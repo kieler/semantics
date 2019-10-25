@@ -13570,6 +13570,23 @@ ruleShiftRightUnsignedOperator returns [Enumerator current=null]
 	)
 ;
 
+// Rule SfbyOperator
+ruleSfbyOperator returns [Enumerator current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		enumLiteral_0='sfby'
+		{
+			$current = grammarAccess.getSfbyOperatorAccess().getSFBYEnumLiteralDeclaration().getEnumLiteral().getInstance();
+			newLeafNode(enumLiteral_0, grammarAccess.getSfbyOperatorAccess().getSFBYEnumLiteralDeclaration());
+		}
+	)
+;
+
 // Rule HostType
 ruleHostType returns [Enumerator current=null]
 @init {

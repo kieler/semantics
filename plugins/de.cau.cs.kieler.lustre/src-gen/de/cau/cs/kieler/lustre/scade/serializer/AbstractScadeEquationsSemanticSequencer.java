@@ -300,6 +300,10 @@ public abstract class AbstractScadeEquationsSemanticSequencer extends LustreSema
 					sequence_CompareOperation_CurrentExpression_FbyExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_MultExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_SumExpression_TernaryOperation_WhenExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
+				else if (rule == grammarAccess.getSfbyExpressionRule()) {
+					sequence_CompareOperation_CurrentExpression_FbyExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_SfbyExpression_SumExpression_TernaryOperation_WhenExpression(context, (OperatorExpression) semanticObject); 
+					return; 
+				}
 				else if (rule == grammarAccess.getShiftExpressionsRule()
 						|| action == grammarAccess.getShiftExpressionsAccess().getOperatorExpressionSubExpressionsAction_1_0_0()
 						|| action == grammarAccess.getShiftExpressionsAccess().getOperatorExpressionSubExpressionsAction_1_1_0()
@@ -366,6 +370,7 @@ public abstract class AbstractScadeEquationsSemanticSequencer extends LustreSema
 						|| action == grammarAccess.getMultExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| action == grammarAccess.getDivExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| action == grammarAccess.getModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| action == grammarAccess.getSfbyExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getAtomicValuedExpressionRule()
 						|| rule == grammarAccess.getVectorValueMemberRule()) {
 					sequence_CompareOperation_CurrentExpression_FbyExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_SumExpression_TernaryOperation_WhenExpression(context, (OperatorExpression) semanticObject); 
@@ -1284,6 +1289,95 @@ public abstract class AbstractScadeEquationsSemanticSequencer extends LustreSema
 	
 	/**
 	 * Contexts:
+	 *     SfbyExpression returns OperatorExpression
+	 *
+	 * Constraint:
+	 *     (
+	 *         (
+	 *             subExpressions+=ProductExpression_OperatorExpression_1_0_0 
+	 *             operator=MultOperator 
+	 *             subExpressions+=IntDivExpression 
+	 *             subExpressions+=IntDivExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=ProductExpression_OperatorExpression_1_1_0 
+	 *             operator=DivOperator 
+	 *             subExpressions+=IntDivExpression 
+	 *             subExpressions+=IntDivExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=ProductExpression_OperatorExpression_1_2_0 
+	 *             operator=ModOperator 
+	 *             subExpressions+=IntDivExpression 
+	 *             subExpressions+=IntDivExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=IntDivExpression_OperatorExpression_1_0 
+	 *             operator=IntDivOperator 
+	 *             subExpressions+=NegExpression 
+	 *             subExpressions+=AtomicValuedExpression*
+	 *         ) | 
+	 *         (operator=SubOperator subExpressions+=NegExpression) | 
+	 *         (subExpressions+=FbyExpression_OperatorExpression_1_0 operator=FbyOperator subExpressions+=WhenExpression subExpressions+=WhenExpression*) | 
+	 *         (subExpressions+=AtomicValuedExpression operator=WhenOperator subExpressions+=AtomicValuedExpression) | 
+	 *         (operator=CurrentOperator subExpressions+=AtomicValuedExpression) | 
+	 *         (operator=PreOperator subExpressions+=AtomicValuedExpression) | 
+	 *         (subExpressions+=InitExpression_OperatorExpression_1_0 operator=InitOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation*) | 
+	 *         (operator=ConditionalOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation subExpressions+=TernaryOperation) | 
+	 *         (
+	 *             subExpressions+=ImpliesExpression_OperatorExpression_1_0 
+	 *             operator=ImpliesOperator 
+	 *             subExpressions+=LogicalXorExpression 
+	 *             subExpressions+=LogicalXorExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=LogicalXorExpression_OperatorExpression_1_0 
+	 *             operator=LogicalXorOperator 
+	 *             subExpressions+=LogicalOrExpression 
+	 *             subExpressions+=LogicalOrExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=LogicalOrExpression_OperatorExpression_1_0 
+	 *             operator=LogicalOrOperator 
+	 *             subExpressions+=LogicalAndExpression 
+	 *             subExpressions+=LogicalAndExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=LogicalAndExpression_OperatorExpression_1_0 
+	 *             operator=LogicalAndOperator 
+	 *             subExpressions+=CompareOperation 
+	 *             subExpressions+=CompareOperation*
+	 *         ) | 
+	 *         ((operator=AtMostOneOperator | operator=NorOperator) subExpressions+=Expression subExpressions+=Expression*) | 
+	 *         (operator=NotOperator subExpressions+=NotExpression) | 
+	 *         (subExpressions+=CompareOperation_OperatorExpression_1_0 operator=CompareOperator subExpressions+=NotOrValuedExpression) | 
+	 *         (
+	 *             subExpressions+=SumExpression_OperatorExpression_1_0_0 
+	 *             operator=AddOperator 
+	 *             subExpressions+=ProductExpression 
+	 *             subExpressions+=ProductExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=SumExpression_OperatorExpression_1_1_0 
+	 *             operator=SubOperator 
+	 *             subExpressions+=ProductExpression 
+	 *             subExpressions+=ProductExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=SfbyExpression_OperatorExpression_1_0 
+	 *             operator=SfbyOperator 
+	 *             subExpressions+=AtomicValuedExpression 
+	 *             subExpressions+=AtomicValuedExpression*
+	 *         )
+	 *     )
+	 */
+	protected void sequence_CompareOperation_CurrentExpression_FbyExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_SfbyExpression_SumExpression_TernaryOperation_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     ShiftExpressions returns OperatorExpression
 	 *     ShiftExpressions.OperatorExpression_1_0_0 returns OperatorExpression
 	 *     ShiftExpressions.OperatorExpression_1_1_0 returns OperatorExpression
@@ -1782,6 +1876,7 @@ public abstract class AbstractScadeEquationsSemanticSequencer extends LustreSema
 	 *     MultExpression.OperatorExpression_1_0 returns OperatorExpression
 	 *     DivExpression.OperatorExpression_1_0 returns OperatorExpression
 	 *     ModExpression.OperatorExpression_1_0 returns OperatorExpression
+	 *     SfbyExpression.OperatorExpression_1_0 returns OperatorExpression
 	 *     AtomicValuedExpression returns OperatorExpression
 	 *     VectorValueMember returns OperatorExpression
 	 *
@@ -1962,6 +2057,8 @@ public abstract class AbstractScadeEquationsSemanticSequencer extends LustreSema
 	 *     DivExpression.OperatorExpression_1_0 returns ValuedObjectString
 	 *     ModExpression returns ValuedObjectString
 	 *     ModExpression.OperatorExpression_1_0 returns ValuedObjectString
+	 *     SfbyExpression returns ValuedObjectString
+	 *     SfbyExpression.OperatorExpression_1_0 returns ValuedObjectString
 	 *     AtomicValuedExpression returns ValuedObjectString
 	 *     VectorValueMember returns ValuedObjectString
 	 *
@@ -2044,6 +2141,8 @@ public abstract class AbstractScadeEquationsSemanticSequencer extends LustreSema
 	 *     DivExpression.OperatorExpression_1_0 returns OperatorExpression
 	 *     ModExpression returns OperatorExpression
 	 *     ModExpression.OperatorExpression_1_0 returns OperatorExpression
+	 *     SfbyExpression returns OperatorExpression
+	 *     SfbyExpression.OperatorExpression_1_0 returns OperatorExpression
 	 *     AtomicValuedExpression returns OperatorExpression
 	 *     VectorValueMember returns OperatorExpression
 	 *

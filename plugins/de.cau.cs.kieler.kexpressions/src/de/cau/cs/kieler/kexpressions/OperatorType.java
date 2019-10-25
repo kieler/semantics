@@ -391,7 +391,15 @@ public enum OperatorType implements Enumerator {
      * @generated
      * @ordered
      */
-    IMPLIES(31, "IMPLIES", "implies");
+    IMPLIES(31, "IMPLIES", "implies"), /**
+     * The '<em><b>SFBY</b></em>' literal object.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #SFBY_VALUE
+     * @generated
+     * @ordered
+     */
+    SFBY(32, "SFBY", "sfby");
 
     /**
      * The '<em><b>NOT</b></em>' literal value.
@@ -871,6 +879,17 @@ public enum OperatorType implements Enumerator {
     public static final int IMPLIES_VALUE = 31;
 
     /**
+     * The '<em><b>SFBY</b></em>' literal value.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #SFBY
+     * @model literal="sfby"
+     * @generated
+     * @ordered
+     */
+    public static final int SFBY_VALUE = 32;
+
+    /**
      * An array of all the '<em><b>Operator Type</b></em>' enumerators.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -911,6 +930,7 @@ public enum OperatorType implements Enumerator {
             ATMOSTONEOF,
             NOR,
             IMPLIES,
+            SFBY,
         };
 
     /**
@@ -999,6 +1019,7 @@ public enum OperatorType implements Enumerator {
             case ATMOSTONEOF_VALUE: return ATMOSTONEOF;
             case NOR_VALUE: return NOR;
             case IMPLIES_VALUE: return IMPLIES;
+            case SFBY_VALUE: return SFBY;
         }
         return null;
     }

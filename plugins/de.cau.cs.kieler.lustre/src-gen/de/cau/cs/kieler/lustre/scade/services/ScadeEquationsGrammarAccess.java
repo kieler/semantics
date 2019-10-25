@@ -1915,6 +1915,17 @@ public class ScadeEquationsGrammarAccess extends AbstractGrammarElementFinder {
 		return getModExpressionAccess().getRule();
 	}
 	
+	//SfbyExpression Expression:
+	//	AtomicValuedExpression ({OperatorExpression.subExpressions+=current} (operator=SfbyOperator
+	//	subExpressions+=AtomicValuedExpression) ('sfby' subExpressions+=AtomicValuedExpression)*)?;
+	public KExpressionsGrammarAccess.SfbyExpressionElements getSfbyExpressionAccess() {
+		return gaKExpressions.getSfbyExpressionAccess();
+	}
+	
+	public ParserRule getSfbyExpressionRule() {
+		return getSfbyExpressionAccess().getRule();
+	}
+	
 	//// Atomic Valued Expression Rule
 	//// An atomic valued expression is either a simple int float or string literal, another valued expression
 	//// encapsulated in braces, or a atomic expression.
@@ -2291,6 +2302,16 @@ public class ScadeEquationsGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public EnumRule getPostfixSubRule() {
 		return getPostfixSubAccess().getRule();
+	}
+	
+	//enum SfbyOperator returns OperatorType:
+	//	SFBY="sfby";
+	public KExpressionsGrammarAccess.SfbyOperatorElements getSfbyOperatorAccess() {
+		return gaKExpressions.getSfbyOperatorAccess();
+	}
+	
+	public EnumRule getSfbyOperatorRule() {
+		return getSfbyOperatorAccess().getRule();
 	}
 	
 	//enum HostType returns ValueType:

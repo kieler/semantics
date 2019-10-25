@@ -561,16 +561,16 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 					return; 
 				}
 				else if (rule == grammarAccess.getTernaryOperationRule()) {
-					sequence_AddExpression_AndExpression_CompareOperation_DivExpression_FbyExpression_InitExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_SubExpression_TernaryOperation_ValuedObjectPreExpression(context, (OperatorExpression) semanticObject); 
+					sequence_AddExpression_AndExpression_CompareOperation_DivExpression_FbyExpression_InitExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_SfbyExpression_SubExpression_TernaryOperation_ValuedObjectPreExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getInitExpressionRule()) {
-					sequence_AddExpression_AndExpression_CompareOperation_DivExpression_FbyExpression_InitExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_SubExpression_ValuedObjectPreExpression(context, (OperatorExpression) semanticObject); 
+					sequence_AddExpression_AndExpression_CompareOperation_DivExpression_FbyExpression_InitExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_SfbyExpression_SubExpression_ValuedObjectPreExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
 				else if (action == grammarAccess.getInitExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getFbyExpressionRule()) {
-					sequence_AddExpression_AndExpression_CompareOperation_DivExpression_FbyExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_SubExpression_ValuedObjectPreExpression(context, (OperatorExpression) semanticObject); 
+					sequence_AddExpression_AndExpression_CompareOperation_DivExpression_FbyExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_SfbyExpression_SubExpression_ValuedObjectPreExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getShiftExpressionsRule()
@@ -608,6 +608,11 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 					sequence_AddExpression_AndExpression_CompareOperation_DivExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_ProductExpression_SubExpression_ValuedObjectPreExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
+				else if (action == grammarAccess.getFbyExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getSfbyExpressionRule()) {
+					sequence_AddExpression_AndExpression_CompareOperation_DivExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_SfbyExpression_SubExpression_ValuedObjectPreExpression(context, (OperatorExpression) semanticObject); 
+					return; 
+				}
 				else if (rule == grammarAccess.getAtomicExpressionRule()
 						|| rule == grammarAccess.getAtomicValuedExpressionRule()
 						|| rule == grammarAccess.getExpressionRule()
@@ -634,7 +639,7 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 						|| rule == grammarAccess.getNegExpressionRule()
 						|| rule == grammarAccess.getRootRule()
 						|| action == grammarAccess.getBitwiseAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
-						|| action == grammarAccess.getFbyExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()) {
+						|| action == grammarAccess.getSfbyExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()) {
 					sequence_AddExpression_AndExpression_CompareOperation_DivExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_SubExpression_ValuedObjectPreExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
@@ -1215,15 +1220,16 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	 *             subExpressions+=AtomicValuedExpression?
 	 *         ) | 
 	 *         (subExpressions+=InitExpression_OperatorExpression_1_0 operator=InitOperator subExpressions+=FbyExpression subExpressions+=FbyExpression*) | 
+	 *         (subExpressions+=FbyExpression_OperatorExpression_1_0 operator=FbyOperator subExpressions+=SfbyExpression subExpressions+=SfbyExpression*) | 
 	 *         (
-	 *             subExpressions+=FbyExpression_OperatorExpression_1_0 
-	 *             operator=FbyOperator 
+	 *             subExpressions+=SfbyExpression_OperatorExpression_1_0 
+	 *             operator=SfbyOperator 
 	 *             subExpressions+=AtomicValuedExpression 
 	 *             subExpressions+=AtomicValuedExpression*
 	 *         )
 	 *     )
 	 */
-	protected void sequence_AddExpression_AndExpression_CompareOperation_DivExpression_FbyExpression_InitExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_SubExpression_TernaryOperation_ValuedObjectPreExpression(ISerializationContext context, OperatorExpression semanticObject) {
+	protected void sequence_AddExpression_AndExpression_CompareOperation_DivExpression_FbyExpression_InitExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_SfbyExpression_SubExpression_TernaryOperation_ValuedObjectPreExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -1247,15 +1253,16 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	 *         (subExpressions+=ModExpression_OperatorExpression_1_0 operator=EsterelModOperator subExpressions+=AtomicValuedExpression) | 
 	 *         (operator=EsterelSubOperator subExpressions+=NegExpression) | 
 	 *         (subExpressions+=InitExpression_OperatorExpression_1_0 operator=InitOperator subExpressions+=FbyExpression subExpressions+=FbyExpression*) | 
+	 *         (subExpressions+=FbyExpression_OperatorExpression_1_0 operator=FbyOperator subExpressions+=SfbyExpression subExpressions+=SfbyExpression*) | 
 	 *         (
-	 *             subExpressions+=FbyExpression_OperatorExpression_1_0 
-	 *             operator=FbyOperator 
+	 *             subExpressions+=SfbyExpression_OperatorExpression_1_0 
+	 *             operator=SfbyOperator 
 	 *             subExpressions+=AtomicValuedExpression 
 	 *             subExpressions+=AtomicValuedExpression*
 	 *         )
 	 *     )
 	 */
-	protected void sequence_AddExpression_AndExpression_CompareOperation_DivExpression_FbyExpression_InitExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_SubExpression_ValuedObjectPreExpression(ISerializationContext context, OperatorExpression semanticObject) {
+	protected void sequence_AddExpression_AndExpression_CompareOperation_DivExpression_FbyExpression_InitExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_SfbyExpression_SubExpression_ValuedObjectPreExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -1279,15 +1286,16 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	 *         (subExpressions+=DivExpression_OperatorExpression_1_0 operator=EsterelDivOperator subExpressions+=ModExpression) | 
 	 *         (subExpressions+=ModExpression_OperatorExpression_1_0 operator=EsterelModOperator subExpressions+=AtomicValuedExpression) | 
 	 *         (operator=EsterelSubOperator subExpressions+=NegExpression) | 
+	 *         (subExpressions+=FbyExpression_OperatorExpression_1_0 operator=FbyOperator subExpressions+=SfbyExpression subExpressions+=SfbyExpression*) | 
 	 *         (
-	 *             subExpressions+=FbyExpression_OperatorExpression_1_0 
-	 *             operator=FbyOperator 
+	 *             subExpressions+=SfbyExpression_OperatorExpression_1_0 
+	 *             operator=SfbyOperator 
 	 *             subExpressions+=AtomicValuedExpression 
 	 *             subExpressions+=AtomicValuedExpression*
 	 *         )
 	 *     )
 	 */
-	protected void sequence_AddExpression_AndExpression_CompareOperation_DivExpression_FbyExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_SubExpression_ValuedObjectPreExpression(ISerializationContext context, OperatorExpression semanticObject) {
+	protected void sequence_AddExpression_AndExpression_CompareOperation_DivExpression_FbyExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_SfbyExpression_SubExpression_ValuedObjectPreExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -1569,6 +1577,38 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	
 	/**
 	 * Contexts:
+	 *     FbyExpression.OperatorExpression_1_0 returns OperatorExpression
+	 *     SfbyExpression returns OperatorExpression
+	 *
+	 * Constraint:
+	 *     (
+	 *         (operator=EsterelPreOperator subExpressions+=ValuedObjectPreExpression) | 
+	 *         (operator=EsterelValueTestOperator subExpressions+=SignalReferenceExpression) | 
+	 *         (subExpressions+=OrExpression_OperatorExpression_1_0 (operator=EsterelOrOperator subExpressions+=AndExpression)+) | 
+	 *         (subExpressions+=AndExpression_OperatorExpression_1_0 (operator=EsterelAndOperator subExpressions+=CompareOperation)+) | 
+	 *         (subExpressions+=CompareOperation_OperatorExpression_1_0 operator=EsterelCompareOperator subExpressions+=NotOrValuedExpression) | 
+	 *         (operator=EsterelNotOperator subExpressions+=NotExpression) | 
+	 *         (subExpressions+=AddExpression_OperatorExpression_1_0 (operator=EsterelAddOperator subExpressions+=SubExpression)+) | 
+	 *         (subExpressions+=SubExpression_OperatorExpression_1_0 (operator=EsterelSubOperator subExpressions+=MultExpression)+) | 
+	 *         (subExpressions+=MultExpression_OperatorExpression_1_0 (operator=EsterelMultOperator subExpressions+=DivExpression)+) | 
+	 *         (subExpressions+=DivExpression_OperatorExpression_1_0 operator=EsterelDivOperator subExpressions+=ModExpression) | 
+	 *         (subExpressions+=ModExpression_OperatorExpression_1_0 operator=EsterelModOperator subExpressions+=AtomicValuedExpression) | 
+	 *         (operator=EsterelSubOperator subExpressions+=NegExpression) | 
+	 *         (
+	 *             subExpressions+=SfbyExpression_OperatorExpression_1_0 
+	 *             operator=SfbyOperator 
+	 *             subExpressions+=AtomicValuedExpression 
+	 *             subExpressions+=AtomicValuedExpression*
+	 *         )
+	 *     )
+	 */
+	protected void sequence_AddExpression_AndExpression_CompareOperation_DivExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_SfbyExpression_SubExpression_ValuedObjectPreExpression(ISerializationContext context, OperatorExpression semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     AtomicExpression returns OperatorExpression
 	 *     AtomicValuedExpression returns OperatorExpression
 	 *     Expression returns OperatorExpression
@@ -1595,7 +1635,7 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	 *     NegExpression returns OperatorExpression
 	 *     Root returns OperatorExpression
 	 *     BitwiseAndExpression.OperatorExpression_1_0 returns OperatorExpression
-	 *     FbyExpression.OperatorExpression_1_0 returns OperatorExpression
+	 *     SfbyExpression.OperatorExpression_1_0 returns OperatorExpression
 	 *
 	 * Constraint:
 	 *     (

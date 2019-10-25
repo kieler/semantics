@@ -3611,6 +3611,22 @@ finally {
 	restoreStackSize(stackSize);
 }
 
+// Rule SfbyOperator
+ruleSfbyOperator
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+	(
+		{ before(grammarAccess.getSfbyOperatorAccess().getSFBYEnumLiteralDeclaration()); }
+		('sfby')
+		{ after(grammarAccess.getSfbyOperatorAccess().getSFBYEnumLiteralDeclaration()); }
+	)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
 // Rule HostType
 ruleHostType
 	@init {

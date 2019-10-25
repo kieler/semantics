@@ -9392,11 +9392,11 @@ ruleFbyExpression returns [EObject current=null]
 			/* */
 		}
 		{
-			newCompositeNode(grammarAccess.getFbyExpressionAccess().getAtomicValuedExpressionParserRuleCall_0());
+			newCompositeNode(grammarAccess.getFbyExpressionAccess().getSfbyExpressionParserRuleCall_0());
 		}
-		this_AtomicValuedExpression_0=ruleAtomicValuedExpression
+		this_SfbyExpression_0=ruleSfbyExpression
 		{
-			$current = $this_AtomicValuedExpression_0.current;
+			$current = $this_SfbyExpression_0.current;
 			afterParserOrEnumRuleCall();
 		}
 		(
@@ -9433,9 +9433,9 @@ ruleFbyExpression returns [EObject current=null]
 				(
 					(
 						{
-							newCompositeNode(grammarAccess.getFbyExpressionAccess().getSubExpressionsAtomicValuedExpressionParserRuleCall_1_1_1_0());
+							newCompositeNode(grammarAccess.getFbyExpressionAccess().getSubExpressionsSfbyExpressionParserRuleCall_1_1_1_0());
 						}
-						lv_subExpressions_3_0=ruleAtomicValuedExpression
+						lv_subExpressions_3_0=ruleSfbyExpression
 						{
 							if ($current==null) {
 								$current = createModelElementForParent(grammarAccess.getFbyExpressionRule());
@@ -9444,7 +9444,7 @@ ruleFbyExpression returns [EObject current=null]
 								$current,
 								"subExpressions",
 								lv_subExpressions_3_0,
-								"de.cau.cs.kieler.kexpressions.KExpressions.AtomicValuedExpression");
+								"de.cau.cs.kieler.kexpressions.KExpressions.SfbyExpression");
 							afterParserOrEnumRuleCall();
 						}
 					)
@@ -9458,12 +9458,119 @@ ruleFbyExpression returns [EObject current=null]
 				(
 					(
 						{
-							newCompositeNode(grammarAccess.getFbyExpressionAccess().getSubExpressionsAtomicValuedExpressionParserRuleCall_1_2_1_0());
+							newCompositeNode(grammarAccess.getFbyExpressionAccess().getSubExpressionsSfbyExpressionParserRuleCall_1_2_1_0());
+						}
+						lv_subExpressions_5_0=ruleSfbyExpression
+						{
+							if ($current==null) {
+								$current = createModelElementForParent(grammarAccess.getFbyExpressionRule());
+							}
+							add(
+								$current,
+								"subExpressions",
+								lv_subExpressions_5_0,
+								"de.cau.cs.kieler.kexpressions.KExpressions.SfbyExpression");
+							afterParserOrEnumRuleCall();
+						}
+					)
+				)
+			)*
+		)?
+	)
+;
+
+// Entry rule entryRuleSfbyExpression
+entryRuleSfbyExpression returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getSfbyExpressionRule()); }
+	iv_ruleSfbyExpression=ruleSfbyExpression
+	{ $current=$iv_ruleSfbyExpression.current; }
+	EOF;
+
+// Rule SfbyExpression
+ruleSfbyExpression returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		{
+			/* */
+		}
+		{
+			newCompositeNode(grammarAccess.getSfbyExpressionAccess().getAtomicValuedExpressionParserRuleCall_0());
+		}
+		this_AtomicValuedExpression_0=ruleAtomicValuedExpression
+		{
+			$current = $this_AtomicValuedExpression_0.current;
+			afterParserOrEnumRuleCall();
+		}
+		(
+			(
+				{
+					/* */
+				}
+				{
+					$current = forceCreateModelElementAndAdd(
+						grammarAccess.getSfbyExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0(),
+						$current);
+				}
+			)
+			(
+				(
+					(
+						{
+							newCompositeNode(grammarAccess.getSfbyExpressionAccess().getOperatorSfbyOperatorEnumRuleCall_1_1_0_0());
+						}
+						lv_operator_2_0=ruleSfbyOperator
+						{
+							if ($current==null) {
+								$current = createModelElementForParent(grammarAccess.getSfbyExpressionRule());
+							}
+							set(
+								$current,
+								"operator",
+								lv_operator_2_0,
+								"de.cau.cs.kieler.kexpressions.KExpressions.SfbyOperator");
+							afterParserOrEnumRuleCall();
+						}
+					)
+				)
+				(
+					(
+						{
+							newCompositeNode(grammarAccess.getSfbyExpressionAccess().getSubExpressionsAtomicValuedExpressionParserRuleCall_1_1_1_0());
+						}
+						lv_subExpressions_3_0=ruleAtomicValuedExpression
+						{
+							if ($current==null) {
+								$current = createModelElementForParent(grammarAccess.getSfbyExpressionRule());
+							}
+							add(
+								$current,
+								"subExpressions",
+								lv_subExpressions_3_0,
+								"de.cau.cs.kieler.kexpressions.KExpressions.AtomicValuedExpression");
+							afterParserOrEnumRuleCall();
+						}
+					)
+				)
+			)
+			(
+				otherlv_4='sfby'
+				{
+					newLeafNode(otherlv_4, grammarAccess.getSfbyExpressionAccess().getSfbyKeyword_1_2_0());
+				}
+				(
+					(
+						{
+							newCompositeNode(grammarAccess.getSfbyExpressionAccess().getSubExpressionsAtomicValuedExpressionParserRuleCall_1_2_1_0());
 						}
 						lv_subExpressions_5_0=ruleAtomicValuedExpression
 						{
 							if ($current==null) {
-								$current = createModelElementForParent(grammarAccess.getFbyExpressionRule());
+								$current = createModelElementForParent(grammarAccess.getSfbyExpressionRule());
 							}
 							add(
 								$current,
@@ -13283,6 +13390,23 @@ ruleFbyOperator returns [Enumerator current=null]
 		{
 			$current = grammarAccess.getFbyOperatorAccess().getFBYEnumLiteralDeclaration().getEnumLiteral().getInstance();
 			newLeafNode(enumLiteral_0, grammarAccess.getFbyOperatorAccess().getFBYEnumLiteralDeclaration());
+		}
+	)
+;
+
+// Rule SfbyOperator
+ruleSfbyOperator returns [Enumerator current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		enumLiteral_0='sfby'
+		{
+			$current = grammarAccess.getSfbyOperatorAccess().getSFBYEnumLiteralDeclaration().getEnumLiteral().getInstance();
+			newLeafNode(enumLiteral_0, grammarAccess.getSfbyOperatorAccess().getSFBYEnumLiteralDeclaration());
 		}
 	)
 ;

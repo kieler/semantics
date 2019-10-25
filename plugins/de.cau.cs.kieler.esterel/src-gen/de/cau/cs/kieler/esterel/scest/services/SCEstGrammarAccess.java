@@ -3518,14 +3518,25 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//FbyExpression Expression:
-	//	super::AtomicValuedExpression ({OperatorExpression.subExpressions+=current} (operator=FbyOperator
-	//	subExpressions+=super::AtomicValuedExpression) ('fby' subExpressions+=super::AtomicValuedExpression)*)?;
+	//	SfbyExpression ({OperatorExpression.subExpressions+=current} (operator=FbyOperator subExpressions+=SfbyExpression)
+	//	('fby' subExpressions+=SfbyExpression)*)?;
 	public KExpressionsGrammarAccess.FbyExpressionElements getFbyExpressionAccess() {
 		return gaKExpressions.getFbyExpressionAccess();
 	}
 	
 	public ParserRule getFbyExpressionRule() {
 		return getFbyExpressionAccess().getRule();
+	}
+	
+	//SfbyExpression Expression:
+	//	super::AtomicValuedExpression ({OperatorExpression.subExpressions+=current} (operator=SfbyOperator
+	//	subExpressions+=super::AtomicValuedExpression) ('sfby' subExpressions+=super::AtomicValuedExpression)*)?;
+	public KExpressionsGrammarAccess.SfbyExpressionElements getSfbyExpressionAccess() {
+		return gaKExpressions.getSfbyExpressionAccess();
+	}
+	
+	public ParserRule getSfbyExpressionRule() {
+		return getSfbyExpressionAccess().getRule();
 	}
 	
 	//// Valued Object Test Expression Rule
@@ -3981,6 +3992,16 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public EnumRule getFbyOperatorRule() {
 		return getFbyOperatorAccess().getRule();
+	}
+	
+	//enum SfbyOperator returns OperatorType:
+	//	SFBY="sfby";
+	public KExpressionsGrammarAccess.SfbyOperatorElements getSfbyOperatorAccess() {
+		return gaKExpressions.getSfbyOperatorAccess();
+	}
+	
+	public EnumRule getSfbyOperatorRule() {
+		return getSfbyOperatorAccess().getRule();
 	}
 	
 	//enum ValueType:

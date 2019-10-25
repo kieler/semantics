@@ -42,37 +42,58 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cRandomizeCallEffectParserRuleCall_7 = (RuleCall)cAlternatives.eContents().get(7);
 		private final RuleCall cPureEmissionParserRuleCall_8 = (RuleCall)cAlternatives.eContents().get(8);
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@metamodelDeclarations.3'
+		///**
+		// * @author ssm
+		// * @kieler.design 2015-08-23 proposed 
+		// * @kieler.rating 2015-08-23 proposed yellow
+		// */ /*
+		// * KEffects allow deriving grammars to use a range of different effects, namely assignments,
+		// * postfix effects, esterel like emissions, host code and function call effects.
+		// * Of course other grammars may extend this list.
+		// */ // ---------------- //
+		////  KEffects Rules  // 
+		//// ---------------- //
+		//// Effect Rule
+		//// An effect is either an assignment, a postfix effect, an emission, a hostcode effect or a 
+		//// function call effect.
+		//// NOTE: Emission has precedence before ReferenceCallEffect and consumes simple refecerence call grammar using this rule
+		//// should to use the KEffectsEmissionReferenceCallConverter to convert these Emissions back to ReferenceCallEffects.
+		//// If precedence is changed the converter has to be adapted too.
+		//Effect keffects::Effect:
+		//	Assignment | PostfixEffect | ValuedEmission | HostcodeEffect | ReferenceCallEffect | FunctionCallEffect |
+		//	PrintCallEffect | RandomizeCallEffect | PureEmission;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.0/@alternatives'
+		//Assignment | PostfixEffect | ValuedEmission | HostcodeEffect | ReferenceCallEffect | FunctionCallEffect |
+		//PrintCallEffect | RandomizeCallEffect | PureEmission
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.0/@alternatives/@elements.0'
+		//Assignment
 		public RuleCall getAssignmentParserRuleCall_0() { return cAssignmentParserRuleCall_0; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.0/@alternatives/@elements.1'
+		//PostfixEffect
 		public RuleCall getPostfixEffectParserRuleCall_1() { return cPostfixEffectParserRuleCall_1; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.0/@alternatives/@elements.2'
+		//ValuedEmission
 		public RuleCall getValuedEmissionParserRuleCall_2() { return cValuedEmissionParserRuleCall_2; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.0/@alternatives/@elements.3'
+		//// Will consume some ReferenceCallEffects
+		//HostcodeEffect
 		public RuleCall getHostcodeEffectParserRuleCall_3() { return cHostcodeEffectParserRuleCall_3; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.0/@alternatives/@elements.4'
+		//ReferenceCallEffect
 		public RuleCall getReferenceCallEffectParserRuleCall_4() { return cReferenceCallEffectParserRuleCall_4; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.0/@alternatives/@elements.5'
+		//FunctionCallEffect
 		public RuleCall getFunctionCallEffectParserRuleCall_5() { return cFunctionCallEffectParserRuleCall_5; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.0/@alternatives/@elements.6'
+		//PrintCallEffect
 		public RuleCall getPrintCallEffectParserRuleCall_6() { return cPrintCallEffectParserRuleCall_6; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.0/@alternatives/@elements.7'
+		//RandomizeCallEffect
 		public RuleCall getRandomizeCallEffectParserRuleCall_7() { return cRandomizeCallEffectParserRuleCall_7; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.0/@alternatives/@elements.8'
+		//PureEmission
 		public RuleCall getPureEmissionParserRuleCall_8() { return cPureEmissionParserRuleCall_8; }
 	}
 	public class PureEmissionElements extends AbstractParserRuleElementFinder {
@@ -87,34 +108,43 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cScheduleAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
 		private final RuleCall cScheduleScheduleObjectReferenceParserRuleCall_2_1_0 = (RuleCall)cScheduleAssignment_2_1.eContents().get(0);
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.keffects.KEffects/PureEmission'
+		//// Emission Rule
+		//// An emission is a esterel like 'call' of a signal instance. A transition effect list may simply set
+		//// an emission for a specific signal to emit it. Additionally, emission may include a parameter part for
+		//// a new value in the case of valued signals. 
+		//// Example: A, B(2)
+		//// Important: To help the parser and to avoid ambiguities, emissions may only allow restricted 
+		//// annotations defined in the annotations grammar.		
+		//PureEmission keffects::Emission:
+		//	annotations+=QuotedStringAnnotation*
+		//	reference=ValuedObjectReference ('schedule' schedule+=ScheduleObjectReference+)?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.1/@alternatives'
+		//annotations+=QuotedStringAnnotation* reference=ValuedObjectReference ('schedule' schedule+=ScheduleObjectReference+)?
 		public Group getGroup() { return cGroup; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.1/@alternatives/@elements.0'
+		//annotations+=QuotedStringAnnotation*
 		public Assignment getAnnotationsAssignment_0() { return cAnnotationsAssignment_0; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.1/@alternatives/@elements.0/@terminal'
+		//QuotedStringAnnotation
 		public RuleCall getAnnotationsQuotedStringAnnotationParserRuleCall_0_0() { return cAnnotationsQuotedStringAnnotationParserRuleCall_0_0; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.1/@alternatives/@elements.1'
+		//reference=ValuedObjectReference
 		public Assignment getReferenceAssignment_1() { return cReferenceAssignment_1; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.1/@alternatives/@elements.1/@terminal'
+		//ValuedObjectReference
 		public RuleCall getReferenceValuedObjectReferenceParserRuleCall_1_0() { return cReferenceValuedObjectReferenceParserRuleCall_1_0; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.1/@alternatives/@elements.2'
+		//('schedule' schedule+=ScheduleObjectReference+)?
 		public Group getGroup_2() { return cGroup_2; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.1/@alternatives/@elements.2/@elements.0'
+		//'schedule'
 		public Keyword getScheduleKeyword_2_0() { return cScheduleKeyword_2_0; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.1/@alternatives/@elements.2/@elements.1'
+		//schedule+=ScheduleObjectReference+
 		public Assignment getScheduleAssignment_2_1() { return cScheduleAssignment_2_1; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.1/@alternatives/@elements.2/@elements.1/@terminal'
+		//ScheduleObjectReference
 		public RuleCall getScheduleScheduleObjectReferenceParserRuleCall_2_1_0() { return cScheduleScheduleObjectReferenceParserRuleCall_2_1_0; }
 	}
 	public class ValuedEmissionElements extends AbstractParserRuleElementFinder {
@@ -133,46 +163,52 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cScheduleAssignment_5_1 = (Assignment)cGroup_5.eContents().get(1);
 		private final RuleCall cScheduleScheduleObjectReferenceParserRuleCall_5_1_0 = (RuleCall)cScheduleAssignment_5_1.eContents().get(0);
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.keffects.KEffects/ValuedEmission'
+		//// Valued emission must be separated from normal emission to allow correct parsing in combination with referece calls
+		//// Problematic case f(), here the emission rule must not even partially (optional value part) match to allow parsing as referece call
+		//ValuedEmission keffects::Emission:
+		//	annotations+=QuotedStringAnnotation*
+		//	reference=ValuedObjectReference
+		//	"(" newValue=Expression ")" ('schedule' schedule+=ScheduleObjectReference+)?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.2/@alternatives'
+		//annotations+=QuotedStringAnnotation* reference=ValuedObjectReference "(" newValue=Expression ")" ('schedule'
+		//schedule+=ScheduleObjectReference+)?
 		public Group getGroup() { return cGroup; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.2/@alternatives/@elements.0'
+		//annotations+=QuotedStringAnnotation*
 		public Assignment getAnnotationsAssignment_0() { return cAnnotationsAssignment_0; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.2/@alternatives/@elements.0/@terminal'
+		//QuotedStringAnnotation
 		public RuleCall getAnnotationsQuotedStringAnnotationParserRuleCall_0_0() { return cAnnotationsQuotedStringAnnotationParserRuleCall_0_0; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.2/@alternatives/@elements.1'
+		//reference=ValuedObjectReference
 		public Assignment getReferenceAssignment_1() { return cReferenceAssignment_1; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.2/@alternatives/@elements.1/@terminal'
+		//ValuedObjectReference
 		public RuleCall getReferenceValuedObjectReferenceParserRuleCall_1_0() { return cReferenceValuedObjectReferenceParserRuleCall_1_0; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.2/@alternatives/@elements.2'
+		//"("
 		public Keyword getLeftParenthesisKeyword_2() { return cLeftParenthesisKeyword_2; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.2/@alternatives/@elements.3'
+		//newValue=Expression
 		public Assignment getNewValueAssignment_3() { return cNewValueAssignment_3; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.2/@alternatives/@elements.3/@terminal'
+		//Expression
 		public RuleCall getNewValueExpressionParserRuleCall_3_0() { return cNewValueExpressionParserRuleCall_3_0; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.2/@alternatives/@elements.4'
+		//")"
 		public Keyword getRightParenthesisKeyword_4() { return cRightParenthesisKeyword_4; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.2/@alternatives/@elements.5'
+		//('schedule' schedule+=ScheduleObjectReference+)?
 		public Group getGroup_5() { return cGroup_5; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.2/@alternatives/@elements.5/@elements.0'
+		//'schedule'
 		public Keyword getScheduleKeyword_5_0() { return cScheduleKeyword_5_0; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.2/@alternatives/@elements.5/@elements.1'
+		//schedule+=ScheduleObjectReference+
 		public Assignment getScheduleAssignment_5_1() { return cScheduleAssignment_5_1; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.2/@alternatives/@elements.5/@elements.1/@terminal'
+		//ScheduleObjectReference
 		public RuleCall getScheduleScheduleObjectReferenceParserRuleCall_5_1_0() { return cScheduleScheduleObjectReferenceParserRuleCall_5_1_0; }
 	}
 	public class PureOrValuedEmissionElements extends AbstractParserRuleElementFinder {
@@ -181,16 +217,17 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cValuedEmissionParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
 		private final RuleCall cPureEmissionParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.keffects.KEffects/PureOrValuedEmission'
+		//PureOrValuedEmission keffects::Emission:
+		//	ValuedEmission | PureEmission;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.3/@alternatives'
+		//ValuedEmission | PureEmission
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.3/@alternatives/@elements.0'
+		//ValuedEmission
 		public RuleCall getValuedEmissionParserRuleCall_0() { return cValuedEmissionParserRuleCall_0; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.3/@alternatives/@elements.1'
+		//PureEmission
 		public RuleCall getPureEmissionParserRuleCall_1() { return cPureEmissionParserRuleCall_1; }
 	}
 	public class AssignmentElements extends AbstractParserRuleElementFinder {
@@ -209,46 +246,55 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cScheduleAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
 		private final RuleCall cScheduleScheduleObjectReferenceParserRuleCall_4_1_0 = (RuleCall)cScheduleAssignment_4_1.eContents().get(0);
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.keffects.KEffects/Assignment'
+		//// Assignment Rule
+		//// An assignment may start with a list of arbitrary annotatations.
+		//// Then, an arbitrary expression is assigned to a valued object. The object may be suffixed by an 
+		//// indices part. The type of assignment is determined by the type of the operator.
+		//// Example: A = true, I[0] = I[1], I += 1     
+		//Assignment keffects::Assignment:
+		//	annotations+=Annotation*
+		//	reference=ValuedObjectReference
+		//	operator=AssignOperator expression=Expression ('schedule' schedule+=ScheduleObjectReference+)?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.4/@alternatives'
+		//annotations+=Annotation* reference=ValuedObjectReference operator=AssignOperator expression=Expression ('schedule'
+		//schedule+=ScheduleObjectReference+)?
 		public Group getGroup() { return cGroup; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.4/@alternatives/@elements.0'
+		//annotations+=Annotation*
 		public Assignment getAnnotationsAssignment_0() { return cAnnotationsAssignment_0; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.4/@alternatives/@elements.0/@terminal'
+		//Annotation
 		public RuleCall getAnnotationsAnnotationParserRuleCall_0_0() { return cAnnotationsAnnotationParserRuleCall_0_0; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.4/@alternatives/@elements.1'
+		//reference=ValuedObjectReference
 		public Assignment getReferenceAssignment_1() { return cReferenceAssignment_1; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.4/@alternatives/@elements.1/@terminal'
+		//ValuedObjectReference
 		public RuleCall getReferenceValuedObjectReferenceParserRuleCall_1_0() { return cReferenceValuedObjectReferenceParserRuleCall_1_0; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.4/@alternatives/@elements.2'
+		//operator=AssignOperator
 		public Assignment getOperatorAssignment_2() { return cOperatorAssignment_2; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.4/@alternatives/@elements.2/@terminal'
+		//AssignOperator
 		public RuleCall getOperatorAssignOperatorEnumRuleCall_2_0() { return cOperatorAssignOperatorEnumRuleCall_2_0; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.4/@alternatives/@elements.3'
+		//expression=Expression
 		public Assignment getExpressionAssignment_3() { return cExpressionAssignment_3; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.4/@alternatives/@elements.3/@terminal'
+		//Expression
 		public RuleCall getExpressionExpressionParserRuleCall_3_0() { return cExpressionExpressionParserRuleCall_3_0; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.4/@alternatives/@elements.4'
+		//('schedule' schedule+=ScheduleObjectReference+)?
 		public Group getGroup_4() { return cGroup_4; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.4/@alternatives/@elements.4/@elements.0'
+		//'schedule'
 		public Keyword getScheduleKeyword_4_0() { return cScheduleKeyword_4_0; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.4/@alternatives/@elements.4/@elements.1'
+		//schedule+=ScheduleObjectReference+
 		public Assignment getScheduleAssignment_4_1() { return cScheduleAssignment_4_1; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.4/@alternatives/@elements.4/@elements.1/@terminal'
+		//ScheduleObjectReference
 		public RuleCall getScheduleScheduleObjectReferenceParserRuleCall_4_1_0() { return cScheduleScheduleObjectReferenceParserRuleCall_4_1_0; }
 	}
 	public class PostfixEffectElements extends AbstractParserRuleElementFinder {
@@ -265,40 +311,53 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cScheduleAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
 		private final RuleCall cScheduleScheduleObjectReferenceParserRuleCall_3_1_0 = (RuleCall)cScheduleAssignment_3_1.eContents().get(0);
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.keffects.KEffects/PostfixEffect'
+		////SubReferenceAssignment returns keffects::Assignment:
+		////    (annotations+=Annotation)*    
+		////    valuedObject=ValuedObjectReference
+		////     operator=AssignOperator expression = Expression
+		////     ('schedule' schedule+=ScheduleObjectReference+)?;	 
+		//// Postfix Effect
+		//// A postfix effect is an assignment missing the part beyond the operator. In this case the operator type
+		//// must be a postfix operator.
+		//// Example: I++, I-- 
+		//PostfixEffect keffects::Assignment:
+		//	annotations+=Annotation*
+		//	reference=ValuedObjectReference
+		//	operator=PostfixOperator ('schedule' schedule+=ScheduleObjectReference+)?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.5/@alternatives'
+		//annotations+=Annotation* reference=ValuedObjectReference operator=PostfixOperator ('schedule'
+		//schedule+=ScheduleObjectReference+)?
 		public Group getGroup() { return cGroup; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.5/@alternatives/@elements.0'
+		//annotations+=Annotation*
 		public Assignment getAnnotationsAssignment_0() { return cAnnotationsAssignment_0; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.5/@alternatives/@elements.0/@terminal'
+		//Annotation
 		public RuleCall getAnnotationsAnnotationParserRuleCall_0_0() { return cAnnotationsAnnotationParserRuleCall_0_0; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.5/@alternatives/@elements.1'
+		//reference=ValuedObjectReference
 		public Assignment getReferenceAssignment_1() { return cReferenceAssignment_1; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.5/@alternatives/@elements.1/@terminal'
+		//ValuedObjectReference
 		public RuleCall getReferenceValuedObjectReferenceParserRuleCall_1_0() { return cReferenceValuedObjectReferenceParserRuleCall_1_0; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.5/@alternatives/@elements.2'
+		//operator=PostfixOperator
 		public Assignment getOperatorAssignment_2() { return cOperatorAssignment_2; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.5/@alternatives/@elements.2/@terminal'
+		//PostfixOperator
 		public RuleCall getOperatorPostfixOperatorEnumRuleCall_2_0() { return cOperatorPostfixOperatorEnumRuleCall_2_0; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.5/@alternatives/@elements.3'
+		//('schedule' schedule+=ScheduleObjectReference+)?
 		public Group getGroup_3() { return cGroup_3; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.5/@alternatives/@elements.3/@elements.0'
+		//'schedule'
 		public Keyword getScheduleKeyword_3_0() { return cScheduleKeyword_3_0; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.5/@alternatives/@elements.3/@elements.1'
+		//schedule+=ScheduleObjectReference+
 		public Assignment getScheduleAssignment_3_1() { return cScheduleAssignment_3_1; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.5/@alternatives/@elements.3/@elements.1/@terminal'
+		//ScheduleObjectReference
 		public RuleCall getScheduleScheduleObjectReferenceParserRuleCall_3_1_0() { return cScheduleScheduleObjectReferenceParserRuleCall_3_1_0; }
 	}
 	public class HostcodeEffectElements extends AbstractParserRuleElementFinder {
@@ -309,22 +368,26 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cTextAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cTextHOSTCODETerminalRuleCall_1_0 = (RuleCall)cTextAssignment_1.eContents().get(0);
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.keffects.KEffects/HostcodeEffect'
+		//// Hostcode Effect Rule
+		//// A hostcode effect is an effect that include hostcode. It may be preceded by a list of annotations.
+		//HostcodeEffect keffects::HostcodeEffect:
+		//	annotations+=Annotation*
+		//	text=HOSTCODE;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.6/@alternatives'
+		//annotations+=Annotation* text=HOSTCODE
 		public Group getGroup() { return cGroup; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.6/@alternatives/@elements.0'
+		//annotations+=Annotation*
 		public Assignment getAnnotationsAssignment_0() { return cAnnotationsAssignment_0; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.6/@alternatives/@elements.0/@terminal'
+		//Annotation
 		public RuleCall getAnnotationsAnnotationParserRuleCall_0_0() { return cAnnotationsAnnotationParserRuleCall_0_0; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.6/@alternatives/@elements.1'
+		//text=HOSTCODE
 		public Assignment getTextAssignment_1() { return cTextAssignment_1; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.6/@alternatives/@elements.1/@terminal'
+		//HOSTCODE
 		public RuleCall getTextHOSTCODETerminalRuleCall_1_0() { return cTextHOSTCODETerminalRuleCall_1_0; }
 	}
 	public class ReferenceCallEffectElements extends AbstractParserRuleElementFinder {
@@ -360,97 +423,106 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cScheduleAssignment_5_1 = (Assignment)cGroup_5.eContents().get(1);
 		private final RuleCall cScheduleScheduleObjectReferenceParserRuleCall_5_1_0 = (RuleCall)cScheduleAssignment_5_1.eContents().get(0);
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.keffects.KEffects/ReferenceCallEffect'
+		//// Reference Call Effect Rule
+		//// A reference call effect works similar to the reference call expression. Additionally, it may be
+		//// preceded by a list of annotations.
+		//ReferenceCallEffect keffects::ReferenceCallEffect:
+		//	annotations+=Annotation*
+		//	valuedObject=[kexpressions::ValuedObject|PrimeID] ('[' indices+=Expression ']')* ('.'
+		//	subReference=ValuedObjectReference)? ('(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()') ('schedule'
+		//	schedule+=ScheduleObjectReference+)?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.7/@alternatives'
+		//annotations+=Annotation* valuedObject=[kexpressions::ValuedObject|PrimeID] ('[' indices+=Expression ']')* ('.'
+		//subReference=ValuedObjectReference)? ('(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()') ('schedule'
+		//schedule+=ScheduleObjectReference+)?
 		public Group getGroup() { return cGroup; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.7/@alternatives/@elements.0'
+		//annotations+=Annotation*
 		public Assignment getAnnotationsAssignment_0() { return cAnnotationsAssignment_0; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.7/@alternatives/@elements.0/@terminal'
+		//Annotation
 		public RuleCall getAnnotationsAnnotationParserRuleCall_0_0() { return cAnnotationsAnnotationParserRuleCall_0_0; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.7/@alternatives/@elements.1'
+		//valuedObject=[kexpressions::ValuedObject|PrimeID]
 		public Assignment getValuedObjectAssignment_1() { return cValuedObjectAssignment_1; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.7/@alternatives/@elements.1/@terminal'
+		//[kexpressions::ValuedObject|PrimeID]
 		public CrossReference getValuedObjectValuedObjectCrossReference_1_0() { return cValuedObjectValuedObjectCrossReference_1_0; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.7/@alternatives/@elements.1/@terminal/@terminal'
+		//PrimeID
 		public RuleCall getValuedObjectValuedObjectPrimeIDParserRuleCall_1_0_1() { return cValuedObjectValuedObjectPrimeIDParserRuleCall_1_0_1; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.7/@alternatives/@elements.2'
+		//('[' indices+=Expression ']')*
 		public Group getGroup_2() { return cGroup_2; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.7/@alternatives/@elements.2/@elements.0'
+		//'['
 		public Keyword getLeftSquareBracketKeyword_2_0() { return cLeftSquareBracketKeyword_2_0; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.7/@alternatives/@elements.2/@elements.1'
+		//indices+=Expression
 		public Assignment getIndicesAssignment_2_1() { return cIndicesAssignment_2_1; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.7/@alternatives/@elements.2/@elements.1/@terminal'
+		//Expression
 		public RuleCall getIndicesExpressionParserRuleCall_2_1_0() { return cIndicesExpressionParserRuleCall_2_1_0; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.7/@alternatives/@elements.2/@elements.2'
+		//']'
 		public Keyword getRightSquareBracketKeyword_2_2() { return cRightSquareBracketKeyword_2_2; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.7/@alternatives/@elements.3'
+		//('.' subReference=ValuedObjectReference)?
 		public Group getGroup_3() { return cGroup_3; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.7/@alternatives/@elements.3/@elements.0'
+		//'.'
 		public Keyword getFullStopKeyword_3_0() { return cFullStopKeyword_3_0; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.7/@alternatives/@elements.3/@elements.1'
+		//subReference=ValuedObjectReference
 		public Assignment getSubReferenceAssignment_3_1() { return cSubReferenceAssignment_3_1; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.7/@alternatives/@elements.3/@elements.1/@terminal'
+		//ValuedObjectReference
 		public RuleCall getSubReferenceValuedObjectReferenceParserRuleCall_3_1_0() { return cSubReferenceValuedObjectReferenceParserRuleCall_3_1_0; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.7/@alternatives/@elements.4'
+		//('(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()')
 		public Alternatives getAlternatives_4() { return cAlternatives_4; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.7/@alternatives/@elements.4/@elements.0'
+		//'(' parameters+=Parameter (',' parameters+=Parameter)* ')'
 		public Group getGroup_4_0() { return cGroup_4_0; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.7/@alternatives/@elements.4/@elements.0/@elements.0'
+		//'('
 		public Keyword getLeftParenthesisKeyword_4_0_0() { return cLeftParenthesisKeyword_4_0_0; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.7/@alternatives/@elements.4/@elements.0/@elements.1'
+		//parameters+=Parameter
 		public Assignment getParametersAssignment_4_0_1() { return cParametersAssignment_4_0_1; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.7/@alternatives/@elements.4/@elements.0/@elements.1/@terminal'
+		//Parameter
 		public RuleCall getParametersParameterParserRuleCall_4_0_1_0() { return cParametersParameterParserRuleCall_4_0_1_0; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.7/@alternatives/@elements.4/@elements.0/@elements.2'
+		//(',' parameters+=Parameter)*
 		public Group getGroup_4_0_2() { return cGroup_4_0_2; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.7/@alternatives/@elements.4/@elements.0/@elements.2/@elements.0'
+		//','
 		public Keyword getCommaKeyword_4_0_2_0() { return cCommaKeyword_4_0_2_0; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.7/@alternatives/@elements.4/@elements.0/@elements.2/@elements.1'
+		//parameters+=Parameter
 		public Assignment getParametersAssignment_4_0_2_1() { return cParametersAssignment_4_0_2_1; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.7/@alternatives/@elements.4/@elements.0/@elements.2/@elements.1/@terminal'
+		//Parameter
 		public RuleCall getParametersParameterParserRuleCall_4_0_2_1_0() { return cParametersParameterParserRuleCall_4_0_2_1_0; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.7/@alternatives/@elements.4/@elements.0/@elements.3'
+		//')'
 		public Keyword getRightParenthesisKeyword_4_0_3() { return cRightParenthesisKeyword_4_0_3; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.7/@alternatives/@elements.4/@elements.1'
+		//'()'
 		public Keyword getLeftParenthesisRightParenthesisKeyword_4_1() { return cLeftParenthesisRightParenthesisKeyword_4_1; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.7/@alternatives/@elements.5'
+		//('schedule' schedule+=ScheduleObjectReference+)?
 		public Group getGroup_5() { return cGroup_5; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.7/@alternatives/@elements.5/@elements.0'
+		//'schedule'
 		public Keyword getScheduleKeyword_5_0() { return cScheduleKeyword_5_0; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.7/@alternatives/@elements.5/@elements.1'
+		//schedule+=ScheduleObjectReference+
 		public Assignment getScheduleAssignment_5_1() { return cScheduleAssignment_5_1; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.7/@alternatives/@elements.5/@elements.1/@terminal'
+		//ScheduleObjectReference
 		public RuleCall getScheduleScheduleObjectReferenceParserRuleCall_5_1_0() { return cScheduleScheduleObjectReferenceParserRuleCall_5_1_0; }
 	}
 	public class FunctionCallEffectElements extends AbstractParserRuleElementFinder {
@@ -474,61 +546,66 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightParenthesisKeyword_1_2_0_3 = (Keyword)cGroup_1_2_0.eContents().get(3);
 		private final Keyword cLeftParenthesisRightParenthesisKeyword_1_2_1 = (Keyword)cAlternatives_1_2.eContents().get(1);
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.keffects.KEffects/FunctionCallEffect'
+		//// Function Call Effect Rule
+		//// A function call effect works similar to the function call expression. Additionally, it may be
+		//// preceded by a list of annotations.
+		//FunctionCallEffect keffects::FunctionCallEffect:
+		//	annotations+=Annotation* ('extern' functionName=ID ('(' parameters+=Parameter (',' parameters+=Parameter)* ')'
+		//	| '()'));
 		@Override public ParserRule getRule() { return rule; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.8/@alternatives'
+		//annotations+=Annotation* ('extern' functionName=ID ('(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()'))
 		public Group getGroup() { return cGroup; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.8/@alternatives/@elements.0'
+		//annotations+=Annotation*
 		public Assignment getAnnotationsAssignment_0() { return cAnnotationsAssignment_0; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.8/@alternatives/@elements.0/@terminal'
+		//Annotation
 		public RuleCall getAnnotationsAnnotationParserRuleCall_0_0() { return cAnnotationsAnnotationParserRuleCall_0_0; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.8/@alternatives/@elements.1'
+		//('extern' functionName=ID ('(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()'))
 		public Group getGroup_1() { return cGroup_1; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.8/@alternatives/@elements.1/@elements.0'
+		//'extern'
 		public Keyword getExternKeyword_1_0() { return cExternKeyword_1_0; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.8/@alternatives/@elements.1/@elements.1'
+		//functionName=ID
 		public Assignment getFunctionNameAssignment_1_1() { return cFunctionNameAssignment_1_1; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.8/@alternatives/@elements.1/@elements.1/@terminal'
+		//ID
 		public RuleCall getFunctionNameIDTerminalRuleCall_1_1_0() { return cFunctionNameIDTerminalRuleCall_1_1_0; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.8/@alternatives/@elements.1/@elements.2'
+		//('(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()')
 		public Alternatives getAlternatives_1_2() { return cAlternatives_1_2; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.8/@alternatives/@elements.1/@elements.2/@elements.0'
+		//'(' parameters+=Parameter (',' parameters+=Parameter)* ')'
 		public Group getGroup_1_2_0() { return cGroup_1_2_0; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.8/@alternatives/@elements.1/@elements.2/@elements.0/@elements.0'
+		//'('
 		public Keyword getLeftParenthesisKeyword_1_2_0_0() { return cLeftParenthesisKeyword_1_2_0_0; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.8/@alternatives/@elements.1/@elements.2/@elements.0/@elements.1'
+		//parameters+=Parameter
 		public Assignment getParametersAssignment_1_2_0_1() { return cParametersAssignment_1_2_0_1; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.8/@alternatives/@elements.1/@elements.2/@elements.0/@elements.1/@terminal'
+		//Parameter
 		public RuleCall getParametersParameterParserRuleCall_1_2_0_1_0() { return cParametersParameterParserRuleCall_1_2_0_1_0; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.8/@alternatives/@elements.1/@elements.2/@elements.0/@elements.2'
+		//(',' parameters+=Parameter)*
 		public Group getGroup_1_2_0_2() { return cGroup_1_2_0_2; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.8/@alternatives/@elements.1/@elements.2/@elements.0/@elements.2/@elements.0'
+		//','
 		public Keyword getCommaKeyword_1_2_0_2_0() { return cCommaKeyword_1_2_0_2_0; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.8/@alternatives/@elements.1/@elements.2/@elements.0/@elements.2/@elements.1'
+		//parameters+=Parameter
 		public Assignment getParametersAssignment_1_2_0_2_1() { return cParametersAssignment_1_2_0_2_1; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.8/@alternatives/@elements.1/@elements.2/@elements.0/@elements.2/@elements.1/@terminal'
+		//Parameter
 		public RuleCall getParametersParameterParserRuleCall_1_2_0_2_1_0() { return cParametersParameterParserRuleCall_1_2_0_2_1_0; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.8/@alternatives/@elements.1/@elements.2/@elements.0/@elements.3'
+		//')'
 		public Keyword getRightParenthesisKeyword_1_2_0_3() { return cRightParenthesisKeyword_1_2_0_3; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.8/@alternatives/@elements.1/@elements.2/@elements.1'
+		//'()'
 		public Keyword getLeftParenthesisRightParenthesisKeyword_1_2_1() { return cLeftParenthesisRightParenthesisKeyword_1_2_1; }
 	}
 	public class PrintCallEffectElements extends AbstractParserRuleElementFinder {
@@ -551,58 +628,64 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cScheduleAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
 		private final RuleCall cScheduleScheduleObjectReferenceParserRuleCall_3_1_0 = (RuleCall)cScheduleAssignment_3_1.eContents().get(0);
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.keffects.KEffects/PrintCallEffect'
+		//// Print Call Effect Rule
+		//// A print functions that enables target-independent prints in the model.    
+		//PrintCallEffect keffects::PrintCallEffect:
+		//	annotations+=Annotation*
+		//	'print' ('(' parameters+=Parameter (',' parameters+=Parameter)* ')') ('schedule'
+		//	schedule+=ScheduleObjectReference+)?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.9/@alternatives'
+		//annotations+=Annotation* 'print' ('(' parameters+=Parameter (',' parameters+=Parameter)* ')') ('schedule'
+		//schedule+=ScheduleObjectReference+)?
 		public Group getGroup() { return cGroup; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.9/@alternatives/@elements.0'
+		//annotations+=Annotation*
 		public Assignment getAnnotationsAssignment_0() { return cAnnotationsAssignment_0; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.9/@alternatives/@elements.0/@terminal'
+		//Annotation
 		public RuleCall getAnnotationsAnnotationParserRuleCall_0_0() { return cAnnotationsAnnotationParserRuleCall_0_0; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.9/@alternatives/@elements.1'
+		//'print'
 		public Keyword getPrintKeyword_1() { return cPrintKeyword_1; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.9/@alternatives/@elements.2'
+		//('(' parameters+=Parameter (',' parameters+=Parameter)* ')')
 		public Group getGroup_2() { return cGroup_2; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.9/@alternatives/@elements.2/@elements.0'
+		//'('
 		public Keyword getLeftParenthesisKeyword_2_0() { return cLeftParenthesisKeyword_2_0; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.9/@alternatives/@elements.2/@elements.1'
+		//parameters+=Parameter
 		public Assignment getParametersAssignment_2_1() { return cParametersAssignment_2_1; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.9/@alternatives/@elements.2/@elements.1/@terminal'
+		//Parameter
 		public RuleCall getParametersParameterParserRuleCall_2_1_0() { return cParametersParameterParserRuleCall_2_1_0; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.9/@alternatives/@elements.2/@elements.2'
+		//(',' parameters+=Parameter)*
 		public Group getGroup_2_2() { return cGroup_2_2; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.9/@alternatives/@elements.2/@elements.2/@elements.0'
+		//','
 		public Keyword getCommaKeyword_2_2_0() { return cCommaKeyword_2_2_0; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.9/@alternatives/@elements.2/@elements.2/@elements.1'
+		//parameters+=Parameter
 		public Assignment getParametersAssignment_2_2_1() { return cParametersAssignment_2_2_1; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.9/@alternatives/@elements.2/@elements.2/@elements.1/@terminal'
+		//Parameter
 		public RuleCall getParametersParameterParserRuleCall_2_2_1_0() { return cParametersParameterParserRuleCall_2_2_1_0; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.9/@alternatives/@elements.2/@elements.3'
+		//')'
 		public Keyword getRightParenthesisKeyword_2_3() { return cRightParenthesisKeyword_2_3; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.9/@alternatives/@elements.3'
+		//('schedule' schedule+=ScheduleObjectReference+)?
 		public Group getGroup_3() { return cGroup_3; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.9/@alternatives/@elements.3/@elements.0'
+		//'schedule'
 		public Keyword getScheduleKeyword_3_0() { return cScheduleKeyword_3_0; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.9/@alternatives/@elements.3/@elements.1'
+		//schedule+=ScheduleObjectReference+
 		public Assignment getScheduleAssignment_3_1() { return cScheduleAssignment_3_1; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.9/@alternatives/@elements.3/@elements.1/@terminal'
+		//ScheduleObjectReference
 		public RuleCall getScheduleScheduleObjectReferenceParserRuleCall_3_1_0() { return cScheduleScheduleObjectReferenceParserRuleCall_3_1_0; }
 	}
 	public class RandomizeCallEffectElements extends AbstractParserRuleElementFinder {
@@ -624,55 +707,59 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightParenthesisKeyword_3_0_3 = (Keyword)cGroup_3_0.eContents().get(3);
 		private final Keyword cLeftParenthesisRightParenthesisKeyword_3_1 = (Keyword)cAlternatives_3.eContents().get(1);
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.keffects.KEffects/RandomizeCallEffect'
+		//RandomizeCallEffect keffects::RandomizeCallEffect:
+		//	{keffects::RandomizeCallEffect} annotations+=Annotation*
+		//	'randomize' ('(' parameters+=Parameter (',' parameters+=Parameter)* ')'
+		//	| '()');
 		@Override public ParserRule getRule() { return rule; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.10/@alternatives'
+		//{keffects::RandomizeCallEffect} annotations+=Annotation* 'randomize' ('(' parameters+=Parameter (','
+		//parameters+=Parameter)* ')' | '()')
 		public Group getGroup() { return cGroup; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.10/@alternatives/@elements.0'
+		//{keffects::RandomizeCallEffect}
 		public Action getRandomizeCallEffectAction_0() { return cRandomizeCallEffectAction_0; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.10/@alternatives/@elements.1'
+		//annotations+=Annotation*
 		public Assignment getAnnotationsAssignment_1() { return cAnnotationsAssignment_1; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.10/@alternatives/@elements.1/@terminal'
+		//Annotation
 		public RuleCall getAnnotationsAnnotationParserRuleCall_1_0() { return cAnnotationsAnnotationParserRuleCall_1_0; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.10/@alternatives/@elements.2'
+		//'randomize'
 		public Keyword getRandomizeKeyword_2() { return cRandomizeKeyword_2; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.10/@alternatives/@elements.3'
+		//('(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()')
 		public Alternatives getAlternatives_3() { return cAlternatives_3; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.10/@alternatives/@elements.3/@elements.0'
+		//'(' parameters+=Parameter (',' parameters+=Parameter)* ')'
 		public Group getGroup_3_0() { return cGroup_3_0; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.10/@alternatives/@elements.3/@elements.0/@elements.0'
+		//'('
 		public Keyword getLeftParenthesisKeyword_3_0_0() { return cLeftParenthesisKeyword_3_0_0; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.10/@alternatives/@elements.3/@elements.0/@elements.1'
+		//parameters+=Parameter
 		public Assignment getParametersAssignment_3_0_1() { return cParametersAssignment_3_0_1; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.10/@alternatives/@elements.3/@elements.0/@elements.1/@terminal'
+		//Parameter
 		public RuleCall getParametersParameterParserRuleCall_3_0_1_0() { return cParametersParameterParserRuleCall_3_0_1_0; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.10/@alternatives/@elements.3/@elements.0/@elements.2'
+		//(',' parameters+=Parameter)*
 		public Group getGroup_3_0_2() { return cGroup_3_0_2; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.10/@alternatives/@elements.3/@elements.0/@elements.2/@elements.0'
+		//','
 		public Keyword getCommaKeyword_3_0_2_0() { return cCommaKeyword_3_0_2_0; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.10/@alternatives/@elements.3/@elements.0/@elements.2/@elements.1'
+		//parameters+=Parameter
 		public Assignment getParametersAssignment_3_0_2_1() { return cParametersAssignment_3_0_2_1; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.10/@alternatives/@elements.3/@elements.0/@elements.2/@elements.1/@terminal'
+		//Parameter
 		public RuleCall getParametersParameterParserRuleCall_3_0_2_1_0() { return cParametersParameterParserRuleCall_3_0_2_1_0; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.10/@alternatives/@elements.3/@elements.0/@elements.3'
+		//')'
 		public Keyword getRightParenthesisKeyword_3_0_3() { return cRightParenthesisKeyword_3_0_3; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.10/@alternatives/@elements.3/@elements.1'
+		//'()'
 		public Keyword getLeftParenthesisRightParenthesisKeyword_3_1() { return cLeftParenthesisRightParenthesisKeyword_3_1; }
 	}
 	
@@ -708,94 +795,100 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		private final EnumLiteralDeclaration cASSIGNMAXEnumLiteralDeclaration_13 = (EnumLiteralDeclaration)cAlternatives.eContents().get(13);
 		private final Keyword cASSIGNMAXMaxKeyword_13_0 = (Keyword)cASSIGNMAXEnumLiteralDeclaration_13.eContents().get(0);
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.keffects.KEffects/AssignOperator'
+		//enum AssignOperator returns keffects::AssignOperator:
+		//	ASSIGN="=" | ASSIGNADD="+=" | ASSIGNSUB="-=" | ASSIGNMUL="*=" | ASSIGNDIV="/=" |
+		//	ASSIGNMOD="%=" | ASSIGNAND="&=" | ASSIGNOR="|=" | ASSIGNXOR="^=" |
+		//	ASSIGNSHIFTLEFT="<<=" | ASSIGNSHIFTRIGHT=">>=" | ASSIGNSHIFTRIGHTUNSIGNED=">>>=" |
+		//	ASSIGNMIN="min=" | ASSIGNMAX="max=";
 		public EnumRule getRule() { return rule; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.11/@alternatives'
+		//ASSIGN="=" | ASSIGNADD="+=" | ASSIGNSUB="-=" | ASSIGNMUL="*=" | ASSIGNDIV="/=" | ASSIGNMOD="%=" | ASSIGNAND="&=" |
+		//ASSIGNOR="|=" | ASSIGNXOR="^=" | ASSIGNSHIFTLEFT="<<=" | ASSIGNSHIFTRIGHT=">>=" | ASSIGNSHIFTRIGHTUNSIGNED=">>>=" |
+		//ASSIGNMIN="min=" | ASSIGNMAX="max="
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.11/@alternatives/@elements.0'
+		//ASSIGN="="
 		public EnumLiteralDeclaration getASSIGNEnumLiteralDeclaration_0() { return cASSIGNEnumLiteralDeclaration_0; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.11/@alternatives/@elements.0/@literal'
+		//"="
 		public Keyword getASSIGNEqualsSignKeyword_0_0() { return cASSIGNEqualsSignKeyword_0_0; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.11/@alternatives/@elements.1'
+		//ASSIGNADD="+="
 		public EnumLiteralDeclaration getASSIGNADDEnumLiteralDeclaration_1() { return cASSIGNADDEnumLiteralDeclaration_1; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.11/@alternatives/@elements.1/@literal'
+		//"+="
 		public Keyword getASSIGNADDPlusSignEqualsSignKeyword_1_0() { return cASSIGNADDPlusSignEqualsSignKeyword_1_0; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.11/@alternatives/@elements.2'
+		//ASSIGNSUB="-="
 		public EnumLiteralDeclaration getASSIGNSUBEnumLiteralDeclaration_2() { return cASSIGNSUBEnumLiteralDeclaration_2; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.11/@alternatives/@elements.2/@literal'
+		//"-="
 		public Keyword getASSIGNSUBHyphenMinusEqualsSignKeyword_2_0() { return cASSIGNSUBHyphenMinusEqualsSignKeyword_2_0; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.11/@alternatives/@elements.3'
+		//ASSIGNMUL="*="
 		public EnumLiteralDeclaration getASSIGNMULEnumLiteralDeclaration_3() { return cASSIGNMULEnumLiteralDeclaration_3; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.11/@alternatives/@elements.3/@literal'
+		//"*="
 		public Keyword getASSIGNMULAsteriskEqualsSignKeyword_3_0() { return cASSIGNMULAsteriskEqualsSignKeyword_3_0; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.11/@alternatives/@elements.4'
+		//ASSIGNDIV="/="
 		public EnumLiteralDeclaration getASSIGNDIVEnumLiteralDeclaration_4() { return cASSIGNDIVEnumLiteralDeclaration_4; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.11/@alternatives/@elements.4/@literal'
+		//"/="
 		public Keyword getASSIGNDIVSolidusEqualsSignKeyword_4_0() { return cASSIGNDIVSolidusEqualsSignKeyword_4_0; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.11/@alternatives/@elements.5'
+		//ASSIGNMOD="%="
 		public EnumLiteralDeclaration getASSIGNMODEnumLiteralDeclaration_5() { return cASSIGNMODEnumLiteralDeclaration_5; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.11/@alternatives/@elements.5/@literal'
+		//"%="
 		public Keyword getASSIGNMODPercentSignEqualsSignKeyword_5_0() { return cASSIGNMODPercentSignEqualsSignKeyword_5_0; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.11/@alternatives/@elements.6'
+		//ASSIGNAND="&="
 		public EnumLiteralDeclaration getASSIGNANDEnumLiteralDeclaration_6() { return cASSIGNANDEnumLiteralDeclaration_6; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.11/@alternatives/@elements.6/@literal'
+		//"&="
 		public Keyword getASSIGNANDAmpersandEqualsSignKeyword_6_0() { return cASSIGNANDAmpersandEqualsSignKeyword_6_0; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.11/@alternatives/@elements.7'
+		//ASSIGNOR="|="
 		public EnumLiteralDeclaration getASSIGNOREnumLiteralDeclaration_7() { return cASSIGNOREnumLiteralDeclaration_7; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.11/@alternatives/@elements.7/@literal'
+		//"|="
 		public Keyword getASSIGNORVerticalLineEqualsSignKeyword_7_0() { return cASSIGNORVerticalLineEqualsSignKeyword_7_0; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.11/@alternatives/@elements.8'
+		//ASSIGNXOR="^="
 		public EnumLiteralDeclaration getASSIGNXOREnumLiteralDeclaration_8() { return cASSIGNXOREnumLiteralDeclaration_8; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.11/@alternatives/@elements.8/@literal'
+		//"^="
 		public Keyword getASSIGNXORCircumflexAccentEqualsSignKeyword_8_0() { return cASSIGNXORCircumflexAccentEqualsSignKeyword_8_0; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.11/@alternatives/@elements.9'
+		//ASSIGNSHIFTLEFT="<<="
 		public EnumLiteralDeclaration getASSIGNSHIFTLEFTEnumLiteralDeclaration_9() { return cASSIGNSHIFTLEFTEnumLiteralDeclaration_9; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.11/@alternatives/@elements.9/@literal'
+		//"<<="
 		public Keyword getASSIGNSHIFTLEFTLessThanSignLessThanSignEqualsSignKeyword_9_0() { return cASSIGNSHIFTLEFTLessThanSignLessThanSignEqualsSignKeyword_9_0; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.11/@alternatives/@elements.10'
+		//ASSIGNSHIFTRIGHT=">>="
 		public EnumLiteralDeclaration getASSIGNSHIFTRIGHTEnumLiteralDeclaration_10() { return cASSIGNSHIFTRIGHTEnumLiteralDeclaration_10; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.11/@alternatives/@elements.10/@literal'
+		//">>="
 		public Keyword getASSIGNSHIFTRIGHTGreaterThanSignGreaterThanSignEqualsSignKeyword_10_0() { return cASSIGNSHIFTRIGHTGreaterThanSignGreaterThanSignEqualsSignKeyword_10_0; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.11/@alternatives/@elements.11'
+		//ASSIGNSHIFTRIGHTUNSIGNED=">>>="
 		public EnumLiteralDeclaration getASSIGNSHIFTRIGHTUNSIGNEDEnumLiteralDeclaration_11() { return cASSIGNSHIFTRIGHTUNSIGNEDEnumLiteralDeclaration_11; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.11/@alternatives/@elements.11/@literal'
+		//">>>="
 		public Keyword getASSIGNSHIFTRIGHTUNSIGNEDGreaterThanSignGreaterThanSignGreaterThanSignEqualsSignKeyword_11_0() { return cASSIGNSHIFTRIGHTUNSIGNEDGreaterThanSignGreaterThanSignGreaterThanSignEqualsSignKeyword_11_0; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.11/@alternatives/@elements.12'
+		//ASSIGNMIN="min="
 		public EnumLiteralDeclaration getASSIGNMINEnumLiteralDeclaration_12() { return cASSIGNMINEnumLiteralDeclaration_12; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.11/@alternatives/@elements.12/@literal'
+		//"min="
 		public Keyword getASSIGNMINMinKeyword_12_0() { return cASSIGNMINMinKeyword_12_0; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.11/@alternatives/@elements.13'
+		//ASSIGNMAX="max="
 		public EnumLiteralDeclaration getASSIGNMAXEnumLiteralDeclaration_13() { return cASSIGNMAXEnumLiteralDeclaration_13; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.11/@alternatives/@elements.13/@literal'
+		//"max="
 		public Keyword getASSIGNMAXMaxKeyword_13_0() { return cASSIGNMAXMaxKeyword_13_0; }
 	}
 	public class PostfixOperatorElements extends AbstractEnumRuleElementFinder {
@@ -806,22 +899,23 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		private final EnumLiteralDeclaration cPOSTFIXSUBEnumLiteralDeclaration_1 = (EnumLiteralDeclaration)cAlternatives.eContents().get(1);
 		private final Keyword cPOSTFIXSUBHyphenMinusHyphenMinusKeyword_1_0 = (Keyword)cPOSTFIXSUBEnumLiteralDeclaration_1.eContents().get(0);
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.keffects.KEffects/PostfixOperator'
+		//enum PostfixOperator returns keffects::AssignOperator:
+		//	POSTFIXADD="++" | POSTFIXSUB="--";
 		public EnumRule getRule() { return rule; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.12/@alternatives'
+		//POSTFIXADD="++" | POSTFIXSUB="--"
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.12/@alternatives/@elements.0'
+		//POSTFIXADD="++"
 		public EnumLiteralDeclaration getPOSTFIXADDEnumLiteralDeclaration_0() { return cPOSTFIXADDEnumLiteralDeclaration_0; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.12/@alternatives/@elements.0/@literal'
+		//"++"
 		public Keyword getPOSTFIXADDPlusSignPlusSignKeyword_0_0() { return cPOSTFIXADDPlusSignPlusSignKeyword_0_0; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.12/@alternatives/@elements.1'
+		//POSTFIXSUB="--"
 		public EnumLiteralDeclaration getPOSTFIXSUBEnumLiteralDeclaration_1() { return cPOSTFIXSUBEnumLiteralDeclaration_1; }
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#/0/@rules.12/@alternatives/@elements.1/@literal'
+		//"--"
 		public Keyword getPOSTFIXSUBHyphenMinusHyphenMinusKeyword_1_0() { return cPOSTFIXSUBHyphenMinusHyphenMinusKeyword_1_0; }
 	}
 	
@@ -906,7 +1000,26 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	
-	//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.keffects.KEffects/Effect'
+	///**
+	// * @author ssm
+	// * @kieler.design 2015-08-23 proposed 
+	// * @kieler.rating 2015-08-23 proposed yellow
+	// */ /*
+	// * KEffects allow deriving grammars to use a range of different effects, namely assignments,
+	// * postfix effects, esterel like emissions, host code and function call effects.
+	// * Of course other grammars may extend this list.
+	// */ // ---------------- //
+	////  KEffects Rules  // 
+	//// ---------------- //
+	//// Effect Rule
+	//// An effect is either an assignment, a postfix effect, an emission, a hostcode effect or a 
+	//// function call effect.
+	//// NOTE: Emission has precedence before ReferenceCallEffect and consumes simple refecerence call grammar using this rule
+	//// should to use the KEffectsEmissionReferenceCallConverter to convert these Emissions back to ReferenceCallEffects.
+	//// If precedence is changed the converter has to be adapted too.
+	//Effect keffects::Effect:
+	//	Assignment | PostfixEffect | ValuedEmission | HostcodeEffect | ReferenceCallEffect | FunctionCallEffect |
+	//	PrintCallEffect | RandomizeCallEffect | PureEmission;
 	public EffectElements getEffectAccess() {
 		return pEffect;
 	}
@@ -915,7 +1028,16 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		return getEffectAccess().getRule();
 	}
 	
-	//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.keffects.KEffects/PureEmission'
+	//// Emission Rule
+	//// An emission is a esterel like 'call' of a signal instance. A transition effect list may simply set
+	//// an emission for a specific signal to emit it. Additionally, emission may include a parameter part for
+	//// a new value in the case of valued signals. 
+	//// Example: A, B(2)
+	//// Important: To help the parser and to avoid ambiguities, emissions may only allow restricted 
+	//// annotations defined in the annotations grammar.		
+	//PureEmission keffects::Emission:
+	//	annotations+=QuotedStringAnnotation*
+	//	reference=ValuedObjectReference ('schedule' schedule+=ScheduleObjectReference+)?;
 	public PureEmissionElements getPureEmissionAccess() {
 		return pPureEmission;
 	}
@@ -924,7 +1046,12 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		return getPureEmissionAccess().getRule();
 	}
 	
-	//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.keffects.KEffects/ValuedEmission'
+	//// Valued emission must be separated from normal emission to allow correct parsing in combination with referece calls
+	//// Problematic case f(), here the emission rule must not even partially (optional value part) match to allow parsing as referece call
+	//ValuedEmission keffects::Emission:
+	//	annotations+=QuotedStringAnnotation*
+	//	reference=ValuedObjectReference
+	//	"(" newValue=Expression ")" ('schedule' schedule+=ScheduleObjectReference+)?;
 	public ValuedEmissionElements getValuedEmissionAccess() {
 		return pValuedEmission;
 	}
@@ -933,7 +1060,8 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		return getValuedEmissionAccess().getRule();
 	}
 	
-	//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.keffects.KEffects/PureOrValuedEmission'
+	//PureOrValuedEmission keffects::Emission:
+	//	ValuedEmission | PureEmission;
 	public PureOrValuedEmissionElements getPureOrValuedEmissionAccess() {
 		return pPureOrValuedEmission;
 	}
@@ -942,7 +1070,15 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		return getPureOrValuedEmissionAccess().getRule();
 	}
 	
-	//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.keffects.KEffects/Assignment'
+	//// Assignment Rule
+	//// An assignment may start with a list of arbitrary annotatations.
+	//// Then, an arbitrary expression is assigned to a valued object. The object may be suffixed by an 
+	//// indices part. The type of assignment is determined by the type of the operator.
+	//// Example: A = true, I[0] = I[1], I += 1     
+	//Assignment keffects::Assignment:
+	//	annotations+=Annotation*
+	//	reference=ValuedObjectReference
+	//	operator=AssignOperator expression=Expression ('schedule' schedule+=ScheduleObjectReference+)?;
 	public AssignmentElements getAssignmentAccess() {
 		return pAssignment;
 	}
@@ -951,7 +1087,19 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		return getAssignmentAccess().getRule();
 	}
 	
-	//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.keffects.KEffects/PostfixEffect'
+	////SubReferenceAssignment returns keffects::Assignment:
+	////    (annotations+=Annotation)*    
+	////    valuedObject=ValuedObjectReference
+	////     operator=AssignOperator expression = Expression
+	////     ('schedule' schedule+=ScheduleObjectReference+)?;	 
+	//// Postfix Effect
+	//// A postfix effect is an assignment missing the part beyond the operator. In this case the operator type
+	//// must be a postfix operator.
+	//// Example: I++, I-- 
+	//PostfixEffect keffects::Assignment:
+	//	annotations+=Annotation*
+	//	reference=ValuedObjectReference
+	//	operator=PostfixOperator ('schedule' schedule+=ScheduleObjectReference+)?;
 	public PostfixEffectElements getPostfixEffectAccess() {
 		return pPostfixEffect;
 	}
@@ -960,7 +1108,11 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		return getPostfixEffectAccess().getRule();
 	}
 	
-	//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.keffects.KEffects/HostcodeEffect'
+	//// Hostcode Effect Rule
+	//// A hostcode effect is an effect that include hostcode. It may be preceded by a list of annotations.
+	//HostcodeEffect keffects::HostcodeEffect:
+	//	annotations+=Annotation*
+	//	text=HOSTCODE;
 	public HostcodeEffectElements getHostcodeEffectAccess() {
 		return pHostcodeEffect;
 	}
@@ -969,7 +1121,14 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		return getHostcodeEffectAccess().getRule();
 	}
 	
-	//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.keffects.KEffects/ReferenceCallEffect'
+	//// Reference Call Effect Rule
+	//// A reference call effect works similar to the reference call expression. Additionally, it may be
+	//// preceded by a list of annotations.
+	//ReferenceCallEffect keffects::ReferenceCallEffect:
+	//	annotations+=Annotation*
+	//	valuedObject=[kexpressions::ValuedObject|PrimeID] ('[' indices+=Expression ']')* ('.'
+	//	subReference=ValuedObjectReference)? ('(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()') ('schedule'
+	//	schedule+=ScheduleObjectReference+)?;
 	public ReferenceCallEffectElements getReferenceCallEffectAccess() {
 		return pReferenceCallEffect;
 	}
@@ -978,7 +1137,12 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		return getReferenceCallEffectAccess().getRule();
 	}
 	
-	//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.keffects.KEffects/FunctionCallEffect'
+	//// Function Call Effect Rule
+	//// A function call effect works similar to the function call expression. Additionally, it may be
+	//// preceded by a list of annotations.
+	//FunctionCallEffect keffects::FunctionCallEffect:
+	//	annotations+=Annotation* ('extern' functionName=ID ('(' parameters+=Parameter (',' parameters+=Parameter)* ')'
+	//	| '()'));
 	public FunctionCallEffectElements getFunctionCallEffectAccess() {
 		return pFunctionCallEffect;
 	}
@@ -987,7 +1151,12 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		return getFunctionCallEffectAccess().getRule();
 	}
 	
-	//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.keffects.KEffects/PrintCallEffect'
+	//// Print Call Effect Rule
+	//// A print functions that enables target-independent prints in the model.    
+	//PrintCallEffect keffects::PrintCallEffect:
+	//	annotations+=Annotation*
+	//	'print' ('(' parameters+=Parameter (',' parameters+=Parameter)* ')') ('schedule'
+	//	schedule+=ScheduleObjectReference+)?;
 	public PrintCallEffectElements getPrintCallEffectAccess() {
 		return pPrintCallEffect;
 	}
@@ -996,7 +1165,10 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		return getPrintCallEffectAccess().getRule();
 	}
 	
-	//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.keffects.KEffects/RandomizeCallEffect'
+	//RandomizeCallEffect keffects::RandomizeCallEffect:
+	//	{keffects::RandomizeCallEffect} annotations+=Annotation*
+	//	'randomize' ('(' parameters+=Parameter (',' parameters+=Parameter)* ')'
+	//	| '()');
 	public RandomizeCallEffectElements getRandomizeCallEffectAccess() {
 		return pRandomizeCallEffect;
 	}
@@ -1005,7 +1177,11 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		return getRandomizeCallEffectAccess().getRule();
 	}
 	
-	//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.keffects.KEffects/AssignOperator'
+	//enum AssignOperator returns keffects::AssignOperator:
+	//	ASSIGN="=" | ASSIGNADD="+=" | ASSIGNSUB="-=" | ASSIGNMUL="*=" | ASSIGNDIV="/=" |
+	//	ASSIGNMOD="%=" | ASSIGNAND="&=" | ASSIGNOR="|=" | ASSIGNXOR="^=" |
+	//	ASSIGNSHIFTLEFT="<<=" | ASSIGNSHIFTRIGHT=">>=" | ASSIGNSHIFTRIGHTUNSIGNED=">>>=" |
+	//	ASSIGNMIN="min=" | ASSIGNMAX="max=";
 	public AssignOperatorElements getAssignOperatorAccess() {
 		return eAssignOperator;
 	}
@@ -1014,7 +1190,8 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		return getAssignOperatorAccess().getRule();
 	}
 	
-	//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/keffects/KEffects.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.keffects.KEffects/PostfixOperator'
+	//enum PostfixOperator returns keffects::AssignOperator:
+	//	POSTFIXADD="++" | POSTFIXSUB="--";
 	public PostfixOperatorElements getPostfixOperatorAccess() {
 		return ePostfixOperator;
 	}
@@ -1414,14 +1591,25 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//FbyExpression Expression:
-	//	AtomicValuedExpression ({OperatorExpression.subExpressions+=current} (operator=FbyOperator
-	//	subExpressions+=AtomicValuedExpression) ('fby' subExpressions+=AtomicValuedExpression)*)?;
+	//	SfbyExpression ({OperatorExpression.subExpressions+=current} (operator=FbyOperator subExpressions+=SfbyExpression)
+	//	('fby' subExpressions+=SfbyExpression)*)?;
 	public KExpressionsGrammarAccess.FbyExpressionElements getFbyExpressionAccess() {
 		return gaKExpressions.getFbyExpressionAccess();
 	}
 	
 	public ParserRule getFbyExpressionRule() {
 		return getFbyExpressionAccess().getRule();
+	}
+	
+	//SfbyExpression Expression:
+	//	AtomicValuedExpression ({OperatorExpression.subExpressions+=current} (operator=SfbyOperator
+	//	subExpressions+=AtomicValuedExpression) ('sfby' subExpressions+=AtomicValuedExpression)*)?;
+	public KExpressionsGrammarAccess.SfbyExpressionElements getSfbyExpressionAccess() {
+		return gaKExpressions.getSfbyExpressionAccess();
+	}
+	
+	public ParserRule getSfbyExpressionRule() {
+		return getSfbyExpressionAccess().getRule();
 	}
 	
 	//// Atomic Expression Rule
@@ -1917,6 +2105,16 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public EnumRule getFbyOperatorRule() {
 		return getFbyOperatorAccess().getRule();
+	}
+	
+	//enum SfbyOperator returns OperatorType:
+	//	SFBY="sfby";
+	public KExpressionsGrammarAccess.SfbyOperatorElements getSfbyOperatorAccess() {
+		return gaKExpressions.getSfbyOperatorAccess();
+	}
+	
+	public EnumRule getSfbyOperatorRule() {
+		return getSfbyOperatorAccess().getRule();
 	}
 	
 	//enum ValueType:

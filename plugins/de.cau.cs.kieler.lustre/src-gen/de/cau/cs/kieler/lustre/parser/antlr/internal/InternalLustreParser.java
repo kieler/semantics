@@ -23,7 +23,7 @@ import java.util.HashMap;
 @SuppressWarnings("all")
 public class InternalLustreParser extends AbstractInternalAntlrParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_STRING", "RULE_ID", "RULE_HOSTCODE", "RULE_INT", "RULE_FLOAT", "RULE_BOOLEAN", "RULE_COMMENT_ANNOTATION", "RULE_SL_COMMENT_ANNOTATION", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_NUMBER", "RULE_WS", "RULE_ANY_OTHER", "'include'", "'const'", "';'", "'type'", "'='", "'{'", "','", "'}'", "'unsafe'", "'extern'", "'function'", "'node'", "'('", "')'", "'()'", "'returns'", "':'", "'when'", "'^'", "'var'", "'let'", "'tel'", "'.'", "'emit'", "'assert'", "'automaton'", "'..'", "'initial'", "'state'", "'until'", "'unless'", "'if'", "'do'", "'restart'", "'resume'", "'*'", "'/'", "'mod'", "'div'", "'fby'", "'->'", "'then'", "'else'", "'=>'", "'xor'", "'or'", "'and'", "'scope'", "'expression'", "'json'", "'input'", "'output'", "'global'", "'static'", "'signal'", "'host'", "'schedule'", "'ref'", "'['", "']'", "'combine'", "'label'", "'print'", "'randomize'", "'&'", "'>>'", "'>>>'", "'+'", "'-'", "'\\''", "'!'", "'_'", "'null'", "'#'", "'@'", "'bool'", "'int'", "'real'", "'enum'", "'<'", "'<='", "'>'", "'>='", "'<>'", "'not'", "'current'", "'nor'", "'conflicting'", "'commuting'", "'++'", "'--'", "'pre'", "'~'", "'|'", "'val'", "'<<'", "'struct'", "'class'", "'none'", "'max'", "'min'", "'public'", "'protected'", "'private'", "'void'", "'float'", "'string'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_STRING", "RULE_ID", "RULE_HOSTCODE", "RULE_INT", "RULE_FLOAT", "RULE_BOOLEAN", "RULE_COMMENT_ANNOTATION", "RULE_SL_COMMENT_ANNOTATION", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_NUMBER", "RULE_WS", "RULE_ANY_OTHER", "'include'", "'const'", "';'", "'type'", "'='", "'{'", "','", "'}'", "'unsafe'", "'extern'", "'function'", "'node'", "'('", "')'", "'()'", "'returns'", "':'", "'when'", "'^'", "'var'", "'let'", "'tel'", "'.'", "'emit'", "'assert'", "'automaton'", "'..'", "'initial'", "'state'", "'until'", "'unless'", "'if'", "'do'", "'restart'", "'resume'", "'*'", "'/'", "'mod'", "'div'", "'fby'", "'->'", "'then'", "'else'", "'=>'", "'xor'", "'or'", "'and'", "'scope'", "'expression'", "'json'", "'input'", "'output'", "'global'", "'static'", "'signal'", "'host'", "'schedule'", "'ref'", "'['", "']'", "'combine'", "'label'", "'print'", "'randomize'", "'&'", "'>>'", "'>>>'", "'+'", "'-'", "'\\''", "'!'", "'_'", "'null'", "'#'", "'@'", "'bool'", "'int'", "'real'", "'enum'", "'<'", "'<='", "'>'", "'>='", "'<>'", "'not'", "'current'", "'nor'", "'conflicting'", "'commuting'", "'++'", "'--'", "'pre'", "'~'", "'|'", "'val'", "'<<'", "'sfby'", "'struct'", "'class'", "'none'", "'max'", "'min'", "'public'", "'protected'", "'private'", "'void'", "'float'", "'string'"
     };
     public static final int T__50=50;
     public static final int T__59=59;
@@ -103,6 +103,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
     public static final int T__70=70;
     public static final int T__121=121;
     public static final int T__71=71;
+    public static final int T__124=124;
     public static final int T__72=72;
     public static final int T__123=123;
     public static final int T__120=120;
@@ -428,11 +429,11 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     {
                     int LA5_4 = input.LA(2);
 
-                    if ( ((LA5_4>=27 && LA5_4<=28)) ) {
-                        alt5=4;
-                    }
-                    else if ( (LA5_4==26) ) {
+                    if ( (LA5_4==26) ) {
                         alt5=3;
+                    }
+                    else if ( ((LA5_4>=27 && LA5_4<=28)) ) {
+                        alt5=4;
                     }
 
 
@@ -991,7 +992,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                         alt11=2;
                         }
                         break;
-                    case 113:
+                    case 114:
                         {
                         alt11=3;
                         }
@@ -14015,7 +14016,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             int alt102=2;
             int LA102_0 = input.LA(1);
 
-            if ( ((LA102_0>=118 && LA102_0<=120)) ) {
+            if ( ((LA102_0>=119 && LA102_0<=121)) ) {
                 alt102=1;
             }
             switch (alt102) {
@@ -14793,7 +14794,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             int alt113=2;
             int LA113_0 = input.LA(1);
 
-            if ( ((LA113_0>=118 && LA113_0<=120)) ) {
+            if ( ((LA113_0>=119 && LA113_0<=121)) ) {
                 alt113=1;
             }
             switch (alt113) {
@@ -15586,7 +15587,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             int alt124=2;
             int LA124_0 = input.LA(1);
 
-            if ( ((LA124_0>=118 && LA124_0<=120)) ) {
+            if ( ((LA124_0>=119 && LA124_0<=121)) ) {
                 alt124=1;
             }
             switch (alt124) {
@@ -15854,10 +15855,10 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             int alt135=2;
             int LA135_0 = input.LA(1);
 
-            if ( (LA135_0==114) ) {
+            if ( (LA135_0==115) ) {
                 alt135=1;
             }
-            else if ( (LA135_0==113) ) {
+            else if ( (LA135_0==114) ) {
                 alt135=2;
             }
             else {
@@ -15962,7 +15963,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                         int alt132=2;
                         int LA132_0 = input.LA(1);
 
-                        if ( (LA132_0==RULE_ID||LA132_0==RULE_COMMENT_ANNOTATION||LA132_0==18||LA132_0==26||(LA132_0>=67 && LA132_0<=74)||(LA132_0>=91 && LA132_0<=94)||(LA132_0>=113 && LA132_0<=114)||(LA132_0>=118 && LA132_0<=123)) ) {
+                        if ( (LA132_0==RULE_ID||LA132_0==RULE_COMMENT_ANNOTATION||LA132_0==18||LA132_0==26||(LA132_0>=67 && LA132_0<=74)||(LA132_0>=91 && LA132_0<=94)||(LA132_0>=114 && LA132_0<=115)||(LA132_0>=119 && LA132_0<=124)) ) {
                             alt132=1;
                         }
 
@@ -16115,7 +16116,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                         int alt134=2;
                         int LA134_0 = input.LA(1);
 
-                        if ( (LA134_0==RULE_COMMENT_ANNOTATION||LA134_0==18||LA134_0==26||(LA134_0>=67 && LA134_0<=74)||(LA134_0>=91 && LA134_0<=94)||(LA134_0>=113 && LA134_0<=114)||(LA134_0>=118 && LA134_0<=120)) ) {
+                        if ( (LA134_0==RULE_COMMENT_ANNOTATION||LA134_0==18||LA134_0==26||(LA134_0>=67 && LA134_0<=74)||(LA134_0>=91 && LA134_0<=94)||(LA134_0>=114 && LA134_0<=115)||(LA134_0>=119 && LA134_0<=121)) ) {
                             alt134=1;
                         }
 
@@ -16671,7 +16672,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             int alt141=2;
             int LA141_0 = input.LA(1);
 
-            if ( ((LA141_0>=118 && LA141_0<=120)) ) {
+            if ( ((LA141_0>=119 && LA141_0<=121)) ) {
                 alt141=1;
             }
             switch (alt141) {
@@ -16939,10 +16940,10 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             int alt152=2;
             int LA152_0 = input.LA(1);
 
-            if ( (LA152_0==114) ) {
+            if ( (LA152_0==115) ) {
                 alt152=1;
             }
-            else if ( (LA152_0==113) ) {
+            else if ( (LA152_0==114) ) {
                 alt152=2;
             }
             else {
@@ -17047,7 +17048,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                         int alt149=2;
                         int LA149_0 = input.LA(1);
 
-                        if ( (LA149_0==RULE_ID||LA149_0==RULE_COMMENT_ANNOTATION||LA149_0==18||LA149_0==26||(LA149_0>=67 && LA149_0<=74)||(LA149_0>=91 && LA149_0<=94)||(LA149_0>=113 && LA149_0<=114)||(LA149_0>=118 && LA149_0<=123)) ) {
+                        if ( (LA149_0==RULE_ID||LA149_0==RULE_COMMENT_ANNOTATION||LA149_0==18||LA149_0==26||(LA149_0>=67 && LA149_0<=74)||(LA149_0>=91 && LA149_0<=94)||(LA149_0>=114 && LA149_0<=115)||(LA149_0>=119 && LA149_0<=124)) ) {
                             alt149=1;
                         }
 
@@ -17200,7 +17201,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                         int alt151=2;
                         int LA151_0 = input.LA(1);
 
-                        if ( (LA151_0==RULE_COMMENT_ANNOTATION||LA151_0==18||LA151_0==26||(LA151_0>=67 && LA151_0<=74)||(LA151_0>=91 && LA151_0<=94)||(LA151_0>=113 && LA151_0<=114)||(LA151_0>=118 && LA151_0<=120)) ) {
+                        if ( (LA151_0==RULE_COMMENT_ANNOTATION||LA151_0==18||LA151_0==26||(LA151_0>=67 && LA151_0<=74)||(LA151_0>=91 && LA151_0<=94)||(LA151_0>=114 && LA151_0<=115)||(LA151_0>=119 && LA151_0<=121)) ) {
                             alt151=1;
                         }
 
@@ -17758,7 +17759,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             int alt158=2;
             int LA158_0 = input.LA(1);
 
-            if ( ((LA158_0>=118 && LA158_0<=120)) ) {
+            if ( ((LA158_0>=119 && LA158_0<=121)) ) {
                 alt158=1;
             }
             switch (alt158) {
@@ -17804,7 +17805,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             int alt159=2;
             int LA159_0 = input.LA(1);
 
-            if ( ((LA159_0>=92 && LA159_0<=93)||(LA159_0>=121 && LA159_0<=123)) ) {
+            if ( ((LA159_0>=92 && LA159_0<=93)||(LA159_0>=122 && LA159_0<=124)) ) {
                 alt159=1;
             }
             switch (alt159) {
@@ -18369,7 +18370,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             int alt166=2;
             int LA166_0 = input.LA(1);
 
-            if ( ((LA166_0>=118 && LA166_0<=120)) ) {
+            if ( ((LA166_0>=119 && LA166_0<=121)) ) {
                 alt166=1;
             }
             switch (alt166) {
@@ -18415,7 +18416,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             int alt167=2;
             int LA167_0 = input.LA(1);
 
-            if ( ((LA167_0>=92 && LA167_0<=93)||(LA167_0>=121 && LA167_0<=123)) ) {
+            if ( ((LA167_0>=92 && LA167_0<=93)||(LA167_0>=122 && LA167_0<=124)) ) {
                 alt167=1;
             }
             switch (alt167) {
@@ -19079,7 +19080,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             int alt175=2;
             int LA175_0 = input.LA(1);
 
-            if ( ((LA175_0>=118 && LA175_0<=120)) ) {
+            if ( ((LA175_0>=119 && LA175_0<=121)) ) {
                 alt175=1;
             }
             switch (alt175) {
@@ -19624,7 +19625,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             int alt181=2;
             int LA181_0 = input.LA(1);
 
-            if ( ((LA181_0>=118 && LA181_0<=120)) ) {
+            if ( ((LA181_0>=119 && LA181_0<=121)) ) {
                 alt181=1;
             }
             switch (alt181) {
@@ -20335,7 +20336,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             int alt188=2;
             int LA188_0 = input.LA(1);
 
-            if ( ((LA188_0>=118 && LA188_0<=120)) ) {
+            if ( ((LA188_0>=119 && LA188_0<=121)) ) {
                 alt188=1;
             }
             switch (alt188) {
@@ -20923,7 +20924,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             int alt196=2;
             int LA196_0 = input.LA(1);
 
-            if ( ((LA196_0>=118 && LA196_0<=120)) ) {
+            if ( ((LA196_0>=119 && LA196_0<=121)) ) {
                 alt196=1;
             }
             switch (alt196) {
@@ -37655,8 +37656,56 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
     // $ANTLR end "ruleShiftRightUnsignedOperator"
 
 
+    // $ANTLR start "ruleSfbyOperator"
+    // InternalLustre.g:13433:1: ruleSfbyOperator returns [Enumerator current=null] : (enumLiteral_0= 'sfby' ) ;
+    public final Enumerator ruleSfbyOperator() throws RecognitionException {
+        Enumerator current = null;
+
+        Token enumLiteral_0=null;
+
+
+        	enterRule();
+
+        try {
+            // InternalLustre.g:13439:2: ( (enumLiteral_0= 'sfby' ) )
+            // InternalLustre.g:13440:2: (enumLiteral_0= 'sfby' )
+            {
+            // InternalLustre.g:13440:2: (enumLiteral_0= 'sfby' )
+            // InternalLustre.g:13441:3: enumLiteral_0= 'sfby'
+            {
+            enumLiteral_0=(Token)match(input,113,FollowSets000.FOLLOW_2); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              			current = grammarAccess.getSfbyOperatorAccess().getSFBYEnumLiteralDeclaration().getEnumLiteral().getInstance();
+              			newLeafNode(enumLiteral_0, grammarAccess.getSfbyOperatorAccess().getSFBYEnumLiteralDeclaration());
+              		
+            }
+
+            }
+
+
+            }
+
+            if ( state.backtracking==0 ) {
+
+              	leaveRule();
+
+            }
+        }
+
+            catch (RecognitionException re) {
+                recover(input,re);
+                appendSkippedTokens();
+            }
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end "ruleSfbyOperator"
+
+
     // $ANTLR start "ruleHostType"
-    // InternalLustre.g:13433:1: ruleHostType returns [Enumerator current=null] : (enumLiteral_0= 'host' ) ;
+    // InternalLustre.g:13450:1: ruleHostType returns [Enumerator current=null] : (enumLiteral_0= 'host' ) ;
     public final Enumerator ruleHostType() throws RecognitionException {
         Enumerator current = null;
 
@@ -37666,11 +37715,11 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalLustre.g:13439:2: ( (enumLiteral_0= 'host' ) )
-            // InternalLustre.g:13440:2: (enumLiteral_0= 'host' )
+            // InternalLustre.g:13456:2: ( (enumLiteral_0= 'host' ) )
+            // InternalLustre.g:13457:2: (enumLiteral_0= 'host' )
             {
-            // InternalLustre.g:13440:2: (enumLiteral_0= 'host' )
-            // InternalLustre.g:13441:3: enumLiteral_0= 'host'
+            // InternalLustre.g:13457:2: (enumLiteral_0= 'host' )
+            // InternalLustre.g:13458:3: enumLiteral_0= 'host'
             {
             enumLiteral_0=(Token)match(input,72,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -37704,7 +37753,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleStructType"
-    // InternalLustre.g:13450:1: ruleStructType returns [Enumerator current=null] : (enumLiteral_0= 'struct' ) ;
+    // InternalLustre.g:13467:1: ruleStructType returns [Enumerator current=null] : (enumLiteral_0= 'struct' ) ;
     public final Enumerator ruleStructType() throws RecognitionException {
         Enumerator current = null;
 
@@ -37714,13 +37763,13 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalLustre.g:13456:2: ( (enumLiteral_0= 'struct' ) )
-            // InternalLustre.g:13457:2: (enumLiteral_0= 'struct' )
+            // InternalLustre.g:13473:2: ( (enumLiteral_0= 'struct' ) )
+            // InternalLustre.g:13474:2: (enumLiteral_0= 'struct' )
             {
-            // InternalLustre.g:13457:2: (enumLiteral_0= 'struct' )
-            // InternalLustre.g:13458:3: enumLiteral_0= 'struct'
+            // InternalLustre.g:13474:2: (enumLiteral_0= 'struct' )
+            // InternalLustre.g:13475:3: enumLiteral_0= 'struct'
             {
-            enumLiteral_0=(Token)match(input,113,FollowSets000.FOLLOW_2); if (state.failed) return current;
+            enumLiteral_0=(Token)match(input,114,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               			current = grammarAccess.getStructTypeAccess().getSTRUCTEnumLiteralDeclaration().getEnumLiteral().getInstance();
@@ -37752,7 +37801,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleClassType"
-    // InternalLustre.g:13467:1: ruleClassType returns [Enumerator current=null] : (enumLiteral_0= 'class' ) ;
+    // InternalLustre.g:13484:1: ruleClassType returns [Enumerator current=null] : (enumLiteral_0= 'class' ) ;
     public final Enumerator ruleClassType() throws RecognitionException {
         Enumerator current = null;
 
@@ -37762,13 +37811,13 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalLustre.g:13473:2: ( (enumLiteral_0= 'class' ) )
-            // InternalLustre.g:13474:2: (enumLiteral_0= 'class' )
+            // InternalLustre.g:13490:2: ( (enumLiteral_0= 'class' ) )
+            // InternalLustre.g:13491:2: (enumLiteral_0= 'class' )
             {
-            // InternalLustre.g:13474:2: (enumLiteral_0= 'class' )
-            // InternalLustre.g:13475:3: enumLiteral_0= 'class'
+            // InternalLustre.g:13491:2: (enumLiteral_0= 'class' )
+            // InternalLustre.g:13492:3: enumLiteral_0= 'class'
             {
-            enumLiteral_0=(Token)match(input,114,FollowSets000.FOLLOW_2); if (state.failed) return current;
+            enumLiteral_0=(Token)match(input,115,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               			current = grammarAccess.getClassTypeAccess().getCLASSEnumLiteralDeclaration().getEnumLiteral().getInstance();
@@ -37800,7 +37849,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleCombineOperator"
-    // InternalLustre.g:13484:1: ruleCombineOperator returns [Enumerator current=null] : ( (enumLiteral_0= 'none' ) | (enumLiteral_1= '+' ) | (enumLiteral_2= '*' ) | (enumLiteral_3= 'max' ) | (enumLiteral_4= 'min' ) | (enumLiteral_5= '|' ) | (enumLiteral_6= '&' ) | (enumLiteral_7= 'host' ) ) ;
+    // InternalLustre.g:13501:1: ruleCombineOperator returns [Enumerator current=null] : ( (enumLiteral_0= 'none' ) | (enumLiteral_1= '+' ) | (enumLiteral_2= '*' ) | (enumLiteral_3= 'max' ) | (enumLiteral_4= 'min' ) | (enumLiteral_5= '|' ) | (enumLiteral_6= '&' ) | (enumLiteral_7= 'host' ) ) ;
     public final Enumerator ruleCombineOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -37817,13 +37866,13 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalLustre.g:13490:2: ( ( (enumLiteral_0= 'none' ) | (enumLiteral_1= '+' ) | (enumLiteral_2= '*' ) | (enumLiteral_3= 'max' ) | (enumLiteral_4= 'min' ) | (enumLiteral_5= '|' ) | (enumLiteral_6= '&' ) | (enumLiteral_7= 'host' ) ) )
-            // InternalLustre.g:13491:2: ( (enumLiteral_0= 'none' ) | (enumLiteral_1= '+' ) | (enumLiteral_2= '*' ) | (enumLiteral_3= 'max' ) | (enumLiteral_4= 'min' ) | (enumLiteral_5= '|' ) | (enumLiteral_6= '&' ) | (enumLiteral_7= 'host' ) )
+            // InternalLustre.g:13507:2: ( ( (enumLiteral_0= 'none' ) | (enumLiteral_1= '+' ) | (enumLiteral_2= '*' ) | (enumLiteral_3= 'max' ) | (enumLiteral_4= 'min' ) | (enumLiteral_5= '|' ) | (enumLiteral_6= '&' ) | (enumLiteral_7= 'host' ) ) )
+            // InternalLustre.g:13508:2: ( (enumLiteral_0= 'none' ) | (enumLiteral_1= '+' ) | (enumLiteral_2= '*' ) | (enumLiteral_3= 'max' ) | (enumLiteral_4= 'min' ) | (enumLiteral_5= '|' ) | (enumLiteral_6= '&' ) | (enumLiteral_7= 'host' ) )
             {
-            // InternalLustre.g:13491:2: ( (enumLiteral_0= 'none' ) | (enumLiteral_1= '+' ) | (enumLiteral_2= '*' ) | (enumLiteral_3= 'max' ) | (enumLiteral_4= 'min' ) | (enumLiteral_5= '|' ) | (enumLiteral_6= '&' ) | (enumLiteral_7= 'host' ) )
+            // InternalLustre.g:13508:2: ( (enumLiteral_0= 'none' ) | (enumLiteral_1= '+' ) | (enumLiteral_2= '*' ) | (enumLiteral_3= 'max' ) | (enumLiteral_4= 'min' ) | (enumLiteral_5= '|' ) | (enumLiteral_6= '&' ) | (enumLiteral_7= 'host' ) )
             int alt300=8;
             switch ( input.LA(1) ) {
-            case 115:
+            case 116:
                 {
                 alt300=1;
                 }
@@ -37838,12 +37887,12 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                 alt300=3;
                 }
                 break;
-            case 116:
+            case 117:
                 {
                 alt300=4;
                 }
                 break;
-            case 117:
+            case 118:
                 {
                 alt300=5;
                 }
@@ -37873,12 +37922,12 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
             switch (alt300) {
                 case 1 :
-                    // InternalLustre.g:13492:3: (enumLiteral_0= 'none' )
+                    // InternalLustre.g:13509:3: (enumLiteral_0= 'none' )
                     {
-                    // InternalLustre.g:13492:3: (enumLiteral_0= 'none' )
-                    // InternalLustre.g:13493:4: enumLiteral_0= 'none'
+                    // InternalLustre.g:13509:3: (enumLiteral_0= 'none' )
+                    // InternalLustre.g:13510:4: enumLiteral_0= 'none'
                     {
-                    enumLiteral_0=(Token)match(input,115,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    enumLiteral_0=(Token)match(input,116,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       				current = grammarAccess.getCombineOperatorAccess().getNONEEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
@@ -37892,10 +37941,10 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalLustre.g:13500:3: (enumLiteral_1= '+' )
+                    // InternalLustre.g:13517:3: (enumLiteral_1= '+' )
                     {
-                    // InternalLustre.g:13500:3: (enumLiteral_1= '+' )
-                    // InternalLustre.g:13501:4: enumLiteral_1= '+'
+                    // InternalLustre.g:13517:3: (enumLiteral_1= '+' )
+                    // InternalLustre.g:13518:4: enumLiteral_1= '+'
                     {
                     enumLiteral_1=(Token)match(input,84,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -37911,10 +37960,10 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalLustre.g:13508:3: (enumLiteral_2= '*' )
+                    // InternalLustre.g:13525:3: (enumLiteral_2= '*' )
                     {
-                    // InternalLustre.g:13508:3: (enumLiteral_2= '*' )
-                    // InternalLustre.g:13509:4: enumLiteral_2= '*'
+                    // InternalLustre.g:13525:3: (enumLiteral_2= '*' )
+                    // InternalLustre.g:13526:4: enumLiteral_2= '*'
                     {
                     enumLiteral_2=(Token)match(input,52,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -37930,12 +37979,12 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // InternalLustre.g:13516:3: (enumLiteral_3= 'max' )
+                    // InternalLustre.g:13533:3: (enumLiteral_3= 'max' )
                     {
-                    // InternalLustre.g:13516:3: (enumLiteral_3= 'max' )
-                    // InternalLustre.g:13517:4: enumLiteral_3= 'max'
+                    // InternalLustre.g:13533:3: (enumLiteral_3= 'max' )
+                    // InternalLustre.g:13534:4: enumLiteral_3= 'max'
                     {
-                    enumLiteral_3=(Token)match(input,116,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    enumLiteral_3=(Token)match(input,117,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       				current = grammarAccess.getCombineOperatorAccess().getMAXEnumLiteralDeclaration_3().getEnumLiteral().getInstance();
@@ -37949,12 +37998,12 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 5 :
-                    // InternalLustre.g:13524:3: (enumLiteral_4= 'min' )
+                    // InternalLustre.g:13541:3: (enumLiteral_4= 'min' )
                     {
-                    // InternalLustre.g:13524:3: (enumLiteral_4= 'min' )
-                    // InternalLustre.g:13525:4: enumLiteral_4= 'min'
+                    // InternalLustre.g:13541:3: (enumLiteral_4= 'min' )
+                    // InternalLustre.g:13542:4: enumLiteral_4= 'min'
                     {
-                    enumLiteral_4=(Token)match(input,117,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    enumLiteral_4=(Token)match(input,118,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       				current = grammarAccess.getCombineOperatorAccess().getMINEnumLiteralDeclaration_4().getEnumLiteral().getInstance();
@@ -37968,10 +38017,10 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 6 :
-                    // InternalLustre.g:13532:3: (enumLiteral_5= '|' )
+                    // InternalLustre.g:13549:3: (enumLiteral_5= '|' )
                     {
-                    // InternalLustre.g:13532:3: (enumLiteral_5= '|' )
-                    // InternalLustre.g:13533:4: enumLiteral_5= '|'
+                    // InternalLustre.g:13549:3: (enumLiteral_5= '|' )
+                    // InternalLustre.g:13550:4: enumLiteral_5= '|'
                     {
                     enumLiteral_5=(Token)match(input,110,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -37987,10 +38036,10 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 7 :
-                    // InternalLustre.g:13540:3: (enumLiteral_6= '&' )
+                    // InternalLustre.g:13557:3: (enumLiteral_6= '&' )
                     {
-                    // InternalLustre.g:13540:3: (enumLiteral_6= '&' )
-                    // InternalLustre.g:13541:4: enumLiteral_6= '&'
+                    // InternalLustre.g:13557:3: (enumLiteral_6= '&' )
+                    // InternalLustre.g:13558:4: enumLiteral_6= '&'
                     {
                     enumLiteral_6=(Token)match(input,81,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -38006,10 +38055,10 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 8 :
-                    // InternalLustre.g:13548:3: (enumLiteral_7= 'host' )
+                    // InternalLustre.g:13565:3: (enumLiteral_7= 'host' )
                     {
-                    // InternalLustre.g:13548:3: (enumLiteral_7= 'host' )
-                    // InternalLustre.g:13549:4: enumLiteral_7= 'host'
+                    // InternalLustre.g:13565:3: (enumLiteral_7= 'host' )
+                    // InternalLustre.g:13566:4: enumLiteral_7= 'host'
                     {
                     enumLiteral_7=(Token)match(input,72,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -38049,7 +38098,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleAccessModifier"
-    // InternalLustre.g:13559:1: ruleAccessModifier returns [Enumerator current=null] : ( (enumLiteral_0= 'public' ) | (enumLiteral_1= 'protected' ) | (enumLiteral_2= 'private' ) ) ;
+    // InternalLustre.g:13576:1: ruleAccessModifier returns [Enumerator current=null] : ( (enumLiteral_0= 'public' ) | (enumLiteral_1= 'protected' ) | (enumLiteral_2= 'private' ) ) ;
     public final Enumerator ruleAccessModifier() throws RecognitionException {
         Enumerator current = null;
 
@@ -38061,23 +38110,23 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalLustre.g:13565:2: ( ( (enumLiteral_0= 'public' ) | (enumLiteral_1= 'protected' ) | (enumLiteral_2= 'private' ) ) )
-            // InternalLustre.g:13566:2: ( (enumLiteral_0= 'public' ) | (enumLiteral_1= 'protected' ) | (enumLiteral_2= 'private' ) )
+            // InternalLustre.g:13582:2: ( ( (enumLiteral_0= 'public' ) | (enumLiteral_1= 'protected' ) | (enumLiteral_2= 'private' ) ) )
+            // InternalLustre.g:13583:2: ( (enumLiteral_0= 'public' ) | (enumLiteral_1= 'protected' ) | (enumLiteral_2= 'private' ) )
             {
-            // InternalLustre.g:13566:2: ( (enumLiteral_0= 'public' ) | (enumLiteral_1= 'protected' ) | (enumLiteral_2= 'private' ) )
+            // InternalLustre.g:13583:2: ( (enumLiteral_0= 'public' ) | (enumLiteral_1= 'protected' ) | (enumLiteral_2= 'private' ) )
             int alt301=3;
             switch ( input.LA(1) ) {
-            case 118:
+            case 119:
                 {
                 alt301=1;
                 }
                 break;
-            case 119:
+            case 120:
                 {
                 alt301=2;
                 }
                 break;
-            case 120:
+            case 121:
                 {
                 alt301=3;
                 }
@@ -38092,12 +38141,12 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
             switch (alt301) {
                 case 1 :
-                    // InternalLustre.g:13567:3: (enumLiteral_0= 'public' )
+                    // InternalLustre.g:13584:3: (enumLiteral_0= 'public' )
                     {
-                    // InternalLustre.g:13567:3: (enumLiteral_0= 'public' )
-                    // InternalLustre.g:13568:4: enumLiteral_0= 'public'
+                    // InternalLustre.g:13584:3: (enumLiteral_0= 'public' )
+                    // InternalLustre.g:13585:4: enumLiteral_0= 'public'
                     {
-                    enumLiteral_0=(Token)match(input,118,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    enumLiteral_0=(Token)match(input,119,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       				current = grammarAccess.getAccessModifierAccess().getPUBLICEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
@@ -38111,12 +38160,12 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalLustre.g:13575:3: (enumLiteral_1= 'protected' )
+                    // InternalLustre.g:13592:3: (enumLiteral_1= 'protected' )
                     {
-                    // InternalLustre.g:13575:3: (enumLiteral_1= 'protected' )
-                    // InternalLustre.g:13576:4: enumLiteral_1= 'protected'
+                    // InternalLustre.g:13592:3: (enumLiteral_1= 'protected' )
+                    // InternalLustre.g:13593:4: enumLiteral_1= 'protected'
                     {
-                    enumLiteral_1=(Token)match(input,119,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    enumLiteral_1=(Token)match(input,120,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       				current = grammarAccess.getAccessModifierAccess().getPROTECTEDEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
@@ -38130,12 +38179,12 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalLustre.g:13583:3: (enumLiteral_2= 'private' )
+                    // InternalLustre.g:13600:3: (enumLiteral_2= 'private' )
                     {
-                    // InternalLustre.g:13583:3: (enumLiteral_2= 'private' )
-                    // InternalLustre.g:13584:4: enumLiteral_2= 'private'
+                    // InternalLustre.g:13600:3: (enumLiteral_2= 'private' )
+                    // InternalLustre.g:13601:4: enumLiteral_2= 'private'
                     {
-                    enumLiteral_2=(Token)match(input,120,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    enumLiteral_2=(Token)match(input,121,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       				current = grammarAccess.getAccessModifierAccess().getPRIVATEEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
@@ -38173,7 +38222,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleMethodReturnType"
-    // InternalLustre.g:13594:1: ruleMethodReturnType returns [Enumerator current=null] : ( (enumLiteral_0= 'void' ) | (enumLiteral_1= 'bool' ) | (enumLiteral_2= 'int' ) | (enumLiteral_3= 'float' ) | (enumLiteral_4= 'string' ) ) ;
+    // InternalLustre.g:13611:1: ruleMethodReturnType returns [Enumerator current=null] : ( (enumLiteral_0= 'void' ) | (enumLiteral_1= 'bool' ) | (enumLiteral_2= 'int' ) | (enumLiteral_3= 'float' ) | (enumLiteral_4= 'string' ) ) ;
     public final Enumerator ruleMethodReturnType() throws RecognitionException {
         Enumerator current = null;
 
@@ -38187,13 +38236,13 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalLustre.g:13600:2: ( ( (enumLiteral_0= 'void' ) | (enumLiteral_1= 'bool' ) | (enumLiteral_2= 'int' ) | (enumLiteral_3= 'float' ) | (enumLiteral_4= 'string' ) ) )
-            // InternalLustre.g:13601:2: ( (enumLiteral_0= 'void' ) | (enumLiteral_1= 'bool' ) | (enumLiteral_2= 'int' ) | (enumLiteral_3= 'float' ) | (enumLiteral_4= 'string' ) )
+            // InternalLustre.g:13617:2: ( ( (enumLiteral_0= 'void' ) | (enumLiteral_1= 'bool' ) | (enumLiteral_2= 'int' ) | (enumLiteral_3= 'float' ) | (enumLiteral_4= 'string' ) ) )
+            // InternalLustre.g:13618:2: ( (enumLiteral_0= 'void' ) | (enumLiteral_1= 'bool' ) | (enumLiteral_2= 'int' ) | (enumLiteral_3= 'float' ) | (enumLiteral_4= 'string' ) )
             {
-            // InternalLustre.g:13601:2: ( (enumLiteral_0= 'void' ) | (enumLiteral_1= 'bool' ) | (enumLiteral_2= 'int' ) | (enumLiteral_3= 'float' ) | (enumLiteral_4= 'string' ) )
+            // InternalLustre.g:13618:2: ( (enumLiteral_0= 'void' ) | (enumLiteral_1= 'bool' ) | (enumLiteral_2= 'int' ) | (enumLiteral_3= 'float' ) | (enumLiteral_4= 'string' ) )
             int alt302=5;
             switch ( input.LA(1) ) {
-            case 121:
+            case 122:
                 {
                 alt302=1;
                 }
@@ -38208,12 +38257,12 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                 alt302=3;
                 }
                 break;
-            case 122:
+            case 123:
                 {
                 alt302=4;
                 }
                 break;
-            case 123:
+            case 124:
                 {
                 alt302=5;
                 }
@@ -38228,12 +38277,12 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
             switch (alt302) {
                 case 1 :
-                    // InternalLustre.g:13602:3: (enumLiteral_0= 'void' )
+                    // InternalLustre.g:13619:3: (enumLiteral_0= 'void' )
                     {
-                    // InternalLustre.g:13602:3: (enumLiteral_0= 'void' )
-                    // InternalLustre.g:13603:4: enumLiteral_0= 'void'
+                    // InternalLustre.g:13619:3: (enumLiteral_0= 'void' )
+                    // InternalLustre.g:13620:4: enumLiteral_0= 'void'
                     {
-                    enumLiteral_0=(Token)match(input,121,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    enumLiteral_0=(Token)match(input,122,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       				current = grammarAccess.getMethodReturnTypeAccess().getVOIDEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
@@ -38247,10 +38296,10 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalLustre.g:13610:3: (enumLiteral_1= 'bool' )
+                    // InternalLustre.g:13627:3: (enumLiteral_1= 'bool' )
                     {
-                    // InternalLustre.g:13610:3: (enumLiteral_1= 'bool' )
-                    // InternalLustre.g:13611:4: enumLiteral_1= 'bool'
+                    // InternalLustre.g:13627:3: (enumLiteral_1= 'bool' )
+                    // InternalLustre.g:13628:4: enumLiteral_1= 'bool'
                     {
                     enumLiteral_1=(Token)match(input,92,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -38266,10 +38315,10 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalLustre.g:13618:3: (enumLiteral_2= 'int' )
+                    // InternalLustre.g:13635:3: (enumLiteral_2= 'int' )
                     {
-                    // InternalLustre.g:13618:3: (enumLiteral_2= 'int' )
-                    // InternalLustre.g:13619:4: enumLiteral_2= 'int'
+                    // InternalLustre.g:13635:3: (enumLiteral_2= 'int' )
+                    // InternalLustre.g:13636:4: enumLiteral_2= 'int'
                     {
                     enumLiteral_2=(Token)match(input,93,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -38285,12 +38334,12 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // InternalLustre.g:13626:3: (enumLiteral_3= 'float' )
+                    // InternalLustre.g:13643:3: (enumLiteral_3= 'float' )
                     {
-                    // InternalLustre.g:13626:3: (enumLiteral_3= 'float' )
-                    // InternalLustre.g:13627:4: enumLiteral_3= 'float'
+                    // InternalLustre.g:13643:3: (enumLiteral_3= 'float' )
+                    // InternalLustre.g:13644:4: enumLiteral_3= 'float'
                     {
-                    enumLiteral_3=(Token)match(input,122,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    enumLiteral_3=(Token)match(input,123,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       				current = grammarAccess.getMethodReturnTypeAccess().getFLOATEnumLiteralDeclaration_3().getEnumLiteral().getInstance();
@@ -38304,12 +38353,12 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 5 :
-                    // InternalLustre.g:13634:3: (enumLiteral_4= 'string' )
+                    // InternalLustre.g:13651:3: (enumLiteral_4= 'string' )
                     {
-                    // InternalLustre.g:13634:3: (enumLiteral_4= 'string' )
-                    // InternalLustre.g:13635:4: enumLiteral_4= 'string'
+                    // InternalLustre.g:13651:3: (enumLiteral_4= 'string' )
+                    // InternalLustre.g:13652:4: enumLiteral_4= 'string'
                     {
-                    enumLiteral_4=(Token)match(input,123,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    enumLiteral_4=(Token)match(input,124,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       				current = grammarAccess.getMethodReturnTypeAccess().getSTRINGEnumLiteralDeclaration_4().getEnumLiteral().getInstance();
@@ -40584,11 +40633,11 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
     static final String dfa_1s = "\104\uffff";
     static final String dfa_2s = "\1\1\103\uffff";
     static final String dfa_3s = "\1\5\77\uffff\1\0\3\uffff";
-    static final String dfa_4s = "\1\173\77\uffff\1\0\3\uffff";
+    static final String dfa_4s = "\1\174\77\uffff\1\0\3\uffff";
     static final String dfa_5s = "\1\uffff\1\2\101\uffff\1\1";
     static final String dfa_6s = "\100\uffff\1\0\3\uffff}>";
     static final String[] dfa_7s = {
-            "\2\1\3\uffff\2\1\6\uffff\2\1\1\uffff\1\1\1\uffff\2\1\1\uffff\1\1\3\uffff\1\1\2\uffff\3\1\15\uffff\3\1\1\100\2\1\2\uffff\22\1\1\uffff\12\1\5\uffff\4\1\1\uffff\5\1\14\uffff\2\1\3\uffff\6\1",
+            "\2\1\3\uffff\2\1\6\uffff\2\1\1\uffff\1\1\1\uffff\2\1\1\uffff\1\1\3\uffff\1\1\2\uffff\3\1\15\uffff\3\1\1\100\2\1\2\uffff\22\1\1\uffff\12\1\5\uffff\4\1\1\uffff\5\1\15\uffff\2\1\3\uffff\6\1",
             "",
             "",
             "",
@@ -40710,10 +40759,10 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         }
     }
     static final String dfa_8s = "\1\5\100\uffff\1\0\2\uffff";
-    static final String dfa_9s = "\1\173\100\uffff\1\0\2\uffff";
+    static final String dfa_9s = "\1\174\100\uffff\1\0\2\uffff";
     static final String dfa_10s = "\101\uffff\1\0\2\uffff}>";
     static final String[] dfa_11s = {
-            "\2\1\3\uffff\2\1\6\uffff\2\1\1\uffff\1\1\1\uffff\2\1\1\uffff\1\1\3\uffff\1\1\2\uffff\3\1\15\uffff\4\1\1\101\1\1\2\uffff\22\1\1\uffff\12\1\5\uffff\4\1\1\uffff\5\1\14\uffff\2\1\3\uffff\6\1",
+            "\2\1\3\uffff\2\1\6\uffff\2\1\1\uffff\1\1\1\uffff\2\1\1\uffff\1\1\3\uffff\1\1\2\uffff\3\1\15\uffff\4\1\1\101\1\1\2\uffff\22\1\1\uffff\12\1\5\uffff\4\1\1\uffff\5\1\15\uffff\2\1\3\uffff\6\1",
             "",
             "",
             "",
@@ -40831,10 +40880,10 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         }
     }
     static final String dfa_12s = "\1\5\101\uffff\1\0\1\uffff";
-    static final String dfa_13s = "\1\173\101\uffff\1\0\1\uffff";
+    static final String dfa_13s = "\1\174\101\uffff\1\0\1\uffff";
     static final String dfa_14s = "\102\uffff\1\0\1\uffff}>";
     static final String[] dfa_15s = {
-            "\2\1\3\uffff\2\1\6\uffff\2\1\1\uffff\1\1\1\uffff\2\1\1\uffff\1\1\3\uffff\1\1\2\uffff\3\1\15\uffff\5\1\1\102\2\uffff\22\1\1\uffff\12\1\5\uffff\4\1\1\uffff\5\1\14\uffff\2\1\3\uffff\6\1",
+            "\2\1\3\uffff\2\1\6\uffff\2\1\1\uffff\1\1\1\uffff\2\1\1\uffff\1\1\3\uffff\1\1\2\uffff\3\1\15\uffff\5\1\1\102\2\uffff\22\1\1\uffff\12\1\5\uffff\4\1\1\uffff\5\1\15\uffff\2\1\3\uffff\6\1",
             "",
             "",
             "",
@@ -41247,11 +41296,11 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
     static final String dfa_28s = "\35\uffff";
     static final String dfa_29s = "\1\3\34\uffff";
     static final String dfa_30s = "\1\5\2\0\4\uffff\1\0\25\uffff";
-    static final String dfa_31s = "\1\170\2\0\4\uffff\1\0\25\uffff";
+    static final String dfa_31s = "\1\171\2\0\4\uffff\1\0\25\uffff";
     static final String dfa_32s = "\3\uffff\1\2\10\uffff\1\1\20\uffff";
     static final String dfa_33s = "\1\uffff\1\0\1\1\4\uffff\1\2\25\uffff}>";
     static final String[] dfa_34s = {
-            "\2\3\3\uffff\1\1\7\uffff\1\14\7\uffff\1\7\45\uffff\3\3\10\14\4\uffff\2\3\12\uffff\1\2\3\14\22\uffff\2\14\3\uffff\3\14",
+            "\2\3\3\uffff\1\1\7\uffff\1\14\7\uffff\1\7\45\uffff\3\3\10\14\4\uffff\2\3\12\uffff\1\2\3\14\23\uffff\2\14\3\uffff\3\14",
             "\1\uffff",
             "\1\uffff",
             "",
@@ -41364,7 +41413,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         }
     }
     static final String[] dfa_35s = {
-            "\2\3\3\uffff\1\1\7\uffff\1\14\5\uffff\1\3\1\uffff\1\7\45\uffff\3\3\10\14\4\uffff\2\3\12\uffff\1\2\3\14\22\uffff\2\14\3\uffff\3\14",
+            "\2\3\3\uffff\1\1\7\uffff\1\14\5\uffff\1\3\1\uffff\1\7\45\uffff\3\3\10\14\4\uffff\2\3\12\uffff\1\2\3\14\23\uffff\2\14\3\uffff\3\14",
             "\1\uffff",
             "\1\uffff",
             "",
@@ -41554,11 +41603,11 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
     }
     static final String dfa_42s = "\25\uffff";
     static final String dfa_43s = "\1\12\12\0\4\uffff\1\0\5\uffff";
-    static final String dfa_44s = "\1\170\12\0\4\uffff\1\0\5\uffff";
+    static final String dfa_44s = "\1\171\12\0\4\uffff\1\0\5\uffff";
     static final String dfa_45s = "\13\uffff\1\1\4\uffff\1\2\1\uffff\1\3\1\4\1\uffff";
     static final String dfa_46s = "\1\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\10\1\11\4\uffff\1\12\5\uffff}>";
     static final String[] dfa_47s = {
-            "\1\1\7\uffff\1\6\7\uffff\1\20\50\uffff\1\7\1\10\1\11\1\12\1\13\1\17\1\22\1\20\20\uffff\1\2\3\13\22\uffff\2\23\3\uffff\1\3\1\4\1\5",
+            "\1\1\7\uffff\1\6\7\uffff\1\20\50\uffff\1\7\1\10\1\11\1\12\1\13\1\17\1\22\1\20\20\uffff\1\2\3\13\23\uffff\2\23\3\uffff\1\3\1\4\1\5",
             "\1\uffff",
             "\1\uffff",
             "\1\uffff",
@@ -42018,11 +42067,11 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
     static final String dfa_48s = "\37\uffff";
     static final String dfa_49s = "\1\1\36\uffff";
     static final String dfa_50s = "\1\5\33\uffff\1\0\2\uffff";
-    static final String dfa_51s = "\1\173\33\uffff\1\0\2\uffff";
+    static final String dfa_51s = "\1\174\33\uffff\1\0\2\uffff";
     static final String dfa_52s = "\1\uffff\1\2\34\uffff\1\1";
     static final String dfa_53s = "\34\uffff\1\0\2\uffff}>";
     static final String[] dfa_54s = {
-            "\1\1\4\uffff\2\1\6\uffff\1\1\4\uffff\1\34\1\1\1\uffff\1\1\3\uffff\1\1\44\uffff\10\1\20\uffff\4\1\22\uffff\2\1\3\uffff\6\1",
+            "\1\1\4\uffff\2\1\6\uffff\1\1\4\uffff\1\34\1\1\1\uffff\1\1\3\uffff\1\1\44\uffff\10\1\20\uffff\4\1\23\uffff\2\1\3\uffff\6\1",
             "",
             "",
             "",
@@ -42108,11 +42157,11 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
     }
     static final String dfa_55s = "\31\uffff";
     static final String dfa_56s = "\1\5\5\0\6\uffff\2\0\13\uffff";
-    static final String dfa_57s = "\1\173\5\0\6\uffff\2\0\13\uffff";
+    static final String dfa_57s = "\1\174\5\0\6\uffff\2\0\13\uffff";
     static final String dfa_58s = "\6\uffff\1\1\16\uffff\1\2\3\uffff";
     static final String dfa_59s = "\1\uffff\1\0\1\1\1\2\1\3\1\4\6\uffff\1\5\1\6\13\uffff}>";
     static final String[] dfa_60s = {
-            "\1\25\4\uffff\1\1\7\uffff\1\6\7\uffff\1\6\50\uffff\10\6\20\uffff\1\2\1\14\1\15\1\6\22\uffff\2\6\3\uffff\1\3\1\4\1\5\3\25",
+            "\1\25\4\uffff\1\1\7\uffff\1\6\7\uffff\1\6\50\uffff\10\6\20\uffff\1\2\1\14\1\15\1\6\23\uffff\2\6\3\uffff\1\3\1\4\1\5\3\25",
             "\1\uffff",
             "\1\uffff",
             "\1\uffff",
@@ -42281,11 +42330,11 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
     }
     static final String dfa_61s = "\1\4\34\uffff";
     static final String dfa_62s = "\1\5\3\0\31\uffff";
-    static final String dfa_63s = "\1\173\3\0\31\uffff";
+    static final String dfa_63s = "\1\174\3\0\31\uffff";
     static final String dfa_64s = "\4\uffff\1\2\27\uffff\1\1";
     static final String dfa_65s = "\1\uffff\1\0\1\1\1\2\31\uffff}>";
     static final String[] dfa_66s = {
-            "\1\3\4\uffff\1\1\1\4\6\uffff\1\4\5\uffff\1\4\1\uffff\1\4\50\uffff\10\4\20\uffff\1\2\3\4\22\uffff\2\4\3\uffff\6\4",
+            "\1\3\4\uffff\1\1\1\4\6\uffff\1\4\5\uffff\1\4\1\uffff\1\4\50\uffff\10\4\20\uffff\1\2\3\4\23\uffff\2\4\3\uffff\6\4",
             "\1\uffff",
             "\1\uffff",
             "\1\uffff",
@@ -42532,15 +42581,15 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
     static final String dfa_67s = "\6\uffff";
     static final String dfa_68s = "\1\2\5\uffff";
     static final String dfa_69s = "\1\5\1\4\1\uffff\2\5\1\uffff";
-    static final String dfa_70s = "\1\173\1\133\1\uffff\2\173\1\uffff";
+    static final String dfa_70s = "\1\174\1\133\1\uffff\2\174\1\uffff";
     static final String dfa_71s = "\2\uffff\1\2\2\uffff\1\1";
     static final String dfa_72s = "\6\uffff}>";
     static final String[] dfa_73s = {
-            "\1\2\4\uffff\2\2\6\uffff\1\2\5\uffff\1\2\1\uffff\1\2\50\uffff\6\2\1\1\1\2\20\uffff\4\2\22\uffff\2\2\3\uffff\6\2",
+            "\1\2\4\uffff\2\2\6\uffff\1\2\5\uffff\1\2\1\uffff\1\2\50\uffff\6\2\1\1\1\2\20\uffff\4\2\23\uffff\2\2\3\uffff\6\2",
             "\1\2\1\3\4\uffff\1\2\13\uffff\1\2\56\uffff\1\2\25\uffff\1\2",
             "",
-            "\1\2\1\uffff\1\5\2\uffff\2\2\6\uffff\1\2\2\uffff\1\2\1\uffff\2\2\1\uffff\1\2\50\uffff\11\2\1\uffff\2\2\7\uffff\1\4\4\uffff\4\2\22\uffff\2\2\3\uffff\6\2",
-            "\1\2\1\uffff\1\5\2\uffff\2\2\6\uffff\1\2\2\uffff\1\2\1\uffff\2\2\1\uffff\1\2\50\uffff\11\2\1\uffff\2\2\7\uffff\1\4\4\uffff\4\2\22\uffff\2\2\3\uffff\6\2",
+            "\1\2\1\uffff\1\5\2\uffff\2\2\6\uffff\1\2\2\uffff\1\2\1\uffff\2\2\1\uffff\1\2\50\uffff\11\2\1\uffff\2\2\7\uffff\1\4\4\uffff\4\2\23\uffff\2\2\3\uffff\6\2",
+            "\1\2\1\uffff\1\5\2\uffff\2\2\6\uffff\1\2\2\uffff\1\2\1\uffff\2\2\1\uffff\1\2\50\uffff\11\2\1\uffff\2\2\7\uffff\1\4\4\uffff\4\2\23\uffff\2\2\3\uffff\6\2",
             ""
     };
 
@@ -42572,11 +42621,11 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
     static final String dfa_74s = "\5\uffff";
     static final String dfa_75s = "\1\1\4\uffff";
     static final String dfa_76s = "\1\5\1\uffff\2\7\1\uffff";
-    static final String dfa_77s = "\1\173\1\uffff\2\126\1\uffff";
+    static final String dfa_77s = "\1\174\1\uffff\2\126\1\uffff";
     static final String dfa_78s = "\1\uffff\1\2\2\uffff\1\1";
     static final String dfa_79s = "\5\uffff}>";
     static final String[] dfa_80s = {
-            "\1\2\4\uffff\2\1\6\uffff\1\1\5\uffff\1\1\1\uffff\1\1\50\uffff\10\1\20\uffff\4\1\22\uffff\2\1\3\uffff\6\1",
+            "\1\2\4\uffff\2\1\6\uffff\1\1\5\uffff\1\1\1\uffff\1\1\50\uffff\10\1\20\uffff\4\1\23\uffff\2\1\3\uffff\6\1",
             "",
             "\1\4\25\uffff\1\1\1\uffff\1\1\66\uffff\1\3",
             "\1\4\25\uffff\1\1\1\uffff\1\1\66\uffff\1\3",
@@ -43291,11 +43340,11 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
     static final String dfa_103s = "\101\uffff";
     static final String dfa_104s = "\1\1\100\uffff";
     static final String dfa_105s = "\1\5\75\uffff\1\0\2\uffff";
-    static final String dfa_106s = "\1\173\75\uffff\1\0\2\uffff";
+    static final String dfa_106s = "\1\174\75\uffff\1\0\2\uffff";
     static final String dfa_107s = "\1\uffff\1\2\76\uffff\1\1";
     static final String dfa_108s = "\76\uffff\1\0\2\uffff}>";
     static final String[] dfa_109s = {
-            "\2\1\3\uffff\2\1\6\uffff\2\1\1\uffff\1\1\1\uffff\2\1\1\uffff\1\1\3\uffff\1\1\2\uffff\3\1\15\uffff\3\1\5\uffff\22\1\1\uffff\10\1\1\76\1\1\5\uffff\4\1\1\uffff\5\1\14\uffff\2\1\3\uffff\6\1",
+            "\2\1\3\uffff\2\1\6\uffff\2\1\1\uffff\1\1\1\uffff\2\1\1\uffff\1\1\3\uffff\1\1\2\uffff\3\1\15\uffff\3\1\5\uffff\22\1\1\uffff\10\1\1\76\1\1\5\uffff\4\1\1\uffff\5\1\15\uffff\2\1\3\uffff\6\1",
             "",
             "",
             "",
@@ -43414,10 +43463,10 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         }
     }
     static final String dfa_110s = "\1\5\76\uffff\1\0\1\uffff";
-    static final String dfa_111s = "\1\173\76\uffff\1\0\1\uffff";
+    static final String dfa_111s = "\1\174\76\uffff\1\0\1\uffff";
     static final String dfa_112s = "\77\uffff\1\0\1\uffff}>";
     static final String[] dfa_113s = {
-            "\2\1\3\uffff\2\1\6\uffff\2\1\1\uffff\1\1\1\uffff\2\1\1\uffff\1\1\3\uffff\1\1\2\uffff\3\1\15\uffff\3\1\5\uffff\22\1\1\uffff\11\1\1\77\5\uffff\4\1\1\uffff\5\1\14\uffff\2\1\3\uffff\6\1",
+            "\2\1\3\uffff\2\1\6\uffff\2\1\1\uffff\1\1\1\uffff\2\1\1\uffff\1\1\3\uffff\1\1\2\uffff\3\1\15\uffff\3\1\5\uffff\22\1\1\uffff\11\1\1\77\5\uffff\4\1\1\uffff\5\1\15\uffff\2\1\3\uffff\6\1",
             "",
             "",
             "",
@@ -43857,20 +43906,20 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
     }
     static final String dfa_125s = "\3\uffff\1\1\4\uffff\2\1";
     static final String dfa_126s = "\1\12\1\uffff\1\5\1\4\2\5\1\7\1\uffff\2\4";
-    static final String dfa_127s = "\1\133\1\uffff\1\5\1\173\1\5\1\10\1\7\1\uffff\2\173";
+    static final String dfa_127s = "\1\133\1\uffff\1\5\1\174\1\5\1\10\1\7\1\uffff\2\174";
     static final String dfa_128s = "\1\uffff\1\1\5\uffff\1\2\2\uffff";
     static final String dfa_129s = "\12\uffff}>";
     static final String[] dfa_130s = {
             "\1\1\120\uffff\1\2",
             "",
             "\1\3",
-            "\7\1\7\uffff\1\1\3\uffff\1\7\3\uffff\1\1\14\uffff\1\4\31\uffff\13\1\3\uffff\2\1\4\uffff\1\5\4\uffff\1\6\4\1\22\uffff\2\1\3\uffff\6\1",
+            "\7\1\7\uffff\1\1\3\uffff\1\7\3\uffff\1\1\14\uffff\1\4\31\uffff\13\1\3\uffff\2\1\4\uffff\1\5\4\uffff\1\6\4\1\23\uffff\2\1\3\uffff\6\1",
             "\1\10",
             "\1\10\1\uffff\2\1",
             "\1\11",
             "",
-            "\7\1\7\uffff\1\1\3\uffff\1\7\3\uffff\1\1\14\uffff\1\4\31\uffff\13\1\3\uffff\2\1\4\uffff\1\5\4\uffff\1\6\4\1\22\uffff\2\1\3\uffff\6\1",
-            "\7\1\7\uffff\1\1\3\uffff\1\7\3\uffff\1\1\46\uffff\13\1\3\uffff\2\1\4\uffff\1\1\5\uffff\4\1\22\uffff\2\1\3\uffff\6\1"
+            "\7\1\7\uffff\1\1\3\uffff\1\7\3\uffff\1\1\14\uffff\1\4\31\uffff\13\1\3\uffff\2\1\4\uffff\1\5\4\uffff\1\6\4\1\23\uffff\2\1\3\uffff\6\1",
+            "\7\1\7\uffff\1\1\3\uffff\1\7\3\uffff\1\1\46\uffff\13\1\3\uffff\2\1\4\uffff\1\1\5\uffff\4\1\23\uffff\2\1\3\uffff\6\1"
     };
     static final short[] dfa_125 = DFA.unpackEncodedString(dfa_125s);
     static final char[] dfa_126 = DFA.unpackEncodedStringToUnsignedChars(dfa_126s);
@@ -43930,33 +43979,33 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         }
     }
     static final String dfa_133s = "\26\uffff";
-    static final String dfa_134s = "\3\uffff\1\12\5\uffff\1\10\1\uffff\2\12\1\uffff\1\10\1\uffff\1\10\1\uffff\1\10\1\uffff\1\10\1\uffff";
-    static final String dfa_135s = "\1\12\1\uffff\1\5\1\4\2\5\1\7\2\uffff\1\5\1\uffff\2\4\10\5\1\0";
-    static final String dfa_136s = "\1\133\1\uffff\1\5\1\173\1\5\1\10\1\7\2\uffff\1\173\1\uffff\2\173\1\5\1\173\1\5\1\173\1\5\1\173\1\5\1\173\1\0";
-    static final String dfa_137s = "\1\uffff\1\1\5\uffff\1\3\1\2\1\uffff\1\4\13\uffff";
+    static final String dfa_134s = "\3\uffff\1\11\4\uffff\1\7\2\uffff\2\11\1\uffff\1\7\1\uffff\1\7\1\uffff\1\7\1\uffff\1\7\1\uffff";
+    static final String dfa_135s = "\1\12\1\uffff\1\5\1\4\2\5\1\7\1\uffff\1\5\2\uffff\2\4\10\5\1\0";
+    static final String dfa_136s = "\1\133\1\uffff\1\5\1\174\1\5\1\10\1\7\1\uffff\1\174\2\uffff\2\174\1\5\1\174\1\5\1\174\1\5\1\174\1\5\1\174\1\0";
+    static final String dfa_137s = "\1\uffff\1\1\5\uffff\1\2\1\uffff\1\4\1\3\13\uffff";
     static final String dfa_138s = "\25\uffff\1\0}>";
     static final String[] dfa_139s = {
             "\1\1\120\uffff\1\2",
             "",
             "\1\3",
-            "\1\10\1\11\1\12\3\10\1\12\7\uffff\1\12\7\uffff\1\12\14\uffff\1\4\31\uffff\12\12\1\7\3\uffff\2\12\4\uffff\1\5\4\uffff\1\6\4\12\22\uffff\2\12\3\uffff\6\12",
+            "\1\7\1\10\1\11\3\7\1\11\7\uffff\1\11\7\uffff\1\11\14\uffff\1\4\31\uffff\12\11\1\12\3\uffff\2\11\4\uffff\1\5\4\uffff\1\6\4\11\23\uffff\2\11\3\uffff\6\11",
             "\1\13",
-            "\1\13\1\uffff\2\10",
+            "\1\13\1\uffff\2\7",
             "\1\14",
             "",
+            "\2\7\3\uffff\1\7\7\uffff\1\7\2\uffff\1\11\1\uffff\1\7\2\uffff\1\7\2\uffff\1\11\1\uffff\1\11\7\uffff\1\15\31\uffff\12\7\1\11\3\uffff\2\7\4\uffff\1\7\1\11\3\uffff\5\7\13\uffff\2\11\6\uffff\2\7\3\uffff\6\7",
             "",
-            "\2\10\3\uffff\1\10\7\uffff\1\10\2\uffff\1\12\1\uffff\1\10\2\uffff\1\10\2\uffff\1\12\1\uffff\1\12\7\uffff\1\15\31\uffff\12\10\1\12\3\uffff\2\10\4\uffff\1\10\1\12\3\uffff\5\10\13\uffff\2\12\5\uffff\2\10\3\uffff\6\10",
             "",
-            "\1\10\1\11\1\12\3\10\1\12\7\uffff\1\12\7\uffff\1\12\14\uffff\1\4\31\uffff\12\12\1\7\3\uffff\2\12\4\uffff\1\5\4\uffff\1\6\4\12\22\uffff\2\12\3\uffff\6\12",
-            "\1\10\1\11\1\12\3\10\1\12\7\uffff\1\12\7\uffff\1\12\46\uffff\12\12\1\7\3\uffff\2\12\4\uffff\1\10\5\uffff\4\12\22\uffff\2\12\3\uffff\6\12",
+            "\1\7\1\10\1\11\3\7\1\11\7\uffff\1\11\7\uffff\1\11\14\uffff\1\4\31\uffff\12\11\1\12\3\uffff\2\11\4\uffff\1\5\4\uffff\1\6\4\11\23\uffff\2\11\3\uffff\6\11",
+            "\1\7\1\10\1\11\3\7\1\11\7\uffff\1\11\7\uffff\1\11\46\uffff\12\11\1\12\3\uffff\2\11\4\uffff\1\7\5\uffff\4\11\23\uffff\2\11\3\uffff\6\11",
             "\1\16",
-            "\2\10\3\uffff\1\10\7\uffff\1\10\2\uffff\1\12\1\uffff\1\10\2\uffff\1\10\2\uffff\1\12\1\uffff\1\12\7\uffff\1\17\31\uffff\12\10\1\12\3\uffff\2\10\4\uffff\1\10\1\12\3\uffff\5\10\13\uffff\2\12\5\uffff\2\10\3\uffff\6\10",
+            "\2\7\3\uffff\1\7\7\uffff\1\7\2\uffff\1\11\1\uffff\1\7\2\uffff\1\7\2\uffff\1\11\1\uffff\1\11\7\uffff\1\17\31\uffff\12\7\1\11\3\uffff\2\7\4\uffff\1\7\1\11\3\uffff\5\7\13\uffff\2\11\6\uffff\2\7\3\uffff\6\7",
             "\1\20",
-            "\2\10\3\uffff\1\10\7\uffff\1\10\2\uffff\1\12\1\uffff\1\10\2\uffff\1\10\2\uffff\1\12\1\uffff\1\12\7\uffff\1\21\31\uffff\12\10\1\12\3\uffff\2\10\4\uffff\1\10\1\12\3\uffff\5\10\13\uffff\2\12\5\uffff\2\10\3\uffff\6\10",
+            "\2\7\3\uffff\1\7\7\uffff\1\7\2\uffff\1\11\1\uffff\1\7\2\uffff\1\7\2\uffff\1\11\1\uffff\1\11\7\uffff\1\21\31\uffff\12\7\1\11\3\uffff\2\7\4\uffff\1\7\1\11\3\uffff\5\7\13\uffff\2\11\6\uffff\2\7\3\uffff\6\7",
             "\1\22",
-            "\2\10\3\uffff\1\10\7\uffff\1\10\2\uffff\1\12\1\uffff\1\10\2\uffff\1\10\2\uffff\1\12\1\uffff\1\12\7\uffff\1\23\31\uffff\12\10\1\12\3\uffff\2\10\4\uffff\1\10\1\12\3\uffff\5\10\13\uffff\2\12\5\uffff\2\10\3\uffff\6\10",
+            "\2\7\3\uffff\1\7\7\uffff\1\7\2\uffff\1\11\1\uffff\1\7\2\uffff\1\7\2\uffff\1\11\1\uffff\1\11\7\uffff\1\23\31\uffff\12\7\1\11\3\uffff\2\7\4\uffff\1\7\1\11\3\uffff\5\7\13\uffff\2\11\6\uffff\2\7\3\uffff\6\7",
             "\1\24",
-            "\2\10\3\uffff\1\10\7\uffff\1\10\2\uffff\1\12\1\uffff\1\10\2\uffff\1\10\2\uffff\1\12\1\uffff\1\12\7\uffff\1\25\31\uffff\12\10\1\12\3\uffff\2\10\4\uffff\1\10\1\12\3\uffff\5\10\13\uffff\2\12\5\uffff\2\10\3\uffff\6\10",
+            "\2\7\3\uffff\1\7\7\uffff\1\7\2\uffff\1\11\1\uffff\1\7\2\uffff\1\7\2\uffff\1\11\1\uffff\1\11\7\uffff\1\25\31\uffff\12\7\1\11\3\uffff\2\7\4\uffff\1\7\1\11\3\uffff\5\7\13\uffff\2\11\6\uffff\2\7\3\uffff\6\7",
             "\1\uffff"
     };
 
@@ -43995,9 +44044,9 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                         int index278_21 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred321_InternalLustre()) ) {s = 8;}
+                        if ( (synpred321_InternalLustre()) ) {s = 7;}
 
-                        else if ( (true) ) {s = 10;}
+                        else if ( (true) ) {s = 9;}
 
                          
                         input.seek(index278_21);
@@ -44011,21 +44060,21 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             throw nvae;
         }
     }
-    static final String dfa_140s = "\2\uffff\1\6\5\uffff\2\6";
+    static final String dfa_140s = "\2\uffff\1\7\5\uffff\2\7";
     static final String dfa_141s = "\1\132\1\5\1\4\2\5\1\7\2\uffff\2\4";
     static final String dfa_142s = "\1\132\1\5\1\132\1\5\1\10\1\7\2\uffff\1\132\1\125";
-    static final String dfa_143s = "\6\uffff\1\2\1\1\2\uffff";
+    static final String dfa_143s = "\6\uffff\1\1\1\2\2\uffff";
     static final String[] dfa_144s = {
             "\1\1",
             "\1\2",
-            "\2\7\1\uffff\3\7\35\uffff\1\3\55\uffff\1\4\4\uffff\1\5",
+            "\2\6\1\uffff\3\6\35\uffff\1\3\55\uffff\1\4\4\uffff\1\5",
             "\1\10",
-            "\1\10\1\uffff\2\7",
+            "\1\10\1\uffff\2\6",
             "\1\11",
             "",
             "",
-            "\2\7\1\uffff\3\7\35\uffff\1\3\55\uffff\1\4\4\uffff\1\5",
-            "\2\7\1\uffff\3\7\113\uffff\1\7"
+            "\2\6\1\uffff\3\6\35\uffff\1\3\55\uffff\1\4\4\uffff\1\5",
+            "\2\6\1\uffff\3\6\113\uffff\1\6"
     };
     static final short[] dfa_140 = DFA.unpackEncodedString(dfa_140s);
     static final char[] dfa_141 = DFA.unpackEncodedStringToUnsignedChars(dfa_141s);
@@ -44151,7 +44200,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         public static final BitSet FOLLOW_6 = new BitSet(new long[]{0x0000000000080000L});
         public static final BitSet FOLLOW_7 = new BitSet(new long[]{0x000000001E140002L});
         public static final BitSet FOLLOW_8 = new BitSet(new long[]{0x0000000000200002L});
-        public static final BitSet FOLLOW_9 = new BitSet(new long[]{0x0000000000000000L,0x00020000F0000000L});
+        public static final BitSet FOLLOW_9 = new BitSet(new long[]{0x0000000000000000L,0x00040000F0000000L});
         public static final BitSet FOLLOW_10 = new BitSet(new long[]{0x0000000000400000L});
         public static final BitSet FOLLOW_11 = new BitSet(new long[]{0x0000000001800000L});
         public static final BitSet FOLLOW_12 = new BitSet(new long[]{0x0000000001080000L});
@@ -44204,43 +44253,43 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         public static final BitSet FOLLOW_59 = new BitSet(new long[]{0x8000000000000002L});
         public static final BitSet FOLLOW_60 = new BitSet(new long[]{0x0000000040000000L});
         public static final BitSet FOLLOW_61 = new BitSet(new long[]{0x0000000020000000L});
-        public static final BitSet FOLLOW_62 = new BitSet(new long[]{0x0000000004040462L,0x01C69000F80187FFL});
+        public static final BitSet FOLLOW_62 = new BitSet(new long[]{0x0000000004040462L,0x038C9000F80187FFL});
         public static final BitSet FOLLOW_63 = new BitSet(new long[]{0x0000000004000462L,0x0000900008018007L});
         public static final BitSet FOLLOW_64 = new BitSet(new long[]{0x0000000000400020L});
         public static final BitSet FOLLOW_65 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000001L});
-        public static final BitSet FOLLOW_66 = new BitSet(new long[]{0x0000000005040460L,0x01C69000F80187FFL});
+        public static final BitSet FOLLOW_66 = new BitSet(new long[]{0x0000000005040460L,0x038C9000F80187FFL});
         public static final BitSet FOLLOW_67 = new BitSet(new long[]{0x0000000005000460L,0x0000900008018007L});
         public static final BitSet FOLLOW_68 = new BitSet(new long[]{0x0000000001000000L,0x0000000000000001L});
         public static final BitSet FOLLOW_69 = new BitSet(new long[]{0x0000000000000400L,0x0000000008000002L});
         public static final BitSet FOLLOW_70 = new BitSet(new long[]{0x0000000000000400L,0x0000000008000004L});
-        public static final BitSet FOLLOW_71 = new BitSet(new long[]{0x0000000000040400L,0x01C00000780001F8L});
+        public static final BitSet FOLLOW_71 = new BitSet(new long[]{0x0000000000040400L,0x03800000780001F8L});
         public static final BitSet FOLLOW_72 = new BitSet(new long[]{0x0000000000000420L,0x0000000008000000L});
         public static final BitSet FOLLOW_73 = new BitSet(new long[]{0x0000000000880000L});
         public static final BitSet FOLLOW_74 = new BitSet(new long[]{0x0000000000000802L});
         public static final BitSet FOLLOW_75 = new BitSet(new long[]{0x0000000000800802L});
-        public static final BitSet FOLLOW_76 = new BitSet(new long[]{0x0000000000040400L,0x01C60000F8000178L});
-        public static final BitSet FOLLOW_77 = new BitSet(new long[]{0x0000000000040000L,0x00060000F0000178L});
-        public static final BitSet FOLLOW_78 = new BitSet(new long[]{0x0000000000000000L,0x00060000F0000178L});
-        public static final BitSet FOLLOW_79 = new BitSet(new long[]{0x0000000000000000L,0x00060000F0000170L});
-        public static final BitSet FOLLOW_80 = new BitSet(new long[]{0x0000000000000000L,0x00060000F0000160L});
-        public static final BitSet FOLLOW_81 = new BitSet(new long[]{0x0000000000000000L,0x00060000F0000140L});
-        public static final BitSet FOLLOW_82 = new BitSet(new long[]{0x0000000000000000L,0x00060000F0000100L});
-        public static final BitSet FOLLOW_83 = new BitSet(new long[]{0x0000000000000000L,0x00060000F0000000L});
-        public static final BitSet FOLLOW_84 = new BitSet(new long[]{0x0000000005040460L,0x0FC69000F80187FFL});
+        public static final BitSet FOLLOW_76 = new BitSet(new long[]{0x0000000000040400L,0x038C0000F8000178L});
+        public static final BitSet FOLLOW_77 = new BitSet(new long[]{0x0000000000040000L,0x000C0000F0000178L});
+        public static final BitSet FOLLOW_78 = new BitSet(new long[]{0x0000000000000000L,0x000C0000F0000178L});
+        public static final BitSet FOLLOW_79 = new BitSet(new long[]{0x0000000000000000L,0x000C0000F0000170L});
+        public static final BitSet FOLLOW_80 = new BitSet(new long[]{0x0000000000000000L,0x000C0000F0000160L});
+        public static final BitSet FOLLOW_81 = new BitSet(new long[]{0x0000000000000000L,0x000C0000F0000140L});
+        public static final BitSet FOLLOW_82 = new BitSet(new long[]{0x0000000000000000L,0x000C0000F0000100L});
+        public static final BitSet FOLLOW_83 = new BitSet(new long[]{0x0000000000000000L,0x000C0000F0000000L});
+        public static final BitSet FOLLOW_84 = new BitSet(new long[]{0x0000000005040460L,0x1F8C9000F80187FFL});
         public static final BitSet FOLLOW_85 = new BitSet(new long[]{0x0000000000080420L,0x0000000008000000L});
         public static final BitSet FOLLOW_86 = new BitSet(new long[]{0x0000000000000C22L,0x0000000008000000L});
-        public static final BitSet FOLLOW_87 = new BitSet(new long[]{0x0000000005040400L,0x01C60000F80007F8L});
-        public static final BitSet FOLLOW_88 = new BitSet(new long[]{0x0000000004040460L,0x0FC69000F80187FFL});
+        public static final BitSet FOLLOW_87 = new BitSet(new long[]{0x0000000005040400L,0x038C0000F80007F8L});
+        public static final BitSet FOLLOW_88 = new BitSet(new long[]{0x0000000004040460L,0x1F8C9000F80187FFL});
         public static final BitSet FOLLOW_89 = new BitSet(new long[]{0x0000000000080000L,0x0000000000000200L});
         public static final BitSet FOLLOW_90 = new BitSet(new long[]{0x0000000000080020L});
         public static final BitSet FOLLOW_91 = new BitSet(new long[]{0x0000000000000802L,0x0000000000000200L});
         public static final BitSet FOLLOW_92 = new BitSet(new long[]{0x0000000000000822L});
         public static final BitSet FOLLOW_93 = new BitSet(new long[]{0x0000000200000002L});
-        public static final BitSet FOLLOW_94 = new BitSet(new long[]{0x0000000004000400L,0x01C0000008000400L});
+        public static final BitSet FOLLOW_94 = new BitSet(new long[]{0x0000000004000400L,0x0380000008000400L});
         public static final BitSet FOLLOW_95 = new BitSet(new long[]{0x0000000004000000L,0x0000000000000400L});
         public static final BitSet FOLLOW_96 = new BitSet(new long[]{0x0000000000000410L,0x0000000008000000L});
         public static final BitSet FOLLOW_97 = new BitSet(new long[]{0x0000000000800420L,0x0000000008000000L});
-        public static final BitSet FOLLOW_98 = new BitSet(new long[]{0x0000000000000400L,0x01C0000008000200L});
+        public static final BitSet FOLLOW_98 = new BitSet(new long[]{0x0000000000000400L,0x0380000008000200L});
         public static final BitSet FOLLOW_99 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000200L});
         public static final BitSet FOLLOW_100 = new BitSet(new long[]{0x0000000000400430L,0x0000000008000020L});
         public static final BitSet FOLLOW_101 = new BitSet(new long[]{0x0000000000400420L,0x0000000008000020L});
@@ -44249,7 +44298,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         public static final BitSet FOLLOW_104 = new BitSet(new long[]{0x0000000000200002L,0x0000000000006800L});
         public static final BitSet FOLLOW_105 = new BitSet(new long[]{0x0000000000000000L,0x0000000000001000L});
         public static final BitSet FOLLOW_106 = new BitSet(new long[]{0x0000000000000002L,0x0000000000006000L});
-        public static final BitSet FOLLOW_107 = new BitSet(new long[]{0x0010000000000000L,0x0038400000120100L});
+        public static final BitSet FOLLOW_107 = new BitSet(new long[]{0x0010000000000000L,0x0070400000120100L});
         public static final BitSet FOLLOW_108 = new BitSet(new long[]{0x0000000000000002L,0x0000000000004000L});
         public static final BitSet FOLLOW_109 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000200L});
         public static final BitSet FOLLOW_110 = new BitSet(new long[]{0x0000000000000022L});

@@ -1655,39 +1655,39 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	public class FbyExpressionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.FbyExpression");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final RuleCall cAtomicValuedExpressionParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
+		private final RuleCall cSfbyExpressionParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
 		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
 		private final Action cOperatorExpressionSubExpressionsAction_1_0 = (Action)cGroup_1.eContents().get(0);
 		private final Group cGroup_1_1 = (Group)cGroup_1.eContents().get(1);
 		private final Assignment cOperatorAssignment_1_1_0 = (Assignment)cGroup_1_1.eContents().get(0);
 		private final RuleCall cOperatorFbyOperatorEnumRuleCall_1_1_0_0 = (RuleCall)cOperatorAssignment_1_1_0.eContents().get(0);
 		private final Assignment cSubExpressionsAssignment_1_1_1 = (Assignment)cGroup_1_1.eContents().get(1);
-		private final RuleCall cSubExpressionsAtomicValuedExpressionParserRuleCall_1_1_1_0 = (RuleCall)cSubExpressionsAssignment_1_1_1.eContents().get(0);
+		private final RuleCall cSubExpressionsSfbyExpressionParserRuleCall_1_1_1_0 = (RuleCall)cSubExpressionsAssignment_1_1_1.eContents().get(0);
 		private final Group cGroup_1_2 = (Group)cGroup_1.eContents().get(2);
 		private final Keyword cFbyKeyword_1_2_0 = (Keyword)cGroup_1_2.eContents().get(0);
 		private final Assignment cSubExpressionsAssignment_1_2_1 = (Assignment)cGroup_1_2.eContents().get(1);
-		private final RuleCall cSubExpressionsAtomicValuedExpressionParserRuleCall_1_2_1_0 = (RuleCall)cSubExpressionsAssignment_1_2_1.eContents().get(0);
+		private final RuleCall cSubExpressionsSfbyExpressionParserRuleCall_1_2_1_0 = (RuleCall)cSubExpressionsAssignment_1_2_1.eContents().get(0);
 		
 		//FbyExpression Expression:
-		//	AtomicValuedExpression ({OperatorExpression.subExpressions+=current} (operator=FbyOperator
-		//	subExpressions+=AtomicValuedExpression) ('fby' subExpressions+=AtomicValuedExpression)*)?;
+		//	SfbyExpression ({OperatorExpression.subExpressions+=current} (operator=FbyOperator subExpressions+=SfbyExpression)
+		//	('fby' subExpressions+=SfbyExpression)*)?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//AtomicValuedExpression ({OperatorExpression.subExpressions+=current} (operator=FbyOperator
-		//subExpressions+=AtomicValuedExpression) ('fby' subExpressions+=AtomicValuedExpression)*)?
+		//SfbyExpression ({OperatorExpression.subExpressions+=current} (operator=FbyOperator subExpressions+=SfbyExpression)
+		//('fby' subExpressions+=SfbyExpression)*)?
 		public Group getGroup() { return cGroup; }
 		
-		//AtomicValuedExpression
-		public RuleCall getAtomicValuedExpressionParserRuleCall_0() { return cAtomicValuedExpressionParserRuleCall_0; }
+		//SfbyExpression
+		public RuleCall getSfbyExpressionParserRuleCall_0() { return cSfbyExpressionParserRuleCall_0; }
 		
-		//({OperatorExpression.subExpressions+=current} (operator=FbyOperator subExpressions+=AtomicValuedExpression) ('fby'
-		//subExpressions+=AtomicValuedExpression)*)?
+		//({OperatorExpression.subExpressions+=current} (operator=FbyOperator subExpressions+=SfbyExpression) ('fby'
+		//subExpressions+=SfbyExpression)*)?
 		public Group getGroup_1() { return cGroup_1; }
 		
 		//{OperatorExpression.subExpressions+=current}
 		public Action getOperatorExpressionSubExpressionsAction_1_0() { return cOperatorExpressionSubExpressionsAction_1_0; }
 		
-		//(operator=FbyOperator subExpressions+=AtomicValuedExpression)
+		//(operator=FbyOperator subExpressions+=SfbyExpression)
 		public Group getGroup_1_1() { return cGroup_1_1; }
 		
 		//operator=FbyOperator
@@ -1696,17 +1696,79 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//FbyOperator
 		public RuleCall getOperatorFbyOperatorEnumRuleCall_1_1_0_0() { return cOperatorFbyOperatorEnumRuleCall_1_1_0_0; }
 		
+		//subExpressions+=SfbyExpression
+		public Assignment getSubExpressionsAssignment_1_1_1() { return cSubExpressionsAssignment_1_1_1; }
+		
+		//SfbyExpression
+		public RuleCall getSubExpressionsSfbyExpressionParserRuleCall_1_1_1_0() { return cSubExpressionsSfbyExpressionParserRuleCall_1_1_1_0; }
+		
+		//('fby' subExpressions+=SfbyExpression)*
+		public Group getGroup_1_2() { return cGroup_1_2; }
+		
+		//'fby'
+		public Keyword getFbyKeyword_1_2_0() { return cFbyKeyword_1_2_0; }
+		
+		//subExpressions+=SfbyExpression
+		public Assignment getSubExpressionsAssignment_1_2_1() { return cSubExpressionsAssignment_1_2_1; }
+		
+		//SfbyExpression
+		public RuleCall getSubExpressionsSfbyExpressionParserRuleCall_1_2_1_0() { return cSubExpressionsSfbyExpressionParserRuleCall_1_2_1_0; }
+	}
+	public class SfbyExpressionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.SfbyExpression");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final RuleCall cAtomicValuedExpressionParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
+		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
+		private final Action cOperatorExpressionSubExpressionsAction_1_0 = (Action)cGroup_1.eContents().get(0);
+		private final Group cGroup_1_1 = (Group)cGroup_1.eContents().get(1);
+		private final Assignment cOperatorAssignment_1_1_0 = (Assignment)cGroup_1_1.eContents().get(0);
+		private final RuleCall cOperatorSfbyOperatorEnumRuleCall_1_1_0_0 = (RuleCall)cOperatorAssignment_1_1_0.eContents().get(0);
+		private final Assignment cSubExpressionsAssignment_1_1_1 = (Assignment)cGroup_1_1.eContents().get(1);
+		private final RuleCall cSubExpressionsAtomicValuedExpressionParserRuleCall_1_1_1_0 = (RuleCall)cSubExpressionsAssignment_1_1_1.eContents().get(0);
+		private final Group cGroup_1_2 = (Group)cGroup_1.eContents().get(2);
+		private final Keyword cSfbyKeyword_1_2_0 = (Keyword)cGroup_1_2.eContents().get(0);
+		private final Assignment cSubExpressionsAssignment_1_2_1 = (Assignment)cGroup_1_2.eContents().get(1);
+		private final RuleCall cSubExpressionsAtomicValuedExpressionParserRuleCall_1_2_1_0 = (RuleCall)cSubExpressionsAssignment_1_2_1.eContents().get(0);
+		
+		//SfbyExpression Expression:
+		//	AtomicValuedExpression ({OperatorExpression.subExpressions+=current} (operator=SfbyOperator
+		//	subExpressions+=AtomicValuedExpression) ('sfby' subExpressions+=AtomicValuedExpression)*)?;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//AtomicValuedExpression ({OperatorExpression.subExpressions+=current} (operator=SfbyOperator
+		//subExpressions+=AtomicValuedExpression) ('sfby' subExpressions+=AtomicValuedExpression)*)?
+		public Group getGroup() { return cGroup; }
+		
+		//AtomicValuedExpression
+		public RuleCall getAtomicValuedExpressionParserRuleCall_0() { return cAtomicValuedExpressionParserRuleCall_0; }
+		
+		//({OperatorExpression.subExpressions+=current} (operator=SfbyOperator subExpressions+=AtomicValuedExpression) ('sfby'
+		//subExpressions+=AtomicValuedExpression)*)?
+		public Group getGroup_1() { return cGroup_1; }
+		
+		//{OperatorExpression.subExpressions+=current}
+		public Action getOperatorExpressionSubExpressionsAction_1_0() { return cOperatorExpressionSubExpressionsAction_1_0; }
+		
+		//(operator=SfbyOperator subExpressions+=AtomicValuedExpression)
+		public Group getGroup_1_1() { return cGroup_1_1; }
+		
+		//operator=SfbyOperator
+		public Assignment getOperatorAssignment_1_1_0() { return cOperatorAssignment_1_1_0; }
+		
+		//SfbyOperator
+		public RuleCall getOperatorSfbyOperatorEnumRuleCall_1_1_0_0() { return cOperatorSfbyOperatorEnumRuleCall_1_1_0_0; }
+		
 		//subExpressions+=AtomicValuedExpression
 		public Assignment getSubExpressionsAssignment_1_1_1() { return cSubExpressionsAssignment_1_1_1; }
 		
 		//AtomicValuedExpression
 		public RuleCall getSubExpressionsAtomicValuedExpressionParserRuleCall_1_1_1_0() { return cSubExpressionsAtomicValuedExpressionParserRuleCall_1_1_1_0; }
 		
-		//('fby' subExpressions+=AtomicValuedExpression)*
+		//('sfby' subExpressions+=AtomicValuedExpression)*
 		public Group getGroup_1_2() { return cGroup_1_2; }
 		
-		//'fby'
-		public Keyword getFbyKeyword_1_2_0() { return cFbyKeyword_1_2_0; }
+		//'sfby'
+		public Keyword getSfbyKeyword_1_2_0() { return cSfbyKeyword_1_2_0; }
 		
 		//subExpressions+=AtomicValuedExpression
 		public Assignment getSubExpressionsAssignment_1_2_1() { return cSubExpressionsAssignment_1_2_1; }
@@ -3261,6 +3323,21 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//"fby"
 		public Keyword getFBYFbyKeyword_0() { return cFBYFbyKeyword_0; }
 	}
+	public class SfbyOperatorElements extends AbstractEnumRuleElementFinder {
+		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.SfbyOperator");
+		private final EnumLiteralDeclaration cSFBYEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
+		private final Keyword cSFBYSfbyKeyword_0 = (Keyword)cSFBYEnumLiteralDeclaration.eContents().get(0);
+		
+		//enum SfbyOperator returns OperatorType:
+		//	SFBY="sfby";
+		public EnumRule getRule() { return rule; }
+		
+		//SFBY="sfby"
+		public EnumLiteralDeclaration getSFBYEnumLiteralDeclaration() { return cSFBYEnumLiteralDeclaration; }
+		
+		//"sfby"
+		public Keyword getSFBYSfbyKeyword_0() { return cSFBYSfbyKeyword_0; }
+	}
 	public class ValueTypeElements extends AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.ValueType");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
@@ -3552,6 +3629,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	private final TernaryOperationElements pTernaryOperation;
 	private final InitExpressionElements pInitExpression;
 	private final FbyExpressionElements pFbyExpression;
+	private final SfbyExpressionElements pSfbyExpression;
 	private final AtomicExpressionElements pAtomicExpression;
 	private final AtomicValuedExpressionElements pAtomicValuedExpression;
 	private final ValuedObjectTestExpressionElements pValuedObjectTestExpression;
@@ -3596,6 +3674,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	private final ConditionalOperatorElements eConditionalOperator;
 	private final InitOperatorElements eInitOperator;
 	private final FbyOperatorElements eFbyOperator;
+	private final SfbyOperatorElements eSfbyOperator;
 	private final ValueTypeElements eValueType;
 	private final HostTypeElements eHostType;
 	private final StructTypeElements eStructType;
@@ -3657,6 +3736,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		this.pTernaryOperation = new TernaryOperationElements();
 		this.pInitExpression = new InitExpressionElements();
 		this.pFbyExpression = new FbyExpressionElements();
+		this.pSfbyExpression = new SfbyExpressionElements();
 		this.pAtomicExpression = new AtomicExpressionElements();
 		this.pAtomicValuedExpression = new AtomicValuedExpressionElements();
 		this.pValuedObjectTestExpression = new ValuedObjectTestExpressionElements();
@@ -3701,6 +3781,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		this.eConditionalOperator = new ConditionalOperatorElements();
 		this.eInitOperator = new InitOperatorElements();
 		this.eFbyOperator = new FbyOperatorElements();
+		this.eSfbyOperator = new SfbyOperatorElements();
 		this.eValueType = new ValueTypeElements();
 		this.eHostType = new HostTypeElements();
 		this.eStructType = new StructTypeElements();
@@ -4144,14 +4225,25 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//FbyExpression Expression:
-	//	AtomicValuedExpression ({OperatorExpression.subExpressions+=current} (operator=FbyOperator
-	//	subExpressions+=AtomicValuedExpression) ('fby' subExpressions+=AtomicValuedExpression)*)?;
+	//	SfbyExpression ({OperatorExpression.subExpressions+=current} (operator=FbyOperator subExpressions+=SfbyExpression)
+	//	('fby' subExpressions+=SfbyExpression)*)?;
 	public FbyExpressionElements getFbyExpressionAccess() {
 		return pFbyExpression;
 	}
 	
 	public ParserRule getFbyExpressionRule() {
 		return getFbyExpressionAccess().getRule();
+	}
+	
+	//SfbyExpression Expression:
+	//	AtomicValuedExpression ({OperatorExpression.subExpressions+=current} (operator=SfbyOperator
+	//	subExpressions+=AtomicValuedExpression) ('sfby' subExpressions+=AtomicValuedExpression)*)?;
+	public SfbyExpressionElements getSfbyExpressionAccess() {
+		return pSfbyExpression;
+	}
+	
+	public ParserRule getSfbyExpressionRule() {
+		return getSfbyExpressionAccess().getRule();
 	}
 	
 	//// Atomic Expression Rule
@@ -4647,6 +4739,16 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public EnumRule getFbyOperatorRule() {
 		return getFbyOperatorAccess().getRule();
+	}
+	
+	//enum SfbyOperator returns OperatorType:
+	//	SFBY="sfby";
+	public SfbyOperatorElements getSfbyOperatorAccess() {
+		return eSfbyOperator;
+	}
+	
+	public EnumRule getSfbyOperatorRule() {
+		return getSfbyOperatorAccess().getRule();
 	}
 	
 	//enum ValueType:

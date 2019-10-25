@@ -286,10 +286,17 @@ InitExpression returns Expression:
     )?;
     
 FbyExpression returns Expression:
+    SfbyExpression
+    ({OperatorExpression.subExpressions+=current}
+        (operator=FbyOperator subExpressions+=SfbyExpression)
+        ('fby' subExpressions+=SfbyExpression)*
+    )?;
+    
+SfbyExpression returns Expression:
     AtomicValuedExpression
     ({OperatorExpression.subExpressions+=current}
-        (operator=FbyOperator subExpressions+=AtomicValuedExpression)
-        ('fby' subExpressions+=AtomicValuedExpression)*
+        (operator=SfbyOperator subExpressions+=AtomicValuedExpression)
+        ('sfby' subExpressions+=AtomicValuedExpression)*
     )?;
     
 // Atomic Expression Rule
@@ -495,7 +502,10 @@ enum InitOperator returns OperatorType:
     
 enum FbyOperator returns OperatorType:
     FBY = "fby";
-
+    
+enum SfbyOperator returns OperatorType:
+    SFBY = "sfby";
+    
 enum ValueType returns ValueType:
 	PURE="pure" | BOOL="bool" | 
 	INT="int" | FLOAT="float" |
