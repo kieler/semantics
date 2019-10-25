@@ -25,7 +25,13 @@ class VerificationProcessorProvider implements IProcessorProvider {
         #[
             de.cau.cs.kieler.verification.processors.nuxmv.RunNuxmvProcessor,
             de.cau.cs.kieler.verification.processors.nuxmv.RunNusmvProcessor,
-            de.cau.cs.kieler.verification.processors.spin.RunSpinProcessor
+            de.cau.cs.kieler.verification.processors.spin.RunSpinProcessor,
+            de.cau.cs.kieler.sccharts.processors.verification.SCChartsVerificationPropertyAnalyzer,
+            de.cau.cs.kieler.scg.processors.codegen.promela.PromelaCodeGenerator,
+            de.cau.cs.kieler.scg.processors.codegen.smv.SmvCodeGenerator,
+            de.cau.cs.kieler.scg.processors.codegen.smv.SimplifyNamesOfSSA,
+            de.cau.cs.kieler.scg.processors.codegen.smv.DefineUnboundVariablesOfSSA,
+            de.cau.cs.kieler.scg.processors.codegen.smv.PreFinalVariableValuesOfSSA
         ]
     }
     

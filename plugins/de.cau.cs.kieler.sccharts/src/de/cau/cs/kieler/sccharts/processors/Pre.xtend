@@ -32,14 +32,12 @@ import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransformationExtension
 import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
-import de.cau.cs.kieler.verification.VerificationContext
 import java.util.HashMap
 import java.util.List
 import java.util.Stack
 import org.eclipse.emf.ecore.EObject
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
-import static extension de.cau.cs.kieler.verification.extensions.VerificationContextExtensions.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
 /**
@@ -184,11 +182,7 @@ class Pre extends SCChartsProcessor implements Traceable {
         v.declaration2.output = false
         voStore.update(v, SCCHARTS_GENERATED, "pre")
         
-        // Copy range assumptions for verification
-        if(compilationContext instanceof VerificationContext) {
-            (compilationContext as VerificationContext).copyAssumptions(v, source)
-        }
-        
+        verificationHack(v, source)
         return v
     }
     
@@ -322,5 +316,19 @@ class Pre extends SCChartsProcessor implements Traceable {
             }
         }
         return null
+    }
+    
+    /**
+     * This hacks some verification adaption into this transformation without introducing a dependency to kieler.verification
+     */
+    private def verificationHack(ValuedObject vo, ValuedObject source) {
+        try {
+            // Copy range assumptions for verification
+            if(compilationContext.class.simpleName.equals("VerificationContext")) {
+                compilationContext.class.getMethod("copyAssumptions", ValuedObject, ValuedObject).invoke(compilationContext, vo, source)
+            }
+        } catch (Exception e) {
+            // Nobody cares
+        }
     }
 }

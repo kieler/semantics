@@ -1133,8 +1133,15 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 		else if (epackage == KExtPackage.eINSTANCE)
 			switch (semanticObject.eClass().getClassifierID()) {
 			case KExtPackage.ANNOTATED_EXPRESSION:
-				sequence_AnnotatedExpression(context, (AnnotatedExpression) semanticObject); 
-				return; 
+				if (rule == grammarAccess.getAnnotatedExpressionRule()) {
+					sequence_AnnotatedExpression(context, (AnnotatedExpression) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getAnnotatedJsonExpressionRule()) {
+					sequence_AnnotatedJsonExpression(context, (AnnotatedExpression) semanticObject); 
+					return; 
+				}
+				else break;
 			case KExtPackage.CLASS_DECLARATION:
 				sequence_ClassDeclaration(context, (ClassDeclaration) semanticObject); 
 				return; 

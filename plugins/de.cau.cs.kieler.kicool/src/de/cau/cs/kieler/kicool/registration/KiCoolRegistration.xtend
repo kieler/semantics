@@ -117,6 +117,10 @@ class KiCoolRegistration {
         modelsMap.get(res)
     }
     
+    static def boolean hasSystemWithId(String id) {
+        return temporarySystems.containsKey(id) || modelsIdMap.containsKey(id)
+    }
+    
     static def System getSystemById(String id) {
         if (temporarySystems.containsKey(id)) {
             return temporarySystems.get(id)

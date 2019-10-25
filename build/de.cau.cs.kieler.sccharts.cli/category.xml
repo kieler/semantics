@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <description name="KIELER SCCharts Compiler CLI">
+      Artificial Update site for the KIELER SCCharts Compiler CLI.
+   </description>
+   <bundle id="de.cau.cs.kieler.sccharts"/>
+   <bundle id="de.cau.cs.kieler.sccharts.scg"/>
+   <bundle id="de.cau.cs.kieler.scg"/>
+   <bundle id="de.cau.cs.kieler.kicool"/>
+</site>

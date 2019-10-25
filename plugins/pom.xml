@@ -16,9 +16,7 @@
 
 <!-- all plugins need to be listed as module -->
 
-  <modules>
-    <module>../build/de.cau.cs.kieler.semantics.targetplatform</module>
-    <module>../test</module> 
+  <modules> 
     <module>de.cau.cs.kieler.annotations.ide</module>
     <module>de.cau.cs.kieler.annotations.ui</module>
     <module>de.cau.cs.kieler.annotations</module>
