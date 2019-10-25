@@ -3261,51 +3261,6 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//"fby"
 		public Keyword getFBYFbyKeyword_0() { return cFBYFbyKeyword_0; }
 	}
-	public class ImpliesOperatorElements extends AbstractEnumRuleElementFinder {
-		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.ImpliesOperator");
-		private final EnumLiteralDeclaration cIMPLIESEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
-		private final Keyword cIMPLIESImpliesKeyword_0 = (Keyword)cIMPLIESEnumLiteralDeclaration.eContents().get(0);
-		
-		//enum ImpliesOperator returns OperatorType:
-		//	IMPLIES="implies";
-		public EnumRule getRule() { return rule; }
-		
-		//IMPLIES="implies"
-		public EnumLiteralDeclaration getIMPLIESEnumLiteralDeclaration() { return cIMPLIESEnumLiteralDeclaration; }
-		
-		//"implies"
-		public Keyword getIMPLIESImpliesKeyword_0() { return cIMPLIESImpliesKeyword_0; }
-	}
-	public class AtMostOneOfOperatorElements extends AbstractEnumRuleElementFinder {
-		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.AtMostOneOfOperator");
-		private final EnumLiteralDeclaration cATMOSTONEOFEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
-		private final Keyword cATMOSTONEOFNumberSignKeyword_0 = (Keyword)cATMOSTONEOFEnumLiteralDeclaration.eContents().get(0);
-		
-		//enum AtMostOneOfOperator returns OperatorType:
-		//	ATMOSTONEOF="#";
-		public EnumRule getRule() { return rule; }
-		
-		//ATMOSTONEOF="#"
-		public EnumLiteralDeclaration getATMOSTONEOFEnumLiteralDeclaration() { return cATMOSTONEOFEnumLiteralDeclaration; }
-		
-		//"#"
-		public Keyword getATMOSTONEOFNumberSignKeyword_0() { return cATMOSTONEOFNumberSignKeyword_0; }
-	}
-	public class NoneOfOperatorElements extends AbstractEnumRuleElementFinder {
-		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.NoneOfOperator");
-		private final EnumLiteralDeclaration cNOREnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
-		private final Keyword cNORNorKeyword_0 = (Keyword)cNOREnumLiteralDeclaration.eContents().get(0);
-		
-		//enum NoneOfOperator returns OperatorType:
-		//	NOR="nor";
-		public EnumRule getRule() { return rule; }
-		
-		//NOR="nor"
-		public EnumLiteralDeclaration getNOREnumLiteralDeclaration() { return cNOREnumLiteralDeclaration; }
-		
-		//"nor"
-		public Keyword getNORNorKeyword_0() { return cNORNorKeyword_0; }
-	}
 	public class ValueTypeElements extends AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.ValueType");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
@@ -3641,9 +3596,6 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	private final ConditionalOperatorElements eConditionalOperator;
 	private final InitOperatorElements eInitOperator;
 	private final FbyOperatorElements eFbyOperator;
-	private final ImpliesOperatorElements eImpliesOperator;
-	private final AtMostOneOfOperatorElements eAtMostOneOfOperator;
-	private final NoneOfOperatorElements eNoneOfOperator;
 	private final ValueTypeElements eValueType;
 	private final HostTypeElements eHostType;
 	private final StructTypeElements eStructType;
@@ -3749,9 +3701,6 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		this.eConditionalOperator = new ConditionalOperatorElements();
 		this.eInitOperator = new InitOperatorElements();
 		this.eFbyOperator = new FbyOperatorElements();
-		this.eImpliesOperator = new ImpliesOperatorElements();
-		this.eAtMostOneOfOperator = new AtMostOneOfOperatorElements();
-		this.eNoneOfOperator = new NoneOfOperatorElements();
 		this.eValueType = new ValueTypeElements();
 		this.eHostType = new HostTypeElements();
 		this.eStructType = new StructTypeElements();
@@ -4698,36 +4647,6 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public EnumRule getFbyOperatorRule() {
 		return getFbyOperatorAccess().getRule();
-	}
-	
-	//enum ImpliesOperator returns OperatorType:
-	//	IMPLIES="implies";
-	public ImpliesOperatorElements getImpliesOperatorAccess() {
-		return eImpliesOperator;
-	}
-	
-	public EnumRule getImpliesOperatorRule() {
-		return getImpliesOperatorAccess().getRule();
-	}
-	
-	//enum AtMostOneOfOperator returns OperatorType:
-	//	ATMOSTONEOF="#";
-	public AtMostOneOfOperatorElements getAtMostOneOfOperatorAccess() {
-		return eAtMostOneOfOperator;
-	}
-	
-	public EnumRule getAtMostOneOfOperatorRule() {
-		return getAtMostOneOfOperatorAccess().getRule();
-	}
-	
-	//enum NoneOfOperator returns OperatorType:
-	//	NOR="nor";
-	public NoneOfOperatorElements getNoneOfOperatorAccess() {
-		return eNoneOfOperator;
-	}
-	
-	public EnumRule getNoneOfOperatorRule() {
-		return getNoneOfOperatorAccess().getRule();
 	}
 	
 	//enum ValueType:

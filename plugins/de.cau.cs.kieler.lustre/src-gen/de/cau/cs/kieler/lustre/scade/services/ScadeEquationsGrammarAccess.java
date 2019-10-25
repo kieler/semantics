@@ -1033,7 +1033,6 @@ public class ScadeEquationsGrammarAccess extends AbstractGrammarElementFinder {
 		return getLogicalXorOperatorAccess().getRule();
 	}
 	
-	//@Override
 	//enum ImpliesOperator returns kexpressions::OperatorType:
 	//	IMPLIES="=>";
 	public LustreGrammarAccess.ImpliesOperatorElements getImpliesOperatorAccess() {
@@ -2280,26 +2279,6 @@ public class ScadeEquationsGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public EnumRule getPostfixSubRule() {
 		return getPostfixSubAccess().getRule();
-	}
-	
-	//enum AtMostOneOfOperator returns OperatorType:
-	//	ATMOSTONEOF="#";
-	public KExpressionsGrammarAccess.AtMostOneOfOperatorElements getAtMostOneOfOperatorAccess() {
-		return gaKExpressions.getAtMostOneOfOperatorAccess();
-	}
-	
-	public EnumRule getAtMostOneOfOperatorRule() {
-		return getAtMostOneOfOperatorAccess().getRule();
-	}
-	
-	//enum NoneOfOperator returns OperatorType:
-	//	NOR="nor";
-	public KExpressionsGrammarAccess.NoneOfOperatorElements getNoneOfOperatorAccess() {
-		return gaKExpressions.getNoneOfOperatorAccess();
-	}
-	
-	public EnumRule getNoneOfOperatorRule() {
-		return getNoneOfOperatorAccess().getRule();
 	}
 	
 	//enum HostType returns ValueType:

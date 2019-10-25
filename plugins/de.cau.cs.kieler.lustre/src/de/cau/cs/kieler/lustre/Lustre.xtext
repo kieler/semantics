@@ -443,7 +443,6 @@ enum LogicalXorOperator returns kexpressions::OperatorType:
     BITWISE_XOR="xor"
 ;
 
-@Override 
 enum ImpliesOperator returns kexpressions::OperatorType:  
     IMPLIES="=>"
 ;

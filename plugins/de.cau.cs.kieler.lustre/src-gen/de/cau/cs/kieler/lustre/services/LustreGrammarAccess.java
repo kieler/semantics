@@ -2930,7 +2930,6 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		private final EnumLiteralDeclaration cIMPLIESEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
 		private final Keyword cIMPLIESEqualsSignGreaterThanSignKeyword_0 = (Keyword)cIMPLIESEnumLiteralDeclaration.eContents().get(0);
 		
-		//@Override
 		//enum ImpliesOperator returns kexpressions::OperatorType:
 		//	IMPLIES="=>";
 		public EnumRule getRule() { return rule; }
@@ -3755,7 +3754,6 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		return getLogicalXorOperatorAccess().getRule();
 	}
 	
-	//@Override
 	//enum ImpliesOperator returns kexpressions::OperatorType:
 	//	IMPLIES="=>";
 	public ImpliesOperatorElements getImpliesOperatorAccess() {
@@ -5032,26 +5030,6 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public EnumRule getPostfixSubRule() {
 		return getPostfixSubAccess().getRule();
-	}
-	
-	//enum AtMostOneOfOperator returns OperatorType:
-	//	ATMOSTONEOF="#";
-	public KExpressionsGrammarAccess.AtMostOneOfOperatorElements getAtMostOneOfOperatorAccess() {
-		return gaKExpressions.getAtMostOneOfOperatorAccess();
-	}
-	
-	public EnumRule getAtMostOneOfOperatorRule() {
-		return getAtMostOneOfOperatorAccess().getRule();
-	}
-	
-	//enum NoneOfOperator returns OperatorType:
-	//	NOR="nor";
-	public KExpressionsGrammarAccess.NoneOfOperatorElements getNoneOfOperatorAccess() {
-		return gaKExpressions.getNoneOfOperatorAccess();
-	}
-	
-	public EnumRule getNoneOfOperatorRule() {
-		return getNoneOfOperatorAccess().getRule();
 	}
 	
 	//enum HostType returns ValueType:

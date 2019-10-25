@@ -495,15 +495,6 @@ enum InitOperator returns OperatorType:
     
 enum FbyOperator returns OperatorType:
     FBY = "fby";
-    
-enum ImpliesOperator returns OperatorType:
-    IMPLIES = "implies";
-    
-enum AtMostOneOfOperator returns OperatorType:
-    ATMOSTONEOF = "#";
-    
-enum NoneOfOperator returns OperatorType:
-    NOR = "nor";
 
 enum ValueType returns ValueType:
 	PURE="pure" | BOOL="bool" | 

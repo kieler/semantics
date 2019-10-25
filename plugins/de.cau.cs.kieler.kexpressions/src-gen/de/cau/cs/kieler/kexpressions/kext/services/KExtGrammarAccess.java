@@ -3637,36 +3637,6 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		return getFbyOperatorAccess().getRule();
 	}
 	
-	//enum ImpliesOperator returns OperatorType:
-	//	IMPLIES="implies";
-	public KExpressionsGrammarAccess.ImpliesOperatorElements getImpliesOperatorAccess() {
-		return gaKExpressions.getImpliesOperatorAccess();
-	}
-	
-	public EnumRule getImpliesOperatorRule() {
-		return getImpliesOperatorAccess().getRule();
-	}
-	
-	//enum AtMostOneOfOperator returns OperatorType:
-	//	ATMOSTONEOF="#";
-	public KExpressionsGrammarAccess.AtMostOneOfOperatorElements getAtMostOneOfOperatorAccess() {
-		return gaKExpressions.getAtMostOneOfOperatorAccess();
-	}
-	
-	public EnumRule getAtMostOneOfOperatorRule() {
-		return getAtMostOneOfOperatorAccess().getRule();
-	}
-	
-	//enum NoneOfOperator returns OperatorType:
-	//	NOR="nor";
-	public KExpressionsGrammarAccess.NoneOfOperatorElements getNoneOfOperatorAccess() {
-		return gaKExpressions.getNoneOfOperatorAccess();
-	}
-	
-	public EnumRule getNoneOfOperatorRule() {
-		return getNoneOfOperatorAccess().getRule();
-	}
-	
 	//enum ValueType:
 	//	PURE="pure" | BOOL="bool" |
 	//	INT="int" | FLOAT="float" |
