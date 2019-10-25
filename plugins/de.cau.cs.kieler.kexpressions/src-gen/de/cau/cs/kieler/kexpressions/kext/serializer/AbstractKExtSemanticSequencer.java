@@ -410,8 +410,15 @@ public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequ
 		else if (epackage == KExtPackage.eINSTANCE)
 			switch (semanticObject.eClass().getClassifierID()) {
 			case KExtPackage.ANNOTATED_EXPRESSION:
-				sequence_AnnotatedExpression(context, (AnnotatedExpression) semanticObject); 
-				return; 
+				if (rule == grammarAccess.getAnnotatedExpressionRule()) {
+					sequence_AnnotatedExpression(context, (AnnotatedExpression) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getAnnotatedJsonExpressionRule()) {
+					sequence_AnnotatedJsonExpression(context, (AnnotatedExpression) semanticObject); 
+					return; 
+				}
+				else break;
 			case KExtPackage.CLASS_DECLARATION:
 				if (rule == grammarAccess.getDeclarationWOSemicolonRule()
 						|| rule == grammarAccess.getClassDeclarationWOSemicolonRule()
@@ -455,6 +462,18 @@ public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequ
 	 *     (annotations+=Annotation* expression=Expression)
 	 */
 	protected void sequence_AnnotatedExpression(ISerializationContext context, AnnotatedExpression semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     AnnotatedJsonExpression returns AnnotatedExpression
+	 *
+	 * Constraint:
+	 *     (annotations+=Annotation* expression=JsonObjectValue)
+	 */
+	protected void sequence_AnnotatedJsonExpression(ISerializationContext context, AnnotatedExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -709,7 +728,7 @@ public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequ
 	 *     TestEntity returns TestEntity
 	 *
 	 * Constraint:
-	 *     (expression=AnnotatedExpression | effect=Effect)
+	 *     (expression=AnnotatedExpression | expression=AnnotatedJsonExpression | effect=Effect)
 	 */
 	protected void sequence_TestEntity(ISerializationContext context, TestEntity semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

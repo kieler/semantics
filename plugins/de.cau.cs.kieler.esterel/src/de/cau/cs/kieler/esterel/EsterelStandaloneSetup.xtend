@@ -10,6 +10,8 @@ import com.google.inject.Injector
  */
 class EsterelStandaloneSetup extends EsterelStandaloneSetupGenerated {
     
+    // Only SCEst is registered as KilerLanguage and will also handle Esterel
+    
     static var Injector injector
 
 	def static doSetup() {

@@ -290,7 +290,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         for (transition : state.outgoingTransitions.reverseView) {
             transition.transform => [ edge |
                 val target = transition.targetState;
-                if (!target.name.nullOrEmpty) {
+                if (!target?.name.nullOrEmpty) {
                     val counter = groupedTransitions.get(target).indexOf(transition)
                     edge.head.data += KGraphFactory::eINSTANCE.createKIdentifier => [it.id = target.name + counter]
                 }

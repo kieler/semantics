@@ -125,9 +125,9 @@ abstract class Processor<Source, Target> implements IKiCoolCloneable {
      */
     protected def void updateProgress(double progress) {
         // Set the actual pTime before triggering the notification.
-        val startTimestamp = environments.target.getProperty(START_TIMESTAMP).longValue
+        val startTimestamp = environments.target.getProperty(TRANSFORMATION_TIME_START).longValue
         val intermediateTimestamp = System.nanoTime
-        environments.target.setProperty(PTIME, (intermediateTimestamp - startTimestamp) / 1000_000)
+        environments.target.setProperty(TRANSFORMATION_INTERMEDIATE_TIME, (intermediateTimestamp - startTimestamp))
         
         // Create the notification.
         compilationContext.notify(

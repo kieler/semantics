@@ -69,6 +69,7 @@ public class LustreParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getByNameStaticArgAccess().getAlternatives(), "rule__ByNameStaticArg__Alternatives");
 			builder.put(grammarAccess.getVariableDeclarationAccess().getAlternatives(), "rule__VariableDeclaration__Alternatives");
 			builder.put(grammarAccess.getTestEntityAccess().getAlternatives(), "rule__TestEntity__Alternatives");
+			builder.put(grammarAccess.getTestEntityAccess().getExpressionAlternatives_0_0(), "rule__TestEntity__ExpressionAlternatives_0_0");
 			builder.put(grammarAccess.getDeclarationAccess().getAlternatives(), "rule__Declaration__Alternatives");
 			builder.put(grammarAccess.getDeclarationWOSemicolonAccess().getAlternatives(), "rule__DeclarationWOSemicolon__Alternatives");
 			builder.put(grammarAccess.getVariableDeclarationWOSemicolonAccess().getAlternatives_7(), "rule__VariableDeclarationWOSemicolon__Alternatives_7");
@@ -249,6 +250,7 @@ public class LustreParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getScopeAccess().getGroup(), "rule__Scope__Group__0");
 			builder.put(grammarAccess.getScopeAccess().getGroup_5(), "rule__Scope__Group_5__0");
 			builder.put(grammarAccess.getAnnotatedExpressionAccess().getGroup(), "rule__AnnotatedExpression__Group__0");
+			builder.put(grammarAccess.getAnnotatedJsonExpressionAccess().getGroup(), "rule__AnnotatedJsonExpression__Group__0");
 			builder.put(grammarAccess.getVariableDeclarationWOSemicolonAccess().getGroup(), "rule__VariableDeclarationWOSemicolon__Group__0");
 			builder.put(grammarAccess.getVariableDeclarationWOSemicolonAccess().getGroup_7_0(), "rule__VariableDeclarationWOSemicolon__Group_7_0__0");
 			builder.put(grammarAccess.getVariableDeclarationWOSemicolonAccess().getGroup_7_2(), "rule__VariableDeclarationWOSemicolon__Group_7_2__0");
@@ -625,6 +627,8 @@ public class LustreParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getTestEntityAccess().getEffectAssignment_1(), "rule__TestEntity__EffectAssignment_1");
 			builder.put(grammarAccess.getAnnotatedExpressionAccess().getAnnotationsAssignment_0(), "rule__AnnotatedExpression__AnnotationsAssignment_0");
 			builder.put(grammarAccess.getAnnotatedExpressionAccess().getExpressionAssignment_2(), "rule__AnnotatedExpression__ExpressionAssignment_2");
+			builder.put(grammarAccess.getAnnotatedJsonExpressionAccess().getAnnotationsAssignment_0(), "rule__AnnotatedJsonExpression__AnnotationsAssignment_0");
+			builder.put(grammarAccess.getAnnotatedJsonExpressionAccess().getExpressionAssignment_2(), "rule__AnnotatedJsonExpression__ExpressionAssignment_2");
 			builder.put(grammarAccess.getVariableDeclarationWOSemicolonAccess().getAnnotationsAssignment_0(), "rule__VariableDeclarationWOSemicolon__AnnotationsAssignment_0");
 			builder.put(grammarAccess.getVariableDeclarationWOSemicolonAccess().getAccessAssignment_1(), "rule__VariableDeclarationWOSemicolon__AccessAssignment_1");
 			builder.put(grammarAccess.getVariableDeclarationWOSemicolonAccess().getConstAssignment_2(), "rule__VariableDeclarationWOSemicolon__ConstAssignment_2");

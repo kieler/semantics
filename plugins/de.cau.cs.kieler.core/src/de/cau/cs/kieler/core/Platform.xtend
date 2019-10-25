@@ -18,18 +18,26 @@ package de.cau.cs.kieler.core
  */
 class Platform {
     
+    enum OS { WIN, MAC, UNIX }
+    
     public static val MAX_PATH_LENGTH = 64
-    static val OS = System.getProperty("os.name").toLowerCase();
+    static val OS_NAME = System.getProperty("os.name").toLowerCase();
   
     static def boolean isWindows() {
-        return (OS.indexOf("win") >= 0);
+        return (OS_NAME.indexOf("win") >= 0);
     }
     
     static def boolean isMac() {
-        return (OS.indexOf("mac") >= 0);
+        return (OS_NAME.indexOf("mac") >= 0);
     }
     
     static def boolean isUnix() {
-        return (OS.indexOf("nix") >= 0 || OS.indexOf("nux") >= 0 || OS.indexOf("aix") > 0);
+        return (OS_NAME.indexOf("nix") >= 0 || OS_NAME.indexOf("nux") >= 0 || OS_NAME.indexOf("aix") > 0);
+    }
+    
+    static def OS getOS() {
+        if (isWindows) return OS::WIN
+        if (isMac) return OS::MAC
+        return OS::UNIX
     }
 }
