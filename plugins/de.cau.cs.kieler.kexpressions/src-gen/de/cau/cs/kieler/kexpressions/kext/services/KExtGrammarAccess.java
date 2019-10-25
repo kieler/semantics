@@ -176,24 +176,32 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.kext.KExt.TestEntity");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final Assignment cExpressionAssignment_0 = (Assignment)cAlternatives.eContents().get(0);
-		private final RuleCall cExpressionAnnotatedExpressionParserRuleCall_0_0 = (RuleCall)cExpressionAssignment_0.eContents().get(0);
+		private final Alternatives cExpressionAlternatives_0_0 = (Alternatives)cExpressionAssignment_0.eContents().get(0);
+		private final RuleCall cExpressionAnnotatedExpressionParserRuleCall_0_0_0 = (RuleCall)cExpressionAlternatives_0_0.eContents().get(0);
+		private final RuleCall cExpressionAnnotatedJsonExpressionParserRuleCall_0_0_1 = (RuleCall)cExpressionAlternatives_0_0.eContents().get(1);
 		private final Assignment cEffectAssignment_1 = (Assignment)cAlternatives.eContents().get(1);
 		private final RuleCall cEffectEffectParserRuleCall_1_0 = (RuleCall)cEffectAssignment_1.eContents().get(0);
 		
 		//// Test Entity Rule
 		//// A test entity is either an annotation expression or an effect.
 		//TestEntity kext::TestEntity:
-		//	expression=AnnotatedExpression | effect=Effect;
+		//	expression=(AnnotatedExpression | AnnotatedJsonExpression) | effect=Effect;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//expression=AnnotatedExpression | effect=Effect
+		//expression=(AnnotatedExpression | AnnotatedJsonExpression) | effect=Effect
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
-		//expression=AnnotatedExpression
+		//expression=(AnnotatedExpression | AnnotatedJsonExpression)
 		public Assignment getExpressionAssignment_0() { return cExpressionAssignment_0; }
 		
+		//(AnnotatedExpression | AnnotatedJsonExpression)
+		public Alternatives getExpressionAlternatives_0_0() { return cExpressionAlternatives_0_0; }
+		
 		//AnnotatedExpression
-		public RuleCall getExpressionAnnotatedExpressionParserRuleCall_0_0() { return cExpressionAnnotatedExpressionParserRuleCall_0_0; }
+		public RuleCall getExpressionAnnotatedExpressionParserRuleCall_0_0_0() { return cExpressionAnnotatedExpressionParserRuleCall_0_0_0; }
+		
+		//AnnotatedJsonExpression
+		public RuleCall getExpressionAnnotatedJsonExpressionParserRuleCall_0_0_1() { return cExpressionAnnotatedJsonExpressionParserRuleCall_0_0_1; }
 		
 		//effect=Effect
 		public Assignment getEffectAssignment_1() { return cEffectAssignment_1; }
@@ -236,6 +244,39 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//Expression
 		public RuleCall getExpressionExpressionParserRuleCall_2_0() { return cExpressionExpressionParserRuleCall_2_0; }
+	}
+	public class AnnotatedJsonExpressionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.kext.KExt.AnnotatedJsonExpression");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cAnnotationsAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cAnnotationsAnnotationParserRuleCall_0_0 = (RuleCall)cAnnotationsAssignment_0.eContents().get(0);
+		private final Keyword cJsonKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cExpressionAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cExpressionJsonObjectValueParserRuleCall_2_0 = (RuleCall)cExpressionAssignment_2.eContents().get(0);
+		
+		//AnnotatedJsonExpression kext::AnnotatedExpression:
+		//	annotations+=Annotation*
+		//	'json'
+		//	expression=JsonObjectValue;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//annotations+=Annotation* 'json' expression=JsonObjectValue
+		public Group getGroup() { return cGroup; }
+		
+		//annotations+=Annotation*
+		public Assignment getAnnotationsAssignment_0() { return cAnnotationsAssignment_0; }
+		
+		//Annotation
+		public RuleCall getAnnotationsAnnotationParserRuleCall_0_0() { return cAnnotationsAnnotationParserRuleCall_0_0; }
+		
+		//'json'
+		public Keyword getJsonKeyword_1() { return cJsonKeyword_1; }
+		
+		//expression=JsonObjectValue
+		public Assignment getExpressionAssignment_2() { return cExpressionAssignment_2; }
+		
+		//JsonObjectValue
+		public RuleCall getExpressionJsonObjectValueParserRuleCall_2_0() { return cExpressionJsonObjectValueParserRuleCall_2_0; }
 	}
 	public class DeclarationElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.kext.KExt.Declaration");
@@ -2076,6 +2117,7 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 	private final ScopeElements pScope;
 	private final TestEntityElements pTestEntity;
 	private final AnnotatedExpressionElements pAnnotatedExpression;
+	private final AnnotatedJsonExpressionElements pAnnotatedJsonExpression;
 	private final DeclarationElements pDeclaration;
 	private final DeclarationWOSemicolonElements pDeclarationWOSemicolon;
 	private final VariableDeclarationElements pVariableDeclaration;
@@ -2122,6 +2164,7 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		this.pScope = new ScopeElements();
 		this.pTestEntity = new TestEntityElements();
 		this.pAnnotatedExpression = new AnnotatedExpressionElements();
+		this.pAnnotatedJsonExpression = new AnnotatedJsonExpressionElements();
 		this.pDeclaration = new DeclarationElements();
 		this.pDeclarationWOSemicolon = new DeclarationWOSemicolonElements();
 		this.pVariableDeclaration = new VariableDeclarationElements();
@@ -2232,7 +2275,7 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 	//// Test Entity Rule
 	//// A test entity is either an annotation expression or an effect.
 	//TestEntity kext::TestEntity:
-	//	expression=AnnotatedExpression | effect=Effect;
+	//	expression=(AnnotatedExpression | AnnotatedJsonExpression) | effect=Effect;
 	public TestEntityElements getTestEntityAccess() {
 		return pTestEntity;
 	}
@@ -2254,6 +2297,18 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getAnnotatedExpressionRule() {
 		return getAnnotatedExpressionAccess().getRule();
+	}
+	
+	//AnnotatedJsonExpression kext::AnnotatedExpression:
+	//	annotations+=Annotation*
+	//	'json'
+	//	expression=JsonObjectValue;
+	public AnnotatedJsonExpressionElements getAnnotatedJsonExpressionAccess() {
+		return pAnnotatedJsonExpression;
+	}
+	
+	public ParserRule getAnnotatedJsonExpressionRule() {
+		return getAnnotatedJsonExpressionAccess().getRule();
 	}
 	
 	//// Declaration Rule

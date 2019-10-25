@@ -7467,21 +7467,39 @@ ruleTestEntity returns [EObject current=null]
 	(
 		(
 			(
-				{
-					newCompositeNode(grammarAccess.getTestEntityAccess().getExpressionAnnotatedExpressionParserRuleCall_0_0());
-				}
-				lv_expression_0_0=ruleAnnotatedExpression
-				{
-					if ($current==null) {
-						$current = createModelElementForParent(grammarAccess.getTestEntityRule());
+				(
+					{
+						newCompositeNode(grammarAccess.getTestEntityAccess().getExpressionAnnotatedExpressionParserRuleCall_0_0_0());
 					}
-					set(
-						$current,
-						"expression",
-						lv_expression_0_0,
-						"de.cau.cs.kieler.kexpressions.kext.KExt.AnnotatedExpression");
-					afterParserOrEnumRuleCall();
-				}
+					lv_expression_0_1=ruleAnnotatedExpression
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getTestEntityRule());
+						}
+						set(
+							$current,
+							"expression",
+							lv_expression_0_1,
+							"de.cau.cs.kieler.kexpressions.kext.KExt.AnnotatedExpression");
+						afterParserOrEnumRuleCall();
+					}
+					    |
+					{
+						newCompositeNode(grammarAccess.getTestEntityAccess().getExpressionAnnotatedJsonExpressionParserRuleCall_0_0_1());
+					}
+					lv_expression_0_2=ruleAnnotatedJsonExpression
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getTestEntityRule());
+						}
+						set(
+							$current,
+							"expression",
+							lv_expression_0_2,
+							"de.cau.cs.kieler.kexpressions.kext.KExt.AnnotatedJsonExpression");
+						afterParserOrEnumRuleCall();
+					}
+				)
 			)
 		)
 		    |
@@ -7561,6 +7579,67 @@ ruleAnnotatedExpression returns [EObject current=null]
 						"expression",
 						lv_expression_2_0,
 						"de.cau.cs.kieler.kexpressions.KExpressions.Expression");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)
+	)
+;
+
+// Entry rule entryRuleAnnotatedJsonExpression
+entryRuleAnnotatedJsonExpression returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getAnnotatedJsonExpressionRule()); }
+	iv_ruleAnnotatedJsonExpression=ruleAnnotatedJsonExpression
+	{ $current=$iv_ruleAnnotatedJsonExpression.current; }
+	EOF;
+
+// Rule AnnotatedJsonExpression
+ruleAnnotatedJsonExpression returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getAnnotatedJsonExpressionAccess().getAnnotationsAnnotationParserRuleCall_0_0());
+				}
+				lv_annotations_0_0=ruleAnnotation
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getAnnotatedJsonExpressionRule());
+					}
+					add(
+						$current,
+						"annotations",
+						lv_annotations_0_0,
+						"de.cau.cs.kieler.kexpressions.KExpressions.Annotation");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)*
+		otherlv_1='json'
+		{
+			newLeafNode(otherlv_1, grammarAccess.getAnnotatedJsonExpressionAccess().getJsonKeyword_1());
+		}
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getAnnotatedJsonExpressionAccess().getExpressionJsonObjectValueParserRuleCall_2_0());
+				}
+				lv_expression_2_0=ruleJsonObjectValue
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getAnnotatedJsonExpressionRule());
+					}
+					set(
+						$current,
+						"expression",
+						lv_expression_2_0,
+						"de.cau.cs.kieler.kexpressions.KExpressions.JsonObjectValue");
 					afterParserOrEnumRuleCall();
 				}
 			)

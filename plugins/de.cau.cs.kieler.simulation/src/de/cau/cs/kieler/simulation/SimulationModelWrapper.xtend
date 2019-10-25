@@ -30,13 +30,14 @@ import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor
+import de.cau.cs.kieler.kicool.compilation.ExecutableContainerWrapper
 
 /**
  * @author als
  * @kieler.design proposed
  * @kieler.rating proposed yellow
  */
-class SimulationModelWrapper implements Simulatable {
+class SimulationModelWrapper implements Simulatable, ExecutableContainerWrapper {
     
     private static val POOL = Executors.newCachedThreadPool
 
@@ -194,6 +195,10 @@ class SimulationModelWrapper implements Simulatable {
     
     override toString() {
         id
+    }
+    
+    override ExecutableContainer getExecutableContainer() {
+        return executable
     }
 }
 

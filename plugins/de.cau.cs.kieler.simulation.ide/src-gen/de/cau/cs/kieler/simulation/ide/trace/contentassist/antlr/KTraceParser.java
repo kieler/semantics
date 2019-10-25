@@ -35,6 +35,7 @@ public class KTraceParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getEsoTickAccess().getAlternatives_2_1(), "rule__EsoTick__Alternatives_2_1");
 			builder.put(grammarAccess.getEsoTickAccess().getAlternatives_4_1(), "rule__EsoTick__Alternatives_4_1");
 			builder.put(grammarAccess.getTestEntityAccess().getAlternatives(), "rule__TestEntity__Alternatives");
+			builder.put(grammarAccess.getTestEntityAccess().getExpressionAlternatives_0_0(), "rule__TestEntity__ExpressionAlternatives_0_0");
 			builder.put(grammarAccess.getDeclarationAccess().getAlternatives(), "rule__Declaration__Alternatives");
 			builder.put(grammarAccess.getDeclarationWOSemicolonAccess().getAlternatives(), "rule__DeclarationWOSemicolon__Alternatives");
 			builder.put(grammarAccess.getVariableDeclarationAccess().getAlternatives_7(), "rule__VariableDeclaration__Alternatives_7");
@@ -113,6 +114,7 @@ public class KTraceParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getScopeAccess().getGroup(), "rule__Scope__Group__0");
 			builder.put(grammarAccess.getScopeAccess().getGroup_5(), "rule__Scope__Group_5__0");
 			builder.put(grammarAccess.getAnnotatedExpressionAccess().getGroup(), "rule__AnnotatedExpression__Group__0");
+			builder.put(grammarAccess.getAnnotatedJsonExpressionAccess().getGroup(), "rule__AnnotatedJsonExpression__Group__0");
 			builder.put(grammarAccess.getVariableDeclarationAccess().getGroup(), "rule__VariableDeclaration__Group__0");
 			builder.put(grammarAccess.getVariableDeclarationAccess().getGroup_7_0(), "rule__VariableDeclaration__Group_7_0__0");
 			builder.put(grammarAccess.getVariableDeclarationAccess().getGroup_7_2(), "rule__VariableDeclaration__Group_7_2__0");
@@ -363,6 +365,8 @@ public class KTraceParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getTestEntityAccess().getEffectAssignment_1(), "rule__TestEntity__EffectAssignment_1");
 			builder.put(grammarAccess.getAnnotatedExpressionAccess().getAnnotationsAssignment_0(), "rule__AnnotatedExpression__AnnotationsAssignment_0");
 			builder.put(grammarAccess.getAnnotatedExpressionAccess().getExpressionAssignment_2(), "rule__AnnotatedExpression__ExpressionAssignment_2");
+			builder.put(grammarAccess.getAnnotatedJsonExpressionAccess().getAnnotationsAssignment_0(), "rule__AnnotatedJsonExpression__AnnotationsAssignment_0");
+			builder.put(grammarAccess.getAnnotatedJsonExpressionAccess().getExpressionAssignment_2(), "rule__AnnotatedJsonExpression__ExpressionAssignment_2");
 			builder.put(grammarAccess.getVariableDeclarationAccess().getAnnotationsAssignment_0(), "rule__VariableDeclaration__AnnotationsAssignment_0");
 			builder.put(grammarAccess.getVariableDeclarationAccess().getAccessAssignment_1(), "rule__VariableDeclaration__AccessAssignment_1");
 			builder.put(grammarAccess.getVariableDeclarationAccess().getConstAssignment_2(), "rule__VariableDeclaration__ConstAssignment_2");

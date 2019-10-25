@@ -1005,251 +1005,217 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cStatesAssignment_7_1_2_1_3 = (Assignment)cGroup_7_1_2_1.eContents().get(3);
 		private final RuleCall cStatesStateParserRuleCall_7_1_2_1_3_0 = (RuleCall)cStatesAssignment_7_1_2_1_3.eContents().get(0);
 		
-		//ControlflowRegion sccharts::ControlflowRegion:
-		//	{sccharts::ControlflowRegion} annotations+=Annotation*
-		//	override?='override'?
-		//	final?='final'?
-		//	'region' name=ExtendedID? label=STRING? ('is'
-		//	reference=ScopeCall ('for' counterVariable=CounterVariable ':' forStart=IntOrReference ('to'
-		//	forEnd=IntOrReference)?)? ('schedule' schedule+=ScheduleObjectReference+)?
-		//	| ('for' counterVariable=CounterVariable ':' forStart=IntOrReference ('to' forEnd=IntOrReference)?)? ('schedule'
-		//	schedule+=ScheduleObjectReference+)? ('{'
-		//	declarations+=DeclarationOrMethodWithKeywordWOSemicolon*
-		//	actions+=LocalAction* (states+=ImplicitState | states+=State+)
-		//	'}'
-		//	|
-		//	':'
-		//	declarations+=DeclarationOrMethodWithKeywordWOSemicolon*
-		//	actions+=LocalAction*
-		//	states+=State*));
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#XtextFragmentProvider_de.cau.cs.kieler.sccharts.text.SCTX/LocalAction'
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{sccharts::ControlflowRegion} annotations+=Annotation* override?='override'? final?='final'? 'region' name=ExtendedID?
-		//label=STRING? ('is' reference=ScopeCall ('for' counterVariable=CounterVariable ':' forStart=IntOrReference ('to'
-		//forEnd=IntOrReference)?)? ('schedule' schedule+=ScheduleObjectReference+)? | ('for' counterVariable=CounterVariable
-		//':' forStart=IntOrReference ('to' forEnd=IntOrReference)?)? ('schedule' schedule+=ScheduleObjectReference+)? ('{'
-		//declarations+=DeclarationOrMethodWithKeywordWOSemicolon* actions+=LocalAction* (states+=ImplicitState |
-		//states+=State+) '}' | ':' declarations+=DeclarationOrMethodWithKeywordWOSemicolon* actions+=LocalAction*
-		//states+=State*))
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.10/@alternatives'
 		public Group getGroup() { return cGroup; }
 		
-		//{sccharts::ControlflowRegion}
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.10/@alternatives/@elements.0'
 		public Action getControlflowRegionAction_0() { return cControlflowRegionAction_0; }
 		
-		//annotations+=Annotation*
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.10/@alternatives/@elements.1'
 		public Assignment getAnnotationsAssignment_1() { return cAnnotationsAssignment_1; }
 		
-		//Annotation
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.10/@alternatives/@elements.1/@terminal'
 		public RuleCall getAnnotationsAnnotationParserRuleCall_1_0() { return cAnnotationsAnnotationParserRuleCall_1_0; }
 		
-		//override?='override'?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.10/@alternatives/@elements.2'
 		public Assignment getOverrideAssignment_2() { return cOverrideAssignment_2; }
 		
-		//'override'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.10/@alternatives/@elements.2/@terminal'
 		public Keyword getOverrideOverrideKeyword_2_0() { return cOverrideOverrideKeyword_2_0; }
 		
-		//final?='final'?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.10/@alternatives/@elements.3'
 		public Assignment getFinalAssignment_3() { return cFinalAssignment_3; }
 		
-		//'final'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.10/@alternatives/@elements.3/@terminal'
 		public Keyword getFinalFinalKeyword_3_0() { return cFinalFinalKeyword_3_0; }
 		
-		//'region'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.10/@alternatives/@elements.4'
 		public Keyword getRegionKeyword_4() { return cRegionKeyword_4; }
 		
-		//name=ExtendedID?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.10/@alternatives/@elements.5'
 		public Assignment getNameAssignment_5() { return cNameAssignment_5; }
 		
-		//ExtendedID
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.10/@alternatives/@elements.5/@terminal'
 		public RuleCall getNameExtendedIDParserRuleCall_5_0() { return cNameExtendedIDParserRuleCall_5_0; }
 		
-		//label=STRING?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.10/@alternatives/@elements.6'
 		public Assignment getLabelAssignment_6() { return cLabelAssignment_6; }
 		
-		//STRING
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.10/@alternatives/@elements.6/@terminal'
 		public RuleCall getLabelSTRINGTerminalRuleCall_6_0() { return cLabelSTRINGTerminalRuleCall_6_0; }
 		
-		//('is' reference=ScopeCall ('for' counterVariable=CounterVariable ':' forStart=IntOrReference ('to'
-		//forEnd=IntOrReference)?)? ('schedule' schedule+=ScheduleObjectReference+)? | ('for' counterVariable=CounterVariable
-		//':' forStart=IntOrReference ('to' forEnd=IntOrReference)?)? ('schedule' schedule+=ScheduleObjectReference+)? ('{'
-		//declarations+=DeclarationOrMethodWithKeywordWOSemicolon* actions+=LocalAction* (states+=ImplicitState |
-		//states+=State+) '}' | ':' declarations+=DeclarationOrMethodWithKeywordWOSemicolon* actions+=LocalAction*
-		//states+=State*))
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.10/@alternatives/@elements.7'
 		public Alternatives getAlternatives_7() { return cAlternatives_7; }
 		
-		//'is' reference=ScopeCall ('for' counterVariable=CounterVariable ':' forStart=IntOrReference ('to'
-		//forEnd=IntOrReference)?)? ('schedule' schedule+=ScheduleObjectReference+)?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.10/@alternatives/@elements.7/@elements.0'
 		public Group getGroup_7_0() { return cGroup_7_0; }
 		
-		//'is'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.10/@alternatives/@elements.7/@elements.0/@elements.0'
 		public Keyword getIsKeyword_7_0_0() { return cIsKeyword_7_0_0; }
 		
-		//reference=ScopeCall
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.10/@alternatives/@elements.7/@elements.0/@elements.1'
 		public Assignment getReferenceAssignment_7_0_1() { return cReferenceAssignment_7_0_1; }
 		
-		//ScopeCall
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.10/@alternatives/@elements.7/@elements.0/@elements.1/@terminal'
 		public RuleCall getReferenceScopeCallParserRuleCall_7_0_1_0() { return cReferenceScopeCallParserRuleCall_7_0_1_0; }
 		
-		//('for' counterVariable=CounterVariable ':' forStart=IntOrReference ('to' forEnd=IntOrReference)?)?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.10/@alternatives/@elements.7/@elements.0/@elements.2'
 		public Group getGroup_7_0_2() { return cGroup_7_0_2; }
 		
-		//'for'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.10/@alternatives/@elements.7/@elements.0/@elements.2/@elements.0'
 		public Keyword getForKeyword_7_0_2_0() { return cForKeyword_7_0_2_0; }
 		
-		//counterVariable=CounterVariable
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.10/@alternatives/@elements.7/@elements.0/@elements.2/@elements.1'
 		public Assignment getCounterVariableAssignment_7_0_2_1() { return cCounterVariableAssignment_7_0_2_1; }
 		
-		//CounterVariable
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.10/@alternatives/@elements.7/@elements.0/@elements.2/@elements.1/@terminal'
 		public RuleCall getCounterVariableCounterVariableParserRuleCall_7_0_2_1_0() { return cCounterVariableCounterVariableParserRuleCall_7_0_2_1_0; }
 		
-		//':'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.10/@alternatives/@elements.7/@elements.0/@elements.2/@elements.2'
 		public Keyword getColonKeyword_7_0_2_2() { return cColonKeyword_7_0_2_2; }
 		
-		//forStart=IntOrReference
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.10/@alternatives/@elements.7/@elements.0/@elements.2/@elements.3'
 		public Assignment getForStartAssignment_7_0_2_3() { return cForStartAssignment_7_0_2_3; }
 		
-		//IntOrReference
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.10/@alternatives/@elements.7/@elements.0/@elements.2/@elements.3/@terminal'
 		public RuleCall getForStartIntOrReferenceParserRuleCall_7_0_2_3_0() { return cForStartIntOrReferenceParserRuleCall_7_0_2_3_0; }
 		
-		//('to' forEnd=IntOrReference)?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.10/@alternatives/@elements.7/@elements.0/@elements.2/@elements.4'
 		public Group getGroup_7_0_2_4() { return cGroup_7_0_2_4; }
 		
-		//'to'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.10/@alternatives/@elements.7/@elements.0/@elements.2/@elements.4/@elements.0'
 		public Keyword getToKeyword_7_0_2_4_0() { return cToKeyword_7_0_2_4_0; }
 		
-		//forEnd=IntOrReference
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.10/@alternatives/@elements.7/@elements.0/@elements.2/@elements.4/@elements.1'
 		public Assignment getForEndAssignment_7_0_2_4_1() { return cForEndAssignment_7_0_2_4_1; }
 		
-		//IntOrReference
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.10/@alternatives/@elements.7/@elements.0/@elements.2/@elements.4/@elements.1/@terminal'
 		public RuleCall getForEndIntOrReferenceParserRuleCall_7_0_2_4_1_0() { return cForEndIntOrReferenceParserRuleCall_7_0_2_4_1_0; }
 		
-		//('schedule' schedule+=ScheduleObjectReference+)?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.10/@alternatives/@elements.7/@elements.0/@elements.3'
 		public Group getGroup_7_0_3() { return cGroup_7_0_3; }
 		
-		//'schedule'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.10/@alternatives/@elements.7/@elements.0/@elements.3/@elements.0'
 		public Keyword getScheduleKeyword_7_0_3_0() { return cScheduleKeyword_7_0_3_0; }
 		
-		//schedule+=ScheduleObjectReference+
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.10/@alternatives/@elements.7/@elements.0/@elements.3/@elements.1'
 		public Assignment getScheduleAssignment_7_0_3_1() { return cScheduleAssignment_7_0_3_1; }
 		
-		//ScheduleObjectReference
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.10/@alternatives/@elements.7/@elements.0/@elements.3/@elements.1/@terminal'
 		public RuleCall getScheduleScheduleObjectReferenceParserRuleCall_7_0_3_1_0() { return cScheduleScheduleObjectReferenceParserRuleCall_7_0_3_1_0; }
 		
-		//('for' counterVariable=CounterVariable ':' forStart=IntOrReference ('to' forEnd=IntOrReference)?)? ('schedule'
-		//schedule+=ScheduleObjectReference+)? ('{' declarations+=DeclarationOrMethodWithKeywordWOSemicolon*
-		//actions+=LocalAction* (states+=ImplicitState | states+=State+) '}' | ':'
-		//declarations+=DeclarationOrMethodWithKeywordWOSemicolon* actions+=LocalAction* states+=State*)
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.10/@alternatives/@elements.7/@elements.1'
 		public Group getGroup_7_1() { return cGroup_7_1; }
 		
-		//('for' counterVariable=CounterVariable ':' forStart=IntOrReference ('to' forEnd=IntOrReference)?)?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.10/@alternatives/@elements.7/@elements.1/@elements.0'
 		public Group getGroup_7_1_0() { return cGroup_7_1_0; }
 		
-		//'for'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.10/@alternatives/@elements.7/@elements.1/@elements.0/@elements.0'
 		public Keyword getForKeyword_7_1_0_0() { return cForKeyword_7_1_0_0; }
 		
-		//counterVariable=CounterVariable
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.10/@alternatives/@elements.7/@elements.1/@elements.0/@elements.1'
 		public Assignment getCounterVariableAssignment_7_1_0_1() { return cCounterVariableAssignment_7_1_0_1; }
 		
-		//CounterVariable
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.10/@alternatives/@elements.7/@elements.1/@elements.0/@elements.1/@terminal'
 		public RuleCall getCounterVariableCounterVariableParserRuleCall_7_1_0_1_0() { return cCounterVariableCounterVariableParserRuleCall_7_1_0_1_0; }
 		
-		//':'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.10/@alternatives/@elements.7/@elements.1/@elements.0/@elements.2'
 		public Keyword getColonKeyword_7_1_0_2() { return cColonKeyword_7_1_0_2; }
 		
-		//forStart=IntOrReference
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.10/@alternatives/@elements.7/@elements.1/@elements.0/@elements.3'
 		public Assignment getForStartAssignment_7_1_0_3() { return cForStartAssignment_7_1_0_3; }
 		
-		//IntOrReference
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.10/@alternatives/@elements.7/@elements.1/@elements.0/@elements.3/@terminal'
 		public RuleCall getForStartIntOrReferenceParserRuleCall_7_1_0_3_0() { return cForStartIntOrReferenceParserRuleCall_7_1_0_3_0; }
 		
-		//('to' forEnd=IntOrReference)?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.10/@alternatives/@elements.7/@elements.1/@elements.0/@elements.4'
 		public Group getGroup_7_1_0_4() { return cGroup_7_1_0_4; }
 		
-		//'to'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.10/@alternatives/@elements.7/@elements.1/@elements.0/@elements.4/@elements.0'
 		public Keyword getToKeyword_7_1_0_4_0() { return cToKeyword_7_1_0_4_0; }
 		
-		//forEnd=IntOrReference
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.10/@alternatives/@elements.7/@elements.1/@elements.0/@elements.4/@elements.1'
 		public Assignment getForEndAssignment_7_1_0_4_1() { return cForEndAssignment_7_1_0_4_1; }
 		
-		//IntOrReference
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.10/@alternatives/@elements.7/@elements.1/@elements.0/@elements.4/@elements.1/@terminal'
 		public RuleCall getForEndIntOrReferenceParserRuleCall_7_1_0_4_1_0() { return cForEndIntOrReferenceParserRuleCall_7_1_0_4_1_0; }
 		
-		//('schedule' schedule+=ScheduleObjectReference+)?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.10/@alternatives/@elements.7/@elements.1/@elements.1'
 		public Group getGroup_7_1_1() { return cGroup_7_1_1; }
 		
-		//'schedule'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.10/@alternatives/@elements.7/@elements.1/@elements.1/@elements.0'
 		public Keyword getScheduleKeyword_7_1_1_0() { return cScheduleKeyword_7_1_1_0; }
 		
-		//schedule+=ScheduleObjectReference+
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.10/@alternatives/@elements.7/@elements.1/@elements.1/@elements.1'
 		public Assignment getScheduleAssignment_7_1_1_1() { return cScheduleAssignment_7_1_1_1; }
 		
-		//ScheduleObjectReference
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.10/@alternatives/@elements.7/@elements.1/@elements.1/@elements.1/@terminal'
 		public RuleCall getScheduleScheduleObjectReferenceParserRuleCall_7_1_1_1_0() { return cScheduleScheduleObjectReferenceParserRuleCall_7_1_1_1_0; }
 		
-		//('{' declarations+=DeclarationOrMethodWithKeywordWOSemicolon* actions+=LocalAction* (states+=ImplicitState |
-		//states+=State+) '}' | ':' declarations+=DeclarationOrMethodWithKeywordWOSemicolon* actions+=LocalAction*
-		//states+=State*)
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.10/@alternatives/@elements.7/@elements.1/@elements.2'
 		public Alternatives getAlternatives_7_1_2() { return cAlternatives_7_1_2; }
 		
-		//'{' declarations+=DeclarationOrMethodWithKeywordWOSemicolon* actions+=LocalAction* (states+=ImplicitState |
-		//states+=State+) '}'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.10/@alternatives/@elements.7/@elements.1/@elements.2/@elements.0'
 		public Group getGroup_7_1_2_0() { return cGroup_7_1_2_0; }
 		
-		//'{'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.10/@alternatives/@elements.7/@elements.1/@elements.2/@elements.0/@elements.0'
 		public Keyword getLeftCurlyBracketKeyword_7_1_2_0_0() { return cLeftCurlyBracketKeyword_7_1_2_0_0; }
 		
-		//declarations+=DeclarationOrMethodWithKeywordWOSemicolon*
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.10/@alternatives/@elements.7/@elements.1/@elements.2/@elements.0/@elements.1'
 		public Assignment getDeclarationsAssignment_7_1_2_0_1() { return cDeclarationsAssignment_7_1_2_0_1; }
 		
-		//DeclarationOrMethodWithKeywordWOSemicolon
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.10/@alternatives/@elements.7/@elements.1/@elements.2/@elements.0/@elements.1/@terminal'
 		public RuleCall getDeclarationsDeclarationOrMethodWithKeywordWOSemicolonParserRuleCall_7_1_2_0_1_0() { return cDeclarationsDeclarationOrMethodWithKeywordWOSemicolonParserRuleCall_7_1_2_0_1_0; }
 		
-		//actions+=LocalAction*
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.10/@alternatives/@elements.7/@elements.1/@elements.2/@elements.0/@elements.2'
 		public Assignment getActionsAssignment_7_1_2_0_2() { return cActionsAssignment_7_1_2_0_2; }
 		
-		//LocalAction
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.10/@alternatives/@elements.7/@elements.1/@elements.2/@elements.0/@elements.2/@terminal'
 		public RuleCall getActionsLocalActionParserRuleCall_7_1_2_0_2_0() { return cActionsLocalActionParserRuleCall_7_1_2_0_2_0; }
 		
-		//(states+=ImplicitState | states+=State+)
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.10/@alternatives/@elements.7/@elements.1/@elements.2/@elements.0/@elements.3'
 		public Alternatives getAlternatives_7_1_2_0_3() { return cAlternatives_7_1_2_0_3; }
 		
-		//states+=ImplicitState
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.10/@alternatives/@elements.7/@elements.1/@elements.2/@elements.0/@elements.3/@elements.0'
 		public Assignment getStatesAssignment_7_1_2_0_3_0() { return cStatesAssignment_7_1_2_0_3_0; }
 		
-		//ImplicitState
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.10/@alternatives/@elements.7/@elements.1/@elements.2/@elements.0/@elements.3/@elements.0/@terminal'
 		public RuleCall getStatesImplicitStateParserRuleCall_7_1_2_0_3_0_0() { return cStatesImplicitStateParserRuleCall_7_1_2_0_3_0_0; }
 		
-		//states+=State+
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.10/@alternatives/@elements.7/@elements.1/@elements.2/@elements.0/@elements.3/@elements.1'
 		public Assignment getStatesAssignment_7_1_2_0_3_1() { return cStatesAssignment_7_1_2_0_3_1; }
 		
-		//State
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.10/@alternatives/@elements.7/@elements.1/@elements.2/@elements.0/@elements.3/@elements.1/@terminal'
 		public RuleCall getStatesStateParserRuleCall_7_1_2_0_3_1_0() { return cStatesStateParserRuleCall_7_1_2_0_3_1_0; }
 		
-		//'}'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.10/@alternatives/@elements.7/@elements.1/@elements.2/@elements.0/@elements.4'
 		public Keyword getRightCurlyBracketKeyword_7_1_2_0_4() { return cRightCurlyBracketKeyword_7_1_2_0_4; }
 		
-		//':' declarations+=DeclarationOrMethodWithKeywordWOSemicolon* actions+=LocalAction* states+=State*
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.10/@alternatives/@elements.7/@elements.1/@elements.2/@elements.1'
 		public Group getGroup_7_1_2_1() { return cGroup_7_1_2_1; }
 		
-		//':'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.10/@alternatives/@elements.7/@elements.1/@elements.2/@elements.1/@elements.0'
 		public Keyword getColonKeyword_7_1_2_1_0() { return cColonKeyword_7_1_2_1_0; }
 		
-		//declarations+=DeclarationOrMethodWithKeywordWOSemicolon*
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.10/@alternatives/@elements.7/@elements.1/@elements.2/@elements.1/@elements.1'
 		public Assignment getDeclarationsAssignment_7_1_2_1_1() { return cDeclarationsAssignment_7_1_2_1_1; }
 		
-		//DeclarationOrMethodWithKeywordWOSemicolon
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.10/@alternatives/@elements.7/@elements.1/@elements.2/@elements.1/@elements.1/@terminal'
 		public RuleCall getDeclarationsDeclarationOrMethodWithKeywordWOSemicolonParserRuleCall_7_1_2_1_1_0() { return cDeclarationsDeclarationOrMethodWithKeywordWOSemicolonParserRuleCall_7_1_2_1_1_0; }
 		
-		//actions+=LocalAction*
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.10/@alternatives/@elements.7/@elements.1/@elements.2/@elements.1/@elements.2'
 		public Assignment getActionsAssignment_7_1_2_1_2() { return cActionsAssignment_7_1_2_1_2; }
 		
-		//LocalAction
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.10/@alternatives/@elements.7/@elements.1/@elements.2/@elements.1/@elements.2/@terminal'
 		public RuleCall getActionsLocalActionParserRuleCall_7_1_2_1_2_0() { return cActionsLocalActionParserRuleCall_7_1_2_1_2_0; }
 		
-		//states+=State*
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.10/@alternatives/@elements.7/@elements.1/@elements.2/@elements.1/@elements.3'
 		public Assignment getStatesAssignment_7_1_2_1_3() { return cStatesAssignment_7_1_2_1_3; }
 		
-		//State
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.10/@alternatives/@elements.7/@elements.1/@elements.2/@elements.1/@elements.3/@terminal'
 		public RuleCall getStatesStateParserRuleCall_7_1_2_1_3_0() { return cStatesStateParserRuleCall_7_1_2_1_3_0; }
 	}
 	public class DataflowRegionElements extends AbstractParserRuleElementFinder {
@@ -1297,149 +1263,133 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cEquationsAssignment_9_1_2 = (Assignment)cGroup_9_1.eContents().get(2);
 		private final RuleCall cEquationsAssignmentParserRuleCall_9_1_2_0 = (RuleCall)cEquationsAssignment_9_1_2.eContents().get(0);
 		
-		//DataflowRegion sccharts::DataflowRegion:
-		//	{sccharts::DataflowRegion} annotations+=Annotation*
-		//	override?='override'?
-		//	'dataflow' name=ExtendedID? label=STRING? ('for' counterVariable=CounterVariable ':' forStart=IntOrReference ('to'
-		//	forEnd=IntOrReference)?)? ('schedule' schedule+=ScheduleObjectReference+)?
-		//	once?='once'? ('{'
-		//	declarations+=DeclarationWOSemicolon*
-		//	equations+=Assignment*
-		//	'}'
-		//	|
-		//	':'
-		//	declarations+=DeclarationWOSemicolon*
-		//	equations+=Assignment*);
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#XtextFragmentProvider_de.cau.cs.kieler.sccharts.text.SCTX/DataflowRegion'
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{sccharts::DataflowRegion} annotations+=Annotation* override?='override'? 'dataflow' name=ExtendedID? label=STRING?
-		//('for' counterVariable=CounterVariable ':' forStart=IntOrReference ('to' forEnd=IntOrReference)?)? ('schedule'
-		//schedule+=ScheduleObjectReference+)? once?='once'? ('{' declarations+=DeclarationWOSemicolon* equations+=Assignment*
-		//'}' | ':' declarations+=DeclarationWOSemicolon* equations+=Assignment*)
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.11/@alternatives'
 		public Group getGroup() { return cGroup; }
 		
-		//{sccharts::DataflowRegion}
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.11/@alternatives/@elements.0'
 		public Action getDataflowRegionAction_0() { return cDataflowRegionAction_0; }
 		
-		//annotations+=Annotation*
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.11/@alternatives/@elements.1'
 		public Assignment getAnnotationsAssignment_1() { return cAnnotationsAssignment_1; }
 		
-		//Annotation
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.11/@alternatives/@elements.1/@terminal'
 		public RuleCall getAnnotationsAnnotationParserRuleCall_1_0() { return cAnnotationsAnnotationParserRuleCall_1_0; }
 		
-		//override?='override'?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.11/@alternatives/@elements.2'
 		public Assignment getOverrideAssignment_2() { return cOverrideAssignment_2; }
 		
-		//'override'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.11/@alternatives/@elements.2/@terminal'
 		public Keyword getOverrideOverrideKeyword_2_0() { return cOverrideOverrideKeyword_2_0; }
 		
-		//'dataflow'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.11/@alternatives/@elements.3'
 		public Keyword getDataflowKeyword_3() { return cDataflowKeyword_3; }
 		
-		//name=ExtendedID?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.11/@alternatives/@elements.4'
 		public Assignment getNameAssignment_4() { return cNameAssignment_4; }
 		
-		//ExtendedID
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.11/@alternatives/@elements.4/@terminal'
 		public RuleCall getNameExtendedIDParserRuleCall_4_0() { return cNameExtendedIDParserRuleCall_4_0; }
 		
-		//label=STRING?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.11/@alternatives/@elements.5'
 		public Assignment getLabelAssignment_5() { return cLabelAssignment_5; }
 		
-		//STRING
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.11/@alternatives/@elements.5/@terminal'
 		public RuleCall getLabelSTRINGTerminalRuleCall_5_0() { return cLabelSTRINGTerminalRuleCall_5_0; }
 		
-		//('for' counterVariable=CounterVariable ':' forStart=IntOrReference ('to' forEnd=IntOrReference)?)?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.11/@alternatives/@elements.6'
 		public Group getGroup_6() { return cGroup_6; }
 		
-		//'for'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.11/@alternatives/@elements.6/@elements.0'
 		public Keyword getForKeyword_6_0() { return cForKeyword_6_0; }
 		
-		//counterVariable=CounterVariable
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.11/@alternatives/@elements.6/@elements.1'
 		public Assignment getCounterVariableAssignment_6_1() { return cCounterVariableAssignment_6_1; }
 		
-		//CounterVariable
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.11/@alternatives/@elements.6/@elements.1/@terminal'
 		public RuleCall getCounterVariableCounterVariableParserRuleCall_6_1_0() { return cCounterVariableCounterVariableParserRuleCall_6_1_0; }
 		
-		//':'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.11/@alternatives/@elements.6/@elements.2'
 		public Keyword getColonKeyword_6_2() { return cColonKeyword_6_2; }
 		
-		//forStart=IntOrReference
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.11/@alternatives/@elements.6/@elements.3'
 		public Assignment getForStartAssignment_6_3() { return cForStartAssignment_6_3; }
 		
-		//IntOrReference
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.11/@alternatives/@elements.6/@elements.3/@terminal'
 		public RuleCall getForStartIntOrReferenceParserRuleCall_6_3_0() { return cForStartIntOrReferenceParserRuleCall_6_3_0; }
 		
-		//('to' forEnd=IntOrReference)?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.11/@alternatives/@elements.6/@elements.4'
 		public Group getGroup_6_4() { return cGroup_6_4; }
 		
-		//'to'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.11/@alternatives/@elements.6/@elements.4/@elements.0'
 		public Keyword getToKeyword_6_4_0() { return cToKeyword_6_4_0; }
 		
-		//forEnd=IntOrReference
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.11/@alternatives/@elements.6/@elements.4/@elements.1'
 		public Assignment getForEndAssignment_6_4_1() { return cForEndAssignment_6_4_1; }
 		
-		//IntOrReference
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.11/@alternatives/@elements.6/@elements.4/@elements.1/@terminal'
 		public RuleCall getForEndIntOrReferenceParserRuleCall_6_4_1_0() { return cForEndIntOrReferenceParserRuleCall_6_4_1_0; }
 		
-		//('schedule' schedule+=ScheduleObjectReference+)?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.11/@alternatives/@elements.7'
 		public Group getGroup_7() { return cGroup_7; }
 		
-		//'schedule'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.11/@alternatives/@elements.7/@elements.0'
 		public Keyword getScheduleKeyword_7_0() { return cScheduleKeyword_7_0; }
 		
-		//schedule+=ScheduleObjectReference+
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.11/@alternatives/@elements.7/@elements.1'
 		public Assignment getScheduleAssignment_7_1() { return cScheduleAssignment_7_1; }
 		
-		//ScheduleObjectReference
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.11/@alternatives/@elements.7/@elements.1/@terminal'
 		public RuleCall getScheduleScheduleObjectReferenceParserRuleCall_7_1_0() { return cScheduleScheduleObjectReferenceParserRuleCall_7_1_0; }
 		
-		//once?='once'?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.11/@alternatives/@elements.8'
 		public Assignment getOnceAssignment_8() { return cOnceAssignment_8; }
 		
-		//'once'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.11/@alternatives/@elements.8/@terminal'
 		public Keyword getOnceOnceKeyword_8_0() { return cOnceOnceKeyword_8_0; }
 		
-		//('{' declarations+=DeclarationWOSemicolon* equations+=Assignment* '}' | ':' declarations+=DeclarationWOSemicolon*
-		//equations+=Assignment*)
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.11/@alternatives/@elements.9'
 		public Alternatives getAlternatives_9() { return cAlternatives_9; }
 		
-		//'{' declarations+=DeclarationWOSemicolon* equations+=Assignment* '}'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.11/@alternatives/@elements.9/@elements.0'
 		public Group getGroup_9_0() { return cGroup_9_0; }
 		
-		//'{'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.11/@alternatives/@elements.9/@elements.0/@elements.0'
 		public Keyword getLeftCurlyBracketKeyword_9_0_0() { return cLeftCurlyBracketKeyword_9_0_0; }
 		
-		//declarations+=DeclarationWOSemicolon*
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.11/@alternatives/@elements.9/@elements.0/@elements.1'
 		public Assignment getDeclarationsAssignment_9_0_1() { return cDeclarationsAssignment_9_0_1; }
 		
-		//DeclarationWOSemicolon
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.11/@alternatives/@elements.9/@elements.0/@elements.1/@terminal'
 		public RuleCall getDeclarationsDeclarationWOSemicolonParserRuleCall_9_0_1_0() { return cDeclarationsDeclarationWOSemicolonParserRuleCall_9_0_1_0; }
 		
-		//equations+=Assignment*
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.11/@alternatives/@elements.9/@elements.0/@elements.2'
 		public Assignment getEquationsAssignment_9_0_2() { return cEquationsAssignment_9_0_2; }
 		
-		//Assignment
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.11/@alternatives/@elements.9/@elements.0/@elements.2/@terminal'
 		public RuleCall getEquationsAssignmentParserRuleCall_9_0_2_0() { return cEquationsAssignmentParserRuleCall_9_0_2_0; }
 		
-		//'}'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.11/@alternatives/@elements.9/@elements.0/@elements.3'
 		public Keyword getRightCurlyBracketKeyword_9_0_3() { return cRightCurlyBracketKeyword_9_0_3; }
 		
-		//':' declarations+=DeclarationWOSemicolon* equations+=Assignment*
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.11/@alternatives/@elements.9/@elements.1'
 		public Group getGroup_9_1() { return cGroup_9_1; }
 		
-		//':'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.11/@alternatives/@elements.9/@elements.1/@elements.0'
 		public Keyword getColonKeyword_9_1_0() { return cColonKeyword_9_1_0; }
 		
-		//declarations+=DeclarationWOSemicolon*
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.11/@alternatives/@elements.9/@elements.1/@elements.1'
 		public Assignment getDeclarationsAssignment_9_1_1() { return cDeclarationsAssignment_9_1_1; }
 		
-		//DeclarationWOSemicolon
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.11/@alternatives/@elements.9/@elements.1/@elements.1/@terminal'
 		public RuleCall getDeclarationsDeclarationWOSemicolonParserRuleCall_9_1_1_0() { return cDeclarationsDeclarationWOSemicolonParserRuleCall_9_1_1_0; }
 		
-		//equations+=Assignment*
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.11/@alternatives/@elements.9/@elements.1/@elements.2'
 		public Assignment getEquationsAssignment_9_1_2() { return cEquationsAssignment_9_1_2; }
 		
-		//Assignment
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.11/@alternatives/@elements.9/@elements.1/@elements.2/@terminal'
 		public RuleCall getEquationsAssignmentParserRuleCall_9_1_2_0() { return cEquationsAssignmentParserRuleCall_9_1_2_0; }
 	}
 	public class IntOrReferenceElements extends AbstractParserRuleElementFinder {
@@ -1448,17 +1398,16 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cIntValueParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
 		private final RuleCall cValuedObjectReferenceParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		
-		//IntOrReference kexpressions::Expression:
-		//	IntValue | ValuedObjectReference;
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#XtextFragmentProvider_de.cau.cs.kieler.sccharts.text.SCTX/IntOrReference'
 		@Override public ParserRule getRule() { return rule; }
 		
-		//IntValue | ValuedObjectReference
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.12/@alternatives'
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
-		//IntValue
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.12/@alternatives/@elements.0'
 		public RuleCall getIntValueParserRuleCall_0() { return cIntValueParserRuleCall_0; }
 		
-		//ValuedObjectReference
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.12/@alternatives/@elements.1'
 		public RuleCall getValuedObjectReferenceParserRuleCall_1() { return cValuedObjectReferenceParserRuleCall_1; }
 	}
 	public class CounterVariableElements extends AbstractParserRuleElementFinder {
@@ -1466,14 +1415,13 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cNameAssignment = (Assignment)rule.eContents().get(1);
 		private final RuleCall cNamePrimeIDParserRuleCall_0 = (RuleCall)cNameAssignment.eContents().get(0);
 		
-		//CounterVariable kexpressions::ValuedObject:
-		//	name=PrimeID;
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#XtextFragmentProvider_de.cau.cs.kieler.sccharts.text.SCTX/CounterVariable'
 		@Override public ParserRule getRule() { return rule; }
 		
-		//name=PrimeID
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.13/@alternatives'
 		public Assignment getNameAssignment() { return cNameAssignment; }
 		
-		//PrimeID
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.13/@alternatives/@terminal'
 		public RuleCall getNamePrimeIDParserRuleCall_0() { return cNamePrimeIDParserRuleCall_0; }
 	}
 	public class LocalActionElements extends AbstractParserRuleElementFinder {
@@ -1487,35 +1435,31 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cSucceedingActionParserRuleCall_5 = (RuleCall)cAlternatives.eContents().get(5);
 		private final RuleCall cPeriodActionParserRuleCall_6 = (RuleCall)cAlternatives.eContents().get(6);
 		
-		//// -------------- //
-		////  Action Rules  // 
-		//// -------------- //
-		//LocalAction sccharts::LocalAction:
-		//	EntryAction | DuringAction | ExitAction | SuspendAction | PrecedingAction | SucceedingAction | PeriodAction;
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#XtextFragmentProvider_de.cau.cs.kieler.sccharts.text.SCTX/LocalAction'
 		@Override public ParserRule getRule() { return rule; }
 		
-		//EntryAction | DuringAction | ExitAction | SuspendAction | PrecedingAction | SucceedingAction | PeriodAction
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.14/@alternatives'
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
-		//EntryAction
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.14/@alternatives/@elements.0'
 		public RuleCall getEntryActionParserRuleCall_0() { return cEntryActionParserRuleCall_0; }
 		
-		//DuringAction
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.14/@alternatives/@elements.1'
 		public RuleCall getDuringActionParserRuleCall_1() { return cDuringActionParserRuleCall_1; }
 		
-		//ExitAction
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.14/@alternatives/@elements.2'
 		public RuleCall getExitActionParserRuleCall_2() { return cExitActionParserRuleCall_2; }
 		
-		//SuspendAction
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.14/@alternatives/@elements.3'
 		public RuleCall getSuspendActionParserRuleCall_3() { return cSuspendActionParserRuleCall_3; }
 		
-		//PrecedingAction
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.14/@alternatives/@elements.4'
 		public RuleCall getPrecedingActionParserRuleCall_4() { return cPrecedingActionParserRuleCall_4; }
 		
-		//SucceedingAction
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.14/@alternatives/@elements.5'
 		public RuleCall getSucceedingActionParserRuleCall_5() { return cSucceedingActionParserRuleCall_5; }
 		
-		//PeriodAction
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.14/@alternatives/@elements.6'
 		public RuleCall getPeriodActionParserRuleCall_6() { return cPeriodActionParserRuleCall_6; }
 	}
 	public class EntryActionElements extends AbstractParserRuleElementFinder {
@@ -1544,80 +1488,76 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cLabelAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
 		private final RuleCall cLabelSTRINGTerminalRuleCall_4_1_0 = (RuleCall)cLabelAssignment_4_1.eContents().get(0);
 		
-		//EntryAction sccharts::EntryAction:
-		//	{sccharts::EntryAction}
-		//	'entry' ('if' trigger=BoolScheduleExpression ('Pr' triggerProbability=FLOAT)?)? ('do' effects+=Effect (';'
-		//	effects+=Effect)*)? ('label' label=STRING)?;
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#XtextFragmentProvider_de.cau.cs.kieler.sccharts.text.SCTX/EntryAction'
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{sccharts::EntryAction} 'entry' ('if' trigger=BoolScheduleExpression ('Pr' triggerProbability=FLOAT)?)? ('do'
-		//effects+=Effect (';' effects+=Effect)*)? ('label' label=STRING)?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.15/@alternatives'
 		public Group getGroup() { return cGroup; }
 		
-		//{sccharts::EntryAction}
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.15/@alternatives/@elements.0'
 		public Action getEntryActionAction_0() { return cEntryActionAction_0; }
 		
-		//'entry'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.15/@alternatives/@elements.1'
 		public Keyword getEntryKeyword_1() { return cEntryKeyword_1; }
 		
-		//('if' trigger=BoolScheduleExpression ('Pr' triggerProbability=FLOAT)?)?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.15/@alternatives/@elements.2'
 		public Group getGroup_2() { return cGroup_2; }
 		
-		//'if'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.15/@alternatives/@elements.2/@elements.0'
 		public Keyword getIfKeyword_2_0() { return cIfKeyword_2_0; }
 		
-		//trigger=BoolScheduleExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.15/@alternatives/@elements.2/@elements.1'
 		public Assignment getTriggerAssignment_2_1() { return cTriggerAssignment_2_1; }
 		
-		//BoolScheduleExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.15/@alternatives/@elements.2/@elements.1/@terminal'
 		public RuleCall getTriggerBoolScheduleExpressionParserRuleCall_2_1_0() { return cTriggerBoolScheduleExpressionParserRuleCall_2_1_0; }
 		
-		//('Pr' triggerProbability=FLOAT)?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.15/@alternatives/@elements.2/@elements.2'
 		public Group getGroup_2_2() { return cGroup_2_2; }
 		
-		//'Pr'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.15/@alternatives/@elements.2/@elements.2/@elements.0'
 		public Keyword getPrKeyword_2_2_0() { return cPrKeyword_2_2_0; }
 		
-		//triggerProbability=FLOAT
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.15/@alternatives/@elements.2/@elements.2/@elements.1'
 		public Assignment getTriggerProbabilityAssignment_2_2_1() { return cTriggerProbabilityAssignment_2_2_1; }
 		
-		//FLOAT
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.15/@alternatives/@elements.2/@elements.2/@elements.1/@terminal'
 		public RuleCall getTriggerProbabilityFLOATTerminalRuleCall_2_2_1_0() { return cTriggerProbabilityFLOATTerminalRuleCall_2_2_1_0; }
 		
-		//('do' effects+=Effect (';' effects+=Effect)*)?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.15/@alternatives/@elements.3'
 		public Group getGroup_3() { return cGroup_3; }
 		
-		//'do'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.15/@alternatives/@elements.3/@elements.0'
 		public Keyword getDoKeyword_3_0() { return cDoKeyword_3_0; }
 		
-		//effects+=Effect
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.15/@alternatives/@elements.3/@elements.1'
 		public Assignment getEffectsAssignment_3_1() { return cEffectsAssignment_3_1; }
 		
-		//Effect
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.15/@alternatives/@elements.3/@elements.1/@terminal'
 		public RuleCall getEffectsEffectParserRuleCall_3_1_0() { return cEffectsEffectParserRuleCall_3_1_0; }
 		
-		//(';' effects+=Effect)*
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.15/@alternatives/@elements.3/@elements.2'
 		public Group getGroup_3_2() { return cGroup_3_2; }
 		
-		//';'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.15/@alternatives/@elements.3/@elements.2/@elements.0'
 		public Keyword getSemicolonKeyword_3_2_0() { return cSemicolonKeyword_3_2_0; }
 		
-		//effects+=Effect
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.15/@alternatives/@elements.3/@elements.2/@elements.1'
 		public Assignment getEffectsAssignment_3_2_1() { return cEffectsAssignment_3_2_1; }
 		
-		//Effect
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.15/@alternatives/@elements.3/@elements.2/@elements.1/@terminal'
 		public RuleCall getEffectsEffectParserRuleCall_3_2_1_0() { return cEffectsEffectParserRuleCall_3_2_1_0; }
 		
-		//('label' label=STRING)?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.15/@alternatives/@elements.4'
 		public Group getGroup_4() { return cGroup_4; }
 		
-		//'label'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.15/@alternatives/@elements.4/@elements.0'
 		public Keyword getLabelKeyword_4_0() { return cLabelKeyword_4_0; }
 		
-		//label=STRING
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.15/@alternatives/@elements.4/@elements.1'
 		public Assignment getLabelAssignment_4_1() { return cLabelAssignment_4_1; }
 		
-		//STRING
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.15/@alternatives/@elements.4/@elements.1/@terminal'
 		public RuleCall getLabelSTRINGTerminalRuleCall_4_1_0() { return cLabelSTRINGTerminalRuleCall_4_1_0; }
 	}
 	public class DuringActionElements extends AbstractParserRuleElementFinder {
@@ -1650,91 +1590,88 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cLabelAssignment_5_1 = (Assignment)cGroup_5.eContents().get(1);
 		private final RuleCall cLabelSTRINGTerminalRuleCall_5_1_0 = (RuleCall)cLabelAssignment_5_1.eContents().get(0);
 		
-		//DuringAction sccharts::DuringAction:
-		//	{sccharts::DuringAction} delay=DelayType? 'during' ('if' triggerDelay=INT? trigger=BoolScheduleExpression ('Pr='
-		//	triggerProbability=FLOAT)?)? ('do' effects+=Effect (';' effects+=Effect)*)? ('label' label=STRING)?;
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#XtextFragmentProvider_de.cau.cs.kieler.sccharts.text.SCTX/DuringAction'
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{sccharts::DuringAction} delay=DelayType? 'during' ('if' triggerDelay=INT? trigger=BoolScheduleExpression ('Pr='
-		//triggerProbability=FLOAT)?)? ('do' effects+=Effect (';' effects+=Effect)*)? ('label' label=STRING)?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.16/@alternatives'
 		public Group getGroup() { return cGroup; }
 		
-		//{sccharts::DuringAction}
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.16/@alternatives/@elements.0'
 		public Action getDuringActionAction_0() { return cDuringActionAction_0; }
 		
-		//delay=DelayType?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.16/@alternatives/@elements.1'
 		public Assignment getDelayAssignment_1() { return cDelayAssignment_1; }
 		
-		//DelayType
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.16/@alternatives/@elements.1/@terminal'
 		public RuleCall getDelayDelayTypeEnumRuleCall_1_0() { return cDelayDelayTypeEnumRuleCall_1_0; }
 		
-		//'during'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.16/@alternatives/@elements.2'
 		public Keyword getDuringKeyword_2() { return cDuringKeyword_2; }
 		
-		//('if' triggerDelay=INT? trigger=BoolScheduleExpression ('Pr=' triggerProbability=FLOAT)?)?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.16/@alternatives/@elements.3'
 		public Group getGroup_3() { return cGroup_3; }
 		
-		//'if'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.16/@alternatives/@elements.3/@elements.0'
 		public Keyword getIfKeyword_3_0() { return cIfKeyword_3_0; }
 		
-		//triggerDelay=INT?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.16/@alternatives/@elements.3/@elements.1'
 		public Assignment getTriggerDelayAssignment_3_1() { return cTriggerDelayAssignment_3_1; }
 		
-		//INT
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.16/@alternatives/@elements.3/@elements.1/@terminal'
 		public RuleCall getTriggerDelayINTTerminalRuleCall_3_1_0() { return cTriggerDelayINTTerminalRuleCall_3_1_0; }
 		
-		//trigger=BoolScheduleExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.16/@alternatives/@elements.3/@elements.2'
 		public Assignment getTriggerAssignment_3_2() { return cTriggerAssignment_3_2; }
 		
-		//BoolScheduleExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.16/@alternatives/@elements.3/@elements.2/@terminal'
 		public RuleCall getTriggerBoolScheduleExpressionParserRuleCall_3_2_0() { return cTriggerBoolScheduleExpressionParserRuleCall_3_2_0; }
 		
-		//('Pr=' triggerProbability=FLOAT)?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.16/@alternatives/@elements.3/@elements.3'
 		public Group getGroup_3_3() { return cGroup_3_3; }
 		
-		//'Pr='
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.16/@alternatives/@elements.3/@elements.3/@elements.0'
 		public Keyword getPrKeyword_3_3_0() { return cPrKeyword_3_3_0; }
 		
-		//triggerProbability=FLOAT
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.16/@alternatives/@elements.3/@elements.3/@elements.1'
 		public Assignment getTriggerProbabilityAssignment_3_3_1() { return cTriggerProbabilityAssignment_3_3_1; }
 		
-		//FLOAT
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.16/@alternatives/@elements.3/@elements.3/@elements.1/@terminal'
 		public RuleCall getTriggerProbabilityFLOATTerminalRuleCall_3_3_1_0() { return cTriggerProbabilityFLOATTerminalRuleCall_3_3_1_0; }
 		
-		//('do' effects+=Effect (';' effects+=Effect)*)?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.16/@alternatives/@elements.4'
 		public Group getGroup_4() { return cGroup_4; }
 		
-		//'do'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.16/@alternatives/@elements.4/@elements.0'
 		public Keyword getDoKeyword_4_0() { return cDoKeyword_4_0; }
 		
-		//effects+=Effect
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.16/@alternatives/@elements.4/@elements.1'
 		public Assignment getEffectsAssignment_4_1() { return cEffectsAssignment_4_1; }
 		
-		//Effect
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.16/@alternatives/@elements.4/@elements.1/@terminal'
 		public RuleCall getEffectsEffectParserRuleCall_4_1_0() { return cEffectsEffectParserRuleCall_4_1_0; }
 		
-		//(';' effects+=Effect)*
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.16/@alternatives/@elements.4/@elements.2'
 		public Group getGroup_4_2() { return cGroup_4_2; }
 		
-		//';'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.16/@alternatives/@elements.4/@elements.2/@elements.0'
 		public Keyword getSemicolonKeyword_4_2_0() { return cSemicolonKeyword_4_2_0; }
 		
-		//effects+=Effect
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.16/@alternatives/@elements.4/@elements.2/@elements.1'
 		public Assignment getEffectsAssignment_4_2_1() { return cEffectsAssignment_4_2_1; }
 		
-		//Effect
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.16/@alternatives/@elements.4/@elements.2/@elements.1/@terminal'
 		public RuleCall getEffectsEffectParserRuleCall_4_2_1_0() { return cEffectsEffectParserRuleCall_4_2_1_0; }
 		
-		//('label' label=STRING)?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.16/@alternatives/@elements.5'
 		public Group getGroup_5() { return cGroup_5; }
 		
-		//'label'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.16/@alternatives/@elements.5/@elements.0'
 		public Keyword getLabelKeyword_5_0() { return cLabelKeyword_5_0; }
 		
-		//label=STRING
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.16/@alternatives/@elements.5/@elements.1'
 		public Assignment getLabelAssignment_5_1() { return cLabelAssignment_5_1; }
 		
-		//STRING
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.16/@alternatives/@elements.5/@elements.1/@terminal'
 		public RuleCall getLabelSTRINGTerminalRuleCall_5_1_0() { return cLabelSTRINGTerminalRuleCall_5_1_0; }
 	}
 	public class ExitActionElements extends AbstractParserRuleElementFinder {
@@ -1763,80 +1700,76 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cLabelAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
 		private final RuleCall cLabelSTRINGTerminalRuleCall_4_1_0 = (RuleCall)cLabelAssignment_4_1.eContents().get(0);
 		
-		//ExitAction sccharts::ExitAction:
-		//	{sccharts::ExitAction}
-		//	'exit' ('if' trigger=BoolScheduleExpression ('Pr' triggerProbability=FLOAT)?)? ('do' effects+=Effect (';'
-		//	effects+=Effect)*)? ('label' label=STRING)?;
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#XtextFragmentProvider_de.cau.cs.kieler.sccharts.text.SCTX/ExitAction'
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{sccharts::ExitAction} 'exit' ('if' trigger=BoolScheduleExpression ('Pr' triggerProbability=FLOAT)?)? ('do'
-		//effects+=Effect (';' effects+=Effect)*)? ('label' label=STRING)?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.17/@alternatives'
 		public Group getGroup() { return cGroup; }
 		
-		//{sccharts::ExitAction}
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.17/@alternatives/@elements.0'
 		public Action getExitActionAction_0() { return cExitActionAction_0; }
 		
-		//'exit'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.17/@alternatives/@elements.1'
 		public Keyword getExitKeyword_1() { return cExitKeyword_1; }
 		
-		//('if' trigger=BoolScheduleExpression ('Pr' triggerProbability=FLOAT)?)?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.17/@alternatives/@elements.2'
 		public Group getGroup_2() { return cGroup_2; }
 		
-		//'if'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.17/@alternatives/@elements.2/@elements.0'
 		public Keyword getIfKeyword_2_0() { return cIfKeyword_2_0; }
 		
-		//trigger=BoolScheduleExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.17/@alternatives/@elements.2/@elements.1'
 		public Assignment getTriggerAssignment_2_1() { return cTriggerAssignment_2_1; }
 		
-		//BoolScheduleExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.17/@alternatives/@elements.2/@elements.1/@terminal'
 		public RuleCall getTriggerBoolScheduleExpressionParserRuleCall_2_1_0() { return cTriggerBoolScheduleExpressionParserRuleCall_2_1_0; }
 		
-		//('Pr' triggerProbability=FLOAT)?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.17/@alternatives/@elements.2/@elements.2'
 		public Group getGroup_2_2() { return cGroup_2_2; }
 		
-		//'Pr'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.17/@alternatives/@elements.2/@elements.2/@elements.0'
 		public Keyword getPrKeyword_2_2_0() { return cPrKeyword_2_2_0; }
 		
-		//triggerProbability=FLOAT
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.17/@alternatives/@elements.2/@elements.2/@elements.1'
 		public Assignment getTriggerProbabilityAssignment_2_2_1() { return cTriggerProbabilityAssignment_2_2_1; }
 		
-		//FLOAT
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.17/@alternatives/@elements.2/@elements.2/@elements.1/@terminal'
 		public RuleCall getTriggerProbabilityFLOATTerminalRuleCall_2_2_1_0() { return cTriggerProbabilityFLOATTerminalRuleCall_2_2_1_0; }
 		
-		//('do' effects+=Effect (';' effects+=Effect)*)?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.17/@alternatives/@elements.3'
 		public Group getGroup_3() { return cGroup_3; }
 		
-		//'do'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.17/@alternatives/@elements.3/@elements.0'
 		public Keyword getDoKeyword_3_0() { return cDoKeyword_3_0; }
 		
-		//effects+=Effect
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.17/@alternatives/@elements.3/@elements.1'
 		public Assignment getEffectsAssignment_3_1() { return cEffectsAssignment_3_1; }
 		
-		//Effect
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.17/@alternatives/@elements.3/@elements.1/@terminal'
 		public RuleCall getEffectsEffectParserRuleCall_3_1_0() { return cEffectsEffectParserRuleCall_3_1_0; }
 		
-		//(';' effects+=Effect)*
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.17/@alternatives/@elements.3/@elements.2'
 		public Group getGroup_3_2() { return cGroup_3_2; }
 		
-		//';'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.17/@alternatives/@elements.3/@elements.2/@elements.0'
 		public Keyword getSemicolonKeyword_3_2_0() { return cSemicolonKeyword_3_2_0; }
 		
-		//effects+=Effect
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.17/@alternatives/@elements.3/@elements.2/@elements.1'
 		public Assignment getEffectsAssignment_3_2_1() { return cEffectsAssignment_3_2_1; }
 		
-		//Effect
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.17/@alternatives/@elements.3/@elements.2/@elements.1/@terminal'
 		public RuleCall getEffectsEffectParserRuleCall_3_2_1_0() { return cEffectsEffectParserRuleCall_3_2_1_0; }
 		
-		//('label' label=STRING)?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.17/@alternatives/@elements.4'
 		public Group getGroup_4() { return cGroup_4; }
 		
-		//'label'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.17/@alternatives/@elements.4/@elements.0'
 		public Keyword getLabelKeyword_4_0() { return cLabelKeyword_4_0; }
 		
-		//label=STRING
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.17/@alternatives/@elements.4/@elements.1'
 		public Assignment getLabelAssignment_4_1() { return cLabelAssignment_4_1; }
 		
-		//STRING
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.17/@alternatives/@elements.4/@elements.1/@terminal'
 		public RuleCall getLabelSTRINGTerminalRuleCall_4_1_0() { return cLabelSTRINGTerminalRuleCall_4_1_0; }
 	}
 	public class SuspendActionElements extends AbstractParserRuleElementFinder {
@@ -1863,73 +1796,70 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cLabelAssignment_5_1 = (Assignment)cGroup_5.eContents().get(1);
 		private final RuleCall cLabelSTRINGTerminalRuleCall_5_1_0 = (RuleCall)cLabelAssignment_5_1.eContents().get(0);
 		
-		//SuspendAction sccharts::SuspendAction:
-		//	{sccharts::SuspendAction} delay=DelayType? weak?='weak'? 'suspend' ('if' triggerDelay=INT?
-		//	trigger=BoolScheduleExpression ('Pr=' triggerProbability=FLOAT)?)? ('label' label=STRING)?;
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#XtextFragmentProvider_de.cau.cs.kieler.sccharts.text.SCTX/SuspendAction'
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{sccharts::SuspendAction} delay=DelayType? weak?='weak'? 'suspend' ('if' triggerDelay=INT?
-		//trigger=BoolScheduleExpression ('Pr=' triggerProbability=FLOAT)?)? ('label' label=STRING)?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.18/@alternatives'
 		public Group getGroup() { return cGroup; }
 		
-		//{sccharts::SuspendAction}
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.18/@alternatives/@elements.0'
 		public Action getSuspendActionAction_0() { return cSuspendActionAction_0; }
 		
-		//delay=DelayType?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.18/@alternatives/@elements.1'
 		public Assignment getDelayAssignment_1() { return cDelayAssignment_1; }
 		
-		//DelayType
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.18/@alternatives/@elements.1/@terminal'
 		public RuleCall getDelayDelayTypeEnumRuleCall_1_0() { return cDelayDelayTypeEnumRuleCall_1_0; }
 		
-		//weak?='weak'?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.18/@alternatives/@elements.2'
 		public Assignment getWeakAssignment_2() { return cWeakAssignment_2; }
 		
-		//'weak'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.18/@alternatives/@elements.2/@terminal'
 		public Keyword getWeakWeakKeyword_2_0() { return cWeakWeakKeyword_2_0; }
 		
-		//'suspend'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.18/@alternatives/@elements.3'
 		public Keyword getSuspendKeyword_3() { return cSuspendKeyword_3; }
 		
-		//('if' triggerDelay=INT? trigger=BoolScheduleExpression ('Pr=' triggerProbability=FLOAT)?)?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.18/@alternatives/@elements.4'
 		public Group getGroup_4() { return cGroup_4; }
 		
-		//'if'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.18/@alternatives/@elements.4/@elements.0'
 		public Keyword getIfKeyword_4_0() { return cIfKeyword_4_0; }
 		
-		//triggerDelay=INT?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.18/@alternatives/@elements.4/@elements.1'
 		public Assignment getTriggerDelayAssignment_4_1() { return cTriggerDelayAssignment_4_1; }
 		
-		//INT
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.18/@alternatives/@elements.4/@elements.1/@terminal'
 		public RuleCall getTriggerDelayINTTerminalRuleCall_4_1_0() { return cTriggerDelayINTTerminalRuleCall_4_1_0; }
 		
-		//trigger=BoolScheduleExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.18/@alternatives/@elements.4/@elements.2'
 		public Assignment getTriggerAssignment_4_2() { return cTriggerAssignment_4_2; }
 		
-		//BoolScheduleExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.18/@alternatives/@elements.4/@elements.2/@terminal'
 		public RuleCall getTriggerBoolScheduleExpressionParserRuleCall_4_2_0() { return cTriggerBoolScheduleExpressionParserRuleCall_4_2_0; }
 		
-		//('Pr=' triggerProbability=FLOAT)?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.18/@alternatives/@elements.4/@elements.3'
 		public Group getGroup_4_3() { return cGroup_4_3; }
 		
-		//'Pr='
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.18/@alternatives/@elements.4/@elements.3/@elements.0'
 		public Keyword getPrKeyword_4_3_0() { return cPrKeyword_4_3_0; }
 		
-		//triggerProbability=FLOAT
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.18/@alternatives/@elements.4/@elements.3/@elements.1'
 		public Assignment getTriggerProbabilityAssignment_4_3_1() { return cTriggerProbabilityAssignment_4_3_1; }
 		
-		//FLOAT
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.18/@alternatives/@elements.4/@elements.3/@elements.1/@terminal'
 		public RuleCall getTriggerProbabilityFLOATTerminalRuleCall_4_3_1_0() { return cTriggerProbabilityFLOATTerminalRuleCall_4_3_1_0; }
 		
-		//('label' label=STRING)?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.18/@alternatives/@elements.5'
 		public Group getGroup_5() { return cGroup_5; }
 		
-		//'label'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.18/@alternatives/@elements.5/@elements.0'
 		public Keyword getLabelKeyword_5_0() { return cLabelKeyword_5_0; }
 		
-		//label=STRING
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.18/@alternatives/@elements.5/@elements.1'
 		public Assignment getLabelAssignment_5_1() { return cLabelAssignment_5_1; }
 		
-		//STRING
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.18/@alternatives/@elements.5/@elements.1/@terminal'
 		public RuleCall getLabelSTRINGTerminalRuleCall_5_1_0() { return cLabelSTRINGTerminalRuleCall_5_1_0; }
 	}
 	public class PrecedingActionElements extends AbstractParserRuleElementFinder {
@@ -1958,80 +1888,76 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cLabelAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
 		private final RuleCall cLabelSTRINGTerminalRuleCall_4_1_0 = (RuleCall)cLabelAssignment_4_1.eContents().get(0);
 		
-		//PrecedingAction sccharts::PrecedingAction:
-		//	{sccharts::PrecedingAction}
-		//	'preceding' ('if' trigger=BoolScheduleExpression ('Pr' triggerProbability=FLOAT)?)? ('do' effects+=Effect (';'
-		//	effects+=Effect)*)? ('label' label=STRING)?;
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#XtextFragmentProvider_de.cau.cs.kieler.sccharts.text.SCTX/PrecedingAction'
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{sccharts::PrecedingAction} 'preceding' ('if' trigger=BoolScheduleExpression ('Pr' triggerProbability=FLOAT)?)? ('do'
-		//effects+=Effect (';' effects+=Effect)*)? ('label' label=STRING)?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.19/@alternatives'
 		public Group getGroup() { return cGroup; }
 		
-		//{sccharts::PrecedingAction}
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.19/@alternatives/@elements.0'
 		public Action getPrecedingActionAction_0() { return cPrecedingActionAction_0; }
 		
-		//'preceding'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.19/@alternatives/@elements.1'
 		public Keyword getPrecedingKeyword_1() { return cPrecedingKeyword_1; }
 		
-		//('if' trigger=BoolScheduleExpression ('Pr' triggerProbability=FLOAT)?)?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.19/@alternatives/@elements.2'
 		public Group getGroup_2() { return cGroup_2; }
 		
-		//'if'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.19/@alternatives/@elements.2/@elements.0'
 		public Keyword getIfKeyword_2_0() { return cIfKeyword_2_0; }
 		
-		//trigger=BoolScheduleExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.19/@alternatives/@elements.2/@elements.1'
 		public Assignment getTriggerAssignment_2_1() { return cTriggerAssignment_2_1; }
 		
-		//BoolScheduleExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.19/@alternatives/@elements.2/@elements.1/@terminal'
 		public RuleCall getTriggerBoolScheduleExpressionParserRuleCall_2_1_0() { return cTriggerBoolScheduleExpressionParserRuleCall_2_1_0; }
 		
-		//('Pr' triggerProbability=FLOAT)?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.19/@alternatives/@elements.2/@elements.2'
 		public Group getGroup_2_2() { return cGroup_2_2; }
 		
-		//'Pr'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.19/@alternatives/@elements.2/@elements.2/@elements.0'
 		public Keyword getPrKeyword_2_2_0() { return cPrKeyword_2_2_0; }
 		
-		//triggerProbability=FLOAT
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.19/@alternatives/@elements.2/@elements.2/@elements.1'
 		public Assignment getTriggerProbabilityAssignment_2_2_1() { return cTriggerProbabilityAssignment_2_2_1; }
 		
-		//FLOAT
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.19/@alternatives/@elements.2/@elements.2/@elements.1/@terminal'
 		public RuleCall getTriggerProbabilityFLOATTerminalRuleCall_2_2_1_0() { return cTriggerProbabilityFLOATTerminalRuleCall_2_2_1_0; }
 		
-		//('do' effects+=Effect (';' effects+=Effect)*)?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.19/@alternatives/@elements.3'
 		public Group getGroup_3() { return cGroup_3; }
 		
-		//'do'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.19/@alternatives/@elements.3/@elements.0'
 		public Keyword getDoKeyword_3_0() { return cDoKeyword_3_0; }
 		
-		//effects+=Effect
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.19/@alternatives/@elements.3/@elements.1'
 		public Assignment getEffectsAssignment_3_1() { return cEffectsAssignment_3_1; }
 		
-		//Effect
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.19/@alternatives/@elements.3/@elements.1/@terminal'
 		public RuleCall getEffectsEffectParserRuleCall_3_1_0() { return cEffectsEffectParserRuleCall_3_1_0; }
 		
-		//(';' effects+=Effect)*
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.19/@alternatives/@elements.3/@elements.2'
 		public Group getGroup_3_2() { return cGroup_3_2; }
 		
-		//';'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.19/@alternatives/@elements.3/@elements.2/@elements.0'
 		public Keyword getSemicolonKeyword_3_2_0() { return cSemicolonKeyword_3_2_0; }
 		
-		//effects+=Effect
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.19/@alternatives/@elements.3/@elements.2/@elements.1'
 		public Assignment getEffectsAssignment_3_2_1() { return cEffectsAssignment_3_2_1; }
 		
-		//Effect
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.19/@alternatives/@elements.3/@elements.2/@elements.1/@terminal'
 		public RuleCall getEffectsEffectParserRuleCall_3_2_1_0() { return cEffectsEffectParserRuleCall_3_2_1_0; }
 		
-		//('label' label=STRING)?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.19/@alternatives/@elements.4'
 		public Group getGroup_4() { return cGroup_4; }
 		
-		//'label'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.19/@alternatives/@elements.4/@elements.0'
 		public Keyword getLabelKeyword_4_0() { return cLabelKeyword_4_0; }
 		
-		//label=STRING
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.19/@alternatives/@elements.4/@elements.1'
 		public Assignment getLabelAssignment_4_1() { return cLabelAssignment_4_1; }
 		
-		//STRING
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.19/@alternatives/@elements.4/@elements.1/@terminal'
 		public RuleCall getLabelSTRINGTerminalRuleCall_4_1_0() { return cLabelSTRINGTerminalRuleCall_4_1_0; }
 	}
 	public class SucceedingActionElements extends AbstractParserRuleElementFinder {
@@ -2060,80 +1986,76 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cLabelAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
 		private final RuleCall cLabelSTRINGTerminalRuleCall_4_1_0 = (RuleCall)cLabelAssignment_4_1.eContents().get(0);
 		
-		//SucceedingAction sccharts::SucceedingAction:
-		//	{sccharts::SucceedingAction}
-		//	'succeeding' ('if' trigger=BoolScheduleExpression ('Pr' triggerProbability=FLOAT)?)? ('do' effects+=Effect (';'
-		//	effects+=Effect)*)? ('label' label=STRING)?;
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#XtextFragmentProvider_de.cau.cs.kieler.sccharts.text.SCTX/SucceedingAction'
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{sccharts::SucceedingAction} 'succeeding' ('if' trigger=BoolScheduleExpression ('Pr' triggerProbability=FLOAT)?)? ('do'
-		//effects+=Effect (';' effects+=Effect)*)? ('label' label=STRING)?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.20/@alternatives'
 		public Group getGroup() { return cGroup; }
 		
-		//{sccharts::SucceedingAction}
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.20/@alternatives/@elements.0'
 		public Action getSucceedingActionAction_0() { return cSucceedingActionAction_0; }
 		
-		//'succeeding'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.20/@alternatives/@elements.1'
 		public Keyword getSucceedingKeyword_1() { return cSucceedingKeyword_1; }
 		
-		//('if' trigger=BoolScheduleExpression ('Pr' triggerProbability=FLOAT)?)?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.20/@alternatives/@elements.2'
 		public Group getGroup_2() { return cGroup_2; }
 		
-		//'if'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.20/@alternatives/@elements.2/@elements.0'
 		public Keyword getIfKeyword_2_0() { return cIfKeyword_2_0; }
 		
-		//trigger=BoolScheduleExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.20/@alternatives/@elements.2/@elements.1'
 		public Assignment getTriggerAssignment_2_1() { return cTriggerAssignment_2_1; }
 		
-		//BoolScheduleExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.20/@alternatives/@elements.2/@elements.1/@terminal'
 		public RuleCall getTriggerBoolScheduleExpressionParserRuleCall_2_1_0() { return cTriggerBoolScheduleExpressionParserRuleCall_2_1_0; }
 		
-		//('Pr' triggerProbability=FLOAT)?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.20/@alternatives/@elements.2/@elements.2'
 		public Group getGroup_2_2() { return cGroup_2_2; }
 		
-		//'Pr'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.20/@alternatives/@elements.2/@elements.2/@elements.0'
 		public Keyword getPrKeyword_2_2_0() { return cPrKeyword_2_2_0; }
 		
-		//triggerProbability=FLOAT
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.20/@alternatives/@elements.2/@elements.2/@elements.1'
 		public Assignment getTriggerProbabilityAssignment_2_2_1() { return cTriggerProbabilityAssignment_2_2_1; }
 		
-		//FLOAT
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.20/@alternatives/@elements.2/@elements.2/@elements.1/@terminal'
 		public RuleCall getTriggerProbabilityFLOATTerminalRuleCall_2_2_1_0() { return cTriggerProbabilityFLOATTerminalRuleCall_2_2_1_0; }
 		
-		//('do' effects+=Effect (';' effects+=Effect)*)?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.20/@alternatives/@elements.3'
 		public Group getGroup_3() { return cGroup_3; }
 		
-		//'do'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.20/@alternatives/@elements.3/@elements.0'
 		public Keyword getDoKeyword_3_0() { return cDoKeyword_3_0; }
 		
-		//effects+=Effect
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.20/@alternatives/@elements.3/@elements.1'
 		public Assignment getEffectsAssignment_3_1() { return cEffectsAssignment_3_1; }
 		
-		//Effect
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.20/@alternatives/@elements.3/@elements.1/@terminal'
 		public RuleCall getEffectsEffectParserRuleCall_3_1_0() { return cEffectsEffectParserRuleCall_3_1_0; }
 		
-		//(';' effects+=Effect)*
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.20/@alternatives/@elements.3/@elements.2'
 		public Group getGroup_3_2() { return cGroup_3_2; }
 		
-		//';'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.20/@alternatives/@elements.3/@elements.2/@elements.0'
 		public Keyword getSemicolonKeyword_3_2_0() { return cSemicolonKeyword_3_2_0; }
 		
-		//effects+=Effect
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.20/@alternatives/@elements.3/@elements.2/@elements.1'
 		public Assignment getEffectsAssignment_3_2_1() { return cEffectsAssignment_3_2_1; }
 		
-		//Effect
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.20/@alternatives/@elements.3/@elements.2/@elements.1/@terminal'
 		public RuleCall getEffectsEffectParserRuleCall_3_2_1_0() { return cEffectsEffectParserRuleCall_3_2_1_0; }
 		
-		//('label' label=STRING)?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.20/@alternatives/@elements.4'
 		public Group getGroup_4() { return cGroup_4; }
 		
-		//'label'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.20/@alternatives/@elements.4/@elements.0'
 		public Keyword getLabelKeyword_4_0() { return cLabelKeyword_4_0; }
 		
-		//label=STRING
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.20/@alternatives/@elements.4/@elements.1'
 		public Assignment getLabelAssignment_4_1() { return cLabelAssignment_4_1; }
 		
-		//STRING
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.20/@alternatives/@elements.4/@elements.1/@terminal'
 		public RuleCall getLabelSTRINGTerminalRuleCall_4_1_0() { return cLabelSTRINGTerminalRuleCall_4_1_0; }
 	}
 	public class PeriodActionElements extends AbstractParserRuleElementFinder {
@@ -2152,49 +2074,46 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cLabelAssignment_5_1 = (Assignment)cGroup_5.eContents().get(1);
 		private final RuleCall cLabelSTRINGTerminalRuleCall_5_1_0 = (RuleCall)cLabelAssignment_5_1.eContents().get(0);
 		
-		//PeriodAction sccharts::PeriodAction:
-		//	{sccharts::PeriodAction} annotations+=RestrictedTypeAnnotation*
-		//	delay=DelayType? 'period' trigger=ValuedExpression ('label' label=STRING)?;
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#XtextFragmentProvider_de.cau.cs.kieler.sccharts.text.SCTX/PeriodAction'
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{sccharts::PeriodAction} annotations+=RestrictedTypeAnnotation* delay=DelayType? 'period' trigger=ValuedExpression
-		//('label' label=STRING)?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.21/@alternatives'
 		public Group getGroup() { return cGroup; }
 		
-		//{sccharts::PeriodAction}
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.21/@alternatives/@elements.0'
 		public Action getPeriodActionAction_0() { return cPeriodActionAction_0; }
 		
-		//annotations+=RestrictedTypeAnnotation*
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.21/@alternatives/@elements.1'
 		public Assignment getAnnotationsAssignment_1() { return cAnnotationsAssignment_1; }
 		
-		//RestrictedTypeAnnotation
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.21/@alternatives/@elements.1/@terminal'
 		public RuleCall getAnnotationsRestrictedTypeAnnotationParserRuleCall_1_0() { return cAnnotationsRestrictedTypeAnnotationParserRuleCall_1_0; }
 		
-		//delay=DelayType?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.21/@alternatives/@elements.2'
 		public Assignment getDelayAssignment_2() { return cDelayAssignment_2; }
 		
-		//DelayType
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.21/@alternatives/@elements.2/@terminal'
 		public RuleCall getDelayDelayTypeEnumRuleCall_2_0() { return cDelayDelayTypeEnumRuleCall_2_0; }
 		
-		//'period'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.21/@alternatives/@elements.3'
 		public Keyword getPeriodKeyword_3() { return cPeriodKeyword_3; }
 		
-		//trigger=ValuedExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.21/@alternatives/@elements.4'
 		public Assignment getTriggerAssignment_4() { return cTriggerAssignment_4; }
 		
-		//ValuedExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.21/@alternatives/@elements.4/@terminal'
 		public RuleCall getTriggerValuedExpressionParserRuleCall_4_0() { return cTriggerValuedExpressionParserRuleCall_4_0; }
 		
-		//('label' label=STRING)?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.21/@alternatives/@elements.5'
 		public Group getGroup_5() { return cGroup_5; }
 		
-		//'label'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.21/@alternatives/@elements.5/@elements.0'
 		public Keyword getLabelKeyword_5_0() { return cLabelKeyword_5_0; }
 		
-		//label=STRING
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.21/@alternatives/@elements.5/@elements.1'
 		public Assignment getLabelAssignment_5_1() { return cLabelAssignment_5_1; }
 		
-		//STRING
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.21/@alternatives/@elements.5/@elements.1/@terminal'
 		public RuleCall getLabelSTRINGTerminalRuleCall_5_1_0() { return cLabelSTRINGTerminalRuleCall_5_1_0; }
 	}
 	public class DeclarationElements extends AbstractParserRuleElementFinder {
@@ -2203,18 +2122,16 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cDeclarationParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
 		private final RuleCall cDeclarationWOSemicolonParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		
-		//@Override
-		//Declaration kexpressions::Declaration:
-		//	super | DeclarationWOSemicolon;
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#XtextFragmentProvider_de.cau.cs.kieler.sccharts.text.SCTX/Declaration'
 		@Override public ParserRule getRule() { return rule; }
 		
-		//super | DeclarationWOSemicolon
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.22/@alternatives'
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
-		//super
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.22/@alternatives/@elements.0'
 		public RuleCall getDeclarationParserRuleCall_0() { return cDeclarationParserRuleCall_0; }
 		
-		//DeclarationWOSemicolon
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.22/@alternatives/@elements.1'
 		public RuleCall getDeclarationWOSemicolonParserRuleCall_1() { return cDeclarationWOSemicolonParserRuleCall_1; }
 	}
 	public class StatementElements extends AbstractParserRuleElementFinder {
@@ -2230,41 +2147,37 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cForLoopParserRuleCall_7 = (RuleCall)cAlternatives.eContents().get(7);
 		private final RuleCall cWhileLoopParserRuleCall_8 = (RuleCall)cAlternatives.eContents().get(8);
 		
-		//@Override
-		//Statement scl::Statement:
-		//	SclAssignment | SclPostfixAssignment | Label | Conditional | Goto | ScopeStatement | Return | ForLoop | WhileLoop;
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#XtextFragmentProvider_de.cau.cs.kieler.sccharts.text.SCTX/Statement'
 		@Override public ParserRule getRule() { return rule; }
 		
-		//// Only allow restricted set of SCL statements
-		//SclAssignment | SclPostfixAssignment | Label | Conditional | Goto | ScopeStatement | Return | ForLoop | WhileLoop
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.23/@alternatives'
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
-		//// Only allow restricted set of SCL statements
-		//SclAssignment
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.23/@alternatives/@elements.0'
 		public RuleCall getSclAssignmentParserRuleCall_0() { return cSclAssignmentParserRuleCall_0; }
 		
-		//SclPostfixAssignment
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.23/@alternatives/@elements.1'
 		public RuleCall getSclPostfixAssignmentParserRuleCall_1() { return cSclPostfixAssignmentParserRuleCall_1; }
 		
-		//Label
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.23/@alternatives/@elements.2'
 		public RuleCall getLabelParserRuleCall_2() { return cLabelParserRuleCall_2; }
 		
-		//Conditional
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.23/@alternatives/@elements.3'
 		public RuleCall getConditionalParserRuleCall_3() { return cConditionalParserRuleCall_3; }
 		
-		//Goto
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.23/@alternatives/@elements.4'
 		public RuleCall getGotoParserRuleCall_4() { return cGotoParserRuleCall_4; }
 		
-		//ScopeStatement
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.23/@alternatives/@elements.5'
 		public RuleCall getScopeStatementParserRuleCall_5() { return cScopeStatementParserRuleCall_5; }
 		
-		//Return
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.23/@alternatives/@elements.6'
 		public RuleCall getReturnParserRuleCall_6() { return cReturnParserRuleCall_6; }
 		
-		//ForLoop
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.23/@alternatives/@elements.7'
 		public RuleCall getForLoopParserRuleCall_7() { return cForLoopParserRuleCall_7; }
 		
-		//WhileLoop
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.23/@alternatives/@elements.8'
 		public RuleCall getWhileLoopParserRuleCall_8() { return cWhileLoopParserRuleCall_8; }
 	}
 	public class EffectElements extends AbstractParserRuleElementFinder {
@@ -2273,18 +2186,16 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cEffectParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
 		private final RuleCall cCodeEffectParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		
-		//@Override
-		//Effect keffects::Effect:
-		//	super | CodeEffect;
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#XtextFragmentProvider_de.cau.cs.kieler.sccharts.text.SCTX/Effect'
 		@Override public ParserRule getRule() { return rule; }
 		
-		//super | CodeEffect
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.24/@alternatives'
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
-		//super
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.24/@alternatives/@elements.0'
 		public RuleCall getEffectParserRuleCall_0() { return cEffectParserRuleCall_0; }
 		
-		//CodeEffect
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.24/@alternatives/@elements.1'
 		public RuleCall getCodeEffectParserRuleCall_1() { return cCodeEffectParserRuleCall_1; }
 	}
 	public class CodeEffectElements extends AbstractParserRuleElementFinder {
@@ -2300,42 +2211,37 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cStatementsStatementParserRuleCall_4_0 = (RuleCall)cStatementsAssignment_4.eContents().get(0);
 		private final Keyword cRightCurlyBracketKeyword_5 = (Keyword)cGroup.eContents().get(5);
 		
-		//CodeEffect sccharts::CodeEffect:
-		//	{sccharts::CodeEffect} annotations+=Annotation*
-		//	'{'
-		//	declarations+=Declaration*
-		//	statements+=Statement*
-		//	'}';
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#XtextFragmentProvider_de.cau.cs.kieler.sccharts.text.SCTX/CodeEffect'
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{sccharts::CodeEffect} annotations+=Annotation* '{' declarations+=Declaration* statements+=Statement* '}'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.25/@alternatives'
 		public Group getGroup() { return cGroup; }
 		
-		//{sccharts::CodeEffect}
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.25/@alternatives/@elements.0'
 		public Action getCodeEffectAction_0() { return cCodeEffectAction_0; }
 		
-		//annotations+=Annotation*
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.25/@alternatives/@elements.1'
 		public Assignment getAnnotationsAssignment_1() { return cAnnotationsAssignment_1; }
 		
-		//Annotation
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.25/@alternatives/@elements.1/@terminal'
 		public RuleCall getAnnotationsAnnotationParserRuleCall_1_0() { return cAnnotationsAnnotationParserRuleCall_1_0; }
 		
-		//'{'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.25/@alternatives/@elements.2'
 		public Keyword getLeftCurlyBracketKeyword_2() { return cLeftCurlyBracketKeyword_2; }
 		
-		//declarations+=Declaration*
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.25/@alternatives/@elements.3'
 		public Assignment getDeclarationsAssignment_3() { return cDeclarationsAssignment_3; }
 		
-		//Declaration
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.25/@alternatives/@elements.3/@terminal'
 		public RuleCall getDeclarationsDeclarationParserRuleCall_3_0() { return cDeclarationsDeclarationParserRuleCall_3_0; }
 		
-		//statements+=Statement*
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.25/@alternatives/@elements.4'
 		public Assignment getStatementsAssignment_4() { return cStatementsAssignment_4; }
 		
-		//Statement
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.25/@alternatives/@elements.4/@terminal'
 		public RuleCall getStatementsStatementParserRuleCall_4_0() { return cStatementsStatementParserRuleCall_4_0; }
 		
-		//'}'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.25/@alternatives/@elements.5'
 		public Keyword getRightCurlyBracketKeyword_5() { return cRightCurlyBracketKeyword_5; }
 	}
 	public class ClassDeclarationWOSemicolonElements extends AbstractParserRuleElementFinder {
@@ -2389,175 +2295,151 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cAnnotationsAssignment_11 = (Assignment)cGroup.eContents().get(11);
 		private final RuleCall cAnnotationsCommentAnnotatonSLParserRuleCall_11_0 = (RuleCall)cAnnotationsAssignment_11.eContents().get(0);
 		
-		//@Override
-		//ClassDeclarationWOSemicolon kext::ClassDeclaration:
-		//	{sccharts::PolicyClassDeclaration} annotations+=Annotation*
-		//	access=AccessModifier?
-		//	const?='const'?
-		//	input?='input'?
-		//	output?='output'?
-		//	global?='global'?
-		//	static?='static'?
-		//	host?='host'? (type=ClassType
-		//	name=ID?
-		//	'{'
-		//	policy=PolicyRegion?
-		//	declarations+=DeclarationOrMethodWOSemicolon*
-		//	'}'
-		//	| type=StructType
-		//	name=ID?
-		//	'{'
-		//	declarations+=DeclarationWOSemicolon*
-		//	'}') (valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*)?
-		//	annotations+=CommentAnnotatonSL?;
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#XtextFragmentProvider_de.cau.cs.kieler.sccharts.text.SCTX/ClassDeclarationWOSemicolon'
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{sccharts::PolicyClassDeclaration} annotations+=Annotation* access=AccessModifier? const?='const'? input?='input'?
-		//output?='output'? global?='global'? static?='static'? host?='host'? (type=ClassType name=ID? '{' policy=PolicyRegion?
-		//declarations+=DeclarationOrMethodWOSemicolon* '}' | type=StructType name=ID? '{' declarations+=DeclarationWOSemicolon*
-		//'}') (valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*)? annotations+=CommentAnnotatonSL?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.26/@alternatives'
 		public Group getGroup() { return cGroup; }
 		
-		//{sccharts::PolicyClassDeclaration}
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.26/@alternatives/@elements.0'
 		public Action getPolicyClassDeclarationAction_0() { return cPolicyClassDeclarationAction_0; }
 		
-		//annotations+=Annotation*
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.26/@alternatives/@elements.1'
 		public Assignment getAnnotationsAssignment_1() { return cAnnotationsAssignment_1; }
 		
-		//Annotation
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.26/@alternatives/@elements.1/@terminal'
 		public RuleCall getAnnotationsAnnotationParserRuleCall_1_0() { return cAnnotationsAnnotationParserRuleCall_1_0; }
 		
-		//access=AccessModifier?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.26/@alternatives/@elements.2'
 		public Assignment getAccessAssignment_2() { return cAccessAssignment_2; }
 		
-		//AccessModifier
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.26/@alternatives/@elements.2/@terminal'
 		public RuleCall getAccessAccessModifierEnumRuleCall_2_0() { return cAccessAccessModifierEnumRuleCall_2_0; }
 		
-		//const?='const'?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.26/@alternatives/@elements.3'
 		public Assignment getConstAssignment_3() { return cConstAssignment_3; }
 		
-		//'const'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.26/@alternatives/@elements.3/@terminal'
 		public Keyword getConstConstKeyword_3_0() { return cConstConstKeyword_3_0; }
 		
-		//input?='input'?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.26/@alternatives/@elements.4'
 		public Assignment getInputAssignment_4() { return cInputAssignment_4; }
 		
-		//'input'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.26/@alternatives/@elements.4/@terminal'
 		public Keyword getInputInputKeyword_4_0() { return cInputInputKeyword_4_0; }
 		
-		//output?='output'?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.26/@alternatives/@elements.5'
 		public Assignment getOutputAssignment_5() { return cOutputAssignment_5; }
 		
-		//'output'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.26/@alternatives/@elements.5/@terminal'
 		public Keyword getOutputOutputKeyword_5_0() { return cOutputOutputKeyword_5_0; }
 		
-		//global?='global'?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.26/@alternatives/@elements.6'
 		public Assignment getGlobalAssignment_6() { return cGlobalAssignment_6; }
 		
-		//'global'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.26/@alternatives/@elements.6/@terminal'
 		public Keyword getGlobalGlobalKeyword_6_0() { return cGlobalGlobalKeyword_6_0; }
 		
-		//static?='static'?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.26/@alternatives/@elements.7'
 		public Assignment getStaticAssignment_7() { return cStaticAssignment_7; }
 		
-		//'static'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.26/@alternatives/@elements.7/@terminal'
 		public Keyword getStaticStaticKeyword_7_0() { return cStaticStaticKeyword_7_0; }
 		
-		//host?='host'?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.26/@alternatives/@elements.8'
 		public Assignment getHostAssignment_8() { return cHostAssignment_8; }
 		
-		//'host'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.26/@alternatives/@elements.8/@terminal'
 		public Keyword getHostHostKeyword_8_0() { return cHostHostKeyword_8_0; }
 		
-		//(type=ClassType name=ID? '{' policy=PolicyRegion? declarations+=DeclarationOrMethodWOSemicolon* '}' | type=StructType
-		//name=ID? '{' declarations+=DeclarationWOSemicolon* '}')
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.26/@alternatives/@elements.9'
 		public Alternatives getAlternatives_9() { return cAlternatives_9; }
 		
-		//type=ClassType name=ID? '{' policy=PolicyRegion? declarations+=DeclarationOrMethodWOSemicolon* '}'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.26/@alternatives/@elements.9/@elements.0'
 		public Group getGroup_9_0() { return cGroup_9_0; }
 		
-		//type=ClassType
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.26/@alternatives/@elements.9/@elements.0/@elements.0'
 		public Assignment getTypeAssignment_9_0_0() { return cTypeAssignment_9_0_0; }
 		
-		//ClassType
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.26/@alternatives/@elements.9/@elements.0/@elements.0/@terminal'
 		public RuleCall getTypeClassTypeEnumRuleCall_9_0_0_0() { return cTypeClassTypeEnumRuleCall_9_0_0_0; }
 		
-		//name=ID?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.26/@alternatives/@elements.9/@elements.0/@elements.1'
 		public Assignment getNameAssignment_9_0_1() { return cNameAssignment_9_0_1; }
 		
-		//ID
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.26/@alternatives/@elements.9/@elements.0/@elements.1/@terminal'
 		public RuleCall getNameIDTerminalRuleCall_9_0_1_0() { return cNameIDTerminalRuleCall_9_0_1_0; }
 		
-		//'{'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.26/@alternatives/@elements.9/@elements.0/@elements.2'
 		public Keyword getLeftCurlyBracketKeyword_9_0_2() { return cLeftCurlyBracketKeyword_9_0_2; }
 		
-		//policy=PolicyRegion?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.26/@alternatives/@elements.9/@elements.0/@elements.3'
 		public Assignment getPolicyAssignment_9_0_3() { return cPolicyAssignment_9_0_3; }
 		
-		//PolicyRegion
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.26/@alternatives/@elements.9/@elements.0/@elements.3/@terminal'
 		public RuleCall getPolicyPolicyRegionParserRuleCall_9_0_3_0() { return cPolicyPolicyRegionParserRuleCall_9_0_3_0; }
 		
-		//declarations+=DeclarationOrMethodWOSemicolon*
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.26/@alternatives/@elements.9/@elements.0/@elements.4'
 		public Assignment getDeclarationsAssignment_9_0_4() { return cDeclarationsAssignment_9_0_4; }
 		
-		//DeclarationOrMethodWOSemicolon
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.26/@alternatives/@elements.9/@elements.0/@elements.4/@terminal'
 		public RuleCall getDeclarationsDeclarationOrMethodWOSemicolonParserRuleCall_9_0_4_0() { return cDeclarationsDeclarationOrMethodWOSemicolonParserRuleCall_9_0_4_0; }
 		
-		//'}'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.26/@alternatives/@elements.9/@elements.0/@elements.5'
 		public Keyword getRightCurlyBracketKeyword_9_0_5() { return cRightCurlyBracketKeyword_9_0_5; }
 		
-		//type=StructType name=ID? '{' declarations+=DeclarationWOSemicolon* '}'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.26/@alternatives/@elements.9/@elements.1'
 		public Group getGroup_9_1() { return cGroup_9_1; }
 		
-		//type=StructType
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.26/@alternatives/@elements.9/@elements.1/@elements.0'
 		public Assignment getTypeAssignment_9_1_0() { return cTypeAssignment_9_1_0; }
 		
-		//StructType
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.26/@alternatives/@elements.9/@elements.1/@elements.0/@terminal'
 		public RuleCall getTypeStructTypeEnumRuleCall_9_1_0_0() { return cTypeStructTypeEnumRuleCall_9_1_0_0; }
 		
-		//name=ID?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.26/@alternatives/@elements.9/@elements.1/@elements.1'
 		public Assignment getNameAssignment_9_1_1() { return cNameAssignment_9_1_1; }
 		
-		//ID
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.26/@alternatives/@elements.9/@elements.1/@elements.1/@terminal'
 		public RuleCall getNameIDTerminalRuleCall_9_1_1_0() { return cNameIDTerminalRuleCall_9_1_1_0; }
 		
-		//'{'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.26/@alternatives/@elements.9/@elements.1/@elements.2'
 		public Keyword getLeftCurlyBracketKeyword_9_1_2() { return cLeftCurlyBracketKeyword_9_1_2; }
 		
-		//declarations+=DeclarationWOSemicolon*
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.26/@alternatives/@elements.9/@elements.1/@elements.3'
 		public Assignment getDeclarationsAssignment_9_1_3() { return cDeclarationsAssignment_9_1_3; }
 		
-		//DeclarationWOSemicolon
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.26/@alternatives/@elements.9/@elements.1/@elements.3/@terminal'
 		public RuleCall getDeclarationsDeclarationWOSemicolonParserRuleCall_9_1_3_0() { return cDeclarationsDeclarationWOSemicolonParserRuleCall_9_1_3_0; }
 		
-		//'}'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.26/@alternatives/@elements.9/@elements.1/@elements.4'
 		public Keyword getRightCurlyBracketKeyword_9_1_4() { return cRightCurlyBracketKeyword_9_1_4; }
 		
-		//(valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*)?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.26/@alternatives/@elements.10'
 		public Group getGroup_10() { return cGroup_10; }
 		
-		//valuedObjects+=ValuedObject
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.26/@alternatives/@elements.10/@elements.0'
 		public Assignment getValuedObjectsAssignment_10_0() { return cValuedObjectsAssignment_10_0; }
 		
-		//ValuedObject
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.26/@alternatives/@elements.10/@elements.0/@terminal'
 		public RuleCall getValuedObjectsValuedObjectParserRuleCall_10_0_0() { return cValuedObjectsValuedObjectParserRuleCall_10_0_0; }
 		
-		//(',' valuedObjects+=ValuedObject)*
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.26/@alternatives/@elements.10/@elements.1'
 		public Group getGroup_10_1() { return cGroup_10_1; }
 		
-		//','
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.26/@alternatives/@elements.10/@elements.1/@elements.0'
 		public Keyword getCommaKeyword_10_1_0() { return cCommaKeyword_10_1_0; }
 		
-		//valuedObjects+=ValuedObject
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.26/@alternatives/@elements.10/@elements.1/@elements.1'
 		public Assignment getValuedObjectsAssignment_10_1_1() { return cValuedObjectsAssignment_10_1_1; }
 		
-		//ValuedObject
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.26/@alternatives/@elements.10/@elements.1/@elements.1/@terminal'
 		public RuleCall getValuedObjectsValuedObjectParserRuleCall_10_1_1_0() { return cValuedObjectsValuedObjectParserRuleCall_10_1_1_0; }
 		
-		//annotations+=CommentAnnotatonSL?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.26/@alternatives/@elements.11'
 		public Assignment getAnnotationsAssignment_11() { return cAnnotationsAssignment_11; }
 		
-		//CommentAnnotatonSL
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.26/@alternatives/@elements.11/@terminal'
 		public RuleCall getAnnotationsCommentAnnotatonSLParserRuleCall_11_0() { return cAnnotationsCommentAnnotatonSLParserRuleCall_11_0; }
 	}
 	public class PolicyRegionElements extends AbstractParserRuleElementFinder {
@@ -2575,48 +2457,43 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cStatesPolicyStateParserRuleCall_5_0 = (RuleCall)cStatesAssignment_5.eContents().get(0);
 		private final Keyword cRightCurlyBracketKeyword_6 = (Keyword)cGroup.eContents().get(6);
 		
-		//PolicyRegion sccharts::PolicyRegion:
-		//	'policy' name=ID label=STRING?
-		//	'{'
-		//	declarations+=DeclarationWOSemicolon*
-		//	states+=PolicyState+
-		//	'}';
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#XtextFragmentProvider_de.cau.cs.kieler.sccharts.text.SCTX/PolicyRegion'
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'policy' name=ID label=STRING? '{' declarations+=DeclarationWOSemicolon* states+=PolicyState+ '}'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.27/@alternatives'
 		public Group getGroup() { return cGroup; }
 		
-		//'policy'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.27/@alternatives/@elements.0'
 		public Keyword getPolicyKeyword_0() { return cPolicyKeyword_0; }
 		
-		//name=ID
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.27/@alternatives/@elements.1'
 		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
 		
-		//ID
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.27/@alternatives/@elements.1/@terminal'
 		public RuleCall getNameIDTerminalRuleCall_1_0() { return cNameIDTerminalRuleCall_1_0; }
 		
-		//label=STRING?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.27/@alternatives/@elements.2'
 		public Assignment getLabelAssignment_2() { return cLabelAssignment_2; }
 		
-		//STRING
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.27/@alternatives/@elements.2/@terminal'
 		public RuleCall getLabelSTRINGTerminalRuleCall_2_0() { return cLabelSTRINGTerminalRuleCall_2_0; }
 		
-		//'{'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.27/@alternatives/@elements.3'
 		public Keyword getLeftCurlyBracketKeyword_3() { return cLeftCurlyBracketKeyword_3; }
 		
-		//declarations+=DeclarationWOSemicolon*
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.27/@alternatives/@elements.4'
 		public Assignment getDeclarationsAssignment_4() { return cDeclarationsAssignment_4; }
 		
-		//DeclarationWOSemicolon
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.27/@alternatives/@elements.4/@terminal'
 		public RuleCall getDeclarationsDeclarationWOSemicolonParserRuleCall_4_0() { return cDeclarationsDeclarationWOSemicolonParserRuleCall_4_0; }
 		
-		//states+=PolicyState+
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.27/@alternatives/@elements.5'
 		public Assignment getStatesAssignment_5() { return cStatesAssignment_5; }
 		
-		//PolicyState
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.27/@alternatives/@elements.5/@terminal'
 		public RuleCall getStatesPolicyStateParserRuleCall_5_0() { return cStatesPolicyStateParserRuleCall_5_0; }
 		
-		//'}'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.27/@alternatives/@elements.6'
 		public Keyword getRightCurlyBracketKeyword_6() { return cRightCurlyBracketKeyword_6; }
 	}
 	public class PolicyStateElements extends AbstractParserRuleElementFinder {
@@ -2634,47 +2511,43 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cOutgoingTransitionsAssignment_5 = (Assignment)cGroup.eContents().get(5);
 		private final RuleCall cOutgoingTransitionsPolicyTransitionParserRuleCall_5_0 = (RuleCall)cOutgoingTransitionsAssignment_5.eContents().get(0);
 		
-		//PolicyState sccharts::State:
-		//	annotations+=Annotation*
-		//	initial?='initial'?
-		//	'state' name=ID label=STRING?
-		//	outgoingTransitions+=PolicyTransition*;
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#XtextFragmentProvider_de.cau.cs.kieler.sccharts.text.SCTX/PolicyState'
 		@Override public ParserRule getRule() { return rule; }
 		
-		//annotations+=Annotation* initial?='initial'? 'state' name=ID label=STRING? outgoingTransitions+=PolicyTransition*
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.28/@alternatives'
 		public Group getGroup() { return cGroup; }
 		
-		//annotations+=Annotation*
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.28/@alternatives/@elements.0'
 		public Assignment getAnnotationsAssignment_0() { return cAnnotationsAssignment_0; }
 		
-		//Annotation
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.28/@alternatives/@elements.0/@terminal'
 		public RuleCall getAnnotationsAnnotationParserRuleCall_0_0() { return cAnnotationsAnnotationParserRuleCall_0_0; }
 		
-		//initial?='initial'?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.28/@alternatives/@elements.1'
 		public Assignment getInitialAssignment_1() { return cInitialAssignment_1; }
 		
-		//'initial'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.28/@alternatives/@elements.1/@terminal'
 		public Keyword getInitialInitialKeyword_1_0() { return cInitialInitialKeyword_1_0; }
 		
-		//'state'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.28/@alternatives/@elements.2'
 		public Keyword getStateKeyword_2() { return cStateKeyword_2; }
 		
-		//name=ID
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.28/@alternatives/@elements.3'
 		public Assignment getNameAssignment_3() { return cNameAssignment_3; }
 		
-		//ID
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.28/@alternatives/@elements.3/@terminal'
 		public RuleCall getNameIDTerminalRuleCall_3_0() { return cNameIDTerminalRuleCall_3_0; }
 		
-		//label=STRING?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.28/@alternatives/@elements.4'
 		public Assignment getLabelAssignment_4() { return cLabelAssignment_4; }
 		
-		//STRING
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.28/@alternatives/@elements.4/@terminal'
 		public RuleCall getLabelSTRINGTerminalRuleCall_4_0() { return cLabelSTRINGTerminalRuleCall_4_0; }
 		
-		//outgoingTransitions+=PolicyTransition*
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.28/@alternatives/@elements.5'
 		public Assignment getOutgoingTransitionsAssignment_5() { return cOutgoingTransitionsAssignment_5; }
 		
-		//PolicyTransition
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.28/@alternatives/@elements.5/@terminal'
 		public RuleCall getOutgoingTransitionsPolicyTransitionParserRuleCall_5_0() { return cOutgoingTransitionsPolicyTransitionParserRuleCall_5_0; }
 	}
 	public class PolicyTransitionElements extends AbstractParserRuleElementFinder {
@@ -2707,95 +2580,88 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cLabelAssignment_5_1 = (Assignment)cGroup_5.eContents().get(1);
 		private final RuleCall cLabelSTRINGTerminalRuleCall_5_1_0 = (RuleCall)cLabelAssignment_5_1.eContents().get(0);
 		
-		//PolicyTransition sccharts::Transition:
-		//	{sccharts::Transition} annotations+=RestrictedTypeAnnotation* ('if' (trigger=LogicalOrExpression |
-		//	trigger=ValuedObjectReference) (':' effects+=PureEmission (',' effects+=PureEmission)*)?)?
-		//	'go to'
-		//	targetState=[sccharts::State] ('label' label=STRING)?;
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#XtextFragmentProvider_de.cau.cs.kieler.sccharts.text.SCTX/PolicyTransition'
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{sccharts::Transition} annotations+=RestrictedTypeAnnotation* ('if' (trigger=LogicalOrExpression |
-		//trigger=ValuedObjectReference) (':' effects+=PureEmission (',' effects+=PureEmission)*)?)? 'go to'
-		//targetState=[sccharts::State] ('label' label=STRING)?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.29/@alternatives'
 		public Group getGroup() { return cGroup; }
 		
-		//{sccharts::Transition}
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.29/@alternatives/@elements.0'
 		public Action getTransitionAction_0() { return cTransitionAction_0; }
 		
-		//annotations+=RestrictedTypeAnnotation*
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.29/@alternatives/@elements.1'
 		public Assignment getAnnotationsAssignment_1() { return cAnnotationsAssignment_1; }
 		
-		//RestrictedTypeAnnotation
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.29/@alternatives/@elements.1/@terminal'
 		public RuleCall getAnnotationsRestrictedTypeAnnotationParserRuleCall_1_0() { return cAnnotationsRestrictedTypeAnnotationParserRuleCall_1_0; }
 		
-		//('if' (trigger=LogicalOrExpression | trigger=ValuedObjectReference) (':' effects+=PureEmission (','
-		//effects+=PureEmission)*)?)?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.29/@alternatives/@elements.2'
 		public Group getGroup_2() { return cGroup_2; }
 		
-		//'if'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.29/@alternatives/@elements.2/@elements.0'
 		public Keyword getIfKeyword_2_0() { return cIfKeyword_2_0; }
 		
-		//(trigger=LogicalOrExpression | trigger=ValuedObjectReference)
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.29/@alternatives/@elements.2/@elements.1'
 		public Alternatives getAlternatives_2_1() { return cAlternatives_2_1; }
 		
-		//trigger=LogicalOrExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.29/@alternatives/@elements.2/@elements.1/@elements.0'
 		public Assignment getTriggerAssignment_2_1_0() { return cTriggerAssignment_2_1_0; }
 		
-		//LogicalOrExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.29/@alternatives/@elements.2/@elements.1/@elements.0/@terminal'
 		public RuleCall getTriggerLogicalOrExpressionParserRuleCall_2_1_0_0() { return cTriggerLogicalOrExpressionParserRuleCall_2_1_0_0; }
 		
-		//trigger=ValuedObjectReference
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.29/@alternatives/@elements.2/@elements.1/@elements.1'
 		public Assignment getTriggerAssignment_2_1_1() { return cTriggerAssignment_2_1_1; }
 		
-		//ValuedObjectReference
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.29/@alternatives/@elements.2/@elements.1/@elements.1/@terminal'
 		public RuleCall getTriggerValuedObjectReferenceParserRuleCall_2_1_1_0() { return cTriggerValuedObjectReferenceParserRuleCall_2_1_1_0; }
 		
-		//(':' effects+=PureEmission (',' effects+=PureEmission)*)?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.29/@alternatives/@elements.2/@elements.2'
 		public Group getGroup_2_2() { return cGroup_2_2; }
 		
-		//':'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.29/@alternatives/@elements.2/@elements.2/@elements.0'
 		public Keyword getColonKeyword_2_2_0() { return cColonKeyword_2_2_0; }
 		
-		//effects+=PureEmission
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.29/@alternatives/@elements.2/@elements.2/@elements.1'
 		public Assignment getEffectsAssignment_2_2_1() { return cEffectsAssignment_2_2_1; }
 		
-		//PureEmission
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.29/@alternatives/@elements.2/@elements.2/@elements.1/@terminal'
 		public RuleCall getEffectsPureEmissionParserRuleCall_2_2_1_0() { return cEffectsPureEmissionParserRuleCall_2_2_1_0; }
 		
-		//(',' effects+=PureEmission)*
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.29/@alternatives/@elements.2/@elements.2/@elements.2'
 		public Group getGroup_2_2_2() { return cGroup_2_2_2; }
 		
-		//','
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.29/@alternatives/@elements.2/@elements.2/@elements.2/@elements.0'
 		public Keyword getCommaKeyword_2_2_2_0() { return cCommaKeyword_2_2_2_0; }
 		
-		//effects+=PureEmission
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.29/@alternatives/@elements.2/@elements.2/@elements.2/@elements.1'
 		public Assignment getEffectsAssignment_2_2_2_1() { return cEffectsAssignment_2_2_2_1; }
 		
-		//PureEmission
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.29/@alternatives/@elements.2/@elements.2/@elements.2/@elements.1/@terminal'
 		public RuleCall getEffectsPureEmissionParserRuleCall_2_2_2_1_0() { return cEffectsPureEmissionParserRuleCall_2_2_2_1_0; }
 		
-		//'go to'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.29/@alternatives/@elements.3'
 		public Keyword getGoToKeyword_3() { return cGoToKeyword_3; }
 		
-		//targetState=[sccharts::State]
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.29/@alternatives/@elements.4'
 		public Assignment getTargetStateAssignment_4() { return cTargetStateAssignment_4; }
 		
-		//[sccharts::State]
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.29/@alternatives/@elements.4/@terminal'
 		public CrossReference getTargetStateStateCrossReference_4_0() { return cTargetStateStateCrossReference_4_0; }
 		
-		//ID
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.29/@alternatives/@elements.4/@terminal/@terminal'
 		public RuleCall getTargetStateStateIDTerminalRuleCall_4_0_1() { return cTargetStateStateIDTerminalRuleCall_4_0_1; }
 		
-		//('label' label=STRING)?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.29/@alternatives/@elements.5'
 		public Group getGroup_5() { return cGroup_5; }
 		
-		//'label'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.29/@alternatives/@elements.5/@elements.0'
 		public Keyword getLabelKeyword_5_0() { return cLabelKeyword_5_0; }
 		
-		//label=STRING
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.29/@alternatives/@elements.5/@elements.1'
 		public Assignment getLabelAssignment_5_1() { return cLabelAssignment_5_1; }
 		
-		//STRING
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.29/@alternatives/@elements.5/@elements.1/@terminal'
 		public RuleCall getLabelSTRINGTerminalRuleCall_5_1_0() { return cLabelSTRINGTerminalRuleCall_5_1_0; }
 	}
 	public class DeclarationOrMethodWithKeywordWOSemicolonElements extends AbstractParserRuleElementFinder {
@@ -2804,17 +2670,16 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cDeclarationWOSemicolonParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
 		private final RuleCall cKeywordMethodDeclarationWOSemicolonParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		
-		//DeclarationOrMethodWithKeywordWOSemicolon kexpressions::Declaration:
-		//	DeclarationWOSemicolon | KeywordMethodDeclarationWOSemicolon;
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#XtextFragmentProvider_de.cau.cs.kieler.sccharts.text.SCTX/DeclarationOrMethodWithKeywordWOSemicolon'
 		@Override public ParserRule getRule() { return rule; }
 		
-		//DeclarationWOSemicolon | KeywordMethodDeclarationWOSemicolon
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.30/@alternatives'
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
-		//DeclarationWOSemicolon
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.30/@alternatives/@elements.0'
 		public RuleCall getDeclarationWOSemicolonParserRuleCall_0() { return cDeclarationWOSemicolonParserRuleCall_0; }
 		
-		//KeywordMethodDeclarationWOSemicolon
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.30/@alternatives/@elements.1'
 		public RuleCall getKeywordMethodDeclarationWOSemicolonParserRuleCall_1() { return cKeywordMethodDeclarationWOSemicolonParserRuleCall_1; }
 	}
 	public class KeywordMethodDeclarationWOSemicolonElements extends AbstractParserRuleElementFinder {
@@ -2855,55 +2720,40 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cStatementsStatementParserRuleCall_8_3_0 = (RuleCall)cStatementsAssignment_8_3.eContents().get(0);
 		private final Keyword cRightCurlyBracketKeyword_8_4 = (Keyword)cGroup_8.eContents().get(4);
 		
-		//KeywordMethodDeclarationWOSemicolon kexpressions::MethodDeclaration:
-		//	{scl::MethodImplementationDeclaration} annotations+=Annotation*
-		//	access=AccessModifier?
-		//	'method'
-		//	returnType=MethodReturnType?
-		//	valuedObjects+=SimpleValuedObject ('(' parameterDeclarations+=VariableDeclarationWOSemicolon (','
-		//	parameterDeclarations+=VariableDeclarationWOSemicolon)* ')' | '()') ('schedule' schedule+=ScheduleObjectReference+)?
-		//	('{'
-		//	annotations+=CommentAnnotatonSL?
-		//	declarations+=Declaration*
-		//	statements+=Statement*
-		//	'}')?;
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#XtextFragmentProvider_de.cau.cs.kieler.sccharts.text.SCTX/KeywordMethodDeclarationWOSemicolon'
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{scl::MethodImplementationDeclaration} annotations+=Annotation* access=AccessModifier? 'method'
-		//returnType=MethodReturnType? valuedObjects+=SimpleValuedObject ('('
-		//parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)* ')'
-		//| '()') ('schedule' schedule+=ScheduleObjectReference+)? ('{' annotations+=CommentAnnotatonSL?
-		//declarations+=Declaration* statements+=Statement* '}')?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.31/@alternatives'
 		public Group getGroup() { return cGroup; }
 		
-		//{scl::MethodImplementationDeclaration}
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.31/@alternatives/@elements.0'
 		public Action getMethodImplementationDeclarationAction_0() { return cMethodImplementationDeclarationAction_0; }
 		
-		//annotations+=Annotation*
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.31/@alternatives/@elements.1'
 		public Assignment getAnnotationsAssignment_1() { return cAnnotationsAssignment_1; }
 		
-		//Annotation
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.31/@alternatives/@elements.1/@terminal'
 		public RuleCall getAnnotationsAnnotationParserRuleCall_1_0() { return cAnnotationsAnnotationParserRuleCall_1_0; }
 		
-		//access=AccessModifier?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.31/@alternatives/@elements.2'
 		public Assignment getAccessAssignment_2() { return cAccessAssignment_2; }
 		
-		//AccessModifier
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.31/@alternatives/@elements.2/@terminal'
 		public RuleCall getAccessAccessModifierEnumRuleCall_2_0() { return cAccessAccessModifierEnumRuleCall_2_0; }
 		
-		//'method'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.31/@alternatives/@elements.3'
 		public Keyword getMethodKeyword_3() { return cMethodKeyword_3; }
 		
-		//returnType=MethodReturnType?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.31/@alternatives/@elements.4'
 		public Assignment getReturnTypeAssignment_4() { return cReturnTypeAssignment_4; }
 		
-		//MethodReturnType
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.31/@alternatives/@elements.4/@terminal'
 		public RuleCall getReturnTypeMethodReturnTypeEnumRuleCall_4_0() { return cReturnTypeMethodReturnTypeEnumRuleCall_4_0; }
 		
-		//valuedObjects+=SimpleValuedObject
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.31/@alternatives/@elements.5'
 		public Assignment getValuedObjectsAssignment_5() { return cValuedObjectsAssignment_5; }
 		
-		//SimpleValuedObject
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#/0/@rules.31/@alternatives/@elements.5/@terminal'
 		public RuleCall getValuedObjectsSimpleValuedObjectParserRuleCall_5_0() { return cValuedObjectsSimpleValuedObjectParserRuleCall_5_0; }
 		
 		//('(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)*
@@ -4012,13 +3862,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		return getLegacyElseScopeAccess().getRule();
 	}
 	
-	//Thread:
-	//	{Thread} (annotations+=Annotation*
-	//	'{'
-	//	declarations+=super::Declaration*
-	//	statements+=super::Statement*
-	//	'}'
-	//	| statements+=super::Statement*);
+	//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#XtextFragmentProvider_de.cau.cs.kieler.sccharts.text.SCTX/Statement'
 	public SCLGrammarAccess.ThreadElements getThreadAccess() {
 		return gaSCL.getThreadAccess();
 	}
@@ -4040,12 +3884,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		return getParallelAccess().getRule();
 	}
 	
-	//ScopeStatement:
-	//	{ScopeStatement} annotations+=Annotation*
-	//	'{'
-	//	declarations+=super::Declaration*
-	//	statements+=super::Statement*
-	//	'}';
+	//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#XtextFragmentProvider_de.cau.cs.kieler.sccharts.text.SCTX/Declaration'
 	public SCLGrammarAccess.ScopeStatementElements getScopeStatementAccess() {
 		return gaSCL.getScopeStatementAccess();
 	}
@@ -4054,17 +3893,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		return getScopeStatementAccess().getRule();
 	}
 	
-	//ForLoop Loop:
-	//	'for' '(' (initializationDeclaration=LoopDeclaration | initialization=EffectOrAssignment)?
-	//	';'
-	//	condition=BoolExpression
-	//	';'
-	//	afterthought=EffectOrAssignment?
-	//	')' '{'
-	//	declarations+=super::Declaration*
-	//	statements+=super::Statement*
-	//	'}'
-	//	semicolon?=';'?;
+	//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#XtextFragmentProvider_de.cau.cs.kieler.sccharts.text.SCTX/Declaration'
 	public SCLGrammarAccess.ForLoopElements getForLoopAccess() {
 		return gaSCL.getForLoopAccess();
 	}
@@ -4073,8 +3902,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		return getForLoopAccess().getRule();
 	}
 	
-	//LoopDeclaration kexpressions::VariableDeclaration:
-	//	annotations+=Annotation* (type=super::ValueType | type=HostType hostType=STRING) valuedObjects+=ValuedObject;
+	//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#XtextFragmentProvider_de.cau.cs.kieler.sccharts.text.SCTX/ValueType'
 	public SCLGrammarAccess.LoopDeclarationElements getLoopDeclarationAccess() {
 		return gaSCL.getLoopDeclarationAccess();
 	}
@@ -4098,14 +3926,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		return getEffectOrAssignmentAccess().getRule();
 	}
 	
-	//WhileLoop Loop:
-	//	'while' '('
-	//	condition=BoolExpression
-	//	')' '{'
-	//	declarations+=super::Declaration*
-	//	statements+=super::Statement*
-	//	'}'
-	//	semicolon?=';'?;
+	//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#XtextFragmentProvider_de.cau.cs.kieler.sccharts.text.SCTX/Declaration'
 	public SCLGrammarAccess.WhileLoopElements getWhileLoopAccess() {
 		return gaSCL.getWhileLoopAccess();
 	}
@@ -4139,20 +3960,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		return getModuleCallParameterAccess().getRule();
 	}
 	
-	//@Override
-	//MethodDeclaration kexpressions::MethodDeclaration:
-	//	{MethodImplementationDeclaration} annotations+=Annotation*
-	//	access=AccessModifier?
-	//	returnType=MethodReturnType?
-	//	valuedObjects+=SimpleValuedObject ('(' parameterDeclarations+=VariableDeclarationWOSemicolon (','
-	//	parameterDeclarations+=VariableDeclarationWOSemicolon)* ')' | '()') ('schedule' schedule+=ScheduleObjectReference+)?
-	//	(';'
-	//	|
-	//	'{'
-	//	annotations+=CommentAnnotatonSL?
-	//	declarations+=super::Declaration*
-	//	statements+=super::Statement*
-	//	'}') annotations+=CommentAnnotatonSL?;
+	//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#XtextFragmentProvider_de.cau.cs.kieler.sccharts.text.SCTX/Declaration'
 	public SCLGrammarAccess.MethodDeclarationElements getMethodDeclarationAccess() {
 		return gaSCL.getMethodDeclarationAccess();
 	}
@@ -4161,18 +3969,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		return getMethodDeclarationAccess().getRule();
 	}
 	
-	//@Override
-	//MethodDeclarationWOSemicolon kexpressions::MethodDeclaration:
-	//	{MethodImplementationDeclaration} annotations+=Annotation*
-	//	access=AccessModifier?
-	//	returnType=MethodReturnType?
-	//	valuedObjects+=SimpleValuedObject ('(' parameterDeclarations+=VariableDeclarationWOSemicolon (','
-	//	parameterDeclarations+=VariableDeclarationWOSemicolon)* ')' | '()') ('schedule' schedule+=ScheduleObjectReference+)?
-	//	('{'
-	//	annotations+=CommentAnnotatonSL?
-	//	declarations+=super::Declaration*
-	//	statements+=super::Statement*
-	//	'}')?;
+	//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#XtextFragmentProvider_de.cau.cs.kieler.sccharts.text.SCTX/Declaration'
 	public SCLGrammarAccess.MethodDeclarationWOSemicolonElements getMethodDeclarationWOSemicolonAccess() {
 		return gaSCL.getMethodDeclarationWOSemicolonAccess();
 	}
@@ -4205,9 +4002,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		return getKextAccess().getRule();
 	}
 	
-	//RootScope kext::KExtScope:
-	//	{kext::KExtScope} declarations+=super::Declaration*
-	//	entities+=TestEntity* ('scope' scopes+=Scope)*;
+	//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#XtextFragmentProvider_de.cau.cs.kieler.sccharts.text.SCTX/Declaration'
 	public KExtGrammarAccess.RootScopeElements getRootScopeAccess() {
 		return gaKExt.getRootScopeAccess();
 	}
@@ -4216,10 +4011,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		return getRootScopeAccess().getRule();
 	}
 	
-	//Scope kext::KExtScope:
-	//	{kext::KExtScope} name=ID? '{'
-	//	declarations+=super::Declaration*
-	//	entities+=TestEntity* ('scope' scopes+=Scope)* '}';
+	//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#XtextFragmentProvider_de.cau.cs.kieler.sccharts.text.SCTX/Declaration'
 	public KExtGrammarAccess.ScopeElements getScopeAccess() {
 		return gaKExt.getScopeAccess();
 	}
@@ -4228,10 +4020,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		return getScopeAccess().getRule();
 	}
 	
-	//// Test Entity Rule
-	//// A test entity is either an annotation expression or an effect.
-	//TestEntity kext::TestEntity:
-	//	expression=AnnotatedExpression | effect=super::Effect;
+	//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#XtextFragmentProvider_de.cau.cs.kieler.sccharts.text.SCTX/Effect'
 	public KExtGrammarAccess.TestEntityElements getTestEntityAccess() {
 		return gaKExt.getTestEntityAccess();
 	}
@@ -4255,6 +4044,18 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		return getAnnotatedExpressionAccess().getRule();
 	}
 	
+	//AnnotatedJsonExpression kext::AnnotatedExpression:
+	//	annotations+=Annotation*
+	//	'json'
+	//	expression=JsonObjectValue;
+	public KExtGrammarAccess.AnnotatedJsonExpressionElements getAnnotatedJsonExpressionAccess() {
+		return gaKExt.getAnnotatedJsonExpressionAccess();
+	}
+	
+	public ParserRule getAnnotatedJsonExpressionRule() {
+		return getAnnotatedJsonExpressionAccess().getRule();
+	}
+	
 	//// Declaration Rule
 	//// A declaration follows the general KIELER pattern for variable declaration. More specific:
 	//// this centralized declaration rule should replace any other declaration in drived grammars.
@@ -4271,9 +4072,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		return getKExtDeclarationAccess().getRule();
 	}
 	
-	//DeclarationWOSemicolon kexpressions::Declaration:
-	//	VariableDeclarationWOSemicolon | ReferenceDeclarationWOSemicolon | ScheduleDeclarationWOSemicolon |
-	//	super::ClassDeclarationWOSemicolon;
+	//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#XtextFragmentProvider_de.cau.cs.kieler.sccharts.text.SCTX/ClassDeclarationWOSemicolon'
 	public KExtGrammarAccess.DeclarationWOSemicolonElements getDeclarationWOSemicolonAccess() {
 		return gaKExt.getDeclarationWOSemicolonAccess();
 	}
@@ -4282,16 +4081,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		return getDeclarationWOSemicolonAccess().getRule();
 	}
 	
-	//VariableDeclaration kexpressions::VariableDeclaration:
-	//	annotations+=Annotation*
-	//	access=AccessModifier?
-	//	const?='const'?
-	//	input?='input'?
-	//	output?='output'?
-	//	global?='global'?
-	//	static?='static'? (signal?='signal'? type=super::ValueType | signal?='signal' | type=HostType hostType=STRING)
-	//	valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
-	//	annotations+=CommentAnnotatonSL?;
+	//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#XtextFragmentProvider_de.cau.cs.kieler.sccharts.text.SCTX/ValueType'
 	public KExtGrammarAccess.VariableDeclarationElements getVariableDeclarationAccess() {
 		return gaKExt.getVariableDeclarationAccess();
 	}
@@ -4300,16 +4090,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		return getVariableDeclarationAccess().getRule();
 	}
 	
-	//VariableDeclarationWOSemicolon kexpressions::VariableDeclaration:
-	//	annotations+=Annotation*
-	//	access=AccessModifier?
-	//	const?='const'?
-	//	input?='input'?
-	//	output?='output'?
-	//	global?='global'?
-	//	static?='static'? (signal?='signal'? type=super::ValueType | signal?='signal' | type=HostType hostType=STRING)
-	//	valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
-	//	annotations+=CommentAnnotatonSL?;
+	//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#XtextFragmentProvider_de.cau.cs.kieler.sccharts.text.SCTX/ValueType'
 	public KExtGrammarAccess.VariableDeclarationWOSemicolonElements getVariableDeclarationWOSemicolonAccess() {
 		return gaKExt.getVariableDeclarationWOSemicolonAccess();
 	}
@@ -4318,26 +4099,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		return getVariableDeclarationWOSemicolonAccess().getRule();
 	}
 	
-	//ClassDeclaration kext::ClassDeclaration:
-	//	{kext::ClassDeclaration} annotations+=Annotation*
-	//	access=AccessModifier?
-	//	const?='const'?
-	//	input?='input'?
-	//	output?='output'?
-	//	global?='global'?
-	//	static?='static'?
-	//	host?='host'? (type=ClassType
-	//	name=ID?
-	//	'{'
-	//	declarations+=DeclarationOrMethod*
-	//	'}'
-	//	| type=StructType
-	//	name=ID?
-	//	'{'
-	//	declarations+=super::Declaration*
-	//	'}') (valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*)?
-	//	';'
-	//	annotations+=CommentAnnotatonSL?;
+	//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#XtextFragmentProvider_de.cau.cs.kieler.sccharts.text.SCTX/Declaration'
 	public KExtGrammarAccess.ClassDeclarationElements getClassDeclarationAccess() {
 		return gaKExt.getClassDeclarationAccess();
 	}
@@ -4346,8 +4108,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		return getClassDeclarationAccess().getRule();
 	}
 	
-	//DeclarationOrMethod kexpressions::Declaration:
-	//	super::Declaration | super::MethodDeclaration;
+	//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/sccharts/text/SCTX.xtext#XtextFragmentProvider_de.cau.cs.kieler.sccharts.text.SCTX/Declaration'
 	public KExtGrammarAccess.DeclarationOrMethodElements getDeclarationOrMethodAccess() {
 		return gaKExt.getDeclarationOrMethodAccess();
 	}
