@@ -31,6 +31,7 @@ import de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure
 import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
 import de.cau.cs.kieler.kicool.registration.ModelInformation
+import de.cau.cs.kieler.kicool.util.KiCoolUtils
 import java.io.File
 import java.nio.file.FileSystems
 import java.nio.file.Files
@@ -92,10 +93,13 @@ class KielerCompilerCLI implements Runnable, Observer {
     @Parameters(description = "the files and/or directories to process.")
     protected List<File> files;
     
-    @Option(names = #["--list-systems"], description = "lists all available compilation systems.")
+    @Option(names = #["--list-systems"], description = "lists common compilation systems.")
     protected boolean listSystems;
     
-    @Option(names = #["--help"], usageHelp = true, description = "displays this help message.")
+    @Option(names = #["--list-all-systems"], description = "lists all available compilation systems, including internal and developer-only systems.")
+    protected boolean listAllSystems;
+    
+    @Option(names = #["-h", "--help"], usageHelp = true, description = "displays this help message.")
     protected boolean help;
     
     protected static val LAZY_PREFIX = "de.cau.cs.kieler"
@@ -118,11 +122,24 @@ class KielerCompilerCLI implements Runnable, Observer {
         try {
             // List all systems
             val availableSystems = availableSystemsMap
-            if (listSystems) {
-                println("Available compilation systems:")
-                //TODO highlight those matching the input filter?
-                for (entry : availableSystems.entrySet.sortBy[key]) {
-                    println("  " + entry.key + " - " + entry.value.label)
+            if (listSystems || listAllSystems) {
+                if (listAllSystems) {
+                    println("All available compilation systems:")
+                } else {
+                    println("Compilation systems:")
+                }
+               
+                val languages = availableInputLanguagesMap
+                for (entry : availableSystems.entrySet.filter[listAllSystems ? true : it.value.public].sortBy[key]) {
+                    val input = KiCoolUtils.findInputClass(entry.value)
+                    val lang = languages.values.findFirst[supportedModels.contains(input)]
+                    if (lang !== null) {
+                        println("  %s - [%s] - %s".format(entry.key, lang.supportedResourceExtensions.join(", ")["*." + it], entry.value.label))
+                    } else if (input !== null && ("Object".equals(input.simpleName) || "EObject".equals(input.simpleName))) {
+                        println("  %s - [*.*] - %s".format(entry.key, entry.value.label))
+                    } else {
+                        println("  %s - %s".format(entry.key, entry.value.label))
+                    }
                 }
                 System.exit(0)
             }
@@ -345,7 +362,8 @@ class KielerCompilerCLI implements Runnable, Observer {
                 }
                 val processorDir = if (intermediates) {
                     val pinf = ProjectInfrastructure.getProjectInfrastructure(env)
-                    val dir = new File(pinf.generatedCodeFolder, event.processorInstance.id)
+                    val idx = event.compilationContext.processorInstances.indexOf(event.processorInstance)
+                    val dir = new File(pinf.generatedCodeFolder, "%02d_%s".format(idx, event.processorInstance.id))
                     if (dir.isFile || (!dir.exists && !dir.mkdirs)) {
                         println("Cannot create folder for intermediate results %s".format(dir))
                     }
