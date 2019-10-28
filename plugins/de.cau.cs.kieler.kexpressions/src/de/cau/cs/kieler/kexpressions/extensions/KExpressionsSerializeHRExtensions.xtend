@@ -251,16 +251,8 @@ class KExpressionsSerializeHRExtensions extends KExpressionsSerializeExtensions 
         combineOperatorsHR(expression.subExpressions.iterator, " fby ")
     }
 
-    protected def CharSequence serializeHROperatorExpressionImplies(OperatorExpression expression) {
-        combineOperatorsHR(expression.subExpressions.iterator, " => ")
-    }
-
-    protected def CharSequence serializeHROperatorExpressionAtMostOneOf(OperatorExpression expression) {
-        "#(" + combineOperatorsHR(expression.subExpressions.iterator, ", ") + ")"
-    }
-
-    protected def CharSequence serializeHROperatorExpressionNoneOf(OperatorExpression expression) {
-        "nor(" + combineOperatorsHR(expression.subExpressions.iterator, ", ") + ")"
+    protected def CharSequence serializeHROperatorExpressionSfby(OperatorExpression expression) {
+        combineOperatorsHR(expression.subExpressions.iterator, " sfby ")
     }
     
     protected def CharSequence serializeHROperatorExpressionNot(OperatorExpression expression) {
@@ -366,12 +358,8 @@ class KExpressionsSerializeHRExtensions extends KExpressionsSerializeExtensions 
             return expression.serializeHROperatorExpressionINIT
         } else if (expression.operator == OperatorType::FBY) {
             return expression.serializeHROperatorExpressionFby
-        } else if (expression.operator == OperatorType::IMPLIES) {
-            return expression.serializeHROperatorExpressionImplies
-        } else if (expression.operator == OperatorType::ATMOSTONEOF) {
-            return expression.serializeHROperatorExpressionAtMostOneOf
-        } else if (expression.operator == OperatorType::NOR) {
-            return expression.serializeHROperatorExpressionNoneOf
+        } else if (expression.operator == OperatorType::SFBY) {
+            return expression.serializeHROperatorExpressionSfby
         } else if (expression.operator == OperatorType::NE) {
             result = expression.serializeHROperatorExpressionNE
         } else if (expression.operator == OperatorType::LOGICAL_AND) {
