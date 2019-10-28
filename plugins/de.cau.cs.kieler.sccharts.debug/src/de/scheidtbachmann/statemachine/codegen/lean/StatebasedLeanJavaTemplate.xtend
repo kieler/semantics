@@ -568,14 +568,16 @@ class StatebasedLeanJavaTemplate extends AbstractStatebasedLeanTemplate {
     }
     
     protected def generateJavaDocFromCommentAnnotations(Annotatable annotatable) {
-        val comments = annotatable.annotations.filter(CommentAnnotation).head;
+        val comments = annotatable.annotations.filter(CommentAnnotation);
         return '''
             « IF comments !== null »
             /**
-             « FOR comment : comments.values »
+             « FOR commentAnnotation : comments»
+             « FOR comment : commentAnnotation.values »
              « FOR line : comment.split("\n") »
              * « line »
              « ENDFOR » 
+             « ENDFOR »
              « ENDFOR »
              */
             « ENDIF »
