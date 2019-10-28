@@ -33,6 +33,10 @@ class JavaBreakpointListener implements IJavaBreakpointListener {
     
     var breakpointToTarget = new HashMap<IJavaBreakpoint,IJavaDebugTarget>()
     
+    def void findCurrentStates(IJavaThread thread, IJavaBreakpoint breakpoint) {
+        
+    }
+    
     
     override addingBreakpoint(IJavaDebugTarget target, IJavaBreakpoint breakpoint) {
         println("Adding breakpoint!")
@@ -59,6 +63,7 @@ class JavaBreakpointListener implements IJavaBreakpointListener {
                         DiagramViewManager.createView(null, "TestView", model)
                     }
                 })
+                findCurrentStates(thread, breakpoint)
                 
             }
             

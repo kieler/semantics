@@ -38,6 +38,7 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.processors.statebased.lean.codegen.AbstractStatebasedLeanTemplate
 import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
+import de.cau.cs.kieler.annotations.Annotatable
 
 /**
  * @author wechselberg
@@ -260,6 +261,7 @@ class StatebasedLeanJavaTemplate extends AbstractStatebasedLeanTemplate {
 
     protected def CharSequence createCodeState(State state) {
         return '''
+          « state.generateJavaDocFromCommentAnnotations »
           private void « state.uniqueName »« IF (state == rootState) »_root« ENDIF »(« state.uniqueContextMemberName » context) {
           « IF state.isHierarchical »
           « IF state !== rootState »
@@ -563,5 +565,20 @@ class StatebasedLeanJavaTemplate extends AbstractStatebasedLeanTemplate {
 
     protected def findModifications() {
         return modifications
+    }
+    
+    protected def generateJavaDocFromCommentAnnotations(Annotatable annotatable) {
+        val comments = annotatable.annotations.filter(CommentAnnotation).head;
+        return '''
+            « IF comments !== null »
+            /**
+             « FOR comment : comments.values »
+             « FOR line : comment.split("\n") »
+             * « line »
+             « ENDFOR » 
+             « ENDFOR »
+             */
+            « ENDIF »
+        '''
     }
 }

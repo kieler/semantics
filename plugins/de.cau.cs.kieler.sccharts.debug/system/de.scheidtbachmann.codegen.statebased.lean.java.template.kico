@@ -10,4 +10,5 @@ de.cau.cs.kieler.sccharts.processors.regionDependencies
 de.cau.cs.kieler.sccharts.processors.regionDependencySort
 de.scheidtbachmann.statemachine.processors.stateOrigin
 pre process de.cau.cs.kieler.sccharts.processors.voRise 
+de.cau.cs.kieler.sccharts.debug.DebugAnnotationsProcessor
 de.scheidtbachmann.statemachine.codegen.statebased.lean.java

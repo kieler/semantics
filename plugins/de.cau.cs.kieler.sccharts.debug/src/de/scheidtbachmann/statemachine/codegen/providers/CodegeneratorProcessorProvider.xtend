@@ -13,7 +13,8 @@ class CodegeneratorProcessorProvider implements IProcessorProvider {
         #[
             de.scheidtbachmann.statemachine.transformators.ModelSelect,
             de.scheidtbachmann.statemachine.transformators.StateOriginMarker,
-            de.scheidtbachmann.statemachine.codegen.lean.StatebasedLeanJavaCodeGenerator
+            de.scheidtbachmann.statemachine.codegen.lean.StatebasedLeanJavaCodeGenerator,
+            de.cau.cs.kieler.sccharts.debug.codegen.processors.DebugAnnotationsProcessor
         ]
     }
     
