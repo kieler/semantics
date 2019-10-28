@@ -75,7 +75,7 @@ class SCChartsCLITest extends AbstractCLITest {
         // check results
         assertExists(new File(wd, "code/ABO.c"))
         assertExists(new File(wd, "code/ABO.h"))
-        assertExists(new File(wd, "kieler-gen/abo.sctx/25_de.cau.cs.kieler.sccharts.processors.triggerEffect/abo.sctx"))
-        assertExists(new File(wd, "kieler-gen/abo.sctx/27_de.cau.cs.kieler.sccharts.scg.processors.SCG/abo.scg"))
+        assertExists(new File(wd, "kieler-gen/abo.sctx/27_de.cau.cs.kieler.sccharts.processors.triggerEffect/abo.sctx"))
+        assertExists(new File(wd, "kieler-gen/abo.sctx/29_de.cau.cs.kieler.sccharts.scg.processors.SCG/abo.scg"))
     }
 }

@@ -4,20 +4,16 @@
 package de.cau.cs.kieler.lustre.lustre.impl;
 
 import de.cau.cs.kieler.kexpressions.Expression;
-import de.cau.cs.kieler.kexpressions.ValuedObjectReference;
 import de.cau.cs.kieler.kexpressions.VariableDeclaration;
 
 import de.cau.cs.kieler.kexpressions.impl.DeclarationImpl;
 
 import de.cau.cs.kieler.kexpressions.keffects.Assignment;
+import de.cau.cs.kieler.kexpressions.keffects.Emission;
 
 import de.cau.cs.kieler.lustre.lustre.Automaton;
-import de.cau.cs.kieler.lustre.lustre.ClockedVariableDeclaration;
 import de.cau.cs.kieler.lustre.lustre.LustrePackage;
 import de.cau.cs.kieler.lustre.lustre.NodeDeclaration;
-import de.cau.cs.kieler.lustre.lustre.Params;
-import de.cau.cs.kieler.lustre.lustre.StaticArg;
-import de.cau.cs.kieler.lustre.lustre.StaticParam;
 
 import java.util.Collection;
 
@@ -44,14 +40,12 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.lustre.lustre.impl.NodeDeclarationImpl#isIsUnsafe <em>Is Unsafe</em>}</li>
  *   <li>{@link de.cau.cs.kieler.lustre.lustre.impl.NodeDeclarationImpl#isHasState <em>Has State</em>}</li>
- *   <li>{@link de.cau.cs.kieler.lustre.lustre.impl.NodeDeclarationImpl#getStaticParams <em>Static Params</em>}</li>
- *   <li>{@link de.cau.cs.kieler.lustre.lustre.impl.NodeDeclarationImpl#getInput <em>Input</em>}</li>
- *   <li>{@link de.cau.cs.kieler.lustre.lustre.impl.NodeDeclarationImpl#getOutput <em>Output</em>}</li>
- *   <li>{@link de.cau.cs.kieler.lustre.lustre.impl.NodeDeclarationImpl#getEffectiveNode <em>Effective Node</em>}</li>
- *   <li>{@link de.cau.cs.kieler.lustre.lustre.impl.NodeDeclarationImpl#getStaticArgs <em>Static Args</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.lustre.lustre.impl.NodeDeclarationImpl#getInputs <em>Inputs</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.lustre.lustre.impl.NodeDeclarationImpl#getOutputs <em>Outputs</em>}</li>
  *   <li>{@link de.cau.cs.kieler.lustre.lustre.impl.NodeDeclarationImpl#getConstants <em>Constants</em>}</li>
  *   <li>{@link de.cau.cs.kieler.lustre.lustre.impl.NodeDeclarationImpl#getVariables <em>Variables</em>}</li>
  *   <li>{@link de.cau.cs.kieler.lustre.lustre.impl.NodeDeclarationImpl#getEquations <em>Equations</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.lustre.lustre.impl.NodeDeclarationImpl#getEmissions <em>Emissions</em>}</li>
  *   <li>{@link de.cau.cs.kieler.lustre.lustre.impl.NodeDeclarationImpl#getAssertions <em>Assertions</em>}</li>
  *   <li>{@link de.cau.cs.kieler.lustre.lustre.impl.NodeDeclarationImpl#getAutomatons <em>Automatons</em>}</li>
  * </ul>
@@ -101,54 +95,24 @@ public class NodeDeclarationImpl extends DeclarationImpl implements NodeDeclarat
   protected boolean hasState = HAS_STATE_EDEFAULT;
 
   /**
-   * The cached value of the '{@link #getStaticParams() <em>Static Params</em>}' containment reference list.
+   * The cached value of the '{@link #getInputs() <em>Inputs</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getStaticParams()
+   * @see #getInputs()
    * @generated
    * @ordered
    */
-  protected EList<StaticParam> staticParams;
+  protected EList<VariableDeclaration> inputs;
 
   /**
-   * The cached value of the '{@link #getInput() <em>Input</em>}' containment reference.
+   * The cached value of the '{@link #getOutputs() <em>Outputs</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getInput()
+   * @see #getOutputs()
    * @generated
    * @ordered
    */
-  protected Params input;
-
-  /**
-   * The cached value of the '{@link #getOutput() <em>Output</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getOutput()
-   * @generated
-   * @ordered
-   */
-  protected Params output;
-
-  /**
-   * The cached value of the '{@link #getEffectiveNode() <em>Effective Node</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getEffectiveNode()
-   * @generated
-   * @ordered
-   */
-  protected ValuedObjectReference effectiveNode;
-
-  /**
-   * The cached value of the '{@link #getStaticArgs() <em>Static Args</em>}' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getStaticArgs()
-   * @generated
-   * @ordered
-   */
-  protected EList<StaticArg> staticArgs;
+  protected EList<VariableDeclaration> outputs;
 
   /**
    * The cached value of the '{@link #getConstants() <em>Constants</em>}' containment reference list.
@@ -168,7 +132,7 @@ public class NodeDeclarationImpl extends DeclarationImpl implements NodeDeclarat
    * @generated
    * @ordered
    */
-  protected EList<ClockedVariableDeclaration> variables;
+  protected EList<VariableDeclaration> variables;
 
   /**
    * The cached value of the '{@link #getEquations() <em>Equations</em>}' containment reference list.
@@ -179,6 +143,16 @@ public class NodeDeclarationImpl extends DeclarationImpl implements NodeDeclarat
    * @ordered
    */
   protected EList<Assignment> equations;
+
+  /**
+   * The cached value of the '{@link #getEmissions() <em>Emissions</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getEmissions()
+   * @generated
+   * @ordered
+   */
+  protected EList<Emission> emissions;
 
   /**
    * The cached value of the '{@link #getAssertions() <em>Assertions</em>}' containment reference list.
@@ -277,13 +251,13 @@ public class NodeDeclarationImpl extends DeclarationImpl implements NodeDeclarat
    * @generated
    */
   @Override
-  public EList<StaticParam> getStaticParams()
+  public EList<VariableDeclaration> getInputs()
   {
-    if (staticParams == null)
+    if (inputs == null)
     {
-      staticParams = new EObjectContainmentEList<StaticParam>(StaticParam.class, this, LustrePackage.NODE_DECLARATION__STATIC_PARAMS);
+      inputs = new EObjectContainmentEList<VariableDeclaration>(VariableDeclaration.class, this, LustrePackage.NODE_DECLARATION__INPUTS);
     }
-    return staticParams;
+    return inputs;
   }
 
   /**
@@ -292,163 +266,13 @@ public class NodeDeclarationImpl extends DeclarationImpl implements NodeDeclarat
    * @generated
    */
   @Override
-  public Params getInput()
+  public EList<VariableDeclaration> getOutputs()
   {
-    return input;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public NotificationChain basicSetInput(Params newInput, NotificationChain msgs)
-  {
-    Params oldInput = input;
-    input = newInput;
-    if (eNotificationRequired())
+    if (outputs == null)
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, LustrePackage.NODE_DECLARATION__INPUT, oldInput, newInput);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
+      outputs = new EObjectContainmentEList<VariableDeclaration>(VariableDeclaration.class, this, LustrePackage.NODE_DECLARATION__OUTPUTS);
     }
-    return msgs;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public void setInput(Params newInput)
-  {
-    if (newInput != input)
-    {
-      NotificationChain msgs = null;
-      if (input != null)
-        msgs = ((InternalEObject)input).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - LustrePackage.NODE_DECLARATION__INPUT, null, msgs);
-      if (newInput != null)
-        msgs = ((InternalEObject)newInput).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - LustrePackage.NODE_DECLARATION__INPUT, null, msgs);
-      msgs = basicSetInput(newInput, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, LustrePackage.NODE_DECLARATION__INPUT, newInput, newInput));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public Params getOutput()
-  {
-    return output;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public NotificationChain basicSetOutput(Params newOutput, NotificationChain msgs)
-  {
-    Params oldOutput = output;
-    output = newOutput;
-    if (eNotificationRequired())
-    {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, LustrePackage.NODE_DECLARATION__OUTPUT, oldOutput, newOutput);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
-    }
-    return msgs;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public void setOutput(Params newOutput)
-  {
-    if (newOutput != output)
-    {
-      NotificationChain msgs = null;
-      if (output != null)
-        msgs = ((InternalEObject)output).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - LustrePackage.NODE_DECLARATION__OUTPUT, null, msgs);
-      if (newOutput != null)
-        msgs = ((InternalEObject)newOutput).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - LustrePackage.NODE_DECLARATION__OUTPUT, null, msgs);
-      msgs = basicSetOutput(newOutput, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, LustrePackage.NODE_DECLARATION__OUTPUT, newOutput, newOutput));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public ValuedObjectReference getEffectiveNode()
-  {
-    return effectiveNode;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public NotificationChain basicSetEffectiveNode(ValuedObjectReference newEffectiveNode, NotificationChain msgs)
-  {
-    ValuedObjectReference oldEffectiveNode = effectiveNode;
-    effectiveNode = newEffectiveNode;
-    if (eNotificationRequired())
-    {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, LustrePackage.NODE_DECLARATION__EFFECTIVE_NODE, oldEffectiveNode, newEffectiveNode);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
-    }
-    return msgs;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public void setEffectiveNode(ValuedObjectReference newEffectiveNode)
-  {
-    if (newEffectiveNode != effectiveNode)
-    {
-      NotificationChain msgs = null;
-      if (effectiveNode != null)
-        msgs = ((InternalEObject)effectiveNode).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - LustrePackage.NODE_DECLARATION__EFFECTIVE_NODE, null, msgs);
-      if (newEffectiveNode != null)
-        msgs = ((InternalEObject)newEffectiveNode).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - LustrePackage.NODE_DECLARATION__EFFECTIVE_NODE, null, msgs);
-      msgs = basicSetEffectiveNode(newEffectiveNode, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, LustrePackage.NODE_DECLARATION__EFFECTIVE_NODE, newEffectiveNode, newEffectiveNode));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public EList<StaticArg> getStaticArgs()
-  {
-    if (staticArgs == null)
-    {
-      staticArgs = new EObjectContainmentEList<StaticArg>(StaticArg.class, this, LustrePackage.NODE_DECLARATION__STATIC_ARGS);
-    }
-    return staticArgs;
+    return outputs;
   }
 
   /**
@@ -472,11 +296,11 @@ public class NodeDeclarationImpl extends DeclarationImpl implements NodeDeclarat
    * @generated
    */
   @Override
-  public EList<ClockedVariableDeclaration> getVariables()
+  public EList<VariableDeclaration> getVariables()
   {
     if (variables == null)
     {
-      variables = new EObjectContainmentEList<ClockedVariableDeclaration>(ClockedVariableDeclaration.class, this, LustrePackage.NODE_DECLARATION__VARIABLES);
+      variables = new EObjectContainmentEList<VariableDeclaration>(VariableDeclaration.class, this, LustrePackage.NODE_DECLARATION__VARIABLES);
     }
     return variables;
   }
@@ -494,6 +318,21 @@ public class NodeDeclarationImpl extends DeclarationImpl implements NodeDeclarat
       equations = new EObjectContainmentEList<Assignment>(Assignment.class, this, LustrePackage.NODE_DECLARATION__EQUATIONS);
     }
     return equations;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EList<Emission> getEmissions()
+  {
+    if (emissions == null)
+    {
+      emissions = new EObjectContainmentEList<Emission>(Emission.class, this, LustrePackage.NODE_DECLARATION__EMISSIONS);
+    }
+    return emissions;
   }
 
   /**
@@ -536,22 +375,18 @@ public class NodeDeclarationImpl extends DeclarationImpl implements NodeDeclarat
   {
     switch (featureID)
     {
-      case LustrePackage.NODE_DECLARATION__STATIC_PARAMS:
-        return ((InternalEList<?>)getStaticParams()).basicRemove(otherEnd, msgs);
-      case LustrePackage.NODE_DECLARATION__INPUT:
-        return basicSetInput(null, msgs);
-      case LustrePackage.NODE_DECLARATION__OUTPUT:
-        return basicSetOutput(null, msgs);
-      case LustrePackage.NODE_DECLARATION__EFFECTIVE_NODE:
-        return basicSetEffectiveNode(null, msgs);
-      case LustrePackage.NODE_DECLARATION__STATIC_ARGS:
-        return ((InternalEList<?>)getStaticArgs()).basicRemove(otherEnd, msgs);
+      case LustrePackage.NODE_DECLARATION__INPUTS:
+        return ((InternalEList<?>)getInputs()).basicRemove(otherEnd, msgs);
+      case LustrePackage.NODE_DECLARATION__OUTPUTS:
+        return ((InternalEList<?>)getOutputs()).basicRemove(otherEnd, msgs);
       case LustrePackage.NODE_DECLARATION__CONSTANTS:
         return ((InternalEList<?>)getConstants()).basicRemove(otherEnd, msgs);
       case LustrePackage.NODE_DECLARATION__VARIABLES:
         return ((InternalEList<?>)getVariables()).basicRemove(otherEnd, msgs);
       case LustrePackage.NODE_DECLARATION__EQUATIONS:
         return ((InternalEList<?>)getEquations()).basicRemove(otherEnd, msgs);
+      case LustrePackage.NODE_DECLARATION__EMISSIONS:
+        return ((InternalEList<?>)getEmissions()).basicRemove(otherEnd, msgs);
       case LustrePackage.NODE_DECLARATION__ASSERTIONS:
         return ((InternalEList<?>)getAssertions()).basicRemove(otherEnd, msgs);
       case LustrePackage.NODE_DECLARATION__AUTOMATONS:
@@ -574,22 +409,18 @@ public class NodeDeclarationImpl extends DeclarationImpl implements NodeDeclarat
         return isIsUnsafe();
       case LustrePackage.NODE_DECLARATION__HAS_STATE:
         return isHasState();
-      case LustrePackage.NODE_DECLARATION__STATIC_PARAMS:
-        return getStaticParams();
-      case LustrePackage.NODE_DECLARATION__INPUT:
-        return getInput();
-      case LustrePackage.NODE_DECLARATION__OUTPUT:
-        return getOutput();
-      case LustrePackage.NODE_DECLARATION__EFFECTIVE_NODE:
-        return getEffectiveNode();
-      case LustrePackage.NODE_DECLARATION__STATIC_ARGS:
-        return getStaticArgs();
+      case LustrePackage.NODE_DECLARATION__INPUTS:
+        return getInputs();
+      case LustrePackage.NODE_DECLARATION__OUTPUTS:
+        return getOutputs();
       case LustrePackage.NODE_DECLARATION__CONSTANTS:
         return getConstants();
       case LustrePackage.NODE_DECLARATION__VARIABLES:
         return getVariables();
       case LustrePackage.NODE_DECLARATION__EQUATIONS:
         return getEquations();
+      case LustrePackage.NODE_DECLARATION__EMISSIONS:
+        return getEmissions();
       case LustrePackage.NODE_DECLARATION__ASSERTIONS:
         return getAssertions();
       case LustrePackage.NODE_DECLARATION__AUTOMATONS:
@@ -615,22 +446,13 @@ public class NodeDeclarationImpl extends DeclarationImpl implements NodeDeclarat
       case LustrePackage.NODE_DECLARATION__HAS_STATE:
         setHasState((Boolean)newValue);
         return;
-      case LustrePackage.NODE_DECLARATION__STATIC_PARAMS:
-        getStaticParams().clear();
-        getStaticParams().addAll((Collection<? extends StaticParam>)newValue);
+      case LustrePackage.NODE_DECLARATION__INPUTS:
+        getInputs().clear();
+        getInputs().addAll((Collection<? extends VariableDeclaration>)newValue);
         return;
-      case LustrePackage.NODE_DECLARATION__INPUT:
-        setInput((Params)newValue);
-        return;
-      case LustrePackage.NODE_DECLARATION__OUTPUT:
-        setOutput((Params)newValue);
-        return;
-      case LustrePackage.NODE_DECLARATION__EFFECTIVE_NODE:
-        setEffectiveNode((ValuedObjectReference)newValue);
-        return;
-      case LustrePackage.NODE_DECLARATION__STATIC_ARGS:
-        getStaticArgs().clear();
-        getStaticArgs().addAll((Collection<? extends StaticArg>)newValue);
+      case LustrePackage.NODE_DECLARATION__OUTPUTS:
+        getOutputs().clear();
+        getOutputs().addAll((Collection<? extends VariableDeclaration>)newValue);
         return;
       case LustrePackage.NODE_DECLARATION__CONSTANTS:
         getConstants().clear();
@@ -638,11 +460,15 @@ public class NodeDeclarationImpl extends DeclarationImpl implements NodeDeclarat
         return;
       case LustrePackage.NODE_DECLARATION__VARIABLES:
         getVariables().clear();
-        getVariables().addAll((Collection<? extends ClockedVariableDeclaration>)newValue);
+        getVariables().addAll((Collection<? extends VariableDeclaration>)newValue);
         return;
       case LustrePackage.NODE_DECLARATION__EQUATIONS:
         getEquations().clear();
         getEquations().addAll((Collection<? extends Assignment>)newValue);
+        return;
+      case LustrePackage.NODE_DECLARATION__EMISSIONS:
+        getEmissions().clear();
+        getEmissions().addAll((Collection<? extends Emission>)newValue);
         return;
       case LustrePackage.NODE_DECLARATION__ASSERTIONS:
         getAssertions().clear();
@@ -672,20 +498,11 @@ public class NodeDeclarationImpl extends DeclarationImpl implements NodeDeclarat
       case LustrePackage.NODE_DECLARATION__HAS_STATE:
         setHasState(HAS_STATE_EDEFAULT);
         return;
-      case LustrePackage.NODE_DECLARATION__STATIC_PARAMS:
-        getStaticParams().clear();
+      case LustrePackage.NODE_DECLARATION__INPUTS:
+        getInputs().clear();
         return;
-      case LustrePackage.NODE_DECLARATION__INPUT:
-        setInput((Params)null);
-        return;
-      case LustrePackage.NODE_DECLARATION__OUTPUT:
-        setOutput((Params)null);
-        return;
-      case LustrePackage.NODE_DECLARATION__EFFECTIVE_NODE:
-        setEffectiveNode((ValuedObjectReference)null);
-        return;
-      case LustrePackage.NODE_DECLARATION__STATIC_ARGS:
-        getStaticArgs().clear();
+      case LustrePackage.NODE_DECLARATION__OUTPUTS:
+        getOutputs().clear();
         return;
       case LustrePackage.NODE_DECLARATION__CONSTANTS:
         getConstants().clear();
@@ -695,6 +512,9 @@ public class NodeDeclarationImpl extends DeclarationImpl implements NodeDeclarat
         return;
       case LustrePackage.NODE_DECLARATION__EQUATIONS:
         getEquations().clear();
+        return;
+      case LustrePackage.NODE_DECLARATION__EMISSIONS:
+        getEmissions().clear();
         return;
       case LustrePackage.NODE_DECLARATION__ASSERTIONS:
         getAssertions().clear();
@@ -720,22 +540,18 @@ public class NodeDeclarationImpl extends DeclarationImpl implements NodeDeclarat
         return isUnsafe != IS_UNSAFE_EDEFAULT;
       case LustrePackage.NODE_DECLARATION__HAS_STATE:
         return hasState != HAS_STATE_EDEFAULT;
-      case LustrePackage.NODE_DECLARATION__STATIC_PARAMS:
-        return staticParams != null && !staticParams.isEmpty();
-      case LustrePackage.NODE_DECLARATION__INPUT:
-        return input != null;
-      case LustrePackage.NODE_DECLARATION__OUTPUT:
-        return output != null;
-      case LustrePackage.NODE_DECLARATION__EFFECTIVE_NODE:
-        return effectiveNode != null;
-      case LustrePackage.NODE_DECLARATION__STATIC_ARGS:
-        return staticArgs != null && !staticArgs.isEmpty();
+      case LustrePackage.NODE_DECLARATION__INPUTS:
+        return inputs != null && !inputs.isEmpty();
+      case LustrePackage.NODE_DECLARATION__OUTPUTS:
+        return outputs != null && !outputs.isEmpty();
       case LustrePackage.NODE_DECLARATION__CONSTANTS:
         return constants != null && !constants.isEmpty();
       case LustrePackage.NODE_DECLARATION__VARIABLES:
         return variables != null && !variables.isEmpty();
       case LustrePackage.NODE_DECLARATION__EQUATIONS:
         return equations != null && !equations.isEmpty();
+      case LustrePackage.NODE_DECLARATION__EMISSIONS:
+        return emissions != null && !emissions.isEmpty();
       case LustrePackage.NODE_DECLARATION__ASSERTIONS:
         return assertions != null && !assertions.isEmpty();
       case LustrePackage.NODE_DECLARATION__AUTOMATONS:

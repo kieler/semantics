@@ -11,6 +11,8 @@ de.cau.cs.kieler.sccharts.processors.^const
 pre process de.cau.cs.kieler.sccharts.processors.period
 de.cau.cs.kieler.sccharts.processors.timedautomata
 de.cau.cs.kieler.sccharts.processors.initOperator
+de.cau.cs.kieler.sccharts.processors.followedBy
+de.cau.cs.kieler.sccharts.processors.sequentialFollowedBy
 de.cau.cs.kieler.sccharts.processors.history
 [ label "SyncCharts"	
 	de.cau.cs.kieler.sccharts.processors.^signal

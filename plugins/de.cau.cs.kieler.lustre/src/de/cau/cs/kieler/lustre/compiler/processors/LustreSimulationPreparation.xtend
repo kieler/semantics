@@ -55,30 +55,30 @@ class LustreSimulationPreparation extends InplaceProcessor<LustreProgram> {
                
         // Model name
         var templateEnv = environment.getProperty(TemplateEngine.GENRAL_ENVIRONMENT)?:newHashMap
-        templateEnv.put(CommonTemplateVariables.MODEL_DATA_NAME, model.packBody.nodes.head.valuedObjects.head.name + "_" + model.packBody.nodes.head.valuedObjects.head.name)
+        templateEnv.put(CommonTemplateVariables.MODEL_DATA_NAME, model.nodes.head.valuedObjects.head.name + "_" + model.nodes.head.valuedObjects.head.name)
         environment.setProperty(TemplateEngine.GENRAL_ENVIRONMENT, templateEnv)
 
         // Init store
-        if (model.packBody !== null) {
-            val nodes = model.packBody.nodes
+        if (model.nodes !== null) {
+            val nodes = model.nodes
             
             var node = nodes.head
             if (node instanceof NodeDeclaration) {
                 
-                var inputCountFormat = "%0" + (node.input.parameter.size.toString.length) + "d";
+                var inputCountFormat = "%0" + (node.inputs.size.toString.length) + "d";
                 var valObjCounter = 0
-                for (var i = 0; i < node.input.parameter.size; i++) {
-                    var varDecl = node.input.parameter.get(i)
+                for (var i = 0; i < node.inputs.size; i++) {
+                    var varDecl = node.inputs.get(i)
                     for (ValuedObject valObj : varDecl.valuedObjects) {
                         processValuedObject(valObj, INPUT, String.format(inputCountFormat, valObjCounter))
                         valObjCounter++
                     }
                 }
                 
-                var outputCountFormat = "%0" + (node.output.parameter.size.toString.length) + "d";
+                var outputCountFormat = "%0" + (node.outputs.size.toString.length) + "d";
                 valObjCounter = 0
-                for (var i = 0; i < node.output.parameter.size; i++) {
-                    var varDecl = node.output.parameter.get(i)
+                for (var i = 0; i < node.outputs.size; i++) {
+                    var varDecl = node.outputs.get(i)
                     for (ValuedObject valObj : varDecl.valuedObjects) {
                         processValuedObject(valObj, OUTPUT, String.format(outputCountFormat, valObjCounter))
                         valObjCounter++
