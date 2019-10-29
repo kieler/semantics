@@ -3,21 +3,14 @@ knode operator {
     properties:
     org.eclipse.elk.portLabels.placement = INSIDE
     org.eclipse.elk.portConstraints = FIXED_ORDER
-    
-    klabel "pre" {
-            ktext {
-                styles: fontSize = 6pt
-            }
-        }
 
   krectangle {
         styles: lineStyle = solid
-              foreground = 190r, 190g, 190b 
-            background = 248r, 249g, 253b, 255a -> 205r, 220g, 243b, 243a (90)
+              foreground = 190r, 190g, 190b
   }
 
-  kport in0 {
-    size: width = 2 height = 2
+  kport in1 {
+    size: width = 0 height = 0
     properties: de.cau.cs.kieler.portSide = WEST
         
     klabel "" { 
@@ -27,9 +20,9 @@ knode operator {
     }
   }
   
-  kport in1 {
-    size: width = 2 height = 0
-    properties: de.cau.cs.kieler.portSide = SOUTH
+  kport in0 {
+    size: width = 0 height = 0
+    properties: de.cau.cs.kieler.portSide = WEST
     
     klabel "" { 
         ktext {
@@ -39,10 +32,10 @@ knode operator {
   }
   
   kport out {
-    size: width = 2 height = 2
+    size: width = 0 height = 0
     properties:
     org.eclipse.elk.port.side = EAST
-    
+     
     klabel "" { 
         ktext {
             styles: fontSize = 4pt

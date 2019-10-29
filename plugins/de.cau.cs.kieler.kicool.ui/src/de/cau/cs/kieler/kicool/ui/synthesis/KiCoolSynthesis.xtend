@@ -1,6 +1,6 @@
 /*
  * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
- *
+ * 
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
  * Copyright 2016 by
@@ -51,17 +51,17 @@ import de.cau.cs.kieler.kicool.ui.synthesis.actions.SelectNothing
  */
 @ViewSynthesisShared
 class KiCoolSynthesis extends AbstractDiagramSynthesis<System> {
- 
+
     @Inject extension KNodeExtensions
     @Inject extension KRenderingExtensions
     @Inject extension ProcessorSynthesis
     @Inject extension SourceSynthesis
-    
+
     public static final SynthesisOption FLATTEN_SYSTEM = SynthesisOption.createCheckOption("Flatten System", false)
-    
+
     override transform(System model) {
         val rootNode = model.createNode
-        
+
         rootNode.setLayoutOption(CoreOptions::ALGORITHM, "org.eclipse.elk.layered");
         rootNode.setLayoutOption(CoreOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
         rootNode.setLayoutOption(CoreOptions::DIRECTION, Direction::RIGHT);
@@ -73,7 +73,8 @@ class KiCoolSynthesis extends AbstractDiagramSynthesis<System> {
         rootNode.setLayoutOption(LayeredOptions::LAYERING_STRATEGY, LayeringStrategy::LONGEST_PATH)
         rootNode.setLayoutOption(LayeredOptions::WRAPPING_STRATEGY, WrappingStrategy.SINGLE_EDGE)
         rootNode.setLayoutOption(LayeredOptions::COMPACTION_POST_COMPACTION_STRATEGY, GraphCompactionStrategy.LEFT)
-        rootNode.setLayoutOption(LayeredOptions::COMPACTION_POST_COMPACTION_CONSTRAINTS, ConstraintCalculationStrategy.QUADRATIC)
+        rootNode.setLayoutOption(LayeredOptions::COMPACTION_POST_COMPACTION_CONSTRAINTS,
+            ConstraintCalculationStrategy.QUADRATIC)
         rootNode.setLayoutOption(LayeredOptions::SPACING_EDGE_NODE, 5.0)
         rootNode.setLayoutOption(LayeredOptions::SPACING_NODE_NODE, 2.0)
         rootNode.setLayoutOption(LayeredOptions::WRAPPING_ADDITIONAL_EDGE_SPACING, 0.0)
@@ -83,26 +84,40 @@ class KiCoolSynthesis extends AbstractDiagramSynthesis<System> {
 //      val aspectRatio = size.x as double / size.y * 2
 //        rootNode.setLayoutOption(LayeredOptions::ASPECT_RATIO, 10.0) 
         rootNode.setLayoutOption(LayeredOptions::WRAPPING_CORRECTION_FACTOR, 1.4)
-        
+
         rootNode.addRectangle => [
             addAction(Trigger::SINGLECLICK, SelectNothing.ID)
         ]
-        
+
         val source = sourceNode
         val processorNodes = model.processors.transform
         val nodes = processorNodes.head.children
         source.sourceConnect(nodes.head)
         nodes += source
 
-        rootNode.children += nodes 
-        
-        if (FLATTEN_SYSTEM.booleanValue) rootNode.flattenHierarchy
-        
+        rootNode.children += nodes
+
+        if(FLATTEN_SYSTEM.booleanValue) rootNode.flattenHierarchy
+
         rootNode
     }
-        
+
     public static val KGTInjector = new KGraphStandaloneSetup().createInjectorAndDoEMFRegistration
-    
+
+    def static doesKGTExist(String bundleId, String resourceLocation, String skinPrefix) {
+        val newURI = URI.createPlatformPluginURI("/" + bundleId + "/" + skinPrefix + resourceLocation, true)
+        val newResourceSet = KGTInjector.getInstance(XtextResourceSet)
+        newResourceSet.addLoadOption(XtextResource.OPTION_RESOLVE_ALL, Boolean.FALSE)
+        val res = newResourceSet.createResource(newURI)
+        try {
+            res.load(newResourceSet.loadOptions)
+            (res.getContents().get(0) as KNode).children.head
+            return true
+        } catch (Exception e) {
+            return false
+        }
+    }
+
     /**
      * Load a KGT from a bundle.
      */
@@ -117,11 +132,10 @@ class KiCoolSynthesis extends AbstractDiagramSynthesis<System> {
             return node
         } catch (Exception e) {
             e.printStackTrace
-        }         
+        }
         return KGraphUtil::createInitializedNode
     }
-    
-    
+
     def void flattenHierarchy(KNode rootNode) {
         for (node : rootNode.getKNodeIterator(false).toList) {
             if (!node.children.empty && node.getProperty(ProcessorSynthesis.GROUP_NODE)) {
@@ -138,10 +152,10 @@ class KiCoolSynthesis extends AbstractDiagramSynthesis<System> {
                 }
             }
         }
-    }    
-    
+    }
+
     def static getKGTFromBundle(String bundleId, String resourceLocation) {
         return getKGTFromBundle(bundleId, resourceLocation, SkinSelector.skinPrefix)
     }
-    
+
 }
