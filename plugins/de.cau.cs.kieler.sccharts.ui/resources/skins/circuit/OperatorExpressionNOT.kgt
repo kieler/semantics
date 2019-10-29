@@ -15,9 +15,10 @@ knode not {
   }
  
   kport out {
-    size: width = 3 height = 3
+    size: width = 6 height = 6
     pos:  x = 31
     properties: org.eclipse.elk.port.borderOffset = -0.5
+                de.cau.cs.kieler.portSide = EAST
     kellipse{
     	styles: lineWidth = 0.5
     }
