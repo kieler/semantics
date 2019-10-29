@@ -27,6 +27,8 @@ import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import java.util.LinkedList
+import de.cau.cs.kieler.sccharts.Transition
 
 /**
  * SCCharts Transformation Extensions. Extension in order to improve readability of SCCharts extended
@@ -49,12 +51,10 @@ class SCChartsTransformationExtension {
     // -------------------------------------------------------------------------
     // --             H I G H E R      L E V E L     T E S T S                --
     // -------------------------------------------------------------------------
-    
     // Test if a state can be immediately aborted
     def boolean canImmediateAborted(State state) {
-        ((state.outgoingTransitions.filter[e|e.isStrongAbort && e.implicitlyImmediate].size > 0)
-        ||
-        (state.outgoingTransitions.filter[e|e.isWeakAbort && e.implicitlyImmediate].size > 0))
+        ((state.outgoingTransitions.filter[e|e.isStrongAbort && e.implicitlyImmediate].size > 0) ||
+            (state.outgoingTransitions.filter[e|e.isWeakAbort && e.implicitlyImmediate].size > 0))
     }
 
     // Test if for a state ALL regions may possibly terminate immediate
@@ -78,28 +78,30 @@ class SCChartsTransformationExtension {
             }
         }
     }
-    
+
     // Test if a final state is reachable immediately from an initial state
     def boolean isImmediatelyReachable(State finalState) {
-        return finalState.isImmediatelyReachableHelper(finalState)
-    }
-    def boolean isImmediatelyReachableHelper(State finalState, State previousState) {
-        if (previousState.initial) {
+        if (finalState.initial)
             return true
-        }
-        for (transition : previousState.incomingTransitions.filter[implicitlyImmediate]) {
-           if (finalState.isImmediatelyReachableHelper(transition.sourceState)) {
-               return true
-           }
+        val visited = new LinkedList<State>
+        visited.add(finalState)
+        val next = new LinkedList<Transition>
+        next.addAll(finalState.incomingTransitions.filter[implicitlyImmediate])
+        while (next.size > 0) {
+            val n = next.pop
+            if (!visited.contains(n.sourceState)) {
+                if (n.sourceState.initial)
+                    return true
+                visited.add(n.sourceState)
+                next.addAll( n.sourceState.incomingTransitions.filter[implicitlyImmediate])
+            }
         }
         return false
     }
 
-
     // -------------------------------------------------------------------------
     // --          V A L U E D     O B J E C T S    W R A P P E R             --
     // -------------------------------------------------------------------------
-    
     // // Return the list of all contained ValuedObjects. 
     // // ATTENTION: This method returns a specific list. If you add ValuedObjects to this
     // // list they will be added to  the container of a Declaration.
@@ -122,7 +124,6 @@ class SCChartsTransformationExtension {
         }
     }
 
-
     // Removes a ValuedObject from any declaration it is contained in.
     def public void removeValuedObject(EObject eObject, ValuedObject valuedObject) {
         val declarations = eObject.eAllContents.filter(typeof(Declaration)).
@@ -131,16 +132,15 @@ class SCChartsTransformationExtension {
             declaration.valuedObjects.remove(valuedObject)
         }
     }
-    
+
     // =========  VALUED OBJECT CREATION =========
-    
     // Creates a new ValuedObject. This is not contained in any scope / declaration yet!
     def ValuedObject createValuedObject(String valuedObjectName) {
         val valuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
         valuedObject.setName(valuedObjectName)
         valuedObject
     }
-    
+
     // Creates a new ValuedObject in a scope.
     def ValuedObject createValuedObject(Scope scope, String valuedObjectName) {
         val valuedObject = createValuedObject(valuedObjectName)
@@ -149,7 +149,6 @@ class SCChartsTransformationExtension {
     }
 
 //    // ========= ATTRIBUTE GETTER =========
-
     def public ValueType getType(ValuedObject valuedObject) {
         valuedObject.variableDeclaration.type
     }
@@ -159,7 +158,7 @@ class SCChartsTransformationExtension {
         KExpressionsFactory::eINSTANCE.createValuedObjectReference() => [
             setValuedObject(valuedObject)
         ]
-    }    
+    }
 
     // Return whether the ValuedObject is an input.
     def public boolean getInput(ValuedObject valuedObject) {
@@ -228,7 +227,6 @@ class SCChartsTransformationExtension {
     }
 
     // ========= ATTRIBUTE SETTER =========
-    
     def ValuedObject copyAttributes(ValuedObject valuedObject, ValuedObject valuedObjectWithAttributes) {
         if (valuedObjectWithAttributes.initialValue != null) {
             valuedObject.setInitialValue(valuedObjectWithAttributes.initialValue.copy)
@@ -240,13 +238,13 @@ class SCChartsTransformationExtension {
             for (card : valuedObjectWithAttributes.cardinalities) {
                 valuedObject.cardinalities.add(card.copy);
             }
-        }        
+        }
         valuedObject
     }
-    
+
     // Set the intial value of a valued object based on its type (e.g. int -> 0, bool -> false)
     def void setDefaultValue(ValuedObject valuedObject) {
-        switch(valuedObject.type) {
+        switch (valuedObject.type) {
             case BOOL: {
                 valuedObject.initialValue = createBoolValue(false)
             }
@@ -254,7 +252,7 @@ class SCChartsTransformationExtension {
             case DOUBLE,
             case FLOAT,
             case UNSIGNED: {
-                valuedObject.initialValue = createIntValue(0) 
+                valuedObject.initialValue = createIntValue(0)
             }
             case STRING: {
                 valuedObject.initialValue = createStringValue("")
@@ -265,7 +263,7 @@ class SCChartsTransformationExtension {
             }
         }
     }
-    
+
     // Set the type of a ValuedObject. 
     def public ValuedObject setType(ValuedObject valuedObject, ValueType type) {
         val uniqueDeclaration = valuedObject.uniqueDeclaration
@@ -416,13 +414,10 @@ class SCChartsTransformationExtension {
         valuedObject.setType(ValueType::FLOAT)
         valuedObject
     }
-    
-    
 
     // -------------------------------------------------------------------------
     // --           V A R I A B L E S    A N D    S I G N A L S               --
     // -------------------------------------------------------------------------
-
     // ===========  VARIABLES  ===========
     // Creates a new variable ValuedObject in a Scope.
     def ValuedObject createVariable(Scope scope, String variableName) {
@@ -434,13 +429,10 @@ class SCChartsTransformationExtension {
     def ValuedObject createSignal(Scope scope, String variableName) {
         scope.createValuedObject(variableName).setIsSignal
     }
-    
-    
-    
+
     // -------------------------------------------------------------------------
     // --                        D E C L A R A T I O N S                      --
     // -------------------------------------------------------------------------
-    
     // Creates a new Declaration.
     def public VariableDeclaration createVariableDeclaration() {
         KExpressionsFactory::eINSTANCE.createVariableDeclaration
@@ -453,17 +445,16 @@ class SCChartsTransformationExtension {
     def public VariableDeclaration createDeclaration(VariableDeclaration existingDeclaration) {
         val newDeclaration = createVariableDeclaration()
         if (existingDeclaration != null) {
-           newDeclaration.copyAttributes(existingDeclaration)
-           val parent = existingDeclaration.eContainer
-           if (parent instanceof Scope) {
-               parent.declarations += newDeclaration
-           }
-        } 
+            newDeclaration.copyAttributes(existingDeclaration)
+            val parent = existingDeclaration.eContainer
+            if (parent instanceof Scope) {
+                parent.declarations += newDeclaration
+            }
+        }
         newDeclaration
     }
-    
+
     // =========  HELPER METHODS =========
-    
     // Get the surrounding Declaration of a ValuedObject that contains the ValuedObject. 
     // This Declaration may also contain other ValuedObjects, see containsOnly().
     // If the valuedObject does not have any Declaration yet, then create a new one.
@@ -509,9 +500,9 @@ class SCChartsTransformationExtension {
             declaration._removeValuedObject(valuedObject)
             val parent = declaration.eContainer
             if (parent instanceof State) {
-                    parent.declarations.add(newDeclaration)                
+                parent.declarations.add(newDeclaration)
             } else if (parent instanceof ControlflowRegion) {
-                    parent.declarations.add(newDeclaration)                
+                parent.declarations.add(newDeclaration)
             }
             newDeclaration._addValuedObject(valuedObject)
             newDeclaration
@@ -545,19 +536,14 @@ class SCChartsTransformationExtension {
         declaration.valuedObjects.add(valuedObject)
         declaration
     }
-    
 
-
-    // -------------------------------------------------------------------------
-    // --                       K E X P R E S S I O N S                       --
-    // -------------------------------------------------------------------------
-    
-    // NOW PART OF KExpressionsCreateExtensions
-    // @Inject
-    // extension KExpressionsCreateExtensions
-    
-    
-    //===========  VALUES  ===========
+// -------------------------------------------------------------------------
+// --                       K E X P R E S S I O N S                       --
+// -------------------------------------------------------------------------
+// NOW PART OF KExpressionsCreateExtensions
+// @Inject
+// extension KExpressionsCreateExtensions
+// ===========  VALUES  ===========
 //    // Create a TRUE value.
 //    def public BoolValue TRUE() {
 //        createBoolValue(true)
@@ -567,7 +553,6 @@ class SCChartsTransformationExtension {
 //    def public BoolValue FALSE() {
 //        createBoolValue(false)
 //    }
-
 //    // Create an int value.
 //    def IntValue createIntValue(int value) {
 //        val expression = KExpressionsFactory::eINSTANCE.createIntValue()
@@ -601,7 +586,5 @@ class SCChartsTransformationExtension {
 //        val expression = KExpressionsFactory::eINSTANCE.createTextExpression()
 //        expression
 //    }
-    
-    // ------------------------------------------------------------------------
-    
+// ------------------------------------------------------------------------
 }
