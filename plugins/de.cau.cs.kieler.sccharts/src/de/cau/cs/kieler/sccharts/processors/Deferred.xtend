@@ -157,6 +157,12 @@ class Deferred extends SCChartsProcessor implements Traceable {
                     inTransition.targetState = shallow
                 }
             }
+            // remove all entry actions of the copy for deep deferred transitions
+            while (shallow.entryActions.size > 0)
+                shallow.entryActions.get(0).remove
+            // each immediate during action in _S will be set to delayed
+            for (during : shallow.duringActions)
+                during.delay = DelayType.DELAYED
         }
         // deep deferred
         if (s.hasDeepDeferred) {
@@ -213,13 +219,13 @@ class Deferred extends SCChartsProcessor implements Traceable {
             if (t.delay == DelayType.IMMEDIATE)
                 return true
         }
-        if (deep) {
-            if (s.entryActions.size > 0)
+        if (s.entryActions.size > 0)
+            return true
+        for (a : s.duringActions) {
+            if (a.delay == DelayType.IMMEDIATE)
                 return true
-            for (a : s.duringActions) {
-                if (a.delay == DelayType.IMMEDIATE)
-                    return true
-            }
+        }
+        if (deep) {
             for (subRegion : s.allContainedControlflowRegions.toList) {
                 if (subRegion.states.size > 0) {
                     for (state : subRegion.states.filter[it.initial].toList) {
@@ -334,6 +340,26 @@ class Deferred extends SCChartsProcessor implements Traceable {
                     val deferTest = not(deferVariable.reference)
                     transition.setTrigger(deferTest.and(transition.trigger.copy))
                 }
+            }
+        }
+        // add guard to all entry actions of the state
+        for( a : s.entryActions ){
+            if (a.trigger === null) {
+                val deferTest = not(deferVariable.reference)
+                a.setTrigger(deferTest)
+            } else {
+                val deferTest = not(deferVariable.reference)
+                a.setTrigger(deferTest.and(a.trigger.copy))
+            }
+        }
+        // add guard to immediate during action of the state
+        for (a : s.duringActions.filter[it.delay == DelayType.IMMEDIATE]){
+            if (a.trigger === null) {
+                val deferTest = not(deferVariable.reference)
+                a.setTrigger(deferTest)
+            } else {
+                val deferTest = not(deferVariable.reference)
+                a.setTrigger(deferTest.and(a.trigger.copy))
             }
         }
     }

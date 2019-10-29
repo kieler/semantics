@@ -140,58 +140,26 @@ class WeakSuspend extends SCChartsProcessor implements Traceable {
                 initWSTransition.setTrigger(weakSuspendFlag.reference.and(lastWishDone.reference))
 
                 for (subState : subStates) {
-                    var immediateDurings = subState.duringActions.filter[delay == DelayType.IMMEDIATE];
-                    var ValuedObject entryGuard = null
-                    if (subState.entryActions.size > 0 || immediateDurings.size > 0) {
-                        // add a entry guard to each entry action.
-                        entryGuard = subState.parentRegion.createValuedObject(GENERATED_PREFIX + subState.name +
-                            "_entry_guard", createBoolDeclaration).uniqueName
-                        voStore.update(entryGuard, SCCHARTS_GENERATED)
-                        entryGuard.setInitialValue(TRUE)
-                        for (entryAction : subState.entryActions) {
-                            entryAction.trigger = entryAction.trigger.and(entryGuard.reference)
-                        }
-                        val update = entryGuard.createAssignment(FALSE)
-                        subState.createDuringAction().addEffect(update)
-                        for (t : subState.incomingTransitions)
-                            t.addEffect(entryGuard.createAssignment(TRUE))
-                    }
-                    if (immediateDurings.size > 0) {
-                        // add a first tick guard and the entry guard to immediate during actions
-                        val firstTick = subState.createValuedObject(GENERATED_PREFIX + "_first_tick",
-                            createBoolDeclaration).uniqueName
-                        voStore.update(firstTick, SCCHARTS_GENERATED)
-                        firstTick.setInitialValue(TRUE)
-                        subState.createEntryAction().addEffect(firstTick.createAssignment(TRUE))
-                        subState.createDuringAction().addEffect(firstTick.createAssignment(FALSE))
-                        for (duringAction : immediateDurings) {
-                            duringAction.trigger = duringAction.trigger.and(
-                                not(firstTick.reference).or(entryGuard.reference))
-                        }
-                    }
-                    while (subState.exitActions.size > 0) {
+
+                    if (subState.exitActions.size > 0) {
                         // transform exit actions into immediate outgoing transitions
-                        val e = subState.exitActions.get(0)
                         for (t : subState.outgoingTransitions) {
                             val exitState = subState.parentRegion.createState(GENERATED_PREFIX + "_exit").uniqueName
-                            val endExitState = subState.parentRegion.createState(GENERATED_PREFIX + "_end_exit").
-                                uniqueName
-                            val exitTransition = exitState.createTerminationTo(endExitState)
+                            for (action : subState.exitActions)
+                                exitState.actions.add(action.copy)
+                            val exitTransition = exitState.createTerminationTo(t.targetState)
+                            exitTransition.history = t.history
+                            exitTransition.deferred = t.deferred
                             exitTransition.delay = DelayType::IMMEDIATE
-                            exitTransition.trigger = e.trigger.copy
-                            for (effect : e.effects)
-                                exitTransition.addEffect(effect.copy)
-                            val effectTransition = endExitState.createTerminationTo(t.targetState)
-                            effectTransition.history = t.history
-                            effectTransition.deferred = t.deferred
-                            effectTransition.delay = DelayType::IMMEDIATE
+                            exitTransition.preemption = t.preemption
                             while (t.effects.size > 0)
-                                effectTransition.addEffect(t.effects.get(0))
+                                exitTransition.addEffect(t.effects.get(0))
                             t.history = HistoryType::RESET
                             t.deferred = DeferredType::NONE
                             t.targetState = exitState
                         }
-                        e.remove
+                        while (subState.exitActions.size > 0)
+                            subState.exitActions.get(0).remove
                     }
                     val reEnterTransition = wsState.createImmediateTransitionTo(subState)
                     reEnterTransition.setTrigger(stateBookmark.reference.eq(counter.createIntValue))
