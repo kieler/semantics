@@ -366,7 +366,14 @@ class ProjectInfrastructure {
         if (!dest.exists || overrideFile) {
             logger?.println("Copying file: " + src)
             try {
-                if (dest.exists) dest.delete
+                if (dest.exists)  {
+                    dest.delete
+                } else {
+                    val parent = dest.canonicalFile.parentFile
+                    if (!parent.exists) {
+                        parent.mkdirs
+                    }
+                }
                 Files.copy(src.toPath, dest.toPath)
                 return true
             } catch (IOException e) {
