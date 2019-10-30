@@ -26,6 +26,7 @@ import de.cau.cs.kieler.kexpressions.Declaration
 import java.lang.instrument.ClassDefinition
 import de.cau.cs.kieler.scg.extensions.SCGMethodExtensions
 import de.cau.cs.kieler.kexpressions.TextExpression
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 
 /**
  * Java Code Generator Struct Module
@@ -41,6 +42,7 @@ class JavaCodeGeneratorStructModule extends CCodeGeneratorStructModule {
     
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension SCGMethodExtensions
+    @Inject extension AnnotationsExtensions
     @Accessors @Inject JavaCodeSerializeHRExtensions javaSerializer
     
     @Accessors String className
@@ -105,20 +107,24 @@ class JavaCodeGeneratorStructModule extends CCodeGeneratorStructModule {
     }
     
     protected def void generateClassDeclarations(List<Declaration> declarations, int depth, extension CCodeSerializeHRExtensions serializer) {
-        for (declaration : declarations.filter(ClassDeclaration).filter[!host]) {
-            hasClasses = true
-            (0..depth).forEach[indent]
-            code.append("public class ")
-            code.append(declaration.name)
-            code.append(" {\n")
-            declaration.declarations.generateClassDeclarations(depth + 1, serializer)
-            declaration.declarations.generateDeclarations(depth + 1, serializer)
-            if (declaration.declarations.exists[it instanceof ClassDeclaration || valuedObjects.exists[!cardinalities.nullOrEmpty]]) {
-                code.append("\n")
-                declaration.declarations.createConstructor(declaration.name, null, serializer)
+        for (declaration : declarations.filter(ClassDeclaration)) {
+            if (!declaration.host) {
+                hasClasses = true
+                (0..depth).forEach[indent]
+                code.append("public class ")
+                code.append(declaration.name)
+                code.append(" {\n")
+                declaration.declarations.generateClassDeclarations(depth + 1, serializer)
+                declaration.declarations.generateDeclarations(depth + 1, serializer)
+                if (declaration.declarations.exists[it instanceof ClassDeclaration || valuedObjects.exists[!cardinalities.nullOrEmpty]]) {
+                    code.append("\n")
+                    declaration.declarations.createConstructor(declaration.name, null, serializer)
+                }
+                (0..depth).forEach[indent]
+                code.append("}\n\n")
+            } else if (declaration.valuedObjects.exists[!it.hasAnnotation("skipClassInit")]) {
+                hasClasses = true // create constructor for class init
             }
-            (0..depth).forEach[indent]
-            code.append("}\n\n")
         }
     }
     
@@ -138,7 +144,7 @@ class JavaCodeGeneratorStructModule extends CCodeGeneratorStructModule {
             for (valuedObject : declaration.valuedObjects) {
                 if (valuedObject.isArray) {
                     valuedObject.createArrayForCardinalityIndex(0, serializer)
-                } else if (isClass) {
+                } else if (isClass && !valuedObject.hasAnnotation("skipClassInit")) {
                     indent(2)
                     if (valuedObject.initialValue instanceof TextExpression) {
                         code.append(valuedObject.name + " = " + (valuedObject.initialValue as TextExpression).text + ";\n")

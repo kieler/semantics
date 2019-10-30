@@ -14,6 +14,8 @@
 package de.cau.cs.kieler.sccharts.processors
 
 import com.google.inject.Inject
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.kexpressions.TextExpression
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
@@ -32,7 +34,6 @@ import java.util.List
 import static de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
-import de.cau.cs.kieler.kexpressions.TextExpression
 
 /**
  * SCCharts Initialization Transformation.
@@ -66,6 +67,7 @@ class Initialization extends SCChartsProcessor implements Traceable {
     @Inject extension KExtDeclarationExtensions
     @Inject extension SCChartsScopeExtensions
     @Inject extension SCChartsActionExtensions
+    @Inject extension AnnotationsExtensions
     
     // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_"
@@ -91,7 +93,10 @@ class Initialization extends SCChartsProcessor implements Traceable {
             if (decl instanceof ClassDeclaration) {
                 if (decl.host) {
                     val vos = decl.valuedObjects.filter[initialValue instanceof TextExpression]
-                    if (!vos.empty) initVOs += vos.map[newArrayList(it)]
+                    if (!vos.empty) {
+                        initVOs += vos.map[newArrayList(it)]
+                        vos.forEach[it.addTagAnnotation("skipClassInit")] // FIXME magic keyword affects code generation
+                    }
                 } else {
                     for (nestedVO : decl.allNestedValuedObjects.filter[initialValue !== null]) {
                         // Calculate paths to all initialized members
