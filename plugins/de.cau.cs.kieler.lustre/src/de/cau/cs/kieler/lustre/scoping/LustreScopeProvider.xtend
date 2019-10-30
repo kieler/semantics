@@ -3,8 +3,11 @@ package de.cau.cs.kieler.lustre.scoping
 import de.cau.cs.kieler.kexpressions.ReferenceCall
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.lustre.lustre.AState
+import de.cau.cs.kieler.lustre.lustre.AnAction
+import de.cau.cs.kieler.lustre.lustre.Automaton
+import de.cau.cs.kieler.lustre.lustre.LustreProgram
 import de.cau.cs.kieler.lustre.lustre.NodeDeclaration
-import de.cau.cs.kieler.lustre.lustre.PackBody
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EReference
 import org.eclipse.xtext.scoping.IScope
@@ -24,6 +27,7 @@ class LustreScopeProvider extends AbstractLustreScopeProvider {
         
         switch(context) {
             ReferenceCall: return getScopeForNodeReference(context, reference)
+            AnAction: return getScopeForAction(context, reference)
         }
         
         return super.getScope(context, reference);
@@ -35,12 +39,16 @@ class LustreScopeProvider extends AbstractLustreScopeProvider {
         do {
             val declarations = <VariableDeclaration>newArrayList
             switch(superContext) {
-                PackBody: declarations.addAll(superContext.constants)
+                LustreProgram: declarations.addAll(superContext.constants)
                 NodeDeclaration: {
-                    declarations.addAll(superContext.input.parameter)
-                    declarations.addAll(superContext.output.parameter)
+                    declarations.addAll(superContext.inputs)
+                    declarations.addAll(superContext.outputs)
                     declarations.addAll(superContext.constants)
-                    declarations.addAll(superContext.variables.map[vardecl])
+                    declarations.addAll(superContext.variables)
+                }
+                AState: {
+                    declarations.addAll(superContext.constants)
+                    declarations.addAll(superContext.variables)
                 }
             }
             for(declaration : declarations) {
@@ -55,12 +63,23 @@ class LustreScopeProvider extends AbstractLustreScopeProvider {
     }
     
     def IScope getScopeForNodeReference(ReferenceCall context, EReference reference) {
-        var EObject body = context
-        while (body !== null) {
-            if (body instanceof PackBody) {
-                return Scopes.scopeFor(body.nodes.map[valuedObjects.head])
+        var EObject p = context
+        while (p !== null) {
+            if (p instanceof LustreProgram) {
+                return Scopes.scopeFor(p.nodes.map[valuedObjects.head])
             }
-            body = body.eContainer
+            p = p.eContainer
+        }
+        return IScope.NULLSCOPE
+    }
+    
+    def IScope getScopeForAction(AnAction context, EReference reference) {
+        var EObject automaton = context
+        while (automaton !== null) {
+            if (automaton instanceof Automaton) {
+                return Scopes.scopeFor(automaton.states.map[valuedObject])
+            } 
+            automaton = automaton.eContainer
         }
         return IScope.NULLSCOPE
     }

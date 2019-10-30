@@ -8,112 +8,63 @@
       fileExtensions="lus" ecorePackage="Lustre.ecore#/">
     <genClasses ecoreClass="Lustre.ecore#//LustreProgram">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Lustre.ecore#//LustreProgram/includes"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//LustreProgram/packBody"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//LustreProgram/packList"/>
-    </genClasses>
-    <genClasses ecoreClass="Lustre.ecore#//PackList">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//PackList/modelDeclarations"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//PackList/packageDeclarations"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//PackList/packageEquations"/>
-    </genClasses>
-    <genClasses ecoreClass="Lustre.ecore#//ModelDeclaration">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Lustre.ecore#//ModelDeclaration/name"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Lustre.ecore#//ModelDeclaration/usesIds"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//ModelDeclaration/needsParams"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//ModelDeclaration/provisions"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//ModelDeclaration/body"/>
-    </genClasses>
-    <genClasses ecoreClass="Lustre.ecore#//Provide">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Lustre.ecore#//Provide/name"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Lustre.ecore#//Provide/type"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//Provide/value"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//Provide/types"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//Provide/staticParams"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//Provide/input"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//Provide/output"/>
-    </genClasses>
-    <genClasses ecoreClass="Lustre.ecore#//PackageDeclaration">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Lustre.ecore#//PackageDeclaration/name"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Lustre.ecore#//PackageDeclaration/usesIds"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//PackageDeclaration/provisions"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//PackageDeclaration/body"/>
-    </genClasses>
-    <genClasses ecoreClass="Lustre.ecore#//PackageEquation">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Lustre.ecore#//PackageEquation/name"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Lustre.ecore#//PackageEquation/eqOrIs"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//PackageEquation/byNameStaticArgs"/>
-    </genClasses>
-    <genClasses ecoreClass="Lustre.ecore#//PackBody">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//PackBody/constants"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//PackBody/types"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//PackBody/externals"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//PackBody/nodes"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//LustreProgram/constants"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//LustreProgram/types"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//LustreProgram/externals"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//LustreProgram/nodes"/>
     </genClasses>
     <genClasses ecoreClass="Lustre.ecore#//TypeDeclaration">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Lustre.ecore#//TypeDeclaration/name"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Lustre.ecore#//TypeDeclaration/type"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Lustre.ecore#//TypeDeclaration/enums"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//TypeDeclaration/variables"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//TypeDeclaration/values"/>
-    </genClasses>
-    <genClasses ecoreClass="Lustre.ecore#//ExternalNodeDeclaration">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Lustre.ecore#//ExternalNodeDeclaration/isUnsafe"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Lustre.ecore#//ExternalNodeDeclaration/hasState"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Lustre.ecore#//ExternalNodeDeclaration/name"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//ExternalNodeDeclaration/input"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//ExternalNodeDeclaration/output"/>
     </genClasses>
     <genClasses ecoreClass="Lustre.ecore#//Automaton">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Lustre.ecore#//Automaton/name"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//Automaton/states"/>
     </genClasses>
     <genClasses ecoreClass="Lustre.ecore#//AState">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Lustre.ecore#//AState/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Lustre.ecore#//AState/initial"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//AState/valuedObject"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//AState/constants"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//AState/variables"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//AState/equations"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//AState/emissions"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//AState/assertions"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//AState/automatons"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//AState/transitions"/>
     </genClasses>
     <genClasses ecoreClass="Lustre.ecore#//ATransition">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Lustre.ecore#//ATransition/strong"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//ATransition/condition"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Lustre.ecore#//ATransition/history"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Lustre.ecore#//ATransition/nextState"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//ATransition/actions"/>
     </genClasses>
-    <genClasses ecoreClass="Lustre.ecore#//Params">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//Params/parameter"/>
+    <genClasses ecoreClass="Lustre.ecore#//AnAction">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//AnAction/condition"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//AnAction/effects"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Lustre.ecore#//AnAction/history"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Lustre.ecore#//AnAction/nextState"/>
     </genClasses>
-    <genClasses ecoreClass="Lustre.ecore#//StaticParam">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Lustre.ecore#//StaticParam/name"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Lustre.ecore#//StaticParam/type"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//StaticParam/nodeInput"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//StaticParam/nodeOutput"/>
+    <genClasses ecoreClass="Lustre.ecore#//ExternalNodeDeclaration">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Lustre.ecore#//ExternalNodeDeclaration/isUnsafe"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Lustre.ecore#//ExternalNodeDeclaration/hasState"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//ExternalNodeDeclaration/inputs"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//ExternalNodeDeclaration/outputs"/>
     </genClasses>
-    <genClasses ecoreClass="Lustre.ecore#//StaticArg">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Lustre.ecore#//StaticArg/type"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//StaticArg/expr"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//StaticArg/name"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//StaticArg/staticArgs"/>
+    <genClasses ecoreClass="Lustre.ecore#//LustreVariableDeclaration">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//LustreVariableDeclaration/clockExpr"/>
     </genClasses>
-    <genClasses ecoreClass="Lustre.ecore#//ByNameStaticArg">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Lustre.ecore#//ByNameStaticArg/name"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Lustre.ecore#//ByNameStaticArg/type"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//ByNameStaticArg/expr"/>
-    </genClasses>
-    <genClasses ecoreClass="Lustre.ecore#//ClockedVariableDeclaration">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//ClockedVariableDeclaration/vardecl"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//ClockedVariableDeclaration/clockExpr"/>
+    <genClasses ecoreClass="Lustre.ecore#//LustreValuedObject">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Lustre.ecore#//LustreValuedObject/type"/>
     </genClasses>
     <genClasses ecoreClass="Lustre.ecore#//NodeDeclaration">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Lustre.ecore#//NodeDeclaration/isUnsafe"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Lustre.ecore#//NodeDeclaration/hasState"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//NodeDeclaration/staticParams"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//NodeDeclaration/input"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//NodeDeclaration/output"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//NodeDeclaration/effectiveNode"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//NodeDeclaration/staticArgs"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//NodeDeclaration/inputs"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//NodeDeclaration/outputs"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//NodeDeclaration/constants"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//NodeDeclaration/variables"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//NodeDeclaration/equations"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//NodeDeclaration/emissions"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//NodeDeclaration/assertions"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//NodeDeclaration/automatons"/>
     </genClasses>
@@ -124,9 +75,6 @@
     <genClasses ecoreClass="Lustre.ecore#//Assertion">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//Assertion/expr"/>
     </genClasses>
-    <genClasses ecoreClass="Lustre.ecore#//LustreValuedObject">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Lustre.ecore#//LustreValuedObject/type"/>
-    </genClasses>
-    <genClasses ecoreClass="Lustre.ecore#//NodeReference"/>
+    <genClasses ecoreClass="Lustre.ecore#//StateValuedObject"/>
   </genPackages>
 </genmodel:GenModel>

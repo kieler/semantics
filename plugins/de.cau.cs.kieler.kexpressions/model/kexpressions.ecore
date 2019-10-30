@@ -147,15 +147,14 @@
     <eLiterals name="BITWISE_XOR" value="23" literal="^"/>
     <eLiterals name="BITWISE_NOT" value="25" literal="~"/>
     <eLiterals name="CONDITIONAL" value="24" literal="? :"/>
-    <eLiterals name="FBY" value="25" literal="FBY"/>
-    <eLiterals name="CURRENT" value="26" literal="CURRENT"/>
-    <eLiterals name="WHEN" value="27" literal="WHEN"/>
-    <eLiterals name="INIT" value="28" literal="INIT"/>
-    <eLiterals name="INTDIV" value="29" literal="INTDIV"/>
-    <eLiterals name="LOGICAL_XOR" value="30" literal="LOGICAL_XOR"/>
-    <eLiterals name="IMPLIES" value="31" literal="IMPLIES"/>
-    <eLiterals name="ATMOSTONEOF" value="32" literal="ATMOSTONEOF"/>
-    <eLiterals name="NOR" value="33" literal="NOR"/>
+    <eLiterals name="FBY" value="25" literal="fby"/>
+    <eLiterals name="CURRENT" value="26" literal="current"/>
+    <eLiterals name="WHEN" value="27" literal="when"/>
+    <eLiterals name="INIT" value="28" literal="->"/>
+    <eLiterals name="ATMOSTONEOF" value="29" literal="#"/>
+    <eLiterals name="NOR" value="30" literal="nor"/>
+    <eLiterals name="IMPLIES" value="31" literal="implies"/>
+    <eLiterals name="SFBY" value="32" literal="sfby"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ValuedObject" eSuperTypes="../../de.cau.cs.kieler.annotations/model/annotations.ecore#//NamedObject ../../de.cau.cs.kieler.annotations/model/annotations.ecore#//Annotatable #//Referenceable">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
