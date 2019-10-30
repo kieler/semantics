@@ -43,6 +43,8 @@ class CCodeGeneratorModule extends SCGCodeGeneratorModule {
     @Inject Injector injector
     
     protected static val HOSTCODE = PragmaRegistry.register("hostcode", StringPragma, "Allows additional hostcode to be included (e.g. includes).")
+    protected static val HOSTCODE_C = PragmaRegistry.register("hostcode-c", StringPragma, "Allows additional hostcode to be included (e.g. includes) only for C.")
+    
     public static val C_EXTENSION = ".c"
     public static val H_EXTENSION = ".h"
     
@@ -152,7 +154,7 @@ class CCodeGeneratorModule extends SCGCodeGeneratorModule {
             sb.append("#include " + include + "\n")
         }
         
-        val hostcodePragmas = SCGraphs.getStringPragmas(HOSTCODE)
+        val hostcodePragmas = SCGraphs.getStringPragmas(HOSTCODE) + SCGraphs.getStringPragmas(HOSTCODE_C)
         for (pragma : hostcodePragmas) {
             sb.append(pragma.values.head + "\n")
         }
