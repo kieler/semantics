@@ -29,6 +29,7 @@ import de.cau.cs.kieler.kexpressions.VectorValue
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
 import de.cau.cs.kieler.kexpressions.kext.extensions.KExtReferenceExtensions
 import de.cau.cs.kieler.kicool.compilation.VariableStore
 import de.cau.cs.kieler.scg.Assignment
@@ -148,6 +149,10 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
                 if (declaration instanceof ReferenceDeclaration && declaration.asReferenceDeclaration.reference instanceof SCGraph) {
                     code.append(callToSCG(referenceCall, declaration as ReferenceDeclaration, conditionalStack.size + 1, serializer))
                 } else {
+                    if (declaration instanceof ClassDeclaration) {
+                        valuedObjectPrefix = struct.getVariableName + struct.separator
+                        prePrefix = CCodeGeneratorStructModule.STRUCT_PRE_PREFIX
+                    }
                     code.append((assignment.expression as ReferenceCall).serialize).append(";\n")
                 }
             } else {
