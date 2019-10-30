@@ -149,6 +149,9 @@ class ProjectInfrastructure {
                 resource = inputModel.eResource
                 if (resource !== null) {
                     modelFile = resource.findResourceLocation
+                    if (modelFile === null && resource.URI !== null) {
+                        modelFile = URIUtils.getJavaFile(resource.URI)
+                    }
                 }
             } else if (inputModel instanceof CodeContainer) {
                 if (!inputModel.files.empty) {
