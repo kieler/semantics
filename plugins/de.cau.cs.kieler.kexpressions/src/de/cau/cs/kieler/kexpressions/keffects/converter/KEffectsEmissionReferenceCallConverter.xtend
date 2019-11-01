@@ -75,7 +75,7 @@ class KEffectsEmissionReferenceCallConverter {
                             voNameNode = voNameNode.nextSibling
                         }
                         if (voNameNode !== null) {
-                            emission.reference.link((voNameNode.getCrossRefNodeAsString(true)?:"").split("\\."))
+                            emission.reference.link((voNameNode.getCrossRefNodeAsString(true)?:"").split("\\.").map[trim])
 //                            var voRef = emission.reference.lowermostReference
 //                            val candidates = getScope(voRef, expPackage.valuedObjectReference_ValuedObject)
 //                            if (candidates !== null) {
