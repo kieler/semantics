@@ -14849,11 +14849,11 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                 {
                 int LA111_1 = input.LA(2);
 
-                if ( ((LA111_1>=90 && LA111_1<=92)) ) {
-                    alt111=1;
-                }
-                else if ( (LA111_1==RULE_ID||LA111_1==RULE_COMMENT_ANNOTATION||LA111_1==89) ) {
+                if ( (LA111_1==RULE_ID||LA111_1==RULE_COMMENT_ANNOTATION||LA111_1==89) ) {
                     alt111=2;
+                }
+                else if ( ((LA111_1>=90 && LA111_1<=92)) ) {
+                    alt111=1;
                 }
                 else {
                     if (state.backtracking>0) {state.failed=true; return current;}
@@ -15627,11 +15627,11 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                 {
                 int LA122_1 = input.LA(2);
 
-                if ( (LA122_1==RULE_ID||LA122_1==RULE_COMMENT_ANNOTATION||LA122_1==89) ) {
-                    alt122=2;
-                }
-                else if ( ((LA122_1>=90 && LA122_1<=92)) ) {
+                if ( ((LA122_1>=90 && LA122_1<=92)) ) {
                     alt122=1;
+                }
+                else if ( (LA122_1==RULE_ID||LA122_1==RULE_COMMENT_ANNOTATION||LA122_1==89) ) {
+                    alt122=2;
                 }
                 else {
                     if (state.backtracking>0) {state.failed=true; return current;}
@@ -16064,7 +16064,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleClassDeclaration"
-    // InternalScadeEquations.g:5859:1: ruleClassDeclaration returns [EObject current=null] : ( () ( (lv_annotations_1_0= ruleAnnotation ) )* ( (lv_access_2_0= ruleAccessModifier ) )? ( (lv_const_3_0= 'const' ) )? ( (lv_input_4_0= 'input' ) )? ( (lv_output_5_0= 'output' ) )? ( (lv_global_6_0= 'global' ) )? ( (lv_static_7_0= 'static' ) )? ( (lv_host_8_0= 'host' ) )? ( ( ( (lv_type_9_0= ruleClassType ) ) ( (lv_name_10_0= RULE_ID ) )? otherlv_11= '{' ( (lv_declarations_12_0= ruleDeclarationOrMethod ) )* otherlv_13= '}' ) | ( ( (lv_type_14_0= ruleStructType ) ) ( (lv_name_15_0= RULE_ID ) )? otherlv_16= '{' ( (lv_declarations_17_0= ruleDeclaration ) )* otherlv_18= '}' ) ) ( ( (lv_valuedObjects_19_0= ruleValuedObject ) ) (otherlv_20= ',' ( (lv_valuedObjects_21_0= ruleValuedObject ) ) )* )? otherlv_22= ';' ( (lv_annotations_23_0= ruleCommentAnnotatonSL ) )? ) ;
+    // InternalScadeEquations.g:5859:1: ruleClassDeclaration returns [EObject current=null] : ( () ( (lv_annotations_1_0= ruleAnnotation ) )* ( (lv_access_2_0= ruleAccessModifier ) )? ( (lv_const_3_0= 'const' ) )? ( (lv_input_4_0= 'input' ) )? ( (lv_output_5_0= 'output' ) )? ( (lv_global_6_0= 'global' ) )? ( (lv_static_7_0= 'static' ) )? ( (lv_host_8_0= 'host' ) )? ( ( ( (lv_type_9_0= ruleClassType ) ) ( (lv_name_10_0= ruleEString ) )? otherlv_11= '{' ( (lv_declarations_12_0= ruleDeclarationOrMethod ) )* otherlv_13= '}' ) | ( ( (lv_type_14_0= ruleStructType ) ) ( (lv_name_15_0= ruleEString ) )? otherlv_16= '{' ( (lv_declarations_17_0= ruleDeclaration ) )* otherlv_18= '}' ) ) ( ( (lv_valuedObjects_19_0= ruleValuedObject ) ) (otherlv_20= ',' ( (lv_valuedObjects_21_0= ruleValuedObject ) ) )* )? otherlv_22= ';' ( (lv_annotations_23_0= ruleCommentAnnotatonSL ) )? ) ;
     public final EObject ruleClassDeclaration() throws RecognitionException {
         EObject current = null;
 
@@ -16074,10 +16074,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         Token lv_global_6_0=null;
         Token lv_static_7_0=null;
         Token lv_host_8_0=null;
-        Token lv_name_10_0=null;
         Token otherlv_11=null;
         Token otherlv_13=null;
-        Token lv_name_15_0=null;
         Token otherlv_16=null;
         Token otherlv_18=null;
         Token otherlv_20=null;
@@ -16088,9 +16086,13 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
         Enumerator lv_type_9_0 = null;
 
+        AntlrDatatypeRuleToken lv_name_10_0 = null;
+
         EObject lv_declarations_12_0 = null;
 
         Enumerator lv_type_14_0 = null;
+
+        AntlrDatatypeRuleToken lv_name_15_0 = null;
 
         EObject lv_declarations_17_0 = null;
 
@@ -16105,11 +16107,11 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:5865:2: ( ( () ( (lv_annotations_1_0= ruleAnnotation ) )* ( (lv_access_2_0= ruleAccessModifier ) )? ( (lv_const_3_0= 'const' ) )? ( (lv_input_4_0= 'input' ) )? ( (lv_output_5_0= 'output' ) )? ( (lv_global_6_0= 'global' ) )? ( (lv_static_7_0= 'static' ) )? ( (lv_host_8_0= 'host' ) )? ( ( ( (lv_type_9_0= ruleClassType ) ) ( (lv_name_10_0= RULE_ID ) )? otherlv_11= '{' ( (lv_declarations_12_0= ruleDeclarationOrMethod ) )* otherlv_13= '}' ) | ( ( (lv_type_14_0= ruleStructType ) ) ( (lv_name_15_0= RULE_ID ) )? otherlv_16= '{' ( (lv_declarations_17_0= ruleDeclaration ) )* otherlv_18= '}' ) ) ( ( (lv_valuedObjects_19_0= ruleValuedObject ) ) (otherlv_20= ',' ( (lv_valuedObjects_21_0= ruleValuedObject ) ) )* )? otherlv_22= ';' ( (lv_annotations_23_0= ruleCommentAnnotatonSL ) )? ) )
-            // InternalScadeEquations.g:5866:2: ( () ( (lv_annotations_1_0= ruleAnnotation ) )* ( (lv_access_2_0= ruleAccessModifier ) )? ( (lv_const_3_0= 'const' ) )? ( (lv_input_4_0= 'input' ) )? ( (lv_output_5_0= 'output' ) )? ( (lv_global_6_0= 'global' ) )? ( (lv_static_7_0= 'static' ) )? ( (lv_host_8_0= 'host' ) )? ( ( ( (lv_type_9_0= ruleClassType ) ) ( (lv_name_10_0= RULE_ID ) )? otherlv_11= '{' ( (lv_declarations_12_0= ruleDeclarationOrMethod ) )* otherlv_13= '}' ) | ( ( (lv_type_14_0= ruleStructType ) ) ( (lv_name_15_0= RULE_ID ) )? otherlv_16= '{' ( (lv_declarations_17_0= ruleDeclaration ) )* otherlv_18= '}' ) ) ( ( (lv_valuedObjects_19_0= ruleValuedObject ) ) (otherlv_20= ',' ( (lv_valuedObjects_21_0= ruleValuedObject ) ) )* )? otherlv_22= ';' ( (lv_annotations_23_0= ruleCommentAnnotatonSL ) )? )
+            // InternalScadeEquations.g:5865:2: ( ( () ( (lv_annotations_1_0= ruleAnnotation ) )* ( (lv_access_2_0= ruleAccessModifier ) )? ( (lv_const_3_0= 'const' ) )? ( (lv_input_4_0= 'input' ) )? ( (lv_output_5_0= 'output' ) )? ( (lv_global_6_0= 'global' ) )? ( (lv_static_7_0= 'static' ) )? ( (lv_host_8_0= 'host' ) )? ( ( ( (lv_type_9_0= ruleClassType ) ) ( (lv_name_10_0= ruleEString ) )? otherlv_11= '{' ( (lv_declarations_12_0= ruleDeclarationOrMethod ) )* otherlv_13= '}' ) | ( ( (lv_type_14_0= ruleStructType ) ) ( (lv_name_15_0= ruleEString ) )? otherlv_16= '{' ( (lv_declarations_17_0= ruleDeclaration ) )* otherlv_18= '}' ) ) ( ( (lv_valuedObjects_19_0= ruleValuedObject ) ) (otherlv_20= ',' ( (lv_valuedObjects_21_0= ruleValuedObject ) ) )* )? otherlv_22= ';' ( (lv_annotations_23_0= ruleCommentAnnotatonSL ) )? ) )
+            // InternalScadeEquations.g:5866:2: ( () ( (lv_annotations_1_0= ruleAnnotation ) )* ( (lv_access_2_0= ruleAccessModifier ) )? ( (lv_const_3_0= 'const' ) )? ( (lv_input_4_0= 'input' ) )? ( (lv_output_5_0= 'output' ) )? ( (lv_global_6_0= 'global' ) )? ( (lv_static_7_0= 'static' ) )? ( (lv_host_8_0= 'host' ) )? ( ( ( (lv_type_9_0= ruleClassType ) ) ( (lv_name_10_0= ruleEString ) )? otherlv_11= '{' ( (lv_declarations_12_0= ruleDeclarationOrMethod ) )* otherlv_13= '}' ) | ( ( (lv_type_14_0= ruleStructType ) ) ( (lv_name_15_0= ruleEString ) )? otherlv_16= '{' ( (lv_declarations_17_0= ruleDeclaration ) )* otherlv_18= '}' ) ) ( ( (lv_valuedObjects_19_0= ruleValuedObject ) ) (otherlv_20= ',' ( (lv_valuedObjects_21_0= ruleValuedObject ) ) )* )? otherlv_22= ';' ( (lv_annotations_23_0= ruleCommentAnnotatonSL ) )? )
             {
-            // InternalScadeEquations.g:5866:2: ( () ( (lv_annotations_1_0= ruleAnnotation ) )* ( (lv_access_2_0= ruleAccessModifier ) )? ( (lv_const_3_0= 'const' ) )? ( (lv_input_4_0= 'input' ) )? ( (lv_output_5_0= 'output' ) )? ( (lv_global_6_0= 'global' ) )? ( (lv_static_7_0= 'static' ) )? ( (lv_host_8_0= 'host' ) )? ( ( ( (lv_type_9_0= ruleClassType ) ) ( (lv_name_10_0= RULE_ID ) )? otherlv_11= '{' ( (lv_declarations_12_0= ruleDeclarationOrMethod ) )* otherlv_13= '}' ) | ( ( (lv_type_14_0= ruleStructType ) ) ( (lv_name_15_0= RULE_ID ) )? otherlv_16= '{' ( (lv_declarations_17_0= ruleDeclaration ) )* otherlv_18= '}' ) ) ( ( (lv_valuedObjects_19_0= ruleValuedObject ) ) (otherlv_20= ',' ( (lv_valuedObjects_21_0= ruleValuedObject ) ) )* )? otherlv_22= ';' ( (lv_annotations_23_0= ruleCommentAnnotatonSL ) )? )
-            // InternalScadeEquations.g:5867:3: () ( (lv_annotations_1_0= ruleAnnotation ) )* ( (lv_access_2_0= ruleAccessModifier ) )? ( (lv_const_3_0= 'const' ) )? ( (lv_input_4_0= 'input' ) )? ( (lv_output_5_0= 'output' ) )? ( (lv_global_6_0= 'global' ) )? ( (lv_static_7_0= 'static' ) )? ( (lv_host_8_0= 'host' ) )? ( ( ( (lv_type_9_0= ruleClassType ) ) ( (lv_name_10_0= RULE_ID ) )? otherlv_11= '{' ( (lv_declarations_12_0= ruleDeclarationOrMethod ) )* otherlv_13= '}' ) | ( ( (lv_type_14_0= ruleStructType ) ) ( (lv_name_15_0= RULE_ID ) )? otherlv_16= '{' ( (lv_declarations_17_0= ruleDeclaration ) )* otherlv_18= '}' ) ) ( ( (lv_valuedObjects_19_0= ruleValuedObject ) ) (otherlv_20= ',' ( (lv_valuedObjects_21_0= ruleValuedObject ) ) )* )? otherlv_22= ';' ( (lv_annotations_23_0= ruleCommentAnnotatonSL ) )?
+            // InternalScadeEquations.g:5866:2: ( () ( (lv_annotations_1_0= ruleAnnotation ) )* ( (lv_access_2_0= ruleAccessModifier ) )? ( (lv_const_3_0= 'const' ) )? ( (lv_input_4_0= 'input' ) )? ( (lv_output_5_0= 'output' ) )? ( (lv_global_6_0= 'global' ) )? ( (lv_static_7_0= 'static' ) )? ( (lv_host_8_0= 'host' ) )? ( ( ( (lv_type_9_0= ruleClassType ) ) ( (lv_name_10_0= ruleEString ) )? otherlv_11= '{' ( (lv_declarations_12_0= ruleDeclarationOrMethod ) )* otherlv_13= '}' ) | ( ( (lv_type_14_0= ruleStructType ) ) ( (lv_name_15_0= ruleEString ) )? otherlv_16= '{' ( (lv_declarations_17_0= ruleDeclaration ) )* otherlv_18= '}' ) ) ( ( (lv_valuedObjects_19_0= ruleValuedObject ) ) (otherlv_20= ',' ( (lv_valuedObjects_21_0= ruleValuedObject ) ) )* )? otherlv_22= ';' ( (lv_annotations_23_0= ruleCommentAnnotatonSL ) )? )
+            // InternalScadeEquations.g:5867:3: () ( (lv_annotations_1_0= ruleAnnotation ) )* ( (lv_access_2_0= ruleAccessModifier ) )? ( (lv_const_3_0= 'const' ) )? ( (lv_input_4_0= 'input' ) )? ( (lv_output_5_0= 'output' ) )? ( (lv_global_6_0= 'global' ) )? ( (lv_static_7_0= 'static' ) )? ( (lv_host_8_0= 'host' ) )? ( ( ( (lv_type_9_0= ruleClassType ) ) ( (lv_name_10_0= ruleEString ) )? otherlv_11= '{' ( (lv_declarations_12_0= ruleDeclarationOrMethod ) )* otherlv_13= '}' ) | ( ( (lv_type_14_0= ruleStructType ) ) ( (lv_name_15_0= ruleEString ) )? otherlv_16= '{' ( (lv_declarations_17_0= ruleDeclaration ) )* otherlv_18= '}' ) ) ( ( (lv_valuedObjects_19_0= ruleValuedObject ) ) (otherlv_20= ',' ( (lv_valuedObjects_21_0= ruleValuedObject ) ) )* )? otherlv_22= ';' ( (lv_annotations_23_0= ruleCommentAnnotatonSL ) )?
             {
             // InternalScadeEquations.g:5867:3: ()
             // InternalScadeEquations.g:5868:4: 
@@ -16450,7 +16452,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalScadeEquations.g:5999:3: ( ( ( (lv_type_9_0= ruleClassType ) ) ( (lv_name_10_0= RULE_ID ) )? otherlv_11= '{' ( (lv_declarations_12_0= ruleDeclarationOrMethod ) )* otherlv_13= '}' ) | ( ( (lv_type_14_0= ruleStructType ) ) ( (lv_name_15_0= RULE_ID ) )? otherlv_16= '{' ( (lv_declarations_17_0= ruleDeclaration ) )* otherlv_18= '}' ) )
+            // InternalScadeEquations.g:5999:3: ( ( ( (lv_type_9_0= ruleClassType ) ) ( (lv_name_10_0= ruleEString ) )? otherlv_11= '{' ( (lv_declarations_12_0= ruleDeclarationOrMethod ) )* otherlv_13= '}' ) | ( ( (lv_type_14_0= ruleStructType ) ) ( (lv_name_15_0= ruleEString ) )? otherlv_16= '{' ( (lv_declarations_17_0= ruleDeclaration ) )* otherlv_18= '}' ) )
             int alt137=2;
             int LA137_0 = input.LA(1);
 
@@ -16469,10 +16471,10 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             }
             switch (alt137) {
                 case 1 :
-                    // InternalScadeEquations.g:6000:4: ( ( (lv_type_9_0= ruleClassType ) ) ( (lv_name_10_0= RULE_ID ) )? otherlv_11= '{' ( (lv_declarations_12_0= ruleDeclarationOrMethod ) )* otherlv_13= '}' )
+                    // InternalScadeEquations.g:6000:4: ( ( (lv_type_9_0= ruleClassType ) ) ( (lv_name_10_0= ruleEString ) )? otherlv_11= '{' ( (lv_declarations_12_0= ruleDeclarationOrMethod ) )* otherlv_13= '}' )
                     {
-                    // InternalScadeEquations.g:6000:4: ( ( (lv_type_9_0= ruleClassType ) ) ( (lv_name_10_0= RULE_ID ) )? otherlv_11= '{' ( (lv_declarations_12_0= ruleDeclarationOrMethod ) )* otherlv_13= '}' )
-                    // InternalScadeEquations.g:6001:5: ( (lv_type_9_0= ruleClassType ) ) ( (lv_name_10_0= RULE_ID ) )? otherlv_11= '{' ( (lv_declarations_12_0= ruleDeclarationOrMethod ) )* otherlv_13= '}'
+                    // InternalScadeEquations.g:6000:4: ( ( (lv_type_9_0= ruleClassType ) ) ( (lv_name_10_0= ruleEString ) )? otherlv_11= '{' ( (lv_declarations_12_0= ruleDeclarationOrMethod ) )* otherlv_13= '}' )
+                    // InternalScadeEquations.g:6001:5: ( (lv_type_9_0= ruleClassType ) ) ( (lv_name_10_0= ruleEString ) )? otherlv_11= '{' ( (lv_declarations_12_0= ruleDeclarationOrMethod ) )* otherlv_13= '}'
                     {
                     // InternalScadeEquations.g:6001:5: ( (lv_type_9_0= ruleClassType ) )
                     // InternalScadeEquations.g:6002:6: (lv_type_9_0= ruleClassType )
@@ -16485,7 +16487,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                       							newCompositeNode(grammarAccess.getClassDeclarationAccess().getTypeClassTypeEnumRuleCall_9_0_0_0());
                       						
                     }
-                    pushFollow(FollowSets000.FOLLOW_62);
+                    pushFollow(FollowSets000.FOLLOW_82);
                     lv_type_9_0=ruleClassType();
 
                     state._fsp--;
@@ -16509,36 +16511,41 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalScadeEquations.g:6020:5: ( (lv_name_10_0= RULE_ID ) )?
+                    // InternalScadeEquations.g:6020:5: ( (lv_name_10_0= ruleEString ) )?
                     int alt133=2;
                     int LA133_0 = input.LA(1);
 
-                    if ( (LA133_0==RULE_ID) ) {
+                    if ( ((LA133_0>=RULE_ID && LA133_0<=RULE_STRING)) ) {
                         alt133=1;
                     }
                     switch (alt133) {
                         case 1 :
-                            // InternalScadeEquations.g:6021:6: (lv_name_10_0= RULE_ID )
+                            // InternalScadeEquations.g:6021:6: (lv_name_10_0= ruleEString )
                             {
-                            // InternalScadeEquations.g:6021:6: (lv_name_10_0= RULE_ID )
-                            // InternalScadeEquations.g:6022:7: lv_name_10_0= RULE_ID
+                            // InternalScadeEquations.g:6021:6: (lv_name_10_0= ruleEString )
+                            // InternalScadeEquations.g:6022:7: lv_name_10_0= ruleEString
                             {
-                            lv_name_10_0=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_16); if (state.failed) return current;
                             if ( state.backtracking==0 ) {
 
-                              							newLeafNode(lv_name_10_0, grammarAccess.getClassDeclarationAccess().getNameIDTerminalRuleCall_9_0_1_0());
+                              							newCompositeNode(grammarAccess.getClassDeclarationAccess().getNameEStringParserRuleCall_9_0_1_0());
                               						
                             }
+                            pushFollow(FollowSets000.FOLLOW_16);
+                            lv_name_10_0=ruleEString();
+
+                            state._fsp--;
+                            if (state.failed) return current;
                             if ( state.backtracking==0 ) {
 
                               							if (current==null) {
-                              								current = createModelElement(grammarAccess.getClassDeclarationRule());
+                              								current = createModelElementForParent(grammarAccess.getClassDeclarationRule());
                               							}
-                              							setWithLastConsumed(
+                              							set(
                               								current,
                               								"name",
                               								lv_name_10_0,
-                              								"de.cau.cs.kieler.annotations.Annotations.ID");
+                              								"de.cau.cs.kieler.annotations.Annotations.EString");
+                              							afterParserOrEnumRuleCall();
                               						
                             }
 
@@ -16550,13 +16557,13 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    otherlv_11=(Token)match(input,22,FollowSets000.FOLLOW_82); if (state.failed) return current;
+                    otherlv_11=(Token)match(input,22,FollowSets000.FOLLOW_83); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       					newLeafNode(otherlv_11, grammarAccess.getClassDeclarationAccess().getLeftCurlyBracketKeyword_9_0_2());
                       				
                     }
-                    // InternalScadeEquations.g:6042:5: ( (lv_declarations_12_0= ruleDeclarationOrMethod ) )*
+                    // InternalScadeEquations.g:6043:5: ( (lv_declarations_12_0= ruleDeclarationOrMethod ) )*
                     loop134:
                     do {
                         int alt134=2;
@@ -16569,17 +16576,17 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                         switch (alt134) {
                     	case 1 :
-                    	    // InternalScadeEquations.g:6043:6: (lv_declarations_12_0= ruleDeclarationOrMethod )
+                    	    // InternalScadeEquations.g:6044:6: (lv_declarations_12_0= ruleDeclarationOrMethod )
                     	    {
-                    	    // InternalScadeEquations.g:6043:6: (lv_declarations_12_0= ruleDeclarationOrMethod )
-                    	    // InternalScadeEquations.g:6044:7: lv_declarations_12_0= ruleDeclarationOrMethod
+                    	    // InternalScadeEquations.g:6044:6: (lv_declarations_12_0= ruleDeclarationOrMethod )
+                    	    // InternalScadeEquations.g:6045:7: lv_declarations_12_0= ruleDeclarationOrMethod
                     	    {
                     	    if ( state.backtracking==0 ) {
 
                     	      							newCompositeNode(grammarAccess.getClassDeclarationAccess().getDeclarationsDeclarationOrMethodParserRuleCall_9_0_3_0());
                     	      						
                     	    }
-                    	    pushFollow(FollowSets000.FOLLOW_82);
+                    	    pushFollow(FollowSets000.FOLLOW_83);
                     	    lv_declarations_12_0=ruleDeclarationOrMethod();
 
                     	    state._fsp--;
@@ -16609,7 +16616,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                         }
                     } while (true);
 
-                    otherlv_13=(Token)match(input,23,FollowSets000.FOLLOW_83); if (state.failed) return current;
+                    otherlv_13=(Token)match(input,23,FollowSets000.FOLLOW_84); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       					newLeafNode(otherlv_13, grammarAccess.getClassDeclarationAccess().getRightCurlyBracketKeyword_9_0_4());
@@ -16622,23 +16629,23 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalScadeEquations.g:6067:4: ( ( (lv_type_14_0= ruleStructType ) ) ( (lv_name_15_0= RULE_ID ) )? otherlv_16= '{' ( (lv_declarations_17_0= ruleDeclaration ) )* otherlv_18= '}' )
+                    // InternalScadeEquations.g:6068:4: ( ( (lv_type_14_0= ruleStructType ) ) ( (lv_name_15_0= ruleEString ) )? otherlv_16= '{' ( (lv_declarations_17_0= ruleDeclaration ) )* otherlv_18= '}' )
                     {
-                    // InternalScadeEquations.g:6067:4: ( ( (lv_type_14_0= ruleStructType ) ) ( (lv_name_15_0= RULE_ID ) )? otherlv_16= '{' ( (lv_declarations_17_0= ruleDeclaration ) )* otherlv_18= '}' )
-                    // InternalScadeEquations.g:6068:5: ( (lv_type_14_0= ruleStructType ) ) ( (lv_name_15_0= RULE_ID ) )? otherlv_16= '{' ( (lv_declarations_17_0= ruleDeclaration ) )* otherlv_18= '}'
+                    // InternalScadeEquations.g:6068:4: ( ( (lv_type_14_0= ruleStructType ) ) ( (lv_name_15_0= ruleEString ) )? otherlv_16= '{' ( (lv_declarations_17_0= ruleDeclaration ) )* otherlv_18= '}' )
+                    // InternalScadeEquations.g:6069:5: ( (lv_type_14_0= ruleStructType ) ) ( (lv_name_15_0= ruleEString ) )? otherlv_16= '{' ( (lv_declarations_17_0= ruleDeclaration ) )* otherlv_18= '}'
                     {
-                    // InternalScadeEquations.g:6068:5: ( (lv_type_14_0= ruleStructType ) )
-                    // InternalScadeEquations.g:6069:6: (lv_type_14_0= ruleStructType )
+                    // InternalScadeEquations.g:6069:5: ( (lv_type_14_0= ruleStructType ) )
+                    // InternalScadeEquations.g:6070:6: (lv_type_14_0= ruleStructType )
                     {
-                    // InternalScadeEquations.g:6069:6: (lv_type_14_0= ruleStructType )
-                    // InternalScadeEquations.g:6070:7: lv_type_14_0= ruleStructType
+                    // InternalScadeEquations.g:6070:6: (lv_type_14_0= ruleStructType )
+                    // InternalScadeEquations.g:6071:7: lv_type_14_0= ruleStructType
                     {
                     if ( state.backtracking==0 ) {
 
                       							newCompositeNode(grammarAccess.getClassDeclarationAccess().getTypeStructTypeEnumRuleCall_9_1_0_0());
                       						
                     }
-                    pushFollow(FollowSets000.FOLLOW_62);
+                    pushFollow(FollowSets000.FOLLOW_82);
                     lv_type_14_0=ruleStructType();
 
                     state._fsp--;
@@ -16662,36 +16669,41 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalScadeEquations.g:6087:5: ( (lv_name_15_0= RULE_ID ) )?
+                    // InternalScadeEquations.g:6088:5: ( (lv_name_15_0= ruleEString ) )?
                     int alt135=2;
                     int LA135_0 = input.LA(1);
 
-                    if ( (LA135_0==RULE_ID) ) {
+                    if ( ((LA135_0>=RULE_ID && LA135_0<=RULE_STRING)) ) {
                         alt135=1;
                     }
                     switch (alt135) {
                         case 1 :
-                            // InternalScadeEquations.g:6088:6: (lv_name_15_0= RULE_ID )
+                            // InternalScadeEquations.g:6089:6: (lv_name_15_0= ruleEString )
                             {
-                            // InternalScadeEquations.g:6088:6: (lv_name_15_0= RULE_ID )
-                            // InternalScadeEquations.g:6089:7: lv_name_15_0= RULE_ID
+                            // InternalScadeEquations.g:6089:6: (lv_name_15_0= ruleEString )
+                            // InternalScadeEquations.g:6090:7: lv_name_15_0= ruleEString
                             {
-                            lv_name_15_0=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_16); if (state.failed) return current;
                             if ( state.backtracking==0 ) {
 
-                              							newLeafNode(lv_name_15_0, grammarAccess.getClassDeclarationAccess().getNameIDTerminalRuleCall_9_1_1_0());
+                              							newCompositeNode(grammarAccess.getClassDeclarationAccess().getNameEStringParserRuleCall_9_1_1_0());
                               						
                             }
+                            pushFollow(FollowSets000.FOLLOW_16);
+                            lv_name_15_0=ruleEString();
+
+                            state._fsp--;
+                            if (state.failed) return current;
                             if ( state.backtracking==0 ) {
 
                               							if (current==null) {
-                              								current = createModelElement(grammarAccess.getClassDeclarationRule());
+                              								current = createModelElementForParent(grammarAccess.getClassDeclarationRule());
                               							}
-                              							setWithLastConsumed(
+                              							set(
                               								current,
                               								"name",
                               								lv_name_15_0,
-                              								"de.cau.cs.kieler.annotations.Annotations.ID");
+                              								"de.cau.cs.kieler.annotations.Annotations.EString");
+                              							afterParserOrEnumRuleCall();
                               						
                             }
 
@@ -16709,7 +16721,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                       					newLeafNode(otherlv_16, grammarAccess.getClassDeclarationAccess().getLeftCurlyBracketKeyword_9_1_2());
                       				
                     }
-                    // InternalScadeEquations.g:6109:5: ( (lv_declarations_17_0= ruleDeclaration ) )*
+                    // InternalScadeEquations.g:6111:5: ( (lv_declarations_17_0= ruleDeclaration ) )*
                     loop136:
                     do {
                         int alt136=2;
@@ -16722,10 +16734,10 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                         switch (alt136) {
                     	case 1 :
-                    	    // InternalScadeEquations.g:6110:6: (lv_declarations_17_0= ruleDeclaration )
+                    	    // InternalScadeEquations.g:6112:6: (lv_declarations_17_0= ruleDeclaration )
                     	    {
-                    	    // InternalScadeEquations.g:6110:6: (lv_declarations_17_0= ruleDeclaration )
-                    	    // InternalScadeEquations.g:6111:7: lv_declarations_17_0= ruleDeclaration
+                    	    // InternalScadeEquations.g:6112:6: (lv_declarations_17_0= ruleDeclaration )
+                    	    // InternalScadeEquations.g:6113:7: lv_declarations_17_0= ruleDeclaration
                     	    {
                     	    if ( state.backtracking==0 ) {
 
@@ -16762,7 +16774,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                         }
                     } while (true);
 
-                    otherlv_18=(Token)match(input,23,FollowSets000.FOLLOW_83); if (state.failed) return current;
+                    otherlv_18=(Token)match(input,23,FollowSets000.FOLLOW_84); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       					newLeafNode(otherlv_18, grammarAccess.getClassDeclarationAccess().getRightCurlyBracketKeyword_9_1_4());
@@ -16777,7 +16789,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalScadeEquations.g:6134:3: ( ( (lv_valuedObjects_19_0= ruleValuedObject ) ) (otherlv_20= ',' ( (lv_valuedObjects_21_0= ruleValuedObject ) ) )* )?
+            // InternalScadeEquations.g:6136:3: ( ( (lv_valuedObjects_19_0= ruleValuedObject ) ) (otherlv_20= ',' ( (lv_valuedObjects_21_0= ruleValuedObject ) ) )* )?
             int alt139=2;
             int LA139_0 = input.LA(1);
 
@@ -16786,13 +16798,13 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             }
             switch (alt139) {
                 case 1 :
-                    // InternalScadeEquations.g:6135:4: ( (lv_valuedObjects_19_0= ruleValuedObject ) ) (otherlv_20= ',' ( (lv_valuedObjects_21_0= ruleValuedObject ) ) )*
+                    // InternalScadeEquations.g:6137:4: ( (lv_valuedObjects_19_0= ruleValuedObject ) ) (otherlv_20= ',' ( (lv_valuedObjects_21_0= ruleValuedObject ) ) )*
                     {
-                    // InternalScadeEquations.g:6135:4: ( (lv_valuedObjects_19_0= ruleValuedObject ) )
-                    // InternalScadeEquations.g:6136:5: (lv_valuedObjects_19_0= ruleValuedObject )
+                    // InternalScadeEquations.g:6137:4: ( (lv_valuedObjects_19_0= ruleValuedObject ) )
+                    // InternalScadeEquations.g:6138:5: (lv_valuedObjects_19_0= ruleValuedObject )
                     {
-                    // InternalScadeEquations.g:6136:5: (lv_valuedObjects_19_0= ruleValuedObject )
-                    // InternalScadeEquations.g:6137:6: lv_valuedObjects_19_0= ruleValuedObject
+                    // InternalScadeEquations.g:6138:5: (lv_valuedObjects_19_0= ruleValuedObject )
+                    // InternalScadeEquations.g:6139:6: lv_valuedObjects_19_0= ruleValuedObject
                     {
                     if ( state.backtracking==0 ) {
 
@@ -16823,7 +16835,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalScadeEquations.g:6154:4: (otherlv_20= ',' ( (lv_valuedObjects_21_0= ruleValuedObject ) ) )*
+                    // InternalScadeEquations.g:6156:4: (otherlv_20= ',' ( (lv_valuedObjects_21_0= ruleValuedObject ) ) )*
                     loop138:
                     do {
                         int alt138=2;
@@ -16836,7 +16848,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                         switch (alt138) {
                     	case 1 :
-                    	    // InternalScadeEquations.g:6155:5: otherlv_20= ',' ( (lv_valuedObjects_21_0= ruleValuedObject ) )
+                    	    // InternalScadeEquations.g:6157:5: otherlv_20= ',' ( (lv_valuedObjects_21_0= ruleValuedObject ) )
                     	    {
                     	    otherlv_20=(Token)match(input,18,FollowSets000.FOLLOW_35); if (state.failed) return current;
                     	    if ( state.backtracking==0 ) {
@@ -16844,11 +16856,11 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                     	      					newLeafNode(otherlv_20, grammarAccess.getClassDeclarationAccess().getCommaKeyword_10_1_0());
                     	      				
                     	    }
-                    	    // InternalScadeEquations.g:6159:5: ( (lv_valuedObjects_21_0= ruleValuedObject ) )
-                    	    // InternalScadeEquations.g:6160:6: (lv_valuedObjects_21_0= ruleValuedObject )
+                    	    // InternalScadeEquations.g:6161:5: ( (lv_valuedObjects_21_0= ruleValuedObject ) )
+                    	    // InternalScadeEquations.g:6162:6: (lv_valuedObjects_21_0= ruleValuedObject )
                     	    {
-                    	    // InternalScadeEquations.g:6160:6: (lv_valuedObjects_21_0= ruleValuedObject )
-                    	    // InternalScadeEquations.g:6161:7: lv_valuedObjects_21_0= ruleValuedObject
+                    	    // InternalScadeEquations.g:6162:6: (lv_valuedObjects_21_0= ruleValuedObject )
+                    	    // InternalScadeEquations.g:6163:7: lv_valuedObjects_21_0= ruleValuedObject
                     	    {
                     	    if ( state.backtracking==0 ) {
 
@@ -16900,7 +16912,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
               			newLeafNode(otherlv_22, grammarAccess.getClassDeclarationAccess().getSemicolonKeyword_11());
               		
             }
-            // InternalScadeEquations.g:6184:3: ( (lv_annotations_23_0= ruleCommentAnnotatonSL ) )?
+            // InternalScadeEquations.g:6186:3: ( (lv_annotations_23_0= ruleCommentAnnotatonSL ) )?
             int alt140=2;
             int LA140_0 = input.LA(1);
 
@@ -16909,10 +16921,10 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             }
             switch (alt140) {
                 case 1 :
-                    // InternalScadeEquations.g:6185:4: (lv_annotations_23_0= ruleCommentAnnotatonSL )
+                    // InternalScadeEquations.g:6187:4: (lv_annotations_23_0= ruleCommentAnnotatonSL )
                     {
-                    // InternalScadeEquations.g:6185:4: (lv_annotations_23_0= ruleCommentAnnotatonSL )
-                    // InternalScadeEquations.g:6186:5: lv_annotations_23_0= ruleCommentAnnotatonSL
+                    // InternalScadeEquations.g:6187:4: (lv_annotations_23_0= ruleCommentAnnotatonSL )
+                    // InternalScadeEquations.g:6188:5: lv_annotations_23_0= ruleCommentAnnotatonSL
                     {
                     if ( state.backtracking==0 ) {
 
@@ -16971,7 +16983,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleDeclarationOrMethod"
-    // InternalScadeEquations.g:6207:1: entryRuleDeclarationOrMethod returns [EObject current=null] : iv_ruleDeclarationOrMethod= ruleDeclarationOrMethod EOF ;
+    // InternalScadeEquations.g:6209:1: entryRuleDeclarationOrMethod returns [EObject current=null] : iv_ruleDeclarationOrMethod= ruleDeclarationOrMethod EOF ;
     public final EObject entryRuleDeclarationOrMethod() throws RecognitionException {
         EObject current = null;
 
@@ -16979,8 +16991,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalScadeEquations.g:6207:60: (iv_ruleDeclarationOrMethod= ruleDeclarationOrMethod EOF )
-            // InternalScadeEquations.g:6208:2: iv_ruleDeclarationOrMethod= ruleDeclarationOrMethod EOF
+            // InternalScadeEquations.g:6209:60: (iv_ruleDeclarationOrMethod= ruleDeclarationOrMethod EOF )
+            // InternalScadeEquations.g:6210:2: iv_ruleDeclarationOrMethod= ruleDeclarationOrMethod EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getDeclarationOrMethodRule()); 
@@ -17011,7 +17023,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleDeclarationOrMethod"
-    // InternalScadeEquations.g:6214:1: ruleDeclarationOrMethod returns [EObject current=null] : (this_Declaration_0= ruleDeclaration | this_MethodDeclaration_1= ruleMethodDeclaration ) ;
+    // InternalScadeEquations.g:6216:1: ruleDeclarationOrMethod returns [EObject current=null] : (this_Declaration_0= ruleDeclaration | this_MethodDeclaration_1= ruleMethodDeclaration ) ;
     public final EObject ruleDeclarationOrMethod() throws RecognitionException {
         EObject current = null;
 
@@ -17024,15 +17036,15 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:6220:2: ( (this_Declaration_0= ruleDeclaration | this_MethodDeclaration_1= ruleMethodDeclaration ) )
-            // InternalScadeEquations.g:6221:2: (this_Declaration_0= ruleDeclaration | this_MethodDeclaration_1= ruleMethodDeclaration )
+            // InternalScadeEquations.g:6222:2: ( (this_Declaration_0= ruleDeclaration | this_MethodDeclaration_1= ruleMethodDeclaration ) )
+            // InternalScadeEquations.g:6223:2: (this_Declaration_0= ruleDeclaration | this_MethodDeclaration_1= ruleMethodDeclaration )
             {
-            // InternalScadeEquations.g:6221:2: (this_Declaration_0= ruleDeclaration | this_MethodDeclaration_1= ruleMethodDeclaration )
+            // InternalScadeEquations.g:6223:2: (this_Declaration_0= ruleDeclaration | this_MethodDeclaration_1= ruleMethodDeclaration )
             int alt141=2;
             alt141 = dfa141.predict(input);
             switch (alt141) {
                 case 1 :
-                    // InternalScadeEquations.g:6222:3: this_Declaration_0= ruleDeclaration
+                    // InternalScadeEquations.g:6224:3: this_Declaration_0= ruleDeclaration
                     {
                     if ( state.backtracking==0 ) {
 
@@ -17059,7 +17071,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalScadeEquations.g:6234:3: this_MethodDeclaration_1= ruleMethodDeclaration
+                    // InternalScadeEquations.g:6236:3: this_MethodDeclaration_1= ruleMethodDeclaration
                     {
                     if ( state.backtracking==0 ) {
 
@@ -17110,7 +17122,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleClassDeclarationWOSemicolon"
-    // InternalScadeEquations.g:6249:1: entryRuleClassDeclarationWOSemicolon returns [EObject current=null] : iv_ruleClassDeclarationWOSemicolon= ruleClassDeclarationWOSemicolon EOF ;
+    // InternalScadeEquations.g:6251:1: entryRuleClassDeclarationWOSemicolon returns [EObject current=null] : iv_ruleClassDeclarationWOSemicolon= ruleClassDeclarationWOSemicolon EOF ;
     public final EObject entryRuleClassDeclarationWOSemicolon() throws RecognitionException {
         EObject current = null;
 
@@ -17118,8 +17130,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalScadeEquations.g:6249:68: (iv_ruleClassDeclarationWOSemicolon= ruleClassDeclarationWOSemicolon EOF )
-            // InternalScadeEquations.g:6250:2: iv_ruleClassDeclarationWOSemicolon= ruleClassDeclarationWOSemicolon EOF
+            // InternalScadeEquations.g:6251:68: (iv_ruleClassDeclarationWOSemicolon= ruleClassDeclarationWOSemicolon EOF )
+            // InternalScadeEquations.g:6252:2: iv_ruleClassDeclarationWOSemicolon= ruleClassDeclarationWOSemicolon EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getClassDeclarationWOSemicolonRule()); 
@@ -17150,7 +17162,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleClassDeclarationWOSemicolon"
-    // InternalScadeEquations.g:6256:1: ruleClassDeclarationWOSemicolon returns [EObject current=null] : ( () ( (lv_annotations_1_0= ruleAnnotation ) )* ( (lv_access_2_0= ruleAccessModifier ) )? ( (lv_const_3_0= 'const' ) )? ( (lv_input_4_0= 'input' ) )? ( (lv_output_5_0= 'output' ) )? ( (lv_global_6_0= 'global' ) )? ( (lv_static_7_0= 'static' ) )? ( (lv_host_8_0= 'host' ) )? ( ( ( (lv_type_9_0= ruleClassType ) ) ( (lv_name_10_0= RULE_ID ) )? otherlv_11= '{' ( (lv_declarations_12_0= ruleDeclarationOrMethodWOSemicolon ) )* otherlv_13= '}' ) | ( ( (lv_type_14_0= ruleStructType ) ) ( (lv_name_15_0= RULE_ID ) )? otherlv_16= '{' ( (lv_declarations_17_0= ruleDeclarationWOSemicolon ) )* otherlv_18= '}' ) ) ( ( (lv_valuedObjects_19_0= ruleValuedObject ) ) (otherlv_20= ',' ( (lv_valuedObjects_21_0= ruleValuedObject ) ) )* )? ( (lv_annotations_22_0= ruleCommentAnnotatonSL ) )? ) ;
+    // InternalScadeEquations.g:6258:1: ruleClassDeclarationWOSemicolon returns [EObject current=null] : ( () ( (lv_annotations_1_0= ruleAnnotation ) )* ( (lv_access_2_0= ruleAccessModifier ) )? ( (lv_const_3_0= 'const' ) )? ( (lv_input_4_0= 'input' ) )? ( (lv_output_5_0= 'output' ) )? ( (lv_global_6_0= 'global' ) )? ( (lv_static_7_0= 'static' ) )? ( (lv_host_8_0= 'host' ) )? ( ( ( (lv_type_9_0= ruleClassType ) ) ( (lv_name_10_0= ruleEString ) )? otherlv_11= '{' ( (lv_declarations_12_0= ruleDeclarationOrMethodWOSemicolon ) )* otherlv_13= '}' ) | ( ( (lv_type_14_0= ruleStructType ) ) ( (lv_name_15_0= ruleEString ) )? otherlv_16= '{' ( (lv_declarations_17_0= ruleDeclarationWOSemicolon ) )* otherlv_18= '}' ) ) ( ( (lv_valuedObjects_19_0= ruleValuedObject ) ) (otherlv_20= ',' ( (lv_valuedObjects_21_0= ruleValuedObject ) ) )* )? ( (lv_annotations_22_0= ruleCommentAnnotatonSL ) )? ) ;
     public final EObject ruleClassDeclarationWOSemicolon() throws RecognitionException {
         EObject current = null;
 
@@ -17160,10 +17172,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         Token lv_global_6_0=null;
         Token lv_static_7_0=null;
         Token lv_host_8_0=null;
-        Token lv_name_10_0=null;
         Token otherlv_11=null;
         Token otherlv_13=null;
-        Token lv_name_15_0=null;
         Token otherlv_16=null;
         Token otherlv_18=null;
         Token otherlv_20=null;
@@ -17173,9 +17183,13 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
         Enumerator lv_type_9_0 = null;
 
+        AntlrDatatypeRuleToken lv_name_10_0 = null;
+
         EObject lv_declarations_12_0 = null;
 
         Enumerator lv_type_14_0 = null;
+
+        AntlrDatatypeRuleToken lv_name_15_0 = null;
 
         EObject lv_declarations_17_0 = null;
 
@@ -17190,14 +17204,14 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:6262:2: ( ( () ( (lv_annotations_1_0= ruleAnnotation ) )* ( (lv_access_2_0= ruleAccessModifier ) )? ( (lv_const_3_0= 'const' ) )? ( (lv_input_4_0= 'input' ) )? ( (lv_output_5_0= 'output' ) )? ( (lv_global_6_0= 'global' ) )? ( (lv_static_7_0= 'static' ) )? ( (lv_host_8_0= 'host' ) )? ( ( ( (lv_type_9_0= ruleClassType ) ) ( (lv_name_10_0= RULE_ID ) )? otherlv_11= '{' ( (lv_declarations_12_0= ruleDeclarationOrMethodWOSemicolon ) )* otherlv_13= '}' ) | ( ( (lv_type_14_0= ruleStructType ) ) ( (lv_name_15_0= RULE_ID ) )? otherlv_16= '{' ( (lv_declarations_17_0= ruleDeclarationWOSemicolon ) )* otherlv_18= '}' ) ) ( ( (lv_valuedObjects_19_0= ruleValuedObject ) ) (otherlv_20= ',' ( (lv_valuedObjects_21_0= ruleValuedObject ) ) )* )? ( (lv_annotations_22_0= ruleCommentAnnotatonSL ) )? ) )
-            // InternalScadeEquations.g:6263:2: ( () ( (lv_annotations_1_0= ruleAnnotation ) )* ( (lv_access_2_0= ruleAccessModifier ) )? ( (lv_const_3_0= 'const' ) )? ( (lv_input_4_0= 'input' ) )? ( (lv_output_5_0= 'output' ) )? ( (lv_global_6_0= 'global' ) )? ( (lv_static_7_0= 'static' ) )? ( (lv_host_8_0= 'host' ) )? ( ( ( (lv_type_9_0= ruleClassType ) ) ( (lv_name_10_0= RULE_ID ) )? otherlv_11= '{' ( (lv_declarations_12_0= ruleDeclarationOrMethodWOSemicolon ) )* otherlv_13= '}' ) | ( ( (lv_type_14_0= ruleStructType ) ) ( (lv_name_15_0= RULE_ID ) )? otherlv_16= '{' ( (lv_declarations_17_0= ruleDeclarationWOSemicolon ) )* otherlv_18= '}' ) ) ( ( (lv_valuedObjects_19_0= ruleValuedObject ) ) (otherlv_20= ',' ( (lv_valuedObjects_21_0= ruleValuedObject ) ) )* )? ( (lv_annotations_22_0= ruleCommentAnnotatonSL ) )? )
+            // InternalScadeEquations.g:6264:2: ( ( () ( (lv_annotations_1_0= ruleAnnotation ) )* ( (lv_access_2_0= ruleAccessModifier ) )? ( (lv_const_3_0= 'const' ) )? ( (lv_input_4_0= 'input' ) )? ( (lv_output_5_0= 'output' ) )? ( (lv_global_6_0= 'global' ) )? ( (lv_static_7_0= 'static' ) )? ( (lv_host_8_0= 'host' ) )? ( ( ( (lv_type_9_0= ruleClassType ) ) ( (lv_name_10_0= ruleEString ) )? otherlv_11= '{' ( (lv_declarations_12_0= ruleDeclarationOrMethodWOSemicolon ) )* otherlv_13= '}' ) | ( ( (lv_type_14_0= ruleStructType ) ) ( (lv_name_15_0= ruleEString ) )? otherlv_16= '{' ( (lv_declarations_17_0= ruleDeclarationWOSemicolon ) )* otherlv_18= '}' ) ) ( ( (lv_valuedObjects_19_0= ruleValuedObject ) ) (otherlv_20= ',' ( (lv_valuedObjects_21_0= ruleValuedObject ) ) )* )? ( (lv_annotations_22_0= ruleCommentAnnotatonSL ) )? ) )
+            // InternalScadeEquations.g:6265:2: ( () ( (lv_annotations_1_0= ruleAnnotation ) )* ( (lv_access_2_0= ruleAccessModifier ) )? ( (lv_const_3_0= 'const' ) )? ( (lv_input_4_0= 'input' ) )? ( (lv_output_5_0= 'output' ) )? ( (lv_global_6_0= 'global' ) )? ( (lv_static_7_0= 'static' ) )? ( (lv_host_8_0= 'host' ) )? ( ( ( (lv_type_9_0= ruleClassType ) ) ( (lv_name_10_0= ruleEString ) )? otherlv_11= '{' ( (lv_declarations_12_0= ruleDeclarationOrMethodWOSemicolon ) )* otherlv_13= '}' ) | ( ( (lv_type_14_0= ruleStructType ) ) ( (lv_name_15_0= ruleEString ) )? otherlv_16= '{' ( (lv_declarations_17_0= ruleDeclarationWOSemicolon ) )* otherlv_18= '}' ) ) ( ( (lv_valuedObjects_19_0= ruleValuedObject ) ) (otherlv_20= ',' ( (lv_valuedObjects_21_0= ruleValuedObject ) ) )* )? ( (lv_annotations_22_0= ruleCommentAnnotatonSL ) )? )
             {
-            // InternalScadeEquations.g:6263:2: ( () ( (lv_annotations_1_0= ruleAnnotation ) )* ( (lv_access_2_0= ruleAccessModifier ) )? ( (lv_const_3_0= 'const' ) )? ( (lv_input_4_0= 'input' ) )? ( (lv_output_5_0= 'output' ) )? ( (lv_global_6_0= 'global' ) )? ( (lv_static_7_0= 'static' ) )? ( (lv_host_8_0= 'host' ) )? ( ( ( (lv_type_9_0= ruleClassType ) ) ( (lv_name_10_0= RULE_ID ) )? otherlv_11= '{' ( (lv_declarations_12_0= ruleDeclarationOrMethodWOSemicolon ) )* otherlv_13= '}' ) | ( ( (lv_type_14_0= ruleStructType ) ) ( (lv_name_15_0= RULE_ID ) )? otherlv_16= '{' ( (lv_declarations_17_0= ruleDeclarationWOSemicolon ) )* otherlv_18= '}' ) ) ( ( (lv_valuedObjects_19_0= ruleValuedObject ) ) (otherlv_20= ',' ( (lv_valuedObjects_21_0= ruleValuedObject ) ) )* )? ( (lv_annotations_22_0= ruleCommentAnnotatonSL ) )? )
-            // InternalScadeEquations.g:6264:3: () ( (lv_annotations_1_0= ruleAnnotation ) )* ( (lv_access_2_0= ruleAccessModifier ) )? ( (lv_const_3_0= 'const' ) )? ( (lv_input_4_0= 'input' ) )? ( (lv_output_5_0= 'output' ) )? ( (lv_global_6_0= 'global' ) )? ( (lv_static_7_0= 'static' ) )? ( (lv_host_8_0= 'host' ) )? ( ( ( (lv_type_9_0= ruleClassType ) ) ( (lv_name_10_0= RULE_ID ) )? otherlv_11= '{' ( (lv_declarations_12_0= ruleDeclarationOrMethodWOSemicolon ) )* otherlv_13= '}' ) | ( ( (lv_type_14_0= ruleStructType ) ) ( (lv_name_15_0= RULE_ID ) )? otherlv_16= '{' ( (lv_declarations_17_0= ruleDeclarationWOSemicolon ) )* otherlv_18= '}' ) ) ( ( (lv_valuedObjects_19_0= ruleValuedObject ) ) (otherlv_20= ',' ( (lv_valuedObjects_21_0= ruleValuedObject ) ) )* )? ( (lv_annotations_22_0= ruleCommentAnnotatonSL ) )?
+            // InternalScadeEquations.g:6265:2: ( () ( (lv_annotations_1_0= ruleAnnotation ) )* ( (lv_access_2_0= ruleAccessModifier ) )? ( (lv_const_3_0= 'const' ) )? ( (lv_input_4_0= 'input' ) )? ( (lv_output_5_0= 'output' ) )? ( (lv_global_6_0= 'global' ) )? ( (lv_static_7_0= 'static' ) )? ( (lv_host_8_0= 'host' ) )? ( ( ( (lv_type_9_0= ruleClassType ) ) ( (lv_name_10_0= ruleEString ) )? otherlv_11= '{' ( (lv_declarations_12_0= ruleDeclarationOrMethodWOSemicolon ) )* otherlv_13= '}' ) | ( ( (lv_type_14_0= ruleStructType ) ) ( (lv_name_15_0= ruleEString ) )? otherlv_16= '{' ( (lv_declarations_17_0= ruleDeclarationWOSemicolon ) )* otherlv_18= '}' ) ) ( ( (lv_valuedObjects_19_0= ruleValuedObject ) ) (otherlv_20= ',' ( (lv_valuedObjects_21_0= ruleValuedObject ) ) )* )? ( (lv_annotations_22_0= ruleCommentAnnotatonSL ) )? )
+            // InternalScadeEquations.g:6266:3: () ( (lv_annotations_1_0= ruleAnnotation ) )* ( (lv_access_2_0= ruleAccessModifier ) )? ( (lv_const_3_0= 'const' ) )? ( (lv_input_4_0= 'input' ) )? ( (lv_output_5_0= 'output' ) )? ( (lv_global_6_0= 'global' ) )? ( (lv_static_7_0= 'static' ) )? ( (lv_host_8_0= 'host' ) )? ( ( ( (lv_type_9_0= ruleClassType ) ) ( (lv_name_10_0= ruleEString ) )? otherlv_11= '{' ( (lv_declarations_12_0= ruleDeclarationOrMethodWOSemicolon ) )* otherlv_13= '}' ) | ( ( (lv_type_14_0= ruleStructType ) ) ( (lv_name_15_0= ruleEString ) )? otherlv_16= '{' ( (lv_declarations_17_0= ruleDeclarationWOSemicolon ) )* otherlv_18= '}' ) ) ( ( (lv_valuedObjects_19_0= ruleValuedObject ) ) (otherlv_20= ',' ( (lv_valuedObjects_21_0= ruleValuedObject ) ) )* )? ( (lv_annotations_22_0= ruleCommentAnnotatonSL ) )?
             {
-            // InternalScadeEquations.g:6264:3: ()
-            // InternalScadeEquations.g:6265:4: 
+            // InternalScadeEquations.g:6266:3: ()
+            // InternalScadeEquations.g:6267:4: 
             {
             if ( state.backtracking==0 ) {
 
@@ -17214,7 +17228,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalScadeEquations.g:6274:3: ( (lv_annotations_1_0= ruleAnnotation ) )*
+            // InternalScadeEquations.g:6276:3: ( (lv_annotations_1_0= ruleAnnotation ) )*
             loop142:
             do {
                 int alt142=2;
@@ -17227,10 +17241,10 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                 switch (alt142) {
             	case 1 :
-            	    // InternalScadeEquations.g:6275:4: (lv_annotations_1_0= ruleAnnotation )
+            	    // InternalScadeEquations.g:6277:4: (lv_annotations_1_0= ruleAnnotation )
             	    {
-            	    // InternalScadeEquations.g:6275:4: (lv_annotations_1_0= ruleAnnotation )
-            	    // InternalScadeEquations.g:6276:5: lv_annotations_1_0= ruleAnnotation
+            	    // InternalScadeEquations.g:6277:4: (lv_annotations_1_0= ruleAnnotation )
+            	    // InternalScadeEquations.g:6278:5: lv_annotations_1_0= ruleAnnotation
             	    {
             	    if ( state.backtracking==0 ) {
 
@@ -17267,7 +17281,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                 }
             } while (true);
 
-            // InternalScadeEquations.g:6293:3: ( (lv_access_2_0= ruleAccessModifier ) )?
+            // InternalScadeEquations.g:6295:3: ( (lv_access_2_0= ruleAccessModifier ) )?
             int alt143=2;
             int LA143_0 = input.LA(1);
 
@@ -17276,10 +17290,10 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             }
             switch (alt143) {
                 case 1 :
-                    // InternalScadeEquations.g:6294:4: (lv_access_2_0= ruleAccessModifier )
+                    // InternalScadeEquations.g:6296:4: (lv_access_2_0= ruleAccessModifier )
                     {
-                    // InternalScadeEquations.g:6294:4: (lv_access_2_0= ruleAccessModifier )
-                    // InternalScadeEquations.g:6295:5: lv_access_2_0= ruleAccessModifier
+                    // InternalScadeEquations.g:6296:4: (lv_access_2_0= ruleAccessModifier )
+                    // InternalScadeEquations.g:6297:5: lv_access_2_0= ruleAccessModifier
                     {
                     if ( state.backtracking==0 ) {
 
@@ -17313,7 +17327,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalScadeEquations.g:6312:3: ( (lv_const_3_0= 'const' ) )?
+            // InternalScadeEquations.g:6314:3: ( (lv_const_3_0= 'const' ) )?
             int alt144=2;
             int LA144_0 = input.LA(1);
 
@@ -17322,10 +17336,10 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             }
             switch (alt144) {
                 case 1 :
-                    // InternalScadeEquations.g:6313:4: (lv_const_3_0= 'const' )
+                    // InternalScadeEquations.g:6315:4: (lv_const_3_0= 'const' )
                     {
-                    // InternalScadeEquations.g:6313:4: (lv_const_3_0= 'const' )
-                    // InternalScadeEquations.g:6314:5: lv_const_3_0= 'const'
+                    // InternalScadeEquations.g:6315:4: (lv_const_3_0= 'const' )
+                    // InternalScadeEquations.g:6316:5: lv_const_3_0= 'const'
                     {
                     lv_const_3_0=(Token)match(input,33,FollowSets000.FOLLOW_76); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -17350,7 +17364,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalScadeEquations.g:6326:3: ( (lv_input_4_0= 'input' ) )?
+            // InternalScadeEquations.g:6328:3: ( (lv_input_4_0= 'input' ) )?
             int alt145=2;
             int LA145_0 = input.LA(1);
 
@@ -17359,10 +17373,10 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             }
             switch (alt145) {
                 case 1 :
-                    // InternalScadeEquations.g:6327:4: (lv_input_4_0= 'input' )
+                    // InternalScadeEquations.g:6329:4: (lv_input_4_0= 'input' )
                     {
-                    // InternalScadeEquations.g:6327:4: (lv_input_4_0= 'input' )
-                    // InternalScadeEquations.g:6328:5: lv_input_4_0= 'input'
+                    // InternalScadeEquations.g:6329:4: (lv_input_4_0= 'input' )
+                    // InternalScadeEquations.g:6330:5: lv_input_4_0= 'input'
                     {
                     lv_input_4_0=(Token)match(input,65,FollowSets000.FOLLOW_77); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -17387,7 +17401,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalScadeEquations.g:6340:3: ( (lv_output_5_0= 'output' ) )?
+            // InternalScadeEquations.g:6342:3: ( (lv_output_5_0= 'output' ) )?
             int alt146=2;
             int LA146_0 = input.LA(1);
 
@@ -17396,10 +17410,10 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             }
             switch (alt146) {
                 case 1 :
-                    // InternalScadeEquations.g:6341:4: (lv_output_5_0= 'output' )
+                    // InternalScadeEquations.g:6343:4: (lv_output_5_0= 'output' )
                     {
-                    // InternalScadeEquations.g:6341:4: (lv_output_5_0= 'output' )
-                    // InternalScadeEquations.g:6342:5: lv_output_5_0= 'output'
+                    // InternalScadeEquations.g:6343:4: (lv_output_5_0= 'output' )
+                    // InternalScadeEquations.g:6344:5: lv_output_5_0= 'output'
                     {
                     lv_output_5_0=(Token)match(input,66,FollowSets000.FOLLOW_78); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -17424,7 +17438,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalScadeEquations.g:6354:3: ( (lv_global_6_0= 'global' ) )?
+            // InternalScadeEquations.g:6356:3: ( (lv_global_6_0= 'global' ) )?
             int alt147=2;
             int LA147_0 = input.LA(1);
 
@@ -17433,10 +17447,10 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             }
             switch (alt147) {
                 case 1 :
-                    // InternalScadeEquations.g:6355:4: (lv_global_6_0= 'global' )
+                    // InternalScadeEquations.g:6357:4: (lv_global_6_0= 'global' )
                     {
-                    // InternalScadeEquations.g:6355:4: (lv_global_6_0= 'global' )
-                    // InternalScadeEquations.g:6356:5: lv_global_6_0= 'global'
+                    // InternalScadeEquations.g:6357:4: (lv_global_6_0= 'global' )
+                    // InternalScadeEquations.g:6358:5: lv_global_6_0= 'global'
                     {
                     lv_global_6_0=(Token)match(input,67,FollowSets000.FOLLOW_79); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -17461,7 +17475,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalScadeEquations.g:6368:3: ( (lv_static_7_0= 'static' ) )?
+            // InternalScadeEquations.g:6370:3: ( (lv_static_7_0= 'static' ) )?
             int alt148=2;
             int LA148_0 = input.LA(1);
 
@@ -17470,10 +17484,10 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             }
             switch (alt148) {
                 case 1 :
-                    // InternalScadeEquations.g:6369:4: (lv_static_7_0= 'static' )
+                    // InternalScadeEquations.g:6371:4: (lv_static_7_0= 'static' )
                     {
-                    // InternalScadeEquations.g:6369:4: (lv_static_7_0= 'static' )
-                    // InternalScadeEquations.g:6370:5: lv_static_7_0= 'static'
+                    // InternalScadeEquations.g:6371:4: (lv_static_7_0= 'static' )
+                    // InternalScadeEquations.g:6372:5: lv_static_7_0= 'static'
                     {
                     lv_static_7_0=(Token)match(input,68,FollowSets000.FOLLOW_80); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -17498,7 +17512,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalScadeEquations.g:6382:3: ( (lv_host_8_0= 'host' ) )?
+            // InternalScadeEquations.g:6384:3: ( (lv_host_8_0= 'host' ) )?
             int alt149=2;
             int LA149_0 = input.LA(1);
 
@@ -17507,10 +17521,10 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             }
             switch (alt149) {
                 case 1 :
-                    // InternalScadeEquations.g:6383:4: (lv_host_8_0= 'host' )
+                    // InternalScadeEquations.g:6385:4: (lv_host_8_0= 'host' )
                     {
-                    // InternalScadeEquations.g:6383:4: (lv_host_8_0= 'host' )
-                    // InternalScadeEquations.g:6384:5: lv_host_8_0= 'host'
+                    // InternalScadeEquations.g:6385:4: (lv_host_8_0= 'host' )
+                    // InternalScadeEquations.g:6386:5: lv_host_8_0= 'host'
                     {
                     lv_host_8_0=(Token)match(input,70,FollowSets000.FOLLOW_81); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -17535,7 +17549,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalScadeEquations.g:6396:3: ( ( ( (lv_type_9_0= ruleClassType ) ) ( (lv_name_10_0= RULE_ID ) )? otherlv_11= '{' ( (lv_declarations_12_0= ruleDeclarationOrMethodWOSemicolon ) )* otherlv_13= '}' ) | ( ( (lv_type_14_0= ruleStructType ) ) ( (lv_name_15_0= RULE_ID ) )? otherlv_16= '{' ( (lv_declarations_17_0= ruleDeclarationWOSemicolon ) )* otherlv_18= '}' ) )
+            // InternalScadeEquations.g:6398:3: ( ( ( (lv_type_9_0= ruleClassType ) ) ( (lv_name_10_0= ruleEString ) )? otherlv_11= '{' ( (lv_declarations_12_0= ruleDeclarationOrMethodWOSemicolon ) )* otherlv_13= '}' ) | ( ( (lv_type_14_0= ruleStructType ) ) ( (lv_name_15_0= ruleEString ) )? otherlv_16= '{' ( (lv_declarations_17_0= ruleDeclarationWOSemicolon ) )* otherlv_18= '}' ) )
             int alt154=2;
             int LA154_0 = input.LA(1);
 
@@ -17554,23 +17568,23 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             }
             switch (alt154) {
                 case 1 :
-                    // InternalScadeEquations.g:6397:4: ( ( (lv_type_9_0= ruleClassType ) ) ( (lv_name_10_0= RULE_ID ) )? otherlv_11= '{' ( (lv_declarations_12_0= ruleDeclarationOrMethodWOSemicolon ) )* otherlv_13= '}' )
+                    // InternalScadeEquations.g:6399:4: ( ( (lv_type_9_0= ruleClassType ) ) ( (lv_name_10_0= ruleEString ) )? otherlv_11= '{' ( (lv_declarations_12_0= ruleDeclarationOrMethodWOSemicolon ) )* otherlv_13= '}' )
                     {
-                    // InternalScadeEquations.g:6397:4: ( ( (lv_type_9_0= ruleClassType ) ) ( (lv_name_10_0= RULE_ID ) )? otherlv_11= '{' ( (lv_declarations_12_0= ruleDeclarationOrMethodWOSemicolon ) )* otherlv_13= '}' )
-                    // InternalScadeEquations.g:6398:5: ( (lv_type_9_0= ruleClassType ) ) ( (lv_name_10_0= RULE_ID ) )? otherlv_11= '{' ( (lv_declarations_12_0= ruleDeclarationOrMethodWOSemicolon ) )* otherlv_13= '}'
+                    // InternalScadeEquations.g:6399:4: ( ( (lv_type_9_0= ruleClassType ) ) ( (lv_name_10_0= ruleEString ) )? otherlv_11= '{' ( (lv_declarations_12_0= ruleDeclarationOrMethodWOSemicolon ) )* otherlv_13= '}' )
+                    // InternalScadeEquations.g:6400:5: ( (lv_type_9_0= ruleClassType ) ) ( (lv_name_10_0= ruleEString ) )? otherlv_11= '{' ( (lv_declarations_12_0= ruleDeclarationOrMethodWOSemicolon ) )* otherlv_13= '}'
                     {
-                    // InternalScadeEquations.g:6398:5: ( (lv_type_9_0= ruleClassType ) )
-                    // InternalScadeEquations.g:6399:6: (lv_type_9_0= ruleClassType )
+                    // InternalScadeEquations.g:6400:5: ( (lv_type_9_0= ruleClassType ) )
+                    // InternalScadeEquations.g:6401:6: (lv_type_9_0= ruleClassType )
                     {
-                    // InternalScadeEquations.g:6399:6: (lv_type_9_0= ruleClassType )
-                    // InternalScadeEquations.g:6400:7: lv_type_9_0= ruleClassType
+                    // InternalScadeEquations.g:6401:6: (lv_type_9_0= ruleClassType )
+                    // InternalScadeEquations.g:6402:7: lv_type_9_0= ruleClassType
                     {
                     if ( state.backtracking==0 ) {
 
                       							newCompositeNode(grammarAccess.getClassDeclarationWOSemicolonAccess().getTypeClassTypeEnumRuleCall_9_0_0_0());
                       						
                     }
-                    pushFollow(FollowSets000.FOLLOW_62);
+                    pushFollow(FollowSets000.FOLLOW_82);
                     lv_type_9_0=ruleClassType();
 
                     state._fsp--;
@@ -17594,36 +17608,41 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalScadeEquations.g:6417:5: ( (lv_name_10_0= RULE_ID ) )?
+                    // InternalScadeEquations.g:6419:5: ( (lv_name_10_0= ruleEString ) )?
                     int alt150=2;
                     int LA150_0 = input.LA(1);
 
-                    if ( (LA150_0==RULE_ID) ) {
+                    if ( ((LA150_0>=RULE_ID && LA150_0<=RULE_STRING)) ) {
                         alt150=1;
                     }
                     switch (alt150) {
                         case 1 :
-                            // InternalScadeEquations.g:6418:6: (lv_name_10_0= RULE_ID )
+                            // InternalScadeEquations.g:6420:6: (lv_name_10_0= ruleEString )
                             {
-                            // InternalScadeEquations.g:6418:6: (lv_name_10_0= RULE_ID )
-                            // InternalScadeEquations.g:6419:7: lv_name_10_0= RULE_ID
+                            // InternalScadeEquations.g:6420:6: (lv_name_10_0= ruleEString )
+                            // InternalScadeEquations.g:6421:7: lv_name_10_0= ruleEString
                             {
-                            lv_name_10_0=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_16); if (state.failed) return current;
                             if ( state.backtracking==0 ) {
 
-                              							newLeafNode(lv_name_10_0, grammarAccess.getClassDeclarationWOSemicolonAccess().getNameIDTerminalRuleCall_9_0_1_0());
+                              							newCompositeNode(grammarAccess.getClassDeclarationWOSemicolonAccess().getNameEStringParserRuleCall_9_0_1_0());
                               						
                             }
+                            pushFollow(FollowSets000.FOLLOW_16);
+                            lv_name_10_0=ruleEString();
+
+                            state._fsp--;
+                            if (state.failed) return current;
                             if ( state.backtracking==0 ) {
 
                               							if (current==null) {
-                              								current = createModelElement(grammarAccess.getClassDeclarationWOSemicolonRule());
+                              								current = createModelElementForParent(grammarAccess.getClassDeclarationWOSemicolonRule());
                               							}
-                              							setWithLastConsumed(
+                              							set(
                               								current,
                               								"name",
                               								lv_name_10_0,
-                              								"de.cau.cs.kieler.annotations.Annotations.ID");
+                              								"de.cau.cs.kieler.annotations.Annotations.EString");
+                              							afterParserOrEnumRuleCall();
                               						
                             }
 
@@ -17635,13 +17654,13 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    otherlv_11=(Token)match(input,22,FollowSets000.FOLLOW_82); if (state.failed) return current;
+                    otherlv_11=(Token)match(input,22,FollowSets000.FOLLOW_83); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       					newLeafNode(otherlv_11, grammarAccess.getClassDeclarationWOSemicolonAccess().getLeftCurlyBracketKeyword_9_0_2());
                       				
                     }
-                    // InternalScadeEquations.g:6439:5: ( (lv_declarations_12_0= ruleDeclarationOrMethodWOSemicolon ) )*
+                    // InternalScadeEquations.g:6442:5: ( (lv_declarations_12_0= ruleDeclarationOrMethodWOSemicolon ) )*
                     loop151:
                     do {
                         int alt151=2;
@@ -17654,17 +17673,17 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                         switch (alt151) {
                     	case 1 :
-                    	    // InternalScadeEquations.g:6440:6: (lv_declarations_12_0= ruleDeclarationOrMethodWOSemicolon )
+                    	    // InternalScadeEquations.g:6443:6: (lv_declarations_12_0= ruleDeclarationOrMethodWOSemicolon )
                     	    {
-                    	    // InternalScadeEquations.g:6440:6: (lv_declarations_12_0= ruleDeclarationOrMethodWOSemicolon )
-                    	    // InternalScadeEquations.g:6441:7: lv_declarations_12_0= ruleDeclarationOrMethodWOSemicolon
+                    	    // InternalScadeEquations.g:6443:6: (lv_declarations_12_0= ruleDeclarationOrMethodWOSemicolon )
+                    	    // InternalScadeEquations.g:6444:7: lv_declarations_12_0= ruleDeclarationOrMethodWOSemicolon
                     	    {
                     	    if ( state.backtracking==0 ) {
 
                     	      							newCompositeNode(grammarAccess.getClassDeclarationWOSemicolonAccess().getDeclarationsDeclarationOrMethodWOSemicolonParserRuleCall_9_0_3_0());
                     	      						
                     	    }
-                    	    pushFollow(FollowSets000.FOLLOW_82);
+                    	    pushFollow(FollowSets000.FOLLOW_83);
                     	    lv_declarations_12_0=ruleDeclarationOrMethodWOSemicolon();
 
                     	    state._fsp--;
@@ -17694,7 +17713,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                         }
                     } while (true);
 
-                    otherlv_13=(Token)match(input,23,FollowSets000.FOLLOW_84); if (state.failed) return current;
+                    otherlv_13=(Token)match(input,23,FollowSets000.FOLLOW_85); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       					newLeafNode(otherlv_13, grammarAccess.getClassDeclarationWOSemicolonAccess().getRightCurlyBracketKeyword_9_0_4());
@@ -17707,23 +17726,23 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalScadeEquations.g:6464:4: ( ( (lv_type_14_0= ruleStructType ) ) ( (lv_name_15_0= RULE_ID ) )? otherlv_16= '{' ( (lv_declarations_17_0= ruleDeclarationWOSemicolon ) )* otherlv_18= '}' )
+                    // InternalScadeEquations.g:6467:4: ( ( (lv_type_14_0= ruleStructType ) ) ( (lv_name_15_0= ruleEString ) )? otherlv_16= '{' ( (lv_declarations_17_0= ruleDeclarationWOSemicolon ) )* otherlv_18= '}' )
                     {
-                    // InternalScadeEquations.g:6464:4: ( ( (lv_type_14_0= ruleStructType ) ) ( (lv_name_15_0= RULE_ID ) )? otherlv_16= '{' ( (lv_declarations_17_0= ruleDeclarationWOSemicolon ) )* otherlv_18= '}' )
-                    // InternalScadeEquations.g:6465:5: ( (lv_type_14_0= ruleStructType ) ) ( (lv_name_15_0= RULE_ID ) )? otherlv_16= '{' ( (lv_declarations_17_0= ruleDeclarationWOSemicolon ) )* otherlv_18= '}'
+                    // InternalScadeEquations.g:6467:4: ( ( (lv_type_14_0= ruleStructType ) ) ( (lv_name_15_0= ruleEString ) )? otherlv_16= '{' ( (lv_declarations_17_0= ruleDeclarationWOSemicolon ) )* otherlv_18= '}' )
+                    // InternalScadeEquations.g:6468:5: ( (lv_type_14_0= ruleStructType ) ) ( (lv_name_15_0= ruleEString ) )? otherlv_16= '{' ( (lv_declarations_17_0= ruleDeclarationWOSemicolon ) )* otherlv_18= '}'
                     {
-                    // InternalScadeEquations.g:6465:5: ( (lv_type_14_0= ruleStructType ) )
-                    // InternalScadeEquations.g:6466:6: (lv_type_14_0= ruleStructType )
+                    // InternalScadeEquations.g:6468:5: ( (lv_type_14_0= ruleStructType ) )
+                    // InternalScadeEquations.g:6469:6: (lv_type_14_0= ruleStructType )
                     {
-                    // InternalScadeEquations.g:6466:6: (lv_type_14_0= ruleStructType )
-                    // InternalScadeEquations.g:6467:7: lv_type_14_0= ruleStructType
+                    // InternalScadeEquations.g:6469:6: (lv_type_14_0= ruleStructType )
+                    // InternalScadeEquations.g:6470:7: lv_type_14_0= ruleStructType
                     {
                     if ( state.backtracking==0 ) {
 
                       							newCompositeNode(grammarAccess.getClassDeclarationWOSemicolonAccess().getTypeStructTypeEnumRuleCall_9_1_0_0());
                       						
                     }
-                    pushFollow(FollowSets000.FOLLOW_62);
+                    pushFollow(FollowSets000.FOLLOW_82);
                     lv_type_14_0=ruleStructType();
 
                     state._fsp--;
@@ -17747,36 +17766,41 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalScadeEquations.g:6484:5: ( (lv_name_15_0= RULE_ID ) )?
+                    // InternalScadeEquations.g:6487:5: ( (lv_name_15_0= ruleEString ) )?
                     int alt152=2;
                     int LA152_0 = input.LA(1);
 
-                    if ( (LA152_0==RULE_ID) ) {
+                    if ( ((LA152_0>=RULE_ID && LA152_0<=RULE_STRING)) ) {
                         alt152=1;
                     }
                     switch (alt152) {
                         case 1 :
-                            // InternalScadeEquations.g:6485:6: (lv_name_15_0= RULE_ID )
+                            // InternalScadeEquations.g:6488:6: (lv_name_15_0= ruleEString )
                             {
-                            // InternalScadeEquations.g:6485:6: (lv_name_15_0= RULE_ID )
-                            // InternalScadeEquations.g:6486:7: lv_name_15_0= RULE_ID
+                            // InternalScadeEquations.g:6488:6: (lv_name_15_0= ruleEString )
+                            // InternalScadeEquations.g:6489:7: lv_name_15_0= ruleEString
                             {
-                            lv_name_15_0=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_16); if (state.failed) return current;
                             if ( state.backtracking==0 ) {
 
-                              							newLeafNode(lv_name_15_0, grammarAccess.getClassDeclarationWOSemicolonAccess().getNameIDTerminalRuleCall_9_1_1_0());
+                              							newCompositeNode(grammarAccess.getClassDeclarationWOSemicolonAccess().getNameEStringParserRuleCall_9_1_1_0());
                               						
                             }
+                            pushFollow(FollowSets000.FOLLOW_16);
+                            lv_name_15_0=ruleEString();
+
+                            state._fsp--;
+                            if (state.failed) return current;
                             if ( state.backtracking==0 ) {
 
                               							if (current==null) {
-                              								current = createModelElement(grammarAccess.getClassDeclarationWOSemicolonRule());
+                              								current = createModelElementForParent(grammarAccess.getClassDeclarationWOSemicolonRule());
                               							}
-                              							setWithLastConsumed(
+                              							set(
                               								current,
                               								"name",
                               								lv_name_15_0,
-                              								"de.cau.cs.kieler.annotations.Annotations.ID");
+                              								"de.cau.cs.kieler.annotations.Annotations.EString");
+                              							afterParserOrEnumRuleCall();
                               						
                             }
 
@@ -17788,13 +17812,13 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    otherlv_16=(Token)match(input,22,FollowSets000.FOLLOW_85); if (state.failed) return current;
+                    otherlv_16=(Token)match(input,22,FollowSets000.FOLLOW_86); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       					newLeafNode(otherlv_16, grammarAccess.getClassDeclarationWOSemicolonAccess().getLeftCurlyBracketKeyword_9_1_2());
                       				
                     }
-                    // InternalScadeEquations.g:6506:5: ( (lv_declarations_17_0= ruleDeclarationWOSemicolon ) )*
+                    // InternalScadeEquations.g:6510:5: ( (lv_declarations_17_0= ruleDeclarationWOSemicolon ) )*
                     loop153:
                     do {
                         int alt153=2;
@@ -17807,17 +17831,17 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                         switch (alt153) {
                     	case 1 :
-                    	    // InternalScadeEquations.g:6507:6: (lv_declarations_17_0= ruleDeclarationWOSemicolon )
+                    	    // InternalScadeEquations.g:6511:6: (lv_declarations_17_0= ruleDeclarationWOSemicolon )
                     	    {
-                    	    // InternalScadeEquations.g:6507:6: (lv_declarations_17_0= ruleDeclarationWOSemicolon )
-                    	    // InternalScadeEquations.g:6508:7: lv_declarations_17_0= ruleDeclarationWOSemicolon
+                    	    // InternalScadeEquations.g:6511:6: (lv_declarations_17_0= ruleDeclarationWOSemicolon )
+                    	    // InternalScadeEquations.g:6512:7: lv_declarations_17_0= ruleDeclarationWOSemicolon
                     	    {
                     	    if ( state.backtracking==0 ) {
 
                     	      							newCompositeNode(grammarAccess.getClassDeclarationWOSemicolonAccess().getDeclarationsDeclarationWOSemicolonParserRuleCall_9_1_3_0());
                     	      						
                     	    }
-                    	    pushFollow(FollowSets000.FOLLOW_85);
+                    	    pushFollow(FollowSets000.FOLLOW_86);
                     	    lv_declarations_17_0=ruleDeclarationWOSemicolon();
 
                     	    state._fsp--;
@@ -17847,7 +17871,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                         }
                     } while (true);
 
-                    otherlv_18=(Token)match(input,23,FollowSets000.FOLLOW_84); if (state.failed) return current;
+                    otherlv_18=(Token)match(input,23,FollowSets000.FOLLOW_85); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       					newLeafNode(otherlv_18, grammarAccess.getClassDeclarationWOSemicolonAccess().getRightCurlyBracketKeyword_9_1_4());
@@ -17862,18 +17886,18 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalScadeEquations.g:6531:3: ( ( (lv_valuedObjects_19_0= ruleValuedObject ) ) (otherlv_20= ',' ( (lv_valuedObjects_21_0= ruleValuedObject ) ) )* )?
+            // InternalScadeEquations.g:6535:3: ( ( (lv_valuedObjects_19_0= ruleValuedObject ) ) (otherlv_20= ',' ( (lv_valuedObjects_21_0= ruleValuedObject ) ) )* )?
             int alt156=2;
             alt156 = dfa156.predict(input);
             switch (alt156) {
                 case 1 :
-                    // InternalScadeEquations.g:6532:4: ( (lv_valuedObjects_19_0= ruleValuedObject ) ) (otherlv_20= ',' ( (lv_valuedObjects_21_0= ruleValuedObject ) ) )*
+                    // InternalScadeEquations.g:6536:4: ( (lv_valuedObjects_19_0= ruleValuedObject ) ) (otherlv_20= ',' ( (lv_valuedObjects_21_0= ruleValuedObject ) ) )*
                     {
-                    // InternalScadeEquations.g:6532:4: ( (lv_valuedObjects_19_0= ruleValuedObject ) )
-                    // InternalScadeEquations.g:6533:5: (lv_valuedObjects_19_0= ruleValuedObject )
+                    // InternalScadeEquations.g:6536:4: ( (lv_valuedObjects_19_0= ruleValuedObject ) )
+                    // InternalScadeEquations.g:6537:5: (lv_valuedObjects_19_0= ruleValuedObject )
                     {
-                    // InternalScadeEquations.g:6533:5: (lv_valuedObjects_19_0= ruleValuedObject )
-                    // InternalScadeEquations.g:6534:6: lv_valuedObjects_19_0= ruleValuedObject
+                    // InternalScadeEquations.g:6537:5: (lv_valuedObjects_19_0= ruleValuedObject )
+                    // InternalScadeEquations.g:6538:6: lv_valuedObjects_19_0= ruleValuedObject
                     {
                     if ( state.backtracking==0 ) {
 
@@ -17904,7 +17928,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalScadeEquations.g:6551:4: (otherlv_20= ',' ( (lv_valuedObjects_21_0= ruleValuedObject ) ) )*
+                    // InternalScadeEquations.g:6555:4: (otherlv_20= ',' ( (lv_valuedObjects_21_0= ruleValuedObject ) ) )*
                     loop155:
                     do {
                         int alt155=2;
@@ -17917,7 +17941,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                         switch (alt155) {
                     	case 1 :
-                    	    // InternalScadeEquations.g:6552:5: otherlv_20= ',' ( (lv_valuedObjects_21_0= ruleValuedObject ) )
+                    	    // InternalScadeEquations.g:6556:5: otherlv_20= ',' ( (lv_valuedObjects_21_0= ruleValuedObject ) )
                     	    {
                     	    otherlv_20=(Token)match(input,18,FollowSets000.FOLLOW_35); if (state.failed) return current;
                     	    if ( state.backtracking==0 ) {
@@ -17925,11 +17949,11 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                     	      					newLeafNode(otherlv_20, grammarAccess.getClassDeclarationWOSemicolonAccess().getCommaKeyword_10_1_0());
                     	      				
                     	    }
-                    	    // InternalScadeEquations.g:6556:5: ( (lv_valuedObjects_21_0= ruleValuedObject ) )
-                    	    // InternalScadeEquations.g:6557:6: (lv_valuedObjects_21_0= ruleValuedObject )
+                    	    // InternalScadeEquations.g:6560:5: ( (lv_valuedObjects_21_0= ruleValuedObject ) )
+                    	    // InternalScadeEquations.g:6561:6: (lv_valuedObjects_21_0= ruleValuedObject )
                     	    {
-                    	    // InternalScadeEquations.g:6557:6: (lv_valuedObjects_21_0= ruleValuedObject )
-                    	    // InternalScadeEquations.g:6558:7: lv_valuedObjects_21_0= ruleValuedObject
+                    	    // InternalScadeEquations.g:6561:6: (lv_valuedObjects_21_0= ruleValuedObject )
+                    	    // InternalScadeEquations.g:6562:7: lv_valuedObjects_21_0= ruleValuedObject
                     	    {
                     	    if ( state.backtracking==0 ) {
 
@@ -17975,7 +17999,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalScadeEquations.g:6577:3: ( (lv_annotations_22_0= ruleCommentAnnotatonSL ) )?
+            // InternalScadeEquations.g:6581:3: ( (lv_annotations_22_0= ruleCommentAnnotatonSL ) )?
             int alt157=2;
             int LA157_0 = input.LA(1);
 
@@ -17984,10 +18008,10 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             }
             switch (alt157) {
                 case 1 :
-                    // InternalScadeEquations.g:6578:4: (lv_annotations_22_0= ruleCommentAnnotatonSL )
+                    // InternalScadeEquations.g:6582:4: (lv_annotations_22_0= ruleCommentAnnotatonSL )
                     {
-                    // InternalScadeEquations.g:6578:4: (lv_annotations_22_0= ruleCommentAnnotatonSL )
-                    // InternalScadeEquations.g:6579:5: lv_annotations_22_0= ruleCommentAnnotatonSL
+                    // InternalScadeEquations.g:6582:4: (lv_annotations_22_0= ruleCommentAnnotatonSL )
+                    // InternalScadeEquations.g:6583:5: lv_annotations_22_0= ruleCommentAnnotatonSL
                     {
                     if ( state.backtracking==0 ) {
 
@@ -18046,7 +18070,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleDeclarationOrMethodWOSemicolon"
-    // InternalScadeEquations.g:6600:1: entryRuleDeclarationOrMethodWOSemicolon returns [EObject current=null] : iv_ruleDeclarationOrMethodWOSemicolon= ruleDeclarationOrMethodWOSemicolon EOF ;
+    // InternalScadeEquations.g:6604:1: entryRuleDeclarationOrMethodWOSemicolon returns [EObject current=null] : iv_ruleDeclarationOrMethodWOSemicolon= ruleDeclarationOrMethodWOSemicolon EOF ;
     public final EObject entryRuleDeclarationOrMethodWOSemicolon() throws RecognitionException {
         EObject current = null;
 
@@ -18054,8 +18078,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalScadeEquations.g:6600:71: (iv_ruleDeclarationOrMethodWOSemicolon= ruleDeclarationOrMethodWOSemicolon EOF )
-            // InternalScadeEquations.g:6601:2: iv_ruleDeclarationOrMethodWOSemicolon= ruleDeclarationOrMethodWOSemicolon EOF
+            // InternalScadeEquations.g:6604:71: (iv_ruleDeclarationOrMethodWOSemicolon= ruleDeclarationOrMethodWOSemicolon EOF )
+            // InternalScadeEquations.g:6605:2: iv_ruleDeclarationOrMethodWOSemicolon= ruleDeclarationOrMethodWOSemicolon EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getDeclarationOrMethodWOSemicolonRule()); 
@@ -18086,7 +18110,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleDeclarationOrMethodWOSemicolon"
-    // InternalScadeEquations.g:6607:1: ruleDeclarationOrMethodWOSemicolon returns [EObject current=null] : (this_DeclarationWOSemicolon_0= ruleDeclarationWOSemicolon | this_MethodDeclarationWOSemicolon_1= ruleMethodDeclarationWOSemicolon ) ;
+    // InternalScadeEquations.g:6611:1: ruleDeclarationOrMethodWOSemicolon returns [EObject current=null] : (this_DeclarationWOSemicolon_0= ruleDeclarationWOSemicolon | this_MethodDeclarationWOSemicolon_1= ruleMethodDeclarationWOSemicolon ) ;
     public final EObject ruleDeclarationOrMethodWOSemicolon() throws RecognitionException {
         EObject current = null;
 
@@ -18099,15 +18123,15 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:6613:2: ( (this_DeclarationWOSemicolon_0= ruleDeclarationWOSemicolon | this_MethodDeclarationWOSemicolon_1= ruleMethodDeclarationWOSemicolon ) )
-            // InternalScadeEquations.g:6614:2: (this_DeclarationWOSemicolon_0= ruleDeclarationWOSemicolon | this_MethodDeclarationWOSemicolon_1= ruleMethodDeclarationWOSemicolon )
+            // InternalScadeEquations.g:6617:2: ( (this_DeclarationWOSemicolon_0= ruleDeclarationWOSemicolon | this_MethodDeclarationWOSemicolon_1= ruleMethodDeclarationWOSemicolon ) )
+            // InternalScadeEquations.g:6618:2: (this_DeclarationWOSemicolon_0= ruleDeclarationWOSemicolon | this_MethodDeclarationWOSemicolon_1= ruleMethodDeclarationWOSemicolon )
             {
-            // InternalScadeEquations.g:6614:2: (this_DeclarationWOSemicolon_0= ruleDeclarationWOSemicolon | this_MethodDeclarationWOSemicolon_1= ruleMethodDeclarationWOSemicolon )
+            // InternalScadeEquations.g:6618:2: (this_DeclarationWOSemicolon_0= ruleDeclarationWOSemicolon | this_MethodDeclarationWOSemicolon_1= ruleMethodDeclarationWOSemicolon )
             int alt158=2;
             alt158 = dfa158.predict(input);
             switch (alt158) {
                 case 1 :
-                    // InternalScadeEquations.g:6615:3: this_DeclarationWOSemicolon_0= ruleDeclarationWOSemicolon
+                    // InternalScadeEquations.g:6619:3: this_DeclarationWOSemicolon_0= ruleDeclarationWOSemicolon
                     {
                     if ( state.backtracking==0 ) {
 
@@ -18134,7 +18158,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalScadeEquations.g:6627:3: this_MethodDeclarationWOSemicolon_1= ruleMethodDeclarationWOSemicolon
+                    // InternalScadeEquations.g:6631:3: this_MethodDeclarationWOSemicolon_1= ruleMethodDeclarationWOSemicolon
                     {
                     if ( state.backtracking==0 ) {
 
@@ -18185,7 +18209,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleMethodDeclaration"
-    // InternalScadeEquations.g:6642:1: entryRuleMethodDeclaration returns [EObject current=null] : iv_ruleMethodDeclaration= ruleMethodDeclaration EOF ;
+    // InternalScadeEquations.g:6646:1: entryRuleMethodDeclaration returns [EObject current=null] : iv_ruleMethodDeclaration= ruleMethodDeclaration EOF ;
     public final EObject entryRuleMethodDeclaration() throws RecognitionException {
         EObject current = null;
 
@@ -18193,8 +18217,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalScadeEquations.g:6642:58: (iv_ruleMethodDeclaration= ruleMethodDeclaration EOF )
-            // InternalScadeEquations.g:6643:2: iv_ruleMethodDeclaration= ruleMethodDeclaration EOF
+            // InternalScadeEquations.g:6646:58: (iv_ruleMethodDeclaration= ruleMethodDeclaration EOF )
+            // InternalScadeEquations.g:6647:2: iv_ruleMethodDeclaration= ruleMethodDeclaration EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getMethodDeclarationRule()); 
@@ -18225,7 +18249,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleMethodDeclaration"
-    // InternalScadeEquations.g:6649:1: ruleMethodDeclaration returns [EObject current=null] : ( () ( (lv_annotations_1_0= ruleAnnotation ) )* ( (lv_access_2_0= ruleAccessModifier ) )? ( (lv_returnType_3_0= ruleMethodReturnType ) )? ( (lv_valuedObjects_4_0= ruleSimpleValuedObject ) ) ( (otherlv_5= '(' ( (lv_parameterDeclarations_6_0= ruleVariableDeclarationWOSemicolon ) ) (otherlv_7= ',' ( (lv_parameterDeclarations_8_0= ruleVariableDeclarationWOSemicolon ) ) )* otherlv_9= ')' ) | otherlv_10= '()' ) (otherlv_11= 'schedule' ( (lv_schedule_12_0= ruleScheduleObjectReference ) )+ )? otherlv_13= ';' ( (lv_annotations_14_0= ruleCommentAnnotatonSL ) )? ) ;
+    // InternalScadeEquations.g:6653:1: ruleMethodDeclaration returns [EObject current=null] : ( () ( (lv_annotations_1_0= ruleAnnotation ) )* ( (lv_access_2_0= ruleAccessModifier ) )? ( (lv_returnType_3_0= ruleMethodReturnType ) )? ( (lv_valuedObjects_4_0= ruleSimpleValuedObject ) ) ( (otherlv_5= '(' ( (lv_parameterDeclarations_6_0= ruleVariableDeclarationWOSemicolon ) ) (otherlv_7= ',' ( (lv_parameterDeclarations_8_0= ruleVariableDeclarationWOSemicolon ) ) )* otherlv_9= ')' ) | otherlv_10= '()' ) (otherlv_11= 'schedule' ( (lv_schedule_12_0= ruleScheduleObjectReference ) )+ )? otherlv_13= ';' ( (lv_annotations_14_0= ruleCommentAnnotatonSL ) )? ) ;
     public final EObject ruleMethodDeclaration() throws RecognitionException {
         EObject current = null;
 
@@ -18256,14 +18280,14 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:6655:2: ( ( () ( (lv_annotations_1_0= ruleAnnotation ) )* ( (lv_access_2_0= ruleAccessModifier ) )? ( (lv_returnType_3_0= ruleMethodReturnType ) )? ( (lv_valuedObjects_4_0= ruleSimpleValuedObject ) ) ( (otherlv_5= '(' ( (lv_parameterDeclarations_6_0= ruleVariableDeclarationWOSemicolon ) ) (otherlv_7= ',' ( (lv_parameterDeclarations_8_0= ruleVariableDeclarationWOSemicolon ) ) )* otherlv_9= ')' ) | otherlv_10= '()' ) (otherlv_11= 'schedule' ( (lv_schedule_12_0= ruleScheduleObjectReference ) )+ )? otherlv_13= ';' ( (lv_annotations_14_0= ruleCommentAnnotatonSL ) )? ) )
-            // InternalScadeEquations.g:6656:2: ( () ( (lv_annotations_1_0= ruleAnnotation ) )* ( (lv_access_2_0= ruleAccessModifier ) )? ( (lv_returnType_3_0= ruleMethodReturnType ) )? ( (lv_valuedObjects_4_0= ruleSimpleValuedObject ) ) ( (otherlv_5= '(' ( (lv_parameterDeclarations_6_0= ruleVariableDeclarationWOSemicolon ) ) (otherlv_7= ',' ( (lv_parameterDeclarations_8_0= ruleVariableDeclarationWOSemicolon ) ) )* otherlv_9= ')' ) | otherlv_10= '()' ) (otherlv_11= 'schedule' ( (lv_schedule_12_0= ruleScheduleObjectReference ) )+ )? otherlv_13= ';' ( (lv_annotations_14_0= ruleCommentAnnotatonSL ) )? )
+            // InternalScadeEquations.g:6659:2: ( ( () ( (lv_annotations_1_0= ruleAnnotation ) )* ( (lv_access_2_0= ruleAccessModifier ) )? ( (lv_returnType_3_0= ruleMethodReturnType ) )? ( (lv_valuedObjects_4_0= ruleSimpleValuedObject ) ) ( (otherlv_5= '(' ( (lv_parameterDeclarations_6_0= ruleVariableDeclarationWOSemicolon ) ) (otherlv_7= ',' ( (lv_parameterDeclarations_8_0= ruleVariableDeclarationWOSemicolon ) ) )* otherlv_9= ')' ) | otherlv_10= '()' ) (otherlv_11= 'schedule' ( (lv_schedule_12_0= ruleScheduleObjectReference ) )+ )? otherlv_13= ';' ( (lv_annotations_14_0= ruleCommentAnnotatonSL ) )? ) )
+            // InternalScadeEquations.g:6660:2: ( () ( (lv_annotations_1_0= ruleAnnotation ) )* ( (lv_access_2_0= ruleAccessModifier ) )? ( (lv_returnType_3_0= ruleMethodReturnType ) )? ( (lv_valuedObjects_4_0= ruleSimpleValuedObject ) ) ( (otherlv_5= '(' ( (lv_parameterDeclarations_6_0= ruleVariableDeclarationWOSemicolon ) ) (otherlv_7= ',' ( (lv_parameterDeclarations_8_0= ruleVariableDeclarationWOSemicolon ) ) )* otherlv_9= ')' ) | otherlv_10= '()' ) (otherlv_11= 'schedule' ( (lv_schedule_12_0= ruleScheduleObjectReference ) )+ )? otherlv_13= ';' ( (lv_annotations_14_0= ruleCommentAnnotatonSL ) )? )
             {
-            // InternalScadeEquations.g:6656:2: ( () ( (lv_annotations_1_0= ruleAnnotation ) )* ( (lv_access_2_0= ruleAccessModifier ) )? ( (lv_returnType_3_0= ruleMethodReturnType ) )? ( (lv_valuedObjects_4_0= ruleSimpleValuedObject ) ) ( (otherlv_5= '(' ( (lv_parameterDeclarations_6_0= ruleVariableDeclarationWOSemicolon ) ) (otherlv_7= ',' ( (lv_parameterDeclarations_8_0= ruleVariableDeclarationWOSemicolon ) ) )* otherlv_9= ')' ) | otherlv_10= '()' ) (otherlv_11= 'schedule' ( (lv_schedule_12_0= ruleScheduleObjectReference ) )+ )? otherlv_13= ';' ( (lv_annotations_14_0= ruleCommentAnnotatonSL ) )? )
-            // InternalScadeEquations.g:6657:3: () ( (lv_annotations_1_0= ruleAnnotation ) )* ( (lv_access_2_0= ruleAccessModifier ) )? ( (lv_returnType_3_0= ruleMethodReturnType ) )? ( (lv_valuedObjects_4_0= ruleSimpleValuedObject ) ) ( (otherlv_5= '(' ( (lv_parameterDeclarations_6_0= ruleVariableDeclarationWOSemicolon ) ) (otherlv_7= ',' ( (lv_parameterDeclarations_8_0= ruleVariableDeclarationWOSemicolon ) ) )* otherlv_9= ')' ) | otherlv_10= '()' ) (otherlv_11= 'schedule' ( (lv_schedule_12_0= ruleScheduleObjectReference ) )+ )? otherlv_13= ';' ( (lv_annotations_14_0= ruleCommentAnnotatonSL ) )?
+            // InternalScadeEquations.g:6660:2: ( () ( (lv_annotations_1_0= ruleAnnotation ) )* ( (lv_access_2_0= ruleAccessModifier ) )? ( (lv_returnType_3_0= ruleMethodReturnType ) )? ( (lv_valuedObjects_4_0= ruleSimpleValuedObject ) ) ( (otherlv_5= '(' ( (lv_parameterDeclarations_6_0= ruleVariableDeclarationWOSemicolon ) ) (otherlv_7= ',' ( (lv_parameterDeclarations_8_0= ruleVariableDeclarationWOSemicolon ) ) )* otherlv_9= ')' ) | otherlv_10= '()' ) (otherlv_11= 'schedule' ( (lv_schedule_12_0= ruleScheduleObjectReference ) )+ )? otherlv_13= ';' ( (lv_annotations_14_0= ruleCommentAnnotatonSL ) )? )
+            // InternalScadeEquations.g:6661:3: () ( (lv_annotations_1_0= ruleAnnotation ) )* ( (lv_access_2_0= ruleAccessModifier ) )? ( (lv_returnType_3_0= ruleMethodReturnType ) )? ( (lv_valuedObjects_4_0= ruleSimpleValuedObject ) ) ( (otherlv_5= '(' ( (lv_parameterDeclarations_6_0= ruleVariableDeclarationWOSemicolon ) ) (otherlv_7= ',' ( (lv_parameterDeclarations_8_0= ruleVariableDeclarationWOSemicolon ) ) )* otherlv_9= ')' ) | otherlv_10= '()' ) (otherlv_11= 'schedule' ( (lv_schedule_12_0= ruleScheduleObjectReference ) )+ )? otherlv_13= ';' ( (lv_annotations_14_0= ruleCommentAnnotatonSL ) )?
             {
-            // InternalScadeEquations.g:6657:3: ()
-            // InternalScadeEquations.g:6658:4: 
+            // InternalScadeEquations.g:6661:3: ()
+            // InternalScadeEquations.g:6662:4: 
             {
             if ( state.backtracking==0 ) {
 
@@ -18280,7 +18304,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalScadeEquations.g:6667:3: ( (lv_annotations_1_0= ruleAnnotation ) )*
+            // InternalScadeEquations.g:6671:3: ( (lv_annotations_1_0= ruleAnnotation ) )*
             loop159:
             do {
                 int alt159=2;
@@ -18314,17 +18338,17 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                 switch (alt159) {
             	case 1 :
-            	    // InternalScadeEquations.g:6668:4: (lv_annotations_1_0= ruleAnnotation )
+            	    // InternalScadeEquations.g:6672:4: (lv_annotations_1_0= ruleAnnotation )
             	    {
-            	    // InternalScadeEquations.g:6668:4: (lv_annotations_1_0= ruleAnnotation )
-            	    // InternalScadeEquations.g:6669:5: lv_annotations_1_0= ruleAnnotation
+            	    // InternalScadeEquations.g:6672:4: (lv_annotations_1_0= ruleAnnotation )
+            	    // InternalScadeEquations.g:6673:5: lv_annotations_1_0= ruleAnnotation
             	    {
             	    if ( state.backtracking==0 ) {
 
             	      					newCompositeNode(grammarAccess.getMethodDeclarationAccess().getAnnotationsAnnotationParserRuleCall_1_0());
             	      				
             	    }
-            	    pushFollow(FollowSets000.FOLLOW_86);
+            	    pushFollow(FollowSets000.FOLLOW_87);
             	    lv_annotations_1_0=ruleAnnotation();
 
             	    state._fsp--;
@@ -18354,7 +18378,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                 }
             } while (true);
 
-            // InternalScadeEquations.g:6686:3: ( (lv_access_2_0= ruleAccessModifier ) )?
+            // InternalScadeEquations.g:6690:3: ( (lv_access_2_0= ruleAccessModifier ) )?
             int alt160=2;
             int LA160_0 = input.LA(1);
 
@@ -18363,17 +18387,17 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             }
             switch (alt160) {
                 case 1 :
-                    // InternalScadeEquations.g:6687:4: (lv_access_2_0= ruleAccessModifier )
+                    // InternalScadeEquations.g:6691:4: (lv_access_2_0= ruleAccessModifier )
                     {
-                    // InternalScadeEquations.g:6687:4: (lv_access_2_0= ruleAccessModifier )
-                    // InternalScadeEquations.g:6688:5: lv_access_2_0= ruleAccessModifier
+                    // InternalScadeEquations.g:6691:4: (lv_access_2_0= ruleAccessModifier )
+                    // InternalScadeEquations.g:6692:5: lv_access_2_0= ruleAccessModifier
                     {
                     if ( state.backtracking==0 ) {
 
                       					newCompositeNode(grammarAccess.getMethodDeclarationAccess().getAccessAccessModifierEnumRuleCall_2_0());
                       				
                     }
-                    pushFollow(FollowSets000.FOLLOW_86);
+                    pushFollow(FollowSets000.FOLLOW_87);
                     lv_access_2_0=ruleAccessModifier();
 
                     state._fsp--;
@@ -18400,7 +18424,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalScadeEquations.g:6705:3: ( (lv_returnType_3_0= ruleMethodReturnType ) )?
+            // InternalScadeEquations.g:6709:3: ( (lv_returnType_3_0= ruleMethodReturnType ) )?
             int alt161=2;
             int LA161_0 = input.LA(1);
 
@@ -18409,17 +18433,17 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             }
             switch (alt161) {
                 case 1 :
-                    // InternalScadeEquations.g:6706:4: (lv_returnType_3_0= ruleMethodReturnType )
+                    // InternalScadeEquations.g:6710:4: (lv_returnType_3_0= ruleMethodReturnType )
                     {
-                    // InternalScadeEquations.g:6706:4: (lv_returnType_3_0= ruleMethodReturnType )
-                    // InternalScadeEquations.g:6707:5: lv_returnType_3_0= ruleMethodReturnType
+                    // InternalScadeEquations.g:6710:4: (lv_returnType_3_0= ruleMethodReturnType )
+                    // InternalScadeEquations.g:6711:5: lv_returnType_3_0= ruleMethodReturnType
                     {
                     if ( state.backtracking==0 ) {
 
                       					newCompositeNode(grammarAccess.getMethodDeclarationAccess().getReturnTypeMethodReturnTypeEnumRuleCall_3_0());
                       				
                     }
-                    pushFollow(FollowSets000.FOLLOW_86);
+                    pushFollow(FollowSets000.FOLLOW_87);
                     lv_returnType_3_0=ruleMethodReturnType();
 
                     state._fsp--;
@@ -18446,11 +18470,11 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalScadeEquations.g:6724:3: ( (lv_valuedObjects_4_0= ruleSimpleValuedObject ) )
-            // InternalScadeEquations.g:6725:4: (lv_valuedObjects_4_0= ruleSimpleValuedObject )
+            // InternalScadeEquations.g:6728:3: ( (lv_valuedObjects_4_0= ruleSimpleValuedObject ) )
+            // InternalScadeEquations.g:6729:4: (lv_valuedObjects_4_0= ruleSimpleValuedObject )
             {
-            // InternalScadeEquations.g:6725:4: (lv_valuedObjects_4_0= ruleSimpleValuedObject )
-            // InternalScadeEquations.g:6726:5: lv_valuedObjects_4_0= ruleSimpleValuedObject
+            // InternalScadeEquations.g:6729:4: (lv_valuedObjects_4_0= ruleSimpleValuedObject )
+            // InternalScadeEquations.g:6730:5: lv_valuedObjects_4_0= ruleSimpleValuedObject
             {
             if ( state.backtracking==0 ) {
 
@@ -18481,7 +18505,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalScadeEquations.g:6743:3: ( (otherlv_5= '(' ( (lv_parameterDeclarations_6_0= ruleVariableDeclarationWOSemicolon ) ) (otherlv_7= ',' ( (lv_parameterDeclarations_8_0= ruleVariableDeclarationWOSemicolon ) ) )* otherlv_9= ')' ) | otherlv_10= '()' )
+            // InternalScadeEquations.g:6747:3: ( (otherlv_5= '(' ( (lv_parameterDeclarations_6_0= ruleVariableDeclarationWOSemicolon ) ) (otherlv_7= ',' ( (lv_parameterDeclarations_8_0= ruleVariableDeclarationWOSemicolon ) ) )* otherlv_9= ')' ) | otherlv_10= '()' )
             int alt163=2;
             int LA163_0 = input.LA(1);
 
@@ -18500,10 +18524,10 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             }
             switch (alt163) {
                 case 1 :
-                    // InternalScadeEquations.g:6744:4: (otherlv_5= '(' ( (lv_parameterDeclarations_6_0= ruleVariableDeclarationWOSemicolon ) ) (otherlv_7= ',' ( (lv_parameterDeclarations_8_0= ruleVariableDeclarationWOSemicolon ) ) )* otherlv_9= ')' )
+                    // InternalScadeEquations.g:6748:4: (otherlv_5= '(' ( (lv_parameterDeclarations_6_0= ruleVariableDeclarationWOSemicolon ) ) (otherlv_7= ',' ( (lv_parameterDeclarations_8_0= ruleVariableDeclarationWOSemicolon ) ) )* otherlv_9= ')' )
                     {
-                    // InternalScadeEquations.g:6744:4: (otherlv_5= '(' ( (lv_parameterDeclarations_6_0= ruleVariableDeclarationWOSemicolon ) ) (otherlv_7= ',' ( (lv_parameterDeclarations_8_0= ruleVariableDeclarationWOSemicolon ) ) )* otherlv_9= ')' )
-                    // InternalScadeEquations.g:6745:5: otherlv_5= '(' ( (lv_parameterDeclarations_6_0= ruleVariableDeclarationWOSemicolon ) ) (otherlv_7= ',' ( (lv_parameterDeclarations_8_0= ruleVariableDeclarationWOSemicolon ) ) )* otherlv_9= ')'
+                    // InternalScadeEquations.g:6748:4: (otherlv_5= '(' ( (lv_parameterDeclarations_6_0= ruleVariableDeclarationWOSemicolon ) ) (otherlv_7= ',' ( (lv_parameterDeclarations_8_0= ruleVariableDeclarationWOSemicolon ) ) )* otherlv_9= ')' )
+                    // InternalScadeEquations.g:6749:5: otherlv_5= '(' ( (lv_parameterDeclarations_6_0= ruleVariableDeclarationWOSemicolon ) ) (otherlv_7= ',' ( (lv_parameterDeclarations_8_0= ruleVariableDeclarationWOSemicolon ) ) )* otherlv_9= ')'
                     {
                     otherlv_5=(Token)match(input,17,FollowSets000.FOLLOW_69); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -18511,11 +18535,11 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                       					newLeafNode(otherlv_5, grammarAccess.getMethodDeclarationAccess().getLeftParenthesisKeyword_5_0_0());
                       				
                     }
-                    // InternalScadeEquations.g:6749:5: ( (lv_parameterDeclarations_6_0= ruleVariableDeclarationWOSemicolon ) )
-                    // InternalScadeEquations.g:6750:6: (lv_parameterDeclarations_6_0= ruleVariableDeclarationWOSemicolon )
+                    // InternalScadeEquations.g:6753:5: ( (lv_parameterDeclarations_6_0= ruleVariableDeclarationWOSemicolon ) )
+                    // InternalScadeEquations.g:6754:6: (lv_parameterDeclarations_6_0= ruleVariableDeclarationWOSemicolon )
                     {
-                    // InternalScadeEquations.g:6750:6: (lv_parameterDeclarations_6_0= ruleVariableDeclarationWOSemicolon )
-                    // InternalScadeEquations.g:6751:7: lv_parameterDeclarations_6_0= ruleVariableDeclarationWOSemicolon
+                    // InternalScadeEquations.g:6754:6: (lv_parameterDeclarations_6_0= ruleVariableDeclarationWOSemicolon )
+                    // InternalScadeEquations.g:6755:7: lv_parameterDeclarations_6_0= ruleVariableDeclarationWOSemicolon
                     {
                     if ( state.backtracking==0 ) {
 
@@ -18546,7 +18570,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalScadeEquations.g:6768:5: (otherlv_7= ',' ( (lv_parameterDeclarations_8_0= ruleVariableDeclarationWOSemicolon ) ) )*
+                    // InternalScadeEquations.g:6772:5: (otherlv_7= ',' ( (lv_parameterDeclarations_8_0= ruleVariableDeclarationWOSemicolon ) ) )*
                     loop162:
                     do {
                         int alt162=2;
@@ -18559,7 +18583,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                         switch (alt162) {
                     	case 1 :
-                    	    // InternalScadeEquations.g:6769:6: otherlv_7= ',' ( (lv_parameterDeclarations_8_0= ruleVariableDeclarationWOSemicolon ) )
+                    	    // InternalScadeEquations.g:6773:6: otherlv_7= ',' ( (lv_parameterDeclarations_8_0= ruleVariableDeclarationWOSemicolon ) )
                     	    {
                     	    otherlv_7=(Token)match(input,18,FollowSets000.FOLLOW_69); if (state.failed) return current;
                     	    if ( state.backtracking==0 ) {
@@ -18567,11 +18591,11 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                     	      						newLeafNode(otherlv_7, grammarAccess.getMethodDeclarationAccess().getCommaKeyword_5_0_2_0());
                     	      					
                     	    }
-                    	    // InternalScadeEquations.g:6773:6: ( (lv_parameterDeclarations_8_0= ruleVariableDeclarationWOSemicolon ) )
-                    	    // InternalScadeEquations.g:6774:7: (lv_parameterDeclarations_8_0= ruleVariableDeclarationWOSemicolon )
+                    	    // InternalScadeEquations.g:6777:6: ( (lv_parameterDeclarations_8_0= ruleVariableDeclarationWOSemicolon ) )
+                    	    // InternalScadeEquations.g:6778:7: (lv_parameterDeclarations_8_0= ruleVariableDeclarationWOSemicolon )
                     	    {
-                    	    // InternalScadeEquations.g:6774:7: (lv_parameterDeclarations_8_0= ruleVariableDeclarationWOSemicolon )
-                    	    // InternalScadeEquations.g:6775:8: lv_parameterDeclarations_8_0= ruleVariableDeclarationWOSemicolon
+                    	    // InternalScadeEquations.g:6778:7: (lv_parameterDeclarations_8_0= ruleVariableDeclarationWOSemicolon )
+                    	    // InternalScadeEquations.g:6779:8: lv_parameterDeclarations_8_0= ruleVariableDeclarationWOSemicolon
                     	    {
                     	    if ( state.backtracking==0 ) {
 
@@ -18611,7 +18635,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                         }
                     } while (true);
 
-                    otherlv_9=(Token)match(input,19,FollowSets000.FOLLOW_87); if (state.failed) return current;
+                    otherlv_9=(Token)match(input,19,FollowSets000.FOLLOW_88); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       					newLeafNode(otherlv_9, grammarAccess.getMethodDeclarationAccess().getRightParenthesisKeyword_5_0_3());
@@ -18624,9 +18648,9 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalScadeEquations.g:6799:4: otherlv_10= '()'
+                    // InternalScadeEquations.g:6803:4: otherlv_10= '()'
                     {
-                    otherlv_10=(Token)match(input,28,FollowSets000.FOLLOW_87); if (state.failed) return current;
+                    otherlv_10=(Token)match(input,28,FollowSets000.FOLLOW_88); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       				newLeafNode(otherlv_10, grammarAccess.getMethodDeclarationAccess().getLeftParenthesisRightParenthesisKeyword_5_1());
@@ -18638,7 +18662,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalScadeEquations.g:6804:3: (otherlv_11= 'schedule' ( (lv_schedule_12_0= ruleScheduleObjectReference ) )+ )?
+            // InternalScadeEquations.g:6808:3: (otherlv_11= 'schedule' ( (lv_schedule_12_0= ruleScheduleObjectReference ) )+ )?
             int alt165=2;
             int LA165_0 = input.LA(1);
 
@@ -18647,7 +18671,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             }
             switch (alt165) {
                 case 1 :
-                    // InternalScadeEquations.g:6805:4: otherlv_11= 'schedule' ( (lv_schedule_12_0= ruleScheduleObjectReference ) )+
+                    // InternalScadeEquations.g:6809:4: otherlv_11= 'schedule' ( (lv_schedule_12_0= ruleScheduleObjectReference ) )+
                     {
                     otherlv_11=(Token)match(input,71,FollowSets000.FOLLOW_4); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -18655,7 +18679,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                       				newLeafNode(otherlv_11, grammarAccess.getMethodDeclarationAccess().getScheduleKeyword_6_0());
                       			
                     }
-                    // InternalScadeEquations.g:6809:4: ( (lv_schedule_12_0= ruleScheduleObjectReference ) )+
+                    // InternalScadeEquations.g:6813:4: ( (lv_schedule_12_0= ruleScheduleObjectReference ) )+
                     int cnt164=0;
                     loop164:
                     do {
@@ -18669,17 +18693,17 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                         switch (alt164) {
                     	case 1 :
-                    	    // InternalScadeEquations.g:6810:5: (lv_schedule_12_0= ruleScheduleObjectReference )
+                    	    // InternalScadeEquations.g:6814:5: (lv_schedule_12_0= ruleScheduleObjectReference )
                     	    {
-                    	    // InternalScadeEquations.g:6810:5: (lv_schedule_12_0= ruleScheduleObjectReference )
-                    	    // InternalScadeEquations.g:6811:6: lv_schedule_12_0= ruleScheduleObjectReference
+                    	    // InternalScadeEquations.g:6814:5: (lv_schedule_12_0= ruleScheduleObjectReference )
+                    	    // InternalScadeEquations.g:6815:6: lv_schedule_12_0= ruleScheduleObjectReference
                     	    {
                     	    if ( state.backtracking==0 ) {
 
                     	      						newCompositeNode(grammarAccess.getMethodDeclarationAccess().getScheduleScheduleObjectReferenceParserRuleCall_6_1_0());
                     	      					
                     	    }
-                    	    pushFollow(FollowSets000.FOLLOW_88);
+                    	    pushFollow(FollowSets000.FOLLOW_89);
                     	    lv_schedule_12_0=ruleScheduleObjectReference();
 
                     	    state._fsp--;
@@ -18726,7 +18750,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
               			newLeafNode(otherlv_13, grammarAccess.getMethodDeclarationAccess().getSemicolonKeyword_7());
               		
             }
-            // InternalScadeEquations.g:6833:3: ( (lv_annotations_14_0= ruleCommentAnnotatonSL ) )?
+            // InternalScadeEquations.g:6837:3: ( (lv_annotations_14_0= ruleCommentAnnotatonSL ) )?
             int alt166=2;
             int LA166_0 = input.LA(1);
 
@@ -18735,10 +18759,10 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             }
             switch (alt166) {
                 case 1 :
-                    // InternalScadeEquations.g:6834:4: (lv_annotations_14_0= ruleCommentAnnotatonSL )
+                    // InternalScadeEquations.g:6838:4: (lv_annotations_14_0= ruleCommentAnnotatonSL )
                     {
-                    // InternalScadeEquations.g:6834:4: (lv_annotations_14_0= ruleCommentAnnotatonSL )
-                    // InternalScadeEquations.g:6835:5: lv_annotations_14_0= ruleCommentAnnotatonSL
+                    // InternalScadeEquations.g:6838:4: (lv_annotations_14_0= ruleCommentAnnotatonSL )
+                    // InternalScadeEquations.g:6839:5: lv_annotations_14_0= ruleCommentAnnotatonSL
                     {
                     if ( state.backtracking==0 ) {
 
@@ -18797,7 +18821,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleMethodDeclarationWOSemicolon"
-    // InternalScadeEquations.g:6856:1: entryRuleMethodDeclarationWOSemicolon returns [EObject current=null] : iv_ruleMethodDeclarationWOSemicolon= ruleMethodDeclarationWOSemicolon EOF ;
+    // InternalScadeEquations.g:6860:1: entryRuleMethodDeclarationWOSemicolon returns [EObject current=null] : iv_ruleMethodDeclarationWOSemicolon= ruleMethodDeclarationWOSemicolon EOF ;
     public final EObject entryRuleMethodDeclarationWOSemicolon() throws RecognitionException {
         EObject current = null;
 
@@ -18805,8 +18829,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalScadeEquations.g:6856:69: (iv_ruleMethodDeclarationWOSemicolon= ruleMethodDeclarationWOSemicolon EOF )
-            // InternalScadeEquations.g:6857:2: iv_ruleMethodDeclarationWOSemicolon= ruleMethodDeclarationWOSemicolon EOF
+            // InternalScadeEquations.g:6860:69: (iv_ruleMethodDeclarationWOSemicolon= ruleMethodDeclarationWOSemicolon EOF )
+            // InternalScadeEquations.g:6861:2: iv_ruleMethodDeclarationWOSemicolon= ruleMethodDeclarationWOSemicolon EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getMethodDeclarationWOSemicolonRule()); 
@@ -18837,7 +18861,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleMethodDeclarationWOSemicolon"
-    // InternalScadeEquations.g:6863:1: ruleMethodDeclarationWOSemicolon returns [EObject current=null] : ( () ( (lv_annotations_1_0= ruleAnnotation ) )* ( (lv_access_2_0= ruleAccessModifier ) )? ( (lv_returnType_3_0= ruleMethodReturnType ) )? ( (lv_valuedObjects_4_0= ruleSimpleValuedObject ) ) ( (otherlv_5= '(' ( (lv_parameterDeclarations_6_0= ruleVariableDeclarationWOSemicolon ) ) (otherlv_7= ',' ( (lv_parameterDeclarations_8_0= ruleVariableDeclarationWOSemicolon ) ) )* otherlv_9= ')' ) | otherlv_10= '()' ) (otherlv_11= 'schedule' ( (lv_schedule_12_0= ruleScheduleObjectReference ) )+ )? ( (lv_annotations_13_0= ruleCommentAnnotatonSL ) )? ) ;
+    // InternalScadeEquations.g:6867:1: ruleMethodDeclarationWOSemicolon returns [EObject current=null] : ( () ( (lv_annotations_1_0= ruleAnnotation ) )* ( (lv_access_2_0= ruleAccessModifier ) )? ( (lv_returnType_3_0= ruleMethodReturnType ) )? ( (lv_valuedObjects_4_0= ruleSimpleValuedObject ) ) ( (otherlv_5= '(' ( (lv_parameterDeclarations_6_0= ruleVariableDeclarationWOSemicolon ) ) (otherlv_7= ',' ( (lv_parameterDeclarations_8_0= ruleVariableDeclarationWOSemicolon ) ) )* otherlv_9= ')' ) | otherlv_10= '()' ) (otherlv_11= 'schedule' ( (lv_schedule_12_0= ruleScheduleObjectReference ) )+ )? ( (lv_annotations_13_0= ruleCommentAnnotatonSL ) )? ) ;
     public final EObject ruleMethodDeclarationWOSemicolon() throws RecognitionException {
         EObject current = null;
 
@@ -18867,14 +18891,14 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:6869:2: ( ( () ( (lv_annotations_1_0= ruleAnnotation ) )* ( (lv_access_2_0= ruleAccessModifier ) )? ( (lv_returnType_3_0= ruleMethodReturnType ) )? ( (lv_valuedObjects_4_0= ruleSimpleValuedObject ) ) ( (otherlv_5= '(' ( (lv_parameterDeclarations_6_0= ruleVariableDeclarationWOSemicolon ) ) (otherlv_7= ',' ( (lv_parameterDeclarations_8_0= ruleVariableDeclarationWOSemicolon ) ) )* otherlv_9= ')' ) | otherlv_10= '()' ) (otherlv_11= 'schedule' ( (lv_schedule_12_0= ruleScheduleObjectReference ) )+ )? ( (lv_annotations_13_0= ruleCommentAnnotatonSL ) )? ) )
-            // InternalScadeEquations.g:6870:2: ( () ( (lv_annotations_1_0= ruleAnnotation ) )* ( (lv_access_2_0= ruleAccessModifier ) )? ( (lv_returnType_3_0= ruleMethodReturnType ) )? ( (lv_valuedObjects_4_0= ruleSimpleValuedObject ) ) ( (otherlv_5= '(' ( (lv_parameterDeclarations_6_0= ruleVariableDeclarationWOSemicolon ) ) (otherlv_7= ',' ( (lv_parameterDeclarations_8_0= ruleVariableDeclarationWOSemicolon ) ) )* otherlv_9= ')' ) | otherlv_10= '()' ) (otherlv_11= 'schedule' ( (lv_schedule_12_0= ruleScheduleObjectReference ) )+ )? ( (lv_annotations_13_0= ruleCommentAnnotatonSL ) )? )
+            // InternalScadeEquations.g:6873:2: ( ( () ( (lv_annotations_1_0= ruleAnnotation ) )* ( (lv_access_2_0= ruleAccessModifier ) )? ( (lv_returnType_3_0= ruleMethodReturnType ) )? ( (lv_valuedObjects_4_0= ruleSimpleValuedObject ) ) ( (otherlv_5= '(' ( (lv_parameterDeclarations_6_0= ruleVariableDeclarationWOSemicolon ) ) (otherlv_7= ',' ( (lv_parameterDeclarations_8_0= ruleVariableDeclarationWOSemicolon ) ) )* otherlv_9= ')' ) | otherlv_10= '()' ) (otherlv_11= 'schedule' ( (lv_schedule_12_0= ruleScheduleObjectReference ) )+ )? ( (lv_annotations_13_0= ruleCommentAnnotatonSL ) )? ) )
+            // InternalScadeEquations.g:6874:2: ( () ( (lv_annotations_1_0= ruleAnnotation ) )* ( (lv_access_2_0= ruleAccessModifier ) )? ( (lv_returnType_3_0= ruleMethodReturnType ) )? ( (lv_valuedObjects_4_0= ruleSimpleValuedObject ) ) ( (otherlv_5= '(' ( (lv_parameterDeclarations_6_0= ruleVariableDeclarationWOSemicolon ) ) (otherlv_7= ',' ( (lv_parameterDeclarations_8_0= ruleVariableDeclarationWOSemicolon ) ) )* otherlv_9= ')' ) | otherlv_10= '()' ) (otherlv_11= 'schedule' ( (lv_schedule_12_0= ruleScheduleObjectReference ) )+ )? ( (lv_annotations_13_0= ruleCommentAnnotatonSL ) )? )
             {
-            // InternalScadeEquations.g:6870:2: ( () ( (lv_annotations_1_0= ruleAnnotation ) )* ( (lv_access_2_0= ruleAccessModifier ) )? ( (lv_returnType_3_0= ruleMethodReturnType ) )? ( (lv_valuedObjects_4_0= ruleSimpleValuedObject ) ) ( (otherlv_5= '(' ( (lv_parameterDeclarations_6_0= ruleVariableDeclarationWOSemicolon ) ) (otherlv_7= ',' ( (lv_parameterDeclarations_8_0= ruleVariableDeclarationWOSemicolon ) ) )* otherlv_9= ')' ) | otherlv_10= '()' ) (otherlv_11= 'schedule' ( (lv_schedule_12_0= ruleScheduleObjectReference ) )+ )? ( (lv_annotations_13_0= ruleCommentAnnotatonSL ) )? )
-            // InternalScadeEquations.g:6871:3: () ( (lv_annotations_1_0= ruleAnnotation ) )* ( (lv_access_2_0= ruleAccessModifier ) )? ( (lv_returnType_3_0= ruleMethodReturnType ) )? ( (lv_valuedObjects_4_0= ruleSimpleValuedObject ) ) ( (otherlv_5= '(' ( (lv_parameterDeclarations_6_0= ruleVariableDeclarationWOSemicolon ) ) (otherlv_7= ',' ( (lv_parameterDeclarations_8_0= ruleVariableDeclarationWOSemicolon ) ) )* otherlv_9= ')' ) | otherlv_10= '()' ) (otherlv_11= 'schedule' ( (lv_schedule_12_0= ruleScheduleObjectReference ) )+ )? ( (lv_annotations_13_0= ruleCommentAnnotatonSL ) )?
+            // InternalScadeEquations.g:6874:2: ( () ( (lv_annotations_1_0= ruleAnnotation ) )* ( (lv_access_2_0= ruleAccessModifier ) )? ( (lv_returnType_3_0= ruleMethodReturnType ) )? ( (lv_valuedObjects_4_0= ruleSimpleValuedObject ) ) ( (otherlv_5= '(' ( (lv_parameterDeclarations_6_0= ruleVariableDeclarationWOSemicolon ) ) (otherlv_7= ',' ( (lv_parameterDeclarations_8_0= ruleVariableDeclarationWOSemicolon ) ) )* otherlv_9= ')' ) | otherlv_10= '()' ) (otherlv_11= 'schedule' ( (lv_schedule_12_0= ruleScheduleObjectReference ) )+ )? ( (lv_annotations_13_0= ruleCommentAnnotatonSL ) )? )
+            // InternalScadeEquations.g:6875:3: () ( (lv_annotations_1_0= ruleAnnotation ) )* ( (lv_access_2_0= ruleAccessModifier ) )? ( (lv_returnType_3_0= ruleMethodReturnType ) )? ( (lv_valuedObjects_4_0= ruleSimpleValuedObject ) ) ( (otherlv_5= '(' ( (lv_parameterDeclarations_6_0= ruleVariableDeclarationWOSemicolon ) ) (otherlv_7= ',' ( (lv_parameterDeclarations_8_0= ruleVariableDeclarationWOSemicolon ) ) )* otherlv_9= ')' ) | otherlv_10= '()' ) (otherlv_11= 'schedule' ( (lv_schedule_12_0= ruleScheduleObjectReference ) )+ )? ( (lv_annotations_13_0= ruleCommentAnnotatonSL ) )?
             {
-            // InternalScadeEquations.g:6871:3: ()
-            // InternalScadeEquations.g:6872:4: 
+            // InternalScadeEquations.g:6875:3: ()
+            // InternalScadeEquations.g:6876:4: 
             {
             if ( state.backtracking==0 ) {
 
@@ -18891,7 +18915,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalScadeEquations.g:6881:3: ( (lv_annotations_1_0= ruleAnnotation ) )*
+            // InternalScadeEquations.g:6885:3: ( (lv_annotations_1_0= ruleAnnotation ) )*
             loop167:
             do {
                 int alt167=2;
@@ -18925,17 +18949,17 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                 switch (alt167) {
             	case 1 :
-            	    // InternalScadeEquations.g:6882:4: (lv_annotations_1_0= ruleAnnotation )
+            	    // InternalScadeEquations.g:6886:4: (lv_annotations_1_0= ruleAnnotation )
             	    {
-            	    // InternalScadeEquations.g:6882:4: (lv_annotations_1_0= ruleAnnotation )
-            	    // InternalScadeEquations.g:6883:5: lv_annotations_1_0= ruleAnnotation
+            	    // InternalScadeEquations.g:6886:4: (lv_annotations_1_0= ruleAnnotation )
+            	    // InternalScadeEquations.g:6887:5: lv_annotations_1_0= ruleAnnotation
             	    {
             	    if ( state.backtracking==0 ) {
 
             	      					newCompositeNode(grammarAccess.getMethodDeclarationWOSemicolonAccess().getAnnotationsAnnotationParserRuleCall_1_0());
             	      				
             	    }
-            	    pushFollow(FollowSets000.FOLLOW_86);
+            	    pushFollow(FollowSets000.FOLLOW_87);
             	    lv_annotations_1_0=ruleAnnotation();
 
             	    state._fsp--;
@@ -18965,7 +18989,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                 }
             } while (true);
 
-            // InternalScadeEquations.g:6900:3: ( (lv_access_2_0= ruleAccessModifier ) )?
+            // InternalScadeEquations.g:6904:3: ( (lv_access_2_0= ruleAccessModifier ) )?
             int alt168=2;
             int LA168_0 = input.LA(1);
 
@@ -18974,17 +18998,17 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             }
             switch (alt168) {
                 case 1 :
-                    // InternalScadeEquations.g:6901:4: (lv_access_2_0= ruleAccessModifier )
+                    // InternalScadeEquations.g:6905:4: (lv_access_2_0= ruleAccessModifier )
                     {
-                    // InternalScadeEquations.g:6901:4: (lv_access_2_0= ruleAccessModifier )
-                    // InternalScadeEquations.g:6902:5: lv_access_2_0= ruleAccessModifier
+                    // InternalScadeEquations.g:6905:4: (lv_access_2_0= ruleAccessModifier )
+                    // InternalScadeEquations.g:6906:5: lv_access_2_0= ruleAccessModifier
                     {
                     if ( state.backtracking==0 ) {
 
                       					newCompositeNode(grammarAccess.getMethodDeclarationWOSemicolonAccess().getAccessAccessModifierEnumRuleCall_2_0());
                       				
                     }
-                    pushFollow(FollowSets000.FOLLOW_86);
+                    pushFollow(FollowSets000.FOLLOW_87);
                     lv_access_2_0=ruleAccessModifier();
 
                     state._fsp--;
@@ -19011,7 +19035,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalScadeEquations.g:6919:3: ( (lv_returnType_3_0= ruleMethodReturnType ) )?
+            // InternalScadeEquations.g:6923:3: ( (lv_returnType_3_0= ruleMethodReturnType ) )?
             int alt169=2;
             int LA169_0 = input.LA(1);
 
@@ -19020,17 +19044,17 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             }
             switch (alt169) {
                 case 1 :
-                    // InternalScadeEquations.g:6920:4: (lv_returnType_3_0= ruleMethodReturnType )
+                    // InternalScadeEquations.g:6924:4: (lv_returnType_3_0= ruleMethodReturnType )
                     {
-                    // InternalScadeEquations.g:6920:4: (lv_returnType_3_0= ruleMethodReturnType )
-                    // InternalScadeEquations.g:6921:5: lv_returnType_3_0= ruleMethodReturnType
+                    // InternalScadeEquations.g:6924:4: (lv_returnType_3_0= ruleMethodReturnType )
+                    // InternalScadeEquations.g:6925:5: lv_returnType_3_0= ruleMethodReturnType
                     {
                     if ( state.backtracking==0 ) {
 
                       					newCompositeNode(grammarAccess.getMethodDeclarationWOSemicolonAccess().getReturnTypeMethodReturnTypeEnumRuleCall_3_0());
                       				
                     }
-                    pushFollow(FollowSets000.FOLLOW_86);
+                    pushFollow(FollowSets000.FOLLOW_87);
                     lv_returnType_3_0=ruleMethodReturnType();
 
                     state._fsp--;
@@ -19057,11 +19081,11 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalScadeEquations.g:6938:3: ( (lv_valuedObjects_4_0= ruleSimpleValuedObject ) )
-            // InternalScadeEquations.g:6939:4: (lv_valuedObjects_4_0= ruleSimpleValuedObject )
+            // InternalScadeEquations.g:6942:3: ( (lv_valuedObjects_4_0= ruleSimpleValuedObject ) )
+            // InternalScadeEquations.g:6943:4: (lv_valuedObjects_4_0= ruleSimpleValuedObject )
             {
-            // InternalScadeEquations.g:6939:4: (lv_valuedObjects_4_0= ruleSimpleValuedObject )
-            // InternalScadeEquations.g:6940:5: lv_valuedObjects_4_0= ruleSimpleValuedObject
+            // InternalScadeEquations.g:6943:4: (lv_valuedObjects_4_0= ruleSimpleValuedObject )
+            // InternalScadeEquations.g:6944:5: lv_valuedObjects_4_0= ruleSimpleValuedObject
             {
             if ( state.backtracking==0 ) {
 
@@ -19092,7 +19116,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalScadeEquations.g:6957:3: ( (otherlv_5= '(' ( (lv_parameterDeclarations_6_0= ruleVariableDeclarationWOSemicolon ) ) (otherlv_7= ',' ( (lv_parameterDeclarations_8_0= ruleVariableDeclarationWOSemicolon ) ) )* otherlv_9= ')' ) | otherlv_10= '()' )
+            // InternalScadeEquations.g:6961:3: ( (otherlv_5= '(' ( (lv_parameterDeclarations_6_0= ruleVariableDeclarationWOSemicolon ) ) (otherlv_7= ',' ( (lv_parameterDeclarations_8_0= ruleVariableDeclarationWOSemicolon ) ) )* otherlv_9= ')' ) | otherlv_10= '()' )
             int alt171=2;
             int LA171_0 = input.LA(1);
 
@@ -19111,10 +19135,10 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             }
             switch (alt171) {
                 case 1 :
-                    // InternalScadeEquations.g:6958:4: (otherlv_5= '(' ( (lv_parameterDeclarations_6_0= ruleVariableDeclarationWOSemicolon ) ) (otherlv_7= ',' ( (lv_parameterDeclarations_8_0= ruleVariableDeclarationWOSemicolon ) ) )* otherlv_9= ')' )
+                    // InternalScadeEquations.g:6962:4: (otherlv_5= '(' ( (lv_parameterDeclarations_6_0= ruleVariableDeclarationWOSemicolon ) ) (otherlv_7= ',' ( (lv_parameterDeclarations_8_0= ruleVariableDeclarationWOSemicolon ) ) )* otherlv_9= ')' )
                     {
-                    // InternalScadeEquations.g:6958:4: (otherlv_5= '(' ( (lv_parameterDeclarations_6_0= ruleVariableDeclarationWOSemicolon ) ) (otherlv_7= ',' ( (lv_parameterDeclarations_8_0= ruleVariableDeclarationWOSemicolon ) ) )* otherlv_9= ')' )
-                    // InternalScadeEquations.g:6959:5: otherlv_5= '(' ( (lv_parameterDeclarations_6_0= ruleVariableDeclarationWOSemicolon ) ) (otherlv_7= ',' ( (lv_parameterDeclarations_8_0= ruleVariableDeclarationWOSemicolon ) ) )* otherlv_9= ')'
+                    // InternalScadeEquations.g:6962:4: (otherlv_5= '(' ( (lv_parameterDeclarations_6_0= ruleVariableDeclarationWOSemicolon ) ) (otherlv_7= ',' ( (lv_parameterDeclarations_8_0= ruleVariableDeclarationWOSemicolon ) ) )* otherlv_9= ')' )
+                    // InternalScadeEquations.g:6963:5: otherlv_5= '(' ( (lv_parameterDeclarations_6_0= ruleVariableDeclarationWOSemicolon ) ) (otherlv_7= ',' ( (lv_parameterDeclarations_8_0= ruleVariableDeclarationWOSemicolon ) ) )* otherlv_9= ')'
                     {
                     otherlv_5=(Token)match(input,17,FollowSets000.FOLLOW_69); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -19122,11 +19146,11 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                       					newLeafNode(otherlv_5, grammarAccess.getMethodDeclarationWOSemicolonAccess().getLeftParenthesisKeyword_5_0_0());
                       				
                     }
-                    // InternalScadeEquations.g:6963:5: ( (lv_parameterDeclarations_6_0= ruleVariableDeclarationWOSemicolon ) )
-                    // InternalScadeEquations.g:6964:6: (lv_parameterDeclarations_6_0= ruleVariableDeclarationWOSemicolon )
+                    // InternalScadeEquations.g:6967:5: ( (lv_parameterDeclarations_6_0= ruleVariableDeclarationWOSemicolon ) )
+                    // InternalScadeEquations.g:6968:6: (lv_parameterDeclarations_6_0= ruleVariableDeclarationWOSemicolon )
                     {
-                    // InternalScadeEquations.g:6964:6: (lv_parameterDeclarations_6_0= ruleVariableDeclarationWOSemicolon )
-                    // InternalScadeEquations.g:6965:7: lv_parameterDeclarations_6_0= ruleVariableDeclarationWOSemicolon
+                    // InternalScadeEquations.g:6968:6: (lv_parameterDeclarations_6_0= ruleVariableDeclarationWOSemicolon )
+                    // InternalScadeEquations.g:6969:7: lv_parameterDeclarations_6_0= ruleVariableDeclarationWOSemicolon
                     {
                     if ( state.backtracking==0 ) {
 
@@ -19157,7 +19181,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalScadeEquations.g:6982:5: (otherlv_7= ',' ( (lv_parameterDeclarations_8_0= ruleVariableDeclarationWOSemicolon ) ) )*
+                    // InternalScadeEquations.g:6986:5: (otherlv_7= ',' ( (lv_parameterDeclarations_8_0= ruleVariableDeclarationWOSemicolon ) ) )*
                     loop170:
                     do {
                         int alt170=2;
@@ -19170,7 +19194,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                         switch (alt170) {
                     	case 1 :
-                    	    // InternalScadeEquations.g:6983:6: otherlv_7= ',' ( (lv_parameterDeclarations_8_0= ruleVariableDeclarationWOSemicolon ) )
+                    	    // InternalScadeEquations.g:6987:6: otherlv_7= ',' ( (lv_parameterDeclarations_8_0= ruleVariableDeclarationWOSemicolon ) )
                     	    {
                     	    otherlv_7=(Token)match(input,18,FollowSets000.FOLLOW_69); if (state.failed) return current;
                     	    if ( state.backtracking==0 ) {
@@ -19178,11 +19202,11 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                     	      						newLeafNode(otherlv_7, grammarAccess.getMethodDeclarationWOSemicolonAccess().getCommaKeyword_5_0_2_0());
                     	      					
                     	    }
-                    	    // InternalScadeEquations.g:6987:6: ( (lv_parameterDeclarations_8_0= ruleVariableDeclarationWOSemicolon ) )
-                    	    // InternalScadeEquations.g:6988:7: (lv_parameterDeclarations_8_0= ruleVariableDeclarationWOSemicolon )
+                    	    // InternalScadeEquations.g:6991:6: ( (lv_parameterDeclarations_8_0= ruleVariableDeclarationWOSemicolon ) )
+                    	    // InternalScadeEquations.g:6992:7: (lv_parameterDeclarations_8_0= ruleVariableDeclarationWOSemicolon )
                     	    {
-                    	    // InternalScadeEquations.g:6988:7: (lv_parameterDeclarations_8_0= ruleVariableDeclarationWOSemicolon )
-                    	    // InternalScadeEquations.g:6989:8: lv_parameterDeclarations_8_0= ruleVariableDeclarationWOSemicolon
+                    	    // InternalScadeEquations.g:6992:7: (lv_parameterDeclarations_8_0= ruleVariableDeclarationWOSemicolon )
+                    	    // InternalScadeEquations.g:6993:8: lv_parameterDeclarations_8_0= ruleVariableDeclarationWOSemicolon
                     	    {
                     	    if ( state.backtracking==0 ) {
 
@@ -19222,7 +19246,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                         }
                     } while (true);
 
-                    otherlv_9=(Token)match(input,19,FollowSets000.FOLLOW_89); if (state.failed) return current;
+                    otherlv_9=(Token)match(input,19,FollowSets000.FOLLOW_90); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       					newLeafNode(otherlv_9, grammarAccess.getMethodDeclarationWOSemicolonAccess().getRightParenthesisKeyword_5_0_3());
@@ -19235,9 +19259,9 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalScadeEquations.g:7013:4: otherlv_10= '()'
+                    // InternalScadeEquations.g:7017:4: otherlv_10= '()'
                     {
-                    otherlv_10=(Token)match(input,28,FollowSets000.FOLLOW_89); if (state.failed) return current;
+                    otherlv_10=(Token)match(input,28,FollowSets000.FOLLOW_90); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       				newLeafNode(otherlv_10, grammarAccess.getMethodDeclarationWOSemicolonAccess().getLeftParenthesisRightParenthesisKeyword_5_1());
@@ -19249,12 +19273,12 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalScadeEquations.g:7018:3: (otherlv_11= 'schedule' ( (lv_schedule_12_0= ruleScheduleObjectReference ) )+ )?
+            // InternalScadeEquations.g:7022:3: (otherlv_11= 'schedule' ( (lv_schedule_12_0= ruleScheduleObjectReference ) )+ )?
             int alt173=2;
             alt173 = dfa173.predict(input);
             switch (alt173) {
                 case 1 :
-                    // InternalScadeEquations.g:7019:4: otherlv_11= 'schedule' ( (lv_schedule_12_0= ruleScheduleObjectReference ) )+
+                    // InternalScadeEquations.g:7023:4: otherlv_11= 'schedule' ( (lv_schedule_12_0= ruleScheduleObjectReference ) )+
                     {
                     otherlv_11=(Token)match(input,71,FollowSets000.FOLLOW_4); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -19262,7 +19286,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                       				newLeafNode(otherlv_11, grammarAccess.getMethodDeclarationWOSemicolonAccess().getScheduleKeyword_6_0());
                       			
                     }
-                    // InternalScadeEquations.g:7023:4: ( (lv_schedule_12_0= ruleScheduleObjectReference ) )+
+                    // InternalScadeEquations.g:7027:4: ( (lv_schedule_12_0= ruleScheduleObjectReference ) )+
                     int cnt172=0;
                     loop172:
                     do {
@@ -19270,17 +19294,17 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                         alt172 = dfa172.predict(input);
                         switch (alt172) {
                     	case 1 :
-                    	    // InternalScadeEquations.g:7024:5: (lv_schedule_12_0= ruleScheduleObjectReference )
+                    	    // InternalScadeEquations.g:7028:5: (lv_schedule_12_0= ruleScheduleObjectReference )
                     	    {
-                    	    // InternalScadeEquations.g:7024:5: (lv_schedule_12_0= ruleScheduleObjectReference )
-                    	    // InternalScadeEquations.g:7025:6: lv_schedule_12_0= ruleScheduleObjectReference
+                    	    // InternalScadeEquations.g:7028:5: (lv_schedule_12_0= ruleScheduleObjectReference )
+                    	    // InternalScadeEquations.g:7029:6: lv_schedule_12_0= ruleScheduleObjectReference
                     	    {
                     	    if ( state.backtracking==0 ) {
 
                     	      						newCompositeNode(grammarAccess.getMethodDeclarationWOSemicolonAccess().getScheduleScheduleObjectReferenceParserRuleCall_6_1_0());
                     	      					
                     	    }
-                    	    pushFollow(FollowSets000.FOLLOW_90);
+                    	    pushFollow(FollowSets000.FOLLOW_91);
                     	    lv_schedule_12_0=ruleScheduleObjectReference();
 
                     	    state._fsp--;
@@ -19321,7 +19345,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalScadeEquations.g:7043:3: ( (lv_annotations_13_0= ruleCommentAnnotatonSL ) )?
+            // InternalScadeEquations.g:7047:3: ( (lv_annotations_13_0= ruleCommentAnnotatonSL ) )?
             int alt174=2;
             int LA174_0 = input.LA(1);
 
@@ -19330,10 +19354,10 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             }
             switch (alt174) {
                 case 1 :
-                    // InternalScadeEquations.g:7044:4: (lv_annotations_13_0= ruleCommentAnnotatonSL )
+                    // InternalScadeEquations.g:7048:4: (lv_annotations_13_0= ruleCommentAnnotatonSL )
                     {
-                    // InternalScadeEquations.g:7044:4: (lv_annotations_13_0= ruleCommentAnnotatonSL )
-                    // InternalScadeEquations.g:7045:5: lv_annotations_13_0= ruleCommentAnnotatonSL
+                    // InternalScadeEquations.g:7048:4: (lv_annotations_13_0= ruleCommentAnnotatonSL )
+                    // InternalScadeEquations.g:7049:5: lv_annotations_13_0= ruleCommentAnnotatonSL
                     {
                     if ( state.backtracking==0 ) {
 
@@ -19392,7 +19416,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleNamespaceID"
-    // InternalScadeEquations.g:7066:1: entryRuleNamespaceID returns [String current=null] : iv_ruleNamespaceID= ruleNamespaceID EOF ;
+    // InternalScadeEquations.g:7070:1: entryRuleNamespaceID returns [String current=null] : iv_ruleNamespaceID= ruleNamespaceID EOF ;
     public final String entryRuleNamespaceID() throws RecognitionException {
         String current = null;
 
@@ -19400,8 +19424,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalScadeEquations.g:7066:51: (iv_ruleNamespaceID= ruleNamespaceID EOF )
-            // InternalScadeEquations.g:7067:2: iv_ruleNamespaceID= ruleNamespaceID EOF
+            // InternalScadeEquations.g:7070:51: (iv_ruleNamespaceID= ruleNamespaceID EOF )
+            // InternalScadeEquations.g:7071:2: iv_ruleNamespaceID= ruleNamespaceID EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getNamespaceIDRule()); 
@@ -19432,7 +19456,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleNamespaceID"
-    // InternalScadeEquations.g:7073:1: ruleNamespaceID returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_ExtendedID_0= ruleExtendedID (kw= ':' this_PrimeID_2= rulePrimeID )* ) ;
+    // InternalScadeEquations.g:7077:1: ruleNamespaceID returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_ExtendedID_0= ruleExtendedID (kw= ':' this_PrimeID_2= rulePrimeID )* ) ;
     public final AntlrDatatypeRuleToken ruleNamespaceID() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -19446,18 +19470,18 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:7079:2: ( (this_ExtendedID_0= ruleExtendedID (kw= ':' this_PrimeID_2= rulePrimeID )* ) )
-            // InternalScadeEquations.g:7080:2: (this_ExtendedID_0= ruleExtendedID (kw= ':' this_PrimeID_2= rulePrimeID )* )
+            // InternalScadeEquations.g:7083:2: ( (this_ExtendedID_0= ruleExtendedID (kw= ':' this_PrimeID_2= rulePrimeID )* ) )
+            // InternalScadeEquations.g:7084:2: (this_ExtendedID_0= ruleExtendedID (kw= ':' this_PrimeID_2= rulePrimeID )* )
             {
-            // InternalScadeEquations.g:7080:2: (this_ExtendedID_0= ruleExtendedID (kw= ':' this_PrimeID_2= rulePrimeID )* )
-            // InternalScadeEquations.g:7081:3: this_ExtendedID_0= ruleExtendedID (kw= ':' this_PrimeID_2= rulePrimeID )*
+            // InternalScadeEquations.g:7084:2: (this_ExtendedID_0= ruleExtendedID (kw= ':' this_PrimeID_2= rulePrimeID )* )
+            // InternalScadeEquations.g:7085:3: this_ExtendedID_0= ruleExtendedID (kw= ':' this_PrimeID_2= rulePrimeID )*
             {
             if ( state.backtracking==0 ) {
 
               			newCompositeNode(grammarAccess.getNamespaceIDAccess().getExtendedIDParserRuleCall_0());
               		
             }
-            pushFollow(FollowSets000.FOLLOW_91);
+            pushFollow(FollowSets000.FOLLOW_92);
             this_ExtendedID_0=ruleExtendedID();
 
             state._fsp--;
@@ -19472,7 +19496,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
               			afterParserOrEnumRuleCall();
               		
             }
-            // InternalScadeEquations.g:7091:3: (kw= ':' this_PrimeID_2= rulePrimeID )*
+            // InternalScadeEquations.g:7095:3: (kw= ':' this_PrimeID_2= rulePrimeID )*
             loop175:
             do {
                 int alt175=2;
@@ -19485,7 +19509,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                 switch (alt175) {
             	case 1 :
-            	    // InternalScadeEquations.g:7092:4: kw= ':' this_PrimeID_2= rulePrimeID
+            	    // InternalScadeEquations.g:7096:4: kw= ':' this_PrimeID_2= rulePrimeID
             	    {
             	    kw=(Token)match(input,30,FollowSets000.FOLLOW_4); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
@@ -19499,7 +19523,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             	      				newCompositeNode(grammarAccess.getNamespaceIDAccess().getPrimeIDParserRuleCall_1_1());
             	      			
             	    }
-            	    pushFollow(FollowSets000.FOLLOW_91);
+            	    pushFollow(FollowSets000.FOLLOW_92);
             	    this_PrimeID_2=rulePrimeID();
 
             	    state._fsp--;
@@ -19548,7 +19572,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleReferenceDeclaration"
-    // InternalScadeEquations.g:7112:1: entryRuleReferenceDeclaration returns [EObject current=null] : iv_ruleReferenceDeclaration= ruleReferenceDeclaration EOF ;
+    // InternalScadeEquations.g:7116:1: entryRuleReferenceDeclaration returns [EObject current=null] : iv_ruleReferenceDeclaration= ruleReferenceDeclaration EOF ;
     public final EObject entryRuleReferenceDeclaration() throws RecognitionException {
         EObject current = null;
 
@@ -19556,8 +19580,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalScadeEquations.g:7112:61: (iv_ruleReferenceDeclaration= ruleReferenceDeclaration EOF )
-            // InternalScadeEquations.g:7113:2: iv_ruleReferenceDeclaration= ruleReferenceDeclaration EOF
+            // InternalScadeEquations.g:7116:61: (iv_ruleReferenceDeclaration= ruleReferenceDeclaration EOF )
+            // InternalScadeEquations.g:7117:2: iv_ruleReferenceDeclaration= ruleReferenceDeclaration EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getReferenceDeclarationRule()); 
@@ -19588,7 +19612,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleReferenceDeclaration"
-    // InternalScadeEquations.g:7119:1: ruleReferenceDeclaration returns [EObject current=null] : ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_access_1_0= ruleAccessModifier ) )? ( (otherlv_2= 'ref' ( ( ruleNamespaceID ) ) ) | (otherlv_4= 'extern' ( (lv_extern_5_0= ruleExternString ) ) (otherlv_6= ',' ( (lv_extern_7_0= ruleExternString ) ) )* ) ) ( (lv_valuedObjects_8_0= ruleValuedObject ) ) (otherlv_9= ',' ( (lv_valuedObjects_10_0= ruleValuedObject ) ) )* otherlv_11= ';' ( (lv_annotations_12_0= ruleCommentAnnotatonSL ) )? ) ;
+    // InternalScadeEquations.g:7123:1: ruleReferenceDeclaration returns [EObject current=null] : ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_access_1_0= ruleAccessModifier ) )? ( (otherlv_2= 'ref' ( ( ruleNamespaceID ) ) ) | (otherlv_4= 'extern' ( (lv_extern_5_0= ruleExternString ) ) (otherlv_6= ',' ( (lv_extern_7_0= ruleExternString ) ) )* ) ) ( (lv_valuedObjects_8_0= ruleValuedObject ) ) (otherlv_9= ',' ( (lv_valuedObjects_10_0= ruleValuedObject ) ) )* otherlv_11= ';' ( (lv_annotations_12_0= ruleCommentAnnotatonSL ) )? ) ;
     public final EObject ruleReferenceDeclaration() throws RecognitionException {
         EObject current = null;
 
@@ -19616,13 +19640,13 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:7125:2: ( ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_access_1_0= ruleAccessModifier ) )? ( (otherlv_2= 'ref' ( ( ruleNamespaceID ) ) ) | (otherlv_4= 'extern' ( (lv_extern_5_0= ruleExternString ) ) (otherlv_6= ',' ( (lv_extern_7_0= ruleExternString ) ) )* ) ) ( (lv_valuedObjects_8_0= ruleValuedObject ) ) (otherlv_9= ',' ( (lv_valuedObjects_10_0= ruleValuedObject ) ) )* otherlv_11= ';' ( (lv_annotations_12_0= ruleCommentAnnotatonSL ) )? ) )
-            // InternalScadeEquations.g:7126:2: ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_access_1_0= ruleAccessModifier ) )? ( (otherlv_2= 'ref' ( ( ruleNamespaceID ) ) ) | (otherlv_4= 'extern' ( (lv_extern_5_0= ruleExternString ) ) (otherlv_6= ',' ( (lv_extern_7_0= ruleExternString ) ) )* ) ) ( (lv_valuedObjects_8_0= ruleValuedObject ) ) (otherlv_9= ',' ( (lv_valuedObjects_10_0= ruleValuedObject ) ) )* otherlv_11= ';' ( (lv_annotations_12_0= ruleCommentAnnotatonSL ) )? )
+            // InternalScadeEquations.g:7129:2: ( ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_access_1_0= ruleAccessModifier ) )? ( (otherlv_2= 'ref' ( ( ruleNamespaceID ) ) ) | (otherlv_4= 'extern' ( (lv_extern_5_0= ruleExternString ) ) (otherlv_6= ',' ( (lv_extern_7_0= ruleExternString ) ) )* ) ) ( (lv_valuedObjects_8_0= ruleValuedObject ) ) (otherlv_9= ',' ( (lv_valuedObjects_10_0= ruleValuedObject ) ) )* otherlv_11= ';' ( (lv_annotations_12_0= ruleCommentAnnotatonSL ) )? ) )
+            // InternalScadeEquations.g:7130:2: ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_access_1_0= ruleAccessModifier ) )? ( (otherlv_2= 'ref' ( ( ruleNamespaceID ) ) ) | (otherlv_4= 'extern' ( (lv_extern_5_0= ruleExternString ) ) (otherlv_6= ',' ( (lv_extern_7_0= ruleExternString ) ) )* ) ) ( (lv_valuedObjects_8_0= ruleValuedObject ) ) (otherlv_9= ',' ( (lv_valuedObjects_10_0= ruleValuedObject ) ) )* otherlv_11= ';' ( (lv_annotations_12_0= ruleCommentAnnotatonSL ) )? )
             {
-            // InternalScadeEquations.g:7126:2: ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_access_1_0= ruleAccessModifier ) )? ( (otherlv_2= 'ref' ( ( ruleNamespaceID ) ) ) | (otherlv_4= 'extern' ( (lv_extern_5_0= ruleExternString ) ) (otherlv_6= ',' ( (lv_extern_7_0= ruleExternString ) ) )* ) ) ( (lv_valuedObjects_8_0= ruleValuedObject ) ) (otherlv_9= ',' ( (lv_valuedObjects_10_0= ruleValuedObject ) ) )* otherlv_11= ';' ( (lv_annotations_12_0= ruleCommentAnnotatonSL ) )? )
-            // InternalScadeEquations.g:7127:3: ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_access_1_0= ruleAccessModifier ) )? ( (otherlv_2= 'ref' ( ( ruleNamespaceID ) ) ) | (otherlv_4= 'extern' ( (lv_extern_5_0= ruleExternString ) ) (otherlv_6= ',' ( (lv_extern_7_0= ruleExternString ) ) )* ) ) ( (lv_valuedObjects_8_0= ruleValuedObject ) ) (otherlv_9= ',' ( (lv_valuedObjects_10_0= ruleValuedObject ) ) )* otherlv_11= ';' ( (lv_annotations_12_0= ruleCommentAnnotatonSL ) )?
+            // InternalScadeEquations.g:7130:2: ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_access_1_0= ruleAccessModifier ) )? ( (otherlv_2= 'ref' ( ( ruleNamespaceID ) ) ) | (otherlv_4= 'extern' ( (lv_extern_5_0= ruleExternString ) ) (otherlv_6= ',' ( (lv_extern_7_0= ruleExternString ) ) )* ) ) ( (lv_valuedObjects_8_0= ruleValuedObject ) ) (otherlv_9= ',' ( (lv_valuedObjects_10_0= ruleValuedObject ) ) )* otherlv_11= ';' ( (lv_annotations_12_0= ruleCommentAnnotatonSL ) )? )
+            // InternalScadeEquations.g:7131:3: ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_access_1_0= ruleAccessModifier ) )? ( (otherlv_2= 'ref' ( ( ruleNamespaceID ) ) ) | (otherlv_4= 'extern' ( (lv_extern_5_0= ruleExternString ) ) (otherlv_6= ',' ( (lv_extern_7_0= ruleExternString ) ) )* ) ) ( (lv_valuedObjects_8_0= ruleValuedObject ) ) (otherlv_9= ',' ( (lv_valuedObjects_10_0= ruleValuedObject ) ) )* otherlv_11= ';' ( (lv_annotations_12_0= ruleCommentAnnotatonSL ) )?
             {
-            // InternalScadeEquations.g:7127:3: ( (lv_annotations_0_0= ruleAnnotation ) )*
+            // InternalScadeEquations.g:7131:3: ( (lv_annotations_0_0= ruleAnnotation ) )*
             loop176:
             do {
                 int alt176=2;
@@ -19635,17 +19659,17 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                 switch (alt176) {
             	case 1 :
-            	    // InternalScadeEquations.g:7128:4: (lv_annotations_0_0= ruleAnnotation )
+            	    // InternalScadeEquations.g:7132:4: (lv_annotations_0_0= ruleAnnotation )
             	    {
-            	    // InternalScadeEquations.g:7128:4: (lv_annotations_0_0= ruleAnnotation )
-            	    // InternalScadeEquations.g:7129:5: lv_annotations_0_0= ruleAnnotation
+            	    // InternalScadeEquations.g:7132:4: (lv_annotations_0_0= ruleAnnotation )
+            	    // InternalScadeEquations.g:7133:5: lv_annotations_0_0= ruleAnnotation
             	    {
             	    if ( state.backtracking==0 ) {
 
             	      					newCompositeNode(grammarAccess.getReferenceDeclarationAccess().getAnnotationsAnnotationParserRuleCall_0_0());
             	      				
             	    }
-            	    pushFollow(FollowSets000.FOLLOW_92);
+            	    pushFollow(FollowSets000.FOLLOW_93);
             	    lv_annotations_0_0=ruleAnnotation();
 
             	    state._fsp--;
@@ -19675,7 +19699,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                 }
             } while (true);
 
-            // InternalScadeEquations.g:7146:3: ( (lv_access_1_0= ruleAccessModifier ) )?
+            // InternalScadeEquations.g:7150:3: ( (lv_access_1_0= ruleAccessModifier ) )?
             int alt177=2;
             int LA177_0 = input.LA(1);
 
@@ -19684,17 +19708,17 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             }
             switch (alt177) {
                 case 1 :
-                    // InternalScadeEquations.g:7147:4: (lv_access_1_0= ruleAccessModifier )
+                    // InternalScadeEquations.g:7151:4: (lv_access_1_0= ruleAccessModifier )
                     {
-                    // InternalScadeEquations.g:7147:4: (lv_access_1_0= ruleAccessModifier )
-                    // InternalScadeEquations.g:7148:5: lv_access_1_0= ruleAccessModifier
+                    // InternalScadeEquations.g:7151:4: (lv_access_1_0= ruleAccessModifier )
+                    // InternalScadeEquations.g:7152:5: lv_access_1_0= ruleAccessModifier
                     {
                     if ( state.backtracking==0 ) {
 
                       					newCompositeNode(grammarAccess.getReferenceDeclarationAccess().getAccessAccessModifierEnumRuleCall_1_0());
                       				
                     }
-                    pushFollow(FollowSets000.FOLLOW_93);
+                    pushFollow(FollowSets000.FOLLOW_94);
                     lv_access_1_0=ruleAccessModifier();
 
                     state._fsp--;
@@ -19721,7 +19745,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalScadeEquations.g:7165:3: ( (otherlv_2= 'ref' ( ( ruleNamespaceID ) ) ) | (otherlv_4= 'extern' ( (lv_extern_5_0= ruleExternString ) ) (otherlv_6= ',' ( (lv_extern_7_0= ruleExternString ) ) )* ) )
+            // InternalScadeEquations.g:7169:3: ( (otherlv_2= 'ref' ( ( ruleNamespaceID ) ) ) | (otherlv_4= 'extern' ( (lv_extern_5_0= ruleExternString ) ) (otherlv_6= ',' ( (lv_extern_7_0= ruleExternString ) ) )* ) )
             int alt179=2;
             int LA179_0 = input.LA(1);
 
@@ -19740,22 +19764,22 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             }
             switch (alt179) {
                 case 1 :
-                    // InternalScadeEquations.g:7166:4: (otherlv_2= 'ref' ( ( ruleNamespaceID ) ) )
+                    // InternalScadeEquations.g:7170:4: (otherlv_2= 'ref' ( ( ruleNamespaceID ) ) )
                     {
-                    // InternalScadeEquations.g:7166:4: (otherlv_2= 'ref' ( ( ruleNamespaceID ) ) )
-                    // InternalScadeEquations.g:7167:5: otherlv_2= 'ref' ( ( ruleNamespaceID ) )
+                    // InternalScadeEquations.g:7170:4: (otherlv_2= 'ref' ( ( ruleNamespaceID ) ) )
+                    // InternalScadeEquations.g:7171:5: otherlv_2= 'ref' ( ( ruleNamespaceID ) )
                     {
-                    otherlv_2=(Token)match(input,72,FollowSets000.FOLLOW_4); if (state.failed) return current;
+                    otherlv_2=(Token)match(input,72,FollowSets000.FOLLOW_95); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       					newLeafNode(otherlv_2, grammarAccess.getReferenceDeclarationAccess().getRefKeyword_2_0_0());
                       				
                     }
-                    // InternalScadeEquations.g:7171:5: ( ( ruleNamespaceID ) )
-                    // InternalScadeEquations.g:7172:6: ( ruleNamespaceID )
+                    // InternalScadeEquations.g:7175:5: ( ( ruleNamespaceID ) )
+                    // InternalScadeEquations.g:7176:6: ( ruleNamespaceID )
                     {
-                    // InternalScadeEquations.g:7172:6: ( ruleNamespaceID )
-                    // InternalScadeEquations.g:7173:7: ruleNamespaceID
+                    // InternalScadeEquations.g:7176:6: ( ruleNamespaceID )
+                    // InternalScadeEquations.g:7177:7: ruleNamespaceID
                     {
                     if ( state.backtracking==0 ) {
 
@@ -19797,29 +19821,29 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalScadeEquations.g:7192:4: (otherlv_4= 'extern' ( (lv_extern_5_0= ruleExternString ) ) (otherlv_6= ',' ( (lv_extern_7_0= ruleExternString ) ) )* )
+                    // InternalScadeEquations.g:7196:4: (otherlv_4= 'extern' ( (lv_extern_5_0= ruleExternString ) ) (otherlv_6= ',' ( (lv_extern_7_0= ruleExternString ) ) )* )
                     {
-                    // InternalScadeEquations.g:7192:4: (otherlv_4= 'extern' ( (lv_extern_5_0= ruleExternString ) ) (otherlv_6= ',' ( (lv_extern_7_0= ruleExternString ) ) )* )
-                    // InternalScadeEquations.g:7193:5: otherlv_4= 'extern' ( (lv_extern_5_0= ruleExternString ) ) (otherlv_6= ',' ( (lv_extern_7_0= ruleExternString ) ) )*
+                    // InternalScadeEquations.g:7196:4: (otherlv_4= 'extern' ( (lv_extern_5_0= ruleExternString ) ) (otherlv_6= ',' ( (lv_extern_7_0= ruleExternString ) ) )* )
+                    // InternalScadeEquations.g:7197:5: otherlv_4= 'extern' ( (lv_extern_5_0= ruleExternString ) ) (otherlv_6= ',' ( (lv_extern_7_0= ruleExternString ) ) )*
                     {
-                    otherlv_4=(Token)match(input,25,FollowSets000.FOLLOW_94); if (state.failed) return current;
+                    otherlv_4=(Token)match(input,25,FollowSets000.FOLLOW_96); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       					newLeafNode(otherlv_4, grammarAccess.getReferenceDeclarationAccess().getExternKeyword_2_1_0());
                       				
                     }
-                    // InternalScadeEquations.g:7197:5: ( (lv_extern_5_0= ruleExternString ) )
-                    // InternalScadeEquations.g:7198:6: (lv_extern_5_0= ruleExternString )
+                    // InternalScadeEquations.g:7201:5: ( (lv_extern_5_0= ruleExternString ) )
+                    // InternalScadeEquations.g:7202:6: (lv_extern_5_0= ruleExternString )
                     {
-                    // InternalScadeEquations.g:7198:6: (lv_extern_5_0= ruleExternString )
-                    // InternalScadeEquations.g:7199:7: lv_extern_5_0= ruleExternString
+                    // InternalScadeEquations.g:7202:6: (lv_extern_5_0= ruleExternString )
+                    // InternalScadeEquations.g:7203:7: lv_extern_5_0= ruleExternString
                     {
                     if ( state.backtracking==0 ) {
 
                       							newCompositeNode(grammarAccess.getReferenceDeclarationAccess().getExternExternStringParserRuleCall_2_1_1_0());
                       						
                     }
-                    pushFollow(FollowSets000.FOLLOW_95);
+                    pushFollow(FollowSets000.FOLLOW_97);
                     lv_extern_5_0=ruleExternString();
 
                     state._fsp--;
@@ -19843,7 +19867,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalScadeEquations.g:7216:5: (otherlv_6= ',' ( (lv_extern_7_0= ruleExternString ) ) )*
+                    // InternalScadeEquations.g:7220:5: (otherlv_6= ',' ( (lv_extern_7_0= ruleExternString ) ) )*
                     loop178:
                     do {
                         int alt178=2;
@@ -19856,26 +19880,26 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                         switch (alt178) {
                     	case 1 :
-                    	    // InternalScadeEquations.g:7217:6: otherlv_6= ',' ( (lv_extern_7_0= ruleExternString ) )
+                    	    // InternalScadeEquations.g:7221:6: otherlv_6= ',' ( (lv_extern_7_0= ruleExternString ) )
                     	    {
-                    	    otherlv_6=(Token)match(input,18,FollowSets000.FOLLOW_94); if (state.failed) return current;
+                    	    otherlv_6=(Token)match(input,18,FollowSets000.FOLLOW_96); if (state.failed) return current;
                     	    if ( state.backtracking==0 ) {
 
                     	      						newLeafNode(otherlv_6, grammarAccess.getReferenceDeclarationAccess().getCommaKeyword_2_1_2_0());
                     	      					
                     	    }
-                    	    // InternalScadeEquations.g:7221:6: ( (lv_extern_7_0= ruleExternString ) )
-                    	    // InternalScadeEquations.g:7222:7: (lv_extern_7_0= ruleExternString )
+                    	    // InternalScadeEquations.g:7225:6: ( (lv_extern_7_0= ruleExternString ) )
+                    	    // InternalScadeEquations.g:7226:7: (lv_extern_7_0= ruleExternString )
                     	    {
-                    	    // InternalScadeEquations.g:7222:7: (lv_extern_7_0= ruleExternString )
-                    	    // InternalScadeEquations.g:7223:8: lv_extern_7_0= ruleExternString
+                    	    // InternalScadeEquations.g:7226:7: (lv_extern_7_0= ruleExternString )
+                    	    // InternalScadeEquations.g:7227:8: lv_extern_7_0= ruleExternString
                     	    {
                     	    if ( state.backtracking==0 ) {
 
                     	      								newCompositeNode(grammarAccess.getReferenceDeclarationAccess().getExternExternStringParserRuleCall_2_1_2_1_0());
                     	      							
                     	    }
-                    	    pushFollow(FollowSets000.FOLLOW_95);
+                    	    pushFollow(FollowSets000.FOLLOW_97);
                     	    lv_extern_7_0=ruleExternString();
 
                     	    state._fsp--;
@@ -19917,11 +19941,11 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalScadeEquations.g:7243:3: ( (lv_valuedObjects_8_0= ruleValuedObject ) )
-            // InternalScadeEquations.g:7244:4: (lv_valuedObjects_8_0= ruleValuedObject )
+            // InternalScadeEquations.g:7247:3: ( (lv_valuedObjects_8_0= ruleValuedObject ) )
+            // InternalScadeEquations.g:7248:4: (lv_valuedObjects_8_0= ruleValuedObject )
             {
-            // InternalScadeEquations.g:7244:4: (lv_valuedObjects_8_0= ruleValuedObject )
-            // InternalScadeEquations.g:7245:5: lv_valuedObjects_8_0= ruleValuedObject
+            // InternalScadeEquations.g:7248:4: (lv_valuedObjects_8_0= ruleValuedObject )
+            // InternalScadeEquations.g:7249:5: lv_valuedObjects_8_0= ruleValuedObject
             {
             if ( state.backtracking==0 ) {
 
@@ -19952,7 +19976,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalScadeEquations.g:7262:3: (otherlv_9= ',' ( (lv_valuedObjects_10_0= ruleValuedObject ) ) )*
+            // InternalScadeEquations.g:7266:3: (otherlv_9= ',' ( (lv_valuedObjects_10_0= ruleValuedObject ) ) )*
             loop180:
             do {
                 int alt180=2;
@@ -19965,7 +19989,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                 switch (alt180) {
             	case 1 :
-            	    // InternalScadeEquations.g:7263:4: otherlv_9= ',' ( (lv_valuedObjects_10_0= ruleValuedObject ) )
+            	    // InternalScadeEquations.g:7267:4: otherlv_9= ',' ( (lv_valuedObjects_10_0= ruleValuedObject ) )
             	    {
             	    otherlv_9=(Token)match(input,18,FollowSets000.FOLLOW_35); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
@@ -19973,11 +19997,11 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             	      				newLeafNode(otherlv_9, grammarAccess.getReferenceDeclarationAccess().getCommaKeyword_4_0());
             	      			
             	    }
-            	    // InternalScadeEquations.g:7267:4: ( (lv_valuedObjects_10_0= ruleValuedObject ) )
-            	    // InternalScadeEquations.g:7268:5: (lv_valuedObjects_10_0= ruleValuedObject )
+            	    // InternalScadeEquations.g:7271:4: ( (lv_valuedObjects_10_0= ruleValuedObject ) )
+            	    // InternalScadeEquations.g:7272:5: (lv_valuedObjects_10_0= ruleValuedObject )
             	    {
-            	    // InternalScadeEquations.g:7268:5: (lv_valuedObjects_10_0= ruleValuedObject )
-            	    // InternalScadeEquations.g:7269:6: lv_valuedObjects_10_0= ruleValuedObject
+            	    // InternalScadeEquations.g:7272:5: (lv_valuedObjects_10_0= ruleValuedObject )
+            	    // InternalScadeEquations.g:7273:6: lv_valuedObjects_10_0= ruleValuedObject
             	    {
             	    if ( state.backtracking==0 ) {
 
@@ -20023,7 +20047,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
               			newLeafNode(otherlv_11, grammarAccess.getReferenceDeclarationAccess().getSemicolonKeyword_5());
               		
             }
-            // InternalScadeEquations.g:7291:3: ( (lv_annotations_12_0= ruleCommentAnnotatonSL ) )?
+            // InternalScadeEquations.g:7295:3: ( (lv_annotations_12_0= ruleCommentAnnotatonSL ) )?
             int alt181=2;
             int LA181_0 = input.LA(1);
 
@@ -20032,10 +20056,10 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             }
             switch (alt181) {
                 case 1 :
-                    // InternalScadeEquations.g:7292:4: (lv_annotations_12_0= ruleCommentAnnotatonSL )
+                    // InternalScadeEquations.g:7296:4: (lv_annotations_12_0= ruleCommentAnnotatonSL )
                     {
-                    // InternalScadeEquations.g:7292:4: (lv_annotations_12_0= ruleCommentAnnotatonSL )
-                    // InternalScadeEquations.g:7293:5: lv_annotations_12_0= ruleCommentAnnotatonSL
+                    // InternalScadeEquations.g:7296:4: (lv_annotations_12_0= ruleCommentAnnotatonSL )
+                    // InternalScadeEquations.g:7297:5: lv_annotations_12_0= ruleCommentAnnotatonSL
                     {
                     if ( state.backtracking==0 ) {
 
@@ -20094,7 +20118,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleReferenceDeclarationWOSemicolon"
-    // InternalScadeEquations.g:7314:1: entryRuleReferenceDeclarationWOSemicolon returns [EObject current=null] : iv_ruleReferenceDeclarationWOSemicolon= ruleReferenceDeclarationWOSemicolon EOF ;
+    // InternalScadeEquations.g:7318:1: entryRuleReferenceDeclarationWOSemicolon returns [EObject current=null] : iv_ruleReferenceDeclarationWOSemicolon= ruleReferenceDeclarationWOSemicolon EOF ;
     public final EObject entryRuleReferenceDeclarationWOSemicolon() throws RecognitionException {
         EObject current = null;
 
@@ -20102,8 +20126,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalScadeEquations.g:7314:72: (iv_ruleReferenceDeclarationWOSemicolon= ruleReferenceDeclarationWOSemicolon EOF )
-            // InternalScadeEquations.g:7315:2: iv_ruleReferenceDeclarationWOSemicolon= ruleReferenceDeclarationWOSemicolon EOF
+            // InternalScadeEquations.g:7318:72: (iv_ruleReferenceDeclarationWOSemicolon= ruleReferenceDeclarationWOSemicolon EOF )
+            // InternalScadeEquations.g:7319:2: iv_ruleReferenceDeclarationWOSemicolon= ruleReferenceDeclarationWOSemicolon EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getReferenceDeclarationWOSemicolonRule()); 
@@ -20134,7 +20158,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleReferenceDeclarationWOSemicolon"
-    // InternalScadeEquations.g:7321:1: ruleReferenceDeclarationWOSemicolon returns [EObject current=null] : ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_access_1_0= ruleAccessModifier ) )? ( (otherlv_2= 'ref' ( ( ruleNamespaceID ) ) ) | (otherlv_4= 'extern' ( (lv_extern_5_0= ruleExternString ) ) (otherlv_6= ',' ( (lv_extern_7_0= ruleExternString ) ) )* ) ) ( (lv_valuedObjects_8_0= ruleValuedObject ) ) (otherlv_9= ',' ( (lv_valuedObjects_10_0= ruleValuedObject ) ) )* ( (lv_annotations_11_0= ruleCommentAnnotatonSL ) )? ) ;
+    // InternalScadeEquations.g:7325:1: ruleReferenceDeclarationWOSemicolon returns [EObject current=null] : ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_access_1_0= ruleAccessModifier ) )? ( (otherlv_2= 'ref' ( ( ruleNamespaceID ) ) ) | (otherlv_4= 'extern' ( (lv_extern_5_0= ruleExternString ) ) (otherlv_6= ',' ( (lv_extern_7_0= ruleExternString ) ) )* ) ) ( (lv_valuedObjects_8_0= ruleValuedObject ) ) (otherlv_9= ',' ( (lv_valuedObjects_10_0= ruleValuedObject ) ) )* ( (lv_annotations_11_0= ruleCommentAnnotatonSL ) )? ) ;
     public final EObject ruleReferenceDeclarationWOSemicolon() throws RecognitionException {
         EObject current = null;
 
@@ -20161,13 +20185,13 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:7327:2: ( ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_access_1_0= ruleAccessModifier ) )? ( (otherlv_2= 'ref' ( ( ruleNamespaceID ) ) ) | (otherlv_4= 'extern' ( (lv_extern_5_0= ruleExternString ) ) (otherlv_6= ',' ( (lv_extern_7_0= ruleExternString ) ) )* ) ) ( (lv_valuedObjects_8_0= ruleValuedObject ) ) (otherlv_9= ',' ( (lv_valuedObjects_10_0= ruleValuedObject ) ) )* ( (lv_annotations_11_0= ruleCommentAnnotatonSL ) )? ) )
-            // InternalScadeEquations.g:7328:2: ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_access_1_0= ruleAccessModifier ) )? ( (otherlv_2= 'ref' ( ( ruleNamespaceID ) ) ) | (otherlv_4= 'extern' ( (lv_extern_5_0= ruleExternString ) ) (otherlv_6= ',' ( (lv_extern_7_0= ruleExternString ) ) )* ) ) ( (lv_valuedObjects_8_0= ruleValuedObject ) ) (otherlv_9= ',' ( (lv_valuedObjects_10_0= ruleValuedObject ) ) )* ( (lv_annotations_11_0= ruleCommentAnnotatonSL ) )? )
+            // InternalScadeEquations.g:7331:2: ( ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_access_1_0= ruleAccessModifier ) )? ( (otherlv_2= 'ref' ( ( ruleNamespaceID ) ) ) | (otherlv_4= 'extern' ( (lv_extern_5_0= ruleExternString ) ) (otherlv_6= ',' ( (lv_extern_7_0= ruleExternString ) ) )* ) ) ( (lv_valuedObjects_8_0= ruleValuedObject ) ) (otherlv_9= ',' ( (lv_valuedObjects_10_0= ruleValuedObject ) ) )* ( (lv_annotations_11_0= ruleCommentAnnotatonSL ) )? ) )
+            // InternalScadeEquations.g:7332:2: ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_access_1_0= ruleAccessModifier ) )? ( (otherlv_2= 'ref' ( ( ruleNamespaceID ) ) ) | (otherlv_4= 'extern' ( (lv_extern_5_0= ruleExternString ) ) (otherlv_6= ',' ( (lv_extern_7_0= ruleExternString ) ) )* ) ) ( (lv_valuedObjects_8_0= ruleValuedObject ) ) (otherlv_9= ',' ( (lv_valuedObjects_10_0= ruleValuedObject ) ) )* ( (lv_annotations_11_0= ruleCommentAnnotatonSL ) )? )
             {
-            // InternalScadeEquations.g:7328:2: ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_access_1_0= ruleAccessModifier ) )? ( (otherlv_2= 'ref' ( ( ruleNamespaceID ) ) ) | (otherlv_4= 'extern' ( (lv_extern_5_0= ruleExternString ) ) (otherlv_6= ',' ( (lv_extern_7_0= ruleExternString ) ) )* ) ) ( (lv_valuedObjects_8_0= ruleValuedObject ) ) (otherlv_9= ',' ( (lv_valuedObjects_10_0= ruleValuedObject ) ) )* ( (lv_annotations_11_0= ruleCommentAnnotatonSL ) )? )
-            // InternalScadeEquations.g:7329:3: ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_access_1_0= ruleAccessModifier ) )? ( (otherlv_2= 'ref' ( ( ruleNamespaceID ) ) ) | (otherlv_4= 'extern' ( (lv_extern_5_0= ruleExternString ) ) (otherlv_6= ',' ( (lv_extern_7_0= ruleExternString ) ) )* ) ) ( (lv_valuedObjects_8_0= ruleValuedObject ) ) (otherlv_9= ',' ( (lv_valuedObjects_10_0= ruleValuedObject ) ) )* ( (lv_annotations_11_0= ruleCommentAnnotatonSL ) )?
+            // InternalScadeEquations.g:7332:2: ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_access_1_0= ruleAccessModifier ) )? ( (otherlv_2= 'ref' ( ( ruleNamespaceID ) ) ) | (otherlv_4= 'extern' ( (lv_extern_5_0= ruleExternString ) ) (otherlv_6= ',' ( (lv_extern_7_0= ruleExternString ) ) )* ) ) ( (lv_valuedObjects_8_0= ruleValuedObject ) ) (otherlv_9= ',' ( (lv_valuedObjects_10_0= ruleValuedObject ) ) )* ( (lv_annotations_11_0= ruleCommentAnnotatonSL ) )? )
+            // InternalScadeEquations.g:7333:3: ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_access_1_0= ruleAccessModifier ) )? ( (otherlv_2= 'ref' ( ( ruleNamespaceID ) ) ) | (otherlv_4= 'extern' ( (lv_extern_5_0= ruleExternString ) ) (otherlv_6= ',' ( (lv_extern_7_0= ruleExternString ) ) )* ) ) ( (lv_valuedObjects_8_0= ruleValuedObject ) ) (otherlv_9= ',' ( (lv_valuedObjects_10_0= ruleValuedObject ) ) )* ( (lv_annotations_11_0= ruleCommentAnnotatonSL ) )?
             {
-            // InternalScadeEquations.g:7329:3: ( (lv_annotations_0_0= ruleAnnotation ) )*
+            // InternalScadeEquations.g:7333:3: ( (lv_annotations_0_0= ruleAnnotation ) )*
             loop182:
             do {
                 int alt182=2;
@@ -20180,17 +20204,17 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                 switch (alt182) {
             	case 1 :
-            	    // InternalScadeEquations.g:7330:4: (lv_annotations_0_0= ruleAnnotation )
+            	    // InternalScadeEquations.g:7334:4: (lv_annotations_0_0= ruleAnnotation )
             	    {
-            	    // InternalScadeEquations.g:7330:4: (lv_annotations_0_0= ruleAnnotation )
-            	    // InternalScadeEquations.g:7331:5: lv_annotations_0_0= ruleAnnotation
+            	    // InternalScadeEquations.g:7334:4: (lv_annotations_0_0= ruleAnnotation )
+            	    // InternalScadeEquations.g:7335:5: lv_annotations_0_0= ruleAnnotation
             	    {
             	    if ( state.backtracking==0 ) {
 
             	      					newCompositeNode(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getAnnotationsAnnotationParserRuleCall_0_0());
             	      				
             	    }
-            	    pushFollow(FollowSets000.FOLLOW_92);
+            	    pushFollow(FollowSets000.FOLLOW_93);
             	    lv_annotations_0_0=ruleAnnotation();
 
             	    state._fsp--;
@@ -20220,7 +20244,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                 }
             } while (true);
 
-            // InternalScadeEquations.g:7348:3: ( (lv_access_1_0= ruleAccessModifier ) )?
+            // InternalScadeEquations.g:7352:3: ( (lv_access_1_0= ruleAccessModifier ) )?
             int alt183=2;
             int LA183_0 = input.LA(1);
 
@@ -20229,17 +20253,17 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             }
             switch (alt183) {
                 case 1 :
-                    // InternalScadeEquations.g:7349:4: (lv_access_1_0= ruleAccessModifier )
+                    // InternalScadeEquations.g:7353:4: (lv_access_1_0= ruleAccessModifier )
                     {
-                    // InternalScadeEquations.g:7349:4: (lv_access_1_0= ruleAccessModifier )
-                    // InternalScadeEquations.g:7350:5: lv_access_1_0= ruleAccessModifier
+                    // InternalScadeEquations.g:7353:4: (lv_access_1_0= ruleAccessModifier )
+                    // InternalScadeEquations.g:7354:5: lv_access_1_0= ruleAccessModifier
                     {
                     if ( state.backtracking==0 ) {
 
                       					newCompositeNode(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getAccessAccessModifierEnumRuleCall_1_0());
                       				
                     }
-                    pushFollow(FollowSets000.FOLLOW_93);
+                    pushFollow(FollowSets000.FOLLOW_94);
                     lv_access_1_0=ruleAccessModifier();
 
                     state._fsp--;
@@ -20266,7 +20290,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalScadeEquations.g:7367:3: ( (otherlv_2= 'ref' ( ( ruleNamespaceID ) ) ) | (otherlv_4= 'extern' ( (lv_extern_5_0= ruleExternString ) ) (otherlv_6= ',' ( (lv_extern_7_0= ruleExternString ) ) )* ) )
+            // InternalScadeEquations.g:7371:3: ( (otherlv_2= 'ref' ( ( ruleNamespaceID ) ) ) | (otherlv_4= 'extern' ( (lv_extern_5_0= ruleExternString ) ) (otherlv_6= ',' ( (lv_extern_7_0= ruleExternString ) ) )* ) )
             int alt185=2;
             int LA185_0 = input.LA(1);
 
@@ -20285,22 +20309,22 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             }
             switch (alt185) {
                 case 1 :
-                    // InternalScadeEquations.g:7368:4: (otherlv_2= 'ref' ( ( ruleNamespaceID ) ) )
+                    // InternalScadeEquations.g:7372:4: (otherlv_2= 'ref' ( ( ruleNamespaceID ) ) )
                     {
-                    // InternalScadeEquations.g:7368:4: (otherlv_2= 'ref' ( ( ruleNamespaceID ) ) )
-                    // InternalScadeEquations.g:7369:5: otherlv_2= 'ref' ( ( ruleNamespaceID ) )
+                    // InternalScadeEquations.g:7372:4: (otherlv_2= 'ref' ( ( ruleNamespaceID ) ) )
+                    // InternalScadeEquations.g:7373:5: otherlv_2= 'ref' ( ( ruleNamespaceID ) )
                     {
-                    otherlv_2=(Token)match(input,72,FollowSets000.FOLLOW_4); if (state.failed) return current;
+                    otherlv_2=(Token)match(input,72,FollowSets000.FOLLOW_95); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       					newLeafNode(otherlv_2, grammarAccess.getReferenceDeclarationWOSemicolonAccess().getRefKeyword_2_0_0());
                       				
                     }
-                    // InternalScadeEquations.g:7373:5: ( ( ruleNamespaceID ) )
-                    // InternalScadeEquations.g:7374:6: ( ruleNamespaceID )
+                    // InternalScadeEquations.g:7377:5: ( ( ruleNamespaceID ) )
+                    // InternalScadeEquations.g:7378:6: ( ruleNamespaceID )
                     {
-                    // InternalScadeEquations.g:7374:6: ( ruleNamespaceID )
-                    // InternalScadeEquations.g:7375:7: ruleNamespaceID
+                    // InternalScadeEquations.g:7378:6: ( ruleNamespaceID )
+                    // InternalScadeEquations.g:7379:7: ruleNamespaceID
                     {
                     if ( state.backtracking==0 ) {
 
@@ -20342,29 +20366,29 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalScadeEquations.g:7394:4: (otherlv_4= 'extern' ( (lv_extern_5_0= ruleExternString ) ) (otherlv_6= ',' ( (lv_extern_7_0= ruleExternString ) ) )* )
+                    // InternalScadeEquations.g:7398:4: (otherlv_4= 'extern' ( (lv_extern_5_0= ruleExternString ) ) (otherlv_6= ',' ( (lv_extern_7_0= ruleExternString ) ) )* )
                     {
-                    // InternalScadeEquations.g:7394:4: (otherlv_4= 'extern' ( (lv_extern_5_0= ruleExternString ) ) (otherlv_6= ',' ( (lv_extern_7_0= ruleExternString ) ) )* )
-                    // InternalScadeEquations.g:7395:5: otherlv_4= 'extern' ( (lv_extern_5_0= ruleExternString ) ) (otherlv_6= ',' ( (lv_extern_7_0= ruleExternString ) ) )*
+                    // InternalScadeEquations.g:7398:4: (otherlv_4= 'extern' ( (lv_extern_5_0= ruleExternString ) ) (otherlv_6= ',' ( (lv_extern_7_0= ruleExternString ) ) )* )
+                    // InternalScadeEquations.g:7399:5: otherlv_4= 'extern' ( (lv_extern_5_0= ruleExternString ) ) (otherlv_6= ',' ( (lv_extern_7_0= ruleExternString ) ) )*
                     {
-                    otherlv_4=(Token)match(input,25,FollowSets000.FOLLOW_94); if (state.failed) return current;
+                    otherlv_4=(Token)match(input,25,FollowSets000.FOLLOW_96); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       					newLeafNode(otherlv_4, grammarAccess.getReferenceDeclarationWOSemicolonAccess().getExternKeyword_2_1_0());
                       				
                     }
-                    // InternalScadeEquations.g:7399:5: ( (lv_extern_5_0= ruleExternString ) )
-                    // InternalScadeEquations.g:7400:6: (lv_extern_5_0= ruleExternString )
+                    // InternalScadeEquations.g:7403:5: ( (lv_extern_5_0= ruleExternString ) )
+                    // InternalScadeEquations.g:7404:6: (lv_extern_5_0= ruleExternString )
                     {
-                    // InternalScadeEquations.g:7400:6: (lv_extern_5_0= ruleExternString )
-                    // InternalScadeEquations.g:7401:7: lv_extern_5_0= ruleExternString
+                    // InternalScadeEquations.g:7404:6: (lv_extern_5_0= ruleExternString )
+                    // InternalScadeEquations.g:7405:7: lv_extern_5_0= ruleExternString
                     {
                     if ( state.backtracking==0 ) {
 
                       							newCompositeNode(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getExternExternStringParserRuleCall_2_1_1_0());
                       						
                     }
-                    pushFollow(FollowSets000.FOLLOW_95);
+                    pushFollow(FollowSets000.FOLLOW_97);
                     lv_extern_5_0=ruleExternString();
 
                     state._fsp--;
@@ -20388,7 +20412,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalScadeEquations.g:7418:5: (otherlv_6= ',' ( (lv_extern_7_0= ruleExternString ) ) )*
+                    // InternalScadeEquations.g:7422:5: (otherlv_6= ',' ( (lv_extern_7_0= ruleExternString ) ) )*
                     loop184:
                     do {
                         int alt184=2;
@@ -20401,26 +20425,26 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                         switch (alt184) {
                     	case 1 :
-                    	    // InternalScadeEquations.g:7419:6: otherlv_6= ',' ( (lv_extern_7_0= ruleExternString ) )
+                    	    // InternalScadeEquations.g:7423:6: otherlv_6= ',' ( (lv_extern_7_0= ruleExternString ) )
                     	    {
-                    	    otherlv_6=(Token)match(input,18,FollowSets000.FOLLOW_94); if (state.failed) return current;
+                    	    otherlv_6=(Token)match(input,18,FollowSets000.FOLLOW_96); if (state.failed) return current;
                     	    if ( state.backtracking==0 ) {
 
                     	      						newLeafNode(otherlv_6, grammarAccess.getReferenceDeclarationWOSemicolonAccess().getCommaKeyword_2_1_2_0());
                     	      					
                     	    }
-                    	    // InternalScadeEquations.g:7423:6: ( (lv_extern_7_0= ruleExternString ) )
-                    	    // InternalScadeEquations.g:7424:7: (lv_extern_7_0= ruleExternString )
+                    	    // InternalScadeEquations.g:7427:6: ( (lv_extern_7_0= ruleExternString ) )
+                    	    // InternalScadeEquations.g:7428:7: (lv_extern_7_0= ruleExternString )
                     	    {
-                    	    // InternalScadeEquations.g:7424:7: (lv_extern_7_0= ruleExternString )
-                    	    // InternalScadeEquations.g:7425:8: lv_extern_7_0= ruleExternString
+                    	    // InternalScadeEquations.g:7428:7: (lv_extern_7_0= ruleExternString )
+                    	    // InternalScadeEquations.g:7429:8: lv_extern_7_0= ruleExternString
                     	    {
                     	    if ( state.backtracking==0 ) {
 
                     	      								newCompositeNode(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getExternExternStringParserRuleCall_2_1_2_1_0());
                     	      							
                     	    }
-                    	    pushFollow(FollowSets000.FOLLOW_95);
+                    	    pushFollow(FollowSets000.FOLLOW_97);
                     	    lv_extern_7_0=ruleExternString();
 
                     	    state._fsp--;
@@ -20462,11 +20486,11 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalScadeEquations.g:7445:3: ( (lv_valuedObjects_8_0= ruleValuedObject ) )
-            // InternalScadeEquations.g:7446:4: (lv_valuedObjects_8_0= ruleValuedObject )
+            // InternalScadeEquations.g:7449:3: ( (lv_valuedObjects_8_0= ruleValuedObject ) )
+            // InternalScadeEquations.g:7450:4: (lv_valuedObjects_8_0= ruleValuedObject )
             {
-            // InternalScadeEquations.g:7446:4: (lv_valuedObjects_8_0= ruleValuedObject )
-            // InternalScadeEquations.g:7447:5: lv_valuedObjects_8_0= ruleValuedObject
+            // InternalScadeEquations.g:7450:4: (lv_valuedObjects_8_0= ruleValuedObject )
+            // InternalScadeEquations.g:7451:5: lv_valuedObjects_8_0= ruleValuedObject
             {
             if ( state.backtracking==0 ) {
 
@@ -20497,7 +20521,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalScadeEquations.g:7464:3: (otherlv_9= ',' ( (lv_valuedObjects_10_0= ruleValuedObject ) ) )*
+            // InternalScadeEquations.g:7468:3: (otherlv_9= ',' ( (lv_valuedObjects_10_0= ruleValuedObject ) ) )*
             loop186:
             do {
                 int alt186=2;
@@ -20510,7 +20534,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                 switch (alt186) {
             	case 1 :
-            	    // InternalScadeEquations.g:7465:4: otherlv_9= ',' ( (lv_valuedObjects_10_0= ruleValuedObject ) )
+            	    // InternalScadeEquations.g:7469:4: otherlv_9= ',' ( (lv_valuedObjects_10_0= ruleValuedObject ) )
             	    {
             	    otherlv_9=(Token)match(input,18,FollowSets000.FOLLOW_35); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
@@ -20518,11 +20542,11 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             	      				newLeafNode(otherlv_9, grammarAccess.getReferenceDeclarationWOSemicolonAccess().getCommaKeyword_4_0());
             	      			
             	    }
-            	    // InternalScadeEquations.g:7469:4: ( (lv_valuedObjects_10_0= ruleValuedObject ) )
-            	    // InternalScadeEquations.g:7470:5: (lv_valuedObjects_10_0= ruleValuedObject )
+            	    // InternalScadeEquations.g:7473:4: ( (lv_valuedObjects_10_0= ruleValuedObject ) )
+            	    // InternalScadeEquations.g:7474:5: (lv_valuedObjects_10_0= ruleValuedObject )
             	    {
-            	    // InternalScadeEquations.g:7470:5: (lv_valuedObjects_10_0= ruleValuedObject )
-            	    // InternalScadeEquations.g:7471:6: lv_valuedObjects_10_0= ruleValuedObject
+            	    // InternalScadeEquations.g:7474:5: (lv_valuedObjects_10_0= ruleValuedObject )
+            	    // InternalScadeEquations.g:7475:6: lv_valuedObjects_10_0= ruleValuedObject
             	    {
             	    if ( state.backtracking==0 ) {
 
@@ -20562,7 +20586,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                 }
             } while (true);
 
-            // InternalScadeEquations.g:7489:3: ( (lv_annotations_11_0= ruleCommentAnnotatonSL ) )?
+            // InternalScadeEquations.g:7493:3: ( (lv_annotations_11_0= ruleCommentAnnotatonSL ) )?
             int alt187=2;
             int LA187_0 = input.LA(1);
 
@@ -20571,10 +20595,10 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             }
             switch (alt187) {
                 case 1 :
-                    // InternalScadeEquations.g:7490:4: (lv_annotations_11_0= ruleCommentAnnotatonSL )
+                    // InternalScadeEquations.g:7494:4: (lv_annotations_11_0= ruleCommentAnnotatonSL )
                     {
-                    // InternalScadeEquations.g:7490:4: (lv_annotations_11_0= ruleCommentAnnotatonSL )
-                    // InternalScadeEquations.g:7491:5: lv_annotations_11_0= ruleCommentAnnotatonSL
+                    // InternalScadeEquations.g:7494:4: (lv_annotations_11_0= ruleCommentAnnotatonSL )
+                    // InternalScadeEquations.g:7495:5: lv_annotations_11_0= ruleCommentAnnotatonSL
                     {
                     if ( state.backtracking==0 ) {
 
@@ -20633,7 +20657,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleExternString"
-    // InternalScadeEquations.g:7512:1: entryRuleExternString returns [EObject current=null] : iv_ruleExternString= ruleExternString EOF ;
+    // InternalScadeEquations.g:7516:1: entryRuleExternString returns [EObject current=null] : iv_ruleExternString= ruleExternString EOF ;
     public final EObject entryRuleExternString() throws RecognitionException {
         EObject current = null;
 
@@ -20641,8 +20665,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalScadeEquations.g:7512:53: (iv_ruleExternString= ruleExternString EOF )
-            // InternalScadeEquations.g:7513:2: iv_ruleExternString= ruleExternString EOF
+            // InternalScadeEquations.g:7516:53: (iv_ruleExternString= ruleExternString EOF )
+            // InternalScadeEquations.g:7517:2: iv_ruleExternString= ruleExternString EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getExternStringRule()); 
@@ -20673,7 +20697,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleExternString"
-    // InternalScadeEquations.g:7519:1: ruleExternString returns [EObject current=null] : ( ( (lv_annotations_0_0= ruleTagAnnotation ) )* ( (lv_code_1_0= RULE_STRING ) ) ) ;
+    // InternalScadeEquations.g:7523:1: ruleExternString returns [EObject current=null] : ( ( (lv_annotations_0_0= ruleTagAnnotation ) )* ( (lv_code_1_0= RULE_STRING ) ) ) ;
     public final EObject ruleExternString() throws RecognitionException {
         EObject current = null;
 
@@ -20685,13 +20709,13 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:7525:2: ( ( ( (lv_annotations_0_0= ruleTagAnnotation ) )* ( (lv_code_1_0= RULE_STRING ) ) ) )
-            // InternalScadeEquations.g:7526:2: ( ( (lv_annotations_0_0= ruleTagAnnotation ) )* ( (lv_code_1_0= RULE_STRING ) ) )
+            // InternalScadeEquations.g:7529:2: ( ( ( (lv_annotations_0_0= ruleTagAnnotation ) )* ( (lv_code_1_0= RULE_STRING ) ) ) )
+            // InternalScadeEquations.g:7530:2: ( ( (lv_annotations_0_0= ruleTagAnnotation ) )* ( (lv_code_1_0= RULE_STRING ) ) )
             {
-            // InternalScadeEquations.g:7526:2: ( ( (lv_annotations_0_0= ruleTagAnnotation ) )* ( (lv_code_1_0= RULE_STRING ) ) )
-            // InternalScadeEquations.g:7527:3: ( (lv_annotations_0_0= ruleTagAnnotation ) )* ( (lv_code_1_0= RULE_STRING ) )
+            // InternalScadeEquations.g:7530:2: ( ( (lv_annotations_0_0= ruleTagAnnotation ) )* ( (lv_code_1_0= RULE_STRING ) ) )
+            // InternalScadeEquations.g:7531:3: ( (lv_annotations_0_0= ruleTagAnnotation ) )* ( (lv_code_1_0= RULE_STRING ) )
             {
-            // InternalScadeEquations.g:7527:3: ( (lv_annotations_0_0= ruleTagAnnotation ) )*
+            // InternalScadeEquations.g:7531:3: ( (lv_annotations_0_0= ruleTagAnnotation ) )*
             loop188:
             do {
                 int alt188=2;
@@ -20704,17 +20728,17 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                 switch (alt188) {
             	case 1 :
-            	    // InternalScadeEquations.g:7528:4: (lv_annotations_0_0= ruleTagAnnotation )
+            	    // InternalScadeEquations.g:7532:4: (lv_annotations_0_0= ruleTagAnnotation )
             	    {
-            	    // InternalScadeEquations.g:7528:4: (lv_annotations_0_0= ruleTagAnnotation )
-            	    // InternalScadeEquations.g:7529:5: lv_annotations_0_0= ruleTagAnnotation
+            	    // InternalScadeEquations.g:7532:4: (lv_annotations_0_0= ruleTagAnnotation )
+            	    // InternalScadeEquations.g:7533:5: lv_annotations_0_0= ruleTagAnnotation
             	    {
             	    if ( state.backtracking==0 ) {
 
             	      					newCompositeNode(grammarAccess.getExternStringAccess().getAnnotationsTagAnnotationParserRuleCall_0_0());
             	      				
             	    }
-            	    pushFollow(FollowSets000.FOLLOW_94);
+            	    pushFollow(FollowSets000.FOLLOW_96);
             	    lv_annotations_0_0=ruleTagAnnotation();
 
             	    state._fsp--;
@@ -20744,11 +20768,11 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                 }
             } while (true);
 
-            // InternalScadeEquations.g:7546:3: ( (lv_code_1_0= RULE_STRING ) )
-            // InternalScadeEquations.g:7547:4: (lv_code_1_0= RULE_STRING )
+            // InternalScadeEquations.g:7550:3: ( (lv_code_1_0= RULE_STRING ) )
+            // InternalScadeEquations.g:7551:4: (lv_code_1_0= RULE_STRING )
             {
-            // InternalScadeEquations.g:7547:4: (lv_code_1_0= RULE_STRING )
-            // InternalScadeEquations.g:7548:5: lv_code_1_0= RULE_STRING
+            // InternalScadeEquations.g:7551:4: (lv_code_1_0= RULE_STRING )
+            // InternalScadeEquations.g:7552:5: lv_code_1_0= RULE_STRING
             {
             lv_code_1_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -20799,7 +20823,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleScheduleDeclaration"
-    // InternalScadeEquations.g:7568:1: entryRuleScheduleDeclaration returns [EObject current=null] : iv_ruleScheduleDeclaration= ruleScheduleDeclaration EOF ;
+    // InternalScadeEquations.g:7572:1: entryRuleScheduleDeclaration returns [EObject current=null] : iv_ruleScheduleDeclaration= ruleScheduleDeclaration EOF ;
     public final EObject entryRuleScheduleDeclaration() throws RecognitionException {
         EObject current = null;
 
@@ -20807,8 +20831,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalScadeEquations.g:7568:60: (iv_ruleScheduleDeclaration= ruleScheduleDeclaration EOF )
-            // InternalScadeEquations.g:7569:2: iv_ruleScheduleDeclaration= ruleScheduleDeclaration EOF
+            // InternalScadeEquations.g:7572:60: (iv_ruleScheduleDeclaration= ruleScheduleDeclaration EOF )
+            // InternalScadeEquations.g:7573:2: iv_ruleScheduleDeclaration= ruleScheduleDeclaration EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getScheduleDeclarationRule()); 
@@ -20839,7 +20863,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleScheduleDeclaration"
-    // InternalScadeEquations.g:7575:1: ruleScheduleDeclaration returns [EObject current=null] : ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_access_1_0= ruleAccessModifier ) )? otherlv_2= 'schedule' ( (lv_name_3_0= RULE_STRING ) )? (otherlv_4= 'global' ( (lv_global_5_0= rulePriorityProtocol ) ) )? (otherlv_6= '{' ( (lv_priorities_7_0= rulePriorityProtocol ) ) (otherlv_8= ',' ( (lv_priorities_9_0= rulePriorityProtocol ) ) )* otherlv_10= '}' )? ( (lv_valuedObjects_11_0= ruleValuedObject ) ) (otherlv_12= ',' ( (lv_valuedObjects_13_0= ruleValuedObject ) ) )* otherlv_14= ';' ( (lv_annotations_15_0= ruleCommentAnnotatonSL ) )? ) ;
+    // InternalScadeEquations.g:7579:1: ruleScheduleDeclaration returns [EObject current=null] : ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_access_1_0= ruleAccessModifier ) )? otherlv_2= 'schedule' ( (lv_name_3_0= RULE_STRING ) )? (otherlv_4= 'global' ( (lv_global_5_0= rulePriorityProtocol ) ) )? (otherlv_6= '{' ( (lv_priorities_7_0= rulePriorityProtocol ) ) (otherlv_8= ',' ( (lv_priorities_9_0= rulePriorityProtocol ) ) )* otherlv_10= '}' )? ( (lv_valuedObjects_11_0= ruleValuedObject ) ) (otherlv_12= ',' ( (lv_valuedObjects_13_0= ruleValuedObject ) ) )* otherlv_14= ';' ( (lv_annotations_15_0= ruleCommentAnnotatonSL ) )? ) ;
     public final EObject ruleScheduleDeclaration() throws RecognitionException {
         EObject current = null;
 
@@ -20872,13 +20896,13 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:7581:2: ( ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_access_1_0= ruleAccessModifier ) )? otherlv_2= 'schedule' ( (lv_name_3_0= RULE_STRING ) )? (otherlv_4= 'global' ( (lv_global_5_0= rulePriorityProtocol ) ) )? (otherlv_6= '{' ( (lv_priorities_7_0= rulePriorityProtocol ) ) (otherlv_8= ',' ( (lv_priorities_9_0= rulePriorityProtocol ) ) )* otherlv_10= '}' )? ( (lv_valuedObjects_11_0= ruleValuedObject ) ) (otherlv_12= ',' ( (lv_valuedObjects_13_0= ruleValuedObject ) ) )* otherlv_14= ';' ( (lv_annotations_15_0= ruleCommentAnnotatonSL ) )? ) )
-            // InternalScadeEquations.g:7582:2: ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_access_1_0= ruleAccessModifier ) )? otherlv_2= 'schedule' ( (lv_name_3_0= RULE_STRING ) )? (otherlv_4= 'global' ( (lv_global_5_0= rulePriorityProtocol ) ) )? (otherlv_6= '{' ( (lv_priorities_7_0= rulePriorityProtocol ) ) (otherlv_8= ',' ( (lv_priorities_9_0= rulePriorityProtocol ) ) )* otherlv_10= '}' )? ( (lv_valuedObjects_11_0= ruleValuedObject ) ) (otherlv_12= ',' ( (lv_valuedObjects_13_0= ruleValuedObject ) ) )* otherlv_14= ';' ( (lv_annotations_15_0= ruleCommentAnnotatonSL ) )? )
+            // InternalScadeEquations.g:7585:2: ( ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_access_1_0= ruleAccessModifier ) )? otherlv_2= 'schedule' ( (lv_name_3_0= RULE_STRING ) )? (otherlv_4= 'global' ( (lv_global_5_0= rulePriorityProtocol ) ) )? (otherlv_6= '{' ( (lv_priorities_7_0= rulePriorityProtocol ) ) (otherlv_8= ',' ( (lv_priorities_9_0= rulePriorityProtocol ) ) )* otherlv_10= '}' )? ( (lv_valuedObjects_11_0= ruleValuedObject ) ) (otherlv_12= ',' ( (lv_valuedObjects_13_0= ruleValuedObject ) ) )* otherlv_14= ';' ( (lv_annotations_15_0= ruleCommentAnnotatonSL ) )? ) )
+            // InternalScadeEquations.g:7586:2: ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_access_1_0= ruleAccessModifier ) )? otherlv_2= 'schedule' ( (lv_name_3_0= RULE_STRING ) )? (otherlv_4= 'global' ( (lv_global_5_0= rulePriorityProtocol ) ) )? (otherlv_6= '{' ( (lv_priorities_7_0= rulePriorityProtocol ) ) (otherlv_8= ',' ( (lv_priorities_9_0= rulePriorityProtocol ) ) )* otherlv_10= '}' )? ( (lv_valuedObjects_11_0= ruleValuedObject ) ) (otherlv_12= ',' ( (lv_valuedObjects_13_0= ruleValuedObject ) ) )* otherlv_14= ';' ( (lv_annotations_15_0= ruleCommentAnnotatonSL ) )? )
             {
-            // InternalScadeEquations.g:7582:2: ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_access_1_0= ruleAccessModifier ) )? otherlv_2= 'schedule' ( (lv_name_3_0= RULE_STRING ) )? (otherlv_4= 'global' ( (lv_global_5_0= rulePriorityProtocol ) ) )? (otherlv_6= '{' ( (lv_priorities_7_0= rulePriorityProtocol ) ) (otherlv_8= ',' ( (lv_priorities_9_0= rulePriorityProtocol ) ) )* otherlv_10= '}' )? ( (lv_valuedObjects_11_0= ruleValuedObject ) ) (otherlv_12= ',' ( (lv_valuedObjects_13_0= ruleValuedObject ) ) )* otherlv_14= ';' ( (lv_annotations_15_0= ruleCommentAnnotatonSL ) )? )
-            // InternalScadeEquations.g:7583:3: ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_access_1_0= ruleAccessModifier ) )? otherlv_2= 'schedule' ( (lv_name_3_0= RULE_STRING ) )? (otherlv_4= 'global' ( (lv_global_5_0= rulePriorityProtocol ) ) )? (otherlv_6= '{' ( (lv_priorities_7_0= rulePriorityProtocol ) ) (otherlv_8= ',' ( (lv_priorities_9_0= rulePriorityProtocol ) ) )* otherlv_10= '}' )? ( (lv_valuedObjects_11_0= ruleValuedObject ) ) (otherlv_12= ',' ( (lv_valuedObjects_13_0= ruleValuedObject ) ) )* otherlv_14= ';' ( (lv_annotations_15_0= ruleCommentAnnotatonSL ) )?
+            // InternalScadeEquations.g:7586:2: ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_access_1_0= ruleAccessModifier ) )? otherlv_2= 'schedule' ( (lv_name_3_0= RULE_STRING ) )? (otherlv_4= 'global' ( (lv_global_5_0= rulePriorityProtocol ) ) )? (otherlv_6= '{' ( (lv_priorities_7_0= rulePriorityProtocol ) ) (otherlv_8= ',' ( (lv_priorities_9_0= rulePriorityProtocol ) ) )* otherlv_10= '}' )? ( (lv_valuedObjects_11_0= ruleValuedObject ) ) (otherlv_12= ',' ( (lv_valuedObjects_13_0= ruleValuedObject ) ) )* otherlv_14= ';' ( (lv_annotations_15_0= ruleCommentAnnotatonSL ) )? )
+            // InternalScadeEquations.g:7587:3: ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_access_1_0= ruleAccessModifier ) )? otherlv_2= 'schedule' ( (lv_name_3_0= RULE_STRING ) )? (otherlv_4= 'global' ( (lv_global_5_0= rulePriorityProtocol ) ) )? (otherlv_6= '{' ( (lv_priorities_7_0= rulePriorityProtocol ) ) (otherlv_8= ',' ( (lv_priorities_9_0= rulePriorityProtocol ) ) )* otherlv_10= '}' )? ( (lv_valuedObjects_11_0= ruleValuedObject ) ) (otherlv_12= ',' ( (lv_valuedObjects_13_0= ruleValuedObject ) ) )* otherlv_14= ';' ( (lv_annotations_15_0= ruleCommentAnnotatonSL ) )?
             {
-            // InternalScadeEquations.g:7583:3: ( (lv_annotations_0_0= ruleAnnotation ) )*
+            // InternalScadeEquations.g:7587:3: ( (lv_annotations_0_0= ruleAnnotation ) )*
             loop189:
             do {
                 int alt189=2;
@@ -20891,17 +20915,17 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                 switch (alt189) {
             	case 1 :
-            	    // InternalScadeEquations.g:7584:4: (lv_annotations_0_0= ruleAnnotation )
+            	    // InternalScadeEquations.g:7588:4: (lv_annotations_0_0= ruleAnnotation )
             	    {
-            	    // InternalScadeEquations.g:7584:4: (lv_annotations_0_0= ruleAnnotation )
-            	    // InternalScadeEquations.g:7585:5: lv_annotations_0_0= ruleAnnotation
+            	    // InternalScadeEquations.g:7588:4: (lv_annotations_0_0= ruleAnnotation )
+            	    // InternalScadeEquations.g:7589:5: lv_annotations_0_0= ruleAnnotation
             	    {
             	    if ( state.backtracking==0 ) {
 
             	      					newCompositeNode(grammarAccess.getScheduleDeclarationAccess().getAnnotationsAnnotationParserRuleCall_0_0());
             	      				
             	    }
-            	    pushFollow(FollowSets000.FOLLOW_96);
+            	    pushFollow(FollowSets000.FOLLOW_98);
             	    lv_annotations_0_0=ruleAnnotation();
 
             	    state._fsp--;
@@ -20931,7 +20955,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                 }
             } while (true);
 
-            // InternalScadeEquations.g:7602:3: ( (lv_access_1_0= ruleAccessModifier ) )?
+            // InternalScadeEquations.g:7606:3: ( (lv_access_1_0= ruleAccessModifier ) )?
             int alt190=2;
             int LA190_0 = input.LA(1);
 
@@ -20940,17 +20964,17 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             }
             switch (alt190) {
                 case 1 :
-                    // InternalScadeEquations.g:7603:4: (lv_access_1_0= ruleAccessModifier )
+                    // InternalScadeEquations.g:7607:4: (lv_access_1_0= ruleAccessModifier )
                     {
-                    // InternalScadeEquations.g:7603:4: (lv_access_1_0= ruleAccessModifier )
-                    // InternalScadeEquations.g:7604:5: lv_access_1_0= ruleAccessModifier
+                    // InternalScadeEquations.g:7607:4: (lv_access_1_0= ruleAccessModifier )
+                    // InternalScadeEquations.g:7608:5: lv_access_1_0= ruleAccessModifier
                     {
                     if ( state.backtracking==0 ) {
 
                       					newCompositeNode(grammarAccess.getScheduleDeclarationAccess().getAccessAccessModifierEnumRuleCall_1_0());
                       				
                     }
-                    pushFollow(FollowSets000.FOLLOW_97);
+                    pushFollow(FollowSets000.FOLLOW_99);
                     lv_access_1_0=ruleAccessModifier();
 
                     state._fsp--;
@@ -20977,13 +21001,13 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_2=(Token)match(input,71,FollowSets000.FOLLOW_98); if (state.failed) return current;
+            otherlv_2=(Token)match(input,71,FollowSets000.FOLLOW_100); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               			newLeafNode(otherlv_2, grammarAccess.getScheduleDeclarationAccess().getScheduleKeyword_2());
               		
             }
-            // InternalScadeEquations.g:7625:3: ( (lv_name_3_0= RULE_STRING ) )?
+            // InternalScadeEquations.g:7629:3: ( (lv_name_3_0= RULE_STRING ) )?
             int alt191=2;
             int LA191_0 = input.LA(1);
 
@@ -20992,12 +21016,12 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             }
             switch (alt191) {
                 case 1 :
-                    // InternalScadeEquations.g:7626:4: (lv_name_3_0= RULE_STRING )
+                    // InternalScadeEquations.g:7630:4: (lv_name_3_0= RULE_STRING )
                     {
-                    // InternalScadeEquations.g:7626:4: (lv_name_3_0= RULE_STRING )
-                    // InternalScadeEquations.g:7627:5: lv_name_3_0= RULE_STRING
+                    // InternalScadeEquations.g:7630:4: (lv_name_3_0= RULE_STRING )
+                    // InternalScadeEquations.g:7631:5: lv_name_3_0= RULE_STRING
                     {
-                    lv_name_3_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_99); if (state.failed) return current;
+                    lv_name_3_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_101); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       					newLeafNode(lv_name_3_0, grammarAccess.getScheduleDeclarationAccess().getNameSTRINGTerminalRuleCall_3_0());
@@ -21024,7 +21048,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalScadeEquations.g:7643:3: (otherlv_4= 'global' ( (lv_global_5_0= rulePriorityProtocol ) ) )?
+            // InternalScadeEquations.g:7647:3: (otherlv_4= 'global' ( (lv_global_5_0= rulePriorityProtocol ) ) )?
             int alt192=2;
             int LA192_0 = input.LA(1);
 
@@ -21033,26 +21057,26 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             }
             switch (alt192) {
                 case 1 :
-                    // InternalScadeEquations.g:7644:4: otherlv_4= 'global' ( (lv_global_5_0= rulePriorityProtocol ) )
+                    // InternalScadeEquations.g:7648:4: otherlv_4= 'global' ( (lv_global_5_0= rulePriorityProtocol ) )
                     {
-                    otherlv_4=(Token)match(input,67,FollowSets000.FOLLOW_100); if (state.failed) return current;
+                    otherlv_4=(Token)match(input,67,FollowSets000.FOLLOW_102); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       				newLeafNode(otherlv_4, grammarAccess.getScheduleDeclarationAccess().getGlobalKeyword_4_0());
                       			
                     }
-                    // InternalScadeEquations.g:7648:4: ( (lv_global_5_0= rulePriorityProtocol ) )
-                    // InternalScadeEquations.g:7649:5: (lv_global_5_0= rulePriorityProtocol )
+                    // InternalScadeEquations.g:7652:4: ( (lv_global_5_0= rulePriorityProtocol ) )
+                    // InternalScadeEquations.g:7653:5: (lv_global_5_0= rulePriorityProtocol )
                     {
-                    // InternalScadeEquations.g:7649:5: (lv_global_5_0= rulePriorityProtocol )
-                    // InternalScadeEquations.g:7650:6: lv_global_5_0= rulePriorityProtocol
+                    // InternalScadeEquations.g:7653:5: (lv_global_5_0= rulePriorityProtocol )
+                    // InternalScadeEquations.g:7654:6: lv_global_5_0= rulePriorityProtocol
                     {
                     if ( state.backtracking==0 ) {
 
                       						newCompositeNode(grammarAccess.getScheduleDeclarationAccess().getGlobalPriorityProtocolEnumRuleCall_4_1_0());
                       					
                     }
-                    pushFollow(FollowSets000.FOLLOW_101);
+                    pushFollow(FollowSets000.FOLLOW_103);
                     lv_global_5_0=rulePriorityProtocol();
 
                     state._fsp--;
@@ -21082,7 +21106,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalScadeEquations.g:7668:3: (otherlv_6= '{' ( (lv_priorities_7_0= rulePriorityProtocol ) ) (otherlv_8= ',' ( (lv_priorities_9_0= rulePriorityProtocol ) ) )* otherlv_10= '}' )?
+            // InternalScadeEquations.g:7672:3: (otherlv_6= '{' ( (lv_priorities_7_0= rulePriorityProtocol ) ) (otherlv_8= ',' ( (lv_priorities_9_0= rulePriorityProtocol ) ) )* otherlv_10= '}' )?
             int alt194=2;
             int LA194_0 = input.LA(1);
 
@@ -21091,19 +21115,19 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             }
             switch (alt194) {
                 case 1 :
-                    // InternalScadeEquations.g:7669:4: otherlv_6= '{' ( (lv_priorities_7_0= rulePriorityProtocol ) ) (otherlv_8= ',' ( (lv_priorities_9_0= rulePriorityProtocol ) ) )* otherlv_10= '}'
+                    // InternalScadeEquations.g:7673:4: otherlv_6= '{' ( (lv_priorities_7_0= rulePriorityProtocol ) ) (otherlv_8= ',' ( (lv_priorities_9_0= rulePriorityProtocol ) ) )* otherlv_10= '}'
                     {
-                    otherlv_6=(Token)match(input,22,FollowSets000.FOLLOW_100); if (state.failed) return current;
+                    otherlv_6=(Token)match(input,22,FollowSets000.FOLLOW_102); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       				newLeafNode(otherlv_6, grammarAccess.getScheduleDeclarationAccess().getLeftCurlyBracketKeyword_5_0());
                       			
                     }
-                    // InternalScadeEquations.g:7673:4: ( (lv_priorities_7_0= rulePriorityProtocol ) )
-                    // InternalScadeEquations.g:7674:5: (lv_priorities_7_0= rulePriorityProtocol )
+                    // InternalScadeEquations.g:7677:4: ( (lv_priorities_7_0= rulePriorityProtocol ) )
+                    // InternalScadeEquations.g:7678:5: (lv_priorities_7_0= rulePriorityProtocol )
                     {
-                    // InternalScadeEquations.g:7674:5: (lv_priorities_7_0= rulePriorityProtocol )
-                    // InternalScadeEquations.g:7675:6: lv_priorities_7_0= rulePriorityProtocol
+                    // InternalScadeEquations.g:7678:5: (lv_priorities_7_0= rulePriorityProtocol )
+                    // InternalScadeEquations.g:7679:6: lv_priorities_7_0= rulePriorityProtocol
                     {
                     if ( state.backtracking==0 ) {
 
@@ -21134,7 +21158,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalScadeEquations.g:7692:4: (otherlv_8= ',' ( (lv_priorities_9_0= rulePriorityProtocol ) ) )*
+                    // InternalScadeEquations.g:7696:4: (otherlv_8= ',' ( (lv_priorities_9_0= rulePriorityProtocol ) ) )*
                     loop193:
                     do {
                         int alt193=2;
@@ -21147,19 +21171,19 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                         switch (alt193) {
                     	case 1 :
-                    	    // InternalScadeEquations.g:7693:5: otherlv_8= ',' ( (lv_priorities_9_0= rulePriorityProtocol ) )
+                    	    // InternalScadeEquations.g:7697:5: otherlv_8= ',' ( (lv_priorities_9_0= rulePriorityProtocol ) )
                     	    {
-                    	    otherlv_8=(Token)match(input,18,FollowSets000.FOLLOW_100); if (state.failed) return current;
+                    	    otherlv_8=(Token)match(input,18,FollowSets000.FOLLOW_102); if (state.failed) return current;
                     	    if ( state.backtracking==0 ) {
 
                     	      					newLeafNode(otherlv_8, grammarAccess.getScheduleDeclarationAccess().getCommaKeyword_5_2_0());
                     	      				
                     	    }
-                    	    // InternalScadeEquations.g:7697:5: ( (lv_priorities_9_0= rulePriorityProtocol ) )
-                    	    // InternalScadeEquations.g:7698:6: (lv_priorities_9_0= rulePriorityProtocol )
+                    	    // InternalScadeEquations.g:7701:5: ( (lv_priorities_9_0= rulePriorityProtocol ) )
+                    	    // InternalScadeEquations.g:7702:6: (lv_priorities_9_0= rulePriorityProtocol )
                     	    {
-                    	    // InternalScadeEquations.g:7698:6: (lv_priorities_9_0= rulePriorityProtocol )
-                    	    // InternalScadeEquations.g:7699:7: lv_priorities_9_0= rulePriorityProtocol
+                    	    // InternalScadeEquations.g:7702:6: (lv_priorities_9_0= rulePriorityProtocol )
+                    	    // InternalScadeEquations.g:7703:7: lv_priorities_9_0= rulePriorityProtocol
                     	    {
                     	    if ( state.backtracking==0 ) {
 
@@ -21211,11 +21235,11 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalScadeEquations.g:7722:3: ( (lv_valuedObjects_11_0= ruleValuedObject ) )
-            // InternalScadeEquations.g:7723:4: (lv_valuedObjects_11_0= ruleValuedObject )
+            // InternalScadeEquations.g:7726:3: ( (lv_valuedObjects_11_0= ruleValuedObject ) )
+            // InternalScadeEquations.g:7727:4: (lv_valuedObjects_11_0= ruleValuedObject )
             {
-            // InternalScadeEquations.g:7723:4: (lv_valuedObjects_11_0= ruleValuedObject )
-            // InternalScadeEquations.g:7724:5: lv_valuedObjects_11_0= ruleValuedObject
+            // InternalScadeEquations.g:7727:4: (lv_valuedObjects_11_0= ruleValuedObject )
+            // InternalScadeEquations.g:7728:5: lv_valuedObjects_11_0= ruleValuedObject
             {
             if ( state.backtracking==0 ) {
 
@@ -21246,7 +21270,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalScadeEquations.g:7741:3: (otherlv_12= ',' ( (lv_valuedObjects_13_0= ruleValuedObject ) ) )*
+            // InternalScadeEquations.g:7745:3: (otherlv_12= ',' ( (lv_valuedObjects_13_0= ruleValuedObject ) ) )*
             loop195:
             do {
                 int alt195=2;
@@ -21259,7 +21283,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                 switch (alt195) {
             	case 1 :
-            	    // InternalScadeEquations.g:7742:4: otherlv_12= ',' ( (lv_valuedObjects_13_0= ruleValuedObject ) )
+            	    // InternalScadeEquations.g:7746:4: otherlv_12= ',' ( (lv_valuedObjects_13_0= ruleValuedObject ) )
             	    {
             	    otherlv_12=(Token)match(input,18,FollowSets000.FOLLOW_35); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
@@ -21267,11 +21291,11 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             	      				newLeafNode(otherlv_12, grammarAccess.getScheduleDeclarationAccess().getCommaKeyword_7_0());
             	      			
             	    }
-            	    // InternalScadeEquations.g:7746:4: ( (lv_valuedObjects_13_0= ruleValuedObject ) )
-            	    // InternalScadeEquations.g:7747:5: (lv_valuedObjects_13_0= ruleValuedObject )
+            	    // InternalScadeEquations.g:7750:4: ( (lv_valuedObjects_13_0= ruleValuedObject ) )
+            	    // InternalScadeEquations.g:7751:5: (lv_valuedObjects_13_0= ruleValuedObject )
             	    {
-            	    // InternalScadeEquations.g:7747:5: (lv_valuedObjects_13_0= ruleValuedObject )
-            	    // InternalScadeEquations.g:7748:6: lv_valuedObjects_13_0= ruleValuedObject
+            	    // InternalScadeEquations.g:7751:5: (lv_valuedObjects_13_0= ruleValuedObject )
+            	    // InternalScadeEquations.g:7752:6: lv_valuedObjects_13_0= ruleValuedObject
             	    {
             	    if ( state.backtracking==0 ) {
 
@@ -21317,7 +21341,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
               			newLeafNode(otherlv_14, grammarAccess.getScheduleDeclarationAccess().getSemicolonKeyword_8());
               		
             }
-            // InternalScadeEquations.g:7770:3: ( (lv_annotations_15_0= ruleCommentAnnotatonSL ) )?
+            // InternalScadeEquations.g:7774:3: ( (lv_annotations_15_0= ruleCommentAnnotatonSL ) )?
             int alt196=2;
             int LA196_0 = input.LA(1);
 
@@ -21326,10 +21350,10 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             }
             switch (alt196) {
                 case 1 :
-                    // InternalScadeEquations.g:7771:4: (lv_annotations_15_0= ruleCommentAnnotatonSL )
+                    // InternalScadeEquations.g:7775:4: (lv_annotations_15_0= ruleCommentAnnotatonSL )
                     {
-                    // InternalScadeEquations.g:7771:4: (lv_annotations_15_0= ruleCommentAnnotatonSL )
-                    // InternalScadeEquations.g:7772:5: lv_annotations_15_0= ruleCommentAnnotatonSL
+                    // InternalScadeEquations.g:7775:4: (lv_annotations_15_0= ruleCommentAnnotatonSL )
+                    // InternalScadeEquations.g:7776:5: lv_annotations_15_0= ruleCommentAnnotatonSL
                     {
                     if ( state.backtracking==0 ) {
 
@@ -21388,7 +21412,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleScheduleDeclarationWOSemicolon"
-    // InternalScadeEquations.g:7793:1: entryRuleScheduleDeclarationWOSemicolon returns [EObject current=null] : iv_ruleScheduleDeclarationWOSemicolon= ruleScheduleDeclarationWOSemicolon EOF ;
+    // InternalScadeEquations.g:7797:1: entryRuleScheduleDeclarationWOSemicolon returns [EObject current=null] : iv_ruleScheduleDeclarationWOSemicolon= ruleScheduleDeclarationWOSemicolon EOF ;
     public final EObject entryRuleScheduleDeclarationWOSemicolon() throws RecognitionException {
         EObject current = null;
 
@@ -21396,8 +21420,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalScadeEquations.g:7793:71: (iv_ruleScheduleDeclarationWOSemicolon= ruleScheduleDeclarationWOSemicolon EOF )
-            // InternalScadeEquations.g:7794:2: iv_ruleScheduleDeclarationWOSemicolon= ruleScheduleDeclarationWOSemicolon EOF
+            // InternalScadeEquations.g:7797:71: (iv_ruleScheduleDeclarationWOSemicolon= ruleScheduleDeclarationWOSemicolon EOF )
+            // InternalScadeEquations.g:7798:2: iv_ruleScheduleDeclarationWOSemicolon= ruleScheduleDeclarationWOSemicolon EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getScheduleDeclarationWOSemicolonRule()); 
@@ -21428,7 +21452,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleScheduleDeclarationWOSemicolon"
-    // InternalScadeEquations.g:7800:1: ruleScheduleDeclarationWOSemicolon returns [EObject current=null] : ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_access_1_0= ruleAccessModifier ) )? otherlv_2= 'schedule' ( (lv_name_3_0= RULE_STRING ) )? (otherlv_4= 'global' ( (lv_global_5_0= rulePriorityProtocol ) ) )? (otherlv_6= '{' ( (lv_priorities_7_0= rulePriorityProtocol ) ) (otherlv_8= ',' ( (lv_priorities_9_0= rulePriorityProtocol ) ) )* otherlv_10= '}' )? ( (lv_valuedObjects_11_0= ruleValuedObject ) ) (otherlv_12= ',' ( (lv_valuedObjects_13_0= ruleValuedObject ) ) )* ( (lv_annotations_14_0= ruleCommentAnnotatonSL ) )? ) ;
+    // InternalScadeEquations.g:7804:1: ruleScheduleDeclarationWOSemicolon returns [EObject current=null] : ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_access_1_0= ruleAccessModifier ) )? otherlv_2= 'schedule' ( (lv_name_3_0= RULE_STRING ) )? (otherlv_4= 'global' ( (lv_global_5_0= rulePriorityProtocol ) ) )? (otherlv_6= '{' ( (lv_priorities_7_0= rulePriorityProtocol ) ) (otherlv_8= ',' ( (lv_priorities_9_0= rulePriorityProtocol ) ) )* otherlv_10= '}' )? ( (lv_valuedObjects_11_0= ruleValuedObject ) ) (otherlv_12= ',' ( (lv_valuedObjects_13_0= ruleValuedObject ) ) )* ( (lv_annotations_14_0= ruleCommentAnnotatonSL ) )? ) ;
     public final EObject ruleScheduleDeclarationWOSemicolon() throws RecognitionException {
         EObject current = null;
 
@@ -21460,13 +21484,13 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:7806:2: ( ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_access_1_0= ruleAccessModifier ) )? otherlv_2= 'schedule' ( (lv_name_3_0= RULE_STRING ) )? (otherlv_4= 'global' ( (lv_global_5_0= rulePriorityProtocol ) ) )? (otherlv_6= '{' ( (lv_priorities_7_0= rulePriorityProtocol ) ) (otherlv_8= ',' ( (lv_priorities_9_0= rulePriorityProtocol ) ) )* otherlv_10= '}' )? ( (lv_valuedObjects_11_0= ruleValuedObject ) ) (otherlv_12= ',' ( (lv_valuedObjects_13_0= ruleValuedObject ) ) )* ( (lv_annotations_14_0= ruleCommentAnnotatonSL ) )? ) )
-            // InternalScadeEquations.g:7807:2: ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_access_1_0= ruleAccessModifier ) )? otherlv_2= 'schedule' ( (lv_name_3_0= RULE_STRING ) )? (otherlv_4= 'global' ( (lv_global_5_0= rulePriorityProtocol ) ) )? (otherlv_6= '{' ( (lv_priorities_7_0= rulePriorityProtocol ) ) (otherlv_8= ',' ( (lv_priorities_9_0= rulePriorityProtocol ) ) )* otherlv_10= '}' )? ( (lv_valuedObjects_11_0= ruleValuedObject ) ) (otherlv_12= ',' ( (lv_valuedObjects_13_0= ruleValuedObject ) ) )* ( (lv_annotations_14_0= ruleCommentAnnotatonSL ) )? )
+            // InternalScadeEquations.g:7810:2: ( ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_access_1_0= ruleAccessModifier ) )? otherlv_2= 'schedule' ( (lv_name_3_0= RULE_STRING ) )? (otherlv_4= 'global' ( (lv_global_5_0= rulePriorityProtocol ) ) )? (otherlv_6= '{' ( (lv_priorities_7_0= rulePriorityProtocol ) ) (otherlv_8= ',' ( (lv_priorities_9_0= rulePriorityProtocol ) ) )* otherlv_10= '}' )? ( (lv_valuedObjects_11_0= ruleValuedObject ) ) (otherlv_12= ',' ( (lv_valuedObjects_13_0= ruleValuedObject ) ) )* ( (lv_annotations_14_0= ruleCommentAnnotatonSL ) )? ) )
+            // InternalScadeEquations.g:7811:2: ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_access_1_0= ruleAccessModifier ) )? otherlv_2= 'schedule' ( (lv_name_3_0= RULE_STRING ) )? (otherlv_4= 'global' ( (lv_global_5_0= rulePriorityProtocol ) ) )? (otherlv_6= '{' ( (lv_priorities_7_0= rulePriorityProtocol ) ) (otherlv_8= ',' ( (lv_priorities_9_0= rulePriorityProtocol ) ) )* otherlv_10= '}' )? ( (lv_valuedObjects_11_0= ruleValuedObject ) ) (otherlv_12= ',' ( (lv_valuedObjects_13_0= ruleValuedObject ) ) )* ( (lv_annotations_14_0= ruleCommentAnnotatonSL ) )? )
             {
-            // InternalScadeEquations.g:7807:2: ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_access_1_0= ruleAccessModifier ) )? otherlv_2= 'schedule' ( (lv_name_3_0= RULE_STRING ) )? (otherlv_4= 'global' ( (lv_global_5_0= rulePriorityProtocol ) ) )? (otherlv_6= '{' ( (lv_priorities_7_0= rulePriorityProtocol ) ) (otherlv_8= ',' ( (lv_priorities_9_0= rulePriorityProtocol ) ) )* otherlv_10= '}' )? ( (lv_valuedObjects_11_0= ruleValuedObject ) ) (otherlv_12= ',' ( (lv_valuedObjects_13_0= ruleValuedObject ) ) )* ( (lv_annotations_14_0= ruleCommentAnnotatonSL ) )? )
-            // InternalScadeEquations.g:7808:3: ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_access_1_0= ruleAccessModifier ) )? otherlv_2= 'schedule' ( (lv_name_3_0= RULE_STRING ) )? (otherlv_4= 'global' ( (lv_global_5_0= rulePriorityProtocol ) ) )? (otherlv_6= '{' ( (lv_priorities_7_0= rulePriorityProtocol ) ) (otherlv_8= ',' ( (lv_priorities_9_0= rulePriorityProtocol ) ) )* otherlv_10= '}' )? ( (lv_valuedObjects_11_0= ruleValuedObject ) ) (otherlv_12= ',' ( (lv_valuedObjects_13_0= ruleValuedObject ) ) )* ( (lv_annotations_14_0= ruleCommentAnnotatonSL ) )?
+            // InternalScadeEquations.g:7811:2: ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_access_1_0= ruleAccessModifier ) )? otherlv_2= 'schedule' ( (lv_name_3_0= RULE_STRING ) )? (otherlv_4= 'global' ( (lv_global_5_0= rulePriorityProtocol ) ) )? (otherlv_6= '{' ( (lv_priorities_7_0= rulePriorityProtocol ) ) (otherlv_8= ',' ( (lv_priorities_9_0= rulePriorityProtocol ) ) )* otherlv_10= '}' )? ( (lv_valuedObjects_11_0= ruleValuedObject ) ) (otherlv_12= ',' ( (lv_valuedObjects_13_0= ruleValuedObject ) ) )* ( (lv_annotations_14_0= ruleCommentAnnotatonSL ) )? )
+            // InternalScadeEquations.g:7812:3: ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_access_1_0= ruleAccessModifier ) )? otherlv_2= 'schedule' ( (lv_name_3_0= RULE_STRING ) )? (otherlv_4= 'global' ( (lv_global_5_0= rulePriorityProtocol ) ) )? (otherlv_6= '{' ( (lv_priorities_7_0= rulePriorityProtocol ) ) (otherlv_8= ',' ( (lv_priorities_9_0= rulePriorityProtocol ) ) )* otherlv_10= '}' )? ( (lv_valuedObjects_11_0= ruleValuedObject ) ) (otherlv_12= ',' ( (lv_valuedObjects_13_0= ruleValuedObject ) ) )* ( (lv_annotations_14_0= ruleCommentAnnotatonSL ) )?
             {
-            // InternalScadeEquations.g:7808:3: ( (lv_annotations_0_0= ruleAnnotation ) )*
+            // InternalScadeEquations.g:7812:3: ( (lv_annotations_0_0= ruleAnnotation ) )*
             loop197:
             do {
                 int alt197=2;
@@ -21479,17 +21503,17 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                 switch (alt197) {
             	case 1 :
-            	    // InternalScadeEquations.g:7809:4: (lv_annotations_0_0= ruleAnnotation )
+            	    // InternalScadeEquations.g:7813:4: (lv_annotations_0_0= ruleAnnotation )
             	    {
-            	    // InternalScadeEquations.g:7809:4: (lv_annotations_0_0= ruleAnnotation )
-            	    // InternalScadeEquations.g:7810:5: lv_annotations_0_0= ruleAnnotation
+            	    // InternalScadeEquations.g:7813:4: (lv_annotations_0_0= ruleAnnotation )
+            	    // InternalScadeEquations.g:7814:5: lv_annotations_0_0= ruleAnnotation
             	    {
             	    if ( state.backtracking==0 ) {
 
             	      					newCompositeNode(grammarAccess.getScheduleDeclarationWOSemicolonAccess().getAnnotationsAnnotationParserRuleCall_0_0());
             	      				
             	    }
-            	    pushFollow(FollowSets000.FOLLOW_96);
+            	    pushFollow(FollowSets000.FOLLOW_98);
             	    lv_annotations_0_0=ruleAnnotation();
 
             	    state._fsp--;
@@ -21519,7 +21543,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                 }
             } while (true);
 
-            // InternalScadeEquations.g:7827:3: ( (lv_access_1_0= ruleAccessModifier ) )?
+            // InternalScadeEquations.g:7831:3: ( (lv_access_1_0= ruleAccessModifier ) )?
             int alt198=2;
             int LA198_0 = input.LA(1);
 
@@ -21528,17 +21552,17 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             }
             switch (alt198) {
                 case 1 :
-                    // InternalScadeEquations.g:7828:4: (lv_access_1_0= ruleAccessModifier )
+                    // InternalScadeEquations.g:7832:4: (lv_access_1_0= ruleAccessModifier )
                     {
-                    // InternalScadeEquations.g:7828:4: (lv_access_1_0= ruleAccessModifier )
-                    // InternalScadeEquations.g:7829:5: lv_access_1_0= ruleAccessModifier
+                    // InternalScadeEquations.g:7832:4: (lv_access_1_0= ruleAccessModifier )
+                    // InternalScadeEquations.g:7833:5: lv_access_1_0= ruleAccessModifier
                     {
                     if ( state.backtracking==0 ) {
 
                       					newCompositeNode(grammarAccess.getScheduleDeclarationWOSemicolonAccess().getAccessAccessModifierEnumRuleCall_1_0());
                       				
                     }
-                    pushFollow(FollowSets000.FOLLOW_97);
+                    pushFollow(FollowSets000.FOLLOW_99);
                     lv_access_1_0=ruleAccessModifier();
 
                     state._fsp--;
@@ -21565,13 +21589,13 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_2=(Token)match(input,71,FollowSets000.FOLLOW_98); if (state.failed) return current;
+            otherlv_2=(Token)match(input,71,FollowSets000.FOLLOW_100); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               			newLeafNode(otherlv_2, grammarAccess.getScheduleDeclarationWOSemicolonAccess().getScheduleKeyword_2());
               		
             }
-            // InternalScadeEquations.g:7850:3: ( (lv_name_3_0= RULE_STRING ) )?
+            // InternalScadeEquations.g:7854:3: ( (lv_name_3_0= RULE_STRING ) )?
             int alt199=2;
             int LA199_0 = input.LA(1);
 
@@ -21580,12 +21604,12 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             }
             switch (alt199) {
                 case 1 :
-                    // InternalScadeEquations.g:7851:4: (lv_name_3_0= RULE_STRING )
+                    // InternalScadeEquations.g:7855:4: (lv_name_3_0= RULE_STRING )
                     {
-                    // InternalScadeEquations.g:7851:4: (lv_name_3_0= RULE_STRING )
-                    // InternalScadeEquations.g:7852:5: lv_name_3_0= RULE_STRING
+                    // InternalScadeEquations.g:7855:4: (lv_name_3_0= RULE_STRING )
+                    // InternalScadeEquations.g:7856:5: lv_name_3_0= RULE_STRING
                     {
-                    lv_name_3_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_99); if (state.failed) return current;
+                    lv_name_3_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_101); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       					newLeafNode(lv_name_3_0, grammarAccess.getScheduleDeclarationWOSemicolonAccess().getNameSTRINGTerminalRuleCall_3_0());
@@ -21612,7 +21636,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalScadeEquations.g:7868:3: (otherlv_4= 'global' ( (lv_global_5_0= rulePriorityProtocol ) ) )?
+            // InternalScadeEquations.g:7872:3: (otherlv_4= 'global' ( (lv_global_5_0= rulePriorityProtocol ) ) )?
             int alt200=2;
             int LA200_0 = input.LA(1);
 
@@ -21621,26 +21645,26 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             }
             switch (alt200) {
                 case 1 :
-                    // InternalScadeEquations.g:7869:4: otherlv_4= 'global' ( (lv_global_5_0= rulePriorityProtocol ) )
+                    // InternalScadeEquations.g:7873:4: otherlv_4= 'global' ( (lv_global_5_0= rulePriorityProtocol ) )
                     {
-                    otherlv_4=(Token)match(input,67,FollowSets000.FOLLOW_100); if (state.failed) return current;
+                    otherlv_4=(Token)match(input,67,FollowSets000.FOLLOW_102); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       				newLeafNode(otherlv_4, grammarAccess.getScheduleDeclarationWOSemicolonAccess().getGlobalKeyword_4_0());
                       			
                     }
-                    // InternalScadeEquations.g:7873:4: ( (lv_global_5_0= rulePriorityProtocol ) )
-                    // InternalScadeEquations.g:7874:5: (lv_global_5_0= rulePriorityProtocol )
+                    // InternalScadeEquations.g:7877:4: ( (lv_global_5_0= rulePriorityProtocol ) )
+                    // InternalScadeEquations.g:7878:5: (lv_global_5_0= rulePriorityProtocol )
                     {
-                    // InternalScadeEquations.g:7874:5: (lv_global_5_0= rulePriorityProtocol )
-                    // InternalScadeEquations.g:7875:6: lv_global_5_0= rulePriorityProtocol
+                    // InternalScadeEquations.g:7878:5: (lv_global_5_0= rulePriorityProtocol )
+                    // InternalScadeEquations.g:7879:6: lv_global_5_0= rulePriorityProtocol
                     {
                     if ( state.backtracking==0 ) {
 
                       						newCompositeNode(grammarAccess.getScheduleDeclarationWOSemicolonAccess().getGlobalPriorityProtocolEnumRuleCall_4_1_0());
                       					
                     }
-                    pushFollow(FollowSets000.FOLLOW_101);
+                    pushFollow(FollowSets000.FOLLOW_103);
                     lv_global_5_0=rulePriorityProtocol();
 
                     state._fsp--;
@@ -21670,7 +21694,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalScadeEquations.g:7893:3: (otherlv_6= '{' ( (lv_priorities_7_0= rulePriorityProtocol ) ) (otherlv_8= ',' ( (lv_priorities_9_0= rulePriorityProtocol ) ) )* otherlv_10= '}' )?
+            // InternalScadeEquations.g:7897:3: (otherlv_6= '{' ( (lv_priorities_7_0= rulePriorityProtocol ) ) (otherlv_8= ',' ( (lv_priorities_9_0= rulePriorityProtocol ) ) )* otherlv_10= '}' )?
             int alt202=2;
             int LA202_0 = input.LA(1);
 
@@ -21679,19 +21703,19 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             }
             switch (alt202) {
                 case 1 :
-                    // InternalScadeEquations.g:7894:4: otherlv_6= '{' ( (lv_priorities_7_0= rulePriorityProtocol ) ) (otherlv_8= ',' ( (lv_priorities_9_0= rulePriorityProtocol ) ) )* otherlv_10= '}'
+                    // InternalScadeEquations.g:7898:4: otherlv_6= '{' ( (lv_priorities_7_0= rulePriorityProtocol ) ) (otherlv_8= ',' ( (lv_priorities_9_0= rulePriorityProtocol ) ) )* otherlv_10= '}'
                     {
-                    otherlv_6=(Token)match(input,22,FollowSets000.FOLLOW_100); if (state.failed) return current;
+                    otherlv_6=(Token)match(input,22,FollowSets000.FOLLOW_102); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       				newLeafNode(otherlv_6, grammarAccess.getScheduleDeclarationWOSemicolonAccess().getLeftCurlyBracketKeyword_5_0());
                       			
                     }
-                    // InternalScadeEquations.g:7898:4: ( (lv_priorities_7_0= rulePriorityProtocol ) )
-                    // InternalScadeEquations.g:7899:5: (lv_priorities_7_0= rulePriorityProtocol )
+                    // InternalScadeEquations.g:7902:4: ( (lv_priorities_7_0= rulePriorityProtocol ) )
+                    // InternalScadeEquations.g:7903:5: (lv_priorities_7_0= rulePriorityProtocol )
                     {
-                    // InternalScadeEquations.g:7899:5: (lv_priorities_7_0= rulePriorityProtocol )
-                    // InternalScadeEquations.g:7900:6: lv_priorities_7_0= rulePriorityProtocol
+                    // InternalScadeEquations.g:7903:5: (lv_priorities_7_0= rulePriorityProtocol )
+                    // InternalScadeEquations.g:7904:6: lv_priorities_7_0= rulePriorityProtocol
                     {
                     if ( state.backtracking==0 ) {
 
@@ -21722,7 +21746,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalScadeEquations.g:7917:4: (otherlv_8= ',' ( (lv_priorities_9_0= rulePriorityProtocol ) ) )*
+                    // InternalScadeEquations.g:7921:4: (otherlv_8= ',' ( (lv_priorities_9_0= rulePriorityProtocol ) ) )*
                     loop201:
                     do {
                         int alt201=2;
@@ -21735,19 +21759,19 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                         switch (alt201) {
                     	case 1 :
-                    	    // InternalScadeEquations.g:7918:5: otherlv_8= ',' ( (lv_priorities_9_0= rulePriorityProtocol ) )
+                    	    // InternalScadeEquations.g:7922:5: otherlv_8= ',' ( (lv_priorities_9_0= rulePriorityProtocol ) )
                     	    {
-                    	    otherlv_8=(Token)match(input,18,FollowSets000.FOLLOW_100); if (state.failed) return current;
+                    	    otherlv_8=(Token)match(input,18,FollowSets000.FOLLOW_102); if (state.failed) return current;
                     	    if ( state.backtracking==0 ) {
 
                     	      					newLeafNode(otherlv_8, grammarAccess.getScheduleDeclarationWOSemicolonAccess().getCommaKeyword_5_2_0());
                     	      				
                     	    }
-                    	    // InternalScadeEquations.g:7922:5: ( (lv_priorities_9_0= rulePriorityProtocol ) )
-                    	    // InternalScadeEquations.g:7923:6: (lv_priorities_9_0= rulePriorityProtocol )
+                    	    // InternalScadeEquations.g:7926:5: ( (lv_priorities_9_0= rulePriorityProtocol ) )
+                    	    // InternalScadeEquations.g:7927:6: (lv_priorities_9_0= rulePriorityProtocol )
                     	    {
-                    	    // InternalScadeEquations.g:7923:6: (lv_priorities_9_0= rulePriorityProtocol )
-                    	    // InternalScadeEquations.g:7924:7: lv_priorities_9_0= rulePriorityProtocol
+                    	    // InternalScadeEquations.g:7927:6: (lv_priorities_9_0= rulePriorityProtocol )
+                    	    // InternalScadeEquations.g:7928:7: lv_priorities_9_0= rulePriorityProtocol
                     	    {
                     	    if ( state.backtracking==0 ) {
 
@@ -21799,11 +21823,11 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalScadeEquations.g:7947:3: ( (lv_valuedObjects_11_0= ruleValuedObject ) )
-            // InternalScadeEquations.g:7948:4: (lv_valuedObjects_11_0= ruleValuedObject )
+            // InternalScadeEquations.g:7951:3: ( (lv_valuedObjects_11_0= ruleValuedObject ) )
+            // InternalScadeEquations.g:7952:4: (lv_valuedObjects_11_0= ruleValuedObject )
             {
-            // InternalScadeEquations.g:7948:4: (lv_valuedObjects_11_0= ruleValuedObject )
-            // InternalScadeEquations.g:7949:5: lv_valuedObjects_11_0= ruleValuedObject
+            // InternalScadeEquations.g:7952:4: (lv_valuedObjects_11_0= ruleValuedObject )
+            // InternalScadeEquations.g:7953:5: lv_valuedObjects_11_0= ruleValuedObject
             {
             if ( state.backtracking==0 ) {
 
@@ -21834,7 +21858,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalScadeEquations.g:7966:3: (otherlv_12= ',' ( (lv_valuedObjects_13_0= ruleValuedObject ) ) )*
+            // InternalScadeEquations.g:7970:3: (otherlv_12= ',' ( (lv_valuedObjects_13_0= ruleValuedObject ) ) )*
             loop203:
             do {
                 int alt203=2;
@@ -21847,7 +21871,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                 switch (alt203) {
             	case 1 :
-            	    // InternalScadeEquations.g:7967:4: otherlv_12= ',' ( (lv_valuedObjects_13_0= ruleValuedObject ) )
+            	    // InternalScadeEquations.g:7971:4: otherlv_12= ',' ( (lv_valuedObjects_13_0= ruleValuedObject ) )
             	    {
             	    otherlv_12=(Token)match(input,18,FollowSets000.FOLLOW_35); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
@@ -21855,11 +21879,11 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             	      				newLeafNode(otherlv_12, grammarAccess.getScheduleDeclarationWOSemicolonAccess().getCommaKeyword_7_0());
             	      			
             	    }
-            	    // InternalScadeEquations.g:7971:4: ( (lv_valuedObjects_13_0= ruleValuedObject ) )
-            	    // InternalScadeEquations.g:7972:5: (lv_valuedObjects_13_0= ruleValuedObject )
+            	    // InternalScadeEquations.g:7975:4: ( (lv_valuedObjects_13_0= ruleValuedObject ) )
+            	    // InternalScadeEquations.g:7976:5: (lv_valuedObjects_13_0= ruleValuedObject )
             	    {
-            	    // InternalScadeEquations.g:7972:5: (lv_valuedObjects_13_0= ruleValuedObject )
-            	    // InternalScadeEquations.g:7973:6: lv_valuedObjects_13_0= ruleValuedObject
+            	    // InternalScadeEquations.g:7976:5: (lv_valuedObjects_13_0= ruleValuedObject )
+            	    // InternalScadeEquations.g:7977:6: lv_valuedObjects_13_0= ruleValuedObject
             	    {
             	    if ( state.backtracking==0 ) {
 
@@ -21899,7 +21923,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                 }
             } while (true);
 
-            // InternalScadeEquations.g:7991:3: ( (lv_annotations_14_0= ruleCommentAnnotatonSL ) )?
+            // InternalScadeEquations.g:7995:3: ( (lv_annotations_14_0= ruleCommentAnnotatonSL ) )?
             int alt204=2;
             int LA204_0 = input.LA(1);
 
@@ -21908,10 +21932,10 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             }
             switch (alt204) {
                 case 1 :
-                    // InternalScadeEquations.g:7992:4: (lv_annotations_14_0= ruleCommentAnnotatonSL )
+                    // InternalScadeEquations.g:7996:4: (lv_annotations_14_0= ruleCommentAnnotatonSL )
                     {
-                    // InternalScadeEquations.g:7992:4: (lv_annotations_14_0= ruleCommentAnnotatonSL )
-                    // InternalScadeEquations.g:7993:5: lv_annotations_14_0= ruleCommentAnnotatonSL
+                    // InternalScadeEquations.g:7996:4: (lv_annotations_14_0= ruleCommentAnnotatonSL )
+                    // InternalScadeEquations.g:7997:5: lv_annotations_14_0= ruleCommentAnnotatonSL
                     {
                     if ( state.backtracking==0 ) {
 
@@ -21970,7 +21994,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleValuedObject"
-    // InternalScadeEquations.g:8014:1: entryRuleValuedObject returns [EObject current=null] : iv_ruleValuedObject= ruleValuedObject EOF ;
+    // InternalScadeEquations.g:8018:1: entryRuleValuedObject returns [EObject current=null] : iv_ruleValuedObject= ruleValuedObject EOF ;
     public final EObject entryRuleValuedObject() throws RecognitionException {
         EObject current = null;
 
@@ -21978,8 +22002,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalScadeEquations.g:8014:53: (iv_ruleValuedObject= ruleValuedObject EOF )
-            // InternalScadeEquations.g:8015:2: iv_ruleValuedObject= ruleValuedObject EOF
+            // InternalScadeEquations.g:8018:53: (iv_ruleValuedObject= ruleValuedObject EOF )
+            // InternalScadeEquations.g:8019:2: iv_ruleValuedObject= ruleValuedObject EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getValuedObjectRule()); 
@@ -22010,7 +22034,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleValuedObject"
-    // InternalScadeEquations.g:8021:1: ruleValuedObject returns [EObject current=null] : ( ( (lv_annotations_0_0= ruleQuotedStringAnnotation ) )* ( (lv_name_1_0= rulePrimeID ) ) (otherlv_2= '[' ( (lv_cardinalities_3_0= ruleExpression ) ) otherlv_4= ']' )* (otherlv_5= '=' ( (lv_initialValue_6_0= ruleExpression ) ) )? (otherlv_7= 'combine' ( (lv_combineOperator_8_0= ruleCombineOperator ) ) )? (otherlv_9= 'label' ( (lv_label_10_0= RULE_STRING ) ) )? ) ;
+    // InternalScadeEquations.g:8025:1: ruleValuedObject returns [EObject current=null] : ( ( (lv_annotations_0_0= ruleQuotedStringAnnotation ) )* ( (lv_name_1_0= rulePrimeID ) ) (otherlv_2= '[' ( (lv_cardinalities_3_0= ruleExpression ) ) otherlv_4= ']' )* (otherlv_5= '=' ( (lv_initialValue_6_0= ruleExpression ) ) )? (otherlv_7= 'combine' ( (lv_combineOperator_8_0= ruleCombineOperator ) ) )? (otherlv_9= 'label' ( (lv_label_10_0= RULE_STRING ) ) )? ) ;
     public final EObject ruleValuedObject() throws RecognitionException {
         EObject current = null;
 
@@ -22035,13 +22059,13 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:8027:2: ( ( ( (lv_annotations_0_0= ruleQuotedStringAnnotation ) )* ( (lv_name_1_0= rulePrimeID ) ) (otherlv_2= '[' ( (lv_cardinalities_3_0= ruleExpression ) ) otherlv_4= ']' )* (otherlv_5= '=' ( (lv_initialValue_6_0= ruleExpression ) ) )? (otherlv_7= 'combine' ( (lv_combineOperator_8_0= ruleCombineOperator ) ) )? (otherlv_9= 'label' ( (lv_label_10_0= RULE_STRING ) ) )? ) )
-            // InternalScadeEquations.g:8028:2: ( ( (lv_annotations_0_0= ruleQuotedStringAnnotation ) )* ( (lv_name_1_0= rulePrimeID ) ) (otherlv_2= '[' ( (lv_cardinalities_3_0= ruleExpression ) ) otherlv_4= ']' )* (otherlv_5= '=' ( (lv_initialValue_6_0= ruleExpression ) ) )? (otherlv_7= 'combine' ( (lv_combineOperator_8_0= ruleCombineOperator ) ) )? (otherlv_9= 'label' ( (lv_label_10_0= RULE_STRING ) ) )? )
+            // InternalScadeEquations.g:8031:2: ( ( ( (lv_annotations_0_0= ruleQuotedStringAnnotation ) )* ( (lv_name_1_0= rulePrimeID ) ) (otherlv_2= '[' ( (lv_cardinalities_3_0= ruleExpression ) ) otherlv_4= ']' )* (otherlv_5= '=' ( (lv_initialValue_6_0= ruleExpression ) ) )? (otherlv_7= 'combine' ( (lv_combineOperator_8_0= ruleCombineOperator ) ) )? (otherlv_9= 'label' ( (lv_label_10_0= RULE_STRING ) ) )? ) )
+            // InternalScadeEquations.g:8032:2: ( ( (lv_annotations_0_0= ruleQuotedStringAnnotation ) )* ( (lv_name_1_0= rulePrimeID ) ) (otherlv_2= '[' ( (lv_cardinalities_3_0= ruleExpression ) ) otherlv_4= ']' )* (otherlv_5= '=' ( (lv_initialValue_6_0= ruleExpression ) ) )? (otherlv_7= 'combine' ( (lv_combineOperator_8_0= ruleCombineOperator ) ) )? (otherlv_9= 'label' ( (lv_label_10_0= RULE_STRING ) ) )? )
             {
-            // InternalScadeEquations.g:8028:2: ( ( (lv_annotations_0_0= ruleQuotedStringAnnotation ) )* ( (lv_name_1_0= rulePrimeID ) ) (otherlv_2= '[' ( (lv_cardinalities_3_0= ruleExpression ) ) otherlv_4= ']' )* (otherlv_5= '=' ( (lv_initialValue_6_0= ruleExpression ) ) )? (otherlv_7= 'combine' ( (lv_combineOperator_8_0= ruleCombineOperator ) ) )? (otherlv_9= 'label' ( (lv_label_10_0= RULE_STRING ) ) )? )
-            // InternalScadeEquations.g:8029:3: ( (lv_annotations_0_0= ruleQuotedStringAnnotation ) )* ( (lv_name_1_0= rulePrimeID ) ) (otherlv_2= '[' ( (lv_cardinalities_3_0= ruleExpression ) ) otherlv_4= ']' )* (otherlv_5= '=' ( (lv_initialValue_6_0= ruleExpression ) ) )? (otherlv_7= 'combine' ( (lv_combineOperator_8_0= ruleCombineOperator ) ) )? (otherlv_9= 'label' ( (lv_label_10_0= RULE_STRING ) ) )?
+            // InternalScadeEquations.g:8032:2: ( ( (lv_annotations_0_0= ruleQuotedStringAnnotation ) )* ( (lv_name_1_0= rulePrimeID ) ) (otherlv_2= '[' ( (lv_cardinalities_3_0= ruleExpression ) ) otherlv_4= ']' )* (otherlv_5= '=' ( (lv_initialValue_6_0= ruleExpression ) ) )? (otherlv_7= 'combine' ( (lv_combineOperator_8_0= ruleCombineOperator ) ) )? (otherlv_9= 'label' ( (lv_label_10_0= RULE_STRING ) ) )? )
+            // InternalScadeEquations.g:8033:3: ( (lv_annotations_0_0= ruleQuotedStringAnnotation ) )* ( (lv_name_1_0= rulePrimeID ) ) (otherlv_2= '[' ( (lv_cardinalities_3_0= ruleExpression ) ) otherlv_4= ']' )* (otherlv_5= '=' ( (lv_initialValue_6_0= ruleExpression ) ) )? (otherlv_7= 'combine' ( (lv_combineOperator_8_0= ruleCombineOperator ) ) )? (otherlv_9= 'label' ( (lv_label_10_0= RULE_STRING ) ) )?
             {
-            // InternalScadeEquations.g:8029:3: ( (lv_annotations_0_0= ruleQuotedStringAnnotation ) )*
+            // InternalScadeEquations.g:8033:3: ( (lv_annotations_0_0= ruleQuotedStringAnnotation ) )*
             loop205:
             do {
                 int alt205=2;
@@ -22054,10 +22078,10 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                 switch (alt205) {
             	case 1 :
-            	    // InternalScadeEquations.g:8030:4: (lv_annotations_0_0= ruleQuotedStringAnnotation )
+            	    // InternalScadeEquations.g:8034:4: (lv_annotations_0_0= ruleQuotedStringAnnotation )
             	    {
-            	    // InternalScadeEquations.g:8030:4: (lv_annotations_0_0= ruleQuotedStringAnnotation )
-            	    // InternalScadeEquations.g:8031:5: lv_annotations_0_0= ruleQuotedStringAnnotation
+            	    // InternalScadeEquations.g:8034:4: (lv_annotations_0_0= ruleQuotedStringAnnotation )
+            	    // InternalScadeEquations.g:8035:5: lv_annotations_0_0= ruleQuotedStringAnnotation
             	    {
             	    if ( state.backtracking==0 ) {
 
@@ -22094,18 +22118,18 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                 }
             } while (true);
 
-            // InternalScadeEquations.g:8048:3: ( (lv_name_1_0= rulePrimeID ) )
-            // InternalScadeEquations.g:8049:4: (lv_name_1_0= rulePrimeID )
+            // InternalScadeEquations.g:8052:3: ( (lv_name_1_0= rulePrimeID ) )
+            // InternalScadeEquations.g:8053:4: (lv_name_1_0= rulePrimeID )
             {
-            // InternalScadeEquations.g:8049:4: (lv_name_1_0= rulePrimeID )
-            // InternalScadeEquations.g:8050:5: lv_name_1_0= rulePrimeID
+            // InternalScadeEquations.g:8053:4: (lv_name_1_0= rulePrimeID )
+            // InternalScadeEquations.g:8054:5: lv_name_1_0= rulePrimeID
             {
             if ( state.backtracking==0 ) {
 
               					newCompositeNode(grammarAccess.getValuedObjectAccess().getNamePrimeIDParserRuleCall_1_0());
               				
             }
-            pushFollow(FollowSets000.FOLLOW_102);
+            pushFollow(FollowSets000.FOLLOW_104);
             lv_name_1_0=rulePrimeID();
 
             state._fsp--;
@@ -22129,7 +22153,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalScadeEquations.g:8067:3: (otherlv_2= '[' ( (lv_cardinalities_3_0= ruleExpression ) ) otherlv_4= ']' )*
+            // InternalScadeEquations.g:8071:3: (otherlv_2= '[' ( (lv_cardinalities_3_0= ruleExpression ) ) otherlv_4= ']' )*
             loop206:
             do {
                 int alt206=2;
@@ -22142,7 +22166,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                 switch (alt206) {
             	case 1 :
-            	    // InternalScadeEquations.g:8068:4: otherlv_2= '[' ( (lv_cardinalities_3_0= ruleExpression ) ) otherlv_4= ']'
+            	    // InternalScadeEquations.g:8072:4: otherlv_2= '[' ( (lv_cardinalities_3_0= ruleExpression ) ) otherlv_4= ']'
             	    {
             	    otherlv_2=(Token)match(input,73,FollowSets000.FOLLOW_9); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
@@ -22150,18 +22174,18 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             	      				newLeafNode(otherlv_2, grammarAccess.getValuedObjectAccess().getLeftSquareBracketKeyword_2_0());
             	      			
             	    }
-            	    // InternalScadeEquations.g:8072:4: ( (lv_cardinalities_3_0= ruleExpression ) )
-            	    // InternalScadeEquations.g:8073:5: (lv_cardinalities_3_0= ruleExpression )
+            	    // InternalScadeEquations.g:8076:4: ( (lv_cardinalities_3_0= ruleExpression ) )
+            	    // InternalScadeEquations.g:8077:5: (lv_cardinalities_3_0= ruleExpression )
             	    {
-            	    // InternalScadeEquations.g:8073:5: (lv_cardinalities_3_0= ruleExpression )
-            	    // InternalScadeEquations.g:8074:6: lv_cardinalities_3_0= ruleExpression
+            	    // InternalScadeEquations.g:8077:5: (lv_cardinalities_3_0= ruleExpression )
+            	    // InternalScadeEquations.g:8078:6: lv_cardinalities_3_0= ruleExpression
             	    {
             	    if ( state.backtracking==0 ) {
 
             	      						newCompositeNode(grammarAccess.getValuedObjectAccess().getCardinalitiesExpressionParserRuleCall_2_1_0());
             	      					
             	    }
-            	    pushFollow(FollowSets000.FOLLOW_103);
+            	    pushFollow(FollowSets000.FOLLOW_105);
             	    lv_cardinalities_3_0=ruleExpression();
 
             	    state._fsp--;
@@ -22185,7 +22209,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             	    }
 
-            	    otherlv_4=(Token)match(input,74,FollowSets000.FOLLOW_102); if (state.failed) return current;
+            	    otherlv_4=(Token)match(input,74,FollowSets000.FOLLOW_104); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	      				newLeafNode(otherlv_4, grammarAccess.getValuedObjectAccess().getRightSquareBracketKeyword_2_2());
@@ -22200,7 +22224,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                 }
             } while (true);
 
-            // InternalScadeEquations.g:8096:3: (otherlv_5= '=' ( (lv_initialValue_6_0= ruleExpression ) ) )?
+            // InternalScadeEquations.g:8100:3: (otherlv_5= '=' ( (lv_initialValue_6_0= ruleExpression ) ) )?
             int alt207=2;
             int LA207_0 = input.LA(1);
 
@@ -22209,7 +22233,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             }
             switch (alt207) {
                 case 1 :
-                    // InternalScadeEquations.g:8097:4: otherlv_5= '=' ( (lv_initialValue_6_0= ruleExpression ) )
+                    // InternalScadeEquations.g:8101:4: otherlv_5= '=' ( (lv_initialValue_6_0= ruleExpression ) )
                     {
                     otherlv_5=(Token)match(input,21,FollowSets000.FOLLOW_9); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -22217,18 +22241,18 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                       				newLeafNode(otherlv_5, grammarAccess.getValuedObjectAccess().getEqualsSignKeyword_3_0());
                       			
                     }
-                    // InternalScadeEquations.g:8101:4: ( (lv_initialValue_6_0= ruleExpression ) )
-                    // InternalScadeEquations.g:8102:5: (lv_initialValue_6_0= ruleExpression )
+                    // InternalScadeEquations.g:8105:4: ( (lv_initialValue_6_0= ruleExpression ) )
+                    // InternalScadeEquations.g:8106:5: (lv_initialValue_6_0= ruleExpression )
                     {
-                    // InternalScadeEquations.g:8102:5: (lv_initialValue_6_0= ruleExpression )
-                    // InternalScadeEquations.g:8103:6: lv_initialValue_6_0= ruleExpression
+                    // InternalScadeEquations.g:8106:5: (lv_initialValue_6_0= ruleExpression )
+                    // InternalScadeEquations.g:8107:6: lv_initialValue_6_0= ruleExpression
                     {
                     if ( state.backtracking==0 ) {
 
                       						newCompositeNode(grammarAccess.getValuedObjectAccess().getInitialValueExpressionParserRuleCall_3_1_0());
                       					
                     }
-                    pushFollow(FollowSets000.FOLLOW_104);
+                    pushFollow(FollowSets000.FOLLOW_106);
                     lv_initialValue_6_0=ruleExpression();
 
                     state._fsp--;
@@ -22258,7 +22282,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalScadeEquations.g:8121:3: (otherlv_7= 'combine' ( (lv_combineOperator_8_0= ruleCombineOperator ) ) )?
+            // InternalScadeEquations.g:8125:3: (otherlv_7= 'combine' ( (lv_combineOperator_8_0= ruleCombineOperator ) ) )?
             int alt208=2;
             int LA208_0 = input.LA(1);
 
@@ -22267,26 +22291,26 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             }
             switch (alt208) {
                 case 1 :
-                    // InternalScadeEquations.g:8122:4: otherlv_7= 'combine' ( (lv_combineOperator_8_0= ruleCombineOperator ) )
+                    // InternalScadeEquations.g:8126:4: otherlv_7= 'combine' ( (lv_combineOperator_8_0= ruleCombineOperator ) )
                     {
-                    otherlv_7=(Token)match(input,75,FollowSets000.FOLLOW_105); if (state.failed) return current;
+                    otherlv_7=(Token)match(input,75,FollowSets000.FOLLOW_107); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       				newLeafNode(otherlv_7, grammarAccess.getValuedObjectAccess().getCombineKeyword_4_0());
                       			
                     }
-                    // InternalScadeEquations.g:8126:4: ( (lv_combineOperator_8_0= ruleCombineOperator ) )
-                    // InternalScadeEquations.g:8127:5: (lv_combineOperator_8_0= ruleCombineOperator )
+                    // InternalScadeEquations.g:8130:4: ( (lv_combineOperator_8_0= ruleCombineOperator ) )
+                    // InternalScadeEquations.g:8131:5: (lv_combineOperator_8_0= ruleCombineOperator )
                     {
-                    // InternalScadeEquations.g:8127:5: (lv_combineOperator_8_0= ruleCombineOperator )
-                    // InternalScadeEquations.g:8128:6: lv_combineOperator_8_0= ruleCombineOperator
+                    // InternalScadeEquations.g:8131:5: (lv_combineOperator_8_0= ruleCombineOperator )
+                    // InternalScadeEquations.g:8132:6: lv_combineOperator_8_0= ruleCombineOperator
                     {
                     if ( state.backtracking==0 ) {
 
                       						newCompositeNode(grammarAccess.getValuedObjectAccess().getCombineOperatorCombineOperatorEnumRuleCall_4_1_0());
                       					
                     }
-                    pushFollow(FollowSets000.FOLLOW_106);
+                    pushFollow(FollowSets000.FOLLOW_108);
                     lv_combineOperator_8_0=ruleCombineOperator();
 
                     state._fsp--;
@@ -22316,7 +22340,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalScadeEquations.g:8146:3: (otherlv_9= 'label' ( (lv_label_10_0= RULE_STRING ) ) )?
+            // InternalScadeEquations.g:8150:3: (otherlv_9= 'label' ( (lv_label_10_0= RULE_STRING ) ) )?
             int alt209=2;
             int LA209_0 = input.LA(1);
 
@@ -22325,7 +22349,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             }
             switch (alt209) {
                 case 1 :
-                    // InternalScadeEquations.g:8147:4: otherlv_9= 'label' ( (lv_label_10_0= RULE_STRING ) )
+                    // InternalScadeEquations.g:8151:4: otherlv_9= 'label' ( (lv_label_10_0= RULE_STRING ) )
                     {
                     otherlv_9=(Token)match(input,76,FollowSets000.FOLLOW_70); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -22333,11 +22357,11 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                       				newLeafNode(otherlv_9, grammarAccess.getValuedObjectAccess().getLabelKeyword_5_0());
                       			
                     }
-                    // InternalScadeEquations.g:8151:4: ( (lv_label_10_0= RULE_STRING ) )
-                    // InternalScadeEquations.g:8152:5: (lv_label_10_0= RULE_STRING )
+                    // InternalScadeEquations.g:8155:4: ( (lv_label_10_0= RULE_STRING ) )
+                    // InternalScadeEquations.g:8156:5: (lv_label_10_0= RULE_STRING )
                     {
-                    // InternalScadeEquations.g:8152:5: (lv_label_10_0= RULE_STRING )
-                    // InternalScadeEquations.g:8153:6: lv_label_10_0= RULE_STRING
+                    // InternalScadeEquations.g:8156:5: (lv_label_10_0= RULE_STRING )
+                    // InternalScadeEquations.g:8157:6: lv_label_10_0= RULE_STRING
                     {
                     lv_label_10_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -22394,7 +22418,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleSimpleValuedObject"
-    // InternalScadeEquations.g:8174:1: entryRuleSimpleValuedObject returns [EObject current=null] : iv_ruleSimpleValuedObject= ruleSimpleValuedObject EOF ;
+    // InternalScadeEquations.g:8178:1: entryRuleSimpleValuedObject returns [EObject current=null] : iv_ruleSimpleValuedObject= ruleSimpleValuedObject EOF ;
     public final EObject entryRuleSimpleValuedObject() throws RecognitionException {
         EObject current = null;
 
@@ -22402,8 +22426,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalScadeEquations.g:8174:59: (iv_ruleSimpleValuedObject= ruleSimpleValuedObject EOF )
-            // InternalScadeEquations.g:8175:2: iv_ruleSimpleValuedObject= ruleSimpleValuedObject EOF
+            // InternalScadeEquations.g:8178:59: (iv_ruleSimpleValuedObject= ruleSimpleValuedObject EOF )
+            // InternalScadeEquations.g:8179:2: iv_ruleSimpleValuedObject= ruleSimpleValuedObject EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getSimpleValuedObjectRule()); 
@@ -22434,7 +22458,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleSimpleValuedObject"
-    // InternalScadeEquations.g:8181:1: ruleSimpleValuedObject returns [EObject current=null] : ( ( (lv_annotations_0_0= ruleQuotedStringAnnotation ) )* ( (lv_name_1_0= rulePrimeID ) ) ) ;
+    // InternalScadeEquations.g:8185:1: ruleSimpleValuedObject returns [EObject current=null] : ( ( (lv_annotations_0_0= ruleQuotedStringAnnotation ) )* ( (lv_name_1_0= rulePrimeID ) ) ) ;
     public final EObject ruleSimpleValuedObject() throws RecognitionException {
         EObject current = null;
 
@@ -22447,13 +22471,13 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:8187:2: ( ( ( (lv_annotations_0_0= ruleQuotedStringAnnotation ) )* ( (lv_name_1_0= rulePrimeID ) ) ) )
-            // InternalScadeEquations.g:8188:2: ( ( (lv_annotations_0_0= ruleQuotedStringAnnotation ) )* ( (lv_name_1_0= rulePrimeID ) ) )
+            // InternalScadeEquations.g:8191:2: ( ( ( (lv_annotations_0_0= ruleQuotedStringAnnotation ) )* ( (lv_name_1_0= rulePrimeID ) ) ) )
+            // InternalScadeEquations.g:8192:2: ( ( (lv_annotations_0_0= ruleQuotedStringAnnotation ) )* ( (lv_name_1_0= rulePrimeID ) ) )
             {
-            // InternalScadeEquations.g:8188:2: ( ( (lv_annotations_0_0= ruleQuotedStringAnnotation ) )* ( (lv_name_1_0= rulePrimeID ) ) )
-            // InternalScadeEquations.g:8189:3: ( (lv_annotations_0_0= ruleQuotedStringAnnotation ) )* ( (lv_name_1_0= rulePrimeID ) )
+            // InternalScadeEquations.g:8192:2: ( ( (lv_annotations_0_0= ruleQuotedStringAnnotation ) )* ( (lv_name_1_0= rulePrimeID ) ) )
+            // InternalScadeEquations.g:8193:3: ( (lv_annotations_0_0= ruleQuotedStringAnnotation ) )* ( (lv_name_1_0= rulePrimeID ) )
             {
-            // InternalScadeEquations.g:8189:3: ( (lv_annotations_0_0= ruleQuotedStringAnnotation ) )*
+            // InternalScadeEquations.g:8193:3: ( (lv_annotations_0_0= ruleQuotedStringAnnotation ) )*
             loop210:
             do {
                 int alt210=2;
@@ -22466,10 +22490,10 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                 switch (alt210) {
             	case 1 :
-            	    // InternalScadeEquations.g:8190:4: (lv_annotations_0_0= ruleQuotedStringAnnotation )
+            	    // InternalScadeEquations.g:8194:4: (lv_annotations_0_0= ruleQuotedStringAnnotation )
             	    {
-            	    // InternalScadeEquations.g:8190:4: (lv_annotations_0_0= ruleQuotedStringAnnotation )
-            	    // InternalScadeEquations.g:8191:5: lv_annotations_0_0= ruleQuotedStringAnnotation
+            	    // InternalScadeEquations.g:8194:4: (lv_annotations_0_0= ruleQuotedStringAnnotation )
+            	    // InternalScadeEquations.g:8195:5: lv_annotations_0_0= ruleQuotedStringAnnotation
             	    {
             	    if ( state.backtracking==0 ) {
 
@@ -22506,11 +22530,11 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                 }
             } while (true);
 
-            // InternalScadeEquations.g:8208:3: ( (lv_name_1_0= rulePrimeID ) )
-            // InternalScadeEquations.g:8209:4: (lv_name_1_0= rulePrimeID )
+            // InternalScadeEquations.g:8212:3: ( (lv_name_1_0= rulePrimeID ) )
+            // InternalScadeEquations.g:8213:4: (lv_name_1_0= rulePrimeID )
             {
-            // InternalScadeEquations.g:8209:4: (lv_name_1_0= rulePrimeID )
-            // InternalScadeEquations.g:8210:5: lv_name_1_0= rulePrimeID
+            // InternalScadeEquations.g:8213:4: (lv_name_1_0= rulePrimeID )
+            // InternalScadeEquations.g:8214:5: lv_name_1_0= rulePrimeID
             {
             if ( state.backtracking==0 ) {
 
@@ -22566,7 +22590,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleEffect"
-    // InternalScadeEquations.g:8231:1: entryRuleEffect returns [EObject current=null] : iv_ruleEffect= ruleEffect EOF ;
+    // InternalScadeEquations.g:8235:1: entryRuleEffect returns [EObject current=null] : iv_ruleEffect= ruleEffect EOF ;
     public final EObject entryRuleEffect() throws RecognitionException {
         EObject current = null;
 
@@ -22574,8 +22598,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalScadeEquations.g:8231:47: (iv_ruleEffect= ruleEffect EOF )
-            // InternalScadeEquations.g:8232:2: iv_ruleEffect= ruleEffect EOF
+            // InternalScadeEquations.g:8235:47: (iv_ruleEffect= ruleEffect EOF )
+            // InternalScadeEquations.g:8236:2: iv_ruleEffect= ruleEffect EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getEffectRule()); 
@@ -22606,7 +22630,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleEffect"
-    // InternalScadeEquations.g:8238:1: ruleEffect returns [EObject current=null] : (this_Assignment_0= ruleAssignment | this_PostfixEffect_1= rulePostfixEffect | this_ValuedEmission_2= ruleValuedEmission | this_HostcodeEffect_3= ruleHostcodeEffect | this_ReferenceCallEffect_4= ruleReferenceCallEffect | this_FunctionCallEffect_5= ruleFunctionCallEffect | this_PrintCallEffect_6= rulePrintCallEffect | this_RandomizeCallEffect_7= ruleRandomizeCallEffect | this_PureEmission_8= rulePureEmission ) ;
+    // InternalScadeEquations.g:8242:1: ruleEffect returns [EObject current=null] : (this_Assignment_0= ruleAssignment | this_PostfixEffect_1= rulePostfixEffect | this_ValuedEmission_2= ruleValuedEmission | this_HostcodeEffect_3= ruleHostcodeEffect | this_ReferenceCallEffect_4= ruleReferenceCallEffect | this_FunctionCallEffect_5= ruleFunctionCallEffect | this_PrintCallEffect_6= rulePrintCallEffect | this_RandomizeCallEffect_7= ruleRandomizeCallEffect | this_PureEmission_8= rulePureEmission ) ;
     public final EObject ruleEffect() throws RecognitionException {
         EObject current = null;
 
@@ -22633,15 +22657,15 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:8244:2: ( (this_Assignment_0= ruleAssignment | this_PostfixEffect_1= rulePostfixEffect | this_ValuedEmission_2= ruleValuedEmission | this_HostcodeEffect_3= ruleHostcodeEffect | this_ReferenceCallEffect_4= ruleReferenceCallEffect | this_FunctionCallEffect_5= ruleFunctionCallEffect | this_PrintCallEffect_6= rulePrintCallEffect | this_RandomizeCallEffect_7= ruleRandomizeCallEffect | this_PureEmission_8= rulePureEmission ) )
-            // InternalScadeEquations.g:8245:2: (this_Assignment_0= ruleAssignment | this_PostfixEffect_1= rulePostfixEffect | this_ValuedEmission_2= ruleValuedEmission | this_HostcodeEffect_3= ruleHostcodeEffect | this_ReferenceCallEffect_4= ruleReferenceCallEffect | this_FunctionCallEffect_5= ruleFunctionCallEffect | this_PrintCallEffect_6= rulePrintCallEffect | this_RandomizeCallEffect_7= ruleRandomizeCallEffect | this_PureEmission_8= rulePureEmission )
+            // InternalScadeEquations.g:8248:2: ( (this_Assignment_0= ruleAssignment | this_PostfixEffect_1= rulePostfixEffect | this_ValuedEmission_2= ruleValuedEmission | this_HostcodeEffect_3= ruleHostcodeEffect | this_ReferenceCallEffect_4= ruleReferenceCallEffect | this_FunctionCallEffect_5= ruleFunctionCallEffect | this_PrintCallEffect_6= rulePrintCallEffect | this_RandomizeCallEffect_7= ruleRandomizeCallEffect | this_PureEmission_8= rulePureEmission ) )
+            // InternalScadeEquations.g:8249:2: (this_Assignment_0= ruleAssignment | this_PostfixEffect_1= rulePostfixEffect | this_ValuedEmission_2= ruleValuedEmission | this_HostcodeEffect_3= ruleHostcodeEffect | this_ReferenceCallEffect_4= ruleReferenceCallEffect | this_FunctionCallEffect_5= ruleFunctionCallEffect | this_PrintCallEffect_6= rulePrintCallEffect | this_RandomizeCallEffect_7= ruleRandomizeCallEffect | this_PureEmission_8= rulePureEmission )
             {
-            // InternalScadeEquations.g:8245:2: (this_Assignment_0= ruleAssignment | this_PostfixEffect_1= rulePostfixEffect | this_ValuedEmission_2= ruleValuedEmission | this_HostcodeEffect_3= ruleHostcodeEffect | this_ReferenceCallEffect_4= ruleReferenceCallEffect | this_FunctionCallEffect_5= ruleFunctionCallEffect | this_PrintCallEffect_6= rulePrintCallEffect | this_RandomizeCallEffect_7= ruleRandomizeCallEffect | this_PureEmission_8= rulePureEmission )
+            // InternalScadeEquations.g:8249:2: (this_Assignment_0= ruleAssignment | this_PostfixEffect_1= rulePostfixEffect | this_ValuedEmission_2= ruleValuedEmission | this_HostcodeEffect_3= ruleHostcodeEffect | this_ReferenceCallEffect_4= ruleReferenceCallEffect | this_FunctionCallEffect_5= ruleFunctionCallEffect | this_PrintCallEffect_6= rulePrintCallEffect | this_RandomizeCallEffect_7= ruleRandomizeCallEffect | this_PureEmission_8= rulePureEmission )
             int alt211=9;
             alt211 = dfa211.predict(input);
             switch (alt211) {
                 case 1 :
-                    // InternalScadeEquations.g:8246:3: this_Assignment_0= ruleAssignment
+                    // InternalScadeEquations.g:8250:3: this_Assignment_0= ruleAssignment
                     {
                     if ( state.backtracking==0 ) {
 
@@ -22668,7 +22692,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalScadeEquations.g:8258:3: this_PostfixEffect_1= rulePostfixEffect
+                    // InternalScadeEquations.g:8262:3: this_PostfixEffect_1= rulePostfixEffect
                     {
                     if ( state.backtracking==0 ) {
 
@@ -22695,7 +22719,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalScadeEquations.g:8270:3: this_ValuedEmission_2= ruleValuedEmission
+                    // InternalScadeEquations.g:8274:3: this_ValuedEmission_2= ruleValuedEmission
                     {
                     if ( state.backtracking==0 ) {
 
@@ -22722,7 +22746,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // InternalScadeEquations.g:8282:3: this_HostcodeEffect_3= ruleHostcodeEffect
+                    // InternalScadeEquations.g:8286:3: this_HostcodeEffect_3= ruleHostcodeEffect
                     {
                     if ( state.backtracking==0 ) {
 
@@ -22749,7 +22773,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 5 :
-                    // InternalScadeEquations.g:8294:3: this_ReferenceCallEffect_4= ruleReferenceCallEffect
+                    // InternalScadeEquations.g:8298:3: this_ReferenceCallEffect_4= ruleReferenceCallEffect
                     {
                     if ( state.backtracking==0 ) {
 
@@ -22776,7 +22800,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 6 :
-                    // InternalScadeEquations.g:8306:3: this_FunctionCallEffect_5= ruleFunctionCallEffect
+                    // InternalScadeEquations.g:8310:3: this_FunctionCallEffect_5= ruleFunctionCallEffect
                     {
                     if ( state.backtracking==0 ) {
 
@@ -22803,7 +22827,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 7 :
-                    // InternalScadeEquations.g:8318:3: this_PrintCallEffect_6= rulePrintCallEffect
+                    // InternalScadeEquations.g:8322:3: this_PrintCallEffect_6= rulePrintCallEffect
                     {
                     if ( state.backtracking==0 ) {
 
@@ -22830,7 +22854,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 8 :
-                    // InternalScadeEquations.g:8330:3: this_RandomizeCallEffect_7= ruleRandomizeCallEffect
+                    // InternalScadeEquations.g:8334:3: this_RandomizeCallEffect_7= ruleRandomizeCallEffect
                     {
                     if ( state.backtracking==0 ) {
 
@@ -22857,7 +22881,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 9 :
-                    // InternalScadeEquations.g:8342:3: this_PureEmission_8= rulePureEmission
+                    // InternalScadeEquations.g:8346:3: this_PureEmission_8= rulePureEmission
                     {
                     if ( state.backtracking==0 ) {
 
@@ -22908,7 +22932,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRulePureEmission"
-    // InternalScadeEquations.g:8357:1: entryRulePureEmission returns [EObject current=null] : iv_rulePureEmission= rulePureEmission EOF ;
+    // InternalScadeEquations.g:8361:1: entryRulePureEmission returns [EObject current=null] : iv_rulePureEmission= rulePureEmission EOF ;
     public final EObject entryRulePureEmission() throws RecognitionException {
         EObject current = null;
 
@@ -22916,8 +22940,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalScadeEquations.g:8357:53: (iv_rulePureEmission= rulePureEmission EOF )
-            // InternalScadeEquations.g:8358:2: iv_rulePureEmission= rulePureEmission EOF
+            // InternalScadeEquations.g:8361:53: (iv_rulePureEmission= rulePureEmission EOF )
+            // InternalScadeEquations.g:8362:2: iv_rulePureEmission= rulePureEmission EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getPureEmissionRule()); 
@@ -22948,7 +22972,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "rulePureEmission"
-    // InternalScadeEquations.g:8364:1: rulePureEmission returns [EObject current=null] : ( ( (lv_annotations_0_0= ruleQuotedStringAnnotation ) )* ( (lv_reference_1_0= ruleValuedObjectReference ) ) (otherlv_2= 'schedule' ( (lv_schedule_3_0= ruleScheduleObjectReference ) )+ )? ) ;
+    // InternalScadeEquations.g:8368:1: rulePureEmission returns [EObject current=null] : ( ( (lv_annotations_0_0= ruleQuotedStringAnnotation ) )* ( (lv_reference_1_0= ruleValuedObjectReference ) ) (otherlv_2= 'schedule' ( (lv_schedule_3_0= ruleScheduleObjectReference ) )+ )? ) ;
     public final EObject rulePureEmission() throws RecognitionException {
         EObject current = null;
 
@@ -22964,13 +22988,13 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:8370:2: ( ( ( (lv_annotations_0_0= ruleQuotedStringAnnotation ) )* ( (lv_reference_1_0= ruleValuedObjectReference ) ) (otherlv_2= 'schedule' ( (lv_schedule_3_0= ruleScheduleObjectReference ) )+ )? ) )
-            // InternalScadeEquations.g:8371:2: ( ( (lv_annotations_0_0= ruleQuotedStringAnnotation ) )* ( (lv_reference_1_0= ruleValuedObjectReference ) ) (otherlv_2= 'schedule' ( (lv_schedule_3_0= ruleScheduleObjectReference ) )+ )? )
+            // InternalScadeEquations.g:8374:2: ( ( ( (lv_annotations_0_0= ruleQuotedStringAnnotation ) )* ( (lv_reference_1_0= ruleValuedObjectReference ) ) (otherlv_2= 'schedule' ( (lv_schedule_3_0= ruleScheduleObjectReference ) )+ )? ) )
+            // InternalScadeEquations.g:8375:2: ( ( (lv_annotations_0_0= ruleQuotedStringAnnotation ) )* ( (lv_reference_1_0= ruleValuedObjectReference ) ) (otherlv_2= 'schedule' ( (lv_schedule_3_0= ruleScheduleObjectReference ) )+ )? )
             {
-            // InternalScadeEquations.g:8371:2: ( ( (lv_annotations_0_0= ruleQuotedStringAnnotation ) )* ( (lv_reference_1_0= ruleValuedObjectReference ) ) (otherlv_2= 'schedule' ( (lv_schedule_3_0= ruleScheduleObjectReference ) )+ )? )
-            // InternalScadeEquations.g:8372:3: ( (lv_annotations_0_0= ruleQuotedStringAnnotation ) )* ( (lv_reference_1_0= ruleValuedObjectReference ) ) (otherlv_2= 'schedule' ( (lv_schedule_3_0= ruleScheduleObjectReference ) )+ )?
+            // InternalScadeEquations.g:8375:2: ( ( (lv_annotations_0_0= ruleQuotedStringAnnotation ) )* ( (lv_reference_1_0= ruleValuedObjectReference ) ) (otherlv_2= 'schedule' ( (lv_schedule_3_0= ruleScheduleObjectReference ) )+ )? )
+            // InternalScadeEquations.g:8376:3: ( (lv_annotations_0_0= ruleQuotedStringAnnotation ) )* ( (lv_reference_1_0= ruleValuedObjectReference ) ) (otherlv_2= 'schedule' ( (lv_schedule_3_0= ruleScheduleObjectReference ) )+ )?
             {
-            // InternalScadeEquations.g:8372:3: ( (lv_annotations_0_0= ruleQuotedStringAnnotation ) )*
+            // InternalScadeEquations.g:8376:3: ( (lv_annotations_0_0= ruleQuotedStringAnnotation ) )*
             loop212:
             do {
                 int alt212=2;
@@ -22983,10 +23007,10 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                 switch (alt212) {
             	case 1 :
-            	    // InternalScadeEquations.g:8373:4: (lv_annotations_0_0= ruleQuotedStringAnnotation )
+            	    // InternalScadeEquations.g:8377:4: (lv_annotations_0_0= ruleQuotedStringAnnotation )
             	    {
-            	    // InternalScadeEquations.g:8373:4: (lv_annotations_0_0= ruleQuotedStringAnnotation )
-            	    // InternalScadeEquations.g:8374:5: lv_annotations_0_0= ruleQuotedStringAnnotation
+            	    // InternalScadeEquations.g:8377:4: (lv_annotations_0_0= ruleQuotedStringAnnotation )
+            	    // InternalScadeEquations.g:8378:5: lv_annotations_0_0= ruleQuotedStringAnnotation
             	    {
             	    if ( state.backtracking==0 ) {
 
@@ -23023,18 +23047,18 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                 }
             } while (true);
 
-            // InternalScadeEquations.g:8391:3: ( (lv_reference_1_0= ruleValuedObjectReference ) )
-            // InternalScadeEquations.g:8392:4: (lv_reference_1_0= ruleValuedObjectReference )
+            // InternalScadeEquations.g:8395:3: ( (lv_reference_1_0= ruleValuedObjectReference ) )
+            // InternalScadeEquations.g:8396:4: (lv_reference_1_0= ruleValuedObjectReference )
             {
-            // InternalScadeEquations.g:8392:4: (lv_reference_1_0= ruleValuedObjectReference )
-            // InternalScadeEquations.g:8393:5: lv_reference_1_0= ruleValuedObjectReference
+            // InternalScadeEquations.g:8396:4: (lv_reference_1_0= ruleValuedObjectReference )
+            // InternalScadeEquations.g:8397:5: lv_reference_1_0= ruleValuedObjectReference
             {
             if ( state.backtracking==0 ) {
 
               					newCompositeNode(grammarAccess.getPureEmissionAccess().getReferenceValuedObjectReferenceParserRuleCall_1_0());
               				
             }
-            pushFollow(FollowSets000.FOLLOW_107);
+            pushFollow(FollowSets000.FOLLOW_109);
             lv_reference_1_0=ruleValuedObjectReference();
 
             state._fsp--;
@@ -23058,7 +23082,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalScadeEquations.g:8410:3: (otherlv_2= 'schedule' ( (lv_schedule_3_0= ruleScheduleObjectReference ) )+ )?
+            // InternalScadeEquations.g:8414:3: (otherlv_2= 'schedule' ( (lv_schedule_3_0= ruleScheduleObjectReference ) )+ )?
             int alt214=2;
             int LA214_0 = input.LA(1);
 
@@ -23067,7 +23091,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             }
             switch (alt214) {
                 case 1 :
-                    // InternalScadeEquations.g:8411:4: otherlv_2= 'schedule' ( (lv_schedule_3_0= ruleScheduleObjectReference ) )+
+                    // InternalScadeEquations.g:8415:4: otherlv_2= 'schedule' ( (lv_schedule_3_0= ruleScheduleObjectReference ) )+
                     {
                     otherlv_2=(Token)match(input,71,FollowSets000.FOLLOW_4); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -23075,7 +23099,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                       				newLeafNode(otherlv_2, grammarAccess.getPureEmissionAccess().getScheduleKeyword_2_0());
                       			
                     }
-                    // InternalScadeEquations.g:8415:4: ( (lv_schedule_3_0= ruleScheduleObjectReference ) )+
+                    // InternalScadeEquations.g:8419:4: ( (lv_schedule_3_0= ruleScheduleObjectReference ) )+
                     int cnt213=0;
                     loop213:
                     do {
@@ -23083,17 +23107,17 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                         alt213 = dfa213.predict(input);
                         switch (alt213) {
                     	case 1 :
-                    	    // InternalScadeEquations.g:8416:5: (lv_schedule_3_0= ruleScheduleObjectReference )
+                    	    // InternalScadeEquations.g:8420:5: (lv_schedule_3_0= ruleScheduleObjectReference )
                     	    {
-                    	    // InternalScadeEquations.g:8416:5: (lv_schedule_3_0= ruleScheduleObjectReference )
-                    	    // InternalScadeEquations.g:8417:6: lv_schedule_3_0= ruleScheduleObjectReference
+                    	    // InternalScadeEquations.g:8420:5: (lv_schedule_3_0= ruleScheduleObjectReference )
+                    	    // InternalScadeEquations.g:8421:6: lv_schedule_3_0= ruleScheduleObjectReference
                     	    {
                     	    if ( state.backtracking==0 ) {
 
                     	      						newCompositeNode(grammarAccess.getPureEmissionAccess().getScheduleScheduleObjectReferenceParserRuleCall_2_1_0());
                     	      					
                     	    }
-                    	    pushFollow(FollowSets000.FOLLOW_108);
+                    	    pushFollow(FollowSets000.FOLLOW_110);
                     	    lv_schedule_3_0=ruleScheduleObjectReference();
 
                     	    state._fsp--;
@@ -23159,7 +23183,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleValuedEmission"
-    // InternalScadeEquations.g:8439:1: entryRuleValuedEmission returns [EObject current=null] : iv_ruleValuedEmission= ruleValuedEmission EOF ;
+    // InternalScadeEquations.g:8443:1: entryRuleValuedEmission returns [EObject current=null] : iv_ruleValuedEmission= ruleValuedEmission EOF ;
     public final EObject entryRuleValuedEmission() throws RecognitionException {
         EObject current = null;
 
@@ -23167,8 +23191,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalScadeEquations.g:8439:55: (iv_ruleValuedEmission= ruleValuedEmission EOF )
-            // InternalScadeEquations.g:8440:2: iv_ruleValuedEmission= ruleValuedEmission EOF
+            // InternalScadeEquations.g:8443:55: (iv_ruleValuedEmission= ruleValuedEmission EOF )
+            // InternalScadeEquations.g:8444:2: iv_ruleValuedEmission= ruleValuedEmission EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getValuedEmissionRule()); 
@@ -23199,7 +23223,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleValuedEmission"
-    // InternalScadeEquations.g:8446:1: ruleValuedEmission returns [EObject current=null] : ( ( (lv_annotations_0_0= ruleQuotedStringAnnotation ) )* ( (lv_reference_1_0= ruleValuedObjectReference ) ) otherlv_2= '(' ( (lv_newValue_3_0= ruleExpression ) ) otherlv_4= ')' (otherlv_5= 'schedule' ( (lv_schedule_6_0= ruleScheduleObjectReference ) )+ )? ) ;
+    // InternalScadeEquations.g:8450:1: ruleValuedEmission returns [EObject current=null] : ( ( (lv_annotations_0_0= ruleQuotedStringAnnotation ) )* ( (lv_reference_1_0= ruleValuedObjectReference ) ) otherlv_2= '(' ( (lv_newValue_3_0= ruleExpression ) ) otherlv_4= ')' (otherlv_5= 'schedule' ( (lv_schedule_6_0= ruleScheduleObjectReference ) )+ )? ) ;
     public final EObject ruleValuedEmission() throws RecognitionException {
         EObject current = null;
 
@@ -23219,13 +23243,13 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:8452:2: ( ( ( (lv_annotations_0_0= ruleQuotedStringAnnotation ) )* ( (lv_reference_1_0= ruleValuedObjectReference ) ) otherlv_2= '(' ( (lv_newValue_3_0= ruleExpression ) ) otherlv_4= ')' (otherlv_5= 'schedule' ( (lv_schedule_6_0= ruleScheduleObjectReference ) )+ )? ) )
-            // InternalScadeEquations.g:8453:2: ( ( (lv_annotations_0_0= ruleQuotedStringAnnotation ) )* ( (lv_reference_1_0= ruleValuedObjectReference ) ) otherlv_2= '(' ( (lv_newValue_3_0= ruleExpression ) ) otherlv_4= ')' (otherlv_5= 'schedule' ( (lv_schedule_6_0= ruleScheduleObjectReference ) )+ )? )
+            // InternalScadeEquations.g:8456:2: ( ( ( (lv_annotations_0_0= ruleQuotedStringAnnotation ) )* ( (lv_reference_1_0= ruleValuedObjectReference ) ) otherlv_2= '(' ( (lv_newValue_3_0= ruleExpression ) ) otherlv_4= ')' (otherlv_5= 'schedule' ( (lv_schedule_6_0= ruleScheduleObjectReference ) )+ )? ) )
+            // InternalScadeEquations.g:8457:2: ( ( (lv_annotations_0_0= ruleQuotedStringAnnotation ) )* ( (lv_reference_1_0= ruleValuedObjectReference ) ) otherlv_2= '(' ( (lv_newValue_3_0= ruleExpression ) ) otherlv_4= ')' (otherlv_5= 'schedule' ( (lv_schedule_6_0= ruleScheduleObjectReference ) )+ )? )
             {
-            // InternalScadeEquations.g:8453:2: ( ( (lv_annotations_0_0= ruleQuotedStringAnnotation ) )* ( (lv_reference_1_0= ruleValuedObjectReference ) ) otherlv_2= '(' ( (lv_newValue_3_0= ruleExpression ) ) otherlv_4= ')' (otherlv_5= 'schedule' ( (lv_schedule_6_0= ruleScheduleObjectReference ) )+ )? )
-            // InternalScadeEquations.g:8454:3: ( (lv_annotations_0_0= ruleQuotedStringAnnotation ) )* ( (lv_reference_1_0= ruleValuedObjectReference ) ) otherlv_2= '(' ( (lv_newValue_3_0= ruleExpression ) ) otherlv_4= ')' (otherlv_5= 'schedule' ( (lv_schedule_6_0= ruleScheduleObjectReference ) )+ )?
+            // InternalScadeEquations.g:8457:2: ( ( (lv_annotations_0_0= ruleQuotedStringAnnotation ) )* ( (lv_reference_1_0= ruleValuedObjectReference ) ) otherlv_2= '(' ( (lv_newValue_3_0= ruleExpression ) ) otherlv_4= ')' (otherlv_5= 'schedule' ( (lv_schedule_6_0= ruleScheduleObjectReference ) )+ )? )
+            // InternalScadeEquations.g:8458:3: ( (lv_annotations_0_0= ruleQuotedStringAnnotation ) )* ( (lv_reference_1_0= ruleValuedObjectReference ) ) otherlv_2= '(' ( (lv_newValue_3_0= ruleExpression ) ) otherlv_4= ')' (otherlv_5= 'schedule' ( (lv_schedule_6_0= ruleScheduleObjectReference ) )+ )?
             {
-            // InternalScadeEquations.g:8454:3: ( (lv_annotations_0_0= ruleQuotedStringAnnotation ) )*
+            // InternalScadeEquations.g:8458:3: ( (lv_annotations_0_0= ruleQuotedStringAnnotation ) )*
             loop215:
             do {
                 int alt215=2;
@@ -23238,10 +23262,10 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                 switch (alt215) {
             	case 1 :
-            	    // InternalScadeEquations.g:8455:4: (lv_annotations_0_0= ruleQuotedStringAnnotation )
+            	    // InternalScadeEquations.g:8459:4: (lv_annotations_0_0= ruleQuotedStringAnnotation )
             	    {
-            	    // InternalScadeEquations.g:8455:4: (lv_annotations_0_0= ruleQuotedStringAnnotation )
-            	    // InternalScadeEquations.g:8456:5: lv_annotations_0_0= ruleQuotedStringAnnotation
+            	    // InternalScadeEquations.g:8459:4: (lv_annotations_0_0= ruleQuotedStringAnnotation )
+            	    // InternalScadeEquations.g:8460:5: lv_annotations_0_0= ruleQuotedStringAnnotation
             	    {
             	    if ( state.backtracking==0 ) {
 
@@ -23278,11 +23302,11 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                 }
             } while (true);
 
-            // InternalScadeEquations.g:8473:3: ( (lv_reference_1_0= ruleValuedObjectReference ) )
-            // InternalScadeEquations.g:8474:4: (lv_reference_1_0= ruleValuedObjectReference )
+            // InternalScadeEquations.g:8477:3: ( (lv_reference_1_0= ruleValuedObjectReference ) )
+            // InternalScadeEquations.g:8478:4: (lv_reference_1_0= ruleValuedObjectReference )
             {
-            // InternalScadeEquations.g:8474:4: (lv_reference_1_0= ruleValuedObjectReference )
-            // InternalScadeEquations.g:8475:5: lv_reference_1_0= ruleValuedObjectReference
+            // InternalScadeEquations.g:8478:4: (lv_reference_1_0= ruleValuedObjectReference )
+            // InternalScadeEquations.g:8479:5: lv_reference_1_0= ruleValuedObjectReference
             {
             if ( state.backtracking==0 ) {
 
@@ -23319,11 +23343,11 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
               			newLeafNode(otherlv_2, grammarAccess.getValuedEmissionAccess().getLeftParenthesisKeyword_2());
               		
             }
-            // InternalScadeEquations.g:8496:3: ( (lv_newValue_3_0= ruleExpression ) )
-            // InternalScadeEquations.g:8497:4: (lv_newValue_3_0= ruleExpression )
+            // InternalScadeEquations.g:8500:3: ( (lv_newValue_3_0= ruleExpression ) )
+            // InternalScadeEquations.g:8501:4: (lv_newValue_3_0= ruleExpression )
             {
-            // InternalScadeEquations.g:8497:4: (lv_newValue_3_0= ruleExpression )
-            // InternalScadeEquations.g:8498:5: lv_newValue_3_0= ruleExpression
+            // InternalScadeEquations.g:8501:4: (lv_newValue_3_0= ruleExpression )
+            // InternalScadeEquations.g:8502:5: lv_newValue_3_0= ruleExpression
             {
             if ( state.backtracking==0 ) {
 
@@ -23354,13 +23378,13 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_4=(Token)match(input,19,FollowSets000.FOLLOW_107); if (state.failed) return current;
+            otherlv_4=(Token)match(input,19,FollowSets000.FOLLOW_109); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               			newLeafNode(otherlv_4, grammarAccess.getValuedEmissionAccess().getRightParenthesisKeyword_4());
               		
             }
-            // InternalScadeEquations.g:8519:3: (otherlv_5= 'schedule' ( (lv_schedule_6_0= ruleScheduleObjectReference ) )+ )?
+            // InternalScadeEquations.g:8523:3: (otherlv_5= 'schedule' ( (lv_schedule_6_0= ruleScheduleObjectReference ) )+ )?
             int alt217=2;
             int LA217_0 = input.LA(1);
 
@@ -23369,7 +23393,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             }
             switch (alt217) {
                 case 1 :
-                    // InternalScadeEquations.g:8520:4: otherlv_5= 'schedule' ( (lv_schedule_6_0= ruleScheduleObjectReference ) )+
+                    // InternalScadeEquations.g:8524:4: otherlv_5= 'schedule' ( (lv_schedule_6_0= ruleScheduleObjectReference ) )+
                     {
                     otherlv_5=(Token)match(input,71,FollowSets000.FOLLOW_4); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -23377,7 +23401,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                       				newLeafNode(otherlv_5, grammarAccess.getValuedEmissionAccess().getScheduleKeyword_5_0());
                       			
                     }
-                    // InternalScadeEquations.g:8524:4: ( (lv_schedule_6_0= ruleScheduleObjectReference ) )+
+                    // InternalScadeEquations.g:8528:4: ( (lv_schedule_6_0= ruleScheduleObjectReference ) )+
                     int cnt216=0;
                     loop216:
                     do {
@@ -23385,17 +23409,17 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                         alt216 = dfa216.predict(input);
                         switch (alt216) {
                     	case 1 :
-                    	    // InternalScadeEquations.g:8525:5: (lv_schedule_6_0= ruleScheduleObjectReference )
+                    	    // InternalScadeEquations.g:8529:5: (lv_schedule_6_0= ruleScheduleObjectReference )
                     	    {
-                    	    // InternalScadeEquations.g:8525:5: (lv_schedule_6_0= ruleScheduleObjectReference )
-                    	    // InternalScadeEquations.g:8526:6: lv_schedule_6_0= ruleScheduleObjectReference
+                    	    // InternalScadeEquations.g:8529:5: (lv_schedule_6_0= ruleScheduleObjectReference )
+                    	    // InternalScadeEquations.g:8530:6: lv_schedule_6_0= ruleScheduleObjectReference
                     	    {
                     	    if ( state.backtracking==0 ) {
 
                     	      						newCompositeNode(grammarAccess.getValuedEmissionAccess().getScheduleScheduleObjectReferenceParserRuleCall_5_1_0());
                     	      					
                     	    }
-                    	    pushFollow(FollowSets000.FOLLOW_108);
+                    	    pushFollow(FollowSets000.FOLLOW_110);
                     	    lv_schedule_6_0=ruleScheduleObjectReference();
 
                     	    state._fsp--;
@@ -23461,7 +23485,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleAssignment"
-    // InternalScadeEquations.g:8548:1: entryRuleAssignment returns [EObject current=null] : iv_ruleAssignment= ruleAssignment EOF ;
+    // InternalScadeEquations.g:8552:1: entryRuleAssignment returns [EObject current=null] : iv_ruleAssignment= ruleAssignment EOF ;
     public final EObject entryRuleAssignment() throws RecognitionException {
         EObject current = null;
 
@@ -23469,8 +23493,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalScadeEquations.g:8548:51: (iv_ruleAssignment= ruleAssignment EOF )
-            // InternalScadeEquations.g:8549:2: iv_ruleAssignment= ruleAssignment EOF
+            // InternalScadeEquations.g:8552:51: (iv_ruleAssignment= ruleAssignment EOF )
+            // InternalScadeEquations.g:8553:2: iv_ruleAssignment= ruleAssignment EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getAssignmentRule()); 
@@ -23501,7 +23525,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleAssignment"
-    // InternalScadeEquations.g:8555:1: ruleAssignment returns [EObject current=null] : ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_reference_1_0= ruleValuedObjectReference ) ) ( (lv_operator_2_0= ruleAssignOperator ) ) ( (lv_expression_3_0= ruleExpression ) ) (otherlv_4= 'schedule' ( (lv_schedule_5_0= ruleScheduleObjectReference ) )+ )? ) ;
+    // InternalScadeEquations.g:8559:1: ruleAssignment returns [EObject current=null] : ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_reference_1_0= ruleValuedObjectReference ) ) ( (lv_operator_2_0= ruleAssignOperator ) ) ( (lv_expression_3_0= ruleExpression ) ) (otherlv_4= 'schedule' ( (lv_schedule_5_0= ruleScheduleObjectReference ) )+ )? ) ;
     public final EObject ruleAssignment() throws RecognitionException {
         EObject current = null;
 
@@ -23521,13 +23545,13 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:8561:2: ( ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_reference_1_0= ruleValuedObjectReference ) ) ( (lv_operator_2_0= ruleAssignOperator ) ) ( (lv_expression_3_0= ruleExpression ) ) (otherlv_4= 'schedule' ( (lv_schedule_5_0= ruleScheduleObjectReference ) )+ )? ) )
-            // InternalScadeEquations.g:8562:2: ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_reference_1_0= ruleValuedObjectReference ) ) ( (lv_operator_2_0= ruleAssignOperator ) ) ( (lv_expression_3_0= ruleExpression ) ) (otherlv_4= 'schedule' ( (lv_schedule_5_0= ruleScheduleObjectReference ) )+ )? )
+            // InternalScadeEquations.g:8565:2: ( ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_reference_1_0= ruleValuedObjectReference ) ) ( (lv_operator_2_0= ruleAssignOperator ) ) ( (lv_expression_3_0= ruleExpression ) ) (otherlv_4= 'schedule' ( (lv_schedule_5_0= ruleScheduleObjectReference ) )+ )? ) )
+            // InternalScadeEquations.g:8566:2: ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_reference_1_0= ruleValuedObjectReference ) ) ( (lv_operator_2_0= ruleAssignOperator ) ) ( (lv_expression_3_0= ruleExpression ) ) (otherlv_4= 'schedule' ( (lv_schedule_5_0= ruleScheduleObjectReference ) )+ )? )
             {
-            // InternalScadeEquations.g:8562:2: ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_reference_1_0= ruleValuedObjectReference ) ) ( (lv_operator_2_0= ruleAssignOperator ) ) ( (lv_expression_3_0= ruleExpression ) ) (otherlv_4= 'schedule' ( (lv_schedule_5_0= ruleScheduleObjectReference ) )+ )? )
-            // InternalScadeEquations.g:8563:3: ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_reference_1_0= ruleValuedObjectReference ) ) ( (lv_operator_2_0= ruleAssignOperator ) ) ( (lv_expression_3_0= ruleExpression ) ) (otherlv_4= 'schedule' ( (lv_schedule_5_0= ruleScheduleObjectReference ) )+ )?
+            // InternalScadeEquations.g:8566:2: ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_reference_1_0= ruleValuedObjectReference ) ) ( (lv_operator_2_0= ruleAssignOperator ) ) ( (lv_expression_3_0= ruleExpression ) ) (otherlv_4= 'schedule' ( (lv_schedule_5_0= ruleScheduleObjectReference ) )+ )? )
+            // InternalScadeEquations.g:8567:3: ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_reference_1_0= ruleValuedObjectReference ) ) ( (lv_operator_2_0= ruleAssignOperator ) ) ( (lv_expression_3_0= ruleExpression ) ) (otherlv_4= 'schedule' ( (lv_schedule_5_0= ruleScheduleObjectReference ) )+ )?
             {
-            // InternalScadeEquations.g:8563:3: ( (lv_annotations_0_0= ruleAnnotation ) )*
+            // InternalScadeEquations.g:8567:3: ( (lv_annotations_0_0= ruleAnnotation ) )*
             loop218:
             do {
                 int alt218=2;
@@ -23540,10 +23564,10 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                 switch (alt218) {
             	case 1 :
-            	    // InternalScadeEquations.g:8564:4: (lv_annotations_0_0= ruleAnnotation )
+            	    // InternalScadeEquations.g:8568:4: (lv_annotations_0_0= ruleAnnotation )
             	    {
-            	    // InternalScadeEquations.g:8564:4: (lv_annotations_0_0= ruleAnnotation )
-            	    // InternalScadeEquations.g:8565:5: lv_annotations_0_0= ruleAnnotation
+            	    // InternalScadeEquations.g:8568:4: (lv_annotations_0_0= ruleAnnotation )
+            	    // InternalScadeEquations.g:8569:5: lv_annotations_0_0= ruleAnnotation
             	    {
             	    if ( state.backtracking==0 ) {
 
@@ -23580,11 +23604,11 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                 }
             } while (true);
 
-            // InternalScadeEquations.g:8582:3: ( (lv_reference_1_0= ruleValuedObjectReference ) )
-            // InternalScadeEquations.g:8583:4: (lv_reference_1_0= ruleValuedObjectReference )
+            // InternalScadeEquations.g:8586:3: ( (lv_reference_1_0= ruleValuedObjectReference ) )
+            // InternalScadeEquations.g:8587:4: (lv_reference_1_0= ruleValuedObjectReference )
             {
-            // InternalScadeEquations.g:8583:4: (lv_reference_1_0= ruleValuedObjectReference )
-            // InternalScadeEquations.g:8584:5: lv_reference_1_0= ruleValuedObjectReference
+            // InternalScadeEquations.g:8587:4: (lv_reference_1_0= ruleValuedObjectReference )
+            // InternalScadeEquations.g:8588:5: lv_reference_1_0= ruleValuedObjectReference
             {
             if ( state.backtracking==0 ) {
 
@@ -23615,11 +23639,11 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalScadeEquations.g:8601:3: ( (lv_operator_2_0= ruleAssignOperator ) )
-            // InternalScadeEquations.g:8602:4: (lv_operator_2_0= ruleAssignOperator )
+            // InternalScadeEquations.g:8605:3: ( (lv_operator_2_0= ruleAssignOperator ) )
+            // InternalScadeEquations.g:8606:4: (lv_operator_2_0= ruleAssignOperator )
             {
-            // InternalScadeEquations.g:8602:4: (lv_operator_2_0= ruleAssignOperator )
-            // InternalScadeEquations.g:8603:5: lv_operator_2_0= ruleAssignOperator
+            // InternalScadeEquations.g:8606:4: (lv_operator_2_0= ruleAssignOperator )
+            // InternalScadeEquations.g:8607:5: lv_operator_2_0= ruleAssignOperator
             {
             if ( state.backtracking==0 ) {
 
@@ -23650,18 +23674,18 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalScadeEquations.g:8620:3: ( (lv_expression_3_0= ruleExpression ) )
-            // InternalScadeEquations.g:8621:4: (lv_expression_3_0= ruleExpression )
+            // InternalScadeEquations.g:8624:3: ( (lv_expression_3_0= ruleExpression ) )
+            // InternalScadeEquations.g:8625:4: (lv_expression_3_0= ruleExpression )
             {
-            // InternalScadeEquations.g:8621:4: (lv_expression_3_0= ruleExpression )
-            // InternalScadeEquations.g:8622:5: lv_expression_3_0= ruleExpression
+            // InternalScadeEquations.g:8625:4: (lv_expression_3_0= ruleExpression )
+            // InternalScadeEquations.g:8626:5: lv_expression_3_0= ruleExpression
             {
             if ( state.backtracking==0 ) {
 
               					newCompositeNode(grammarAccess.getAssignmentAccess().getExpressionExpressionParserRuleCall_3_0());
               				
             }
-            pushFollow(FollowSets000.FOLLOW_107);
+            pushFollow(FollowSets000.FOLLOW_109);
             lv_expression_3_0=ruleExpression();
 
             state._fsp--;
@@ -23685,7 +23709,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalScadeEquations.g:8639:3: (otherlv_4= 'schedule' ( (lv_schedule_5_0= ruleScheduleObjectReference ) )+ )?
+            // InternalScadeEquations.g:8643:3: (otherlv_4= 'schedule' ( (lv_schedule_5_0= ruleScheduleObjectReference ) )+ )?
             int alt220=2;
             int LA220_0 = input.LA(1);
 
@@ -23694,7 +23718,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             }
             switch (alt220) {
                 case 1 :
-                    // InternalScadeEquations.g:8640:4: otherlv_4= 'schedule' ( (lv_schedule_5_0= ruleScheduleObjectReference ) )+
+                    // InternalScadeEquations.g:8644:4: otherlv_4= 'schedule' ( (lv_schedule_5_0= ruleScheduleObjectReference ) )+
                     {
                     otherlv_4=(Token)match(input,71,FollowSets000.FOLLOW_4); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -23702,7 +23726,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                       				newLeafNode(otherlv_4, grammarAccess.getAssignmentAccess().getScheduleKeyword_4_0());
                       			
                     }
-                    // InternalScadeEquations.g:8644:4: ( (lv_schedule_5_0= ruleScheduleObjectReference ) )+
+                    // InternalScadeEquations.g:8648:4: ( (lv_schedule_5_0= ruleScheduleObjectReference ) )+
                     int cnt219=0;
                     loop219:
                     do {
@@ -23710,17 +23734,17 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                         alt219 = dfa219.predict(input);
                         switch (alt219) {
                     	case 1 :
-                    	    // InternalScadeEquations.g:8645:5: (lv_schedule_5_0= ruleScheduleObjectReference )
+                    	    // InternalScadeEquations.g:8649:5: (lv_schedule_5_0= ruleScheduleObjectReference )
                     	    {
-                    	    // InternalScadeEquations.g:8645:5: (lv_schedule_5_0= ruleScheduleObjectReference )
-                    	    // InternalScadeEquations.g:8646:6: lv_schedule_5_0= ruleScheduleObjectReference
+                    	    // InternalScadeEquations.g:8649:5: (lv_schedule_5_0= ruleScheduleObjectReference )
+                    	    // InternalScadeEquations.g:8650:6: lv_schedule_5_0= ruleScheduleObjectReference
                     	    {
                     	    if ( state.backtracking==0 ) {
 
                     	      						newCompositeNode(grammarAccess.getAssignmentAccess().getScheduleScheduleObjectReferenceParserRuleCall_4_1_0());
                     	      					
                     	    }
-                    	    pushFollow(FollowSets000.FOLLOW_108);
+                    	    pushFollow(FollowSets000.FOLLOW_110);
                     	    lv_schedule_5_0=ruleScheduleObjectReference();
 
                     	    state._fsp--;
@@ -23786,7 +23810,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRulePostfixEffect"
-    // InternalScadeEquations.g:8668:1: entryRulePostfixEffect returns [EObject current=null] : iv_rulePostfixEffect= rulePostfixEffect EOF ;
+    // InternalScadeEquations.g:8672:1: entryRulePostfixEffect returns [EObject current=null] : iv_rulePostfixEffect= rulePostfixEffect EOF ;
     public final EObject entryRulePostfixEffect() throws RecognitionException {
         EObject current = null;
 
@@ -23794,8 +23818,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalScadeEquations.g:8668:54: (iv_rulePostfixEffect= rulePostfixEffect EOF )
-            // InternalScadeEquations.g:8669:2: iv_rulePostfixEffect= rulePostfixEffect EOF
+            // InternalScadeEquations.g:8672:54: (iv_rulePostfixEffect= rulePostfixEffect EOF )
+            // InternalScadeEquations.g:8673:2: iv_rulePostfixEffect= rulePostfixEffect EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getPostfixEffectRule()); 
@@ -23826,7 +23850,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "rulePostfixEffect"
-    // InternalScadeEquations.g:8675:1: rulePostfixEffect returns [EObject current=null] : ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_reference_1_0= ruleValuedObjectReference ) ) ( (lv_operator_2_0= rulePostfixOperator ) ) (otherlv_3= 'schedule' ( (lv_schedule_4_0= ruleScheduleObjectReference ) )+ )? ) ;
+    // InternalScadeEquations.g:8679:1: rulePostfixEffect returns [EObject current=null] : ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_reference_1_0= ruleValuedObjectReference ) ) ( (lv_operator_2_0= rulePostfixOperator ) ) (otherlv_3= 'schedule' ( (lv_schedule_4_0= ruleScheduleObjectReference ) )+ )? ) ;
     public final EObject rulePostfixEffect() throws RecognitionException {
         EObject current = null;
 
@@ -23844,13 +23868,13 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:8681:2: ( ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_reference_1_0= ruleValuedObjectReference ) ) ( (lv_operator_2_0= rulePostfixOperator ) ) (otherlv_3= 'schedule' ( (lv_schedule_4_0= ruleScheduleObjectReference ) )+ )? ) )
-            // InternalScadeEquations.g:8682:2: ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_reference_1_0= ruleValuedObjectReference ) ) ( (lv_operator_2_0= rulePostfixOperator ) ) (otherlv_3= 'schedule' ( (lv_schedule_4_0= ruleScheduleObjectReference ) )+ )? )
+            // InternalScadeEquations.g:8685:2: ( ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_reference_1_0= ruleValuedObjectReference ) ) ( (lv_operator_2_0= rulePostfixOperator ) ) (otherlv_3= 'schedule' ( (lv_schedule_4_0= ruleScheduleObjectReference ) )+ )? ) )
+            // InternalScadeEquations.g:8686:2: ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_reference_1_0= ruleValuedObjectReference ) ) ( (lv_operator_2_0= rulePostfixOperator ) ) (otherlv_3= 'schedule' ( (lv_schedule_4_0= ruleScheduleObjectReference ) )+ )? )
             {
-            // InternalScadeEquations.g:8682:2: ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_reference_1_0= ruleValuedObjectReference ) ) ( (lv_operator_2_0= rulePostfixOperator ) ) (otherlv_3= 'schedule' ( (lv_schedule_4_0= ruleScheduleObjectReference ) )+ )? )
-            // InternalScadeEquations.g:8683:3: ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_reference_1_0= ruleValuedObjectReference ) ) ( (lv_operator_2_0= rulePostfixOperator ) ) (otherlv_3= 'schedule' ( (lv_schedule_4_0= ruleScheduleObjectReference ) )+ )?
+            // InternalScadeEquations.g:8686:2: ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_reference_1_0= ruleValuedObjectReference ) ) ( (lv_operator_2_0= rulePostfixOperator ) ) (otherlv_3= 'schedule' ( (lv_schedule_4_0= ruleScheduleObjectReference ) )+ )? )
+            // InternalScadeEquations.g:8687:3: ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_reference_1_0= ruleValuedObjectReference ) ) ( (lv_operator_2_0= rulePostfixOperator ) ) (otherlv_3= 'schedule' ( (lv_schedule_4_0= ruleScheduleObjectReference ) )+ )?
             {
-            // InternalScadeEquations.g:8683:3: ( (lv_annotations_0_0= ruleAnnotation ) )*
+            // InternalScadeEquations.g:8687:3: ( (lv_annotations_0_0= ruleAnnotation ) )*
             loop221:
             do {
                 int alt221=2;
@@ -23863,10 +23887,10 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                 switch (alt221) {
             	case 1 :
-            	    // InternalScadeEquations.g:8684:4: (lv_annotations_0_0= ruleAnnotation )
+            	    // InternalScadeEquations.g:8688:4: (lv_annotations_0_0= ruleAnnotation )
             	    {
-            	    // InternalScadeEquations.g:8684:4: (lv_annotations_0_0= ruleAnnotation )
-            	    // InternalScadeEquations.g:8685:5: lv_annotations_0_0= ruleAnnotation
+            	    // InternalScadeEquations.g:8688:4: (lv_annotations_0_0= ruleAnnotation )
+            	    // InternalScadeEquations.g:8689:5: lv_annotations_0_0= ruleAnnotation
             	    {
             	    if ( state.backtracking==0 ) {
 
@@ -23903,18 +23927,18 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                 }
             } while (true);
 
-            // InternalScadeEquations.g:8702:3: ( (lv_reference_1_0= ruleValuedObjectReference ) )
-            // InternalScadeEquations.g:8703:4: (lv_reference_1_0= ruleValuedObjectReference )
+            // InternalScadeEquations.g:8706:3: ( (lv_reference_1_0= ruleValuedObjectReference ) )
+            // InternalScadeEquations.g:8707:4: (lv_reference_1_0= ruleValuedObjectReference )
             {
-            // InternalScadeEquations.g:8703:4: (lv_reference_1_0= ruleValuedObjectReference )
-            // InternalScadeEquations.g:8704:5: lv_reference_1_0= ruleValuedObjectReference
+            // InternalScadeEquations.g:8707:4: (lv_reference_1_0= ruleValuedObjectReference )
+            // InternalScadeEquations.g:8708:5: lv_reference_1_0= ruleValuedObjectReference
             {
             if ( state.backtracking==0 ) {
 
               					newCompositeNode(grammarAccess.getPostfixEffectAccess().getReferenceValuedObjectReferenceParserRuleCall_1_0());
               				
             }
-            pushFollow(FollowSets000.FOLLOW_109);
+            pushFollow(FollowSets000.FOLLOW_111);
             lv_reference_1_0=ruleValuedObjectReference();
 
             state._fsp--;
@@ -23938,18 +23962,18 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalScadeEquations.g:8721:3: ( (lv_operator_2_0= rulePostfixOperator ) )
-            // InternalScadeEquations.g:8722:4: (lv_operator_2_0= rulePostfixOperator )
+            // InternalScadeEquations.g:8725:3: ( (lv_operator_2_0= rulePostfixOperator ) )
+            // InternalScadeEquations.g:8726:4: (lv_operator_2_0= rulePostfixOperator )
             {
-            // InternalScadeEquations.g:8722:4: (lv_operator_2_0= rulePostfixOperator )
-            // InternalScadeEquations.g:8723:5: lv_operator_2_0= rulePostfixOperator
+            // InternalScadeEquations.g:8726:4: (lv_operator_2_0= rulePostfixOperator )
+            // InternalScadeEquations.g:8727:5: lv_operator_2_0= rulePostfixOperator
             {
             if ( state.backtracking==0 ) {
 
               					newCompositeNode(grammarAccess.getPostfixEffectAccess().getOperatorPostfixOperatorEnumRuleCall_2_0());
               				
             }
-            pushFollow(FollowSets000.FOLLOW_107);
+            pushFollow(FollowSets000.FOLLOW_109);
             lv_operator_2_0=rulePostfixOperator();
 
             state._fsp--;
@@ -23973,7 +23997,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalScadeEquations.g:8740:3: (otherlv_3= 'schedule' ( (lv_schedule_4_0= ruleScheduleObjectReference ) )+ )?
+            // InternalScadeEquations.g:8744:3: (otherlv_3= 'schedule' ( (lv_schedule_4_0= ruleScheduleObjectReference ) )+ )?
             int alt223=2;
             int LA223_0 = input.LA(1);
 
@@ -23982,7 +24006,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             }
             switch (alt223) {
                 case 1 :
-                    // InternalScadeEquations.g:8741:4: otherlv_3= 'schedule' ( (lv_schedule_4_0= ruleScheduleObjectReference ) )+
+                    // InternalScadeEquations.g:8745:4: otherlv_3= 'schedule' ( (lv_schedule_4_0= ruleScheduleObjectReference ) )+
                     {
                     otherlv_3=(Token)match(input,71,FollowSets000.FOLLOW_4); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -23990,7 +24014,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                       				newLeafNode(otherlv_3, grammarAccess.getPostfixEffectAccess().getScheduleKeyword_3_0());
                       			
                     }
-                    // InternalScadeEquations.g:8745:4: ( (lv_schedule_4_0= ruleScheduleObjectReference ) )+
+                    // InternalScadeEquations.g:8749:4: ( (lv_schedule_4_0= ruleScheduleObjectReference ) )+
                     int cnt222=0;
                     loop222:
                     do {
@@ -23998,17 +24022,17 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                         alt222 = dfa222.predict(input);
                         switch (alt222) {
                     	case 1 :
-                    	    // InternalScadeEquations.g:8746:5: (lv_schedule_4_0= ruleScheduleObjectReference )
+                    	    // InternalScadeEquations.g:8750:5: (lv_schedule_4_0= ruleScheduleObjectReference )
                     	    {
-                    	    // InternalScadeEquations.g:8746:5: (lv_schedule_4_0= ruleScheduleObjectReference )
-                    	    // InternalScadeEquations.g:8747:6: lv_schedule_4_0= ruleScheduleObjectReference
+                    	    // InternalScadeEquations.g:8750:5: (lv_schedule_4_0= ruleScheduleObjectReference )
+                    	    // InternalScadeEquations.g:8751:6: lv_schedule_4_0= ruleScheduleObjectReference
                     	    {
                     	    if ( state.backtracking==0 ) {
 
                     	      						newCompositeNode(grammarAccess.getPostfixEffectAccess().getScheduleScheduleObjectReferenceParserRuleCall_3_1_0());
                     	      					
                     	    }
-                    	    pushFollow(FollowSets000.FOLLOW_108);
+                    	    pushFollow(FollowSets000.FOLLOW_110);
                     	    lv_schedule_4_0=ruleScheduleObjectReference();
 
                     	    state._fsp--;
@@ -24074,7 +24098,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleHostcodeEffect"
-    // InternalScadeEquations.g:8769:1: entryRuleHostcodeEffect returns [EObject current=null] : iv_ruleHostcodeEffect= ruleHostcodeEffect EOF ;
+    // InternalScadeEquations.g:8773:1: entryRuleHostcodeEffect returns [EObject current=null] : iv_ruleHostcodeEffect= ruleHostcodeEffect EOF ;
     public final EObject entryRuleHostcodeEffect() throws RecognitionException {
         EObject current = null;
 
@@ -24082,8 +24106,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalScadeEquations.g:8769:55: (iv_ruleHostcodeEffect= ruleHostcodeEffect EOF )
-            // InternalScadeEquations.g:8770:2: iv_ruleHostcodeEffect= ruleHostcodeEffect EOF
+            // InternalScadeEquations.g:8773:55: (iv_ruleHostcodeEffect= ruleHostcodeEffect EOF )
+            // InternalScadeEquations.g:8774:2: iv_ruleHostcodeEffect= ruleHostcodeEffect EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getHostcodeEffectRule()); 
@@ -24114,7 +24138,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleHostcodeEffect"
-    // InternalScadeEquations.g:8776:1: ruleHostcodeEffect returns [EObject current=null] : ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_text_1_0= RULE_HOSTCODE ) ) ) ;
+    // InternalScadeEquations.g:8780:1: ruleHostcodeEffect returns [EObject current=null] : ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_text_1_0= RULE_HOSTCODE ) ) ) ;
     public final EObject ruleHostcodeEffect() throws RecognitionException {
         EObject current = null;
 
@@ -24126,13 +24150,13 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:8782:2: ( ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_text_1_0= RULE_HOSTCODE ) ) ) )
-            // InternalScadeEquations.g:8783:2: ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_text_1_0= RULE_HOSTCODE ) ) )
+            // InternalScadeEquations.g:8786:2: ( ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_text_1_0= RULE_HOSTCODE ) ) ) )
+            // InternalScadeEquations.g:8787:2: ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_text_1_0= RULE_HOSTCODE ) ) )
             {
-            // InternalScadeEquations.g:8783:2: ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_text_1_0= RULE_HOSTCODE ) ) )
-            // InternalScadeEquations.g:8784:3: ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_text_1_0= RULE_HOSTCODE ) )
+            // InternalScadeEquations.g:8787:2: ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_text_1_0= RULE_HOSTCODE ) ) )
+            // InternalScadeEquations.g:8788:3: ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_text_1_0= RULE_HOSTCODE ) )
             {
-            // InternalScadeEquations.g:8784:3: ( (lv_annotations_0_0= ruleAnnotation ) )*
+            // InternalScadeEquations.g:8788:3: ( (lv_annotations_0_0= ruleAnnotation ) )*
             loop224:
             do {
                 int alt224=2;
@@ -24145,17 +24169,17 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                 switch (alt224) {
             	case 1 :
-            	    // InternalScadeEquations.g:8785:4: (lv_annotations_0_0= ruleAnnotation )
+            	    // InternalScadeEquations.g:8789:4: (lv_annotations_0_0= ruleAnnotation )
             	    {
-            	    // InternalScadeEquations.g:8785:4: (lv_annotations_0_0= ruleAnnotation )
-            	    // InternalScadeEquations.g:8786:5: lv_annotations_0_0= ruleAnnotation
+            	    // InternalScadeEquations.g:8789:4: (lv_annotations_0_0= ruleAnnotation )
+            	    // InternalScadeEquations.g:8790:5: lv_annotations_0_0= ruleAnnotation
             	    {
             	    if ( state.backtracking==0 ) {
 
             	      					newCompositeNode(grammarAccess.getHostcodeEffectAccess().getAnnotationsAnnotationParserRuleCall_0_0());
             	      				
             	    }
-            	    pushFollow(FollowSets000.FOLLOW_110);
+            	    pushFollow(FollowSets000.FOLLOW_112);
             	    lv_annotations_0_0=ruleAnnotation();
 
             	    state._fsp--;
@@ -24185,11 +24209,11 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                 }
             } while (true);
 
-            // InternalScadeEquations.g:8803:3: ( (lv_text_1_0= RULE_HOSTCODE ) )
-            // InternalScadeEquations.g:8804:4: (lv_text_1_0= RULE_HOSTCODE )
+            // InternalScadeEquations.g:8807:3: ( (lv_text_1_0= RULE_HOSTCODE ) )
+            // InternalScadeEquations.g:8808:4: (lv_text_1_0= RULE_HOSTCODE )
             {
-            // InternalScadeEquations.g:8804:4: (lv_text_1_0= RULE_HOSTCODE )
-            // InternalScadeEquations.g:8805:5: lv_text_1_0= RULE_HOSTCODE
+            // InternalScadeEquations.g:8808:4: (lv_text_1_0= RULE_HOSTCODE )
+            // InternalScadeEquations.g:8809:5: lv_text_1_0= RULE_HOSTCODE
             {
             lv_text_1_0=(Token)match(input,RULE_HOSTCODE,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -24240,7 +24264,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleReferenceCallEffect"
-    // InternalScadeEquations.g:8825:1: entryRuleReferenceCallEffect returns [EObject current=null] : iv_ruleReferenceCallEffect= ruleReferenceCallEffect EOF ;
+    // InternalScadeEquations.g:8829:1: entryRuleReferenceCallEffect returns [EObject current=null] : iv_ruleReferenceCallEffect= ruleReferenceCallEffect EOF ;
     public final EObject entryRuleReferenceCallEffect() throws RecognitionException {
         EObject current = null;
 
@@ -24248,8 +24272,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalScadeEquations.g:8825:60: (iv_ruleReferenceCallEffect= ruleReferenceCallEffect EOF )
-            // InternalScadeEquations.g:8826:2: iv_ruleReferenceCallEffect= ruleReferenceCallEffect EOF
+            // InternalScadeEquations.g:8829:60: (iv_ruleReferenceCallEffect= ruleReferenceCallEffect EOF )
+            // InternalScadeEquations.g:8830:2: iv_ruleReferenceCallEffect= ruleReferenceCallEffect EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getReferenceCallEffectRule()); 
@@ -24280,7 +24304,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleReferenceCallEffect"
-    // InternalScadeEquations.g:8832:1: ruleReferenceCallEffect returns [EObject current=null] : ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( ( rulePrimeID ) ) (otherlv_2= '[' ( (lv_indices_3_0= ruleExpression ) ) otherlv_4= ']' )* (otherlv_5= '.' ( (lv_subReference_6_0= ruleValuedObjectReference ) ) )? ( (otherlv_7= '(' ( (lv_parameters_8_0= ruleParameter ) ) (otherlv_9= ',' ( (lv_parameters_10_0= ruleParameter ) ) )* otherlv_11= ')' ) | otherlv_12= '()' ) (otherlv_13= 'schedule' ( (lv_schedule_14_0= ruleScheduleObjectReference ) )+ )? ) ;
+    // InternalScadeEquations.g:8836:1: ruleReferenceCallEffect returns [EObject current=null] : ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( ( rulePrimeID ) ) (otherlv_2= '[' ( (lv_indices_3_0= ruleExpression ) ) otherlv_4= ']' )* (otherlv_5= '.' ( (lv_subReference_6_0= ruleValuedObjectReference ) ) )? ( (otherlv_7= '(' ( (lv_parameters_8_0= ruleParameter ) ) (otherlv_9= ',' ( (lv_parameters_10_0= ruleParameter ) ) )* otherlv_11= ')' ) | otherlv_12= '()' ) (otherlv_13= 'schedule' ( (lv_schedule_14_0= ruleScheduleObjectReference ) )+ )? ) ;
     public final EObject ruleReferenceCallEffect() throws RecognitionException {
         EObject current = null;
 
@@ -24309,13 +24333,13 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:8838:2: ( ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( ( rulePrimeID ) ) (otherlv_2= '[' ( (lv_indices_3_0= ruleExpression ) ) otherlv_4= ']' )* (otherlv_5= '.' ( (lv_subReference_6_0= ruleValuedObjectReference ) ) )? ( (otherlv_7= '(' ( (lv_parameters_8_0= ruleParameter ) ) (otherlv_9= ',' ( (lv_parameters_10_0= ruleParameter ) ) )* otherlv_11= ')' ) | otherlv_12= '()' ) (otherlv_13= 'schedule' ( (lv_schedule_14_0= ruleScheduleObjectReference ) )+ )? ) )
-            // InternalScadeEquations.g:8839:2: ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( ( rulePrimeID ) ) (otherlv_2= '[' ( (lv_indices_3_0= ruleExpression ) ) otherlv_4= ']' )* (otherlv_5= '.' ( (lv_subReference_6_0= ruleValuedObjectReference ) ) )? ( (otherlv_7= '(' ( (lv_parameters_8_0= ruleParameter ) ) (otherlv_9= ',' ( (lv_parameters_10_0= ruleParameter ) ) )* otherlv_11= ')' ) | otherlv_12= '()' ) (otherlv_13= 'schedule' ( (lv_schedule_14_0= ruleScheduleObjectReference ) )+ )? )
+            // InternalScadeEquations.g:8842:2: ( ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( ( rulePrimeID ) ) (otherlv_2= '[' ( (lv_indices_3_0= ruleExpression ) ) otherlv_4= ']' )* (otherlv_5= '.' ( (lv_subReference_6_0= ruleValuedObjectReference ) ) )? ( (otherlv_7= '(' ( (lv_parameters_8_0= ruleParameter ) ) (otherlv_9= ',' ( (lv_parameters_10_0= ruleParameter ) ) )* otherlv_11= ')' ) | otherlv_12= '()' ) (otherlv_13= 'schedule' ( (lv_schedule_14_0= ruleScheduleObjectReference ) )+ )? ) )
+            // InternalScadeEquations.g:8843:2: ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( ( rulePrimeID ) ) (otherlv_2= '[' ( (lv_indices_3_0= ruleExpression ) ) otherlv_4= ']' )* (otherlv_5= '.' ( (lv_subReference_6_0= ruleValuedObjectReference ) ) )? ( (otherlv_7= '(' ( (lv_parameters_8_0= ruleParameter ) ) (otherlv_9= ',' ( (lv_parameters_10_0= ruleParameter ) ) )* otherlv_11= ')' ) | otherlv_12= '()' ) (otherlv_13= 'schedule' ( (lv_schedule_14_0= ruleScheduleObjectReference ) )+ )? )
             {
-            // InternalScadeEquations.g:8839:2: ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( ( rulePrimeID ) ) (otherlv_2= '[' ( (lv_indices_3_0= ruleExpression ) ) otherlv_4= ']' )* (otherlv_5= '.' ( (lv_subReference_6_0= ruleValuedObjectReference ) ) )? ( (otherlv_7= '(' ( (lv_parameters_8_0= ruleParameter ) ) (otherlv_9= ',' ( (lv_parameters_10_0= ruleParameter ) ) )* otherlv_11= ')' ) | otherlv_12= '()' ) (otherlv_13= 'schedule' ( (lv_schedule_14_0= ruleScheduleObjectReference ) )+ )? )
-            // InternalScadeEquations.g:8840:3: ( (lv_annotations_0_0= ruleAnnotation ) )* ( ( rulePrimeID ) ) (otherlv_2= '[' ( (lv_indices_3_0= ruleExpression ) ) otherlv_4= ']' )* (otherlv_5= '.' ( (lv_subReference_6_0= ruleValuedObjectReference ) ) )? ( (otherlv_7= '(' ( (lv_parameters_8_0= ruleParameter ) ) (otherlv_9= ',' ( (lv_parameters_10_0= ruleParameter ) ) )* otherlv_11= ')' ) | otherlv_12= '()' ) (otherlv_13= 'schedule' ( (lv_schedule_14_0= ruleScheduleObjectReference ) )+ )?
+            // InternalScadeEquations.g:8843:2: ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( ( rulePrimeID ) ) (otherlv_2= '[' ( (lv_indices_3_0= ruleExpression ) ) otherlv_4= ']' )* (otherlv_5= '.' ( (lv_subReference_6_0= ruleValuedObjectReference ) ) )? ( (otherlv_7= '(' ( (lv_parameters_8_0= ruleParameter ) ) (otherlv_9= ',' ( (lv_parameters_10_0= ruleParameter ) ) )* otherlv_11= ')' ) | otherlv_12= '()' ) (otherlv_13= 'schedule' ( (lv_schedule_14_0= ruleScheduleObjectReference ) )+ )? )
+            // InternalScadeEquations.g:8844:3: ( (lv_annotations_0_0= ruleAnnotation ) )* ( ( rulePrimeID ) ) (otherlv_2= '[' ( (lv_indices_3_0= ruleExpression ) ) otherlv_4= ']' )* (otherlv_5= '.' ( (lv_subReference_6_0= ruleValuedObjectReference ) ) )? ( (otherlv_7= '(' ( (lv_parameters_8_0= ruleParameter ) ) (otherlv_9= ',' ( (lv_parameters_10_0= ruleParameter ) ) )* otherlv_11= ')' ) | otherlv_12= '()' ) (otherlv_13= 'schedule' ( (lv_schedule_14_0= ruleScheduleObjectReference ) )+ )?
             {
-            // InternalScadeEquations.g:8840:3: ( (lv_annotations_0_0= ruleAnnotation ) )*
+            // InternalScadeEquations.g:8844:3: ( (lv_annotations_0_0= ruleAnnotation ) )*
             loop225:
             do {
                 int alt225=2;
@@ -24328,10 +24352,10 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                 switch (alt225) {
             	case 1 :
-            	    // InternalScadeEquations.g:8841:4: (lv_annotations_0_0= ruleAnnotation )
+            	    // InternalScadeEquations.g:8845:4: (lv_annotations_0_0= ruleAnnotation )
             	    {
-            	    // InternalScadeEquations.g:8841:4: (lv_annotations_0_0= ruleAnnotation )
-            	    // InternalScadeEquations.g:8842:5: lv_annotations_0_0= ruleAnnotation
+            	    // InternalScadeEquations.g:8845:4: (lv_annotations_0_0= ruleAnnotation )
+            	    // InternalScadeEquations.g:8846:5: lv_annotations_0_0= ruleAnnotation
             	    {
             	    if ( state.backtracking==0 ) {
 
@@ -24368,11 +24392,11 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                 }
             } while (true);
 
-            // InternalScadeEquations.g:8859:3: ( ( rulePrimeID ) )
-            // InternalScadeEquations.g:8860:4: ( rulePrimeID )
+            // InternalScadeEquations.g:8863:3: ( ( rulePrimeID ) )
+            // InternalScadeEquations.g:8864:4: ( rulePrimeID )
             {
-            // InternalScadeEquations.g:8860:4: ( rulePrimeID )
-            // InternalScadeEquations.g:8861:5: rulePrimeID
+            // InternalScadeEquations.g:8864:4: ( rulePrimeID )
+            // InternalScadeEquations.g:8865:5: rulePrimeID
             {
             if ( state.backtracking==0 ) {
 
@@ -24391,7 +24415,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
               					newCompositeNode(grammarAccess.getReferenceCallEffectAccess().getValuedObjectValuedObjectCrossReference_1_0());
               				
             }
-            pushFollow(FollowSets000.FOLLOW_111);
+            pushFollow(FollowSets000.FOLLOW_113);
             rulePrimeID();
 
             state._fsp--;
@@ -24407,7 +24431,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalScadeEquations.g:8878:3: (otherlv_2= '[' ( (lv_indices_3_0= ruleExpression ) ) otherlv_4= ']' )*
+            // InternalScadeEquations.g:8882:3: (otherlv_2= '[' ( (lv_indices_3_0= ruleExpression ) ) otherlv_4= ']' )*
             loop226:
             do {
                 int alt226=2;
@@ -24420,7 +24444,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                 switch (alt226) {
             	case 1 :
-            	    // InternalScadeEquations.g:8879:4: otherlv_2= '[' ( (lv_indices_3_0= ruleExpression ) ) otherlv_4= ']'
+            	    // InternalScadeEquations.g:8883:4: otherlv_2= '[' ( (lv_indices_3_0= ruleExpression ) ) otherlv_4= ']'
             	    {
             	    otherlv_2=(Token)match(input,73,FollowSets000.FOLLOW_9); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
@@ -24428,18 +24452,18 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             	      				newLeafNode(otherlv_2, grammarAccess.getReferenceCallEffectAccess().getLeftSquareBracketKeyword_2_0());
             	      			
             	    }
-            	    // InternalScadeEquations.g:8883:4: ( (lv_indices_3_0= ruleExpression ) )
-            	    // InternalScadeEquations.g:8884:5: (lv_indices_3_0= ruleExpression )
+            	    // InternalScadeEquations.g:8887:4: ( (lv_indices_3_0= ruleExpression ) )
+            	    // InternalScadeEquations.g:8888:5: (lv_indices_3_0= ruleExpression )
             	    {
-            	    // InternalScadeEquations.g:8884:5: (lv_indices_3_0= ruleExpression )
-            	    // InternalScadeEquations.g:8885:6: lv_indices_3_0= ruleExpression
+            	    // InternalScadeEquations.g:8888:5: (lv_indices_3_0= ruleExpression )
+            	    // InternalScadeEquations.g:8889:6: lv_indices_3_0= ruleExpression
             	    {
             	    if ( state.backtracking==0 ) {
 
             	      						newCompositeNode(grammarAccess.getReferenceCallEffectAccess().getIndicesExpressionParserRuleCall_2_1_0());
             	      					
             	    }
-            	    pushFollow(FollowSets000.FOLLOW_103);
+            	    pushFollow(FollowSets000.FOLLOW_105);
             	    lv_indices_3_0=ruleExpression();
 
             	    state._fsp--;
@@ -24463,7 +24487,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             	    }
 
-            	    otherlv_4=(Token)match(input,74,FollowSets000.FOLLOW_111); if (state.failed) return current;
+            	    otherlv_4=(Token)match(input,74,FollowSets000.FOLLOW_113); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	      				newLeafNode(otherlv_4, grammarAccess.getReferenceCallEffectAccess().getRightSquareBracketKeyword_2_2());
@@ -24478,7 +24502,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                 }
             } while (true);
 
-            // InternalScadeEquations.g:8907:3: (otherlv_5= '.' ( (lv_subReference_6_0= ruleValuedObjectReference ) ) )?
+            // InternalScadeEquations.g:8911:3: (otherlv_5= '.' ( (lv_subReference_6_0= ruleValuedObjectReference ) ) )?
             int alt227=2;
             int LA227_0 = input.LA(1);
 
@@ -24487,7 +24511,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             }
             switch (alt227) {
                 case 1 :
-                    // InternalScadeEquations.g:8908:4: otherlv_5= '.' ( (lv_subReference_6_0= ruleValuedObjectReference ) )
+                    // InternalScadeEquations.g:8912:4: otherlv_5= '.' ( (lv_subReference_6_0= ruleValuedObjectReference ) )
                     {
                     otherlv_5=(Token)match(input,37,FollowSets000.FOLLOW_4); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -24495,11 +24519,11 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                       				newLeafNode(otherlv_5, grammarAccess.getReferenceCallEffectAccess().getFullStopKeyword_3_0());
                       			
                     }
-                    // InternalScadeEquations.g:8912:4: ( (lv_subReference_6_0= ruleValuedObjectReference ) )
-                    // InternalScadeEquations.g:8913:5: (lv_subReference_6_0= ruleValuedObjectReference )
+                    // InternalScadeEquations.g:8916:4: ( (lv_subReference_6_0= ruleValuedObjectReference ) )
+                    // InternalScadeEquations.g:8917:5: (lv_subReference_6_0= ruleValuedObjectReference )
                     {
-                    // InternalScadeEquations.g:8913:5: (lv_subReference_6_0= ruleValuedObjectReference )
-                    // InternalScadeEquations.g:8914:6: lv_subReference_6_0= ruleValuedObjectReference
+                    // InternalScadeEquations.g:8917:5: (lv_subReference_6_0= ruleValuedObjectReference )
+                    // InternalScadeEquations.g:8918:6: lv_subReference_6_0= ruleValuedObjectReference
                     {
                     if ( state.backtracking==0 ) {
 
@@ -24536,7 +24560,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalScadeEquations.g:8932:3: ( (otherlv_7= '(' ( (lv_parameters_8_0= ruleParameter ) ) (otherlv_9= ',' ( (lv_parameters_10_0= ruleParameter ) ) )* otherlv_11= ')' ) | otherlv_12= '()' )
+            // InternalScadeEquations.g:8936:3: ( (otherlv_7= '(' ( (lv_parameters_8_0= ruleParameter ) ) (otherlv_9= ',' ( (lv_parameters_10_0= ruleParameter ) ) )* otherlv_11= ')' ) | otherlv_12= '()' )
             int alt229=2;
             int LA229_0 = input.LA(1);
 
@@ -24555,22 +24579,22 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             }
             switch (alt229) {
                 case 1 :
-                    // InternalScadeEquations.g:8933:4: (otherlv_7= '(' ( (lv_parameters_8_0= ruleParameter ) ) (otherlv_9= ',' ( (lv_parameters_10_0= ruleParameter ) ) )* otherlv_11= ')' )
+                    // InternalScadeEquations.g:8937:4: (otherlv_7= '(' ( (lv_parameters_8_0= ruleParameter ) ) (otherlv_9= ',' ( (lv_parameters_10_0= ruleParameter ) ) )* otherlv_11= ')' )
                     {
-                    // InternalScadeEquations.g:8933:4: (otherlv_7= '(' ( (lv_parameters_8_0= ruleParameter ) ) (otherlv_9= ',' ( (lv_parameters_10_0= ruleParameter ) ) )* otherlv_11= ')' )
-                    // InternalScadeEquations.g:8934:5: otherlv_7= '(' ( (lv_parameters_8_0= ruleParameter ) ) (otherlv_9= ',' ( (lv_parameters_10_0= ruleParameter ) ) )* otherlv_11= ')'
+                    // InternalScadeEquations.g:8937:4: (otherlv_7= '(' ( (lv_parameters_8_0= ruleParameter ) ) (otherlv_9= ',' ( (lv_parameters_10_0= ruleParameter ) ) )* otherlv_11= ')' )
+                    // InternalScadeEquations.g:8938:5: otherlv_7= '(' ( (lv_parameters_8_0= ruleParameter ) ) (otherlv_9= ',' ( (lv_parameters_10_0= ruleParameter ) ) )* otherlv_11= ')'
                     {
-                    otherlv_7=(Token)match(input,17,FollowSets000.FOLLOW_112); if (state.failed) return current;
+                    otherlv_7=(Token)match(input,17,FollowSets000.FOLLOW_114); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       					newLeafNode(otherlv_7, grammarAccess.getReferenceCallEffectAccess().getLeftParenthesisKeyword_4_0_0());
                       				
                     }
-                    // InternalScadeEquations.g:8938:5: ( (lv_parameters_8_0= ruleParameter ) )
-                    // InternalScadeEquations.g:8939:6: (lv_parameters_8_0= ruleParameter )
+                    // InternalScadeEquations.g:8942:5: ( (lv_parameters_8_0= ruleParameter ) )
+                    // InternalScadeEquations.g:8943:6: (lv_parameters_8_0= ruleParameter )
                     {
-                    // InternalScadeEquations.g:8939:6: (lv_parameters_8_0= ruleParameter )
-                    // InternalScadeEquations.g:8940:7: lv_parameters_8_0= ruleParameter
+                    // InternalScadeEquations.g:8943:6: (lv_parameters_8_0= ruleParameter )
+                    // InternalScadeEquations.g:8944:7: lv_parameters_8_0= ruleParameter
                     {
                     if ( state.backtracking==0 ) {
 
@@ -24601,7 +24625,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalScadeEquations.g:8957:5: (otherlv_9= ',' ( (lv_parameters_10_0= ruleParameter ) ) )*
+                    // InternalScadeEquations.g:8961:5: (otherlv_9= ',' ( (lv_parameters_10_0= ruleParameter ) ) )*
                     loop228:
                     do {
                         int alt228=2;
@@ -24614,19 +24638,19 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                         switch (alt228) {
                     	case 1 :
-                    	    // InternalScadeEquations.g:8958:6: otherlv_9= ',' ( (lv_parameters_10_0= ruleParameter ) )
+                    	    // InternalScadeEquations.g:8962:6: otherlv_9= ',' ( (lv_parameters_10_0= ruleParameter ) )
                     	    {
-                    	    otherlv_9=(Token)match(input,18,FollowSets000.FOLLOW_112); if (state.failed) return current;
+                    	    otherlv_9=(Token)match(input,18,FollowSets000.FOLLOW_114); if (state.failed) return current;
                     	    if ( state.backtracking==0 ) {
 
                     	      						newLeafNode(otherlv_9, grammarAccess.getReferenceCallEffectAccess().getCommaKeyword_4_0_2_0());
                     	      					
                     	    }
-                    	    // InternalScadeEquations.g:8962:6: ( (lv_parameters_10_0= ruleParameter ) )
-                    	    // InternalScadeEquations.g:8963:7: (lv_parameters_10_0= ruleParameter )
+                    	    // InternalScadeEquations.g:8966:6: ( (lv_parameters_10_0= ruleParameter ) )
+                    	    // InternalScadeEquations.g:8967:7: (lv_parameters_10_0= ruleParameter )
                     	    {
-                    	    // InternalScadeEquations.g:8963:7: (lv_parameters_10_0= ruleParameter )
-                    	    // InternalScadeEquations.g:8964:8: lv_parameters_10_0= ruleParameter
+                    	    // InternalScadeEquations.g:8967:7: (lv_parameters_10_0= ruleParameter )
+                    	    // InternalScadeEquations.g:8968:8: lv_parameters_10_0= ruleParameter
                     	    {
                     	    if ( state.backtracking==0 ) {
 
@@ -24666,7 +24690,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                         }
                     } while (true);
 
-                    otherlv_11=(Token)match(input,19,FollowSets000.FOLLOW_107); if (state.failed) return current;
+                    otherlv_11=(Token)match(input,19,FollowSets000.FOLLOW_109); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       					newLeafNode(otherlv_11, grammarAccess.getReferenceCallEffectAccess().getRightParenthesisKeyword_4_0_3());
@@ -24679,9 +24703,9 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalScadeEquations.g:8988:4: otherlv_12= '()'
+                    // InternalScadeEquations.g:8992:4: otherlv_12= '()'
                     {
-                    otherlv_12=(Token)match(input,28,FollowSets000.FOLLOW_107); if (state.failed) return current;
+                    otherlv_12=(Token)match(input,28,FollowSets000.FOLLOW_109); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       				newLeafNode(otherlv_12, grammarAccess.getReferenceCallEffectAccess().getLeftParenthesisRightParenthesisKeyword_4_1());
@@ -24693,7 +24717,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalScadeEquations.g:8993:3: (otherlv_13= 'schedule' ( (lv_schedule_14_0= ruleScheduleObjectReference ) )+ )?
+            // InternalScadeEquations.g:8997:3: (otherlv_13= 'schedule' ( (lv_schedule_14_0= ruleScheduleObjectReference ) )+ )?
             int alt231=2;
             int LA231_0 = input.LA(1);
 
@@ -24702,7 +24726,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             }
             switch (alt231) {
                 case 1 :
-                    // InternalScadeEquations.g:8994:4: otherlv_13= 'schedule' ( (lv_schedule_14_0= ruleScheduleObjectReference ) )+
+                    // InternalScadeEquations.g:8998:4: otherlv_13= 'schedule' ( (lv_schedule_14_0= ruleScheduleObjectReference ) )+
                     {
                     otherlv_13=(Token)match(input,71,FollowSets000.FOLLOW_4); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -24710,7 +24734,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                       				newLeafNode(otherlv_13, grammarAccess.getReferenceCallEffectAccess().getScheduleKeyword_5_0());
                       			
                     }
-                    // InternalScadeEquations.g:8998:4: ( (lv_schedule_14_0= ruleScheduleObjectReference ) )+
+                    // InternalScadeEquations.g:9002:4: ( (lv_schedule_14_0= ruleScheduleObjectReference ) )+
                     int cnt230=0;
                     loop230:
                     do {
@@ -24718,17 +24742,17 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                         alt230 = dfa230.predict(input);
                         switch (alt230) {
                     	case 1 :
-                    	    // InternalScadeEquations.g:8999:5: (lv_schedule_14_0= ruleScheduleObjectReference )
+                    	    // InternalScadeEquations.g:9003:5: (lv_schedule_14_0= ruleScheduleObjectReference )
                     	    {
-                    	    // InternalScadeEquations.g:8999:5: (lv_schedule_14_0= ruleScheduleObjectReference )
-                    	    // InternalScadeEquations.g:9000:6: lv_schedule_14_0= ruleScheduleObjectReference
+                    	    // InternalScadeEquations.g:9003:5: (lv_schedule_14_0= ruleScheduleObjectReference )
+                    	    // InternalScadeEquations.g:9004:6: lv_schedule_14_0= ruleScheduleObjectReference
                     	    {
                     	    if ( state.backtracking==0 ) {
 
                     	      						newCompositeNode(grammarAccess.getReferenceCallEffectAccess().getScheduleScheduleObjectReferenceParserRuleCall_5_1_0());
                     	      					
                     	    }
-                    	    pushFollow(FollowSets000.FOLLOW_108);
+                    	    pushFollow(FollowSets000.FOLLOW_110);
                     	    lv_schedule_14_0=ruleScheduleObjectReference();
 
                     	    state._fsp--;
@@ -24794,7 +24818,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleFunctionCallEffect"
-    // InternalScadeEquations.g:9022:1: entryRuleFunctionCallEffect returns [EObject current=null] : iv_ruleFunctionCallEffect= ruleFunctionCallEffect EOF ;
+    // InternalScadeEquations.g:9026:1: entryRuleFunctionCallEffect returns [EObject current=null] : iv_ruleFunctionCallEffect= ruleFunctionCallEffect EOF ;
     public final EObject entryRuleFunctionCallEffect() throws RecognitionException {
         EObject current = null;
 
@@ -24802,8 +24826,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalScadeEquations.g:9022:59: (iv_ruleFunctionCallEffect= ruleFunctionCallEffect EOF )
-            // InternalScadeEquations.g:9023:2: iv_ruleFunctionCallEffect= ruleFunctionCallEffect EOF
+            // InternalScadeEquations.g:9026:59: (iv_ruleFunctionCallEffect= ruleFunctionCallEffect EOF )
+            // InternalScadeEquations.g:9027:2: iv_ruleFunctionCallEffect= ruleFunctionCallEffect EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getFunctionCallEffectRule()); 
@@ -24834,7 +24858,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleFunctionCallEffect"
-    // InternalScadeEquations.g:9029:1: ruleFunctionCallEffect returns [EObject current=null] : ( ( (lv_annotations_0_0= ruleAnnotation ) )* (otherlv_1= 'extern' ( (lv_functionName_2_0= RULE_ID ) ) ( (otherlv_3= '(' ( (lv_parameters_4_0= ruleParameter ) ) (otherlv_5= ',' ( (lv_parameters_6_0= ruleParameter ) ) )* otherlv_7= ')' ) | otherlv_8= '()' ) ) ) ;
+    // InternalScadeEquations.g:9033:1: ruleFunctionCallEffect returns [EObject current=null] : ( ( (lv_annotations_0_0= ruleAnnotation ) )* (otherlv_1= 'extern' ( (lv_functionName_2_0= RULE_ID ) ) ( (otherlv_3= '(' ( (lv_parameters_4_0= ruleParameter ) ) (otherlv_5= ',' ( (lv_parameters_6_0= ruleParameter ) ) )* otherlv_7= ')' ) | otherlv_8= '()' ) ) ) ;
     public final EObject ruleFunctionCallEffect() throws RecognitionException {
         EObject current = null;
 
@@ -24855,13 +24879,13 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:9035:2: ( ( ( (lv_annotations_0_0= ruleAnnotation ) )* (otherlv_1= 'extern' ( (lv_functionName_2_0= RULE_ID ) ) ( (otherlv_3= '(' ( (lv_parameters_4_0= ruleParameter ) ) (otherlv_5= ',' ( (lv_parameters_6_0= ruleParameter ) ) )* otherlv_7= ')' ) | otherlv_8= '()' ) ) ) )
-            // InternalScadeEquations.g:9036:2: ( ( (lv_annotations_0_0= ruleAnnotation ) )* (otherlv_1= 'extern' ( (lv_functionName_2_0= RULE_ID ) ) ( (otherlv_3= '(' ( (lv_parameters_4_0= ruleParameter ) ) (otherlv_5= ',' ( (lv_parameters_6_0= ruleParameter ) ) )* otherlv_7= ')' ) | otherlv_8= '()' ) ) )
+            // InternalScadeEquations.g:9039:2: ( ( ( (lv_annotations_0_0= ruleAnnotation ) )* (otherlv_1= 'extern' ( (lv_functionName_2_0= RULE_ID ) ) ( (otherlv_3= '(' ( (lv_parameters_4_0= ruleParameter ) ) (otherlv_5= ',' ( (lv_parameters_6_0= ruleParameter ) ) )* otherlv_7= ')' ) | otherlv_8= '()' ) ) ) )
+            // InternalScadeEquations.g:9040:2: ( ( (lv_annotations_0_0= ruleAnnotation ) )* (otherlv_1= 'extern' ( (lv_functionName_2_0= RULE_ID ) ) ( (otherlv_3= '(' ( (lv_parameters_4_0= ruleParameter ) ) (otherlv_5= ',' ( (lv_parameters_6_0= ruleParameter ) ) )* otherlv_7= ')' ) | otherlv_8= '()' ) ) )
             {
-            // InternalScadeEquations.g:9036:2: ( ( (lv_annotations_0_0= ruleAnnotation ) )* (otherlv_1= 'extern' ( (lv_functionName_2_0= RULE_ID ) ) ( (otherlv_3= '(' ( (lv_parameters_4_0= ruleParameter ) ) (otherlv_5= ',' ( (lv_parameters_6_0= ruleParameter ) ) )* otherlv_7= ')' ) | otherlv_8= '()' ) ) )
-            // InternalScadeEquations.g:9037:3: ( (lv_annotations_0_0= ruleAnnotation ) )* (otherlv_1= 'extern' ( (lv_functionName_2_0= RULE_ID ) ) ( (otherlv_3= '(' ( (lv_parameters_4_0= ruleParameter ) ) (otherlv_5= ',' ( (lv_parameters_6_0= ruleParameter ) ) )* otherlv_7= ')' ) | otherlv_8= '()' ) )
+            // InternalScadeEquations.g:9040:2: ( ( (lv_annotations_0_0= ruleAnnotation ) )* (otherlv_1= 'extern' ( (lv_functionName_2_0= RULE_ID ) ) ( (otherlv_3= '(' ( (lv_parameters_4_0= ruleParameter ) ) (otherlv_5= ',' ( (lv_parameters_6_0= ruleParameter ) ) )* otherlv_7= ')' ) | otherlv_8= '()' ) ) )
+            // InternalScadeEquations.g:9041:3: ( (lv_annotations_0_0= ruleAnnotation ) )* (otherlv_1= 'extern' ( (lv_functionName_2_0= RULE_ID ) ) ( (otherlv_3= '(' ( (lv_parameters_4_0= ruleParameter ) ) (otherlv_5= ',' ( (lv_parameters_6_0= ruleParameter ) ) )* otherlv_7= ')' ) | otherlv_8= '()' ) )
             {
-            // InternalScadeEquations.g:9037:3: ( (lv_annotations_0_0= ruleAnnotation ) )*
+            // InternalScadeEquations.g:9041:3: ( (lv_annotations_0_0= ruleAnnotation ) )*
             loop232:
             do {
                 int alt232=2;
@@ -24874,17 +24898,17 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                 switch (alt232) {
             	case 1 :
-            	    // InternalScadeEquations.g:9038:4: (lv_annotations_0_0= ruleAnnotation )
+            	    // InternalScadeEquations.g:9042:4: (lv_annotations_0_0= ruleAnnotation )
             	    {
-            	    // InternalScadeEquations.g:9038:4: (lv_annotations_0_0= ruleAnnotation )
-            	    // InternalScadeEquations.g:9039:5: lv_annotations_0_0= ruleAnnotation
+            	    // InternalScadeEquations.g:9042:4: (lv_annotations_0_0= ruleAnnotation )
+            	    // InternalScadeEquations.g:9043:5: lv_annotations_0_0= ruleAnnotation
             	    {
             	    if ( state.backtracking==0 ) {
 
             	      					newCompositeNode(grammarAccess.getFunctionCallEffectAccess().getAnnotationsAnnotationParserRuleCall_0_0());
             	      				
             	    }
-            	    pushFollow(FollowSets000.FOLLOW_113);
+            	    pushFollow(FollowSets000.FOLLOW_115);
             	    lv_annotations_0_0=ruleAnnotation();
 
             	    state._fsp--;
@@ -24914,8 +24938,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                 }
             } while (true);
 
-            // InternalScadeEquations.g:9056:3: (otherlv_1= 'extern' ( (lv_functionName_2_0= RULE_ID ) ) ( (otherlv_3= '(' ( (lv_parameters_4_0= ruleParameter ) ) (otherlv_5= ',' ( (lv_parameters_6_0= ruleParameter ) ) )* otherlv_7= ')' ) | otherlv_8= '()' ) )
-            // InternalScadeEquations.g:9057:4: otherlv_1= 'extern' ( (lv_functionName_2_0= RULE_ID ) ) ( (otherlv_3= '(' ( (lv_parameters_4_0= ruleParameter ) ) (otherlv_5= ',' ( (lv_parameters_6_0= ruleParameter ) ) )* otherlv_7= ')' ) | otherlv_8= '()' )
+            // InternalScadeEquations.g:9060:3: (otherlv_1= 'extern' ( (lv_functionName_2_0= RULE_ID ) ) ( (otherlv_3= '(' ( (lv_parameters_4_0= ruleParameter ) ) (otherlv_5= ',' ( (lv_parameters_6_0= ruleParameter ) ) )* otherlv_7= ')' ) | otherlv_8= '()' ) )
+            // InternalScadeEquations.g:9061:4: otherlv_1= 'extern' ( (lv_functionName_2_0= RULE_ID ) ) ( (otherlv_3= '(' ( (lv_parameters_4_0= ruleParameter ) ) (otherlv_5= ',' ( (lv_parameters_6_0= ruleParameter ) ) )* otherlv_7= ')' ) | otherlv_8= '()' )
             {
             otherlv_1=(Token)match(input,25,FollowSets000.FOLLOW_4); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -24923,11 +24947,11 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
               				newLeafNode(otherlv_1, grammarAccess.getFunctionCallEffectAccess().getExternKeyword_1_0());
               			
             }
-            // InternalScadeEquations.g:9061:4: ( (lv_functionName_2_0= RULE_ID ) )
-            // InternalScadeEquations.g:9062:5: (lv_functionName_2_0= RULE_ID )
+            // InternalScadeEquations.g:9065:4: ( (lv_functionName_2_0= RULE_ID ) )
+            // InternalScadeEquations.g:9066:5: (lv_functionName_2_0= RULE_ID )
             {
-            // InternalScadeEquations.g:9062:5: (lv_functionName_2_0= RULE_ID )
-            // InternalScadeEquations.g:9063:6: lv_functionName_2_0= RULE_ID
+            // InternalScadeEquations.g:9066:5: (lv_functionName_2_0= RULE_ID )
+            // InternalScadeEquations.g:9067:6: lv_functionName_2_0= RULE_ID
             {
             lv_functionName_2_0=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_22); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -24953,7 +24977,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalScadeEquations.g:9079:4: ( (otherlv_3= '(' ( (lv_parameters_4_0= ruleParameter ) ) (otherlv_5= ',' ( (lv_parameters_6_0= ruleParameter ) ) )* otherlv_7= ')' ) | otherlv_8= '()' )
+            // InternalScadeEquations.g:9083:4: ( (otherlv_3= '(' ( (lv_parameters_4_0= ruleParameter ) ) (otherlv_5= ',' ( (lv_parameters_6_0= ruleParameter ) ) )* otherlv_7= ')' ) | otherlv_8= '()' )
             int alt234=2;
             int LA234_0 = input.LA(1);
 
@@ -24972,22 +24996,22 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             }
             switch (alt234) {
                 case 1 :
-                    // InternalScadeEquations.g:9080:5: (otherlv_3= '(' ( (lv_parameters_4_0= ruleParameter ) ) (otherlv_5= ',' ( (lv_parameters_6_0= ruleParameter ) ) )* otherlv_7= ')' )
+                    // InternalScadeEquations.g:9084:5: (otherlv_3= '(' ( (lv_parameters_4_0= ruleParameter ) ) (otherlv_5= ',' ( (lv_parameters_6_0= ruleParameter ) ) )* otherlv_7= ')' )
                     {
-                    // InternalScadeEquations.g:9080:5: (otherlv_3= '(' ( (lv_parameters_4_0= ruleParameter ) ) (otherlv_5= ',' ( (lv_parameters_6_0= ruleParameter ) ) )* otherlv_7= ')' )
-                    // InternalScadeEquations.g:9081:6: otherlv_3= '(' ( (lv_parameters_4_0= ruleParameter ) ) (otherlv_5= ',' ( (lv_parameters_6_0= ruleParameter ) ) )* otherlv_7= ')'
+                    // InternalScadeEquations.g:9084:5: (otherlv_3= '(' ( (lv_parameters_4_0= ruleParameter ) ) (otherlv_5= ',' ( (lv_parameters_6_0= ruleParameter ) ) )* otherlv_7= ')' )
+                    // InternalScadeEquations.g:9085:6: otherlv_3= '(' ( (lv_parameters_4_0= ruleParameter ) ) (otherlv_5= ',' ( (lv_parameters_6_0= ruleParameter ) ) )* otherlv_7= ')'
                     {
-                    otherlv_3=(Token)match(input,17,FollowSets000.FOLLOW_112); if (state.failed) return current;
+                    otherlv_3=(Token)match(input,17,FollowSets000.FOLLOW_114); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       						newLeafNode(otherlv_3, grammarAccess.getFunctionCallEffectAccess().getLeftParenthesisKeyword_1_2_0_0());
                       					
                     }
-                    // InternalScadeEquations.g:9085:6: ( (lv_parameters_4_0= ruleParameter ) )
-                    // InternalScadeEquations.g:9086:7: (lv_parameters_4_0= ruleParameter )
+                    // InternalScadeEquations.g:9089:6: ( (lv_parameters_4_0= ruleParameter ) )
+                    // InternalScadeEquations.g:9090:7: (lv_parameters_4_0= ruleParameter )
                     {
-                    // InternalScadeEquations.g:9086:7: (lv_parameters_4_0= ruleParameter )
-                    // InternalScadeEquations.g:9087:8: lv_parameters_4_0= ruleParameter
+                    // InternalScadeEquations.g:9090:7: (lv_parameters_4_0= ruleParameter )
+                    // InternalScadeEquations.g:9091:8: lv_parameters_4_0= ruleParameter
                     {
                     if ( state.backtracking==0 ) {
 
@@ -25018,7 +25042,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalScadeEquations.g:9104:6: (otherlv_5= ',' ( (lv_parameters_6_0= ruleParameter ) ) )*
+                    // InternalScadeEquations.g:9108:6: (otherlv_5= ',' ( (lv_parameters_6_0= ruleParameter ) ) )*
                     loop233:
                     do {
                         int alt233=2;
@@ -25031,19 +25055,19 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                         switch (alt233) {
                     	case 1 :
-                    	    // InternalScadeEquations.g:9105:7: otherlv_5= ',' ( (lv_parameters_6_0= ruleParameter ) )
+                    	    // InternalScadeEquations.g:9109:7: otherlv_5= ',' ( (lv_parameters_6_0= ruleParameter ) )
                     	    {
-                    	    otherlv_5=(Token)match(input,18,FollowSets000.FOLLOW_112); if (state.failed) return current;
+                    	    otherlv_5=(Token)match(input,18,FollowSets000.FOLLOW_114); if (state.failed) return current;
                     	    if ( state.backtracking==0 ) {
 
                     	      							newLeafNode(otherlv_5, grammarAccess.getFunctionCallEffectAccess().getCommaKeyword_1_2_0_2_0());
                     	      						
                     	    }
-                    	    // InternalScadeEquations.g:9109:7: ( (lv_parameters_6_0= ruleParameter ) )
-                    	    // InternalScadeEquations.g:9110:8: (lv_parameters_6_0= ruleParameter )
+                    	    // InternalScadeEquations.g:9113:7: ( (lv_parameters_6_0= ruleParameter ) )
+                    	    // InternalScadeEquations.g:9114:8: (lv_parameters_6_0= ruleParameter )
                     	    {
-                    	    // InternalScadeEquations.g:9110:8: (lv_parameters_6_0= ruleParameter )
-                    	    // InternalScadeEquations.g:9111:9: lv_parameters_6_0= ruleParameter
+                    	    // InternalScadeEquations.g:9114:8: (lv_parameters_6_0= ruleParameter )
+                    	    // InternalScadeEquations.g:9115:9: lv_parameters_6_0= ruleParameter
                     	    {
                     	    if ( state.backtracking==0 ) {
 
@@ -25096,7 +25120,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalScadeEquations.g:9135:5: otherlv_8= '()'
+                    // InternalScadeEquations.g:9139:5: otherlv_8= '()'
                     {
                     otherlv_8=(Token)match(input,28,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -25138,7 +25162,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRulePrintCallEffect"
-    // InternalScadeEquations.g:9145:1: entryRulePrintCallEffect returns [EObject current=null] : iv_rulePrintCallEffect= rulePrintCallEffect EOF ;
+    // InternalScadeEquations.g:9149:1: entryRulePrintCallEffect returns [EObject current=null] : iv_rulePrintCallEffect= rulePrintCallEffect EOF ;
     public final EObject entryRulePrintCallEffect() throws RecognitionException {
         EObject current = null;
 
@@ -25146,8 +25170,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalScadeEquations.g:9145:56: (iv_rulePrintCallEffect= rulePrintCallEffect EOF )
-            // InternalScadeEquations.g:9146:2: iv_rulePrintCallEffect= rulePrintCallEffect EOF
+            // InternalScadeEquations.g:9149:56: (iv_rulePrintCallEffect= rulePrintCallEffect EOF )
+            // InternalScadeEquations.g:9150:2: iv_rulePrintCallEffect= rulePrintCallEffect EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getPrintCallEffectRule()); 
@@ -25178,7 +25202,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "rulePrintCallEffect"
-    // InternalScadeEquations.g:9152:1: rulePrintCallEffect returns [EObject current=null] : ( ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'print' (otherlv_2= '(' ( (lv_parameters_3_0= ruleParameter ) ) (otherlv_4= ',' ( (lv_parameters_5_0= ruleParameter ) ) )* otherlv_6= ')' ) (otherlv_7= 'schedule' ( (lv_schedule_8_0= ruleScheduleObjectReference ) )+ )? ) ;
+    // InternalScadeEquations.g:9156:1: rulePrintCallEffect returns [EObject current=null] : ( ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'print' (otherlv_2= '(' ( (lv_parameters_3_0= ruleParameter ) ) (otherlv_4= ',' ( (lv_parameters_5_0= ruleParameter ) ) )* otherlv_6= ')' ) (otherlv_7= 'schedule' ( (lv_schedule_8_0= ruleScheduleObjectReference ) )+ )? ) ;
     public final EObject rulePrintCallEffect() throws RecognitionException {
         EObject current = null;
 
@@ -25200,13 +25224,13 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:9158:2: ( ( ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'print' (otherlv_2= '(' ( (lv_parameters_3_0= ruleParameter ) ) (otherlv_4= ',' ( (lv_parameters_5_0= ruleParameter ) ) )* otherlv_6= ')' ) (otherlv_7= 'schedule' ( (lv_schedule_8_0= ruleScheduleObjectReference ) )+ )? ) )
-            // InternalScadeEquations.g:9159:2: ( ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'print' (otherlv_2= '(' ( (lv_parameters_3_0= ruleParameter ) ) (otherlv_4= ',' ( (lv_parameters_5_0= ruleParameter ) ) )* otherlv_6= ')' ) (otherlv_7= 'schedule' ( (lv_schedule_8_0= ruleScheduleObjectReference ) )+ )? )
+            // InternalScadeEquations.g:9162:2: ( ( ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'print' (otherlv_2= '(' ( (lv_parameters_3_0= ruleParameter ) ) (otherlv_4= ',' ( (lv_parameters_5_0= ruleParameter ) ) )* otherlv_6= ')' ) (otherlv_7= 'schedule' ( (lv_schedule_8_0= ruleScheduleObjectReference ) )+ )? ) )
+            // InternalScadeEquations.g:9163:2: ( ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'print' (otherlv_2= '(' ( (lv_parameters_3_0= ruleParameter ) ) (otherlv_4= ',' ( (lv_parameters_5_0= ruleParameter ) ) )* otherlv_6= ')' ) (otherlv_7= 'schedule' ( (lv_schedule_8_0= ruleScheduleObjectReference ) )+ )? )
             {
-            // InternalScadeEquations.g:9159:2: ( ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'print' (otherlv_2= '(' ( (lv_parameters_3_0= ruleParameter ) ) (otherlv_4= ',' ( (lv_parameters_5_0= ruleParameter ) ) )* otherlv_6= ')' ) (otherlv_7= 'schedule' ( (lv_schedule_8_0= ruleScheduleObjectReference ) )+ )? )
-            // InternalScadeEquations.g:9160:3: ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'print' (otherlv_2= '(' ( (lv_parameters_3_0= ruleParameter ) ) (otherlv_4= ',' ( (lv_parameters_5_0= ruleParameter ) ) )* otherlv_6= ')' ) (otherlv_7= 'schedule' ( (lv_schedule_8_0= ruleScheduleObjectReference ) )+ )?
+            // InternalScadeEquations.g:9163:2: ( ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'print' (otherlv_2= '(' ( (lv_parameters_3_0= ruleParameter ) ) (otherlv_4= ',' ( (lv_parameters_5_0= ruleParameter ) ) )* otherlv_6= ')' ) (otherlv_7= 'schedule' ( (lv_schedule_8_0= ruleScheduleObjectReference ) )+ )? )
+            // InternalScadeEquations.g:9164:3: ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'print' (otherlv_2= '(' ( (lv_parameters_3_0= ruleParameter ) ) (otherlv_4= ',' ( (lv_parameters_5_0= ruleParameter ) ) )* otherlv_6= ')' ) (otherlv_7= 'schedule' ( (lv_schedule_8_0= ruleScheduleObjectReference ) )+ )?
             {
-            // InternalScadeEquations.g:9160:3: ( (lv_annotations_0_0= ruleAnnotation ) )*
+            // InternalScadeEquations.g:9164:3: ( (lv_annotations_0_0= ruleAnnotation ) )*
             loop235:
             do {
                 int alt235=2;
@@ -25219,17 +25243,17 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                 switch (alt235) {
             	case 1 :
-            	    // InternalScadeEquations.g:9161:4: (lv_annotations_0_0= ruleAnnotation )
+            	    // InternalScadeEquations.g:9165:4: (lv_annotations_0_0= ruleAnnotation )
             	    {
-            	    // InternalScadeEquations.g:9161:4: (lv_annotations_0_0= ruleAnnotation )
-            	    // InternalScadeEquations.g:9162:5: lv_annotations_0_0= ruleAnnotation
+            	    // InternalScadeEquations.g:9165:4: (lv_annotations_0_0= ruleAnnotation )
+            	    // InternalScadeEquations.g:9166:5: lv_annotations_0_0= ruleAnnotation
             	    {
             	    if ( state.backtracking==0 ) {
 
             	      					newCompositeNode(grammarAccess.getPrintCallEffectAccess().getAnnotationsAnnotationParserRuleCall_0_0());
             	      				
             	    }
-            	    pushFollow(FollowSets000.FOLLOW_114);
+            	    pushFollow(FollowSets000.FOLLOW_116);
             	    lv_annotations_0_0=ruleAnnotation();
 
             	    state._fsp--;
@@ -25265,20 +25289,20 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
               			newLeafNode(otherlv_1, grammarAccess.getPrintCallEffectAccess().getPrintKeyword_1());
               		
             }
-            // InternalScadeEquations.g:9183:3: (otherlv_2= '(' ( (lv_parameters_3_0= ruleParameter ) ) (otherlv_4= ',' ( (lv_parameters_5_0= ruleParameter ) ) )* otherlv_6= ')' )
-            // InternalScadeEquations.g:9184:4: otherlv_2= '(' ( (lv_parameters_3_0= ruleParameter ) ) (otherlv_4= ',' ( (lv_parameters_5_0= ruleParameter ) ) )* otherlv_6= ')'
+            // InternalScadeEquations.g:9187:3: (otherlv_2= '(' ( (lv_parameters_3_0= ruleParameter ) ) (otherlv_4= ',' ( (lv_parameters_5_0= ruleParameter ) ) )* otherlv_6= ')' )
+            // InternalScadeEquations.g:9188:4: otherlv_2= '(' ( (lv_parameters_3_0= ruleParameter ) ) (otherlv_4= ',' ( (lv_parameters_5_0= ruleParameter ) ) )* otherlv_6= ')'
             {
-            otherlv_2=(Token)match(input,17,FollowSets000.FOLLOW_112); if (state.failed) return current;
+            otherlv_2=(Token)match(input,17,FollowSets000.FOLLOW_114); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               				newLeafNode(otherlv_2, grammarAccess.getPrintCallEffectAccess().getLeftParenthesisKeyword_2_0());
               			
             }
-            // InternalScadeEquations.g:9188:4: ( (lv_parameters_3_0= ruleParameter ) )
-            // InternalScadeEquations.g:9189:5: (lv_parameters_3_0= ruleParameter )
+            // InternalScadeEquations.g:9192:4: ( (lv_parameters_3_0= ruleParameter ) )
+            // InternalScadeEquations.g:9193:5: (lv_parameters_3_0= ruleParameter )
             {
-            // InternalScadeEquations.g:9189:5: (lv_parameters_3_0= ruleParameter )
-            // InternalScadeEquations.g:9190:6: lv_parameters_3_0= ruleParameter
+            // InternalScadeEquations.g:9193:5: (lv_parameters_3_0= ruleParameter )
+            // InternalScadeEquations.g:9194:6: lv_parameters_3_0= ruleParameter
             {
             if ( state.backtracking==0 ) {
 
@@ -25309,7 +25333,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalScadeEquations.g:9207:4: (otherlv_4= ',' ( (lv_parameters_5_0= ruleParameter ) ) )*
+            // InternalScadeEquations.g:9211:4: (otherlv_4= ',' ( (lv_parameters_5_0= ruleParameter ) ) )*
             loop236:
             do {
                 int alt236=2;
@@ -25322,19 +25346,19 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                 switch (alt236) {
             	case 1 :
-            	    // InternalScadeEquations.g:9208:5: otherlv_4= ',' ( (lv_parameters_5_0= ruleParameter ) )
+            	    // InternalScadeEquations.g:9212:5: otherlv_4= ',' ( (lv_parameters_5_0= ruleParameter ) )
             	    {
-            	    otherlv_4=(Token)match(input,18,FollowSets000.FOLLOW_112); if (state.failed) return current;
+            	    otherlv_4=(Token)match(input,18,FollowSets000.FOLLOW_114); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	      					newLeafNode(otherlv_4, grammarAccess.getPrintCallEffectAccess().getCommaKeyword_2_2_0());
             	      				
             	    }
-            	    // InternalScadeEquations.g:9212:5: ( (lv_parameters_5_0= ruleParameter ) )
-            	    // InternalScadeEquations.g:9213:6: (lv_parameters_5_0= ruleParameter )
+            	    // InternalScadeEquations.g:9216:5: ( (lv_parameters_5_0= ruleParameter ) )
+            	    // InternalScadeEquations.g:9217:6: (lv_parameters_5_0= ruleParameter )
             	    {
-            	    // InternalScadeEquations.g:9213:6: (lv_parameters_5_0= ruleParameter )
-            	    // InternalScadeEquations.g:9214:7: lv_parameters_5_0= ruleParameter
+            	    // InternalScadeEquations.g:9217:6: (lv_parameters_5_0= ruleParameter )
+            	    // InternalScadeEquations.g:9218:7: lv_parameters_5_0= ruleParameter
             	    {
             	    if ( state.backtracking==0 ) {
 
@@ -25374,7 +25398,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                 }
             } while (true);
 
-            otherlv_6=(Token)match(input,19,FollowSets000.FOLLOW_107); if (state.failed) return current;
+            otherlv_6=(Token)match(input,19,FollowSets000.FOLLOW_109); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               				newLeafNode(otherlv_6, grammarAccess.getPrintCallEffectAccess().getRightParenthesisKeyword_2_3());
@@ -25383,7 +25407,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalScadeEquations.g:9237:3: (otherlv_7= 'schedule' ( (lv_schedule_8_0= ruleScheduleObjectReference ) )+ )?
+            // InternalScadeEquations.g:9241:3: (otherlv_7= 'schedule' ( (lv_schedule_8_0= ruleScheduleObjectReference ) )+ )?
             int alt238=2;
             int LA238_0 = input.LA(1);
 
@@ -25392,7 +25416,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             }
             switch (alt238) {
                 case 1 :
-                    // InternalScadeEquations.g:9238:4: otherlv_7= 'schedule' ( (lv_schedule_8_0= ruleScheduleObjectReference ) )+
+                    // InternalScadeEquations.g:9242:4: otherlv_7= 'schedule' ( (lv_schedule_8_0= ruleScheduleObjectReference ) )+
                     {
                     otherlv_7=(Token)match(input,71,FollowSets000.FOLLOW_4); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -25400,7 +25424,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                       				newLeafNode(otherlv_7, grammarAccess.getPrintCallEffectAccess().getScheduleKeyword_3_0());
                       			
                     }
-                    // InternalScadeEquations.g:9242:4: ( (lv_schedule_8_0= ruleScheduleObjectReference ) )+
+                    // InternalScadeEquations.g:9246:4: ( (lv_schedule_8_0= ruleScheduleObjectReference ) )+
                     int cnt237=0;
                     loop237:
                     do {
@@ -25408,17 +25432,17 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                         alt237 = dfa237.predict(input);
                         switch (alt237) {
                     	case 1 :
-                    	    // InternalScadeEquations.g:9243:5: (lv_schedule_8_0= ruleScheduleObjectReference )
+                    	    // InternalScadeEquations.g:9247:5: (lv_schedule_8_0= ruleScheduleObjectReference )
                     	    {
-                    	    // InternalScadeEquations.g:9243:5: (lv_schedule_8_0= ruleScheduleObjectReference )
-                    	    // InternalScadeEquations.g:9244:6: lv_schedule_8_0= ruleScheduleObjectReference
+                    	    // InternalScadeEquations.g:9247:5: (lv_schedule_8_0= ruleScheduleObjectReference )
+                    	    // InternalScadeEquations.g:9248:6: lv_schedule_8_0= ruleScheduleObjectReference
                     	    {
                     	    if ( state.backtracking==0 ) {
 
                     	      						newCompositeNode(grammarAccess.getPrintCallEffectAccess().getScheduleScheduleObjectReferenceParserRuleCall_3_1_0());
                     	      					
                     	    }
-                    	    pushFollow(FollowSets000.FOLLOW_108);
+                    	    pushFollow(FollowSets000.FOLLOW_110);
                     	    lv_schedule_8_0=ruleScheduleObjectReference();
 
                     	    state._fsp--;
@@ -25484,7 +25508,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleRandomizeCallEffect"
-    // InternalScadeEquations.g:9266:1: entryRuleRandomizeCallEffect returns [EObject current=null] : iv_ruleRandomizeCallEffect= ruleRandomizeCallEffect EOF ;
+    // InternalScadeEquations.g:9270:1: entryRuleRandomizeCallEffect returns [EObject current=null] : iv_ruleRandomizeCallEffect= ruleRandomizeCallEffect EOF ;
     public final EObject entryRuleRandomizeCallEffect() throws RecognitionException {
         EObject current = null;
 
@@ -25492,8 +25516,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalScadeEquations.g:9266:60: (iv_ruleRandomizeCallEffect= ruleRandomizeCallEffect EOF )
-            // InternalScadeEquations.g:9267:2: iv_ruleRandomizeCallEffect= ruleRandomizeCallEffect EOF
+            // InternalScadeEquations.g:9270:60: (iv_ruleRandomizeCallEffect= ruleRandomizeCallEffect EOF )
+            // InternalScadeEquations.g:9271:2: iv_ruleRandomizeCallEffect= ruleRandomizeCallEffect EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getRandomizeCallEffectRule()); 
@@ -25524,7 +25548,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleRandomizeCallEffect"
-    // InternalScadeEquations.g:9273:1: ruleRandomizeCallEffect returns [EObject current=null] : ( () ( (lv_annotations_1_0= ruleAnnotation ) )* otherlv_2= 'randomize' ( (otherlv_3= '(' ( (lv_parameters_4_0= ruleParameter ) ) (otherlv_5= ',' ( (lv_parameters_6_0= ruleParameter ) ) )* otherlv_7= ')' ) | otherlv_8= '()' ) ) ;
+    // InternalScadeEquations.g:9277:1: ruleRandomizeCallEffect returns [EObject current=null] : ( () ( (lv_annotations_1_0= ruleAnnotation ) )* otherlv_2= 'randomize' ( (otherlv_3= '(' ( (lv_parameters_4_0= ruleParameter ) ) (otherlv_5= ',' ( (lv_parameters_6_0= ruleParameter ) ) )* otherlv_7= ')' ) | otherlv_8= '()' ) ) ;
     public final EObject ruleRandomizeCallEffect() throws RecognitionException {
         EObject current = null;
 
@@ -25544,14 +25568,14 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:9279:2: ( ( () ( (lv_annotations_1_0= ruleAnnotation ) )* otherlv_2= 'randomize' ( (otherlv_3= '(' ( (lv_parameters_4_0= ruleParameter ) ) (otherlv_5= ',' ( (lv_parameters_6_0= ruleParameter ) ) )* otherlv_7= ')' ) | otherlv_8= '()' ) ) )
-            // InternalScadeEquations.g:9280:2: ( () ( (lv_annotations_1_0= ruleAnnotation ) )* otherlv_2= 'randomize' ( (otherlv_3= '(' ( (lv_parameters_4_0= ruleParameter ) ) (otherlv_5= ',' ( (lv_parameters_6_0= ruleParameter ) ) )* otherlv_7= ')' ) | otherlv_8= '()' ) )
+            // InternalScadeEquations.g:9283:2: ( ( () ( (lv_annotations_1_0= ruleAnnotation ) )* otherlv_2= 'randomize' ( (otherlv_3= '(' ( (lv_parameters_4_0= ruleParameter ) ) (otherlv_5= ',' ( (lv_parameters_6_0= ruleParameter ) ) )* otherlv_7= ')' ) | otherlv_8= '()' ) ) )
+            // InternalScadeEquations.g:9284:2: ( () ( (lv_annotations_1_0= ruleAnnotation ) )* otherlv_2= 'randomize' ( (otherlv_3= '(' ( (lv_parameters_4_0= ruleParameter ) ) (otherlv_5= ',' ( (lv_parameters_6_0= ruleParameter ) ) )* otherlv_7= ')' ) | otherlv_8= '()' ) )
             {
-            // InternalScadeEquations.g:9280:2: ( () ( (lv_annotations_1_0= ruleAnnotation ) )* otherlv_2= 'randomize' ( (otherlv_3= '(' ( (lv_parameters_4_0= ruleParameter ) ) (otherlv_5= ',' ( (lv_parameters_6_0= ruleParameter ) ) )* otherlv_7= ')' ) | otherlv_8= '()' ) )
-            // InternalScadeEquations.g:9281:3: () ( (lv_annotations_1_0= ruleAnnotation ) )* otherlv_2= 'randomize' ( (otherlv_3= '(' ( (lv_parameters_4_0= ruleParameter ) ) (otherlv_5= ',' ( (lv_parameters_6_0= ruleParameter ) ) )* otherlv_7= ')' ) | otherlv_8= '()' )
+            // InternalScadeEquations.g:9284:2: ( () ( (lv_annotations_1_0= ruleAnnotation ) )* otherlv_2= 'randomize' ( (otherlv_3= '(' ( (lv_parameters_4_0= ruleParameter ) ) (otherlv_5= ',' ( (lv_parameters_6_0= ruleParameter ) ) )* otherlv_7= ')' ) | otherlv_8= '()' ) )
+            // InternalScadeEquations.g:9285:3: () ( (lv_annotations_1_0= ruleAnnotation ) )* otherlv_2= 'randomize' ( (otherlv_3= '(' ( (lv_parameters_4_0= ruleParameter ) ) (otherlv_5= ',' ( (lv_parameters_6_0= ruleParameter ) ) )* otherlv_7= ')' ) | otherlv_8= '()' )
             {
-            // InternalScadeEquations.g:9281:3: ()
-            // InternalScadeEquations.g:9282:4: 
+            // InternalScadeEquations.g:9285:3: ()
+            // InternalScadeEquations.g:9286:4: 
             {
             if ( state.backtracking==0 ) {
 
@@ -25568,7 +25592,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalScadeEquations.g:9291:3: ( (lv_annotations_1_0= ruleAnnotation ) )*
+            // InternalScadeEquations.g:9295:3: ( (lv_annotations_1_0= ruleAnnotation ) )*
             loop239:
             do {
                 int alt239=2;
@@ -25581,17 +25605,17 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                 switch (alt239) {
             	case 1 :
-            	    // InternalScadeEquations.g:9292:4: (lv_annotations_1_0= ruleAnnotation )
+            	    // InternalScadeEquations.g:9296:4: (lv_annotations_1_0= ruleAnnotation )
             	    {
-            	    // InternalScadeEquations.g:9292:4: (lv_annotations_1_0= ruleAnnotation )
-            	    // InternalScadeEquations.g:9293:5: lv_annotations_1_0= ruleAnnotation
+            	    // InternalScadeEquations.g:9296:4: (lv_annotations_1_0= ruleAnnotation )
+            	    // InternalScadeEquations.g:9297:5: lv_annotations_1_0= ruleAnnotation
             	    {
             	    if ( state.backtracking==0 ) {
 
             	      					newCompositeNode(grammarAccess.getRandomizeCallEffectAccess().getAnnotationsAnnotationParserRuleCall_1_0());
             	      				
             	    }
-            	    pushFollow(FollowSets000.FOLLOW_115);
+            	    pushFollow(FollowSets000.FOLLOW_117);
             	    lv_annotations_1_0=ruleAnnotation();
 
             	    state._fsp--;
@@ -25627,7 +25651,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
               			newLeafNode(otherlv_2, grammarAccess.getRandomizeCallEffectAccess().getRandomizeKeyword_2());
               		
             }
-            // InternalScadeEquations.g:9314:3: ( (otherlv_3= '(' ( (lv_parameters_4_0= ruleParameter ) ) (otherlv_5= ',' ( (lv_parameters_6_0= ruleParameter ) ) )* otherlv_7= ')' ) | otherlv_8= '()' )
+            // InternalScadeEquations.g:9318:3: ( (otherlv_3= '(' ( (lv_parameters_4_0= ruleParameter ) ) (otherlv_5= ',' ( (lv_parameters_6_0= ruleParameter ) ) )* otherlv_7= ')' ) | otherlv_8= '()' )
             int alt241=2;
             int LA241_0 = input.LA(1);
 
@@ -25646,22 +25670,22 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             }
             switch (alt241) {
                 case 1 :
-                    // InternalScadeEquations.g:9315:4: (otherlv_3= '(' ( (lv_parameters_4_0= ruleParameter ) ) (otherlv_5= ',' ( (lv_parameters_6_0= ruleParameter ) ) )* otherlv_7= ')' )
+                    // InternalScadeEquations.g:9319:4: (otherlv_3= '(' ( (lv_parameters_4_0= ruleParameter ) ) (otherlv_5= ',' ( (lv_parameters_6_0= ruleParameter ) ) )* otherlv_7= ')' )
                     {
-                    // InternalScadeEquations.g:9315:4: (otherlv_3= '(' ( (lv_parameters_4_0= ruleParameter ) ) (otherlv_5= ',' ( (lv_parameters_6_0= ruleParameter ) ) )* otherlv_7= ')' )
-                    // InternalScadeEquations.g:9316:5: otherlv_3= '(' ( (lv_parameters_4_0= ruleParameter ) ) (otherlv_5= ',' ( (lv_parameters_6_0= ruleParameter ) ) )* otherlv_7= ')'
+                    // InternalScadeEquations.g:9319:4: (otherlv_3= '(' ( (lv_parameters_4_0= ruleParameter ) ) (otherlv_5= ',' ( (lv_parameters_6_0= ruleParameter ) ) )* otherlv_7= ')' )
+                    // InternalScadeEquations.g:9320:5: otherlv_3= '(' ( (lv_parameters_4_0= ruleParameter ) ) (otherlv_5= ',' ( (lv_parameters_6_0= ruleParameter ) ) )* otherlv_7= ')'
                     {
-                    otherlv_3=(Token)match(input,17,FollowSets000.FOLLOW_112); if (state.failed) return current;
+                    otherlv_3=(Token)match(input,17,FollowSets000.FOLLOW_114); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       					newLeafNode(otherlv_3, grammarAccess.getRandomizeCallEffectAccess().getLeftParenthesisKeyword_3_0_0());
                       				
                     }
-                    // InternalScadeEquations.g:9320:5: ( (lv_parameters_4_0= ruleParameter ) )
-                    // InternalScadeEquations.g:9321:6: (lv_parameters_4_0= ruleParameter )
+                    // InternalScadeEquations.g:9324:5: ( (lv_parameters_4_0= ruleParameter ) )
+                    // InternalScadeEquations.g:9325:6: (lv_parameters_4_0= ruleParameter )
                     {
-                    // InternalScadeEquations.g:9321:6: (lv_parameters_4_0= ruleParameter )
-                    // InternalScadeEquations.g:9322:7: lv_parameters_4_0= ruleParameter
+                    // InternalScadeEquations.g:9325:6: (lv_parameters_4_0= ruleParameter )
+                    // InternalScadeEquations.g:9326:7: lv_parameters_4_0= ruleParameter
                     {
                     if ( state.backtracking==0 ) {
 
@@ -25692,7 +25716,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalScadeEquations.g:9339:5: (otherlv_5= ',' ( (lv_parameters_6_0= ruleParameter ) ) )*
+                    // InternalScadeEquations.g:9343:5: (otherlv_5= ',' ( (lv_parameters_6_0= ruleParameter ) ) )*
                     loop240:
                     do {
                         int alt240=2;
@@ -25705,19 +25729,19 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                         switch (alt240) {
                     	case 1 :
-                    	    // InternalScadeEquations.g:9340:6: otherlv_5= ',' ( (lv_parameters_6_0= ruleParameter ) )
+                    	    // InternalScadeEquations.g:9344:6: otherlv_5= ',' ( (lv_parameters_6_0= ruleParameter ) )
                     	    {
-                    	    otherlv_5=(Token)match(input,18,FollowSets000.FOLLOW_112); if (state.failed) return current;
+                    	    otherlv_5=(Token)match(input,18,FollowSets000.FOLLOW_114); if (state.failed) return current;
                     	    if ( state.backtracking==0 ) {
 
                     	      						newLeafNode(otherlv_5, grammarAccess.getRandomizeCallEffectAccess().getCommaKeyword_3_0_2_0());
                     	      					
                     	    }
-                    	    // InternalScadeEquations.g:9344:6: ( (lv_parameters_6_0= ruleParameter ) )
-                    	    // InternalScadeEquations.g:9345:7: (lv_parameters_6_0= ruleParameter )
+                    	    // InternalScadeEquations.g:9348:6: ( (lv_parameters_6_0= ruleParameter ) )
+                    	    // InternalScadeEquations.g:9349:7: (lv_parameters_6_0= ruleParameter )
                     	    {
-                    	    // InternalScadeEquations.g:9345:7: (lv_parameters_6_0= ruleParameter )
-                    	    // InternalScadeEquations.g:9346:8: lv_parameters_6_0= ruleParameter
+                    	    // InternalScadeEquations.g:9349:7: (lv_parameters_6_0= ruleParameter )
+                    	    // InternalScadeEquations.g:9350:8: lv_parameters_6_0= ruleParameter
                     	    {
                     	    if ( state.backtracking==0 ) {
 
@@ -25770,7 +25794,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalScadeEquations.g:9370:4: otherlv_8= '()'
+                    // InternalScadeEquations.g:9374:4: otherlv_8= '()'
                     {
                     otherlv_8=(Token)match(input,28,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -25809,7 +25833,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleExpression"
-    // InternalScadeEquations.g:9379:1: entryRuleExpression returns [EObject current=null] : iv_ruleExpression= ruleExpression EOF ;
+    // InternalScadeEquations.g:9383:1: entryRuleExpression returns [EObject current=null] : iv_ruleExpression= ruleExpression EOF ;
     public final EObject entryRuleExpression() throws RecognitionException {
         EObject current = null;
 
@@ -25817,8 +25841,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalScadeEquations.g:9379:51: (iv_ruleExpression= ruleExpression EOF )
-            // InternalScadeEquations.g:9380:2: iv_ruleExpression= ruleExpression EOF
+            // InternalScadeEquations.g:9383:51: (iv_ruleExpression= ruleExpression EOF )
+            // InternalScadeEquations.g:9384:2: iv_ruleExpression= ruleExpression EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getExpressionRule()); 
@@ -25849,7 +25873,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleExpression"
-    // InternalScadeEquations.g:9386:1: ruleExpression returns [EObject current=null] : (this_BoolExpression_0= ruleBoolExpression | this_ValuedExpression_1= ruleValuedExpression ) ;
+    // InternalScadeEquations.g:9390:1: ruleExpression returns [EObject current=null] : (this_BoolExpression_0= ruleBoolExpression | this_ValuedExpression_1= ruleValuedExpression ) ;
     public final EObject ruleExpression() throws RecognitionException {
         EObject current = null;
 
@@ -25862,15 +25886,15 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:9392:2: ( (this_BoolExpression_0= ruleBoolExpression | this_ValuedExpression_1= ruleValuedExpression ) )
-            // InternalScadeEquations.g:9393:2: (this_BoolExpression_0= ruleBoolExpression | this_ValuedExpression_1= ruleValuedExpression )
+            // InternalScadeEquations.g:9396:2: ( (this_BoolExpression_0= ruleBoolExpression | this_ValuedExpression_1= ruleValuedExpression ) )
+            // InternalScadeEquations.g:9397:2: (this_BoolExpression_0= ruleBoolExpression | this_ValuedExpression_1= ruleValuedExpression )
             {
-            // InternalScadeEquations.g:9393:2: (this_BoolExpression_0= ruleBoolExpression | this_ValuedExpression_1= ruleValuedExpression )
+            // InternalScadeEquations.g:9397:2: (this_BoolExpression_0= ruleBoolExpression | this_ValuedExpression_1= ruleValuedExpression )
             int alt242=2;
             alt242 = dfa242.predict(input);
             switch (alt242) {
                 case 1 :
-                    // InternalScadeEquations.g:9394:3: this_BoolExpression_0= ruleBoolExpression
+                    // InternalScadeEquations.g:9398:3: this_BoolExpression_0= ruleBoolExpression
                     {
                     if ( state.backtracking==0 ) {
 
@@ -25897,7 +25921,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalScadeEquations.g:9406:3: this_ValuedExpression_1= ruleValuedExpression
+                    // InternalScadeEquations.g:9410:3: this_ValuedExpression_1= ruleValuedExpression
                     {
                     if ( state.backtracking==0 ) {
 
@@ -25948,7 +25972,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleBitwiseXOrExpression"
-    // InternalScadeEquations.g:9421:1: entryRuleBitwiseXOrExpression returns [EObject current=null] : iv_ruleBitwiseXOrExpression= ruleBitwiseXOrExpression EOF ;
+    // InternalScadeEquations.g:9425:1: entryRuleBitwiseXOrExpression returns [EObject current=null] : iv_ruleBitwiseXOrExpression= ruleBitwiseXOrExpression EOF ;
     public final EObject entryRuleBitwiseXOrExpression() throws RecognitionException {
         EObject current = null;
 
@@ -25956,8 +25980,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalScadeEquations.g:9421:61: (iv_ruleBitwiseXOrExpression= ruleBitwiseXOrExpression EOF )
-            // InternalScadeEquations.g:9422:2: iv_ruleBitwiseXOrExpression= ruleBitwiseXOrExpression EOF
+            // InternalScadeEquations.g:9425:61: (iv_ruleBitwiseXOrExpression= ruleBitwiseXOrExpression EOF )
+            // InternalScadeEquations.g:9426:2: iv_ruleBitwiseXOrExpression= ruleBitwiseXOrExpression EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getBitwiseXOrExpressionRule()); 
@@ -25988,7 +26012,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleBitwiseXOrExpression"
-    // InternalScadeEquations.g:9428:1: ruleBitwiseXOrExpression returns [EObject current=null] : (this_BitwiseAndExpression_0= ruleBitwiseAndExpression ( () ( ( (lv_operator_2_0= ruleBitwiseXOrOperator ) ) ( (lv_subExpressions_3_0= ruleBitwiseAndExpression ) ) ) (otherlv_4= '^' ( (lv_subExpressions_5_0= ruleBitwiseAndExpression ) ) )* )? ) ;
+    // InternalScadeEquations.g:9432:1: ruleBitwiseXOrExpression returns [EObject current=null] : (this_BitwiseAndExpression_0= ruleBitwiseAndExpression ( () ( ( (lv_operator_2_0= ruleBitwiseXOrOperator ) ) ( (lv_subExpressions_3_0= ruleBitwiseAndExpression ) ) ) (otherlv_4= '^' ( (lv_subExpressions_5_0= ruleBitwiseAndExpression ) ) )* )? ) ;
     public final EObject ruleBitwiseXOrExpression() throws RecognitionException {
         EObject current = null;
 
@@ -26006,11 +26030,11 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:9434:2: ( (this_BitwiseAndExpression_0= ruleBitwiseAndExpression ( () ( ( (lv_operator_2_0= ruleBitwiseXOrOperator ) ) ( (lv_subExpressions_3_0= ruleBitwiseAndExpression ) ) ) (otherlv_4= '^' ( (lv_subExpressions_5_0= ruleBitwiseAndExpression ) ) )* )? ) )
-            // InternalScadeEquations.g:9435:2: (this_BitwiseAndExpression_0= ruleBitwiseAndExpression ( () ( ( (lv_operator_2_0= ruleBitwiseXOrOperator ) ) ( (lv_subExpressions_3_0= ruleBitwiseAndExpression ) ) ) (otherlv_4= '^' ( (lv_subExpressions_5_0= ruleBitwiseAndExpression ) ) )* )? )
+            // InternalScadeEquations.g:9438:2: ( (this_BitwiseAndExpression_0= ruleBitwiseAndExpression ( () ( ( (lv_operator_2_0= ruleBitwiseXOrOperator ) ) ( (lv_subExpressions_3_0= ruleBitwiseAndExpression ) ) ) (otherlv_4= '^' ( (lv_subExpressions_5_0= ruleBitwiseAndExpression ) ) )* )? ) )
+            // InternalScadeEquations.g:9439:2: (this_BitwiseAndExpression_0= ruleBitwiseAndExpression ( () ( ( (lv_operator_2_0= ruleBitwiseXOrOperator ) ) ( (lv_subExpressions_3_0= ruleBitwiseAndExpression ) ) ) (otherlv_4= '^' ( (lv_subExpressions_5_0= ruleBitwiseAndExpression ) ) )* )? )
             {
-            // InternalScadeEquations.g:9435:2: (this_BitwiseAndExpression_0= ruleBitwiseAndExpression ( () ( ( (lv_operator_2_0= ruleBitwiseXOrOperator ) ) ( (lv_subExpressions_3_0= ruleBitwiseAndExpression ) ) ) (otherlv_4= '^' ( (lv_subExpressions_5_0= ruleBitwiseAndExpression ) ) )* )? )
-            // InternalScadeEquations.g:9436:3: this_BitwiseAndExpression_0= ruleBitwiseAndExpression ( () ( ( (lv_operator_2_0= ruleBitwiseXOrOperator ) ) ( (lv_subExpressions_3_0= ruleBitwiseAndExpression ) ) ) (otherlv_4= '^' ( (lv_subExpressions_5_0= ruleBitwiseAndExpression ) ) )* )?
+            // InternalScadeEquations.g:9439:2: (this_BitwiseAndExpression_0= ruleBitwiseAndExpression ( () ( ( (lv_operator_2_0= ruleBitwiseXOrOperator ) ) ( (lv_subExpressions_3_0= ruleBitwiseAndExpression ) ) ) (otherlv_4= '^' ( (lv_subExpressions_5_0= ruleBitwiseAndExpression ) ) )* )? )
+            // InternalScadeEquations.g:9440:3: this_BitwiseAndExpression_0= ruleBitwiseAndExpression ( () ( ( (lv_operator_2_0= ruleBitwiseXOrOperator ) ) ( (lv_subExpressions_3_0= ruleBitwiseAndExpression ) ) ) (otherlv_4= '^' ( (lv_subExpressions_5_0= ruleBitwiseAndExpression ) ) )* )?
             {
             if ( state.backtracking==0 ) {
 
@@ -26033,7 +26057,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
               			afterParserOrEnumRuleCall();
               		
             }
-            // InternalScadeEquations.g:9447:3: ( () ( ( (lv_operator_2_0= ruleBitwiseXOrOperator ) ) ( (lv_subExpressions_3_0= ruleBitwiseAndExpression ) ) ) (otherlv_4= '^' ( (lv_subExpressions_5_0= ruleBitwiseAndExpression ) ) )* )?
+            // InternalScadeEquations.g:9451:3: ( () ( ( (lv_operator_2_0= ruleBitwiseXOrOperator ) ) ( (lv_subExpressions_3_0= ruleBitwiseAndExpression ) ) ) (otherlv_4= '^' ( (lv_subExpressions_5_0= ruleBitwiseAndExpression ) ) )* )?
             int alt244=2;
             int LA244_0 = input.LA(1);
 
@@ -26042,10 +26066,10 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             }
             switch (alt244) {
                 case 1 :
-                    // InternalScadeEquations.g:9448:4: () ( ( (lv_operator_2_0= ruleBitwiseXOrOperator ) ) ( (lv_subExpressions_3_0= ruleBitwiseAndExpression ) ) ) (otherlv_4= '^' ( (lv_subExpressions_5_0= ruleBitwiseAndExpression ) ) )*
+                    // InternalScadeEquations.g:9452:4: () ( ( (lv_operator_2_0= ruleBitwiseXOrOperator ) ) ( (lv_subExpressions_3_0= ruleBitwiseAndExpression ) ) ) (otherlv_4= '^' ( (lv_subExpressions_5_0= ruleBitwiseAndExpression ) ) )*
                     {
-                    // InternalScadeEquations.g:9448:4: ()
-                    // InternalScadeEquations.g:9449:5: 
+                    // InternalScadeEquations.g:9452:4: ()
+                    // InternalScadeEquations.g:9453:5: 
                     {
                     if ( state.backtracking==0 ) {
 
@@ -26062,14 +26086,14 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalScadeEquations.g:9458:4: ( ( (lv_operator_2_0= ruleBitwiseXOrOperator ) ) ( (lv_subExpressions_3_0= ruleBitwiseAndExpression ) ) )
-                    // InternalScadeEquations.g:9459:5: ( (lv_operator_2_0= ruleBitwiseXOrOperator ) ) ( (lv_subExpressions_3_0= ruleBitwiseAndExpression ) )
+                    // InternalScadeEquations.g:9462:4: ( ( (lv_operator_2_0= ruleBitwiseXOrOperator ) ) ( (lv_subExpressions_3_0= ruleBitwiseAndExpression ) ) )
+                    // InternalScadeEquations.g:9463:5: ( (lv_operator_2_0= ruleBitwiseXOrOperator ) ) ( (lv_subExpressions_3_0= ruleBitwiseAndExpression ) )
                     {
-                    // InternalScadeEquations.g:9459:5: ( (lv_operator_2_0= ruleBitwiseXOrOperator ) )
-                    // InternalScadeEquations.g:9460:6: (lv_operator_2_0= ruleBitwiseXOrOperator )
+                    // InternalScadeEquations.g:9463:5: ( (lv_operator_2_0= ruleBitwiseXOrOperator ) )
+                    // InternalScadeEquations.g:9464:6: (lv_operator_2_0= ruleBitwiseXOrOperator )
                     {
-                    // InternalScadeEquations.g:9460:6: (lv_operator_2_0= ruleBitwiseXOrOperator )
-                    // InternalScadeEquations.g:9461:7: lv_operator_2_0= ruleBitwiseXOrOperator
+                    // InternalScadeEquations.g:9464:6: (lv_operator_2_0= ruleBitwiseXOrOperator )
+                    // InternalScadeEquations.g:9465:7: lv_operator_2_0= ruleBitwiseXOrOperator
                     {
                     if ( state.backtracking==0 ) {
 
@@ -26100,11 +26124,11 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalScadeEquations.g:9478:5: ( (lv_subExpressions_3_0= ruleBitwiseAndExpression ) )
-                    // InternalScadeEquations.g:9479:6: (lv_subExpressions_3_0= ruleBitwiseAndExpression )
+                    // InternalScadeEquations.g:9482:5: ( (lv_subExpressions_3_0= ruleBitwiseAndExpression ) )
+                    // InternalScadeEquations.g:9483:6: (lv_subExpressions_3_0= ruleBitwiseAndExpression )
                     {
-                    // InternalScadeEquations.g:9479:6: (lv_subExpressions_3_0= ruleBitwiseAndExpression )
-                    // InternalScadeEquations.g:9480:7: lv_subExpressions_3_0= ruleBitwiseAndExpression
+                    // InternalScadeEquations.g:9483:6: (lv_subExpressions_3_0= ruleBitwiseAndExpression )
+                    // InternalScadeEquations.g:9484:7: lv_subExpressions_3_0= ruleBitwiseAndExpression
                     {
                     if ( state.backtracking==0 ) {
 
@@ -26138,7 +26162,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalScadeEquations.g:9498:4: (otherlv_4= '^' ( (lv_subExpressions_5_0= ruleBitwiseAndExpression ) ) )*
+                    // InternalScadeEquations.g:9502:4: (otherlv_4= '^' ( (lv_subExpressions_5_0= ruleBitwiseAndExpression ) ) )*
                     loop243:
                     do {
                         int alt243=2;
@@ -26151,7 +26175,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                         switch (alt243) {
                     	case 1 :
-                    	    // InternalScadeEquations.g:9499:5: otherlv_4= '^' ( (lv_subExpressions_5_0= ruleBitwiseAndExpression ) )
+                    	    // InternalScadeEquations.g:9503:5: otherlv_4= '^' ( (lv_subExpressions_5_0= ruleBitwiseAndExpression ) )
                     	    {
                     	    otherlv_4=(Token)match(input,32,FollowSets000.FOLLOW_9); if (state.failed) return current;
                     	    if ( state.backtracking==0 ) {
@@ -26159,11 +26183,11 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                     	      					newLeafNode(otherlv_4, grammarAccess.getBitwiseXOrExpressionAccess().getCircumflexAccentKeyword_1_2_0());
                     	      				
                     	    }
-                    	    // InternalScadeEquations.g:9503:5: ( (lv_subExpressions_5_0= ruleBitwiseAndExpression ) )
-                    	    // InternalScadeEquations.g:9504:6: (lv_subExpressions_5_0= ruleBitwiseAndExpression )
+                    	    // InternalScadeEquations.g:9507:5: ( (lv_subExpressions_5_0= ruleBitwiseAndExpression ) )
+                    	    // InternalScadeEquations.g:9508:6: (lv_subExpressions_5_0= ruleBitwiseAndExpression )
                     	    {
-                    	    // InternalScadeEquations.g:9504:6: (lv_subExpressions_5_0= ruleBitwiseAndExpression )
-                    	    // InternalScadeEquations.g:9505:7: lv_subExpressions_5_0= ruleBitwiseAndExpression
+                    	    // InternalScadeEquations.g:9508:6: (lv_subExpressions_5_0= ruleBitwiseAndExpression )
+                    	    // InternalScadeEquations.g:9509:7: lv_subExpressions_5_0= ruleBitwiseAndExpression
                     	    {
                     	    if ( state.backtracking==0 ) {
 
@@ -26234,7 +26258,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleBitwiseAndExpression"
-    // InternalScadeEquations.g:9528:1: entryRuleBitwiseAndExpression returns [EObject current=null] : iv_ruleBitwiseAndExpression= ruleBitwiseAndExpression EOF ;
+    // InternalScadeEquations.g:9532:1: entryRuleBitwiseAndExpression returns [EObject current=null] : iv_ruleBitwiseAndExpression= ruleBitwiseAndExpression EOF ;
     public final EObject entryRuleBitwiseAndExpression() throws RecognitionException {
         EObject current = null;
 
@@ -26242,8 +26266,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalScadeEquations.g:9528:61: (iv_ruleBitwiseAndExpression= ruleBitwiseAndExpression EOF )
-            // InternalScadeEquations.g:9529:2: iv_ruleBitwiseAndExpression= ruleBitwiseAndExpression EOF
+            // InternalScadeEquations.g:9532:61: (iv_ruleBitwiseAndExpression= ruleBitwiseAndExpression EOF )
+            // InternalScadeEquations.g:9533:2: iv_ruleBitwiseAndExpression= ruleBitwiseAndExpression EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getBitwiseAndExpressionRule()); 
@@ -26274,7 +26298,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleBitwiseAndExpression"
-    // InternalScadeEquations.g:9535:1: ruleBitwiseAndExpression returns [EObject current=null] : (this_CompareOperation_0= ruleCompareOperation ( () ( ( (lv_operator_2_0= ruleBitwiseAndOperator ) ) ( (lv_subExpressions_3_0= ruleCompareOperation ) ) ) (otherlv_4= '&' ( (lv_subExpressions_5_0= ruleCompareOperation ) ) )* )? ) ;
+    // InternalScadeEquations.g:9539:1: ruleBitwiseAndExpression returns [EObject current=null] : (this_CompareOperation_0= ruleCompareOperation ( () ( ( (lv_operator_2_0= ruleBitwiseAndOperator ) ) ( (lv_subExpressions_3_0= ruleCompareOperation ) ) ) (otherlv_4= '&' ( (lv_subExpressions_5_0= ruleCompareOperation ) ) )* )? ) ;
     public final EObject ruleBitwiseAndExpression() throws RecognitionException {
         EObject current = null;
 
@@ -26292,11 +26316,11 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:9541:2: ( (this_CompareOperation_0= ruleCompareOperation ( () ( ( (lv_operator_2_0= ruleBitwiseAndOperator ) ) ( (lv_subExpressions_3_0= ruleCompareOperation ) ) ) (otherlv_4= '&' ( (lv_subExpressions_5_0= ruleCompareOperation ) ) )* )? ) )
-            // InternalScadeEquations.g:9542:2: (this_CompareOperation_0= ruleCompareOperation ( () ( ( (lv_operator_2_0= ruleBitwiseAndOperator ) ) ( (lv_subExpressions_3_0= ruleCompareOperation ) ) ) (otherlv_4= '&' ( (lv_subExpressions_5_0= ruleCompareOperation ) ) )* )? )
+            // InternalScadeEquations.g:9545:2: ( (this_CompareOperation_0= ruleCompareOperation ( () ( ( (lv_operator_2_0= ruleBitwiseAndOperator ) ) ( (lv_subExpressions_3_0= ruleCompareOperation ) ) ) (otherlv_4= '&' ( (lv_subExpressions_5_0= ruleCompareOperation ) ) )* )? ) )
+            // InternalScadeEquations.g:9546:2: (this_CompareOperation_0= ruleCompareOperation ( () ( ( (lv_operator_2_0= ruleBitwiseAndOperator ) ) ( (lv_subExpressions_3_0= ruleCompareOperation ) ) ) (otherlv_4= '&' ( (lv_subExpressions_5_0= ruleCompareOperation ) ) )* )? )
             {
-            // InternalScadeEquations.g:9542:2: (this_CompareOperation_0= ruleCompareOperation ( () ( ( (lv_operator_2_0= ruleBitwiseAndOperator ) ) ( (lv_subExpressions_3_0= ruleCompareOperation ) ) ) (otherlv_4= '&' ( (lv_subExpressions_5_0= ruleCompareOperation ) ) )* )? )
-            // InternalScadeEquations.g:9543:3: this_CompareOperation_0= ruleCompareOperation ( () ( ( (lv_operator_2_0= ruleBitwiseAndOperator ) ) ( (lv_subExpressions_3_0= ruleCompareOperation ) ) ) (otherlv_4= '&' ( (lv_subExpressions_5_0= ruleCompareOperation ) ) )* )?
+            // InternalScadeEquations.g:9546:2: (this_CompareOperation_0= ruleCompareOperation ( () ( ( (lv_operator_2_0= ruleBitwiseAndOperator ) ) ( (lv_subExpressions_3_0= ruleCompareOperation ) ) ) (otherlv_4= '&' ( (lv_subExpressions_5_0= ruleCompareOperation ) ) )* )? )
+            // InternalScadeEquations.g:9547:3: this_CompareOperation_0= ruleCompareOperation ( () ( ( (lv_operator_2_0= ruleBitwiseAndOperator ) ) ( (lv_subExpressions_3_0= ruleCompareOperation ) ) ) (otherlv_4= '&' ( (lv_subExpressions_5_0= ruleCompareOperation ) ) )* )?
             {
             if ( state.backtracking==0 ) {
 
@@ -26308,7 +26332,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
               			newCompositeNode(grammarAccess.getBitwiseAndExpressionAccess().getCompareOperationParserRuleCall_0());
               		
             }
-            pushFollow(FollowSets000.FOLLOW_116);
+            pushFollow(FollowSets000.FOLLOW_118);
             this_CompareOperation_0=ruleCompareOperation();
 
             state._fsp--;
@@ -26319,7 +26343,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
               			afterParserOrEnumRuleCall();
               		
             }
-            // InternalScadeEquations.g:9554:3: ( () ( ( (lv_operator_2_0= ruleBitwiseAndOperator ) ) ( (lv_subExpressions_3_0= ruleCompareOperation ) ) ) (otherlv_4= '&' ( (lv_subExpressions_5_0= ruleCompareOperation ) ) )* )?
+            // InternalScadeEquations.g:9558:3: ( () ( ( (lv_operator_2_0= ruleBitwiseAndOperator ) ) ( (lv_subExpressions_3_0= ruleCompareOperation ) ) ) (otherlv_4= '&' ( (lv_subExpressions_5_0= ruleCompareOperation ) ) )* )?
             int alt246=2;
             int LA246_0 = input.LA(1);
 
@@ -26328,10 +26352,10 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             }
             switch (alt246) {
                 case 1 :
-                    // InternalScadeEquations.g:9555:4: () ( ( (lv_operator_2_0= ruleBitwiseAndOperator ) ) ( (lv_subExpressions_3_0= ruleCompareOperation ) ) ) (otherlv_4= '&' ( (lv_subExpressions_5_0= ruleCompareOperation ) ) )*
+                    // InternalScadeEquations.g:9559:4: () ( ( (lv_operator_2_0= ruleBitwiseAndOperator ) ) ( (lv_subExpressions_3_0= ruleCompareOperation ) ) ) (otherlv_4= '&' ( (lv_subExpressions_5_0= ruleCompareOperation ) ) )*
                     {
-                    // InternalScadeEquations.g:9555:4: ()
-                    // InternalScadeEquations.g:9556:5: 
+                    // InternalScadeEquations.g:9559:4: ()
+                    // InternalScadeEquations.g:9560:5: 
                     {
                     if ( state.backtracking==0 ) {
 
@@ -26348,14 +26372,14 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalScadeEquations.g:9565:4: ( ( (lv_operator_2_0= ruleBitwiseAndOperator ) ) ( (lv_subExpressions_3_0= ruleCompareOperation ) ) )
-                    // InternalScadeEquations.g:9566:5: ( (lv_operator_2_0= ruleBitwiseAndOperator ) ) ( (lv_subExpressions_3_0= ruleCompareOperation ) )
+                    // InternalScadeEquations.g:9569:4: ( ( (lv_operator_2_0= ruleBitwiseAndOperator ) ) ( (lv_subExpressions_3_0= ruleCompareOperation ) ) )
+                    // InternalScadeEquations.g:9570:5: ( (lv_operator_2_0= ruleBitwiseAndOperator ) ) ( (lv_subExpressions_3_0= ruleCompareOperation ) )
                     {
-                    // InternalScadeEquations.g:9566:5: ( (lv_operator_2_0= ruleBitwiseAndOperator ) )
-                    // InternalScadeEquations.g:9567:6: (lv_operator_2_0= ruleBitwiseAndOperator )
+                    // InternalScadeEquations.g:9570:5: ( (lv_operator_2_0= ruleBitwiseAndOperator ) )
+                    // InternalScadeEquations.g:9571:6: (lv_operator_2_0= ruleBitwiseAndOperator )
                     {
-                    // InternalScadeEquations.g:9567:6: (lv_operator_2_0= ruleBitwiseAndOperator )
-                    // InternalScadeEquations.g:9568:7: lv_operator_2_0= ruleBitwiseAndOperator
+                    // InternalScadeEquations.g:9571:6: (lv_operator_2_0= ruleBitwiseAndOperator )
+                    // InternalScadeEquations.g:9572:7: lv_operator_2_0= ruleBitwiseAndOperator
                     {
                     if ( state.backtracking==0 ) {
 
@@ -26386,18 +26410,18 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalScadeEquations.g:9585:5: ( (lv_subExpressions_3_0= ruleCompareOperation ) )
-                    // InternalScadeEquations.g:9586:6: (lv_subExpressions_3_0= ruleCompareOperation )
+                    // InternalScadeEquations.g:9589:5: ( (lv_subExpressions_3_0= ruleCompareOperation ) )
+                    // InternalScadeEquations.g:9590:6: (lv_subExpressions_3_0= ruleCompareOperation )
                     {
-                    // InternalScadeEquations.g:9586:6: (lv_subExpressions_3_0= ruleCompareOperation )
-                    // InternalScadeEquations.g:9587:7: lv_subExpressions_3_0= ruleCompareOperation
+                    // InternalScadeEquations.g:9590:6: (lv_subExpressions_3_0= ruleCompareOperation )
+                    // InternalScadeEquations.g:9591:7: lv_subExpressions_3_0= ruleCompareOperation
                     {
                     if ( state.backtracking==0 ) {
 
                       							newCompositeNode(grammarAccess.getBitwiseAndExpressionAccess().getSubExpressionsCompareOperationParserRuleCall_1_1_1_0());
                       						
                     }
-                    pushFollow(FollowSets000.FOLLOW_116);
+                    pushFollow(FollowSets000.FOLLOW_118);
                     lv_subExpressions_3_0=ruleCompareOperation();
 
                     state._fsp--;
@@ -26424,7 +26448,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalScadeEquations.g:9605:4: (otherlv_4= '&' ( (lv_subExpressions_5_0= ruleCompareOperation ) ) )*
+                    // InternalScadeEquations.g:9609:4: (otherlv_4= '&' ( (lv_subExpressions_5_0= ruleCompareOperation ) ) )*
                     loop245:
                     do {
                         int alt245=2;
@@ -26437,7 +26461,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                         switch (alt245) {
                     	case 1 :
-                    	    // InternalScadeEquations.g:9606:5: otherlv_4= '&' ( (lv_subExpressions_5_0= ruleCompareOperation ) )
+                    	    // InternalScadeEquations.g:9610:5: otherlv_4= '&' ( (lv_subExpressions_5_0= ruleCompareOperation ) )
                     	    {
                     	    otherlv_4=(Token)match(input,79,FollowSets000.FOLLOW_9); if (state.failed) return current;
                     	    if ( state.backtracking==0 ) {
@@ -26445,18 +26469,18 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                     	      					newLeafNode(otherlv_4, grammarAccess.getBitwiseAndExpressionAccess().getAmpersandKeyword_1_2_0());
                     	      				
                     	    }
-                    	    // InternalScadeEquations.g:9610:5: ( (lv_subExpressions_5_0= ruleCompareOperation ) )
-                    	    // InternalScadeEquations.g:9611:6: (lv_subExpressions_5_0= ruleCompareOperation )
+                    	    // InternalScadeEquations.g:9614:5: ( (lv_subExpressions_5_0= ruleCompareOperation ) )
+                    	    // InternalScadeEquations.g:9615:6: (lv_subExpressions_5_0= ruleCompareOperation )
                     	    {
-                    	    // InternalScadeEquations.g:9611:6: (lv_subExpressions_5_0= ruleCompareOperation )
-                    	    // InternalScadeEquations.g:9612:7: lv_subExpressions_5_0= ruleCompareOperation
+                    	    // InternalScadeEquations.g:9615:6: (lv_subExpressions_5_0= ruleCompareOperation )
+                    	    // InternalScadeEquations.g:9616:7: lv_subExpressions_5_0= ruleCompareOperation
                     	    {
                     	    if ( state.backtracking==0 ) {
 
                     	      							newCompositeNode(grammarAccess.getBitwiseAndExpressionAccess().getSubExpressionsCompareOperationParserRuleCall_1_2_1_0());
                     	      						
                     	    }
-                    	    pushFollow(FollowSets000.FOLLOW_116);
+                    	    pushFollow(FollowSets000.FOLLOW_118);
                     	    lv_subExpressions_5_0=ruleCompareOperation();
 
                     	    state._fsp--;
@@ -26520,7 +26544,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleCompareOperation"
-    // InternalScadeEquations.g:9635:1: entryRuleCompareOperation returns [EObject current=null] : iv_ruleCompareOperation= ruleCompareOperation EOF ;
+    // InternalScadeEquations.g:9639:1: entryRuleCompareOperation returns [EObject current=null] : iv_ruleCompareOperation= ruleCompareOperation EOF ;
     public final EObject entryRuleCompareOperation() throws RecognitionException {
         EObject current = null;
 
@@ -26528,8 +26552,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalScadeEquations.g:9635:57: (iv_ruleCompareOperation= ruleCompareOperation EOF )
-            // InternalScadeEquations.g:9636:2: iv_ruleCompareOperation= ruleCompareOperation EOF
+            // InternalScadeEquations.g:9639:57: (iv_ruleCompareOperation= ruleCompareOperation EOF )
+            // InternalScadeEquations.g:9640:2: iv_ruleCompareOperation= ruleCompareOperation EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getCompareOperationRule()); 
@@ -26560,7 +26584,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleCompareOperation"
-    // InternalScadeEquations.g:9642:1: ruleCompareOperation returns [EObject current=null] : (this_NotOrValuedExpression_0= ruleNotOrValuedExpression ( () ( (lv_operator_2_0= ruleCompareOperator ) ) ( (lv_subExpressions_3_0= ruleNotOrValuedExpression ) ) )? ) ;
+    // InternalScadeEquations.g:9646:1: ruleCompareOperation returns [EObject current=null] : (this_NotOrValuedExpression_0= ruleNotOrValuedExpression ( () ( (lv_operator_2_0= ruleCompareOperator ) ) ( (lv_subExpressions_3_0= ruleNotOrValuedExpression ) ) )? ) ;
     public final EObject ruleCompareOperation() throws RecognitionException {
         EObject current = null;
 
@@ -26575,11 +26599,11 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:9648:2: ( (this_NotOrValuedExpression_0= ruleNotOrValuedExpression ( () ( (lv_operator_2_0= ruleCompareOperator ) ) ( (lv_subExpressions_3_0= ruleNotOrValuedExpression ) ) )? ) )
-            // InternalScadeEquations.g:9649:2: (this_NotOrValuedExpression_0= ruleNotOrValuedExpression ( () ( (lv_operator_2_0= ruleCompareOperator ) ) ( (lv_subExpressions_3_0= ruleNotOrValuedExpression ) ) )? )
+            // InternalScadeEquations.g:9652:2: ( (this_NotOrValuedExpression_0= ruleNotOrValuedExpression ( () ( (lv_operator_2_0= ruleCompareOperator ) ) ( (lv_subExpressions_3_0= ruleNotOrValuedExpression ) ) )? ) )
+            // InternalScadeEquations.g:9653:2: (this_NotOrValuedExpression_0= ruleNotOrValuedExpression ( () ( (lv_operator_2_0= ruleCompareOperator ) ) ( (lv_subExpressions_3_0= ruleNotOrValuedExpression ) ) )? )
             {
-            // InternalScadeEquations.g:9649:2: (this_NotOrValuedExpression_0= ruleNotOrValuedExpression ( () ( (lv_operator_2_0= ruleCompareOperator ) ) ( (lv_subExpressions_3_0= ruleNotOrValuedExpression ) ) )? )
-            // InternalScadeEquations.g:9650:3: this_NotOrValuedExpression_0= ruleNotOrValuedExpression ( () ( (lv_operator_2_0= ruleCompareOperator ) ) ( (lv_subExpressions_3_0= ruleNotOrValuedExpression ) ) )?
+            // InternalScadeEquations.g:9653:2: (this_NotOrValuedExpression_0= ruleNotOrValuedExpression ( () ( (lv_operator_2_0= ruleCompareOperator ) ) ( (lv_subExpressions_3_0= ruleNotOrValuedExpression ) ) )? )
+            // InternalScadeEquations.g:9654:3: this_NotOrValuedExpression_0= ruleNotOrValuedExpression ( () ( (lv_operator_2_0= ruleCompareOperator ) ) ( (lv_subExpressions_3_0= ruleNotOrValuedExpression ) ) )?
             {
             if ( state.backtracking==0 ) {
 
@@ -26591,7 +26615,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
               			newCompositeNode(grammarAccess.getCompareOperationAccess().getNotOrValuedExpressionParserRuleCall_0());
               		
             }
-            pushFollow(FollowSets000.FOLLOW_117);
+            pushFollow(FollowSets000.FOLLOW_119);
             this_NotOrValuedExpression_0=ruleNotOrValuedExpression();
 
             state._fsp--;
@@ -26602,7 +26626,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
               			afterParserOrEnumRuleCall();
               		
             }
-            // InternalScadeEquations.g:9661:3: ( () ( (lv_operator_2_0= ruleCompareOperator ) ) ( (lv_subExpressions_3_0= ruleNotOrValuedExpression ) ) )?
+            // InternalScadeEquations.g:9665:3: ( () ( (lv_operator_2_0= ruleCompareOperator ) ) ( (lv_subExpressions_3_0= ruleNotOrValuedExpression ) ) )?
             int alt247=2;
             int LA247_0 = input.LA(1);
 
@@ -26611,10 +26635,10 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             }
             switch (alt247) {
                 case 1 :
-                    // InternalScadeEquations.g:9662:4: () ( (lv_operator_2_0= ruleCompareOperator ) ) ( (lv_subExpressions_3_0= ruleNotOrValuedExpression ) )
+                    // InternalScadeEquations.g:9666:4: () ( (lv_operator_2_0= ruleCompareOperator ) ) ( (lv_subExpressions_3_0= ruleNotOrValuedExpression ) )
                     {
-                    // InternalScadeEquations.g:9662:4: ()
-                    // InternalScadeEquations.g:9663:5: 
+                    // InternalScadeEquations.g:9666:4: ()
+                    // InternalScadeEquations.g:9667:5: 
                     {
                     if ( state.backtracking==0 ) {
 
@@ -26631,11 +26655,11 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalScadeEquations.g:9672:4: ( (lv_operator_2_0= ruleCompareOperator ) )
-                    // InternalScadeEquations.g:9673:5: (lv_operator_2_0= ruleCompareOperator )
+                    // InternalScadeEquations.g:9676:4: ( (lv_operator_2_0= ruleCompareOperator ) )
+                    // InternalScadeEquations.g:9677:5: (lv_operator_2_0= ruleCompareOperator )
                     {
-                    // InternalScadeEquations.g:9673:5: (lv_operator_2_0= ruleCompareOperator )
-                    // InternalScadeEquations.g:9674:6: lv_operator_2_0= ruleCompareOperator
+                    // InternalScadeEquations.g:9677:5: (lv_operator_2_0= ruleCompareOperator )
+                    // InternalScadeEquations.g:9678:6: lv_operator_2_0= ruleCompareOperator
                     {
                     if ( state.backtracking==0 ) {
 
@@ -26666,11 +26690,11 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalScadeEquations.g:9691:4: ( (lv_subExpressions_3_0= ruleNotOrValuedExpression ) )
-                    // InternalScadeEquations.g:9692:5: (lv_subExpressions_3_0= ruleNotOrValuedExpression )
+                    // InternalScadeEquations.g:9695:4: ( (lv_subExpressions_3_0= ruleNotOrValuedExpression ) )
+                    // InternalScadeEquations.g:9696:5: (lv_subExpressions_3_0= ruleNotOrValuedExpression )
                     {
-                    // InternalScadeEquations.g:9692:5: (lv_subExpressions_3_0= ruleNotOrValuedExpression )
-                    // InternalScadeEquations.g:9693:6: lv_subExpressions_3_0= ruleNotOrValuedExpression
+                    // InternalScadeEquations.g:9696:5: (lv_subExpressions_3_0= ruleNotOrValuedExpression )
+                    // InternalScadeEquations.g:9697:6: lv_subExpressions_3_0= ruleNotOrValuedExpression
                     {
                     if ( state.backtracking==0 ) {
 
@@ -26732,7 +26756,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleNotOrValuedExpression"
-    // InternalScadeEquations.g:9715:1: entryRuleNotOrValuedExpression returns [EObject current=null] : iv_ruleNotOrValuedExpression= ruleNotOrValuedExpression EOF ;
+    // InternalScadeEquations.g:9719:1: entryRuleNotOrValuedExpression returns [EObject current=null] : iv_ruleNotOrValuedExpression= ruleNotOrValuedExpression EOF ;
     public final EObject entryRuleNotOrValuedExpression() throws RecognitionException {
         EObject current = null;
 
@@ -26740,8 +26764,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalScadeEquations.g:9715:62: (iv_ruleNotOrValuedExpression= ruleNotOrValuedExpression EOF )
-            // InternalScadeEquations.g:9716:2: iv_ruleNotOrValuedExpression= ruleNotOrValuedExpression EOF
+            // InternalScadeEquations.g:9719:62: (iv_ruleNotOrValuedExpression= ruleNotOrValuedExpression EOF )
+            // InternalScadeEquations.g:9720:2: iv_ruleNotOrValuedExpression= ruleNotOrValuedExpression EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getNotOrValuedExpressionRule()); 
@@ -26772,7 +26796,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleNotOrValuedExpression"
-    // InternalScadeEquations.g:9722:1: ruleNotOrValuedExpression returns [EObject current=null] : (this_ValuedExpression_0= ruleValuedExpression | this_NotExpression_1= ruleNotExpression ) ;
+    // InternalScadeEquations.g:9726:1: ruleNotOrValuedExpression returns [EObject current=null] : (this_ValuedExpression_0= ruleValuedExpression | this_NotExpression_1= ruleNotExpression ) ;
     public final EObject ruleNotOrValuedExpression() throws RecognitionException {
         EObject current = null;
 
@@ -26785,15 +26809,15 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:9728:2: ( (this_ValuedExpression_0= ruleValuedExpression | this_NotExpression_1= ruleNotExpression ) )
-            // InternalScadeEquations.g:9729:2: (this_ValuedExpression_0= ruleValuedExpression | this_NotExpression_1= ruleNotExpression )
+            // InternalScadeEquations.g:9732:2: ( (this_ValuedExpression_0= ruleValuedExpression | this_NotExpression_1= ruleNotExpression ) )
+            // InternalScadeEquations.g:9733:2: (this_ValuedExpression_0= ruleValuedExpression | this_NotExpression_1= ruleNotExpression )
             {
-            // InternalScadeEquations.g:9729:2: (this_ValuedExpression_0= ruleValuedExpression | this_NotExpression_1= ruleNotExpression )
+            // InternalScadeEquations.g:9733:2: (this_ValuedExpression_0= ruleValuedExpression | this_NotExpression_1= ruleNotExpression )
             int alt248=2;
             alt248 = dfa248.predict(input);
             switch (alt248) {
                 case 1 :
-                    // InternalScadeEquations.g:9730:3: this_ValuedExpression_0= ruleValuedExpression
+                    // InternalScadeEquations.g:9734:3: this_ValuedExpression_0= ruleValuedExpression
                     {
                     if ( state.backtracking==0 ) {
 
@@ -26820,7 +26844,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalScadeEquations.g:9742:3: this_NotExpression_1= ruleNotExpression
+                    // InternalScadeEquations.g:9746:3: this_NotExpression_1= ruleNotExpression
                     {
                     if ( state.backtracking==0 ) {
 
@@ -26871,7 +26895,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleBitwiseNotExpression"
-    // InternalScadeEquations.g:9757:1: entryRuleBitwiseNotExpression returns [EObject current=null] : iv_ruleBitwiseNotExpression= ruleBitwiseNotExpression EOF ;
+    // InternalScadeEquations.g:9761:1: entryRuleBitwiseNotExpression returns [EObject current=null] : iv_ruleBitwiseNotExpression= ruleBitwiseNotExpression EOF ;
     public final EObject entryRuleBitwiseNotExpression() throws RecognitionException {
         EObject current = null;
 
@@ -26879,8 +26903,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalScadeEquations.g:9757:61: (iv_ruleBitwiseNotExpression= ruleBitwiseNotExpression EOF )
-            // InternalScadeEquations.g:9758:2: iv_ruleBitwiseNotExpression= ruleBitwiseNotExpression EOF
+            // InternalScadeEquations.g:9761:61: (iv_ruleBitwiseNotExpression= ruleBitwiseNotExpression EOF )
+            // InternalScadeEquations.g:9762:2: iv_ruleBitwiseNotExpression= ruleBitwiseNotExpression EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getBitwiseNotExpressionRule()); 
@@ -26911,7 +26935,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleBitwiseNotExpression"
-    // InternalScadeEquations.g:9764:1: ruleBitwiseNotExpression returns [EObject current=null] : ( ( () ( (lv_operator_1_0= ruleBitwiseNotOperator ) ) ( (lv_subExpressions_2_0= ruleBitwiseNotExpression ) ) ) | this_AtomicExpression_3= ruleAtomicExpression ) ;
+    // InternalScadeEquations.g:9768:1: ruleBitwiseNotExpression returns [EObject current=null] : ( ( () ( (lv_operator_1_0= ruleBitwiseNotOperator ) ) ( (lv_subExpressions_2_0= ruleBitwiseNotExpression ) ) ) | this_AtomicExpression_3= ruleAtomicExpression ) ;
     public final EObject ruleBitwiseNotExpression() throws RecognitionException {
         EObject current = null;
 
@@ -26926,10 +26950,10 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:9770:2: ( ( ( () ( (lv_operator_1_0= ruleBitwiseNotOperator ) ) ( (lv_subExpressions_2_0= ruleBitwiseNotExpression ) ) ) | this_AtomicExpression_3= ruleAtomicExpression ) )
-            // InternalScadeEquations.g:9771:2: ( ( () ( (lv_operator_1_0= ruleBitwiseNotOperator ) ) ( (lv_subExpressions_2_0= ruleBitwiseNotExpression ) ) ) | this_AtomicExpression_3= ruleAtomicExpression )
+            // InternalScadeEquations.g:9774:2: ( ( ( () ( (lv_operator_1_0= ruleBitwiseNotOperator ) ) ( (lv_subExpressions_2_0= ruleBitwiseNotExpression ) ) ) | this_AtomicExpression_3= ruleAtomicExpression ) )
+            // InternalScadeEquations.g:9775:2: ( ( () ( (lv_operator_1_0= ruleBitwiseNotOperator ) ) ( (lv_subExpressions_2_0= ruleBitwiseNotExpression ) ) ) | this_AtomicExpression_3= ruleAtomicExpression )
             {
-            // InternalScadeEquations.g:9771:2: ( ( () ( (lv_operator_1_0= ruleBitwiseNotOperator ) ) ( (lv_subExpressions_2_0= ruleBitwiseNotExpression ) ) ) | this_AtomicExpression_3= ruleAtomicExpression )
+            // InternalScadeEquations.g:9775:2: ( ( () ( (lv_operator_1_0= ruleBitwiseNotOperator ) ) ( (lv_subExpressions_2_0= ruleBitwiseNotExpression ) ) ) | this_AtomicExpression_3= ruleAtomicExpression )
             int alt249=2;
             int LA249_0 = input.LA(1);
 
@@ -26948,13 +26972,13 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             }
             switch (alt249) {
                 case 1 :
-                    // InternalScadeEquations.g:9772:3: ( () ( (lv_operator_1_0= ruleBitwiseNotOperator ) ) ( (lv_subExpressions_2_0= ruleBitwiseNotExpression ) ) )
+                    // InternalScadeEquations.g:9776:3: ( () ( (lv_operator_1_0= ruleBitwiseNotOperator ) ) ( (lv_subExpressions_2_0= ruleBitwiseNotExpression ) ) )
                     {
-                    // InternalScadeEquations.g:9772:3: ( () ( (lv_operator_1_0= ruleBitwiseNotOperator ) ) ( (lv_subExpressions_2_0= ruleBitwiseNotExpression ) ) )
-                    // InternalScadeEquations.g:9773:4: () ( (lv_operator_1_0= ruleBitwiseNotOperator ) ) ( (lv_subExpressions_2_0= ruleBitwiseNotExpression ) )
+                    // InternalScadeEquations.g:9776:3: ( () ( (lv_operator_1_0= ruleBitwiseNotOperator ) ) ( (lv_subExpressions_2_0= ruleBitwiseNotExpression ) ) )
+                    // InternalScadeEquations.g:9777:4: () ( (lv_operator_1_0= ruleBitwiseNotOperator ) ) ( (lv_subExpressions_2_0= ruleBitwiseNotExpression ) )
                     {
-                    // InternalScadeEquations.g:9773:4: ()
-                    // InternalScadeEquations.g:9774:5: 
+                    // InternalScadeEquations.g:9777:4: ()
+                    // InternalScadeEquations.g:9778:5: 
                     {
                     if ( state.backtracking==0 ) {
 
@@ -26971,18 +26995,18 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalScadeEquations.g:9783:4: ( (lv_operator_1_0= ruleBitwiseNotOperator ) )
-                    // InternalScadeEquations.g:9784:5: (lv_operator_1_0= ruleBitwiseNotOperator )
+                    // InternalScadeEquations.g:9787:4: ( (lv_operator_1_0= ruleBitwiseNotOperator ) )
+                    // InternalScadeEquations.g:9788:5: (lv_operator_1_0= ruleBitwiseNotOperator )
                     {
-                    // InternalScadeEquations.g:9784:5: (lv_operator_1_0= ruleBitwiseNotOperator )
-                    // InternalScadeEquations.g:9785:6: lv_operator_1_0= ruleBitwiseNotOperator
+                    // InternalScadeEquations.g:9788:5: (lv_operator_1_0= ruleBitwiseNotOperator )
+                    // InternalScadeEquations.g:9789:6: lv_operator_1_0= ruleBitwiseNotOperator
                     {
                     if ( state.backtracking==0 ) {
 
                       						newCompositeNode(grammarAccess.getBitwiseNotExpressionAccess().getOperatorBitwiseNotOperatorEnumRuleCall_0_1_0());
                       					
                     }
-                    pushFollow(FollowSets000.FOLLOW_118);
+                    pushFollow(FollowSets000.FOLLOW_120);
                     lv_operator_1_0=ruleBitwiseNotOperator();
 
                     state._fsp--;
@@ -27006,11 +27030,11 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalScadeEquations.g:9802:4: ( (lv_subExpressions_2_0= ruleBitwiseNotExpression ) )
-                    // InternalScadeEquations.g:9803:5: (lv_subExpressions_2_0= ruleBitwiseNotExpression )
+                    // InternalScadeEquations.g:9806:4: ( (lv_subExpressions_2_0= ruleBitwiseNotExpression ) )
+                    // InternalScadeEquations.g:9807:5: (lv_subExpressions_2_0= ruleBitwiseNotExpression )
                     {
-                    // InternalScadeEquations.g:9803:5: (lv_subExpressions_2_0= ruleBitwiseNotExpression )
-                    // InternalScadeEquations.g:9804:6: lv_subExpressions_2_0= ruleBitwiseNotExpression
+                    // InternalScadeEquations.g:9807:5: (lv_subExpressions_2_0= ruleBitwiseNotExpression )
+                    // InternalScadeEquations.g:9808:6: lv_subExpressions_2_0= ruleBitwiseNotExpression
                     {
                     if ( state.backtracking==0 ) {
 
@@ -27048,7 +27072,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalScadeEquations.g:9823:3: this_AtomicExpression_3= ruleAtomicExpression
+                    // InternalScadeEquations.g:9827:3: this_AtomicExpression_3= ruleAtomicExpression
                     {
                     if ( state.backtracking==0 ) {
 
@@ -27099,7 +27123,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleShiftRightExpression"
-    // InternalScadeEquations.g:9838:1: entryRuleShiftRightExpression returns [EObject current=null] : iv_ruleShiftRightExpression= ruleShiftRightExpression EOF ;
+    // InternalScadeEquations.g:9842:1: entryRuleShiftRightExpression returns [EObject current=null] : iv_ruleShiftRightExpression= ruleShiftRightExpression EOF ;
     public final EObject entryRuleShiftRightExpression() throws RecognitionException {
         EObject current = null;
 
@@ -27107,8 +27131,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalScadeEquations.g:9838:61: (iv_ruleShiftRightExpression= ruleShiftRightExpression EOF )
-            // InternalScadeEquations.g:9839:2: iv_ruleShiftRightExpression= ruleShiftRightExpression EOF
+            // InternalScadeEquations.g:9842:61: (iv_ruleShiftRightExpression= ruleShiftRightExpression EOF )
+            // InternalScadeEquations.g:9843:2: iv_ruleShiftRightExpression= ruleShiftRightExpression EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getShiftRightExpressionRule()); 
@@ -27139,7 +27163,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleShiftRightExpression"
-    // InternalScadeEquations.g:9845:1: ruleShiftRightExpression returns [EObject current=null] : (this_SumExpression_0= ruleSumExpression ( () ( ( (lv_operator_2_0= ruleShiftRightOperator ) ) ( (lv_subExpressions_3_0= ruleShiftRightUnsignedExpression ) ) ) (otherlv_4= '>>' ( (lv_subExpressions_5_0= ruleShiftRightUnsignedExpression ) ) )* )? ) ;
+    // InternalScadeEquations.g:9849:1: ruleShiftRightExpression returns [EObject current=null] : (this_SumExpression_0= ruleSumExpression ( () ( ( (lv_operator_2_0= ruleShiftRightOperator ) ) ( (lv_subExpressions_3_0= ruleShiftRightUnsignedExpression ) ) ) (otherlv_4= '>>' ( (lv_subExpressions_5_0= ruleShiftRightUnsignedExpression ) ) )* )? ) ;
     public final EObject ruleShiftRightExpression() throws RecognitionException {
         EObject current = null;
 
@@ -27157,11 +27181,11 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:9851:2: ( (this_SumExpression_0= ruleSumExpression ( () ( ( (lv_operator_2_0= ruleShiftRightOperator ) ) ( (lv_subExpressions_3_0= ruleShiftRightUnsignedExpression ) ) ) (otherlv_4= '>>' ( (lv_subExpressions_5_0= ruleShiftRightUnsignedExpression ) ) )* )? ) )
-            // InternalScadeEquations.g:9852:2: (this_SumExpression_0= ruleSumExpression ( () ( ( (lv_operator_2_0= ruleShiftRightOperator ) ) ( (lv_subExpressions_3_0= ruleShiftRightUnsignedExpression ) ) ) (otherlv_4= '>>' ( (lv_subExpressions_5_0= ruleShiftRightUnsignedExpression ) ) )* )? )
+            // InternalScadeEquations.g:9855:2: ( (this_SumExpression_0= ruleSumExpression ( () ( ( (lv_operator_2_0= ruleShiftRightOperator ) ) ( (lv_subExpressions_3_0= ruleShiftRightUnsignedExpression ) ) ) (otherlv_4= '>>' ( (lv_subExpressions_5_0= ruleShiftRightUnsignedExpression ) ) )* )? ) )
+            // InternalScadeEquations.g:9856:2: (this_SumExpression_0= ruleSumExpression ( () ( ( (lv_operator_2_0= ruleShiftRightOperator ) ) ( (lv_subExpressions_3_0= ruleShiftRightUnsignedExpression ) ) ) (otherlv_4= '>>' ( (lv_subExpressions_5_0= ruleShiftRightUnsignedExpression ) ) )* )? )
             {
-            // InternalScadeEquations.g:9852:2: (this_SumExpression_0= ruleSumExpression ( () ( ( (lv_operator_2_0= ruleShiftRightOperator ) ) ( (lv_subExpressions_3_0= ruleShiftRightUnsignedExpression ) ) ) (otherlv_4= '>>' ( (lv_subExpressions_5_0= ruleShiftRightUnsignedExpression ) ) )* )? )
-            // InternalScadeEquations.g:9853:3: this_SumExpression_0= ruleSumExpression ( () ( ( (lv_operator_2_0= ruleShiftRightOperator ) ) ( (lv_subExpressions_3_0= ruleShiftRightUnsignedExpression ) ) ) (otherlv_4= '>>' ( (lv_subExpressions_5_0= ruleShiftRightUnsignedExpression ) ) )* )?
+            // InternalScadeEquations.g:9856:2: (this_SumExpression_0= ruleSumExpression ( () ( ( (lv_operator_2_0= ruleShiftRightOperator ) ) ( (lv_subExpressions_3_0= ruleShiftRightUnsignedExpression ) ) ) (otherlv_4= '>>' ( (lv_subExpressions_5_0= ruleShiftRightUnsignedExpression ) ) )* )? )
+            // InternalScadeEquations.g:9857:3: this_SumExpression_0= ruleSumExpression ( () ( ( (lv_operator_2_0= ruleShiftRightOperator ) ) ( (lv_subExpressions_3_0= ruleShiftRightUnsignedExpression ) ) ) (otherlv_4= '>>' ( (lv_subExpressions_5_0= ruleShiftRightUnsignedExpression ) ) )* )?
             {
             if ( state.backtracking==0 ) {
 
@@ -27173,7 +27197,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
               			newCompositeNode(grammarAccess.getShiftRightExpressionAccess().getSumExpressionParserRuleCall_0());
               		
             }
-            pushFollow(FollowSets000.FOLLOW_119);
+            pushFollow(FollowSets000.FOLLOW_121);
             this_SumExpression_0=ruleSumExpression();
 
             state._fsp--;
@@ -27184,7 +27208,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
               			afterParserOrEnumRuleCall();
               		
             }
-            // InternalScadeEquations.g:9864:3: ( () ( ( (lv_operator_2_0= ruleShiftRightOperator ) ) ( (lv_subExpressions_3_0= ruleShiftRightUnsignedExpression ) ) ) (otherlv_4= '>>' ( (lv_subExpressions_5_0= ruleShiftRightUnsignedExpression ) ) )* )?
+            // InternalScadeEquations.g:9868:3: ( () ( ( (lv_operator_2_0= ruleShiftRightOperator ) ) ( (lv_subExpressions_3_0= ruleShiftRightUnsignedExpression ) ) ) (otherlv_4= '>>' ( (lv_subExpressions_5_0= ruleShiftRightUnsignedExpression ) ) )* )?
             int alt251=2;
             int LA251_0 = input.LA(1);
 
@@ -27193,10 +27217,10 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             }
             switch (alt251) {
                 case 1 :
-                    // InternalScadeEquations.g:9865:4: () ( ( (lv_operator_2_0= ruleShiftRightOperator ) ) ( (lv_subExpressions_3_0= ruleShiftRightUnsignedExpression ) ) ) (otherlv_4= '>>' ( (lv_subExpressions_5_0= ruleShiftRightUnsignedExpression ) ) )*
+                    // InternalScadeEquations.g:9869:4: () ( ( (lv_operator_2_0= ruleShiftRightOperator ) ) ( (lv_subExpressions_3_0= ruleShiftRightUnsignedExpression ) ) ) (otherlv_4= '>>' ( (lv_subExpressions_5_0= ruleShiftRightUnsignedExpression ) ) )*
                     {
-                    // InternalScadeEquations.g:9865:4: ()
-                    // InternalScadeEquations.g:9866:5: 
+                    // InternalScadeEquations.g:9869:4: ()
+                    // InternalScadeEquations.g:9870:5: 
                     {
                     if ( state.backtracking==0 ) {
 
@@ -27213,14 +27237,14 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalScadeEquations.g:9875:4: ( ( (lv_operator_2_0= ruleShiftRightOperator ) ) ( (lv_subExpressions_3_0= ruleShiftRightUnsignedExpression ) ) )
-                    // InternalScadeEquations.g:9876:5: ( (lv_operator_2_0= ruleShiftRightOperator ) ) ( (lv_subExpressions_3_0= ruleShiftRightUnsignedExpression ) )
+                    // InternalScadeEquations.g:9879:4: ( ( (lv_operator_2_0= ruleShiftRightOperator ) ) ( (lv_subExpressions_3_0= ruleShiftRightUnsignedExpression ) ) )
+                    // InternalScadeEquations.g:9880:5: ( (lv_operator_2_0= ruleShiftRightOperator ) ) ( (lv_subExpressions_3_0= ruleShiftRightUnsignedExpression ) )
                     {
-                    // InternalScadeEquations.g:9876:5: ( (lv_operator_2_0= ruleShiftRightOperator ) )
-                    // InternalScadeEquations.g:9877:6: (lv_operator_2_0= ruleShiftRightOperator )
+                    // InternalScadeEquations.g:9880:5: ( (lv_operator_2_0= ruleShiftRightOperator ) )
+                    // InternalScadeEquations.g:9881:6: (lv_operator_2_0= ruleShiftRightOperator )
                     {
-                    // InternalScadeEquations.g:9877:6: (lv_operator_2_0= ruleShiftRightOperator )
-                    // InternalScadeEquations.g:9878:7: lv_operator_2_0= ruleShiftRightOperator
+                    // InternalScadeEquations.g:9881:6: (lv_operator_2_0= ruleShiftRightOperator )
+                    // InternalScadeEquations.g:9882:7: lv_operator_2_0= ruleShiftRightOperator
                     {
                     if ( state.backtracking==0 ) {
 
@@ -27251,18 +27275,18 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalScadeEquations.g:9895:5: ( (lv_subExpressions_3_0= ruleShiftRightUnsignedExpression ) )
-                    // InternalScadeEquations.g:9896:6: (lv_subExpressions_3_0= ruleShiftRightUnsignedExpression )
+                    // InternalScadeEquations.g:9899:5: ( (lv_subExpressions_3_0= ruleShiftRightUnsignedExpression ) )
+                    // InternalScadeEquations.g:9900:6: (lv_subExpressions_3_0= ruleShiftRightUnsignedExpression )
                     {
-                    // InternalScadeEquations.g:9896:6: (lv_subExpressions_3_0= ruleShiftRightUnsignedExpression )
-                    // InternalScadeEquations.g:9897:7: lv_subExpressions_3_0= ruleShiftRightUnsignedExpression
+                    // InternalScadeEquations.g:9900:6: (lv_subExpressions_3_0= ruleShiftRightUnsignedExpression )
+                    // InternalScadeEquations.g:9901:7: lv_subExpressions_3_0= ruleShiftRightUnsignedExpression
                     {
                     if ( state.backtracking==0 ) {
 
                       							newCompositeNode(grammarAccess.getShiftRightExpressionAccess().getSubExpressionsShiftRightUnsignedExpressionParserRuleCall_1_1_1_0());
                       						
                     }
-                    pushFollow(FollowSets000.FOLLOW_119);
+                    pushFollow(FollowSets000.FOLLOW_121);
                     lv_subExpressions_3_0=ruleShiftRightUnsignedExpression();
 
                     state._fsp--;
@@ -27289,7 +27313,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalScadeEquations.g:9915:4: (otherlv_4= '>>' ( (lv_subExpressions_5_0= ruleShiftRightUnsignedExpression ) ) )*
+                    // InternalScadeEquations.g:9919:4: (otherlv_4= '>>' ( (lv_subExpressions_5_0= ruleShiftRightUnsignedExpression ) ) )*
                     loop250:
                     do {
                         int alt250=2;
@@ -27302,7 +27326,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                         switch (alt250) {
                     	case 1 :
-                    	    // InternalScadeEquations.g:9916:5: otherlv_4= '>>' ( (lv_subExpressions_5_0= ruleShiftRightUnsignedExpression ) )
+                    	    // InternalScadeEquations.g:9920:5: otherlv_4= '>>' ( (lv_subExpressions_5_0= ruleShiftRightUnsignedExpression ) )
                     	    {
                     	    otherlv_4=(Token)match(input,80,FollowSets000.FOLLOW_48); if (state.failed) return current;
                     	    if ( state.backtracking==0 ) {
@@ -27310,18 +27334,18 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                     	      					newLeafNode(otherlv_4, grammarAccess.getShiftRightExpressionAccess().getGreaterThanSignGreaterThanSignKeyword_1_2_0());
                     	      				
                     	    }
-                    	    // InternalScadeEquations.g:9920:5: ( (lv_subExpressions_5_0= ruleShiftRightUnsignedExpression ) )
-                    	    // InternalScadeEquations.g:9921:6: (lv_subExpressions_5_0= ruleShiftRightUnsignedExpression )
+                    	    // InternalScadeEquations.g:9924:5: ( (lv_subExpressions_5_0= ruleShiftRightUnsignedExpression ) )
+                    	    // InternalScadeEquations.g:9925:6: (lv_subExpressions_5_0= ruleShiftRightUnsignedExpression )
                     	    {
-                    	    // InternalScadeEquations.g:9921:6: (lv_subExpressions_5_0= ruleShiftRightUnsignedExpression )
-                    	    // InternalScadeEquations.g:9922:7: lv_subExpressions_5_0= ruleShiftRightUnsignedExpression
+                    	    // InternalScadeEquations.g:9925:6: (lv_subExpressions_5_0= ruleShiftRightUnsignedExpression )
+                    	    // InternalScadeEquations.g:9926:7: lv_subExpressions_5_0= ruleShiftRightUnsignedExpression
                     	    {
                     	    if ( state.backtracking==0 ) {
 
                     	      							newCompositeNode(grammarAccess.getShiftRightExpressionAccess().getSubExpressionsShiftRightUnsignedExpressionParserRuleCall_1_2_1_0());
                     	      						
                     	    }
-                    	    pushFollow(FollowSets000.FOLLOW_119);
+                    	    pushFollow(FollowSets000.FOLLOW_121);
                     	    lv_subExpressions_5_0=ruleShiftRightUnsignedExpression();
 
                     	    state._fsp--;
@@ -27385,7 +27409,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleShiftRightUnsignedExpression"
-    // InternalScadeEquations.g:9945:1: entryRuleShiftRightUnsignedExpression returns [EObject current=null] : iv_ruleShiftRightUnsignedExpression= ruleShiftRightUnsignedExpression EOF ;
+    // InternalScadeEquations.g:9949:1: entryRuleShiftRightUnsignedExpression returns [EObject current=null] : iv_ruleShiftRightUnsignedExpression= ruleShiftRightUnsignedExpression EOF ;
     public final EObject entryRuleShiftRightUnsignedExpression() throws RecognitionException {
         EObject current = null;
 
@@ -27393,8 +27417,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalScadeEquations.g:9945:69: (iv_ruleShiftRightUnsignedExpression= ruleShiftRightUnsignedExpression EOF )
-            // InternalScadeEquations.g:9946:2: iv_ruleShiftRightUnsignedExpression= ruleShiftRightUnsignedExpression EOF
+            // InternalScadeEquations.g:9949:69: (iv_ruleShiftRightUnsignedExpression= ruleShiftRightUnsignedExpression EOF )
+            // InternalScadeEquations.g:9950:2: iv_ruleShiftRightUnsignedExpression= ruleShiftRightUnsignedExpression EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getShiftRightUnsignedExpressionRule()); 
@@ -27425,7 +27449,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleShiftRightUnsignedExpression"
-    // InternalScadeEquations.g:9952:1: ruleShiftRightUnsignedExpression returns [EObject current=null] : (this_SumExpression_0= ruleSumExpression ( () ( ( (lv_operator_2_0= ruleShiftRightUnsignedOperator ) ) ( (lv_subExpressions_3_0= ruleSumExpression ) ) ) (otherlv_4= '>>>' ( (lv_subExpressions_5_0= ruleSumExpression ) ) )* )? ) ;
+    // InternalScadeEquations.g:9956:1: ruleShiftRightUnsignedExpression returns [EObject current=null] : (this_SumExpression_0= ruleSumExpression ( () ( ( (lv_operator_2_0= ruleShiftRightUnsignedOperator ) ) ( (lv_subExpressions_3_0= ruleSumExpression ) ) ) (otherlv_4= '>>>' ( (lv_subExpressions_5_0= ruleSumExpression ) ) )* )? ) ;
     public final EObject ruleShiftRightUnsignedExpression() throws RecognitionException {
         EObject current = null;
 
@@ -27443,11 +27467,11 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:9958:2: ( (this_SumExpression_0= ruleSumExpression ( () ( ( (lv_operator_2_0= ruleShiftRightUnsignedOperator ) ) ( (lv_subExpressions_3_0= ruleSumExpression ) ) ) (otherlv_4= '>>>' ( (lv_subExpressions_5_0= ruleSumExpression ) ) )* )? ) )
-            // InternalScadeEquations.g:9959:2: (this_SumExpression_0= ruleSumExpression ( () ( ( (lv_operator_2_0= ruleShiftRightUnsignedOperator ) ) ( (lv_subExpressions_3_0= ruleSumExpression ) ) ) (otherlv_4= '>>>' ( (lv_subExpressions_5_0= ruleSumExpression ) ) )* )? )
+            // InternalScadeEquations.g:9962:2: ( (this_SumExpression_0= ruleSumExpression ( () ( ( (lv_operator_2_0= ruleShiftRightUnsignedOperator ) ) ( (lv_subExpressions_3_0= ruleSumExpression ) ) ) (otherlv_4= '>>>' ( (lv_subExpressions_5_0= ruleSumExpression ) ) )* )? ) )
+            // InternalScadeEquations.g:9963:2: (this_SumExpression_0= ruleSumExpression ( () ( ( (lv_operator_2_0= ruleShiftRightUnsignedOperator ) ) ( (lv_subExpressions_3_0= ruleSumExpression ) ) ) (otherlv_4= '>>>' ( (lv_subExpressions_5_0= ruleSumExpression ) ) )* )? )
             {
-            // InternalScadeEquations.g:9959:2: (this_SumExpression_0= ruleSumExpression ( () ( ( (lv_operator_2_0= ruleShiftRightUnsignedOperator ) ) ( (lv_subExpressions_3_0= ruleSumExpression ) ) ) (otherlv_4= '>>>' ( (lv_subExpressions_5_0= ruleSumExpression ) ) )* )? )
-            // InternalScadeEquations.g:9960:3: this_SumExpression_0= ruleSumExpression ( () ( ( (lv_operator_2_0= ruleShiftRightUnsignedOperator ) ) ( (lv_subExpressions_3_0= ruleSumExpression ) ) ) (otherlv_4= '>>>' ( (lv_subExpressions_5_0= ruleSumExpression ) ) )* )?
+            // InternalScadeEquations.g:9963:2: (this_SumExpression_0= ruleSumExpression ( () ( ( (lv_operator_2_0= ruleShiftRightUnsignedOperator ) ) ( (lv_subExpressions_3_0= ruleSumExpression ) ) ) (otherlv_4= '>>>' ( (lv_subExpressions_5_0= ruleSumExpression ) ) )* )? )
+            // InternalScadeEquations.g:9964:3: this_SumExpression_0= ruleSumExpression ( () ( ( (lv_operator_2_0= ruleShiftRightUnsignedOperator ) ) ( (lv_subExpressions_3_0= ruleSumExpression ) ) ) (otherlv_4= '>>>' ( (lv_subExpressions_5_0= ruleSumExpression ) ) )* )?
             {
             if ( state.backtracking==0 ) {
 
@@ -27459,7 +27483,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
               			newCompositeNode(grammarAccess.getShiftRightUnsignedExpressionAccess().getSumExpressionParserRuleCall_0());
               		
             }
-            pushFollow(FollowSets000.FOLLOW_120);
+            pushFollow(FollowSets000.FOLLOW_122);
             this_SumExpression_0=ruleSumExpression();
 
             state._fsp--;
@@ -27470,7 +27494,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
               			afterParserOrEnumRuleCall();
               		
             }
-            // InternalScadeEquations.g:9971:3: ( () ( ( (lv_operator_2_0= ruleShiftRightUnsignedOperator ) ) ( (lv_subExpressions_3_0= ruleSumExpression ) ) ) (otherlv_4= '>>>' ( (lv_subExpressions_5_0= ruleSumExpression ) ) )* )?
+            // InternalScadeEquations.g:9975:3: ( () ( ( (lv_operator_2_0= ruleShiftRightUnsignedOperator ) ) ( (lv_subExpressions_3_0= ruleSumExpression ) ) ) (otherlv_4= '>>>' ( (lv_subExpressions_5_0= ruleSumExpression ) ) )* )?
             int alt253=2;
             int LA253_0 = input.LA(1);
 
@@ -27479,10 +27503,10 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             }
             switch (alt253) {
                 case 1 :
-                    // InternalScadeEquations.g:9972:4: () ( ( (lv_operator_2_0= ruleShiftRightUnsignedOperator ) ) ( (lv_subExpressions_3_0= ruleSumExpression ) ) ) (otherlv_4= '>>>' ( (lv_subExpressions_5_0= ruleSumExpression ) ) )*
+                    // InternalScadeEquations.g:9976:4: () ( ( (lv_operator_2_0= ruleShiftRightUnsignedOperator ) ) ( (lv_subExpressions_3_0= ruleSumExpression ) ) ) (otherlv_4= '>>>' ( (lv_subExpressions_5_0= ruleSumExpression ) ) )*
                     {
-                    // InternalScadeEquations.g:9972:4: ()
-                    // InternalScadeEquations.g:9973:5: 
+                    // InternalScadeEquations.g:9976:4: ()
+                    // InternalScadeEquations.g:9977:5: 
                     {
                     if ( state.backtracking==0 ) {
 
@@ -27499,14 +27523,14 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalScadeEquations.g:9982:4: ( ( (lv_operator_2_0= ruleShiftRightUnsignedOperator ) ) ( (lv_subExpressions_3_0= ruleSumExpression ) ) )
-                    // InternalScadeEquations.g:9983:5: ( (lv_operator_2_0= ruleShiftRightUnsignedOperator ) ) ( (lv_subExpressions_3_0= ruleSumExpression ) )
+                    // InternalScadeEquations.g:9986:4: ( ( (lv_operator_2_0= ruleShiftRightUnsignedOperator ) ) ( (lv_subExpressions_3_0= ruleSumExpression ) ) )
+                    // InternalScadeEquations.g:9987:5: ( (lv_operator_2_0= ruleShiftRightUnsignedOperator ) ) ( (lv_subExpressions_3_0= ruleSumExpression ) )
                     {
-                    // InternalScadeEquations.g:9983:5: ( (lv_operator_2_0= ruleShiftRightUnsignedOperator ) )
-                    // InternalScadeEquations.g:9984:6: (lv_operator_2_0= ruleShiftRightUnsignedOperator )
+                    // InternalScadeEquations.g:9987:5: ( (lv_operator_2_0= ruleShiftRightUnsignedOperator ) )
+                    // InternalScadeEquations.g:9988:6: (lv_operator_2_0= ruleShiftRightUnsignedOperator )
                     {
-                    // InternalScadeEquations.g:9984:6: (lv_operator_2_0= ruleShiftRightUnsignedOperator )
-                    // InternalScadeEquations.g:9985:7: lv_operator_2_0= ruleShiftRightUnsignedOperator
+                    // InternalScadeEquations.g:9988:6: (lv_operator_2_0= ruleShiftRightUnsignedOperator )
+                    // InternalScadeEquations.g:9989:7: lv_operator_2_0= ruleShiftRightUnsignedOperator
                     {
                     if ( state.backtracking==0 ) {
 
@@ -27537,18 +27561,18 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalScadeEquations.g:10002:5: ( (lv_subExpressions_3_0= ruleSumExpression ) )
-                    // InternalScadeEquations.g:10003:6: (lv_subExpressions_3_0= ruleSumExpression )
+                    // InternalScadeEquations.g:10006:5: ( (lv_subExpressions_3_0= ruleSumExpression ) )
+                    // InternalScadeEquations.g:10007:6: (lv_subExpressions_3_0= ruleSumExpression )
                     {
-                    // InternalScadeEquations.g:10003:6: (lv_subExpressions_3_0= ruleSumExpression )
-                    // InternalScadeEquations.g:10004:7: lv_subExpressions_3_0= ruleSumExpression
+                    // InternalScadeEquations.g:10007:6: (lv_subExpressions_3_0= ruleSumExpression )
+                    // InternalScadeEquations.g:10008:7: lv_subExpressions_3_0= ruleSumExpression
                     {
                     if ( state.backtracking==0 ) {
 
                       							newCompositeNode(grammarAccess.getShiftRightUnsignedExpressionAccess().getSubExpressionsSumExpressionParserRuleCall_1_1_1_0());
                       						
                     }
-                    pushFollow(FollowSets000.FOLLOW_120);
+                    pushFollow(FollowSets000.FOLLOW_122);
                     lv_subExpressions_3_0=ruleSumExpression();
 
                     state._fsp--;
@@ -27575,7 +27599,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalScadeEquations.g:10022:4: (otherlv_4= '>>>' ( (lv_subExpressions_5_0= ruleSumExpression ) ) )*
+                    // InternalScadeEquations.g:10026:4: (otherlv_4= '>>>' ( (lv_subExpressions_5_0= ruleSumExpression ) ) )*
                     loop252:
                     do {
                         int alt252=2;
@@ -27588,7 +27612,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                         switch (alt252) {
                     	case 1 :
-                    	    // InternalScadeEquations.g:10023:5: otherlv_4= '>>>' ( (lv_subExpressions_5_0= ruleSumExpression ) )
+                    	    // InternalScadeEquations.g:10027:5: otherlv_4= '>>>' ( (lv_subExpressions_5_0= ruleSumExpression ) )
                     	    {
                     	    otherlv_4=(Token)match(input,81,FollowSets000.FOLLOW_48); if (state.failed) return current;
                     	    if ( state.backtracking==0 ) {
@@ -27596,18 +27620,18 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                     	      					newLeafNode(otherlv_4, grammarAccess.getShiftRightUnsignedExpressionAccess().getGreaterThanSignGreaterThanSignGreaterThanSignKeyword_1_2_0());
                     	      				
                     	    }
-                    	    // InternalScadeEquations.g:10027:5: ( (lv_subExpressions_5_0= ruleSumExpression ) )
-                    	    // InternalScadeEquations.g:10028:6: (lv_subExpressions_5_0= ruleSumExpression )
+                    	    // InternalScadeEquations.g:10031:5: ( (lv_subExpressions_5_0= ruleSumExpression ) )
+                    	    // InternalScadeEquations.g:10032:6: (lv_subExpressions_5_0= ruleSumExpression )
                     	    {
-                    	    // InternalScadeEquations.g:10028:6: (lv_subExpressions_5_0= ruleSumExpression )
-                    	    // InternalScadeEquations.g:10029:7: lv_subExpressions_5_0= ruleSumExpression
+                    	    // InternalScadeEquations.g:10032:6: (lv_subExpressions_5_0= ruleSumExpression )
+                    	    // InternalScadeEquations.g:10033:7: lv_subExpressions_5_0= ruleSumExpression
                     	    {
                     	    if ( state.backtracking==0 ) {
 
                     	      							newCompositeNode(grammarAccess.getShiftRightUnsignedExpressionAccess().getSubExpressionsSumExpressionParserRuleCall_1_2_1_0());
                     	      						
                     	    }
-                    	    pushFollow(FollowSets000.FOLLOW_120);
+                    	    pushFollow(FollowSets000.FOLLOW_122);
                     	    lv_subExpressions_5_0=ruleSumExpression();
 
                     	    state._fsp--;
@@ -27671,7 +27695,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleSumExpression"
-    // InternalScadeEquations.g:10052:1: entryRuleSumExpression returns [EObject current=null] : iv_ruleSumExpression= ruleSumExpression EOF ;
+    // InternalScadeEquations.g:10056:1: entryRuleSumExpression returns [EObject current=null] : iv_ruleSumExpression= ruleSumExpression EOF ;
     public final EObject entryRuleSumExpression() throws RecognitionException {
         EObject current = null;
 
@@ -27679,8 +27703,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalScadeEquations.g:10052:54: (iv_ruleSumExpression= ruleSumExpression EOF )
-            // InternalScadeEquations.g:10053:2: iv_ruleSumExpression= ruleSumExpression EOF
+            // InternalScadeEquations.g:10056:54: (iv_ruleSumExpression= ruleSumExpression EOF )
+            // InternalScadeEquations.g:10057:2: iv_ruleSumExpression= ruleSumExpression EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getSumExpressionRule()); 
@@ -27711,7 +27735,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleSumExpression"
-    // InternalScadeEquations.g:10059:1: ruleSumExpression returns [EObject current=null] : (this_ProductExpression_0= ruleProductExpression ( ( () ( (lv_operator_2_0= ruleAddOperator ) ) ( (lv_subExpressions_3_0= ruleProductExpression ) ) (otherlv_4= '+' ( (lv_subExpressions_5_0= ruleProductExpression ) ) )* ) | ( () ( (lv_operator_7_0= ruleSubOperator ) ) ( (lv_subExpressions_8_0= ruleProductExpression ) ) (otherlv_9= '-' ( (lv_subExpressions_10_0= ruleProductExpression ) ) )* ) )* ) ;
+    // InternalScadeEquations.g:10063:1: ruleSumExpression returns [EObject current=null] : (this_ProductExpression_0= ruleProductExpression ( ( () ( (lv_operator_2_0= ruleAddOperator ) ) ( (lv_subExpressions_3_0= ruleProductExpression ) ) (otherlv_4= '+' ( (lv_subExpressions_5_0= ruleProductExpression ) ) )* ) | ( () ( (lv_operator_7_0= ruleSubOperator ) ) ( (lv_subExpressions_8_0= ruleProductExpression ) ) (otherlv_9= '-' ( (lv_subExpressions_10_0= ruleProductExpression ) ) )* ) )* ) ;
     public final EObject ruleSumExpression() throws RecognitionException {
         EObject current = null;
 
@@ -27736,11 +27760,11 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:10065:2: ( (this_ProductExpression_0= ruleProductExpression ( ( () ( (lv_operator_2_0= ruleAddOperator ) ) ( (lv_subExpressions_3_0= ruleProductExpression ) ) (otherlv_4= '+' ( (lv_subExpressions_5_0= ruleProductExpression ) ) )* ) | ( () ( (lv_operator_7_0= ruleSubOperator ) ) ( (lv_subExpressions_8_0= ruleProductExpression ) ) (otherlv_9= '-' ( (lv_subExpressions_10_0= ruleProductExpression ) ) )* ) )* ) )
-            // InternalScadeEquations.g:10066:2: (this_ProductExpression_0= ruleProductExpression ( ( () ( (lv_operator_2_0= ruleAddOperator ) ) ( (lv_subExpressions_3_0= ruleProductExpression ) ) (otherlv_4= '+' ( (lv_subExpressions_5_0= ruleProductExpression ) ) )* ) | ( () ( (lv_operator_7_0= ruleSubOperator ) ) ( (lv_subExpressions_8_0= ruleProductExpression ) ) (otherlv_9= '-' ( (lv_subExpressions_10_0= ruleProductExpression ) ) )* ) )* )
+            // InternalScadeEquations.g:10069:2: ( (this_ProductExpression_0= ruleProductExpression ( ( () ( (lv_operator_2_0= ruleAddOperator ) ) ( (lv_subExpressions_3_0= ruleProductExpression ) ) (otherlv_4= '+' ( (lv_subExpressions_5_0= ruleProductExpression ) ) )* ) | ( () ( (lv_operator_7_0= ruleSubOperator ) ) ( (lv_subExpressions_8_0= ruleProductExpression ) ) (otherlv_9= '-' ( (lv_subExpressions_10_0= ruleProductExpression ) ) )* ) )* ) )
+            // InternalScadeEquations.g:10070:2: (this_ProductExpression_0= ruleProductExpression ( ( () ( (lv_operator_2_0= ruleAddOperator ) ) ( (lv_subExpressions_3_0= ruleProductExpression ) ) (otherlv_4= '+' ( (lv_subExpressions_5_0= ruleProductExpression ) ) )* ) | ( () ( (lv_operator_7_0= ruleSubOperator ) ) ( (lv_subExpressions_8_0= ruleProductExpression ) ) (otherlv_9= '-' ( (lv_subExpressions_10_0= ruleProductExpression ) ) )* ) )* )
             {
-            // InternalScadeEquations.g:10066:2: (this_ProductExpression_0= ruleProductExpression ( ( () ( (lv_operator_2_0= ruleAddOperator ) ) ( (lv_subExpressions_3_0= ruleProductExpression ) ) (otherlv_4= '+' ( (lv_subExpressions_5_0= ruleProductExpression ) ) )* ) | ( () ( (lv_operator_7_0= ruleSubOperator ) ) ( (lv_subExpressions_8_0= ruleProductExpression ) ) (otherlv_9= '-' ( (lv_subExpressions_10_0= ruleProductExpression ) ) )* ) )* )
-            // InternalScadeEquations.g:10067:3: this_ProductExpression_0= ruleProductExpression ( ( () ( (lv_operator_2_0= ruleAddOperator ) ) ( (lv_subExpressions_3_0= ruleProductExpression ) ) (otherlv_4= '+' ( (lv_subExpressions_5_0= ruleProductExpression ) ) )* ) | ( () ( (lv_operator_7_0= ruleSubOperator ) ) ( (lv_subExpressions_8_0= ruleProductExpression ) ) (otherlv_9= '-' ( (lv_subExpressions_10_0= ruleProductExpression ) ) )* ) )*
+            // InternalScadeEquations.g:10070:2: (this_ProductExpression_0= ruleProductExpression ( ( () ( (lv_operator_2_0= ruleAddOperator ) ) ( (lv_subExpressions_3_0= ruleProductExpression ) ) (otherlv_4= '+' ( (lv_subExpressions_5_0= ruleProductExpression ) ) )* ) | ( () ( (lv_operator_7_0= ruleSubOperator ) ) ( (lv_subExpressions_8_0= ruleProductExpression ) ) (otherlv_9= '-' ( (lv_subExpressions_10_0= ruleProductExpression ) ) )* ) )* )
+            // InternalScadeEquations.g:10071:3: this_ProductExpression_0= ruleProductExpression ( ( () ( (lv_operator_2_0= ruleAddOperator ) ) ( (lv_subExpressions_3_0= ruleProductExpression ) ) (otherlv_4= '+' ( (lv_subExpressions_5_0= ruleProductExpression ) ) )* ) | ( () ( (lv_operator_7_0= ruleSubOperator ) ) ( (lv_subExpressions_8_0= ruleProductExpression ) ) (otherlv_9= '-' ( (lv_subExpressions_10_0= ruleProductExpression ) ) )* ) )*
             {
             if ( state.backtracking==0 ) {
 
@@ -27752,7 +27776,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
               			newCompositeNode(grammarAccess.getSumExpressionAccess().getProductExpressionParserRuleCall_0());
               		
             }
-            pushFollow(FollowSets000.FOLLOW_121);
+            pushFollow(FollowSets000.FOLLOW_123);
             this_ProductExpression_0=ruleProductExpression();
 
             state._fsp--;
@@ -27763,7 +27787,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
               			afterParserOrEnumRuleCall();
               		
             }
-            // InternalScadeEquations.g:10078:3: ( ( () ( (lv_operator_2_0= ruleAddOperator ) ) ( (lv_subExpressions_3_0= ruleProductExpression ) ) (otherlv_4= '+' ( (lv_subExpressions_5_0= ruleProductExpression ) ) )* ) | ( () ( (lv_operator_7_0= ruleSubOperator ) ) ( (lv_subExpressions_8_0= ruleProductExpression ) ) (otherlv_9= '-' ( (lv_subExpressions_10_0= ruleProductExpression ) ) )* ) )*
+            // InternalScadeEquations.g:10082:3: ( ( () ( (lv_operator_2_0= ruleAddOperator ) ) ( (lv_subExpressions_3_0= ruleProductExpression ) ) (otherlv_4= '+' ( (lv_subExpressions_5_0= ruleProductExpression ) ) )* ) | ( () ( (lv_operator_7_0= ruleSubOperator ) ) ( (lv_subExpressions_8_0= ruleProductExpression ) ) (otherlv_9= '-' ( (lv_subExpressions_10_0= ruleProductExpression ) ) )* ) )*
             loop256:
             do {
                 int alt256=3;
@@ -27779,13 +27803,13 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                 switch (alt256) {
             	case 1 :
-            	    // InternalScadeEquations.g:10079:4: ( () ( (lv_operator_2_0= ruleAddOperator ) ) ( (lv_subExpressions_3_0= ruleProductExpression ) ) (otherlv_4= '+' ( (lv_subExpressions_5_0= ruleProductExpression ) ) )* )
+            	    // InternalScadeEquations.g:10083:4: ( () ( (lv_operator_2_0= ruleAddOperator ) ) ( (lv_subExpressions_3_0= ruleProductExpression ) ) (otherlv_4= '+' ( (lv_subExpressions_5_0= ruleProductExpression ) ) )* )
             	    {
-            	    // InternalScadeEquations.g:10079:4: ( () ( (lv_operator_2_0= ruleAddOperator ) ) ( (lv_subExpressions_3_0= ruleProductExpression ) ) (otherlv_4= '+' ( (lv_subExpressions_5_0= ruleProductExpression ) ) )* )
-            	    // InternalScadeEquations.g:10080:5: () ( (lv_operator_2_0= ruleAddOperator ) ) ( (lv_subExpressions_3_0= ruleProductExpression ) ) (otherlv_4= '+' ( (lv_subExpressions_5_0= ruleProductExpression ) ) )*
+            	    // InternalScadeEquations.g:10083:4: ( () ( (lv_operator_2_0= ruleAddOperator ) ) ( (lv_subExpressions_3_0= ruleProductExpression ) ) (otherlv_4= '+' ( (lv_subExpressions_5_0= ruleProductExpression ) ) )* )
+            	    // InternalScadeEquations.g:10084:5: () ( (lv_operator_2_0= ruleAddOperator ) ) ( (lv_subExpressions_3_0= ruleProductExpression ) ) (otherlv_4= '+' ( (lv_subExpressions_5_0= ruleProductExpression ) ) )*
             	    {
-            	    // InternalScadeEquations.g:10080:5: ()
-            	    // InternalScadeEquations.g:10081:6: 
+            	    // InternalScadeEquations.g:10084:5: ()
+            	    // InternalScadeEquations.g:10085:6: 
             	    {
             	    if ( state.backtracking==0 ) {
 
@@ -27802,11 +27826,11 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             	    }
 
-            	    // InternalScadeEquations.g:10090:5: ( (lv_operator_2_0= ruleAddOperator ) )
-            	    // InternalScadeEquations.g:10091:6: (lv_operator_2_0= ruleAddOperator )
+            	    // InternalScadeEquations.g:10094:5: ( (lv_operator_2_0= ruleAddOperator ) )
+            	    // InternalScadeEquations.g:10095:6: (lv_operator_2_0= ruleAddOperator )
             	    {
-            	    // InternalScadeEquations.g:10091:6: (lv_operator_2_0= ruleAddOperator )
-            	    // InternalScadeEquations.g:10092:7: lv_operator_2_0= ruleAddOperator
+            	    // InternalScadeEquations.g:10095:6: (lv_operator_2_0= ruleAddOperator )
+            	    // InternalScadeEquations.g:10096:7: lv_operator_2_0= ruleAddOperator
             	    {
             	    if ( state.backtracking==0 ) {
 
@@ -27837,18 +27861,18 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             	    }
 
-            	    // InternalScadeEquations.g:10109:5: ( (lv_subExpressions_3_0= ruleProductExpression ) )
-            	    // InternalScadeEquations.g:10110:6: (lv_subExpressions_3_0= ruleProductExpression )
+            	    // InternalScadeEquations.g:10113:5: ( (lv_subExpressions_3_0= ruleProductExpression ) )
+            	    // InternalScadeEquations.g:10114:6: (lv_subExpressions_3_0= ruleProductExpression )
             	    {
-            	    // InternalScadeEquations.g:10110:6: (lv_subExpressions_3_0= ruleProductExpression )
-            	    // InternalScadeEquations.g:10111:7: lv_subExpressions_3_0= ruleProductExpression
+            	    // InternalScadeEquations.g:10114:6: (lv_subExpressions_3_0= ruleProductExpression )
+            	    // InternalScadeEquations.g:10115:7: lv_subExpressions_3_0= ruleProductExpression
             	    {
             	    if ( state.backtracking==0 ) {
 
             	      							newCompositeNode(grammarAccess.getSumExpressionAccess().getSubExpressionsProductExpressionParserRuleCall_1_0_2_0());
             	      						
             	    }
-            	    pushFollow(FollowSets000.FOLLOW_121);
+            	    pushFollow(FollowSets000.FOLLOW_123);
             	    lv_subExpressions_3_0=ruleProductExpression();
 
             	    state._fsp--;
@@ -27872,14 +27896,14 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             	    }
 
-            	    // InternalScadeEquations.g:10128:5: (otherlv_4= '+' ( (lv_subExpressions_5_0= ruleProductExpression ) ) )*
+            	    // InternalScadeEquations.g:10132:5: (otherlv_4= '+' ( (lv_subExpressions_5_0= ruleProductExpression ) ) )*
             	    loop254:
             	    do {
             	        int alt254=2;
             	        alt254 = dfa254.predict(input);
             	        switch (alt254) {
             	    	case 1 :
-            	    	    // InternalScadeEquations.g:10129:6: otherlv_4= '+' ( (lv_subExpressions_5_0= ruleProductExpression ) )
+            	    	    // InternalScadeEquations.g:10133:6: otherlv_4= '+' ( (lv_subExpressions_5_0= ruleProductExpression ) )
             	    	    {
             	    	    otherlv_4=(Token)match(input,82,FollowSets000.FOLLOW_48); if (state.failed) return current;
             	    	    if ( state.backtracking==0 ) {
@@ -27887,18 +27911,18 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             	    	      						newLeafNode(otherlv_4, grammarAccess.getSumExpressionAccess().getPlusSignKeyword_1_0_3_0());
             	    	      					
             	    	    }
-            	    	    // InternalScadeEquations.g:10133:6: ( (lv_subExpressions_5_0= ruleProductExpression ) )
-            	    	    // InternalScadeEquations.g:10134:7: (lv_subExpressions_5_0= ruleProductExpression )
+            	    	    // InternalScadeEquations.g:10137:6: ( (lv_subExpressions_5_0= ruleProductExpression ) )
+            	    	    // InternalScadeEquations.g:10138:7: (lv_subExpressions_5_0= ruleProductExpression )
             	    	    {
-            	    	    // InternalScadeEquations.g:10134:7: (lv_subExpressions_5_0= ruleProductExpression )
-            	    	    // InternalScadeEquations.g:10135:8: lv_subExpressions_5_0= ruleProductExpression
+            	    	    // InternalScadeEquations.g:10138:7: (lv_subExpressions_5_0= ruleProductExpression )
+            	    	    // InternalScadeEquations.g:10139:8: lv_subExpressions_5_0= ruleProductExpression
             	    	    {
             	    	    if ( state.backtracking==0 ) {
 
             	    	      								newCompositeNode(grammarAccess.getSumExpressionAccess().getSubExpressionsProductExpressionParserRuleCall_1_0_3_1_0());
             	    	      							
             	    	    }
-            	    	    pushFollow(FollowSets000.FOLLOW_121);
+            	    	    pushFollow(FollowSets000.FOLLOW_123);
             	    	    lv_subExpressions_5_0=ruleProductExpression();
 
             	    	    state._fsp--;
@@ -27938,13 +27962,13 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             	    }
             	    break;
             	case 2 :
-            	    // InternalScadeEquations.g:10155:4: ( () ( (lv_operator_7_0= ruleSubOperator ) ) ( (lv_subExpressions_8_0= ruleProductExpression ) ) (otherlv_9= '-' ( (lv_subExpressions_10_0= ruleProductExpression ) ) )* )
+            	    // InternalScadeEquations.g:10159:4: ( () ( (lv_operator_7_0= ruleSubOperator ) ) ( (lv_subExpressions_8_0= ruleProductExpression ) ) (otherlv_9= '-' ( (lv_subExpressions_10_0= ruleProductExpression ) ) )* )
             	    {
-            	    // InternalScadeEquations.g:10155:4: ( () ( (lv_operator_7_0= ruleSubOperator ) ) ( (lv_subExpressions_8_0= ruleProductExpression ) ) (otherlv_9= '-' ( (lv_subExpressions_10_0= ruleProductExpression ) ) )* )
-            	    // InternalScadeEquations.g:10156:5: () ( (lv_operator_7_0= ruleSubOperator ) ) ( (lv_subExpressions_8_0= ruleProductExpression ) ) (otherlv_9= '-' ( (lv_subExpressions_10_0= ruleProductExpression ) ) )*
+            	    // InternalScadeEquations.g:10159:4: ( () ( (lv_operator_7_0= ruleSubOperator ) ) ( (lv_subExpressions_8_0= ruleProductExpression ) ) (otherlv_9= '-' ( (lv_subExpressions_10_0= ruleProductExpression ) ) )* )
+            	    // InternalScadeEquations.g:10160:5: () ( (lv_operator_7_0= ruleSubOperator ) ) ( (lv_subExpressions_8_0= ruleProductExpression ) ) (otherlv_9= '-' ( (lv_subExpressions_10_0= ruleProductExpression ) ) )*
             	    {
-            	    // InternalScadeEquations.g:10156:5: ()
-            	    // InternalScadeEquations.g:10157:6: 
+            	    // InternalScadeEquations.g:10160:5: ()
+            	    // InternalScadeEquations.g:10161:6: 
             	    {
             	    if ( state.backtracking==0 ) {
 
@@ -27961,11 +27985,11 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             	    }
 
-            	    // InternalScadeEquations.g:10166:5: ( (lv_operator_7_0= ruleSubOperator ) )
-            	    // InternalScadeEquations.g:10167:6: (lv_operator_7_0= ruleSubOperator )
+            	    // InternalScadeEquations.g:10170:5: ( (lv_operator_7_0= ruleSubOperator ) )
+            	    // InternalScadeEquations.g:10171:6: (lv_operator_7_0= ruleSubOperator )
             	    {
-            	    // InternalScadeEquations.g:10167:6: (lv_operator_7_0= ruleSubOperator )
-            	    // InternalScadeEquations.g:10168:7: lv_operator_7_0= ruleSubOperator
+            	    // InternalScadeEquations.g:10171:6: (lv_operator_7_0= ruleSubOperator )
+            	    // InternalScadeEquations.g:10172:7: lv_operator_7_0= ruleSubOperator
             	    {
             	    if ( state.backtracking==0 ) {
 
@@ -27996,18 +28020,18 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             	    }
 
-            	    // InternalScadeEquations.g:10185:5: ( (lv_subExpressions_8_0= ruleProductExpression ) )
-            	    // InternalScadeEquations.g:10186:6: (lv_subExpressions_8_0= ruleProductExpression )
+            	    // InternalScadeEquations.g:10189:5: ( (lv_subExpressions_8_0= ruleProductExpression ) )
+            	    // InternalScadeEquations.g:10190:6: (lv_subExpressions_8_0= ruleProductExpression )
             	    {
-            	    // InternalScadeEquations.g:10186:6: (lv_subExpressions_8_0= ruleProductExpression )
-            	    // InternalScadeEquations.g:10187:7: lv_subExpressions_8_0= ruleProductExpression
+            	    // InternalScadeEquations.g:10190:6: (lv_subExpressions_8_0= ruleProductExpression )
+            	    // InternalScadeEquations.g:10191:7: lv_subExpressions_8_0= ruleProductExpression
             	    {
             	    if ( state.backtracking==0 ) {
 
             	      							newCompositeNode(grammarAccess.getSumExpressionAccess().getSubExpressionsProductExpressionParserRuleCall_1_1_2_0());
             	      						
             	    }
-            	    pushFollow(FollowSets000.FOLLOW_121);
+            	    pushFollow(FollowSets000.FOLLOW_123);
             	    lv_subExpressions_8_0=ruleProductExpression();
 
             	    state._fsp--;
@@ -28031,14 +28055,14 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             	    }
 
-            	    // InternalScadeEquations.g:10204:5: (otherlv_9= '-' ( (lv_subExpressions_10_0= ruleProductExpression ) ) )*
+            	    // InternalScadeEquations.g:10208:5: (otherlv_9= '-' ( (lv_subExpressions_10_0= ruleProductExpression ) ) )*
             	    loop255:
             	    do {
             	        int alt255=2;
             	        alt255 = dfa255.predict(input);
             	        switch (alt255) {
             	    	case 1 :
-            	    	    // InternalScadeEquations.g:10205:6: otherlv_9= '-' ( (lv_subExpressions_10_0= ruleProductExpression ) )
+            	    	    // InternalScadeEquations.g:10209:6: otherlv_9= '-' ( (lv_subExpressions_10_0= ruleProductExpression ) )
             	    	    {
             	    	    otherlv_9=(Token)match(input,83,FollowSets000.FOLLOW_48); if (state.failed) return current;
             	    	    if ( state.backtracking==0 ) {
@@ -28046,18 +28070,18 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             	    	      						newLeafNode(otherlv_9, grammarAccess.getSumExpressionAccess().getHyphenMinusKeyword_1_1_3_0());
             	    	      					
             	    	    }
-            	    	    // InternalScadeEquations.g:10209:6: ( (lv_subExpressions_10_0= ruleProductExpression ) )
-            	    	    // InternalScadeEquations.g:10210:7: (lv_subExpressions_10_0= ruleProductExpression )
+            	    	    // InternalScadeEquations.g:10213:6: ( (lv_subExpressions_10_0= ruleProductExpression ) )
+            	    	    // InternalScadeEquations.g:10214:7: (lv_subExpressions_10_0= ruleProductExpression )
             	    	    {
-            	    	    // InternalScadeEquations.g:10210:7: (lv_subExpressions_10_0= ruleProductExpression )
-            	    	    // InternalScadeEquations.g:10211:8: lv_subExpressions_10_0= ruleProductExpression
+            	    	    // InternalScadeEquations.g:10214:7: (lv_subExpressions_10_0= ruleProductExpression )
+            	    	    // InternalScadeEquations.g:10215:8: lv_subExpressions_10_0= ruleProductExpression
             	    	    {
             	    	    if ( state.backtracking==0 ) {
 
             	    	      								newCompositeNode(grammarAccess.getSumExpressionAccess().getSubExpressionsProductExpressionParserRuleCall_1_1_3_1_0());
             	    	      							
             	    	    }
-            	    	    pushFollow(FollowSets000.FOLLOW_121);
+            	    	    pushFollow(FollowSets000.FOLLOW_123);
             	    	    lv_subExpressions_10_0=ruleProductExpression();
 
             	    	    state._fsp--;
@@ -28127,7 +28151,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleAtomicValuedExpression"
-    // InternalScadeEquations.g:10235:1: entryRuleAtomicValuedExpression returns [EObject current=null] : iv_ruleAtomicValuedExpression= ruleAtomicValuedExpression EOF ;
+    // InternalScadeEquations.g:10239:1: entryRuleAtomicValuedExpression returns [EObject current=null] : iv_ruleAtomicValuedExpression= ruleAtomicValuedExpression EOF ;
     public final EObject entryRuleAtomicValuedExpression() throws RecognitionException {
         EObject current = null;
 
@@ -28135,8 +28159,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalScadeEquations.g:10235:63: (iv_ruleAtomicValuedExpression= ruleAtomicValuedExpression EOF )
-            // InternalScadeEquations.g:10236:2: iv_ruleAtomicValuedExpression= ruleAtomicValuedExpression EOF
+            // InternalScadeEquations.g:10239:63: (iv_ruleAtomicValuedExpression= ruleAtomicValuedExpression EOF )
+            // InternalScadeEquations.g:10240:2: iv_ruleAtomicValuedExpression= ruleAtomicValuedExpression EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getAtomicValuedExpressionRule()); 
@@ -28167,7 +28191,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleAtomicValuedExpression"
-    // InternalScadeEquations.g:10242:1: ruleAtomicValuedExpression returns [EObject current=null] : (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_StringValue_2= ruleStringValue | this_VectorValue_3= ruleVectorValue | (otherlv_4= '(' this_ValuedExpression_5= ruleValuedExpression otherlv_6= ')' ) | this_AtomicExpression_7= ruleAtomicExpression ) ;
+    // InternalScadeEquations.g:10246:1: ruleAtomicValuedExpression returns [EObject current=null] : (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_StringValue_2= ruleStringValue | this_VectorValue_3= ruleVectorValue | (otherlv_4= '(' this_ValuedExpression_5= ruleValuedExpression otherlv_6= ')' ) | this_AtomicExpression_7= ruleAtomicExpression ) ;
     public final EObject ruleAtomicValuedExpression() throws RecognitionException {
         EObject current = null;
 
@@ -28190,15 +28214,15 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:10248:2: ( (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_StringValue_2= ruleStringValue | this_VectorValue_3= ruleVectorValue | (otherlv_4= '(' this_ValuedExpression_5= ruleValuedExpression otherlv_6= ')' ) | this_AtomicExpression_7= ruleAtomicExpression ) )
-            // InternalScadeEquations.g:10249:2: (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_StringValue_2= ruleStringValue | this_VectorValue_3= ruleVectorValue | (otherlv_4= '(' this_ValuedExpression_5= ruleValuedExpression otherlv_6= ')' ) | this_AtomicExpression_7= ruleAtomicExpression )
+            // InternalScadeEquations.g:10252:2: ( (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_StringValue_2= ruleStringValue | this_VectorValue_3= ruleVectorValue | (otherlv_4= '(' this_ValuedExpression_5= ruleValuedExpression otherlv_6= ')' ) | this_AtomicExpression_7= ruleAtomicExpression ) )
+            // InternalScadeEquations.g:10253:2: (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_StringValue_2= ruleStringValue | this_VectorValue_3= ruleVectorValue | (otherlv_4= '(' this_ValuedExpression_5= ruleValuedExpression otherlv_6= ')' ) | this_AtomicExpression_7= ruleAtomicExpression )
             {
-            // InternalScadeEquations.g:10249:2: (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_StringValue_2= ruleStringValue | this_VectorValue_3= ruleVectorValue | (otherlv_4= '(' this_ValuedExpression_5= ruleValuedExpression otherlv_6= ')' ) | this_AtomicExpression_7= ruleAtomicExpression )
+            // InternalScadeEquations.g:10253:2: (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_StringValue_2= ruleStringValue | this_VectorValue_3= ruleVectorValue | (otherlv_4= '(' this_ValuedExpression_5= ruleValuedExpression otherlv_6= ')' ) | this_AtomicExpression_7= ruleAtomicExpression )
             int alt257=6;
             alt257 = dfa257.predict(input);
             switch (alt257) {
                 case 1 :
-                    // InternalScadeEquations.g:10250:3: this_IntValue_0= ruleIntValue
+                    // InternalScadeEquations.g:10254:3: this_IntValue_0= ruleIntValue
                     {
                     if ( state.backtracking==0 ) {
 
@@ -28225,7 +28249,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalScadeEquations.g:10262:3: this_FloatValue_1= ruleFloatValue
+                    // InternalScadeEquations.g:10266:3: this_FloatValue_1= ruleFloatValue
                     {
                     if ( state.backtracking==0 ) {
 
@@ -28252,7 +28276,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalScadeEquations.g:10274:3: this_StringValue_2= ruleStringValue
+                    // InternalScadeEquations.g:10278:3: this_StringValue_2= ruleStringValue
                     {
                     if ( state.backtracking==0 ) {
 
@@ -28279,7 +28303,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // InternalScadeEquations.g:10286:3: this_VectorValue_3= ruleVectorValue
+                    // InternalScadeEquations.g:10290:3: this_VectorValue_3= ruleVectorValue
                     {
                     if ( state.backtracking==0 ) {
 
@@ -28306,10 +28330,10 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 5 :
-                    // InternalScadeEquations.g:10298:3: (otherlv_4= '(' this_ValuedExpression_5= ruleValuedExpression otherlv_6= ')' )
+                    // InternalScadeEquations.g:10302:3: (otherlv_4= '(' this_ValuedExpression_5= ruleValuedExpression otherlv_6= ')' )
                     {
-                    // InternalScadeEquations.g:10298:3: (otherlv_4= '(' this_ValuedExpression_5= ruleValuedExpression otherlv_6= ')' )
-                    // InternalScadeEquations.g:10299:4: otherlv_4= '(' this_ValuedExpression_5= ruleValuedExpression otherlv_6= ')'
+                    // InternalScadeEquations.g:10302:3: (otherlv_4= '(' this_ValuedExpression_5= ruleValuedExpression otherlv_6= ')' )
+                    // InternalScadeEquations.g:10303:4: otherlv_4= '(' this_ValuedExpression_5= ruleValuedExpression otherlv_6= ')'
                     {
                     otherlv_4=(Token)match(input,17,FollowSets000.FOLLOW_48); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -28351,7 +28375,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 6 :
-                    // InternalScadeEquations.g:10320:3: this_AtomicExpression_7= ruleAtomicExpression
+                    // InternalScadeEquations.g:10324:3: this_AtomicExpression_7= ruleAtomicExpression
                     {
                     if ( state.backtracking==0 ) {
 
@@ -28402,7 +28426,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRulePrimeID"
-    // InternalScadeEquations.g:10335:1: entryRulePrimeID returns [String current=null] : iv_rulePrimeID= rulePrimeID EOF ;
+    // InternalScadeEquations.g:10339:1: entryRulePrimeID returns [String current=null] : iv_rulePrimeID= rulePrimeID EOF ;
     public final String entryRulePrimeID() throws RecognitionException {
         String current = null;
 
@@ -28410,8 +28434,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalScadeEquations.g:10335:47: (iv_rulePrimeID= rulePrimeID EOF )
-            // InternalScadeEquations.g:10336:2: iv_rulePrimeID= rulePrimeID EOF
+            // InternalScadeEquations.g:10339:47: (iv_rulePrimeID= rulePrimeID EOF )
+            // InternalScadeEquations.g:10340:2: iv_rulePrimeID= rulePrimeID EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getPrimeIDRule()); 
@@ -28442,7 +28466,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "rulePrimeID"
-    // InternalScadeEquations.g:10342:1: rulePrimeID returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_ID_0= RULE_ID (kw= '\\'' )* ) ;
+    // InternalScadeEquations.g:10346:1: rulePrimeID returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_ID_0= RULE_ID (kw= '\\'' )* ) ;
     public final AntlrDatatypeRuleToken rulePrimeID() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -28453,13 +28477,13 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:10348:2: ( (this_ID_0= RULE_ID (kw= '\\'' )* ) )
-            // InternalScadeEquations.g:10349:2: (this_ID_0= RULE_ID (kw= '\\'' )* )
+            // InternalScadeEquations.g:10352:2: ( (this_ID_0= RULE_ID (kw= '\\'' )* ) )
+            // InternalScadeEquations.g:10353:2: (this_ID_0= RULE_ID (kw= '\\'' )* )
             {
-            // InternalScadeEquations.g:10349:2: (this_ID_0= RULE_ID (kw= '\\'' )* )
-            // InternalScadeEquations.g:10350:3: this_ID_0= RULE_ID (kw= '\\'' )*
+            // InternalScadeEquations.g:10353:2: (this_ID_0= RULE_ID (kw= '\\'' )* )
+            // InternalScadeEquations.g:10354:3: this_ID_0= RULE_ID (kw= '\\'' )*
             {
-            this_ID_0=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_122); if (state.failed) return current;
+            this_ID_0=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_124); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               			current.merge(this_ID_0);
@@ -28470,7 +28494,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
               			newLeafNode(this_ID_0, grammarAccess.getPrimeIDAccess().getIDTerminalRuleCall_0());
               		
             }
-            // InternalScadeEquations.g:10357:3: (kw= '\\'' )*
+            // InternalScadeEquations.g:10361:3: (kw= '\\'' )*
             loop258:
             do {
                 int alt258=2;
@@ -28483,9 +28507,9 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                 switch (alt258) {
             	case 1 :
-            	    // InternalScadeEquations.g:10358:4: kw= '\\''
+            	    // InternalScadeEquations.g:10362:4: kw= '\\''
             	    {
-            	    kw=(Token)match(input,84,FollowSets000.FOLLOW_122); if (state.failed) return current;
+            	    kw=(Token)match(input,84,FollowSets000.FOLLOW_124); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	      				current.merge(kw);
@@ -28526,7 +28550,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleValuedObjectReference"
-    // InternalScadeEquations.g:10368:1: entryRuleValuedObjectReference returns [EObject current=null] : iv_ruleValuedObjectReference= ruleValuedObjectReference EOF ;
+    // InternalScadeEquations.g:10372:1: entryRuleValuedObjectReference returns [EObject current=null] : iv_ruleValuedObjectReference= ruleValuedObjectReference EOF ;
     public final EObject entryRuleValuedObjectReference() throws RecognitionException {
         EObject current = null;
 
@@ -28534,8 +28558,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalScadeEquations.g:10368:62: (iv_ruleValuedObjectReference= ruleValuedObjectReference EOF )
-            // InternalScadeEquations.g:10369:2: iv_ruleValuedObjectReference= ruleValuedObjectReference EOF
+            // InternalScadeEquations.g:10372:62: (iv_ruleValuedObjectReference= ruleValuedObjectReference EOF )
+            // InternalScadeEquations.g:10373:2: iv_ruleValuedObjectReference= ruleValuedObjectReference EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getValuedObjectReferenceRule()); 
@@ -28566,7 +28590,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleValuedObjectReference"
-    // InternalScadeEquations.g:10375:1: ruleValuedObjectReference returns [EObject current=null] : ( ( ( rulePrimeID ) ) (otherlv_1= '[' ( (lv_indices_2_0= ruleExpression ) ) otherlv_3= ']' )* (otherlv_4= '.' ( (lv_subReference_5_0= ruleValuedObjectReference ) ) )? ) ;
+    // InternalScadeEquations.g:10379:1: ruleValuedObjectReference returns [EObject current=null] : ( ( ( rulePrimeID ) ) (otherlv_1= '[' ( (lv_indices_2_0= ruleExpression ) ) otherlv_3= ']' )* (otherlv_4= '.' ( (lv_subReference_5_0= ruleValuedObjectReference ) ) )? ) ;
     public final EObject ruleValuedObjectReference() throws RecognitionException {
         EObject current = null;
 
@@ -28582,17 +28606,17 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:10381:2: ( ( ( ( rulePrimeID ) ) (otherlv_1= '[' ( (lv_indices_2_0= ruleExpression ) ) otherlv_3= ']' )* (otherlv_4= '.' ( (lv_subReference_5_0= ruleValuedObjectReference ) ) )? ) )
-            // InternalScadeEquations.g:10382:2: ( ( ( rulePrimeID ) ) (otherlv_1= '[' ( (lv_indices_2_0= ruleExpression ) ) otherlv_3= ']' )* (otherlv_4= '.' ( (lv_subReference_5_0= ruleValuedObjectReference ) ) )? )
+            // InternalScadeEquations.g:10385:2: ( ( ( ( rulePrimeID ) ) (otherlv_1= '[' ( (lv_indices_2_0= ruleExpression ) ) otherlv_3= ']' )* (otherlv_4= '.' ( (lv_subReference_5_0= ruleValuedObjectReference ) ) )? ) )
+            // InternalScadeEquations.g:10386:2: ( ( ( rulePrimeID ) ) (otherlv_1= '[' ( (lv_indices_2_0= ruleExpression ) ) otherlv_3= ']' )* (otherlv_4= '.' ( (lv_subReference_5_0= ruleValuedObjectReference ) ) )? )
             {
-            // InternalScadeEquations.g:10382:2: ( ( ( rulePrimeID ) ) (otherlv_1= '[' ( (lv_indices_2_0= ruleExpression ) ) otherlv_3= ']' )* (otherlv_4= '.' ( (lv_subReference_5_0= ruleValuedObjectReference ) ) )? )
-            // InternalScadeEquations.g:10383:3: ( ( rulePrimeID ) ) (otherlv_1= '[' ( (lv_indices_2_0= ruleExpression ) ) otherlv_3= ']' )* (otherlv_4= '.' ( (lv_subReference_5_0= ruleValuedObjectReference ) ) )?
+            // InternalScadeEquations.g:10386:2: ( ( ( rulePrimeID ) ) (otherlv_1= '[' ( (lv_indices_2_0= ruleExpression ) ) otherlv_3= ']' )* (otherlv_4= '.' ( (lv_subReference_5_0= ruleValuedObjectReference ) ) )? )
+            // InternalScadeEquations.g:10387:3: ( ( rulePrimeID ) ) (otherlv_1= '[' ( (lv_indices_2_0= ruleExpression ) ) otherlv_3= ']' )* (otherlv_4= '.' ( (lv_subReference_5_0= ruleValuedObjectReference ) ) )?
             {
-            // InternalScadeEquations.g:10383:3: ( ( rulePrimeID ) )
-            // InternalScadeEquations.g:10384:4: ( rulePrimeID )
+            // InternalScadeEquations.g:10387:3: ( ( rulePrimeID ) )
+            // InternalScadeEquations.g:10388:4: ( rulePrimeID )
             {
-            // InternalScadeEquations.g:10384:4: ( rulePrimeID )
-            // InternalScadeEquations.g:10385:5: rulePrimeID
+            // InternalScadeEquations.g:10388:4: ( rulePrimeID )
+            // InternalScadeEquations.g:10389:5: rulePrimeID
             {
             if ( state.backtracking==0 ) {
 
@@ -28611,7 +28635,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
               					newCompositeNode(grammarAccess.getValuedObjectReferenceAccess().getValuedObjectValuedObjectCrossReference_0_0());
               				
             }
-            pushFollow(FollowSets000.FOLLOW_123);
+            pushFollow(FollowSets000.FOLLOW_125);
             rulePrimeID();
 
             state._fsp--;
@@ -28627,7 +28651,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalScadeEquations.g:10402:3: (otherlv_1= '[' ( (lv_indices_2_0= ruleExpression ) ) otherlv_3= ']' )*
+            // InternalScadeEquations.g:10406:3: (otherlv_1= '[' ( (lv_indices_2_0= ruleExpression ) ) otherlv_3= ']' )*
             loop259:
             do {
                 int alt259=2;
@@ -28640,7 +28664,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                 switch (alt259) {
             	case 1 :
-            	    // InternalScadeEquations.g:10403:4: otherlv_1= '[' ( (lv_indices_2_0= ruleExpression ) ) otherlv_3= ']'
+            	    // InternalScadeEquations.g:10407:4: otherlv_1= '[' ( (lv_indices_2_0= ruleExpression ) ) otherlv_3= ']'
             	    {
             	    otherlv_1=(Token)match(input,73,FollowSets000.FOLLOW_9); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
@@ -28648,18 +28672,18 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             	      				newLeafNode(otherlv_1, grammarAccess.getValuedObjectReferenceAccess().getLeftSquareBracketKeyword_1_0());
             	      			
             	    }
-            	    // InternalScadeEquations.g:10407:4: ( (lv_indices_2_0= ruleExpression ) )
-            	    // InternalScadeEquations.g:10408:5: (lv_indices_2_0= ruleExpression )
+            	    // InternalScadeEquations.g:10411:4: ( (lv_indices_2_0= ruleExpression ) )
+            	    // InternalScadeEquations.g:10412:5: (lv_indices_2_0= ruleExpression )
             	    {
-            	    // InternalScadeEquations.g:10408:5: (lv_indices_2_0= ruleExpression )
-            	    // InternalScadeEquations.g:10409:6: lv_indices_2_0= ruleExpression
+            	    // InternalScadeEquations.g:10412:5: (lv_indices_2_0= ruleExpression )
+            	    // InternalScadeEquations.g:10413:6: lv_indices_2_0= ruleExpression
             	    {
             	    if ( state.backtracking==0 ) {
 
             	      						newCompositeNode(grammarAccess.getValuedObjectReferenceAccess().getIndicesExpressionParserRuleCall_1_1_0());
             	      					
             	    }
-            	    pushFollow(FollowSets000.FOLLOW_103);
+            	    pushFollow(FollowSets000.FOLLOW_105);
             	    lv_indices_2_0=ruleExpression();
 
             	    state._fsp--;
@@ -28683,7 +28707,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             	    }
 
-            	    otherlv_3=(Token)match(input,74,FollowSets000.FOLLOW_123); if (state.failed) return current;
+            	    otherlv_3=(Token)match(input,74,FollowSets000.FOLLOW_125); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	      				newLeafNode(otherlv_3, grammarAccess.getValuedObjectReferenceAccess().getRightSquareBracketKeyword_1_2());
@@ -28698,7 +28722,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                 }
             } while (true);
 
-            // InternalScadeEquations.g:10431:3: (otherlv_4= '.' ( (lv_subReference_5_0= ruleValuedObjectReference ) ) )?
+            // InternalScadeEquations.g:10435:3: (otherlv_4= '.' ( (lv_subReference_5_0= ruleValuedObjectReference ) ) )?
             int alt260=2;
             int LA260_0 = input.LA(1);
 
@@ -28707,7 +28731,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             }
             switch (alt260) {
                 case 1 :
-                    // InternalScadeEquations.g:10432:4: otherlv_4= '.' ( (lv_subReference_5_0= ruleValuedObjectReference ) )
+                    // InternalScadeEquations.g:10436:4: otherlv_4= '.' ( (lv_subReference_5_0= ruleValuedObjectReference ) )
                     {
                     otherlv_4=(Token)match(input,37,FollowSets000.FOLLOW_4); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -28715,11 +28739,11 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                       				newLeafNode(otherlv_4, grammarAccess.getValuedObjectReferenceAccess().getFullStopKeyword_2_0());
                       			
                     }
-                    // InternalScadeEquations.g:10436:4: ( (lv_subReference_5_0= ruleValuedObjectReference ) )
-                    // InternalScadeEquations.g:10437:5: (lv_subReference_5_0= ruleValuedObjectReference )
+                    // InternalScadeEquations.g:10440:4: ( (lv_subReference_5_0= ruleValuedObjectReference ) )
+                    // InternalScadeEquations.g:10441:5: (lv_subReference_5_0= ruleValuedObjectReference )
                     {
-                    // InternalScadeEquations.g:10437:5: (lv_subReference_5_0= ruleValuedObjectReference )
-                    // InternalScadeEquations.g:10438:6: lv_subReference_5_0= ruleValuedObjectReference
+                    // InternalScadeEquations.g:10441:5: (lv_subReference_5_0= ruleValuedObjectReference )
+                    // InternalScadeEquations.g:10442:6: lv_subReference_5_0= ruleValuedObjectReference
                     {
                     if ( state.backtracking==0 ) {
 
@@ -28781,7 +28805,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleScheduleObjectReference"
-    // InternalScadeEquations.g:10460:1: entryRuleScheduleObjectReference returns [EObject current=null] : iv_ruleScheduleObjectReference= ruleScheduleObjectReference EOF ;
+    // InternalScadeEquations.g:10464:1: entryRuleScheduleObjectReference returns [EObject current=null] : iv_ruleScheduleObjectReference= ruleScheduleObjectReference EOF ;
     public final EObject entryRuleScheduleObjectReference() throws RecognitionException {
         EObject current = null;
 
@@ -28789,8 +28813,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalScadeEquations.g:10460:64: (iv_ruleScheduleObjectReference= ruleScheduleObjectReference EOF )
-            // InternalScadeEquations.g:10461:2: iv_ruleScheduleObjectReference= ruleScheduleObjectReference EOF
+            // InternalScadeEquations.g:10464:64: (iv_ruleScheduleObjectReference= ruleScheduleObjectReference EOF )
+            // InternalScadeEquations.g:10465:2: iv_ruleScheduleObjectReference= ruleScheduleObjectReference EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getScheduleObjectReferenceRule()); 
@@ -28821,7 +28845,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleScheduleObjectReference"
-    // InternalScadeEquations.g:10467:1: ruleScheduleObjectReference returns [EObject current=null] : ( ( ( rulePrimeID ) ) ( (lv_priority_1_0= RULE_INT ) ) ) ;
+    // InternalScadeEquations.g:10471:1: ruleScheduleObjectReference returns [EObject current=null] : ( ( ( rulePrimeID ) ) ( (lv_priority_1_0= RULE_INT ) ) ) ;
     public final EObject ruleScheduleObjectReference() throws RecognitionException {
         EObject current = null;
 
@@ -28831,17 +28855,17 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:10473:2: ( ( ( ( rulePrimeID ) ) ( (lv_priority_1_0= RULE_INT ) ) ) )
-            // InternalScadeEquations.g:10474:2: ( ( ( rulePrimeID ) ) ( (lv_priority_1_0= RULE_INT ) ) )
+            // InternalScadeEquations.g:10477:2: ( ( ( ( rulePrimeID ) ) ( (lv_priority_1_0= RULE_INT ) ) ) )
+            // InternalScadeEquations.g:10478:2: ( ( ( rulePrimeID ) ) ( (lv_priority_1_0= RULE_INT ) ) )
             {
-            // InternalScadeEquations.g:10474:2: ( ( ( rulePrimeID ) ) ( (lv_priority_1_0= RULE_INT ) ) )
-            // InternalScadeEquations.g:10475:3: ( ( rulePrimeID ) ) ( (lv_priority_1_0= RULE_INT ) )
+            // InternalScadeEquations.g:10478:2: ( ( ( rulePrimeID ) ) ( (lv_priority_1_0= RULE_INT ) ) )
+            // InternalScadeEquations.g:10479:3: ( ( rulePrimeID ) ) ( (lv_priority_1_0= RULE_INT ) )
             {
-            // InternalScadeEquations.g:10475:3: ( ( rulePrimeID ) )
-            // InternalScadeEquations.g:10476:4: ( rulePrimeID )
+            // InternalScadeEquations.g:10479:3: ( ( rulePrimeID ) )
+            // InternalScadeEquations.g:10480:4: ( rulePrimeID )
             {
-            // InternalScadeEquations.g:10476:4: ( rulePrimeID )
-            // InternalScadeEquations.g:10477:5: rulePrimeID
+            // InternalScadeEquations.g:10480:4: ( rulePrimeID )
+            // InternalScadeEquations.g:10481:5: rulePrimeID
             {
             if ( state.backtracking==0 ) {
 
@@ -28860,7 +28884,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
               					newCompositeNode(grammarAccess.getScheduleObjectReferenceAccess().getValuedObjectValuedObjectCrossReference_0_0());
               				
             }
-            pushFollow(FollowSets000.FOLLOW_124);
+            pushFollow(FollowSets000.FOLLOW_126);
             rulePrimeID();
 
             state._fsp--;
@@ -28876,11 +28900,11 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalScadeEquations.g:10494:3: ( (lv_priority_1_0= RULE_INT ) )
-            // InternalScadeEquations.g:10495:4: (lv_priority_1_0= RULE_INT )
+            // InternalScadeEquations.g:10498:3: ( (lv_priority_1_0= RULE_INT ) )
+            // InternalScadeEquations.g:10499:4: (lv_priority_1_0= RULE_INT )
             {
-            // InternalScadeEquations.g:10495:4: (lv_priority_1_0= RULE_INT )
-            // InternalScadeEquations.g:10496:5: lv_priority_1_0= RULE_INT
+            // InternalScadeEquations.g:10499:4: (lv_priority_1_0= RULE_INT )
+            // InternalScadeEquations.g:10500:5: lv_priority_1_0= RULE_INT
             {
             lv_priority_1_0=(Token)match(input,RULE_INT,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -28931,7 +28955,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleReferenceCall"
-    // InternalScadeEquations.g:10516:1: entryRuleReferenceCall returns [EObject current=null] : iv_ruleReferenceCall= ruleReferenceCall EOF ;
+    // InternalScadeEquations.g:10520:1: entryRuleReferenceCall returns [EObject current=null] : iv_ruleReferenceCall= ruleReferenceCall EOF ;
     public final EObject entryRuleReferenceCall() throws RecognitionException {
         EObject current = null;
 
@@ -28939,8 +28963,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalScadeEquations.g:10516:54: (iv_ruleReferenceCall= ruleReferenceCall EOF )
-            // InternalScadeEquations.g:10517:2: iv_ruleReferenceCall= ruleReferenceCall EOF
+            // InternalScadeEquations.g:10520:54: (iv_ruleReferenceCall= ruleReferenceCall EOF )
+            // InternalScadeEquations.g:10521:2: iv_ruleReferenceCall= ruleReferenceCall EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getReferenceCallRule()); 
@@ -28971,7 +28995,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleReferenceCall"
-    // InternalScadeEquations.g:10523:1: ruleReferenceCall returns [EObject current=null] : ( ( ( rulePrimeID ) ) (otherlv_1= '[' ( (lv_indices_2_0= ruleExpression ) ) otherlv_3= ']' )* (otherlv_4= '.' ( (lv_subReference_5_0= ruleValuedObjectReference ) ) )? ( (otherlv_6= '(' ( (lv_parameters_7_0= ruleParameter ) ) (otherlv_8= ',' ( (lv_parameters_9_0= ruleParameter ) ) )* otherlv_10= ')' ) | otherlv_11= '()' ) ) ;
+    // InternalScadeEquations.g:10527:1: ruleReferenceCall returns [EObject current=null] : ( ( ( rulePrimeID ) ) (otherlv_1= '[' ( (lv_indices_2_0= ruleExpression ) ) otherlv_3= ']' )* (otherlv_4= '.' ( (lv_subReference_5_0= ruleValuedObjectReference ) ) )? ( (otherlv_6= '(' ( (lv_parameters_7_0= ruleParameter ) ) (otherlv_8= ',' ( (lv_parameters_9_0= ruleParameter ) ) )* otherlv_10= ')' ) | otherlv_11= '()' ) ) ;
     public final EObject ruleReferenceCall() throws RecognitionException {
         EObject current = null;
 
@@ -28995,17 +29019,17 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:10529:2: ( ( ( ( rulePrimeID ) ) (otherlv_1= '[' ( (lv_indices_2_0= ruleExpression ) ) otherlv_3= ']' )* (otherlv_4= '.' ( (lv_subReference_5_0= ruleValuedObjectReference ) ) )? ( (otherlv_6= '(' ( (lv_parameters_7_0= ruleParameter ) ) (otherlv_8= ',' ( (lv_parameters_9_0= ruleParameter ) ) )* otherlv_10= ')' ) | otherlv_11= '()' ) ) )
-            // InternalScadeEquations.g:10530:2: ( ( ( rulePrimeID ) ) (otherlv_1= '[' ( (lv_indices_2_0= ruleExpression ) ) otherlv_3= ']' )* (otherlv_4= '.' ( (lv_subReference_5_0= ruleValuedObjectReference ) ) )? ( (otherlv_6= '(' ( (lv_parameters_7_0= ruleParameter ) ) (otherlv_8= ',' ( (lv_parameters_9_0= ruleParameter ) ) )* otherlv_10= ')' ) | otherlv_11= '()' ) )
+            // InternalScadeEquations.g:10533:2: ( ( ( ( rulePrimeID ) ) (otherlv_1= '[' ( (lv_indices_2_0= ruleExpression ) ) otherlv_3= ']' )* (otherlv_4= '.' ( (lv_subReference_5_0= ruleValuedObjectReference ) ) )? ( (otherlv_6= '(' ( (lv_parameters_7_0= ruleParameter ) ) (otherlv_8= ',' ( (lv_parameters_9_0= ruleParameter ) ) )* otherlv_10= ')' ) | otherlv_11= '()' ) ) )
+            // InternalScadeEquations.g:10534:2: ( ( ( rulePrimeID ) ) (otherlv_1= '[' ( (lv_indices_2_0= ruleExpression ) ) otherlv_3= ']' )* (otherlv_4= '.' ( (lv_subReference_5_0= ruleValuedObjectReference ) ) )? ( (otherlv_6= '(' ( (lv_parameters_7_0= ruleParameter ) ) (otherlv_8= ',' ( (lv_parameters_9_0= ruleParameter ) ) )* otherlv_10= ')' ) | otherlv_11= '()' ) )
             {
-            // InternalScadeEquations.g:10530:2: ( ( ( rulePrimeID ) ) (otherlv_1= '[' ( (lv_indices_2_0= ruleExpression ) ) otherlv_3= ']' )* (otherlv_4= '.' ( (lv_subReference_5_0= ruleValuedObjectReference ) ) )? ( (otherlv_6= '(' ( (lv_parameters_7_0= ruleParameter ) ) (otherlv_8= ',' ( (lv_parameters_9_0= ruleParameter ) ) )* otherlv_10= ')' ) | otherlv_11= '()' ) )
-            // InternalScadeEquations.g:10531:3: ( ( rulePrimeID ) ) (otherlv_1= '[' ( (lv_indices_2_0= ruleExpression ) ) otherlv_3= ']' )* (otherlv_4= '.' ( (lv_subReference_5_0= ruleValuedObjectReference ) ) )? ( (otherlv_6= '(' ( (lv_parameters_7_0= ruleParameter ) ) (otherlv_8= ',' ( (lv_parameters_9_0= ruleParameter ) ) )* otherlv_10= ')' ) | otherlv_11= '()' )
+            // InternalScadeEquations.g:10534:2: ( ( ( rulePrimeID ) ) (otherlv_1= '[' ( (lv_indices_2_0= ruleExpression ) ) otherlv_3= ']' )* (otherlv_4= '.' ( (lv_subReference_5_0= ruleValuedObjectReference ) ) )? ( (otherlv_6= '(' ( (lv_parameters_7_0= ruleParameter ) ) (otherlv_8= ',' ( (lv_parameters_9_0= ruleParameter ) ) )* otherlv_10= ')' ) | otherlv_11= '()' ) )
+            // InternalScadeEquations.g:10535:3: ( ( rulePrimeID ) ) (otherlv_1= '[' ( (lv_indices_2_0= ruleExpression ) ) otherlv_3= ']' )* (otherlv_4= '.' ( (lv_subReference_5_0= ruleValuedObjectReference ) ) )? ( (otherlv_6= '(' ( (lv_parameters_7_0= ruleParameter ) ) (otherlv_8= ',' ( (lv_parameters_9_0= ruleParameter ) ) )* otherlv_10= ')' ) | otherlv_11= '()' )
             {
-            // InternalScadeEquations.g:10531:3: ( ( rulePrimeID ) )
-            // InternalScadeEquations.g:10532:4: ( rulePrimeID )
+            // InternalScadeEquations.g:10535:3: ( ( rulePrimeID ) )
+            // InternalScadeEquations.g:10536:4: ( rulePrimeID )
             {
-            // InternalScadeEquations.g:10532:4: ( rulePrimeID )
-            // InternalScadeEquations.g:10533:5: rulePrimeID
+            // InternalScadeEquations.g:10536:4: ( rulePrimeID )
+            // InternalScadeEquations.g:10537:5: rulePrimeID
             {
             if ( state.backtracking==0 ) {
 
@@ -29024,7 +29048,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
               					newCompositeNode(grammarAccess.getReferenceCallAccess().getValuedObjectValuedObjectCrossReference_0_0());
               				
             }
-            pushFollow(FollowSets000.FOLLOW_111);
+            pushFollow(FollowSets000.FOLLOW_113);
             rulePrimeID();
 
             state._fsp--;
@@ -29040,7 +29064,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalScadeEquations.g:10550:3: (otherlv_1= '[' ( (lv_indices_2_0= ruleExpression ) ) otherlv_3= ']' )*
+            // InternalScadeEquations.g:10554:3: (otherlv_1= '[' ( (lv_indices_2_0= ruleExpression ) ) otherlv_3= ']' )*
             loop261:
             do {
                 int alt261=2;
@@ -29053,7 +29077,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                 switch (alt261) {
             	case 1 :
-            	    // InternalScadeEquations.g:10551:4: otherlv_1= '[' ( (lv_indices_2_0= ruleExpression ) ) otherlv_3= ']'
+            	    // InternalScadeEquations.g:10555:4: otherlv_1= '[' ( (lv_indices_2_0= ruleExpression ) ) otherlv_3= ']'
             	    {
             	    otherlv_1=(Token)match(input,73,FollowSets000.FOLLOW_9); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
@@ -29061,18 +29085,18 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             	      				newLeafNode(otherlv_1, grammarAccess.getReferenceCallAccess().getLeftSquareBracketKeyword_1_0());
             	      			
             	    }
-            	    // InternalScadeEquations.g:10555:4: ( (lv_indices_2_0= ruleExpression ) )
-            	    // InternalScadeEquations.g:10556:5: (lv_indices_2_0= ruleExpression )
+            	    // InternalScadeEquations.g:10559:4: ( (lv_indices_2_0= ruleExpression ) )
+            	    // InternalScadeEquations.g:10560:5: (lv_indices_2_0= ruleExpression )
             	    {
-            	    // InternalScadeEquations.g:10556:5: (lv_indices_2_0= ruleExpression )
-            	    // InternalScadeEquations.g:10557:6: lv_indices_2_0= ruleExpression
+            	    // InternalScadeEquations.g:10560:5: (lv_indices_2_0= ruleExpression )
+            	    // InternalScadeEquations.g:10561:6: lv_indices_2_0= ruleExpression
             	    {
             	    if ( state.backtracking==0 ) {
 
             	      						newCompositeNode(grammarAccess.getReferenceCallAccess().getIndicesExpressionParserRuleCall_1_1_0());
             	      					
             	    }
-            	    pushFollow(FollowSets000.FOLLOW_103);
+            	    pushFollow(FollowSets000.FOLLOW_105);
             	    lv_indices_2_0=ruleExpression();
 
             	    state._fsp--;
@@ -29096,7 +29120,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             	    }
 
-            	    otherlv_3=(Token)match(input,74,FollowSets000.FOLLOW_111); if (state.failed) return current;
+            	    otherlv_3=(Token)match(input,74,FollowSets000.FOLLOW_113); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	      				newLeafNode(otherlv_3, grammarAccess.getReferenceCallAccess().getRightSquareBracketKeyword_1_2());
@@ -29111,7 +29135,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                 }
             } while (true);
 
-            // InternalScadeEquations.g:10579:3: (otherlv_4= '.' ( (lv_subReference_5_0= ruleValuedObjectReference ) ) )?
+            // InternalScadeEquations.g:10583:3: (otherlv_4= '.' ( (lv_subReference_5_0= ruleValuedObjectReference ) ) )?
             int alt262=2;
             int LA262_0 = input.LA(1);
 
@@ -29120,7 +29144,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             }
             switch (alt262) {
                 case 1 :
-                    // InternalScadeEquations.g:10580:4: otherlv_4= '.' ( (lv_subReference_5_0= ruleValuedObjectReference ) )
+                    // InternalScadeEquations.g:10584:4: otherlv_4= '.' ( (lv_subReference_5_0= ruleValuedObjectReference ) )
                     {
                     otherlv_4=(Token)match(input,37,FollowSets000.FOLLOW_4); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -29128,11 +29152,11 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                       				newLeafNode(otherlv_4, grammarAccess.getReferenceCallAccess().getFullStopKeyword_2_0());
                       			
                     }
-                    // InternalScadeEquations.g:10584:4: ( (lv_subReference_5_0= ruleValuedObjectReference ) )
-                    // InternalScadeEquations.g:10585:5: (lv_subReference_5_0= ruleValuedObjectReference )
+                    // InternalScadeEquations.g:10588:4: ( (lv_subReference_5_0= ruleValuedObjectReference ) )
+                    // InternalScadeEquations.g:10589:5: (lv_subReference_5_0= ruleValuedObjectReference )
                     {
-                    // InternalScadeEquations.g:10585:5: (lv_subReference_5_0= ruleValuedObjectReference )
-                    // InternalScadeEquations.g:10586:6: lv_subReference_5_0= ruleValuedObjectReference
+                    // InternalScadeEquations.g:10589:5: (lv_subReference_5_0= ruleValuedObjectReference )
+                    // InternalScadeEquations.g:10590:6: lv_subReference_5_0= ruleValuedObjectReference
                     {
                     if ( state.backtracking==0 ) {
 
@@ -29169,7 +29193,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalScadeEquations.g:10604:3: ( (otherlv_6= '(' ( (lv_parameters_7_0= ruleParameter ) ) (otherlv_8= ',' ( (lv_parameters_9_0= ruleParameter ) ) )* otherlv_10= ')' ) | otherlv_11= '()' )
+            // InternalScadeEquations.g:10608:3: ( (otherlv_6= '(' ( (lv_parameters_7_0= ruleParameter ) ) (otherlv_8= ',' ( (lv_parameters_9_0= ruleParameter ) ) )* otherlv_10= ')' ) | otherlv_11= '()' )
             int alt264=2;
             int LA264_0 = input.LA(1);
 
@@ -29188,22 +29212,22 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             }
             switch (alt264) {
                 case 1 :
-                    // InternalScadeEquations.g:10605:4: (otherlv_6= '(' ( (lv_parameters_7_0= ruleParameter ) ) (otherlv_8= ',' ( (lv_parameters_9_0= ruleParameter ) ) )* otherlv_10= ')' )
+                    // InternalScadeEquations.g:10609:4: (otherlv_6= '(' ( (lv_parameters_7_0= ruleParameter ) ) (otherlv_8= ',' ( (lv_parameters_9_0= ruleParameter ) ) )* otherlv_10= ')' )
                     {
-                    // InternalScadeEquations.g:10605:4: (otherlv_6= '(' ( (lv_parameters_7_0= ruleParameter ) ) (otherlv_8= ',' ( (lv_parameters_9_0= ruleParameter ) ) )* otherlv_10= ')' )
-                    // InternalScadeEquations.g:10606:5: otherlv_6= '(' ( (lv_parameters_7_0= ruleParameter ) ) (otherlv_8= ',' ( (lv_parameters_9_0= ruleParameter ) ) )* otherlv_10= ')'
+                    // InternalScadeEquations.g:10609:4: (otherlv_6= '(' ( (lv_parameters_7_0= ruleParameter ) ) (otherlv_8= ',' ( (lv_parameters_9_0= ruleParameter ) ) )* otherlv_10= ')' )
+                    // InternalScadeEquations.g:10610:5: otherlv_6= '(' ( (lv_parameters_7_0= ruleParameter ) ) (otherlv_8= ',' ( (lv_parameters_9_0= ruleParameter ) ) )* otherlv_10= ')'
                     {
-                    otherlv_6=(Token)match(input,17,FollowSets000.FOLLOW_112); if (state.failed) return current;
+                    otherlv_6=(Token)match(input,17,FollowSets000.FOLLOW_114); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       					newLeafNode(otherlv_6, grammarAccess.getReferenceCallAccess().getLeftParenthesisKeyword_3_0_0());
                       				
                     }
-                    // InternalScadeEquations.g:10610:5: ( (lv_parameters_7_0= ruleParameter ) )
-                    // InternalScadeEquations.g:10611:6: (lv_parameters_7_0= ruleParameter )
+                    // InternalScadeEquations.g:10614:5: ( (lv_parameters_7_0= ruleParameter ) )
+                    // InternalScadeEquations.g:10615:6: (lv_parameters_7_0= ruleParameter )
                     {
-                    // InternalScadeEquations.g:10611:6: (lv_parameters_7_0= ruleParameter )
-                    // InternalScadeEquations.g:10612:7: lv_parameters_7_0= ruleParameter
+                    // InternalScadeEquations.g:10615:6: (lv_parameters_7_0= ruleParameter )
+                    // InternalScadeEquations.g:10616:7: lv_parameters_7_0= ruleParameter
                     {
                     if ( state.backtracking==0 ) {
 
@@ -29234,7 +29258,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalScadeEquations.g:10629:5: (otherlv_8= ',' ( (lv_parameters_9_0= ruleParameter ) ) )*
+                    // InternalScadeEquations.g:10633:5: (otherlv_8= ',' ( (lv_parameters_9_0= ruleParameter ) ) )*
                     loop263:
                     do {
                         int alt263=2;
@@ -29247,19 +29271,19 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                         switch (alt263) {
                     	case 1 :
-                    	    // InternalScadeEquations.g:10630:6: otherlv_8= ',' ( (lv_parameters_9_0= ruleParameter ) )
+                    	    // InternalScadeEquations.g:10634:6: otherlv_8= ',' ( (lv_parameters_9_0= ruleParameter ) )
                     	    {
-                    	    otherlv_8=(Token)match(input,18,FollowSets000.FOLLOW_112); if (state.failed) return current;
+                    	    otherlv_8=(Token)match(input,18,FollowSets000.FOLLOW_114); if (state.failed) return current;
                     	    if ( state.backtracking==0 ) {
 
                     	      						newLeafNode(otherlv_8, grammarAccess.getReferenceCallAccess().getCommaKeyword_3_0_2_0());
                     	      					
                     	    }
-                    	    // InternalScadeEquations.g:10634:6: ( (lv_parameters_9_0= ruleParameter ) )
-                    	    // InternalScadeEquations.g:10635:7: (lv_parameters_9_0= ruleParameter )
+                    	    // InternalScadeEquations.g:10638:6: ( (lv_parameters_9_0= ruleParameter ) )
+                    	    // InternalScadeEquations.g:10639:7: (lv_parameters_9_0= ruleParameter )
                     	    {
-                    	    // InternalScadeEquations.g:10635:7: (lv_parameters_9_0= ruleParameter )
-                    	    // InternalScadeEquations.g:10636:8: lv_parameters_9_0= ruleParameter
+                    	    // InternalScadeEquations.g:10639:7: (lv_parameters_9_0= ruleParameter )
+                    	    // InternalScadeEquations.g:10640:8: lv_parameters_9_0= ruleParameter
                     	    {
                     	    if ( state.backtracking==0 ) {
 
@@ -29312,7 +29336,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalScadeEquations.g:10660:4: otherlv_11= '()'
+                    // InternalScadeEquations.g:10664:4: otherlv_11= '()'
                     {
                     otherlv_11=(Token)match(input,28,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -29351,7 +29375,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleParameter"
-    // InternalScadeEquations.g:10669:1: entryRuleParameter returns [EObject current=null] : iv_ruleParameter= ruleParameter EOF ;
+    // InternalScadeEquations.g:10673:1: entryRuleParameter returns [EObject current=null] : iv_ruleParameter= ruleParameter EOF ;
     public final EObject entryRuleParameter() throws RecognitionException {
         EObject current = null;
 
@@ -29359,8 +29383,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalScadeEquations.g:10669:50: (iv_ruleParameter= ruleParameter EOF )
-            // InternalScadeEquations.g:10670:2: iv_ruleParameter= ruleParameter EOF
+            // InternalScadeEquations.g:10673:50: (iv_ruleParameter= ruleParameter EOF )
+            // InternalScadeEquations.g:10674:2: iv_ruleParameter= ruleParameter EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getParameterRule()); 
@@ -29391,7 +29415,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleParameter"
-    // InternalScadeEquations.g:10676:1: ruleParameter returns [EObject current=null] : ( ( ( (lv_pureOutput_0_0= '!' ) )? ( (lv_callByReference_1_0= '&' ) ) )? ( (lv_expression_2_0= ruleExpression ) ) ) ;
+    // InternalScadeEquations.g:10680:1: ruleParameter returns [EObject current=null] : ( ( ( (lv_pureOutput_0_0= '!' ) )? ( (lv_callByReference_1_0= '&' ) ) )? ( (lv_expression_2_0= ruleExpression ) ) ) ;
     public final EObject ruleParameter() throws RecognitionException {
         EObject current = null;
 
@@ -29404,13 +29428,13 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:10682:2: ( ( ( ( (lv_pureOutput_0_0= '!' ) )? ( (lv_callByReference_1_0= '&' ) ) )? ( (lv_expression_2_0= ruleExpression ) ) ) )
-            // InternalScadeEquations.g:10683:2: ( ( ( (lv_pureOutput_0_0= '!' ) )? ( (lv_callByReference_1_0= '&' ) ) )? ( (lv_expression_2_0= ruleExpression ) ) )
+            // InternalScadeEquations.g:10686:2: ( ( ( ( (lv_pureOutput_0_0= '!' ) )? ( (lv_callByReference_1_0= '&' ) ) )? ( (lv_expression_2_0= ruleExpression ) ) ) )
+            // InternalScadeEquations.g:10687:2: ( ( ( (lv_pureOutput_0_0= '!' ) )? ( (lv_callByReference_1_0= '&' ) ) )? ( (lv_expression_2_0= ruleExpression ) ) )
             {
-            // InternalScadeEquations.g:10683:2: ( ( ( (lv_pureOutput_0_0= '!' ) )? ( (lv_callByReference_1_0= '&' ) ) )? ( (lv_expression_2_0= ruleExpression ) ) )
-            // InternalScadeEquations.g:10684:3: ( ( (lv_pureOutput_0_0= '!' ) )? ( (lv_callByReference_1_0= '&' ) ) )? ( (lv_expression_2_0= ruleExpression ) )
+            // InternalScadeEquations.g:10687:2: ( ( ( (lv_pureOutput_0_0= '!' ) )? ( (lv_callByReference_1_0= '&' ) ) )? ( (lv_expression_2_0= ruleExpression ) ) )
+            // InternalScadeEquations.g:10688:3: ( ( (lv_pureOutput_0_0= '!' ) )? ( (lv_callByReference_1_0= '&' ) ) )? ( (lv_expression_2_0= ruleExpression ) )
             {
-            // InternalScadeEquations.g:10684:3: ( ( (lv_pureOutput_0_0= '!' ) )? ( (lv_callByReference_1_0= '&' ) ) )?
+            // InternalScadeEquations.g:10688:3: ( ( (lv_pureOutput_0_0= '!' ) )? ( (lv_callByReference_1_0= '&' ) ) )?
             int alt266=2;
             int LA266_0 = input.LA(1);
 
@@ -29419,9 +29443,9 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             }
             switch (alt266) {
                 case 1 :
-                    // InternalScadeEquations.g:10685:4: ( (lv_pureOutput_0_0= '!' ) )? ( (lv_callByReference_1_0= '&' ) )
+                    // InternalScadeEquations.g:10689:4: ( (lv_pureOutput_0_0= '!' ) )? ( (lv_callByReference_1_0= '&' ) )
                     {
-                    // InternalScadeEquations.g:10685:4: ( (lv_pureOutput_0_0= '!' ) )?
+                    // InternalScadeEquations.g:10689:4: ( (lv_pureOutput_0_0= '!' ) )?
                     int alt265=2;
                     int LA265_0 = input.LA(1);
 
@@ -29430,12 +29454,12 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                     }
                     switch (alt265) {
                         case 1 :
-                            // InternalScadeEquations.g:10686:5: (lv_pureOutput_0_0= '!' )
+                            // InternalScadeEquations.g:10690:5: (lv_pureOutput_0_0= '!' )
                             {
-                            // InternalScadeEquations.g:10686:5: (lv_pureOutput_0_0= '!' )
-                            // InternalScadeEquations.g:10687:6: lv_pureOutput_0_0= '!'
+                            // InternalScadeEquations.g:10690:5: (lv_pureOutput_0_0= '!' )
+                            // InternalScadeEquations.g:10691:6: lv_pureOutput_0_0= '!'
                             {
-                            lv_pureOutput_0_0=(Token)match(input,85,FollowSets000.FOLLOW_125); if (state.failed) return current;
+                            lv_pureOutput_0_0=(Token)match(input,85,FollowSets000.FOLLOW_127); if (state.failed) return current;
                             if ( state.backtracking==0 ) {
 
                               						newLeafNode(lv_pureOutput_0_0, grammarAccess.getParameterAccess().getPureOutputExclamationMarkKeyword_0_0_0());
@@ -29458,11 +29482,11 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalScadeEquations.g:10699:4: ( (lv_callByReference_1_0= '&' ) )
-                    // InternalScadeEquations.g:10700:5: (lv_callByReference_1_0= '&' )
+                    // InternalScadeEquations.g:10703:4: ( (lv_callByReference_1_0= '&' ) )
+                    // InternalScadeEquations.g:10704:5: (lv_callByReference_1_0= '&' )
                     {
-                    // InternalScadeEquations.g:10700:5: (lv_callByReference_1_0= '&' )
-                    // InternalScadeEquations.g:10701:6: lv_callByReference_1_0= '&'
+                    // InternalScadeEquations.g:10704:5: (lv_callByReference_1_0= '&' )
+                    // InternalScadeEquations.g:10705:6: lv_callByReference_1_0= '&'
                     {
                     lv_callByReference_1_0=(Token)match(input,79,FollowSets000.FOLLOW_9); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -29490,11 +29514,11 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalScadeEquations.g:10714:3: ( (lv_expression_2_0= ruleExpression ) )
-            // InternalScadeEquations.g:10715:4: (lv_expression_2_0= ruleExpression )
+            // InternalScadeEquations.g:10718:3: ( (lv_expression_2_0= ruleExpression ) )
+            // InternalScadeEquations.g:10719:4: (lv_expression_2_0= ruleExpression )
             {
-            // InternalScadeEquations.g:10715:4: (lv_expression_2_0= ruleExpression )
-            // InternalScadeEquations.g:10716:5: lv_expression_2_0= ruleExpression
+            // InternalScadeEquations.g:10719:4: (lv_expression_2_0= ruleExpression )
+            // InternalScadeEquations.g:10720:5: lv_expression_2_0= ruleExpression
             {
             if ( state.backtracking==0 ) {
 
@@ -29550,7 +29574,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleIntValue"
-    // InternalScadeEquations.g:10737:1: entryRuleIntValue returns [EObject current=null] : iv_ruleIntValue= ruleIntValue EOF ;
+    // InternalScadeEquations.g:10741:1: entryRuleIntValue returns [EObject current=null] : iv_ruleIntValue= ruleIntValue EOF ;
     public final EObject entryRuleIntValue() throws RecognitionException {
         EObject current = null;
 
@@ -29558,8 +29582,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalScadeEquations.g:10737:49: (iv_ruleIntValue= ruleIntValue EOF )
-            // InternalScadeEquations.g:10738:2: iv_ruleIntValue= ruleIntValue EOF
+            // InternalScadeEquations.g:10741:49: (iv_ruleIntValue= ruleIntValue EOF )
+            // InternalScadeEquations.g:10742:2: iv_ruleIntValue= ruleIntValue EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getIntValueRule()); 
@@ -29590,7 +29614,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleIntValue"
-    // InternalScadeEquations.g:10744:1: ruleIntValue returns [EObject current=null] : ( (lv_value_0_0= RULE_INT ) ) ;
+    // InternalScadeEquations.g:10748:1: ruleIntValue returns [EObject current=null] : ( (lv_value_0_0= RULE_INT ) ) ;
     public final EObject ruleIntValue() throws RecognitionException {
         EObject current = null;
 
@@ -29600,14 +29624,14 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:10750:2: ( ( (lv_value_0_0= RULE_INT ) ) )
-            // InternalScadeEquations.g:10751:2: ( (lv_value_0_0= RULE_INT ) )
+            // InternalScadeEquations.g:10754:2: ( ( (lv_value_0_0= RULE_INT ) ) )
+            // InternalScadeEquations.g:10755:2: ( (lv_value_0_0= RULE_INT ) )
             {
-            // InternalScadeEquations.g:10751:2: ( (lv_value_0_0= RULE_INT ) )
-            // InternalScadeEquations.g:10752:3: (lv_value_0_0= RULE_INT )
+            // InternalScadeEquations.g:10755:2: ( (lv_value_0_0= RULE_INT ) )
+            // InternalScadeEquations.g:10756:3: (lv_value_0_0= RULE_INT )
             {
-            // InternalScadeEquations.g:10752:3: (lv_value_0_0= RULE_INT )
-            // InternalScadeEquations.g:10753:4: lv_value_0_0= RULE_INT
+            // InternalScadeEquations.g:10756:3: (lv_value_0_0= RULE_INT )
+            // InternalScadeEquations.g:10757:4: lv_value_0_0= RULE_INT
             {
             lv_value_0_0=(Token)match(input,RULE_INT,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -29655,7 +29679,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleFloatValue"
-    // InternalScadeEquations.g:10772:1: entryRuleFloatValue returns [EObject current=null] : iv_ruleFloatValue= ruleFloatValue EOF ;
+    // InternalScadeEquations.g:10776:1: entryRuleFloatValue returns [EObject current=null] : iv_ruleFloatValue= ruleFloatValue EOF ;
     public final EObject entryRuleFloatValue() throws RecognitionException {
         EObject current = null;
 
@@ -29663,8 +29687,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalScadeEquations.g:10772:51: (iv_ruleFloatValue= ruleFloatValue EOF )
-            // InternalScadeEquations.g:10773:2: iv_ruleFloatValue= ruleFloatValue EOF
+            // InternalScadeEquations.g:10776:51: (iv_ruleFloatValue= ruleFloatValue EOF )
+            // InternalScadeEquations.g:10777:2: iv_ruleFloatValue= ruleFloatValue EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getFloatValueRule()); 
@@ -29695,7 +29719,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleFloatValue"
-    // InternalScadeEquations.g:10779:1: ruleFloatValue returns [EObject current=null] : ( (lv_value_0_0= RULE_FLOAT ) ) ;
+    // InternalScadeEquations.g:10783:1: ruleFloatValue returns [EObject current=null] : ( (lv_value_0_0= RULE_FLOAT ) ) ;
     public final EObject ruleFloatValue() throws RecognitionException {
         EObject current = null;
 
@@ -29705,14 +29729,14 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:10785:2: ( ( (lv_value_0_0= RULE_FLOAT ) ) )
-            // InternalScadeEquations.g:10786:2: ( (lv_value_0_0= RULE_FLOAT ) )
+            // InternalScadeEquations.g:10789:2: ( ( (lv_value_0_0= RULE_FLOAT ) ) )
+            // InternalScadeEquations.g:10790:2: ( (lv_value_0_0= RULE_FLOAT ) )
             {
-            // InternalScadeEquations.g:10786:2: ( (lv_value_0_0= RULE_FLOAT ) )
-            // InternalScadeEquations.g:10787:3: (lv_value_0_0= RULE_FLOAT )
+            // InternalScadeEquations.g:10790:2: ( (lv_value_0_0= RULE_FLOAT ) )
+            // InternalScadeEquations.g:10791:3: (lv_value_0_0= RULE_FLOAT )
             {
-            // InternalScadeEquations.g:10787:3: (lv_value_0_0= RULE_FLOAT )
-            // InternalScadeEquations.g:10788:4: lv_value_0_0= RULE_FLOAT
+            // InternalScadeEquations.g:10791:3: (lv_value_0_0= RULE_FLOAT )
+            // InternalScadeEquations.g:10792:4: lv_value_0_0= RULE_FLOAT
             {
             lv_value_0_0=(Token)match(input,RULE_FLOAT,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -29760,7 +29784,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleBoolValue"
-    // InternalScadeEquations.g:10807:1: entryRuleBoolValue returns [EObject current=null] : iv_ruleBoolValue= ruleBoolValue EOF ;
+    // InternalScadeEquations.g:10811:1: entryRuleBoolValue returns [EObject current=null] : iv_ruleBoolValue= ruleBoolValue EOF ;
     public final EObject entryRuleBoolValue() throws RecognitionException {
         EObject current = null;
 
@@ -29768,8 +29792,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalScadeEquations.g:10807:50: (iv_ruleBoolValue= ruleBoolValue EOF )
-            // InternalScadeEquations.g:10808:2: iv_ruleBoolValue= ruleBoolValue EOF
+            // InternalScadeEquations.g:10811:50: (iv_ruleBoolValue= ruleBoolValue EOF )
+            // InternalScadeEquations.g:10812:2: iv_ruleBoolValue= ruleBoolValue EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getBoolValueRule()); 
@@ -29800,7 +29824,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleBoolValue"
-    // InternalScadeEquations.g:10814:1: ruleBoolValue returns [EObject current=null] : ( (lv_value_0_0= RULE_BOOLEAN ) ) ;
+    // InternalScadeEquations.g:10818:1: ruleBoolValue returns [EObject current=null] : ( (lv_value_0_0= RULE_BOOLEAN ) ) ;
     public final EObject ruleBoolValue() throws RecognitionException {
         EObject current = null;
 
@@ -29810,14 +29834,14 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:10820:2: ( ( (lv_value_0_0= RULE_BOOLEAN ) ) )
-            // InternalScadeEquations.g:10821:2: ( (lv_value_0_0= RULE_BOOLEAN ) )
+            // InternalScadeEquations.g:10824:2: ( ( (lv_value_0_0= RULE_BOOLEAN ) ) )
+            // InternalScadeEquations.g:10825:2: ( (lv_value_0_0= RULE_BOOLEAN ) )
             {
-            // InternalScadeEquations.g:10821:2: ( (lv_value_0_0= RULE_BOOLEAN ) )
-            // InternalScadeEquations.g:10822:3: (lv_value_0_0= RULE_BOOLEAN )
+            // InternalScadeEquations.g:10825:2: ( (lv_value_0_0= RULE_BOOLEAN ) )
+            // InternalScadeEquations.g:10826:3: (lv_value_0_0= RULE_BOOLEAN )
             {
-            // InternalScadeEquations.g:10822:3: (lv_value_0_0= RULE_BOOLEAN )
-            // InternalScadeEquations.g:10823:4: lv_value_0_0= RULE_BOOLEAN
+            // InternalScadeEquations.g:10826:3: (lv_value_0_0= RULE_BOOLEAN )
+            // InternalScadeEquations.g:10827:4: lv_value_0_0= RULE_BOOLEAN
             {
             lv_value_0_0=(Token)match(input,RULE_BOOLEAN,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -29865,7 +29889,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleStringValue"
-    // InternalScadeEquations.g:10842:1: entryRuleStringValue returns [EObject current=null] : iv_ruleStringValue= ruleStringValue EOF ;
+    // InternalScadeEquations.g:10846:1: entryRuleStringValue returns [EObject current=null] : iv_ruleStringValue= ruleStringValue EOF ;
     public final EObject entryRuleStringValue() throws RecognitionException {
         EObject current = null;
 
@@ -29873,8 +29897,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalScadeEquations.g:10842:52: (iv_ruleStringValue= ruleStringValue EOF )
-            // InternalScadeEquations.g:10843:2: iv_ruleStringValue= ruleStringValue EOF
+            // InternalScadeEquations.g:10846:52: (iv_ruleStringValue= ruleStringValue EOF )
+            // InternalScadeEquations.g:10847:2: iv_ruleStringValue= ruleStringValue EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getStringValueRule()); 
@@ -29905,7 +29929,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleStringValue"
-    // InternalScadeEquations.g:10849:1: ruleStringValue returns [EObject current=null] : ( (lv_value_0_0= RULE_STRING ) ) ;
+    // InternalScadeEquations.g:10853:1: ruleStringValue returns [EObject current=null] : ( (lv_value_0_0= RULE_STRING ) ) ;
     public final EObject ruleStringValue() throws RecognitionException {
         EObject current = null;
 
@@ -29915,14 +29939,14 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:10855:2: ( ( (lv_value_0_0= RULE_STRING ) ) )
-            // InternalScadeEquations.g:10856:2: ( (lv_value_0_0= RULE_STRING ) )
+            // InternalScadeEquations.g:10859:2: ( ( (lv_value_0_0= RULE_STRING ) ) )
+            // InternalScadeEquations.g:10860:2: ( (lv_value_0_0= RULE_STRING ) )
             {
-            // InternalScadeEquations.g:10856:2: ( (lv_value_0_0= RULE_STRING ) )
-            // InternalScadeEquations.g:10857:3: (lv_value_0_0= RULE_STRING )
+            // InternalScadeEquations.g:10860:2: ( (lv_value_0_0= RULE_STRING ) )
+            // InternalScadeEquations.g:10861:3: (lv_value_0_0= RULE_STRING )
             {
-            // InternalScadeEquations.g:10857:3: (lv_value_0_0= RULE_STRING )
-            // InternalScadeEquations.g:10858:4: lv_value_0_0= RULE_STRING
+            // InternalScadeEquations.g:10861:3: (lv_value_0_0= RULE_STRING )
+            // InternalScadeEquations.g:10862:4: lv_value_0_0= RULE_STRING
             {
             lv_value_0_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -29970,7 +29994,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleVectorValue"
-    // InternalScadeEquations.g:10877:1: entryRuleVectorValue returns [EObject current=null] : iv_ruleVectorValue= ruleVectorValue EOF ;
+    // InternalScadeEquations.g:10881:1: entryRuleVectorValue returns [EObject current=null] : iv_ruleVectorValue= ruleVectorValue EOF ;
     public final EObject entryRuleVectorValue() throws RecognitionException {
         EObject current = null;
 
@@ -29978,8 +30002,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalScadeEquations.g:10877:52: (iv_ruleVectorValue= ruleVectorValue EOF )
-            // InternalScadeEquations.g:10878:2: iv_ruleVectorValue= ruleVectorValue EOF
+            // InternalScadeEquations.g:10881:52: (iv_ruleVectorValue= ruleVectorValue EOF )
+            // InternalScadeEquations.g:10882:2: iv_ruleVectorValue= ruleVectorValue EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getVectorValueRule()); 
@@ -30010,7 +30034,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleVectorValue"
-    // InternalScadeEquations.g:10884:1: ruleVectorValue returns [EObject current=null] : (otherlv_0= '{' ( (lv_values_1_0= ruleVectorValueMember ) ) (otherlv_2= ',' ( (lv_values_3_0= ruleVectorValueMember ) ) )* otherlv_4= '}' ) ;
+    // InternalScadeEquations.g:10888:1: ruleVectorValue returns [EObject current=null] : (otherlv_0= '{' ( (lv_values_1_0= ruleVectorValueMember ) ) (otherlv_2= ',' ( (lv_values_3_0= ruleVectorValueMember ) ) )* otherlv_4= '}' ) ;
     public final EObject ruleVectorValue() throws RecognitionException {
         EObject current = null;
 
@@ -30026,23 +30050,23 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:10890:2: ( (otherlv_0= '{' ( (lv_values_1_0= ruleVectorValueMember ) ) (otherlv_2= ',' ( (lv_values_3_0= ruleVectorValueMember ) ) )* otherlv_4= '}' ) )
-            // InternalScadeEquations.g:10891:2: (otherlv_0= '{' ( (lv_values_1_0= ruleVectorValueMember ) ) (otherlv_2= ',' ( (lv_values_3_0= ruleVectorValueMember ) ) )* otherlv_4= '}' )
+            // InternalScadeEquations.g:10894:2: ( (otherlv_0= '{' ( (lv_values_1_0= ruleVectorValueMember ) ) (otherlv_2= ',' ( (lv_values_3_0= ruleVectorValueMember ) ) )* otherlv_4= '}' ) )
+            // InternalScadeEquations.g:10895:2: (otherlv_0= '{' ( (lv_values_1_0= ruleVectorValueMember ) ) (otherlv_2= ',' ( (lv_values_3_0= ruleVectorValueMember ) ) )* otherlv_4= '}' )
             {
-            // InternalScadeEquations.g:10891:2: (otherlv_0= '{' ( (lv_values_1_0= ruleVectorValueMember ) ) (otherlv_2= ',' ( (lv_values_3_0= ruleVectorValueMember ) ) )* otherlv_4= '}' )
-            // InternalScadeEquations.g:10892:3: otherlv_0= '{' ( (lv_values_1_0= ruleVectorValueMember ) ) (otherlv_2= ',' ( (lv_values_3_0= ruleVectorValueMember ) ) )* otherlv_4= '}'
+            // InternalScadeEquations.g:10895:2: (otherlv_0= '{' ( (lv_values_1_0= ruleVectorValueMember ) ) (otherlv_2= ',' ( (lv_values_3_0= ruleVectorValueMember ) ) )* otherlv_4= '}' )
+            // InternalScadeEquations.g:10896:3: otherlv_0= '{' ( (lv_values_1_0= ruleVectorValueMember ) ) (otherlv_2= ',' ( (lv_values_3_0= ruleVectorValueMember ) ) )* otherlv_4= '}'
             {
-            otherlv_0=(Token)match(input,22,FollowSets000.FOLLOW_126); if (state.failed) return current;
+            otherlv_0=(Token)match(input,22,FollowSets000.FOLLOW_128); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               			newLeafNode(otherlv_0, grammarAccess.getVectorValueAccess().getLeftCurlyBracketKeyword_0());
               		
             }
-            // InternalScadeEquations.g:10896:3: ( (lv_values_1_0= ruleVectorValueMember ) )
-            // InternalScadeEquations.g:10897:4: (lv_values_1_0= ruleVectorValueMember )
+            // InternalScadeEquations.g:10900:3: ( (lv_values_1_0= ruleVectorValueMember ) )
+            // InternalScadeEquations.g:10901:4: (lv_values_1_0= ruleVectorValueMember )
             {
-            // InternalScadeEquations.g:10897:4: (lv_values_1_0= ruleVectorValueMember )
-            // InternalScadeEquations.g:10898:5: lv_values_1_0= ruleVectorValueMember
+            // InternalScadeEquations.g:10901:4: (lv_values_1_0= ruleVectorValueMember )
+            // InternalScadeEquations.g:10902:5: lv_values_1_0= ruleVectorValueMember
             {
             if ( state.backtracking==0 ) {
 
@@ -30073,7 +30097,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalScadeEquations.g:10915:3: (otherlv_2= ',' ( (lv_values_3_0= ruleVectorValueMember ) ) )*
+            // InternalScadeEquations.g:10919:3: (otherlv_2= ',' ( (lv_values_3_0= ruleVectorValueMember ) ) )*
             loop267:
             do {
                 int alt267=2;
@@ -30086,19 +30110,19 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                 switch (alt267) {
             	case 1 :
-            	    // InternalScadeEquations.g:10916:4: otherlv_2= ',' ( (lv_values_3_0= ruleVectorValueMember ) )
+            	    // InternalScadeEquations.g:10920:4: otherlv_2= ',' ( (lv_values_3_0= ruleVectorValueMember ) )
             	    {
-            	    otherlv_2=(Token)match(input,18,FollowSets000.FOLLOW_126); if (state.failed) return current;
+            	    otherlv_2=(Token)match(input,18,FollowSets000.FOLLOW_128); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	      				newLeafNode(otherlv_2, grammarAccess.getVectorValueAccess().getCommaKeyword_2_0());
             	      			
             	    }
-            	    // InternalScadeEquations.g:10920:4: ( (lv_values_3_0= ruleVectorValueMember ) )
-            	    // InternalScadeEquations.g:10921:5: (lv_values_3_0= ruleVectorValueMember )
+            	    // InternalScadeEquations.g:10924:4: ( (lv_values_3_0= ruleVectorValueMember ) )
+            	    // InternalScadeEquations.g:10925:5: (lv_values_3_0= ruleVectorValueMember )
             	    {
-            	    // InternalScadeEquations.g:10921:5: (lv_values_3_0= ruleVectorValueMember )
-            	    // InternalScadeEquations.g:10922:6: lv_values_3_0= ruleVectorValueMember
+            	    // InternalScadeEquations.g:10925:5: (lv_values_3_0= ruleVectorValueMember )
+            	    // InternalScadeEquations.g:10926:6: lv_values_3_0= ruleVectorValueMember
             	    {
             	    if ( state.backtracking==0 ) {
 
@@ -30169,7 +30193,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleVectorValueMember"
-    // InternalScadeEquations.g:10948:1: entryRuleVectorValueMember returns [EObject current=null] : iv_ruleVectorValueMember= ruleVectorValueMember EOF ;
+    // InternalScadeEquations.g:10952:1: entryRuleVectorValueMember returns [EObject current=null] : iv_ruleVectorValueMember= ruleVectorValueMember EOF ;
     public final EObject entryRuleVectorValueMember() throws RecognitionException {
         EObject current = null;
 
@@ -30177,8 +30201,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalScadeEquations.g:10948:58: (iv_ruleVectorValueMember= ruleVectorValueMember EOF )
-            // InternalScadeEquations.g:10949:2: iv_ruleVectorValueMember= ruleVectorValueMember EOF
+            // InternalScadeEquations.g:10952:58: (iv_ruleVectorValueMember= ruleVectorValueMember EOF )
+            // InternalScadeEquations.g:10953:2: iv_ruleVectorValueMember= ruleVectorValueMember EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getVectorValueMemberRule()); 
@@ -30209,7 +30233,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleVectorValueMember"
-    // InternalScadeEquations.g:10955:1: ruleVectorValueMember returns [EObject current=null] : (this_BoolExpression_0= ruleBoolExpression | this_ValuedExpression_1= ruleValuedExpression | this_IgnoreValue_2= ruleIgnoreValue ) ;
+    // InternalScadeEquations.g:10959:1: ruleVectorValueMember returns [EObject current=null] : (this_BoolExpression_0= ruleBoolExpression | this_ValuedExpression_1= ruleValuedExpression | this_IgnoreValue_2= ruleIgnoreValue ) ;
     public final EObject ruleVectorValueMember() throws RecognitionException {
         EObject current = null;
 
@@ -30224,15 +30248,15 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:10961:2: ( (this_BoolExpression_0= ruleBoolExpression | this_ValuedExpression_1= ruleValuedExpression | this_IgnoreValue_2= ruleIgnoreValue ) )
-            // InternalScadeEquations.g:10962:2: (this_BoolExpression_0= ruleBoolExpression | this_ValuedExpression_1= ruleValuedExpression | this_IgnoreValue_2= ruleIgnoreValue )
+            // InternalScadeEquations.g:10965:2: ( (this_BoolExpression_0= ruleBoolExpression | this_ValuedExpression_1= ruleValuedExpression | this_IgnoreValue_2= ruleIgnoreValue ) )
+            // InternalScadeEquations.g:10966:2: (this_BoolExpression_0= ruleBoolExpression | this_ValuedExpression_1= ruleValuedExpression | this_IgnoreValue_2= ruleIgnoreValue )
             {
-            // InternalScadeEquations.g:10962:2: (this_BoolExpression_0= ruleBoolExpression | this_ValuedExpression_1= ruleValuedExpression | this_IgnoreValue_2= ruleIgnoreValue )
+            // InternalScadeEquations.g:10966:2: (this_BoolExpression_0= ruleBoolExpression | this_ValuedExpression_1= ruleValuedExpression | this_IgnoreValue_2= ruleIgnoreValue )
             int alt268=3;
             alt268 = dfa268.predict(input);
             switch (alt268) {
                 case 1 :
-                    // InternalScadeEquations.g:10963:3: this_BoolExpression_0= ruleBoolExpression
+                    // InternalScadeEquations.g:10967:3: this_BoolExpression_0= ruleBoolExpression
                     {
                     if ( state.backtracking==0 ) {
 
@@ -30259,7 +30283,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalScadeEquations.g:10975:3: this_ValuedExpression_1= ruleValuedExpression
+                    // InternalScadeEquations.g:10979:3: this_ValuedExpression_1= ruleValuedExpression
                     {
                     if ( state.backtracking==0 ) {
 
@@ -30286,7 +30310,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalScadeEquations.g:10987:3: this_IgnoreValue_2= ruleIgnoreValue
+                    // InternalScadeEquations.g:10991:3: this_IgnoreValue_2= ruleIgnoreValue
                     {
                     if ( state.backtracking==0 ) {
 
@@ -30337,7 +30361,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleIgnoreValue"
-    // InternalScadeEquations.g:11002:1: entryRuleIgnoreValue returns [EObject current=null] : iv_ruleIgnoreValue= ruleIgnoreValue EOF ;
+    // InternalScadeEquations.g:11006:1: entryRuleIgnoreValue returns [EObject current=null] : iv_ruleIgnoreValue= ruleIgnoreValue EOF ;
     public final EObject entryRuleIgnoreValue() throws RecognitionException {
         EObject current = null;
 
@@ -30345,8 +30369,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalScadeEquations.g:11002:52: (iv_ruleIgnoreValue= ruleIgnoreValue EOF )
-            // InternalScadeEquations.g:11003:2: iv_ruleIgnoreValue= ruleIgnoreValue EOF
+            // InternalScadeEquations.g:11006:52: (iv_ruleIgnoreValue= ruleIgnoreValue EOF )
+            // InternalScadeEquations.g:11007:2: iv_ruleIgnoreValue= ruleIgnoreValue EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getIgnoreValueRule()); 
@@ -30377,7 +30401,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleIgnoreValue"
-    // InternalScadeEquations.g:11009:1: ruleIgnoreValue returns [EObject current=null] : ( () otherlv_1= '_' ) ;
+    // InternalScadeEquations.g:11013:1: ruleIgnoreValue returns [EObject current=null] : ( () otherlv_1= '_' ) ;
     public final EObject ruleIgnoreValue() throws RecognitionException {
         EObject current = null;
 
@@ -30387,14 +30411,14 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:11015:2: ( ( () otherlv_1= '_' ) )
-            // InternalScadeEquations.g:11016:2: ( () otherlv_1= '_' )
+            // InternalScadeEquations.g:11019:2: ( ( () otherlv_1= '_' ) )
+            // InternalScadeEquations.g:11020:2: ( () otherlv_1= '_' )
             {
-            // InternalScadeEquations.g:11016:2: ( () otherlv_1= '_' )
-            // InternalScadeEquations.g:11017:3: () otherlv_1= '_'
+            // InternalScadeEquations.g:11020:2: ( () otherlv_1= '_' )
+            // InternalScadeEquations.g:11021:3: () otherlv_1= '_'
             {
-            // InternalScadeEquations.g:11017:3: ()
-            // InternalScadeEquations.g:11018:4: 
+            // InternalScadeEquations.g:11021:3: ()
+            // InternalScadeEquations.g:11022:4: 
             {
             if ( state.backtracking==0 ) {
 
@@ -30442,7 +30466,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleAnyValue"
-    // InternalScadeEquations.g:11035:1: entryRuleAnyValue returns [EObject current=null] : iv_ruleAnyValue= ruleAnyValue EOF ;
+    // InternalScadeEquations.g:11039:1: entryRuleAnyValue returns [EObject current=null] : iv_ruleAnyValue= ruleAnyValue EOF ;
     public final EObject entryRuleAnyValue() throws RecognitionException {
         EObject current = null;
 
@@ -30450,8 +30474,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalScadeEquations.g:11035:49: (iv_ruleAnyValue= ruleAnyValue EOF )
-            // InternalScadeEquations.g:11036:2: iv_ruleAnyValue= ruleAnyValue EOF
+            // InternalScadeEquations.g:11039:49: (iv_ruleAnyValue= ruleAnyValue EOF )
+            // InternalScadeEquations.g:11040:2: iv_ruleAnyValue= ruleAnyValue EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getAnyValueRule()); 
@@ -30482,7 +30506,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleAnyValue"
-    // InternalScadeEquations.g:11042:1: ruleAnyValue returns [EObject current=null] : (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_BoolValue_2= ruleBoolValue | this_StringValue_3= ruleStringValue ) ;
+    // InternalScadeEquations.g:11046:1: ruleAnyValue returns [EObject current=null] : (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_BoolValue_2= ruleBoolValue | this_StringValue_3= ruleStringValue ) ;
     public final EObject ruleAnyValue() throws RecognitionException {
         EObject current = null;
 
@@ -30499,10 +30523,10 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:11048:2: ( (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_BoolValue_2= ruleBoolValue | this_StringValue_3= ruleStringValue ) )
-            // InternalScadeEquations.g:11049:2: (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_BoolValue_2= ruleBoolValue | this_StringValue_3= ruleStringValue )
+            // InternalScadeEquations.g:11052:2: ( (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_BoolValue_2= ruleBoolValue | this_StringValue_3= ruleStringValue ) )
+            // InternalScadeEquations.g:11053:2: (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_BoolValue_2= ruleBoolValue | this_StringValue_3= ruleStringValue )
             {
-            // InternalScadeEquations.g:11049:2: (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_BoolValue_2= ruleBoolValue | this_StringValue_3= ruleStringValue )
+            // InternalScadeEquations.g:11053:2: (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_BoolValue_2= ruleBoolValue | this_StringValue_3= ruleStringValue )
             int alt269=4;
             switch ( input.LA(1) ) {
             case RULE_INT:
@@ -30535,7 +30559,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             switch (alt269) {
                 case 1 :
-                    // InternalScadeEquations.g:11050:3: this_IntValue_0= ruleIntValue
+                    // InternalScadeEquations.g:11054:3: this_IntValue_0= ruleIntValue
                     {
                     if ( state.backtracking==0 ) {
 
@@ -30562,7 +30586,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalScadeEquations.g:11062:3: this_FloatValue_1= ruleFloatValue
+                    // InternalScadeEquations.g:11066:3: this_FloatValue_1= ruleFloatValue
                     {
                     if ( state.backtracking==0 ) {
 
@@ -30589,7 +30613,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalScadeEquations.g:11074:3: this_BoolValue_2= ruleBoolValue
+                    // InternalScadeEquations.g:11078:3: this_BoolValue_2= ruleBoolValue
                     {
                     if ( state.backtracking==0 ) {
 
@@ -30616,7 +30640,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // InternalScadeEquations.g:11086:3: this_StringValue_3= ruleStringValue
+                    // InternalScadeEquations.g:11090:3: this_StringValue_3= ruleStringValue
                     {
                     if ( state.backtracking==0 ) {
 
@@ -30667,7 +30691,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleJsonObjectValue"
-    // InternalScadeEquations.g:11101:1: entryRuleJsonObjectValue returns [EObject current=null] : iv_ruleJsonObjectValue= ruleJsonObjectValue EOF ;
+    // InternalScadeEquations.g:11105:1: entryRuleJsonObjectValue returns [EObject current=null] : iv_ruleJsonObjectValue= ruleJsonObjectValue EOF ;
     public final EObject entryRuleJsonObjectValue() throws RecognitionException {
         EObject current = null;
 
@@ -30675,8 +30699,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalScadeEquations.g:11101:56: (iv_ruleJsonObjectValue= ruleJsonObjectValue EOF )
-            // InternalScadeEquations.g:11102:2: iv_ruleJsonObjectValue= ruleJsonObjectValue EOF
+            // InternalScadeEquations.g:11105:56: (iv_ruleJsonObjectValue= ruleJsonObjectValue EOF )
+            // InternalScadeEquations.g:11106:2: iv_ruleJsonObjectValue= ruleJsonObjectValue EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getJsonObjectValueRule()); 
@@ -30707,7 +30731,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleJsonObjectValue"
-    // InternalScadeEquations.g:11108:1: ruleJsonObjectValue returns [EObject current=null] : ( () otherlv_1= '{' ( ( (lv_members_2_0= ruleJsonObjectMember ) ) (otherlv_3= ',' ( (lv_members_4_0= ruleJsonObjectMember ) ) )* )? otherlv_5= '}' ) ;
+    // InternalScadeEquations.g:11112:1: ruleJsonObjectValue returns [EObject current=null] : ( () otherlv_1= '{' ( ( (lv_members_2_0= ruleJsonObjectMember ) ) (otherlv_3= ',' ( (lv_members_4_0= ruleJsonObjectMember ) ) )* )? otherlv_5= '}' ) ;
     public final EObject ruleJsonObjectValue() throws RecognitionException {
         EObject current = null;
 
@@ -30723,14 +30747,14 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:11114:2: ( ( () otherlv_1= '{' ( ( (lv_members_2_0= ruleJsonObjectMember ) ) (otherlv_3= ',' ( (lv_members_4_0= ruleJsonObjectMember ) ) )* )? otherlv_5= '}' ) )
-            // InternalScadeEquations.g:11115:2: ( () otherlv_1= '{' ( ( (lv_members_2_0= ruleJsonObjectMember ) ) (otherlv_3= ',' ( (lv_members_4_0= ruleJsonObjectMember ) ) )* )? otherlv_5= '}' )
+            // InternalScadeEquations.g:11118:2: ( ( () otherlv_1= '{' ( ( (lv_members_2_0= ruleJsonObjectMember ) ) (otherlv_3= ',' ( (lv_members_4_0= ruleJsonObjectMember ) ) )* )? otherlv_5= '}' ) )
+            // InternalScadeEquations.g:11119:2: ( () otherlv_1= '{' ( ( (lv_members_2_0= ruleJsonObjectMember ) ) (otherlv_3= ',' ( (lv_members_4_0= ruleJsonObjectMember ) ) )* )? otherlv_5= '}' )
             {
-            // InternalScadeEquations.g:11115:2: ( () otherlv_1= '{' ( ( (lv_members_2_0= ruleJsonObjectMember ) ) (otherlv_3= ',' ( (lv_members_4_0= ruleJsonObjectMember ) ) )* )? otherlv_5= '}' )
-            // InternalScadeEquations.g:11116:3: () otherlv_1= '{' ( ( (lv_members_2_0= ruleJsonObjectMember ) ) (otherlv_3= ',' ( (lv_members_4_0= ruleJsonObjectMember ) ) )* )? otherlv_5= '}'
+            // InternalScadeEquations.g:11119:2: ( () otherlv_1= '{' ( ( (lv_members_2_0= ruleJsonObjectMember ) ) (otherlv_3= ',' ( (lv_members_4_0= ruleJsonObjectMember ) ) )* )? otherlv_5= '}' )
+            // InternalScadeEquations.g:11120:3: () otherlv_1= '{' ( ( (lv_members_2_0= ruleJsonObjectMember ) ) (otherlv_3= ',' ( (lv_members_4_0= ruleJsonObjectMember ) ) )* )? otherlv_5= '}'
             {
-            // InternalScadeEquations.g:11116:3: ()
-            // InternalScadeEquations.g:11117:4: 
+            // InternalScadeEquations.g:11120:3: ()
+            // InternalScadeEquations.g:11121:4: 
             {
             if ( state.backtracking==0 ) {
 
@@ -30747,13 +30771,13 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_1=(Token)match(input,22,FollowSets000.FOLLOW_127); if (state.failed) return current;
+            otherlv_1=(Token)match(input,22,FollowSets000.FOLLOW_129); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               			newLeafNode(otherlv_1, grammarAccess.getJsonObjectValueAccess().getLeftCurlyBracketKeyword_1());
               		
             }
-            // InternalScadeEquations.g:11130:3: ( ( (lv_members_2_0= ruleJsonObjectMember ) ) (otherlv_3= ',' ( (lv_members_4_0= ruleJsonObjectMember ) ) )* )?
+            // InternalScadeEquations.g:11134:3: ( ( (lv_members_2_0= ruleJsonObjectMember ) ) (otherlv_3= ',' ( (lv_members_4_0= ruleJsonObjectMember ) ) )* )?
             int alt271=2;
             int LA271_0 = input.LA(1);
 
@@ -30762,13 +30786,13 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             }
             switch (alt271) {
                 case 1 :
-                    // InternalScadeEquations.g:11131:4: ( (lv_members_2_0= ruleJsonObjectMember ) ) (otherlv_3= ',' ( (lv_members_4_0= ruleJsonObjectMember ) ) )*
+                    // InternalScadeEquations.g:11135:4: ( (lv_members_2_0= ruleJsonObjectMember ) ) (otherlv_3= ',' ( (lv_members_4_0= ruleJsonObjectMember ) ) )*
                     {
-                    // InternalScadeEquations.g:11131:4: ( (lv_members_2_0= ruleJsonObjectMember ) )
-                    // InternalScadeEquations.g:11132:5: (lv_members_2_0= ruleJsonObjectMember )
+                    // InternalScadeEquations.g:11135:4: ( (lv_members_2_0= ruleJsonObjectMember ) )
+                    // InternalScadeEquations.g:11136:5: (lv_members_2_0= ruleJsonObjectMember )
                     {
-                    // InternalScadeEquations.g:11132:5: (lv_members_2_0= ruleJsonObjectMember )
-                    // InternalScadeEquations.g:11133:6: lv_members_2_0= ruleJsonObjectMember
+                    // InternalScadeEquations.g:11136:5: (lv_members_2_0= ruleJsonObjectMember )
+                    // InternalScadeEquations.g:11137:6: lv_members_2_0= ruleJsonObjectMember
                     {
                     if ( state.backtracking==0 ) {
 
@@ -30799,7 +30823,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalScadeEquations.g:11150:4: (otherlv_3= ',' ( (lv_members_4_0= ruleJsonObjectMember ) ) )*
+                    // InternalScadeEquations.g:11154:4: (otherlv_3= ',' ( (lv_members_4_0= ruleJsonObjectMember ) ) )*
                     loop270:
                     do {
                         int alt270=2;
@@ -30812,7 +30836,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                         switch (alt270) {
                     	case 1 :
-                    	    // InternalScadeEquations.g:11151:5: otherlv_3= ',' ( (lv_members_4_0= ruleJsonObjectMember ) )
+                    	    // InternalScadeEquations.g:11155:5: otherlv_3= ',' ( (lv_members_4_0= ruleJsonObjectMember ) )
                     	    {
                     	    otherlv_3=(Token)match(input,18,FollowSets000.FOLLOW_70); if (state.failed) return current;
                     	    if ( state.backtracking==0 ) {
@@ -30820,11 +30844,11 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                     	      					newLeafNode(otherlv_3, grammarAccess.getJsonObjectValueAccess().getCommaKeyword_2_1_0());
                     	      				
                     	    }
-                    	    // InternalScadeEquations.g:11155:5: ( (lv_members_4_0= ruleJsonObjectMember ) )
-                    	    // InternalScadeEquations.g:11156:6: (lv_members_4_0= ruleJsonObjectMember )
+                    	    // InternalScadeEquations.g:11159:5: ( (lv_members_4_0= ruleJsonObjectMember ) )
+                    	    // InternalScadeEquations.g:11160:6: (lv_members_4_0= ruleJsonObjectMember )
                     	    {
-                    	    // InternalScadeEquations.g:11156:6: (lv_members_4_0= ruleJsonObjectMember )
-                    	    // InternalScadeEquations.g:11157:7: lv_members_4_0= ruleJsonObjectMember
+                    	    // InternalScadeEquations.g:11160:6: (lv_members_4_0= ruleJsonObjectMember )
+                    	    // InternalScadeEquations.g:11161:7: lv_members_4_0= ruleJsonObjectMember
                     	    {
                     	    if ( state.backtracking==0 ) {
 
@@ -30901,7 +30925,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleJsonObjectMember"
-    // InternalScadeEquations.g:11184:1: entryRuleJsonObjectMember returns [EObject current=null] : iv_ruleJsonObjectMember= ruleJsonObjectMember EOF ;
+    // InternalScadeEquations.g:11188:1: entryRuleJsonObjectMember returns [EObject current=null] : iv_ruleJsonObjectMember= ruleJsonObjectMember EOF ;
     public final EObject entryRuleJsonObjectMember() throws RecognitionException {
         EObject current = null;
 
@@ -30909,8 +30933,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalScadeEquations.g:11184:57: (iv_ruleJsonObjectMember= ruleJsonObjectMember EOF )
-            // InternalScadeEquations.g:11185:2: iv_ruleJsonObjectMember= ruleJsonObjectMember EOF
+            // InternalScadeEquations.g:11188:57: (iv_ruleJsonObjectMember= ruleJsonObjectMember EOF )
+            // InternalScadeEquations.g:11189:2: iv_ruleJsonObjectMember= ruleJsonObjectMember EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getJsonObjectMemberRule()); 
@@ -30941,7 +30965,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleJsonObjectMember"
-    // InternalScadeEquations.g:11191:1: ruleJsonObjectMember returns [EObject current=null] : ( ( (lv_key_0_0= RULE_STRING ) ) otherlv_1= ':' ( (lv_value_2_0= ruleJsonValue ) ) ) ;
+    // InternalScadeEquations.g:11195:1: ruleJsonObjectMember returns [EObject current=null] : ( ( (lv_key_0_0= RULE_STRING ) ) otherlv_1= ':' ( (lv_value_2_0= ruleJsonValue ) ) ) ;
     public final EObject ruleJsonObjectMember() throws RecognitionException {
         EObject current = null;
 
@@ -30954,19 +30978,19 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:11197:2: ( ( ( (lv_key_0_0= RULE_STRING ) ) otherlv_1= ':' ( (lv_value_2_0= ruleJsonValue ) ) ) )
-            // InternalScadeEquations.g:11198:2: ( ( (lv_key_0_0= RULE_STRING ) ) otherlv_1= ':' ( (lv_value_2_0= ruleJsonValue ) ) )
+            // InternalScadeEquations.g:11201:2: ( ( ( (lv_key_0_0= RULE_STRING ) ) otherlv_1= ':' ( (lv_value_2_0= ruleJsonValue ) ) ) )
+            // InternalScadeEquations.g:11202:2: ( ( (lv_key_0_0= RULE_STRING ) ) otherlv_1= ':' ( (lv_value_2_0= ruleJsonValue ) ) )
             {
-            // InternalScadeEquations.g:11198:2: ( ( (lv_key_0_0= RULE_STRING ) ) otherlv_1= ':' ( (lv_value_2_0= ruleJsonValue ) ) )
-            // InternalScadeEquations.g:11199:3: ( (lv_key_0_0= RULE_STRING ) ) otherlv_1= ':' ( (lv_value_2_0= ruleJsonValue ) )
+            // InternalScadeEquations.g:11202:2: ( ( (lv_key_0_0= RULE_STRING ) ) otherlv_1= ':' ( (lv_value_2_0= ruleJsonValue ) ) )
+            // InternalScadeEquations.g:11203:3: ( (lv_key_0_0= RULE_STRING ) ) otherlv_1= ':' ( (lv_value_2_0= ruleJsonValue ) )
             {
-            // InternalScadeEquations.g:11199:3: ( (lv_key_0_0= RULE_STRING ) )
-            // InternalScadeEquations.g:11200:4: (lv_key_0_0= RULE_STRING )
+            // InternalScadeEquations.g:11203:3: ( (lv_key_0_0= RULE_STRING ) )
+            // InternalScadeEquations.g:11204:4: (lv_key_0_0= RULE_STRING )
             {
-            // InternalScadeEquations.g:11200:4: (lv_key_0_0= RULE_STRING )
-            // InternalScadeEquations.g:11201:5: lv_key_0_0= RULE_STRING
+            // InternalScadeEquations.g:11204:4: (lv_key_0_0= RULE_STRING )
+            // InternalScadeEquations.g:11205:5: lv_key_0_0= RULE_STRING
             {
-            lv_key_0_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_128); if (state.failed) return current;
+            lv_key_0_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_130); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               					newLeafNode(lv_key_0_0, grammarAccess.getJsonObjectMemberAccess().getKeySTRINGTerminalRuleCall_0_0());
@@ -30990,17 +31014,17 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_1=(Token)match(input,30,FollowSets000.FOLLOW_129); if (state.failed) return current;
+            otherlv_1=(Token)match(input,30,FollowSets000.FOLLOW_131); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               			newLeafNode(otherlv_1, grammarAccess.getJsonObjectMemberAccess().getColonKeyword_1());
               		
             }
-            // InternalScadeEquations.g:11221:3: ( (lv_value_2_0= ruleJsonValue ) )
-            // InternalScadeEquations.g:11222:4: (lv_value_2_0= ruleJsonValue )
+            // InternalScadeEquations.g:11225:3: ( (lv_value_2_0= ruleJsonValue ) )
+            // InternalScadeEquations.g:11226:4: (lv_value_2_0= ruleJsonValue )
             {
-            // InternalScadeEquations.g:11222:4: (lv_value_2_0= ruleJsonValue )
-            // InternalScadeEquations.g:11223:5: lv_value_2_0= ruleJsonValue
+            // InternalScadeEquations.g:11226:4: (lv_value_2_0= ruleJsonValue )
+            // InternalScadeEquations.g:11227:5: lv_value_2_0= ruleJsonValue
             {
             if ( state.backtracking==0 ) {
 
@@ -31056,7 +31080,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleJsonArrayValue"
-    // InternalScadeEquations.g:11244:1: entryRuleJsonArrayValue returns [EObject current=null] : iv_ruleJsonArrayValue= ruleJsonArrayValue EOF ;
+    // InternalScadeEquations.g:11248:1: entryRuleJsonArrayValue returns [EObject current=null] : iv_ruleJsonArrayValue= ruleJsonArrayValue EOF ;
     public final EObject entryRuleJsonArrayValue() throws RecognitionException {
         EObject current = null;
 
@@ -31064,8 +31088,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalScadeEquations.g:11244:55: (iv_ruleJsonArrayValue= ruleJsonArrayValue EOF )
-            // InternalScadeEquations.g:11245:2: iv_ruleJsonArrayValue= ruleJsonArrayValue EOF
+            // InternalScadeEquations.g:11248:55: (iv_ruleJsonArrayValue= ruleJsonArrayValue EOF )
+            // InternalScadeEquations.g:11249:2: iv_ruleJsonArrayValue= ruleJsonArrayValue EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getJsonArrayValueRule()); 
@@ -31096,7 +31120,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleJsonArrayValue"
-    // InternalScadeEquations.g:11251:1: ruleJsonArrayValue returns [EObject current=null] : ( () otherlv_1= '[' ( ( (lv_elements_2_0= ruleJsonValue ) ) (otherlv_3= ',' ( (lv_elements_4_0= ruleJsonValue ) ) )* )? otherlv_5= ']' ) ;
+    // InternalScadeEquations.g:11255:1: ruleJsonArrayValue returns [EObject current=null] : ( () otherlv_1= '[' ( ( (lv_elements_2_0= ruleJsonValue ) ) (otherlv_3= ',' ( (lv_elements_4_0= ruleJsonValue ) ) )* )? otherlv_5= ']' ) ;
     public final EObject ruleJsonArrayValue() throws RecognitionException {
         EObject current = null;
 
@@ -31112,14 +31136,14 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:11257:2: ( ( () otherlv_1= '[' ( ( (lv_elements_2_0= ruleJsonValue ) ) (otherlv_3= ',' ( (lv_elements_4_0= ruleJsonValue ) ) )* )? otherlv_5= ']' ) )
-            // InternalScadeEquations.g:11258:2: ( () otherlv_1= '[' ( ( (lv_elements_2_0= ruleJsonValue ) ) (otherlv_3= ',' ( (lv_elements_4_0= ruleJsonValue ) ) )* )? otherlv_5= ']' )
+            // InternalScadeEquations.g:11261:2: ( ( () otherlv_1= '[' ( ( (lv_elements_2_0= ruleJsonValue ) ) (otherlv_3= ',' ( (lv_elements_4_0= ruleJsonValue ) ) )* )? otherlv_5= ']' ) )
+            // InternalScadeEquations.g:11262:2: ( () otherlv_1= '[' ( ( (lv_elements_2_0= ruleJsonValue ) ) (otherlv_3= ',' ( (lv_elements_4_0= ruleJsonValue ) ) )* )? otherlv_5= ']' )
             {
-            // InternalScadeEquations.g:11258:2: ( () otherlv_1= '[' ( ( (lv_elements_2_0= ruleJsonValue ) ) (otherlv_3= ',' ( (lv_elements_4_0= ruleJsonValue ) ) )* )? otherlv_5= ']' )
-            // InternalScadeEquations.g:11259:3: () otherlv_1= '[' ( ( (lv_elements_2_0= ruleJsonValue ) ) (otherlv_3= ',' ( (lv_elements_4_0= ruleJsonValue ) ) )* )? otherlv_5= ']'
+            // InternalScadeEquations.g:11262:2: ( () otherlv_1= '[' ( ( (lv_elements_2_0= ruleJsonValue ) ) (otherlv_3= ',' ( (lv_elements_4_0= ruleJsonValue ) ) )* )? otherlv_5= ']' )
+            // InternalScadeEquations.g:11263:3: () otherlv_1= '[' ( ( (lv_elements_2_0= ruleJsonValue ) ) (otherlv_3= ',' ( (lv_elements_4_0= ruleJsonValue ) ) )* )? otherlv_5= ']'
             {
-            // InternalScadeEquations.g:11259:3: ()
-            // InternalScadeEquations.g:11260:4: 
+            // InternalScadeEquations.g:11263:3: ()
+            // InternalScadeEquations.g:11264:4: 
             {
             if ( state.backtracking==0 ) {
 
@@ -31136,13 +31160,13 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_1=(Token)match(input,73,FollowSets000.FOLLOW_130); if (state.failed) return current;
+            otherlv_1=(Token)match(input,73,FollowSets000.FOLLOW_132); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               			newLeafNode(otherlv_1, grammarAccess.getJsonArrayValueAccess().getLeftSquareBracketKeyword_1());
               		
             }
-            // InternalScadeEquations.g:11273:3: ( ( (lv_elements_2_0= ruleJsonValue ) ) (otherlv_3= ',' ( (lv_elements_4_0= ruleJsonValue ) ) )* )?
+            // InternalScadeEquations.g:11277:3: ( ( (lv_elements_2_0= ruleJsonValue ) ) (otherlv_3= ',' ( (lv_elements_4_0= ruleJsonValue ) ) )* )?
             int alt273=2;
             int LA273_0 = input.LA(1);
 
@@ -31151,20 +31175,20 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             }
             switch (alt273) {
                 case 1 :
-                    // InternalScadeEquations.g:11274:4: ( (lv_elements_2_0= ruleJsonValue ) ) (otherlv_3= ',' ( (lv_elements_4_0= ruleJsonValue ) ) )*
+                    // InternalScadeEquations.g:11278:4: ( (lv_elements_2_0= ruleJsonValue ) ) (otherlv_3= ',' ( (lv_elements_4_0= ruleJsonValue ) ) )*
                     {
-                    // InternalScadeEquations.g:11274:4: ( (lv_elements_2_0= ruleJsonValue ) )
-                    // InternalScadeEquations.g:11275:5: (lv_elements_2_0= ruleJsonValue )
+                    // InternalScadeEquations.g:11278:4: ( (lv_elements_2_0= ruleJsonValue ) )
+                    // InternalScadeEquations.g:11279:5: (lv_elements_2_0= ruleJsonValue )
                     {
-                    // InternalScadeEquations.g:11275:5: (lv_elements_2_0= ruleJsonValue )
-                    // InternalScadeEquations.g:11276:6: lv_elements_2_0= ruleJsonValue
+                    // InternalScadeEquations.g:11279:5: (lv_elements_2_0= ruleJsonValue )
+                    // InternalScadeEquations.g:11280:6: lv_elements_2_0= ruleJsonValue
                     {
                     if ( state.backtracking==0 ) {
 
                       						newCompositeNode(grammarAccess.getJsonArrayValueAccess().getElementsJsonValueParserRuleCall_2_0_0());
                       					
                     }
-                    pushFollow(FollowSets000.FOLLOW_131);
+                    pushFollow(FollowSets000.FOLLOW_133);
                     lv_elements_2_0=ruleJsonValue();
 
                     state._fsp--;
@@ -31188,7 +31212,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalScadeEquations.g:11293:4: (otherlv_3= ',' ( (lv_elements_4_0= ruleJsonValue ) ) )*
+                    // InternalScadeEquations.g:11297:4: (otherlv_3= ',' ( (lv_elements_4_0= ruleJsonValue ) ) )*
                     loop272:
                     do {
                         int alt272=2;
@@ -31201,26 +31225,26 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                         switch (alt272) {
                     	case 1 :
-                    	    // InternalScadeEquations.g:11294:5: otherlv_3= ',' ( (lv_elements_4_0= ruleJsonValue ) )
+                    	    // InternalScadeEquations.g:11298:5: otherlv_3= ',' ( (lv_elements_4_0= ruleJsonValue ) )
                     	    {
-                    	    otherlv_3=(Token)match(input,18,FollowSets000.FOLLOW_129); if (state.failed) return current;
+                    	    otherlv_3=(Token)match(input,18,FollowSets000.FOLLOW_131); if (state.failed) return current;
                     	    if ( state.backtracking==0 ) {
 
                     	      					newLeafNode(otherlv_3, grammarAccess.getJsonArrayValueAccess().getCommaKeyword_2_1_0());
                     	      				
                     	    }
-                    	    // InternalScadeEquations.g:11298:5: ( (lv_elements_4_0= ruleJsonValue ) )
-                    	    // InternalScadeEquations.g:11299:6: (lv_elements_4_0= ruleJsonValue )
+                    	    // InternalScadeEquations.g:11302:5: ( (lv_elements_4_0= ruleJsonValue ) )
+                    	    // InternalScadeEquations.g:11303:6: (lv_elements_4_0= ruleJsonValue )
                     	    {
-                    	    // InternalScadeEquations.g:11299:6: (lv_elements_4_0= ruleJsonValue )
-                    	    // InternalScadeEquations.g:11300:7: lv_elements_4_0= ruleJsonValue
+                    	    // InternalScadeEquations.g:11303:6: (lv_elements_4_0= ruleJsonValue )
+                    	    // InternalScadeEquations.g:11304:7: lv_elements_4_0= ruleJsonValue
                     	    {
                     	    if ( state.backtracking==0 ) {
 
                     	      							newCompositeNode(grammarAccess.getJsonArrayValueAccess().getElementsJsonValueParserRuleCall_2_1_1_0());
                     	      						
                     	    }
-                    	    pushFollow(FollowSets000.FOLLOW_131);
+                    	    pushFollow(FollowSets000.FOLLOW_133);
                     	    lv_elements_4_0=ruleJsonValue();
 
                     	    state._fsp--;
@@ -31290,7 +31314,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleJsonValue"
-    // InternalScadeEquations.g:11327:1: entryRuleJsonValue returns [EObject current=null] : iv_ruleJsonValue= ruleJsonValue EOF ;
+    // InternalScadeEquations.g:11331:1: entryRuleJsonValue returns [EObject current=null] : iv_ruleJsonValue= ruleJsonValue EOF ;
     public final EObject entryRuleJsonValue() throws RecognitionException {
         EObject current = null;
 
@@ -31298,8 +31322,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalScadeEquations.g:11327:50: (iv_ruleJsonValue= ruleJsonValue EOF )
-            // InternalScadeEquations.g:11328:2: iv_ruleJsonValue= ruleJsonValue EOF
+            // InternalScadeEquations.g:11331:50: (iv_ruleJsonValue= ruleJsonValue EOF )
+            // InternalScadeEquations.g:11332:2: iv_ruleJsonValue= ruleJsonValue EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getJsonValueRule()); 
@@ -31330,7 +31354,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleJsonValue"
-    // InternalScadeEquations.g:11334:1: ruleJsonValue returns [EObject current=null] : (this_JsonObjectValue_0= ruleJsonObjectValue | this_JsonArrayValue_1= ruleJsonArrayValue | this_NullValue_2= ruleNullValue | this_AnyValue_3= ruleAnyValue ) ;
+    // InternalScadeEquations.g:11338:1: ruleJsonValue returns [EObject current=null] : (this_JsonObjectValue_0= ruleJsonObjectValue | this_JsonArrayValue_1= ruleJsonArrayValue | this_NullValue_2= ruleNullValue | this_AnyValue_3= ruleAnyValue ) ;
     public final EObject ruleJsonValue() throws RecognitionException {
         EObject current = null;
 
@@ -31347,10 +31371,10 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:11340:2: ( (this_JsonObjectValue_0= ruleJsonObjectValue | this_JsonArrayValue_1= ruleJsonArrayValue | this_NullValue_2= ruleNullValue | this_AnyValue_3= ruleAnyValue ) )
-            // InternalScadeEquations.g:11341:2: (this_JsonObjectValue_0= ruleJsonObjectValue | this_JsonArrayValue_1= ruleJsonArrayValue | this_NullValue_2= ruleNullValue | this_AnyValue_3= ruleAnyValue )
+            // InternalScadeEquations.g:11344:2: ( (this_JsonObjectValue_0= ruleJsonObjectValue | this_JsonArrayValue_1= ruleJsonArrayValue | this_NullValue_2= ruleNullValue | this_AnyValue_3= ruleAnyValue ) )
+            // InternalScadeEquations.g:11345:2: (this_JsonObjectValue_0= ruleJsonObjectValue | this_JsonArrayValue_1= ruleJsonArrayValue | this_NullValue_2= ruleNullValue | this_AnyValue_3= ruleAnyValue )
             {
-            // InternalScadeEquations.g:11341:2: (this_JsonObjectValue_0= ruleJsonObjectValue | this_JsonArrayValue_1= ruleJsonArrayValue | this_NullValue_2= ruleNullValue | this_AnyValue_3= ruleAnyValue )
+            // InternalScadeEquations.g:11345:2: (this_JsonObjectValue_0= ruleJsonObjectValue | this_JsonArrayValue_1= ruleJsonArrayValue | this_NullValue_2= ruleNullValue | this_AnyValue_3= ruleAnyValue )
             int alt274=4;
             switch ( input.LA(1) ) {
             case 22:
@@ -31386,7 +31410,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             switch (alt274) {
                 case 1 :
-                    // InternalScadeEquations.g:11342:3: this_JsonObjectValue_0= ruleJsonObjectValue
+                    // InternalScadeEquations.g:11346:3: this_JsonObjectValue_0= ruleJsonObjectValue
                     {
                     if ( state.backtracking==0 ) {
 
@@ -31413,7 +31437,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalScadeEquations.g:11354:3: this_JsonArrayValue_1= ruleJsonArrayValue
+                    // InternalScadeEquations.g:11358:3: this_JsonArrayValue_1= ruleJsonArrayValue
                     {
                     if ( state.backtracking==0 ) {
 
@@ -31440,7 +31464,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalScadeEquations.g:11366:3: this_NullValue_2= ruleNullValue
+                    // InternalScadeEquations.g:11370:3: this_NullValue_2= ruleNullValue
                     {
                     if ( state.backtracking==0 ) {
 
@@ -31467,7 +31491,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // InternalScadeEquations.g:11378:3: this_AnyValue_3= ruleAnyValue
+                    // InternalScadeEquations.g:11382:3: this_AnyValue_3= ruleAnyValue
                     {
                     if ( state.backtracking==0 ) {
 
@@ -31518,7 +31542,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleNullValue"
-    // InternalScadeEquations.g:11393:1: entryRuleNullValue returns [EObject current=null] : iv_ruleNullValue= ruleNullValue EOF ;
+    // InternalScadeEquations.g:11397:1: entryRuleNullValue returns [EObject current=null] : iv_ruleNullValue= ruleNullValue EOF ;
     public final EObject entryRuleNullValue() throws RecognitionException {
         EObject current = null;
 
@@ -31526,8 +31550,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalScadeEquations.g:11393:50: (iv_ruleNullValue= ruleNullValue EOF )
-            // InternalScadeEquations.g:11394:2: iv_ruleNullValue= ruleNullValue EOF
+            // InternalScadeEquations.g:11397:50: (iv_ruleNullValue= ruleNullValue EOF )
+            // InternalScadeEquations.g:11398:2: iv_ruleNullValue= ruleNullValue EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getNullValueRule()); 
@@ -31558,7 +31582,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleNullValue"
-    // InternalScadeEquations.g:11400:1: ruleNullValue returns [EObject current=null] : ( () otherlv_1= 'null' ) ;
+    // InternalScadeEquations.g:11404:1: ruleNullValue returns [EObject current=null] : ( () otherlv_1= 'null' ) ;
     public final EObject ruleNullValue() throws RecognitionException {
         EObject current = null;
 
@@ -31568,14 +31592,14 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:11406:2: ( ( () otherlv_1= 'null' ) )
-            // InternalScadeEquations.g:11407:2: ( () otherlv_1= 'null' )
+            // InternalScadeEquations.g:11410:2: ( ( () otherlv_1= 'null' ) )
+            // InternalScadeEquations.g:11411:2: ( () otherlv_1= 'null' )
             {
-            // InternalScadeEquations.g:11407:2: ( () otherlv_1= 'null' )
-            // InternalScadeEquations.g:11408:3: () otherlv_1= 'null'
+            // InternalScadeEquations.g:11411:2: ( () otherlv_1= 'null' )
+            // InternalScadeEquations.g:11412:3: () otherlv_1= 'null'
             {
-            // InternalScadeEquations.g:11408:3: ()
-            // InternalScadeEquations.g:11409:4: 
+            // InternalScadeEquations.g:11412:3: ()
+            // InternalScadeEquations.g:11413:4: 
             {
             if ( state.backtracking==0 ) {
 
@@ -31623,7 +31647,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleJsonPragma"
-    // InternalScadeEquations.g:11426:1: entryRuleJsonPragma returns [EObject current=null] : iv_ruleJsonPragma= ruleJsonPragma EOF ;
+    // InternalScadeEquations.g:11430:1: entryRuleJsonPragma returns [EObject current=null] : iv_ruleJsonPragma= ruleJsonPragma EOF ;
     public final EObject entryRuleJsonPragma() throws RecognitionException {
         EObject current = null;
 
@@ -31631,8 +31655,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalScadeEquations.g:11426:51: (iv_ruleJsonPragma= ruleJsonPragma EOF )
-            // InternalScadeEquations.g:11427:2: iv_ruleJsonPragma= ruleJsonPragma EOF
+            // InternalScadeEquations.g:11430:51: (iv_ruleJsonPragma= ruleJsonPragma EOF )
+            // InternalScadeEquations.g:11431:2: iv_ruleJsonPragma= ruleJsonPragma EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getJsonPragmaRule()); 
@@ -31663,7 +31687,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleJsonPragma"
-    // InternalScadeEquations.g:11433:1: ruleJsonPragma returns [EObject current=null] : (otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_value_2_0= ruleJsonObjectValue ) ) ) ;
+    // InternalScadeEquations.g:11437:1: ruleJsonPragma returns [EObject current=null] : (otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_value_2_0= ruleJsonObjectValue ) ) ) ;
     public final EObject ruleJsonPragma() throws RecognitionException {
         EObject current = null;
 
@@ -31677,23 +31701,23 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:11439:2: ( (otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_value_2_0= ruleJsonObjectValue ) ) ) )
-            // InternalScadeEquations.g:11440:2: (otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_value_2_0= ruleJsonObjectValue ) ) )
+            // InternalScadeEquations.g:11443:2: ( (otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_value_2_0= ruleJsonObjectValue ) ) ) )
+            // InternalScadeEquations.g:11444:2: (otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_value_2_0= ruleJsonObjectValue ) ) )
             {
-            // InternalScadeEquations.g:11440:2: (otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_value_2_0= ruleJsonObjectValue ) ) )
-            // InternalScadeEquations.g:11441:3: otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_value_2_0= ruleJsonObjectValue ) )
+            // InternalScadeEquations.g:11444:2: (otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_value_2_0= ruleJsonObjectValue ) ) )
+            // InternalScadeEquations.g:11445:3: otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_value_2_0= ruleJsonObjectValue ) )
             {
-            otherlv_0=(Token)match(input,88,FollowSets000.FOLLOW_4); if (state.failed) return current;
+            otherlv_0=(Token)match(input,88,FollowSets000.FOLLOW_95); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               			newLeafNode(otherlv_0, grammarAccess.getJsonPragmaAccess().getNumberSignKeyword_0());
               		
             }
-            // InternalScadeEquations.g:11445:3: ( (lv_name_1_0= ruleExtendedID ) )
-            // InternalScadeEquations.g:11446:4: (lv_name_1_0= ruleExtendedID )
+            // InternalScadeEquations.g:11449:3: ( (lv_name_1_0= ruleExtendedID ) )
+            // InternalScadeEquations.g:11450:4: (lv_name_1_0= ruleExtendedID )
             {
-            // InternalScadeEquations.g:11446:4: (lv_name_1_0= ruleExtendedID )
-            // InternalScadeEquations.g:11447:5: lv_name_1_0= ruleExtendedID
+            // InternalScadeEquations.g:11450:4: (lv_name_1_0= ruleExtendedID )
+            // InternalScadeEquations.g:11451:5: lv_name_1_0= ruleExtendedID
             {
             if ( state.backtracking==0 ) {
 
@@ -31724,11 +31748,11 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalScadeEquations.g:11464:3: ( (lv_value_2_0= ruleJsonObjectValue ) )
-            // InternalScadeEquations.g:11465:4: (lv_value_2_0= ruleJsonObjectValue )
+            // InternalScadeEquations.g:11468:3: ( (lv_value_2_0= ruleJsonObjectValue ) )
+            // InternalScadeEquations.g:11469:4: (lv_value_2_0= ruleJsonObjectValue )
             {
-            // InternalScadeEquations.g:11465:4: (lv_value_2_0= ruleJsonObjectValue )
-            // InternalScadeEquations.g:11466:5: lv_value_2_0= ruleJsonObjectValue
+            // InternalScadeEquations.g:11469:4: (lv_value_2_0= ruleJsonObjectValue )
+            // InternalScadeEquations.g:11470:5: lv_value_2_0= ruleJsonObjectValue
             {
             if ( state.backtracking==0 ) {
 
@@ -31784,7 +31808,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleJsonAnnotation"
-    // InternalScadeEquations.g:11487:1: entryRuleJsonAnnotation returns [EObject current=null] : iv_ruleJsonAnnotation= ruleJsonAnnotation EOF ;
+    // InternalScadeEquations.g:11491:1: entryRuleJsonAnnotation returns [EObject current=null] : iv_ruleJsonAnnotation= ruleJsonAnnotation EOF ;
     public final EObject entryRuleJsonAnnotation() throws RecognitionException {
         EObject current = null;
 
@@ -31792,8 +31816,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalScadeEquations.g:11487:55: (iv_ruleJsonAnnotation= ruleJsonAnnotation EOF )
-            // InternalScadeEquations.g:11488:2: iv_ruleJsonAnnotation= ruleJsonAnnotation EOF
+            // InternalScadeEquations.g:11491:55: (iv_ruleJsonAnnotation= ruleJsonAnnotation EOF )
+            // InternalScadeEquations.g:11492:2: iv_ruleJsonAnnotation= ruleJsonAnnotation EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getJsonAnnotationRule()); 
@@ -31824,7 +31848,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleJsonAnnotation"
-    // InternalScadeEquations.g:11494:1: ruleJsonAnnotation returns [EObject current=null] : (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_value_2_0= ruleJsonObjectValue ) ) ) ;
+    // InternalScadeEquations.g:11498:1: ruleJsonAnnotation returns [EObject current=null] : (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_value_2_0= ruleJsonObjectValue ) ) ) ;
     public final EObject ruleJsonAnnotation() throws RecognitionException {
         EObject current = null;
 
@@ -31838,23 +31862,23 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:11500:2: ( (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_value_2_0= ruleJsonObjectValue ) ) ) )
-            // InternalScadeEquations.g:11501:2: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_value_2_0= ruleJsonObjectValue ) ) )
+            // InternalScadeEquations.g:11504:2: ( (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_value_2_0= ruleJsonObjectValue ) ) ) )
+            // InternalScadeEquations.g:11505:2: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_value_2_0= ruleJsonObjectValue ) ) )
             {
-            // InternalScadeEquations.g:11501:2: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_value_2_0= ruleJsonObjectValue ) ) )
-            // InternalScadeEquations.g:11502:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_value_2_0= ruleJsonObjectValue ) )
+            // InternalScadeEquations.g:11505:2: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_value_2_0= ruleJsonObjectValue ) ) )
+            // InternalScadeEquations.g:11506:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_value_2_0= ruleJsonObjectValue ) )
             {
-            otherlv_0=(Token)match(input,89,FollowSets000.FOLLOW_4); if (state.failed) return current;
+            otherlv_0=(Token)match(input,89,FollowSets000.FOLLOW_95); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               			newLeafNode(otherlv_0, grammarAccess.getJsonAnnotationAccess().getCommercialAtKeyword_0());
               		
             }
-            // InternalScadeEquations.g:11506:3: ( (lv_name_1_0= ruleExtendedID ) )
-            // InternalScadeEquations.g:11507:4: (lv_name_1_0= ruleExtendedID )
+            // InternalScadeEquations.g:11510:3: ( (lv_name_1_0= ruleExtendedID ) )
+            // InternalScadeEquations.g:11511:4: (lv_name_1_0= ruleExtendedID )
             {
-            // InternalScadeEquations.g:11507:4: (lv_name_1_0= ruleExtendedID )
-            // InternalScadeEquations.g:11508:5: lv_name_1_0= ruleExtendedID
+            // InternalScadeEquations.g:11511:4: (lv_name_1_0= ruleExtendedID )
+            // InternalScadeEquations.g:11512:5: lv_name_1_0= ruleExtendedID
             {
             if ( state.backtracking==0 ) {
 
@@ -31885,11 +31909,11 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalScadeEquations.g:11525:3: ( (lv_value_2_0= ruleJsonObjectValue ) )
-            // InternalScadeEquations.g:11526:4: (lv_value_2_0= ruleJsonObjectValue )
+            // InternalScadeEquations.g:11529:3: ( (lv_value_2_0= ruleJsonObjectValue ) )
+            // InternalScadeEquations.g:11530:4: (lv_value_2_0= ruleJsonObjectValue )
             {
-            // InternalScadeEquations.g:11526:4: (lv_value_2_0= ruleJsonObjectValue )
-            // InternalScadeEquations.g:11527:5: lv_value_2_0= ruleJsonObjectValue
+            // InternalScadeEquations.g:11530:4: (lv_value_2_0= ruleJsonObjectValue )
+            // InternalScadeEquations.g:11531:5: lv_value_2_0= ruleJsonObjectValue
             {
             if ( state.backtracking==0 ) {
 
@@ -31945,7 +31969,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleAnnotation"
-    // InternalScadeEquations.g:11548:1: entryRuleAnnotation returns [EObject current=null] : iv_ruleAnnotation= ruleAnnotation EOF ;
+    // InternalScadeEquations.g:11552:1: entryRuleAnnotation returns [EObject current=null] : iv_ruleAnnotation= ruleAnnotation EOF ;
     public final EObject entryRuleAnnotation() throws RecognitionException {
         EObject current = null;
 
@@ -31953,8 +31977,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalScadeEquations.g:11548:51: (iv_ruleAnnotation= ruleAnnotation EOF )
-            // InternalScadeEquations.g:11549:2: iv_ruleAnnotation= ruleAnnotation EOF
+            // InternalScadeEquations.g:11552:51: (iv_ruleAnnotation= ruleAnnotation EOF )
+            // InternalScadeEquations.g:11553:2: iv_ruleAnnotation= ruleAnnotation EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getAnnotationRule()); 
@@ -31985,7 +32009,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleAnnotation"
-    // InternalScadeEquations.g:11555:1: ruleAnnotation returns [EObject current=null] : (this_Annotation_0= superAnnotation | this_JsonAnnotation_1= ruleJsonAnnotation ) ;
+    // InternalScadeEquations.g:11559:1: ruleAnnotation returns [EObject current=null] : (this_Annotation_0= superAnnotation | this_JsonAnnotation_1= ruleJsonAnnotation ) ;
     public final EObject ruleAnnotation() throws RecognitionException {
         EObject current = null;
 
@@ -31998,15 +32022,15 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:11561:2: ( (this_Annotation_0= superAnnotation | this_JsonAnnotation_1= ruleJsonAnnotation ) )
-            // InternalScadeEquations.g:11562:2: (this_Annotation_0= superAnnotation | this_JsonAnnotation_1= ruleJsonAnnotation )
+            // InternalScadeEquations.g:11565:2: ( (this_Annotation_0= superAnnotation | this_JsonAnnotation_1= ruleJsonAnnotation ) )
+            // InternalScadeEquations.g:11566:2: (this_Annotation_0= superAnnotation | this_JsonAnnotation_1= ruleJsonAnnotation )
             {
-            // InternalScadeEquations.g:11562:2: (this_Annotation_0= superAnnotation | this_JsonAnnotation_1= ruleJsonAnnotation )
+            // InternalScadeEquations.g:11566:2: (this_Annotation_0= superAnnotation | this_JsonAnnotation_1= ruleJsonAnnotation )
             int alt275=2;
             alt275 = dfa275.predict(input);
             switch (alt275) {
                 case 1 :
-                    // InternalScadeEquations.g:11563:3: this_Annotation_0= superAnnotation
+                    // InternalScadeEquations.g:11567:3: this_Annotation_0= superAnnotation
                     {
                     if ( state.backtracking==0 ) {
 
@@ -32033,7 +32057,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalScadeEquations.g:11575:3: this_JsonAnnotation_1= ruleJsonAnnotation
+                    // InternalScadeEquations.g:11579:3: this_JsonAnnotation_1= ruleJsonAnnotation
                     {
                     if ( state.backtracking==0 ) {
 
@@ -32084,7 +32108,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleQuotedStringAnnotation"
-    // InternalScadeEquations.g:11590:1: entryRuleQuotedStringAnnotation returns [EObject current=null] : iv_ruleQuotedStringAnnotation= ruleQuotedStringAnnotation EOF ;
+    // InternalScadeEquations.g:11594:1: entryRuleQuotedStringAnnotation returns [EObject current=null] : iv_ruleQuotedStringAnnotation= ruleQuotedStringAnnotation EOF ;
     public final EObject entryRuleQuotedStringAnnotation() throws RecognitionException {
         EObject current = null;
 
@@ -32092,8 +32116,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalScadeEquations.g:11590:63: (iv_ruleQuotedStringAnnotation= ruleQuotedStringAnnotation EOF )
-            // InternalScadeEquations.g:11591:2: iv_ruleQuotedStringAnnotation= ruleQuotedStringAnnotation EOF
+            // InternalScadeEquations.g:11594:63: (iv_ruleQuotedStringAnnotation= ruleQuotedStringAnnotation EOF )
+            // InternalScadeEquations.g:11595:2: iv_ruleQuotedStringAnnotation= ruleQuotedStringAnnotation EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getQuotedStringAnnotationRule()); 
@@ -32124,7 +32148,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleQuotedStringAnnotation"
-    // InternalScadeEquations.g:11597:1: ruleQuotedStringAnnotation returns [EObject current=null] : (this_QuotedStringAnnotation_0= superQuotedStringAnnotation | this_JsonAnnotation_1= ruleJsonAnnotation ) ;
+    // InternalScadeEquations.g:11601:1: ruleQuotedStringAnnotation returns [EObject current=null] : (this_QuotedStringAnnotation_0= superQuotedStringAnnotation | this_JsonAnnotation_1= ruleJsonAnnotation ) ;
     public final EObject ruleQuotedStringAnnotation() throws RecognitionException {
         EObject current = null;
 
@@ -32137,15 +32161,15 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:11603:2: ( (this_QuotedStringAnnotation_0= superQuotedStringAnnotation | this_JsonAnnotation_1= ruleJsonAnnotation ) )
-            // InternalScadeEquations.g:11604:2: (this_QuotedStringAnnotation_0= superQuotedStringAnnotation | this_JsonAnnotation_1= ruleJsonAnnotation )
+            // InternalScadeEquations.g:11607:2: ( (this_QuotedStringAnnotation_0= superQuotedStringAnnotation | this_JsonAnnotation_1= ruleJsonAnnotation ) )
+            // InternalScadeEquations.g:11608:2: (this_QuotedStringAnnotation_0= superQuotedStringAnnotation | this_JsonAnnotation_1= ruleJsonAnnotation )
             {
-            // InternalScadeEquations.g:11604:2: (this_QuotedStringAnnotation_0= superQuotedStringAnnotation | this_JsonAnnotation_1= ruleJsonAnnotation )
+            // InternalScadeEquations.g:11608:2: (this_QuotedStringAnnotation_0= superQuotedStringAnnotation | this_JsonAnnotation_1= ruleJsonAnnotation )
             int alt276=2;
             alt276 = dfa276.predict(input);
             switch (alt276) {
                 case 1 :
-                    // InternalScadeEquations.g:11605:3: this_QuotedStringAnnotation_0= superQuotedStringAnnotation
+                    // InternalScadeEquations.g:11609:3: this_QuotedStringAnnotation_0= superQuotedStringAnnotation
                     {
                     if ( state.backtracking==0 ) {
 
@@ -32172,7 +32196,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalScadeEquations.g:11617:3: this_JsonAnnotation_1= ruleJsonAnnotation
+                    // InternalScadeEquations.g:11621:3: this_JsonAnnotation_1= ruleJsonAnnotation
                     {
                     if ( state.backtracking==0 ) {
 
@@ -32223,7 +32247,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entrySuperAnnotation"
-    // InternalScadeEquations.g:11632:1: entrySuperAnnotation returns [EObject current=null] : iv_superAnnotation= superAnnotation EOF ;
+    // InternalScadeEquations.g:11636:1: entrySuperAnnotation returns [EObject current=null] : iv_superAnnotation= superAnnotation EOF ;
     public final EObject entrySuperAnnotation() throws RecognitionException {
         EObject current = null;
 
@@ -32231,8 +32255,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalScadeEquations.g:11632:52: (iv_superAnnotation= superAnnotation EOF )
-            // InternalScadeEquations.g:11633:2: iv_superAnnotation= superAnnotation EOF
+            // InternalScadeEquations.g:11636:52: (iv_superAnnotation= superAnnotation EOF )
+            // InternalScadeEquations.g:11637:2: iv_superAnnotation= superAnnotation EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getAnnotationsAnnotationRule()); 
@@ -32263,7 +32287,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "superAnnotation"
-    // InternalScadeEquations.g:11639:1: superAnnotation returns [EObject current=null] : (this_CommentAnnotation_0= ruleCommentAnnotation | this_KeyStringValueAnnotation_1= ruleKeyStringValueAnnotation | this_TypedKeyStringValueAnnotation_2= ruleTypedKeyStringValueAnnotation | this_TagAnnotation_3= ruleTagAnnotation ) ;
+    // InternalScadeEquations.g:11643:1: superAnnotation returns [EObject current=null] : (this_CommentAnnotation_0= ruleCommentAnnotation | this_KeyStringValueAnnotation_1= ruleKeyStringValueAnnotation | this_TypedKeyStringValueAnnotation_2= ruleTypedKeyStringValueAnnotation | this_TagAnnotation_3= ruleTagAnnotation ) ;
     public final EObject superAnnotation() throws RecognitionException {
         EObject current = null;
 
@@ -32280,15 +32304,15 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:11645:2: ( (this_CommentAnnotation_0= ruleCommentAnnotation | this_KeyStringValueAnnotation_1= ruleKeyStringValueAnnotation | this_TypedKeyStringValueAnnotation_2= ruleTypedKeyStringValueAnnotation | this_TagAnnotation_3= ruleTagAnnotation ) )
-            // InternalScadeEquations.g:11646:2: (this_CommentAnnotation_0= ruleCommentAnnotation | this_KeyStringValueAnnotation_1= ruleKeyStringValueAnnotation | this_TypedKeyStringValueAnnotation_2= ruleTypedKeyStringValueAnnotation | this_TagAnnotation_3= ruleTagAnnotation )
+            // InternalScadeEquations.g:11649:2: ( (this_CommentAnnotation_0= ruleCommentAnnotation | this_KeyStringValueAnnotation_1= ruleKeyStringValueAnnotation | this_TypedKeyStringValueAnnotation_2= ruleTypedKeyStringValueAnnotation | this_TagAnnotation_3= ruleTagAnnotation ) )
+            // InternalScadeEquations.g:11650:2: (this_CommentAnnotation_0= ruleCommentAnnotation | this_KeyStringValueAnnotation_1= ruleKeyStringValueAnnotation | this_TypedKeyStringValueAnnotation_2= ruleTypedKeyStringValueAnnotation | this_TagAnnotation_3= ruleTagAnnotation )
             {
-            // InternalScadeEquations.g:11646:2: (this_CommentAnnotation_0= ruleCommentAnnotation | this_KeyStringValueAnnotation_1= ruleKeyStringValueAnnotation | this_TypedKeyStringValueAnnotation_2= ruleTypedKeyStringValueAnnotation | this_TagAnnotation_3= ruleTagAnnotation )
+            // InternalScadeEquations.g:11650:2: (this_CommentAnnotation_0= ruleCommentAnnotation | this_KeyStringValueAnnotation_1= ruleKeyStringValueAnnotation | this_TypedKeyStringValueAnnotation_2= ruleTypedKeyStringValueAnnotation | this_TagAnnotation_3= ruleTagAnnotation )
             int alt277=4;
             alt277 = dfa277.predict(input);
             switch (alt277) {
                 case 1 :
-                    // InternalScadeEquations.g:11647:3: this_CommentAnnotation_0= ruleCommentAnnotation
+                    // InternalScadeEquations.g:11651:3: this_CommentAnnotation_0= ruleCommentAnnotation
                     {
                     if ( state.backtracking==0 ) {
 
@@ -32315,7 +32339,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalScadeEquations.g:11659:3: this_KeyStringValueAnnotation_1= ruleKeyStringValueAnnotation
+                    // InternalScadeEquations.g:11663:3: this_KeyStringValueAnnotation_1= ruleKeyStringValueAnnotation
                     {
                     if ( state.backtracking==0 ) {
 
@@ -32342,7 +32366,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalScadeEquations.g:11671:3: this_TypedKeyStringValueAnnotation_2= ruleTypedKeyStringValueAnnotation
+                    // InternalScadeEquations.g:11675:3: this_TypedKeyStringValueAnnotation_2= ruleTypedKeyStringValueAnnotation
                     {
                     if ( state.backtracking==0 ) {
 
@@ -32369,7 +32393,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // InternalScadeEquations.g:11683:3: this_TagAnnotation_3= ruleTagAnnotation
+                    // InternalScadeEquations.g:11687:3: this_TagAnnotation_3= ruleTagAnnotation
                     {
                     if ( state.backtracking==0 ) {
 
@@ -32420,7 +32444,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entrySuperPragma"
-    // InternalScadeEquations.g:11698:1: entrySuperPragma returns [EObject current=null] : iv_superPragma= superPragma EOF ;
+    // InternalScadeEquations.g:11702:1: entrySuperPragma returns [EObject current=null] : iv_superPragma= superPragma EOF ;
     public final EObject entrySuperPragma() throws RecognitionException {
         EObject current = null;
 
@@ -32428,8 +32452,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalScadeEquations.g:11698:48: (iv_superPragma= superPragma EOF )
-            // InternalScadeEquations.g:11699:2: iv_superPragma= superPragma EOF
+            // InternalScadeEquations.g:11702:48: (iv_superPragma= superPragma EOF )
+            // InternalScadeEquations.g:11703:2: iv_superPragma= superPragma EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getAnnotationsPragmaRule()); 
@@ -32460,7 +32484,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "superPragma"
-    // InternalScadeEquations.g:11705:1: superPragma returns [EObject current=null] : (this_StringPragma_0= ruleStringPragma | this_PragmaTag_1= rulePragmaTag ) ;
+    // InternalScadeEquations.g:11709:1: superPragma returns [EObject current=null] : (this_StringPragma_0= ruleStringPragma | this_PragmaTag_1= rulePragmaTag ) ;
     public final EObject superPragma() throws RecognitionException {
         EObject current = null;
 
@@ -32473,15 +32497,15 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:11711:2: ( (this_StringPragma_0= ruleStringPragma | this_PragmaTag_1= rulePragmaTag ) )
-            // InternalScadeEquations.g:11712:2: (this_StringPragma_0= ruleStringPragma | this_PragmaTag_1= rulePragmaTag )
+            // InternalScadeEquations.g:11715:2: ( (this_StringPragma_0= ruleStringPragma | this_PragmaTag_1= rulePragmaTag ) )
+            // InternalScadeEquations.g:11716:2: (this_StringPragma_0= ruleStringPragma | this_PragmaTag_1= rulePragmaTag )
             {
-            // InternalScadeEquations.g:11712:2: (this_StringPragma_0= ruleStringPragma | this_PragmaTag_1= rulePragmaTag )
+            // InternalScadeEquations.g:11716:2: (this_StringPragma_0= ruleStringPragma | this_PragmaTag_1= rulePragmaTag )
             int alt278=2;
             alt278 = dfa278.predict(input);
             switch (alt278) {
                 case 1 :
-                    // InternalScadeEquations.g:11713:3: this_StringPragma_0= ruleStringPragma
+                    // InternalScadeEquations.g:11717:3: this_StringPragma_0= ruleStringPragma
                     {
                     if ( state.backtracking==0 ) {
 
@@ -32508,7 +32532,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalScadeEquations.g:11725:3: this_PragmaTag_1= rulePragmaTag
+                    // InternalScadeEquations.g:11729:3: this_PragmaTag_1= rulePragmaTag
                     {
                     if ( state.backtracking==0 ) {
 
@@ -32559,7 +32583,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entrySuperValuedAnnotation"
-    // InternalScadeEquations.g:11740:1: entrySuperValuedAnnotation returns [EObject current=null] : iv_superValuedAnnotation= superValuedAnnotation EOF ;
+    // InternalScadeEquations.g:11744:1: entrySuperValuedAnnotation returns [EObject current=null] : iv_superValuedAnnotation= superValuedAnnotation EOF ;
     public final EObject entrySuperValuedAnnotation() throws RecognitionException {
         EObject current = null;
 
@@ -32567,8 +32591,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalScadeEquations.g:11740:58: (iv_superValuedAnnotation= superValuedAnnotation EOF )
-            // InternalScadeEquations.g:11741:2: iv_superValuedAnnotation= superValuedAnnotation EOF
+            // InternalScadeEquations.g:11744:58: (iv_superValuedAnnotation= superValuedAnnotation EOF )
+            // InternalScadeEquations.g:11745:2: iv_superValuedAnnotation= superValuedAnnotation EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getAnnotationsValuedAnnotationRule()); 
@@ -32599,7 +32623,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "superValuedAnnotation"
-    // InternalScadeEquations.g:11747:1: superValuedAnnotation returns [EObject current=null] : (this_CommentAnnotation_0= ruleCommentAnnotation | this_KeyStringValueAnnotation_1= ruleKeyStringValueAnnotation | this_TypedKeyStringValueAnnotation_2= ruleTypedKeyStringValueAnnotation ) ;
+    // InternalScadeEquations.g:11751:1: superValuedAnnotation returns [EObject current=null] : (this_CommentAnnotation_0= ruleCommentAnnotation | this_KeyStringValueAnnotation_1= ruleKeyStringValueAnnotation | this_TypedKeyStringValueAnnotation_2= ruleTypedKeyStringValueAnnotation ) ;
     public final EObject superValuedAnnotation() throws RecognitionException {
         EObject current = null;
 
@@ -32614,15 +32638,15 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:11753:2: ( (this_CommentAnnotation_0= ruleCommentAnnotation | this_KeyStringValueAnnotation_1= ruleKeyStringValueAnnotation | this_TypedKeyStringValueAnnotation_2= ruleTypedKeyStringValueAnnotation ) )
-            // InternalScadeEquations.g:11754:2: (this_CommentAnnotation_0= ruleCommentAnnotation | this_KeyStringValueAnnotation_1= ruleKeyStringValueAnnotation | this_TypedKeyStringValueAnnotation_2= ruleTypedKeyStringValueAnnotation )
+            // InternalScadeEquations.g:11757:2: ( (this_CommentAnnotation_0= ruleCommentAnnotation | this_KeyStringValueAnnotation_1= ruleKeyStringValueAnnotation | this_TypedKeyStringValueAnnotation_2= ruleTypedKeyStringValueAnnotation ) )
+            // InternalScadeEquations.g:11758:2: (this_CommentAnnotation_0= ruleCommentAnnotation | this_KeyStringValueAnnotation_1= ruleKeyStringValueAnnotation | this_TypedKeyStringValueAnnotation_2= ruleTypedKeyStringValueAnnotation )
             {
-            // InternalScadeEquations.g:11754:2: (this_CommentAnnotation_0= ruleCommentAnnotation | this_KeyStringValueAnnotation_1= ruleKeyStringValueAnnotation | this_TypedKeyStringValueAnnotation_2= ruleTypedKeyStringValueAnnotation )
+            // InternalScadeEquations.g:11758:2: (this_CommentAnnotation_0= ruleCommentAnnotation | this_KeyStringValueAnnotation_1= ruleKeyStringValueAnnotation | this_TypedKeyStringValueAnnotation_2= ruleTypedKeyStringValueAnnotation )
             int alt279=3;
             alt279 = dfa279.predict(input);
             switch (alt279) {
                 case 1 :
-                    // InternalScadeEquations.g:11755:3: this_CommentAnnotation_0= ruleCommentAnnotation
+                    // InternalScadeEquations.g:11759:3: this_CommentAnnotation_0= ruleCommentAnnotation
                     {
                     if ( state.backtracking==0 ) {
 
@@ -32649,7 +32673,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalScadeEquations.g:11767:3: this_KeyStringValueAnnotation_1= ruleKeyStringValueAnnotation
+                    // InternalScadeEquations.g:11771:3: this_KeyStringValueAnnotation_1= ruleKeyStringValueAnnotation
                     {
                     if ( state.backtracking==0 ) {
 
@@ -32676,7 +32700,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalScadeEquations.g:11779:3: this_TypedKeyStringValueAnnotation_2= ruleTypedKeyStringValueAnnotation
+                    // InternalScadeEquations.g:11783:3: this_TypedKeyStringValueAnnotation_2= ruleTypedKeyStringValueAnnotation
                     {
                     if ( state.backtracking==0 ) {
 
@@ -32727,7 +32751,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entrySuperQuotedStringAnnotation"
-    // InternalScadeEquations.g:11794:1: entrySuperQuotedStringAnnotation returns [EObject current=null] : iv_superQuotedStringAnnotation= superQuotedStringAnnotation EOF ;
+    // InternalScadeEquations.g:11798:1: entrySuperQuotedStringAnnotation returns [EObject current=null] : iv_superQuotedStringAnnotation= superQuotedStringAnnotation EOF ;
     public final EObject entrySuperQuotedStringAnnotation() throws RecognitionException {
         EObject current = null;
 
@@ -32735,8 +32759,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalScadeEquations.g:11794:64: (iv_superQuotedStringAnnotation= superQuotedStringAnnotation EOF )
-            // InternalScadeEquations.g:11795:2: iv_superQuotedStringAnnotation= superQuotedStringAnnotation EOF
+            // InternalScadeEquations.g:11798:64: (iv_superQuotedStringAnnotation= superQuotedStringAnnotation EOF )
+            // InternalScadeEquations.g:11799:2: iv_superQuotedStringAnnotation= superQuotedStringAnnotation EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getAnnotationsQuotedStringAnnotationRule()); 
@@ -32767,7 +32791,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "superQuotedStringAnnotation"
-    // InternalScadeEquations.g:11801:1: superQuotedStringAnnotation returns [EObject current=null] : (this_CommentAnnotation_0= ruleCommentAnnotation | this_QuotedKeyStringValueAnnotation_1= ruleQuotedKeyStringValueAnnotation | this_QuotedTypedKeyStringValueAnnotation_2= ruleQuotedTypedKeyStringValueAnnotation | this_TagAnnotation_3= ruleTagAnnotation ) ;
+    // InternalScadeEquations.g:11805:1: superQuotedStringAnnotation returns [EObject current=null] : (this_CommentAnnotation_0= ruleCommentAnnotation | this_QuotedKeyStringValueAnnotation_1= ruleQuotedKeyStringValueAnnotation | this_QuotedTypedKeyStringValueAnnotation_2= ruleQuotedTypedKeyStringValueAnnotation | this_TagAnnotation_3= ruleTagAnnotation ) ;
     public final EObject superQuotedStringAnnotation() throws RecognitionException {
         EObject current = null;
 
@@ -32784,15 +32808,15 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:11807:2: ( (this_CommentAnnotation_0= ruleCommentAnnotation | this_QuotedKeyStringValueAnnotation_1= ruleQuotedKeyStringValueAnnotation | this_QuotedTypedKeyStringValueAnnotation_2= ruleQuotedTypedKeyStringValueAnnotation | this_TagAnnotation_3= ruleTagAnnotation ) )
-            // InternalScadeEquations.g:11808:2: (this_CommentAnnotation_0= ruleCommentAnnotation | this_QuotedKeyStringValueAnnotation_1= ruleQuotedKeyStringValueAnnotation | this_QuotedTypedKeyStringValueAnnotation_2= ruleQuotedTypedKeyStringValueAnnotation | this_TagAnnotation_3= ruleTagAnnotation )
+            // InternalScadeEquations.g:11811:2: ( (this_CommentAnnotation_0= ruleCommentAnnotation | this_QuotedKeyStringValueAnnotation_1= ruleQuotedKeyStringValueAnnotation | this_QuotedTypedKeyStringValueAnnotation_2= ruleQuotedTypedKeyStringValueAnnotation | this_TagAnnotation_3= ruleTagAnnotation ) )
+            // InternalScadeEquations.g:11812:2: (this_CommentAnnotation_0= ruleCommentAnnotation | this_QuotedKeyStringValueAnnotation_1= ruleQuotedKeyStringValueAnnotation | this_QuotedTypedKeyStringValueAnnotation_2= ruleQuotedTypedKeyStringValueAnnotation | this_TagAnnotation_3= ruleTagAnnotation )
             {
-            // InternalScadeEquations.g:11808:2: (this_CommentAnnotation_0= ruleCommentAnnotation | this_QuotedKeyStringValueAnnotation_1= ruleQuotedKeyStringValueAnnotation | this_QuotedTypedKeyStringValueAnnotation_2= ruleQuotedTypedKeyStringValueAnnotation | this_TagAnnotation_3= ruleTagAnnotation )
+            // InternalScadeEquations.g:11812:2: (this_CommentAnnotation_0= ruleCommentAnnotation | this_QuotedKeyStringValueAnnotation_1= ruleQuotedKeyStringValueAnnotation | this_QuotedTypedKeyStringValueAnnotation_2= ruleQuotedTypedKeyStringValueAnnotation | this_TagAnnotation_3= ruleTagAnnotation )
             int alt280=4;
             alt280 = dfa280.predict(input);
             switch (alt280) {
                 case 1 :
-                    // InternalScadeEquations.g:11809:3: this_CommentAnnotation_0= ruleCommentAnnotation
+                    // InternalScadeEquations.g:11813:3: this_CommentAnnotation_0= ruleCommentAnnotation
                     {
                     if ( state.backtracking==0 ) {
 
@@ -32819,7 +32843,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalScadeEquations.g:11821:3: this_QuotedKeyStringValueAnnotation_1= ruleQuotedKeyStringValueAnnotation
+                    // InternalScadeEquations.g:11825:3: this_QuotedKeyStringValueAnnotation_1= ruleQuotedKeyStringValueAnnotation
                     {
                     if ( state.backtracking==0 ) {
 
@@ -32846,7 +32870,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalScadeEquations.g:11833:3: this_QuotedTypedKeyStringValueAnnotation_2= ruleQuotedTypedKeyStringValueAnnotation
+                    // InternalScadeEquations.g:11837:3: this_QuotedTypedKeyStringValueAnnotation_2= ruleQuotedTypedKeyStringValueAnnotation
                     {
                     if ( state.backtracking==0 ) {
 
@@ -32873,7 +32897,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // InternalScadeEquations.g:11845:3: this_TagAnnotation_3= ruleTagAnnotation
+                    // InternalScadeEquations.g:11849:3: this_TagAnnotation_3= ruleTagAnnotation
                     {
                     if ( state.backtracking==0 ) {
 
@@ -32924,7 +32948,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleCommentAnnotation"
-    // InternalScadeEquations.g:11860:1: entryRuleCommentAnnotation returns [EObject current=null] : iv_ruleCommentAnnotation= ruleCommentAnnotation EOF ;
+    // InternalScadeEquations.g:11864:1: entryRuleCommentAnnotation returns [EObject current=null] : iv_ruleCommentAnnotation= ruleCommentAnnotation EOF ;
     public final EObject entryRuleCommentAnnotation() throws RecognitionException {
         EObject current = null;
 
@@ -32932,8 +32956,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalScadeEquations.g:11860:58: (iv_ruleCommentAnnotation= ruleCommentAnnotation EOF )
-            // InternalScadeEquations.g:11861:2: iv_ruleCommentAnnotation= ruleCommentAnnotation EOF
+            // InternalScadeEquations.g:11864:58: (iv_ruleCommentAnnotation= ruleCommentAnnotation EOF )
+            // InternalScadeEquations.g:11865:2: iv_ruleCommentAnnotation= ruleCommentAnnotation EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getCommentAnnotationRule()); 
@@ -32964,7 +32988,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleCommentAnnotation"
-    // InternalScadeEquations.g:11867:1: ruleCommentAnnotation returns [EObject current=null] : ( (lv_values_0_0= RULE_COMMENT_ANNOTATION ) ) ;
+    // InternalScadeEquations.g:11871:1: ruleCommentAnnotation returns [EObject current=null] : ( (lv_values_0_0= RULE_COMMENT_ANNOTATION ) ) ;
     public final EObject ruleCommentAnnotation() throws RecognitionException {
         EObject current = null;
 
@@ -32974,14 +32998,14 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:11873:2: ( ( (lv_values_0_0= RULE_COMMENT_ANNOTATION ) ) )
-            // InternalScadeEquations.g:11874:2: ( (lv_values_0_0= RULE_COMMENT_ANNOTATION ) )
+            // InternalScadeEquations.g:11877:2: ( ( (lv_values_0_0= RULE_COMMENT_ANNOTATION ) ) )
+            // InternalScadeEquations.g:11878:2: ( (lv_values_0_0= RULE_COMMENT_ANNOTATION ) )
             {
-            // InternalScadeEquations.g:11874:2: ( (lv_values_0_0= RULE_COMMENT_ANNOTATION ) )
-            // InternalScadeEquations.g:11875:3: (lv_values_0_0= RULE_COMMENT_ANNOTATION )
+            // InternalScadeEquations.g:11878:2: ( (lv_values_0_0= RULE_COMMENT_ANNOTATION ) )
+            // InternalScadeEquations.g:11879:3: (lv_values_0_0= RULE_COMMENT_ANNOTATION )
             {
-            // InternalScadeEquations.g:11875:3: (lv_values_0_0= RULE_COMMENT_ANNOTATION )
-            // InternalScadeEquations.g:11876:4: lv_values_0_0= RULE_COMMENT_ANNOTATION
+            // InternalScadeEquations.g:11879:3: (lv_values_0_0= RULE_COMMENT_ANNOTATION )
+            // InternalScadeEquations.g:11880:4: lv_values_0_0= RULE_COMMENT_ANNOTATION
             {
             lv_values_0_0=(Token)match(input,RULE_COMMENT_ANNOTATION,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -33029,7 +33053,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleCommentAnnotatonSL"
-    // InternalScadeEquations.g:11895:1: entryRuleCommentAnnotatonSL returns [EObject current=null] : iv_ruleCommentAnnotatonSL= ruleCommentAnnotatonSL EOF ;
+    // InternalScadeEquations.g:11899:1: entryRuleCommentAnnotatonSL returns [EObject current=null] : iv_ruleCommentAnnotatonSL= ruleCommentAnnotatonSL EOF ;
     public final EObject entryRuleCommentAnnotatonSL() throws RecognitionException {
         EObject current = null;
 
@@ -33037,8 +33061,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalScadeEquations.g:11895:59: (iv_ruleCommentAnnotatonSL= ruleCommentAnnotatonSL EOF )
-            // InternalScadeEquations.g:11896:2: iv_ruleCommentAnnotatonSL= ruleCommentAnnotatonSL EOF
+            // InternalScadeEquations.g:11899:59: (iv_ruleCommentAnnotatonSL= ruleCommentAnnotatonSL EOF )
+            // InternalScadeEquations.g:11900:2: iv_ruleCommentAnnotatonSL= ruleCommentAnnotatonSL EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getCommentAnnotatonSLRule()); 
@@ -33069,7 +33093,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleCommentAnnotatonSL"
-    // InternalScadeEquations.g:11902:1: ruleCommentAnnotatonSL returns [EObject current=null] : ( (lv_values_0_0= RULE_SL_COMMENT_ANNOTATION ) ) ;
+    // InternalScadeEquations.g:11906:1: ruleCommentAnnotatonSL returns [EObject current=null] : ( (lv_values_0_0= RULE_SL_COMMENT_ANNOTATION ) ) ;
     public final EObject ruleCommentAnnotatonSL() throws RecognitionException {
         EObject current = null;
 
@@ -33079,14 +33103,14 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:11908:2: ( ( (lv_values_0_0= RULE_SL_COMMENT_ANNOTATION ) ) )
-            // InternalScadeEquations.g:11909:2: ( (lv_values_0_0= RULE_SL_COMMENT_ANNOTATION ) )
+            // InternalScadeEquations.g:11912:2: ( ( (lv_values_0_0= RULE_SL_COMMENT_ANNOTATION ) ) )
+            // InternalScadeEquations.g:11913:2: ( (lv_values_0_0= RULE_SL_COMMENT_ANNOTATION ) )
             {
-            // InternalScadeEquations.g:11909:2: ( (lv_values_0_0= RULE_SL_COMMENT_ANNOTATION ) )
-            // InternalScadeEquations.g:11910:3: (lv_values_0_0= RULE_SL_COMMENT_ANNOTATION )
+            // InternalScadeEquations.g:11913:2: ( (lv_values_0_0= RULE_SL_COMMENT_ANNOTATION ) )
+            // InternalScadeEquations.g:11914:3: (lv_values_0_0= RULE_SL_COMMENT_ANNOTATION )
             {
-            // InternalScadeEquations.g:11910:3: (lv_values_0_0= RULE_SL_COMMENT_ANNOTATION )
-            // InternalScadeEquations.g:11911:4: lv_values_0_0= RULE_SL_COMMENT_ANNOTATION
+            // InternalScadeEquations.g:11914:3: (lv_values_0_0= RULE_SL_COMMENT_ANNOTATION )
+            // InternalScadeEquations.g:11915:4: lv_values_0_0= RULE_SL_COMMENT_ANNOTATION
             {
             lv_values_0_0=(Token)match(input,RULE_SL_COMMENT_ANNOTATION,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -33134,7 +33158,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleTagAnnotation"
-    // InternalScadeEquations.g:11930:1: entryRuleTagAnnotation returns [EObject current=null] : iv_ruleTagAnnotation= ruleTagAnnotation EOF ;
+    // InternalScadeEquations.g:11934:1: entryRuleTagAnnotation returns [EObject current=null] : iv_ruleTagAnnotation= ruleTagAnnotation EOF ;
     public final EObject entryRuleTagAnnotation() throws RecognitionException {
         EObject current = null;
 
@@ -33142,8 +33166,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalScadeEquations.g:11930:54: (iv_ruleTagAnnotation= ruleTagAnnotation EOF )
-            // InternalScadeEquations.g:11931:2: iv_ruleTagAnnotation= ruleTagAnnotation EOF
+            // InternalScadeEquations.g:11934:54: (iv_ruleTagAnnotation= ruleTagAnnotation EOF )
+            // InternalScadeEquations.g:11935:2: iv_ruleTagAnnotation= ruleTagAnnotation EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getTagAnnotationRule()); 
@@ -33174,7 +33198,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleTagAnnotation"
-    // InternalScadeEquations.g:11937:1: ruleTagAnnotation returns [EObject current=null] : (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ) ;
+    // InternalScadeEquations.g:11941:1: ruleTagAnnotation returns [EObject current=null] : (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ) ;
     public final EObject ruleTagAnnotation() throws RecognitionException {
         EObject current = null;
 
@@ -33186,23 +33210,23 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:11943:2: ( (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ) )
-            // InternalScadeEquations.g:11944:2: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) )
+            // InternalScadeEquations.g:11947:2: ( (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ) )
+            // InternalScadeEquations.g:11948:2: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) )
             {
-            // InternalScadeEquations.g:11944:2: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) )
-            // InternalScadeEquations.g:11945:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) )
+            // InternalScadeEquations.g:11948:2: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) )
+            // InternalScadeEquations.g:11949:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) )
             {
-            otherlv_0=(Token)match(input,89,FollowSets000.FOLLOW_4); if (state.failed) return current;
+            otherlv_0=(Token)match(input,89,FollowSets000.FOLLOW_95); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               			newLeafNode(otherlv_0, grammarAccess.getTagAnnotationAccess().getCommercialAtKeyword_0());
               		
             }
-            // InternalScadeEquations.g:11949:3: ( (lv_name_1_0= ruleExtendedID ) )
-            // InternalScadeEquations.g:11950:4: (lv_name_1_0= ruleExtendedID )
+            // InternalScadeEquations.g:11953:3: ( (lv_name_1_0= ruleExtendedID ) )
+            // InternalScadeEquations.g:11954:4: (lv_name_1_0= ruleExtendedID )
             {
-            // InternalScadeEquations.g:11950:4: (lv_name_1_0= ruleExtendedID )
-            // InternalScadeEquations.g:11951:5: lv_name_1_0= ruleExtendedID
+            // InternalScadeEquations.g:11954:4: (lv_name_1_0= ruleExtendedID )
+            // InternalScadeEquations.g:11955:5: lv_name_1_0= ruleExtendedID
             {
             if ( state.backtracking==0 ) {
 
@@ -33258,7 +33282,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRulePragmaTag"
-    // InternalScadeEquations.g:11972:1: entryRulePragmaTag returns [EObject current=null] : iv_rulePragmaTag= rulePragmaTag EOF ;
+    // InternalScadeEquations.g:11976:1: entryRulePragmaTag returns [EObject current=null] : iv_rulePragmaTag= rulePragmaTag EOF ;
     public final EObject entryRulePragmaTag() throws RecognitionException {
         EObject current = null;
 
@@ -33266,8 +33290,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalScadeEquations.g:11972:50: (iv_rulePragmaTag= rulePragmaTag EOF )
-            // InternalScadeEquations.g:11973:2: iv_rulePragmaTag= rulePragmaTag EOF
+            // InternalScadeEquations.g:11976:50: (iv_rulePragmaTag= rulePragmaTag EOF )
+            // InternalScadeEquations.g:11977:2: iv_rulePragmaTag= rulePragmaTag EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getPragmaTagRule()); 
@@ -33298,7 +33322,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "rulePragmaTag"
-    // InternalScadeEquations.g:11979:1: rulePragmaTag returns [EObject current=null] : (otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) ) ;
+    // InternalScadeEquations.g:11983:1: rulePragmaTag returns [EObject current=null] : (otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) ) ;
     public final EObject rulePragmaTag() throws RecognitionException {
         EObject current = null;
 
@@ -33310,23 +33334,23 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:11985:2: ( (otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) ) )
-            // InternalScadeEquations.g:11986:2: (otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) )
+            // InternalScadeEquations.g:11989:2: ( (otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) ) )
+            // InternalScadeEquations.g:11990:2: (otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) )
             {
-            // InternalScadeEquations.g:11986:2: (otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) )
-            // InternalScadeEquations.g:11987:3: otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) )
+            // InternalScadeEquations.g:11990:2: (otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) )
+            // InternalScadeEquations.g:11991:3: otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) )
             {
-            otherlv_0=(Token)match(input,88,FollowSets000.FOLLOW_4); if (state.failed) return current;
+            otherlv_0=(Token)match(input,88,FollowSets000.FOLLOW_95); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               			newLeafNode(otherlv_0, grammarAccess.getPragmaTagAccess().getNumberSignKeyword_0());
               		
             }
-            // InternalScadeEquations.g:11991:3: ( (lv_name_1_0= ruleExtendedID ) )
-            // InternalScadeEquations.g:11992:4: (lv_name_1_0= ruleExtendedID )
+            // InternalScadeEquations.g:11995:3: ( (lv_name_1_0= ruleExtendedID ) )
+            // InternalScadeEquations.g:11996:4: (lv_name_1_0= ruleExtendedID )
             {
-            // InternalScadeEquations.g:11992:4: (lv_name_1_0= ruleExtendedID )
-            // InternalScadeEquations.g:11993:5: lv_name_1_0= ruleExtendedID
+            // InternalScadeEquations.g:11996:4: (lv_name_1_0= ruleExtendedID )
+            // InternalScadeEquations.g:11997:5: lv_name_1_0= ruleExtendedID
             {
             if ( state.backtracking==0 ) {
 
@@ -33382,7 +33406,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleKeyStringValueAnnotation"
-    // InternalScadeEquations.g:12014:1: entryRuleKeyStringValueAnnotation returns [EObject current=null] : iv_ruleKeyStringValueAnnotation= ruleKeyStringValueAnnotation EOF ;
+    // InternalScadeEquations.g:12018:1: entryRuleKeyStringValueAnnotation returns [EObject current=null] : iv_ruleKeyStringValueAnnotation= ruleKeyStringValueAnnotation EOF ;
     public final EObject entryRuleKeyStringValueAnnotation() throws RecognitionException {
         EObject current = null;
 
@@ -33390,8 +33414,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalScadeEquations.g:12014:65: (iv_ruleKeyStringValueAnnotation= ruleKeyStringValueAnnotation EOF )
-            // InternalScadeEquations.g:12015:2: iv_ruleKeyStringValueAnnotation= ruleKeyStringValueAnnotation EOF
+            // InternalScadeEquations.g:12018:65: (iv_ruleKeyStringValueAnnotation= ruleKeyStringValueAnnotation EOF )
+            // InternalScadeEquations.g:12019:2: iv_ruleKeyStringValueAnnotation= ruleKeyStringValueAnnotation EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getKeyStringValueAnnotationRule()); 
@@ -33422,7 +33446,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleKeyStringValueAnnotation"
-    // InternalScadeEquations.g:12021:1: ruleKeyStringValueAnnotation returns [EObject current=null] : (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringAllTypes ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )* ) ;
+    // InternalScadeEquations.g:12025:1: ruleKeyStringValueAnnotation returns [EObject current=null] : (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringAllTypes ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )* ) ;
     public final EObject ruleKeyStringValueAnnotation() throws RecognitionException {
         EObject current = null;
 
@@ -33439,30 +33463,30 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:12027:2: ( (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringAllTypes ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )* ) )
-            // InternalScadeEquations.g:12028:2: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringAllTypes ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )* )
+            // InternalScadeEquations.g:12031:2: ( (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringAllTypes ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )* ) )
+            // InternalScadeEquations.g:12032:2: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringAllTypes ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )* )
             {
-            // InternalScadeEquations.g:12028:2: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringAllTypes ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )* )
-            // InternalScadeEquations.g:12029:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringAllTypes ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )*
+            // InternalScadeEquations.g:12032:2: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringAllTypes ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )* )
+            // InternalScadeEquations.g:12033:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringAllTypes ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )*
             {
-            otherlv_0=(Token)match(input,89,FollowSets000.FOLLOW_4); if (state.failed) return current;
+            otherlv_0=(Token)match(input,89,FollowSets000.FOLLOW_95); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               			newLeafNode(otherlv_0, grammarAccess.getKeyStringValueAnnotationAccess().getCommercialAtKeyword_0());
               		
             }
-            // InternalScadeEquations.g:12033:3: ( (lv_name_1_0= ruleExtendedID ) )
-            // InternalScadeEquations.g:12034:4: (lv_name_1_0= ruleExtendedID )
+            // InternalScadeEquations.g:12037:3: ( (lv_name_1_0= ruleExtendedID ) )
+            // InternalScadeEquations.g:12038:4: (lv_name_1_0= ruleExtendedID )
             {
-            // InternalScadeEquations.g:12034:4: (lv_name_1_0= ruleExtendedID )
-            // InternalScadeEquations.g:12035:5: lv_name_1_0= ruleExtendedID
+            // InternalScadeEquations.g:12038:4: (lv_name_1_0= ruleExtendedID )
+            // InternalScadeEquations.g:12039:5: lv_name_1_0= ruleExtendedID
             {
             if ( state.backtracking==0 ) {
 
               					newCompositeNode(grammarAccess.getKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0());
               				
             }
-            pushFollow(FollowSets000.FOLLOW_132);
+            pushFollow(FollowSets000.FOLLOW_134);
             lv_name_1_0=ruleExtendedID();
 
             state._fsp--;
@@ -33486,18 +33510,18 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalScadeEquations.g:12052:3: ( (lv_values_2_0= ruleEStringAllTypes ) )
-            // InternalScadeEquations.g:12053:4: (lv_values_2_0= ruleEStringAllTypes )
+            // InternalScadeEquations.g:12056:3: ( (lv_values_2_0= ruleEStringAllTypes ) )
+            // InternalScadeEquations.g:12057:4: (lv_values_2_0= ruleEStringAllTypes )
             {
-            // InternalScadeEquations.g:12053:4: (lv_values_2_0= ruleEStringAllTypes )
-            // InternalScadeEquations.g:12054:5: lv_values_2_0= ruleEStringAllTypes
+            // InternalScadeEquations.g:12057:4: (lv_values_2_0= ruleEStringAllTypes )
+            // InternalScadeEquations.g:12058:5: lv_values_2_0= ruleEStringAllTypes
             {
             if ( state.backtracking==0 ) {
 
               					newCompositeNode(grammarAccess.getKeyStringValueAnnotationAccess().getValuesEStringAllTypesParserRuleCall_2_0());
               				
             }
-            pushFollow(FollowSets000.FOLLOW_133);
+            pushFollow(FollowSets000.FOLLOW_135);
             lv_values_2_0=ruleEStringAllTypes();
 
             state._fsp--;
@@ -33521,7 +33545,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalScadeEquations.g:12071:3: (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )*
+            // InternalScadeEquations.g:12075:3: (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )*
             loop281:
             do {
                 int alt281=2;
@@ -33534,26 +33558,26 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                 switch (alt281) {
             	case 1 :
-            	    // InternalScadeEquations.g:12072:4: otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) )
+            	    // InternalScadeEquations.g:12076:4: otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) )
             	    {
-            	    otherlv_3=(Token)match(input,18,FollowSets000.FOLLOW_132); if (state.failed) return current;
+            	    otherlv_3=(Token)match(input,18,FollowSets000.FOLLOW_134); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	      				newLeafNode(otherlv_3, grammarAccess.getKeyStringValueAnnotationAccess().getCommaKeyword_3_0());
             	      			
             	    }
-            	    // InternalScadeEquations.g:12076:4: ( (lv_values_4_0= ruleEStringAllTypes ) )
-            	    // InternalScadeEquations.g:12077:5: (lv_values_4_0= ruleEStringAllTypes )
+            	    // InternalScadeEquations.g:12080:4: ( (lv_values_4_0= ruleEStringAllTypes ) )
+            	    // InternalScadeEquations.g:12081:5: (lv_values_4_0= ruleEStringAllTypes )
             	    {
-            	    // InternalScadeEquations.g:12077:5: (lv_values_4_0= ruleEStringAllTypes )
-            	    // InternalScadeEquations.g:12078:6: lv_values_4_0= ruleEStringAllTypes
+            	    // InternalScadeEquations.g:12081:5: (lv_values_4_0= ruleEStringAllTypes )
+            	    // InternalScadeEquations.g:12082:6: lv_values_4_0= ruleEStringAllTypes
             	    {
             	    if ( state.backtracking==0 ) {
 
             	      						newCompositeNode(grammarAccess.getKeyStringValueAnnotationAccess().getValuesEStringAllTypesParserRuleCall_3_1_0());
             	      					
             	    }
-            	    pushFollow(FollowSets000.FOLLOW_133);
+            	    pushFollow(FollowSets000.FOLLOW_135);
             	    lv_values_4_0=ruleEStringAllTypes();
 
             	    state._fsp--;
@@ -33611,7 +33635,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleRestrictedKeyStringValueAnnotation"
-    // InternalScadeEquations.g:12100:1: entryRuleRestrictedKeyStringValueAnnotation returns [EObject current=null] : iv_ruleRestrictedKeyStringValueAnnotation= ruleRestrictedKeyStringValueAnnotation EOF ;
+    // InternalScadeEquations.g:12104:1: entryRuleRestrictedKeyStringValueAnnotation returns [EObject current=null] : iv_ruleRestrictedKeyStringValueAnnotation= ruleRestrictedKeyStringValueAnnotation EOF ;
     public final EObject entryRuleRestrictedKeyStringValueAnnotation() throws RecognitionException {
         EObject current = null;
 
@@ -33619,8 +33643,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalScadeEquations.g:12100:75: (iv_ruleRestrictedKeyStringValueAnnotation= ruleRestrictedKeyStringValueAnnotation EOF )
-            // InternalScadeEquations.g:12101:2: iv_ruleRestrictedKeyStringValueAnnotation= ruleRestrictedKeyStringValueAnnotation EOF
+            // InternalScadeEquations.g:12104:75: (iv_ruleRestrictedKeyStringValueAnnotation= ruleRestrictedKeyStringValueAnnotation EOF )
+            // InternalScadeEquations.g:12105:2: iv_ruleRestrictedKeyStringValueAnnotation= ruleRestrictedKeyStringValueAnnotation EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getRestrictedKeyStringValueAnnotationRule()); 
@@ -33651,7 +33675,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleRestrictedKeyStringValueAnnotation"
-    // InternalScadeEquations.g:12107:1: ruleRestrictedKeyStringValueAnnotation returns [EObject current=null] : (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringBoolean ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringBoolean ) ) )* ) ;
+    // InternalScadeEquations.g:12111:1: ruleRestrictedKeyStringValueAnnotation returns [EObject current=null] : (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringBoolean ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringBoolean ) ) )* ) ;
     public final EObject ruleRestrictedKeyStringValueAnnotation() throws RecognitionException {
         EObject current = null;
 
@@ -33668,30 +33692,30 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:12113:2: ( (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringBoolean ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringBoolean ) ) )* ) )
-            // InternalScadeEquations.g:12114:2: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringBoolean ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringBoolean ) ) )* )
+            // InternalScadeEquations.g:12117:2: ( (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringBoolean ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringBoolean ) ) )* ) )
+            // InternalScadeEquations.g:12118:2: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringBoolean ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringBoolean ) ) )* )
             {
-            // InternalScadeEquations.g:12114:2: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringBoolean ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringBoolean ) ) )* )
-            // InternalScadeEquations.g:12115:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringBoolean ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringBoolean ) ) )*
+            // InternalScadeEquations.g:12118:2: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringBoolean ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringBoolean ) ) )* )
+            // InternalScadeEquations.g:12119:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringBoolean ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringBoolean ) ) )*
             {
-            otherlv_0=(Token)match(input,89,FollowSets000.FOLLOW_4); if (state.failed) return current;
+            otherlv_0=(Token)match(input,89,FollowSets000.FOLLOW_95); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               			newLeafNode(otherlv_0, grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0());
               		
             }
-            // InternalScadeEquations.g:12119:3: ( (lv_name_1_0= ruleExtendedID ) )
-            // InternalScadeEquations.g:12120:4: (lv_name_1_0= ruleExtendedID )
+            // InternalScadeEquations.g:12123:3: ( (lv_name_1_0= ruleExtendedID ) )
+            // InternalScadeEquations.g:12124:4: (lv_name_1_0= ruleExtendedID )
             {
-            // InternalScadeEquations.g:12120:4: (lv_name_1_0= ruleExtendedID )
-            // InternalScadeEquations.g:12121:5: lv_name_1_0= ruleExtendedID
+            // InternalScadeEquations.g:12124:4: (lv_name_1_0= ruleExtendedID )
+            // InternalScadeEquations.g:12125:5: lv_name_1_0= ruleExtendedID
             {
             if ( state.backtracking==0 ) {
 
               					newCompositeNode(grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0());
               				
             }
-            pushFollow(FollowSets000.FOLLOW_134);
+            pushFollow(FollowSets000.FOLLOW_136);
             lv_name_1_0=ruleExtendedID();
 
             state._fsp--;
@@ -33715,18 +33739,18 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalScadeEquations.g:12138:3: ( (lv_values_2_0= ruleEStringBoolean ) )
-            // InternalScadeEquations.g:12139:4: (lv_values_2_0= ruleEStringBoolean )
+            // InternalScadeEquations.g:12142:3: ( (lv_values_2_0= ruleEStringBoolean ) )
+            // InternalScadeEquations.g:12143:4: (lv_values_2_0= ruleEStringBoolean )
             {
-            // InternalScadeEquations.g:12139:4: (lv_values_2_0= ruleEStringBoolean )
-            // InternalScadeEquations.g:12140:5: lv_values_2_0= ruleEStringBoolean
+            // InternalScadeEquations.g:12143:4: (lv_values_2_0= ruleEStringBoolean )
+            // InternalScadeEquations.g:12144:5: lv_values_2_0= ruleEStringBoolean
             {
             if ( state.backtracking==0 ) {
 
               					newCompositeNode(grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getValuesEStringBooleanParserRuleCall_2_0());
               				
             }
-            pushFollow(FollowSets000.FOLLOW_133);
+            pushFollow(FollowSets000.FOLLOW_135);
             lv_values_2_0=ruleEStringBoolean();
 
             state._fsp--;
@@ -33750,7 +33774,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalScadeEquations.g:12157:3: (otherlv_3= ',' ( (lv_values_4_0= ruleEStringBoolean ) ) )*
+            // InternalScadeEquations.g:12161:3: (otherlv_3= ',' ( (lv_values_4_0= ruleEStringBoolean ) ) )*
             loop282:
             do {
                 int alt282=2;
@@ -33763,26 +33787,26 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                 switch (alt282) {
             	case 1 :
-            	    // InternalScadeEquations.g:12158:4: otherlv_3= ',' ( (lv_values_4_0= ruleEStringBoolean ) )
+            	    // InternalScadeEquations.g:12162:4: otherlv_3= ',' ( (lv_values_4_0= ruleEStringBoolean ) )
             	    {
-            	    otherlv_3=(Token)match(input,18,FollowSets000.FOLLOW_134); if (state.failed) return current;
+            	    otherlv_3=(Token)match(input,18,FollowSets000.FOLLOW_136); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	      				newLeafNode(otherlv_3, grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getCommaKeyword_3_0());
             	      			
             	    }
-            	    // InternalScadeEquations.g:12162:4: ( (lv_values_4_0= ruleEStringBoolean ) )
-            	    // InternalScadeEquations.g:12163:5: (lv_values_4_0= ruleEStringBoolean )
+            	    // InternalScadeEquations.g:12166:4: ( (lv_values_4_0= ruleEStringBoolean ) )
+            	    // InternalScadeEquations.g:12167:5: (lv_values_4_0= ruleEStringBoolean )
             	    {
-            	    // InternalScadeEquations.g:12163:5: (lv_values_4_0= ruleEStringBoolean )
-            	    // InternalScadeEquations.g:12164:6: lv_values_4_0= ruleEStringBoolean
+            	    // InternalScadeEquations.g:12167:5: (lv_values_4_0= ruleEStringBoolean )
+            	    // InternalScadeEquations.g:12168:6: lv_values_4_0= ruleEStringBoolean
             	    {
             	    if ( state.backtracking==0 ) {
 
             	      						newCompositeNode(grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getValuesEStringBooleanParserRuleCall_3_1_0());
             	      					
             	    }
-            	    pushFollow(FollowSets000.FOLLOW_133);
+            	    pushFollow(FollowSets000.FOLLOW_135);
             	    lv_values_4_0=ruleEStringBoolean();
 
             	    state._fsp--;
@@ -33840,7 +33864,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleStringPragma"
-    // InternalScadeEquations.g:12186:1: entryRuleStringPragma returns [EObject current=null] : iv_ruleStringPragma= ruleStringPragma EOF ;
+    // InternalScadeEquations.g:12190:1: entryRuleStringPragma returns [EObject current=null] : iv_ruleStringPragma= ruleStringPragma EOF ;
     public final EObject entryRuleStringPragma() throws RecognitionException {
         EObject current = null;
 
@@ -33848,8 +33872,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalScadeEquations.g:12186:53: (iv_ruleStringPragma= ruleStringPragma EOF )
-            // InternalScadeEquations.g:12187:2: iv_ruleStringPragma= ruleStringPragma EOF
+            // InternalScadeEquations.g:12190:53: (iv_ruleStringPragma= ruleStringPragma EOF )
+            // InternalScadeEquations.g:12191:2: iv_ruleStringPragma= ruleStringPragma EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getStringPragmaRule()); 
@@ -33880,7 +33904,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleStringPragma"
-    // InternalScadeEquations.g:12193:1: ruleStringPragma returns [EObject current=null] : (otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringAllTypes ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )* ) ;
+    // InternalScadeEquations.g:12197:1: ruleStringPragma returns [EObject current=null] : (otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringAllTypes ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )* ) ;
     public final EObject ruleStringPragma() throws RecognitionException {
         EObject current = null;
 
@@ -33897,30 +33921,30 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:12199:2: ( (otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringAllTypes ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )* ) )
-            // InternalScadeEquations.g:12200:2: (otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringAllTypes ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )* )
+            // InternalScadeEquations.g:12203:2: ( (otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringAllTypes ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )* ) )
+            // InternalScadeEquations.g:12204:2: (otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringAllTypes ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )* )
             {
-            // InternalScadeEquations.g:12200:2: (otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringAllTypes ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )* )
-            // InternalScadeEquations.g:12201:3: otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringAllTypes ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )*
+            // InternalScadeEquations.g:12204:2: (otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringAllTypes ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )* )
+            // InternalScadeEquations.g:12205:3: otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringAllTypes ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )*
             {
-            otherlv_0=(Token)match(input,88,FollowSets000.FOLLOW_4); if (state.failed) return current;
+            otherlv_0=(Token)match(input,88,FollowSets000.FOLLOW_95); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               			newLeafNode(otherlv_0, grammarAccess.getStringPragmaAccess().getNumberSignKeyword_0());
               		
             }
-            // InternalScadeEquations.g:12205:3: ( (lv_name_1_0= ruleExtendedID ) )
-            // InternalScadeEquations.g:12206:4: (lv_name_1_0= ruleExtendedID )
+            // InternalScadeEquations.g:12209:3: ( (lv_name_1_0= ruleExtendedID ) )
+            // InternalScadeEquations.g:12210:4: (lv_name_1_0= ruleExtendedID )
             {
-            // InternalScadeEquations.g:12206:4: (lv_name_1_0= ruleExtendedID )
-            // InternalScadeEquations.g:12207:5: lv_name_1_0= ruleExtendedID
+            // InternalScadeEquations.g:12210:4: (lv_name_1_0= ruleExtendedID )
+            // InternalScadeEquations.g:12211:5: lv_name_1_0= ruleExtendedID
             {
             if ( state.backtracking==0 ) {
 
               					newCompositeNode(grammarAccess.getStringPragmaAccess().getNameExtendedIDParserRuleCall_1_0());
               				
             }
-            pushFollow(FollowSets000.FOLLOW_132);
+            pushFollow(FollowSets000.FOLLOW_134);
             lv_name_1_0=ruleExtendedID();
 
             state._fsp--;
@@ -33944,18 +33968,18 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalScadeEquations.g:12224:3: ( (lv_values_2_0= ruleEStringAllTypes ) )
-            // InternalScadeEquations.g:12225:4: (lv_values_2_0= ruleEStringAllTypes )
+            // InternalScadeEquations.g:12228:3: ( (lv_values_2_0= ruleEStringAllTypes ) )
+            // InternalScadeEquations.g:12229:4: (lv_values_2_0= ruleEStringAllTypes )
             {
-            // InternalScadeEquations.g:12225:4: (lv_values_2_0= ruleEStringAllTypes )
-            // InternalScadeEquations.g:12226:5: lv_values_2_0= ruleEStringAllTypes
+            // InternalScadeEquations.g:12229:4: (lv_values_2_0= ruleEStringAllTypes )
+            // InternalScadeEquations.g:12230:5: lv_values_2_0= ruleEStringAllTypes
             {
             if ( state.backtracking==0 ) {
 
               					newCompositeNode(grammarAccess.getStringPragmaAccess().getValuesEStringAllTypesParserRuleCall_2_0());
               				
             }
-            pushFollow(FollowSets000.FOLLOW_133);
+            pushFollow(FollowSets000.FOLLOW_135);
             lv_values_2_0=ruleEStringAllTypes();
 
             state._fsp--;
@@ -33979,7 +34003,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalScadeEquations.g:12243:3: (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )*
+            // InternalScadeEquations.g:12247:3: (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )*
             loop283:
             do {
                 int alt283=2;
@@ -33992,26 +34016,26 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                 switch (alt283) {
             	case 1 :
-            	    // InternalScadeEquations.g:12244:4: otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) )
+            	    // InternalScadeEquations.g:12248:4: otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) )
             	    {
-            	    otherlv_3=(Token)match(input,18,FollowSets000.FOLLOW_132); if (state.failed) return current;
+            	    otherlv_3=(Token)match(input,18,FollowSets000.FOLLOW_134); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	      				newLeafNode(otherlv_3, grammarAccess.getStringPragmaAccess().getCommaKeyword_3_0());
             	      			
             	    }
-            	    // InternalScadeEquations.g:12248:4: ( (lv_values_4_0= ruleEStringAllTypes ) )
-            	    // InternalScadeEquations.g:12249:5: (lv_values_4_0= ruleEStringAllTypes )
+            	    // InternalScadeEquations.g:12252:4: ( (lv_values_4_0= ruleEStringAllTypes ) )
+            	    // InternalScadeEquations.g:12253:5: (lv_values_4_0= ruleEStringAllTypes )
             	    {
-            	    // InternalScadeEquations.g:12249:5: (lv_values_4_0= ruleEStringAllTypes )
-            	    // InternalScadeEquations.g:12250:6: lv_values_4_0= ruleEStringAllTypes
+            	    // InternalScadeEquations.g:12253:5: (lv_values_4_0= ruleEStringAllTypes )
+            	    // InternalScadeEquations.g:12254:6: lv_values_4_0= ruleEStringAllTypes
             	    {
             	    if ( state.backtracking==0 ) {
 
             	      						newCompositeNode(grammarAccess.getStringPragmaAccess().getValuesEStringAllTypesParserRuleCall_3_1_0());
             	      					
             	    }
-            	    pushFollow(FollowSets000.FOLLOW_133);
+            	    pushFollow(FollowSets000.FOLLOW_135);
             	    lv_values_4_0=ruleEStringAllTypes();
 
             	    state._fsp--;
@@ -34069,7 +34093,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleTypedKeyStringValueAnnotation"
-    // InternalScadeEquations.g:12272:1: entryRuleTypedKeyStringValueAnnotation returns [EObject current=null] : iv_ruleTypedKeyStringValueAnnotation= ruleTypedKeyStringValueAnnotation EOF ;
+    // InternalScadeEquations.g:12276:1: entryRuleTypedKeyStringValueAnnotation returns [EObject current=null] : iv_ruleTypedKeyStringValueAnnotation= ruleTypedKeyStringValueAnnotation EOF ;
     public final EObject entryRuleTypedKeyStringValueAnnotation() throws RecognitionException {
         EObject current = null;
 
@@ -34077,8 +34101,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalScadeEquations.g:12272:70: (iv_ruleTypedKeyStringValueAnnotation= ruleTypedKeyStringValueAnnotation EOF )
-            // InternalScadeEquations.g:12273:2: iv_ruleTypedKeyStringValueAnnotation= ruleTypedKeyStringValueAnnotation EOF
+            // InternalScadeEquations.g:12276:70: (iv_ruleTypedKeyStringValueAnnotation= ruleTypedKeyStringValueAnnotation EOF )
+            // InternalScadeEquations.g:12277:2: iv_ruleTypedKeyStringValueAnnotation= ruleTypedKeyStringValueAnnotation EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getTypedKeyStringValueAnnotationRule()); 
@@ -34109,7 +34133,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleTypedKeyStringValueAnnotation"
-    // InternalScadeEquations.g:12279:1: ruleTypedKeyStringValueAnnotation returns [EObject current=null] : (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringAllTypes ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringAllTypes ) ) )* ) ;
+    // InternalScadeEquations.g:12283:1: ruleTypedKeyStringValueAnnotation returns [EObject current=null] : (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringAllTypes ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringAllTypes ) ) )* ) ;
     public final EObject ruleTypedKeyStringValueAnnotation() throws RecognitionException {
         EObject current = null;
 
@@ -34130,30 +34154,30 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:12285:2: ( (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringAllTypes ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringAllTypes ) ) )* ) )
-            // InternalScadeEquations.g:12286:2: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringAllTypes ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringAllTypes ) ) )* )
+            // InternalScadeEquations.g:12289:2: ( (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringAllTypes ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringAllTypes ) ) )* ) )
+            // InternalScadeEquations.g:12290:2: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringAllTypes ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringAllTypes ) ) )* )
             {
-            // InternalScadeEquations.g:12286:2: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringAllTypes ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringAllTypes ) ) )* )
-            // InternalScadeEquations.g:12287:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringAllTypes ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringAllTypes ) ) )*
+            // InternalScadeEquations.g:12290:2: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringAllTypes ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringAllTypes ) ) )* )
+            // InternalScadeEquations.g:12291:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringAllTypes ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringAllTypes ) ) )*
             {
-            otherlv_0=(Token)match(input,89,FollowSets000.FOLLOW_4); if (state.failed) return current;
+            otherlv_0=(Token)match(input,89,FollowSets000.FOLLOW_95); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               			newLeafNode(otherlv_0, grammarAccess.getTypedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0());
               		
             }
-            // InternalScadeEquations.g:12291:3: ( (lv_name_1_0= ruleExtendedID ) )
-            // InternalScadeEquations.g:12292:4: (lv_name_1_0= ruleExtendedID )
+            // InternalScadeEquations.g:12295:3: ( (lv_name_1_0= ruleExtendedID ) )
+            // InternalScadeEquations.g:12296:4: (lv_name_1_0= ruleExtendedID )
             {
-            // InternalScadeEquations.g:12292:4: (lv_name_1_0= ruleExtendedID )
-            // InternalScadeEquations.g:12293:5: lv_name_1_0= ruleExtendedID
+            // InternalScadeEquations.g:12296:4: (lv_name_1_0= ruleExtendedID )
+            // InternalScadeEquations.g:12297:5: lv_name_1_0= ruleExtendedID
             {
             if ( state.backtracking==0 ) {
 
               					newCompositeNode(grammarAccess.getTypedKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0());
               				
             }
-            pushFollow(FollowSets000.FOLLOW_135);
+            pushFollow(FollowSets000.FOLLOW_137);
             lv_name_1_0=ruleExtendedID();
 
             state._fsp--;
@@ -34177,24 +34201,24 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_2=(Token)match(input,73,FollowSets000.FOLLOW_4); if (state.failed) return current;
+            otherlv_2=(Token)match(input,73,FollowSets000.FOLLOW_95); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               			newLeafNode(otherlv_2, grammarAccess.getTypedKeyStringValueAnnotationAccess().getLeftSquareBracketKeyword_2());
               		
             }
-            // InternalScadeEquations.g:12314:3: ( (lv_type_3_0= ruleExtendedID ) )
-            // InternalScadeEquations.g:12315:4: (lv_type_3_0= ruleExtendedID )
+            // InternalScadeEquations.g:12318:3: ( (lv_type_3_0= ruleExtendedID ) )
+            // InternalScadeEquations.g:12319:4: (lv_type_3_0= ruleExtendedID )
             {
-            // InternalScadeEquations.g:12315:4: (lv_type_3_0= ruleExtendedID )
-            // InternalScadeEquations.g:12316:5: lv_type_3_0= ruleExtendedID
+            // InternalScadeEquations.g:12319:4: (lv_type_3_0= ruleExtendedID )
+            // InternalScadeEquations.g:12320:5: lv_type_3_0= ruleExtendedID
             {
             if ( state.backtracking==0 ) {
 
               					newCompositeNode(grammarAccess.getTypedKeyStringValueAnnotationAccess().getTypeExtendedIDParserRuleCall_3_0());
               				
             }
-            pushFollow(FollowSets000.FOLLOW_103);
+            pushFollow(FollowSets000.FOLLOW_105);
             lv_type_3_0=ruleExtendedID();
 
             state._fsp--;
@@ -34218,24 +34242,24 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_4=(Token)match(input,74,FollowSets000.FOLLOW_132); if (state.failed) return current;
+            otherlv_4=(Token)match(input,74,FollowSets000.FOLLOW_134); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               			newLeafNode(otherlv_4, grammarAccess.getTypedKeyStringValueAnnotationAccess().getRightSquareBracketKeyword_4());
               		
             }
-            // InternalScadeEquations.g:12337:3: ( (lv_values_5_0= ruleEStringAllTypes ) )
-            // InternalScadeEquations.g:12338:4: (lv_values_5_0= ruleEStringAllTypes )
+            // InternalScadeEquations.g:12341:3: ( (lv_values_5_0= ruleEStringAllTypes ) )
+            // InternalScadeEquations.g:12342:4: (lv_values_5_0= ruleEStringAllTypes )
             {
-            // InternalScadeEquations.g:12338:4: (lv_values_5_0= ruleEStringAllTypes )
-            // InternalScadeEquations.g:12339:5: lv_values_5_0= ruleEStringAllTypes
+            // InternalScadeEquations.g:12342:4: (lv_values_5_0= ruleEStringAllTypes )
+            // InternalScadeEquations.g:12343:5: lv_values_5_0= ruleEStringAllTypes
             {
             if ( state.backtracking==0 ) {
 
               					newCompositeNode(grammarAccess.getTypedKeyStringValueAnnotationAccess().getValuesEStringAllTypesParserRuleCall_5_0());
               				
             }
-            pushFollow(FollowSets000.FOLLOW_133);
+            pushFollow(FollowSets000.FOLLOW_135);
             lv_values_5_0=ruleEStringAllTypes();
 
             state._fsp--;
@@ -34259,7 +34283,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalScadeEquations.g:12356:3: (otherlv_6= ',' ( (lv_values_7_0= ruleEStringAllTypes ) ) )*
+            // InternalScadeEquations.g:12360:3: (otherlv_6= ',' ( (lv_values_7_0= ruleEStringAllTypes ) ) )*
             loop284:
             do {
                 int alt284=2;
@@ -34272,26 +34296,26 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                 switch (alt284) {
             	case 1 :
-            	    // InternalScadeEquations.g:12357:4: otherlv_6= ',' ( (lv_values_7_0= ruleEStringAllTypes ) )
+            	    // InternalScadeEquations.g:12361:4: otherlv_6= ',' ( (lv_values_7_0= ruleEStringAllTypes ) )
             	    {
-            	    otherlv_6=(Token)match(input,18,FollowSets000.FOLLOW_132); if (state.failed) return current;
+            	    otherlv_6=(Token)match(input,18,FollowSets000.FOLLOW_134); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	      				newLeafNode(otherlv_6, grammarAccess.getTypedKeyStringValueAnnotationAccess().getCommaKeyword_6_0());
             	      			
             	    }
-            	    // InternalScadeEquations.g:12361:4: ( (lv_values_7_0= ruleEStringAllTypes ) )
-            	    // InternalScadeEquations.g:12362:5: (lv_values_7_0= ruleEStringAllTypes )
+            	    // InternalScadeEquations.g:12365:4: ( (lv_values_7_0= ruleEStringAllTypes ) )
+            	    // InternalScadeEquations.g:12366:5: (lv_values_7_0= ruleEStringAllTypes )
             	    {
-            	    // InternalScadeEquations.g:12362:5: (lv_values_7_0= ruleEStringAllTypes )
-            	    // InternalScadeEquations.g:12363:6: lv_values_7_0= ruleEStringAllTypes
+            	    // InternalScadeEquations.g:12366:5: (lv_values_7_0= ruleEStringAllTypes )
+            	    // InternalScadeEquations.g:12367:6: lv_values_7_0= ruleEStringAllTypes
             	    {
             	    if ( state.backtracking==0 ) {
 
             	      						newCompositeNode(grammarAccess.getTypedKeyStringValueAnnotationAccess().getValuesEStringAllTypesParserRuleCall_6_1_0());
             	      					
             	    }
-            	    pushFollow(FollowSets000.FOLLOW_133);
+            	    pushFollow(FollowSets000.FOLLOW_135);
             	    lv_values_7_0=ruleEStringAllTypes();
 
             	    state._fsp--;
@@ -34349,7 +34373,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleRestrictedTypedKeyStringValueAnnotation"
-    // InternalScadeEquations.g:12385:1: entryRuleRestrictedTypedKeyStringValueAnnotation returns [EObject current=null] : iv_ruleRestrictedTypedKeyStringValueAnnotation= ruleRestrictedTypedKeyStringValueAnnotation EOF ;
+    // InternalScadeEquations.g:12389:1: entryRuleRestrictedTypedKeyStringValueAnnotation returns [EObject current=null] : iv_ruleRestrictedTypedKeyStringValueAnnotation= ruleRestrictedTypedKeyStringValueAnnotation EOF ;
     public final EObject entryRuleRestrictedTypedKeyStringValueAnnotation() throws RecognitionException {
         EObject current = null;
 
@@ -34357,8 +34381,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalScadeEquations.g:12385:80: (iv_ruleRestrictedTypedKeyStringValueAnnotation= ruleRestrictedTypedKeyStringValueAnnotation EOF )
-            // InternalScadeEquations.g:12386:2: iv_ruleRestrictedTypedKeyStringValueAnnotation= ruleRestrictedTypedKeyStringValueAnnotation EOF
+            // InternalScadeEquations.g:12389:80: (iv_ruleRestrictedTypedKeyStringValueAnnotation= ruleRestrictedTypedKeyStringValueAnnotation EOF )
+            // InternalScadeEquations.g:12390:2: iv_ruleRestrictedTypedKeyStringValueAnnotation= ruleRestrictedTypedKeyStringValueAnnotation EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getRestrictedTypedKeyStringValueAnnotationRule()); 
@@ -34389,7 +34413,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleRestrictedTypedKeyStringValueAnnotation"
-    // InternalScadeEquations.g:12392:1: ruleRestrictedTypedKeyStringValueAnnotation returns [EObject current=null] : (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringBoolean ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringBoolean ) ) )* ) ;
+    // InternalScadeEquations.g:12396:1: ruleRestrictedTypedKeyStringValueAnnotation returns [EObject current=null] : (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringBoolean ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringBoolean ) ) )* ) ;
     public final EObject ruleRestrictedTypedKeyStringValueAnnotation() throws RecognitionException {
         EObject current = null;
 
@@ -34410,30 +34434,30 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:12398:2: ( (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringBoolean ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringBoolean ) ) )* ) )
-            // InternalScadeEquations.g:12399:2: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringBoolean ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringBoolean ) ) )* )
+            // InternalScadeEquations.g:12402:2: ( (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringBoolean ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringBoolean ) ) )* ) )
+            // InternalScadeEquations.g:12403:2: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringBoolean ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringBoolean ) ) )* )
             {
-            // InternalScadeEquations.g:12399:2: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringBoolean ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringBoolean ) ) )* )
-            // InternalScadeEquations.g:12400:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringBoolean ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringBoolean ) ) )*
+            // InternalScadeEquations.g:12403:2: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringBoolean ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringBoolean ) ) )* )
+            // InternalScadeEquations.g:12404:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringBoolean ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringBoolean ) ) )*
             {
-            otherlv_0=(Token)match(input,89,FollowSets000.FOLLOW_4); if (state.failed) return current;
+            otherlv_0=(Token)match(input,89,FollowSets000.FOLLOW_95); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               			newLeafNode(otherlv_0, grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0());
               		
             }
-            // InternalScadeEquations.g:12404:3: ( (lv_name_1_0= ruleExtendedID ) )
-            // InternalScadeEquations.g:12405:4: (lv_name_1_0= ruleExtendedID )
+            // InternalScadeEquations.g:12408:3: ( (lv_name_1_0= ruleExtendedID ) )
+            // InternalScadeEquations.g:12409:4: (lv_name_1_0= ruleExtendedID )
             {
-            // InternalScadeEquations.g:12405:4: (lv_name_1_0= ruleExtendedID )
-            // InternalScadeEquations.g:12406:5: lv_name_1_0= ruleExtendedID
+            // InternalScadeEquations.g:12409:4: (lv_name_1_0= ruleExtendedID )
+            // InternalScadeEquations.g:12410:5: lv_name_1_0= ruleExtendedID
             {
             if ( state.backtracking==0 ) {
 
               					newCompositeNode(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0());
               				
             }
-            pushFollow(FollowSets000.FOLLOW_135);
+            pushFollow(FollowSets000.FOLLOW_137);
             lv_name_1_0=ruleExtendedID();
 
             state._fsp--;
@@ -34457,24 +34481,24 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_2=(Token)match(input,73,FollowSets000.FOLLOW_4); if (state.failed) return current;
+            otherlv_2=(Token)match(input,73,FollowSets000.FOLLOW_95); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               			newLeafNode(otherlv_2, grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getLeftSquareBracketKeyword_2());
               		
             }
-            // InternalScadeEquations.g:12427:3: ( (lv_type_3_0= ruleExtendedID ) )
-            // InternalScadeEquations.g:12428:4: (lv_type_3_0= ruleExtendedID )
+            // InternalScadeEquations.g:12431:3: ( (lv_type_3_0= ruleExtendedID ) )
+            // InternalScadeEquations.g:12432:4: (lv_type_3_0= ruleExtendedID )
             {
-            // InternalScadeEquations.g:12428:4: (lv_type_3_0= ruleExtendedID )
-            // InternalScadeEquations.g:12429:5: lv_type_3_0= ruleExtendedID
+            // InternalScadeEquations.g:12432:4: (lv_type_3_0= ruleExtendedID )
+            // InternalScadeEquations.g:12433:5: lv_type_3_0= ruleExtendedID
             {
             if ( state.backtracking==0 ) {
 
               					newCompositeNode(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getTypeExtendedIDParserRuleCall_3_0());
               				
             }
-            pushFollow(FollowSets000.FOLLOW_103);
+            pushFollow(FollowSets000.FOLLOW_105);
             lv_type_3_0=ruleExtendedID();
 
             state._fsp--;
@@ -34498,24 +34522,24 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_4=(Token)match(input,74,FollowSets000.FOLLOW_134); if (state.failed) return current;
+            otherlv_4=(Token)match(input,74,FollowSets000.FOLLOW_136); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               			newLeafNode(otherlv_4, grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getRightSquareBracketKeyword_4());
               		
             }
-            // InternalScadeEquations.g:12450:3: ( (lv_values_5_0= ruleEStringBoolean ) )
-            // InternalScadeEquations.g:12451:4: (lv_values_5_0= ruleEStringBoolean )
+            // InternalScadeEquations.g:12454:3: ( (lv_values_5_0= ruleEStringBoolean ) )
+            // InternalScadeEquations.g:12455:4: (lv_values_5_0= ruleEStringBoolean )
             {
-            // InternalScadeEquations.g:12451:4: (lv_values_5_0= ruleEStringBoolean )
-            // InternalScadeEquations.g:12452:5: lv_values_5_0= ruleEStringBoolean
+            // InternalScadeEquations.g:12455:4: (lv_values_5_0= ruleEStringBoolean )
+            // InternalScadeEquations.g:12456:5: lv_values_5_0= ruleEStringBoolean
             {
             if ( state.backtracking==0 ) {
 
               					newCompositeNode(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getValuesEStringBooleanParserRuleCall_5_0());
               				
             }
-            pushFollow(FollowSets000.FOLLOW_133);
+            pushFollow(FollowSets000.FOLLOW_135);
             lv_values_5_0=ruleEStringBoolean();
 
             state._fsp--;
@@ -34539,7 +34563,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalScadeEquations.g:12469:3: (otherlv_6= ',' ( (lv_values_7_0= ruleEStringBoolean ) ) )*
+            // InternalScadeEquations.g:12473:3: (otherlv_6= ',' ( (lv_values_7_0= ruleEStringBoolean ) ) )*
             loop285:
             do {
                 int alt285=2;
@@ -34552,26 +34576,26 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                 switch (alt285) {
             	case 1 :
-            	    // InternalScadeEquations.g:12470:4: otherlv_6= ',' ( (lv_values_7_0= ruleEStringBoolean ) )
+            	    // InternalScadeEquations.g:12474:4: otherlv_6= ',' ( (lv_values_7_0= ruleEStringBoolean ) )
             	    {
-            	    otherlv_6=(Token)match(input,18,FollowSets000.FOLLOW_134); if (state.failed) return current;
+            	    otherlv_6=(Token)match(input,18,FollowSets000.FOLLOW_136); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	      				newLeafNode(otherlv_6, grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getCommaKeyword_6_0());
             	      			
             	    }
-            	    // InternalScadeEquations.g:12474:4: ( (lv_values_7_0= ruleEStringBoolean ) )
-            	    // InternalScadeEquations.g:12475:5: (lv_values_7_0= ruleEStringBoolean )
+            	    // InternalScadeEquations.g:12478:4: ( (lv_values_7_0= ruleEStringBoolean ) )
+            	    // InternalScadeEquations.g:12479:5: (lv_values_7_0= ruleEStringBoolean )
             	    {
-            	    // InternalScadeEquations.g:12475:5: (lv_values_7_0= ruleEStringBoolean )
-            	    // InternalScadeEquations.g:12476:6: lv_values_7_0= ruleEStringBoolean
+            	    // InternalScadeEquations.g:12479:5: (lv_values_7_0= ruleEStringBoolean )
+            	    // InternalScadeEquations.g:12480:6: lv_values_7_0= ruleEStringBoolean
             	    {
             	    if ( state.backtracking==0 ) {
 
             	      						newCompositeNode(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getValuesEStringBooleanParserRuleCall_6_1_0());
             	      					
             	    }
-            	    pushFollow(FollowSets000.FOLLOW_133);
+            	    pushFollow(FollowSets000.FOLLOW_135);
             	    lv_values_7_0=ruleEStringBoolean();
 
             	    state._fsp--;
@@ -34629,7 +34653,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleQuotedKeyStringValueAnnotation"
-    // InternalScadeEquations.g:12498:1: entryRuleQuotedKeyStringValueAnnotation returns [EObject current=null] : iv_ruleQuotedKeyStringValueAnnotation= ruleQuotedKeyStringValueAnnotation EOF ;
+    // InternalScadeEquations.g:12502:1: entryRuleQuotedKeyStringValueAnnotation returns [EObject current=null] : iv_ruleQuotedKeyStringValueAnnotation= ruleQuotedKeyStringValueAnnotation EOF ;
     public final EObject entryRuleQuotedKeyStringValueAnnotation() throws RecognitionException {
         EObject current = null;
 
@@ -34637,8 +34661,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalScadeEquations.g:12498:71: (iv_ruleQuotedKeyStringValueAnnotation= ruleQuotedKeyStringValueAnnotation EOF )
-            // InternalScadeEquations.g:12499:2: iv_ruleQuotedKeyStringValueAnnotation= ruleQuotedKeyStringValueAnnotation EOF
+            // InternalScadeEquations.g:12502:71: (iv_ruleQuotedKeyStringValueAnnotation= ruleQuotedKeyStringValueAnnotation EOF )
+            // InternalScadeEquations.g:12503:2: iv_ruleQuotedKeyStringValueAnnotation= ruleQuotedKeyStringValueAnnotation EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getQuotedKeyStringValueAnnotationRule()); 
@@ -34669,7 +34693,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleQuotedKeyStringValueAnnotation"
-    // InternalScadeEquations.g:12505:1: ruleQuotedKeyStringValueAnnotation returns [EObject current=null] : (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= RULE_STRING ) ) (otherlv_3= ',' ( (lv_values_4_0= RULE_STRING ) ) )* ) ;
+    // InternalScadeEquations.g:12509:1: ruleQuotedKeyStringValueAnnotation returns [EObject current=null] : (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= RULE_STRING ) ) (otherlv_3= ',' ( (lv_values_4_0= RULE_STRING ) ) )* ) ;
     public final EObject ruleQuotedKeyStringValueAnnotation() throws RecognitionException {
         EObject current = null;
 
@@ -34684,23 +34708,23 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:12511:2: ( (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= RULE_STRING ) ) (otherlv_3= ',' ( (lv_values_4_0= RULE_STRING ) ) )* ) )
-            // InternalScadeEquations.g:12512:2: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= RULE_STRING ) ) (otherlv_3= ',' ( (lv_values_4_0= RULE_STRING ) ) )* )
+            // InternalScadeEquations.g:12515:2: ( (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= RULE_STRING ) ) (otherlv_3= ',' ( (lv_values_4_0= RULE_STRING ) ) )* ) )
+            // InternalScadeEquations.g:12516:2: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= RULE_STRING ) ) (otherlv_3= ',' ( (lv_values_4_0= RULE_STRING ) ) )* )
             {
-            // InternalScadeEquations.g:12512:2: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= RULE_STRING ) ) (otherlv_3= ',' ( (lv_values_4_0= RULE_STRING ) ) )* )
-            // InternalScadeEquations.g:12513:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= RULE_STRING ) ) (otherlv_3= ',' ( (lv_values_4_0= RULE_STRING ) ) )*
+            // InternalScadeEquations.g:12516:2: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= RULE_STRING ) ) (otherlv_3= ',' ( (lv_values_4_0= RULE_STRING ) ) )* )
+            // InternalScadeEquations.g:12517:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= RULE_STRING ) ) (otherlv_3= ',' ( (lv_values_4_0= RULE_STRING ) ) )*
             {
-            otherlv_0=(Token)match(input,89,FollowSets000.FOLLOW_4); if (state.failed) return current;
+            otherlv_0=(Token)match(input,89,FollowSets000.FOLLOW_95); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               			newLeafNode(otherlv_0, grammarAccess.getQuotedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0());
               		
             }
-            // InternalScadeEquations.g:12517:3: ( (lv_name_1_0= ruleExtendedID ) )
-            // InternalScadeEquations.g:12518:4: (lv_name_1_0= ruleExtendedID )
+            // InternalScadeEquations.g:12521:3: ( (lv_name_1_0= ruleExtendedID ) )
+            // InternalScadeEquations.g:12522:4: (lv_name_1_0= ruleExtendedID )
             {
-            // InternalScadeEquations.g:12518:4: (lv_name_1_0= ruleExtendedID )
-            // InternalScadeEquations.g:12519:5: lv_name_1_0= ruleExtendedID
+            // InternalScadeEquations.g:12522:4: (lv_name_1_0= ruleExtendedID )
+            // InternalScadeEquations.g:12523:5: lv_name_1_0= ruleExtendedID
             {
             if ( state.backtracking==0 ) {
 
@@ -34731,13 +34755,13 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalScadeEquations.g:12536:3: ( (lv_values_2_0= RULE_STRING ) )
-            // InternalScadeEquations.g:12537:4: (lv_values_2_0= RULE_STRING )
+            // InternalScadeEquations.g:12540:3: ( (lv_values_2_0= RULE_STRING ) )
+            // InternalScadeEquations.g:12541:4: (lv_values_2_0= RULE_STRING )
             {
-            // InternalScadeEquations.g:12537:4: (lv_values_2_0= RULE_STRING )
-            // InternalScadeEquations.g:12538:5: lv_values_2_0= RULE_STRING
+            // InternalScadeEquations.g:12541:4: (lv_values_2_0= RULE_STRING )
+            // InternalScadeEquations.g:12542:5: lv_values_2_0= RULE_STRING
             {
-            lv_values_2_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_133); if (state.failed) return current;
+            lv_values_2_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_135); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               					newLeafNode(lv_values_2_0, grammarAccess.getQuotedKeyStringValueAnnotationAccess().getValuesSTRINGTerminalRuleCall_2_0());
@@ -34761,7 +34785,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalScadeEquations.g:12554:3: (otherlv_3= ',' ( (lv_values_4_0= RULE_STRING ) ) )*
+            // InternalScadeEquations.g:12558:3: (otherlv_3= ',' ( (lv_values_4_0= RULE_STRING ) ) )*
             loop286:
             do {
                 int alt286=2;
@@ -34774,7 +34798,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                 switch (alt286) {
             	case 1 :
-            	    // InternalScadeEquations.g:12555:4: otherlv_3= ',' ( (lv_values_4_0= RULE_STRING ) )
+            	    // InternalScadeEquations.g:12559:4: otherlv_3= ',' ( (lv_values_4_0= RULE_STRING ) )
             	    {
             	    otherlv_3=(Token)match(input,18,FollowSets000.FOLLOW_70); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
@@ -34782,13 +34806,13 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             	      				newLeafNode(otherlv_3, grammarAccess.getQuotedKeyStringValueAnnotationAccess().getCommaKeyword_3_0());
             	      			
             	    }
-            	    // InternalScadeEquations.g:12559:4: ( (lv_values_4_0= RULE_STRING ) )
-            	    // InternalScadeEquations.g:12560:5: (lv_values_4_0= RULE_STRING )
+            	    // InternalScadeEquations.g:12563:4: ( (lv_values_4_0= RULE_STRING ) )
+            	    // InternalScadeEquations.g:12564:5: (lv_values_4_0= RULE_STRING )
             	    {
-            	    // InternalScadeEquations.g:12560:5: (lv_values_4_0= RULE_STRING )
-            	    // InternalScadeEquations.g:12561:6: lv_values_4_0= RULE_STRING
+            	    // InternalScadeEquations.g:12564:5: (lv_values_4_0= RULE_STRING )
+            	    // InternalScadeEquations.g:12565:6: lv_values_4_0= RULE_STRING
             	    {
-            	    lv_values_4_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_133); if (state.failed) return current;
+            	    lv_values_4_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_135); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	      						newLeafNode(lv_values_4_0, grammarAccess.getQuotedKeyStringValueAnnotationAccess().getValuesSTRINGTerminalRuleCall_3_1_0());
@@ -34846,7 +34870,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleQuotedTypedKeyStringValueAnnotation"
-    // InternalScadeEquations.g:12582:1: entryRuleQuotedTypedKeyStringValueAnnotation returns [EObject current=null] : iv_ruleQuotedTypedKeyStringValueAnnotation= ruleQuotedTypedKeyStringValueAnnotation EOF ;
+    // InternalScadeEquations.g:12586:1: entryRuleQuotedTypedKeyStringValueAnnotation returns [EObject current=null] : iv_ruleQuotedTypedKeyStringValueAnnotation= ruleQuotedTypedKeyStringValueAnnotation EOF ;
     public final EObject entryRuleQuotedTypedKeyStringValueAnnotation() throws RecognitionException {
         EObject current = null;
 
@@ -34854,8 +34878,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalScadeEquations.g:12582:76: (iv_ruleQuotedTypedKeyStringValueAnnotation= ruleQuotedTypedKeyStringValueAnnotation EOF )
-            // InternalScadeEquations.g:12583:2: iv_ruleQuotedTypedKeyStringValueAnnotation= ruleQuotedTypedKeyStringValueAnnotation EOF
+            // InternalScadeEquations.g:12586:76: (iv_ruleQuotedTypedKeyStringValueAnnotation= ruleQuotedTypedKeyStringValueAnnotation EOF )
+            // InternalScadeEquations.g:12587:2: iv_ruleQuotedTypedKeyStringValueAnnotation= ruleQuotedTypedKeyStringValueAnnotation EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getQuotedTypedKeyStringValueAnnotationRule()); 
@@ -34886,7 +34910,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleQuotedTypedKeyStringValueAnnotation"
-    // InternalScadeEquations.g:12589:1: ruleQuotedTypedKeyStringValueAnnotation returns [EObject current=null] : (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= RULE_STRING ) ) (otherlv_6= ',' ( (lv_values_7_0= RULE_STRING ) ) )* ) ;
+    // InternalScadeEquations.g:12593:1: ruleQuotedTypedKeyStringValueAnnotation returns [EObject current=null] : (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= RULE_STRING ) ) (otherlv_6= ',' ( (lv_values_7_0= RULE_STRING ) ) )* ) ;
     public final EObject ruleQuotedTypedKeyStringValueAnnotation() throws RecognitionException {
         EObject current = null;
 
@@ -34905,30 +34929,30 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:12595:2: ( (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= RULE_STRING ) ) (otherlv_6= ',' ( (lv_values_7_0= RULE_STRING ) ) )* ) )
-            // InternalScadeEquations.g:12596:2: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= RULE_STRING ) ) (otherlv_6= ',' ( (lv_values_7_0= RULE_STRING ) ) )* )
+            // InternalScadeEquations.g:12599:2: ( (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= RULE_STRING ) ) (otherlv_6= ',' ( (lv_values_7_0= RULE_STRING ) ) )* ) )
+            // InternalScadeEquations.g:12600:2: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= RULE_STRING ) ) (otherlv_6= ',' ( (lv_values_7_0= RULE_STRING ) ) )* )
             {
-            // InternalScadeEquations.g:12596:2: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= RULE_STRING ) ) (otherlv_6= ',' ( (lv_values_7_0= RULE_STRING ) ) )* )
-            // InternalScadeEquations.g:12597:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= RULE_STRING ) ) (otherlv_6= ',' ( (lv_values_7_0= RULE_STRING ) ) )*
+            // InternalScadeEquations.g:12600:2: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= RULE_STRING ) ) (otherlv_6= ',' ( (lv_values_7_0= RULE_STRING ) ) )* )
+            // InternalScadeEquations.g:12601:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= RULE_STRING ) ) (otherlv_6= ',' ( (lv_values_7_0= RULE_STRING ) ) )*
             {
-            otherlv_0=(Token)match(input,89,FollowSets000.FOLLOW_4); if (state.failed) return current;
+            otherlv_0=(Token)match(input,89,FollowSets000.FOLLOW_95); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               			newLeafNode(otherlv_0, grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0());
               		
             }
-            // InternalScadeEquations.g:12601:3: ( (lv_name_1_0= ruleExtendedID ) )
-            // InternalScadeEquations.g:12602:4: (lv_name_1_0= ruleExtendedID )
+            // InternalScadeEquations.g:12605:3: ( (lv_name_1_0= ruleExtendedID ) )
+            // InternalScadeEquations.g:12606:4: (lv_name_1_0= ruleExtendedID )
             {
-            // InternalScadeEquations.g:12602:4: (lv_name_1_0= ruleExtendedID )
-            // InternalScadeEquations.g:12603:5: lv_name_1_0= ruleExtendedID
+            // InternalScadeEquations.g:12606:4: (lv_name_1_0= ruleExtendedID )
+            // InternalScadeEquations.g:12607:5: lv_name_1_0= ruleExtendedID
             {
             if ( state.backtracking==0 ) {
 
               					newCompositeNode(grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0());
               				
             }
-            pushFollow(FollowSets000.FOLLOW_135);
+            pushFollow(FollowSets000.FOLLOW_137);
             lv_name_1_0=ruleExtendedID();
 
             state._fsp--;
@@ -34952,24 +34976,24 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_2=(Token)match(input,73,FollowSets000.FOLLOW_4); if (state.failed) return current;
+            otherlv_2=(Token)match(input,73,FollowSets000.FOLLOW_95); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               			newLeafNode(otherlv_2, grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getLeftSquareBracketKeyword_2());
               		
             }
-            // InternalScadeEquations.g:12624:3: ( (lv_type_3_0= ruleExtendedID ) )
-            // InternalScadeEquations.g:12625:4: (lv_type_3_0= ruleExtendedID )
+            // InternalScadeEquations.g:12628:3: ( (lv_type_3_0= ruleExtendedID ) )
+            // InternalScadeEquations.g:12629:4: (lv_type_3_0= ruleExtendedID )
             {
-            // InternalScadeEquations.g:12625:4: (lv_type_3_0= ruleExtendedID )
-            // InternalScadeEquations.g:12626:5: lv_type_3_0= ruleExtendedID
+            // InternalScadeEquations.g:12629:4: (lv_type_3_0= ruleExtendedID )
+            // InternalScadeEquations.g:12630:5: lv_type_3_0= ruleExtendedID
             {
             if ( state.backtracking==0 ) {
 
               					newCompositeNode(grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getTypeExtendedIDParserRuleCall_3_0());
               				
             }
-            pushFollow(FollowSets000.FOLLOW_103);
+            pushFollow(FollowSets000.FOLLOW_105);
             lv_type_3_0=ruleExtendedID();
 
             state._fsp--;
@@ -34999,13 +35023,13 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
               			newLeafNode(otherlv_4, grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getRightSquareBracketKeyword_4());
               		
             }
-            // InternalScadeEquations.g:12647:3: ( (lv_values_5_0= RULE_STRING ) )
-            // InternalScadeEquations.g:12648:4: (lv_values_5_0= RULE_STRING )
+            // InternalScadeEquations.g:12651:3: ( (lv_values_5_0= RULE_STRING ) )
+            // InternalScadeEquations.g:12652:4: (lv_values_5_0= RULE_STRING )
             {
-            // InternalScadeEquations.g:12648:4: (lv_values_5_0= RULE_STRING )
-            // InternalScadeEquations.g:12649:5: lv_values_5_0= RULE_STRING
+            // InternalScadeEquations.g:12652:4: (lv_values_5_0= RULE_STRING )
+            // InternalScadeEquations.g:12653:5: lv_values_5_0= RULE_STRING
             {
-            lv_values_5_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_133); if (state.failed) return current;
+            lv_values_5_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_135); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               					newLeafNode(lv_values_5_0, grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getValuesSTRINGTerminalRuleCall_5_0());
@@ -35029,7 +35053,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalScadeEquations.g:12665:3: (otherlv_6= ',' ( (lv_values_7_0= RULE_STRING ) ) )*
+            // InternalScadeEquations.g:12669:3: (otherlv_6= ',' ( (lv_values_7_0= RULE_STRING ) ) )*
             loop287:
             do {
                 int alt287=2;
@@ -35042,7 +35066,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                 switch (alt287) {
             	case 1 :
-            	    // InternalScadeEquations.g:12666:4: otherlv_6= ',' ( (lv_values_7_0= RULE_STRING ) )
+            	    // InternalScadeEquations.g:12670:4: otherlv_6= ',' ( (lv_values_7_0= RULE_STRING ) )
             	    {
             	    otherlv_6=(Token)match(input,18,FollowSets000.FOLLOW_70); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
@@ -35050,13 +35074,13 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             	      				newLeafNode(otherlv_6, grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getCommaKeyword_6_0());
             	      			
             	    }
-            	    // InternalScadeEquations.g:12670:4: ( (lv_values_7_0= RULE_STRING ) )
-            	    // InternalScadeEquations.g:12671:5: (lv_values_7_0= RULE_STRING )
+            	    // InternalScadeEquations.g:12674:4: ( (lv_values_7_0= RULE_STRING ) )
+            	    // InternalScadeEquations.g:12675:5: (lv_values_7_0= RULE_STRING )
             	    {
-            	    // InternalScadeEquations.g:12671:5: (lv_values_7_0= RULE_STRING )
-            	    // InternalScadeEquations.g:12672:6: lv_values_7_0= RULE_STRING
+            	    // InternalScadeEquations.g:12675:5: (lv_values_7_0= RULE_STRING )
+            	    // InternalScadeEquations.g:12676:6: lv_values_7_0= RULE_STRING
             	    {
-            	    lv_values_7_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_133); if (state.failed) return current;
+            	    lv_values_7_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_135); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	      						newLeafNode(lv_values_7_0, grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getValuesSTRINGTerminalRuleCall_6_1_0());
@@ -35113,8 +35137,149 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
     // $ANTLR end "ruleQuotedTypedKeyStringValueAnnotation"
 
 
+    // $ANTLR start "entryRuleEString"
+    // InternalScadeEquations.g:12697:1: entryRuleEString returns [String current=null] : iv_ruleEString= ruleEString EOF ;
+    public final String entryRuleEString() throws RecognitionException {
+        String current = null;
+
+        AntlrDatatypeRuleToken iv_ruleEString = null;
+
+
+        try {
+            // InternalScadeEquations.g:12697:47: (iv_ruleEString= ruleEString EOF )
+            // InternalScadeEquations.g:12698:2: iv_ruleEString= ruleEString EOF
+            {
+            if ( state.backtracking==0 ) {
+               newCompositeNode(grammarAccess.getEStringRule()); 
+            }
+            pushFollow(FollowSets000.FOLLOW_1);
+            iv_ruleEString=ruleEString();
+
+            state._fsp--;
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+               current =iv_ruleEString.getText(); 
+            }
+            match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return current;
+
+            }
+
+        }
+
+            catch (RecognitionException re) {
+                recover(input,re);
+                appendSkippedTokens();
+            }
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end "entryRuleEString"
+
+
+    // $ANTLR start "ruleEString"
+    // InternalScadeEquations.g:12704:1: ruleEString returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID ) ;
+    public final AntlrDatatypeRuleToken ruleEString() throws RecognitionException {
+        AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
+
+        Token this_STRING_0=null;
+        AntlrDatatypeRuleToken this_ExtendedID_1 = null;
+
+
+
+        	enterRule();
+
+        try {
+            // InternalScadeEquations.g:12710:2: ( (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID ) )
+            // InternalScadeEquations.g:12711:2: (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID )
+            {
+            // InternalScadeEquations.g:12711:2: (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID )
+            int alt288=2;
+            int LA288_0 = input.LA(1);
+
+            if ( (LA288_0==RULE_STRING) ) {
+                alt288=1;
+            }
+            else if ( (LA288_0==RULE_ID) ) {
+                alt288=2;
+            }
+            else {
+                if (state.backtracking>0) {state.failed=true; return current;}
+                NoViableAltException nvae =
+                    new NoViableAltException("", 288, 0, input);
+
+                throw nvae;
+            }
+            switch (alt288) {
+                case 1 :
+                    // InternalScadeEquations.g:12712:3: this_STRING_0= RULE_STRING
+                    {
+                    this_STRING_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
+
+                      			current.merge(this_STRING_0);
+                      		
+                    }
+                    if ( state.backtracking==0 ) {
+
+                      			newLeafNode(this_STRING_0, grammarAccess.getEStringAccess().getSTRINGTerminalRuleCall_0());
+                      		
+                    }
+
+                    }
+                    break;
+                case 2 :
+                    // InternalScadeEquations.g:12720:3: this_ExtendedID_1= ruleExtendedID
+                    {
+                    if ( state.backtracking==0 ) {
+
+                      			newCompositeNode(grammarAccess.getEStringAccess().getExtendedIDParserRuleCall_1());
+                      		
+                    }
+                    pushFollow(FollowSets000.FOLLOW_2);
+                    this_ExtendedID_1=ruleExtendedID();
+
+                    state._fsp--;
+                    if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
+
+                      			current.merge(this_ExtendedID_1);
+                      		
+                    }
+                    if ( state.backtracking==0 ) {
+
+                      			afterParserOrEnumRuleCall();
+                      		
+                    }
+
+                    }
+                    break;
+
+            }
+
+
+            }
+
+            if ( state.backtracking==0 ) {
+
+              	leaveRule();
+
+            }
+        }
+
+            catch (RecognitionException re) {
+                recover(input,re);
+                appendSkippedTokens();
+            }
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end "ruleEString"
+
+
     // $ANTLR start "entryRuleEStringBoolean"
-    // InternalScadeEquations.g:12693:1: entryRuleEStringBoolean returns [String current=null] : iv_ruleEStringBoolean= ruleEStringBoolean EOF ;
+    // InternalScadeEquations.g:12734:1: entryRuleEStringBoolean returns [String current=null] : iv_ruleEStringBoolean= ruleEStringBoolean EOF ;
     public final String entryRuleEStringBoolean() throws RecognitionException {
         String current = null;
 
@@ -35122,8 +35287,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalScadeEquations.g:12693:54: (iv_ruleEStringBoolean= ruleEStringBoolean EOF )
-            // InternalScadeEquations.g:12694:2: iv_ruleEStringBoolean= ruleEStringBoolean EOF
+            // InternalScadeEquations.g:12734:54: (iv_ruleEStringBoolean= ruleEStringBoolean EOF )
+            // InternalScadeEquations.g:12735:2: iv_ruleEStringBoolean= ruleEStringBoolean EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getEStringBooleanRule()); 
@@ -35154,7 +35319,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleEStringBoolean"
-    // InternalScadeEquations.g:12700:1: ruleEStringBoolean returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID | this_BOOLEAN_2= RULE_BOOLEAN ) ;
+    // InternalScadeEquations.g:12741:1: ruleEStringBoolean returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID | this_BOOLEAN_2= RULE_BOOLEAN ) ;
     public final AntlrDatatypeRuleToken ruleEStringBoolean() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -35167,38 +35332,38 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:12706:2: ( (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID | this_BOOLEAN_2= RULE_BOOLEAN ) )
-            // InternalScadeEquations.g:12707:2: (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID | this_BOOLEAN_2= RULE_BOOLEAN )
+            // InternalScadeEquations.g:12747:2: ( (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID | this_BOOLEAN_2= RULE_BOOLEAN ) )
+            // InternalScadeEquations.g:12748:2: (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID | this_BOOLEAN_2= RULE_BOOLEAN )
             {
-            // InternalScadeEquations.g:12707:2: (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID | this_BOOLEAN_2= RULE_BOOLEAN )
-            int alt288=3;
+            // InternalScadeEquations.g:12748:2: (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID | this_BOOLEAN_2= RULE_BOOLEAN )
+            int alt289=3;
             switch ( input.LA(1) ) {
             case RULE_STRING:
                 {
-                alt288=1;
+                alt289=1;
                 }
                 break;
             case RULE_ID:
                 {
-                alt288=2;
+                alt289=2;
                 }
                 break;
             case RULE_BOOLEAN:
                 {
-                alt288=3;
+                alt289=3;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 288, 0, input);
+                    new NoViableAltException("", 289, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt288) {
+            switch (alt289) {
                 case 1 :
-                    // InternalScadeEquations.g:12708:3: this_STRING_0= RULE_STRING
+                    // InternalScadeEquations.g:12749:3: this_STRING_0= RULE_STRING
                     {
                     this_STRING_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -35215,7 +35380,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalScadeEquations.g:12716:3: this_ExtendedID_1= ruleExtendedID
+                    // InternalScadeEquations.g:12757:3: this_ExtendedID_1= ruleExtendedID
                     {
                     if ( state.backtracking==0 ) {
 
@@ -35241,7 +35406,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalScadeEquations.g:12727:3: this_BOOLEAN_2= RULE_BOOLEAN
+                    // InternalScadeEquations.g:12768:3: this_BOOLEAN_2= RULE_BOOLEAN
                     {
                     this_BOOLEAN_2=(Token)match(input,RULE_BOOLEAN,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -35282,7 +35447,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleEStringAllTypes"
-    // InternalScadeEquations.g:12738:1: entryRuleEStringAllTypes returns [String current=null] : iv_ruleEStringAllTypes= ruleEStringAllTypes EOF ;
+    // InternalScadeEquations.g:12779:1: entryRuleEStringAllTypes returns [String current=null] : iv_ruleEStringAllTypes= ruleEStringAllTypes EOF ;
     public final String entryRuleEStringAllTypes() throws RecognitionException {
         String current = null;
 
@@ -35290,8 +35455,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalScadeEquations.g:12738:55: (iv_ruleEStringAllTypes= ruleEStringAllTypes EOF )
-            // InternalScadeEquations.g:12739:2: iv_ruleEStringAllTypes= ruleEStringAllTypes EOF
+            // InternalScadeEquations.g:12779:55: (iv_ruleEStringAllTypes= ruleEStringAllTypes EOF )
+            // InternalScadeEquations.g:12780:2: iv_ruleEStringAllTypes= ruleEStringAllTypes EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getEStringAllTypesRule()); 
@@ -35322,7 +35487,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleEStringAllTypes"
-    // InternalScadeEquations.g:12745:1: ruleEStringAllTypes returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID | this_BOOLEAN_2= RULE_BOOLEAN | this_Integer_3= ruleInteger | this_Floateger_4= ruleFloateger ) ;
+    // InternalScadeEquations.g:12786:1: ruleEStringAllTypes returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID | this_BOOLEAN_2= RULE_BOOLEAN | this_Integer_3= ruleInteger | this_Floateger_4= ruleFloateger ) ;
     public final AntlrDatatypeRuleToken ruleEStringAllTypes() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -35339,41 +35504,41 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:12751:2: ( (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID | this_BOOLEAN_2= RULE_BOOLEAN | this_Integer_3= ruleInteger | this_Floateger_4= ruleFloateger ) )
-            // InternalScadeEquations.g:12752:2: (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID | this_BOOLEAN_2= RULE_BOOLEAN | this_Integer_3= ruleInteger | this_Floateger_4= ruleFloateger )
+            // InternalScadeEquations.g:12792:2: ( (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID | this_BOOLEAN_2= RULE_BOOLEAN | this_Integer_3= ruleInteger | this_Floateger_4= ruleFloateger ) )
+            // InternalScadeEquations.g:12793:2: (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID | this_BOOLEAN_2= RULE_BOOLEAN | this_Integer_3= ruleInteger | this_Floateger_4= ruleFloateger )
             {
-            // InternalScadeEquations.g:12752:2: (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID | this_BOOLEAN_2= RULE_BOOLEAN | this_Integer_3= ruleInteger | this_Floateger_4= ruleFloateger )
-            int alt289=5;
+            // InternalScadeEquations.g:12793:2: (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID | this_BOOLEAN_2= RULE_BOOLEAN | this_Integer_3= ruleInteger | this_Floateger_4= ruleFloateger )
+            int alt290=5;
             switch ( input.LA(1) ) {
             case RULE_STRING:
                 {
-                alt289=1;
+                alt290=1;
                 }
                 break;
             case RULE_ID:
                 {
-                alt289=2;
+                alt290=2;
                 }
                 break;
             case RULE_BOOLEAN:
                 {
-                alt289=3;
+                alt290=3;
                 }
                 break;
             case 83:
                 {
-                int LA289_4 = input.LA(2);
+                int LA290_4 = input.LA(2);
 
-                if ( (LA289_4==RULE_INT) ) {
-                    alt289=4;
+                if ( (LA290_4==RULE_INT) ) {
+                    alt290=4;
                 }
-                else if ( (LA289_4==RULE_FLOAT) ) {
-                    alt289=5;
+                else if ( (LA290_4==RULE_FLOAT) ) {
+                    alt290=5;
                 }
                 else {
                     if (state.backtracking>0) {state.failed=true; return current;}
                     NoViableAltException nvae =
-                        new NoViableAltException("", 289, 4, input);
+                        new NoViableAltException("", 290, 4, input);
 
                     throw nvae;
                 }
@@ -35381,25 +35546,25 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                 break;
             case RULE_INT:
                 {
-                alt289=4;
+                alt290=4;
                 }
                 break;
             case RULE_FLOAT:
                 {
-                alt289=5;
+                alt290=5;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 289, 0, input);
+                    new NoViableAltException("", 290, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt289) {
+            switch (alt290) {
                 case 1 :
-                    // InternalScadeEquations.g:12753:3: this_STRING_0= RULE_STRING
+                    // InternalScadeEquations.g:12794:3: this_STRING_0= RULE_STRING
                     {
                     this_STRING_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -35416,7 +35581,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalScadeEquations.g:12761:3: this_ExtendedID_1= ruleExtendedID
+                    // InternalScadeEquations.g:12802:3: this_ExtendedID_1= ruleExtendedID
                     {
                     if ( state.backtracking==0 ) {
 
@@ -35442,7 +35607,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalScadeEquations.g:12772:3: this_BOOLEAN_2= RULE_BOOLEAN
+                    // InternalScadeEquations.g:12813:3: this_BOOLEAN_2= RULE_BOOLEAN
                     {
                     this_BOOLEAN_2=(Token)match(input,RULE_BOOLEAN,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -35459,7 +35624,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // InternalScadeEquations.g:12780:3: this_Integer_3= ruleInteger
+                    // InternalScadeEquations.g:12821:3: this_Integer_3= ruleInteger
                     {
                     if ( state.backtracking==0 ) {
 
@@ -35485,7 +35650,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 5 :
-                    // InternalScadeEquations.g:12791:3: this_Floateger_4= ruleFloateger
+                    // InternalScadeEquations.g:12832:3: this_Floateger_4= ruleFloateger
                     {
                     if ( state.backtracking==0 ) {
 
@@ -35535,7 +35700,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleExtendedID"
-    // InternalScadeEquations.g:12805:1: entryRuleExtendedID returns [String current=null] : iv_ruleExtendedID= ruleExtendedID EOF ;
+    // InternalScadeEquations.g:12846:1: entryRuleExtendedID returns [String current=null] : iv_ruleExtendedID= ruleExtendedID EOF ;
     public final String entryRuleExtendedID() throws RecognitionException {
         String current = null;
 
@@ -35543,8 +35708,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalScadeEquations.g:12805:50: (iv_ruleExtendedID= ruleExtendedID EOF )
-            // InternalScadeEquations.g:12806:2: iv_ruleExtendedID= ruleExtendedID EOF
+            // InternalScadeEquations.g:12846:50: (iv_ruleExtendedID= ruleExtendedID EOF )
+            // InternalScadeEquations.g:12847:2: iv_ruleExtendedID= ruleExtendedID EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getExtendedIDRule()); 
@@ -35575,7 +35740,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleExtendedID"
-    // InternalScadeEquations.g:12812:1: ruleExtendedID returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_ID_0= RULE_ID ( (kw= '.' | kw= '-' ) this_ID_3= RULE_ID )* (kw= '#' this_INT_5= RULE_INT )? ) ;
+    // InternalScadeEquations.g:12853:1: ruleExtendedID returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_ID_0= RULE_ID ( (kw= '.' | kw= '-' ) this_ID_3= RULE_ID )* (kw= '#' this_INT_5= RULE_INT )? ) ;
     public final AntlrDatatypeRuleToken ruleExtendedID() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -35588,13 +35753,13 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:12818:2: ( (this_ID_0= RULE_ID ( (kw= '.' | kw= '-' ) this_ID_3= RULE_ID )* (kw= '#' this_INT_5= RULE_INT )? ) )
-            // InternalScadeEquations.g:12819:2: (this_ID_0= RULE_ID ( (kw= '.' | kw= '-' ) this_ID_3= RULE_ID )* (kw= '#' this_INT_5= RULE_INT )? )
+            // InternalScadeEquations.g:12859:2: ( (this_ID_0= RULE_ID ( (kw= '.' | kw= '-' ) this_ID_3= RULE_ID )* (kw= '#' this_INT_5= RULE_INT )? ) )
+            // InternalScadeEquations.g:12860:2: (this_ID_0= RULE_ID ( (kw= '.' | kw= '-' ) this_ID_3= RULE_ID )* (kw= '#' this_INT_5= RULE_INT )? )
             {
-            // InternalScadeEquations.g:12819:2: (this_ID_0= RULE_ID ( (kw= '.' | kw= '-' ) this_ID_3= RULE_ID )* (kw= '#' this_INT_5= RULE_INT )? )
-            // InternalScadeEquations.g:12820:3: this_ID_0= RULE_ID ( (kw= '.' | kw= '-' ) this_ID_3= RULE_ID )* (kw= '#' this_INT_5= RULE_INT )?
+            // InternalScadeEquations.g:12860:2: (this_ID_0= RULE_ID ( (kw= '.' | kw= '-' ) this_ID_3= RULE_ID )* (kw= '#' this_INT_5= RULE_INT )? )
+            // InternalScadeEquations.g:12861:3: this_ID_0= RULE_ID ( (kw= '.' | kw= '-' ) this_ID_3= RULE_ID )* (kw= '#' this_INT_5= RULE_INT )?
             {
-            this_ID_0=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_136); if (state.failed) return current;
+            this_ID_0=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_138); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               			current.merge(this_ID_0);
@@ -35605,50 +35770,50 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
               			newLeafNode(this_ID_0, grammarAccess.getExtendedIDAccess().getIDTerminalRuleCall_0());
               		
             }
-            // InternalScadeEquations.g:12827:3: ( (kw= '.' | kw= '-' ) this_ID_3= RULE_ID )*
-            loop291:
+            // InternalScadeEquations.g:12868:3: ( (kw= '.' | kw= '-' ) this_ID_3= RULE_ID )*
+            loop292:
             do {
-                int alt291=2;
-                int LA291_0 = input.LA(1);
+                int alt292=2;
+                int LA292_0 = input.LA(1);
 
-                if ( (LA291_0==83) ) {
-                    int LA291_2 = input.LA(2);
+                if ( (LA292_0==83) ) {
+                    int LA292_2 = input.LA(2);
 
-                    if ( (LA291_2==RULE_ID) ) {
-                        alt291=1;
+                    if ( (LA292_2==RULE_ID) ) {
+                        alt292=1;
                     }
 
 
                 }
-                else if ( (LA291_0==37) ) {
-                    alt291=1;
+                else if ( (LA292_0==37) ) {
+                    alt292=1;
                 }
 
 
-                switch (alt291) {
+                switch (alt292) {
             	case 1 :
-            	    // InternalScadeEquations.g:12828:4: (kw= '.' | kw= '-' ) this_ID_3= RULE_ID
+            	    // InternalScadeEquations.g:12869:4: (kw= '.' | kw= '-' ) this_ID_3= RULE_ID
             	    {
-            	    // InternalScadeEquations.g:12828:4: (kw= '.' | kw= '-' )
-            	    int alt290=2;
-            	    int LA290_0 = input.LA(1);
+            	    // InternalScadeEquations.g:12869:4: (kw= '.' | kw= '-' )
+            	    int alt291=2;
+            	    int LA291_0 = input.LA(1);
 
-            	    if ( (LA290_0==37) ) {
-            	        alt290=1;
+            	    if ( (LA291_0==37) ) {
+            	        alt291=1;
             	    }
-            	    else if ( (LA290_0==83) ) {
-            	        alt290=2;
+            	    else if ( (LA291_0==83) ) {
+            	        alt291=2;
             	    }
             	    else {
             	        if (state.backtracking>0) {state.failed=true; return current;}
             	        NoViableAltException nvae =
-            	            new NoViableAltException("", 290, 0, input);
+            	            new NoViableAltException("", 291, 0, input);
 
             	        throw nvae;
             	    }
-            	    switch (alt290) {
+            	    switch (alt291) {
             	        case 1 :
-            	            // InternalScadeEquations.g:12829:5: kw= '.'
+            	            // InternalScadeEquations.g:12870:5: kw= '.'
             	            {
             	            kw=(Token)match(input,37,FollowSets000.FOLLOW_4); if (state.failed) return current;
             	            if ( state.backtracking==0 ) {
@@ -35661,7 +35826,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             	            }
             	            break;
             	        case 2 :
-            	            // InternalScadeEquations.g:12835:5: kw= '-'
+            	            // InternalScadeEquations.g:12876:5: kw= '-'
             	            {
             	            kw=(Token)match(input,83,FollowSets000.FOLLOW_4); if (state.failed) return current;
             	            if ( state.backtracking==0 ) {
@@ -35676,7 +35841,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
             	    }
 
-            	    this_ID_3=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_136); if (state.failed) return current;
+            	    this_ID_3=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_138); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	      				current.merge(this_ID_3);
@@ -35692,22 +35857,22 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             	    break;
 
             	default :
-            	    break loop291;
+            	    break loop292;
                 }
             } while (true);
 
-            // InternalScadeEquations.g:12849:3: (kw= '#' this_INT_5= RULE_INT )?
-            int alt292=2;
-            int LA292_0 = input.LA(1);
+            // InternalScadeEquations.g:12890:3: (kw= '#' this_INT_5= RULE_INT )?
+            int alt293=2;
+            int LA293_0 = input.LA(1);
 
-            if ( (LA292_0==88) ) {
-                alt292=1;
+            if ( (LA293_0==88) ) {
+                alt293=1;
             }
-            switch (alt292) {
+            switch (alt293) {
                 case 1 :
-                    // InternalScadeEquations.g:12850:4: kw= '#' this_INT_5= RULE_INT
+                    // InternalScadeEquations.g:12891:4: kw= '#' this_INT_5= RULE_INT
                     {
-                    kw=(Token)match(input,88,FollowSets000.FOLLOW_124); if (state.failed) return current;
+                    kw=(Token)match(input,88,FollowSets000.FOLLOW_126); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       				current.merge(kw);
@@ -35756,7 +35921,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleInteger"
-    // InternalScadeEquations.g:12867:1: entryRuleInteger returns [String current=null] : iv_ruleInteger= ruleInteger EOF ;
+    // InternalScadeEquations.g:12908:1: entryRuleInteger returns [String current=null] : iv_ruleInteger= ruleInteger EOF ;
     public final String entryRuleInteger() throws RecognitionException {
         String current = null;
 
@@ -35764,8 +35929,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalScadeEquations.g:12867:47: (iv_ruleInteger= ruleInteger EOF )
-            // InternalScadeEquations.g:12868:2: iv_ruleInteger= ruleInteger EOF
+            // InternalScadeEquations.g:12908:47: (iv_ruleInteger= ruleInteger EOF )
+            // InternalScadeEquations.g:12909:2: iv_ruleInteger= ruleInteger EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getIntegerRule()); 
@@ -35796,7 +35961,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleInteger"
-    // InternalScadeEquations.g:12874:1: ruleInteger returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : ( (kw= '-' )? this_INT_1= RULE_INT ) ;
+    // InternalScadeEquations.g:12915:1: ruleInteger returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : ( (kw= '-' )? this_INT_1= RULE_INT ) ;
     public final AntlrDatatypeRuleToken ruleInteger() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -35807,24 +35972,24 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:12880:2: ( ( (kw= '-' )? this_INT_1= RULE_INT ) )
-            // InternalScadeEquations.g:12881:2: ( (kw= '-' )? this_INT_1= RULE_INT )
+            // InternalScadeEquations.g:12921:2: ( ( (kw= '-' )? this_INT_1= RULE_INT ) )
+            // InternalScadeEquations.g:12922:2: ( (kw= '-' )? this_INT_1= RULE_INT )
             {
-            // InternalScadeEquations.g:12881:2: ( (kw= '-' )? this_INT_1= RULE_INT )
-            // InternalScadeEquations.g:12882:3: (kw= '-' )? this_INT_1= RULE_INT
+            // InternalScadeEquations.g:12922:2: ( (kw= '-' )? this_INT_1= RULE_INT )
+            // InternalScadeEquations.g:12923:3: (kw= '-' )? this_INT_1= RULE_INT
             {
-            // InternalScadeEquations.g:12882:3: (kw= '-' )?
-            int alt293=2;
-            int LA293_0 = input.LA(1);
+            // InternalScadeEquations.g:12923:3: (kw= '-' )?
+            int alt294=2;
+            int LA294_0 = input.LA(1);
 
-            if ( (LA293_0==83) ) {
-                alt293=1;
+            if ( (LA294_0==83) ) {
+                alt294=1;
             }
-            switch (alt293) {
+            switch (alt294) {
                 case 1 :
-                    // InternalScadeEquations.g:12883:4: kw= '-'
+                    // InternalScadeEquations.g:12924:4: kw= '-'
                     {
-                    kw=(Token)match(input,83,FollowSets000.FOLLOW_124); if (state.failed) return current;
+                    kw=(Token)match(input,83,FollowSets000.FOLLOW_126); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       				current.merge(kw);
@@ -35873,7 +36038,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleFloateger"
-    // InternalScadeEquations.g:12900:1: entryRuleFloateger returns [String current=null] : iv_ruleFloateger= ruleFloateger EOF ;
+    // InternalScadeEquations.g:12941:1: entryRuleFloateger returns [String current=null] : iv_ruleFloateger= ruleFloateger EOF ;
     public final String entryRuleFloateger() throws RecognitionException {
         String current = null;
 
@@ -35881,8 +36046,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalScadeEquations.g:12900:49: (iv_ruleFloateger= ruleFloateger EOF )
-            // InternalScadeEquations.g:12901:2: iv_ruleFloateger= ruleFloateger EOF
+            // InternalScadeEquations.g:12941:49: (iv_ruleFloateger= ruleFloateger EOF )
+            // InternalScadeEquations.g:12942:2: iv_ruleFloateger= ruleFloateger EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getFloategerRule()); 
@@ -35913,7 +36078,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleFloateger"
-    // InternalScadeEquations.g:12907:1: ruleFloateger returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : ( (kw= '-' )? this_FLOAT_1= RULE_FLOAT ) ;
+    // InternalScadeEquations.g:12948:1: ruleFloateger returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : ( (kw= '-' )? this_FLOAT_1= RULE_FLOAT ) ;
     public final AntlrDatatypeRuleToken ruleFloateger() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -35924,24 +36089,24 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:12913:2: ( ( (kw= '-' )? this_FLOAT_1= RULE_FLOAT ) )
-            // InternalScadeEquations.g:12914:2: ( (kw= '-' )? this_FLOAT_1= RULE_FLOAT )
+            // InternalScadeEquations.g:12954:2: ( ( (kw= '-' )? this_FLOAT_1= RULE_FLOAT ) )
+            // InternalScadeEquations.g:12955:2: ( (kw= '-' )? this_FLOAT_1= RULE_FLOAT )
             {
-            // InternalScadeEquations.g:12914:2: ( (kw= '-' )? this_FLOAT_1= RULE_FLOAT )
-            // InternalScadeEquations.g:12915:3: (kw= '-' )? this_FLOAT_1= RULE_FLOAT
+            // InternalScadeEquations.g:12955:2: ( (kw= '-' )? this_FLOAT_1= RULE_FLOAT )
+            // InternalScadeEquations.g:12956:3: (kw= '-' )? this_FLOAT_1= RULE_FLOAT
             {
-            // InternalScadeEquations.g:12915:3: (kw= '-' )?
-            int alt294=2;
-            int LA294_0 = input.LA(1);
+            // InternalScadeEquations.g:12956:3: (kw= '-' )?
+            int alt295=2;
+            int LA295_0 = input.LA(1);
 
-            if ( (LA294_0==83) ) {
-                alt294=1;
+            if ( (LA295_0==83) ) {
+                alt295=1;
             }
-            switch (alt294) {
+            switch (alt295) {
                 case 1 :
-                    // InternalScadeEquations.g:12916:4: kw= '-'
+                    // InternalScadeEquations.g:12957:4: kw= '-'
                     {
-                    kw=(Token)match(input,83,FollowSets000.FOLLOW_137); if (state.failed) return current;
+                    kw=(Token)match(input,83,FollowSets000.FOLLOW_139); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       				current.merge(kw);
@@ -35990,7 +36155,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleValueType"
-    // InternalScadeEquations.g:12933:1: ruleValueType returns [Enumerator current=null] : ( (enumLiteral_0= 'bool' ) | (enumLiteral_1= 'int' ) | (enumLiteral_2= 'real' ) ) ;
+    // InternalScadeEquations.g:12974:1: ruleValueType returns [Enumerator current=null] : ( (enumLiteral_0= 'bool' ) | (enumLiteral_1= 'int' ) | (enumLiteral_2= 'real' ) ) ;
     public final Enumerator ruleValueType() throws RecognitionException {
         Enumerator current = null;
 
@@ -36002,41 +36167,41 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:12939:2: ( ( (enumLiteral_0= 'bool' ) | (enumLiteral_1= 'int' ) | (enumLiteral_2= 'real' ) ) )
-            // InternalScadeEquations.g:12940:2: ( (enumLiteral_0= 'bool' ) | (enumLiteral_1= 'int' ) | (enumLiteral_2= 'real' ) )
+            // InternalScadeEquations.g:12980:2: ( ( (enumLiteral_0= 'bool' ) | (enumLiteral_1= 'int' ) | (enumLiteral_2= 'real' ) ) )
+            // InternalScadeEquations.g:12981:2: ( (enumLiteral_0= 'bool' ) | (enumLiteral_1= 'int' ) | (enumLiteral_2= 'real' ) )
             {
-            // InternalScadeEquations.g:12940:2: ( (enumLiteral_0= 'bool' ) | (enumLiteral_1= 'int' ) | (enumLiteral_2= 'real' ) )
-            int alt295=3;
+            // InternalScadeEquations.g:12981:2: ( (enumLiteral_0= 'bool' ) | (enumLiteral_1= 'int' ) | (enumLiteral_2= 'real' ) )
+            int alt296=3;
             switch ( input.LA(1) ) {
             case 90:
                 {
-                alt295=1;
+                alt296=1;
                 }
                 break;
             case 91:
                 {
-                alt295=2;
+                alt296=2;
                 }
                 break;
             case 92:
                 {
-                alt295=3;
+                alt296=3;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 295, 0, input);
+                    new NoViableAltException("", 296, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt295) {
+            switch (alt296) {
                 case 1 :
-                    // InternalScadeEquations.g:12941:3: (enumLiteral_0= 'bool' )
+                    // InternalScadeEquations.g:12982:3: (enumLiteral_0= 'bool' )
                     {
-                    // InternalScadeEquations.g:12941:3: (enumLiteral_0= 'bool' )
-                    // InternalScadeEquations.g:12942:4: enumLiteral_0= 'bool'
+                    // InternalScadeEquations.g:12982:3: (enumLiteral_0= 'bool' )
+                    // InternalScadeEquations.g:12983:4: enumLiteral_0= 'bool'
                     {
                     enumLiteral_0=(Token)match(input,90,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -36052,10 +36217,10 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalScadeEquations.g:12949:3: (enumLiteral_1= 'int' )
+                    // InternalScadeEquations.g:12990:3: (enumLiteral_1= 'int' )
                     {
-                    // InternalScadeEquations.g:12949:3: (enumLiteral_1= 'int' )
-                    // InternalScadeEquations.g:12950:4: enumLiteral_1= 'int'
+                    // InternalScadeEquations.g:12990:3: (enumLiteral_1= 'int' )
+                    // InternalScadeEquations.g:12991:4: enumLiteral_1= 'int'
                     {
                     enumLiteral_1=(Token)match(input,91,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -36071,10 +36236,10 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalScadeEquations.g:12957:3: (enumLiteral_2= 'real' )
+                    // InternalScadeEquations.g:12998:3: (enumLiteral_2= 'real' )
                     {
-                    // InternalScadeEquations.g:12957:3: (enumLiteral_2= 'real' )
-                    // InternalScadeEquations.g:12958:4: enumLiteral_2= 'real'
+                    // InternalScadeEquations.g:12998:3: (enumLiteral_2= 'real' )
+                    // InternalScadeEquations.g:12999:4: enumLiteral_2= 'real'
                     {
                     enumLiteral_2=(Token)match(input,92,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -36114,7 +36279,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleEnumType"
-    // InternalScadeEquations.g:12968:1: ruleEnumType returns [Enumerator current=null] : (enumLiteral_0= 'enum' ) ;
+    // InternalScadeEquations.g:13009:1: ruleEnumType returns [Enumerator current=null] : (enumLiteral_0= 'enum' ) ;
     public final Enumerator ruleEnumType() throws RecognitionException {
         Enumerator current = null;
 
@@ -36124,11 +36289,11 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:12974:2: ( (enumLiteral_0= 'enum' ) )
-            // InternalScadeEquations.g:12975:2: (enumLiteral_0= 'enum' )
+            // InternalScadeEquations.g:13015:2: ( (enumLiteral_0= 'enum' ) )
+            // InternalScadeEquations.g:13016:2: (enumLiteral_0= 'enum' )
             {
-            // InternalScadeEquations.g:12975:2: (enumLiteral_0= 'enum' )
-            // InternalScadeEquations.g:12976:3: enumLiteral_0= 'enum'
+            // InternalScadeEquations.g:13016:2: (enumLiteral_0= 'enum' )
+            // InternalScadeEquations.g:13017:3: enumLiteral_0= 'enum'
             {
             enumLiteral_0=(Token)match(input,93,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -36162,7 +36327,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleAssignOperator"
-    // InternalScadeEquations.g:12985:1: ruleAssignOperator returns [Enumerator current=null] : (enumLiteral_0= '=' ) ;
+    // InternalScadeEquations.g:13026:1: ruleAssignOperator returns [Enumerator current=null] : (enumLiteral_0= '=' ) ;
     public final Enumerator ruleAssignOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -36172,11 +36337,11 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:12991:2: ( (enumLiteral_0= '=' ) )
-            // InternalScadeEquations.g:12992:2: (enumLiteral_0= '=' )
+            // InternalScadeEquations.g:13032:2: ( (enumLiteral_0= '=' ) )
+            // InternalScadeEquations.g:13033:2: (enumLiteral_0= '=' )
             {
-            // InternalScadeEquations.g:12992:2: (enumLiteral_0= '=' )
-            // InternalScadeEquations.g:12993:3: enumLiteral_0= '='
+            // InternalScadeEquations.g:13033:2: (enumLiteral_0= '=' )
+            // InternalScadeEquations.g:13034:3: enumLiteral_0= '='
             {
             enumLiteral_0=(Token)match(input,21,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -36210,7 +36375,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleCompareOperator"
-    // InternalScadeEquations.g:13002:1: ruleCompareOperator returns [Enumerator current=null] : ( (enumLiteral_0= '=' ) | (enumLiteral_1= '<' ) | (enumLiteral_2= '<=' ) | (enumLiteral_3= '>' ) | (enumLiteral_4= '>=' ) | (enumLiteral_5= '<>' ) ) ;
+    // InternalScadeEquations.g:13043:1: ruleCompareOperator returns [Enumerator current=null] : ( (enumLiteral_0= '=' ) | (enumLiteral_1= '<' ) | (enumLiteral_2= '<=' ) | (enumLiteral_3= '>' ) | (enumLiteral_4= '>=' ) | (enumLiteral_5= '<>' ) ) ;
     public final Enumerator ruleCompareOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -36225,56 +36390,56 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:13008:2: ( ( (enumLiteral_0= '=' ) | (enumLiteral_1= '<' ) | (enumLiteral_2= '<=' ) | (enumLiteral_3= '>' ) | (enumLiteral_4= '>=' ) | (enumLiteral_5= '<>' ) ) )
-            // InternalScadeEquations.g:13009:2: ( (enumLiteral_0= '=' ) | (enumLiteral_1= '<' ) | (enumLiteral_2= '<=' ) | (enumLiteral_3= '>' ) | (enumLiteral_4= '>=' ) | (enumLiteral_5= '<>' ) )
+            // InternalScadeEquations.g:13049:2: ( ( (enumLiteral_0= '=' ) | (enumLiteral_1= '<' ) | (enumLiteral_2= '<=' ) | (enumLiteral_3= '>' ) | (enumLiteral_4= '>=' ) | (enumLiteral_5= '<>' ) ) )
+            // InternalScadeEquations.g:13050:2: ( (enumLiteral_0= '=' ) | (enumLiteral_1= '<' ) | (enumLiteral_2= '<=' ) | (enumLiteral_3= '>' ) | (enumLiteral_4= '>=' ) | (enumLiteral_5= '<>' ) )
             {
-            // InternalScadeEquations.g:13009:2: ( (enumLiteral_0= '=' ) | (enumLiteral_1= '<' ) | (enumLiteral_2= '<=' ) | (enumLiteral_3= '>' ) | (enumLiteral_4= '>=' ) | (enumLiteral_5= '<>' ) )
-            int alt296=6;
+            // InternalScadeEquations.g:13050:2: ( (enumLiteral_0= '=' ) | (enumLiteral_1= '<' ) | (enumLiteral_2= '<=' ) | (enumLiteral_3= '>' ) | (enumLiteral_4= '>=' ) | (enumLiteral_5= '<>' ) )
+            int alt297=6;
             switch ( input.LA(1) ) {
             case 21:
                 {
-                alt296=1;
+                alt297=1;
                 }
                 break;
             case 94:
                 {
-                alt296=2;
+                alt297=2;
                 }
                 break;
             case 95:
                 {
-                alt296=3;
+                alt297=3;
                 }
                 break;
             case 96:
                 {
-                alt296=4;
+                alt297=4;
                 }
                 break;
             case 97:
                 {
-                alt296=5;
+                alt297=5;
                 }
                 break;
             case 98:
                 {
-                alt296=6;
+                alt297=6;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 296, 0, input);
+                    new NoViableAltException("", 297, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt296) {
+            switch (alt297) {
                 case 1 :
-                    // InternalScadeEquations.g:13010:3: (enumLiteral_0= '=' )
+                    // InternalScadeEquations.g:13051:3: (enumLiteral_0= '=' )
                     {
-                    // InternalScadeEquations.g:13010:3: (enumLiteral_0= '=' )
-                    // InternalScadeEquations.g:13011:4: enumLiteral_0= '='
+                    // InternalScadeEquations.g:13051:3: (enumLiteral_0= '=' )
+                    // InternalScadeEquations.g:13052:4: enumLiteral_0= '='
                     {
                     enumLiteral_0=(Token)match(input,21,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -36290,10 +36455,10 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalScadeEquations.g:13018:3: (enumLiteral_1= '<' )
+                    // InternalScadeEquations.g:13059:3: (enumLiteral_1= '<' )
                     {
-                    // InternalScadeEquations.g:13018:3: (enumLiteral_1= '<' )
-                    // InternalScadeEquations.g:13019:4: enumLiteral_1= '<'
+                    // InternalScadeEquations.g:13059:3: (enumLiteral_1= '<' )
+                    // InternalScadeEquations.g:13060:4: enumLiteral_1= '<'
                     {
                     enumLiteral_1=(Token)match(input,94,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -36309,10 +36474,10 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalScadeEquations.g:13026:3: (enumLiteral_2= '<=' )
+                    // InternalScadeEquations.g:13067:3: (enumLiteral_2= '<=' )
                     {
-                    // InternalScadeEquations.g:13026:3: (enumLiteral_2= '<=' )
-                    // InternalScadeEquations.g:13027:4: enumLiteral_2= '<='
+                    // InternalScadeEquations.g:13067:3: (enumLiteral_2= '<=' )
+                    // InternalScadeEquations.g:13068:4: enumLiteral_2= '<='
                     {
                     enumLiteral_2=(Token)match(input,95,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -36328,10 +36493,10 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // InternalScadeEquations.g:13034:3: (enumLiteral_3= '>' )
+                    // InternalScadeEquations.g:13075:3: (enumLiteral_3= '>' )
                     {
-                    // InternalScadeEquations.g:13034:3: (enumLiteral_3= '>' )
-                    // InternalScadeEquations.g:13035:4: enumLiteral_3= '>'
+                    // InternalScadeEquations.g:13075:3: (enumLiteral_3= '>' )
+                    // InternalScadeEquations.g:13076:4: enumLiteral_3= '>'
                     {
                     enumLiteral_3=(Token)match(input,96,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -36347,10 +36512,10 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 5 :
-                    // InternalScadeEquations.g:13042:3: (enumLiteral_4= '>=' )
+                    // InternalScadeEquations.g:13083:3: (enumLiteral_4= '>=' )
                     {
-                    // InternalScadeEquations.g:13042:3: (enumLiteral_4= '>=' )
-                    // InternalScadeEquations.g:13043:4: enumLiteral_4= '>='
+                    // InternalScadeEquations.g:13083:3: (enumLiteral_4= '>=' )
+                    // InternalScadeEquations.g:13084:4: enumLiteral_4= '>='
                     {
                     enumLiteral_4=(Token)match(input,97,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -36366,10 +36531,10 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 6 :
-                    // InternalScadeEquations.g:13050:3: (enumLiteral_5= '<>' )
+                    // InternalScadeEquations.g:13091:3: (enumLiteral_5= '<>' )
                     {
-                    // InternalScadeEquations.g:13050:3: (enumLiteral_5= '<>' )
-                    // InternalScadeEquations.g:13051:4: enumLiteral_5= '<>'
+                    // InternalScadeEquations.g:13091:3: (enumLiteral_5= '<>' )
+                    // InternalScadeEquations.g:13092:4: enumLiteral_5= '<>'
                     {
                     enumLiteral_5=(Token)match(input,98,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -36409,7 +36574,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleLogicalOrOperator"
-    // InternalScadeEquations.g:13061:1: ruleLogicalOrOperator returns [Enumerator current=null] : (enumLiteral_0= 'or' ) ;
+    // InternalScadeEquations.g:13102:1: ruleLogicalOrOperator returns [Enumerator current=null] : (enumLiteral_0= 'or' ) ;
     public final Enumerator ruleLogicalOrOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -36419,11 +36584,11 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:13067:2: ( (enumLiteral_0= 'or' ) )
-            // InternalScadeEquations.g:13068:2: (enumLiteral_0= 'or' )
+            // InternalScadeEquations.g:13108:2: ( (enumLiteral_0= 'or' ) )
+            // InternalScadeEquations.g:13109:2: (enumLiteral_0= 'or' )
             {
-            // InternalScadeEquations.g:13068:2: (enumLiteral_0= 'or' )
-            // InternalScadeEquations.g:13069:3: enumLiteral_0= 'or'
+            // InternalScadeEquations.g:13109:2: (enumLiteral_0= 'or' )
+            // InternalScadeEquations.g:13110:3: enumLiteral_0= 'or'
             {
             enumLiteral_0=(Token)match(input,60,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -36457,7 +36622,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleLogicalAndOperator"
-    // InternalScadeEquations.g:13078:1: ruleLogicalAndOperator returns [Enumerator current=null] : (enumLiteral_0= 'and' ) ;
+    // InternalScadeEquations.g:13119:1: ruleLogicalAndOperator returns [Enumerator current=null] : (enumLiteral_0= 'and' ) ;
     public final Enumerator ruleLogicalAndOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -36467,11 +36632,11 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:13084:2: ( (enumLiteral_0= 'and' ) )
-            // InternalScadeEquations.g:13085:2: (enumLiteral_0= 'and' )
+            // InternalScadeEquations.g:13125:2: ( (enumLiteral_0= 'and' ) )
+            // InternalScadeEquations.g:13126:2: (enumLiteral_0= 'and' )
             {
-            // InternalScadeEquations.g:13085:2: (enumLiteral_0= 'and' )
-            // InternalScadeEquations.g:13086:3: enumLiteral_0= 'and'
+            // InternalScadeEquations.g:13126:2: (enumLiteral_0= 'and' )
+            // InternalScadeEquations.g:13127:3: enumLiteral_0= 'and'
             {
             enumLiteral_0=(Token)match(input,61,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -36505,7 +36670,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleNotOperator"
-    // InternalScadeEquations.g:13095:1: ruleNotOperator returns [Enumerator current=null] : (enumLiteral_0= 'not' ) ;
+    // InternalScadeEquations.g:13136:1: ruleNotOperator returns [Enumerator current=null] : (enumLiteral_0= 'not' ) ;
     public final Enumerator ruleNotOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -36515,11 +36680,11 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:13101:2: ( (enumLiteral_0= 'not' ) )
-            // InternalScadeEquations.g:13102:2: (enumLiteral_0= 'not' )
+            // InternalScadeEquations.g:13142:2: ( (enumLiteral_0= 'not' ) )
+            // InternalScadeEquations.g:13143:2: (enumLiteral_0= 'not' )
             {
-            // InternalScadeEquations.g:13102:2: (enumLiteral_0= 'not' )
-            // InternalScadeEquations.g:13103:3: enumLiteral_0= 'not'
+            // InternalScadeEquations.g:13143:2: (enumLiteral_0= 'not' )
+            // InternalScadeEquations.g:13144:3: enumLiteral_0= 'not'
             {
             enumLiteral_0=(Token)match(input,99,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -36553,7 +36718,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleFbyOperator"
-    // InternalScadeEquations.g:13112:1: ruleFbyOperator returns [Enumerator current=null] : (enumLiteral_0= 'fby' ) ;
+    // InternalScadeEquations.g:13153:1: ruleFbyOperator returns [Enumerator current=null] : (enumLiteral_0= 'fby' ) ;
     public final Enumerator ruleFbyOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -36563,11 +36728,11 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:13118:2: ( (enumLiteral_0= 'fby' ) )
-            // InternalScadeEquations.g:13119:2: (enumLiteral_0= 'fby' )
+            // InternalScadeEquations.g:13159:2: ( (enumLiteral_0= 'fby' ) )
+            // InternalScadeEquations.g:13160:2: (enumLiteral_0= 'fby' )
             {
-            // InternalScadeEquations.g:13119:2: (enumLiteral_0= 'fby' )
-            // InternalScadeEquations.g:13120:3: enumLiteral_0= 'fby'
+            // InternalScadeEquations.g:13160:2: (enumLiteral_0= 'fby' )
+            // InternalScadeEquations.g:13161:3: enumLiteral_0= 'fby'
             {
             enumLiteral_0=(Token)match(input,54,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -36601,7 +36766,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleModOperator"
-    // InternalScadeEquations.g:13129:1: ruleModOperator returns [Enumerator current=null] : (enumLiteral_0= 'mod' ) ;
+    // InternalScadeEquations.g:13170:1: ruleModOperator returns [Enumerator current=null] : (enumLiteral_0= 'mod' ) ;
     public final Enumerator ruleModOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -36611,11 +36776,11 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:13135:2: ( (enumLiteral_0= 'mod' ) )
-            // InternalScadeEquations.g:13136:2: (enumLiteral_0= 'mod' )
+            // InternalScadeEquations.g:13176:2: ( (enumLiteral_0= 'mod' ) )
+            // InternalScadeEquations.g:13177:2: (enumLiteral_0= 'mod' )
             {
-            // InternalScadeEquations.g:13136:2: (enumLiteral_0= 'mod' )
-            // InternalScadeEquations.g:13137:3: enumLiteral_0= 'mod'
+            // InternalScadeEquations.g:13177:2: (enumLiteral_0= 'mod' )
+            // InternalScadeEquations.g:13178:3: enumLiteral_0= 'mod'
             {
             enumLiteral_0=(Token)match(input,52,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -36649,7 +36814,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleCurrentOperator"
-    // InternalScadeEquations.g:13146:1: ruleCurrentOperator returns [Enumerator current=null] : (enumLiteral_0= 'current' ) ;
+    // InternalScadeEquations.g:13187:1: ruleCurrentOperator returns [Enumerator current=null] : (enumLiteral_0= 'current' ) ;
     public final Enumerator ruleCurrentOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -36659,11 +36824,11 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:13152:2: ( (enumLiteral_0= 'current' ) )
-            // InternalScadeEquations.g:13153:2: (enumLiteral_0= 'current' )
+            // InternalScadeEquations.g:13193:2: ( (enumLiteral_0= 'current' ) )
+            // InternalScadeEquations.g:13194:2: (enumLiteral_0= 'current' )
             {
-            // InternalScadeEquations.g:13153:2: (enumLiteral_0= 'current' )
-            // InternalScadeEquations.g:13154:3: enumLiteral_0= 'current'
+            // InternalScadeEquations.g:13194:2: (enumLiteral_0= 'current' )
+            // InternalScadeEquations.g:13195:3: enumLiteral_0= 'current'
             {
             enumLiteral_0=(Token)match(input,100,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -36697,7 +36862,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleWhenOperator"
-    // InternalScadeEquations.g:13163:1: ruleWhenOperator returns [Enumerator current=null] : (enumLiteral_0= 'when' ) ;
+    // InternalScadeEquations.g:13204:1: ruleWhenOperator returns [Enumerator current=null] : (enumLiteral_0= 'when' ) ;
     public final Enumerator ruleWhenOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -36707,11 +36872,11 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:13169:2: ( (enumLiteral_0= 'when' ) )
-            // InternalScadeEquations.g:13170:2: (enumLiteral_0= 'when' )
+            // InternalScadeEquations.g:13210:2: ( (enumLiteral_0= 'when' ) )
+            // InternalScadeEquations.g:13211:2: (enumLiteral_0= 'when' )
             {
-            // InternalScadeEquations.g:13170:2: (enumLiteral_0= 'when' )
-            // InternalScadeEquations.g:13171:3: enumLiteral_0= 'when'
+            // InternalScadeEquations.g:13211:2: (enumLiteral_0= 'when' )
+            // InternalScadeEquations.g:13212:3: enumLiteral_0= 'when'
             {
             enumLiteral_0=(Token)match(input,31,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -36745,7 +36910,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleInitOperator"
-    // InternalScadeEquations.g:13180:1: ruleInitOperator returns [Enumerator current=null] : (enumLiteral_0= '->' ) ;
+    // InternalScadeEquations.g:13221:1: ruleInitOperator returns [Enumerator current=null] : (enumLiteral_0= '->' ) ;
     public final Enumerator ruleInitOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -36755,11 +36920,11 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:13186:2: ( (enumLiteral_0= '->' ) )
-            // InternalScadeEquations.g:13187:2: (enumLiteral_0= '->' )
+            // InternalScadeEquations.g:13227:2: ( (enumLiteral_0= '->' ) )
+            // InternalScadeEquations.g:13228:2: (enumLiteral_0= '->' )
             {
-            // InternalScadeEquations.g:13187:2: (enumLiteral_0= '->' )
-            // InternalScadeEquations.g:13188:3: enumLiteral_0= '->'
+            // InternalScadeEquations.g:13228:2: (enumLiteral_0= '->' )
+            // InternalScadeEquations.g:13229:3: enumLiteral_0= '->'
             {
             enumLiteral_0=(Token)match(input,55,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -36793,7 +36958,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleLogicalXorOperator"
-    // InternalScadeEquations.g:13197:1: ruleLogicalXorOperator returns [Enumerator current=null] : (enumLiteral_0= 'xor' ) ;
+    // InternalScadeEquations.g:13238:1: ruleLogicalXorOperator returns [Enumerator current=null] : (enumLiteral_0= 'xor' ) ;
     public final Enumerator ruleLogicalXorOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -36803,11 +36968,11 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:13203:2: ( (enumLiteral_0= 'xor' ) )
-            // InternalScadeEquations.g:13204:2: (enumLiteral_0= 'xor' )
+            // InternalScadeEquations.g:13244:2: ( (enumLiteral_0= 'xor' ) )
+            // InternalScadeEquations.g:13245:2: (enumLiteral_0= 'xor' )
             {
-            // InternalScadeEquations.g:13204:2: (enumLiteral_0= 'xor' )
-            // InternalScadeEquations.g:13205:3: enumLiteral_0= 'xor'
+            // InternalScadeEquations.g:13245:2: (enumLiteral_0= 'xor' )
+            // InternalScadeEquations.g:13246:3: enumLiteral_0= 'xor'
             {
             enumLiteral_0=(Token)match(input,59,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -36841,7 +37006,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleImpliesOperator"
-    // InternalScadeEquations.g:13214:1: ruleImpliesOperator returns [Enumerator current=null] : (enumLiteral_0= '=>' ) ;
+    // InternalScadeEquations.g:13255:1: ruleImpliesOperator returns [Enumerator current=null] : (enumLiteral_0= '=>' ) ;
     public final Enumerator ruleImpliesOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -36851,11 +37016,11 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:13220:2: ( (enumLiteral_0= '=>' ) )
-            // InternalScadeEquations.g:13221:2: (enumLiteral_0= '=>' )
+            // InternalScadeEquations.g:13261:2: ( (enumLiteral_0= '=>' ) )
+            // InternalScadeEquations.g:13262:2: (enumLiteral_0= '=>' )
             {
-            // InternalScadeEquations.g:13221:2: (enumLiteral_0= '=>' )
-            // InternalScadeEquations.g:13222:3: enumLiteral_0= '=>'
+            // InternalScadeEquations.g:13262:2: (enumLiteral_0= '=>' )
+            // InternalScadeEquations.g:13263:3: enumLiteral_0= '=>'
             {
             enumLiteral_0=(Token)match(input,58,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -36889,7 +37054,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleIntDivOperator"
-    // InternalScadeEquations.g:13231:1: ruleIntDivOperator returns [Enumerator current=null] : (enumLiteral_0= 'div' ) ;
+    // InternalScadeEquations.g:13272:1: ruleIntDivOperator returns [Enumerator current=null] : (enumLiteral_0= 'div' ) ;
     public final Enumerator ruleIntDivOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -36899,11 +37064,11 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:13237:2: ( (enumLiteral_0= 'div' ) )
-            // InternalScadeEquations.g:13238:2: (enumLiteral_0= 'div' )
+            // InternalScadeEquations.g:13278:2: ( (enumLiteral_0= 'div' ) )
+            // InternalScadeEquations.g:13279:2: (enumLiteral_0= 'div' )
             {
-            // InternalScadeEquations.g:13238:2: (enumLiteral_0= 'div' )
-            // InternalScadeEquations.g:13239:3: enumLiteral_0= 'div'
+            // InternalScadeEquations.g:13279:2: (enumLiteral_0= 'div' )
+            // InternalScadeEquations.g:13280:3: enumLiteral_0= 'div'
             {
             enumLiteral_0=(Token)match(input,53,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -36937,7 +37102,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleConditionalOperator"
-    // InternalScadeEquations.g:13248:1: ruleConditionalOperator returns [Enumerator current=null] : (enumLiteral_0= 'if' ) ;
+    // InternalScadeEquations.g:13289:1: ruleConditionalOperator returns [Enumerator current=null] : (enumLiteral_0= 'if' ) ;
     public final Enumerator ruleConditionalOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -36947,11 +37112,11 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:13254:2: ( (enumLiteral_0= 'if' ) )
-            // InternalScadeEquations.g:13255:2: (enumLiteral_0= 'if' )
+            // InternalScadeEquations.g:13295:2: ( (enumLiteral_0= 'if' ) )
+            // InternalScadeEquations.g:13296:2: (enumLiteral_0= 'if' )
             {
-            // InternalScadeEquations.g:13255:2: (enumLiteral_0= 'if' )
-            // InternalScadeEquations.g:13256:3: enumLiteral_0= 'if'
+            // InternalScadeEquations.g:13296:2: (enumLiteral_0= 'if' )
+            // InternalScadeEquations.g:13297:3: enumLiteral_0= 'if'
             {
             enumLiteral_0=(Token)match(input,46,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -36985,7 +37150,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleAtMostOneOperator"
-    // InternalScadeEquations.g:13265:1: ruleAtMostOneOperator returns [Enumerator current=null] : (enumLiteral_0= '#' ) ;
+    // InternalScadeEquations.g:13306:1: ruleAtMostOneOperator returns [Enumerator current=null] : (enumLiteral_0= '#' ) ;
     public final Enumerator ruleAtMostOneOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -36995,11 +37160,11 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:13271:2: ( (enumLiteral_0= '#' ) )
-            // InternalScadeEquations.g:13272:2: (enumLiteral_0= '#' )
+            // InternalScadeEquations.g:13312:2: ( (enumLiteral_0= '#' ) )
+            // InternalScadeEquations.g:13313:2: (enumLiteral_0= '#' )
             {
-            // InternalScadeEquations.g:13272:2: (enumLiteral_0= '#' )
-            // InternalScadeEquations.g:13273:3: enumLiteral_0= '#'
+            // InternalScadeEquations.g:13313:2: (enumLiteral_0= '#' )
+            // InternalScadeEquations.g:13314:3: enumLiteral_0= '#'
             {
             enumLiteral_0=(Token)match(input,88,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -37033,7 +37198,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleNorOperator"
-    // InternalScadeEquations.g:13282:1: ruleNorOperator returns [Enumerator current=null] : (enumLiteral_0= 'nor' ) ;
+    // InternalScadeEquations.g:13323:1: ruleNorOperator returns [Enumerator current=null] : (enumLiteral_0= 'nor' ) ;
     public final Enumerator ruleNorOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -37043,11 +37208,11 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:13288:2: ( (enumLiteral_0= 'nor' ) )
-            // InternalScadeEquations.g:13289:2: (enumLiteral_0= 'nor' )
+            // InternalScadeEquations.g:13329:2: ( (enumLiteral_0= 'nor' ) )
+            // InternalScadeEquations.g:13330:2: (enumLiteral_0= 'nor' )
             {
-            // InternalScadeEquations.g:13289:2: (enumLiteral_0= 'nor' )
-            // InternalScadeEquations.g:13290:3: enumLiteral_0= 'nor'
+            // InternalScadeEquations.g:13330:2: (enumLiteral_0= 'nor' )
+            // InternalScadeEquations.g:13331:3: enumLiteral_0= 'nor'
             {
             enumLiteral_0=(Token)match(input,101,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -37081,7 +37246,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "rulePriorityProtocol"
-    // InternalScadeEquations.g:13299:1: rulePriorityProtocol returns [Enumerator current=null] : ( (enumLiteral_0= 'conflicting' ) | (enumLiteral_1= 'commuting' ) ) ;
+    // InternalScadeEquations.g:13340:1: rulePriorityProtocol returns [Enumerator current=null] : ( (enumLiteral_0= 'conflicting' ) | (enumLiteral_1= 'commuting' ) ) ;
     public final Enumerator rulePriorityProtocol() throws RecognitionException {
         Enumerator current = null;
 
@@ -37092,32 +37257,32 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:13305:2: ( ( (enumLiteral_0= 'conflicting' ) | (enumLiteral_1= 'commuting' ) ) )
-            // InternalScadeEquations.g:13306:2: ( (enumLiteral_0= 'conflicting' ) | (enumLiteral_1= 'commuting' ) )
+            // InternalScadeEquations.g:13346:2: ( ( (enumLiteral_0= 'conflicting' ) | (enumLiteral_1= 'commuting' ) ) )
+            // InternalScadeEquations.g:13347:2: ( (enumLiteral_0= 'conflicting' ) | (enumLiteral_1= 'commuting' ) )
             {
-            // InternalScadeEquations.g:13306:2: ( (enumLiteral_0= 'conflicting' ) | (enumLiteral_1= 'commuting' ) )
-            int alt297=2;
-            int LA297_0 = input.LA(1);
+            // InternalScadeEquations.g:13347:2: ( (enumLiteral_0= 'conflicting' ) | (enumLiteral_1= 'commuting' ) )
+            int alt298=2;
+            int LA298_0 = input.LA(1);
 
-            if ( (LA297_0==102) ) {
-                alt297=1;
+            if ( (LA298_0==102) ) {
+                alt298=1;
             }
-            else if ( (LA297_0==103) ) {
-                alt297=2;
+            else if ( (LA298_0==103) ) {
+                alt298=2;
             }
             else {
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 297, 0, input);
+                    new NoViableAltException("", 298, 0, input);
 
                 throw nvae;
             }
-            switch (alt297) {
+            switch (alt298) {
                 case 1 :
-                    // InternalScadeEquations.g:13307:3: (enumLiteral_0= 'conflicting' )
+                    // InternalScadeEquations.g:13348:3: (enumLiteral_0= 'conflicting' )
                     {
-                    // InternalScadeEquations.g:13307:3: (enumLiteral_0= 'conflicting' )
-                    // InternalScadeEquations.g:13308:4: enumLiteral_0= 'conflicting'
+                    // InternalScadeEquations.g:13348:3: (enumLiteral_0= 'conflicting' )
+                    // InternalScadeEquations.g:13349:4: enumLiteral_0= 'conflicting'
                     {
                     enumLiteral_0=(Token)match(input,102,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -37133,10 +37298,10 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalScadeEquations.g:13315:3: (enumLiteral_1= 'commuting' )
+                    // InternalScadeEquations.g:13356:3: (enumLiteral_1= 'commuting' )
                     {
-                    // InternalScadeEquations.g:13315:3: (enumLiteral_1= 'commuting' )
-                    // InternalScadeEquations.g:13316:4: enumLiteral_1= 'commuting'
+                    // InternalScadeEquations.g:13356:3: (enumLiteral_1= 'commuting' )
+                    // InternalScadeEquations.g:13357:4: enumLiteral_1= 'commuting'
                     {
                     enumLiteral_1=(Token)match(input,103,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -37176,7 +37341,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "rulePostfixOperator"
-    // InternalScadeEquations.g:13326:1: rulePostfixOperator returns [Enumerator current=null] : ( (enumLiteral_0= '++' ) | (enumLiteral_1= '--' ) ) ;
+    // InternalScadeEquations.g:13367:1: rulePostfixOperator returns [Enumerator current=null] : ( (enumLiteral_0= '++' ) | (enumLiteral_1= '--' ) ) ;
     public final Enumerator rulePostfixOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -37187,32 +37352,32 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:13332:2: ( ( (enumLiteral_0= '++' ) | (enumLiteral_1= '--' ) ) )
-            // InternalScadeEquations.g:13333:2: ( (enumLiteral_0= '++' ) | (enumLiteral_1= '--' ) )
+            // InternalScadeEquations.g:13373:2: ( ( (enumLiteral_0= '++' ) | (enumLiteral_1= '--' ) ) )
+            // InternalScadeEquations.g:13374:2: ( (enumLiteral_0= '++' ) | (enumLiteral_1= '--' ) )
             {
-            // InternalScadeEquations.g:13333:2: ( (enumLiteral_0= '++' ) | (enumLiteral_1= '--' ) )
-            int alt298=2;
-            int LA298_0 = input.LA(1);
+            // InternalScadeEquations.g:13374:2: ( (enumLiteral_0= '++' ) | (enumLiteral_1= '--' ) )
+            int alt299=2;
+            int LA299_0 = input.LA(1);
 
-            if ( (LA298_0==104) ) {
-                alt298=1;
+            if ( (LA299_0==104) ) {
+                alt299=1;
             }
-            else if ( (LA298_0==105) ) {
-                alt298=2;
+            else if ( (LA299_0==105) ) {
+                alt299=2;
             }
             else {
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 298, 0, input);
+                    new NoViableAltException("", 299, 0, input);
 
                 throw nvae;
             }
-            switch (alt298) {
+            switch (alt299) {
                 case 1 :
-                    // InternalScadeEquations.g:13334:3: (enumLiteral_0= '++' )
+                    // InternalScadeEquations.g:13375:3: (enumLiteral_0= '++' )
                     {
-                    // InternalScadeEquations.g:13334:3: (enumLiteral_0= '++' )
-                    // InternalScadeEquations.g:13335:4: enumLiteral_0= '++'
+                    // InternalScadeEquations.g:13375:3: (enumLiteral_0= '++' )
+                    // InternalScadeEquations.g:13376:4: enumLiteral_0= '++'
                     {
                     enumLiteral_0=(Token)match(input,104,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -37228,10 +37393,10 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalScadeEquations.g:13342:3: (enumLiteral_1= '--' )
+                    // InternalScadeEquations.g:13383:3: (enumLiteral_1= '--' )
                     {
-                    // InternalScadeEquations.g:13342:3: (enumLiteral_1= '--' )
-                    // InternalScadeEquations.g:13343:4: enumLiteral_1= '--'
+                    // InternalScadeEquations.g:13383:3: (enumLiteral_1= '--' )
+                    // InternalScadeEquations.g:13384:4: enumLiteral_1= '--'
                     {
                     enumLiteral_1=(Token)match(input,105,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -37271,7 +37436,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "rulePreOperator"
-    // InternalScadeEquations.g:13353:1: rulePreOperator returns [Enumerator current=null] : (enumLiteral_0= 'pre' ) ;
+    // InternalScadeEquations.g:13394:1: rulePreOperator returns [Enumerator current=null] : (enumLiteral_0= 'pre' ) ;
     public final Enumerator rulePreOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -37281,11 +37446,11 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:13359:2: ( (enumLiteral_0= 'pre' ) )
-            // InternalScadeEquations.g:13360:2: (enumLiteral_0= 'pre' )
+            // InternalScadeEquations.g:13400:2: ( (enumLiteral_0= 'pre' ) )
+            // InternalScadeEquations.g:13401:2: (enumLiteral_0= 'pre' )
             {
-            // InternalScadeEquations.g:13360:2: (enumLiteral_0= 'pre' )
-            // InternalScadeEquations.g:13361:3: enumLiteral_0= 'pre'
+            // InternalScadeEquations.g:13401:2: (enumLiteral_0= 'pre' )
+            // InternalScadeEquations.g:13402:3: enumLiteral_0= 'pre'
             {
             enumLiteral_0=(Token)match(input,106,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -37319,7 +37484,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleBitwiseNotOperator"
-    // InternalScadeEquations.g:13370:1: ruleBitwiseNotOperator returns [Enumerator current=null] : (enumLiteral_0= '~' ) ;
+    // InternalScadeEquations.g:13411:1: ruleBitwiseNotOperator returns [Enumerator current=null] : (enumLiteral_0= '~' ) ;
     public final Enumerator ruleBitwiseNotOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -37329,11 +37494,11 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:13376:2: ( (enumLiteral_0= '~' ) )
-            // InternalScadeEquations.g:13377:2: (enumLiteral_0= '~' )
+            // InternalScadeEquations.g:13417:2: ( (enumLiteral_0= '~' ) )
+            // InternalScadeEquations.g:13418:2: (enumLiteral_0= '~' )
             {
-            // InternalScadeEquations.g:13377:2: (enumLiteral_0= '~' )
-            // InternalScadeEquations.g:13378:3: enumLiteral_0= '~'
+            // InternalScadeEquations.g:13418:2: (enumLiteral_0= '~' )
+            // InternalScadeEquations.g:13419:3: enumLiteral_0= '~'
             {
             enumLiteral_0=(Token)match(input,107,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -37367,7 +37532,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleBitwiseXOrOperator"
-    // InternalScadeEquations.g:13387:1: ruleBitwiseXOrOperator returns [Enumerator current=null] : (enumLiteral_0= '^' ) ;
+    // InternalScadeEquations.g:13428:1: ruleBitwiseXOrOperator returns [Enumerator current=null] : (enumLiteral_0= '^' ) ;
     public final Enumerator ruleBitwiseXOrOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -37377,11 +37542,11 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:13393:2: ( (enumLiteral_0= '^' ) )
-            // InternalScadeEquations.g:13394:2: (enumLiteral_0= '^' )
+            // InternalScadeEquations.g:13434:2: ( (enumLiteral_0= '^' ) )
+            // InternalScadeEquations.g:13435:2: (enumLiteral_0= '^' )
             {
-            // InternalScadeEquations.g:13394:2: (enumLiteral_0= '^' )
-            // InternalScadeEquations.g:13395:3: enumLiteral_0= '^'
+            // InternalScadeEquations.g:13435:2: (enumLiteral_0= '^' )
+            // InternalScadeEquations.g:13436:3: enumLiteral_0= '^'
             {
             enumLiteral_0=(Token)match(input,32,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -37415,7 +37580,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleBitwiseOrOperator"
-    // InternalScadeEquations.g:13404:1: ruleBitwiseOrOperator returns [Enumerator current=null] : (enumLiteral_0= '|' ) ;
+    // InternalScadeEquations.g:13445:1: ruleBitwiseOrOperator returns [Enumerator current=null] : (enumLiteral_0= '|' ) ;
     public final Enumerator ruleBitwiseOrOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -37425,11 +37590,11 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:13410:2: ( (enumLiteral_0= '|' ) )
-            // InternalScadeEquations.g:13411:2: (enumLiteral_0= '|' )
+            // InternalScadeEquations.g:13451:2: ( (enumLiteral_0= '|' ) )
+            // InternalScadeEquations.g:13452:2: (enumLiteral_0= '|' )
             {
-            // InternalScadeEquations.g:13411:2: (enumLiteral_0= '|' )
-            // InternalScadeEquations.g:13412:3: enumLiteral_0= '|'
+            // InternalScadeEquations.g:13452:2: (enumLiteral_0= '|' )
+            // InternalScadeEquations.g:13453:3: enumLiteral_0= '|'
             {
             enumLiteral_0=(Token)match(input,108,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -37463,7 +37628,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleBitwiseAndOperator"
-    // InternalScadeEquations.g:13421:1: ruleBitwiseAndOperator returns [Enumerator current=null] : (enumLiteral_0= '&' ) ;
+    // InternalScadeEquations.g:13462:1: ruleBitwiseAndOperator returns [Enumerator current=null] : (enumLiteral_0= '&' ) ;
     public final Enumerator ruleBitwiseAndOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -37473,11 +37638,11 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:13427:2: ( (enumLiteral_0= '&' ) )
-            // InternalScadeEquations.g:13428:2: (enumLiteral_0= '&' )
+            // InternalScadeEquations.g:13468:2: ( (enumLiteral_0= '&' ) )
+            // InternalScadeEquations.g:13469:2: (enumLiteral_0= '&' )
             {
-            // InternalScadeEquations.g:13428:2: (enumLiteral_0= '&' )
-            // InternalScadeEquations.g:13429:3: enumLiteral_0= '&'
+            // InternalScadeEquations.g:13469:2: (enumLiteral_0= '&' )
+            // InternalScadeEquations.g:13470:3: enumLiteral_0= '&'
             {
             enumLiteral_0=(Token)match(input,79,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -37511,7 +37676,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleAddOperator"
-    // InternalScadeEquations.g:13438:1: ruleAddOperator returns [Enumerator current=null] : (enumLiteral_0= '+' ) ;
+    // InternalScadeEquations.g:13479:1: ruleAddOperator returns [Enumerator current=null] : (enumLiteral_0= '+' ) ;
     public final Enumerator ruleAddOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -37521,11 +37686,11 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:13444:2: ( (enumLiteral_0= '+' ) )
-            // InternalScadeEquations.g:13445:2: (enumLiteral_0= '+' )
+            // InternalScadeEquations.g:13485:2: ( (enumLiteral_0= '+' ) )
+            // InternalScadeEquations.g:13486:2: (enumLiteral_0= '+' )
             {
-            // InternalScadeEquations.g:13445:2: (enumLiteral_0= '+' )
-            // InternalScadeEquations.g:13446:3: enumLiteral_0= '+'
+            // InternalScadeEquations.g:13486:2: (enumLiteral_0= '+' )
+            // InternalScadeEquations.g:13487:3: enumLiteral_0= '+'
             {
             enumLiteral_0=(Token)match(input,82,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -37559,7 +37724,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleSubOperator"
-    // InternalScadeEquations.g:13455:1: ruleSubOperator returns [Enumerator current=null] : (enumLiteral_0= '-' ) ;
+    // InternalScadeEquations.g:13496:1: ruleSubOperator returns [Enumerator current=null] : (enumLiteral_0= '-' ) ;
     public final Enumerator ruleSubOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -37569,11 +37734,11 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:13461:2: ( (enumLiteral_0= '-' ) )
-            // InternalScadeEquations.g:13462:2: (enumLiteral_0= '-' )
+            // InternalScadeEquations.g:13502:2: ( (enumLiteral_0= '-' ) )
+            // InternalScadeEquations.g:13503:2: (enumLiteral_0= '-' )
             {
-            // InternalScadeEquations.g:13462:2: (enumLiteral_0= '-' )
-            // InternalScadeEquations.g:13463:3: enumLiteral_0= '-'
+            // InternalScadeEquations.g:13503:2: (enumLiteral_0= '-' )
+            // InternalScadeEquations.g:13504:3: enumLiteral_0= '-'
             {
             enumLiteral_0=(Token)match(input,83,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -37607,7 +37772,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleMultOperator"
-    // InternalScadeEquations.g:13472:1: ruleMultOperator returns [Enumerator current=null] : (enumLiteral_0= '*' ) ;
+    // InternalScadeEquations.g:13513:1: ruleMultOperator returns [Enumerator current=null] : (enumLiteral_0= '*' ) ;
     public final Enumerator ruleMultOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -37617,11 +37782,11 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:13478:2: ( (enumLiteral_0= '*' ) )
-            // InternalScadeEquations.g:13479:2: (enumLiteral_0= '*' )
+            // InternalScadeEquations.g:13519:2: ( (enumLiteral_0= '*' ) )
+            // InternalScadeEquations.g:13520:2: (enumLiteral_0= '*' )
             {
-            // InternalScadeEquations.g:13479:2: (enumLiteral_0= '*' )
-            // InternalScadeEquations.g:13480:3: enumLiteral_0= '*'
+            // InternalScadeEquations.g:13520:2: (enumLiteral_0= '*' )
+            // InternalScadeEquations.g:13521:3: enumLiteral_0= '*'
             {
             enumLiteral_0=(Token)match(input,50,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -37655,7 +37820,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleDivOperator"
-    // InternalScadeEquations.g:13489:1: ruleDivOperator returns [Enumerator current=null] : (enumLiteral_0= '/' ) ;
+    // InternalScadeEquations.g:13530:1: ruleDivOperator returns [Enumerator current=null] : (enumLiteral_0= '/' ) ;
     public final Enumerator ruleDivOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -37665,11 +37830,11 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:13495:2: ( (enumLiteral_0= '/' ) )
-            // InternalScadeEquations.g:13496:2: (enumLiteral_0= '/' )
+            // InternalScadeEquations.g:13536:2: ( (enumLiteral_0= '/' ) )
+            // InternalScadeEquations.g:13537:2: (enumLiteral_0= '/' )
             {
-            // InternalScadeEquations.g:13496:2: (enumLiteral_0= '/' )
-            // InternalScadeEquations.g:13497:3: enumLiteral_0= '/'
+            // InternalScadeEquations.g:13537:2: (enumLiteral_0= '/' )
+            // InternalScadeEquations.g:13538:3: enumLiteral_0= '/'
             {
             enumLiteral_0=(Token)match(input,51,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -37703,7 +37868,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleValOperator"
-    // InternalScadeEquations.g:13506:1: ruleValOperator returns [Enumerator current=null] : (enumLiteral_0= 'val' ) ;
+    // InternalScadeEquations.g:13547:1: ruleValOperator returns [Enumerator current=null] : (enumLiteral_0= 'val' ) ;
     public final Enumerator ruleValOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -37713,11 +37878,11 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:13512:2: ( (enumLiteral_0= 'val' ) )
-            // InternalScadeEquations.g:13513:2: (enumLiteral_0= 'val' )
+            // InternalScadeEquations.g:13553:2: ( (enumLiteral_0= 'val' ) )
+            // InternalScadeEquations.g:13554:2: (enumLiteral_0= 'val' )
             {
-            // InternalScadeEquations.g:13513:2: (enumLiteral_0= 'val' )
-            // InternalScadeEquations.g:13514:3: enumLiteral_0= 'val'
+            // InternalScadeEquations.g:13554:2: (enumLiteral_0= 'val' )
+            // InternalScadeEquations.g:13555:3: enumLiteral_0= 'val'
             {
             enumLiteral_0=(Token)match(input,109,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -37751,7 +37916,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleShiftLeftOperator"
-    // InternalScadeEquations.g:13523:1: ruleShiftLeftOperator returns [Enumerator current=null] : (enumLiteral_0= '<<' ) ;
+    // InternalScadeEquations.g:13564:1: ruleShiftLeftOperator returns [Enumerator current=null] : (enumLiteral_0= '<<' ) ;
     public final Enumerator ruleShiftLeftOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -37761,11 +37926,11 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:13529:2: ( (enumLiteral_0= '<<' ) )
-            // InternalScadeEquations.g:13530:2: (enumLiteral_0= '<<' )
+            // InternalScadeEquations.g:13570:2: ( (enumLiteral_0= '<<' ) )
+            // InternalScadeEquations.g:13571:2: (enumLiteral_0= '<<' )
             {
-            // InternalScadeEquations.g:13530:2: (enumLiteral_0= '<<' )
-            // InternalScadeEquations.g:13531:3: enumLiteral_0= '<<'
+            // InternalScadeEquations.g:13571:2: (enumLiteral_0= '<<' )
+            // InternalScadeEquations.g:13572:3: enumLiteral_0= '<<'
             {
             enumLiteral_0=(Token)match(input,110,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -37799,7 +37964,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleShiftRightOperator"
-    // InternalScadeEquations.g:13540:1: ruleShiftRightOperator returns [Enumerator current=null] : (enumLiteral_0= '>>' ) ;
+    // InternalScadeEquations.g:13581:1: ruleShiftRightOperator returns [Enumerator current=null] : (enumLiteral_0= '>>' ) ;
     public final Enumerator ruleShiftRightOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -37809,11 +37974,11 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:13546:2: ( (enumLiteral_0= '>>' ) )
-            // InternalScadeEquations.g:13547:2: (enumLiteral_0= '>>' )
+            // InternalScadeEquations.g:13587:2: ( (enumLiteral_0= '>>' ) )
+            // InternalScadeEquations.g:13588:2: (enumLiteral_0= '>>' )
             {
-            // InternalScadeEquations.g:13547:2: (enumLiteral_0= '>>' )
-            // InternalScadeEquations.g:13548:3: enumLiteral_0= '>>'
+            // InternalScadeEquations.g:13588:2: (enumLiteral_0= '>>' )
+            // InternalScadeEquations.g:13589:3: enumLiteral_0= '>>'
             {
             enumLiteral_0=(Token)match(input,80,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -37847,7 +38012,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleShiftRightUnsignedOperator"
-    // InternalScadeEquations.g:13557:1: ruleShiftRightUnsignedOperator returns [Enumerator current=null] : (enumLiteral_0= '>>>' ) ;
+    // InternalScadeEquations.g:13598:1: ruleShiftRightUnsignedOperator returns [Enumerator current=null] : (enumLiteral_0= '>>>' ) ;
     public final Enumerator ruleShiftRightUnsignedOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -37857,11 +38022,11 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:13563:2: ( (enumLiteral_0= '>>>' ) )
-            // InternalScadeEquations.g:13564:2: (enumLiteral_0= '>>>' )
+            // InternalScadeEquations.g:13604:2: ( (enumLiteral_0= '>>>' ) )
+            // InternalScadeEquations.g:13605:2: (enumLiteral_0= '>>>' )
             {
-            // InternalScadeEquations.g:13564:2: (enumLiteral_0= '>>>' )
-            // InternalScadeEquations.g:13565:3: enumLiteral_0= '>>>'
+            // InternalScadeEquations.g:13605:2: (enumLiteral_0= '>>>' )
+            // InternalScadeEquations.g:13606:3: enumLiteral_0= '>>>'
             {
             enumLiteral_0=(Token)match(input,81,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -37895,7 +38060,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleSfbyOperator"
-    // InternalScadeEquations.g:13574:1: ruleSfbyOperator returns [Enumerator current=null] : (enumLiteral_0= 'sfby' ) ;
+    // InternalScadeEquations.g:13615:1: ruleSfbyOperator returns [Enumerator current=null] : (enumLiteral_0= 'sfby' ) ;
     public final Enumerator ruleSfbyOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -37905,11 +38070,11 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:13580:2: ( (enumLiteral_0= 'sfby' ) )
-            // InternalScadeEquations.g:13581:2: (enumLiteral_0= 'sfby' )
+            // InternalScadeEquations.g:13621:2: ( (enumLiteral_0= 'sfby' ) )
+            // InternalScadeEquations.g:13622:2: (enumLiteral_0= 'sfby' )
             {
-            // InternalScadeEquations.g:13581:2: (enumLiteral_0= 'sfby' )
-            // InternalScadeEquations.g:13582:3: enumLiteral_0= 'sfby'
+            // InternalScadeEquations.g:13622:2: (enumLiteral_0= 'sfby' )
+            // InternalScadeEquations.g:13623:3: enumLiteral_0= 'sfby'
             {
             enumLiteral_0=(Token)match(input,111,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -37943,7 +38108,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleHostType"
-    // InternalScadeEquations.g:13591:1: ruleHostType returns [Enumerator current=null] : (enumLiteral_0= 'host' ) ;
+    // InternalScadeEquations.g:13632:1: ruleHostType returns [Enumerator current=null] : (enumLiteral_0= 'host' ) ;
     public final Enumerator ruleHostType() throws RecognitionException {
         Enumerator current = null;
 
@@ -37953,11 +38118,11 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:13597:2: ( (enumLiteral_0= 'host' ) )
-            // InternalScadeEquations.g:13598:2: (enumLiteral_0= 'host' )
+            // InternalScadeEquations.g:13638:2: ( (enumLiteral_0= 'host' ) )
+            // InternalScadeEquations.g:13639:2: (enumLiteral_0= 'host' )
             {
-            // InternalScadeEquations.g:13598:2: (enumLiteral_0= 'host' )
-            // InternalScadeEquations.g:13599:3: enumLiteral_0= 'host'
+            // InternalScadeEquations.g:13639:2: (enumLiteral_0= 'host' )
+            // InternalScadeEquations.g:13640:3: enumLiteral_0= 'host'
             {
             enumLiteral_0=(Token)match(input,70,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -37991,7 +38156,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleStructType"
-    // InternalScadeEquations.g:13608:1: ruleStructType returns [Enumerator current=null] : (enumLiteral_0= 'struct' ) ;
+    // InternalScadeEquations.g:13649:1: ruleStructType returns [Enumerator current=null] : (enumLiteral_0= 'struct' ) ;
     public final Enumerator ruleStructType() throws RecognitionException {
         Enumerator current = null;
 
@@ -38001,11 +38166,11 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:13614:2: ( (enumLiteral_0= 'struct' ) )
-            // InternalScadeEquations.g:13615:2: (enumLiteral_0= 'struct' )
+            // InternalScadeEquations.g:13655:2: ( (enumLiteral_0= 'struct' ) )
+            // InternalScadeEquations.g:13656:2: (enumLiteral_0= 'struct' )
             {
-            // InternalScadeEquations.g:13615:2: (enumLiteral_0= 'struct' )
-            // InternalScadeEquations.g:13616:3: enumLiteral_0= 'struct'
+            // InternalScadeEquations.g:13656:2: (enumLiteral_0= 'struct' )
+            // InternalScadeEquations.g:13657:3: enumLiteral_0= 'struct'
             {
             enumLiteral_0=(Token)match(input,112,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -38039,7 +38204,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleClassType"
-    // InternalScadeEquations.g:13625:1: ruleClassType returns [Enumerator current=null] : (enumLiteral_0= 'class' ) ;
+    // InternalScadeEquations.g:13666:1: ruleClassType returns [Enumerator current=null] : (enumLiteral_0= 'class' ) ;
     public final Enumerator ruleClassType() throws RecognitionException {
         Enumerator current = null;
 
@@ -38049,11 +38214,11 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:13631:2: ( (enumLiteral_0= 'class' ) )
-            // InternalScadeEquations.g:13632:2: (enumLiteral_0= 'class' )
+            // InternalScadeEquations.g:13672:2: ( (enumLiteral_0= 'class' ) )
+            // InternalScadeEquations.g:13673:2: (enumLiteral_0= 'class' )
             {
-            // InternalScadeEquations.g:13632:2: (enumLiteral_0= 'class' )
-            // InternalScadeEquations.g:13633:3: enumLiteral_0= 'class'
+            // InternalScadeEquations.g:13673:2: (enumLiteral_0= 'class' )
+            // InternalScadeEquations.g:13674:3: enumLiteral_0= 'class'
             {
             enumLiteral_0=(Token)match(input,113,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -38087,7 +38252,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleCombineOperator"
-    // InternalScadeEquations.g:13642:1: ruleCombineOperator returns [Enumerator current=null] : ( (enumLiteral_0= 'none' ) | (enumLiteral_1= '+' ) | (enumLiteral_2= '*' ) | (enumLiteral_3= 'max' ) | (enumLiteral_4= 'min' ) | (enumLiteral_5= '|' ) | (enumLiteral_6= '&' ) | (enumLiteral_7= 'host' ) ) ;
+    // InternalScadeEquations.g:13683:1: ruleCombineOperator returns [Enumerator current=null] : ( (enumLiteral_0= 'none' ) | (enumLiteral_1= '+' ) | (enumLiteral_2= '*' ) | (enumLiteral_3= 'max' ) | (enumLiteral_4= 'min' ) | (enumLiteral_5= '|' ) | (enumLiteral_6= '&' ) | (enumLiteral_7= 'host' ) ) ;
     public final Enumerator ruleCombineOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -38104,66 +38269,66 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:13648:2: ( ( (enumLiteral_0= 'none' ) | (enumLiteral_1= '+' ) | (enumLiteral_2= '*' ) | (enumLiteral_3= 'max' ) | (enumLiteral_4= 'min' ) | (enumLiteral_5= '|' ) | (enumLiteral_6= '&' ) | (enumLiteral_7= 'host' ) ) )
-            // InternalScadeEquations.g:13649:2: ( (enumLiteral_0= 'none' ) | (enumLiteral_1= '+' ) | (enumLiteral_2= '*' ) | (enumLiteral_3= 'max' ) | (enumLiteral_4= 'min' ) | (enumLiteral_5= '|' ) | (enumLiteral_6= '&' ) | (enumLiteral_7= 'host' ) )
+            // InternalScadeEquations.g:13689:2: ( ( (enumLiteral_0= 'none' ) | (enumLiteral_1= '+' ) | (enumLiteral_2= '*' ) | (enumLiteral_3= 'max' ) | (enumLiteral_4= 'min' ) | (enumLiteral_5= '|' ) | (enumLiteral_6= '&' ) | (enumLiteral_7= 'host' ) ) )
+            // InternalScadeEquations.g:13690:2: ( (enumLiteral_0= 'none' ) | (enumLiteral_1= '+' ) | (enumLiteral_2= '*' ) | (enumLiteral_3= 'max' ) | (enumLiteral_4= 'min' ) | (enumLiteral_5= '|' ) | (enumLiteral_6= '&' ) | (enumLiteral_7= 'host' ) )
             {
-            // InternalScadeEquations.g:13649:2: ( (enumLiteral_0= 'none' ) | (enumLiteral_1= '+' ) | (enumLiteral_2= '*' ) | (enumLiteral_3= 'max' ) | (enumLiteral_4= 'min' ) | (enumLiteral_5= '|' ) | (enumLiteral_6= '&' ) | (enumLiteral_7= 'host' ) )
-            int alt299=8;
+            // InternalScadeEquations.g:13690:2: ( (enumLiteral_0= 'none' ) | (enumLiteral_1= '+' ) | (enumLiteral_2= '*' ) | (enumLiteral_3= 'max' ) | (enumLiteral_4= 'min' ) | (enumLiteral_5= '|' ) | (enumLiteral_6= '&' ) | (enumLiteral_7= 'host' ) )
+            int alt300=8;
             switch ( input.LA(1) ) {
             case 114:
                 {
-                alt299=1;
+                alt300=1;
                 }
                 break;
             case 82:
                 {
-                alt299=2;
+                alt300=2;
                 }
                 break;
             case 50:
                 {
-                alt299=3;
+                alt300=3;
                 }
                 break;
             case 115:
                 {
-                alt299=4;
+                alt300=4;
                 }
                 break;
             case 116:
                 {
-                alt299=5;
+                alt300=5;
                 }
                 break;
             case 108:
                 {
-                alt299=6;
+                alt300=6;
                 }
                 break;
             case 79:
                 {
-                alt299=7;
+                alt300=7;
                 }
                 break;
             case 70:
                 {
-                alt299=8;
+                alt300=8;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 299, 0, input);
+                    new NoViableAltException("", 300, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt299) {
+            switch (alt300) {
                 case 1 :
-                    // InternalScadeEquations.g:13650:3: (enumLiteral_0= 'none' )
+                    // InternalScadeEquations.g:13691:3: (enumLiteral_0= 'none' )
                     {
-                    // InternalScadeEquations.g:13650:3: (enumLiteral_0= 'none' )
-                    // InternalScadeEquations.g:13651:4: enumLiteral_0= 'none'
+                    // InternalScadeEquations.g:13691:3: (enumLiteral_0= 'none' )
+                    // InternalScadeEquations.g:13692:4: enumLiteral_0= 'none'
                     {
                     enumLiteral_0=(Token)match(input,114,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -38179,10 +38344,10 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalScadeEquations.g:13658:3: (enumLiteral_1= '+' )
+                    // InternalScadeEquations.g:13699:3: (enumLiteral_1= '+' )
                     {
-                    // InternalScadeEquations.g:13658:3: (enumLiteral_1= '+' )
-                    // InternalScadeEquations.g:13659:4: enumLiteral_1= '+'
+                    // InternalScadeEquations.g:13699:3: (enumLiteral_1= '+' )
+                    // InternalScadeEquations.g:13700:4: enumLiteral_1= '+'
                     {
                     enumLiteral_1=(Token)match(input,82,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -38198,10 +38363,10 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalScadeEquations.g:13666:3: (enumLiteral_2= '*' )
+                    // InternalScadeEquations.g:13707:3: (enumLiteral_2= '*' )
                     {
-                    // InternalScadeEquations.g:13666:3: (enumLiteral_2= '*' )
-                    // InternalScadeEquations.g:13667:4: enumLiteral_2= '*'
+                    // InternalScadeEquations.g:13707:3: (enumLiteral_2= '*' )
+                    // InternalScadeEquations.g:13708:4: enumLiteral_2= '*'
                     {
                     enumLiteral_2=(Token)match(input,50,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -38217,10 +38382,10 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // InternalScadeEquations.g:13674:3: (enumLiteral_3= 'max' )
+                    // InternalScadeEquations.g:13715:3: (enumLiteral_3= 'max' )
                     {
-                    // InternalScadeEquations.g:13674:3: (enumLiteral_3= 'max' )
-                    // InternalScadeEquations.g:13675:4: enumLiteral_3= 'max'
+                    // InternalScadeEquations.g:13715:3: (enumLiteral_3= 'max' )
+                    // InternalScadeEquations.g:13716:4: enumLiteral_3= 'max'
                     {
                     enumLiteral_3=(Token)match(input,115,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -38236,10 +38401,10 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 5 :
-                    // InternalScadeEquations.g:13682:3: (enumLiteral_4= 'min' )
+                    // InternalScadeEquations.g:13723:3: (enumLiteral_4= 'min' )
                     {
-                    // InternalScadeEquations.g:13682:3: (enumLiteral_4= 'min' )
-                    // InternalScadeEquations.g:13683:4: enumLiteral_4= 'min'
+                    // InternalScadeEquations.g:13723:3: (enumLiteral_4= 'min' )
+                    // InternalScadeEquations.g:13724:4: enumLiteral_4= 'min'
                     {
                     enumLiteral_4=(Token)match(input,116,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -38255,10 +38420,10 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 6 :
-                    // InternalScadeEquations.g:13690:3: (enumLiteral_5= '|' )
+                    // InternalScadeEquations.g:13731:3: (enumLiteral_5= '|' )
                     {
-                    // InternalScadeEquations.g:13690:3: (enumLiteral_5= '|' )
-                    // InternalScadeEquations.g:13691:4: enumLiteral_5= '|'
+                    // InternalScadeEquations.g:13731:3: (enumLiteral_5= '|' )
+                    // InternalScadeEquations.g:13732:4: enumLiteral_5= '|'
                     {
                     enumLiteral_5=(Token)match(input,108,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -38274,10 +38439,10 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 7 :
-                    // InternalScadeEquations.g:13698:3: (enumLiteral_6= '&' )
+                    // InternalScadeEquations.g:13739:3: (enumLiteral_6= '&' )
                     {
-                    // InternalScadeEquations.g:13698:3: (enumLiteral_6= '&' )
-                    // InternalScadeEquations.g:13699:4: enumLiteral_6= '&'
+                    // InternalScadeEquations.g:13739:3: (enumLiteral_6= '&' )
+                    // InternalScadeEquations.g:13740:4: enumLiteral_6= '&'
                     {
                     enumLiteral_6=(Token)match(input,79,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -38293,10 +38458,10 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 8 :
-                    // InternalScadeEquations.g:13706:3: (enumLiteral_7= 'host' )
+                    // InternalScadeEquations.g:13747:3: (enumLiteral_7= 'host' )
                     {
-                    // InternalScadeEquations.g:13706:3: (enumLiteral_7= 'host' )
-                    // InternalScadeEquations.g:13707:4: enumLiteral_7= 'host'
+                    // InternalScadeEquations.g:13747:3: (enumLiteral_7= 'host' )
+                    // InternalScadeEquations.g:13748:4: enumLiteral_7= 'host'
                     {
                     enumLiteral_7=(Token)match(input,70,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -38336,7 +38501,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleAccessModifier"
-    // InternalScadeEquations.g:13717:1: ruleAccessModifier returns [Enumerator current=null] : ( (enumLiteral_0= 'public' ) | (enumLiteral_1= 'protected' ) | (enumLiteral_2= 'private' ) ) ;
+    // InternalScadeEquations.g:13758:1: ruleAccessModifier returns [Enumerator current=null] : ( (enumLiteral_0= 'public' ) | (enumLiteral_1= 'protected' ) | (enumLiteral_2= 'private' ) ) ;
     public final Enumerator ruleAccessModifier() throws RecognitionException {
         Enumerator current = null;
 
@@ -38348,41 +38513,41 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:13723:2: ( ( (enumLiteral_0= 'public' ) | (enumLiteral_1= 'protected' ) | (enumLiteral_2= 'private' ) ) )
-            // InternalScadeEquations.g:13724:2: ( (enumLiteral_0= 'public' ) | (enumLiteral_1= 'protected' ) | (enumLiteral_2= 'private' ) )
+            // InternalScadeEquations.g:13764:2: ( ( (enumLiteral_0= 'public' ) | (enumLiteral_1= 'protected' ) | (enumLiteral_2= 'private' ) ) )
+            // InternalScadeEquations.g:13765:2: ( (enumLiteral_0= 'public' ) | (enumLiteral_1= 'protected' ) | (enumLiteral_2= 'private' ) )
             {
-            // InternalScadeEquations.g:13724:2: ( (enumLiteral_0= 'public' ) | (enumLiteral_1= 'protected' ) | (enumLiteral_2= 'private' ) )
-            int alt300=3;
+            // InternalScadeEquations.g:13765:2: ( (enumLiteral_0= 'public' ) | (enumLiteral_1= 'protected' ) | (enumLiteral_2= 'private' ) )
+            int alt301=3;
             switch ( input.LA(1) ) {
             case 117:
                 {
-                alt300=1;
+                alt301=1;
                 }
                 break;
             case 118:
                 {
-                alt300=2;
+                alt301=2;
                 }
                 break;
             case 119:
                 {
-                alt300=3;
+                alt301=3;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 300, 0, input);
+                    new NoViableAltException("", 301, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt300) {
+            switch (alt301) {
                 case 1 :
-                    // InternalScadeEquations.g:13725:3: (enumLiteral_0= 'public' )
+                    // InternalScadeEquations.g:13766:3: (enumLiteral_0= 'public' )
                     {
-                    // InternalScadeEquations.g:13725:3: (enumLiteral_0= 'public' )
-                    // InternalScadeEquations.g:13726:4: enumLiteral_0= 'public'
+                    // InternalScadeEquations.g:13766:3: (enumLiteral_0= 'public' )
+                    // InternalScadeEquations.g:13767:4: enumLiteral_0= 'public'
                     {
                     enumLiteral_0=(Token)match(input,117,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -38398,10 +38563,10 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalScadeEquations.g:13733:3: (enumLiteral_1= 'protected' )
+                    // InternalScadeEquations.g:13774:3: (enumLiteral_1= 'protected' )
                     {
-                    // InternalScadeEquations.g:13733:3: (enumLiteral_1= 'protected' )
-                    // InternalScadeEquations.g:13734:4: enumLiteral_1= 'protected'
+                    // InternalScadeEquations.g:13774:3: (enumLiteral_1= 'protected' )
+                    // InternalScadeEquations.g:13775:4: enumLiteral_1= 'protected'
                     {
                     enumLiteral_1=(Token)match(input,118,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -38417,10 +38582,10 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalScadeEquations.g:13741:3: (enumLiteral_2= 'private' )
+                    // InternalScadeEquations.g:13782:3: (enumLiteral_2= 'private' )
                     {
-                    // InternalScadeEquations.g:13741:3: (enumLiteral_2= 'private' )
-                    // InternalScadeEquations.g:13742:4: enumLiteral_2= 'private'
+                    // InternalScadeEquations.g:13782:3: (enumLiteral_2= 'private' )
+                    // InternalScadeEquations.g:13783:4: enumLiteral_2= 'private'
                     {
                     enumLiteral_2=(Token)match(input,119,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -38460,7 +38625,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleMethodReturnType"
-    // InternalScadeEquations.g:13752:1: ruleMethodReturnType returns [Enumerator current=null] : ( (enumLiteral_0= 'void' ) | (enumLiteral_1= 'bool' ) | (enumLiteral_2= 'int' ) | (enumLiteral_3= 'float' ) | (enumLiteral_4= 'string' ) ) ;
+    // InternalScadeEquations.g:13793:1: ruleMethodReturnType returns [Enumerator current=null] : ( (enumLiteral_0= 'void' ) | (enumLiteral_1= 'bool' ) | (enumLiteral_2= 'int' ) | (enumLiteral_3= 'float' ) | (enumLiteral_4= 'string' ) ) ;
     public final Enumerator ruleMethodReturnType() throws RecognitionException {
         Enumerator current = null;
 
@@ -38474,51 +38639,51 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:13758:2: ( ( (enumLiteral_0= 'void' ) | (enumLiteral_1= 'bool' ) | (enumLiteral_2= 'int' ) | (enumLiteral_3= 'float' ) | (enumLiteral_4= 'string' ) ) )
-            // InternalScadeEquations.g:13759:2: ( (enumLiteral_0= 'void' ) | (enumLiteral_1= 'bool' ) | (enumLiteral_2= 'int' ) | (enumLiteral_3= 'float' ) | (enumLiteral_4= 'string' ) )
+            // InternalScadeEquations.g:13799:2: ( ( (enumLiteral_0= 'void' ) | (enumLiteral_1= 'bool' ) | (enumLiteral_2= 'int' ) | (enumLiteral_3= 'float' ) | (enumLiteral_4= 'string' ) ) )
+            // InternalScadeEquations.g:13800:2: ( (enumLiteral_0= 'void' ) | (enumLiteral_1= 'bool' ) | (enumLiteral_2= 'int' ) | (enumLiteral_3= 'float' ) | (enumLiteral_4= 'string' ) )
             {
-            // InternalScadeEquations.g:13759:2: ( (enumLiteral_0= 'void' ) | (enumLiteral_1= 'bool' ) | (enumLiteral_2= 'int' ) | (enumLiteral_3= 'float' ) | (enumLiteral_4= 'string' ) )
-            int alt301=5;
+            // InternalScadeEquations.g:13800:2: ( (enumLiteral_0= 'void' ) | (enumLiteral_1= 'bool' ) | (enumLiteral_2= 'int' ) | (enumLiteral_3= 'float' ) | (enumLiteral_4= 'string' ) )
+            int alt302=5;
             switch ( input.LA(1) ) {
             case 120:
                 {
-                alt301=1;
+                alt302=1;
                 }
                 break;
             case 90:
                 {
-                alt301=2;
+                alt302=2;
                 }
                 break;
             case 91:
                 {
-                alt301=3;
+                alt302=3;
                 }
                 break;
             case 121:
                 {
-                alt301=4;
+                alt302=4;
                 }
                 break;
             case 122:
                 {
-                alt301=5;
+                alt302=5;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 301, 0, input);
+                    new NoViableAltException("", 302, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt301) {
+            switch (alt302) {
                 case 1 :
-                    // InternalScadeEquations.g:13760:3: (enumLiteral_0= 'void' )
+                    // InternalScadeEquations.g:13801:3: (enumLiteral_0= 'void' )
                     {
-                    // InternalScadeEquations.g:13760:3: (enumLiteral_0= 'void' )
-                    // InternalScadeEquations.g:13761:4: enumLiteral_0= 'void'
+                    // InternalScadeEquations.g:13801:3: (enumLiteral_0= 'void' )
+                    // InternalScadeEquations.g:13802:4: enumLiteral_0= 'void'
                     {
                     enumLiteral_0=(Token)match(input,120,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -38534,10 +38699,10 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalScadeEquations.g:13768:3: (enumLiteral_1= 'bool' )
+                    // InternalScadeEquations.g:13809:3: (enumLiteral_1= 'bool' )
                     {
-                    // InternalScadeEquations.g:13768:3: (enumLiteral_1= 'bool' )
-                    // InternalScadeEquations.g:13769:4: enumLiteral_1= 'bool'
+                    // InternalScadeEquations.g:13809:3: (enumLiteral_1= 'bool' )
+                    // InternalScadeEquations.g:13810:4: enumLiteral_1= 'bool'
                     {
                     enumLiteral_1=(Token)match(input,90,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -38553,10 +38718,10 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalScadeEquations.g:13776:3: (enumLiteral_2= 'int' )
+                    // InternalScadeEquations.g:13817:3: (enumLiteral_2= 'int' )
                     {
-                    // InternalScadeEquations.g:13776:3: (enumLiteral_2= 'int' )
-                    // InternalScadeEquations.g:13777:4: enumLiteral_2= 'int'
+                    // InternalScadeEquations.g:13817:3: (enumLiteral_2= 'int' )
+                    // InternalScadeEquations.g:13818:4: enumLiteral_2= 'int'
                     {
                     enumLiteral_2=(Token)match(input,91,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -38572,10 +38737,10 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // InternalScadeEquations.g:13784:3: (enumLiteral_3= 'float' )
+                    // InternalScadeEquations.g:13825:3: (enumLiteral_3= 'float' )
                     {
-                    // InternalScadeEquations.g:13784:3: (enumLiteral_3= 'float' )
-                    // InternalScadeEquations.g:13785:4: enumLiteral_3= 'float'
+                    // InternalScadeEquations.g:13825:3: (enumLiteral_3= 'float' )
+                    // InternalScadeEquations.g:13826:4: enumLiteral_3= 'float'
                     {
                     enumLiteral_3=(Token)match(input,121,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -38591,10 +38756,10 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 5 :
-                    // InternalScadeEquations.g:13792:3: (enumLiteral_4= 'string' )
+                    // InternalScadeEquations.g:13833:3: (enumLiteral_4= 'string' )
                     {
-                    // InternalScadeEquations.g:13792:3: (enumLiteral_4= 'string' )
-                    // InternalScadeEquations.g:13793:4: enumLiteral_4= 'string'
+                    // InternalScadeEquations.g:13833:3: (enumLiteral_4= 'string' )
+                    // InternalScadeEquations.g:13834:4: enumLiteral_4= 'string'
                     {
                     enumLiteral_4=(Token)match(input,122,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -38775,7 +38940,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
           							newCompositeNode(grammarAccess.getEquationAccess().getReferencesValuedObjectReferenceParserRuleCall_1_1_2_0());
           						
         }
-        pushFollow(FollowSets000.FOLLOW_133);
+        pushFollow(FollowSets000.FOLLOW_135);
         lv_references_10_0=ruleValuedObjectReference();
 
         state._fsp--;
@@ -38787,17 +38952,17 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         }
 
         // InternalScadeEquations.g:2089:5: (otherlv_11= ',' ( (lv_references_12_0= ruleValuedObjectReference ) ) )*
-        loop324:
+        loop325:
         do {
-            int alt324=2;
-            int LA324_0 = input.LA(1);
+            int alt325=2;
+            int LA325_0 = input.LA(1);
 
-            if ( (LA324_0==18) ) {
-                alt324=1;
+            if ( (LA325_0==18) ) {
+                alt325=1;
             }
 
 
-            switch (alt324) {
+            switch (alt325) {
         	case 1 :
         	    // InternalScadeEquations.g:2090:6: otherlv_11= ',' ( (lv_references_12_0= ruleValuedObjectReference ) )
         	    {
@@ -38813,7 +38978,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	      								newCompositeNode(grammarAccess.getEquationAccess().getReferencesValuedObjectReferenceParserRuleCall_1_1_3_1_0());
         	      							
         	    }
-        	    pushFollow(FollowSets000.FOLLOW_133);
+        	    pushFollow(FollowSets000.FOLLOW_135);
         	    lv_references_12_0=ruleValuedObjectReference();
 
         	    state._fsp--;
@@ -38829,7 +38994,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	    break;
 
         	default :
-        	    break loop324;
+        	    break loop325;
             }
         } while (true);
 
@@ -39249,22 +39414,22 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         // InternalScadeEquations.g:4971:5: (lv_expression_0_1= ruleAnnotatedExpression | lv_expression_0_2= ruleAnnotatedJsonExpression )
         {
         // InternalScadeEquations.g:4971:5: (lv_expression_0_1= ruleAnnotatedExpression | lv_expression_0_2= ruleAnnotatedJsonExpression )
-        int alt339=2;
+        int alt340=2;
         switch ( input.LA(1) ) {
         case RULE_COMMENT_ANNOTATION:
             {
-            int LA339_1 = input.LA(2);
+            int LA340_1 = input.LA(2);
 
             if ( (synpred116_InternalScadeEquations()) ) {
-                alt339=1;
+                alt340=1;
             }
             else if ( (true) ) {
-                alt339=2;
+                alt340=2;
             }
             else {
                 if (state.backtracking>0) {state.failed=true; return ;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 339, 1, input);
+                    new NoViableAltException("", 340, 1, input);
 
                 throw nvae;
             }
@@ -39272,18 +39437,18 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             break;
         case 89:
             {
-            int LA339_2 = input.LA(2);
+            int LA340_2 = input.LA(2);
 
             if ( (synpred116_InternalScadeEquations()) ) {
-                alt339=1;
+                alt340=1;
             }
             else if ( (true) ) {
-                alt339=2;
+                alt340=2;
             }
             else {
                 if (state.backtracking>0) {state.failed=true; return ;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 339, 2, input);
+                    new NoViableAltException("", 340, 2, input);
 
                 throw nvae;
             }
@@ -39291,23 +39456,23 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             break;
         case 63:
             {
-            alt339=1;
+            alt340=1;
             }
             break;
         case 64:
             {
-            alt339=2;
+            alt340=2;
             }
             break;
         default:
             if (state.backtracking>0) {state.failed=true; return ;}
             NoViableAltException nvae =
-                new NoViableAltException("", 339, 0, input);
+                new NoViableAltException("", 340, 0, input);
 
             throw nvae;
         }
 
-        switch (alt339) {
+        switch (alt340) {
             case 1 :
                 // InternalScadeEquations.g:4972:6: lv_expression_0_1= ruleAnnotatedExpression
                 {
@@ -39529,8 +39694,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         EObject this_Declaration_0 = null;
 
 
-        // InternalScadeEquations.g:6222:3: (this_Declaration_0= ruleDeclaration )
-        // InternalScadeEquations.g:6222:3: this_Declaration_0= ruleDeclaration
+        // InternalScadeEquations.g:6224:3: (this_Declaration_0= ruleDeclaration )
+        // InternalScadeEquations.g:6224:3: this_Declaration_0= ruleDeclaration
         {
         if ( state.backtracking==0 ) {
 
@@ -39555,21 +39720,21 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         EObject lv_valuedObjects_21_0 = null;
 
 
-        // InternalScadeEquations.g:6532:4: ( ( (lv_valuedObjects_19_0= ruleValuedObject ) ) (otherlv_20= ',' ( (lv_valuedObjects_21_0= ruleValuedObject ) ) )* )
-        // InternalScadeEquations.g:6532:4: ( (lv_valuedObjects_19_0= ruleValuedObject ) ) (otherlv_20= ',' ( (lv_valuedObjects_21_0= ruleValuedObject ) ) )*
+        // InternalScadeEquations.g:6536:4: ( ( (lv_valuedObjects_19_0= ruleValuedObject ) ) (otherlv_20= ',' ( (lv_valuedObjects_21_0= ruleValuedObject ) ) )* )
+        // InternalScadeEquations.g:6536:4: ( (lv_valuedObjects_19_0= ruleValuedObject ) ) (otherlv_20= ',' ( (lv_valuedObjects_21_0= ruleValuedObject ) ) )*
         {
-        // InternalScadeEquations.g:6532:4: ( (lv_valuedObjects_19_0= ruleValuedObject ) )
-        // InternalScadeEquations.g:6533:5: (lv_valuedObjects_19_0= ruleValuedObject )
+        // InternalScadeEquations.g:6536:4: ( (lv_valuedObjects_19_0= ruleValuedObject ) )
+        // InternalScadeEquations.g:6537:5: (lv_valuedObjects_19_0= ruleValuedObject )
         {
-        // InternalScadeEquations.g:6533:5: (lv_valuedObjects_19_0= ruleValuedObject )
-        // InternalScadeEquations.g:6534:6: lv_valuedObjects_19_0= ruleValuedObject
+        // InternalScadeEquations.g:6537:5: (lv_valuedObjects_19_0= ruleValuedObject )
+        // InternalScadeEquations.g:6538:6: lv_valuedObjects_19_0= ruleValuedObject
         {
         if ( state.backtracking==0 ) {
 
           						newCompositeNode(grammarAccess.getClassDeclarationWOSemicolonAccess().getValuedObjectsValuedObjectParserRuleCall_10_0_0());
           					
         }
-        pushFollow(FollowSets000.FOLLOW_133);
+        pushFollow(FollowSets000.FOLLOW_135);
         lv_valuedObjects_19_0=ruleValuedObject();
 
         state._fsp--;
@@ -39580,34 +39745,34 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
         }
 
-        // InternalScadeEquations.g:6551:4: (otherlv_20= ',' ( (lv_valuedObjects_21_0= ruleValuedObject ) ) )*
-        loop347:
+        // InternalScadeEquations.g:6555:4: (otherlv_20= ',' ( (lv_valuedObjects_21_0= ruleValuedObject ) ) )*
+        loop348:
         do {
-            int alt347=2;
-            int LA347_0 = input.LA(1);
+            int alt348=2;
+            int LA348_0 = input.LA(1);
 
-            if ( (LA347_0==18) ) {
-                alt347=1;
+            if ( (LA348_0==18) ) {
+                alt348=1;
             }
 
 
-            switch (alt347) {
+            switch (alt348) {
         	case 1 :
-        	    // InternalScadeEquations.g:6552:5: otherlv_20= ',' ( (lv_valuedObjects_21_0= ruleValuedObject ) )
+        	    // InternalScadeEquations.g:6556:5: otherlv_20= ',' ( (lv_valuedObjects_21_0= ruleValuedObject ) )
         	    {
         	    otherlv_20=(Token)match(input,18,FollowSets000.FOLLOW_35); if (state.failed) return ;
-        	    // InternalScadeEquations.g:6556:5: ( (lv_valuedObjects_21_0= ruleValuedObject ) )
-        	    // InternalScadeEquations.g:6557:6: (lv_valuedObjects_21_0= ruleValuedObject )
+        	    // InternalScadeEquations.g:6560:5: ( (lv_valuedObjects_21_0= ruleValuedObject ) )
+        	    // InternalScadeEquations.g:6561:6: (lv_valuedObjects_21_0= ruleValuedObject )
         	    {
-        	    // InternalScadeEquations.g:6557:6: (lv_valuedObjects_21_0= ruleValuedObject )
-        	    // InternalScadeEquations.g:6558:7: lv_valuedObjects_21_0= ruleValuedObject
+        	    // InternalScadeEquations.g:6561:6: (lv_valuedObjects_21_0= ruleValuedObject )
+        	    // InternalScadeEquations.g:6562:7: lv_valuedObjects_21_0= ruleValuedObject
         	    {
         	    if ( state.backtracking==0 ) {
 
         	      							newCompositeNode(grammarAccess.getClassDeclarationWOSemicolonAccess().getValuedObjectsValuedObjectParserRuleCall_10_1_1_0());
         	      						
         	    }
-        	    pushFollow(FollowSets000.FOLLOW_133);
+        	    pushFollow(FollowSets000.FOLLOW_135);
         	    lv_valuedObjects_21_0=ruleValuedObject();
 
         	    state._fsp--;
@@ -39623,7 +39788,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	    break;
 
         	default :
-        	    break loop347;
+        	    break loop348;
             }
         } while (true);
 
@@ -39637,8 +39802,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         EObject this_DeclarationWOSemicolon_0 = null;
 
 
-        // InternalScadeEquations.g:6615:3: (this_DeclarationWOSemicolon_0= ruleDeclarationWOSemicolon )
-        // InternalScadeEquations.g:6615:3: this_DeclarationWOSemicolon_0= ruleDeclarationWOSemicolon
+        // InternalScadeEquations.g:6619:3: (this_DeclarationWOSemicolon_0= ruleDeclarationWOSemicolon )
+        // InternalScadeEquations.g:6619:3: this_DeclarationWOSemicolon_0= ruleDeclarationWOSemicolon
         {
         if ( state.backtracking==0 ) {
 
@@ -39660,11 +39825,11 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         EObject lv_annotations_1_0 = null;
 
 
-        // InternalScadeEquations.g:6668:4: ( (lv_annotations_1_0= ruleAnnotation ) )
-        // InternalScadeEquations.g:6668:4: (lv_annotations_1_0= ruleAnnotation )
+        // InternalScadeEquations.g:6672:4: ( (lv_annotations_1_0= ruleAnnotation ) )
+        // InternalScadeEquations.g:6672:4: (lv_annotations_1_0= ruleAnnotation )
         {
-        // InternalScadeEquations.g:6668:4: (lv_annotations_1_0= ruleAnnotation )
-        // InternalScadeEquations.g:6669:5: lv_annotations_1_0= ruleAnnotation
+        // InternalScadeEquations.g:6672:4: (lv_annotations_1_0= ruleAnnotation )
+        // InternalScadeEquations.g:6673:5: lv_annotations_1_0= ruleAnnotation
         {
         if ( state.backtracking==0 ) {
 
@@ -39689,11 +39854,11 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         EObject lv_annotations_1_0 = null;
 
 
-        // InternalScadeEquations.g:6882:4: ( (lv_annotations_1_0= ruleAnnotation ) )
-        // InternalScadeEquations.g:6882:4: (lv_annotations_1_0= ruleAnnotation )
+        // InternalScadeEquations.g:6886:4: ( (lv_annotations_1_0= ruleAnnotation ) )
+        // InternalScadeEquations.g:6886:4: (lv_annotations_1_0= ruleAnnotation )
         {
-        // InternalScadeEquations.g:6882:4: (lv_annotations_1_0= ruleAnnotation )
-        // InternalScadeEquations.g:6883:5: lv_annotations_1_0= ruleAnnotation
+        // InternalScadeEquations.g:6886:4: (lv_annotations_1_0= ruleAnnotation )
+        // InternalScadeEquations.g:6887:5: lv_annotations_1_0= ruleAnnotation
         {
         if ( state.backtracking==0 ) {
 
@@ -39718,8 +39883,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         EObject this_Assignment_0 = null;
 
 
-        // InternalScadeEquations.g:8246:3: (this_Assignment_0= ruleAssignment )
-        // InternalScadeEquations.g:8246:3: this_Assignment_0= ruleAssignment
+        // InternalScadeEquations.g:8250:3: (this_Assignment_0= ruleAssignment )
+        // InternalScadeEquations.g:8250:3: this_Assignment_0= ruleAssignment
         {
         if ( state.backtracking==0 ) {
 
@@ -39741,8 +39906,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         EObject this_PostfixEffect_1 = null;
 
 
-        // InternalScadeEquations.g:8258:3: (this_PostfixEffect_1= rulePostfixEffect )
-        // InternalScadeEquations.g:8258:3: this_PostfixEffect_1= rulePostfixEffect
+        // InternalScadeEquations.g:8262:3: (this_PostfixEffect_1= rulePostfixEffect )
+        // InternalScadeEquations.g:8262:3: this_PostfixEffect_1= rulePostfixEffect
         {
         if ( state.backtracking==0 ) {
 
@@ -39764,8 +39929,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         EObject this_ValuedEmission_2 = null;
 
 
-        // InternalScadeEquations.g:8270:3: (this_ValuedEmission_2= ruleValuedEmission )
-        // InternalScadeEquations.g:8270:3: this_ValuedEmission_2= ruleValuedEmission
+        // InternalScadeEquations.g:8274:3: (this_ValuedEmission_2= ruleValuedEmission )
+        // InternalScadeEquations.g:8274:3: this_ValuedEmission_2= ruleValuedEmission
         {
         if ( state.backtracking==0 ) {
 
@@ -39787,8 +39952,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         EObject this_HostcodeEffect_3 = null;
 
 
-        // InternalScadeEquations.g:8282:3: (this_HostcodeEffect_3= ruleHostcodeEffect )
-        // InternalScadeEquations.g:8282:3: this_HostcodeEffect_3= ruleHostcodeEffect
+        // InternalScadeEquations.g:8286:3: (this_HostcodeEffect_3= ruleHostcodeEffect )
+        // InternalScadeEquations.g:8286:3: this_HostcodeEffect_3= ruleHostcodeEffect
         {
         if ( state.backtracking==0 ) {
 
@@ -39810,8 +39975,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         EObject this_ReferenceCallEffect_4 = null;
 
 
-        // InternalScadeEquations.g:8294:3: (this_ReferenceCallEffect_4= ruleReferenceCallEffect )
-        // InternalScadeEquations.g:8294:3: this_ReferenceCallEffect_4= ruleReferenceCallEffect
+        // InternalScadeEquations.g:8298:3: (this_ReferenceCallEffect_4= ruleReferenceCallEffect )
+        // InternalScadeEquations.g:8298:3: this_ReferenceCallEffect_4= ruleReferenceCallEffect
         {
         if ( state.backtracking==0 ) {
 
@@ -39833,8 +39998,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         EObject this_FunctionCallEffect_5 = null;
 
 
-        // InternalScadeEquations.g:8306:3: (this_FunctionCallEffect_5= ruleFunctionCallEffect )
-        // InternalScadeEquations.g:8306:3: this_FunctionCallEffect_5= ruleFunctionCallEffect
+        // InternalScadeEquations.g:8310:3: (this_FunctionCallEffect_5= ruleFunctionCallEffect )
+        // InternalScadeEquations.g:8310:3: this_FunctionCallEffect_5= ruleFunctionCallEffect
         {
         if ( state.backtracking==0 ) {
 
@@ -39856,8 +40021,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         EObject this_PrintCallEffect_6 = null;
 
 
-        // InternalScadeEquations.g:8318:3: (this_PrintCallEffect_6= rulePrintCallEffect )
-        // InternalScadeEquations.g:8318:3: this_PrintCallEffect_6= rulePrintCallEffect
+        // InternalScadeEquations.g:8322:3: (this_PrintCallEffect_6= rulePrintCallEffect )
+        // InternalScadeEquations.g:8322:3: this_PrintCallEffect_6= rulePrintCallEffect
         {
         if ( state.backtracking==0 ) {
 
@@ -39879,8 +40044,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         EObject this_RandomizeCallEffect_7 = null;
 
 
-        // InternalScadeEquations.g:8330:3: (this_RandomizeCallEffect_7= ruleRandomizeCallEffect )
-        // InternalScadeEquations.g:8330:3: this_RandomizeCallEffect_7= ruleRandomizeCallEffect
+        // InternalScadeEquations.g:8334:3: (this_RandomizeCallEffect_7= ruleRandomizeCallEffect )
+        // InternalScadeEquations.g:8334:3: this_RandomizeCallEffect_7= ruleRandomizeCallEffect
         {
         if ( state.backtracking==0 ) {
 
@@ -39902,8 +40067,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         EObject this_BoolExpression_0 = null;
 
 
-        // InternalScadeEquations.g:9394:3: (this_BoolExpression_0= ruleBoolExpression )
-        // InternalScadeEquations.g:9394:3: this_BoolExpression_0= ruleBoolExpression
+        // InternalScadeEquations.g:9398:3: (this_BoolExpression_0= ruleBoolExpression )
+        // InternalScadeEquations.g:9398:3: this_BoolExpression_0= ruleBoolExpression
         {
         if ( state.backtracking==0 ) {
 
@@ -39925,8 +40090,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         EObject this_ValuedExpression_0 = null;
 
 
-        // InternalScadeEquations.g:9730:3: (this_ValuedExpression_0= ruleValuedExpression )
-        // InternalScadeEquations.g:9730:3: this_ValuedExpression_0= ruleValuedExpression
+        // InternalScadeEquations.g:9734:3: (this_ValuedExpression_0= ruleValuedExpression )
+        // InternalScadeEquations.g:9734:3: this_ValuedExpression_0= ruleValuedExpression
         {
         if ( state.backtracking==0 ) {
 
@@ -39949,15 +40114,15 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         EObject lv_subExpressions_5_0 = null;
 
 
-        // InternalScadeEquations.g:10129:6: (otherlv_4= '+' ( (lv_subExpressions_5_0= ruleProductExpression ) ) )
-        // InternalScadeEquations.g:10129:6: otherlv_4= '+' ( (lv_subExpressions_5_0= ruleProductExpression ) )
+        // InternalScadeEquations.g:10133:6: (otherlv_4= '+' ( (lv_subExpressions_5_0= ruleProductExpression ) ) )
+        // InternalScadeEquations.g:10133:6: otherlv_4= '+' ( (lv_subExpressions_5_0= ruleProductExpression ) )
         {
         otherlv_4=(Token)match(input,82,FollowSets000.FOLLOW_48); if (state.failed) return ;
-        // InternalScadeEquations.g:10133:6: ( (lv_subExpressions_5_0= ruleProductExpression ) )
-        // InternalScadeEquations.g:10134:7: (lv_subExpressions_5_0= ruleProductExpression )
+        // InternalScadeEquations.g:10137:6: ( (lv_subExpressions_5_0= ruleProductExpression ) )
+        // InternalScadeEquations.g:10138:7: (lv_subExpressions_5_0= ruleProductExpression )
         {
-        // InternalScadeEquations.g:10134:7: (lv_subExpressions_5_0= ruleProductExpression )
-        // InternalScadeEquations.g:10135:8: lv_subExpressions_5_0= ruleProductExpression
+        // InternalScadeEquations.g:10138:7: (lv_subExpressions_5_0= ruleProductExpression )
+        // InternalScadeEquations.g:10139:8: lv_subExpressions_5_0= ruleProductExpression
         {
         if ( state.backtracking==0 ) {
 
@@ -39986,15 +40151,15 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         EObject lv_subExpressions_10_0 = null;
 
 
-        // InternalScadeEquations.g:10205:6: (otherlv_9= '-' ( (lv_subExpressions_10_0= ruleProductExpression ) ) )
-        // InternalScadeEquations.g:10205:6: otherlv_9= '-' ( (lv_subExpressions_10_0= ruleProductExpression ) )
+        // InternalScadeEquations.g:10209:6: (otherlv_9= '-' ( (lv_subExpressions_10_0= ruleProductExpression ) ) )
+        // InternalScadeEquations.g:10209:6: otherlv_9= '-' ( (lv_subExpressions_10_0= ruleProductExpression ) )
         {
         otherlv_9=(Token)match(input,83,FollowSets000.FOLLOW_48); if (state.failed) return ;
-        // InternalScadeEquations.g:10209:6: ( (lv_subExpressions_10_0= ruleProductExpression ) )
-        // InternalScadeEquations.g:10210:7: (lv_subExpressions_10_0= ruleProductExpression )
+        // InternalScadeEquations.g:10213:6: ( (lv_subExpressions_10_0= ruleProductExpression ) )
+        // InternalScadeEquations.g:10214:7: (lv_subExpressions_10_0= ruleProductExpression )
         {
-        // InternalScadeEquations.g:10210:7: (lv_subExpressions_10_0= ruleProductExpression )
-        // InternalScadeEquations.g:10211:8: lv_subExpressions_10_0= ruleProductExpression
+        // InternalScadeEquations.g:10214:7: (lv_subExpressions_10_0= ruleProductExpression )
+        // InternalScadeEquations.g:10215:8: lv_subExpressions_10_0= ruleProductExpression
         {
         if ( state.backtracking==0 ) {
 
@@ -40024,11 +40189,11 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         EObject this_ValuedExpression_5 = null;
 
 
-        // InternalScadeEquations.g:10298:3: ( (otherlv_4= '(' this_ValuedExpression_5= ruleValuedExpression otherlv_6= ')' ) )
-        // InternalScadeEquations.g:10298:3: (otherlv_4= '(' this_ValuedExpression_5= ruleValuedExpression otherlv_6= ')' )
+        // InternalScadeEquations.g:10302:3: ( (otherlv_4= '(' this_ValuedExpression_5= ruleValuedExpression otherlv_6= ')' ) )
+        // InternalScadeEquations.g:10302:3: (otherlv_4= '(' this_ValuedExpression_5= ruleValuedExpression otherlv_6= ')' )
         {
-        // InternalScadeEquations.g:10298:3: (otherlv_4= '(' this_ValuedExpression_5= ruleValuedExpression otherlv_6= ')' )
-        // InternalScadeEquations.g:10299:4: otherlv_4= '(' this_ValuedExpression_5= ruleValuedExpression otherlv_6= ')'
+        // InternalScadeEquations.g:10302:3: (otherlv_4= '(' this_ValuedExpression_5= ruleValuedExpression otherlv_6= ')' )
+        // InternalScadeEquations.g:10303:4: otherlv_4= '(' this_ValuedExpression_5= ruleValuedExpression otherlv_6= ')'
         {
         otherlv_4=(Token)match(input,17,FollowSets000.FOLLOW_48); if (state.failed) return ;
         pushFollow(FollowSets000.FOLLOW_13);
@@ -40050,8 +40215,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         EObject this_BoolExpression_0 = null;
 
 
-        // InternalScadeEquations.g:10963:3: (this_BoolExpression_0= ruleBoolExpression )
-        // InternalScadeEquations.g:10963:3: this_BoolExpression_0= ruleBoolExpression
+        // InternalScadeEquations.g:10967:3: (this_BoolExpression_0= ruleBoolExpression )
+        // InternalScadeEquations.g:10967:3: this_BoolExpression_0= ruleBoolExpression
         {
         if ( state.backtracking==0 ) {
 
@@ -40073,8 +40238,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         EObject this_ValuedExpression_1 = null;
 
 
-        // InternalScadeEquations.g:10975:3: (this_ValuedExpression_1= ruleValuedExpression )
-        // InternalScadeEquations.g:10975:3: this_ValuedExpression_1= ruleValuedExpression
+        // InternalScadeEquations.g:10979:3: (this_ValuedExpression_1= ruleValuedExpression )
+        // InternalScadeEquations.g:10979:3: this_ValuedExpression_1= ruleValuedExpression
         {
         if ( state.backtracking==0 ) {
 
@@ -40096,8 +40261,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         EObject this_KeyStringValueAnnotation_1 = null;
 
 
-        // InternalScadeEquations.g:11659:3: (this_KeyStringValueAnnotation_1= ruleKeyStringValueAnnotation )
-        // InternalScadeEquations.g:11659:3: this_KeyStringValueAnnotation_1= ruleKeyStringValueAnnotation
+        // InternalScadeEquations.g:11663:3: (this_KeyStringValueAnnotation_1= ruleKeyStringValueAnnotation )
+        // InternalScadeEquations.g:11663:3: this_KeyStringValueAnnotation_1= ruleKeyStringValueAnnotation
         {
         if ( state.backtracking==0 ) {
 
@@ -42416,7 +42581,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             this.transition = dfa_73;
         }
         public String getDescription() {
-            return "6221:2: (this_Declaration_0= ruleDeclaration | this_MethodDeclaration_1= ruleMethodDeclaration )";
+            return "6223:2: (this_Declaration_0= ruleDeclaration | this_MethodDeclaration_1= ruleMethodDeclaration )";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -42592,7 +42757,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             this.transition = dfa_79;
         }
         public String getDescription() {
-            return "6531:3: ( ( (lv_valuedObjects_19_0= ruleValuedObject ) ) (otherlv_20= ',' ( (lv_valuedObjects_21_0= ruleValuedObject ) ) )* )?";
+            return "6535:3: ( ( (lv_valuedObjects_19_0= ruleValuedObject ) ) (otherlv_20= ',' ( (lv_valuedObjects_21_0= ruleValuedObject ) ) )* )?";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -42666,7 +42831,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             this.transition = dfa_73;
         }
         public String getDescription() {
-            return "6614:2: (this_DeclarationWOSemicolon_0= ruleDeclarationWOSemicolon | this_MethodDeclarationWOSemicolon_1= ruleMethodDeclarationWOSemicolon )";
+            return "6618:2: (this_DeclarationWOSemicolon_0= ruleDeclarationWOSemicolon | this_MethodDeclarationWOSemicolon_1= ruleMethodDeclarationWOSemicolon )";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -42817,7 +42982,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             this.transition = dfa_84;
         }
         public String getDescription() {
-            return "7018:3: (otherlv_11= 'schedule' ( (lv_schedule_12_0= ruleScheduleObjectReference ) )+ )?";
+            return "7022:3: (otherlv_11= 'schedule' ( (lv_schedule_12_0= ruleScheduleObjectReference ) )+ )?";
         }
     }
     static final String dfa_85s = "\5\uffff";
@@ -42856,7 +43021,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             this.transition = dfa_91;
         }
         public String getDescription() {
-            return "()+ loopback of 7023:4: ( (lv_schedule_12_0= ruleScheduleObjectReference ) )+";
+            return "()+ loopback of 7027:4: ( (lv_schedule_12_0= ruleScheduleObjectReference ) )+";
         }
     }
     static final String dfa_92s = "\1\4\3\0\11\uffff";
@@ -42898,7 +43063,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             this.transition = dfa_96;
         }
         public String getDescription() {
-            return "8245:2: (this_Assignment_0= ruleAssignment | this_PostfixEffect_1= rulePostfixEffect | this_ValuedEmission_2= ruleValuedEmission | this_HostcodeEffect_3= ruleHostcodeEffect | this_ReferenceCallEffect_4= ruleReferenceCallEffect | this_FunctionCallEffect_5= ruleFunctionCallEffect | this_PrintCallEffect_6= rulePrintCallEffect | this_RandomizeCallEffect_7= ruleRandomizeCallEffect | this_PureEmission_8= rulePureEmission )";
+            return "8249:2: (this_Assignment_0= ruleAssignment | this_PostfixEffect_1= rulePostfixEffect | this_ValuedEmission_2= ruleValuedEmission | this_HostcodeEffect_3= ruleHostcodeEffect | this_ReferenceCallEffect_4= ruleReferenceCallEffect | this_FunctionCallEffect_5= ruleFunctionCallEffect | this_PrintCallEffect_6= rulePrintCallEffect | this_RandomizeCallEffect_7= ruleRandomizeCallEffect | this_PureEmission_8= rulePureEmission )";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -43020,7 +43185,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             this.transition = dfa_100;
         }
         public String getDescription() {
-            return "()+ loopback of 8415:4: ( (lv_schedule_3_0= ruleScheduleObjectReference ) )+";
+            return "()+ loopback of 8419:4: ( (lv_schedule_3_0= ruleScheduleObjectReference ) )+";
         }
     }
 
@@ -43038,7 +43203,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             this.transition = dfa_100;
         }
         public String getDescription() {
-            return "()+ loopback of 8524:4: ( (lv_schedule_6_0= ruleScheduleObjectReference ) )+";
+            return "()+ loopback of 8528:4: ( (lv_schedule_6_0= ruleScheduleObjectReference ) )+";
         }
     }
     static final String[] dfa_101s = {
@@ -43064,7 +43229,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             this.transition = dfa_101;
         }
         public String getDescription() {
-            return "()+ loopback of 8644:4: ( (lv_schedule_5_0= ruleScheduleObjectReference ) )+";
+            return "()+ loopback of 8648:4: ( (lv_schedule_5_0= ruleScheduleObjectReference ) )+";
         }
     }
 
@@ -43082,7 +43247,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             this.transition = dfa_101;
         }
         public String getDescription() {
-            return "()+ loopback of 8745:4: ( (lv_schedule_4_0= ruleScheduleObjectReference ) )+";
+            return "()+ loopback of 8749:4: ( (lv_schedule_4_0= ruleScheduleObjectReference ) )+";
         }
     }
 
@@ -43100,7 +43265,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             this.transition = dfa_101;
         }
         public String getDescription() {
-            return "()+ loopback of 8998:4: ( (lv_schedule_14_0= ruleScheduleObjectReference ) )+";
+            return "()+ loopback of 9002:4: ( (lv_schedule_14_0= ruleScheduleObjectReference ) )+";
         }
     }
 
@@ -43118,7 +43283,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             this.transition = dfa_101;
         }
         public String getDescription() {
-            return "()+ loopback of 9242:4: ( (lv_schedule_8_0= ruleScheduleObjectReference ) )+";
+            return "()+ loopback of 9246:4: ( (lv_schedule_8_0= ruleScheduleObjectReference ) )+";
         }
     }
     static final String dfa_102s = "\21\uffff";
@@ -43167,7 +43332,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             this.transition = dfa_107;
         }
         public String getDescription() {
-            return "9393:2: (this_BoolExpression_0= ruleBoolExpression | this_ValuedExpression_1= ruleValuedExpression )";
+            return "9397:2: (this_BoolExpression_0= ruleBoolExpression | this_ValuedExpression_1= ruleValuedExpression )";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -43420,7 +43585,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             this.transition = dfa_113;
         }
         public String getDescription() {
-            return "9729:2: (this_ValuedExpression_0= ruleValuedExpression | this_NotExpression_1= ruleNotExpression )";
+            return "9733:2: (this_ValuedExpression_0= ruleValuedExpression | this_NotExpression_1= ruleNotExpression )";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -43635,7 +43800,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             this.transition = dfa_120;
         }
         public String getDescription() {
-            return "()* loopback of 10128:5: (otherlv_4= '+' ( (lv_subExpressions_5_0= ruleProductExpression ) ) )*";
+            return "()* loopback of 10132:5: (otherlv_4= '+' ( (lv_subExpressions_5_0= ruleProductExpression ) ) )*";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -43753,7 +43918,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             this.transition = dfa_124;
         }
         public String getDescription() {
-            return "()* loopback of 10204:5: (otherlv_9= '-' ( (lv_subExpressions_10_0= ruleProductExpression ) ) )*";
+            return "()* loopback of 10208:5: (otherlv_9= '-' ( (lv_subExpressions_10_0= ruleProductExpression ) ) )*";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -43821,7 +43986,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             this.transition = dfa_129;
         }
         public String getDescription() {
-            return "10249:2: (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_StringValue_2= ruleStringValue | this_VectorValue_3= ruleVectorValue | (otherlv_4= '(' this_ValuedExpression_5= ruleValuedExpression otherlv_6= ')' ) | this_AtomicExpression_7= ruleAtomicExpression )";
+            return "10253:2: (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_StringValue_2= ruleStringValue | this_VectorValue_3= ruleVectorValue | (otherlv_4= '(' this_ValuedExpression_5= ruleValuedExpression otherlv_6= ')' ) | this_AtomicExpression_7= ruleAtomicExpression )";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -43897,7 +44062,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             this.transition = dfa_135;
         }
         public String getDescription() {
-            return "10962:2: (this_BoolExpression_0= ruleBoolExpression | this_ValuedExpression_1= ruleValuedExpression | this_IgnoreValue_2= ruleIgnoreValue )";
+            return "10966:2: (this_BoolExpression_0= ruleBoolExpression | this_ValuedExpression_1= ruleValuedExpression | this_IgnoreValue_2= ruleIgnoreValue )";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -44144,7 +44309,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             this.transition = dfa_141;
         }
         public String getDescription() {
-            return "11562:2: (this_Annotation_0= superAnnotation | this_JsonAnnotation_1= ruleJsonAnnotation )";
+            return "11566:2: (this_Annotation_0= superAnnotation | this_JsonAnnotation_1= ruleJsonAnnotation )";
         }
     }
     static final String dfa_142s = "\1\131\1\uffff\1\4\1\131\2\4\1\7\1\uffff\2\131";
@@ -44177,37 +44342,37 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             this.transition = dfa_143;
         }
         public String getDescription() {
-            return "11604:2: (this_QuotedStringAnnotation_0= superQuotedStringAnnotation | this_JsonAnnotation_1= ruleJsonAnnotation )";
+            return "11608:2: (this_QuotedStringAnnotation_0= superQuotedStringAnnotation | this_JsonAnnotation_1= ruleJsonAnnotation )";
         }
     }
     static final String dfa_144s = "\26\uffff";
-    static final String dfa_145s = "\3\uffff\1\12\5\uffff\1\10\1\uffff\2\12\1\uffff\1\10\1\uffff\1\10\1\uffff\1\10\1\uffff\1\10\1\uffff";
-    static final String dfa_146s = "\1\12\1\uffff\4\4\1\7\2\uffff\1\4\1\uffff\12\4\1\0";
-    static final String dfa_147s = "\1\131\1\uffff\1\4\1\172\1\4\1\10\1\7\2\uffff\1\172\1\uffff\2\172\1\4\1\172\1\4\1\172\1\4\1\172\1\4\1\172\1\0";
-    static final String dfa_148s = "\1\uffff\1\1\5\uffff\1\3\1\2\1\uffff\1\4\13\uffff";
+    static final String dfa_145s = "\3\uffff\1\11\4\uffff\1\7\2\uffff\2\11\1\uffff\1\7\1\uffff\1\7\1\uffff\1\7\1\uffff\1\7\1\uffff";
+    static final String dfa_146s = "\1\12\1\uffff\4\4\1\7\1\uffff\1\4\2\uffff\12\4\1\0";
+    static final String dfa_147s = "\1\131\1\uffff\1\4\1\172\1\4\1\10\1\7\1\uffff\1\172\2\uffff\2\172\1\4\1\172\1\4\1\172\1\4\1\172\1\4\1\172\1\0";
+    static final String dfa_148s = "\1\uffff\1\1\5\uffff\1\2\1\uffff\1\4\1\3\13\uffff";
     static final String dfa_149s = "\25\uffff\1\0}>";
     static final String[] dfa_150s = {
             "\1\1\116\uffff\1\2",
             "",
             "\1\3",
-            "\1\11\1\10\1\12\3\10\1\12\16\uffff\1\12\7\uffff\1\12\3\uffff\1\4\31\uffff\12\12\1\7\3\uffff\2\12\4\uffff\1\5\4\uffff\1\6\4\12\23\uffff\2\12\3\uffff\6\12",
+            "\1\10\1\7\1\11\3\7\1\11\16\uffff\1\11\7\uffff\1\11\3\uffff\1\4\31\uffff\12\11\1\12\3\uffff\2\11\4\uffff\1\5\4\uffff\1\6\4\11\23\uffff\2\11\3\uffff\6\11",
             "\1\13",
-            "\1\13\2\uffff\2\10",
+            "\1\13\2\uffff\2\7",
             "\1\14",
             "",
+            "\1\7\1\uffff\1\7\3\uffff\1\7\6\uffff\1\11\1\7\2\uffff\1\11\3\uffff\1\7\2\uffff\1\11\4\uffff\1\7\3\uffff\1\15\31\uffff\12\7\1\11\3\uffff\2\7\4\uffff\1\7\1\11\3\uffff\5\7\13\uffff\2\11\6\uffff\2\7\3\uffff\6\7",
             "",
-            "\1\10\1\uffff\1\10\3\uffff\1\10\6\uffff\1\12\1\10\2\uffff\1\12\3\uffff\1\10\2\uffff\1\12\4\uffff\1\10\3\uffff\1\15\31\uffff\12\10\1\12\3\uffff\2\10\4\uffff\1\10\1\12\3\uffff\5\10\13\uffff\2\12\6\uffff\2\10\3\uffff\6\10",
             "",
-            "\1\11\1\10\1\12\3\10\1\12\16\uffff\1\12\7\uffff\1\12\3\uffff\1\4\31\uffff\12\12\1\7\3\uffff\2\12\4\uffff\1\5\4\uffff\1\6\4\12\23\uffff\2\12\3\uffff\6\12",
-            "\1\11\1\10\1\12\3\10\1\12\16\uffff\1\12\7\uffff\1\12\35\uffff\12\12\1\7\3\uffff\2\12\4\uffff\1\10\5\uffff\4\12\23\uffff\2\12\3\uffff\6\12",
+            "\1\10\1\7\1\11\3\7\1\11\16\uffff\1\11\7\uffff\1\11\3\uffff\1\4\31\uffff\12\11\1\12\3\uffff\2\11\4\uffff\1\5\4\uffff\1\6\4\11\23\uffff\2\11\3\uffff\6\11",
+            "\1\10\1\7\1\11\3\7\1\11\16\uffff\1\11\7\uffff\1\11\35\uffff\12\11\1\12\3\uffff\2\11\4\uffff\1\7\5\uffff\4\11\23\uffff\2\11\3\uffff\6\11",
             "\1\16",
-            "\1\10\1\uffff\1\10\3\uffff\1\10\6\uffff\1\12\1\10\2\uffff\1\12\3\uffff\1\10\2\uffff\1\12\4\uffff\1\10\3\uffff\1\17\31\uffff\12\10\1\12\3\uffff\2\10\4\uffff\1\10\1\12\3\uffff\5\10\13\uffff\2\12\6\uffff\2\10\3\uffff\6\10",
+            "\1\7\1\uffff\1\7\3\uffff\1\7\6\uffff\1\11\1\7\2\uffff\1\11\3\uffff\1\7\2\uffff\1\11\4\uffff\1\7\3\uffff\1\17\31\uffff\12\7\1\11\3\uffff\2\7\4\uffff\1\7\1\11\3\uffff\5\7\13\uffff\2\11\6\uffff\2\7\3\uffff\6\7",
             "\1\20",
-            "\1\10\1\uffff\1\10\3\uffff\1\10\6\uffff\1\12\1\10\2\uffff\1\12\3\uffff\1\10\2\uffff\1\12\4\uffff\1\10\3\uffff\1\21\31\uffff\12\10\1\12\3\uffff\2\10\4\uffff\1\10\1\12\3\uffff\5\10\13\uffff\2\12\6\uffff\2\10\3\uffff\6\10",
+            "\1\7\1\uffff\1\7\3\uffff\1\7\6\uffff\1\11\1\7\2\uffff\1\11\3\uffff\1\7\2\uffff\1\11\4\uffff\1\7\3\uffff\1\21\31\uffff\12\7\1\11\3\uffff\2\7\4\uffff\1\7\1\11\3\uffff\5\7\13\uffff\2\11\6\uffff\2\7\3\uffff\6\7",
             "\1\22",
-            "\1\10\1\uffff\1\10\3\uffff\1\10\6\uffff\1\12\1\10\2\uffff\1\12\3\uffff\1\10\2\uffff\1\12\4\uffff\1\10\3\uffff\1\23\31\uffff\12\10\1\12\3\uffff\2\10\4\uffff\1\10\1\12\3\uffff\5\10\13\uffff\2\12\6\uffff\2\10\3\uffff\6\10",
+            "\1\7\1\uffff\1\7\3\uffff\1\7\6\uffff\1\11\1\7\2\uffff\1\11\3\uffff\1\7\2\uffff\1\11\4\uffff\1\7\3\uffff\1\23\31\uffff\12\7\1\11\3\uffff\2\7\4\uffff\1\7\1\11\3\uffff\5\7\13\uffff\2\11\6\uffff\2\7\3\uffff\6\7",
             "\1\24",
-            "\1\10\1\uffff\1\10\3\uffff\1\10\6\uffff\1\12\1\10\2\uffff\1\12\3\uffff\1\10\2\uffff\1\12\4\uffff\1\10\3\uffff\1\25\31\uffff\12\10\1\12\3\uffff\2\10\4\uffff\1\10\1\12\3\uffff\5\10\13\uffff\2\12\6\uffff\2\10\3\uffff\6\10",
+            "\1\7\1\uffff\1\7\3\uffff\1\7\6\uffff\1\11\1\7\2\uffff\1\11\3\uffff\1\7\2\uffff\1\11\4\uffff\1\7\3\uffff\1\25\31\uffff\12\7\1\11\3\uffff\2\7\4\uffff\1\7\1\11\3\uffff\5\7\13\uffff\2\11\6\uffff\2\7\3\uffff\6\7",
             "\1\uffff"
     };
 
@@ -44233,7 +44398,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             this.transition = dfa_150;
         }
         public String getDescription() {
-            return "11646:2: (this_CommentAnnotation_0= ruleCommentAnnotation | this_KeyStringValueAnnotation_1= ruleKeyStringValueAnnotation | this_TypedKeyStringValueAnnotation_2= ruleTypedKeyStringValueAnnotation | this_TagAnnotation_3= ruleTagAnnotation )";
+            return "11650:2: (this_CommentAnnotation_0= ruleCommentAnnotation | this_KeyStringValueAnnotation_1= ruleKeyStringValueAnnotation | this_TypedKeyStringValueAnnotation_2= ruleTypedKeyStringValueAnnotation | this_TagAnnotation_3= ruleTagAnnotation )";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -44246,9 +44411,9 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                         int index277_21 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred320_InternalScadeEquations()) ) {s = 8;}
+                        if ( (synpred320_InternalScadeEquations()) ) {s = 7;}
 
-                        else if ( (true) ) {s = 10;}
+                        else if ( (true) ) {s = 9;}
 
                          
                         input.seek(index277_21);
@@ -44298,26 +44463,26 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             this.transition = dfa_155;
         }
         public String getDescription() {
-            return "11712:2: (this_StringPragma_0= ruleStringPragma | this_PragmaTag_1= rulePragmaTag )";
+            return "11716:2: (this_StringPragma_0= ruleStringPragma | this_PragmaTag_1= rulePragmaTag )";
         }
     }
     static final String dfa_156s = "\13\uffff";
     static final String dfa_157s = "\1\12\1\uffff\4\4\1\7\2\uffff\2\4";
     static final String dfa_158s = "\1\131\1\uffff\1\4\1\130\1\4\1\10\1\7\2\uffff\1\130\1\123";
-    static final String dfa_159s = "\1\uffff\1\1\5\uffff\1\2\1\3\2\uffff";
+    static final String dfa_159s = "\1\uffff\1\1\5\uffff\1\3\1\2\2\uffff";
     static final String dfa_160s = "\13\uffff}>";
     static final String[] dfa_161s = {
             "\1\1\116\uffff\1\2",
             "",
             "\1\3",
-            "\2\7\1\uffff\3\7\33\uffff\1\4\43\uffff\1\10\11\uffff\1\5\4\uffff\1\6",
+            "\2\10\1\uffff\3\10\33\uffff\1\4\43\uffff\1\7\11\uffff\1\5\4\uffff\1\6",
             "\1\11",
-            "\1\11\2\uffff\2\7",
+            "\1\11\2\uffff\2\10",
             "\1\12",
             "",
             "",
-            "\2\7\1\uffff\3\7\33\uffff\1\4\43\uffff\1\10\11\uffff\1\5\4\uffff\1\6",
-            "\2\7\1\uffff\3\7\77\uffff\1\10\11\uffff\1\7"
+            "\2\10\1\uffff\3\10\33\uffff\1\4\43\uffff\1\7\11\uffff\1\5\4\uffff\1\6",
+            "\2\10\1\uffff\3\10\77\uffff\1\7\11\uffff\1\10"
     };
 
     static final short[] dfa_156 = DFA.unpackEncodedString(dfa_156s);
@@ -44341,28 +44506,28 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             this.transition = dfa_161;
         }
         public String getDescription() {
-            return "11754:2: (this_CommentAnnotation_0= ruleCommentAnnotation | this_KeyStringValueAnnotation_1= ruleKeyStringValueAnnotation | this_TypedKeyStringValueAnnotation_2= ruleTypedKeyStringValueAnnotation )";
+            return "11758:2: (this_CommentAnnotation_0= ruleCommentAnnotation | this_KeyStringValueAnnotation_1= ruleKeyStringValueAnnotation | this_TypedKeyStringValueAnnotation_2= ruleTypedKeyStringValueAnnotation )";
         }
     }
     static final String dfa_162s = "\14\uffff";
-    static final String dfa_163s = "\3\uffff\1\7\6\uffff\2\7";
+    static final String dfa_163s = "\3\uffff\1\10\6\uffff\2\10";
     static final String dfa_164s = "\1\12\1\uffff\4\4\1\7\3\uffff\2\4";
     static final String dfa_165s = "\1\131\1\uffff\1\4\1\131\2\4\1\7\3\uffff\2\131";
-    static final String dfa_166s = "\1\uffff\1\1\5\uffff\1\4\1\3\1\2\2\uffff";
+    static final String dfa_166s = "\1\uffff\1\1\5\uffff\1\2\1\4\1\3\2\uffff";
     static final String dfa_167s = "\14\uffff}>";
     static final String[] dfa_168s = {
             "\1\1\116\uffff\1\2",
             "",
             "\1\3",
-            "\1\7\1\11\4\uffff\1\7\32\uffff\1\4\43\uffff\1\10\11\uffff\1\5\4\uffff\1\6\1\7",
+            "\1\10\1\7\4\uffff\1\10\32\uffff\1\4\43\uffff\1\11\11\uffff\1\5\4\uffff\1\6\1\10",
             "\1\12",
             "\1\12",
             "\1\13",
             "",
             "",
             "",
-            "\1\7\1\11\4\uffff\1\7\32\uffff\1\4\43\uffff\1\10\11\uffff\1\5\4\uffff\1\6\1\7",
-            "\1\7\1\11\4\uffff\1\7\76\uffff\1\10\17\uffff\1\7"
+            "\1\10\1\7\4\uffff\1\10\32\uffff\1\4\43\uffff\1\11\11\uffff\1\5\4\uffff\1\6\1\10",
+            "\1\10\1\7\4\uffff\1\10\76\uffff\1\11\17\uffff\1\10"
     };
 
     static final short[] dfa_162 = DFA.unpackEncodedString(dfa_162s);
@@ -44387,7 +44552,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             this.transition = dfa_168;
         }
         public String getDescription() {
-            return "11808:2: (this_CommentAnnotation_0= ruleCommentAnnotation | this_QuotedKeyStringValueAnnotation_1= ruleQuotedKeyStringValueAnnotation | this_QuotedTypedKeyStringValueAnnotation_2= ruleQuotedTypedKeyStringValueAnnotation | this_TagAnnotation_3= ruleTagAnnotation )";
+            return "11812:2: (this_CommentAnnotation_0= ruleCommentAnnotation | this_QuotedKeyStringValueAnnotation_1= ruleQuotedKeyStringValueAnnotation | this_QuotedTypedKeyStringValueAnnotation_2= ruleQuotedTypedKeyStringValueAnnotation | this_TagAnnotation_3= ruleTagAnnotation )";
         }
     }
  
@@ -44475,62 +44640,64 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         public static final BitSet FOLLOW_79 = new BitSet(new long[]{0x0000000000000000L,0x000300003C000050L});
         public static final BitSet FOLLOW_80 = new BitSet(new long[]{0x0000000000000000L,0x000300003C000040L});
         public static final BitSet FOLLOW_81 = new BitSet(new long[]{0x0000000000000000L,0x000300003C000000L});
-        public static final BitSet FOLLOW_82 = new BitSet(new long[]{0xC000000202800450L,0x07E300003E0061FFL});
-        public static final BitSet FOLLOW_83 = new BitSet(new long[]{0x0000000000100410L,0x0000000002000000L});
-        public static final BitSet FOLLOW_84 = new BitSet(new long[]{0x0000000000000C12L,0x0000000002000000L});
-        public static final BitSet FOLLOW_85 = new BitSet(new long[]{0x0000000202800400L,0x00E300003E0001FEL});
-        public static final BitSet FOLLOW_86 = new BitSet(new long[]{0xC000000202000450L,0x07E300003E0061FFL});
-        public static final BitSet FOLLOW_87 = new BitSet(new long[]{0x0000000000100000L,0x0000000000000080L});
-        public static final BitSet FOLLOW_88 = new BitSet(new long[]{0x0000000000100010L});
-        public static final BitSet FOLLOW_89 = new BitSet(new long[]{0x0000000000000802L,0x0000000000000080L});
-        public static final BitSet FOLLOW_90 = new BitSet(new long[]{0x0000000000000812L});
-        public static final BitSet FOLLOW_91 = new BitSet(new long[]{0x0000000040000002L});
-        public static final BitSet FOLLOW_92 = new BitSet(new long[]{0x0000000002000400L,0x00E0000002000100L});
-        public static final BitSet FOLLOW_93 = new BitSet(new long[]{0x0000000002000000L,0x0000000000000100L});
-        public static final BitSet FOLLOW_94 = new BitSet(new long[]{0x0000000000000420L,0x0000000002000000L});
-        public static final BitSet FOLLOW_95 = new BitSet(new long[]{0x0000000000040410L,0x0000000002000000L});
-        public static final BitSet FOLLOW_96 = new BitSet(new long[]{0x0000000000000400L,0x00E0000002000080L});
-        public static final BitSet FOLLOW_97 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000080L});
-        public static final BitSet FOLLOW_98 = new BitSet(new long[]{0x0000000000400430L,0x0000000002000008L});
-        public static final BitSet FOLLOW_99 = new BitSet(new long[]{0x0000000000400410L,0x0000000002000008L});
-        public static final BitSet FOLLOW_100 = new BitSet(new long[]{0x0000000000000000L,0x000000C000000000L});
-        public static final BitSet FOLLOW_101 = new BitSet(new long[]{0x0000000000400410L,0x0000000002000000L});
-        public static final BitSet FOLLOW_102 = new BitSet(new long[]{0x0000000000200002L,0x0000000000001A00L});
-        public static final BitSet FOLLOW_103 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000400L});
-        public static final BitSet FOLLOW_104 = new BitSet(new long[]{0x0000000000000002L,0x0000000000001800L});
-        public static final BitSet FOLLOW_105 = new BitSet(new long[]{0x0004000000000000L,0x001C100000048040L});
-        public static final BitSet FOLLOW_106 = new BitSet(new long[]{0x0000000000000002L,0x0000000000001000L});
-        public static final BitSet FOLLOW_107 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000080L});
-        public static final BitSet FOLLOW_108 = new BitSet(new long[]{0x0000000000000012L});
-        public static final BitSet FOLLOW_109 = new BitSet(new long[]{0x0000000000000000L,0x0000030000000000L});
-        public static final BitSet FOLLOW_110 = new BitSet(new long[]{0x0000000000000440L,0x0000000002000000L});
-        public static final BitSet FOLLOW_111 = new BitSet(new long[]{0x0000002010020000L,0x0000000000000200L});
-        public static final BitSet FOLLOW_112 = new BitSet(new long[]{0x00004000004203B0L,0x0000243801288000L});
-        public static final BitSet FOLLOW_113 = new BitSet(new long[]{0x0000000002000400L,0x0000000002000000L});
-        public static final BitSet FOLLOW_114 = new BitSet(new long[]{0x0000000000000400L,0x0000000002002000L});
-        public static final BitSet FOLLOW_115 = new BitSet(new long[]{0x0000000000000400L,0x0000000002004000L});
-        public static final BitSet FOLLOW_116 = new BitSet(new long[]{0x0000000000000002L,0x0000000000008000L});
-        public static final BitSet FOLLOW_117 = new BitSet(new long[]{0x0000000000200002L,0x00000007C0000000L});
-        public static final BitSet FOLLOW_118 = new BitSet(new long[]{0x00000000004203B0L,0x00002C2001000000L});
-        public static final BitSet FOLLOW_119 = new BitSet(new long[]{0x0000000000000002L,0x0000000000010000L});
-        public static final BitSet FOLLOW_120 = new BitSet(new long[]{0x0000000000000002L,0x0000000000020000L});
-        public static final BitSet FOLLOW_121 = new BitSet(new long[]{0x0000000000000002L,0x00000000000C0000L});
-        public static final BitSet FOLLOW_122 = new BitSet(new long[]{0x0000000000000002L,0x0000000000100000L});
-        public static final BitSet FOLLOW_123 = new BitSet(new long[]{0x0000002000000002L,0x0000000000000200L});
-        public static final BitSet FOLLOW_124 = new BitSet(new long[]{0x0000000000000080L});
-        public static final BitSet FOLLOW_125 = new BitSet(new long[]{0x0000000000000000L,0x0000000000008000L});
-        public static final BitSet FOLLOW_126 = new BitSet(new long[]{0x00004000004203B0L,0x0000243801480000L});
-        public static final BitSet FOLLOW_127 = new BitSet(new long[]{0x0000000000800020L});
-        public static final BitSet FOLLOW_128 = new BitSet(new long[]{0x0000000040000000L});
-        public static final BitSet FOLLOW_129 = new BitSet(new long[]{0x00000000004003A0L,0x0000000000800200L});
-        public static final BitSet FOLLOW_130 = new BitSet(new long[]{0x00000000004003A0L,0x0000000000800600L});
-        public static final BitSet FOLLOW_131 = new BitSet(new long[]{0x0000000000040000L,0x0000000000000400L});
-        public static final BitSet FOLLOW_132 = new BitSet(new long[]{0x00000000000003B0L,0x0000000000080000L});
-        public static final BitSet FOLLOW_133 = new BitSet(new long[]{0x0000000000040002L});
-        public static final BitSet FOLLOW_134 = new BitSet(new long[]{0x0000000000000230L});
-        public static final BitSet FOLLOW_135 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000200L});
-        public static final BitSet FOLLOW_136 = new BitSet(new long[]{0x0000002000000002L,0x0000000001080000L});
-        public static final BitSet FOLLOW_137 = new BitSet(new long[]{0x0000000000000100L});
+        public static final BitSet FOLLOW_82 = new BitSet(new long[]{0x0000000000400030L});
+        public static final BitSet FOLLOW_83 = new BitSet(new long[]{0xC000000202800450L,0x07E300003E0061FFL});
+        public static final BitSet FOLLOW_84 = new BitSet(new long[]{0x0000000000100410L,0x0000000002000000L});
+        public static final BitSet FOLLOW_85 = new BitSet(new long[]{0x0000000000000C12L,0x0000000002000000L});
+        public static final BitSet FOLLOW_86 = new BitSet(new long[]{0x0000000202800400L,0x00E300003E0001FEL});
+        public static final BitSet FOLLOW_87 = new BitSet(new long[]{0xC000000202000450L,0x07E300003E0061FFL});
+        public static final BitSet FOLLOW_88 = new BitSet(new long[]{0x0000000000100000L,0x0000000000000080L});
+        public static final BitSet FOLLOW_89 = new BitSet(new long[]{0x0000000000100010L});
+        public static final BitSet FOLLOW_90 = new BitSet(new long[]{0x0000000000000802L,0x0000000000000080L});
+        public static final BitSet FOLLOW_91 = new BitSet(new long[]{0x0000000000000812L});
+        public static final BitSet FOLLOW_92 = new BitSet(new long[]{0x0000000040000002L});
+        public static final BitSet FOLLOW_93 = new BitSet(new long[]{0x0000000002000400L,0x00E0000002000100L});
+        public static final BitSet FOLLOW_94 = new BitSet(new long[]{0x0000000002000000L,0x0000000000000100L});
+        public static final BitSet FOLLOW_95 = new BitSet(new long[]{0x0000000000000030L});
+        public static final BitSet FOLLOW_96 = new BitSet(new long[]{0x0000000000000420L,0x0000000002000000L});
+        public static final BitSet FOLLOW_97 = new BitSet(new long[]{0x0000000000040410L,0x0000000002000000L});
+        public static final BitSet FOLLOW_98 = new BitSet(new long[]{0x0000000000000400L,0x00E0000002000080L});
+        public static final BitSet FOLLOW_99 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000080L});
+        public static final BitSet FOLLOW_100 = new BitSet(new long[]{0x0000000000400430L,0x0000000002000008L});
+        public static final BitSet FOLLOW_101 = new BitSet(new long[]{0x0000000000400410L,0x0000000002000008L});
+        public static final BitSet FOLLOW_102 = new BitSet(new long[]{0x0000000000000000L,0x000000C000000000L});
+        public static final BitSet FOLLOW_103 = new BitSet(new long[]{0x0000000000400410L,0x0000000002000000L});
+        public static final BitSet FOLLOW_104 = new BitSet(new long[]{0x0000000000200002L,0x0000000000001A00L});
+        public static final BitSet FOLLOW_105 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000400L});
+        public static final BitSet FOLLOW_106 = new BitSet(new long[]{0x0000000000000002L,0x0000000000001800L});
+        public static final BitSet FOLLOW_107 = new BitSet(new long[]{0x0004000000000000L,0x001C100000048040L});
+        public static final BitSet FOLLOW_108 = new BitSet(new long[]{0x0000000000000002L,0x0000000000001000L});
+        public static final BitSet FOLLOW_109 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000080L});
+        public static final BitSet FOLLOW_110 = new BitSet(new long[]{0x0000000000000012L});
+        public static final BitSet FOLLOW_111 = new BitSet(new long[]{0x0000000000000000L,0x0000030000000000L});
+        public static final BitSet FOLLOW_112 = new BitSet(new long[]{0x0000000000000440L,0x0000000002000000L});
+        public static final BitSet FOLLOW_113 = new BitSet(new long[]{0x0000002010020000L,0x0000000000000200L});
+        public static final BitSet FOLLOW_114 = new BitSet(new long[]{0x00004000004203B0L,0x0000243801288000L});
+        public static final BitSet FOLLOW_115 = new BitSet(new long[]{0x0000000002000400L,0x0000000002000000L});
+        public static final BitSet FOLLOW_116 = new BitSet(new long[]{0x0000000000000400L,0x0000000002002000L});
+        public static final BitSet FOLLOW_117 = new BitSet(new long[]{0x0000000000000400L,0x0000000002004000L});
+        public static final BitSet FOLLOW_118 = new BitSet(new long[]{0x0000000000000002L,0x0000000000008000L});
+        public static final BitSet FOLLOW_119 = new BitSet(new long[]{0x0000000000200002L,0x00000007C0000000L});
+        public static final BitSet FOLLOW_120 = new BitSet(new long[]{0x00000000004203B0L,0x00002C2001000000L});
+        public static final BitSet FOLLOW_121 = new BitSet(new long[]{0x0000000000000002L,0x0000000000010000L});
+        public static final BitSet FOLLOW_122 = new BitSet(new long[]{0x0000000000000002L,0x0000000000020000L});
+        public static final BitSet FOLLOW_123 = new BitSet(new long[]{0x0000000000000002L,0x00000000000C0000L});
+        public static final BitSet FOLLOW_124 = new BitSet(new long[]{0x0000000000000002L,0x0000000000100000L});
+        public static final BitSet FOLLOW_125 = new BitSet(new long[]{0x0000002000000002L,0x0000000000000200L});
+        public static final BitSet FOLLOW_126 = new BitSet(new long[]{0x0000000000000080L});
+        public static final BitSet FOLLOW_127 = new BitSet(new long[]{0x0000000000000000L,0x0000000000008000L});
+        public static final BitSet FOLLOW_128 = new BitSet(new long[]{0x00004000004203B0L,0x0000243801480000L});
+        public static final BitSet FOLLOW_129 = new BitSet(new long[]{0x0000000000800020L});
+        public static final BitSet FOLLOW_130 = new BitSet(new long[]{0x0000000040000000L});
+        public static final BitSet FOLLOW_131 = new BitSet(new long[]{0x00000000004003A0L,0x0000000000800200L});
+        public static final BitSet FOLLOW_132 = new BitSet(new long[]{0x00000000004003A0L,0x0000000000800600L});
+        public static final BitSet FOLLOW_133 = new BitSet(new long[]{0x0000000000040000L,0x0000000000000400L});
+        public static final BitSet FOLLOW_134 = new BitSet(new long[]{0x00000000000003B0L,0x0000000000080000L});
+        public static final BitSet FOLLOW_135 = new BitSet(new long[]{0x0000000000040002L});
+        public static final BitSet FOLLOW_136 = new BitSet(new long[]{0x0000000000000230L});
+        public static final BitSet FOLLOW_137 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000200L});
+        public static final BitSet FOLLOW_138 = new BitSet(new long[]{0x0000002000000002L,0x0000000001080000L});
+        public static final BitSet FOLLOW_139 = new BitSet(new long[]{0x0000000000000100L});
     }
 
 

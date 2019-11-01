@@ -1,4 +1,4 @@
-public system de.cau.cs.kieler.sccharts.circuit 
+developer system de.cau.cs.kieler.sccharts.circuit 
 	label "SCCharts Circuit Compilation"
 	
 system de.cau.cs.kieler.sccharts.extended.core

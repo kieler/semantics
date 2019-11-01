@@ -1662,8 +1662,8 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	 *         static?='static'? 
 	 *         host?='host'? 
 	 *         (
-	 *             (type=ClassType name=ID? policy=PolicyRegion? declarations+=DeclarationOrMethodWOSemicolon*) | 
-	 *             (type=StructType name=ID? declarations+=DeclarationWOSemicolon*)
+	 *             (type=ClassType name=EString? policy=PolicyRegion? declarations+=DeclarationOrMethodWOSemicolon*) | 
+	 *             (type=StructType name=EString? declarations+=DeclarationWOSemicolon*)
 	 *         ) 
 	 *         (valuedObjects+=ValuedObject valuedObjects+=ValuedObject*)? 
 	 *         annotations+=CommentAnnotatonSL?

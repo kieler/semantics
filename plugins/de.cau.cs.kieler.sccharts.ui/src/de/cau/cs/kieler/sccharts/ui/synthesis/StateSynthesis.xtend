@@ -86,6 +86,7 @@ import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.sccharts.EntryAction
 import de.cau.cs.kieler.sccharts.ExitAction
 import de.cau.cs.kieler.sccharts.DuringAction
+import de.cau.cs.kieler.kexpressions.MethodDeclaration
 
 /**
  * Transforms {@link State} into {@link KNode} diagram elements.
@@ -242,7 +243,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
             // Add declarations
             val declarations = new ArrayList<Declaration>(state.declarations)
             if (SHOW_INHERITANCE.booleanValue) declarations.addAll(0, state.allVisibleInheritedDeclarations.toList)
-            for (declaration : declarations.filter[!(it instanceof MethodImplementationDeclaration)]) {
+            for (declaration : declarations.filter[!(it instanceof MethodImplementationDeclaration) || !SHOW_METHOD_BODY.booleanValue]) {
                 if (declaration instanceof ClassDeclaration) {
                     node.addStructDeclarations(declaration, 0)
                 } else {
@@ -297,8 +298,10 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         }
 
         // Transform methods
-        for (method : state.declarations.filter(MethodImplementationDeclaration)) {
-            node.children += method.transform
+        if (SHOW_METHOD_BODY.booleanValue) {
+            for (method : state.declarations.filter(MethodImplementationDeclaration)) {
+                node.children += method.transform
+            }
         }
 
         // Transform regions
@@ -361,7 +364,12 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
             if (declaration instanceof ClassDeclaration) {
                 node.addStructDeclarations(declaration, indent + 1)
             } else {
-                node.addDeclarationLabel(declaration.serializeHighlighted(true), indent + 1) => [
+                val serialized = if (declaration instanceof MethodDeclaration) {
+                    declaration.serializeMethodHighlighted(true, SHOW_METHOD_BODY.booleanValue)
+                } else {
+                    declaration.serializeHighlighted(true)
+                }
+                node.addDeclarationLabel(serialized, indent + 1) => [
                     setProperty(TracingVisualizationProperties.TRACING_NODE, true)
                     associateWith(declaration)
                     eAllContents.filter(KRendering).forEach[associateWith(declaration)]

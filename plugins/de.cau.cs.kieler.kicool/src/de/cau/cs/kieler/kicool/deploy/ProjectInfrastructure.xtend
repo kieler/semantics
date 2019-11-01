@@ -149,6 +149,9 @@ class ProjectInfrastructure {
                 resource = inputModel.eResource
                 if (resource !== null) {
                     modelFile = resource.findResourceLocation
+                    if (modelFile === null && resource.URI !== null) {
+                        modelFile = URIUtils.getJavaFile(resource.URI)
+                    }
                 }
             } else if (inputModel instanceof CodeContainer) {
                 if (!inputModel.files.empty) {
@@ -366,7 +369,14 @@ class ProjectInfrastructure {
         if (!dest.exists || overrideFile) {
             logger?.println("Copying file: " + src)
             try {
-                if (dest.exists) dest.delete
+                if (dest.exists)  {
+                    dest.delete
+                } else {
+                    val parent = dest.canonicalFile.parentFile
+                    if (!parent.exists) {
+                        parent.mkdirs
+                    }
+                }
                 Files.copy(src.toPath, dest.toPath)
                 return true
             } catch (IOException e) {

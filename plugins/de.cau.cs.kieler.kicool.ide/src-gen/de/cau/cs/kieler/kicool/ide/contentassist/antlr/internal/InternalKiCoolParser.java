@@ -30930,7 +30930,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:8755:1: ( rule__ClassDeclaration__Group_9_0__0__Impl rule__ClassDeclaration__Group_9_0__1 )
             // InternalKiCool.g:8756:2: rule__ClassDeclaration__Group_9_0__0__Impl rule__ClassDeclaration__Group_9_0__1
             {
-            pushFollow(FollowSets000.FOLLOW_29);
+            pushFollow(FollowSets000.FOLLOW_44);
             rule__ClassDeclaration__Group_9_0__0__Impl();
 
             state._fsp--;
@@ -31019,7 +31019,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:8782:1: ( rule__ClassDeclaration__Group_9_0__1__Impl rule__ClassDeclaration__Group_9_0__2 )
             // InternalKiCool.g:8783:2: rule__ClassDeclaration__Group_9_0__1__Impl rule__ClassDeclaration__Group_9_0__2
             {
-            pushFollow(FollowSets000.FOLLOW_29);
+            pushFollow(FollowSets000.FOLLOW_44);
             rule__ClassDeclaration__Group_9_0__1__Impl();
 
             state._fsp--;
@@ -31067,7 +31067,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             int alt117=2;
             int LA117_0 = input.LA(1);
 
-            if ( (LA117_0==RULE_ID) ) {
+            if ( (LA117_0==RULE_STRING||LA117_0==RULE_ID) ) {
                 alt117=1;
             }
             switch (alt117) {
@@ -31119,7 +31119,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:8809:1: ( rule__ClassDeclaration__Group_9_0__2__Impl rule__ClassDeclaration__Group_9_0__3 )
             // InternalKiCool.g:8810:2: rule__ClassDeclaration__Group_9_0__2__Impl rule__ClassDeclaration__Group_9_0__3
             {
-            pushFollow(FollowSets000.FOLLOW_44);
+            pushFollow(FollowSets000.FOLLOW_45);
             rule__ClassDeclaration__Group_9_0__2__Impl();
 
             state._fsp--;
@@ -31198,7 +31198,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:8836:1: ( rule__ClassDeclaration__Group_9_0__3__Impl rule__ClassDeclaration__Group_9_0__4 )
             // InternalKiCool.g:8837:2: rule__ClassDeclaration__Group_9_0__3__Impl rule__ClassDeclaration__Group_9_0__4
             {
-            pushFollow(FollowSets000.FOLLOW_44);
+            pushFollow(FollowSets000.FOLLOW_45);
             rule__ClassDeclaration__Group_9_0__3__Impl();
 
             state._fsp--;
@@ -31257,7 +31257,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // InternalKiCool.g:8851:3: rule__ClassDeclaration__DeclarationsAssignment_9_0_3
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_45);
+            	    pushFollow(FollowSets000.FOLLOW_46);
             	    rule__ClassDeclaration__DeclarationsAssignment_9_0_3();
 
             	    state._fsp--;
@@ -31379,7 +31379,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:8890:1: ( rule__ClassDeclaration__Group_9_1__0__Impl rule__ClassDeclaration__Group_9_1__1 )
             // InternalKiCool.g:8891:2: rule__ClassDeclaration__Group_9_1__0__Impl rule__ClassDeclaration__Group_9_1__1
             {
-            pushFollow(FollowSets000.FOLLOW_29);
+            pushFollow(FollowSets000.FOLLOW_44);
             rule__ClassDeclaration__Group_9_1__0__Impl();
 
             state._fsp--;
@@ -31468,7 +31468,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:8917:1: ( rule__ClassDeclaration__Group_9_1__1__Impl rule__ClassDeclaration__Group_9_1__2 )
             // InternalKiCool.g:8918:2: rule__ClassDeclaration__Group_9_1__1__Impl rule__ClassDeclaration__Group_9_1__2
             {
-            pushFollow(FollowSets000.FOLLOW_29);
+            pushFollow(FollowSets000.FOLLOW_44);
             rule__ClassDeclaration__Group_9_1__1__Impl();
 
             state._fsp--;
@@ -31516,7 +31516,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             int alt119=2;
             int LA119_0 = input.LA(1);
 
-            if ( (LA119_0==RULE_ID) ) {
+            if ( (LA119_0==RULE_STRING||LA119_0==RULE_ID) ) {
                 alt119=1;
             }
             switch (alt119) {
@@ -31568,7 +31568,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:8944:1: ( rule__ClassDeclaration__Group_9_1__2__Impl rule__ClassDeclaration__Group_9_1__3 )
             // InternalKiCool.g:8945:2: rule__ClassDeclaration__Group_9_1__2__Impl rule__ClassDeclaration__Group_9_1__3
             {
-            pushFollow(FollowSets000.FOLLOW_46);
+            pushFollow(FollowSets000.FOLLOW_47);
             rule__ClassDeclaration__Group_9_1__2__Impl();
 
             state._fsp--;
@@ -31647,7 +31647,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:8971:1: ( rule__ClassDeclaration__Group_9_1__3__Impl rule__ClassDeclaration__Group_9_1__4 )
             // InternalKiCool.g:8972:2: rule__ClassDeclaration__Group_9_1__3__Impl rule__ClassDeclaration__Group_9_1__4
             {
-            pushFollow(FollowSets000.FOLLOW_46);
+            pushFollow(FollowSets000.FOLLOW_47);
             rule__ClassDeclaration__Group_9_1__3__Impl();
 
             state._fsp--;
@@ -31828,7 +31828,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:9025:1: ( rule__ClassDeclaration__Group_10__0__Impl rule__ClassDeclaration__Group_10__1 )
             // InternalKiCool.g:9026:2: rule__ClassDeclaration__Group_10__0__Impl rule__ClassDeclaration__Group_10__1
             {
-            pushFollow(FollowSets000.FOLLOW_47);
+            pushFollow(FollowSets000.FOLLOW_48);
             rule__ClassDeclaration__Group_10__0__Impl();
 
             state._fsp--;
@@ -33068,7 +33068,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:9376:1: ( rule__ClassDeclarationWOSemicolon__Group__9__Impl rule__ClassDeclarationWOSemicolon__Group__10 )
             // InternalKiCool.g:9377:2: rule__ClassDeclarationWOSemicolon__Group__9__Impl rule__ClassDeclarationWOSemicolon__Group__10
             {
-            pushFollow(FollowSets000.FOLLOW_48);
+            pushFollow(FollowSets000.FOLLOW_49);
             rule__ClassDeclarationWOSemicolon__Group__9__Impl();
 
             state._fsp--;
@@ -33157,7 +33157,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:9403:1: ( rule__ClassDeclarationWOSemicolon__Group__10__Impl rule__ClassDeclarationWOSemicolon__Group__11 )
             // InternalKiCool.g:9404:2: rule__ClassDeclarationWOSemicolon__Group__10__Impl rule__ClassDeclarationWOSemicolon__Group__11
             {
-            pushFollow(FollowSets000.FOLLOW_48);
+            pushFollow(FollowSets000.FOLLOW_49);
             rule__ClassDeclarationWOSemicolon__Group__10__Impl();
 
             state._fsp--;
@@ -33348,7 +33348,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:9457:1: ( rule__ClassDeclarationWOSemicolon__Group_9_0__0__Impl rule__ClassDeclarationWOSemicolon__Group_9_0__1 )
             // InternalKiCool.g:9458:2: rule__ClassDeclarationWOSemicolon__Group_9_0__0__Impl rule__ClassDeclarationWOSemicolon__Group_9_0__1
             {
-            pushFollow(FollowSets000.FOLLOW_29);
+            pushFollow(FollowSets000.FOLLOW_44);
             rule__ClassDeclarationWOSemicolon__Group_9_0__0__Impl();
 
             state._fsp--;
@@ -33437,7 +33437,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:9484:1: ( rule__ClassDeclarationWOSemicolon__Group_9_0__1__Impl rule__ClassDeclarationWOSemicolon__Group_9_0__2 )
             // InternalKiCool.g:9485:2: rule__ClassDeclarationWOSemicolon__Group_9_0__1__Impl rule__ClassDeclarationWOSemicolon__Group_9_0__2
             {
-            pushFollow(FollowSets000.FOLLOW_29);
+            pushFollow(FollowSets000.FOLLOW_44);
             rule__ClassDeclarationWOSemicolon__Group_9_0__1__Impl();
 
             state._fsp--;
@@ -33485,7 +33485,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             int alt132=2;
             int LA132_0 = input.LA(1);
 
-            if ( (LA132_0==RULE_ID) ) {
+            if ( (LA132_0==RULE_STRING||LA132_0==RULE_ID) ) {
                 alt132=1;
             }
             switch (alt132) {
@@ -33537,7 +33537,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:9511:1: ( rule__ClassDeclarationWOSemicolon__Group_9_0__2__Impl rule__ClassDeclarationWOSemicolon__Group_9_0__3 )
             // InternalKiCool.g:9512:2: rule__ClassDeclarationWOSemicolon__Group_9_0__2__Impl rule__ClassDeclarationWOSemicolon__Group_9_0__3
             {
-            pushFollow(FollowSets000.FOLLOW_44);
+            pushFollow(FollowSets000.FOLLOW_45);
             rule__ClassDeclarationWOSemicolon__Group_9_0__2__Impl();
 
             state._fsp--;
@@ -33616,7 +33616,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:9538:1: ( rule__ClassDeclarationWOSemicolon__Group_9_0__3__Impl rule__ClassDeclarationWOSemicolon__Group_9_0__4 )
             // InternalKiCool.g:9539:2: rule__ClassDeclarationWOSemicolon__Group_9_0__3__Impl rule__ClassDeclarationWOSemicolon__Group_9_0__4
             {
-            pushFollow(FollowSets000.FOLLOW_44);
+            pushFollow(FollowSets000.FOLLOW_45);
             rule__ClassDeclarationWOSemicolon__Group_9_0__3__Impl();
 
             state._fsp--;
@@ -33675,7 +33675,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // InternalKiCool.g:9553:3: rule__ClassDeclarationWOSemicolon__DeclarationsAssignment_9_0_3
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_45);
+            	    pushFollow(FollowSets000.FOLLOW_46);
             	    rule__ClassDeclarationWOSemicolon__DeclarationsAssignment_9_0_3();
 
             	    state._fsp--;
@@ -33797,7 +33797,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:9592:1: ( rule__ClassDeclarationWOSemicolon__Group_9_1__0__Impl rule__ClassDeclarationWOSemicolon__Group_9_1__1 )
             // InternalKiCool.g:9593:2: rule__ClassDeclarationWOSemicolon__Group_9_1__0__Impl rule__ClassDeclarationWOSemicolon__Group_9_1__1
             {
-            pushFollow(FollowSets000.FOLLOW_29);
+            pushFollow(FollowSets000.FOLLOW_44);
             rule__ClassDeclarationWOSemicolon__Group_9_1__0__Impl();
 
             state._fsp--;
@@ -33886,7 +33886,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:9619:1: ( rule__ClassDeclarationWOSemicolon__Group_9_1__1__Impl rule__ClassDeclarationWOSemicolon__Group_9_1__2 )
             // InternalKiCool.g:9620:2: rule__ClassDeclarationWOSemicolon__Group_9_1__1__Impl rule__ClassDeclarationWOSemicolon__Group_9_1__2
             {
-            pushFollow(FollowSets000.FOLLOW_29);
+            pushFollow(FollowSets000.FOLLOW_44);
             rule__ClassDeclarationWOSemicolon__Group_9_1__1__Impl();
 
             state._fsp--;
@@ -33934,7 +33934,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             int alt134=2;
             int LA134_0 = input.LA(1);
 
-            if ( (LA134_0==RULE_ID) ) {
+            if ( (LA134_0==RULE_STRING||LA134_0==RULE_ID) ) {
                 alt134=1;
             }
             switch (alt134) {
@@ -33986,7 +33986,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:9646:1: ( rule__ClassDeclarationWOSemicolon__Group_9_1__2__Impl rule__ClassDeclarationWOSemicolon__Group_9_1__3 )
             // InternalKiCool.g:9647:2: rule__ClassDeclarationWOSemicolon__Group_9_1__2__Impl rule__ClassDeclarationWOSemicolon__Group_9_1__3
             {
-            pushFollow(FollowSets000.FOLLOW_46);
+            pushFollow(FollowSets000.FOLLOW_47);
             rule__ClassDeclarationWOSemicolon__Group_9_1__2__Impl();
 
             state._fsp--;
@@ -34065,7 +34065,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:9673:1: ( rule__ClassDeclarationWOSemicolon__Group_9_1__3__Impl rule__ClassDeclarationWOSemicolon__Group_9_1__4 )
             // InternalKiCool.g:9674:2: rule__ClassDeclarationWOSemicolon__Group_9_1__3__Impl rule__ClassDeclarationWOSemicolon__Group_9_1__4
             {
-            pushFollow(FollowSets000.FOLLOW_46);
+            pushFollow(FollowSets000.FOLLOW_47);
             rule__ClassDeclarationWOSemicolon__Group_9_1__3__Impl();
 
             state._fsp--;
@@ -34246,7 +34246,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:9727:1: ( rule__ClassDeclarationWOSemicolon__Group_10__0__Impl rule__ClassDeclarationWOSemicolon__Group_10__1 )
             // InternalKiCool.g:9728:2: rule__ClassDeclarationWOSemicolon__Group_10__0__Impl rule__ClassDeclarationWOSemicolon__Group_10__1
             {
-            pushFollow(FollowSets000.FOLLOW_47);
+            pushFollow(FollowSets000.FOLLOW_48);
             rule__ClassDeclarationWOSemicolon__Group_10__0__Impl();
 
             state._fsp--;
@@ -34600,7 +34600,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:9835:1: ( rule__MethodDeclaration__Group__0__Impl rule__MethodDeclaration__Group__1 )
             // InternalKiCool.g:9836:2: rule__MethodDeclaration__Group__0__Impl rule__MethodDeclaration__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_49);
+            pushFollow(FollowSets000.FOLLOW_50);
             rule__MethodDeclaration__Group__0__Impl();
 
             state._fsp--;
@@ -34679,7 +34679,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:9862:1: ( rule__MethodDeclaration__Group__1__Impl rule__MethodDeclaration__Group__2 )
             // InternalKiCool.g:9863:2: rule__MethodDeclaration__Group__1__Impl rule__MethodDeclaration__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_49);
+            pushFollow(FollowSets000.FOLLOW_50);
             rule__MethodDeclaration__Group__1__Impl();
 
             state._fsp--;
@@ -34807,7 +34807,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:9889:1: ( rule__MethodDeclaration__Group__2__Impl rule__MethodDeclaration__Group__3 )
             // InternalKiCool.g:9890:2: rule__MethodDeclaration__Group__2__Impl rule__MethodDeclaration__Group__3
             {
-            pushFollow(FollowSets000.FOLLOW_49);
+            pushFollow(FollowSets000.FOLLOW_50);
             rule__MethodDeclaration__Group__2__Impl();
 
             state._fsp--;
@@ -34907,7 +34907,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:9916:1: ( rule__MethodDeclaration__Group__3__Impl rule__MethodDeclaration__Group__4 )
             // InternalKiCool.g:9917:2: rule__MethodDeclaration__Group__3__Impl rule__MethodDeclaration__Group__4
             {
-            pushFollow(FollowSets000.FOLLOW_49);
+            pushFollow(FollowSets000.FOLLOW_50);
             rule__MethodDeclaration__Group__3__Impl();
 
             state._fsp--;
@@ -35007,7 +35007,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:9943:1: ( rule__MethodDeclaration__Group__4__Impl rule__MethodDeclaration__Group__5 )
             // InternalKiCool.g:9944:2: rule__MethodDeclaration__Group__4__Impl rule__MethodDeclaration__Group__5
             {
-            pushFollow(FollowSets000.FOLLOW_50);
+            pushFollow(FollowSets000.FOLLOW_51);
             rule__MethodDeclaration__Group__4__Impl();
 
             state._fsp--;
@@ -35096,7 +35096,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:9970:1: ( rule__MethodDeclaration__Group__5__Impl rule__MethodDeclaration__Group__6 )
             // InternalKiCool.g:9971:2: rule__MethodDeclaration__Group__5__Impl rule__MethodDeclaration__Group__6
             {
-            pushFollow(FollowSets000.FOLLOW_51);
+            pushFollow(FollowSets000.FOLLOW_52);
             rule__MethodDeclaration__Group__5__Impl();
 
             state._fsp--;
@@ -35185,7 +35185,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:9997:1: ( rule__MethodDeclaration__Group__6__Impl rule__MethodDeclaration__Group__7 )
             // InternalKiCool.g:9998:2: rule__MethodDeclaration__Group__6__Impl rule__MethodDeclaration__Group__7
             {
-            pushFollow(FollowSets000.FOLLOW_51);
+            pushFollow(FollowSets000.FOLLOW_52);
             rule__MethodDeclaration__Group__6__Impl();
 
             state._fsp--;
@@ -35459,7 +35459,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:10078:1: ( rule__MethodDeclaration__Group_5_0__0__Impl rule__MethodDeclaration__Group_5_0__1 )
             // InternalKiCool.g:10079:2: rule__MethodDeclaration__Group_5_0__0__Impl rule__MethodDeclaration__Group_5_0__1
             {
-            pushFollow(FollowSets000.FOLLOW_52);
+            pushFollow(FollowSets000.FOLLOW_53);
             rule__MethodDeclaration__Group_5_0__0__Impl();
 
             state._fsp--;
@@ -35538,7 +35538,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:10105:1: ( rule__MethodDeclaration__Group_5_0__1__Impl rule__MethodDeclaration__Group_5_0__2 )
             // InternalKiCool.g:10106:2: rule__MethodDeclaration__Group_5_0__1__Impl rule__MethodDeclaration__Group_5_0__2
             {
-            pushFollow(FollowSets000.FOLLOW_53);
+            pushFollow(FollowSets000.FOLLOW_54);
             rule__MethodDeclaration__Group_5_0__1__Impl();
 
             state._fsp--;
@@ -35627,7 +35627,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:10132:1: ( rule__MethodDeclaration__Group_5_0__2__Impl rule__MethodDeclaration__Group_5_0__3 )
             // InternalKiCool.g:10133:2: rule__MethodDeclaration__Group_5_0__2__Impl rule__MethodDeclaration__Group_5_0__3
             {
-            pushFollow(FollowSets000.FOLLOW_53);
+            pushFollow(FollowSets000.FOLLOW_54);
             rule__MethodDeclaration__Group_5_0__2__Impl();
 
             state._fsp--;
@@ -35808,7 +35808,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:10186:1: ( rule__MethodDeclaration__Group_5_0_2__0__Impl rule__MethodDeclaration__Group_5_0_2__1 )
             // InternalKiCool.g:10187:2: rule__MethodDeclaration__Group_5_0_2__0__Impl rule__MethodDeclaration__Group_5_0_2__1
             {
-            pushFollow(FollowSets000.FOLLOW_52);
+            pushFollow(FollowSets000.FOLLOW_53);
             rule__MethodDeclaration__Group_5_0_2__0__Impl();
 
             state._fsp--;
@@ -36095,7 +36095,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:10282:3: ( rule__MethodDeclaration__ScheduleAssignment_6_1 )
             // InternalKiCool.g:10282:4: rule__MethodDeclaration__ScheduleAssignment_6_1
             {
-            pushFollow(FollowSets000.FOLLOW_54);
+            pushFollow(FollowSets000.FOLLOW_55);
             rule__MethodDeclaration__ScheduleAssignment_6_1();
 
             state._fsp--;
@@ -36130,7 +36130,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // InternalKiCool.g:10287:4: rule__MethodDeclaration__ScheduleAssignment_6_1
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_54);
+            	    pushFollow(FollowSets000.FOLLOW_55);
             	    rule__MethodDeclaration__ScheduleAssignment_6_1();
 
             	    state._fsp--;
@@ -36181,7 +36181,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:10301:1: ( rule__MethodDeclarationWOSemicolon__Group__0__Impl rule__MethodDeclarationWOSemicolon__Group__1 )
             // InternalKiCool.g:10302:2: rule__MethodDeclarationWOSemicolon__Group__0__Impl rule__MethodDeclarationWOSemicolon__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_49);
+            pushFollow(FollowSets000.FOLLOW_50);
             rule__MethodDeclarationWOSemicolon__Group__0__Impl();
 
             state._fsp--;
@@ -36260,7 +36260,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:10328:1: ( rule__MethodDeclarationWOSemicolon__Group__1__Impl rule__MethodDeclarationWOSemicolon__Group__2 )
             // InternalKiCool.g:10329:2: rule__MethodDeclarationWOSemicolon__Group__1__Impl rule__MethodDeclarationWOSemicolon__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_49);
+            pushFollow(FollowSets000.FOLLOW_50);
             rule__MethodDeclarationWOSemicolon__Group__1__Impl();
 
             state._fsp--;
@@ -36388,7 +36388,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:10355:1: ( rule__MethodDeclarationWOSemicolon__Group__2__Impl rule__MethodDeclarationWOSemicolon__Group__3 )
             // InternalKiCool.g:10356:2: rule__MethodDeclarationWOSemicolon__Group__2__Impl rule__MethodDeclarationWOSemicolon__Group__3
             {
-            pushFollow(FollowSets000.FOLLOW_49);
+            pushFollow(FollowSets000.FOLLOW_50);
             rule__MethodDeclarationWOSemicolon__Group__2__Impl();
 
             state._fsp--;
@@ -36488,7 +36488,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:10382:1: ( rule__MethodDeclarationWOSemicolon__Group__3__Impl rule__MethodDeclarationWOSemicolon__Group__4 )
             // InternalKiCool.g:10383:2: rule__MethodDeclarationWOSemicolon__Group__3__Impl rule__MethodDeclarationWOSemicolon__Group__4
             {
-            pushFollow(FollowSets000.FOLLOW_49);
+            pushFollow(FollowSets000.FOLLOW_50);
             rule__MethodDeclarationWOSemicolon__Group__3__Impl();
 
             state._fsp--;
@@ -36588,7 +36588,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:10409:1: ( rule__MethodDeclarationWOSemicolon__Group__4__Impl rule__MethodDeclarationWOSemicolon__Group__5 )
             // InternalKiCool.g:10410:2: rule__MethodDeclarationWOSemicolon__Group__4__Impl rule__MethodDeclarationWOSemicolon__Group__5
             {
-            pushFollow(FollowSets000.FOLLOW_50);
+            pushFollow(FollowSets000.FOLLOW_51);
             rule__MethodDeclarationWOSemicolon__Group__4__Impl();
 
             state._fsp--;
@@ -36677,7 +36677,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:10436:1: ( rule__MethodDeclarationWOSemicolon__Group__5__Impl rule__MethodDeclarationWOSemicolon__Group__6 )
             // InternalKiCool.g:10437:2: rule__MethodDeclarationWOSemicolon__Group__5__Impl rule__MethodDeclarationWOSemicolon__Group__6
             {
-            pushFollow(FollowSets000.FOLLOW_55);
+            pushFollow(FollowSets000.FOLLOW_56);
             rule__MethodDeclarationWOSemicolon__Group__5__Impl();
 
             state._fsp--;
@@ -36766,7 +36766,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:10463:1: ( rule__MethodDeclarationWOSemicolon__Group__6__Impl rule__MethodDeclarationWOSemicolon__Group__7 )
             // InternalKiCool.g:10464:2: rule__MethodDeclarationWOSemicolon__Group__6__Impl rule__MethodDeclarationWOSemicolon__Group__7
             {
-            pushFollow(FollowSets000.FOLLOW_55);
+            pushFollow(FollowSets000.FOLLOW_56);
             rule__MethodDeclarationWOSemicolon__Group__6__Impl();
 
             state._fsp--;
@@ -36957,7 +36957,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:10517:1: ( rule__MethodDeclarationWOSemicolon__Group_5_0__0__Impl rule__MethodDeclarationWOSemicolon__Group_5_0__1 )
             // InternalKiCool.g:10518:2: rule__MethodDeclarationWOSemicolon__Group_5_0__0__Impl rule__MethodDeclarationWOSemicolon__Group_5_0__1
             {
-            pushFollow(FollowSets000.FOLLOW_52);
+            pushFollow(FollowSets000.FOLLOW_53);
             rule__MethodDeclarationWOSemicolon__Group_5_0__0__Impl();
 
             state._fsp--;
@@ -37036,7 +37036,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:10544:1: ( rule__MethodDeclarationWOSemicolon__Group_5_0__1__Impl rule__MethodDeclarationWOSemicolon__Group_5_0__2 )
             // InternalKiCool.g:10545:2: rule__MethodDeclarationWOSemicolon__Group_5_0__1__Impl rule__MethodDeclarationWOSemicolon__Group_5_0__2
             {
-            pushFollow(FollowSets000.FOLLOW_53);
+            pushFollow(FollowSets000.FOLLOW_54);
             rule__MethodDeclarationWOSemicolon__Group_5_0__1__Impl();
 
             state._fsp--;
@@ -37125,7 +37125,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:10571:1: ( rule__MethodDeclarationWOSemicolon__Group_5_0__2__Impl rule__MethodDeclarationWOSemicolon__Group_5_0__3 )
             // InternalKiCool.g:10572:2: rule__MethodDeclarationWOSemicolon__Group_5_0__2__Impl rule__MethodDeclarationWOSemicolon__Group_5_0__3
             {
-            pushFollow(FollowSets000.FOLLOW_53);
+            pushFollow(FollowSets000.FOLLOW_54);
             rule__MethodDeclarationWOSemicolon__Group_5_0__2__Impl();
 
             state._fsp--;
@@ -37306,7 +37306,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:10625:1: ( rule__MethodDeclarationWOSemicolon__Group_5_0_2__0__Impl rule__MethodDeclarationWOSemicolon__Group_5_0_2__1 )
             // InternalKiCool.g:10626:2: rule__MethodDeclarationWOSemicolon__Group_5_0_2__0__Impl rule__MethodDeclarationWOSemicolon__Group_5_0_2__1
             {
-            pushFollow(FollowSets000.FOLLOW_52);
+            pushFollow(FollowSets000.FOLLOW_53);
             rule__MethodDeclarationWOSemicolon__Group_5_0_2__0__Impl();
 
             state._fsp--;
@@ -37593,7 +37593,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:10721:3: ( rule__MethodDeclarationWOSemicolon__ScheduleAssignment_6_1 )
             // InternalKiCool.g:10721:4: rule__MethodDeclarationWOSemicolon__ScheduleAssignment_6_1
             {
-            pushFollow(FollowSets000.FOLLOW_54);
+            pushFollow(FollowSets000.FOLLOW_55);
             rule__MethodDeclarationWOSemicolon__ScheduleAssignment_6_1();
 
             state._fsp--;
@@ -37622,7 +37622,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // InternalKiCool.g:10726:4: rule__MethodDeclarationWOSemicolon__ScheduleAssignment_6_1
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_54);
+            	    pushFollow(FollowSets000.FOLLOW_55);
             	    rule__MethodDeclarationWOSemicolon__ScheduleAssignment_6_1();
 
             	    state._fsp--;
@@ -37673,7 +37673,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:10740:1: ( rule__NamespaceID__Group__0__Impl rule__NamespaceID__Group__1 )
             // InternalKiCool.g:10741:2: rule__NamespaceID__Group__0__Impl rule__NamespaceID__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_56);
+            pushFollow(FollowSets000.FOLLOW_57);
             rule__NamespaceID__Group__0__Impl();
 
             state._fsp--;
@@ -37810,7 +37810,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // InternalKiCool.g:10781:3: rule__NamespaceID__Group_1__0
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_57);
+            	    pushFollow(FollowSets000.FOLLOW_58);
             	    rule__NamespaceID__Group_1__0();
 
             	    state._fsp--;
@@ -38015,7 +38015,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:10848:1: ( rule__ReferenceDeclaration__Group__0__Impl rule__ReferenceDeclaration__Group__1 )
             // InternalKiCool.g:10849:2: rule__ReferenceDeclaration__Group__0__Impl rule__ReferenceDeclaration__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_58);
+            pushFollow(FollowSets000.FOLLOW_59);
             rule__ReferenceDeclaration__Group__0__Impl();
 
             state._fsp--;
@@ -38122,7 +38122,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:10875:1: ( rule__ReferenceDeclaration__Group__1__Impl rule__ReferenceDeclaration__Group__2 )
             // InternalKiCool.g:10876:2: rule__ReferenceDeclaration__Group__1__Impl rule__ReferenceDeclaration__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_58);
+            pushFollow(FollowSets000.FOLLOW_59);
             rule__ReferenceDeclaration__Group__1__Impl();
 
             state._fsp--;
@@ -38844,7 +38844,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:11091:1: ( rule__ReferenceDeclaration__Group_2_1__0__Impl rule__ReferenceDeclaration__Group_2_1__1 )
             // InternalKiCool.g:11092:2: rule__ReferenceDeclaration__Group_2_1__0__Impl rule__ReferenceDeclaration__Group_2_1__1
             {
-            pushFollow(FollowSets000.FOLLOW_59);
+            pushFollow(FollowSets000.FOLLOW_60);
             rule__ReferenceDeclaration__Group_2_1__0__Impl();
 
             state._fsp--;
@@ -38923,7 +38923,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:11118:1: ( rule__ReferenceDeclaration__Group_2_1__1__Impl rule__ReferenceDeclaration__Group_2_1__2 )
             // InternalKiCool.g:11119:2: rule__ReferenceDeclaration__Group_2_1__1__Impl rule__ReferenceDeclaration__Group_2_1__2
             {
-            pushFollow(FollowSets000.FOLLOW_47);
+            pushFollow(FollowSets000.FOLLOW_48);
             rule__ReferenceDeclaration__Group_2_1__1__Impl();
 
             state._fsp--;
@@ -39114,7 +39114,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:11172:1: ( rule__ReferenceDeclaration__Group_2_1_2__0__Impl rule__ReferenceDeclaration__Group_2_1_2__1 )
             // InternalKiCool.g:11173:2: rule__ReferenceDeclaration__Group_2_1_2__0__Impl rule__ReferenceDeclaration__Group_2_1_2__1
             {
-            pushFollow(FollowSets000.FOLLOW_59);
+            pushFollow(FollowSets000.FOLLOW_60);
             rule__ReferenceDeclaration__Group_2_1_2__0__Impl();
 
             state._fsp--;
@@ -39440,7 +39440,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:11280:1: ( rule__ReferenceDeclarationWOSemicolon__Group__0__Impl rule__ReferenceDeclarationWOSemicolon__Group__1 )
             // InternalKiCool.g:11281:2: rule__ReferenceDeclarationWOSemicolon__Group__0__Impl rule__ReferenceDeclarationWOSemicolon__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_58);
+            pushFollow(FollowSets000.FOLLOW_59);
             rule__ReferenceDeclarationWOSemicolon__Group__0__Impl();
 
             state._fsp--;
@@ -39547,7 +39547,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:11307:1: ( rule__ReferenceDeclarationWOSemicolon__Group__1__Impl rule__ReferenceDeclarationWOSemicolon__Group__2 )
             // InternalKiCool.g:11308:2: rule__ReferenceDeclarationWOSemicolon__Group__1__Impl rule__ReferenceDeclarationWOSemicolon__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_58);
+            pushFollow(FollowSets000.FOLLOW_59);
             rule__ReferenceDeclarationWOSemicolon__Group__1__Impl();
 
             state._fsp--;
@@ -40190,7 +40190,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:11496:1: ( rule__ReferenceDeclarationWOSemicolon__Group_2_1__0__Impl rule__ReferenceDeclarationWOSemicolon__Group_2_1__1 )
             // InternalKiCool.g:11497:2: rule__ReferenceDeclarationWOSemicolon__Group_2_1__0__Impl rule__ReferenceDeclarationWOSemicolon__Group_2_1__1
             {
-            pushFollow(FollowSets000.FOLLOW_59);
+            pushFollow(FollowSets000.FOLLOW_60);
             rule__ReferenceDeclarationWOSemicolon__Group_2_1__0__Impl();
 
             state._fsp--;
@@ -40269,7 +40269,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:11523:1: ( rule__ReferenceDeclarationWOSemicolon__Group_2_1__1__Impl rule__ReferenceDeclarationWOSemicolon__Group_2_1__2 )
             // InternalKiCool.g:11524:2: rule__ReferenceDeclarationWOSemicolon__Group_2_1__1__Impl rule__ReferenceDeclarationWOSemicolon__Group_2_1__2
             {
-            pushFollow(FollowSets000.FOLLOW_47);
+            pushFollow(FollowSets000.FOLLOW_48);
             rule__ReferenceDeclarationWOSemicolon__Group_2_1__1__Impl();
 
             state._fsp--;
@@ -40460,7 +40460,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:11577:1: ( rule__ReferenceDeclarationWOSemicolon__Group_2_1_2__0__Impl rule__ReferenceDeclarationWOSemicolon__Group_2_1_2__1 )
             // InternalKiCool.g:11578:2: rule__ReferenceDeclarationWOSemicolon__Group_2_1_2__0__Impl rule__ReferenceDeclarationWOSemicolon__Group_2_1_2__1
             {
-            pushFollow(FollowSets000.FOLLOW_59);
+            pushFollow(FollowSets000.FOLLOW_60);
             rule__ReferenceDeclarationWOSemicolon__Group_2_1_2__0__Impl();
 
             state._fsp--;
@@ -40786,7 +40786,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:11685:1: ( rule__ExternString__Group__0__Impl rule__ExternString__Group__1 )
             // InternalKiCool.g:11686:2: rule__ExternString__Group__0__Impl rule__ExternString__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_59);
+            pushFollow(FollowSets000.FOLLOW_60);
             rule__ExternString__Group__0__Impl();
 
             state._fsp--;
@@ -40977,7 +40977,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:11739:1: ( rule__ScheduleDeclaration__Group__0__Impl rule__ScheduleDeclaration__Group__1 )
             // InternalKiCool.g:11740:2: rule__ScheduleDeclaration__Group__0__Impl rule__ScheduleDeclaration__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_60);
+            pushFollow(FollowSets000.FOLLOW_61);
             rule__ScheduleDeclaration__Group__0__Impl();
 
             state._fsp--;
@@ -41084,7 +41084,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:11766:1: ( rule__ScheduleDeclaration__Group__1__Impl rule__ScheduleDeclaration__Group__2 )
             // InternalKiCool.g:11767:2: rule__ScheduleDeclaration__Group__1__Impl rule__ScheduleDeclaration__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_60);
+            pushFollow(FollowSets000.FOLLOW_61);
             rule__ScheduleDeclaration__Group__1__Impl();
 
             state._fsp--;
@@ -41184,7 +41184,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:11793:1: ( rule__ScheduleDeclaration__Group__2__Impl rule__ScheduleDeclaration__Group__3 )
             // InternalKiCool.g:11794:2: rule__ScheduleDeclaration__Group__2__Impl rule__ScheduleDeclaration__Group__3
             {
-            pushFollow(FollowSets000.FOLLOW_61);
+            pushFollow(FollowSets000.FOLLOW_62);
             rule__ScheduleDeclaration__Group__2__Impl();
 
             state._fsp--;
@@ -41263,7 +41263,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:11820:1: ( rule__ScheduleDeclaration__Group__3__Impl rule__ScheduleDeclaration__Group__4 )
             // InternalKiCool.g:11821:2: rule__ScheduleDeclaration__Group__3__Impl rule__ScheduleDeclaration__Group__4
             {
-            pushFollow(FollowSets000.FOLLOW_61);
+            pushFollow(FollowSets000.FOLLOW_62);
             rule__ScheduleDeclaration__Group__3__Impl();
 
             state._fsp--;
@@ -41363,7 +41363,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:11847:1: ( rule__ScheduleDeclaration__Group__4__Impl rule__ScheduleDeclaration__Group__5 )
             // InternalKiCool.g:11848:2: rule__ScheduleDeclaration__Group__4__Impl rule__ScheduleDeclaration__Group__5
             {
-            pushFollow(FollowSets000.FOLLOW_61);
+            pushFollow(FollowSets000.FOLLOW_62);
             rule__ScheduleDeclaration__Group__4__Impl();
 
             state._fsp--;
@@ -41463,7 +41463,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:11874:1: ( rule__ScheduleDeclaration__Group__5__Impl rule__ScheduleDeclaration__Group__6 )
             // InternalKiCool.g:11875:2: rule__ScheduleDeclaration__Group__5__Impl rule__ScheduleDeclaration__Group__6
             {
-            pushFollow(FollowSets000.FOLLOW_61);
+            pushFollow(FollowSets000.FOLLOW_62);
             rule__ScheduleDeclaration__Group__5__Impl();
 
             state._fsp--;
@@ -41933,7 +41933,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:12009:1: ( rule__ScheduleDeclaration__Group_4__0__Impl rule__ScheduleDeclaration__Group_4__1 )
             // InternalKiCool.g:12010:2: rule__ScheduleDeclaration__Group_4__0__Impl rule__ScheduleDeclaration__Group_4__1
             {
-            pushFollow(FollowSets000.FOLLOW_62);
+            pushFollow(FollowSets000.FOLLOW_63);
             rule__ScheduleDeclaration__Group_4__0__Impl();
 
             state._fsp--;
@@ -42096,7 +42096,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:12063:1: ( rule__ScheduleDeclaration__Group_5__0__Impl rule__ScheduleDeclaration__Group_5__1 )
             // InternalKiCool.g:12064:2: rule__ScheduleDeclaration__Group_5__0__Impl rule__ScheduleDeclaration__Group_5__1
             {
-            pushFollow(FollowSets000.FOLLOW_62);
+            pushFollow(FollowSets000.FOLLOW_63);
             rule__ScheduleDeclaration__Group_5__0__Impl();
 
             state._fsp--;
@@ -42175,7 +42175,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:12090:1: ( rule__ScheduleDeclaration__Group_5__1__Impl rule__ScheduleDeclaration__Group_5__2 )
             // InternalKiCool.g:12091:2: rule__ScheduleDeclaration__Group_5__1__Impl rule__ScheduleDeclaration__Group_5__2
             {
-            pushFollow(FollowSets000.FOLLOW_63);
+            pushFollow(FollowSets000.FOLLOW_64);
             rule__ScheduleDeclaration__Group_5__1__Impl();
 
             state._fsp--;
@@ -42264,7 +42264,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:12117:1: ( rule__ScheduleDeclaration__Group_5__2__Impl rule__ScheduleDeclaration__Group_5__3 )
             // InternalKiCool.g:12118:2: rule__ScheduleDeclaration__Group_5__2__Impl rule__ScheduleDeclaration__Group_5__3
             {
-            pushFollow(FollowSets000.FOLLOW_63);
+            pushFollow(FollowSets000.FOLLOW_64);
             rule__ScheduleDeclaration__Group_5__2__Impl();
 
             state._fsp--;
@@ -42445,7 +42445,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:12171:1: ( rule__ScheduleDeclaration__Group_5_2__0__Impl rule__ScheduleDeclaration__Group_5_2__1 )
             // InternalKiCool.g:12172:2: rule__ScheduleDeclaration__Group_5_2__0__Impl rule__ScheduleDeclaration__Group_5_2__1
             {
-            pushFollow(FollowSets000.FOLLOW_62);
+            pushFollow(FollowSets000.FOLLOW_63);
             rule__ScheduleDeclaration__Group_5_2__0__Impl();
 
             state._fsp--;
@@ -42771,7 +42771,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:12279:1: ( rule__ScheduleDeclarationWOSemicolon__Group__0__Impl rule__ScheduleDeclarationWOSemicolon__Group__1 )
             // InternalKiCool.g:12280:2: rule__ScheduleDeclarationWOSemicolon__Group__0__Impl rule__ScheduleDeclarationWOSemicolon__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_60);
+            pushFollow(FollowSets000.FOLLOW_61);
             rule__ScheduleDeclarationWOSemicolon__Group__0__Impl();
 
             state._fsp--;
@@ -42878,7 +42878,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:12306:1: ( rule__ScheduleDeclarationWOSemicolon__Group__1__Impl rule__ScheduleDeclarationWOSemicolon__Group__2 )
             // InternalKiCool.g:12307:2: rule__ScheduleDeclarationWOSemicolon__Group__1__Impl rule__ScheduleDeclarationWOSemicolon__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_60);
+            pushFollow(FollowSets000.FOLLOW_61);
             rule__ScheduleDeclarationWOSemicolon__Group__1__Impl();
 
             state._fsp--;
@@ -42978,7 +42978,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:12333:1: ( rule__ScheduleDeclarationWOSemicolon__Group__2__Impl rule__ScheduleDeclarationWOSemicolon__Group__3 )
             // InternalKiCool.g:12334:2: rule__ScheduleDeclarationWOSemicolon__Group__2__Impl rule__ScheduleDeclarationWOSemicolon__Group__3
             {
-            pushFollow(FollowSets000.FOLLOW_61);
+            pushFollow(FollowSets000.FOLLOW_62);
             rule__ScheduleDeclarationWOSemicolon__Group__2__Impl();
 
             state._fsp--;
@@ -43057,7 +43057,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:12360:1: ( rule__ScheduleDeclarationWOSemicolon__Group__3__Impl rule__ScheduleDeclarationWOSemicolon__Group__4 )
             // InternalKiCool.g:12361:2: rule__ScheduleDeclarationWOSemicolon__Group__3__Impl rule__ScheduleDeclarationWOSemicolon__Group__4
             {
-            pushFollow(FollowSets000.FOLLOW_61);
+            pushFollow(FollowSets000.FOLLOW_62);
             rule__ScheduleDeclarationWOSemicolon__Group__3__Impl();
 
             state._fsp--;
@@ -43157,7 +43157,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:12387:1: ( rule__ScheduleDeclarationWOSemicolon__Group__4__Impl rule__ScheduleDeclarationWOSemicolon__Group__5 )
             // InternalKiCool.g:12388:2: rule__ScheduleDeclarationWOSemicolon__Group__4__Impl rule__ScheduleDeclarationWOSemicolon__Group__5
             {
-            pushFollow(FollowSets000.FOLLOW_61);
+            pushFollow(FollowSets000.FOLLOW_62);
             rule__ScheduleDeclarationWOSemicolon__Group__4__Impl();
 
             state._fsp--;
@@ -43257,7 +43257,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:12414:1: ( rule__ScheduleDeclarationWOSemicolon__Group__5__Impl rule__ScheduleDeclarationWOSemicolon__Group__6 )
             // InternalKiCool.g:12415:2: rule__ScheduleDeclarationWOSemicolon__Group__5__Impl rule__ScheduleDeclarationWOSemicolon__Group__6
             {
-            pushFollow(FollowSets000.FOLLOW_61);
+            pushFollow(FollowSets000.FOLLOW_62);
             rule__ScheduleDeclarationWOSemicolon__Group__5__Impl();
 
             state._fsp--;
@@ -43648,7 +43648,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:12522:1: ( rule__ScheduleDeclarationWOSemicolon__Group_4__0__Impl rule__ScheduleDeclarationWOSemicolon__Group_4__1 )
             // InternalKiCool.g:12523:2: rule__ScheduleDeclarationWOSemicolon__Group_4__0__Impl rule__ScheduleDeclarationWOSemicolon__Group_4__1
             {
-            pushFollow(FollowSets000.FOLLOW_62);
+            pushFollow(FollowSets000.FOLLOW_63);
             rule__ScheduleDeclarationWOSemicolon__Group_4__0__Impl();
 
             state._fsp--;
@@ -43811,7 +43811,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:12576:1: ( rule__ScheduleDeclarationWOSemicolon__Group_5__0__Impl rule__ScheduleDeclarationWOSemicolon__Group_5__1 )
             // InternalKiCool.g:12577:2: rule__ScheduleDeclarationWOSemicolon__Group_5__0__Impl rule__ScheduleDeclarationWOSemicolon__Group_5__1
             {
-            pushFollow(FollowSets000.FOLLOW_62);
+            pushFollow(FollowSets000.FOLLOW_63);
             rule__ScheduleDeclarationWOSemicolon__Group_5__0__Impl();
 
             state._fsp--;
@@ -43890,7 +43890,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:12603:1: ( rule__ScheduleDeclarationWOSemicolon__Group_5__1__Impl rule__ScheduleDeclarationWOSemicolon__Group_5__2 )
             // InternalKiCool.g:12604:2: rule__ScheduleDeclarationWOSemicolon__Group_5__1__Impl rule__ScheduleDeclarationWOSemicolon__Group_5__2
             {
-            pushFollow(FollowSets000.FOLLOW_63);
+            pushFollow(FollowSets000.FOLLOW_64);
             rule__ScheduleDeclarationWOSemicolon__Group_5__1__Impl();
 
             state._fsp--;
@@ -43979,7 +43979,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:12630:1: ( rule__ScheduleDeclarationWOSemicolon__Group_5__2__Impl rule__ScheduleDeclarationWOSemicolon__Group_5__3 )
             // InternalKiCool.g:12631:2: rule__ScheduleDeclarationWOSemicolon__Group_5__2__Impl rule__ScheduleDeclarationWOSemicolon__Group_5__3
             {
-            pushFollow(FollowSets000.FOLLOW_63);
+            pushFollow(FollowSets000.FOLLOW_64);
             rule__ScheduleDeclarationWOSemicolon__Group_5__2__Impl();
 
             state._fsp--;
@@ -44160,7 +44160,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:12684:1: ( rule__ScheduleDeclarationWOSemicolon__Group_5_2__0__Impl rule__ScheduleDeclarationWOSemicolon__Group_5_2__1 )
             // InternalKiCool.g:12685:2: rule__ScheduleDeclarationWOSemicolon__Group_5_2__0__Impl rule__ScheduleDeclarationWOSemicolon__Group_5_2__1
             {
-            pushFollow(FollowSets000.FOLLOW_62);
+            pushFollow(FollowSets000.FOLLOW_63);
             rule__ScheduleDeclarationWOSemicolon__Group_5_2__0__Impl();
 
             state._fsp--;
@@ -44593,7 +44593,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:12819:1: ( rule__ValuedObject__Group__1__Impl rule__ValuedObject__Group__2 )
             // InternalKiCool.g:12820:2: rule__ValuedObject__Group__1__Impl rule__ValuedObject__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_64);
+            pushFollow(FollowSets000.FOLLOW_65);
             rule__ValuedObject__Group__1__Impl();
 
             state._fsp--;
@@ -44682,7 +44682,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:12846:1: ( rule__ValuedObject__Group__2__Impl rule__ValuedObject__Group__3 )
             // InternalKiCool.g:12847:2: rule__ValuedObject__Group__2__Impl rule__ValuedObject__Group__3
             {
-            pushFollow(FollowSets000.FOLLOW_64);
+            pushFollow(FollowSets000.FOLLOW_65);
             rule__ValuedObject__Group__2__Impl();
 
             state._fsp--;
@@ -44741,7 +44741,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // InternalKiCool.g:12861:3: rule__ValuedObject__Group_2__0
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_65);
+            	    pushFollow(FollowSets000.FOLLOW_66);
             	    rule__ValuedObject__Group_2__0();
 
             	    state._fsp--;
@@ -44789,7 +44789,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:12873:1: ( rule__ValuedObject__Group__3__Impl rule__ValuedObject__Group__4 )
             // InternalKiCool.g:12874:2: rule__ValuedObject__Group__3__Impl rule__ValuedObject__Group__4
             {
-            pushFollow(FollowSets000.FOLLOW_64);
+            pushFollow(FollowSets000.FOLLOW_65);
             rule__ValuedObject__Group__3__Impl();
 
             state._fsp--;
@@ -44889,7 +44889,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:12900:1: ( rule__ValuedObject__Group__4__Impl rule__ValuedObject__Group__5 )
             // InternalKiCool.g:12901:2: rule__ValuedObject__Group__4__Impl rule__ValuedObject__Group__5
             {
-            pushFollow(FollowSets000.FOLLOW_64);
+            pushFollow(FollowSets000.FOLLOW_65);
             rule__ValuedObject__Group__4__Impl();
 
             state._fsp--;
@@ -45489,7 +45489,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:13089:1: ( rule__ValuedObject__Group_4__0__Impl rule__ValuedObject__Group_4__1 )
             // InternalKiCool.g:13090:2: rule__ValuedObject__Group_4__0__Impl rule__ValuedObject__Group_4__1
             {
-            pushFollow(FollowSets000.FOLLOW_66);
+            pushFollow(FollowSets000.FOLLOW_67);
             rule__ValuedObject__Group_4__0__Impl();
 
             state._fsp--;
@@ -45815,7 +45815,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:13197:1: ( rule__SimpleValuedObject__Group__0__Impl rule__SimpleValuedObject__Group__1 )
             // InternalKiCool.g:13198:2: rule__SimpleValuedObject__Group__0__Impl rule__SimpleValuedObject__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_49);
+            pushFollow(FollowSets000.FOLLOW_50);
             rule__SimpleValuedObject__Group__0__Impl();
 
             state._fsp--;
@@ -46006,7 +46006,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:13251:1: ( rule__PureEmission__Group__0__Impl rule__PureEmission__Group__1 )
             // InternalKiCool.g:13252:2: rule__PureEmission__Group__0__Impl rule__PureEmission__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_67);
+            pushFollow(FollowSets000.FOLLOW_68);
             rule__PureEmission__Group__0__Impl();
 
             state._fsp--;
@@ -46113,7 +46113,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:13278:1: ( rule__PureEmission__Group__1__Impl rule__PureEmission__Group__2 )
             // InternalKiCool.g:13279:2: rule__PureEmission__Group__1__Impl rule__PureEmission__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_68);
+            pushFollow(FollowSets000.FOLLOW_69);
             rule__PureEmission__Group__1__Impl();
 
             state._fsp--;
@@ -46421,7 +46421,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:13374:3: ( rule__PureEmission__ScheduleAssignment_2_1 )
             // InternalKiCool.g:13374:4: rule__PureEmission__ScheduleAssignment_2_1
             {
-            pushFollow(FollowSets000.FOLLOW_54);
+            pushFollow(FollowSets000.FOLLOW_55);
             rule__PureEmission__ScheduleAssignment_2_1();
 
             state._fsp--;
@@ -46450,7 +46450,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // InternalKiCool.g:13379:4: rule__PureEmission__ScheduleAssignment_2_1
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_54);
+            	    pushFollow(FollowSets000.FOLLOW_55);
             	    rule__PureEmission__ScheduleAssignment_2_1();
 
             	    state._fsp--;
@@ -46608,7 +46608,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:13420:1: ( rule__ValuedEmission__Group__1__Impl rule__ValuedEmission__Group__2 )
             // InternalKiCool.g:13421:2: rule__ValuedEmission__Group__1__Impl rule__ValuedEmission__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_69);
+            pushFollow(FollowSets000.FOLLOW_70);
             rule__ValuedEmission__Group__1__Impl();
 
             state._fsp--;
@@ -46776,7 +46776,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:13474:1: ( rule__ValuedEmission__Group__3__Impl rule__ValuedEmission__Group__4 )
             // InternalKiCool.g:13475:2: rule__ValuedEmission__Group__3__Impl rule__ValuedEmission__Group__4
             {
-            pushFollow(FollowSets000.FOLLOW_70);
+            pushFollow(FollowSets000.FOLLOW_71);
             rule__ValuedEmission__Group__3__Impl();
 
             state._fsp--;
@@ -46865,7 +46865,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:13501:1: ( rule__ValuedEmission__Group__4__Impl rule__ValuedEmission__Group__5 )
             // InternalKiCool.g:13502:2: rule__ValuedEmission__Group__4__Impl rule__ValuedEmission__Group__5
             {
-            pushFollow(FollowSets000.FOLLOW_68);
+            pushFollow(FollowSets000.FOLLOW_69);
             rule__ValuedEmission__Group__4__Impl();
 
             state._fsp--;
@@ -47163,7 +47163,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:13597:3: ( rule__ValuedEmission__ScheduleAssignment_5_1 )
             // InternalKiCool.g:13597:4: rule__ValuedEmission__ScheduleAssignment_5_1
             {
-            pushFollow(FollowSets000.FOLLOW_54);
+            pushFollow(FollowSets000.FOLLOW_55);
             rule__ValuedEmission__ScheduleAssignment_5_1();
 
             state._fsp--;
@@ -47192,7 +47192,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // InternalKiCool.g:13602:4: rule__ValuedEmission__ScheduleAssignment_5_1
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_54);
+            	    pushFollow(FollowSets000.FOLLOW_55);
             	    rule__ValuedEmission__ScheduleAssignment_5_1();
 
             	    state._fsp--;
@@ -47350,7 +47350,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:13643:1: ( rule__Assignment__Group__1__Impl rule__Assignment__Group__2 )
             // InternalKiCool.g:13644:2: rule__Assignment__Group__1__Impl rule__Assignment__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_71);
+            pushFollow(FollowSets000.FOLLOW_72);
             rule__Assignment__Group__1__Impl();
 
             state._fsp--;
@@ -47528,7 +47528,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:13697:1: ( rule__Assignment__Group__3__Impl rule__Assignment__Group__4 )
             // InternalKiCool.g:13698:2: rule__Assignment__Group__3__Impl rule__Assignment__Group__4
             {
-            pushFollow(FollowSets000.FOLLOW_68);
+            pushFollow(FollowSets000.FOLLOW_69);
             rule__Assignment__Group__3__Impl();
 
             state._fsp--;
@@ -47836,7 +47836,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:13793:3: ( rule__Assignment__ScheduleAssignment_4_1 )
             // InternalKiCool.g:13793:4: rule__Assignment__ScheduleAssignment_4_1
             {
-            pushFollow(FollowSets000.FOLLOW_54);
+            pushFollow(FollowSets000.FOLLOW_55);
             rule__Assignment__ScheduleAssignment_4_1();
 
             state._fsp--;
@@ -47865,7 +47865,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // InternalKiCool.g:13798:4: rule__Assignment__ScheduleAssignment_4_1
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_54);
+            	    pushFollow(FollowSets000.FOLLOW_55);
             	    rule__Assignment__ScheduleAssignment_4_1();
 
             	    state._fsp--;
@@ -48023,7 +48023,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:13839:1: ( rule__PostfixEffect__Group__1__Impl rule__PostfixEffect__Group__2 )
             // InternalKiCool.g:13840:2: rule__PostfixEffect__Group__1__Impl rule__PostfixEffect__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_72);
+            pushFollow(FollowSets000.FOLLOW_73);
             rule__PostfixEffect__Group__1__Impl();
 
             state._fsp--;
@@ -48112,7 +48112,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:13866:1: ( rule__PostfixEffect__Group__2__Impl rule__PostfixEffect__Group__3 )
             // InternalKiCool.g:13867:2: rule__PostfixEffect__Group__2__Impl rule__PostfixEffect__Group__3
             {
-            pushFollow(FollowSets000.FOLLOW_68);
+            pushFollow(FollowSets000.FOLLOW_69);
             rule__PostfixEffect__Group__2__Impl();
 
             state._fsp--;
@@ -48420,7 +48420,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:13962:3: ( rule__PostfixEffect__ScheduleAssignment_3_1 )
             // InternalKiCool.g:13962:4: rule__PostfixEffect__ScheduleAssignment_3_1
             {
-            pushFollow(FollowSets000.FOLLOW_54);
+            pushFollow(FollowSets000.FOLLOW_55);
             rule__PostfixEffect__ScheduleAssignment_3_1();
 
             state._fsp--;
@@ -48449,7 +48449,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // InternalKiCool.g:13967:4: rule__PostfixEffect__ScheduleAssignment_3_1
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_54);
+            	    pushFollow(FollowSets000.FOLLOW_55);
             	    rule__PostfixEffect__ScheduleAssignment_3_1();
 
             	    state._fsp--;
@@ -48500,7 +48500,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:13981:1: ( rule__HostcodeEffect__Group__0__Impl rule__HostcodeEffect__Group__1 )
             // InternalKiCool.g:13982:2: rule__HostcodeEffect__Group__0__Impl rule__HostcodeEffect__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_73);
+            pushFollow(FollowSets000.FOLLOW_74);
             rule__HostcodeEffect__Group__0__Impl();
 
             state._fsp--;
@@ -48798,7 +48798,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:14062:1: ( rule__ReferenceCallEffect__Group__1__Impl rule__ReferenceCallEffect__Group__2 )
             // InternalKiCool.g:14063:2: rule__ReferenceCallEffect__Group__1__Impl rule__ReferenceCallEffect__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_74);
+            pushFollow(FollowSets000.FOLLOW_75);
             rule__ReferenceCallEffect__Group__1__Impl();
 
             state._fsp--;
@@ -48887,7 +48887,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:14089:1: ( rule__ReferenceCallEffect__Group__2__Impl rule__ReferenceCallEffect__Group__3 )
             // InternalKiCool.g:14090:2: rule__ReferenceCallEffect__Group__2__Impl rule__ReferenceCallEffect__Group__3
             {
-            pushFollow(FollowSets000.FOLLOW_74);
+            pushFollow(FollowSets000.FOLLOW_75);
             rule__ReferenceCallEffect__Group__2__Impl();
 
             state._fsp--;
@@ -48946,7 +48946,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // InternalKiCool.g:14104:3: rule__ReferenceCallEffect__Group_2__0
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_65);
+            	    pushFollow(FollowSets000.FOLLOW_66);
             	    rule__ReferenceCallEffect__Group_2__0();
 
             	    state._fsp--;
@@ -48994,7 +48994,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:14116:1: ( rule__ReferenceCallEffect__Group__3__Impl rule__ReferenceCallEffect__Group__4 )
             // InternalKiCool.g:14117:2: rule__ReferenceCallEffect__Group__3__Impl rule__ReferenceCallEffect__Group__4
             {
-            pushFollow(FollowSets000.FOLLOW_74);
+            pushFollow(FollowSets000.FOLLOW_75);
             rule__ReferenceCallEffect__Group__3__Impl();
 
             state._fsp--;
@@ -49094,7 +49094,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:14143:1: ( rule__ReferenceCallEffect__Group__4__Impl rule__ReferenceCallEffect__Group__5 )
             // InternalKiCool.g:14144:2: rule__ReferenceCallEffect__Group__4__Impl rule__ReferenceCallEffect__Group__5
             {
-            pushFollow(FollowSets000.FOLLOW_68);
+            pushFollow(FollowSets000.FOLLOW_69);
             rule__ReferenceCallEffect__Group__4__Impl();
 
             state._fsp--;
@@ -49683,7 +49683,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:14332:1: ( rule__ReferenceCallEffect__Group_4_0__0__Impl rule__ReferenceCallEffect__Group_4_0__1 )
             // InternalKiCool.g:14333:2: rule__ReferenceCallEffect__Group_4_0__0__Impl rule__ReferenceCallEffect__Group_4_0__1
             {
-            pushFollow(FollowSets000.FOLLOW_75);
+            pushFollow(FollowSets000.FOLLOW_76);
             rule__ReferenceCallEffect__Group_4_0__0__Impl();
 
             state._fsp--;
@@ -49762,7 +49762,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:14359:1: ( rule__ReferenceCallEffect__Group_4_0__1__Impl rule__ReferenceCallEffect__Group_4_0__2 )
             // InternalKiCool.g:14360:2: rule__ReferenceCallEffect__Group_4_0__1__Impl rule__ReferenceCallEffect__Group_4_0__2
             {
-            pushFollow(FollowSets000.FOLLOW_53);
+            pushFollow(FollowSets000.FOLLOW_54);
             rule__ReferenceCallEffect__Group_4_0__1__Impl();
 
             state._fsp--;
@@ -49851,7 +49851,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:14386:1: ( rule__ReferenceCallEffect__Group_4_0__2__Impl rule__ReferenceCallEffect__Group_4_0__3 )
             // InternalKiCool.g:14387:2: rule__ReferenceCallEffect__Group_4_0__2__Impl rule__ReferenceCallEffect__Group_4_0__3
             {
-            pushFollow(FollowSets000.FOLLOW_53);
+            pushFollow(FollowSets000.FOLLOW_54);
             rule__ReferenceCallEffect__Group_4_0__2__Impl();
 
             state._fsp--;
@@ -50032,7 +50032,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:14440:1: ( rule__ReferenceCallEffect__Group_4_0_2__0__Impl rule__ReferenceCallEffect__Group_4_0_2__1 )
             // InternalKiCool.g:14441:2: rule__ReferenceCallEffect__Group_4_0_2__0__Impl rule__ReferenceCallEffect__Group_4_0_2__1
             {
-            pushFollow(FollowSets000.FOLLOW_75);
+            pushFollow(FollowSets000.FOLLOW_76);
             rule__ReferenceCallEffect__Group_4_0_2__0__Impl();
 
             state._fsp--;
@@ -50319,7 +50319,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:14536:3: ( rule__ReferenceCallEffect__ScheduleAssignment_5_1 )
             // InternalKiCool.g:14536:4: rule__ReferenceCallEffect__ScheduleAssignment_5_1
             {
-            pushFollow(FollowSets000.FOLLOW_54);
+            pushFollow(FollowSets000.FOLLOW_55);
             rule__ReferenceCallEffect__ScheduleAssignment_5_1();
 
             state._fsp--;
@@ -50348,7 +50348,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // InternalKiCool.g:14541:4: rule__ReferenceCallEffect__ScheduleAssignment_5_1
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_54);
+            	    pushFollow(FollowSets000.FOLLOW_55);
             	    rule__ReferenceCallEffect__ScheduleAssignment_5_1();
 
             	    state._fsp--;
@@ -50399,7 +50399,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:14555:1: ( rule__FunctionCallEffect__Group__0__Impl rule__FunctionCallEffect__Group__1 )
             // InternalKiCool.g:14556:2: rule__FunctionCallEffect__Group__0__Impl rule__FunctionCallEffect__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_76);
+            pushFollow(FollowSets000.FOLLOW_77);
             rule__FunctionCallEffect__Group__0__Impl();
 
             state._fsp--;
@@ -50669,7 +50669,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:14636:1: ( rule__FunctionCallEffect__Group_1__1__Impl rule__FunctionCallEffect__Group_1__2 )
             // InternalKiCool.g:14637:2: rule__FunctionCallEffect__Group_1__1__Impl rule__FunctionCallEffect__Group_1__2
             {
-            pushFollow(FollowSets000.FOLLOW_50);
+            pushFollow(FollowSets000.FOLLOW_51);
             rule__FunctionCallEffect__Group_1__1__Impl();
 
             state._fsp--;
@@ -50842,7 +50842,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:14690:1: ( rule__FunctionCallEffect__Group_1_2_0__0__Impl rule__FunctionCallEffect__Group_1_2_0__1 )
             // InternalKiCool.g:14691:2: rule__FunctionCallEffect__Group_1_2_0__0__Impl rule__FunctionCallEffect__Group_1_2_0__1
             {
-            pushFollow(FollowSets000.FOLLOW_75);
+            pushFollow(FollowSets000.FOLLOW_76);
             rule__FunctionCallEffect__Group_1_2_0__0__Impl();
 
             state._fsp--;
@@ -50921,7 +50921,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:14717:1: ( rule__FunctionCallEffect__Group_1_2_0__1__Impl rule__FunctionCallEffect__Group_1_2_0__2 )
             // InternalKiCool.g:14718:2: rule__FunctionCallEffect__Group_1_2_0__1__Impl rule__FunctionCallEffect__Group_1_2_0__2
             {
-            pushFollow(FollowSets000.FOLLOW_53);
+            pushFollow(FollowSets000.FOLLOW_54);
             rule__FunctionCallEffect__Group_1_2_0__1__Impl();
 
             state._fsp--;
@@ -51010,7 +51010,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:14744:1: ( rule__FunctionCallEffect__Group_1_2_0__2__Impl rule__FunctionCallEffect__Group_1_2_0__3 )
             // InternalKiCool.g:14745:2: rule__FunctionCallEffect__Group_1_2_0__2__Impl rule__FunctionCallEffect__Group_1_2_0__3
             {
-            pushFollow(FollowSets000.FOLLOW_53);
+            pushFollow(FollowSets000.FOLLOW_54);
             rule__FunctionCallEffect__Group_1_2_0__2__Impl();
 
             state._fsp--;
@@ -51191,7 +51191,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:14798:1: ( rule__FunctionCallEffect__Group_1_2_0_2__0__Impl rule__FunctionCallEffect__Group_1_2_0_2__1 )
             // InternalKiCool.g:14799:2: rule__FunctionCallEffect__Group_1_2_0_2__0__Impl rule__FunctionCallEffect__Group_1_2_0_2__1
             {
-            pushFollow(FollowSets000.FOLLOW_75);
+            pushFollow(FollowSets000.FOLLOW_76);
             rule__FunctionCallEffect__Group_1_2_0_2__0__Impl();
 
             state._fsp--;
@@ -51354,7 +51354,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:14852:1: ( rule__PrintCallEffect__Group__0__Impl rule__PrintCallEffect__Group__1 )
             // InternalKiCool.g:14853:2: rule__PrintCallEffect__Group__0__Impl rule__PrintCallEffect__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_77);
+            pushFollow(FollowSets000.FOLLOW_78);
             rule__PrintCallEffect__Group__0__Impl();
 
             state._fsp--;
@@ -51461,7 +51461,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:14879:1: ( rule__PrintCallEffect__Group__1__Impl rule__PrintCallEffect__Group__2 )
             // InternalKiCool.g:14880:2: rule__PrintCallEffect__Group__1__Impl rule__PrintCallEffect__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_69);
+            pushFollow(FollowSets000.FOLLOW_70);
             rule__PrintCallEffect__Group__1__Impl();
 
             state._fsp--;
@@ -51540,7 +51540,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:14906:1: ( rule__PrintCallEffect__Group__2__Impl rule__PrintCallEffect__Group__3 )
             // InternalKiCool.g:14907:2: rule__PrintCallEffect__Group__2__Impl rule__PrintCallEffect__Group__3
             {
-            pushFollow(FollowSets000.FOLLOW_68);
+            pushFollow(FollowSets000.FOLLOW_69);
             rule__PrintCallEffect__Group__2__Impl();
 
             state._fsp--;
@@ -51724,7 +51724,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:14960:1: ( rule__PrintCallEffect__Group_2__0__Impl rule__PrintCallEffect__Group_2__1 )
             // InternalKiCool.g:14961:2: rule__PrintCallEffect__Group_2__0__Impl rule__PrintCallEffect__Group_2__1
             {
-            pushFollow(FollowSets000.FOLLOW_75);
+            pushFollow(FollowSets000.FOLLOW_76);
             rule__PrintCallEffect__Group_2__0__Impl();
 
             state._fsp--;
@@ -51803,7 +51803,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:14987:1: ( rule__PrintCallEffect__Group_2__1__Impl rule__PrintCallEffect__Group_2__2 )
             // InternalKiCool.g:14988:2: rule__PrintCallEffect__Group_2__1__Impl rule__PrintCallEffect__Group_2__2
             {
-            pushFollow(FollowSets000.FOLLOW_53);
+            pushFollow(FollowSets000.FOLLOW_54);
             rule__PrintCallEffect__Group_2__1__Impl();
 
             state._fsp--;
@@ -51892,7 +51892,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:15014:1: ( rule__PrintCallEffect__Group_2__2__Impl rule__PrintCallEffect__Group_2__3 )
             // InternalKiCool.g:15015:2: rule__PrintCallEffect__Group_2__2__Impl rule__PrintCallEffect__Group_2__3
             {
-            pushFollow(FollowSets000.FOLLOW_53);
+            pushFollow(FollowSets000.FOLLOW_54);
             rule__PrintCallEffect__Group_2__2__Impl();
 
             state._fsp--;
@@ -52073,7 +52073,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:15068:1: ( rule__PrintCallEffect__Group_2_2__0__Impl rule__PrintCallEffect__Group_2_2__1 )
             // InternalKiCool.g:15069:2: rule__PrintCallEffect__Group_2_2__0__Impl rule__PrintCallEffect__Group_2_2__1
             {
-            pushFollow(FollowSets000.FOLLOW_75);
+            pushFollow(FollowSets000.FOLLOW_76);
             rule__PrintCallEffect__Group_2_2__0__Impl();
 
             state._fsp--;
@@ -52360,7 +52360,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:15164:3: ( rule__PrintCallEffect__ScheduleAssignment_3_1 )
             // InternalKiCool.g:15164:4: rule__PrintCallEffect__ScheduleAssignment_3_1
             {
-            pushFollow(FollowSets000.FOLLOW_54);
+            pushFollow(FollowSets000.FOLLOW_55);
             rule__PrintCallEffect__ScheduleAssignment_3_1();
 
             state._fsp--;
@@ -52389,7 +52389,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // InternalKiCool.g:15169:4: rule__PrintCallEffect__ScheduleAssignment_3_1
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_54);
+            	    pushFollow(FollowSets000.FOLLOW_55);
             	    rule__PrintCallEffect__ScheduleAssignment_3_1();
 
             	    state._fsp--;
@@ -52440,7 +52440,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:15183:1: ( rule__RandomizeCallEffect__Group__0__Impl rule__RandomizeCallEffect__Group__1 )
             // InternalKiCool.g:15184:2: rule__RandomizeCallEffect__Group__0__Impl rule__RandomizeCallEffect__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_78);
+            pushFollow(FollowSets000.FOLLOW_79);
             rule__RandomizeCallEffect__Group__0__Impl();
 
             state._fsp--;
@@ -52519,7 +52519,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:15210:1: ( rule__RandomizeCallEffect__Group__1__Impl rule__RandomizeCallEffect__Group__2 )
             // InternalKiCool.g:15211:2: rule__RandomizeCallEffect__Group__1__Impl rule__RandomizeCallEffect__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_78);
+            pushFollow(FollowSets000.FOLLOW_79);
             rule__RandomizeCallEffect__Group__1__Impl();
 
             state._fsp--;
@@ -52626,7 +52626,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:15237:1: ( rule__RandomizeCallEffect__Group__2__Impl rule__RandomizeCallEffect__Group__3 )
             // InternalKiCool.g:15238:2: rule__RandomizeCallEffect__Group__2__Impl rule__RandomizeCallEffect__Group__3
             {
-            pushFollow(FollowSets000.FOLLOW_50);
+            pushFollow(FollowSets000.FOLLOW_51);
             rule__RandomizeCallEffect__Group__2__Impl();
 
             state._fsp--;
@@ -52789,7 +52789,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:15291:1: ( rule__RandomizeCallEffect__Group_3_0__0__Impl rule__RandomizeCallEffect__Group_3_0__1 )
             // InternalKiCool.g:15292:2: rule__RandomizeCallEffect__Group_3_0__0__Impl rule__RandomizeCallEffect__Group_3_0__1
             {
-            pushFollow(FollowSets000.FOLLOW_75);
+            pushFollow(FollowSets000.FOLLOW_76);
             rule__RandomizeCallEffect__Group_3_0__0__Impl();
 
             state._fsp--;
@@ -52868,7 +52868,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:15318:1: ( rule__RandomizeCallEffect__Group_3_0__1__Impl rule__RandomizeCallEffect__Group_3_0__2 )
             // InternalKiCool.g:15319:2: rule__RandomizeCallEffect__Group_3_0__1__Impl rule__RandomizeCallEffect__Group_3_0__2
             {
-            pushFollow(FollowSets000.FOLLOW_53);
+            pushFollow(FollowSets000.FOLLOW_54);
             rule__RandomizeCallEffect__Group_3_0__1__Impl();
 
             state._fsp--;
@@ -52957,7 +52957,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:15345:1: ( rule__RandomizeCallEffect__Group_3_0__2__Impl rule__RandomizeCallEffect__Group_3_0__3 )
             // InternalKiCool.g:15346:2: rule__RandomizeCallEffect__Group_3_0__2__Impl rule__RandomizeCallEffect__Group_3_0__3
             {
-            pushFollow(FollowSets000.FOLLOW_53);
+            pushFollow(FollowSets000.FOLLOW_54);
             rule__RandomizeCallEffect__Group_3_0__2__Impl();
 
             state._fsp--;
@@ -53138,7 +53138,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:15399:1: ( rule__RandomizeCallEffect__Group_3_0_2__0__Impl rule__RandomizeCallEffect__Group_3_0_2__1 )
             // InternalKiCool.g:15400:2: rule__RandomizeCallEffect__Group_3_0_2__0__Impl rule__RandomizeCallEffect__Group_3_0_2__1
             {
-            pushFollow(FollowSets000.FOLLOW_75);
+            pushFollow(FollowSets000.FOLLOW_76);
             rule__RandomizeCallEffect__Group_3_0_2__0__Impl();
 
             state._fsp--;
@@ -53301,7 +53301,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:15453:1: ( rule__LogicalOrExpression__Group__0__Impl rule__LogicalOrExpression__Group__1 )
             // InternalKiCool.g:15454:2: rule__LogicalOrExpression__Group__0__Impl rule__LogicalOrExpression__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_79);
+            pushFollow(FollowSets000.FOLLOW_80);
             rule__LogicalOrExpression__Group__0__Impl();
 
             state._fsp--;
@@ -53479,7 +53479,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:15507:1: ( rule__LogicalOrExpression__Group_1__0__Impl rule__LogicalOrExpression__Group_1__1 )
             // InternalKiCool.g:15508:2: rule__LogicalOrExpression__Group_1__0__Impl rule__LogicalOrExpression__Group_1__1
             {
-            pushFollow(FollowSets000.FOLLOW_79);
+            pushFollow(FollowSets000.FOLLOW_80);
             rule__LogicalOrExpression__Group_1__0__Impl();
 
             state._fsp--;
@@ -53558,7 +53558,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:15534:1: ( rule__LogicalOrExpression__Group_1__1__Impl rule__LogicalOrExpression__Group_1__2 )
             // InternalKiCool.g:15535:2: rule__LogicalOrExpression__Group_1__1__Impl rule__LogicalOrExpression__Group_1__2
             {
-            pushFollow(FollowSets000.FOLLOW_79);
+            pushFollow(FollowSets000.FOLLOW_80);
             rule__LogicalOrExpression__Group_1__1__Impl();
 
             state._fsp--;
@@ -53701,7 +53701,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // InternalKiCool.g:15575:3: rule__LogicalOrExpression__Group_1_2__0
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_80);
+            	    pushFollow(FollowSets000.FOLLOW_81);
             	    rule__LogicalOrExpression__Group_1_2__0();
 
             	    state._fsp--;
@@ -54085,7 +54085,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:15696:1: ( rule__LogicalAndExpression__Group__0__Impl rule__LogicalAndExpression__Group__1 )
             // InternalKiCool.g:15697:2: rule__LogicalAndExpression__Group__0__Impl rule__LogicalAndExpression__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_81);
+            pushFollow(FollowSets000.FOLLOW_82);
             rule__LogicalAndExpression__Group__0__Impl();
 
             state._fsp--;
@@ -54263,7 +54263,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:15750:1: ( rule__LogicalAndExpression__Group_1__0__Impl rule__LogicalAndExpression__Group_1__1 )
             // InternalKiCool.g:15751:2: rule__LogicalAndExpression__Group_1__0__Impl rule__LogicalAndExpression__Group_1__1
             {
-            pushFollow(FollowSets000.FOLLOW_81);
+            pushFollow(FollowSets000.FOLLOW_82);
             rule__LogicalAndExpression__Group_1__0__Impl();
 
             state._fsp--;
@@ -54342,7 +54342,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:15777:1: ( rule__LogicalAndExpression__Group_1__1__Impl rule__LogicalAndExpression__Group_1__2 )
             // InternalKiCool.g:15778:2: rule__LogicalAndExpression__Group_1__1__Impl rule__LogicalAndExpression__Group_1__2
             {
-            pushFollow(FollowSets000.FOLLOW_81);
+            pushFollow(FollowSets000.FOLLOW_82);
             rule__LogicalAndExpression__Group_1__1__Impl();
 
             state._fsp--;
@@ -54485,7 +54485,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // InternalKiCool.g:15818:3: rule__LogicalAndExpression__Group_1_2__0
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_82);
+            	    pushFollow(FollowSets000.FOLLOW_83);
             	    rule__LogicalAndExpression__Group_1_2__0();
 
             	    state._fsp--;
@@ -55653,7 +55653,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:16182:1: ( rule__BitwiseXOrExpression__Group__0__Impl rule__BitwiseXOrExpression__Group__1 )
             // InternalKiCool.g:16183:2: rule__BitwiseXOrExpression__Group__0__Impl rule__BitwiseXOrExpression__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_83);
+            pushFollow(FollowSets000.FOLLOW_84);
             rule__BitwiseXOrExpression__Group__0__Impl();
 
             state._fsp--;
@@ -55831,7 +55831,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:16236:1: ( rule__BitwiseXOrExpression__Group_1__0__Impl rule__BitwiseXOrExpression__Group_1__1 )
             // InternalKiCool.g:16237:2: rule__BitwiseXOrExpression__Group_1__0__Impl rule__BitwiseXOrExpression__Group_1__1
             {
-            pushFollow(FollowSets000.FOLLOW_83);
+            pushFollow(FollowSets000.FOLLOW_84);
             rule__BitwiseXOrExpression__Group_1__0__Impl();
 
             state._fsp--;
@@ -55910,7 +55910,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:16263:1: ( rule__BitwiseXOrExpression__Group_1__1__Impl rule__BitwiseXOrExpression__Group_1__2 )
             // InternalKiCool.g:16264:2: rule__BitwiseXOrExpression__Group_1__1__Impl rule__BitwiseXOrExpression__Group_1__2
             {
-            pushFollow(FollowSets000.FOLLOW_83);
+            pushFollow(FollowSets000.FOLLOW_84);
             rule__BitwiseXOrExpression__Group_1__1__Impl();
 
             state._fsp--;
@@ -56053,7 +56053,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // InternalKiCool.g:16304:3: rule__BitwiseXOrExpression__Group_1_2__0
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_84);
+            	    pushFollow(FollowSets000.FOLLOW_85);
             	    rule__BitwiseXOrExpression__Group_1_2__0();
 
             	    state._fsp--;
@@ -56437,7 +56437,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:16425:1: ( rule__BitwiseAndExpression__Group__0__Impl rule__BitwiseAndExpression__Group__1 )
             // InternalKiCool.g:16426:2: rule__BitwiseAndExpression__Group__0__Impl rule__BitwiseAndExpression__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_85);
+            pushFollow(FollowSets000.FOLLOW_86);
             rule__BitwiseAndExpression__Group__0__Impl();
 
             state._fsp--;
@@ -56615,7 +56615,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:16479:1: ( rule__BitwiseAndExpression__Group_1__0__Impl rule__BitwiseAndExpression__Group_1__1 )
             // InternalKiCool.g:16480:2: rule__BitwiseAndExpression__Group_1__0__Impl rule__BitwiseAndExpression__Group_1__1
             {
-            pushFollow(FollowSets000.FOLLOW_85);
+            pushFollow(FollowSets000.FOLLOW_86);
             rule__BitwiseAndExpression__Group_1__0__Impl();
 
             state._fsp--;
@@ -56694,7 +56694,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:16506:1: ( rule__BitwiseAndExpression__Group_1__1__Impl rule__BitwiseAndExpression__Group_1__2 )
             // InternalKiCool.g:16507:2: rule__BitwiseAndExpression__Group_1__1__Impl rule__BitwiseAndExpression__Group_1__2
             {
-            pushFollow(FollowSets000.FOLLOW_85);
+            pushFollow(FollowSets000.FOLLOW_86);
             rule__BitwiseAndExpression__Group_1__1__Impl();
 
             state._fsp--;
@@ -56837,7 +56837,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // InternalKiCool.g:16547:3: rule__BitwiseAndExpression__Group_1_2__0
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_86);
+            	    pushFollow(FollowSets000.FOLLOW_87);
             	    rule__BitwiseAndExpression__Group_1_2__0();
 
             	    state._fsp--;
@@ -57221,7 +57221,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:16668:1: ( rule__CompareOperation__Group__0__Impl rule__CompareOperation__Group__1 )
             // InternalKiCool.g:16669:2: rule__CompareOperation__Group__0__Impl rule__CompareOperation__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_87);
+            pushFollow(FollowSets000.FOLLOW_88);
             rule__CompareOperation__Group__0__Impl();
 
             state._fsp--;
@@ -57399,7 +57399,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:16722:1: ( rule__CompareOperation__Group_1__0__Impl rule__CompareOperation__Group_1__1 )
             // InternalKiCool.g:16723:2: rule__CompareOperation__Group_1__0__Impl rule__CompareOperation__Group_1__1
             {
-            pushFollow(FollowSets000.FOLLOW_87);
+            pushFollow(FollowSets000.FOLLOW_88);
             rule__CompareOperation__Group_1__0__Impl();
 
             state._fsp--;
@@ -57651,7 +57651,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:16803:1: ( rule__BitwiseNotExpression__Group_0__0__Impl rule__BitwiseNotExpression__Group_0__1 )
             // InternalKiCool.g:16804:2: rule__BitwiseNotExpression__Group_0__0__Impl rule__BitwiseNotExpression__Group_0__1
             {
-            pushFollow(FollowSets000.FOLLOW_88);
+            pushFollow(FollowSets000.FOLLOW_89);
             rule__BitwiseNotExpression__Group_0__0__Impl();
 
             state._fsp--;
@@ -57903,7 +57903,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:16884:1: ( rule__NotExpression__Group_0__0__Impl rule__NotExpression__Group_0__1 )
             // InternalKiCool.g:16885:2: rule__NotExpression__Group_0__0__Impl rule__NotExpression__Group_0__1
             {
-            pushFollow(FollowSets000.FOLLOW_89);
+            pushFollow(FollowSets000.FOLLOW_90);
             rule__NotExpression__Group_0__0__Impl();
 
             state._fsp--;
@@ -58155,7 +58155,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:16965:1: ( rule__ShiftExpressions__Group__0__Impl rule__ShiftExpressions__Group__1 )
             // InternalKiCool.g:16966:2: rule__ShiftExpressions__Group__0__Impl rule__ShiftExpressions__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_90);
+            pushFollow(FollowSets000.FOLLOW_91);
             rule__ShiftExpressions__Group__0__Impl();
 
             state._fsp--;
@@ -58292,7 +58292,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // InternalKiCool.g:17006:3: rule__ShiftExpressions__Alternatives_1
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_91);
+            	    pushFollow(FollowSets000.FOLLOW_92);
             	    rule__ShiftExpressions__Alternatives_1();
 
             	    state._fsp--;
@@ -58340,7 +58340,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:17019:1: ( rule__ShiftExpressions__Group_1_0__0__Impl rule__ShiftExpressions__Group_1_0__1 )
             // InternalKiCool.g:17020:2: rule__ShiftExpressions__Group_1_0__0__Impl rule__ShiftExpressions__Group_1_0__1
             {
-            pushFollow(FollowSets000.FOLLOW_92);
+            pushFollow(FollowSets000.FOLLOW_93);
             rule__ShiftExpressions__Group_1_0__0__Impl();
 
             state._fsp--;
@@ -58419,7 +58419,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:17046:1: ( rule__ShiftExpressions__Group_1_0__1__Impl rule__ShiftExpressions__Group_1_0__2 )
             // InternalKiCool.g:17047:2: rule__ShiftExpressions__Group_1_0__1__Impl rule__ShiftExpressions__Group_1_0__2
             {
-            pushFollow(FollowSets000.FOLLOW_93);
+            pushFollow(FollowSets000.FOLLOW_94);
             rule__ShiftExpressions__Group_1_0__1__Impl();
 
             state._fsp--;
@@ -58508,7 +58508,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:17073:1: ( rule__ShiftExpressions__Group_1_0__2__Impl rule__ShiftExpressions__Group_1_0__3 )
             // InternalKiCool.g:17074:2: rule__ShiftExpressions__Group_1_0__2__Impl rule__ShiftExpressions__Group_1_0__3
             {
-            pushFollow(FollowSets000.FOLLOW_92);
+            pushFollow(FollowSets000.FOLLOW_93);
             rule__ShiftExpressions__Group_1_0__2__Impl();
 
             state._fsp--;
@@ -58645,7 +58645,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // InternalKiCool.g:17114:3: rule__ShiftExpressions__Group_1_0_3__0
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_94);
+            	    pushFollow(FollowSets000.FOLLOW_95);
             	    rule__ShiftExpressions__Group_1_0_3__0();
 
             	    state._fsp--;
@@ -58693,7 +58693,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:17127:1: ( rule__ShiftExpressions__Group_1_0_3__0__Impl rule__ShiftExpressions__Group_1_0_3__1 )
             // InternalKiCool.g:17128:2: rule__ShiftExpressions__Group_1_0_3__0__Impl rule__ShiftExpressions__Group_1_0_3__1
             {
-            pushFollow(FollowSets000.FOLLOW_93);
+            pushFollow(FollowSets000.FOLLOW_94);
             rule__ShiftExpressions__Group_1_0_3__0__Impl();
 
             state._fsp--;
@@ -58856,7 +58856,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:17181:1: ( rule__ShiftExpressions__Group_1_1__0__Impl rule__ShiftExpressions__Group_1_1__1 )
             // InternalKiCool.g:17182:2: rule__ShiftExpressions__Group_1_1__0__Impl rule__ShiftExpressions__Group_1_1__1
             {
-            pushFollow(FollowSets000.FOLLOW_95);
+            pushFollow(FollowSets000.FOLLOW_96);
             rule__ShiftExpressions__Group_1_1__0__Impl();
 
             state._fsp--;
@@ -58935,7 +58935,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:17208:1: ( rule__ShiftExpressions__Group_1_1__1__Impl rule__ShiftExpressions__Group_1_1__2 )
             // InternalKiCool.g:17209:2: rule__ShiftExpressions__Group_1_1__1__Impl rule__ShiftExpressions__Group_1_1__2
             {
-            pushFollow(FollowSets000.FOLLOW_93);
+            pushFollow(FollowSets000.FOLLOW_94);
             rule__ShiftExpressions__Group_1_1__1__Impl();
 
             state._fsp--;
@@ -59024,7 +59024,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:17235:1: ( rule__ShiftExpressions__Group_1_1__2__Impl rule__ShiftExpressions__Group_1_1__3 )
             // InternalKiCool.g:17236:2: rule__ShiftExpressions__Group_1_1__2__Impl rule__ShiftExpressions__Group_1_1__3
             {
-            pushFollow(FollowSets000.FOLLOW_95);
+            pushFollow(FollowSets000.FOLLOW_96);
             rule__ShiftExpressions__Group_1_1__2__Impl();
 
             state._fsp--;
@@ -59161,7 +59161,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // InternalKiCool.g:17276:3: rule__ShiftExpressions__Group_1_1_3__0
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_96);
+            	    pushFollow(FollowSets000.FOLLOW_97);
             	    rule__ShiftExpressions__Group_1_1_3__0();
 
             	    state._fsp--;
@@ -59209,7 +59209,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:17289:1: ( rule__ShiftExpressions__Group_1_1_3__0__Impl rule__ShiftExpressions__Group_1_1_3__1 )
             // InternalKiCool.g:17290:2: rule__ShiftExpressions__Group_1_1_3__0__Impl rule__ShiftExpressions__Group_1_1_3__1
             {
-            pushFollow(FollowSets000.FOLLOW_93);
+            pushFollow(FollowSets000.FOLLOW_94);
             rule__ShiftExpressions__Group_1_1_3__0__Impl();
 
             state._fsp--;
@@ -59372,7 +59372,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:17343:1: ( rule__ShiftExpressions__Group_1_2__0__Impl rule__ShiftExpressions__Group_1_2__1 )
             // InternalKiCool.g:17344:2: rule__ShiftExpressions__Group_1_2__0__Impl rule__ShiftExpressions__Group_1_2__1
             {
-            pushFollow(FollowSets000.FOLLOW_90);
+            pushFollow(FollowSets000.FOLLOW_91);
             rule__ShiftExpressions__Group_1_2__0__Impl();
 
             state._fsp--;
@@ -59451,7 +59451,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:17370:1: ( rule__ShiftExpressions__Group_1_2__1__Impl rule__ShiftExpressions__Group_1_2__2 )
             // InternalKiCool.g:17371:2: rule__ShiftExpressions__Group_1_2__1__Impl rule__ShiftExpressions__Group_1_2__2
             {
-            pushFollow(FollowSets000.FOLLOW_93);
+            pushFollow(FollowSets000.FOLLOW_94);
             rule__ShiftExpressions__Group_1_2__1__Impl();
 
             state._fsp--;
@@ -59540,7 +59540,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:17397:1: ( rule__ShiftExpressions__Group_1_2__2__Impl rule__ShiftExpressions__Group_1_2__3 )
             // InternalKiCool.g:17398:2: rule__ShiftExpressions__Group_1_2__2__Impl rule__ShiftExpressions__Group_1_2__3
             {
-            pushFollow(FollowSets000.FOLLOW_97);
+            pushFollow(FollowSets000.FOLLOW_98);
             rule__ShiftExpressions__Group_1_2__2__Impl();
 
             state._fsp--;
@@ -59677,7 +59677,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // InternalKiCool.g:17438:3: rule__ShiftExpressions__Group_1_2_3__0
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_98);
+            	    pushFollow(FollowSets000.FOLLOW_99);
             	    rule__ShiftExpressions__Group_1_2_3__0();
 
             	    state._fsp--;
@@ -59725,7 +59725,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:17451:1: ( rule__ShiftExpressions__Group_1_2_3__0__Impl rule__ShiftExpressions__Group_1_2_3__1 )
             // InternalKiCool.g:17452:2: rule__ShiftExpressions__Group_1_2_3__0__Impl rule__ShiftExpressions__Group_1_2_3__1
             {
-            pushFollow(FollowSets000.FOLLOW_93);
+            pushFollow(FollowSets000.FOLLOW_94);
             rule__ShiftExpressions__Group_1_2_3__0__Impl();
 
             state._fsp--;
@@ -59888,7 +59888,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:17505:1: ( rule__ShiftRightExpression__Group__0__Impl rule__ShiftRightExpression__Group__1 )
             // InternalKiCool.g:17506:2: rule__ShiftRightExpression__Group__0__Impl rule__ShiftRightExpression__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_95);
+            pushFollow(FollowSets000.FOLLOW_96);
             rule__ShiftRightExpression__Group__0__Impl();
 
             state._fsp--;
@@ -60066,7 +60066,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:17559:1: ( rule__ShiftRightExpression__Group_1__0__Impl rule__ShiftRightExpression__Group_1__1 )
             // InternalKiCool.g:17560:2: rule__ShiftRightExpression__Group_1__0__Impl rule__ShiftRightExpression__Group_1__1
             {
-            pushFollow(FollowSets000.FOLLOW_95);
+            pushFollow(FollowSets000.FOLLOW_96);
             rule__ShiftRightExpression__Group_1__0__Impl();
 
             state._fsp--;
@@ -60145,7 +60145,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:17586:1: ( rule__ShiftRightExpression__Group_1__1__Impl rule__ShiftRightExpression__Group_1__2 )
             // InternalKiCool.g:17587:2: rule__ShiftRightExpression__Group_1__1__Impl rule__ShiftRightExpression__Group_1__2
             {
-            pushFollow(FollowSets000.FOLLOW_95);
+            pushFollow(FollowSets000.FOLLOW_96);
             rule__ShiftRightExpression__Group_1__1__Impl();
 
             state._fsp--;
@@ -60288,7 +60288,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // InternalKiCool.g:17627:3: rule__ShiftRightExpression__Group_1_2__0
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_96);
+            	    pushFollow(FollowSets000.FOLLOW_97);
             	    rule__ShiftRightExpression__Group_1_2__0();
 
             	    state._fsp--;
@@ -60336,7 +60336,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:17640:1: ( rule__ShiftRightExpression__Group_1_1__0__Impl rule__ShiftRightExpression__Group_1_1__1 )
             // InternalKiCool.g:17641:2: rule__ShiftRightExpression__Group_1_1__0__Impl rule__ShiftRightExpression__Group_1_1__1
             {
-            pushFollow(FollowSets000.FOLLOW_93);
+            pushFollow(FollowSets000.FOLLOW_94);
             rule__ShiftRightExpression__Group_1_1__0__Impl();
 
             state._fsp--;
@@ -60509,7 +60509,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:17694:1: ( rule__ShiftRightExpression__Group_1_2__0__Impl rule__ShiftRightExpression__Group_1_2__1 )
             // InternalKiCool.g:17695:2: rule__ShiftRightExpression__Group_1_2__0__Impl rule__ShiftRightExpression__Group_1_2__1
             {
-            pushFollow(FollowSets000.FOLLOW_93);
+            pushFollow(FollowSets000.FOLLOW_94);
             rule__ShiftRightExpression__Group_1_2__0__Impl();
 
             state._fsp--;
@@ -60672,7 +60672,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:17748:1: ( rule__ShiftRightUnsignedExpression__Group__0__Impl rule__ShiftRightUnsignedExpression__Group__1 )
             // InternalKiCool.g:17749:2: rule__ShiftRightUnsignedExpression__Group__0__Impl rule__ShiftRightUnsignedExpression__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_90);
+            pushFollow(FollowSets000.FOLLOW_91);
             rule__ShiftRightUnsignedExpression__Group__0__Impl();
 
             state._fsp--;
@@ -60850,7 +60850,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:17802:1: ( rule__ShiftRightUnsignedExpression__Group_1__0__Impl rule__ShiftRightUnsignedExpression__Group_1__1 )
             // InternalKiCool.g:17803:2: rule__ShiftRightUnsignedExpression__Group_1__0__Impl rule__ShiftRightUnsignedExpression__Group_1__1
             {
-            pushFollow(FollowSets000.FOLLOW_90);
+            pushFollow(FollowSets000.FOLLOW_91);
             rule__ShiftRightUnsignedExpression__Group_1__0__Impl();
 
             state._fsp--;
@@ -60929,7 +60929,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:17829:1: ( rule__ShiftRightUnsignedExpression__Group_1__1__Impl rule__ShiftRightUnsignedExpression__Group_1__2 )
             // InternalKiCool.g:17830:2: rule__ShiftRightUnsignedExpression__Group_1__1__Impl rule__ShiftRightUnsignedExpression__Group_1__2
             {
-            pushFollow(FollowSets000.FOLLOW_97);
+            pushFollow(FollowSets000.FOLLOW_98);
             rule__ShiftRightUnsignedExpression__Group_1__1__Impl();
 
             state._fsp--;
@@ -61072,7 +61072,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // InternalKiCool.g:17870:3: rule__ShiftRightUnsignedExpression__Group_1_2__0
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_98);
+            	    pushFollow(FollowSets000.FOLLOW_99);
             	    rule__ShiftRightUnsignedExpression__Group_1_2__0();
 
             	    state._fsp--;
@@ -61120,7 +61120,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:17883:1: ( rule__ShiftRightUnsignedExpression__Group_1_1__0__Impl rule__ShiftRightUnsignedExpression__Group_1_1__1 )
             // InternalKiCool.g:17884:2: rule__ShiftRightUnsignedExpression__Group_1_1__0__Impl rule__ShiftRightUnsignedExpression__Group_1_1__1
             {
-            pushFollow(FollowSets000.FOLLOW_93);
+            pushFollow(FollowSets000.FOLLOW_94);
             rule__ShiftRightUnsignedExpression__Group_1_1__0__Impl();
 
             state._fsp--;
@@ -61293,7 +61293,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:17937:1: ( rule__ShiftRightUnsignedExpression__Group_1_2__0__Impl rule__ShiftRightUnsignedExpression__Group_1_2__1 )
             // InternalKiCool.g:17938:2: rule__ShiftRightUnsignedExpression__Group_1_2__0__Impl rule__ShiftRightUnsignedExpression__Group_1_2__1
             {
-            pushFollow(FollowSets000.FOLLOW_93);
+            pushFollow(FollowSets000.FOLLOW_94);
             rule__ShiftRightUnsignedExpression__Group_1_2__0__Impl();
 
             state._fsp--;
@@ -61456,7 +61456,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:17991:1: ( rule__SumExpression__Group__0__Impl rule__SumExpression__Group__1 )
             // InternalKiCool.g:17992:2: rule__SumExpression__Group__0__Impl rule__SumExpression__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_99);
+            pushFollow(FollowSets000.FOLLOW_100);
             rule__SumExpression__Group__0__Impl();
 
             state._fsp--;
@@ -61593,7 +61593,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // InternalKiCool.g:18032:3: rule__SumExpression__Alternatives_1
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_100);
+            	    pushFollow(FollowSets000.FOLLOW_101);
             	    rule__SumExpression__Alternatives_1();
 
             	    state._fsp--;
@@ -61641,7 +61641,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:18045:1: ( rule__SumExpression__Group_1_0__0__Impl rule__SumExpression__Group_1_0__1 )
             // InternalKiCool.g:18046:2: rule__SumExpression__Group_1_0__0__Impl rule__SumExpression__Group_1_0__1
             {
-            pushFollow(FollowSets000.FOLLOW_101);
+            pushFollow(FollowSets000.FOLLOW_102);
             rule__SumExpression__Group_1_0__0__Impl();
 
             state._fsp--;
@@ -61720,7 +61720,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:18072:1: ( rule__SumExpression__Group_1_0__1__Impl rule__SumExpression__Group_1_0__2 )
             // InternalKiCool.g:18073:2: rule__SumExpression__Group_1_0__1__Impl rule__SumExpression__Group_1_0__2
             {
-            pushFollow(FollowSets000.FOLLOW_93);
+            pushFollow(FollowSets000.FOLLOW_94);
             rule__SumExpression__Group_1_0__1__Impl();
 
             state._fsp--;
@@ -61809,7 +61809,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:18099:1: ( rule__SumExpression__Group_1_0__2__Impl rule__SumExpression__Group_1_0__3 )
             // InternalKiCool.g:18100:2: rule__SumExpression__Group_1_0__2__Impl rule__SumExpression__Group_1_0__3
             {
-            pushFollow(FollowSets000.FOLLOW_101);
+            pushFollow(FollowSets000.FOLLOW_102);
             rule__SumExpression__Group_1_0__2__Impl();
 
             state._fsp--;
@@ -61946,7 +61946,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // InternalKiCool.g:18140:3: rule__SumExpression__Group_1_0_3__0
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_102);
+            	    pushFollow(FollowSets000.FOLLOW_103);
             	    rule__SumExpression__Group_1_0_3__0();
 
             	    state._fsp--;
@@ -61994,7 +61994,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:18153:1: ( rule__SumExpression__Group_1_0_3__0__Impl rule__SumExpression__Group_1_0_3__1 )
             // InternalKiCool.g:18154:2: rule__SumExpression__Group_1_0_3__0__Impl rule__SumExpression__Group_1_0_3__1
             {
-            pushFollow(FollowSets000.FOLLOW_93);
+            pushFollow(FollowSets000.FOLLOW_94);
             rule__SumExpression__Group_1_0_3__0__Impl();
 
             state._fsp--;
@@ -62157,7 +62157,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:18207:1: ( rule__SumExpression__Group_1_1__0__Impl rule__SumExpression__Group_1_1__1 )
             // InternalKiCool.g:18208:2: rule__SumExpression__Group_1_1__0__Impl rule__SumExpression__Group_1_1__1
             {
-            pushFollow(FollowSets000.FOLLOW_99);
+            pushFollow(FollowSets000.FOLLOW_100);
             rule__SumExpression__Group_1_1__0__Impl();
 
             state._fsp--;
@@ -62236,7 +62236,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:18234:1: ( rule__SumExpression__Group_1_1__1__Impl rule__SumExpression__Group_1_1__2 )
             // InternalKiCool.g:18235:2: rule__SumExpression__Group_1_1__1__Impl rule__SumExpression__Group_1_1__2
             {
-            pushFollow(FollowSets000.FOLLOW_93);
+            pushFollow(FollowSets000.FOLLOW_94);
             rule__SumExpression__Group_1_1__1__Impl();
 
             state._fsp--;
@@ -62325,7 +62325,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:18261:1: ( rule__SumExpression__Group_1_1__2__Impl rule__SumExpression__Group_1_1__3 )
             // InternalKiCool.g:18262:2: rule__SumExpression__Group_1_1__2__Impl rule__SumExpression__Group_1_1__3
             {
-            pushFollow(FollowSets000.FOLLOW_103);
+            pushFollow(FollowSets000.FOLLOW_104);
             rule__SumExpression__Group_1_1__2__Impl();
 
             state._fsp--;
@@ -62462,7 +62462,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // InternalKiCool.g:18302:3: rule__SumExpression__Group_1_1_3__0
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_104);
+            	    pushFollow(FollowSets000.FOLLOW_105);
             	    rule__SumExpression__Group_1_1_3__0();
 
             	    state._fsp--;
@@ -62510,7 +62510,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:18315:1: ( rule__SumExpression__Group_1_1_3__0__Impl rule__SumExpression__Group_1_1_3__1 )
             // InternalKiCool.g:18316:2: rule__SumExpression__Group_1_1_3__0__Impl rule__SumExpression__Group_1_1_3__1
             {
-            pushFollow(FollowSets000.FOLLOW_93);
+            pushFollow(FollowSets000.FOLLOW_94);
             rule__SumExpression__Group_1_1_3__0__Impl();
 
             state._fsp--;
@@ -62673,7 +62673,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:18369:1: ( rule__ProductExpression__Group__0__Impl rule__ProductExpression__Group__1 )
             // InternalKiCool.g:18370:2: rule__ProductExpression__Group__0__Impl rule__ProductExpression__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_105);
+            pushFollow(FollowSets000.FOLLOW_106);
             rule__ProductExpression__Group__0__Impl();
 
             state._fsp--;
@@ -62810,7 +62810,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // InternalKiCool.g:18410:3: rule__ProductExpression__Alternatives_1
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_106);
+            	    pushFollow(FollowSets000.FOLLOW_107);
             	    rule__ProductExpression__Alternatives_1();
 
             	    state._fsp--;
@@ -62858,7 +62858,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:18423:1: ( rule__ProductExpression__Group_1_0__0__Impl rule__ProductExpression__Group_1_0__1 )
             // InternalKiCool.g:18424:2: rule__ProductExpression__Group_1_0__0__Impl rule__ProductExpression__Group_1_0__1
             {
-            pushFollow(FollowSets000.FOLLOW_107);
+            pushFollow(FollowSets000.FOLLOW_108);
             rule__ProductExpression__Group_1_0__0__Impl();
 
             state._fsp--;
@@ -62937,7 +62937,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:18450:1: ( rule__ProductExpression__Group_1_0__1__Impl rule__ProductExpression__Group_1_0__2 )
             // InternalKiCool.g:18451:2: rule__ProductExpression__Group_1_0__1__Impl rule__ProductExpression__Group_1_0__2
             {
-            pushFollow(FollowSets000.FOLLOW_93);
+            pushFollow(FollowSets000.FOLLOW_94);
             rule__ProductExpression__Group_1_0__1__Impl();
 
             state._fsp--;
@@ -63026,7 +63026,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:18477:1: ( rule__ProductExpression__Group_1_0__2__Impl rule__ProductExpression__Group_1_0__3 )
             // InternalKiCool.g:18478:2: rule__ProductExpression__Group_1_0__2__Impl rule__ProductExpression__Group_1_0__3
             {
-            pushFollow(FollowSets000.FOLLOW_107);
+            pushFollow(FollowSets000.FOLLOW_108);
             rule__ProductExpression__Group_1_0__2__Impl();
 
             state._fsp--;
@@ -63163,7 +63163,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // InternalKiCool.g:18518:3: rule__ProductExpression__Group_1_0_3__0
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_108);
+            	    pushFollow(FollowSets000.FOLLOW_109);
             	    rule__ProductExpression__Group_1_0_3__0();
 
             	    state._fsp--;
@@ -63211,7 +63211,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:18531:1: ( rule__ProductExpression__Group_1_0_3__0__Impl rule__ProductExpression__Group_1_0_3__1 )
             // InternalKiCool.g:18532:2: rule__ProductExpression__Group_1_0_3__0__Impl rule__ProductExpression__Group_1_0_3__1
             {
-            pushFollow(FollowSets000.FOLLOW_93);
+            pushFollow(FollowSets000.FOLLOW_94);
             rule__ProductExpression__Group_1_0_3__0__Impl();
 
             state._fsp--;
@@ -63374,7 +63374,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:18585:1: ( rule__ProductExpression__Group_1_1__0__Impl rule__ProductExpression__Group_1_1__1 )
             // InternalKiCool.g:18586:2: rule__ProductExpression__Group_1_1__0__Impl rule__ProductExpression__Group_1_1__1
             {
-            pushFollow(FollowSets000.FOLLOW_109);
+            pushFollow(FollowSets000.FOLLOW_110);
             rule__ProductExpression__Group_1_1__0__Impl();
 
             state._fsp--;
@@ -63453,7 +63453,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:18612:1: ( rule__ProductExpression__Group_1_1__1__Impl rule__ProductExpression__Group_1_1__2 )
             // InternalKiCool.g:18613:2: rule__ProductExpression__Group_1_1__1__Impl rule__ProductExpression__Group_1_1__2
             {
-            pushFollow(FollowSets000.FOLLOW_93);
+            pushFollow(FollowSets000.FOLLOW_94);
             rule__ProductExpression__Group_1_1__1__Impl();
 
             state._fsp--;
@@ -63542,7 +63542,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:18639:1: ( rule__ProductExpression__Group_1_1__2__Impl rule__ProductExpression__Group_1_1__3 )
             // InternalKiCool.g:18640:2: rule__ProductExpression__Group_1_1__2__Impl rule__ProductExpression__Group_1_1__3
             {
-            pushFollow(FollowSets000.FOLLOW_109);
+            pushFollow(FollowSets000.FOLLOW_110);
             rule__ProductExpression__Group_1_1__2__Impl();
 
             state._fsp--;
@@ -63679,7 +63679,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // InternalKiCool.g:18680:3: rule__ProductExpression__Group_1_1_3__0
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_110);
+            	    pushFollow(FollowSets000.FOLLOW_111);
             	    rule__ProductExpression__Group_1_1_3__0();
 
             	    state._fsp--;
@@ -63727,7 +63727,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:18693:1: ( rule__ProductExpression__Group_1_1_3__0__Impl rule__ProductExpression__Group_1_1_3__1 )
             // InternalKiCool.g:18694:2: rule__ProductExpression__Group_1_1_3__0__Impl rule__ProductExpression__Group_1_1_3__1
             {
-            pushFollow(FollowSets000.FOLLOW_93);
+            pushFollow(FollowSets000.FOLLOW_94);
             rule__ProductExpression__Group_1_1_3__0__Impl();
 
             state._fsp--;
@@ -63890,7 +63890,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:18747:1: ( rule__ProductExpression__Group_1_2__0__Impl rule__ProductExpression__Group_1_2__1 )
             // InternalKiCool.g:18748:2: rule__ProductExpression__Group_1_2__0__Impl rule__ProductExpression__Group_1_2__1
             {
-            pushFollow(FollowSets000.FOLLOW_105);
+            pushFollow(FollowSets000.FOLLOW_106);
             rule__ProductExpression__Group_1_2__0__Impl();
 
             state._fsp--;
@@ -63969,7 +63969,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:18774:1: ( rule__ProductExpression__Group_1_2__1__Impl rule__ProductExpression__Group_1_2__2 )
             // InternalKiCool.g:18775:2: rule__ProductExpression__Group_1_2__1__Impl rule__ProductExpression__Group_1_2__2
             {
-            pushFollow(FollowSets000.FOLLOW_93);
+            pushFollow(FollowSets000.FOLLOW_94);
             rule__ProductExpression__Group_1_2__1__Impl();
 
             state._fsp--;
@@ -64058,7 +64058,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:18801:1: ( rule__ProductExpression__Group_1_2__2__Impl rule__ProductExpression__Group_1_2__3 )
             // InternalKiCool.g:18802:2: rule__ProductExpression__Group_1_2__2__Impl rule__ProductExpression__Group_1_2__3
             {
-            pushFollow(FollowSets000.FOLLOW_111);
+            pushFollow(FollowSets000.FOLLOW_112);
             rule__ProductExpression__Group_1_2__2__Impl();
 
             state._fsp--;
@@ -64195,7 +64195,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // InternalKiCool.g:18842:3: rule__ProductExpression__Group_1_2_3__0
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_112);
+            	    pushFollow(FollowSets000.FOLLOW_113);
             	    rule__ProductExpression__Group_1_2_3__0();
 
             	    state._fsp--;
@@ -64243,7 +64243,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:18855:1: ( rule__ProductExpression__Group_1_2_3__0__Impl rule__ProductExpression__Group_1_2_3__1 )
             // InternalKiCool.g:18856:2: rule__ProductExpression__Group_1_2_3__0__Impl rule__ProductExpression__Group_1_2_3__1
             {
-            pushFollow(FollowSets000.FOLLOW_93);
+            pushFollow(FollowSets000.FOLLOW_94);
             rule__ProductExpression__Group_1_2_3__0__Impl();
 
             state._fsp--;
@@ -64406,7 +64406,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:18909:1: ( rule__NegExpression__Group_0__0__Impl rule__NegExpression__Group_0__1 )
             // InternalKiCool.g:18910:2: rule__NegExpression__Group_0__0__Impl rule__NegExpression__Group_0__1
             {
-            pushFollow(FollowSets000.FOLLOW_103);
+            pushFollow(FollowSets000.FOLLOW_104);
             rule__NegExpression__Group_0__0__Impl();
 
             state._fsp--;
@@ -64485,7 +64485,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:18936:1: ( rule__NegExpression__Group_0__1__Impl rule__NegExpression__Group_0__2 )
             // InternalKiCool.g:18937:2: rule__NegExpression__Group_0__1__Impl rule__NegExpression__Group_0__2
             {
-            pushFollow(FollowSets000.FOLLOW_93);
+            pushFollow(FollowSets000.FOLLOW_94);
             rule__NegExpression__Group_0__1__Impl();
 
             state._fsp--;
@@ -64658,7 +64658,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:18990:1: ( rule__TernaryOperation__Group_0__0__Impl rule__TernaryOperation__Group_0__1 )
             // InternalKiCool.g:18991:2: rule__TernaryOperation__Group_0__0__Impl rule__TernaryOperation__Group_0__1
             {
-            pushFollow(FollowSets000.FOLLOW_113);
+            pushFollow(FollowSets000.FOLLOW_114);
             rule__TernaryOperation__Group_0__0__Impl();
 
             state._fsp--;
@@ -64737,7 +64737,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:19017:1: ( rule__TernaryOperation__Group_0__1__Impl rule__TernaryOperation__Group_0__2 )
             // InternalKiCool.g:19018:2: rule__TernaryOperation__Group_0__1__Impl rule__TernaryOperation__Group_0__2
             {
-            pushFollow(FollowSets000.FOLLOW_114);
+            pushFollow(FollowSets000.FOLLOW_115);
             rule__TernaryOperation__Group_0__1__Impl();
 
             state._fsp--;
@@ -64826,7 +64826,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:19044:1: ( rule__TernaryOperation__Group_0__2__Impl rule__TernaryOperation__Group_0__3 )
             // InternalKiCool.g:19045:2: rule__TernaryOperation__Group_0__2__Impl rule__TernaryOperation__Group_0__3
             {
-            pushFollow(FollowSets000.FOLLOW_113);
+            pushFollow(FollowSets000.FOLLOW_114);
             rule__TernaryOperation__Group_0__2__Impl();
 
             state._fsp--;
@@ -64915,7 +64915,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:19071:1: ( rule__TernaryOperation__Group_0__3__Impl rule__TernaryOperation__Group_0__4 )
             // InternalKiCool.g:19072:2: rule__TernaryOperation__Group_0__3__Impl rule__TernaryOperation__Group_0__4
             {
-            pushFollow(FollowSets000.FOLLOW_56);
+            pushFollow(FollowSets000.FOLLOW_57);
             rule__TernaryOperation__Group_0__3__Impl();
 
             state._fsp--;
@@ -65099,7 +65099,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:19125:1: ( rule__TernaryOperation__Group_0_4__0__Impl rule__TernaryOperation__Group_0_4__1 )
             // InternalKiCool.g:19126:2: rule__TernaryOperation__Group_0_4__0__Impl rule__TernaryOperation__Group_0_4__1
             {
-            pushFollow(FollowSets000.FOLLOW_113);
+            pushFollow(FollowSets000.FOLLOW_114);
             rule__TernaryOperation__Group_0_4__0__Impl();
 
             state._fsp--;
@@ -65262,7 +65262,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:19179:1: ( rule__InitExpression__Group__0__Impl rule__InitExpression__Group__1 )
             // InternalKiCool.g:19180:2: rule__InitExpression__Group__0__Impl rule__InitExpression__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_115);
+            pushFollow(FollowSets000.FOLLOW_116);
             rule__InitExpression__Group__0__Impl();
 
             state._fsp--;
@@ -65440,7 +65440,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:19233:1: ( rule__InitExpression__Group_1__0__Impl rule__InitExpression__Group_1__1 )
             // InternalKiCool.g:19234:2: rule__InitExpression__Group_1__0__Impl rule__InitExpression__Group_1__1
             {
-            pushFollow(FollowSets000.FOLLOW_115);
+            pushFollow(FollowSets000.FOLLOW_116);
             rule__InitExpression__Group_1__0__Impl();
 
             state._fsp--;
@@ -65519,7 +65519,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:19260:1: ( rule__InitExpression__Group_1__1__Impl rule__InitExpression__Group_1__2 )
             // InternalKiCool.g:19261:2: rule__InitExpression__Group_1__1__Impl rule__InitExpression__Group_1__2
             {
-            pushFollow(FollowSets000.FOLLOW_115);
+            pushFollow(FollowSets000.FOLLOW_116);
             rule__InitExpression__Group_1__1__Impl();
 
             state._fsp--;
@@ -65662,7 +65662,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // InternalKiCool.g:19301:3: rule__InitExpression__Group_1_2__0
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_116);
+            	    pushFollow(FollowSets000.FOLLOW_117);
             	    rule__InitExpression__Group_1_2__0();
 
             	    state._fsp--;
@@ -65710,7 +65710,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:19314:1: ( rule__InitExpression__Group_1_1__0__Impl rule__InitExpression__Group_1_1__1 )
             // InternalKiCool.g:19315:2: rule__InitExpression__Group_1_1__0__Impl rule__InitExpression__Group_1_1__1
             {
-            pushFollow(FollowSets000.FOLLOW_93);
+            pushFollow(FollowSets000.FOLLOW_94);
             rule__InitExpression__Group_1_1__0__Impl();
 
             state._fsp--;
@@ -65883,7 +65883,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:19368:1: ( rule__InitExpression__Group_1_2__0__Impl rule__InitExpression__Group_1_2__1 )
             // InternalKiCool.g:19369:2: rule__InitExpression__Group_1_2__0__Impl rule__InitExpression__Group_1_2__1
             {
-            pushFollow(FollowSets000.FOLLOW_93);
+            pushFollow(FollowSets000.FOLLOW_94);
             rule__InitExpression__Group_1_2__0__Impl();
 
             state._fsp--;
@@ -66046,7 +66046,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:19422:1: ( rule__FbyExpression__Group__0__Impl rule__FbyExpression__Group__1 )
             // InternalKiCool.g:19423:2: rule__FbyExpression__Group__0__Impl rule__FbyExpression__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_117);
+            pushFollow(FollowSets000.FOLLOW_118);
             rule__FbyExpression__Group__0__Impl();
 
             state._fsp--;
@@ -66224,7 +66224,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:19476:1: ( rule__FbyExpression__Group_1__0__Impl rule__FbyExpression__Group_1__1 )
             // InternalKiCool.g:19477:2: rule__FbyExpression__Group_1__0__Impl rule__FbyExpression__Group_1__1
             {
-            pushFollow(FollowSets000.FOLLOW_117);
+            pushFollow(FollowSets000.FOLLOW_118);
             rule__FbyExpression__Group_1__0__Impl();
 
             state._fsp--;
@@ -66303,7 +66303,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:19503:1: ( rule__FbyExpression__Group_1__1__Impl rule__FbyExpression__Group_1__2 )
             // InternalKiCool.g:19504:2: rule__FbyExpression__Group_1__1__Impl rule__FbyExpression__Group_1__2
             {
-            pushFollow(FollowSets000.FOLLOW_117);
+            pushFollow(FollowSets000.FOLLOW_118);
             rule__FbyExpression__Group_1__1__Impl();
 
             state._fsp--;
@@ -66446,7 +66446,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // InternalKiCool.g:19544:3: rule__FbyExpression__Group_1_2__0
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_118);
+            	    pushFollow(FollowSets000.FOLLOW_119);
             	    rule__FbyExpression__Group_1_2__0();
 
             	    state._fsp--;
@@ -66494,7 +66494,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:19557:1: ( rule__FbyExpression__Group_1_1__0__Impl rule__FbyExpression__Group_1_1__1 )
             // InternalKiCool.g:19558:2: rule__FbyExpression__Group_1_1__0__Impl rule__FbyExpression__Group_1_1__1
             {
-            pushFollow(FollowSets000.FOLLOW_93);
+            pushFollow(FollowSets000.FOLLOW_94);
             rule__FbyExpression__Group_1_1__0__Impl();
 
             state._fsp--;
@@ -66667,7 +66667,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:19611:1: ( rule__FbyExpression__Group_1_2__0__Impl rule__FbyExpression__Group_1_2__1 )
             // InternalKiCool.g:19612:2: rule__FbyExpression__Group_1_2__0__Impl rule__FbyExpression__Group_1_2__1
             {
-            pushFollow(FollowSets000.FOLLOW_93);
+            pushFollow(FollowSets000.FOLLOW_94);
             rule__FbyExpression__Group_1_2__0__Impl();
 
             state._fsp--;
@@ -66830,7 +66830,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:19665:1: ( rule__SfbyExpression__Group__0__Impl rule__SfbyExpression__Group__1 )
             // InternalKiCool.g:19666:2: rule__SfbyExpression__Group__0__Impl rule__SfbyExpression__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_119);
+            pushFollow(FollowSets000.FOLLOW_120);
             rule__SfbyExpression__Group__0__Impl();
 
             state._fsp--;
@@ -67008,7 +67008,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:19719:1: ( rule__SfbyExpression__Group_1__0__Impl rule__SfbyExpression__Group_1__1 )
             // InternalKiCool.g:19720:2: rule__SfbyExpression__Group_1__0__Impl rule__SfbyExpression__Group_1__1
             {
-            pushFollow(FollowSets000.FOLLOW_119);
+            pushFollow(FollowSets000.FOLLOW_120);
             rule__SfbyExpression__Group_1__0__Impl();
 
             state._fsp--;
@@ -67087,7 +67087,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:19746:1: ( rule__SfbyExpression__Group_1__1__Impl rule__SfbyExpression__Group_1__2 )
             // InternalKiCool.g:19747:2: rule__SfbyExpression__Group_1__1__Impl rule__SfbyExpression__Group_1__2
             {
-            pushFollow(FollowSets000.FOLLOW_119);
+            pushFollow(FollowSets000.FOLLOW_120);
             rule__SfbyExpression__Group_1__1__Impl();
 
             state._fsp--;
@@ -67230,7 +67230,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // InternalKiCool.g:19787:3: rule__SfbyExpression__Group_1_2__0
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_120);
+            	    pushFollow(FollowSets000.FOLLOW_121);
             	    rule__SfbyExpression__Group_1_2__0();
 
             	    state._fsp--;
@@ -67278,7 +67278,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:19800:1: ( rule__SfbyExpression__Group_1_1__0__Impl rule__SfbyExpression__Group_1_1__1 )
             // InternalKiCool.g:19801:2: rule__SfbyExpression__Group_1_1__0__Impl rule__SfbyExpression__Group_1_1__1
             {
-            pushFollow(FollowSets000.FOLLOW_113);
+            pushFollow(FollowSets000.FOLLOW_114);
             rule__SfbyExpression__Group_1_1__0__Impl();
 
             state._fsp--;
@@ -67451,7 +67451,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:19854:1: ( rule__SfbyExpression__Group_1_2__0__Impl rule__SfbyExpression__Group_1_2__1 )
             // InternalKiCool.g:19855:2: rule__SfbyExpression__Group_1_2__0__Impl rule__SfbyExpression__Group_1_2__1
             {
-            pushFollow(FollowSets000.FOLLOW_113);
+            pushFollow(FollowSets000.FOLLOW_114);
             rule__SfbyExpression__Group_1_2__0__Impl();
 
             state._fsp--;
@@ -67693,7 +67693,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:19935:1: ( rule__AtomicExpression__Group_1__1__Impl rule__AtomicExpression__Group_1__2 )
             // InternalKiCool.g:19936:2: rule__AtomicExpression__Group_1__1__Impl rule__AtomicExpression__Group_1__2
             {
-            pushFollow(FollowSets000.FOLLOW_70);
+            pushFollow(FollowSets000.FOLLOW_71);
             rule__AtomicExpression__Group_1__1__Impl();
 
             state._fsp--;
@@ -67850,7 +67850,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:19989:1: ( rule__AtomicValuedExpression__Group_4__0__Impl rule__AtomicValuedExpression__Group_4__1 )
             // InternalKiCool.g:19990:2: rule__AtomicValuedExpression__Group_4__0__Impl rule__AtomicValuedExpression__Group_4__1
             {
-            pushFollow(FollowSets000.FOLLOW_93);
+            pushFollow(FollowSets000.FOLLOW_94);
             rule__AtomicValuedExpression__Group_4__0__Impl();
 
             state._fsp--;
@@ -67929,7 +67929,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:20016:1: ( rule__AtomicValuedExpression__Group_4__1__Impl rule__AtomicValuedExpression__Group_4__2 )
             // InternalKiCool.g:20017:2: rule__AtomicValuedExpression__Group_4__1__Impl rule__AtomicValuedExpression__Group_4__2
             {
-            pushFollow(FollowSets000.FOLLOW_70);
+            pushFollow(FollowSets000.FOLLOW_71);
             rule__AtomicValuedExpression__Group_4__1__Impl();
 
             state._fsp--;
@@ -68086,7 +68086,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:20070:1: ( rule__ValuedObjectTestExpression__Group_0__0__Impl rule__ValuedObjectTestExpression__Group_0__1 )
             // InternalKiCool.g:20071:2: rule__ValuedObjectTestExpression__Group_0__0__Impl rule__ValuedObjectTestExpression__Group_0__1
             {
-            pushFollow(FollowSets000.FOLLOW_121);
+            pushFollow(FollowSets000.FOLLOW_122);
             rule__ValuedObjectTestExpression__Group_0__0__Impl();
 
             state._fsp--;
@@ -68165,7 +68165,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:20097:1: ( rule__ValuedObjectTestExpression__Group_0__1__Impl rule__ValuedObjectTestExpression__Group_0__2 )
             // InternalKiCool.g:20098:2: rule__ValuedObjectTestExpression__Group_0__1__Impl rule__ValuedObjectTestExpression__Group_0__2
             {
-            pushFollow(FollowSets000.FOLLOW_69);
+            pushFollow(FollowSets000.FOLLOW_70);
             rule__ValuedObjectTestExpression__Group_0__1__Impl();
 
             state._fsp--;
@@ -68254,7 +68254,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:20124:1: ( rule__ValuedObjectTestExpression__Group_0__2__Impl rule__ValuedObjectTestExpression__Group_0__3 )
             // InternalKiCool.g:20125:2: rule__ValuedObjectTestExpression__Group_0__2__Impl rule__ValuedObjectTestExpression__Group_0__3
             {
-            pushFollow(FollowSets000.FOLLOW_122);
+            pushFollow(FollowSets000.FOLLOW_123);
             rule__ValuedObjectTestExpression__Group_0__2__Impl();
 
             state._fsp--;
@@ -68333,7 +68333,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:20151:1: ( rule__ValuedObjectTestExpression__Group_0__3__Impl rule__ValuedObjectTestExpression__Group_0__4 )
             // InternalKiCool.g:20152:2: rule__ValuedObjectTestExpression__Group_0__3__Impl rule__ValuedObjectTestExpression__Group_0__4
             {
-            pushFollow(FollowSets000.FOLLOW_53);
+            pushFollow(FollowSets000.FOLLOW_54);
             rule__ValuedObjectTestExpression__Group_0__3__Impl();
 
             state._fsp--;
@@ -68422,7 +68422,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:20178:1: ( rule__ValuedObjectTestExpression__Group_0__4__Impl rule__ValuedObjectTestExpression__Group_0__5 )
             // InternalKiCool.g:20179:2: rule__ValuedObjectTestExpression__Group_0__4__Impl rule__ValuedObjectTestExpression__Group_0__5
             {
-            pushFollow(FollowSets000.FOLLOW_53);
+            pushFollow(FollowSets000.FOLLOW_54);
             rule__ValuedObjectTestExpression__Group_0__4__Impl();
 
             state._fsp--;
@@ -68759,7 +68759,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:20286:1: ( rule__PrimeID__Group__0__Impl rule__PrimeID__Group__1 )
             // InternalKiCool.g:20287:2: rule__PrimeID__Group__0__Impl rule__PrimeID__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_123);
+            pushFollow(FollowSets000.FOLLOW_124);
             rule__PrimeID__Group__0__Impl();
 
             state._fsp--;
@@ -68892,7 +68892,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // InternalKiCool.g:20327:3: '\\''
             	    {
-            	    match(input,106,FollowSets000.FOLLOW_124); if (state.failed) return ;
+            	    match(input,106,FollowSets000.FOLLOW_125); if (state.failed) return ;
 
             	    }
             	    break;
@@ -68936,7 +68936,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:20340:1: ( rule__ValuedObjectReference__Group__0__Impl rule__ValuedObjectReference__Group__1 )
             // InternalKiCool.g:20341:2: rule__ValuedObjectReference__Group__0__Impl rule__ValuedObjectReference__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_125);
+            pushFollow(FollowSets000.FOLLOW_126);
             rule__ValuedObjectReference__Group__0__Impl();
 
             state._fsp--;
@@ -69025,7 +69025,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:20367:1: ( rule__ValuedObjectReference__Group__1__Impl rule__ValuedObjectReference__Group__2 )
             // InternalKiCool.g:20368:2: rule__ValuedObjectReference__Group__1__Impl rule__ValuedObjectReference__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_125);
+            pushFollow(FollowSets000.FOLLOW_126);
             rule__ValuedObjectReference__Group__1__Impl();
 
             state._fsp--;
@@ -69084,7 +69084,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // InternalKiCool.g:20382:3: rule__ValuedObjectReference__Group_1__0
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_65);
+            	    pushFollow(FollowSets000.FOLLOW_66);
             	    rule__ValuedObjectReference__Group_1__0();
 
             	    state._fsp--;
@@ -69632,7 +69632,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:20556:1: ( rule__ScheduleObjectReference__Group__0__Impl rule__ScheduleObjectReference__Group__1 )
             // InternalKiCool.g:20557:2: rule__ScheduleObjectReference__Group__0__Impl rule__ScheduleObjectReference__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_126);
+            pushFollow(FollowSets000.FOLLOW_127);
             rule__ScheduleObjectReference__Group__0__Impl();
 
             state._fsp--;
@@ -69805,7 +69805,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:20610:1: ( rule__ReferenceCall__Group__0__Impl rule__ReferenceCall__Group__1 )
             // InternalKiCool.g:20611:2: rule__ReferenceCall__Group__0__Impl rule__ReferenceCall__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_74);
+            pushFollow(FollowSets000.FOLLOW_75);
             rule__ReferenceCall__Group__0__Impl();
 
             state._fsp--;
@@ -69894,7 +69894,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:20637:1: ( rule__ReferenceCall__Group__1__Impl rule__ReferenceCall__Group__2 )
             // InternalKiCool.g:20638:2: rule__ReferenceCall__Group__1__Impl rule__ReferenceCall__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_74);
+            pushFollow(FollowSets000.FOLLOW_75);
             rule__ReferenceCall__Group__1__Impl();
 
             state._fsp--;
@@ -69953,7 +69953,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // InternalKiCool.g:20652:3: rule__ReferenceCall__Group_1__0
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_65);
+            	    pushFollow(FollowSets000.FOLLOW_66);
             	    rule__ReferenceCall__Group_1__0();
 
             	    state._fsp--;
@@ -70001,7 +70001,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:20664:1: ( rule__ReferenceCall__Group__2__Impl rule__ReferenceCall__Group__3 )
             // InternalKiCool.g:20665:2: rule__ReferenceCall__Group__2__Impl rule__ReferenceCall__Group__3
             {
-            pushFollow(FollowSets000.FOLLOW_74);
+            pushFollow(FollowSets000.FOLLOW_75);
             rule__ReferenceCall__Group__2__Impl();
 
             state._fsp--;
@@ -70590,7 +70590,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:20853:1: ( rule__ReferenceCall__Group_3_0__0__Impl rule__ReferenceCall__Group_3_0__1 )
             // InternalKiCool.g:20854:2: rule__ReferenceCall__Group_3_0__0__Impl rule__ReferenceCall__Group_3_0__1
             {
-            pushFollow(FollowSets000.FOLLOW_75);
+            pushFollow(FollowSets000.FOLLOW_76);
             rule__ReferenceCall__Group_3_0__0__Impl();
 
             state._fsp--;
@@ -70669,7 +70669,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:20880:1: ( rule__ReferenceCall__Group_3_0__1__Impl rule__ReferenceCall__Group_3_0__2 )
             // InternalKiCool.g:20881:2: rule__ReferenceCall__Group_3_0__1__Impl rule__ReferenceCall__Group_3_0__2
             {
-            pushFollow(FollowSets000.FOLLOW_53);
+            pushFollow(FollowSets000.FOLLOW_54);
             rule__ReferenceCall__Group_3_0__1__Impl();
 
             state._fsp--;
@@ -70758,7 +70758,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:20907:1: ( rule__ReferenceCall__Group_3_0__2__Impl rule__ReferenceCall__Group_3_0__3 )
             // InternalKiCool.g:20908:2: rule__ReferenceCall__Group_3_0__2__Impl rule__ReferenceCall__Group_3_0__3
             {
-            pushFollow(FollowSets000.FOLLOW_53);
+            pushFollow(FollowSets000.FOLLOW_54);
             rule__ReferenceCall__Group_3_0__2__Impl();
 
             state._fsp--;
@@ -70939,7 +70939,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:20961:1: ( rule__ReferenceCall__Group_3_0_2__0__Impl rule__ReferenceCall__Group_3_0_2__1 )
             // InternalKiCool.g:20962:2: rule__ReferenceCall__Group_3_0_2__0__Impl rule__ReferenceCall__Group_3_0_2__1
             {
-            pushFollow(FollowSets000.FOLLOW_75);
+            pushFollow(FollowSets000.FOLLOW_76);
             rule__ReferenceCall__Group_3_0_2__0__Impl();
 
             state._fsp--;
@@ -71102,7 +71102,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:21015:1: ( rule__RandomCall__Group__0__Impl rule__RandomCall__Group__1 )
             // InternalKiCool.g:21016:2: rule__RandomCall__Group__0__Impl rule__RandomCall__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_127);
+            pushFollow(FollowSets000.FOLLOW_128);
             rule__RandomCall__Group__0__Impl();
 
             state._fsp--;
@@ -71181,7 +71181,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:21042:1: ( rule__RandomCall__Group__1__Impl rule__RandomCall__Group__2 )
             // InternalKiCool.g:21043:2: rule__RandomCall__Group__1__Impl rule__RandomCall__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_128);
+            pushFollow(FollowSets000.FOLLOW_129);
             rule__RandomCall__Group__1__Impl();
 
             state._fsp--;
@@ -71351,7 +71351,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:21096:1: ( rule__RandomizeCall__Group__0__Impl rule__RandomizeCall__Group__1 )
             // InternalKiCool.g:21097:2: rule__RandomizeCall__Group__0__Impl rule__RandomizeCall__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_129);
+            pushFollow(FollowSets000.FOLLOW_130);
             rule__RandomizeCall__Group__0__Impl();
 
             state._fsp--;
@@ -71430,7 +71430,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:21123:1: ( rule__RandomizeCall__Group__1__Impl rule__RandomizeCall__Group__2 )
             // InternalKiCool.g:21124:2: rule__RandomizeCall__Group__1__Impl rule__RandomizeCall__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_128);
+            pushFollow(FollowSets000.FOLLOW_129);
             rule__RandomizeCall__Group__1__Impl();
 
             state._fsp--;
@@ -71679,7 +71679,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:21204:1: ( rule__FunctionCall__Group__1__Impl rule__FunctionCall__Group__2 )
             // InternalKiCool.g:21205:2: rule__FunctionCall__Group__1__Impl rule__FunctionCall__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_50);
+            pushFollow(FollowSets000.FOLLOW_51);
             rule__FunctionCall__Group__1__Impl();
 
             state._fsp--;
@@ -71852,7 +71852,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:21258:1: ( rule__FunctionCall__Group_2_0__0__Impl rule__FunctionCall__Group_2_0__1 )
             // InternalKiCool.g:21259:2: rule__FunctionCall__Group_2_0__0__Impl rule__FunctionCall__Group_2_0__1
             {
-            pushFollow(FollowSets000.FOLLOW_75);
+            pushFollow(FollowSets000.FOLLOW_76);
             rule__FunctionCall__Group_2_0__0__Impl();
 
             state._fsp--;
@@ -71931,7 +71931,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:21285:1: ( rule__FunctionCall__Group_2_0__1__Impl rule__FunctionCall__Group_2_0__2 )
             // InternalKiCool.g:21286:2: rule__FunctionCall__Group_2_0__1__Impl rule__FunctionCall__Group_2_0__2
             {
-            pushFollow(FollowSets000.FOLLOW_53);
+            pushFollow(FollowSets000.FOLLOW_54);
             rule__FunctionCall__Group_2_0__1__Impl();
 
             state._fsp--;
@@ -72020,7 +72020,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:21312:1: ( rule__FunctionCall__Group_2_0__2__Impl rule__FunctionCall__Group_2_0__3 )
             // InternalKiCool.g:21313:2: rule__FunctionCall__Group_2_0__2__Impl rule__FunctionCall__Group_2_0__3
             {
-            pushFollow(FollowSets000.FOLLOW_53);
+            pushFollow(FollowSets000.FOLLOW_54);
             rule__FunctionCall__Group_2_0__2__Impl();
 
             state._fsp--;
@@ -72201,7 +72201,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:21366:1: ( rule__FunctionCall__Group_2_0_2__0__Impl rule__FunctionCall__Group_2_0_2__1 )
             // InternalKiCool.g:21367:2: rule__FunctionCall__Group_2_0_2__0__Impl rule__FunctionCall__Group_2_0_2__1
             {
-            pushFollow(FollowSets000.FOLLOW_75);
+            pushFollow(FollowSets000.FOLLOW_76);
             rule__FunctionCall__Group_2_0_2__0__Impl();
 
             state._fsp--;
@@ -72364,7 +72364,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:21420:1: ( rule__Parameter__Group__0__Impl rule__Parameter__Group__1 )
             // InternalKiCool.g:21421:2: rule__Parameter__Group__0__Impl rule__Parameter__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_75);
+            pushFollow(FollowSets000.FOLLOW_76);
             rule__Parameter__Group__0__Impl();
 
             state._fsp--;
@@ -72555,7 +72555,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:21474:1: ( rule__Parameter__Group_0__0__Impl rule__Parameter__Group_0__1 )
             // InternalKiCool.g:21475:2: rule__Parameter__Group_0__0__Impl rule__Parameter__Group_0__1
             {
-            pushFollow(FollowSets000.FOLLOW_130);
+            pushFollow(FollowSets000.FOLLOW_131);
             rule__Parameter__Group_0__0__Impl();
 
             state._fsp--;
@@ -72739,7 +72739,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:21528:1: ( rule__TextExpression__Group__0__Impl rule__TextExpression__Group__1 )
             // InternalKiCool.g:21529:2: rule__TextExpression__Group__0__Impl rule__TextExpression__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_113);
+            pushFollow(FollowSets000.FOLLOW_114);
             rule__TextExpression__Group__0__Impl();
 
             state._fsp--;
@@ -72930,7 +72930,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:21582:1: ( rule__VectorValue__Group__0__Impl rule__VectorValue__Group__1 )
             // InternalKiCool.g:21583:2: rule__VectorValue__Group__0__Impl rule__VectorValue__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_131);
+            pushFollow(FollowSets000.FOLLOW_132);
             rule__VectorValue__Group__0__Impl();
 
             state._fsp--;
@@ -73009,7 +73009,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:21609:1: ( rule__VectorValue__Group__1__Impl rule__VectorValue__Group__2 )
             // InternalKiCool.g:21610:2: rule__VectorValue__Group__1__Impl rule__VectorValue__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_63);
+            pushFollow(FollowSets000.FOLLOW_64);
             rule__VectorValue__Group__1__Impl();
 
             state._fsp--;
@@ -73098,7 +73098,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:21636:1: ( rule__VectorValue__Group__2__Impl rule__VectorValue__Group__3 )
             // InternalKiCool.g:21637:2: rule__VectorValue__Group__2__Impl rule__VectorValue__Group__3
             {
-            pushFollow(FollowSets000.FOLLOW_63);
+            pushFollow(FollowSets000.FOLLOW_64);
             rule__VectorValue__Group__2__Impl();
 
             state._fsp--;
@@ -73279,7 +73279,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:21690:1: ( rule__VectorValue__Group_2__0__Impl rule__VectorValue__Group_2__1 )
             // InternalKiCool.g:21691:2: rule__VectorValue__Group_2__0__Impl rule__VectorValue__Group_2__1
             {
-            pushFollow(FollowSets000.FOLLOW_131);
+            pushFollow(FollowSets000.FOLLOW_132);
             rule__VectorValue__Group_2__0__Impl();
 
             state._fsp--;
@@ -73442,7 +73442,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:21744:1: ( rule__IgnoreValue__Group__0__Impl rule__IgnoreValue__Group__1 )
             // InternalKiCool.g:21745:2: rule__IgnoreValue__Group__0__Impl rule__IgnoreValue__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_131);
+            pushFollow(FollowSets000.FOLLOW_132);
             rule__IgnoreValue__Group__0__Impl();
 
             state._fsp--;
@@ -73674,7 +73674,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:21825:1: ( rule__JsonObjectValue__Group__1__Impl rule__JsonObjectValue__Group__2 )
             // InternalKiCool.g:21826:2: rule__JsonObjectValue__Group__1__Impl rule__JsonObjectValue__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_132);
+            pushFollow(FollowSets000.FOLLOW_133);
             rule__JsonObjectValue__Group__1__Impl();
 
             state._fsp--;
@@ -73753,7 +73753,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:21852:1: ( rule__JsonObjectValue__Group__2__Impl rule__JsonObjectValue__Group__3 )
             // InternalKiCool.g:21853:2: rule__JsonObjectValue__Group__2__Impl rule__JsonObjectValue__Group__3
             {
-            pushFollow(FollowSets000.FOLLOW_132);
+            pushFollow(FollowSets000.FOLLOW_133);
             rule__JsonObjectValue__Group__2__Impl();
 
             state._fsp--;
@@ -73927,7 +73927,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:21906:1: ( rule__JsonObjectValue__Group_2__0__Impl rule__JsonObjectValue__Group_2__1 )
             // InternalKiCool.g:21907:2: rule__JsonObjectValue__Group_2__0__Impl rule__JsonObjectValue__Group_2__1
             {
-            pushFollow(FollowSets000.FOLLOW_47);
+            pushFollow(FollowSets000.FOLLOW_48);
             rule__JsonObjectValue__Group_2__0__Impl();
 
             state._fsp--;
@@ -74281,7 +74281,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:22014:1: ( rule__JsonObjectMember__Group__0__Impl rule__JsonObjectMember__Group__1 )
             // InternalKiCool.g:22015:2: rule__JsonObjectMember__Group__0__Impl rule__JsonObjectMember__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_56);
+            pushFollow(FollowSets000.FOLLOW_57);
             rule__JsonObjectMember__Group__0__Impl();
 
             state._fsp--;
@@ -74370,7 +74370,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:22041:1: ( rule__JsonObjectMember__Group__1__Impl rule__JsonObjectMember__Group__2 )
             // InternalKiCool.g:22042:2: rule__JsonObjectMember__Group__1__Impl rule__JsonObjectMember__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_133);
+            pushFollow(FollowSets000.FOLLOW_134);
             rule__JsonObjectMember__Group__1__Impl();
 
             state._fsp--;
@@ -74533,7 +74533,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:22095:1: ( rule__JsonArrayValue__Group__0__Impl rule__JsonArrayValue__Group__1 )
             // InternalKiCool.g:22096:2: rule__JsonArrayValue__Group__0__Impl rule__JsonArrayValue__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_134);
+            pushFollow(FollowSets000.FOLLOW_135);
             rule__JsonArrayValue__Group__0__Impl();
 
             state._fsp--;
@@ -74612,7 +74612,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:22122:1: ( rule__JsonArrayValue__Group__1__Impl rule__JsonArrayValue__Group__2 )
             // InternalKiCool.g:22123:2: rule__JsonArrayValue__Group__1__Impl rule__JsonArrayValue__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_135);
+            pushFollow(FollowSets000.FOLLOW_136);
             rule__JsonArrayValue__Group__1__Impl();
 
             state._fsp--;
@@ -74691,7 +74691,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:22149:1: ( rule__JsonArrayValue__Group__2__Impl rule__JsonArrayValue__Group__3 )
             // InternalKiCool.g:22150:2: rule__JsonArrayValue__Group__2__Impl rule__JsonArrayValue__Group__3
             {
-            pushFollow(FollowSets000.FOLLOW_135);
+            pushFollow(FollowSets000.FOLLOW_136);
             rule__JsonArrayValue__Group__2__Impl();
 
             state._fsp--;
@@ -74865,7 +74865,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:22203:1: ( rule__JsonArrayValue__Group_2__0__Impl rule__JsonArrayValue__Group_2__1 )
             // InternalKiCool.g:22204:2: rule__JsonArrayValue__Group_2__0__Impl rule__JsonArrayValue__Group_2__1
             {
-            pushFollow(FollowSets000.FOLLOW_47);
+            pushFollow(FollowSets000.FOLLOW_48);
             rule__JsonArrayValue__Group_2__0__Impl();
 
             state._fsp--;
@@ -75056,7 +75056,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:22257:1: ( rule__JsonArrayValue__Group_2_1__0__Impl rule__JsonArrayValue__Group_2_1__1 )
             // InternalKiCool.g:22258:2: rule__JsonArrayValue__Group_2_1__0__Impl rule__JsonArrayValue__Group_2_1__1
             {
-            pushFollow(FollowSets000.FOLLOW_133);
+            pushFollow(FollowSets000.FOLLOW_134);
             rule__JsonArrayValue__Group_2_1__0__Impl();
 
             state._fsp--;
@@ -75219,7 +75219,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:22311:1: ( rule__NullValue__Group__0__Impl rule__NullValue__Group__1 )
             // InternalKiCool.g:22312:2: rule__NullValue__Group__0__Impl rule__NullValue__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_136);
+            pushFollow(FollowSets000.FOLLOW_137);
             rule__NullValue__Group__0__Impl();
 
             state._fsp--;
@@ -76281,7 +76281,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:22662:1: ( rule__KeyStringValueAnnotation__Group__1__Impl rule__KeyStringValueAnnotation__Group__2 )
             // InternalKiCool.g:22663:2: rule__KeyStringValueAnnotation__Group__1__Impl rule__KeyStringValueAnnotation__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_137);
+            pushFollow(FollowSets000.FOLLOW_138);
             rule__KeyStringValueAnnotation__Group__1__Impl();
 
             state._fsp--;
@@ -76370,7 +76370,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:22689:1: ( rule__KeyStringValueAnnotation__Group__2__Impl rule__KeyStringValueAnnotation__Group__3 )
             // InternalKiCool.g:22690:2: rule__KeyStringValueAnnotation__Group__2__Impl rule__KeyStringValueAnnotation__Group__3
             {
-            pushFollow(FollowSets000.FOLLOW_47);
+            pushFollow(FollowSets000.FOLLOW_48);
             rule__KeyStringValueAnnotation__Group__2__Impl();
 
             state._fsp--;
@@ -76561,7 +76561,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:22743:1: ( rule__KeyStringValueAnnotation__Group_3__0__Impl rule__KeyStringValueAnnotation__Group_3__1 )
             // InternalKiCool.g:22744:2: rule__KeyStringValueAnnotation__Group_3__0__Impl rule__KeyStringValueAnnotation__Group_3__1
             {
-            pushFollow(FollowSets000.FOLLOW_137);
+            pushFollow(FollowSets000.FOLLOW_138);
             rule__KeyStringValueAnnotation__Group_3__0__Impl();
 
             state._fsp--;
@@ -76803,7 +76803,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:22824:1: ( rule__RestrictedKeyStringValueAnnotation__Group__1__Impl rule__RestrictedKeyStringValueAnnotation__Group__2 )
             // InternalKiCool.g:22825:2: rule__RestrictedKeyStringValueAnnotation__Group__1__Impl rule__RestrictedKeyStringValueAnnotation__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_138);
+            pushFollow(FollowSets000.FOLLOW_139);
             rule__RestrictedKeyStringValueAnnotation__Group__1__Impl();
 
             state._fsp--;
@@ -76892,7 +76892,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:22851:1: ( rule__RestrictedKeyStringValueAnnotation__Group__2__Impl rule__RestrictedKeyStringValueAnnotation__Group__3 )
             // InternalKiCool.g:22852:2: rule__RestrictedKeyStringValueAnnotation__Group__2__Impl rule__RestrictedKeyStringValueAnnotation__Group__3
             {
-            pushFollow(FollowSets000.FOLLOW_47);
+            pushFollow(FollowSets000.FOLLOW_48);
             rule__RestrictedKeyStringValueAnnotation__Group__2__Impl();
 
             state._fsp--;
@@ -77083,7 +77083,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:22905:1: ( rule__RestrictedKeyStringValueAnnotation__Group_3__0__Impl rule__RestrictedKeyStringValueAnnotation__Group_3__1 )
             // InternalKiCool.g:22906:2: rule__RestrictedKeyStringValueAnnotation__Group_3__0__Impl rule__RestrictedKeyStringValueAnnotation__Group_3__1
             {
-            pushFollow(FollowSets000.FOLLOW_138);
+            pushFollow(FollowSets000.FOLLOW_139);
             rule__RestrictedKeyStringValueAnnotation__Group_3__0__Impl();
 
             state._fsp--;
@@ -77325,7 +77325,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:22986:1: ( rule__StringPragma__Group__1__Impl rule__StringPragma__Group__2 )
             // InternalKiCool.g:22987:2: rule__StringPragma__Group__1__Impl rule__StringPragma__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_137);
+            pushFollow(FollowSets000.FOLLOW_138);
             rule__StringPragma__Group__1__Impl();
 
             state._fsp--;
@@ -77414,7 +77414,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:23013:1: ( rule__StringPragma__Group__2__Impl rule__StringPragma__Group__3 )
             // InternalKiCool.g:23014:2: rule__StringPragma__Group__2__Impl rule__StringPragma__Group__3
             {
-            pushFollow(FollowSets000.FOLLOW_47);
+            pushFollow(FollowSets000.FOLLOW_48);
             rule__StringPragma__Group__2__Impl();
 
             state._fsp--;
@@ -77605,7 +77605,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:23067:1: ( rule__StringPragma__Group_3__0__Impl rule__StringPragma__Group_3__1 )
             // InternalKiCool.g:23068:2: rule__StringPragma__Group_3__0__Impl rule__StringPragma__Group_3__1
             {
-            pushFollow(FollowSets000.FOLLOW_137);
+            pushFollow(FollowSets000.FOLLOW_138);
             rule__StringPragma__Group_3__0__Impl();
 
             state._fsp--;
@@ -77847,7 +77847,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:23148:1: ( rule__TypedKeyStringValueAnnotation__Group__1__Impl rule__TypedKeyStringValueAnnotation__Group__2 )
             // InternalKiCool.g:23149:2: rule__TypedKeyStringValueAnnotation__Group__1__Impl rule__TypedKeyStringValueAnnotation__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_134);
+            pushFollow(FollowSets000.FOLLOW_135);
             rule__TypedKeyStringValueAnnotation__Group__1__Impl();
 
             state._fsp--;
@@ -78104,7 +78104,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:23229:1: ( rule__TypedKeyStringValueAnnotation__Group__4__Impl rule__TypedKeyStringValueAnnotation__Group__5 )
             // InternalKiCool.g:23230:2: rule__TypedKeyStringValueAnnotation__Group__4__Impl rule__TypedKeyStringValueAnnotation__Group__5
             {
-            pushFollow(FollowSets000.FOLLOW_137);
+            pushFollow(FollowSets000.FOLLOW_138);
             rule__TypedKeyStringValueAnnotation__Group__4__Impl();
 
             state._fsp--;
@@ -78183,7 +78183,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:23256:1: ( rule__TypedKeyStringValueAnnotation__Group__5__Impl rule__TypedKeyStringValueAnnotation__Group__6 )
             // InternalKiCool.g:23257:2: rule__TypedKeyStringValueAnnotation__Group__5__Impl rule__TypedKeyStringValueAnnotation__Group__6
             {
-            pushFollow(FollowSets000.FOLLOW_47);
+            pushFollow(FollowSets000.FOLLOW_48);
             rule__TypedKeyStringValueAnnotation__Group__5__Impl();
 
             state._fsp--;
@@ -78374,7 +78374,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:23310:1: ( rule__TypedKeyStringValueAnnotation__Group_6__0__Impl rule__TypedKeyStringValueAnnotation__Group_6__1 )
             // InternalKiCool.g:23311:2: rule__TypedKeyStringValueAnnotation__Group_6__0__Impl rule__TypedKeyStringValueAnnotation__Group_6__1
             {
-            pushFollow(FollowSets000.FOLLOW_137);
+            pushFollow(FollowSets000.FOLLOW_138);
             rule__TypedKeyStringValueAnnotation__Group_6__0__Impl();
 
             state._fsp--;
@@ -78616,7 +78616,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:23391:1: ( rule__RestrictedTypedKeyStringValueAnnotation__Group__1__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__2 )
             // InternalKiCool.g:23392:2: rule__RestrictedTypedKeyStringValueAnnotation__Group__1__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_134);
+            pushFollow(FollowSets000.FOLLOW_135);
             rule__RestrictedTypedKeyStringValueAnnotation__Group__1__Impl();
 
             state._fsp--;
@@ -78873,7 +78873,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:23472:1: ( rule__RestrictedTypedKeyStringValueAnnotation__Group__4__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__5 )
             // InternalKiCool.g:23473:2: rule__RestrictedTypedKeyStringValueAnnotation__Group__4__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__5
             {
-            pushFollow(FollowSets000.FOLLOW_138);
+            pushFollow(FollowSets000.FOLLOW_139);
             rule__RestrictedTypedKeyStringValueAnnotation__Group__4__Impl();
 
             state._fsp--;
@@ -78952,7 +78952,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:23499:1: ( rule__RestrictedTypedKeyStringValueAnnotation__Group__5__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__6 )
             // InternalKiCool.g:23500:2: rule__RestrictedTypedKeyStringValueAnnotation__Group__5__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__6
             {
-            pushFollow(FollowSets000.FOLLOW_47);
+            pushFollow(FollowSets000.FOLLOW_48);
             rule__RestrictedTypedKeyStringValueAnnotation__Group__5__Impl();
 
             state._fsp--;
@@ -79143,7 +79143,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:23553:1: ( rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group_6__1 )
             // InternalKiCool.g:23554:2: rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group_6__1
             {
-            pushFollow(FollowSets000.FOLLOW_138);
+            pushFollow(FollowSets000.FOLLOW_139);
             rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0__Impl();
 
             state._fsp--;
@@ -79474,7 +79474,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:23661:1: ( rule__QuotedKeyStringValueAnnotation__Group__2__Impl rule__QuotedKeyStringValueAnnotation__Group__3 )
             // InternalKiCool.g:23662:2: rule__QuotedKeyStringValueAnnotation__Group__2__Impl rule__QuotedKeyStringValueAnnotation__Group__3
             {
-            pushFollow(FollowSets000.FOLLOW_47);
+            pushFollow(FollowSets000.FOLLOW_48);
             rule__QuotedKeyStringValueAnnotation__Group__2__Impl();
 
             state._fsp--;
@@ -79907,7 +79907,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:23796:1: ( rule__QuotedTypedKeyStringValueAnnotation__Group__1__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__2 )
             // InternalKiCool.g:23797:2: rule__QuotedTypedKeyStringValueAnnotation__Group__1__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_134);
+            pushFollow(FollowSets000.FOLLOW_135);
             rule__QuotedTypedKeyStringValueAnnotation__Group__1__Impl();
 
             state._fsp--;
@@ -80243,7 +80243,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:23904:1: ( rule__QuotedTypedKeyStringValueAnnotation__Group__5__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__6 )
             // InternalKiCool.g:23905:2: rule__QuotedTypedKeyStringValueAnnotation__Group__5__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__6
             {
-            pushFollow(FollowSets000.FOLLOW_47);
+            pushFollow(FollowSets000.FOLLOW_48);
             rule__QuotedTypedKeyStringValueAnnotation__Group__5__Impl();
 
             state._fsp--;
@@ -80597,7 +80597,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:24012:1: ( rule__ExtendedID__Group__0__Impl rule__ExtendedID__Group__1 )
             // InternalKiCool.g:24013:2: rule__ExtendedID__Group__0__Impl rule__ExtendedID__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_139);
+            pushFollow(FollowSets000.FOLLOW_140);
             rule__ExtendedID__Group__0__Impl();
 
             state._fsp--;
@@ -80676,7 +80676,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:24039:1: ( rule__ExtendedID__Group__1__Impl rule__ExtendedID__Group__2 )
             // InternalKiCool.g:24040:2: rule__ExtendedID__Group__1__Impl rule__ExtendedID__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_139);
+            pushFollow(FollowSets000.FOLLOW_140);
             rule__ExtendedID__Group__1__Impl();
 
             state._fsp--;
@@ -80744,7 +80744,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // InternalKiCool.g:24054:3: rule__ExtendedID__Group_1__0
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_140);
+            	    pushFollow(FollowSets000.FOLLOW_141);
             	    rule__ExtendedID__Group_1__0();
 
             	    state._fsp--;
@@ -81054,7 +81054,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:24147:1: ( rule__ExtendedID__Group_2__0__Impl rule__ExtendedID__Group_2__1 )
             // InternalKiCool.g:24148:2: rule__ExtendedID__Group_2__0__Impl rule__ExtendedID__Group_2__1
             {
-            pushFollow(FollowSets000.FOLLOW_126);
+            pushFollow(FollowSets000.FOLLOW_127);
             rule__ExtendedID__Group_2__0__Impl();
 
             state._fsp--;
@@ -81207,7 +81207,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:24201:1: ( rule__QualifiedID__Group__0__Impl rule__QualifiedID__Group__1 )
             // InternalKiCool.g:24202:2: rule__QualifiedID__Group__0__Impl rule__QualifiedID__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_141);
+            pushFollow(FollowSets000.FOLLOW_142);
             rule__QualifiedID__Group__0__Impl();
 
             state._fsp--;
@@ -81340,7 +81340,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // InternalKiCool.g:24242:3: rule__QualifiedID__Group_1__0
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_142);
+            	    pushFollow(FollowSets000.FOLLOW_143);
             	    rule__QualifiedID__Group_1__0();
 
             	    state._fsp--;
@@ -81541,7 +81541,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:24309:1: ( rule__Integer__Group__0__Impl rule__Integer__Group__1 )
             // InternalKiCool.g:24310:2: rule__Integer__Group__0__Impl rule__Integer__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_143);
+            pushFollow(FollowSets000.FOLLOW_144);
             rule__Integer__Group__0__Impl();
 
             state._fsp--;
@@ -81711,7 +81711,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:24363:1: ( rule__Floateger__Group__0__Impl rule__Floateger__Group__1 )
             // InternalKiCool.g:24364:2: rule__Floateger__Group__0__Impl rule__Floateger__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_137);
+            pushFollow(FollowSets000.FOLLOW_138);
             rule__Floateger__Group__0__Impl();
 
             state._fsp--;
@@ -85850,24 +85850,28 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ClassDeclaration__NameAssignment_9_0_1"
-    // InternalKiCool.g:25773:1: rule__ClassDeclaration__NameAssignment_9_0_1 : ( RULE_ID ) ;
+    // InternalKiCool.g:25773:1: rule__ClassDeclaration__NameAssignment_9_0_1 : ( ruleEString ) ;
     public final void rule__ClassDeclaration__NameAssignment_9_0_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:25777:1: ( ( RULE_ID ) )
-            // InternalKiCool.g:25778:2: ( RULE_ID )
+            // InternalKiCool.g:25777:1: ( ( ruleEString ) )
+            // InternalKiCool.g:25778:2: ( ruleEString )
             {
-            // InternalKiCool.g:25778:2: ( RULE_ID )
-            // InternalKiCool.g:25779:3: RULE_ID
+            // InternalKiCool.g:25778:2: ( ruleEString )
+            // InternalKiCool.g:25779:3: ruleEString
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getClassDeclarationAccess().getNameIDTerminalRuleCall_9_0_1_0()); 
+               before(grammarAccess.getClassDeclarationAccess().getNameEStringParserRuleCall_9_0_1_0()); 
             }
-            match(input,RULE_ID,FollowSets000.FOLLOW_2); if (state.failed) return ;
+            pushFollow(FollowSets000.FOLLOW_2);
+            ruleEString();
+
+            state._fsp--;
+            if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getClassDeclarationAccess().getNameIDTerminalRuleCall_9_0_1_0()); 
+               after(grammarAccess.getClassDeclarationAccess().getNameEStringParserRuleCall_9_0_1_0()); 
             }
 
             }
@@ -85981,24 +85985,28 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ClassDeclaration__NameAssignment_9_1_1"
-    // InternalKiCool.g:25818:1: rule__ClassDeclaration__NameAssignment_9_1_1 : ( RULE_ID ) ;
+    // InternalKiCool.g:25818:1: rule__ClassDeclaration__NameAssignment_9_1_1 : ( ruleEString ) ;
     public final void rule__ClassDeclaration__NameAssignment_9_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:25822:1: ( ( RULE_ID ) )
-            // InternalKiCool.g:25823:2: ( RULE_ID )
+            // InternalKiCool.g:25822:1: ( ( ruleEString ) )
+            // InternalKiCool.g:25823:2: ( ruleEString )
             {
-            // InternalKiCool.g:25823:2: ( RULE_ID )
-            // InternalKiCool.g:25824:3: RULE_ID
+            // InternalKiCool.g:25823:2: ( ruleEString )
+            // InternalKiCool.g:25824:3: ruleEString
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getClassDeclarationAccess().getNameIDTerminalRuleCall_9_1_1_0()); 
+               before(grammarAccess.getClassDeclarationAccess().getNameEStringParserRuleCall_9_1_1_0()); 
             }
-            match(input,RULE_ID,FollowSets000.FOLLOW_2); if (state.failed) return ;
+            pushFollow(FollowSets000.FOLLOW_2);
+            ruleEString();
+
+            state._fsp--;
+            if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getClassDeclarationAccess().getNameIDTerminalRuleCall_9_1_1_0()); 
+               after(grammarAccess.getClassDeclarationAccess().getNameEStringParserRuleCall_9_1_1_0()); 
             }
 
             }
@@ -86655,24 +86663,28 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ClassDeclarationWOSemicolon__NameAssignment_9_0_1"
-    // InternalKiCool.g:26052:1: rule__ClassDeclarationWOSemicolon__NameAssignment_9_0_1 : ( RULE_ID ) ;
+    // InternalKiCool.g:26052:1: rule__ClassDeclarationWOSemicolon__NameAssignment_9_0_1 : ( ruleEString ) ;
     public final void rule__ClassDeclarationWOSemicolon__NameAssignment_9_0_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:26056:1: ( ( RULE_ID ) )
-            // InternalKiCool.g:26057:2: ( RULE_ID )
+            // InternalKiCool.g:26056:1: ( ( ruleEString ) )
+            // InternalKiCool.g:26057:2: ( ruleEString )
             {
-            // InternalKiCool.g:26057:2: ( RULE_ID )
-            // InternalKiCool.g:26058:3: RULE_ID
+            // InternalKiCool.g:26057:2: ( ruleEString )
+            // InternalKiCool.g:26058:3: ruleEString
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getClassDeclarationWOSemicolonAccess().getNameIDTerminalRuleCall_9_0_1_0()); 
+               before(grammarAccess.getClassDeclarationWOSemicolonAccess().getNameEStringParserRuleCall_9_0_1_0()); 
             }
-            match(input,RULE_ID,FollowSets000.FOLLOW_2); if (state.failed) return ;
+            pushFollow(FollowSets000.FOLLOW_2);
+            ruleEString();
+
+            state._fsp--;
+            if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getClassDeclarationWOSemicolonAccess().getNameIDTerminalRuleCall_9_0_1_0()); 
+               after(grammarAccess.getClassDeclarationWOSemicolonAccess().getNameEStringParserRuleCall_9_0_1_0()); 
             }
 
             }
@@ -86786,24 +86798,28 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ClassDeclarationWOSemicolon__NameAssignment_9_1_1"
-    // InternalKiCool.g:26097:1: rule__ClassDeclarationWOSemicolon__NameAssignment_9_1_1 : ( RULE_ID ) ;
+    // InternalKiCool.g:26097:1: rule__ClassDeclarationWOSemicolon__NameAssignment_9_1_1 : ( ruleEString ) ;
     public final void rule__ClassDeclarationWOSemicolon__NameAssignment_9_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:26101:1: ( ( RULE_ID ) )
-            // InternalKiCool.g:26102:2: ( RULE_ID )
+            // InternalKiCool.g:26101:1: ( ( ruleEString ) )
+            // InternalKiCool.g:26102:2: ( ruleEString )
             {
-            // InternalKiCool.g:26102:2: ( RULE_ID )
-            // InternalKiCool.g:26103:3: RULE_ID
+            // InternalKiCool.g:26102:2: ( ruleEString )
+            // InternalKiCool.g:26103:3: ruleEString
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getClassDeclarationWOSemicolonAccess().getNameIDTerminalRuleCall_9_1_1_0()); 
+               before(grammarAccess.getClassDeclarationWOSemicolonAccess().getNameEStringParserRuleCall_9_1_1_0()); 
             }
-            match(input,RULE_ID,FollowSets000.FOLLOW_2); if (state.failed) return ;
+            pushFollow(FollowSets000.FOLLOW_2);
+            ruleEString();
+
+            state._fsp--;
+            if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getClassDeclarationWOSemicolonAccess().getNameIDTerminalRuleCall_9_1_1_0()); 
+               after(grammarAccess.getClassDeclarationWOSemicolonAccess().getNameEStringParserRuleCall_9_1_1_0()); 
             }
 
             }
@@ -101226,31 +101242,31 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             return "4426:1: rule__QuotedStringAnnotation__Alternatives : ( ( superQuotedStringAnnotation ) | ( ruleJsonAnnotation ) );";
         }
     }
-    static final String dfa_73s = "\3\uffff\1\7\4\uffff\1\12\2\uffff\2\7\1\uffff\1\12\1\uffff\1\12\1\uffff\1\12\1\uffff";
+    static final String dfa_73s = "\3\uffff\1\11\4\uffff\1\7\2\uffff\2\11\1\uffff\1\7\1\uffff\1\7\1\uffff\1\7\1\uffff";
     static final String dfa_74s = "\1\12\1\uffff\1\6\1\4\2\6\1\7\1\uffff\1\6\2\uffff\2\4\6\6\1\0";
     static final String dfa_75s = "\1\157\1\uffff\1\6\1\167\1\6\1\10\1\7\1\uffff\1\167\2\uffff\2\167\1\6\1\167\1\6\1\167\1\6\1\167\1\0";
-    static final String dfa_76s = "\1\uffff\1\1\5\uffff\1\4\1\uffff\1\3\1\2\11\uffff";
+    static final String dfa_76s = "\1\uffff\1\1\5\uffff\1\2\1\uffff\1\4\1\3\11\uffff";
     static final String dfa_77s = "\23\uffff\1\0}>";
     static final String[] dfa_78s = {
             "\1\1\144\uffff\1\2",
             "",
             "\1\3",
-            "\2\12\1\10\2\12\2\7\15\uffff\1\5\15\uffff\3\7\1\uffff\1\4\30\uffff\5\7\3\uffff\5\7\5\uffff\1\11\6\uffff\2\7\4\uffff\1\7\1\uffff\3\7\1\uffff\2\7\4\uffff\1\6\3\7\1\uffff\5\7",
+            "\2\7\1\10\2\7\2\11\15\uffff\1\5\15\uffff\3\11\1\uffff\1\4\30\uffff\5\11\3\uffff\5\11\5\uffff\1\12\6\uffff\2\11\4\uffff\1\11\1\uffff\3\11\1\uffff\2\11\4\uffff\1\6\3\11\1\uffff\5\11",
             "\1\13",
-            "\1\13\2\12",
+            "\1\13\2\7",
             "\1\14",
             "",
-            "\1\12\2\uffff\2\12\15\uffff\1\12\15\uffff\3\12\1\7\1\15\2\uffff\20\7\6\uffff\5\12\3\uffff\5\12\5\uffff\1\7\6\uffff\2\12\1\uffff\1\12\1\7\1\uffff\1\12\1\uffff\3\12\1\uffff\2\12\1\7\3\uffff\4\12\1\uffff\5\12",
+            "\1\7\2\uffff\2\7\15\uffff\1\7\15\uffff\3\7\1\11\1\15\2\uffff\20\11\6\uffff\5\7\3\uffff\5\7\5\uffff\1\11\6\uffff\2\7\1\uffff\1\7\1\11\1\uffff\1\7\1\uffff\3\7\1\uffff\2\7\1\11\3\uffff\4\7\1\uffff\5\7",
             "",
             "",
-            "\2\12\1\10\2\12\2\7\15\uffff\1\5\15\uffff\3\7\1\uffff\1\4\30\uffff\5\7\3\uffff\5\7\5\uffff\1\11\6\uffff\2\7\4\uffff\1\7\1\uffff\3\7\1\uffff\2\7\4\uffff\1\6\3\7\1\uffff\5\7",
-            "\2\12\1\10\2\12\2\7\15\uffff\1\12\15\uffff\3\7\32\uffff\5\7\3\uffff\5\7\5\uffff\1\11\6\uffff\2\7\4\uffff\1\7\1\uffff\3\7\1\uffff\2\7\5\uffff\3\7\1\uffff\5\7",
+            "\2\7\1\10\2\7\2\11\15\uffff\1\5\15\uffff\3\11\1\uffff\1\4\30\uffff\5\11\3\uffff\5\11\5\uffff\1\12\6\uffff\2\11\4\uffff\1\11\1\uffff\3\11\1\uffff\2\11\4\uffff\1\6\3\11\1\uffff\5\11",
+            "\2\7\1\10\2\7\2\11\15\uffff\1\7\15\uffff\3\11\32\uffff\5\11\3\uffff\5\11\5\uffff\1\12\6\uffff\2\11\4\uffff\1\11\1\uffff\3\11\1\uffff\2\11\5\uffff\3\11\1\uffff\5\11",
             "\1\16",
-            "\1\12\2\uffff\2\12\15\uffff\1\12\15\uffff\3\12\1\7\1\17\2\uffff\20\7\6\uffff\5\12\3\uffff\5\12\5\uffff\1\7\6\uffff\2\12\1\uffff\1\12\1\7\1\uffff\1\12\1\uffff\3\12\1\uffff\2\12\1\7\3\uffff\4\12\1\uffff\5\12",
+            "\1\7\2\uffff\2\7\15\uffff\1\7\15\uffff\3\7\1\11\1\17\2\uffff\20\11\6\uffff\5\7\3\uffff\5\7\5\uffff\1\11\6\uffff\2\7\1\uffff\1\7\1\11\1\uffff\1\7\1\uffff\3\7\1\uffff\2\7\1\11\3\uffff\4\7\1\uffff\5\7",
             "\1\20",
-            "\1\12\2\uffff\2\12\15\uffff\1\12\15\uffff\3\12\1\7\1\21\2\uffff\20\7\6\uffff\5\12\3\uffff\5\12\5\uffff\1\7\6\uffff\2\12\1\uffff\1\12\1\7\1\uffff\1\12\1\uffff\3\12\1\uffff\2\12\1\7\3\uffff\4\12\1\uffff\5\12",
+            "\1\7\2\uffff\2\7\15\uffff\1\7\15\uffff\3\7\1\11\1\21\2\uffff\20\11\6\uffff\5\7\3\uffff\5\7\5\uffff\1\11\6\uffff\2\7\1\uffff\1\7\1\11\1\uffff\1\7\1\uffff\3\7\1\uffff\2\7\1\11\3\uffff\4\7\1\uffff\5\7",
             "\1\22",
-            "\1\12\2\uffff\2\12\15\uffff\1\12\15\uffff\3\12\1\7\1\23\2\uffff\20\7\6\uffff\5\12\3\uffff\5\12\5\uffff\1\7\6\uffff\2\12\1\uffff\1\12\1\7\1\uffff\1\12\1\uffff\3\12\1\uffff\2\12\1\7\3\uffff\4\12\1\uffff\5\12",
+            "\1\7\2\uffff\2\7\15\uffff\1\7\15\uffff\3\7\1\11\1\23\2\uffff\20\11\6\uffff\5\7\3\uffff\5\7\5\uffff\1\11\6\uffff\2\7\1\uffff\1\7\1\11\1\uffff\1\7\1\uffff\3\7\1\uffff\2\7\1\11\3\uffff\4\7\1\uffff\5\7",
             "\1\uffff"
     };
     static final short[] dfa_73 = DFA.unpackEncodedString(dfa_73s);
@@ -101287,9 +101303,9 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
                         int index41_19 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred74_InternalKiCool()) ) {s = 10;}
+                        if ( (synpred74_InternalKiCool()) ) {s = 7;}
 
-                        else if ( (true) ) {s = 7;}
+                        else if ( (true) ) {s = 9;}
 
                          
                         input.seek(index41_19);
@@ -101303,18 +101319,18 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             throw nvae;
         }
     }
-    static final String dfa_79s = "\2\uffff\1\7\5\uffff\2\7";
+    static final String dfa_79s = "\6\uffff\1\2\1\1\2\uffff";
     static final String[] dfa_80s = {
             "\1\1",
             "\1\2",
-            "\5\6\1\uffff\1\7\15\uffff\1\4\21\uffff\1\3\40\uffff\1\7\3\uffff\1\7\36\uffff\1\5\3\7",
+            "\5\7\1\uffff\1\6\15\uffff\1\4\21\uffff\1\3\40\uffff\1\6\3\uffff\1\6\36\uffff\1\5\3\6",
             "\1\10",
-            "\1\10\2\6",
-            "\1\7\1\11",
+            "\1\10\2\7",
+            "\1\6\1\11",
             "",
             "",
-            "\5\6\1\uffff\1\7\15\uffff\1\4\21\uffff\1\3\40\uffff\1\7\3\uffff\1\7\36\uffff\1\5\3\7",
-            "\5\6\1\uffff\1\7\15\uffff\1\6\62\uffff\1\7\3\uffff\1\7\36\uffff\4\7"
+            "\5\7\1\uffff\1\6\15\uffff\1\4\21\uffff\1\3\40\uffff\1\6\3\uffff\1\6\36\uffff\1\5\3\6",
+            "\5\7\1\uffff\1\6\15\uffff\1\7\62\uffff\1\6\3\uffff\1\6\36\uffff\4\6"
     };
     static final short[] dfa_79 = DFA.unpackEncodedString(dfa_79s);
     static final short[][] dfa_80 = unpackEncodedStringArray(dfa_80s);
@@ -101325,10 +101341,10 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             this.recognizer = recognizer;
             this.decisionNumber = 42;
             this.eot = dfa_1;
-            this.eof = dfa_79;
+            this.eof = dfa_60;
             this.min = dfa_61;
             this.max = dfa_62;
-            this.accept = dfa_63;
+            this.accept = dfa_79;
             this.special = dfa_64;
             this.transition = dfa_80;
         }
@@ -101339,20 +101355,20 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
     static final String dfa_81s = "\13\uffff";
     static final String dfa_82s = "\1\12\1\uffff\1\6\1\4\2\6\1\7\2\uffff\2\4";
     static final String dfa_83s = "\1\157\1\uffff\1\6\1\156\1\6\1\10\1\7\2\uffff\1\156\1\125";
-    static final String dfa_84s = "\1\uffff\1\1\5\uffff\1\3\1\2\2\uffff";
+    static final String dfa_84s = "\1\uffff\1\1\5\uffff\1\2\1\3\2\uffff";
     static final String dfa_85s = "\13\uffff}>";
     static final String[] dfa_86s = {
             "\1\1\144\uffff\1\2",
             "",
             "\1\3",
-            "\5\10\17\uffff\1\5\21\uffff\1\4\52\uffff\1\7\30\uffff\1\6",
+            "\5\7\17\uffff\1\5\21\uffff\1\4\52\uffff\1\10\30\uffff\1\6",
             "\1\11",
-            "\1\11\2\10",
+            "\1\11\2\7",
             "\1\12",
             "",
             "",
-            "\5\10\17\uffff\1\5\21\uffff\1\4\52\uffff\1\7\30\uffff\1\6",
-            "\5\10\17\uffff\1\10\74\uffff\1\7"
+            "\5\7\17\uffff\1\5\21\uffff\1\4\52\uffff\1\10\30\uffff\1\6",
+            "\5\7\17\uffff\1\7\74\uffff\1\10"
     };
 
     static final short[] dfa_81 = DFA.unpackEncodedString(dfa_81s);
@@ -101380,24 +101396,24 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
         }
     }
     static final String dfa_87s = "\14\uffff";
-    static final String dfa_88s = "\3\uffff\1\7\6\uffff\2\7";
+    static final String dfa_88s = "\3\uffff\1\10\6\uffff\2\10";
     static final String dfa_89s = "\1\12\1\uffff\1\6\1\4\2\6\1\7\3\uffff\2\4";
     static final String dfa_90s = "\1\157\1\uffff\1\6\1\157\2\6\1\7\3\uffff\2\157";
-    static final String dfa_91s = "\1\uffff\1\1\5\uffff\1\4\1\3\1\2\2\uffff";
+    static final String dfa_91s = "\1\uffff\1\1\5\uffff\1\2\1\4\1\3\2\uffff";
     static final String dfa_92s = "\14\uffff}>";
     static final String[] dfa_93s = {
             "\1\1\144\uffff\1\2",
             "",
             "\1\3",
-            "\1\11\1\uffff\1\7\3\uffff\1\7\15\uffff\1\5\21\uffff\1\4\52\uffff\1\10\30\uffff\1\6\1\7",
+            "\1\7\1\uffff\1\10\3\uffff\1\10\15\uffff\1\5\21\uffff\1\4\52\uffff\1\11\30\uffff\1\6\1\10",
             "\1\12",
             "\1\12",
             "\1\13",
             "",
             "",
             "",
-            "\1\11\1\uffff\1\7\3\uffff\1\7\15\uffff\1\5\21\uffff\1\4\52\uffff\1\10\30\uffff\1\6\1\7",
-            "\1\11\1\uffff\1\7\3\uffff\1\7\112\uffff\1\10\31\uffff\1\7"
+            "\1\7\1\uffff\1\10\3\uffff\1\10\15\uffff\1\5\21\uffff\1\4\52\uffff\1\11\30\uffff\1\6\1\10",
+            "\1\7\1\uffff\1\10\3\uffff\1\10\112\uffff\1\11\31\uffff\1\10"
     };
 
     static final short[] dfa_87 = DFA.unpackEncodedString(dfa_87s);
@@ -103013,106 +103029,107 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
         public static final BitSet FOLLOW_41 = new BitSet(new long[]{0x0000000000000800L,0x0000000080000000L});
         public static final BitSet FOLLOW_42 = new BitSet(new long[]{0x000001C000000400L,0x00F88074000038F8L});
         public static final BitSet FOLLOW_43 = new BitSet(new long[]{0x0000000000000440L,0x0000800040000000L});
-        public static final BitSet FOLLOW_44 = new BitSet(new long[]{0x000001C000000440L,0x00F88074080078F8L});
-        public static final BitSet FOLLOW_45 = new BitSet(new long[]{0x000001C000000442L,0x00F88074000078F8L});
-        public static final BitSet FOLLOW_46 = new BitSet(new long[]{0x000001C000000400L,0x00F88074080038F8L});
-        public static final BitSet FOLLOW_47 = new BitSet(new long[]{0x0000000000000000L,0x0000000080000000L});
-        public static final BitSet FOLLOW_48 = new BitSet(new long[]{0x0000000000000C40L,0x0000800000000000L});
-        public static final BitSet FOLLOW_49 = new BitSet(new long[]{0x000001C000000440L,0x00F88074000078F8L});
-        public static final BitSet FOLLOW_50 = new BitSet(new long[]{0x0000020000000000L,0x0000000100000000L});
-        public static final BitSet FOLLOW_51 = new BitSet(new long[]{0x0000000000000000L,0x0000000440000000L});
-        public static final BitSet FOLLOW_52 = new BitSet(new long[]{0x0000000000000400L,0x0000800000000000L});
-        public static final BitSet FOLLOW_53 = new BitSet(new long[]{0x0000000000000000L,0x0000000280000000L});
-        public static final BitSet FOLLOW_54 = new BitSet(new long[]{0x0000000000000442L,0x0000800000000000L});
-        public static final BitSet FOLLOW_55 = new BitSet(new long[]{0x0000000000000800L,0x0000000400000000L});
-        public static final BitSet FOLLOW_56 = new BitSet(new long[]{0x0000000000000000L,0x0000000800000000L});
-        public static final BitSet FOLLOW_57 = new BitSet(new long[]{0x0000000000000002L,0x0000000800000000L});
-        public static final BitSet FOLLOW_58 = new BitSet(new long[]{0x0000000000000400L,0x0000803000003800L});
-        public static final BitSet FOLLOW_59 = new BitSet(new long[]{0x0000000000000410L,0x0000800000000000L});
-        public static final BitSet FOLLOW_60 = new BitSet(new long[]{0x0000000000000400L,0x0000800400003800L});
-        public static final BitSet FOLLOW_61 = new BitSet(new long[]{0x0000000000000450L,0x0000804004000000L});
-        public static final BitSet FOLLOW_62 = new BitSet(new long[]{0x0000180000000000L});
-        public static final BitSet FOLLOW_63 = new BitSet(new long[]{0x0000000000000000L,0x0000000088000000L});
-        public static final BitSet FOLLOW_64 = new BitSet(new long[]{0x0000200000000000L,0x0000008000210000L});
-        public static final BitSet FOLLOW_65 = new BitSet(new long[]{0x0000000000000002L,0x0000000000200000L});
-        public static final BitSet FOLLOW_66 = new BitSet(new long[]{0x0000004002B00000L,0x0000000000000700L});
-        public static final BitSet FOLLOW_67 = new BitSet(new long[]{0x0000000000000640L,0x0000832030000000L});
-        public static final BitSet FOLLOW_68 = new BitSet(new long[]{0x0000000000000000L,0x0000000400000000L});
-        public static final BitSet FOLLOW_69 = new BitSet(new long[]{0x0000000000000000L,0x0000000100000000L});
-        public static final BitSet FOLLOW_70 = new BitSet(new long[]{0x0000000000000000L,0x0000000200000000L});
-        public static final BitSet FOLLOW_71 = new BitSet(new long[]{0x07FFE00000000000L});
-        public static final BitSet FOLLOW_72 = new BitSet(new long[]{0x1800000000000000L});
-        public static final BitSet FOLLOW_73 = new BitSet(new long[]{0x0000000000000600L,0x0000800000000000L});
-        public static final BitSet FOLLOW_74 = new BitSet(new long[]{0x0000060000000000L,0x0000000100200000L});
-        public static final BitSet FOLLOW_75 = new BitSet(new long[]{0x00000000116607F0L,0x00008A2104000000L});
-        public static final BitSet FOLLOW_76 = new BitSet(new long[]{0x0000000000000400L,0x0000802000000000L});
-        public static final BitSet FOLLOW_77 = new BitSet(new long[]{0x0000000000000400L,0x0000810000000000L});
-        public static final BitSet FOLLOW_78 = new BitSet(new long[]{0x0000000000000400L,0x0000820000000000L});
-        public static final BitSet FOLLOW_79 = new BitSet(new long[]{0x0000000020000000L});
-        public static final BitSet FOLLOW_80 = new BitSet(new long[]{0x0000000020000002L});
-        public static final BitSet FOLLOW_81 = new BitSet(new long[]{0x0000000040000000L});
-        public static final BitSet FOLLOW_82 = new BitSet(new long[]{0x0000000040000002L});
-        public static final BitSet FOLLOW_83 = new BitSet(new long[]{0x0000000000080000L});
-        public static final BitSet FOLLOW_84 = new BitSet(new long[]{0x0000000000080002L});
-        public static final BitSet FOLLOW_85 = new BitSet(new long[]{0x0000000000200000L});
-        public static final BitSet FOLLOW_86 = new BitSet(new long[]{0x0000000000200002L});
-        public static final BitSet FOLLOW_87 = new BitSet(new long[]{0xE000000000000000L,0x0000000000000007L});
-        public static final BitSet FOLLOW_88 = new BitSet(new long[]{0x0000000000040000L});
-        public static final BitSet FOLLOW_89 = new BitSet(new long[]{0x0000000000400000L});
-        public static final BitSet FOLLOW_90 = new BitSet(new long[]{0x0000000380000000L});
-        public static final BitSet FOLLOW_91 = new BitSet(new long[]{0x0000000380000002L});
-        public static final BitSet FOLLOW_92 = new BitSet(new long[]{0x0000000080000000L});
-        public static final BitSet FOLLOW_93 = new BitSet(new long[]{0x00000000110207F0L,0x00008A2104000000L});
-        public static final BitSet FOLLOW_94 = new BitSet(new long[]{0x0000000080000002L});
-        public static final BitSet FOLLOW_95 = new BitSet(new long[]{0x0000000100000000L});
-        public static final BitSet FOLLOW_96 = new BitSet(new long[]{0x0000000100000002L});
-        public static final BitSet FOLLOW_97 = new BitSet(new long[]{0x0000000200000000L});
-        public static final BitSet FOLLOW_98 = new BitSet(new long[]{0x0000000200000002L});
-        public static final BitSet FOLLOW_99 = new BitSet(new long[]{0x0000000001800000L});
-        public static final BitSet FOLLOW_100 = new BitSet(new long[]{0x0000000001800002L});
-        public static final BitSet FOLLOW_101 = new BitSet(new long[]{0x0000000000800000L});
-        public static final BitSet FOLLOW_102 = new BitSet(new long[]{0x0000000000800002L});
-        public static final BitSet FOLLOW_103 = new BitSet(new long[]{0x0000000001000000L});
-        public static final BitSet FOLLOW_104 = new BitSet(new long[]{0x0000000001000002L});
-        public static final BitSet FOLLOW_105 = new BitSet(new long[]{0x000000000E000000L});
-        public static final BitSet FOLLOW_106 = new BitSet(new long[]{0x000000000E000002L});
-        public static final BitSet FOLLOW_107 = new BitSet(new long[]{0x0000000002000000L});
-        public static final BitSet FOLLOW_108 = new BitSet(new long[]{0x0000000002000002L});
-        public static final BitSet FOLLOW_109 = new BitSet(new long[]{0x0000000008000000L});
-        public static final BitSet FOLLOW_110 = new BitSet(new long[]{0x0000000008000002L});
-        public static final BitSet FOLLOW_111 = new BitSet(new long[]{0x0000000004000000L});
-        public static final BitSet FOLLOW_112 = new BitSet(new long[]{0x0000000004000002L});
-        public static final BitSet FOLLOW_113 = new BitSet(new long[]{0x00000000100207F0L,0x00008A2104000000L});
-        public static final BitSet FOLLOW_114 = new BitSet(new long[]{0x0000000400000000L});
-        public static final BitSet FOLLOW_115 = new BitSet(new long[]{0x0000000800000000L});
-        public static final BitSet FOLLOW_116 = new BitSet(new long[]{0x0000000800000002L});
-        public static final BitSet FOLLOW_117 = new BitSet(new long[]{0x0000001000000000L});
-        public static final BitSet FOLLOW_118 = new BitSet(new long[]{0x0000001000000002L});
-        public static final BitSet FOLLOW_119 = new BitSet(new long[]{0x0000002000000000L});
-        public static final BitSet FOLLOW_120 = new BitSet(new long[]{0x0000002000000002L});
-        public static final BitSet FOLLOW_121 = new BitSet(new long[]{0x0000000010020000L});
-        public static final BitSet FOLLOW_122 = new BitSet(new long[]{0x0000000010020440L,0x0000800000000000L});
-        public static final BitSet FOLLOW_123 = new BitSet(new long[]{0x0000000000000000L,0x0000040000000000L});
-        public static final BitSet FOLLOW_124 = new BitSet(new long[]{0x0000000000000002L,0x0000040000000000L});
-        public static final BitSet FOLLOW_125 = new BitSet(new long[]{0x0000040000000000L,0x0000000000200000L});
-        public static final BitSet FOLLOW_126 = new BitSet(new long[]{0x0000000000000080L});
-        public static final BitSet FOLLOW_127 = new BitSet(new long[]{0x0000000000000000L,0x0000080000000000L});
-        public static final BitSet FOLLOW_128 = new BitSet(new long[]{0x0000020000000000L});
-        public static final BitSet FOLLOW_129 = new BitSet(new long[]{0x0000000000000000L,0x0000020000000000L});
-        public static final BitSet FOLLOW_130 = new BitSet(new long[]{0x0000000000600000L});
-        public static final BitSet FOLLOW_131 = new BitSet(new long[]{0x00000000114607F0L,0x00009A2104000000L});
-        public static final BitSet FOLLOW_132 = new BitSet(new long[]{0x0000000000000010L,0x0000000008000000L});
-        public static final BitSet FOLLOW_133 = new BitSet(new long[]{0x00000000000001B0L,0x0000200004200000L});
-        public static final BitSet FOLLOW_134 = new BitSet(new long[]{0x0000000000000000L,0x0000000000200000L});
-        public static final BitSet FOLLOW_135 = new BitSet(new long[]{0x00000000000001B0L,0x0000200004600000L});
-        public static final BitSet FOLLOW_136 = new BitSet(new long[]{0x0000000000000000L,0x0000200000000000L});
-        public static final BitSet FOLLOW_137 = new BitSet(new long[]{0x00000000010001F0L});
-        public static final BitSet FOLLOW_138 = new BitSet(new long[]{0x0000000000000070L});
-        public static final BitSet FOLLOW_139 = new BitSet(new long[]{0x0000040001000000L,0x0000400000000000L});
-        public static final BitSet FOLLOW_140 = new BitSet(new long[]{0x0000040001000002L});
-        public static final BitSet FOLLOW_141 = new BitSet(new long[]{0x0000040000000000L});
-        public static final BitSet FOLLOW_142 = new BitSet(new long[]{0x0000040000000002L});
-        public static final BitSet FOLLOW_143 = new BitSet(new long[]{0x0000000001000080L});
+        public static final BitSet FOLLOW_44 = new BitSet(new long[]{0x0000000000000050L,0x0000000004000000L});
+        public static final BitSet FOLLOW_45 = new BitSet(new long[]{0x000001C000000440L,0x00F88074080078F8L});
+        public static final BitSet FOLLOW_46 = new BitSet(new long[]{0x000001C000000442L,0x00F88074000078F8L});
+        public static final BitSet FOLLOW_47 = new BitSet(new long[]{0x000001C000000400L,0x00F88074080038F8L});
+        public static final BitSet FOLLOW_48 = new BitSet(new long[]{0x0000000000000000L,0x0000000080000000L});
+        public static final BitSet FOLLOW_49 = new BitSet(new long[]{0x0000000000000C40L,0x0000800000000000L});
+        public static final BitSet FOLLOW_50 = new BitSet(new long[]{0x000001C000000440L,0x00F88074000078F8L});
+        public static final BitSet FOLLOW_51 = new BitSet(new long[]{0x0000020000000000L,0x0000000100000000L});
+        public static final BitSet FOLLOW_52 = new BitSet(new long[]{0x0000000000000000L,0x0000000440000000L});
+        public static final BitSet FOLLOW_53 = new BitSet(new long[]{0x0000000000000400L,0x0000800000000000L});
+        public static final BitSet FOLLOW_54 = new BitSet(new long[]{0x0000000000000000L,0x0000000280000000L});
+        public static final BitSet FOLLOW_55 = new BitSet(new long[]{0x0000000000000442L,0x0000800000000000L});
+        public static final BitSet FOLLOW_56 = new BitSet(new long[]{0x0000000000000800L,0x0000000400000000L});
+        public static final BitSet FOLLOW_57 = new BitSet(new long[]{0x0000000000000000L,0x0000000800000000L});
+        public static final BitSet FOLLOW_58 = new BitSet(new long[]{0x0000000000000002L,0x0000000800000000L});
+        public static final BitSet FOLLOW_59 = new BitSet(new long[]{0x0000000000000400L,0x0000803000003800L});
+        public static final BitSet FOLLOW_60 = new BitSet(new long[]{0x0000000000000410L,0x0000800000000000L});
+        public static final BitSet FOLLOW_61 = new BitSet(new long[]{0x0000000000000400L,0x0000800400003800L});
+        public static final BitSet FOLLOW_62 = new BitSet(new long[]{0x0000000000000450L,0x0000804004000000L});
+        public static final BitSet FOLLOW_63 = new BitSet(new long[]{0x0000180000000000L});
+        public static final BitSet FOLLOW_64 = new BitSet(new long[]{0x0000000000000000L,0x0000000088000000L});
+        public static final BitSet FOLLOW_65 = new BitSet(new long[]{0x0000200000000000L,0x0000008000210000L});
+        public static final BitSet FOLLOW_66 = new BitSet(new long[]{0x0000000000000002L,0x0000000000200000L});
+        public static final BitSet FOLLOW_67 = new BitSet(new long[]{0x0000004002B00000L,0x0000000000000700L});
+        public static final BitSet FOLLOW_68 = new BitSet(new long[]{0x0000000000000640L,0x0000832030000000L});
+        public static final BitSet FOLLOW_69 = new BitSet(new long[]{0x0000000000000000L,0x0000000400000000L});
+        public static final BitSet FOLLOW_70 = new BitSet(new long[]{0x0000000000000000L,0x0000000100000000L});
+        public static final BitSet FOLLOW_71 = new BitSet(new long[]{0x0000000000000000L,0x0000000200000000L});
+        public static final BitSet FOLLOW_72 = new BitSet(new long[]{0x07FFE00000000000L});
+        public static final BitSet FOLLOW_73 = new BitSet(new long[]{0x1800000000000000L});
+        public static final BitSet FOLLOW_74 = new BitSet(new long[]{0x0000000000000600L,0x0000800000000000L});
+        public static final BitSet FOLLOW_75 = new BitSet(new long[]{0x0000060000000000L,0x0000000100200000L});
+        public static final BitSet FOLLOW_76 = new BitSet(new long[]{0x00000000116607F0L,0x00008A2104000000L});
+        public static final BitSet FOLLOW_77 = new BitSet(new long[]{0x0000000000000400L,0x0000802000000000L});
+        public static final BitSet FOLLOW_78 = new BitSet(new long[]{0x0000000000000400L,0x0000810000000000L});
+        public static final BitSet FOLLOW_79 = new BitSet(new long[]{0x0000000000000400L,0x0000820000000000L});
+        public static final BitSet FOLLOW_80 = new BitSet(new long[]{0x0000000020000000L});
+        public static final BitSet FOLLOW_81 = new BitSet(new long[]{0x0000000020000002L});
+        public static final BitSet FOLLOW_82 = new BitSet(new long[]{0x0000000040000000L});
+        public static final BitSet FOLLOW_83 = new BitSet(new long[]{0x0000000040000002L});
+        public static final BitSet FOLLOW_84 = new BitSet(new long[]{0x0000000000080000L});
+        public static final BitSet FOLLOW_85 = new BitSet(new long[]{0x0000000000080002L});
+        public static final BitSet FOLLOW_86 = new BitSet(new long[]{0x0000000000200000L});
+        public static final BitSet FOLLOW_87 = new BitSet(new long[]{0x0000000000200002L});
+        public static final BitSet FOLLOW_88 = new BitSet(new long[]{0xE000000000000000L,0x0000000000000007L});
+        public static final BitSet FOLLOW_89 = new BitSet(new long[]{0x0000000000040000L});
+        public static final BitSet FOLLOW_90 = new BitSet(new long[]{0x0000000000400000L});
+        public static final BitSet FOLLOW_91 = new BitSet(new long[]{0x0000000380000000L});
+        public static final BitSet FOLLOW_92 = new BitSet(new long[]{0x0000000380000002L});
+        public static final BitSet FOLLOW_93 = new BitSet(new long[]{0x0000000080000000L});
+        public static final BitSet FOLLOW_94 = new BitSet(new long[]{0x00000000110207F0L,0x00008A2104000000L});
+        public static final BitSet FOLLOW_95 = new BitSet(new long[]{0x0000000080000002L});
+        public static final BitSet FOLLOW_96 = new BitSet(new long[]{0x0000000100000000L});
+        public static final BitSet FOLLOW_97 = new BitSet(new long[]{0x0000000100000002L});
+        public static final BitSet FOLLOW_98 = new BitSet(new long[]{0x0000000200000000L});
+        public static final BitSet FOLLOW_99 = new BitSet(new long[]{0x0000000200000002L});
+        public static final BitSet FOLLOW_100 = new BitSet(new long[]{0x0000000001800000L});
+        public static final BitSet FOLLOW_101 = new BitSet(new long[]{0x0000000001800002L});
+        public static final BitSet FOLLOW_102 = new BitSet(new long[]{0x0000000000800000L});
+        public static final BitSet FOLLOW_103 = new BitSet(new long[]{0x0000000000800002L});
+        public static final BitSet FOLLOW_104 = new BitSet(new long[]{0x0000000001000000L});
+        public static final BitSet FOLLOW_105 = new BitSet(new long[]{0x0000000001000002L});
+        public static final BitSet FOLLOW_106 = new BitSet(new long[]{0x000000000E000000L});
+        public static final BitSet FOLLOW_107 = new BitSet(new long[]{0x000000000E000002L});
+        public static final BitSet FOLLOW_108 = new BitSet(new long[]{0x0000000002000000L});
+        public static final BitSet FOLLOW_109 = new BitSet(new long[]{0x0000000002000002L});
+        public static final BitSet FOLLOW_110 = new BitSet(new long[]{0x0000000008000000L});
+        public static final BitSet FOLLOW_111 = new BitSet(new long[]{0x0000000008000002L});
+        public static final BitSet FOLLOW_112 = new BitSet(new long[]{0x0000000004000000L});
+        public static final BitSet FOLLOW_113 = new BitSet(new long[]{0x0000000004000002L});
+        public static final BitSet FOLLOW_114 = new BitSet(new long[]{0x00000000100207F0L,0x00008A2104000000L});
+        public static final BitSet FOLLOW_115 = new BitSet(new long[]{0x0000000400000000L});
+        public static final BitSet FOLLOW_116 = new BitSet(new long[]{0x0000000800000000L});
+        public static final BitSet FOLLOW_117 = new BitSet(new long[]{0x0000000800000002L});
+        public static final BitSet FOLLOW_118 = new BitSet(new long[]{0x0000001000000000L});
+        public static final BitSet FOLLOW_119 = new BitSet(new long[]{0x0000001000000002L});
+        public static final BitSet FOLLOW_120 = new BitSet(new long[]{0x0000002000000000L});
+        public static final BitSet FOLLOW_121 = new BitSet(new long[]{0x0000002000000002L});
+        public static final BitSet FOLLOW_122 = new BitSet(new long[]{0x0000000010020000L});
+        public static final BitSet FOLLOW_123 = new BitSet(new long[]{0x0000000010020440L,0x0000800000000000L});
+        public static final BitSet FOLLOW_124 = new BitSet(new long[]{0x0000000000000000L,0x0000040000000000L});
+        public static final BitSet FOLLOW_125 = new BitSet(new long[]{0x0000000000000002L,0x0000040000000000L});
+        public static final BitSet FOLLOW_126 = new BitSet(new long[]{0x0000040000000000L,0x0000000000200000L});
+        public static final BitSet FOLLOW_127 = new BitSet(new long[]{0x0000000000000080L});
+        public static final BitSet FOLLOW_128 = new BitSet(new long[]{0x0000000000000000L,0x0000080000000000L});
+        public static final BitSet FOLLOW_129 = new BitSet(new long[]{0x0000020000000000L});
+        public static final BitSet FOLLOW_130 = new BitSet(new long[]{0x0000000000000000L,0x0000020000000000L});
+        public static final BitSet FOLLOW_131 = new BitSet(new long[]{0x0000000000600000L});
+        public static final BitSet FOLLOW_132 = new BitSet(new long[]{0x00000000114607F0L,0x00009A2104000000L});
+        public static final BitSet FOLLOW_133 = new BitSet(new long[]{0x0000000000000010L,0x0000000008000000L});
+        public static final BitSet FOLLOW_134 = new BitSet(new long[]{0x00000000000001B0L,0x0000200004200000L});
+        public static final BitSet FOLLOW_135 = new BitSet(new long[]{0x0000000000000000L,0x0000000000200000L});
+        public static final BitSet FOLLOW_136 = new BitSet(new long[]{0x00000000000001B0L,0x0000200004600000L});
+        public static final BitSet FOLLOW_137 = new BitSet(new long[]{0x0000000000000000L,0x0000200000000000L});
+        public static final BitSet FOLLOW_138 = new BitSet(new long[]{0x00000000010001F0L});
+        public static final BitSet FOLLOW_139 = new BitSet(new long[]{0x0000000000000070L});
+        public static final BitSet FOLLOW_140 = new BitSet(new long[]{0x0000040001000000L,0x0000400000000000L});
+        public static final BitSet FOLLOW_141 = new BitSet(new long[]{0x0000040001000002L});
+        public static final BitSet FOLLOW_142 = new BitSet(new long[]{0x0000040000000000L});
+        public static final BitSet FOLLOW_143 = new BitSet(new long[]{0x0000040000000002L});
+        public static final BitSet FOLLOW_144 = new BitSet(new long[]{0x0000000001000080L});
     }
 
 
