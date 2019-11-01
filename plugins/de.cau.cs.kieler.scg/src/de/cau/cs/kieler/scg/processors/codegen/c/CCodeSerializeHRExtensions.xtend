@@ -366,5 +366,27 @@ class CCodeSerializeHRExtensions extends CodeGeneratorSerializeHRExtensions {
             throw new IllegalArgumentException("An OperatorExpression with a ternary conditional has " + 
                 expression.subExpressions.size + " arguments.")
         }
-    }         
+    }
+    
+    override CharSequence serializeParameters(List<Parameter> parameters) {
+        val sb = new StringBuilder
+        sb.append("(")
+        var cnt = 0
+        for (par : parameters) {
+            if (cnt > 0) {
+                sb.append(", ")
+            }
+            if (par.callByReference) {
+                sb.append("&")
+            }
+            if (par.expression instanceof ValuedObjectReference && par.callByReference) {
+                sb.append("(").append(par.expression.serialize).append(")")
+            } else {
+                sb.append(par.expression.serialize)
+            }
+            cnt = cnt + 1
+        }
+        sb.append(")") 
+        return sb.toString      
+    }       
 }

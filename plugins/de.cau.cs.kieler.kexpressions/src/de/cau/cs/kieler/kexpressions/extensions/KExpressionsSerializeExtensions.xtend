@@ -363,11 +363,7 @@ class KExpressionsSerializeExtensions {
             if (par.callByReference) {
                 sb.append("&")
             }
-            if (par.expression instanceof ValuedObjectReference && par.callByReference) {
-                sb.append("(").append(par.expression.serialize).append(")")
-            } else {
-                sb.append(par.expression.serialize)
-            }
+            sb.append(par.expression.serialize)
             cnt = cnt + 1
         }
         sb.append(")") 
