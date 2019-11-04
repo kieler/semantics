@@ -1,0 +1,28 @@
+module de.cau.cs.kieler.overloard.all.grammars
+
+Workflow {
+	
+	component = @de.cau.cs.kieler.annotations.Annotations auto-inject {}
+	
+	component = @de.cau.cs.kieler.kexpressions.KExpressions auto-inject {}
+	
+	component = @de.cau.cs.kieler.kexpressions.keffects.KEffects auto-inject {}
+	
+	component = @de.cau.cs.kieler.kexpressions.kext.KExt auto-inject {}
+	
+    component = @de.cau.cs.kieler.scl.SCL auto-inject {}
+
+	component = @de.cau.cs.kieler.kicool.KiCool auto-inject {}
+
+    component = @de.cau.cs.kieler.sccharts.text.SCTX auto-inject {}
+    
+    component = @de.cau.cs.kieler.esterel.Esterel auto-inject {}
+    
+    component = @de.cau.cs.kieler.esterel.scest.SCEst auto-inject {}
+    
+    component = @de.cau.cs.kieler.lustre.Lustre auto-inject {}
+    
+    component = @de.cau.cs.kieler.lustre.scade.ScadeEquations auto-inject {}
+    
+    component = @de.cau.cs.kieler.simulation.trace.KTrace auto-inject {}
+}

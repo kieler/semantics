@@ -262,14 +262,14 @@ ClassDeclarationWOSemicolon returns kext::ClassDeclaration:
     host?='host'?
     ((
         type = ClassType
-        (name = ID)?
+        (name = EString)?
         '{'
             policy=PolicyRegion?
             declarations+=DeclarationOrMethodWOSemicolon*
         '}'
     )|(
         type = StructType
-        (name = ID)?
+        (name = EString)?
         '{'
             declarations+=DeclarationWOSemicolon*
         '}'

@@ -11,6 +11,14 @@
 			id="de.cau.cs.kieler.lustre.Lustre"
 			name="Lustre Editor">
 		</editor>
+        <editor
+            class="de.cau.cs.kieler.lustre.ui.scade.ScadeEquationsExecutableExtensionFactory:org.eclipse.xtext.ui.editor.XtextEditor"
+            contributorClass="org.eclipse.ui.editors.text.TextEditorActionContributor"
+            default="true"
+            extensions="scade"
+            id="de.cau.cs.kieler.lustre.scade.ScadeEquations"
+            name="Scade Equations Editor">
+        </editor>
 	</extension>
 	<extension
 		point="org.eclipse.ui.handlers">
@@ -22,7 +30,16 @@
 					definitionId="de.cau.cs.kieler.lustre.Lustre.Editor.opened">
 				</reference>
 			</activeWhen>
-		</handler>
+		</handler>		
+		<handler
+            class="de.cau.cs.kieler.lustre.ui.scade.ScadeEquationsExecutableExtensionFactory:org.eclipse.xtext.ui.editor.hyperlinking.OpenDeclarationHandler"
+            commandId="org.eclipse.xtext.ui.editor.hyperlinking.OpenDeclaration">
+            <activeWhen>
+                <reference
+                    definitionId="de.cau.cs.kieler.lustre.scade.ScadeEquations.Editor.opened">
+                </reference>
+            </activeWhen>
+        </handler>		
 		<handler
 			class="de.cau.cs.kieler.lustre.ui.LustreExecutableExtensionFactory:org.eclipse.xtext.ui.editor.handler.ValidateActionHandler"
 			commandId="de.cau.cs.kieler.lustre.Lustre.validate">
@@ -32,6 +49,15 @@
 			</reference>
 		</activeWhen>
 		</handler>
+		<handler
+            class="de.cau.cs.kieler.lustre.ui.scade.ScadeEquationsExecutableExtensionFactory:org.eclipse.xtext.ui.editor.handler.ValidateActionHandler"
+            commandId="de.cau.cs.kieler.lustre.scade.ScadeEquations.validate">
+        <activeWhen>
+            <reference
+                    definitionId="de.cau.cs.kieler.lustre.scade.ScadeEquations.Editor.opened">
+            </reference>
+        </activeWhen>
+        </handler>
 		<!-- copy qualified name -->
 		<handler
 			class="de.cau.cs.kieler.lustre.ui.LustreExecutableExtensionFactory:org.eclipse.xtext.ui.editor.copyqualifiedname.EditorCopyQualifiedNameHandler"
@@ -64,6 +90,16 @@
 				</with>		
 			</and>
 		</definition>
+		<definition id="de.cau.cs.kieler.lustre.scade.ScadeEquations.Editor.opened">
+            <and>
+                <reference definitionId="isActiveEditorAnInstanceOfXtextEditor"/>
+                <with variable="activeEditor">
+                    <test property="org.eclipse.xtext.ui.editor.XtextEditor.languageName" 
+                        value="de.cau.cs.kieler.lustre.scade.ScadeEquations" 
+                        forcePluginActivation="true"/>
+                </with>     
+            </and>
+        </definition>
 		<definition id="de.cau.cs.kieler.lustre.Lustre.XtextEditor.opened">
 			<and>
 				<reference definitionId="isXtextEditorActive"/>
@@ -78,10 +114,10 @@
 	<extension
 			point="org.eclipse.ui.preferencePages">
 		<page
-        category="de.cau.cs.kieler.core.product.preferencePage"
-        class="de.cau.cs.kieler.lustre.ui.LustreExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
-        id="de.cau.cs.kieler.lustre.Lustre"
-        name="Lustre">
+            category="de.cau.cs.kieler.core.product.preferencePage"
+            class="de.cau.cs.kieler.lustre.ui.LustreExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
+            id="de.cau.cs.kieler.lustre.Lustre"
+            name="Lustre">
 			<keywordReference id="de.cau.cs.kieler.lustre.ui.keyword_Lustre"/>
 		</page>
 		<page
@@ -98,6 +134,28 @@
 			name="Templates">
 			<keywordReference id="de.cau.cs.kieler.lustre.ui.keyword_Lustre"/>
 		</page>
+		
+		<page
+            category="de.cau.cs.kieler.core.product.preferencePage"
+            class="de.cau.cs.kieler.lustre.ui.scade.ScadeEquationsExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
+            id="de.cau.cs.kieler.lustre.scade.ScadeEquations"
+            name="Scade">
+            <keywordReference id="de.cau.cs.kieler.lustre.ui.scade.keyword_Scade"/>
+        </page>
+        <page
+            category="de.cau.cs.kieler.lustre.scade.ScadeEquations"
+            class="de.cau.cs.kieler.lustre.ui.scade.ScadeEquationsExecutableExtensionFactory:org.eclipse.xtext.ui.editor.syntaxcoloring.SyntaxColoringPreferencePage"
+            id="de.cau.cs.kieler.lustre.scade.ScadeEquations.coloring"
+            name="Syntax Coloring">
+            <keywordReference id="de.cau.cs.kieler.lustre.ui.scade.keyword_Scade"/>
+        </page>
+        <page
+            category="de.cau.cs.kieler.lustre.scade.ScadeEquations"
+            class="de.cau.cs.kieler.lustre.ui.scade.ScadeEquationsExecutableExtensionFactory:org.eclipse.xtext.ui.editor.templates.XtextTemplatePreferencePage"
+            id="de.cau.cs.kieler.lustre.scade.ScadeEquations.templates"
+            name="Templates">
+            <keywordReference id="de.cau.cs.kieler.lustre.ui.scade.keyword_Scade"/>
+        </page>
 	</extension>
 	<extension
 			point="org.eclipse.ui.propertyPages">
@@ -111,12 +169,25 @@
 			</enabledWhen>
 			<filter name="projectNature" value="org.eclipse.xtext.ui.shared.xtextNature"/>
 		</page>
+		<page
+            class="de.cau.cs.kieler.lustre.ui.scade.ScadeEquationsExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
+            id="de.cau.cs.kieler.lustre.scade.ScadeEquations"
+            name="Scade">
+            <keywordReference id="de.cau.cs.kieler.lustre.ui.scade.keyword_Scade"/>
+            <enabledWhen>
+                <adapt type="org.eclipse.core.resources.IProject"/>
+            </enabledWhen>
+            <filter name="projectNature" value="org.eclipse.xtext.ui.shared.xtextNature"/>
+        </page>
 	</extension>
 	<extension
 		point="org.eclipse.ui.keywords">
 		<keyword
 			id="de.cau.cs.kieler.lustre.ui.keyword_Lustre"
 			label="Lustre"/>
+			<keyword
+            id="de.cau.cs.kieler.lustre.ui.scade.keyword_Scade"
+            label="Scade"/>
 	</extension>
 	<extension
 		point="org.eclipse.ui.commands">
@@ -125,6 +196,11 @@
 			id="de.cau.cs.kieler.lustre.Lustre.validate"
 			name="Validate">
 	</command>
+    <command
+            description="Trigger expensive validation"
+            id="de.cau.cs.kieler.lustre.scade.ScadeEquations.validate"
+            name="Validate">
+    </command>
 	<!-- copy qualified name -->
 	<command
 			id="org.eclipse.xtext.ui.editor.copyqualifiedname.EditorCopyQualifiedName"
@@ -204,6 +280,15 @@
 				</reference>
 			</activeWhen>
 		</handler>
+		<handler
+            class="de.cau.cs.kieler.lustre.ui.scade.ScadeEquationsExecutableExtensionFactory:org.eclipse.xtext.ui.editor.findrefs.FindReferencesHandler"
+            commandId="org.eclipse.xtext.ui.editor.FindReferences">
+            <activeWhen>
+                <reference
+                    definitionId="de.cau.cs.kieler.lustre.scade.ScadeEquations.Editor.opened">
+                </reference>
+            </activeWhen>
+        </handler>
 	</extension>
 	<!-- adding resource factories -->
 	<extension
@@ -212,12 +297,20 @@
 			class="de.cau.cs.kieler.lustre.ui.LustreExecutableExtensionFactory:org.eclipse.xtext.resource.IResourceFactory"
 			type="lus">
 		</parser>
+		<parser
+            class="de.cau.cs.kieler.lustre.ui.scade.ScadeEquationsExecutableExtensionFactory:org.eclipse.xtext.resource.IResourceFactory"
+            type="scade">
+        </parser>
 	</extension>
 	<extension point="org.eclipse.xtext.extension_resourceServiceProvider">
 		<resourceServiceProvider
 			class="de.cau.cs.kieler.lustre.ui.LustreExecutableExtensionFactory:org.eclipse.xtext.ui.resource.IResourceUIServiceProvider"
 			uriExtension="lus">
 		</resourceServiceProvider>
+		<resourceServiceProvider
+            class="de.cau.cs.kieler.lustre.ui.scade.ScadeEquationsExecutableExtensionFactory:org.eclipse.xtext.ui.resource.IResourceUIServiceProvider"
+            uriExtension="scade">
+        </resourceServiceProvider>
 	</extension>
 	<!-- marker definitions for de.cau.cs.kieler.lustre.Lustre -->
 	<extension
@@ -253,6 +346,15 @@
 				</reference>
 			</activeWhen>
 		</handler>
+		<handler 
+            class="de.cau.cs.kieler.lustre.ui.scade.ScadeEquationsExecutableExtensionFactory:org.eclipse.xtext.ui.editor.outline.quickoutline.ShowQuickOutlineActionHandler"
+            commandId="org.eclipse.xtext.ui.editor.outline.QuickOutline">
+            <activeWhen>
+                <reference
+                    definitionId="de.cau.cs.kieler.lustre.scade.ScadeEquations.Editor.opened">
+                </reference>
+            </activeWhen>
+        </handler>
 	</extension>
 	<extension
 		point="org.eclipse.ui.commands">
@@ -301,6 +403,9 @@
 				value="true">
 			</attribute>
 		</markerResolutionGenerator>
+		<markerResolutionGenerator
+            class="de.cau.cs.kieler.lustre.ui.scade.ScadeEquationsExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator">
+      </markerResolutionGenerator>
 	</extension>
 	<!-- Rename Refactoring -->
 	<extension point="org.eclipse.ui.handlers">
@@ -359,6 +464,10 @@
     <editor
           controllerID="de.cau.cs.kieler.kicool.ui.klighd.KiCoModelUpdateController"
           editorID="de.cau.cs.kieler.lustre.Lustre">
+    </editor>
+    <editor
+          controllerID="de.cau.cs.kieler.kicool.ui.klighd.KiCoModelUpdateController"
+          editorID="de.cau.cs.kieler.lustre.scade.ScadeEquations">
     </editor>
  </extension>
 </plugin>

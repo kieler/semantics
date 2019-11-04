@@ -279,8 +279,25 @@ TernaryOperation returns Expression:
     | InitExpression;
     
 InitExpression returns Expression:
-    {OperatorExpression} subExpressions += AtomicValuedExpression operator=InitOperator subExpressions += AtomicValuedExpression
-    | AtomicValuedExpression;    
+    FbyExpression 
+    ({OperatorExpression.subExpressions+=current} 
+        (operator=InitOperator subExpressions+=FbyExpression) 
+        ('->' subExpressions+=FbyExpression)*
+    )?;
+    
+FbyExpression returns Expression:
+    SfbyExpression
+    ({OperatorExpression.subExpressions+=current}
+        (operator=FbyOperator subExpressions+=SfbyExpression)
+        ('fby' subExpressions+=SfbyExpression)*
+    )?;
+    
+SfbyExpression returns Expression:
+    AtomicValuedExpression
+    ({OperatorExpression.subExpressions+=current}
+        (operator=SfbyOperator subExpressions+=AtomicValuedExpression)
+        ('sfby' subExpressions+=AtomicValuedExpression)*
+    )?;
     
 // Atomic Expression Rule
 // An atomic expression is either a simple boolean value, a test expression, another boolean expression
@@ -478,11 +495,17 @@ enum PostfixSub returns OperatorType:
     POSTFIX_SUB="--";
     
 enum ConditionalOperator returns OperatorType:
-    CONDITIONAL = "?";        
+    CONDITIONAL = "?";
     
 enum InitOperator returns OperatorType:
     INIT = "->";
-
+    
+enum FbyOperator returns OperatorType:
+    FBY = "fby";
+    
+enum SfbyOperator returns OperatorType:
+    SFBY = "sfby";
+    
 enum ValueType returns ValueType:
 	PURE="pure" | BOOL="bool" | 
 	INT="int" | FLOAT="float" |

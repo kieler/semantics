@@ -3,8 +3,8 @@
 <plugin>
 	<extension point="org.eclipse.emf.ecore.generated_package">
 		<package 
-			uri = "http://www.cau.de/cs/kieler/lustre/Lustre"
-			class = "de.cau.cs.kieler.lustre.lustre.LustrePackage"
-			genModel = "model/generated/Lustre.genmodel" />
+			uri = "http://www.cau.de/cs/kieler/lustre/scade/ScadeEquations"
+			class = "de.cau.cs.kieler.lustre.scade.scade.ScadePackage"
+			genModel = "model/generated/ScadeEquations.genmodel" />
 	</extension>
 </plugin>
