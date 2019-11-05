@@ -13,64 +13,44 @@
 package de.cau.cs.kieler.sccharts.ui.synthesis
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.IgnoreValue
 import de.cau.cs.kieler.kexpressions.OperatorExpression
+import de.cau.cs.kieler.kexpressions.OperatorType
+import de.cau.cs.kieler.kexpressions.Value
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.kexpressions.VectorValue
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
+import de.cau.cs.kieler.kicool.ui.synthesis.KiCoolSynthesis
+import de.cau.cs.kieler.klighd.KlighdConstants
+import de.cau.cs.kieler.klighd.SynthesisOption
+import de.cau.cs.kieler.klighd.internal.util.KlighdInternalProperties
+import de.cau.cs.kieler.klighd.kgraph.KIdentifier
+import de.cau.cs.kieler.klighd.kgraph.KLabel
+import de.cau.cs.kieler.klighd.kgraph.KLabeledGraphElement
+import de.cau.cs.kieler.klighd.kgraph.KNode
+import de.cau.cs.kieler.klighd.kgraph.KPort
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KLabelExtensions
-import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.EquationStyles
 import java.util.List
-import java.util.Set
+import org.eclipse.elk.alg.layered.options.LayerConstraint
 import org.eclipse.elk.alg.layered.options.LayeredOptions
+import org.eclipse.elk.core.options.Alignment
 import org.eclipse.elk.core.options.CoreOptions
-import org.eclipse.elk.core.options.PortConstraints
-import org.eclipse.elk.core.options.PortLabelPlacement
 import org.eclipse.elk.core.options.PortSide
+import org.eclipse.elk.graph.properties.IProperty
+import org.eclipse.elk.graph.properties.Property
+import org.eclipse.emf.common.util.URI
+import org.eclipse.emf.ecore.EObject
+import org.eclipse.xtext.resource.XtextResource
+import org.eclipse.xtext.resource.XtextResourceSet
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.klighd.kgraph.KNode
-import de.cau.cs.kieler.klighd.kgraph.KPort
-import org.eclipse.elk.core.math.ElkPadding
-import de.cau.cs.kieler.klighd.SynthesisOption
-import de.cau.cs.kieler.klighd.KlighdConstants
-import org.eclipse.xtext.xbase.lib.Functions.Function1
-import com.google.inject.Injector
-import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
-import de.cau.cs.kieler.sccharts.ui.synthesis.actions.ReferenceExpandAction
-import de.cau.cs.kieler.klighd.util.KlighdProperties
-import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
-import de.cau.cs.kieler.annotations.Annotatable
-import de.cau.cs.kieler.kicool.ui.synthesis.KiCoolSynthesis
-import org.eclipse.xtext.resource.XtextResource
-import org.eclipse.xtext.resource.XtextResourceSet
-import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
-import de.cau.cs.kieler.klighd.kgraph.KIdentifier
-import org.eclipse.emf.ecore.EObject
-import java.util.EnumSet
-import org.eclipse.elk.core.options.SizeConstraint
-import de.cau.cs.kieler.klighd.kgraph.KLabel
-import de.cau.cs.kieler.klighd.kgraph.KLabeledGraphElement
-import de.cau.cs.kieler.kexpressions.OperatorType
-import org.eclipse.elk.alg.layered.options.LayerConstraint
-import de.cau.cs.kieler.kexpressions.Value
-import org.eclipse.elk.core.options.Alignment
-import org.eclipse.elk.alg.layered.options.NodePlacementStrategy
-import de.cau.cs.kieler.sccharts.State
-import org.eclipse.elk.graph.properties.IProperty
-import org.eclipse.elk.graph.properties.Property
-import de.cau.cs.kieler.klighd.krendering.KPolygon
-import de.cau.cs.kieler.klighd.krendering.KText
-import java.io.File
-import de.cau.cs.kieler.kexpressions.Expression
-import de.cau.cs.kieler.klighd.krendering.extensions.KPortExtensions
-import de.cau.cs.kieler.klighd.internal.util.KlighdInternalProperties
 
 /**
  * @author ssm
@@ -104,20 +84,16 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         "de.cau.cs.kieler.sccharts.ui.synthesis.dataflow.inputFlag", false);
     public static final IProperty<Boolean> OUTPUT_FLAG = new Property<Boolean>(
         "de.cau.cs.kieler.sccharts.ui.synthesis.dataflow.outputFlag", false);
+    public static final IProperty<Boolean> DATA_ARRAY_FLAG = new Property<Boolean>(
+        "de.cau.cs.kieler.sccharts.ui.synthesis.dataflow.dataArrayFlag", false);
 
-    @Inject extension KRenderingExtensions
     @Inject extension KNodeExtensionsReplacement
     @Inject extension KEdgeExtensions
-    @Inject extension KPortExtensions
     @Inject extension KLabelExtensions
     @Inject extension KExpressionsValuedObjectExtensions
-    @Inject extension KExtDeclarationExtensions
-    @Inject extension AnnotationsExtensions
     @Inject extension SCChartsSerializeHRExtensions
     @Inject extension SCChartsSynthesis
     @Inject extension EquationStyles
-    @Inject StateSynthesis stateSynthesis
-    @Inject Injector injector
 
 //    public static final IProperty<String> PROPAGATED_SKINPATH = new Property<String>(
 //        "de.cau.cs.kieler.sccharts.ui.synthesis.dataflow.propagatedSkinPath", "");
@@ -139,6 +115,8 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
     protected static val INOUT_PORT = "inout"
 
     protected val defaultFigures = #{
+        "ARRAY_INPUT" -> #["InputArray.kgt", "Array.kgt"],
+        "ARRAY_OTPUT" -> #["InputArray.kgt", "Array.kgt"],
         "OPERATOR" -> #["OperatorExpression.kgt"],
         "PRE" -> #["OperatorExpressionPRE.kgt", "OperatorExpressionUnary.kgt", "OperatorExpression.kgt"],
         "NOT" -> #["OperatorExpressionNOT.kgt", "OperatorExpressionUnary.kgt", "OperatorExpression.kgt"],
@@ -195,24 +173,84 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         return options
     }
 
+    // creates an equation tree graph from an expression and returns the root node of the tree
+    // all created nodes are added to the nodes list
+    // output should be true if output nodes should be generated
     def KNode performTransformation(Expression e, List<KNode> nodes, boolean output) {
         if (e instanceof ValuedObjectReference) {
+            // create input or output nodes for the valued object reference
             val reference = (e as ValuedObjectReference)
+            if (reference.isArrayReference) {
+                // in case of an array reference a array node is inserted between the valued object node and the expression
+                val arrayNode = e.createKGTNode(output ? "ARRAY_OUTPUT" : "ARRAY_INPUT", "")
+                arrayNode.associateWith(e)
+                nodes += arrayNode
+                val varNode = reference.valuedObject.reference.performTransformation(nodes, output)
+                if (output) {
+                    val sourcePort = arrayNode.findPortById(OUT_PORT)
+                    sourcePort.connectWith(varNode.findPortById(PORT0_IN_PREFIX),
+                        reference.valuedObject.serializeHR.toString)
+                    arrayNode.findPortById(PORT0_IN_PREFIX).setLabel(String.join("", reference.indices.map [
+                        "[" + it.serializeHR.toString + "]"
+                    ]), false)
+                } else {
+                    val sourcePort = varNode.findPortById(OUT_PORT)
+                    sourcePort.connectWith(arrayNode.findPortById(PORT0_IN_PREFIX),
+                        reference.valuedObject.serializeHR.toString)
+                    arrayNode.findPortById(OUT_PORT).setLabel(String.join("", reference.indices.map [
+                        "[" + it.serializeHR.toString + "]"
+                    ]), false)
+                }
+                if (reference.valuedObject.array && !reference.isArrayReference)
+                    arrayNode.setProperty(DATA_ARRAY_FLAG, true)
+                return arrayNode
+            }
             val node = reference.valuedObject.createKGTNode(output ? "OUTPUT" : "INPUT", "")
-            val text = reference.serializeHR.toString
+            var text = reference.serializeHR.toString
+            if (reference.isModelReference) {
+                // in case of a model reference the subreference should not be in the label of the node
+                text = reference.valuedObject.reference.serializeHR.toString
+            }
             node.addNodeLabelWithPadding(text, INPUT_OUTPUT_TEXT_SIZE,
                 output ? PADDING_OUTPUT_LEFT : PADDING_INPUT_LEFT, output ? PADDING_OUTPUT_RIGHT : PADDING_INPUT_RIGHT)
             node.setProperty(output ? OUTPUT_FLAG : INPUT_FLAG, true)
-
+            if (reference.isModelReference && reference.subReference !== null) {
+                // write the subreferences to the port labels
+                if (output)
+                    node.findPortById(PORT0_IN_PREFIX).setLabel(reference.subReference.serializeHR.toString, true)
+                else
+                    node.findPortById(OUT_PORT).setLabel(reference.subReference.serializeHR.toString, true)
+            }
             if (ALIGN_INPUTS_OUTPUTS.booleanValue) {
                 node.addLayoutParam(LayeredOptions::LAYERING_LAYER_CONSTRAINT,
                     output ? LayerConstraint::LAST : LayerConstraint::FIRST)
                 node.addLayoutParam(CoreOptions::ALIGNMENT, output ? Alignment.RIGHT : Alignment.LEFT)
             }
             node.associateWith(e)
+            if (reference.valuedObject.array)
+                node.setProperty(DATA_ARRAY_FLAG, true)
             nodes += node
             return node
         }
+        if (e instanceof VectorValue) {
+            // create one node for each value inside of a Vector Value and connect them to a Vector node
+            val node = e.createKGTNode("ARRAY", "")
+            for (value : e.values) {
+                if (!(value instanceof IgnoreValue)) {
+                    val valueNode = value.performTransformation(nodes, false)
+                    val sourcePort = valueNode.findPortById(OUT_PORT)
+                    val targetPort = node.getInputPortWithNumber(e.values.indexOf(value))
+                    sourcePort.connectWith(targetPort,
+                        valueNode.getProperty(KlighdInternalProperties.MODEL_ELEMEMT)?.serializeHR?.toString)
+                    targetPort.setLabel(e.values.indexOf(value).toString, false)
+                }
+            }
+            node.setProperty(DATA_ARRAY_FLAG, true)
+            node.associateWith(e)
+            nodes += node
+            return node
+        }
+        // create an input or output node for constant values
         if (e instanceof Value) {
             val node = e.createKGTNode("INPUT", "")
             val text = e.serializeHR.toString
@@ -228,6 +266,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
             return node
         }
         if (e instanceof OperatorExpression) {
+            // find out the id of the kgt skin
             val operatorExpr = e as OperatorExpression
             var figureId = operatorExpr.operator.getName()
             if (operatorExpr.operator == OperatorType.SUB) {
@@ -240,24 +279,16 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
             if (operatorExpr.operator == OperatorType.CONDITIONAL) {
                 text = ""
             }
+            // create kgt node
             val node = e.createKGTNode(figureId, text)
             for (subExpr : operatorExpr.subExpressions) {
                 val source = subExpr.performTransformation(nodes, false)
                 val sourcePort = source.findPortById(OUT_PORT)
                 val targetPort = node.getInputPortWithNumber(operatorExpr.subExpressions.indexOf(subExpr))
-                val edge = createEdge
-                edge.setLayoutOption(LayeredOptions.INSIDE_SELF_LOOPS_YO, true)
-                edge.source = source
-                edge.sourcePort = sourcePort
-                edge.target = node
-                edge.targetPort = targetPort
-                edge.addWireFigure
-                if (SHOW_WIRE_LABELS.booleanValue && !source.hasProperty(INPUT_FLAG)) {
-                    edge.createLabel.configureTailEdgeLabel(
-                        source.getProperty(KlighdInternalProperties.MODEL_ELEMEMT)?.serializeHR?.toString, 5,
-                        KlighdConstants::DEFAULT_FONT_NAME)
-                }
+                sourcePort.connectWith(targetPort,
+                    source.getProperty(KlighdInternalProperties.MODEL_ELEMEMT)?.serializeHR?.toString)
             }
+            // show or hide port labels
             if (SHOW_EXPRESSION_PORT_LABELS.booleanValue) {
                 for (p : node.ports) {
                     val label = p.labels.head
@@ -282,6 +313,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         return null
     }
 
+    // creates an equation graph for an assignment and returns the list of created nodes
     override performTranformation(Assignment element) {
         val nodes = <KNode>newLinkedList
         val target = element.reference.performTransformation(nodes, true)
@@ -289,28 +321,20 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         nodes += target
         val source = element.expression.performTransformation(nodes, false)
         val sourcePort = source.findPortById(OUT_PORT)
-        val edge = createEdge
-        edge.setLayoutOption(LayeredOptions.INSIDE_SELF_LOOPS_YO, true)
-        edge.source = source
-        edge.sourcePort = sourcePort
-        edge.target = target
-        edge.targetPort = targetPort
-        edge.addWireFigure
-        if (SHOW_WIRE_LABELS.booleanValue && !source.hasProperty(INPUT_FLAG)) {
-            edge.createLabel.configureTailEdgeLabel(
-                source.getProperty(KlighdInternalProperties.MODEL_ELEMEMT)?.serializeHR?.toString, 5,
-                KlighdConstants::DEFAULT_FONT_NAME)
-        }
+        sourcePort.connectWith(targetPort,
+            source.getProperty(KlighdInternalProperties.MODEL_ELEMEMT)?.serializeHR?.toString)
         nodes += source
         return nodes
     }
 
+    // creates an equation graph for a list of assignments and returns a list of created nodes
     def performTranformation(List<Assignment> elements, KNode rootNode) {
         val nodes = <KNode>newLinkedList
         elements.forEach[it.performTranformation.forEach[nodes += it]]
         return nodes
     }
 
+    // create a single node from a kgt file
     protected def KNode createKGTNode(
         EObject createExtensionObject,
         String figureId,
@@ -324,7 +348,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
             val path = nsl.join("/") + "/" + getSkinPath(usedContext)
             for (figure : defaultFigures.get(figureId)) {
                 val kgt = path + if(!path.endsWith("/")) "/" + figure
-                val newURI = org.eclipse.emf.common.util.URI.createPlatformResourceURI(kgt, false)
+                val newURI = URI.createPlatformResourceURI(kgt, false)
                 val newResourceSet = KiCoolSynthesis.KGTInjector.getInstance(XtextResourceSet)
                 newResourceSet.addLoadOption(XtextResource.OPTION_RESOLVE_ALL, Boolean.FALSE)
                 val res = newResourceSet.createResource(newURI)
@@ -372,6 +396,43 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         throw new IllegalArgumentException("Resource not found")
     }
 
+    // connects two ports with a wire
+    private def connectWith(KPort source, KPort target, String label) {
+        val edge = createEdge
+        edge.setLayoutOption(LayeredOptions.INSIDE_SELF_LOOPS_YO, true)
+        edge.source = source.node
+        edge.sourcePort = source
+        edge.target = target.node
+        edge.targetPort = target
+        if (source.node.hasProperty(DATA_ARRAY_FLAG) || target.node.hasProperty(DATA_ARRAY_FLAG))
+            edge.addWireBusFigure
+        else
+            edge.addWireFigure
+        if (SHOW_WIRE_LABELS.booleanValue && !source.hasProperty(INPUT_FLAG) && label !== null) {
+            edge.createLabel.configureTailEdgeLabel(label, 5, KlighdConstants::DEFAULT_FONT_NAME)
+        }
+    }
+
+    // set the label of a port
+    private def setLabel(KPort port, String label, boolean reference) {
+        var portLabel = port.labels.head
+        if (reference) {
+            if (SHOW_REFERENCED_PORT_LABELS.booleanValue) {
+                if (REFERENCED_PORT_LABELS_OUTSIDE.booleanValue) {
+                    port.createLabel().configureOutsidePortLabel(label, PORT_LABEL_FONT_SIZE)
+                } else {
+                    port.createLabel().configureInsidePortLabel(label, PORT_LABEL_FONT_SIZE)
+                }
+            }
+        } else {
+            if (portLabel === null) {
+                port.createLabel.configureInsidePortLabel(label, PORT_LABEL_FONT_SIZE)
+            } else {
+                portLabel.text = label
+            }
+        }
+    }
+
     static def getId(KLabeledGraphElement node) {
         node.eContents?.filter(KIdentifier)?.head?.id
     }
@@ -397,6 +458,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         return null
     }
 
+    // returns the number-th input port of a node and creates it if it doesn't exist
     def getInputPortWithNumber(KNode node, int number) {
         var maxIndex = -1
         var KPort maxPort = null
