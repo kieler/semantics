@@ -69,14 +69,17 @@ class KiCoolUtils {
             for (var i = 0; i < count; i++) {
                 val p = system.processors.findProcessor(i)
                 if (p !== null) {
-                    if (input === null)
+                    if (input === null) {
                         input = p.sourceTargetTypes.source
-                    if (lastTarget != p.sourceTargetTypes.source) {
-                        if (!p.sourceTargetTypes.source.isAssignableFrom(lastTarget))
-                            input = p.sourceTargetTypes.source
                     }
-                    if (p.sourceTargetTypes.source != p.sourceTargetTypes.target)
+                    if (lastTarget != p.sourceTargetTypes.source) {
+                        if (!p.sourceTargetTypes.source.isAssignableFrom(lastTarget)) {
+                            input = p.sourceTargetTypes.source
+                        }
+                    }
+                    if (p.sourceTargetTypes.source != p.sourceTargetTypes.target) {
                         return input
+                    }
                     lastTarget = p.sourceTargetTypes.target
                 }
             }
@@ -88,8 +91,9 @@ class KiCoolUtils {
     }
 
     static def dispatch Processor<?, ?> findProcessor(ProcessorReference p, int index) {
-        if (index == 0)
+        if (index == 0) {
             return KiCoolRegistration.getProcessorInstance(p.id)
+        }
         return null
     }
 
@@ -101,10 +105,11 @@ class KiCoolUtils {
         var index = i
         for (p2 : p.processors.toList) {
             val count = p2.processorCount
-            if (count > index)
+            if (count > index) {
                 return p2.findProcessor(index)
-            else
+            } else {
                 index -= count
+            }
         }
         return null
     }
@@ -118,14 +123,15 @@ class KiCoolUtils {
         return 1
     }
 
-    static def dispatch int processorCount(ProcessorSystem p) {
-        return KiCoolRegistration.getSystemById(p.id)?.processors?.processorCount
+    static def dispatch int processorCount(ProcessorSystem s) {
+        return KiCoolRegistration.getSystemById(s.id)?.processors?.processorCount
     }
 
-    static def dispatch int processorCount(ProcessorGroup p) {
+    static def dispatch int processorCount(ProcessorGroup g) {
         var count = 0
-        for (p2 : p.processors.toList)
-            count += p2.processorCount
+        for (p : g.processors.toList) {
+            count += p.processorCount
+        }
         return count
     }
 

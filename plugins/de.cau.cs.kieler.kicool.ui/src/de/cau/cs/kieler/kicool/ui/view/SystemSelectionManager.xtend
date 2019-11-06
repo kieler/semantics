@@ -55,13 +55,13 @@ class SystemSelectionManager implements SelectionListener {
     
     static val Comparator<Class<?>> TYPE_SORTER = new Comparator<Class<?>>() {
         override compare(Class<?> o1, Class<?> o2) {
-            if( o2 == o1 )
+            if( o2 == o1 ) {
                 return 0
-            if(o1 === null)
+            } else if(o1 === null) {
                 return 1
-            if( o2 === null )
+            } else if( o2 === null ) {
                 return -1
-            if (o1.isAssignableFrom(o2)) {
+            } else if (o1.isAssignableFrom(o2)) {
                 return 1
             } else if (o2.isAssignableFrom(o1)) {
                 return -1
@@ -160,8 +160,9 @@ class SystemSelectionManager implements SelectionListener {
     }
 
     private def selected(SystemSelectionEntry entry) {
-        if (index.size == 0 || combo.selectionIndex < 0 )
+        if (index.size == 0 || combo.selectionIndex < 0 ) {
             return false
+        }
         return index.get(combo.selectionIndex).id == entry.id ||
             (index.get(combo.selectionIndex).path !== null && index.get(combo.selectionIndex) == entry.path)
     }
@@ -303,24 +304,27 @@ class SystemSelectionManager implements SelectionListener {
 
     private def <K, V> getKey(Map<K, V> map, V v) {
         for (entry : map.entrySet()) {
-            if (entry.value == v)
+            if (entry.value == v) {
                 return entry.key
+            }
         }
         return null
     }
 
     private def systemEntryById(String id) {
         for (e : presortedSystems) {
-            if (e.id == id)
+            if (e.id == id) {
                 return e
+            }
         }
         return null
     }
 
     private def systemEntryByFile(String path) {
         for (e : presortedSystems) {
-            if (e.path == path && e.path !== null)
+            if (e.path == path && e.path !== null) {
                 return e
+            }
         }
         return null
     }
@@ -375,8 +379,9 @@ class SystemSelectionManager implements SelectionListener {
     }
     
     def makeVisible(SystemSelectionEntry entry) {
-        if (index.contains(entry))
+        if (index.contains(entry)) {
             return
+        }
         var position = 0
         for (e : index) {
             if (e.isLowerAs(entry)) {
@@ -401,19 +406,23 @@ class SystemSelectionManager implements SelectionListener {
             input = system.findInputClass
             this.path = path
             showName = system.label
-            if (showName.nullOrEmpty)
+            if (showName.nullOrEmpty) {
                 showName = system.id
-            if (path != null)
+            }
+            if (path !== null) {
                 showName = PROJECT_SYSTEM_PREFIX + showName
-            else if (KiCoolRegistration.isTemporarySystem(system.id))
+            } else if (KiCoolRegistration.isTemporarySystem(system.id)) {
                 showName = TEMPORARY_SYSTEM_PREFIX + showName
+            }
         }
 
         def isLowerAs(SystemSelectionEntry e) {
-            if( TYPE_SORTER.compare(input, e.input) > 0 )
+            if (TYPE_SORTER.compare(input, e.input) > 0) {
                 return true
-            if( TYPE_SORTER.compare(input, e.input) == 0 )
+            }
+            if (TYPE_SORTER.compare(input, e.input) == 0) {
                 return showName.compareTo(e.showName) > 0
+            }
             return false
         }
 
