@@ -136,7 +136,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
 
     protected val defaultFigures = #{
         "ARRAY_INPUT" -> #["InputArray.kgt", "Array.kgt"],
-        "ARRAY_OTPUT" -> #["InputArray.kgt", "Array.kgt"],
+        "ARRAY_OUTPUT" -> #["InputArray.kgt", "Array.kgt"],
         "OPERATOR" -> #["OperatorExpression.kgt"],
         "PRE" -> #["OperatorExpressionPRE.kgt", "OperatorExpressionUnary.kgt", "OperatorExpression.kgt"],
         "NOT" -> #["OperatorExpressionNOT.kgt", "OperatorExpressionUnary.kgt", "OperatorExpression.kgt"],
@@ -198,33 +198,55 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         if (e instanceof ValuedObjectReference) {
             // create input or output nodes for the valued object reference
             val reference = (e as ValuedObjectReference)
+            if (reference.isClassReference && reference.subReference !== null) {
+                val arrayNode = e.createKGTNode(output ? "ARRAY_OUTPUT" : "ARRAY_INPUT", "")
+                arrayNode.associateWith(e)
+                nodes += arrayNode
+                var ref = reference.copy
+                ref.subReference = null
+                var varNode = ref.performTransformation(nodes, output)
+                varNode.setProperty(DATA_ARRAY_FLAG, true)
+                var ref2 = reference.valuedObject.reference
+                ref2.indices += reference.indices.map[it.copy].toList
+                var label = reference.serializeHR.toString.substring(ref2.serializeHR.length + 1)
+                if (output) {
+                    val sourcePort = arrayNode.findPortById(OUT_PORT)
+                    sourcePort.connectWith(varNode.findPortById(PORT0_IN_PREFIX),
+                        reference.valuedObject.serializeHR.toString)
+                    arrayNode.findPortById(PORT0_IN_PREFIX).setLabel(label, false)
+                } else {
+                    val sourcePort = varNode.findPortById(OUT_PORT)
+                    sourcePort.connectWith(arrayNode.findPortById(PORT0_IN_PREFIX),
+                        reference.valuedObject.serializeHR.toString)
+                    arrayNode.findPortById(OUT_PORT).setLabel(label, false)
+                }
+                return arrayNode
+            }
             if (reference.isArrayReference) {
                 // in case of an array reference a array node is inserted between the valued object node and the expression
                 val arrayNode = e.createKGTNode(output ? "ARRAY_OUTPUT" : "ARRAY_INPUT", "")
                 arrayNode.associateWith(e)
                 nodes += arrayNode
-                val varNode = reference.valuedObject.reference.performTransformation(nodes, output)
+                var ref = reference.copy
+                ref.indices.clear
+                var KNode varNode = ref.performTransformation(nodes, output)
+                varNode.setProperty(DATA_ARRAY_FLAG, true)
+                var label = String.join("", reference.indices.map["[" + it.serializeHR.toString + "]"])
                 if (output) {
                     val sourcePort = arrayNode.findPortById(OUT_PORT)
                     sourcePort.connectWith(varNode.findPortById(PORT0_IN_PREFIX),
                         reference.valuedObject.serializeHR.toString)
-                    arrayNode.findPortById(PORT0_IN_PREFIX).setLabel(String.join("", reference.indices.map [
-                        "[" + it.serializeHR.toString + "]"
-                    ]), false)
+                    arrayNode.findPortById(PORT0_IN_PREFIX).setLabel(label, false)
                 } else {
                     val sourcePort = varNode.findPortById(OUT_PORT)
                     sourcePort.connectWith(arrayNode.findPortById(PORT0_IN_PREFIX),
                         reference.valuedObject.serializeHR.toString)
-                    arrayNode.findPortById(OUT_PORT).setLabel(String.join("", reference.indices.map [
-                        "[" + it.serializeHR.toString + "]"
-                    ]), false)
+                    arrayNode.findPortById(OUT_PORT).setLabel(label, false)
                 }
-                if (reference.valuedObject.array && !reference.isArrayReference)
-                    arrayNode.setProperty(DATA_ARRAY_FLAG, true)
                 return arrayNode
             }
             var node = reference.valuedObject.createKGTNode(output ? "OUTPUT" : "INPUT", "")
-            var text = reference.serializeHR.toString
+            var text = reference.valuedObject.reference.serializeHR.toString
             if (reference.isModelReference) {
                 // in case of a model reference the subreference should not be in the label of the node
                 text = reference.valuedObject.reference.serializeHR.toString
@@ -234,10 +256,11 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                 node = node.createReferenceNode(reference, text)
                 // write the subreferences to the port labels
                 if (reference.subReference !== null) {
-                    if (output)
+                    if (output) {
                         node.getInputPortWithNumber(0).setLabel(reference.subReference.serializeHR.toString, true)
-                    else
+                    } else {
                         node.findPortById(OUT_PORT)?.setLabel(reference.subReference.serializeHR.toString, true)
+                    }
                 }
             } else {
                 node.addNodeLabelWithPadding(text, INPUT_OUTPUT_TEXT_SIZE,
@@ -250,8 +273,9 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                 node.addLayoutParam(CoreOptions::ALIGNMENT, output ? Alignment.RIGHT : Alignment.LEFT)
             }
             node.associateWith(e)
-            if (reference.valuedObject.array)
+            if (reference.valuedObject.array) {
                 node.setProperty(DATA_ARRAY_FLAG, true)
+            }
             nodes += node
             return node
         }
@@ -316,8 +340,9 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                 for (p : node.ports) {
                     val label = p.labels.head
                     if (label !== null) {
-                        if (operatorExpr.operator != OperatorType::CONDITIONAL)
+                        if (operatorExpr.operator != OperatorType::CONDITIONAL) {
                             label.text = operatorExpr.operator.serializeHR.toString
+                        }
                     }
                 }
             } else {
@@ -358,9 +383,9 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
     }
 
     protected def KNode createReferenceNode(KNode node, ValuedObjectReference voRef, String label) {
-        
-        val list = node.data.filter[ it instanceof KRendering ].toList
-        for( x : list )
+
+        val list = node.data.filter[it instanceof KRendering].toList
+        for (x : list)
             node.data.remove(x)
         var newNode = node
 
@@ -391,10 +416,12 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         if (AUTOMATIC_INLINE.booleanValue && declaration.reference !== null) {
             val state = declaration.reference as State
             newNode = stateSynthesis.transform(state).head
-            if (node.getInputPortWithNumber(0) !== null)
+            if (node.getInputPortWithNumber(0) !== null) {
                 newNode.ports.add(node.getInputPortWithNumber(0).copy)
-            if (node.findPortById(OUT_PORT) !== null)
+            }
+            if (node.findPortById(OUT_PORT) !== null) {
                 newNode.ports.add(node.findPortById(OUT_PORT).copy)
+            }
             newNode.setProperty(INLINED_REFERENCE, true)
         } else {
             newNode.data.filter[it instanceof KRendering]
@@ -402,7 +429,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                 setAsCollapsedView;
                 addDoubleClickAction(ReferenceExpandAction::ID)
             ]
-            
+
             newNode.addReferenceNodeFigure.associateWith(voRef) => [
                 setAsExpandedView;
                 addDoubleClickAction(ReferenceExpandAction::ID);
@@ -509,18 +536,20 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
 
     // connects two ports with a wire
     private def connectWith(KPort source, KPort target, String label) {
-        if (source === null || target === null)
+        if (source === null || target === null) {
             return
+        }
         val edge = createEdge
         edge.setLayoutOption(LayeredOptions.INSIDE_SELF_LOOPS_YO, true)
         edge.source = source.node
         edge.sourcePort = source
         edge.target = target.node
         edge.targetPort = target
-        if (source.node.hasProperty(DATA_ARRAY_FLAG) || target.node.hasProperty(DATA_ARRAY_FLAG))
+        if (source.node.hasProperty(DATA_ARRAY_FLAG) || target.node.hasProperty(DATA_ARRAY_FLAG)) {
             edge.addWireBusFigure
-        else
+        } else {
             edge.addWireFigure
+        }
         if (SHOW_WIRE_LABELS.booleanValue && !source.hasProperty(INPUT_FLAG) && label !== null) {
             edge.createLabel.configureTailEdgeLabel(label, 5, KlighdConstants::DEFAULT_FONT_NAME)
         }
@@ -565,8 +594,9 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
 
     static def findPortById(KNode node, String id) {
         for (p : node.ports) {
-            if (p.id == id)
+            if (p.id == id) {
                 return p
+            }
         }
         return null
     }
