@@ -358,7 +358,10 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
     }
 
     protected def KNode createReferenceNode(KNode node, ValuedObjectReference voRef, String label) {
-
+        
+        val list = node.data.filter[ it instanceof KRendering ].toList
+        for( x : list )
+            node.data.remove(x)
         var newNode = node
 
         node.setLayoutOption(LayeredOptions::NODE_PLACEMENT_STRATEGY, NodePlacementStrategy.SIMPLE)
@@ -394,6 +397,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                 newNode.ports.add(node.findPortById(OUT_PORT).copy)
             newNode.setProperty(INLINED_REFERENCE, true)
         } else {
+            newNode.data.filter[it instanceof KRendering]
             newNode.addReferenceNodeFigure.associateWith(voRef) => [
                 setAsCollapsedView;
                 addDoubleClickAction(ReferenceExpandAction::ID)
