@@ -66,6 +66,7 @@ import org.eclipse.xtext.resource.XtextResourceSet
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.klighd.krendering.KRendering
+import de.cau.cs.kieler.kexpressions.ValuedObject
 
 /**
  * @author ssm
@@ -135,6 +136,8 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
     protected static val INOUT_PORT = "inout"
 
     protected val defaultFigures = #{
+        "CLASS_INPUT" -> #["InputClass.kgt", "Class.kgt"],
+        "CLASS_OUTPUT" -> #["InputClass.kgt", "Class.kgt"],
         "ARRAY_INPUT" -> #["InputArray.kgt", "Array.kgt"],
         "ARRAY_OUTPUT" -> #["InputArray.kgt", "Array.kgt"],
         "OPERATOR" -> #["OperatorExpression.kgt"],
@@ -191,172 +194,175 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         return options
     }
 
+    // performTransformation:
     // creates an equation tree graph from an expression and returns the root node of the tree
     // all created nodes are added to the nodes list
     // output should be true if output nodes should be generated
-    def KNode performTransformation(Expression e, List<KNode> nodes, boolean output) {
-        if (e instanceof ValuedObjectReference) {
-            // create input or output nodes for the valued object reference
-            val reference = (e as ValuedObjectReference)
-            if (reference.isClassReference && reference.subReference !== null) {
-                val arrayNode = e.createKGTNode(output ? "ARRAY_OUTPUT" : "ARRAY_INPUT", "")
-                arrayNode.associateWith(e)
-                nodes += arrayNode
-                var ref = reference.copy
-                ref.subReference = null
-                var varNode = ref.performTransformation(nodes, output)
-                varNode.setProperty(DATA_ARRAY_FLAG, true)
-                var ref2 = reference.valuedObject.reference
-                ref2.indices += reference.indices.map[it.copy].toList
-                var label = reference.serializeHR.toString.substring(ref2.serializeHR.length + 1)
-                if (output) {
-                    val sourcePort = arrayNode.findPortById(OUT_PORT)
-                    sourcePort.connectWith(varNode.findPortById(PORT0_IN_PREFIX),
-                        reference.valuedObject.serializeHR.toString)
-                    arrayNode.findPortById(PORT0_IN_PREFIX).setLabel(label, false)
-                } else {
-                    val sourcePort = varNode.findPortById(OUT_PORT)
-                    sourcePort.connectWith(arrayNode.findPortById(PORT0_IN_PREFIX),
-                        reference.valuedObject.serializeHR.toString)
-                    arrayNode.findPortById(OUT_PORT).setLabel(label, false)
-                }
-                return arrayNode
-            }
-            if (reference.isArrayReference) {
-                // in case of an array reference a array node is inserted between the valued object node and the expression
-                val arrayNode = e.createKGTNode(output ? "ARRAY_OUTPUT" : "ARRAY_INPUT", "")
-                arrayNode.associateWith(e)
-                nodes += arrayNode
-                var ref = reference.copy
-                ref.indices.clear
-                var KNode varNode = ref.performTransformation(nodes, output)
-                varNode.setProperty(DATA_ARRAY_FLAG, true)
-                var label = String.join("", reference.indices.map["[" + it.serializeHR.toString + "]"])
-                if (output) {
-                    val sourcePort = arrayNode.findPortById(OUT_PORT)
-                    sourcePort.connectWith(varNode.findPortById(PORT0_IN_PREFIX),
-                        reference.valuedObject.serializeHR.toString)
-                    arrayNode.findPortById(PORT0_IN_PREFIX).setLabel(label, false)
-                } else {
-                    val sourcePort = varNode.findPortById(OUT_PORT)
-                    sourcePort.connectWith(arrayNode.findPortById(PORT0_IN_PREFIX),
-                        reference.valuedObject.serializeHR.toString)
-                    arrayNode.findPortById(OUT_PORT).setLabel(label, false)
-                }
-                return arrayNode
-            }
-            var node = reference.valuedObject.createKGTNode(output ? "OUTPUT" : "INPUT", "")
-            var text = reference.valuedObject.reference.serializeHR.toString
-            if (reference.isModelReference) {
-                // in case of a model reference the subreference should not be in the label of the node
-                text = reference.valuedObject.reference.serializeHR.toString
-            }
-            node.setProperty(output ? OUTPUT_FLAG : INPUT_FLAG, true)
-            if (reference.isModelReference && reference.subReference !== null) {
-                node = node.createReferenceNode(reference, text)
-                // write the subreferences to the port labels
-                if (reference.subReference !== null) {
-                    if (output) {
-                        node.getInputPortWithNumber(0).setLabel(reference.subReference.serializeHR.toString, true)
-                    } else {
-                        node.findPortById(OUT_PORT)?.setLabel(reference.subReference.serializeHR.toString, true)
-                    }
-                }
+    // create input or output nodes for the valued object reference
+    def dispatch KNode performTransformation(ValuedObjectReference reference, List<KNode> nodes, boolean output) {
+        if (reference.isClassReference && reference.subReference !== null) {
+            // in case of a class reference a class node is inserted between the valued object node and the expression
+            val arrayNode = reference.createKGTNode(output ? "CLASS_OUTPUT" : "CLASS_INPUT", "")
+            arrayNode.associateWith(reference)
+            nodes += arrayNode
+            var ref = reference.copy
+            ref.subReference = null
+            var varNode = ref.performTransformation(nodes, output)
+            varNode.setProperty(DATA_ARRAY_FLAG, true)
+            var ref2 = reference.valuedObject.reference
+            ref2.indices += reference.indices.map[it.copy].toList
+            var label = reference.serializeHR.toString.substring(ref2.serializeHR.length + 1)
+            if (output) {
+                val sourcePort = arrayNode.findPortById(OUT_PORT)
+                sourcePort.connectWith(varNode.findPortById(PORT0_IN_PREFIX),
+                    reference.valuedObject.serializeHR.toString)
+                arrayNode.findPortById(PORT0_IN_PREFIX).setLabel(label, false)
             } else {
-                node.addNodeLabelWithPadding(text, INPUT_OUTPUT_TEXT_SIZE,
-                    output ? PADDING_OUTPUT_LEFT : PADDING_INPUT_LEFT,
-                    output ? PADDING_OUTPUT_RIGHT : PADDING_INPUT_RIGHT)
+                val sourcePort = varNode.findPortById(OUT_PORT)
+                sourcePort.connectWith(arrayNode.findPortById(PORT0_IN_PREFIX),
+                    reference.valuedObject.serializeHR.toString)
+                arrayNode.findPortById(OUT_PORT).setLabel(label, false)
             }
-            if (ALIGN_INPUTS_OUTPUTS.booleanValue) {
-                node.addLayoutParam(LayeredOptions::LAYERING_LAYER_CONSTRAINT,
-                    output ? LayerConstraint::LAST : LayerConstraint::FIRST)
-                node.addLayoutParam(CoreOptions::ALIGNMENT, output ? Alignment.RIGHT : Alignment.LEFT)
-            }
-            node.associateWith(e)
-            if (reference.valuedObject.array) {
-                node.setProperty(DATA_ARRAY_FLAG, true)
-            }
-            nodes += node
-            return node
+            return arrayNode
         }
-        if (e instanceof VectorValue) {
-            // create one node for each value inside of a Vector Value and connect them to a Vector node
-            val node = e.createKGTNode(output ? "ARRAY_OUTPUT" : "ARRAY_INPUT", "")
-            for (value : e.values) {
-                if (!(value instanceof IgnoreValue)) {
-                    val valueNode = value.performTransformation(nodes, false)
-                    val sourcePort = valueNode.findPortById(OUT_PORT)
-                    val targetPort = node.getInputPortWithNumber(e.values.indexOf(value))
-                    sourcePort.connectWith(targetPort,
-                        valueNode.getProperty(KlighdInternalProperties.MODEL_ELEMEMT)?.serializeHR?.toString)
-                    targetPort.setLabel(e.values.indexOf(value).toString, false)
+        if (reference.isArrayReference) {
+            // in case of an array reference a array node is inserted between the valued object node and the expression
+            val arrayNode = reference.createKGTNode(output ? "ARRAY_OUTPUT" : "ARRAY_INPUT", "")
+            arrayNode.associateWith(reference)
+            nodes += arrayNode
+            var ref = reference.copy
+            ref.indices.clear
+            var KNode varNode = ref.performTransformation(nodes, output)
+            varNode.setProperty(DATA_ARRAY_FLAG, true)
+            var label = String.join("", reference.indices.map["[" + it.serializeHR.toString + "]"])
+            if (output) {
+                val sourcePort = arrayNode.findPortById(OUT_PORT)
+                sourcePort.connectWith(varNode.findPortById(PORT0_IN_PREFIX),
+                    reference.valuedObject.serializeHR.toString)
+                arrayNode.findPortById(PORT0_IN_PREFIX).setLabel(label, false)
+            } else {
+                val sourcePort = varNode.findPortById(OUT_PORT)
+                sourcePort.connectWith(arrayNode.findPortById(PORT0_IN_PREFIX),
+                    reference.valuedObject.serializeHR.toString)
+                arrayNode.findPortById(OUT_PORT).setLabel(label, false)
+            }
+            return arrayNode
+        }
+        var node = reference.valuedObject.createKGTNode(output ? "OUTPUT" : "INPUT", "")
+        var text = reference.valuedObject.reference.serializeHR.toString
+        if (reference.isModelReference) {
+            // in case of a model reference the subreference should not be in the label of the node
+            text = reference.valuedObject.reference.serializeHR.toString
+        }
+        node.setProperty(output ? OUTPUT_FLAG : INPUT_FLAG, true)
+        if (reference.isModelReference && reference.subReference !== null) {
+            node = node.createReferenceNode(reference, text)
+            // write the subreferences to the port labels
+            if (reference.subReference !== null) {
+                if (output) {
+                    node.getInputPortWithNumber(0).setLabel(reference.subReference.serializeHR.toString, true)
+                } else {
+                    node.findPortById(OUT_PORT)?.setLabel(reference.subReference.serializeHR.toString, true)
                 }
             }
+        } else {
+            node.addNodeLabelWithPadding(text, INPUT_OUTPUT_TEXT_SIZE,
+                output ? PADDING_OUTPUT_LEFT : PADDING_INPUT_LEFT, output ? PADDING_OUTPUT_RIGHT : PADDING_INPUT_RIGHT)
+        }
+        if (ALIGN_INPUTS_OUTPUTS.booleanValue) {
+            node.addLayoutParam(LayeredOptions::LAYERING_LAYER_CONSTRAINT,
+                output ? LayerConstraint::LAST : LayerConstraint::FIRST)
+            node.addLayoutParam(CoreOptions::ALIGNMENT, output ? Alignment.RIGHT : Alignment.LEFT)
+        }
+        node.associateWith(reference)
+        if (reference.valuedObject.array) {
             node.setProperty(DATA_ARRAY_FLAG, true)
-            node.associateWith(e)
-            nodes += node
-            return node
         }
-        // create an input or output node for constant values
-        if (e instanceof Value) {
-            val node = e.createKGTNode("INPUT", "")
-            val text = e.serializeHR.toString
-            node.addNodeLabelWithPadding(text, INPUT_OUTPUT_TEXT_SIZE, PADDING_INPUT_LEFT, PADDING_INPUT_RIGHT)
-            node.setProperty(INPUT_FLAG, true)
+        nodes += node
+        return node
+    }
 
-            if (ALIGN_CONSTANTS.booleanValue) {
-                node.addLayoutParam(LayeredOptions::LAYERING_LAYER_CONSTRAINT, LayerConstraint::FIRST)
-                node.addLayoutParam(CoreOptions::ALIGNMENT, Alignment.LEFT)
-            }
-            node.associateWith(e)
-            nodes += node
-            return node
-        }
-        if (e instanceof OperatorExpression) {
-            // find out the id of the kgt skin
-            val operatorExpr = e as OperatorExpression
-            var figureId = operatorExpr.operator.getName()
-            if (operatorExpr.operator == OperatorType.SUB) {
-                figureId = if(operatorExpr.subExpressions.size == 1) "UNARY_SUB" else "ARITHMETICAL_SUB"
-            }
-            if (operatorExpr.operator == OperatorType.CONDITIONAL && operatorExpr.subExpressions.size == 2) {
-                figureId = "CONDITIONAL_UPDATE"
-            }
-            var text = operatorExpr.operator.toString
-            if (operatorExpr.operator == OperatorType.CONDITIONAL) {
-                text = ""
-            }
-            // create kgt node
-            val node = e.createKGTNode(figureId, text)
-            for (subExpr : operatorExpr.subExpressions) {
-                val source = subExpr.performTransformation(nodes, false)
-                val sourcePort = source.findPortById(OUT_PORT)
-                val targetPort = node.getInputPortWithNumber(operatorExpr.subExpressions.indexOf(subExpr))
+    // create one node for each value inside of a Vector Value and connect them to a Vector node
+    def dispatch KNode performTransformation(VectorValue e, List<KNode> nodes, boolean output) {
+        val node = e.createKGTNode(output ? "ARRAY_OUTPUT" : "ARRAY_INPUT", "")
+        for (value : e.values) {
+            if (!(value instanceof IgnoreValue)) {
+                val valueNode = value.performTransformation(nodes, false)
+                val sourcePort = valueNode.findPortById(OUT_PORT)
+                val targetPort = node.getInputPortWithNumber(e.values.indexOf(value))
                 sourcePort.connectWith(targetPort,
-                    source.getProperty(KlighdInternalProperties.MODEL_ELEMEMT)?.serializeHR?.toString)
+                    valueNode.getProperty(KlighdInternalProperties.MODEL_ELEMEMT)?.serializeHR?.toString)
+                targetPort.setLabel(e.values.indexOf(value).toString, false)
             }
-            // show or hide port labels
-            if (SHOW_EXPRESSION_PORT_LABELS.booleanValue) {
-                for (p : node.ports) {
-                    val label = p.labels.head
-                    if (label !== null) {
-                        if (operatorExpr.operator != OperatorType::CONDITIONAL) {
-                            label.text = operatorExpr.operator.serializeHR.toString
-                        }
-                    }
-                }
-            } else {
-                for (p : node.ports) {
-                    val label = p.labels.head
-                    if (label !== null) {
-                        label.text = ""
-                    }
-                }
-            }
-            node.associateWith(e)
-            nodes += node
-            return node
         }
+        node.setProperty(DATA_ARRAY_FLAG, true)
+        node.associateWith(e)
+        nodes += node
+        return node
+    }
+
+    // create an input node for constant values
+    def dispatch KNode performTransformation(Value e, List<KNode> nodes, boolean output) {
+        val node = e.createKGTNode("INPUT", "")
+        val text = e.serializeHR.toString
+        node.addNodeLabelWithPadding(text, INPUT_OUTPUT_TEXT_SIZE, PADDING_INPUT_LEFT, PADDING_INPUT_RIGHT)
+        node.setProperty(INPUT_FLAG, true)
+
+        if (ALIGN_CONSTANTS.booleanValue) {
+            node.addLayoutParam(LayeredOptions::LAYERING_LAYER_CONSTRAINT, LayerConstraint::FIRST)
+            node.addLayoutParam(CoreOptions::ALIGNMENT, Alignment.LEFT)
+        }
+        node.associateWith(e)
+        nodes += node
+        return node
+    }
+
+    // create an input or output node for constant values
+    def dispatch KNode performTransformation(OperatorExpression operatorExpr, List<KNode> nodes, boolean output) {
+        var figureId = operatorExpr.operator.getName()
+        if (operatorExpr.operator == OperatorType.SUB) {
+            figureId = if(operatorExpr.subExpressions.size == 1) "UNARY_SUB" else "ARITHMETICAL_SUB"
+        }
+        if (operatorExpr.operator == OperatorType.CONDITIONAL && operatorExpr.subExpressions.size == 2) {
+            figureId = "CONDITIONAL_UPDATE"
+        }
+        var text = operatorExpr.operator.toString
+        if (operatorExpr.operator == OperatorType.CONDITIONAL) {
+            text = ""
+        }
+        // create kgt node
+        val node = operatorExpr.createKGTNode(figureId, text)
+        for (subExpr : operatorExpr.subExpressions) {
+            val source = subExpr.performTransformation(nodes, false)
+            val sourcePort = source.findPortById(OUT_PORT)
+            val targetPort = node.getInputPortWithNumber(operatorExpr.subExpressions.indexOf(subExpr))
+            sourcePort.connectWith(targetPort,
+                source.getProperty(KlighdInternalProperties.MODEL_ELEMEMT)?.serializeHR?.toString)
+        }
+        // show or hide port labels
+        if (SHOW_EXPRESSION_PORT_LABELS.booleanValue) {
+            for (p : node.ports) {
+                val label = p.labels.head
+                if (label !== null) {
+                    if (operatorExpr.operator != OperatorType::CONDITIONAL) {
+                        label.text = operatorExpr.operator.serializeHR.toString
+                    }
+                }
+            }
+        } else {
+            for (p : node.ports) {
+                val label = p.labels.head
+                if (label !== null) {
+                    label.text = ""
+                }
+            }
+        }
+        node.associateWith(operatorExpr)
+        nodes += node
+        return node
+    }
+
+    def dispatch KNode performTransformation(Expression e, List<KNode> nodes, boolean output) {
         println("what should i do with: " + e + "?")
         return null
     }
