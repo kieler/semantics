@@ -36,6 +36,7 @@
       <repository location="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/semantics-integration/pragmatics/"/>
     </location>
     <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="false" type="InstallableUnit">
+      <unit id="org.eclipse.elk.feature.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.elk.graphviz.feature.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.elk.ui.feature.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.elk.sdk.feature.feature.group" version="0.0.0"/>
