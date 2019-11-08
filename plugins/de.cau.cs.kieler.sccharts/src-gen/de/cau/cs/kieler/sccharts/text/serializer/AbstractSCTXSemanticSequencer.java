@@ -2104,7 +2104,7 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	 *         (effects+=Effect effects+=Effect*)? 
 	 *         preemption=PreemptionType 
 	 *         targetState=[State|ID] 
-	 *         deferred?='deferred'? 
+	 *         deferred=DeferredType? 
 	 *         history=HistoryType? 
 	 *         label=STRING?
 	 *     )
