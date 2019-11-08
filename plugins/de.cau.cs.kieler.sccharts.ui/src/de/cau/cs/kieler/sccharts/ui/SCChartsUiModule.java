@@ -5,6 +5,7 @@ package de.cau.cs.kieler.sccharts.ui;
 
 import org.osgi.framework.BundleContext;
 
+import de.cau.cs.kieler.sccharts.ui.debug.breakpoints.SCTXBreakpointListener;
 import de.cau.cs.kieler.sccharts.ui.internal.SCTXActivator;
 import de.cau.cs.kieler.sccharts.ui.simulation.SCChartsDiagramHighlighter;
 import de.cau.cs.kieler.sccharts.ui.simulation.SCChartsDiagramLiveValues;
@@ -26,6 +27,8 @@ public class SCChartsUiModule extends SCTXActivator {
         // FIXME magic registration
         SCChartsDiagramHighlighter.create();
         SCChartsDiagramLiveValues.create();
+        // TODO at least do this with a static method
+        SCTXBreakpointListener listener = new SCTXBreakpointListener();
     } //$NON-NLS-1$
     
     

@@ -1,4 +1,4 @@
-package de.scheidtbachmann.statemachine.codegen.lean
+package de.cau.cs.kieler.sccharts.processors.statebased.codegen.java
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions

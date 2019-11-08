@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.sccharts.debug
+package de.cau.cs.kieler.sccharts.ui.debug.breakpoints
 
 import org.eclipse.jdt.debug.core.IJavaBreakpointListener
 import org.eclipse.jdt.debug.core.IJavaDebugTarget
@@ -19,8 +19,6 @@ import org.eclipse.jdt.debug.core.IJavaLineBreakpoint
 import org.eclipse.debug.core.DebugException
 import org.eclipse.jdt.debug.core.IJavaThread
 import org.eclipse.jdt.debug.core.IJavaType
-import org.eclipse.jdt.core.dom.Message
-import org.eclipse.jdt.ui.JavaUI
 import java.util.HashMap
 import java.nio.charset.StandardCharsets
 import de.cau.cs.kieler.klighd.ui.DiagramViewManager
@@ -39,6 +37,8 @@ import org.eclipse.core.runtime.IProgressMonitor
 import org.eclipse.core.runtime.Status
 import com.google.inject.Guice
 import org.eclipse.jdt.internal.debug.core.model.JDIStackFrame
+import de.cau.cs.kieler.sccharts.text.parser.SCTXStandaloneParser
+import org.eclipse.jdt.ui.JavaUI
 
 /**
  * @author peu
@@ -88,6 +88,7 @@ class JavaBreakpointListener implements IJavaBreakpointListener {
 
             // Extract name of method of this stack frame -----------------------------
             val typeRoot = JavaUI.getEditorInputTypeRoot(editor.editorInput)
+            
             
             val compilationUnit = (typeRoot.getAdapter(ICompilationUnit) as ICompilationUnit)
             
@@ -198,10 +199,4 @@ class JavaBreakpointListener implements IJavaBreakpointListener {
         println("Installing Breakpoint!")
         return DONT_CARE
     }
-    
-    override breakpointHasCompilationErrors(IJavaLineBreakpoint breakpoint,
-            Message[] errors) {
-        // ignore
-    }
-    
 }

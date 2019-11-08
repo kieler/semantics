@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.sccharts.debug.ui;
+package de.cau.cs.kieler.sccharts.ui.debug;
 
 //import org.eclipse.jface.action.Action;
 //import org.eclipse.jface.action.ControlContribution;
@@ -33,6 +33,8 @@ package de.cau.cs.kieler.sccharts.debug.ui;
  * 
  * The elements added here are two toggle breakpoint buttons, one to indicate debug mode and one to
  * enable fast forwarding.
+ *
+ * TODO adapt for new setting
  * 
  * @author lgr
  *

@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.sccharts.debug.ui;
+package de.cau.cs.kieler.sccharts.ui.debug.breakpoints;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -61,7 +61,6 @@ import de.cau.cs.kieler.klighd.util.Iterables2;
 import de.cau.cs.kieler.sccharts.Scope;
 import de.cau.cs.kieler.sccharts.State;
 import de.cau.cs.kieler.sccharts.Transition;
-import de.cau.cs.kieler.sccharts.debug.SCChartsDebugPlugin;
 import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.SynthesisHook;
 
 /**
@@ -161,9 +160,10 @@ public class BreakpointVisualizationHook extends SynthesisHook {
         IResource resource =
                 (IResource) editorPart.getEditorInput().getAdapter(IResource.class);
         
-        if (SCChartsDebugPlugin.getDefault().isEObjectInLine((EObject) state, resource)) {
-            states.put(state, node);
-        }
+        // TODO do this properly
+//        if (SCChartsDebugPlugin.getDefault().isEObjectInLine((EObject) state, resource)) {
+//            states.put(state, node);
+//        }
     }
  
     /**
@@ -177,9 +177,10 @@ public class BreakpointVisualizationHook extends SynthesisHook {
         IResource resource =
                 (IResource) editorPart.getEditorInput().getAdapter(IResource.class);
         
-        if (SCChartsDebugPlugin.getDefault().isEObjectInLine((EObject) transition, resource)) {
-            transitions.put(transition, edge);
-        }
+        // TODO do this properly
+//        if (SCChartsDebugPlugin.getDefault().isEObjectInLine((EObject) transition, resource)) {
+//            transitions.put(transition, edge);
+//        }
     }
 
     /**

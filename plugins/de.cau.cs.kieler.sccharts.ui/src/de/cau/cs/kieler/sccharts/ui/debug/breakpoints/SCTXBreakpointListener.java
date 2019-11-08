@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.sccharts.debug;
+package de.cau.cs.kieler.sccharts.ui.debug.breakpoints;
 
 import org.eclipse.core.resources.IMarkerDelta;
 import org.eclipse.core.runtime.CoreException;
@@ -18,9 +18,6 @@ import org.eclipse.debug.core.IBreakpointListener;
 import org.eclipse.debug.core.model.IBreakpoint;
 import org.eclipse.debug.core.model.LineBreakpoint;
 import org.eclipse.emf.ecore.EObject;
-
-import de.cau.cs.kieler.sccharts.debug.ui.BreakpointVisualizationHook;
-import de.cau.cs.kieler.sccharts.debug.ui.SCChartsBreakpointTargetAdapter;
 
 /**
  * This class listens to adding breakpoints, changing them or removing them. According to the event

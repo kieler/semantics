@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.sccharts.debug;
+package de.cau.cs.kieler.sccharts.ui.debug;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
@@ -22,7 +22,10 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorActionDelegate;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PlatformUI;
-import de.cau.cs.kieler.sccharts.debug.ui.SCChartsBreakpointTargetAdapter;
+
+import de.cau.cs.kieler.sccharts.ui.debug.breakpoints.SCChartsBreakpointTargetAdapter;
+import de.cau.cs.kieler.sccharts.ui.debug.breakpoints.SCChartsBreakpointTargetAdapterFactory;
+
 
 /**
  * This class is used as the Handler for the TextRulerContext command 'Toggle Breakpoint'.
