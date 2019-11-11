@@ -25,6 +25,8 @@ Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: de.cau.cs.kieler.lustre.ui.internal,
  de.cau.cs.kieler.lustre.ui.quickfix,
- de.cau.cs.kieler.lustre.ui.contentassist
-Bundle-Activator: de.cau.cs.kieler.lustre.ui.internal.LustreActivator
+ de.cau.cs.kieler.lustre.ui.contentassist,
+ de.cau.cs.kieler.lustre.ui.scade.contentassist,
+ de.cau.cs.kieler.lustre.ui.scade.quickfix
+Bundle-Activator: de.cau.cs.kieler.lustre.ui.DelegateActivator
 Bundle-ActivationPolicy: lazy

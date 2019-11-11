@@ -42,6 +42,8 @@ class ScopeSynthesis extends AbstractDiagramSynthesis<Scope> {
     @Inject DataflowRegionSynthesis dataflowSynthesis  
         
     @Inject SynthesisHooks hooks  
+    
+    public static val ID = "de.cau.cs.kieler.sccharts.ui.synthesis.ScopeSynthesis"
 
     override getDisplayedActions() {
         return newLinkedList => [ list |

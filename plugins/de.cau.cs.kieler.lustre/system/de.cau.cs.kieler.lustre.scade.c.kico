@@ -1,0 +1,6 @@
+public system de.cau.cs.kieler.lustre.scade.c
+	label "Scade to C (Netlist)"
+
+de.cau.cs.kieler.lustre.scade.processors.scadeToLustre
+de.cau.cs.kieler.lustre.processors.lustreToSCC.dataFlow
+system de.cau.cs.kieler.sccharts.^simulation.netlist.c

@@ -15,6 +15,7 @@ package de.cau.cs.kieler.kicool.deploy
 import de.cau.cs.kieler.annotations.Nameable
 import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.core.properties.Property
+import de.cau.cs.kieler.core.uri.URIUtils
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
 import de.cau.cs.kieler.kicool.environments.Environment
 import java.io.File
@@ -24,12 +25,16 @@ import java.io.InputStream
 import java.io.OutputStream
 import java.io.PrintStream
 import java.net.URL
+import java.nio.file.FileSystems
 import java.nio.file.Files
 import java.util.Comparator
+import java.util.Enumeration
+import java.util.Iterator
 import java.util.List
 import java.util.Map
 import java.util.Map.Entry
 import java.util.Set
+import java.util.stream.Collectors
 import org.eclipse.core.resources.IProject
 import org.eclipse.core.resources.IResource
 import org.eclipse.core.resources.ResourcesPlugin
@@ -71,7 +76,10 @@ class ProjectInfrastructure {
     
     public static val IProperty<Boolean> USE_GENERATED_FOLDER = 
         new Property<Boolean>("de.cau.cs.kieler.kicool.deploy.project.generated.use", true)
-    
+        
+    public static val IProperty<String> GENERATED_FOLDER_ROOT = 
+        new Property<String>("de.cau.cs.kieler.kicool.deploy.project.generated.root", null)
+
     public static val IProperty<String> GENERATED_NAME = 
         new Property<String>("de.cau.cs.kieler.kicool.deploy.project.generated.name", "kieler-gen")
     
@@ -93,7 +101,7 @@ class ProjectInfrastructure {
     @Accessors(AccessorType.PUBLIC_GETTER)
     var IProject project = null
     @Accessors(AccessorType.PUBLIC_GETTER)
-    var File modelFile = null        
+    var File modelFile = null
     @Accessors(AccessorType.PUBLIC_GETTER)
     var File modelFolder = null
     @Accessors(AccessorType.PUBLIC_GETTER)
@@ -145,6 +153,7 @@ class ProjectInfrastructure {
         
         
         // ############### MODEL_FILE ###############
+        modelFile = null
         // Check if compilation is based on input file
         val inputModelPath = environment.getProperty(MODEL_FILE_PATH)
         if (inputModelPath !== null) {
@@ -161,6 +170,9 @@ class ProjectInfrastructure {
                 resource = inputModel.eResource
                 if (resource !== null) {
                     modelFile = resource.findResourceLocation
+                    if (modelFile === null && resource.URI !== null) {
+                        modelFile = URIUtils.getJavaFile(resource.URI)
+                    }
                 }
             } else if (inputModel instanceof CodeContainer) {
                 if (!inputModel.files.empty) {
@@ -199,7 +211,7 @@ class ProjectInfrastructure {
         
         // ############### RELATIVE_SOURCE_PATH ###############
         // get relative path, before temporary project reroutes modelFolder
-        if (srcFolder !== null && modelFile !== null){
+        if (srcFolder !== null && modelFile !== null) {
             variables.computeIfAbsent("RELATIVE_MODEL_PATH", [
                 Paths.get(srcFolder.path)
                      .relativize(Paths.get(constModelFile.parent))
@@ -217,6 +229,7 @@ class ProjectInfrastructure {
             // Find name
             var name = "unknown"
             if (resource !== null && resource.URI !== null && resource.URI.platform) {
+                // workspace relative / plug-in-based path
                 name = resource.URI.toPlatformString(true)
             } else if (resource !== null && resource.URI !== null && resource.URI.file) {
                 name = resource.URI.toFileString
@@ -225,6 +238,7 @@ class ProjectInfrastructure {
                     name = nameSplits.get(nameSplits.length - 1)
                 }
             } else if (modelFile !== null) {
+                // src file path
                 name = modelFile.toString
             } else if (inputModel instanceof Nameable) {
                 name = inputModel.name
@@ -243,6 +257,30 @@ class ProjectInfrastructure {
         }
         
         
+        // ############### DESTINATION_ROOT ###############
+        variables.computeIfAbsent("DST_ROOT", [
+            if (modelFolder !== null) {
+                if (hasProject) {
+                    return project.getFolder(modelFolder.name).rawLocation.toFile.path
+                } else {
+                    if (environment.getProperty(USE_GENERATED_FOLDER) && !environment.getProperty(GENERATED_FOLDER_ROOT).nullOrEmpty) {
+                        return environment.getProperty(GENERATED_FOLDER_ROOT)
+                    } else {
+                        return modelFolder.path
+                    }
+                }
+            } else {
+                return null;
+            }
+        ])
+        
+        
+        // ############### USE_GENERATED_FOLDER ###############
+        if (environment.getProperty(USE_GENERATED_FOLDER)) {
+            variables.putIfAbsent("GEN_FOLDER", environment.getProperty(GENERATED_NAME))
+        }
+                
+        
         // ############### OWN_MODEL_FOLDER ###############
         if (environment.getProperty(OWN_MODEL_FOLDER)) {
             variables.computeIfAbsent("OWN_MODEL_FOLDER", [
@@ -251,53 +289,19 @@ class ProjectInfrastructure {
         }
         
         
-        // ############### DESTINATION_ROOT ###############
-        val dstFolderPath = variables.computeIfAbsent("DST_ROOT", [
-            modelFolder.path
-        ])
-        val dstFolder = if (dstFolderPath !== null) new File(dstFolderPath)
-        
-        if (environment.getProperty(USE_GENERATED_FOLDER)) {
-            variables.putIfAbsent("GEN_FOLDER", environment.getProperty(GENERATED_NAME))
-        }
-        
-        
-        // ############### OVERWRITE DESTINATION_ROOT BY PROJECT ###############
-        if (dstFolder !== null && hasProject) {
-            // root folder
-            var gen = project.getFolder(dstFolder.name)
-            if (!gen.exists) {
-                gen.create(true, true, null)
-            }
-            variables.put("DST_ROOT", gen.rawLocation.toFile.path)
-        }
-        
-        
         // ############### CALCULATE DESTINATION/FLATEN VARIABLES ###############
         // add default output path
-        variables.computeIfAbsent("DST", [
-            variableReplacement("${DST_ROOT}/${GEN_FOLDER}/${RELATIVE_MODEL_PATH}/${OWN_MODEL_FOLDER}/")
-        ])
-        
-        // resolve variables in variables with max recursion of 10 levels
-        for (var i = 0; i<10; i++) {
-            var done = true
-            for (Entry<String,String> entry : variables.entrySet) {
-                if (entry.value.indexOf("${")>=0) {
-                    variables.put(entry.key, variableReplacement(entry.value))
-                    done = false
-                }
-            }
-            if (done) i = 10
-        }
+        variables.putIfAbsent("DST", "${DST_ROOT}/${GEN_FOLDER}/${RELATIVE_MODEL_PATH}/${OWN_MODEL_FOLDER}/")
         
         
         // ############### CREATE FOLDER ###############
         val relativeModelPath =
-            Paths.get(variables.get("DST_ROOT"))
-            .relativize(Paths.get(variables.get("DST")))
+            Paths.get(variableLookup("DST_ROOT"))
+            .relativize(Paths.get(variableLookup("DST")))
             .normalize
-        variables.computeIfAbsent("DST_ROOT_RELATIVE", [relativeModelPath.toString])
+        
+        val dstFolderPath = variableLookup("DST_ROOT")
+        val dstFolder = dstFolderPath !== null ? new File(dstFolderPath) : null
         
         if (dstFolder !== null) {
             if (hasProject) {
@@ -305,6 +309,8 @@ class ProjectInfrastructure {
                 if (!gen.exists) {
                     gen.create(true, true, null)
                 }
+                
+                println(gen.rawLocation.toFile)
                 
                 // generate folders
                 if (relativeModelPath !== null) {
@@ -317,12 +323,13 @@ class ProjectInfrastructure {
                 }
                 generatedCodeFolder = gen.rawLocation.toFile
             } else {
-                generatedCodeFolder = new File(dstFolder, relativeModelPath.toString)
+                generatedCodeFolder = new File(variableLookup("DST"))
                 if (!generatedCodeFolder.exists) {
                     generatedCodeFolder.mkdirs
                 }
             }
         }
+        
     }
     
     def getProjectRelativeFile(File file) {
@@ -358,10 +365,19 @@ class ProjectInfrastructure {
         return WorkspaceSynchronizer.getFile(resource)?.rawLocation?.toFile
     }
     
-    def String variableReplacement(String input) {
-        return variableReplacement(null, input)
+    def String variableLookup(String input) {
+        return variableReplacement("${"+input+"}")
     }
-    def String variableReplacement(Map<String,String> vars, String input) {
+    def String variableReplacement(String input) {
+        return variableReplacement(null, newHashSet, input)
+    }
+    def String variableReplacement(Map<String,String> vars,  String input) {
+        return variableReplacement(vars, newHashSet, input)
+    }
+    def String variableReplacement(Map<String,String> vars, Set<String> blocked, String input) {
+        if (input === null) return null;
+        
+        // perform replacements
         val sb = new StringBuilder
         var lastIndex = 0
         var index = 0
@@ -376,7 +392,17 @@ class ProjectInfrastructure {
             if ((index = input.indexOf("}", lastIndex)) !== -1) {
                 // get value of variable
                 val variableName = input.substring(lastIndex, index)
-                val variableValue = vars?.get(variableName) ?: variables.get(variableName)
+                
+                // prevent endless recursion
+                if (blocked.contains(variableName)) {
+                    throw new IllegalArgumentException("Path contained recursive variable \"" + variableName + "\"")
+                }
+                
+                // get variable
+                blocked.add(variableName)
+                val variableValue = variableReplacement(vars, blocked, (vars?.get(variableName) ?: variables.get(variableName)))
+                blocked.remove(variableName)
+                
                 if (variableValue !== null) {
                     sb.append(variableValue)
                 } // if variable not found: skip entry
@@ -384,7 +410,7 @@ class ProjectInfrastructure {
                 lastIndex = index+1
             } else {
                 // broken variable (no end tag "}")
-                throw new IllegalArgumentException("Path contained variable start \"${\" but no end tag \"}\"")
+                throw new IllegalArgumentException("Path variable contained variable start \"${\" but no end tag \"}\"")
             }
         }
         
@@ -441,14 +467,45 @@ class ProjectInfrastructure {
         checkArgument(src.segmentCount > 2, "Source is not a valid plugin platform URI (i.e. 'platform:/plugin/org.myplugin/path/to/directory')")
         checkArgument(src.fileExtension.nullOrEmpty, "Source is not a directory")
 
-        val bundle = Platform.getBundle(src.segment(1))
         val path = src.segments.drop(2).join("/")
-        val entries = bundle.findEntries(path, "*", true)
-        if (entries.hasMoreElements) {
-            while (entries.hasMoreElements) {
-                val fileUrl = entries.nextElement
+        var Iterator<URL> entries
+        if (src.isPlatformPlugin) {
+            if (Platform.isRunning) {
+                val bundle = Platform.getBundle(src.segment(1))
+                entries = bundle.findEntries(path, "*", true).toIterator
+            } else {
+                val uri = ClassLoader.getSystemResource(path).toURI
+                if (uri.scheme.equals("jar")) {
+                    val fs = FileSystems.newFileSystem(uri, emptyMap)
+                    val files = Files.walk(fs.getPath(path)).filter[
+                        Files.isRegularFile(it)
+                    ].map[
+                        val filePath = it.toString
+                        ClassLoader.getSystemResource(filePath.startsWith("/") ? filePath.substring(1) : filePath)
+                    ].collect(Collectors.toList)
+                    fs.close
+                    entries = files.iterator
+                } else {
+                    entries = Files.walk(new File(uri).toPath).filter[
+                        Files.isRegularFile(it)
+                    ].map[
+                        it.toUri.toURL
+                    ].collect(Collectors.toList).iterator
+                }
+            }
+        } else {
+            entries = Files.walk(new File(src.toFileString).toPath).filter[
+                Files.isRegularFile(it)
+            ].map[
+                it.toUri.toURL
+            ].collect(Collectors.toList).iterator
+        }
+        if (entries.hasNext) {
+            while (entries.hasNext) {
+                val fileUrl = entries.next
                 val fileUrlPath = fileUrl.toString
-                if (!fileUrlPath.endsWith("/")) { // is file
+                val relStart = fileUrlPath.indexOf(path) + 1 + path.length
+                if (!fileUrlPath.endsWith("/") && relStart < fileUrlPath.length) { // is file
                     val relativePath = fileUrlPath.substring(fileUrlPath.indexOf(path) + path.length + 1)
                     val destFile = new File(dest, relativePath)
     
@@ -482,6 +539,14 @@ class ProjectInfrastructure {
         if (!dest.exists || overrideFile) {
             logger?.println("Copying file: " + src)
             try {
+                if (dest.exists)  {
+                    dest.delete
+                } else {
+                    val parent = dest.canonicalFile.parentFile
+                    if (!parent.exists) {
+                        parent.mkdirs
+                    }
+                }
                 Files.copy(src.toPath, dest.toPath)
                 return true
             } catch (IOException e) {
@@ -502,10 +567,20 @@ class ProjectInfrastructure {
         checkArgument(src.segmentCount > 2, "Source is not a valid plugin platform URI (i.e. 'platform:/plugin/org.myplugin/path/to/directory')")
         checkArgument(!src.fileExtension.nullOrEmpty, "Source is not a file")
 
-        val bundle = Platform.getBundle(src.segment(1))
-        val path = src.segments.drop(2).take(src.segmentCount - 3).join("/")
-        val entries = bundle.findEntries(path, src.lastSegment, true)
-        val fileUrl = entries?.nextElement
+        var URL fileUrl
+        if (src.isPlatformPlugin) {
+            if (Platform.isRunning) {
+                val bundle = Platform.getBundle(src.segment(1))
+                val path = src.segments.drop(2).take(src.segmentCount - 3).join("/")
+                val entries = bundle.findEntries(path, src.lastSegment, true)
+                fileUrl = entries?.nextElement
+            } else {
+                val path = src.segments.drop(2).join("/")
+                fileUrl = ClassLoader.getSystemResource(path)
+            }
+        } else {
+            fileUrl = URIUtils.getURL(src)
+        }
         if (fileUrl !== null) {
             val fileUrlPath = fileUrl.toString
             logger?.println("Copying file: " + fileUrlPath)
@@ -575,5 +650,19 @@ class ProjectInfrastructure {
             e.printStackTrace(logger)
             return false
         }
+    }
+    
+    /**
+     * Only available in Enumeration by default since Java 9 :(
+     */
+    private static def <E> Iterator<E> toIterator(Enumeration<E> enumeration) {
+        return new Iterator<E>() {
+            override boolean hasNext() {
+                return enumeration.hasMoreElements()
+            }
+            override E next() {
+                return enumeration.nextElement()
+            }
+        };
     }
 }

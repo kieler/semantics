@@ -57,6 +57,16 @@ interface IPropertyHolder {
             Function<? super IProperty<T>, ? extends T> mappingFunction)
     
     /**
+     * Retrieves a property value. If the property is not set or null, it is set to the given value and returned.
+     * 
+     * @param <T> type of property
+     * @param property the property to get
+     * @param the value to set if absent
+     * @return the current value, or the given value
+     */
+    def <T> T getPropertyAndSetIfAbsent(IProperty<T> property, T value)
+
+    /** 
      * Copy all properties from another property holder to this one.
      * @param holder another property holder
      * @return <code>this</code> {@link IPropertyHolder} for convenience
