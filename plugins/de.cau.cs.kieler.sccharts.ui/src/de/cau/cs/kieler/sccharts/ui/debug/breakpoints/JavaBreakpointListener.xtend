@@ -39,6 +39,7 @@ import com.google.inject.Guice
 import org.eclipse.jdt.internal.debug.core.model.JDIStackFrame
 import de.cau.cs.kieler.sccharts.text.parser.SCTXStandaloneParser
 import org.eclipse.jdt.ui.JavaUI
+import org.eclipse.jdt.core.dom.Message
 
 /**
  * @author peu
@@ -199,4 +200,9 @@ class JavaBreakpointListener implements IJavaBreakpointListener {
         println("Installing Breakpoint!")
         return DONT_CARE
     }
+    
+    override breakpointHasCompilationErrors(IJavaLineBreakpoint breakpoint, Message[] errors) {
+        throw new UnsupportedOperationException("TODO: auto-generated method stub")
+    }
+    
 }
