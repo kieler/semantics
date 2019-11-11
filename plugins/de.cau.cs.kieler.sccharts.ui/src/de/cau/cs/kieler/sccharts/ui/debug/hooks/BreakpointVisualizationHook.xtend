@@ -10,31 +10,25 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.sccharts.ui.debug.breakpoints
+package de.cau.cs.kieler.sccharts.ui.debug.hooks
 import java.util.ArrayList
 import java.util.HashMap
 import java.util.List
 import org.eclipse.core.resources.IResource
 import org.eclipse.core.runtime.CoreException
 import org.eclipse.debug.core.DebugPlugin
-import org.eclipse.debug.core.model.IBreakpoint
 import org.eclipse.debug.core.model.LineBreakpoint
 import org.eclipse.elk.graph.properties.IProperty
 import org.eclipse.elk.graph.properties.Property
-import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.util.EcoreUtil
 import org.eclipse.swt.widgets.Display
-import org.eclipse.ui.IEditorPart
-import org.eclipse.ui.IWorkbenchWindow
 import org.eclipse.ui.PlatformUI
 import org.eclipse.xtext.ui.editor.XtextEditor
 import org.eclipse.xtext.xbase.lib.ObjectExtensions
 import org.eclipse.xtext.xbase.lib.Procedures.Procedure1
-import com.google.common.base.Predicate
 import com.google.common.collect.Iterables
 import com.google.common.collect.Iterators
-import com.google.common.collect.Lists
 import de.cau.cs.kieler.klighd.ViewContext
 import de.cau.cs.kieler.klighd.kgraph.KEdge
 import de.cau.cs.kieler.klighd.kgraph.KNode
@@ -57,6 +51,9 @@ import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.SynthesisHook
+import de.cau.cs.kieler.sccharts.ui.debug.breakpoints.BreakpointUtility
+import de.cau.cs.kieler.sccharts.ui.debug.breakpoints.SCChartsBreakpointTargetAdapter
+
 /** 
  * This class handles the highlighting. The methods that handle highlighting are implemented here
  * and during model synthesis it is check on possible breakpoints in the model so after a save
@@ -95,7 +92,7 @@ class BreakpointVisualizationHook extends SynthesisHook {
 	val _kRenderingExtensions = new KRenderingExtensions()
 	val _kContainerRenderingExtensions = new KContainerRenderingExtensions()
 	
-	val BreakpointUtility breakpointUtility
+	val de.cau.cs.kieler.sccharts.ui.debug.breakpoints.BreakpointUtility breakpointUtility
 	// --------------------------------------------------------------------------------------------
 	/** 
 	 * Constructor that also sets the instance variable.

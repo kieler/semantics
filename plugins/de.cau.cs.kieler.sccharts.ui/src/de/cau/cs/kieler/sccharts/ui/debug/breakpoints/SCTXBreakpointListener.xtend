@@ -17,7 +17,7 @@ import org.eclipse.core.runtime.CoreException
 import org.eclipse.debug.core.IBreakpointListener
 import org.eclipse.debug.core.model.IBreakpoint
 import org.eclipse.debug.core.model.LineBreakpoint
-import org.eclipse.emf.ecore.EObject
+import de.cau.cs.kieler.sccharts.ui.debug.hooks.BreakpointVisualizationHook
 
 /** 
  * This class listens to adding breakpoints, changing them or removing them. According to the event
@@ -90,7 +90,7 @@ class SCTXBreakpointListener implements IBreakpointListener {
     }
 
     def static SCTXBreakpointListener getInstance() {
-        if (instance !== null) {
+        if (instance === null) {
             create()
         }
         return instance

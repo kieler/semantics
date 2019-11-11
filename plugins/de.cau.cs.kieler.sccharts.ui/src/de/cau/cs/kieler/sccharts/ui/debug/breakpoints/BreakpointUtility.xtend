@@ -48,12 +48,16 @@ class BreakpointUtility {
     val resLis = new IResourceChangeListener() {
 
         override resourceChanged(IResourceChangeEvent event) {
-            if (event.getType() == IResourceChangeEvent.POST_CHANGE
-                    && event.getDelta().getKind() == IResourceDelta.CHANGED) {
+            if (event.type == IResourceChangeEvent.POST_CHANGE
+                    && event.delta.kind == IResourceDelta.CHANGED) {
                 updateBreakpointLines();
             }
         }
     };
+    
+    static def create() {
+        instance = getInstance()
+    }
     
     static def BreakpointUtility getInstance() {
         if (instance === null) {
@@ -63,8 +67,8 @@ class BreakpointUtility {
     }
     
     private new() {
-        DebugPlugin.getDefault().getBreakpointManager().addBreakpointListener(breakpointListener)
-        ResourcesPlugin.getWorkspace().addResourceChangeListener(resLis);
+        DebugPlugin.^default.breakpointManager.addBreakpointListener(breakpointListener)
+        ResourcesPlugin.workspace.addResourceChangeListener(resLis);
     }
     
     /**
