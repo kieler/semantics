@@ -160,14 +160,9 @@ class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
             case transition.deferred == DeferredType::NONE: edge.addDefaultDecorator
         }
 
-        if (transition.deferred == DeferredType::SHALLOW) {
-            edge.addShallowDeferredDecorator(transition.history == HistoryType::DEEP ||
-                transition.history == HistoryType::SHALLOW);
-        }
-
-        if (transition.deferred == DeferredType::DEEP) {
-            edge.addDeepDeferredDecorator(transition.history == HistoryType::DEEP ||
-                transition.history == HistoryType::SHALLOW);
+        if (transition.deferred !== DeferredType::NONE) {
+            edge.addDeferredDecorator(transition.deferred == DeferredType::DEEP, 
+                transition.history == HistoryType::DEEP || transition.history == HistoryType::SHALLOW);
         }
 
         switch (transition.preemption) {
