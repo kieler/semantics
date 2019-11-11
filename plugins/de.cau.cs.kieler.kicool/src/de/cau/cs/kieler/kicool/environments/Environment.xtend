@@ -78,24 +78,23 @@ class Environment extends EnvironmentPropertyHolder {
 
     public static val IProperty<Logs> LOGS = 
         new Property<Logs>("de.cau.cs.kieler.kicool.logs", null)
-        
-    public static val IProperty<Long> START_TIMESTAMP = 
-        new Property<Long>("de.cau.cs.kieler.kicool.startTimestamp", new Long(0))
-        
-    public static val IProperty<Long> STOP_TIMESTAMP = 
-        new Property<Long>("de.cau.cs.kieler.kicool.stopTimestamp", new Long(0))
 
-    public static val IProperty<Long> OVERALL_TIMESTAMP = 
-        new Property<Long>("de.cau.cs.kieler.kicool.overallTimestamp", new Long(0))
-    
-    public static val IProperty<Long> OVERALL_TIME = 
-        new Property<Long>("de.cau.cs.kieler.kicool.overallTime", new Long(0))
-    
-    public static val IProperty<Long> PTIME = 
-        new Property<Long>("de.cau.cs.kieler.kicool.pTime", new Long(0))
-
-    public static val IProperty<Long> OVERALL_PTIME = 
-        new Property<Long>("de.cau.cs.kieler.kicool.overallPTime", new Long(0))
+    // Duration of the processor execution in nano seconds
+    public static val IProperty<Long> PROCESSOR_TIME = 
+        new Property<Long>("de.cau.cs.kieler.kicool.time.processor", new Long(0))
+    // Duration of the processor execution with all intermediate and co-processors in nano seconds
+    public static val IProperty<Long> TRANSFORMATION_TIME = 
+        new Property<Long>("de.cau.cs.kieler.kicool.time.transformation", new Long(0))
+    public static val IProperty<Long> TRANSFORMATION_TIME_START = 
+        new Property<Long>("de.cau.cs.kieler.kicool.time.transformation.start", new Long(0))
+    // Duration of the processor execution with all intermediate and co-processors as intermediate time until this progress notification (ProcessorProgress) in nano seconds
+    public static val IProperty<Long> TRANSFORMATION_INTERMEDIATE_TIME = 
+        new Property<Long>("de.cau.cs.kieler.kicool.time.transformation.start", new Long(0))
+    // Duration of the entire compilation in nano seconds
+    public static val IProperty<Long> COMPILATION_TIME = 
+        new Property<Long>("de.cau.cs.kieler.kicool.time.compilation", new Long(0))
+    public static val IProperty<Long> COMPILATION_TIME_START = 
+        new Property<Long>("de.cau.cs.kieler.kicool.time.compilation.start", new Long(0))
 
     public static val IProperty<Snapshots> SNAPSHOTS = 
         new Property<Snapshots>("de.cau.cs.kieler.kicool.snapshots", new Snapshots)

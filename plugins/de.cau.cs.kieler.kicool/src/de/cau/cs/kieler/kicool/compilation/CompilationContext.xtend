@@ -142,7 +142,15 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
         val processorEntry = system.processors
         
         notify(new CompilationStart(this))
+        
+        val startTimestamp = System.nanoTime
+        environment.setProperty(COMPILATION_TIME_START, startTimestamp)
+        
         val EPrime = processorEntry.compileEntry(environment)
+        
+        val endTimestamp = System.nanoTime
+        EPrime.setProperty(COMPILATION_TIME, (endTimestamp - startTimestamp))
+        
         notify(new CompilationFinished(this, EPrime))
 
         result = EPrime
@@ -169,6 +177,9 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
         
         processorInstance.setEnvironment(environment, environmentPrime)
         
+        val startTimestamp = System.nanoTime
+        environmentPrime.setProperty(TRANSFORMATION_TIME_START, startTimestamp)
+        
         notify(new ProcessorStart(this, processorReference, processorInstance))
         
         for (intermediateProcessor : getIntermediateProcessors(processorReference, environmentPrime)) {
@@ -176,11 +187,9 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
             if (intermediateProcessor.validateInputType) intermediateProcessor.processBefore
         }
         
-        val startTimestamp = System.nanoTime
-        environmentPrime.setProperty(START_TIMESTAMP, startTimestamp)
-        
         processorInstance.executeCoProcessors(processorReference.preprocesses, false)
         
+        val pStartTimestamp = System.nanoTime
         try {
             if (processorInstance.sourceEnvironment.getProperty(ENABLED) && (!stopOnError || environmentPrime.errors.empty)) { 
                 processorInstance.process
@@ -191,22 +200,18 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
             System.err.println("Error in processor " + processorReference)
             e.printStackTrace
         }
-
-        processorInstance.executeCoProcessors(processorReference.postprocesses, true)
+        val pEndTimestamp = System.nanoTime
+        environmentPrime.setProperty(PROCESSOR_TIME, (pEndTimestamp - pStartTimestamp))
         
-        val stopTimestamp = System.nanoTime
-        environmentPrime.setProperty(STOP_TIMESTAMP, stopTimestamp)
-        environmentPrime.setProperty(PTIME, (stopTimestamp - startTimestamp) / 1000_000)
+        processorInstance.executeCoProcessors(processorReference.postprocesses, true)
         
         for (intermediateProcessor : getIntermediateProcessors(processorReference, environmentPrime)) {
             intermediateProcessor.setEnvironment(environmentPrime, environmentPrime)
             if (intermediateProcessor.validateInputType) intermediateProcessor.process
         }
         
-        val overallTimestamp = System.nanoTime
-        environmentPrime.setProperty(OVERALL_TIMESTAMP, overallTimestamp)
-        environmentPrime.setProperty(OVERALL_TIME, (overallTimestamp - startTimestamp))
-        environmentPrime.setProperty(OVERALL_PTIME, (overallTimestamp - startTimestamp) / 1000_000)
+        val endTimestamp = System.nanoTime
+        environmentPrime.setProperty(TRANSFORMATION_TIME, (endTimestamp - startTimestamp))
         
         // Set post data that come from the outside, e.g. the system.
         environmentPrime.processEnvironmentConfig(processorReference.postconfig)

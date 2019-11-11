@@ -17,11 +17,15 @@ class PragmaExtensions {
 	
     def Pragma getPragma(Pragmatable pragmatable, String name) {
         pragmatable.getPragmas(name)?.head
-    } 
+    }
 
     def getPragmas(Pragmatable pragmatable, String name) {
+        pragmatable.pragmas.filter[ it.name.equalsIgnoreCase(name) ]
+    }
+    
+    def getPragmasCS(Pragmatable pragmatable, String name) {
         pragmatable.pragmas.filter[ it.name.equals(name) ]
-    }     
+    }
     
     def getStringPragmas(Pragmatable pragmatable, String name) {
         pragmatable.getPragmas(name).filter(StringPragma)

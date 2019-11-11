@@ -1,0 +1,6 @@
+public system de.cau.cs.kieler.lustre.scade.scadeToLustre.substitution
+	label "Scade to Lustre (+Substitution)"
+
+de.cau.cs.kieler.lustre.scade.processors.scadeToLustre config {
+    "de.cau.cs.kieler.lustre.scade.processors.scadeToLustre.substitution" : true
+}

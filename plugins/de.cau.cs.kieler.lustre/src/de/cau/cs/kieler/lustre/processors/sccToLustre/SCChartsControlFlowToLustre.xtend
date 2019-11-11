@@ -71,20 +71,14 @@ class SCChartsControlFlowToLustre extends Processor<SCCharts, LustreProgram> {
             valuedObjects += createNodeValuedObject => [
                 name = state.name
             ]
-            input = createParams => []
-            output = createParams => []
-        ]
-
-        val packageBody = createPackBody => [
-            nodes += node
         ]
 
         for (inputVarDecl : state.variableDeclarations.filter[input]) {
-            node.input.parameter += createVariableDeclaration(inputVarDecl)
+            node.inputs += createVariableDeclaration(inputVarDecl)
         }
 
         for (outputVarDecl : state.variableDeclarations.filter[output]) {
-            node.output.parameter += createVariableDeclaration(outputVarDecl)
+            node.outputs += createVariableDeclaration(outputVarDecl)
         }
 
         val initial = controlFlowRegion.states.filter[initial].head
@@ -95,7 +89,7 @@ class SCChartsControlFlowToLustre extends Processor<SCCharts, LustreProgram> {
             initial.processConditional(node)
         }
 
-        program.packBody = packageBody
+        program.nodes += node
     }
 
     protected def processAssignment(State state, NodeDeclaration node) {

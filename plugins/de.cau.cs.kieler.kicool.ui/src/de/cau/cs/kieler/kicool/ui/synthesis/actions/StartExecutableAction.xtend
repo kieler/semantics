@@ -76,9 +76,9 @@ class StartExecutableAction implements IAction {
                 launch.setAttribute(IExternalToolConstants.ATTR_TOOL_ARGUMENTS, commands.drop(1).join(" "))
             }
             
-            if (exe.environment !== null && !exe.environment.empty) {
+            if (exe.processEnvironment !== null && !exe.processEnvironment.empty) {
                 // FIXME Magic key
-                launch.setAttribute("org.eclipse.debug.core.environmentVariables", exe.environment)
+                launch.setAttribute("org.eclipse.debug.core.environmentVariables", exe.processEnvironment)
             }
             
             launch.setAttribute(DebugPlugin.ATTR_CAPTURE_OUTPUT, exe.console)

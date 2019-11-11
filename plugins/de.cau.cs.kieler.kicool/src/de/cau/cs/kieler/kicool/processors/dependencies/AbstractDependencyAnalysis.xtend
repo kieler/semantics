@@ -53,6 +53,7 @@ import static de.cau.cs.kieler.kexpressions.keffects.DataDependencyType.*
 import static de.cau.cs.kieler.kexpressions.keffects.dependencies.ValuedObjectAccess.*
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
+import de.cau.cs.kieler.kexpressions.MethodDeclaration
 
 /** 
  * @author ssm
@@ -222,14 +223,24 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
     
     /** Protected prototype method to find dependencies in keffects assignments. */
     protected def void processEffect(Effect effect, ForkStack forkStack, ValuedObjectAccessors valuedObjectAccessors) {
-        val writeVOI = if (effect instanceof ReferenceCallEffect) {
-            new ValuedObjectIdentifier(effect)
+        val vor = if (effect instanceof ReferenceCallEffect) {
+            effect
         } else if (effect instanceof PrintCallEffect) {
-            new ValuedObjectIdentifier(effect.parameters.head.expression.asValuedObjectReference)
+            effect.parameters.head.expression.asValuedObjectReference
         }
+        val writeVOI = new ValuedObjectIdentifier(vor)
 
         // Respect user-defined schedules.
-        for(sched : effect.schedule) {
+        val schedules = newArrayList
+        schedules += effect.schedule
+        var sub = vor
+        do {
+            if (sub.valuedObject.declaration instanceof MethodDeclaration) {
+                schedules += (sub.valuedObject.declaration as MethodDeclaration).schedule
+            }
+            sub = sub.subReference
+        } while (sub !== null)
+        for(sched : schedules) {
             val schedule = sched.valuedObject.declaration as ScheduleDeclaration
             val scheduleObject = sched.valuedObject        
             val priority = sched.priority

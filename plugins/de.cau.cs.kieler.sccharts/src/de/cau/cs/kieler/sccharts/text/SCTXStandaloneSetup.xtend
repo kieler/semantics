@@ -3,13 +3,34 @@
  */
 package de.cau.cs.kieler.sccharts.text
 
+import com.google.inject.Injector
+import de.cau.cs.kieler.core.services.KielerLanguage
+import de.cau.cs.kieler.sccharts.SCCharts
 
 /**
  * Initialization support for running Xtext languages without Equinox extension registry.
  */
-class SCTXStandaloneSetup extends SCTXStandaloneSetupGenerated {
-
-	def static doSetup() {
-		return new SCTXStandaloneSetup().createInjectorAndDoEMFRegistration()
+class SCTXStandaloneSetup extends SCTXStandaloneSetupGenerated implements KielerLanguage {
+	
+    static Injector injector
+    
+    def static doSetup() {
+        if (injector === null) {
+            injector = new SCTXStandaloneSetup().createInjectorAndDoEMFRegistration()
+        }
+        return injector
+    }
+	
+	override getInjector() {
+	    return doSetup()
 	}
+
+    override getSupportedModels() {
+        #[SCCharts]
+    }
+    
+    override getSupportedResourceExtensions() {
+        #["sctx"]
+    }
+	
 }

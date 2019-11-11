@@ -3,7 +3,7 @@
  */
 package de.cau.cs.kieler.lustre.lustre;
 
-import de.cau.cs.kieler.kexpressions.Expression;
+import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EObject;
 
@@ -17,9 +17,7 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.lustre.lustre.ATransition#isStrong <em>Strong</em>}</li>
- *   <li>{@link de.cau.cs.kieler.lustre.lustre.ATransition#getCondition <em>Condition</em>}</li>
- *   <li>{@link de.cau.cs.kieler.lustre.lustre.ATransition#isHistory <em>History</em>}</li>
- *   <li>{@link de.cau.cs.kieler.lustre.lustre.ATransition#getNextState <em>Next State</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.lustre.lustre.ATransition#getActions <em>Actions</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.lustre.lustre.LustrePackage#getATransition()
@@ -51,69 +49,15 @@ public interface ATransition extends EObject
   void setStrong(boolean value);
 
   /**
-   * Returns the value of the '<em><b>Condition</b></em>' containment reference.
+   * Returns the value of the '<em><b>Actions</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.lustre.lustre.AnAction}.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Condition</em>' containment reference.
-   * @see #setCondition(Expression)
-   * @see de.cau.cs.kieler.lustre.lustre.LustrePackage#getATransition_Condition()
+   * @return the value of the '<em>Actions</em>' containment reference list.
+   * @see de.cau.cs.kieler.lustre.lustre.LustrePackage#getATransition_Actions()
    * @model containment="true"
    * @generated
    */
-  Expression getCondition();
-
-  /**
-   * Sets the value of the '{@link de.cau.cs.kieler.lustre.lustre.ATransition#getCondition <em>Condition</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Condition</em>' containment reference.
-   * @see #getCondition()
-   * @generated
-   */
-  void setCondition(Expression value);
-
-  /**
-   * Returns the value of the '<em><b>History</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>History</em>' attribute.
-   * @see #setHistory(boolean)
-   * @see de.cau.cs.kieler.lustre.lustre.LustrePackage#getATransition_History()
-   * @model
-   * @generated
-   */
-  boolean isHistory();
-
-  /**
-   * Sets the value of the '{@link de.cau.cs.kieler.lustre.lustre.ATransition#isHistory <em>History</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>History</em>' attribute.
-   * @see #isHistory()
-   * @generated
-   */
-  void setHistory(boolean value);
-
-  /**
-   * Returns the value of the '<em><b>Next State</b></em>' reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Next State</em>' reference.
-   * @see #setNextState(AState)
-   * @see de.cau.cs.kieler.lustre.lustre.LustrePackage#getATransition_NextState()
-   * @model
-   * @generated
-   */
-  AState getNextState();
-
-  /**
-   * Sets the value of the '{@link de.cau.cs.kieler.lustre.lustre.ATransition#getNextState <em>Next State</em>}' reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Next State</em>' reference.
-   * @see #getNextState()
-   * @generated
-   */
-  void setNextState(AState value);
+  EList<AnAction> getActions();
 
 } // ATransition

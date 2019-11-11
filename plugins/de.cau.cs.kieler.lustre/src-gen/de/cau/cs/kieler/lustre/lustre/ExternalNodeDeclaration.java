@@ -3,7 +3,10 @@
  */
 package de.cau.cs.kieler.lustre.lustre;
 
-import org.eclipse.emf.ecore.EObject;
+import de.cau.cs.kieler.kexpressions.Declaration;
+import de.cau.cs.kieler.kexpressions.VariableDeclaration;
+
+import org.eclipse.emf.common.util.EList;
 
 /**
  * <!-- begin-user-doc -->
@@ -16,16 +19,15 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.lustre.lustre.ExternalNodeDeclaration#isIsUnsafe <em>Is Unsafe</em>}</li>
  *   <li>{@link de.cau.cs.kieler.lustre.lustre.ExternalNodeDeclaration#isHasState <em>Has State</em>}</li>
- *   <li>{@link de.cau.cs.kieler.lustre.lustre.ExternalNodeDeclaration#getName <em>Name</em>}</li>
- *   <li>{@link de.cau.cs.kieler.lustre.lustre.ExternalNodeDeclaration#getInput <em>Input</em>}</li>
- *   <li>{@link de.cau.cs.kieler.lustre.lustre.ExternalNodeDeclaration#getOutput <em>Output</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.lustre.lustre.ExternalNodeDeclaration#getInputs <em>Inputs</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.lustre.lustre.ExternalNodeDeclaration#getOutputs <em>Outputs</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.lustre.lustre.LustrePackage#getExternalNodeDeclaration()
  * @model
  * @generated
  */
-public interface ExternalNodeDeclaration extends EObject
+public interface ExternalNodeDeclaration extends Declaration
 {
   /**
    * Returns the value of the '<em><b>Is Unsafe</b></em>' attribute.
@@ -72,69 +74,27 @@ public interface ExternalNodeDeclaration extends EObject
   void setHasState(boolean value);
 
   /**
-   * Returns the value of the '<em><b>Name</b></em>' attribute.
+   * Returns the value of the '<em><b>Inputs</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.kexpressions.VariableDeclaration}.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Name</em>' attribute.
-   * @see #setName(String)
-   * @see de.cau.cs.kieler.lustre.lustre.LustrePackage#getExternalNodeDeclaration_Name()
-   * @model
-   * @generated
-   */
-  String getName();
-
-  /**
-   * Sets the value of the '{@link de.cau.cs.kieler.lustre.lustre.ExternalNodeDeclaration#getName <em>Name</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Name</em>' attribute.
-   * @see #getName()
-   * @generated
-   */
-  void setName(String value);
-
-  /**
-   * Returns the value of the '<em><b>Input</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Input</em>' containment reference.
-   * @see #setInput(Params)
-   * @see de.cau.cs.kieler.lustre.lustre.LustrePackage#getExternalNodeDeclaration_Input()
+   * @return the value of the '<em>Inputs</em>' containment reference list.
+   * @see de.cau.cs.kieler.lustre.lustre.LustrePackage#getExternalNodeDeclaration_Inputs()
    * @model containment="true"
    * @generated
    */
-  Params getInput();
+  EList<VariableDeclaration> getInputs();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.lustre.lustre.ExternalNodeDeclaration#getInput <em>Input</em>}' containment reference.
+   * Returns the value of the '<em><b>Outputs</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.kexpressions.VariableDeclaration}.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Input</em>' containment reference.
-   * @see #getInput()
-   * @generated
-   */
-  void setInput(Params value);
-
-  /**
-   * Returns the value of the '<em><b>Output</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Output</em>' containment reference.
-   * @see #setOutput(Params)
-   * @see de.cau.cs.kieler.lustre.lustre.LustrePackage#getExternalNodeDeclaration_Output()
+   * @return the value of the '<em>Outputs</em>' containment reference list.
+   * @see de.cau.cs.kieler.lustre.lustre.LustrePackage#getExternalNodeDeclaration_Outputs()
    * @model containment="true"
    * @generated
    */
-  Params getOutput();
-
-  /**
-   * Sets the value of the '{@link de.cau.cs.kieler.lustre.lustre.ExternalNodeDeclaration#getOutput <em>Output</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Output</em>' containment reference.
-   * @see #getOutput()
-   * @generated
-   */
-  void setOutput(Params value);
+  EList<VariableDeclaration> getOutputs();
 
 } // ExternalNodeDeclaration

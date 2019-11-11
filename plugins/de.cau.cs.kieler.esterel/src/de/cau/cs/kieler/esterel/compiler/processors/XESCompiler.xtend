@@ -159,7 +159,7 @@ class XESExecutableContainer extends ExecutableContainer {
         this.console = false
     }
 
-    override getEnvironment() {
+    override getProcessEnvironment() {
         val env = <String, String>newHashMap
         compiler.configureEnvironment(env)
         return env

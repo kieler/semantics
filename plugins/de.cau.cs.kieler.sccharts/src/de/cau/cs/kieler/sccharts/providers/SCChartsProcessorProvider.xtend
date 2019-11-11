@@ -36,6 +36,7 @@ class SCChartsProcessorProvider implements IProcessorProvider {
             de.cau.cs.kieler.sccharts.processors.Reference,
             de.cau.cs.kieler.sccharts.processors.Pre,
             de.cau.cs.kieler.sccharts.processors.Map,
+            de.cau.cs.kieler.sccharts.processors.FollowedBy,
             de.cau.cs.kieler.sccharts.processors.Initialization,
             de.cau.cs.kieler.sccharts.processors.History,
             de.cau.cs.kieler.sccharts.processors.For,
@@ -51,6 +52,7 @@ class SCChartsProcessorProvider implements IProcessorProvider {
             de.cau.cs.kieler.sccharts.processors.dataflow.Dataflow,
             de.cau.cs.kieler.sccharts.processors.PrTransitions,
             de.cau.cs.kieler.sccharts.processors.UserSchedule,
+            de.cau.cs.kieler.sccharts.processors.SequentialFollowedBy,
             de.cau.cs.kieler.sccharts.processors.InitOperator,
             de.cau.cs.kieler.sccharts.processors.FinalRegion,
             de.cau.cs.kieler.sccharts.processors.ValuedObjectRise,
@@ -77,7 +79,6 @@ class SCChartsProcessorProvider implements IProcessorProvider {
             de.cau.cs.kieler.sccharts.processors.ArduinoTemplateGenerator,
             de.cau.cs.kieler.sccharts.processors.NXJTemplateGenerator,
             de.cau.cs.kieler.sccharts.processors.ValuedObjectRise,
-            de.cau.cs.kieler.sccharts.processors.verification.SCChartsVerificationPropertyAnalyzer,
             de.cau.cs.kieler.sccharts.processors.SclCodeEffect
         ]
     }

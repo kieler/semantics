@@ -23,6 +23,7 @@ import static de.cau.cs.kieler.kicool.compilation.codegen.CodeGeneratorNames.*
 import de.cau.cs.kieler.annotations.Nameable
 import de.cau.cs.kieler.scg.processors.codegen.prio.c.CPrioCodeGeneratorModule
 import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
+import de.cau.cs.kieler.scg.processors.codegen.java.JavaCodeGeneratorModule
 
 /**
  * Root Java Code Generator Module
@@ -111,7 +112,7 @@ class JavaPrioCodeGeneratorModule extends CPrioCodeGeneratorModule {
             sb.append("import " + include + "\n")
         }
         
-        val hostcodePragmas = SCGraphs.getStringPragmas(HOSTCODE)
+        val hostcodePragmas = SCGraphs.getStringPragmas(HOSTCODE) + SCGraphs.getStringPragmas(JavaCodeGeneratorModule.HOSTCODE_JAVA)
         for (pragma : hostcodePragmas) {
             sb.append(pragma.values.head + "\n")
         }

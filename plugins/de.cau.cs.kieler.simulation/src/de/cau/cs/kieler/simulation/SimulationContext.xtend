@@ -17,14 +17,15 @@ import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.kicool.KiCoolFactory
 import de.cau.cs.kieler.kicool.ProcessorGroup
 import de.cau.cs.kieler.kicool.compilation.CompilationContext
+import de.cau.cs.kieler.kicool.compilation.ExecutableContainerWrapper
 import de.cau.cs.kieler.kicool.compilation.internal.EnvironmentPropertyHolder
-import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
 import de.cau.cs.kieler.simulation.internal.processor.CheckTrace
 import de.cau.cs.kieler.simulation.internal.processor.ReadTrace
 import de.cau.cs.kieler.simulation.internal.processor.TraceProcessor
 import de.cau.cs.kieler.simulation.trace.ktrace.Trace
 import java.io.PrintStream
+import java.util.Collections
 import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.xtend.lib.annotations.Delegate
@@ -33,15 +34,13 @@ import static de.cau.cs.kieler.kicool.environments.Environment.*
 
 import static extension de.cau.cs.kieler.kicool.compilation.internal.ContextPopulation.*
 import static extension de.cau.cs.kieler.kicool.compilation.internal.SystemTransformation.*
-import java.util.Collections
-import java.util.ArrayList
 
 /**
  * @author als
  * @kieler.design proposed
  * @kieler.rating proposed yellow
  */
-class SimulationContext extends CompilationContext implements SimulationControls {
+class SimulationContext extends CompilationContext implements SimulationControls, ExecutableContainerWrapper {
     
     public static val IProperty<CompilationContext> SOURCE_COMPILATION_CONTEXT = 
         new Property<CompilationContext>("de.cau.cs.kieler.simulation.source.cmpilation", null)
@@ -159,6 +158,10 @@ class SimulationContext extends CompilationContext implements SimulationControls
                 errorStream.println("Error in simulation: " + error.message)
             }
         }
+    }
+    
+    override getExecutableContainer() {
+        this.models.filter(SimulationModelWrapper).head?.executableContainer
     }
 
 }

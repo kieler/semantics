@@ -58,6 +58,7 @@ import de.cau.cs.kieler.kexpressions.Parameter
 class CCodeSerializeHRExtensions extends CodeGeneratorSerializeHRExtensions {
     
     public static val INCLUDES = "includes"
+    public static val HEADER_INCLUDES = "header-includes"
     protected var CODE_ANNOTATION = "C"
     protected var CONDITIONAL_PLACEHOLDER = " : __CONDSELF__"
     
@@ -293,31 +294,33 @@ class CCodeSerializeHRExtensions extends CodeGeneratorSerializeHRExtensions {
     }
     
     override dispatch CharSequence serializeHR(ReferenceCall referenceCall) {
-        val declaration = referenceCall.valuedObject.declaration
-        if (declaration instanceof ReferenceDeclaration) {
+        var code = ""
+        if (referenceCall.subReference !== null && !referenceCall.valuedObject.isLocalVariable) {
+            code = valuedObjectPrefix
+        }
+        val rcVOR = referenceCall.lowermostReference
+        val declaration = rcVOR.valuedObject.declaration
+        if (declaration instanceof ReferenceDeclaration) { // no support for extern in class
             if (declaration.extern.nullOrEmpty) { 
-                return referenceCall.valuedObject.serializeHR.toString + referenceCall.parameters.serializeHRParameters
+                return code + referenceCall.serializeVOR.toString + referenceCall.parameters.serializeHRParameters
             } else {
-                var code = declaration.extern.head.code
+                var call = declaration.extern.head.code
                 if (declaration.extern.exists[ hasAnnotation(codeAnnotation) ]) {
-                    code = declaration.extern.filter[ hasAnnotation(codeAnnotation) ].head.code
+                    call = declaration.extern.filter[ hasAnnotation(codeAnnotation) ].head.code
+                }
+                if (referenceCall.subReference !== null) {
+                    val parent = referenceCall.serializeVOR.toString
+                    code += parent.substring(0, parent.lastIndexOf('.') + 1) + call
+                } else {
+                    code += call
                 }
                 return code + referenceCall.parameters.serializeHRParameters
             }
         } if (declaration instanceof MethodDeclaration) {
-            val name = if (declaration.hasSelfInParameter) {
-                var ValuedObjectReference lastVOR = referenceCall
-                while (lastVOR.subReference !== null) {
-                    lastVOR = lastVOR.subReference
-                }
-                lastVOR.valuedObject.name
-            } else {
-                referenceCall.serializeVOR.toString
-            }
             val params = newArrayList
             params.addAll(referenceCall.parameters)
             params.addPlatformDependentParamsToMethodCall(declaration, referenceCall)
-            return name + params.serializeParameters
+            return code + referenceCall.serializeVOR.toString + params.serializeParameters
         } else {
             return referenceCall.serializeVOR.toString + referenceCall.parameters.serializeParameters
         }
@@ -328,7 +331,7 @@ class CCodeSerializeHRExtensions extends CodeGeneratorSerializeHRExtensions {
             params.add(0, createParameter =>[
                 callByReference = true
                 val ex = referenceCall.serializeVOR.toString
-                expression = ex.substring(0, ex.lastIndexOf(".")).asTextExpression
+                expression = ("(" + valuedObjectPrefix + ex.substring(0, ex.lastIndexOf(".")) + ")").asTextExpression
             ])
         }
         if (declaration.hasTickDataInParameter) {
@@ -363,5 +366,27 @@ class CCodeSerializeHRExtensions extends CodeGeneratorSerializeHRExtensions {
             throw new IllegalArgumentException("An OperatorExpression with a ternary conditional has " + 
                 expression.subExpressions.size + " arguments.")
         }
-    }         
+    }
+    
+    override CharSequence serializeParameters(List<Parameter> parameters) {
+        val sb = new StringBuilder
+        sb.append("(")
+        var cnt = 0
+        for (par : parameters) {
+            if (cnt > 0) {
+                sb.append(", ")
+            }
+            if (par.callByReference) {
+                sb.append("&")
+            }
+            if (par.expression instanceof ValuedObjectReference && par.callByReference) {
+                sb.append("(").append(par.expression.serialize).append(")")
+            } else {
+                sb.append(par.expression.serialize)
+            }
+            cnt = cnt + 1
+        }
+        sb.append(")") 
+        return sb.toString      
+    }       
 }
