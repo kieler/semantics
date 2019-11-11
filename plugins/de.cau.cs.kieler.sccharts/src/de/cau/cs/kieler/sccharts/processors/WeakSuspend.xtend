@@ -97,8 +97,7 @@ class WeakSuspend extends SCChartsProcessor implements Traceable {
         weakSuspends.setDefaultTrace
 
         if (!weakSuspends.nullOrEmpty) {
-            val weakSuspendFlag = state.createValuedObject(GENERATED_PREFIX + "wsFlag", createBoolDeclaration).
-                uniqueName
+            val weakSuspendFlag = state.createValuedObject(GENERATED_PREFIX + "wsFlag", createBoolDeclaration).uniqueName
             weakSuspendFlag.setInitialValue(FALSE)
             voStore.update(weakSuspendFlag, SCCHARTS_GENERATED)
 
@@ -114,15 +113,13 @@ class WeakSuspend extends SCChartsProcessor implements Traceable {
             for (region : state.allContainedControlflowRegions.toList) {
                 val subStates = region.states.immutableCopy
                 val wsState = region.createState(GENERATED_PREFIX + "WS").uniqueName
-                val stateBookmark = state.createValuedObject(GENERATED_PREFIX + region.parentState.name,
-                    createIntDeclaration).uniqueName
+                val stateBookmark = state.createValuedObject(GENERATED_PREFIX + region.parentState.name, createIntDeclaration).uniqueName
                 // Set the initial value to the (original) initial state
                 stateBookmark.setInitialValue(createIntValue(0))
                 voStore.update(stateBookmark, SCCHARTS_GENERATED)
 
                 var counter = 0
-                val lastWishDone = state.createValuedObject(GENERATED_PREFIX + "lastWishDone", createBoolDeclaration).
-                    uniqueName
+                val lastWishDone = state.createValuedObject(GENERATED_PREFIX + "lastWishDone", createBoolDeclaration).uniqueName
                 voStore.update(lastWishDone, SCCHARTS_GENERATED)
                 // In each tick reset the lastWish to FALSE
                 val resetLastWishDoneduringAction = state.createDuringAction
@@ -140,26 +137,28 @@ class WeakSuspend extends SCChartsProcessor implements Traceable {
                 initWSTransition.setTrigger(weakSuspendFlag.reference.and(lastWishDone.reference))
 
                 for (subState : subStates) {
-
                     if (subState.exitActions.size > 0) {
                         // transform exit actions into immediate outgoing transitions
                         for (t : subState.outgoingTransitions) {
                             val exitState = subState.parentRegion.createState(GENERATED_PREFIX + "_exit").uniqueName
-                            for (action : subState.exitActions)
+                            for (action : subState.exitActions) {
                                 exitState.actions.add(action.copy)
+                            }
                             val exitTransition = exitState.createTerminationTo(t.targetState)
                             exitTransition.history = t.history
                             exitTransition.deferred = t.deferred
                             exitTransition.delay = DelayType::IMMEDIATE
                             exitTransition.preemption = t.preemption
-                            while (t.effects.size > 0)
+                            while (t.effects.size > 0) {
                                 exitTransition.addEffect(t.effects.get(0))
+                            }
                             t.history = HistoryType::RESET
                             t.deferred = DeferredType::NONE
                             t.targetState = exitState
                         }
-                        while (subState.exitActions.size > 0)
+                        while (subState.exitActions.size > 0) {
                             subState.exitActions.get(0).remove
+                        }
                     }
                     val reEnterTransition = wsState.createImmediateTransitionTo(subState)
                     reEnterTransition.setTrigger(stateBookmark.reference.eq(counter.createIntValue))

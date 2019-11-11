@@ -85,20 +85,23 @@ class Deferred extends SCChartsProcessor implements Traceable {
     def State transform(State state) {
         // It is important, that deferred transition inside of sub states are transformed first
         // because maybe the result state needs to be copied
-        for (s : state.allContainedStates.toList)
+        for (s : state.allContainedStates.toList) {
             s.transform
+        }
         // check if the state has incoming deferred transitions that needs to be transformed
         if (state.needTransform) {
             // check if a simple transformation is possible
-            if (state.isSimpleTransformable)
+            if (state.isSimpleTransformable) {
                 state.transformSimple // add a deferred guard variable
-            else
+            } else {
                 state.transformComplex // copy the target state of the deferred transition
+            }
         }
         // when transforming a deferred transition in some cases new deferred transitions where generated 
         // (before the initial states of the child regions of a target state of a deferred transition) 
-        for (s : state.allContainedStates.toList)
+        for (s : state.allContainedStates.toList) {
             s.transform
+        }
         state
     }
 
@@ -158,11 +161,13 @@ class Deferred extends SCChartsProcessor implements Traceable {
                 }
             }
             // remove all entry actions of the copy for deep deferred transitions
-            while (shallow.entryActions.size > 0)
+            while (shallow.entryActions.size > 0) {
                 shallow.entryActions.get(0).remove
+            }
             // each immediate during action in _S will be set to delayed
-            for (during : shallow.duringActions)
+            for (during : shallow.duringActions) {
                 during.delay = DelayType.DELAYED
+            }
         }
         // deep deferred
         if (s.hasDeepDeferred) {
@@ -188,11 +193,13 @@ class Deferred extends SCChartsProcessor implements Traceable {
                 }
             }
             // remove all entry actions of the copy for deep deferred transitions
-            while (deep.entryActions.size > 0)
+            while (deep.entryActions.size > 0) {
                 deep.entryActions.get(0).remove
+            }
             // each immediate during action in _S will be set to delayed
-            for (during : deep.duringActions)
+            for (during : deep.duringActions) {
                 during.delay = DelayType.DELAYED
+            }
             // if deep has sub regions with immediate behavior of the initial state,
             // then create a new initial state with a immediate deferred transition to the old initial state and transform it later
             for (subRegion : deep.allContainedControlflowRegions.toList) {
@@ -216,21 +223,25 @@ class Deferred extends SCChartsProcessor implements Traceable {
     // if deep is true, then inner instantaneous behavior is also checked
     private def boolean hasInstantaneousBehavior(State s, boolean deep) {
         for (t : s.outgoingTransitions) {
-            if (t.delay == DelayType.IMMEDIATE)
+            if (t.delay == DelayType.IMMEDIATE) {
                 return true
+            }
         }
-        if (s.entryActions.size > 0)
+        if (s.entryActions.size > 0) {
             return true
+        }
         for (a : s.duringActions) {
-            if (a.delay == DelayType.IMMEDIATE)
+            if (a.delay == DelayType.IMMEDIATE) {
                 return true
+            }
         }
         if (deep) {
             for (subRegion : s.allContainedControlflowRegions.toList) {
                 if (subRegion.states.size > 0) {
                     for (state : subRegion.states.filter[it.initial].toList) {
-                        if (state.hasInstantaneousBehavior(deep))
+                        if (state.hasInstantaneousBehavior(deep)) {
                             return true
+                        }
                     }
                 }
             }
@@ -242,8 +253,9 @@ class Deferred extends SCChartsProcessor implements Traceable {
     private def needTransform(State s) {
         for (t : s.incomingTransitions) {
             if (t.deferred != DeferredType::NONE) {
-                if (s.hasInstantaneousBehavior(t.deferred == DeferredType::DEEP))
+                if (s.hasInstantaneousBehavior(t.deferred == DeferredType::DEEP)) {
                     return true
+                }
             }
         }
         return false
@@ -259,10 +271,10 @@ class Deferred extends SCChartsProcessor implements Traceable {
             visited.add(n)
             for (transition : n.targetState.outgoingTransitions) {
                 if (transition.delay == DelayType.IMMEDIATE) {
-                    if (transition == t)
-                        return true
-                    if (!visited.contains(transition) && !next.contains(transition))
+                    if (transition == t) return true
+                    if (!visited.contains(transition) && !next.contains(transition)) {
                         next.add(transition)
+                    }
                 }
             }
         }
@@ -274,23 +286,28 @@ class Deferred extends SCChartsProcessor implements Traceable {
     private def isSimpleTransformable(State s) {
         var hasDeepDeferred = false
         for (t : s.incomingTransitions) {
-            if (t.deferred == DeferredType::DEEP)
+            if (t.deferred == DeferredType::DEEP) {
                 hasDeepDeferred = true;
-            if (t.deferred != DeferredType::NONE && t.findImmediateLoop)
+            }
+            if (t.deferred != DeferredType::NONE && t.findImmediateLoop) {
                 return false
+            }
         }
         if (hasDeepDeferred) {
-            if (s.entryActions.size > 0)
+            if (s.entryActions.size > 0) {
                 return false
+            }
             for (a : s.duringActions) {
-                if (a.delay == DelayType.IMMEDIATE)
+                if (a.delay == DelayType.IMMEDIATE) {
                     return false
+                }
             }
             for (subRegion : s.allContainedControlflowRegions.toList) {
                 if (subRegion.states.size > 0) {
                     for (state : subRegion.states.filter[it.initial].toList) {
-                        if (state.hasInstantaneousBehavior(true))
+                        if (state.hasInstantaneousBehavior(true)) {
                             return false
+                        }
                     }
                 }
             }
@@ -369,25 +386,29 @@ class Deferred extends SCChartsProcessor implements Traceable {
         while (s.declarations.size > 0) {
             var d = s.declarations.get(0);
             parent.declarations.add(d)
-            for (o : d.valuedObjects)
+            for (o : d.valuedObjects) {
                 o.uniqueName;
+            }
         }
-        for (subState : s.allContainedStates.toList)
+        for (subState : s.allContainedStates.toList) {
             subState.makeVariablesPublic(parent)
+        }
         for (region : s.allContainedDataflowRegions.toList) {
             while (region.declarations.size > 0) {
                 var d = region.declarations.get(0);
                 parent.declarations.add(d)
-                for (o : d.valuedObjects)
+                for (o : d.valuedObjects) {
                     o.uniqueName;
+                }
             }
         }
         for (region : s.allContainedControlflowRegions.toList) {
             while (region.declarations.size > 0) {
                 var d = region.declarations.get(0);
                 parent.declarations.add(d)
-                for (o : d.valuedObjects)
+                for (o : d.valuedObjects) {
                     o.uniqueName;
+                }
             }
         }
     }
