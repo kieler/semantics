@@ -52,7 +52,7 @@ class LustreV6Compiler extends AbstractExternalCompiler {
             }
         }
         if (root === null && PROVIDERS.containsKey(ID)) {
-            root = PROVIDERS.get(ID).getRootDir(Platform.OS, Platform.OSArch)
+            root = PROVIDERS.get(ID).getRootDir()
             if (root === null) {
                 environment.warnings.add("There is no Lustre compiler bundled in KIELER for this OS.")
             }

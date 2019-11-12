@@ -14,6 +14,7 @@ package de.cau.cs.kieler.lustre.compiler
 
 import de.cau.cs.kieler.kicool.external.IExternalCompilerProvider
 import org.eclipse.emf.common.util.URI
+import de.cau.cs.kieler.core.Platform
 
 /**
  * Locate compiler binaries.
@@ -28,9 +29,9 @@ class LustreV6CompilerProvider implements IExternalCompilerProvider {
         return "Lustre_V6"
     }
     
-    override URI getRootDir(String os, String arch) {
-        switch(os) {
-            case "linux": return URI.createPlatformPluginURI(PLUGIN + "/compiler/lv6/linux", true)
+    override URI getRootDir() {
+        switch(Platform.getOS) {
+            case UNIX: return URI.createPlatformPluginURI(PLUGIN + "/compiler/lv6/linux", true)
             default: return null
         }
     }
