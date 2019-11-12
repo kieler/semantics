@@ -16,7 +16,11 @@ import com.google.inject.Binder
 import com.google.inject.Guice
 import com.google.inject.Injector
 import com.google.inject.Module
+import de.cau.cs.kieler.annotations.AnnotationsPackage
 import de.cau.cs.kieler.core.services.KielerLanguage
+import de.cau.cs.kieler.kexpressions.KExpressionsPackage
+import de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage
+import de.cau.cs.kieler.kexpressions.kext.KExtPackage
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.emf.ecore.resource.ResourceSet
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
@@ -40,6 +44,12 @@ class SCGInternalLanguage implements KielerLanguage {
             })
             // do registration
             Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("scg", injector.getInstance(XMIResourceFactoryImpl))
+            ScgPackage.eINSTANCE.eClass()
+            // also register referenced packages
+            AnnotationsPackage.eINSTANCE.eClass()
+            KExpressionsPackage.eINSTANCE.eClass()
+            KEffectsPackage.eINSTANCE.eClass()
+            KExtPackage.eINSTANCE.eClass()
         }
         return injector
     }

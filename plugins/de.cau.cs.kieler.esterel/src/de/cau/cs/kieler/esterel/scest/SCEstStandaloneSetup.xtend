@@ -5,6 +5,7 @@ package de.cau.cs.kieler.esterel.scest
 
 import com.google.inject.Injector
 import de.cau.cs.kieler.core.services.KielerLanguage
+import de.cau.cs.kieler.esterel.EsterelPackage
 import de.cau.cs.kieler.esterel.EsterelProgram
 import de.cau.cs.kieler.esterel.SCEstStatement
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
@@ -24,9 +25,17 @@ class SCEstStandaloneSetup extends SCEstStandaloneSetupGenerated implements Kiel
     
     def static doSetup() {
         if (injector === null) {
+            // Ensure meta model package is registered 
+            EsterelPackage.eINSTANCE.eClass()
             injector = new SCEstStandaloneSetup().createInjectorAndDoEMFRegistration()
         }
         return injector
+    }
+    
+    override register(Injector injector) {
+        super.register(injector)
+        // Ensure package is registered 
+        EsterelPackage.eINSTANCE.eClass()
     }
     
     override getInjector() {
@@ -38,10 +47,14 @@ class SCEstStandaloneSetup extends SCEstStandaloneSetupGenerated implements Kiel
     }
     
     override getSupportedResourceExtensions() {
-        #["strl", "scest"]
+        #["scest"]
     }
-	
+    
     override getResourceExtension(Object model) {
+        return getEsterelResourceExtension(model)
+    }
+
+    static def getEsterelResourceExtension(Object model) {
         if (model instanceof EsterelProgram) {
             if (model.eAllContents.exists[
                 switch (it) {
