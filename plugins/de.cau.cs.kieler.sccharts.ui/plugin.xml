@@ -656,7 +656,6 @@ controllerID="de.cau.cs.kieler.kicool.ui.klighd.KiCoModelUpdateController"
    <extension
          point="org.eclipse.ui.commands">
       <command
-            defaultHandler="de.cau.cs.kieler.sccharts.ui.debug.TextRulerHandler"
             description="Toggle Breakpoint in specified Line."
             id="de.cau.cs.kieler.sccharts.ui.debug.toggleBreakpointCommand"
             name="Toggle Breakpoint Command">
@@ -665,7 +664,7 @@ controllerID="de.cau.cs.kieler.kicool.ui.klighd.KiCoModelUpdateController"
    <extension
          point="org.eclipse.ui.editorActions">
       <editorContribution
-            id="de.cau.cs.kieler.sccharts.ui.debug.doubleClick"
+            id="de.cau.cs.kieler.sccharts.ui.doubleClick"
             targetID="de.cau.cs.kieler.sccharts.text.SCTX">
          <action
                class="de.cau.cs.kieler.sccharts.ui.debug.TextRulerHandler"
@@ -680,11 +679,12 @@ controllerID="de.cau.cs.kieler.kicool.ui.klighd.KiCoModelUpdateController"
       <breakpoint
             class="de.cau.cs.kieler.sccharts.ui.debug.breakpoints.SCChartsBreakpoint"
             id="scchartsBreakpoint"
-            markerType="de.cau.cs.kieler.sccharts.ui.debug.scchartsBreakpointMarker">
+            markerType="de.cau.cs.kieler.sccharts.ui.scchartsBreakpointMarker">
       </breakpoint>
    </extension>
    <extension
          id="scchartsBreakpointMarker"
+         name="SCCharts Breakpoint Marker"
          point="org.eclipse.core.resources.markers">
       <super
             type="org.eclipse.debug.core.lineBreakpointMarker">
@@ -706,16 +706,48 @@ controllerID="de.cau.cs.kieler.kicool.ui.klighd.KiCoModelUpdateController"
             adaptableType="de.cau.cs.kieler.sccharts.ui.debug.breakpoints.SCChartsBreakpointTargetAdapter"
             class="de.cau.cs.kieler.sccharts.ui.debug.breakpoints.SCChartsBreakpointTargetAdapterFactory">
          <adapter
-               type="de.cau.cs.kieler.sccharts.ui.Adapter1">
+               type="org.eclipse.xtext.ui.editor.XtextEditor">
          </adapter>
       </factory>
    </extension>
    <extension
          point="org.eclipse.jdt.debug.breakpointListeners">
       <breakpointListener
-            class="de.cau.cs.kieler.sccharts.ui.debug.JavaBreakpointListener"
+            class="de.cau.cs.kieler.sccharts.ui.debug.breakpoints.JavaBreakpointListener"
             id="de.cau.cs.kieler.sccharts.debug.JavaBreakpointListener">
       </breakpointListener>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="popup:#TextRulerContext">
+         <command
+               commandId="de.cau.cs.kieler.sccharts.text.ui.toggleBreakpointCommand"
+               label="Toggle Breakpoint"
+               style="toggle">
+         </command>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="de.cau.cs.kieler.modelSimulation">
+         <actionSet
+               id=" org.eclipse.jdt.debug.ui.JDTDebugActionSet">
+         </actionSet>
+      </perspectiveExtension>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="de.cau.cs.kieler.sccharts.ui.debug.TextRulerHandler"
+            commandId="de.cau.cs.kieler.sccharts.text.ui.toggleBreakpointCommand">
+         <activeWhen>
+            <reference
+                  definitionId="de.cau.cs.kieler.sccharts.text.SCTX.Editor.opened">
+            </reference>
+         </activeWhen>
+      </handler>
    </extension>
    
 </plugin>

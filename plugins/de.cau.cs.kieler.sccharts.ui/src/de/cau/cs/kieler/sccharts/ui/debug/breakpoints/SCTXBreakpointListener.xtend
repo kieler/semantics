@@ -34,6 +34,10 @@ class SCTXBreakpointListener implements IBreakpointListener {
         instance = new SCTXBreakpointListener()
     }
 
+    private new() {
+        // For singleton behavior
+    }
+
     /** 
      * When a breakpoint is added and enabled, it will get highlighted.
      * {@inheritDoc}

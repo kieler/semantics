@@ -50,7 +50,7 @@ class BreakpointUtility {
         override resourceChanged(IResourceChangeEvent event) {
             if (event.type == IResourceChangeEvent.POST_CHANGE
                     && event.delta.kind == IResourceDelta.CHANGED) {
-                updateBreakpointLines();
+                updateBreakpointLines()
             }
         }
     };
@@ -68,21 +68,21 @@ class BreakpointUtility {
     
     private new() {
         DebugPlugin.^default.breakpointManager.addBreakpointListener(breakpointListener)
-        ResourcesPlugin.workspace.addResourceChangeListener(resLis);
+        ResourcesPlugin.workspace.addResourceChangeListener(resLis)
     }
     
     /**
      * @return the breakpointLines
      */
     def HashMap<Integer, List<IBreakpoint>> getBreakpointLines() {
-        return breakpointLines;
+        return breakpointLines
     }
     
     /**
      * Sets {@link dirtyBreakpointList} to true.
      */
     def void setDirtyBreakpointList() {
-        dirtyBreakpointList = true;
+        dirtyBreakpointList = true
     }
     
     /**
@@ -90,27 +90,28 @@ class BreakpointUtility {
      */
     def void updateBreakpointLines() {
         if (dirtyBreakpointList) {
-            breakpointLines.clear();
+            breakpointLines.clear()
 
             val bps = DebugPlugin.getDefault().getBreakpointManager()
-                    .getBreakpoints(SCChartsDebugModelPresentation.ID);
+                    .getBreakpoints(SCChartsDebugModelPresentation.ID)
             // Add each breakpoint and its line number to the list of all breakpoints.
             for (IBreakpoint b : bps) {
                 try {
-                    val line = (b as LineBreakpoint).getLineNumber();
-                    var List<IBreakpoint> bsList;
+                    val line = (b as LineBreakpoint).getLineNumber()
+                    var List<IBreakpoint> bsList
                     if (breakpointLines.containsKey(line)) {
-                        bsList = breakpointLines.get(line);
-                        bsList.add(b);
+                        bsList = breakpointLines.get(line)
+                        bsList.add(b)
                     } else {
-                        bsList = <IBreakpoint> newArrayList;
-                        bsList.add(b);
+                        bsList = <IBreakpoint> newArrayList
+                        bsList.add(b)
                     }
-                    breakpointLines.put(line, bsList);
+                    breakpointLines.put(line, bsList)
                 } catch (CoreException e) {
-                    e.printStackTrace();
+                    e.printStackTrace()
                 }
             }
+            dirtyBreakpointList = false
         }
     }
     
@@ -123,32 +124,32 @@ class BreakpointUtility {
      * @return Returns true is there is a breakpoint associated with the object, otherwise false.
      */
     def boolean isEObjectInLine(EObject obj, Resource resource) {
-        updateBreakpointLines();
-        val n = NodeModelUtils.getNode(obj);
+        updateBreakpointLines()
+        val n = NodeModelUtils.getNode(obj)
         if (n !== null) {
-            val line = n.getStartLine();
+            val line = n.getStartLine()
             try {
-                val bsList = getBreakpointLines().get(line);
+                val bsList = getBreakpointLines().get(line)
                 if (bsList !== null) {
                     for (var i = 0; i < bsList.size(); i++) {
 
-                        val b = bsList.get(i);
+                        val b = bsList.get(i)
 
                         if (b !== null && b.isEnabled()) {
 
-                            val bResource = b.getMarker().getResource();
+                            val bResource = b.getMarker().getResource()
 
                             if (resource.getURI().toString().contains(bResource.getName())) {
-                                return true;
+                                return true
                             }
                         }
                     }
                 }
             } catch (CoreException e) {
-                e.printStackTrace();
+                e.printStackTrace()
             }
         }
-        return false;
+        return false
     }
     
     /**
@@ -160,32 +161,32 @@ class BreakpointUtility {
      * @return Returns true is there is a breakpoint associated with the object, otherwise false.
      */
     def boolean isEObjectInLine(EObject obj, IResource resource) {
-        updateBreakpointLines();
-        val n = NodeModelUtils.getNode(obj);
+        updateBreakpointLines()
+        val n = NodeModelUtils.getNode(obj)
         if (n !== null) {
-            val line = n.getStartLine();
+            val line = n.getStartLine()
             try {
-                val bslist = getBreakpointLines().get(line);
+                val bslist = getBreakpointLines().get(line)
                 if (bslist !== null) {
                     for (var i = 0; i < bslist.size(); i++) {
 
-                        val b = bslist.get(i);
+                        val b = bslist.get(i)
 
                         if (b !== null && b.isEnabled()) {
 
-                            val bResource = b.getMarker().getResource();
+                            val bResource = b.getMarker().getResource()
 
                             if (resource.equals(bResource)) {
-                                return true;
+                                return true
                             }
                         }
                     }
                 }
             } catch (CoreException e) {
-                e.printStackTrace();
+                e.printStackTrace()
             }
         }
-        return false;
+        return false
     }
     
 }

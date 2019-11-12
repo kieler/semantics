@@ -28,6 +28,7 @@ public class SCChartsUiModule extends SCTXActivator {
         // FIXME magic registration
         SCChartsDiagramHighlighter.create();
         SCChartsDiagramLiveValues.create();
+        SCTXBreakpointListener.create();
         BreakpointUtility.create();
     } //$NON-NLS-1$
     
