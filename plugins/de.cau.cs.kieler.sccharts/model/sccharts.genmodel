@@ -25,6 +25,11 @@
       <genEnumLiterals ecoreEnumLiteral="sccharts.ecore#//DelayType/IMMEDIATE"/>
       <genEnumLiterals ecoreEnumLiteral="sccharts.ecore#//DelayType/AUTOMATIC"/>
     </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="sccharts.ecore#//DeferredType">
+      <genEnumLiterals ecoreEnumLiteral="sccharts.ecore#//DeferredType/NONE"/>
+      <genEnumLiterals ecoreEnumLiteral="sccharts.ecore#//DeferredType/SHALLOW"/>
+      <genEnumLiterals ecoreEnumLiteral="sccharts.ecore#//DeferredType/DEEP"/>
+    </genEnums>
     <genClasses ecoreClass="sccharts.ecore#//SCCharts">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference sccharts.ecore#//SCCharts/rootStates"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute sccharts.ecore#//SCCharts/imports"/>

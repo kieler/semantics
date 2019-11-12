@@ -3948,6 +3948,22 @@ finally {
 	restoreStackSize(stackSize);
 }
 
+// Rule DeferredType
+ruleDeferredType
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+	(
+		{ before(grammarAccess.getDeferredTypeAccess().getAlternatives()); }
+		(rule__DeferredType__Alternatives)
+		{ after(grammarAccess.getDeferredTypeAccess().getAlternatives()); }
+	)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
 // Rule ValueType
 ruleValueType
 	@init {
@@ -6405,6 +6421,27 @@ rule__HistoryType__Alternatives
 		{ before(grammarAccess.getHistoryTypeAccess().getDEEPEnumLiteralDeclaration_2()); }
 		('history')
 		{ after(grammarAccess.getHistoryTypeAccess().getDEEPEnumLiteralDeclaration_2()); }
+	)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__DeferredType__Alternatives
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+	(
+		{ before(grammarAccess.getDeferredTypeAccess().getSHALLOWEnumLiteralDeclaration_0()); }
+		('deferred')
+		{ after(grammarAccess.getDeferredTypeAccess().getSHALLOWEnumLiteralDeclaration_0()); }
+	)
+	|
+	(
+		{ before(grammarAccess.getDeferredTypeAccess().getDEEPEnumLiteralDeclaration_1()); }
+		('deep deferred')
+		{ after(grammarAccess.getDeferredTypeAccess().getDEEPEnumLiteralDeclaration_1()); }
 	)
 ;
 finally {
@@ -37396,13 +37433,9 @@ rule__Transition__DeferredAssignment_7
 	}
 :
 	(
-		{ before(grammarAccess.getTransitionAccess().getDeferredDeferredKeyword_7_0()); }
-		(
-			{ before(grammarAccess.getTransitionAccess().getDeferredDeferredKeyword_7_0()); }
-			'deferred'
-			{ after(grammarAccess.getTransitionAccess().getDeferredDeferredKeyword_7_0()); }
-		)
-		{ after(grammarAccess.getTransitionAccess().getDeferredDeferredKeyword_7_0()); }
+		{ before(grammarAccess.getTransitionAccess().getDeferredDeferredTypeEnumRuleCall_7_0()); }
+		ruleDeferredType
+		{ after(grammarAccess.getTransitionAccess().getDeferredDeferredTypeEnumRuleCall_7_0()); }
 	)
 ;
 finally {

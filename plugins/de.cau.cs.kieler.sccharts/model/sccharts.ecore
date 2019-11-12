@@ -99,7 +99,7 @@
         eType="#//PreemptionType"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="history" lowerBound="1"
         eType="#//HistoryType" defaultValueLiteral="RESET"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="deferred" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="deferred" eType="#//DeferredType"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="targetState" lowerBound="1"
         eType="#//State" eOpposite="#//State/incomingTransitions"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="sourceState" lowerBound="1"
@@ -195,4 +195,9 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="PolicyRegion" eSuperTypes="#//ControlflowRegion"/>
   <eClassifiers xsi:type="ecore:EClass" name="CodeEffect" eSuperTypes="../../de.cau.cs.kieler.kexpressions/model/keffects.ecore#//Effect ../../de.cau.cs.kieler.scl/model/scl.ecore#//Scope"/>
+  <eClassifiers xsi:type="ecore:EEnum" name="DeferredType">
+    <eLiterals name="NONE"/>
+    <eLiterals name="SHALLOW" value="1"/>
+    <eLiterals name="DEEP" value="2"/>
+  </eClassifiers>
 </ecore:EPackage>

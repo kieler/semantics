@@ -721,7 +721,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		private final CrossReference cTargetStateStateCrossReference_6_0 = (CrossReference)cTargetStateAssignment_6.eContents().get(0);
 		private final RuleCall cTargetStateStateIDTerminalRuleCall_6_0_1 = (RuleCall)cTargetStateStateCrossReference_6_0.eContents().get(1);
 		private final Assignment cDeferredAssignment_7 = (Assignment)cGroup.eContents().get(7);
-		private final Keyword cDeferredDeferredKeyword_7_0 = (Keyword)cDeferredAssignment_7.eContents().get(0);
+		private final RuleCall cDeferredDeferredTypeEnumRuleCall_7_0 = (RuleCall)cDeferredAssignment_7.eContents().get(0);
 		private final Assignment cHistoryAssignment_8 = (Assignment)cGroup.eContents().get(8);
 		private final RuleCall cHistoryHistoryTypeEnumRuleCall_8_0 = (RuleCall)cHistoryAssignment_8.eContents().get(0);
 		private final Group cGroup_9 = (Group)cGroup.eContents().get(9);
@@ -741,7 +741,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		//	delay=DelayType? ('if' triggerDelay=INT? (trigger=BoolScheduleExpression | trigger=AtomicExpression) ('Pr='
 		//	triggerProbability=FLOAT)? nondeterministic?='nondeterministic'?)? ('do' effects+=Effect (';' effects+=Effect)*)?
 		//	preemption=PreemptionType
-		//	targetState=[sccharts::State] deferred?='deferred'?
+		//	targetState=[sccharts::State] deferred=DeferredType?
 		//	history=HistoryType? ('label' label=STRING)?;
 		@Override public ParserRule getRule() { return rule; }
 		
@@ -753,7 +753,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		//     * go to B 
 		//     */ delay=DelayType? ('if' triggerDelay=INT? (trigger=BoolScheduleExpression | trigger=AtomicExpression) ('Pr='
 		//triggerProbability=FLOAT)? nondeterministic?='nondeterministic'?)? ('do' effects+=Effect (';' effects+=Effect)*)?
-		//preemption=PreemptionType targetState=[sccharts::State] deferred?='deferred'? history=HistoryType? ('label'
+		//preemption=PreemptionType targetState=[sccharts::State] deferred=DeferredType? history=HistoryType? ('label'
 		//label=STRING)?
 		public Group getGroup() { return cGroup; }
 		
@@ -863,11 +863,11 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getTargetStateStateIDTerminalRuleCall_6_0_1() { return cTargetStateStateIDTerminalRuleCall_6_0_1; }
 		
-		//deferred?='deferred'?
+		//deferred=DeferredType?
 		public Assignment getDeferredAssignment_7() { return cDeferredAssignment_7; }
 		
-		//'deferred'
-		public Keyword getDeferredDeferredKeyword_7_0() { return cDeferredDeferredKeyword_7_0; }
+		//DeferredType
+		public RuleCall getDeferredDeferredTypeEnumRuleCall_7_0() { return cDeferredDeferredTypeEnumRuleCall_7_0; }
 		
 		//history=HistoryType?
 		public Assignment getHistoryAssignment_8() { return cHistoryAssignment_8; }
@@ -3125,6 +3125,33 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		//'history'
 		public Keyword getDEEPHistoryKeyword_2_0() { return cDEEPHistoryKeyword_2_0; }
 	}
+	public class DeferredTypeElements extends AbstractEnumRuleElementFinder {
+		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.sccharts.text.SCTX.DeferredType");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final EnumLiteralDeclaration cSHALLOWEnumLiteralDeclaration_0 = (EnumLiteralDeclaration)cAlternatives.eContents().get(0);
+		private final Keyword cSHALLOWDeferredKeyword_0_0 = (Keyword)cSHALLOWEnumLiteralDeclaration_0.eContents().get(0);
+		private final EnumLiteralDeclaration cDEEPEnumLiteralDeclaration_1 = (EnumLiteralDeclaration)cAlternatives.eContents().get(1);
+		private final Keyword cDEEPDeepDeferredKeyword_1_0 = (Keyword)cDEEPEnumLiteralDeclaration_1.eContents().get(0);
+		
+		//enum DeferredType returns sccharts::DeferredType:
+		//	SHALLOW='deferred' | DEEP='deep deferred';
+		public EnumRule getRule() { return rule; }
+		
+		//SHALLOW='deferred' | DEEP='deep deferred'
+		public Alternatives getAlternatives() { return cAlternatives; }
+		
+		//SHALLOW='deferred'
+		public EnumLiteralDeclaration getSHALLOWEnumLiteralDeclaration_0() { return cSHALLOWEnumLiteralDeclaration_0; }
+		
+		//'deferred'
+		public Keyword getSHALLOWDeferredKeyword_0_0() { return cSHALLOWDeferredKeyword_0_0; }
+		
+		//DEEP='deep deferred'
+		public EnumLiteralDeclaration getDEEPEnumLiteralDeclaration_1() { return cDEEPEnumLiteralDeclaration_1; }
+		
+		//'deep deferred'
+		public Keyword getDEEPDeepDeferredKeyword_1_0() { return cDEEPDeepDeferredKeyword_1_0; }
+	}
 	public class ValueTypeElements extends AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.sccharts.text.SCTX.ValueType");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
@@ -3224,6 +3251,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	private final PreemptionTypeElements ePreemptionType;
 	private final DelayTypeElements eDelayType;
 	private final HistoryTypeElements eHistoryType;
+	private final DeferredTypeElements eDeferredType;
 	private final ValueTypeElements eValueType;
 	private final HiddenKeywordsElements pHiddenKeywords;
 	
@@ -3291,6 +3319,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		this.ePreemptionType = new PreemptionTypeElements();
 		this.eDelayType = new DelayTypeElements();
 		this.eHistoryType = new HistoryTypeElements();
+		this.eDeferredType = new DeferredTypeElements();
 		this.eValueType = new ValueTypeElements();
 		this.pHiddenKeywords = new HiddenKeywordsElements();
 	}
@@ -3458,7 +3487,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//	delay=DelayType? ('if' triggerDelay=INT? (trigger=BoolScheduleExpression | trigger=AtomicExpression) ('Pr='
 	//	triggerProbability=FLOAT)? nondeterministic?='nondeterministic'?)? ('do' effects+=Effect (';' effects+=Effect)*)?
 	//	preemption=PreemptionType
-	//	targetState=[sccharts::State] deferred?='deferred'?
+	//	targetState=[sccharts::State] deferred=DeferredType?
 	//	history=HistoryType? ('label' label=STRING)?;
 	public TransitionElements getTransitionAccess() {
 		return pTransition;
@@ -3825,6 +3854,16 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public EnumRule getHistoryTypeRule() {
 		return getHistoryTypeAccess().getRule();
+	}
+	
+	//enum DeferredType returns sccharts::DeferredType:
+	//	SHALLOW='deferred' | DEEP='deep deferred';
+	public DeferredTypeElements getDeferredTypeAccess() {
+		return eDeferredType;
+	}
+	
+	public EnumRule getDeferredTypeRule() {
+		return getDeferredTypeAccess().getRule();
 	}
 	
 	//@Override
