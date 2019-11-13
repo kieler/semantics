@@ -664,11 +664,13 @@ controllerID="de.cau.cs.kieler.kicool.ui.klighd.KiCoModelUpdateController"
    <extension
          point="org.eclipse.ui.editorActions">
       <editorContribution
-            id="de.cau.cs.kieler.sccharts.ui.doubleClick"
+            id="de.cau.cs.kieler.sccharts.debug.doubleClick"
             targetID="de.cau.cs.kieler.sccharts.text.SCTX">
          <action
+               actionID="RulerDoubleClick"
                class="de.cau.cs.kieler.sccharts.ui.debug.TextRulerHandler"
-               id="de.cau.cs.kieler.sccharts.ui.toggleDoubleClick"
+               icon="icons/brkp_obj.png"
+               id="de.cau.cs.kieler.sccharts.debug.toggleDoubleClick"
                label="Not Used"
                style="push">
          </action>

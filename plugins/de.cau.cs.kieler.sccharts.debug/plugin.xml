@@ -34,11 +34,12 @@
           targetID="de.cau.cs.kieler.sccharts.text.SCTX"
           id="de.cau.cs.kieler.sccharts.debug.doubleClick">
        <action
-             label="Not Used"
-             class="de.cau.cs.kieler.sccharts.debug.TextRulerHandler"
-             style="push"
              actionID="RulerDoubleClick"
-             id="de.cau.cs.kieler.sccharts.debug.toggleDoubleClick"/>
+             class="de.cau.cs.kieler.sccharts.debug.TextRulerHandler"
+             icon="icons/brkp_obj.png"
+             id="de.cau.cs.kieler.sccharts.debug.toggleDoubleClick"
+             label="Not Used"
+             style="push"/>
     </editorContribution>
  </extension>
    <extension
