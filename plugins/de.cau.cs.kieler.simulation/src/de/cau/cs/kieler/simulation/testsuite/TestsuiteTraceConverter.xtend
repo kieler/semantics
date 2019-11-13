@@ -12,11 +12,10 @@
  */
 package de.cau.cs.kieler.simulation.testsuite
 
-import com.google.gson.JsonObject
+import de.cau.cs.kieler.kicool.compilation.CodeContainer
+import de.cau.cs.kieler.kicool.compilation.ExogenousProcessor
 import de.cau.cs.kieler.kicool.deploy.Logger
-import de.cau.cs.kieler.kicool.deploy.processor.AbstractDeploymentProcessor
 import de.cau.cs.kieler.simulation.DataPool
-import de.cau.cs.kieler.simulation.DataPoolEntry
 import de.cau.cs.kieler.simulation.trace.TraceDataProvider
 import de.cau.cs.kieler.simulation.trace.ktrace.Trace
 import de.cau.cs.kieler.simulation.trace.ktrace.TraceFile
@@ -25,7 +24,7 @@ import de.cau.cs.kieler.simulation.trace.ktrace.TraceFile
  * @author mek
  *
  */
-class TestsuiteTraceConverter extends AbstractDeploymentProcessor<TraceFile> {
+class TestsuiteTraceConverter extends ExogenousProcessor<TraceFile, CodeContainer> {
     
     override getId() {
         "de.cau.cs.kieler.simulation.testsuite.traceconverter"
@@ -36,12 +35,31 @@ class TestsuiteTraceConverter extends AbstractDeploymentProcessor<TraceFile> {
     }
     
     override process() {
+        val traces = model.traces
         
+        // Do one pass to get all input and output names.
+        // This is required since the given pool has no information about any input or output.
+        // (data-provider mainly gets the information about inputs/outputs/signals from the given data-pool)
+        val inputNames = <String>newHashSet
+        val outputNames = <String>newHashSet
+        for (Trace trace : traces) {
+            val ticks = trace.ticks
+            val max = ticks.size
+            
+            val provider = new TraceDataProvider(trace, false)
+            for (var i = 0; i<max; i++) {
+                provider.applyTraceInputs(i)
+                provider.applyTraceOutputs(i)
+            }
+        
+            inputNames += provider.inputNames
+            outputNames += provider.outputNames
+        }
+
+
+        // With inputs and outputs known, create the JSON trace.
         val out = new Logger
         var first = true
-        
-        val data = model
-        val traces = data.traces
         for (Trace trace : traces) {
             // place a JSON String "reset" between traces
             if (!first) out.println("\"reset\"") else first = false
@@ -50,47 +68,26 @@ class TestsuiteTraceConverter extends AbstractDeploymentProcessor<TraceFile> {
             val max = ticks.size
             
             val provider = new TraceDataProvider(trace, false)
+            provider.addInputNames(inputNames)
+            provider.addOutputNames(outputNames)
             
-            val pool = new DataPool
-            
-            // extract inputs to set and outputs to check for each tick
-            if (provider.signalSemantics) {
-                val outputPool = new DataPool
-                for (var i = 0; i<max; i++) {
-                    // get inputs to set
-                    provider.applyTraceInputs(i)
-                    provider.passInputs(pool)
-                    out.print(pool.rawData)
-                    out.print(" => ")
-                    
-                    // get outputs to check
-                    provider.applyTraceOutputs(i)
-                    val mm = provider.mismatches(outputPool)
-                    for (DataPoolEntry e : mm.entries.map[value]) {
-                        outputPool.setValue(e.name, e.rawValue)
-                    }
-                    out.println(outputPool.rawData)
-                }
-            } else {
-                val emptyPool = new DataPool
-                for (var i = 0; i<max; i++) {
-                    // get inputs to set
-                    provider.applyTraceInputs(i)
-                    provider.passInputs(pool)
-                    out.print(pool.rawData)
-                    out.print(" => ")
-                    
-                    // get outputs to check
-                    provider.applyTraceOutputs(i)
-                    val mm = provider.mismatches(emptyPool)
-                    val JsonObject js = new JsonObject
-                    for (DataPoolEntry e : mm.entries.map[value]) {
-                        js.add(e.name, e.rawValue)
-                    }
-                    out.println(js)
-                }
+            // create the JSON simulation trace
+            val pool  = new DataPool
+            for (var i = 0; i<max; i++) {
+                // get inputs to set
+                pool.clear
+                provider.applyTraceInputs(i)
+                provider.passInputs(pool)
+                out.print(pool.rawData)
+                out.print(" => ")
+                
+                // get outputs to check
+                pool.clear
+                provider.applyTraceOutputs(i)
+                provider.passExpectedOutputs(pool);
+                out.println(pool.rawData)
             }
-        }
+       }
         
         model = out.closeLog("main.test.json")
     }

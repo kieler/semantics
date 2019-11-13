@@ -31,7 +31,10 @@ class SimulationProcessorProvider implements IProcessorProvider {
             de.cau.cs.kieler.simulation.internal.processor.CheckTrace,
             de.cau.cs.kieler.simulation.internal.processor.DynamicTickInput,
             de.cau.cs.kieler.simulation.processor.CTickTimeTemplateGenerator,
-            de.cau.cs.kieler.simulation.processor.JavaTickTimeTemplateGenerator
+            de.cau.cs.kieler.simulation.processor.JavaTickTimeTemplateGenerator,
+            de.cau.cs.kieler.simulation.testsuite.TestsuiteTraceConverter,
+            de.cau.cs.kieler.simulation.testsuite.MakefileDependencieAdder,
+            de.cau.cs.kieler.simulation.testsuite.TestsuiteTransformation
         ]
     }
     

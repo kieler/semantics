@@ -34,6 +34,8 @@ import org.eclipse.xtend.lib.annotations.Accessors
 import static com.google.common.base.Preconditions.*
 
 import static extension de.cau.cs.kieler.simulation.util.JsonUtil.*
+import java.util.Set
+import java.util.HashSet
 
 /**
  * @author als
@@ -136,11 +138,8 @@ class TraceDataProvider {
     }
     
     private def void applyTickEffects(Tick tick, boolean applyInputs) {
-        val effects = if (applyInputs) {
-            tick.inputs
-        } else {
-            tick.outputs
-        }
+        val effects = applyInputs ? tick.inputs : tick.outputs;
+        
         if (signalSemantics) {
             if (applyInputs) {
                 // Reset all signals
@@ -152,20 +151,20 @@ class TraceDataProvider {
                 state.setValues(reset)
             }
             
-            // Set emmited signals
-            val inputs = effects.filter(Emission).toMap([
+            // Set emitted signals
+            val traceInputs = effects.filter(Emission).toMap([
                 reference.valuedObject.name
             ],[
                 newValue
             ])
-            for (input : inputs.entrySet) {
-                val name = input.key
+            for (traceInput : traceInputs.entrySet) {
+                val name = traceInput.key
                 if (applyInputs) {
                     inputNames += name
                 } else {
                     outputNames += name
                 }
-                val value = input.value
+                val value = traceInput.value
                 
                 state.setValue(name, new JsonPrimitive(true))
                 if (value !== null) { // FIXME name magic
@@ -173,15 +172,15 @@ class TraceDataProvider {
                 }
             }
         } else {
-            for (input : effects.filter(Assignment)) {
-                var vor = input.reference
+            for (traceInput : effects.filter(Assignment)) {
+                var vor = traceInput.reference
                 val name = vor.valuedObject.name
                 if (applyInputs) {
                     inputNames += name
                 } else {
                     outputNames += name
                 }
-                var value = input.expression.toJsonValue
+                var value = traceInput.expression.toJsonValue
                 
                 if (!vor.indices.nullOrEmpty) {
                     var idx = 0
@@ -215,7 +214,7 @@ class TraceDataProvider {
         }
     }
     
-    public def void passInputs(DataPool pool) {
+    def void passInputs(DataPool pool) {
         val names = pool.entries.entrySet.filter[value.isInput].map[key].toSet
         names.addAll(inputNames)
         if (signalSemantics) {
@@ -229,7 +228,7 @@ class TraceDataProvider {
                         pool.setValue(input, traceEntry.rawValue.cloneJson)
                     }
                 } else {
-                    // Input that was not specified in trace but must be resetted
+                    // Input that was not specified in trace but must be reseted
                     inputNames += input
                     state.setValue(input, new JsonPrimitive(false))
                     state.setValue(input + "_val", new JsonPrimitive(0))
@@ -245,7 +244,76 @@ class TraceDataProvider {
         }
     }
     
-    public def mismatches(DataPool pool) {
+    /**
+     * Sets all output variables to their expected value of the current tick in the provided DataPool.
+     * 
+     * Outputs with a name ending on "_val" (FIXME: name magic) are only set if the variable with the same name
+     * but without the "_val" is set and which value is not 'false'.
+     * As outputs count all DataPool variables which are an output in the associated Simulatable of the provided
+     * DataPool and all outputs known to the TraceDataProvider.
+     * The Simulatable is not checked if a variable is a signal since this method is designed for DataPools without
+     * an Simulatable. For the same reason no name-changes for magic "_val" values are performed.
+     */
+    def void passExpectedOutputs(DataPool pool) {
+        val names = pool.entries.entrySet.filter[value.isOutput].map[key].toSet
+        names.addAll(outputNames)
+        
+        for (output : names) {
+            val traceEntry = state.entries.get(output)
+            var applyValue = true;
+            // Check if this is a value to an absent signal, since the expected value is undefined in this case
+            // note: isSignal() check doesn't work as it reads the model of the pool
+            if (output.endsWith("_val")) {// FIXME name magic
+                val signalName = output.substring(0, output.length-4) // remove "_val" suffix
+                val signalEntry = state.entries.get(signalName)
+                
+                // Was a signal for this value found?
+                if (signalEntry === null) {
+                    // Assuming "not set" means absent
+                    applyValue = false
+                } else {
+                    if (signalEntry.rawValue.isJsonPrimitive) {
+                        val primitive = signalEntry.rawValue.asJsonPrimitive;
+                        if (primitive.isBoolean && primitive.asBoolean === false) {
+                            applyValue = false
+                        }
+                    }
+                }
+            }
+            
+            if (applyValue) {
+                if (traceEntry !== null) {
+                    pool.setValue(output, traceEntry.rawValue.cloneJson)
+                    
+                    // set value for a valued signal if it exists
+                    val valueName = output+"_val"// FIXME: name magic
+                    val valueEntry = state.entries.get(valueName)
+                    if (valueEntry !== null) {
+                        pool.setValue(valueName, valueEntry.rawValue.cloneJson)
+                    }
+                } else {
+                    // Output that was not specified in trace but must be reseted
+                    outputNames += output
+                    state.setValue(output, new JsonPrimitive(false))
+                }
+            }
+        }
+    }
+    
+    def addOutputNames(Set<String> outputs) {
+        outputNames += outputs;
+    }
+    def addInputNames(Set<String> inputs) {
+        inputNames += inputs;
+    }
+    def getOutputNames() {
+        return outputNames.clone as HashSet<String>
+    }
+    def getInputNames() {
+        return inputNames.clone as HashSet<String>
+    }
+    
+    def mismatches(DataPool pool) {
         val mm = HashMultimap.<DataPoolEntry, DataPoolEntry>create
         val names = pool.entries.entrySet.filter[value.isOutput].map[key].toSet
         names.addAll(outputNames)

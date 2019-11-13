@@ -1,4 +1,4 @@
-system de.cau.cs.kieler.^simulation.testsuite.trace
+public system de.cau.cs.kieler.^simulation.testsuite.trace
     label "Testsuite: element compilation Tracefile"
 
 de.cau.cs.kieler.^simulation.testsuite.traceconverter

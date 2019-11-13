@@ -45,6 +45,7 @@ class TestsuiteTransformation extends ExogenousProcessor<CodeContainer, CodeCont
         
     override process() {
         val value = model
+        var Path basePath = Paths.get("./");
         
         val TestsuiteCompilationData config = new TestsuiteCompilationData
         config.logger = logger
@@ -53,6 +54,9 @@ class TestsuiteTransformation extends ExogenousProcessor<CodeContainer, CodeCont
         var String[] code = {}
         if (value.files.size == 1) {
             code = value.files.get(0).code.split("\\r\\n|\\r|\\n")
+            if (value.files.get(0).proxy) {
+                basePath = Paths.get(value.files.get(0).file.parentFile.absolutePath)
+            }
         } else if (value.files.size > 1) {
             environment.errors.add("Testsuite Creation allows only one Config-File.")
         } else {
@@ -102,7 +106,7 @@ class TestsuiteTransformation extends ExogenousProcessor<CodeContainer, CodeCont
             
             // <Folder>
             } else {
-                compilePath(Paths.get(line), config)
+                compilePath(basePath.resolve(Paths.get(line)), config)
                 System.gc()
             }
         }
@@ -128,7 +132,7 @@ class TestsuiteTransformation extends ExogenousProcessor<CodeContainer, CodeCont
             logger.println("<< No compilation system selected. use: \"system:<systemID>\"")
             return;
         }
-        logger.println("Compiling Path: " + path)
+        logger.println("Compiling Path: " + path + " ("+path.toAbsolutePath+")")
         try {
             Files
                 .walk(path)
