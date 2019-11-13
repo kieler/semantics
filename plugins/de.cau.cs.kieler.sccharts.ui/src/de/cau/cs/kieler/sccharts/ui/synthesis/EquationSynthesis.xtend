@@ -67,6 +67,9 @@ import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.klighd.krendering.KRendering
 import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.sccharts.DataflowRegion
+import com.google.inject.Injector
+import java.util.HashMap
 
 /**
  * @author ssm
@@ -79,8 +82,8 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
 
     public static val SynthesisOption AUTOMATIC_INLINE = SynthesisOption.createCheckOption("Automatic inline", false).
         setCategory(GeneralSynthesisOptions::DATAFLOW)
-    public static val SynthesisOption UNIQUE_WIRES = SynthesisOption.createCheckOption("Unique Wires", false).
-        setCategory(GeneralSynthesisOptions::DATAFLOW)
+    public static val SynthesisOption SEPARATED_ASSIGNMENTS = SynthesisOption.createCheckOption("Separated Assignments",
+        false).setCategory(GeneralSynthesisOptions::DATAFLOW)
     public static val SynthesisOption ALIGN_INPUTS_OUTPUTS = SynthesisOption.createCheckOption(
         "Inputs/Outputs Alignment", true).setCategory(GeneralSynthesisOptions::DATAFLOW)
     public static val SynthesisOption ALIGN_CONSTANTS = SynthesisOption.createCheckOption("Constant Alignment", false).
@@ -102,6 +105,8 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         "de.cau.cs.kieler.sccharts.ui.synthesis.dataflow.outputFlag", false);
     public static final IProperty<Boolean> DATA_ARRAY_FLAG = new Property<Boolean>(
         "de.cau.cs.kieler.sccharts.ui.synthesis.dataflow.dataArrayFlag", false);
+    public static final IProperty<Boolean> REFERENCE_NODE = new Property<Boolean>(
+        "de.cau.cs.kieler.sccharts.ui.synthesis.dataflow.referenceNode", false);
 
     @Inject extension KNodeExtensionsReplacement
     @Inject extension KEdgeExtensions
@@ -115,9 +120,10 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
     @Inject extension AnnotationsExtensions
     @Inject extension KRenderingExtensions
     @Inject StateSynthesis stateSynthesis
+    @Inject Injector injector
+    
+    val HashMap<ReferenceDeclaration, KNode> referenceNodes = newHashMap
 
-//    public static final IProperty<String> PROPAGATED_SKINPATH = new Property<String>(
-//        "de.cau.cs.kieler.sccharts.ui.synthesis.dataflow.propagatedSkinPath", "");
     static val ANNOTATION_FIGURE = "figure"
 
     static val PORT_LABEL_FONT_SIZE = 5
@@ -185,6 +191,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
             AUTOMATIC_INLINE,
             ALIGN_INPUTS_OUTPUTS,
             ALIGN_CONSTANTS,
+            SEPARATED_ASSIGNMENTS,
             SHOW_WIRE_LABELS,
             SHOW_EXPRESSION_PORT_LABELS,
             SHOW_REFERENCED_PORT_LABELS,
@@ -192,6 +199,14 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         )
 
         return options
+    }
+
+    // combines the graphs for the assignments to a simplified connected Graph
+    def List<KNode> simplifyAndCombine(List<KNode> nodes, KNode rootNode) {
+        if (SEPARATED_ASSIGNMENTS.booleanValue) {
+            return nodes
+        }
+        return new EquationSimplification(rootNode, this, injector).simplify(nodes)
     }
 
     // performTransformation:
@@ -261,8 +276,10 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
             if (reference.subReference !== null) {
                 if (output) {
                     node.getInputPortWithNumber(0).setLabel(reference.subReference.serializeHR.toString, true)
+                    node.getInputPortWithNumber(0).associateWith(reference.subReference)
                 } else {
                     node.findPortById(OUT_PORT)?.setLabel(reference.subReference.serializeHR.toString, true)
+                    node.findPortById(OUT_PORT)?.associateWith(reference.subReference)
                 }
             }
         } else {
@@ -370,14 +387,12 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
     // creates an equation graph for an assignment and returns the list of created nodes
     override performTranformation(Assignment element) {
         val nodes = <KNode>newLinkedList
-        val target = element.reference.performTransformation(nodes, true)
-        val targetPort = target.findPortById(PORT0_IN_PREFIX)
-        nodes += target
         val source = element.expression.performTransformation(nodes, false)
         val sourcePort = source.findPortById(OUT_PORT)
+        val target = element.reference.performTransformation(nodes, true)
+        val targetPort = target.findPortById(PORT0_IN_PREFIX)
         sourcePort.connectWith(targetPort,
             source.getProperty(KlighdInternalProperties.MODEL_ELEMEMT)?.serializeHR?.toString)
-        nodes += source
         return nodes
     }
 
@@ -385,14 +400,15 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
     def performTranformation(List<Assignment> elements, KNode rootNode) {
         val nodes = <KNode>newLinkedList
         elements.forEach[it.performTranformation.forEach[nodes += it]]
-        return nodes
+        return nodes.simplifyAndCombine(rootNode)
     }
 
     protected def KNode createReferenceNode(KNode node, ValuedObjectReference voRef, String label) {
 
         val list = node.data.filter[it instanceof KRendering].toList
-        for (x : list)
+        for (x : list) {
             node.data.remove(x)
+        }
         var newNode = node
 
         node.setLayoutOption(LayeredOptions::NODE_PLACEMENT_STRATEGY, NodePlacementStrategy.SIMPLE)
@@ -408,6 +424,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
             newNode = referenceDeclaration.reference.createKGTNode("", label)
             newNode.setProperty(SCChartsSynthesis.SKINPATH, getSkinPath(usedContext))
             newNode.addNodeLabelWithPadding(label, INPUT_OUTPUT_TEXT_SIZE, PADDING_INPUT_LEFT, PADDING_INPUT_RIGHT)
+            newNode.setProperty(REFERENCE_NODE, true)
             if(newNode !== null) return newNode
         }
         if (referenceDeclaration.reference !== null &&
@@ -415,19 +432,27 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
             newNode = referenceDeclaration.reference.createKGTNode("", label)
             newNode.setProperty(SCChartsSynthesis.SKINPATH, getSkinPath(usedContext))
             newNode.addNodeLabelWithPadding(label, INPUT_OUTPUT_TEXT_SIZE, PADDING_INPUT_LEFT, PADDING_INPUT_RIGHT)
+            newNode.setProperty(REFERENCE_NODE, true)
             if(newNode !== null) return newNode
         }
 
         val declaration = voRef.valuedObject.referenceDeclaration
         if (AUTOMATIC_INLINE.booleanValue && declaration.reference !== null) {
-            val state = declaration.reference as State
-            newNode = stateSynthesis.transform(state).head
+            if (referenceNodes.containsKey(declaration)) {
+                newNode = referenceNodes.get(declaration).copy
+                newNode.ports.clear
+            } else {
+                val state = declaration.reference as State
+                newNode = stateSynthesis.transform(state).head.trimReferenceNode
+                referenceNodes.put(declaration, newNode)
+            }
             if (node.getInputPortWithNumber(0) !== null) {
                 newNode.ports.add(node.getInputPortWithNumber(0).copy)
             }
             if (node.findPortById(OUT_PORT) !== null) {
                 newNode.ports.add(node.findPortById(OUT_PORT).copy)
             }
+            newNode.setProperty(REFERENCE_NODE, true)
             newNode.setProperty(INLINED_REFERENCE, true)
         } else {
             newNode.data.filter[it instanceof KRendering]
@@ -446,8 +471,13 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         newNode.setLayoutOption(LayeredOptions::NODE_SIZE_CONSTRAINTS,
             EnumSet.of(SizeConstraint.PORTS, SizeConstraint.MINIMUM_SIZE))
         newNode.setProperty(SCChartsSynthesis.SKINPATH, getSkinPath(usedContext))
-
+        newNode.setProperty(REFERENCE_NODE, true)
         return newNode
+    }
+
+    def trimReferenceNode( KNode node ){
+        //TODO: remove unneeded stuff like declarations
+        return node
     }
 
     // create a single node from a kgt file
@@ -541,7 +571,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
     }
 
     // connects two ports with a wire
-    private def connectWith(KPort source, KPort target, String label) {
+    def connectWith(KPort source, KPort target, String label) {
         if (source === null || target === null) {
             return
         }
@@ -585,7 +615,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         node.eContents?.filter(KIdentifier)?.head?.id
     }
 
-    private def setId(KLabeledGraphElement node, String id) {
+    def setId(KLabeledGraphElement node, String id) {
         node.getData(KIdentifier).id = id
         node
     }
