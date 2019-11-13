@@ -27,7 +27,7 @@ class SCChartsDebugModelPresentation extends LabelProvider implements IDebugMode
      * The ID of the debug context. Breakpoints are added to this ID and it will
      * be searched only for breakpoints with this ID.
      */
-    public static val ID = "de.cau.cs.kieler.sccharts.debug.ui.presentation.scchartsDebugModelPresentation"
+    public static val ID = "de.cau.cs.kieler.sccharts.ui.debug.scchartsDebugModelPresentation"
 
     override IEditorInput getEditorInput(Object element) {
         return null

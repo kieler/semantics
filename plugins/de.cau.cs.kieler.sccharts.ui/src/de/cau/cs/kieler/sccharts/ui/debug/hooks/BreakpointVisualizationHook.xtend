@@ -235,14 +235,16 @@ class BreakpointVisualizationHook extends SynthesisHook {
 	
 	def private KEllipse removeBreakpointDecorator(KEdge edge) {
 		val _line = this.line(edge) 
-		val children = _line.children 
+		val children = _line.children.iterator
 		var found = false
-		for (ren : children) {
-			if (!found && ren.id === ellipseId) {
-				children.remove(ren) 
+		var KRendering ren
+		while(!found && children.hasNext) {
+		    ren = children.next
+			if (ren.id === ellipseId) {
 				found = true // fix for missing break
 			}
 		}
+		_line.children.remove(ren)
 		return null // TODO why return anything here?
 	}
 	

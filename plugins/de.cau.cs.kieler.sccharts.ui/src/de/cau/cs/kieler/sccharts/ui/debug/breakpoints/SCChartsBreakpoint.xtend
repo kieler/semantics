@@ -56,13 +56,13 @@ class SCChartsBreakpoint extends LineBreakpoint {
      */
     protected new(IResource resource, int lineNumber, boolean persistent) throws CoreException {
         var IWorkspaceRunnable runnable = [ IProgressMonitor monitor |
-            var IMarker marker = resource.createMarker("de.cau.cs.kieler.sccharts.debug.scchartsBreakpointMarker")
+            var IMarker marker = resource.createMarker("de.cau.cs.kieler.sccharts.ui.scchartsBreakpointMarker")
             setMarker(marker)
             marker.setAttribute(IBreakpoint.ENABLED, true)
             marker.setAttribute(IBreakpoint.PERSISTED, persistent)
             marker.setAttribute(IMarker.LINE_NUMBER, lineNumber)
             marker.setAttribute(IBreakpoint.ID, getModelIdentifier())
-            marker.setAttribute(IMarker.MESSAGE, '''Line Breakpoint: «resource.getName()» [line: «lineNumber»]''')
+            marker.setAttribute(IMarker.MESSAGE, '''Line Breakpoint: «resource.getName()» [line: «lineNumber»]'''.toString)
         ]
         run(getMarkerRule(resource), runnable)
     }

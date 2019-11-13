@@ -668,7 +668,7 @@ controllerID="de.cau.cs.kieler.kicool.ui.klighd.KiCoModelUpdateController"
             targetID="de.cau.cs.kieler.sccharts.text.SCTX">
          <action
                class="de.cau.cs.kieler.sccharts.ui.debug.TextRulerHandler"
-               id="de.cau.cs.kieler.sccharts.debug.toggleDoubleClick"
+               id="de.cau.cs.kieler.sccharts.ui.toggleDoubleClick"
                label="Not Used"
                style="push">
          </action>
@@ -697,7 +697,7 @@ controllerID="de.cau.cs.kieler.kicool.ui.klighd.KiCoModelUpdateController"
          point="org.eclipse.debug.ui.debugModelPresentations">
       <debugModelPresentation
             class="de.cau.cs.kieler.sccharts.ui.debug.SCChartsDebugModelPresentation"
-            id="scchartsDebugModelPresentation">
+            id="de.cau.cs.kieler.sccharts.ui.debug.scchartsDebugModelPresentation">
       </debugModelPresentation>
    </extension>
    <extension
