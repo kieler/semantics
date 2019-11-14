@@ -276,7 +276,8 @@ class StatebasedLeanJavaTemplate extends AbstractStatebasedLeanTemplate {
 					
 					  context.activeState = « state.parentRegion.uniqueName »States.« state.uniqueEnumName »RUNNING;
 					}
-			
+					
+					« state.generateJavaDocFromCommentAnnotations »
 					private void « state.uniqueName »_running(« state.uniqueContextMemberName » context) {
 				« ENDIF »
 				« createCodeSuperstate(state) »
