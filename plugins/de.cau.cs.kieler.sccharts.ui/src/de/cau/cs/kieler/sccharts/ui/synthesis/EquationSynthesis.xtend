@@ -121,7 +121,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
     @Inject extension KRenderingExtensions
     @Inject StateSynthesis stateSynthesis
     @Inject Injector injector
-    
+
     val HashMap<ReferenceDeclaration, KNode> referenceNodes = newHashMap
 
     static val ANNOTATION_FIGURE = "figure"
@@ -209,59 +209,107 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         return new EquationSimplification(rootNode, this, injector).simplify(nodes)
     }
 
+    // returns the label of the last index of the last sub reference or the label of the last sub reference
+    def String lastSubReferenceLabel(ValuedObjectReference reference) {
+        if (reference.subReference !== null) {
+            return reference.subReference.lastSubReferenceLabel
+        }
+        if (reference.indices.size > 0) {
+            return "[" + reference.indices.get(reference.indices.size - 1).serializeHR.toString + "]"
+        }
+        return reference.serializeHR.toString
+    }
+
+    // returns the last index of the last sub reference or the last sub reference
+    def Expression lastSubReference(ValuedObjectReference reference) {
+        if (reference.subReference !== null) {
+            return reference.subReference.lastSubReference
+        }
+        if (reference.indices.size > 0) {
+            return reference.indices.get(reference.indices.size - 1)
+        }
+        return reference
+    }
+
+    //returns true iff the last sub reference has indices
+    def boolean lastSubReferenceIsArray(ValuedObjectReference reference) {
+        if (reference.subReference !== null) {
+            return reference.subReference.lastSubReferenceIsArray
+        }
+        return reference.indices.size > 0
+    }
+
+    // given a reference with sub references and indices
+    // a copied reference is returned without the last index or sub reference
+    def ValuedObjectReference removeLastReference(ValuedObjectReference reference) {
+        val ref = reference.copy
+        if (ref.subReference !== null) {
+            ref.subReference = ref.subReference.removeLastReference
+            return ref
+        }
+        if (ref.indices.size > 0) {
+            ref.indices.remove(ref.indices.size - 1)
+            return ref
+        }
+        return null
+    }
+
     // performTransformation:
     // creates an equation tree graph from an expression and returns the root node of the tree
     // all created nodes are added to the nodes list
     // output should be true if output nodes should be generated
     // create input or output nodes for the valued object reference
     def dispatch KNode performTransformation(ValuedObjectReference reference, List<KNode> nodes, boolean output) {
-        if (reference.isClassReference && reference.subReference !== null) {
-            // in case of a class reference a class node is inserted between the valued object node and the expression
-            val arrayNode = reference.createKGTNode(output ? "CLASS_OUTPUT" : "CLASS_INPUT", "")
-            arrayNode.associateWith(reference)
-            nodes += arrayNode
-            var ref = reference.copy
-            ref.subReference = null
-            var varNode = ref.performTransformation(nodes, output)
-            varNode.setProperty(DATA_ARRAY_FLAG, true)
-            var ref2 = reference.valuedObject.reference
-            ref2.indices += reference.indices.map[it.copy].toList
-            var label = reference.serializeHR.toString.substring(ref2.serializeHR.length + 1)
-            if (output) {
-                val sourcePort = arrayNode.findPortById(OUT_PORT)
-                sourcePort.connectWith(varNode.findPortById(PORT0_IN_PREFIX),
-                    reference.valuedObject.serializeHR.toString)
-                arrayNode.findPortById(PORT0_IN_PREFIX).setLabel(label, false)
-            } else {
-                val sourcePort = varNode.findPortById(OUT_PORT)
-                sourcePort.connectWith(arrayNode.findPortById(PORT0_IN_PREFIX),
-                    reference.valuedObject.serializeHR.toString)
-                arrayNode.findPortById(OUT_PORT).setLabel(label, false)
+        if ((reference.isClassReference && reference.subReference !== null) || reference.isArrayReference) {
+            // go through the sub references and indices and create a data access node for each index of sub reference
+            var ref = reference
+            var KNode firstNode = null
+            var KNode lastNode = null
+            while (ref !== null) {
+                var nextRef = ref.removeLastReference
+                // create the dada access node
+                var KNode currentNode = null
+                if (ref.lastSubReferenceIsArray) {
+                    currentNode = ref.createKGTNode(output ? "ARRAY_OUTPUT" : "ARRAY_INPUT", "")
+                } else {
+                    currentNode = ref.createKGTNode(output ? "CLASS_OUTPUT" : "CLASS_INPUT", "")
+                }
+                if (nextRef === null) {
+                    // no more data access nodes are needed so a normal input or output node will be created
+                    currentNode = ref.performTransformation(nodes, output)
+                    currentNode.associateWith(ref)
+                } else {
+                    currentNode.associateWith(nextRef)
+                    nodes += currentNode
+                }
+                if (firstNode === null) {
+                    firstNode = currentNode
+                }
+                if (lastNode !== null) {
+                    // connect the last data access node with the new data access node
+                    currentNode.setProperty(DATA_ARRAY_FLAG, true)
+                    if (output) {
+                        val sourcePort = lastNode.findPortById(OUT_PORT)
+                        sourcePort.connectWith(currentNode.findPortById(PORT0_IN_PREFIX), ref.lastSubReferenceLabel)
+                    } else {
+                        val sourcePort = currentNode.findPortById(OUT_PORT)
+                        sourcePort.connectWith(lastNode.findPortById(PORT0_IN_PREFIX), ref.lastSubReferenceLabel)
+                    }
+                }
+                if (nextRef !== null) {
+                    // set the port labels of the new data access node
+                    if (output) {
+                        currentNode.findPortById(PORT0_IN_PREFIX).setLabel(ref.lastSubReferenceLabel, false)
+                        currentNode.findPortById(PORT0_IN_PREFIX).associateWith(ref.lastSubReference)
+                    } else {
+                        currentNode.findPortById(OUT_PORT).setLabel(ref.lastSubReferenceLabel, false)
+                        currentNode.findPortById(OUT_PORT).associateWith(ref.lastSubReference)
+                    }
+                }
+                lastNode = currentNode
+                ref = nextRef
             }
-            return arrayNode
-        }
-        if (reference.isArrayReference) {
-            // in case of an array reference a array node is inserted between the valued object node and the expression
-            val arrayNode = reference.createKGTNode(output ? "ARRAY_OUTPUT" : "ARRAY_INPUT", "")
-            arrayNode.associateWith(reference)
-            nodes += arrayNode
-            var ref = reference.copy
-            ref.indices.clear
-            var KNode varNode = ref.performTransformation(nodes, output)
-            varNode.setProperty(DATA_ARRAY_FLAG, true)
-            var label = String.join("", reference.indices.map["[" + it.serializeHR.toString + "]"])
-            if (output) {
-                val sourcePort = arrayNode.findPortById(OUT_PORT)
-                sourcePort.connectWith(varNode.findPortById(PORT0_IN_PREFIX),
-                    reference.valuedObject.serializeHR.toString)
-                arrayNode.findPortById(PORT0_IN_PREFIX).setLabel(label, false)
-            } else {
-                val sourcePort = varNode.findPortById(OUT_PORT)
-                sourcePort.connectWith(arrayNode.findPortById(PORT0_IN_PREFIX),
-                    reference.valuedObject.serializeHR.toString)
-                arrayNode.findPortById(OUT_PORT).setLabel(label, false)
-            }
-            return arrayNode
+            return firstNode
         }
         var node = reference.valuedObject.createKGTNode(output ? "OUTPUT" : "INPUT", "")
         var text = reference.valuedObject.reference.serializeHR.toString
@@ -353,8 +401,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
             val source = subExpr.performTransformation(nodes, false)
             val sourcePort = source.findPortById(OUT_PORT)
             val targetPort = node.getInputPortWithNumber(operatorExpr.subExpressions.indexOf(subExpr))
-            sourcePort.connectWith(targetPort,
-                source.getProperty(KlighdInternalProperties.MODEL_ELEMEMT)?.serializeHR?.toString)
+            sourcePort.connectWith(targetPort, subExpr.serializeHR.toString)
         }
         // show or hide port labels
         if (SHOW_EXPRESSION_PORT_LABELS.booleanValue) {
@@ -391,8 +438,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         val sourcePort = source.findPortById(OUT_PORT)
         val target = element.reference.performTransformation(nodes, true)
         val targetPort = target.findPortById(PORT0_IN_PREFIX)
-        sourcePort.connectWith(targetPort,
-            source.getProperty(KlighdInternalProperties.MODEL_ELEMEMT)?.serializeHR?.toString)
+        sourcePort.connectWith(targetPort, element.expression.serializeHR.toString)
         return nodes
     }
 
@@ -475,8 +521,8 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         return newNode
     }
 
-    def trimReferenceNode( KNode node ){
-        //TODO: remove unneeded stuff like declarations
+    def trimReferenceNode(KNode node) {
+        // TODO: remove unneeded stuff like declarations
         return node
     }
 

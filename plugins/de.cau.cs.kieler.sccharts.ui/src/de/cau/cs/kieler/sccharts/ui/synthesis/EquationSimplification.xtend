@@ -63,7 +63,7 @@ class EquationSimplification {
     // only if the input nodes are from a different assignment as the output node
     // the input nodes are removed
     def connectInputWithOutput(List<KNode> nodes) {
-        for (node : nodes.filter[isInput && !isReference].toList) {
+        for (node : nodes.filter[isInput && !isReference && !isDataArray].toList) {
             if (node.sourceElement instanceof ValuedObjectReference) {
                 val vo = (node.sourceElement as ValuedObjectReference).valuedObject
                 val output = nodes.getOutputNode(vo)
@@ -145,9 +145,9 @@ class EquationSimplification {
 
     // removes doubled expression nodes
     def removeDublicates(List<KNode> nodes) {
-        for (node : nodes.filter[!isInput && !isOutput && !isReference].toList) {
+        for (node : nodes.filter[!isInput && !isOutput && !isReference && !isDataArray].toList) {
             if (nodes.contains(node)) {
-                val unneed = nodes.findDublicateNode(node)
+                val unneed = nodes.findIndependentDublicateNode(node)
                 if (unneed !== null) {
                     unneed.redirectOutgoingWires(node)
                     while (unneed.incomingEdges.size > 0) {
@@ -164,10 +164,10 @@ class EquationSimplification {
     }
 
     // returns a KNode which stands for the same equation as node or returns null if no such node exists
-    def findDublicateNode(List<KNode> nodes, KNode node) {
+    def findIndependentDublicateNode(List<KNode> nodes, KNode node) {
         for (n : nodes) {
             if (n != node) {
-                if (n.sourceEquals(node)) {
+                if (n.sourceEquals(node) && !n.isInputForEquation(node) && !node.isInputForEquation(n) ) {
                     return n
                 }
             }
@@ -245,6 +245,10 @@ class EquationSimplification {
             }
         }
         return false
+    }
+    
+    def isDataArray(KNode node){
+        node.getProperty(EquationSynthesis.DATA_ARRAY_FLAG) as boolean
     }
 
     def isInput(KNode node) {
