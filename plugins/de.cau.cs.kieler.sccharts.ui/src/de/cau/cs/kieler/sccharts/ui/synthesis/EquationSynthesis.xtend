@@ -70,6 +70,15 @@ import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.sccharts.DataflowRegion
 import com.google.inject.Injector
 import java.util.HashMap
+import de.cau.cs.kieler.sccharts.extensions.SCChartsDataflowRegionExtensions
+import de.cau.cs.kieler.klighd.krendering.KColor
+import org.eclipse.emf.edit.command.CreateChildCommand.Helper
+import de.cau.cs.kieler.klighd.krendering.Colors
+import org.eclipse.elk.core.options.EdgeType
+import de.cau.cs.kieler.klighd.kgraph.KGraphElement
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCompareExtensions
+import de.cau.cs.kieler.sccharts.ui.synthesis.styles.TransitionStyles
+import de.cau.cs.kieler.klighd.kgraph.KGraphFactory
 
 /**
  * @author ssm
@@ -119,6 +128,9 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
     @Inject extension KExtDeclarationExtensions
     @Inject extension AnnotationsExtensions
     @Inject extension KRenderingExtensions
+    @Inject extension SCChartsDataflowRegionExtensions
+    @Inject extension KExpressionsCompareExtensions
+    @Inject extension TransitionStyles
     @Inject StateSynthesis stateSynthesis
     @Inject Injector injector
 
@@ -206,7 +218,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         if (SEPARATED_ASSIGNMENTS.booleanValue) {
             return nodes
         }
-        return new EquationSimplification(rootNode, this, injector).simplify(nodes)
+        return new EquationSimplification(rootNode, injector).simplify(nodes)
     }
 
     // returns the label of the last index of the last sub reference or the label of the last sub reference
@@ -231,7 +243,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         return reference
     }
 
-    //returns true iff the last sub reference has indices
+    // returns true iff the last sub reference has indices
     def boolean lastSubReferenceIsArray(ValuedObjectReference reference) {
         if (reference.subReference !== null) {
             return reference.subReference.lastSubReferenceIsArray
@@ -445,7 +457,56 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
     // creates an equation graph for a list of assignments and returns a list of created nodes
     def performTranformation(List<Assignment> elements, KNode rootNode) {
         val nodes = <KNode>newLinkedList
-        elements.forEach[it.performTranformation.forEach[nodes += it]]
+        var List<KNode> lastKNodes = null
+        for (assignment : elements) {
+            val knodes = assignment.performTranformation
+            nodes += knodes
+            if (lastKNodes !== null) {
+                for (output : lastKNodes.filter[it.getProperty(OUTPUT_FLAG) as boolean]) {
+                    for (input : knodes.filter[it.getProperty(INPUT_FLAG) as boolean && sourceEquals(output)]) {
+                        val edge = createEdge
+                        var sourcePort = output.findPortById(OUT_PORT)
+                        if (sourcePort === null) {
+                            sourcePort = createPort => [
+                                data += KGraphFactory.eINSTANCE.createKIdentifier()
+                                setId(OUT_PORT);
+                                setProperty(CoreOptions::PORT_SIDE, PortSide.EAST)
+                            ]
+                            output.ports.add(sourcePort)
+                        }
+                        var targetPort = input.getInputPortWithNumber(0)
+                        if (targetPort === null) {
+                            targetPort = createPort => [
+                                data += KGraphFactory.eINSTANCE.createKIdentifier()
+                                setId(PORT0_IN_PREFIX);
+                                setProperty(CoreOptions::PORT_SIDE, PortSide.WEST)
+                            ]
+                            input.ports.add(targetPort)
+                        }
+                        edge.setLayoutOption(LayeredOptions.INSIDE_SELF_LOOPS_YO, true)
+                        edge.source = output
+                        edge.sourcePort = sourcePort
+                        edge.target = input
+                        edge.targetPort = targetPort
+                        edge.addWireFigure
+                        edge.data.filter(KRendering).get(0).foreground = Colors.RED
+                        edge.setLayoutOption(CoreOptions.EDGE_TYPE, EdgeType.DEPENDENCY)
+                        edge.setImmediateStyle
+                        input.addLayoutParam(LayeredOptions::LAYERING_LAYER_CONSTRAINT, LayerConstraint::NONE)
+                        output.addLayoutParam(LayeredOptions::LAYERING_LAYER_CONSTRAINT, LayerConstraint::NONE)
+                    }
+                }
+            }
+            if (assignment.sequential) {
+                if (lastKNodes !== null) {
+                    lastKNodes += knodes
+                } else {
+                    lastKNodes = knodes
+                }
+            } else {
+                lastKNodes = null
+            }
+        }
         return nodes.simplifyAndCombine(rootNode)
     }
 
@@ -674,7 +735,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         port.getProperty(CoreOptions::PORT_SIDE)
     }
 
-    static def findPortById(KNode node, String id) {
+    def findPortById(KNode node, String id) {
         for (p : node.ports) {
             if (p.id == id) {
                 return p
@@ -713,5 +774,26 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
             node.ports.add(0, result)
         }
         return result
+    }
+
+    def getSourceElement(KGraphElement node) {
+        return node.getProperty(KlighdInternalProperties.MODEL_ELEMEMT)
+    }
+
+    // given two KGraph elements the return value is true iff the elements are associated with the same source element
+    // in case of associations with ValuedObjectReferences only the ValuedObject needs to be equal
+    def sourceEquals(KGraphElement a, KGraphElement b) {
+        if (a.sourceElement instanceof ValuedObjectReference && b.sourceElement instanceof ValuedObjectReference) {
+            return (a.sourceElement as ValuedObjectReference).valuedObject ==
+                (b.sourceElement as ValuedObjectReference).valuedObject
+        }
+        if (a.sourceElement instanceof Value && b.sourceElement instanceof Value &&
+            a.sourceElement.serializeHR == b.sourceElement.serializeHR) {
+            return true
+        }
+        if (a.sourceElement instanceof Expression && b.sourceElement instanceof Expression) {
+            return (a.sourceElement as Expression).equals2(b.sourceElement as Expression)
+        }
+        return a.sourceElement == b.sourceElement
     }
 }

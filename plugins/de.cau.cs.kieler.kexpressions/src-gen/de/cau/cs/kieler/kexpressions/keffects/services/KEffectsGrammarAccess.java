@@ -480,7 +480,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		//ValuedObjectReference
 		public RuleCall getSubReferenceValuedObjectReferenceParserRuleCall_3_1_0() { return cSubReferenceValuedObjectReferenceParserRuleCall_3_1_0; }
 		
-		//'(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()'
+		//('(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()')
 		public Alternatives getAlternatives_4() { return cAlternatives_4; }
 		
 		//'(' parameters+=Parameter (',' parameters+=Parameter)* ')'
@@ -563,7 +563,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		//Annotation
 		public RuleCall getAnnotationsAnnotationParserRuleCall_0_0() { return cAnnotationsAnnotationParserRuleCall_0_0; }
 		
-		//'extern' functionName=ID ('(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()')
+		//('extern' functionName=ID ('(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()'))
 		public Group getGroup_1() { return cGroup_1; }
 		
 		//'extern'
@@ -575,7 +575,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getFunctionNameIDTerminalRuleCall_1_1_0() { return cFunctionNameIDTerminalRuleCall_1_1_0; }
 		
-		//'(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()'
+		//('(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()')
 		public Alternatives getAlternatives_1_2() { return cAlternatives_1_2; }
 		
 		//'(' parameters+=Parameter (',' parameters+=Parameter)* ')'
@@ -649,7 +649,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		//'print'
 		public Keyword getPrintKeyword_1() { return cPrintKeyword_1; }
 		
-		//'(' parameters+=Parameter (',' parameters+=Parameter)* ')'
+		//('(' parameters+=Parameter (',' parameters+=Parameter)* ')')
 		public Group getGroup_2() { return cGroup_2; }
 		
 		//'('
@@ -729,7 +729,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		//'randomize'
 		public Keyword getRandomizeKeyword_2() { return cRandomizeKeyword_2; }
 		
-		//'(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()'
+		//('(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()')
 		public Alternatives getAlternatives_3() { return cAlternatives_3; }
 		
 		//'(' parameters+=Parameter (',' parameters+=Parameter)* ')'

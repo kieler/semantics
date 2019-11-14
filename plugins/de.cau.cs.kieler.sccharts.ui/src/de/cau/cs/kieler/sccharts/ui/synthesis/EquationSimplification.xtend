@@ -41,17 +41,15 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCompareExtensions
  */
 class EquationSimplification {
 
-    @Inject extension KExpressionsCompareExtensions
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension SCChartsSerializeHRExtensions
+    @Inject extension EquationSynthesis
 
     val DataflowRegion currentRegion
-    val EquationSynthesis synthesis
 
-    new(KNode root, EquationSynthesis es, Injector injector) {
+    new(KNode root, Injector injector) {
         injector.injectMembers(this)
         currentRegion = root.getProperty(KlighdInternalProperties.MODEL_ELEMEMT) as DataflowRegion
-        synthesis = es
     }
 
     // uses all simplifications in the correct order
@@ -167,7 +165,7 @@ class EquationSimplification {
     def findIndependentDublicateNode(List<KNode> nodes, KNode node) {
         for (n : nodes) {
             if (n != node) {
-                if (n.sourceEquals(node) && !n.isInputForEquation(node) && !node.isInputForEquation(n) ) {
+                if (n.sourceEquals(node) && !n.isInputForEquation(node) && !node.isInputForEquation(n)) {
                     return n
                 }
             }
@@ -181,7 +179,7 @@ class EquationSimplification {
             var targetPort = e.targetPort
             for (e2 : output.incomingEdges) {
                 var sourcePort = e2.sourcePort
-                synthesis.connectWith(sourcePort, targetPort,
+                sourcePort.connectWith(targetPort,
                     (input.sourceElement as ValuedObjectReference).valuedObject.serializeHR.toString)
             }
         }
@@ -197,12 +195,12 @@ class EquationSimplification {
     def redirectIncommingWires(KNode old, KNode target) {
         while (old.incomingEdges.size > 0) {
             val e = old.incomingEdges.get(0)
-            var targetPort = synthesis.getInputPortWithNumber(target, 0)
+            var targetPort = target.getInputPortWithNumber(0)
             if (e.targetPort.sourceElement instanceof ValuedObjectReference) {
                 targetPort = target.findPort((e.targetPort.sourceElement as ValuedObjectReference).valuedObject)
                 if (targetPort === null) {
                     targetPort = e.targetPort.copy
-                    synthesis.setId(targetPort, EquationSynthesis.IN_PORT + "_" + target.ports.size)
+                    targetPort.setId(EquationSynthesis.IN_PORT + "_" + target.ports.size)
                     target.ports.add(targetPort)
                 }
             }
@@ -217,12 +215,12 @@ class EquationSimplification {
     def redirectOutgoingWires(KNode old, KNode source) {
         while (old.outgoingEdges.size > 0) {
             val e = old.outgoingEdges.get(0)
-            var sourcePort = EquationSynthesis.findPortById(source, EquationSynthesis.OUT_PORT)
+            var sourcePort = source.findPortById(EquationSynthesis.OUT_PORT)
             if (e.sourcePort.sourceElement instanceof ValuedObjectReference) {
                 sourcePort = source.findPort((e.sourcePort.sourceElement as ValuedObjectReference).valuedObject)
                 if (sourcePort === null) {
                     sourcePort = e.sourcePort.copy
-                    synthesis.setId(sourcePort, EquationSynthesis.OUT_PORT + "_" + source.ports.size)
+                    sourcePort.setId(EquationSynthesis.OUT_PORT + "_" + source.ports.size)
                     source.ports.add(sourcePort)
                 }
             }
@@ -246,8 +244,8 @@ class EquationSimplification {
         }
         return false
     }
-    
-    def isDataArray(KNode node){
+
+    def isDataArray(KNode node) {
         node.getProperty(EquationSynthesis.DATA_ARRAY_FLAG) as boolean
     }
 
@@ -257,10 +255,6 @@ class EquationSimplification {
 
     def isOutput(KNode node) {
         node.getProperty(EquationSynthesis.OUTPUT_FLAG) as boolean
-    }
-
-    def getSourceElement(KGraphElement node) {
-        return node.getProperty(KlighdInternalProperties.MODEL_ELEMEMT)
     }
 
     // returns true iff the node is associated with a valued object which is declared inside of the dataflow region
@@ -297,23 +291,6 @@ class EquationSimplification {
             }
         }
         return null
-    }
-
-    // given two KGraph elements the return value is true iff the elements are associated with the same source element
-    // in case of associations with ValuedObjectReferences only the ValuedObject needs to be equal
-    def sourceEquals(KGraphElement a, KGraphElement b) {
-        if (a.sourceElement instanceof ValuedObjectReference && b.sourceElement instanceof ValuedObjectReference) {
-            return (a.sourceElement as ValuedObjectReference).valuedObject ==
-                (b.sourceElement as ValuedObjectReference).valuedObject
-        }
-        if (a.sourceElement instanceof Value && b.sourceElement instanceof Value &&
-            a.sourceElement.serializeHR == b.sourceElement.serializeHR) {
-            return true
-        }
-        if (a.sourceElement instanceof Expression && b.sourceElement instanceof Expression) {
-            return (a.sourceElement as Expression).equals2(b.sourceElement as Expression)
-        }
-        return a.sourceElement == b.sourceElement
     }
 
     // returns true iff input is a node for the assignment equation of output

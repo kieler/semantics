@@ -20,6 +20,7 @@ import de.cau.cs.kieler.kexpressions.kext.KExtPackage;
 import de.cau.cs.kieler.sccharts.Action;
 import de.cau.cs.kieler.sccharts.CodeEffect;
 import de.cau.cs.kieler.sccharts.ControlflowRegion;
+import de.cau.cs.kieler.sccharts.DataflowAssignment;
 import de.cau.cs.kieler.sccharts.DataflowRegion;
 import de.cau.cs.kieler.sccharts.DelayType;
 import de.cau.cs.kieler.sccharts.DuringAction;
@@ -197,6 +198,13 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * @generated
      */
     private EClass codeEffectEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass dataflowAssignmentEClass = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -859,8 +867,29 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getCodeEffect() {
         return codeEffectEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EClass getDataflowAssignment() {
+        return dataflowAssignmentEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EAttribute getDataflowAssignment_Sequential() {
+        return (EAttribute)dataflowAssignmentEClass.getEStructuralFeatures().get(0);
     }
 
     /**
@@ -1032,6 +1061,9 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
 
         codeEffectEClass = createEClass(CODE_EFFECT);
 
+        dataflowAssignmentEClass = createEClass(DATAFLOW_ASSIGNMENT);
+        createEAttribute(dataflowAssignmentEClass, DATAFLOW_ASSIGNMENT__SEQUENTIAL);
+
         // Create enums
         preemptionTypeEEnum = createEEnum(PREEMPTION_TYPE);
         historyTypeEEnum = createEEnum(HISTORY_TYPE);
@@ -1100,6 +1132,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         policyRegionEClass.getESuperTypes().add(this.getControlflowRegion());
         codeEffectEClass.getESuperTypes().add(theKEffectsPackage.getEffect());
         codeEffectEClass.getESuperTypes().add(theSCLPackage.getScope());
+        dataflowAssignmentEClass.getESuperTypes().add(theKEffectsPackage.getAssignment());
 
         // Initialize classes and features; add operations and parameters
         initEClass(scChartsEClass, SCCharts.class, "SCCharts", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -1181,6 +1214,9 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         initEClass(policyRegionEClass, PolicyRegion.class, "PolicyRegion", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
         initEClass(codeEffectEClass, CodeEffect.class, "CodeEffect", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+        initEClass(dataflowAssignmentEClass, DataflowAssignment.class, "DataflowAssignment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getDataflowAssignment_Sequential(), ecorePackage.getEBoolean(), "sequential", "false", 0, 1, DataflowAssignment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         // Initialize enums and add enum literals
         initEEnum(preemptionTypeEEnum, PreemptionType.class, "PreemptionType");

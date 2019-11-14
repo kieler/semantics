@@ -1967,6 +1967,140 @@ ruleControlflowRegion returns [EObject current=null]
 	)
 ;
 
+// Entry rule entryRuleDataflowAssignment
+entryRuleDataflowAssignment returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getDataflowAssignmentRule()); }
+	iv_ruleDataflowAssignment=ruleDataflowAssignment
+	{ $current=$iv_ruleDataflowAssignment.current; }
+	EOF;
+
+// Rule DataflowAssignment
+ruleDataflowAssignment returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getDataflowAssignmentAccess().getAnnotationsAnnotationParserRuleCall_0_0());
+				}
+				lv_annotations_0_0=ruleAnnotation
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getDataflowAssignmentRule());
+					}
+					add(
+						$current,
+						"annotations",
+						lv_annotations_0_0,
+						"de.cau.cs.kieler.kexpressions.KExpressions.Annotation");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)*
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getDataflowAssignmentAccess().getReferenceValuedObjectReferenceParserRuleCall_1_0());
+				}
+				lv_reference_1_0=ruleValuedObjectReference
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getDataflowAssignmentRule());
+					}
+					set(
+						$current,
+						"reference",
+						lv_reference_1_0,
+						"de.cau.cs.kieler.kexpressions.KExpressions.ValuedObjectReference");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getDataflowAssignmentAccess().getOperatorAssignOperatorEnumRuleCall_2_0());
+				}
+				lv_operator_2_0=ruleAssignOperator
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getDataflowAssignmentRule());
+					}
+					set(
+						$current,
+						"operator",
+						lv_operator_2_0,
+						"de.cau.cs.kieler.kexpressions.keffects.KEffects.AssignOperator");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getDataflowAssignmentAccess().getExpressionExpressionParserRuleCall_3_0());
+				}
+				lv_expression_3_0=ruleExpression
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getDataflowAssignmentRule());
+					}
+					set(
+						$current,
+						"expression",
+						lv_expression_3_0,
+						"de.cau.cs.kieler.kexpressions.KExpressions.Expression");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)
+		(
+			otherlv_4='schedule'
+			{
+				newLeafNode(otherlv_4, grammarAccess.getDataflowAssignmentAccess().getScheduleKeyword_4_0());
+			}
+			(
+				(
+					{
+						newCompositeNode(grammarAccess.getDataflowAssignmentAccess().getScheduleScheduleObjectReferenceParserRuleCall_4_1_0());
+					}
+					lv_schedule_5_0=ruleScheduleObjectReference
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getDataflowAssignmentRule());
+						}
+						add(
+							$current,
+							"schedule",
+							lv_schedule_5_0,
+							"de.cau.cs.kieler.kexpressions.KExpressions.ScheduleObjectReference");
+						afterParserOrEnumRuleCall();
+					}
+				)
+			)+
+		)?
+		(
+			(
+				lv_sequential_6_0='seq'
+				{
+					newLeafNode(lv_sequential_6_0, grammarAccess.getDataflowAssignmentAccess().getSequentialSeqKeyword_5_0());
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getDataflowAssignmentRule());
+					}
+					setWithLastConsumed($current, "sequential", true, "seq");
+				}
+			)
+		)?
+	)
+;
+
 // Entry rule entryRuleDataflowRegion
 entryRuleDataflowRegion returns [EObject current=null]:
 	{ newCompositeNode(grammarAccess.getDataflowRegionRule()); }
@@ -2207,9 +2341,9 @@ ruleDataflowRegion returns [EObject current=null]
 				(
 					(
 						{
-							newCompositeNode(grammarAccess.getDataflowRegionAccess().getEquationsAssignmentParserRuleCall_9_0_2_0());
+							newCompositeNode(grammarAccess.getDataflowRegionAccess().getEquationsDataflowAssignmentParserRuleCall_9_0_2_0());
 						}
-						lv_equations_17_0=ruleAssignment
+						lv_equations_17_0=ruleDataflowAssignment
 						{
 							if ($current==null) {
 								$current = createModelElementForParent(grammarAccess.getDataflowRegionRule());
@@ -2218,7 +2352,7 @@ ruleDataflowRegion returns [EObject current=null]
 								$current,
 								"equations",
 								lv_equations_17_0,
-								"de.cau.cs.kieler.kexpressions.keffects.KEffects.Assignment");
+								"de.cau.cs.kieler.sccharts.text.SCTX.DataflowAssignment");
 							afterParserOrEnumRuleCall();
 						}
 					)
@@ -2256,9 +2390,9 @@ ruleDataflowRegion returns [EObject current=null]
 				(
 					(
 						{
-							newCompositeNode(grammarAccess.getDataflowRegionAccess().getEquationsAssignmentParserRuleCall_9_1_2_0());
+							newCompositeNode(grammarAccess.getDataflowRegionAccess().getEquationsDataflowAssignmentParserRuleCall_9_1_2_0());
 						}
-						lv_equations_21_0=ruleAssignment
+						lv_equations_21_0=ruleDataflowAssignment
 						{
 							if ($current==null) {
 								$current = createModelElementForParent(grammarAccess.getDataflowRegionRule());
@@ -2267,7 +2401,7 @@ ruleDataflowRegion returns [EObject current=null]
 								$current,
 								"equations",
 								lv_equations_21_0,
-								"de.cau.cs.kieler.kexpressions.keffects.KEffects.Assignment");
+								"de.cau.cs.kieler.sccharts.text.SCTX.DataflowAssignment");
 							afterParserOrEnumRuleCall();
 						}
 					)

@@ -153,7 +153,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//{OperatorExpression.subExpressions+=current}
 		public Action getOperatorExpressionSubExpressionsAction_1_0() { return cOperatorExpressionSubExpressionsAction_1_0; }
 		
-		//operator=LogicalOrOperator subExpressions+=LogicalAndExpression
+		//(operator=LogicalOrOperator subExpressions+=LogicalAndExpression)
 		public Group getGroup_1_1() { return cGroup_1_1; }
 		
 		//operator=LogicalOrOperator
@@ -218,7 +218,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//{OperatorExpression.subExpressions+=current}
 		public Action getOperatorExpressionSubExpressionsAction_1_0() { return cOperatorExpressionSubExpressionsAction_1_0; }
 		
-		//operator=LogicalAndOperator subExpressions+=BitwiseOrExpression
+		//(operator=LogicalAndOperator subExpressions+=BitwiseOrExpression)
 		public Group getGroup_1_1() { return cGroup_1_1; }
 		
 		//operator=LogicalAndOperator
@@ -283,7 +283,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//{OperatorExpression.subExpressions+=current}
 		public Action getOperatorExpressionSubExpressionsAction_1_0() { return cOperatorExpressionSubExpressionsAction_1_0; }
 		
-		//operator=BitwiseOrOperator subExpressions+=BitwiseXOrExpression
+		//(operator=BitwiseOrOperator subExpressions+=BitwiseXOrExpression)
 		public Group getGroup_1_1() { return cGroup_1_1; }
 		
 		//operator=BitwiseOrOperator
@@ -345,7 +345,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//{OperatorExpression.subExpressions+=current}
 		public Action getOperatorExpressionSubExpressionsAction_1_0() { return cOperatorExpressionSubExpressionsAction_1_0; }
 		
-		//operator=BitwiseXOrOperator subExpressions+=BitwiseAndExpression
+		//(operator=BitwiseXOrOperator subExpressions+=BitwiseAndExpression)
 		public Group getGroup_1_1() { return cGroup_1_1; }
 		
 		//operator=BitwiseXOrOperator
@@ -410,7 +410,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//{OperatorExpression.subExpressions+=current}
 		public Action getOperatorExpressionSubExpressionsAction_1_0() { return cOperatorExpressionSubExpressionsAction_1_0; }
 		
-		//operator=BitwiseAndOperator subExpressions+=CompareOperation
+		//(operator=BitwiseAndOperator subExpressions+=CompareOperation)
 		public Group getGroup_1_1() { return cGroup_1_1; }
 		
 		//operator=BitwiseAndOperator
@@ -785,7 +785,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//{OperatorExpression.subExpressions+=current}
 		public Action getOperatorExpressionSubExpressionsAction_1_0() { return cOperatorExpressionSubExpressionsAction_1_0; }
 		
-		//operator=ShiftLeftOperator subExpressions+=ShiftRightExpression
+		//(operator=ShiftLeftOperator subExpressions+=ShiftRightExpression)
 		public Group getGroup_1_1() { return cGroup_1_1; }
 		
 		//operator=ShiftLeftOperator
@@ -847,7 +847,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//{OperatorExpression.subExpressions+=current}
 		public Action getOperatorExpressionSubExpressionsAction_1_0() { return cOperatorExpressionSubExpressionsAction_1_0; }
 		
-		//operator=ShiftRightOperator subExpressions+=ShiftRightUnsignedExpression
+		//(operator=ShiftRightOperator subExpressions+=ShiftRightUnsignedExpression)
 		public Group getGroup_1_1() { return cGroup_1_1; }
 		
 		//operator=ShiftRightOperator
@@ -909,7 +909,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//{OperatorExpression.subExpressions+=current}
 		public Action getOperatorExpressionSubExpressionsAction_1_0() { return cOperatorExpressionSubExpressionsAction_1_0; }
 		
-		//operator=ShiftRightUnsignedOperator subExpressions+=SumExpression
+		//(operator=ShiftRightUnsignedOperator subExpressions+=SumExpression)
 		public Group getGroup_1_1() { return cGroup_1_1; }
 		
 		//operator=ShiftRightUnsignedOperator
@@ -1322,7 +1322,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//{OperatorExpression.subExpressions+=current}
 		public Action getOperatorExpressionSubExpressionsAction_1_0() { return cOperatorExpressionSubExpressionsAction_1_0; }
 		
-		//operator=MultOperator subExpressions+=NegExpression
+		//(operator=MultOperator subExpressions+=NegExpression)
 		public Group getGroup_1_1() { return cGroup_1_1; }
 		
 		//operator=MultOperator
@@ -1388,7 +1388,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//{OperatorExpression.subExpressions+=current}
 		public Action getOperatorExpressionSubExpressionsAction_1_0() { return cOperatorExpressionSubExpressionsAction_1_0; }
 		
-		//operator=DivOperator subExpressions+=NegExpression
+		//(operator=DivOperator subExpressions+=NegExpression)
 		public Group getGroup_1_1() { return cGroup_1_1; }
 		
 		//operator=DivOperator
@@ -1454,7 +1454,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//{OperatorExpression.subExpressions+=current}
 		public Action getOperatorExpressionSubExpressionsAction_1_0() { return cOperatorExpressionSubExpressionsAction_1_0; }
 		
-		//operator=ModOperator subExpressions+=NegExpression
+		//(operator=ModOperator subExpressions+=NegExpression)
 		public Group getGroup_1_1() { return cGroup_1_1; }
 		
 		//operator=ModOperator
@@ -2031,7 +2031,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//ValuedObjectReference
 		public RuleCall getSubReferenceValuedObjectReferenceParserRuleCall_2_1_0() { return cSubReferenceValuedObjectReferenceParserRuleCall_2_1_0; }
 		
-		//'(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()'
+		//('(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()')
 		public Alternatives getAlternatives_3() { return cAlternatives_3; }
 		
 		//'(' parameters+=Parameter (',' parameters+=Parameter)* ')'
@@ -2153,7 +2153,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getFunctionNameIDTerminalRuleCall_1_0() { return cFunctionNameIDTerminalRuleCall_1_0; }
 		
-		//'(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()'
+		//('(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()')
 		public Alternatives getAlternatives_2() { return cAlternatives_2; }
 		
 		//'(' parameters+=Parameter (',' parameters+=Parameter)* ')'

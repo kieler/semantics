@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+ KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ 
+ http://www.informatik.uni-kiel.de/rtsys/kieler/
+ 
+ Copyright 2013 by
+ + Kiel University
+   + Department of Computer Science
+     + Real-Time and Embedded Systems Group
+ 
+ This code is provided under the terms of the Eclipse Public License (EPL).
+ See the file epl-v10.html for the license text.
+-->
+
+<plugin
+      name="%pluginName"
+      id="de.cau.cs.kieler.sccharts.tests"
+      version="1.0.0"
+      provider-name="%providerName">
+
+   <requires>
+      <import plugin="org.eclipse.core.runtime"/>
+      <import plugin="de.cau.cs.kieler.sccharts" export="true"/>
+      <import plugin="de.cau.cs.kieler.annotations" export="true"/>
+      <import plugin="de.cau.cs.kieler.kexpressions" export="true"/>
+      <import plugin="de.cau.cs.kieler.scl" export="true"/>
+      <import plugin="org.eclipse.emf.ecore.xmi" export="true"/>
+      <import plugin="org.junit" export="true"/>
+   </requires>
+
+   <runtime>
+      <library name=".">
+         <export name="*"/>
+      </library>
+   </runtime>
+
+</plugin>

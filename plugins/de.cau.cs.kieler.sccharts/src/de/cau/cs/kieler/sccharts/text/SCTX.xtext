@@ -145,6 +145,12 @@ ControlflowRegion returns sccharts::ControlflowRegion:
         ))
     ));
 
+DataflowAssignment returns sccharts::DataflowAssignment:
+    (annotations+=Annotation)*    
+    reference=ValuedObjectReference
+    operator=AssignOperator expression = Expression
+    ('schedule' schedule+=ScheduleObjectReference+)?
+    sequential?='seq'?;
     
 DataflowRegion returns sccharts::DataflowRegion:
     {sccharts::DataflowRegion}
@@ -157,12 +163,12 @@ DataflowRegion returns sccharts::DataflowRegion:
     ((
         '{'
         declarations+=DeclarationWOSemicolon*
-        equations+=Assignment*
+        equations+=(DataflowAssignment)*
         '}'
     )|(
         ':'
         declarations+=DeclarationWOSemicolon*
-        equations+=Assignment*
+        equations+=(DataflowAssignment)*
     ));
     
 IntOrReference returns kexpressions::Expression:

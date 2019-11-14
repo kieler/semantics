@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+ KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ 
+ http://www.informatik.uni-kiel.de/rtsys/kieler/
+ 
+ Copyright 2013 by
+ + Kiel University
+   + Department of Computer Science
+     + Real-Time and Embedded Systems Group
+ 
+ This code is provided under the terms of the Eclipse Public License (EPL).
+ See the file epl-v10.html for the license text.
+-->
+
+<plugin
+      name="%pluginName"
+      id="de.cau.cs.kieler.sccharts.edit"
+      version="1.0.0"
+      provider-name="%providerName"
+      class="de.cau.cs.kieler.sccharts.provider.SCChartsEditPlugin$Implementation">
+
+   <requires>
+      <import plugin="org.eclipse.core.runtime"/>
+      <import plugin="de.cau.cs.kieler.sccharts" export="true"/>
+      <import plugin="org.eclipse.emf.edit" export="true"/>
+      <import plugin="de.cau.cs.kieler.annotations" export="true"/>
+      <import plugin="de.cau.cs.kieler.annotations.edit" export="true"/>
+      <import plugin="de.cau.cs.kieler.kexpressions" export="true"/>
+      <import plugin="de.cau.cs.kieler.kexpressions.edit" export="true"/>
+      <import plugin="de.cau.cs.kieler.scl" export="true"/>
+      <import plugin="de.cau.cs.kieler.scl.edit" export="true"/>
+   </requires>
+
+   <runtime>
+      <library name=".">
+         <export name="*"/>
+      </library>
+   </runtime>
+
+   <extension point="org.eclipse.emf.edit.itemProviderAdapterFactories">
+      <!-- @generated sccharts -->
+      <factory
+            uri="http://kieler.cs.cau.de/sccharts/0.3.0"
+            class="de.cau.cs.kieler.sccharts.provider.SCChartsItemProviderAdapterFactory"
+            supportedTypes=
+              "org.eclipse.emf.edit.provider.IEditingDomainItemProvider
+               org.eclipse.emf.edit.provider.IStructuredItemContentProvider
+               org.eclipse.emf.edit.provider.ITreeItemContentProvider
+               org.eclipse.emf.edit.provider.IItemLabelProvider
+               org.eclipse.emf.edit.provider.IItemPropertySource"/>
+   </extension>
+
+</plugin>

@@ -537,7 +537,7 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 		//EString
 		public RuleCall getLabelEStringParserRuleCall_0_1_0() { return cLabelEStringParserRuleCall_0_1_0; }
 		
-		//processors+=ProcessorGroup ('|' processors+=ProcessorGroup)+
+		//(processors+=ProcessorGroup ('|' processors+=ProcessorGroup)+)
 		public Group getGroup_1() { return cGroup_1; }
 		
 		//processors+=ProcessorGroup

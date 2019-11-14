@@ -195,4 +195,8 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="PolicyRegion" eSuperTypes="#//ControlflowRegion"/>
   <eClassifiers xsi:type="ecore:EClass" name="CodeEffect" eSuperTypes="../../de.cau.cs.kieler.kexpressions/model/keffects.ecore#//Effect ../../de.cau.cs.kieler.scl/model/scl.ecore#//Scope"/>
+  <eClassifiers xsi:type="ecore:EClass" name="DataflowAssignment" eSuperTypes="../../de.cau.cs.kieler.kexpressions/model/keffects.ecore#//Assignment">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="sequential" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+        defaultValueLiteral="false"/>
+  </eClassifiers>
 </ecore:EPackage>

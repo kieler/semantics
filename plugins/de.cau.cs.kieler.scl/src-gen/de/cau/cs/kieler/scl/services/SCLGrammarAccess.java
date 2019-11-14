@@ -752,7 +752,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		//{Thread}
 		public Action getThreadAction_0() { return cThreadAction_0; }
 		
-		//annotations+=Annotation* '{' declarations+=Declaration* statements+=Statement* '}' | statements+=Statement*
+		//(annotations+=Annotation* '{' declarations+=Declaration* statements+=Statement* '}' | statements+=Statement*)
 		public Alternatives getAlternatives_1() { return cAlternatives_1; }
 		
 		//annotations+=Annotation* '{' declarations+=Declaration* statements+=Statement* '}'
@@ -816,7 +816,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		//'fork'
 		public Keyword getForkKeyword_0() { return cForkKeyword_0; }
 		
-		//threads+=Thread ('par' threads+=Thread)*
+		//(threads+=Thread ('par' threads+=Thread)*)
 		public Group getGroup_1() { return cGroup_1; }
 		
 		//threads+=Thread
@@ -1035,7 +1035,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		//Annotation
 		public RuleCall getAnnotationsAnnotationParserRuleCall_0_0() { return cAnnotationsAnnotationParserRuleCall_0_0; }
 		
-		//type=ValueType | type=HostType hostType=STRING
+		//(type=ValueType | type=HostType hostType=STRING)
 		public Alternatives getAlternatives_1() { return cAlternatives_1; }
 		
 		//type=ValueType
@@ -1105,8 +1105,8 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		//Annotation
 		public RuleCall getAnnotationsAnnotationParserRuleCall_0_0() { return cAnnotationsAnnotationParserRuleCall_0_0; }
 		
-		//reference=ValuedObjectReference operator=PostfixOperator | reference=ValuedObjectReference operator=AssignOperator
-		//expression=Expression | expression=Expression
+		//(reference=ValuedObjectReference operator=PostfixOperator | reference=ValuedObjectReference operator=AssignOperator
+		//expression=Expression | expression=Expression)
 		public Alternatives getAlternatives_1() { return cAlternatives_1; }
 		
 		//reference=ValuedObjectReference operator=PostfixOperator
@@ -1484,8 +1484,8 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		//SimpleValuedObject
 		public RuleCall getValuedObjectsSimpleValuedObjectParserRuleCall_4_0() { return cValuedObjectsSimpleValuedObjectParserRuleCall_4_0; }
 		
-		//'(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)*
-		//')' | '()'
+		//('(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)*
+		//')' | '()')
 		public Alternatives getAlternatives_5() { return cAlternatives_5; }
 		
 		//'(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)*
@@ -1531,7 +1531,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		//ScheduleObjectReference
 		public RuleCall getScheduleScheduleObjectReferenceParserRuleCall_6_1_0() { return cScheduleScheduleObjectReferenceParserRuleCall_6_1_0; }
 		
-		//';' | '{' annotations+=CommentAnnotatonSL? declarations+=Declaration* statements+=Statement* '}'
+		//(';' | '{' annotations+=CommentAnnotatonSL? declarations+=Declaration* statements+=Statement* '}')
 		public Alternatives getAlternatives_7() { return cAlternatives_7; }
 		
 		//';'
@@ -1654,8 +1654,8 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		//SimpleValuedObject
 		public RuleCall getValuedObjectsSimpleValuedObjectParserRuleCall_4_0() { return cValuedObjectsSimpleValuedObjectParserRuleCall_4_0; }
 		
-		//'(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)*
-		//')' | '()'
+		//('(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)*
+		//')' | '()')
 		public Alternatives getAlternatives_5() { return cAlternatives_5; }
 		
 		//'(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)*

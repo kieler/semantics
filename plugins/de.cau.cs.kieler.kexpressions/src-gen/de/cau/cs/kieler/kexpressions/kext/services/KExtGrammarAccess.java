@@ -398,7 +398,7 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		//'static'
 		public Keyword getStaticStaticKeyword_6_0() { return cStaticStaticKeyword_6_0; }
 		
-		//signal?='signal'? type=ValueType | signal?='signal' | type=HostType hostType=STRING
+		//(signal?='signal'? type=ValueType | signal?='signal' | type=HostType hostType=STRING)
 		public Alternatives getAlternatives_7() { return cAlternatives_7; }
 		
 		//signal?='signal'? type=ValueType
@@ -562,7 +562,7 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		//'static'
 		public Keyword getStaticStaticKeyword_6_0() { return cStaticStaticKeyword_6_0; }
 		
-		//signal?='signal'? type=ValueType | signal?='signal' | type=HostType hostType=STRING
+		//(signal?='signal'? type=ValueType | signal?='signal' | type=HostType hostType=STRING)
 		public Alternatives getAlternatives_7() { return cAlternatives_7; }
 		
 		//signal?='signal'? type=ValueType
@@ -754,8 +754,8 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		//'host'
 		public Keyword getHostHostKeyword_8_0() { return cHostHostKeyword_8_0; }
 		
-		//type=ClassType name=ID? '{' declarations+=DeclarationOrMethod* '}' | type=StructType name=ID? '{'
-		//declarations+=Declaration* '}'
+		//(type=ClassType name=ID? '{' declarations+=DeclarationOrMethod* '}' | type=StructType name=ID? '{'
+		//declarations+=Declaration* '}')
 		public Alternatives getAlternatives_9() { return cAlternatives_9; }
 		
 		//type=ClassType name=ID? '{' declarations+=DeclarationOrMethod* '}'
@@ -988,8 +988,8 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		//'host'
 		public Keyword getHostHostKeyword_8_0() { return cHostHostKeyword_8_0; }
 		
-		//type=ClassType name=ID? '{' declarations+=DeclarationOrMethodWOSemicolon* '}' | type=StructType name=ID? '{'
-		//declarations+=DeclarationWOSemicolon* '}'
+		//(type=ClassType name=ID? '{' declarations+=DeclarationOrMethodWOSemicolon* '}' | type=StructType name=ID? '{'
+		//declarations+=DeclarationWOSemicolon* '}')
 		public Alternatives getAlternatives_9() { return cAlternatives_9; }
 		
 		//type=ClassType name=ID? '{' declarations+=DeclarationOrMethodWOSemicolon* '}'
@@ -1166,8 +1166,8 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		//SimpleValuedObject
 		public RuleCall getValuedObjectsSimpleValuedObjectParserRuleCall_4_0() { return cValuedObjectsSimpleValuedObjectParserRuleCall_4_0; }
 		
-		//'(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)*
-		//')' | '()'
+		//('(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)*
+		//')' | '()')
 		public Alternatives getAlternatives_5() { return cAlternatives_5; }
 		
 		//'(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)*
@@ -1294,8 +1294,8 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		//SimpleValuedObject
 		public RuleCall getValuedObjectsSimpleValuedObjectParserRuleCall_4_0() { return cValuedObjectsSimpleValuedObjectParserRuleCall_4_0; }
 		
-		//'(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)*
-		//')' | '()'
+		//('(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)*
+		//')' | '()')
 		public Alternatives getAlternatives_5() { return cAlternatives_5; }
 		
 		//'(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)*
@@ -1430,7 +1430,7 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		//AccessModifier
 		public RuleCall getAccessAccessModifierEnumRuleCall_1_0() { return cAccessAccessModifierEnumRuleCall_1_0; }
 		
-		//'ref' reference=[annotations::NamedObject|NamespaceID] | 'extern' extern+=ExternString (',' extern+=ExternString)*
+		//('ref' reference=[annotations::NamedObject|NamespaceID] | 'extern' extern+=ExternString (',' extern+=ExternString)*)
 		public Alternatives getAlternatives_2() { return cAlternatives_2; }
 		
 		//'ref' reference=[annotations::NamedObject|NamespaceID]
@@ -1554,7 +1554,7 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		//AccessModifier
 		public RuleCall getAccessAccessModifierEnumRuleCall_1_0() { return cAccessAccessModifierEnumRuleCall_1_0; }
 		
-		//'ref' reference=[annotations::NamedObject|NamespaceID] | 'extern' extern+=ExternString (',' extern+=ExternString)*
+		//('ref' reference=[annotations::NamedObject|NamespaceID] | 'extern' extern+=ExternString (',' extern+=ExternString)*)
 		public Alternatives getAlternatives_2() { return cAlternatives_2; }
 		
 		//'ref' reference=[annotations::NamedObject|NamespaceID]
