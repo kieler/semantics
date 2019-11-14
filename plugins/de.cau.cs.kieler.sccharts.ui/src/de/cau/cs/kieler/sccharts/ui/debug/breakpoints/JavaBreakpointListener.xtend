@@ -40,6 +40,7 @@ import org.eclipse.jdt.internal.debug.core.model.JDIStackFrame
 import de.cau.cs.kieler.sccharts.text.parser.SCTXStandaloneParser
 import org.eclipse.jdt.ui.JavaUI
 import org.eclipse.jdt.core.dom.Message
+import de.cau.cs.kieler.sccharts.processors.statebased.DebugAnnotations
 
 /**
  * @author peu
@@ -50,6 +51,7 @@ class JavaBreakpointListener implements IJavaBreakpointListener {
     @Inject extension SCChartsScopeExtensions
     
     new() {
+        super()
         Guice.createInjector.injectMembers(this)
     }
     
@@ -120,11 +122,9 @@ class JavaBreakpointListener implements IJavaBreakpointListener {
                     val stateNameString = commentLines.get(commentLines.length - 2)
                     val stateName = stateNameString.split("\\* ").get(1)
                     val states = model.getStatesByID(stateName.split(" ").get(1).split("\\(").get(0))
-                    // TODO filter for states with the same name
-//                    val stateHashString = stateName.split("\\(").last
-//                    val stateHashValue = stateHashString.substring(0, stateHashString.length - 1)
-//                    activeStates.addAll(states.filter[hashCode.equals(stateHashValue)].toList)
-                    activeStates.addAll(states)
+                    val stateHashString = stateName.split("\\(").last
+                    val stateHashValue = stateHashString.substring(0, stateHashString.length - 1)
+                    activeStates.addAll(states.filter[DebugAnnotations.getFullNameHash(it).toString.equals(stateHashValue)].toList)
                 }
             }
         }

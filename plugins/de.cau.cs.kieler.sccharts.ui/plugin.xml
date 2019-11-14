@@ -716,6 +716,7 @@ controllerID="de.cau.cs.kieler.kicool.ui.klighd.KiCoModelUpdateController"
          point="org.eclipse.jdt.debug.breakpointListeners">
       <breakpointListener
             class="de.cau.cs.kieler.sccharts.ui.debug.breakpoints.JavaBreakpointListener"
+            filter="*"
             id="de.cau.cs.kieler.sccharts.debug.JavaBreakpointListener">
       </breakpointListener>
    </extension>

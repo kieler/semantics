@@ -78,8 +78,21 @@ class DebugAnnotations extends SCChartsProcessor implements Traceable {
         // No state should originate from more than one model element, therefore just use the first one
         val originalState = mapping.get(state).filter([it instanceof State]).head as State
         // TODO use proper hashing here to make the value actually reproducable
-        val name = originalState.name + "(" + originalState.hashCode + ")"
+        val name = originalState.name + "(" + originalState.getFullNameHash + ")"
         state.addCommentAnnotation("DebugStateNameComment" + "_" + name, "State " + name)
     }
     
+    // TODO move to some utility
+    static def int getFullNameHash(State state) {
+        state.getFullName.hashCode
+    }
+    
+    static def String getFullName(State state) {
+        val parentRegion = state.parentRegion
+        if (parentRegion === null) {
+            state.name
+        } else {
+            parentRegion.parentState.getFullName + "_" + parentRegion.name + "_" + state.name
+        }
+    }
 }
