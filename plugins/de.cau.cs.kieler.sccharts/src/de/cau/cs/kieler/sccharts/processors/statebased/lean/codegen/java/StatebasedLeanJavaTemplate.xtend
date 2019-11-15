@@ -40,6 +40,7 @@ import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
 import de.cau.cs.kieler.annotations.Annotatable
 import de.cau.cs.kieler.sccharts.processors.statebased.codegen.java.EnhancedStatebasedJavaCodeSerializeHRExtensions
+import de.cau.cs.kieler.sccharts.processors.statebased.DebugAnnotations
 
 /**
  * @author wechselberg
@@ -94,12 +95,22 @@ class StatebasedLeanJavaTemplate extends AbstractStatebasedLeanTemplate {
 			public class « rootState.uniqueName »« IF superClass !== null » extends « superClass »« ENDIF » {
 			
 			  « IF rootState.declarations.filter(VariableDeclaration).map[it.valuedObjects].flatten.size > 0 »
-			  	public Iface iface;
+			     public Iface iface;
 			  « ENDIF »
 			  private TickData rootContext;
 			  « IF needsContextInterface »
 			  	private final «rootState.uniqueName»Context externalContext; // Auto-Created context interface
-			  « ENDIF »      
+			  « ENDIF »
+			  « IF DebugAnnotations.USE_ANNOTATIONS »
+			  
+			  /**
+			   * Annotation for debugging
+			   */
+			  private static @interface SCChartsDebug {
+			     public String originalName() default "";
+			     public int originalStateHash() default 0;
+			  }
+			  « ENDIF »
 			  « IF inputEventDeclarations.size > 0 »
 			
 				  public enum InputEvent {
@@ -261,8 +272,13 @@ class StatebasedLeanJavaTemplate extends AbstractStatebasedLeanTemplate {
     }
 
     protected def CharSequence createCodeState(State state) {
+        
+        val originalName = state.getAnnotation("OriginalState")?.asStringAnnotation?.values?.head
+        val originalStateHashCode = state.getAnnotation("OriginalNameHash")?.asIntAnnotation?.value
+        
         return '''
 			« state.generateJavaDocFromCommentAnnotations »
+			« IF originalName !== null »@SCChartsDebug(originalName = "« originalName »", originalStateHash = « originalStateHashCode »)«ENDIF»
 			private void « state.uniqueName »« IF (state == rootState) »_root« ENDIF »(« state.uniqueContextMemberName » context) {
 			« IF state.isHierarchical »
 				« IF state !== rootState »
@@ -278,6 +294,7 @@ class StatebasedLeanJavaTemplate extends AbstractStatebasedLeanTemplate {
 					}
 					
 					« state.generateJavaDocFromCommentAnnotations »
+					« IF originalName !== null »@SCChartsDebug(originalName = "« originalName »", originalStateHash = « originalStateHashCode »)«ENDIF»
 					private void « state.uniqueName »_running(« state.uniqueContextMemberName » context) {
 				« ENDIF »
 				« createCodeSuperstate(state) »
@@ -572,7 +589,7 @@ class StatebasedLeanJavaTemplate extends AbstractStatebasedLeanTemplate {
     protected def generateJavaDocFromCommentAnnotations(Annotatable annotatable) {
         val comments = annotatable.annotations.filter(CommentAnnotation);
         return '''
-			« IF comments !== null »
+			« IF comments !== null && !comments.empty »
 				/**
 				 « FOR commentAnnotation : comments»
 				 	« FOR comment : commentAnnotation.values »

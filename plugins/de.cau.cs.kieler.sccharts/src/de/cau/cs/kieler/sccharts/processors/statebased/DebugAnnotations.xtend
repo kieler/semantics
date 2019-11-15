@@ -38,6 +38,11 @@ class DebugAnnotations extends SCChartsProcessor implements Traceable {
     
     public static val ID = "de.cau.cs.kieler.sccharts.debug.DebugAnnotations"
     
+    /**
+     * Switch to determine whether annotations (or javadoc comments) should be used.
+     */
+    public static val USE_ANNOTATIONS = true
+    
     override getId() {
         ID
     }
@@ -78,16 +83,17 @@ class DebugAnnotations extends SCChartsProcessor implements Traceable {
         // No state should originate from more than one model element, therefore just use the first one
         val originalState = mapping.get(state).filter([it instanceof State]).head as State
         
-        // If tracing info is available, annotate state with original state name
+        // If tracing info is available, annotate state with original state name and hash of full name
         if (originalState !== null) {
-            val name = originalState.name + "(" + originalState.getFullNameHash + ")"
-            println("State " + state.name + " comes from " + name)
-            state.addCommentAnnotation("DebugStateNameComment" + "_" + name, "State " + name)
+            if (USE_ANNOTATIONS) {
+                state.addStringAnnotation("OriginalState", originalState.name)
+                state.addIntAnnotation("OriginalNameHash", originalState.fullNameHash)
+            } else {
+                state.addCommentAnnotation("DebugAnnotation", "State " + originalState.name + " (" + originalState.fullNameHash + ")")
+            }
         } else {
             environment.warnings.add("Cannot find original model element for " + state.name)
         }
-        
-        
     }
     
     // TODO move to some utility
