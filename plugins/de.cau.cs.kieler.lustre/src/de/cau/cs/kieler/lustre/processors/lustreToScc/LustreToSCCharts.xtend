@@ -14,6 +14,8 @@ package de.cau.cs.kieler.lustre.processors.lustreToScc
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.AnnotationsFactory
+import de.cau.cs.kieler.core.properties.IProperty
+import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kexpressions.keffects.Effect
@@ -26,13 +28,11 @@ import de.cau.cs.kieler.lustre.lustre.Assertion
 import de.cau.cs.kieler.lustre.lustre.Automaton
 import de.cau.cs.kieler.lustre.lustre.Equation
 import de.cau.cs.kieler.lustre.lustre.StateValuedObject
-import de.cau.cs.kieler.sccharts.DataflowRegion
 import de.cau.cs.kieler.sccharts.HistoryType
 import de.cau.cs.kieler.sccharts.PreemptionType
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsDataflowRegionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
 
@@ -44,7 +44,6 @@ class LustreToSCCharts extends CoreLustreToSCC {
 
     @Inject extension LustreUtilityExtensions
     @Inject extension SCChartsCoreExtensions
-    @Inject extension SCChartsDataflowRegionExtensions
     @Inject extension SCChartsStateExtensions
     @Inject extension SCChartsControlflowRegionExtensions
     @Inject extension SCChartsTransitionExtensions
@@ -157,16 +156,5 @@ class LustreToSCCharts extends CoreLustreToSCC {
                 newTransition.history = HistoryType.DEEP
             }
         }
-    }
-    
-    private def getDataflowRegionFromState(State state) {
-        val dataFlowRegionsList = getDataflowRegions(state)
-
-        // If there is no dataflow region, create one
-        if (dataFlowRegionsList.length == 0) {
-            createDataflowRegion(state, "")
-        }
-        
-        return dataFlowRegionsList.head as DataflowRegion
     }
 }
