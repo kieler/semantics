@@ -62,7 +62,15 @@ class DebugHighlighter {
     }
     
     def void highlightExecutingState(State state) {
-        
+        val kNode = DebugDiagramView.getInstance.getKNode(state)
+        if (kNode === null) {
+            //TODO debug print
+            println("Null KNode for state " + state.name + ", nothing to highlight!")
+            return
+        }
+        val highlighting = new Highlighting(kNode, executingStateForeground, state)
+        executingStateHighlightings.add(highlighting)
+        highlighting.apply
     }
     
     def void unHighlightActiveState(State state) {
@@ -74,7 +82,11 @@ class DebugHighlighter {
     }
     
     def void unHighlightExecutingState(State state) {
-        
+        val highlightings = executingStateHighlightings.filter[eObject.equals(state)]
+        for (hl : highlightings) {
+            hl.remove
+        }
+        executingStateHighlightings.removeAll(highlightings)
     }
  
     def void addBreakpointHighlight(State state) {

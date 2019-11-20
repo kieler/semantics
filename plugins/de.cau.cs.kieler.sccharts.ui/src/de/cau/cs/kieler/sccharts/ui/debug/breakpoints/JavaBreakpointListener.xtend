@@ -62,12 +62,11 @@ class JavaBreakpointListener implements IJavaBreakpointListener {
     var breakpointToTarget = new HashMap<IJavaBreakpoint,IJavaDebugTarget>()
     
     /**
-     * Find the active model states in the original SCChart.
+     * Find the model states in the original SCChart currently being executed.
      */
-    def List<State> findCurrentStates(IJavaThread thread, IJavaBreakpoint breakpoint, SCCharts model) {
+    def List<State> findExecutingStates(IJavaThread thread, IJavaBreakpoint breakpoint, SCCharts model) {
         
-        
-        val activeStates = <State> newLinkedList
+        val executingStates = <State> newLinkedList
         
         for (frame : thread.stackFrames) {
             val methodName = (frame as JDIStackFrame).methodName
@@ -128,18 +127,16 @@ class JavaBreakpointListener implements IJavaBreakpointListener {
                     val states = model.getStatesByID(stateName.split(" ").get(1).split("\\(").get(0))
                     val stateHashString = stateName.split("\\(").last
                     val stateHashValue = stateHashString.substring(0, stateHashString.length - 1)
-                    activeStates.addAll(states.filter[DebugAnnotations.getFullNameHash(it).toString.equals(stateHashValue)].toList)
+                    executingStates.addAll(states.filter[DebugAnnotations.getFullNameHash(it).toString.equals(stateHashValue)].toList)
                 }
             }
         }
         
-        // TODO debug only
-        for (state : activeStates) {
-            debugHighlighter.highlightActiveState(state)
-            println(state.name)
-        }
+        return executingStates
+    }
+    
+    def List<State> findActiveStates(IJavaThread thread, IJavaBreakpoint breakpoint, SCCharts model) {
         
-        return activeStates
     }
     
     /**
@@ -157,7 +154,7 @@ class JavaBreakpointListener implements IJavaBreakpointListener {
     
     
     override addingBreakpoint(IJavaDebugTarget target, IJavaBreakpoint breakpoint) {
-        println("Adding breakpoint!")
+//        println("Adding breakpoint!")
     }
     
     override breakpointHasRuntimeException(IJavaLineBreakpoint breakpoint, DebugException exception) {
@@ -165,7 +162,7 @@ class JavaBreakpointListener implements IJavaBreakpointListener {
     }
     
     override breakpointHit(IJavaThread thread, IJavaBreakpoint breakpoint) {
-        println("Hitting breakpoint!")
+//        println("Hitting breakpoint!")
         
         if (breakpointToTarget.containsKey(breakpoint)) {
             val target = breakpointToTarget.get(breakpoint)
@@ -179,8 +176,18 @@ class JavaBreakpointListener implements IJavaBreakpointListener {
                         DebugDiagramView.updateOrCreateView(model)
                     }
                 })
-                findCurrentStates(thread, breakpoint, model)
-                // TODO visualize the states that are currently active
+                
+                // Find the currently active states on SCCharts Level
+                val activeStates = findActiveStates(thread, breakpoint, model)
+                for (state : activeStates) {
+                    debugHighlighter.highlightActiveState(state)
+                }
+                
+                // Find and visualize the states currently being executed on Java level
+                val executingStates = findExecutingStates(thread, breakpoint, model)
+                for (state : executingStates) {
+                    debugHighlighter.highlightExecutingState(state)
+                }
                 return SUSPEND
             }
         
