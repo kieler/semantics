@@ -752,5 +752,15 @@ controllerID="de.cau.cs.kieler.kicool.ui.klighd.KiCoModelUpdateController"
          </activeWhen>
       </handler>
    </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            category="de.cau.cs.kieler"
+            class="de.cau.cs.kieler.sccharts.ui.debug.view.DebugDiagramView"
+            id="de.cau.cs.kieler.sccharts.ui.debug.debugDiagram"
+            name="Debug Diagram"
+            restorable="true">
+      </view>
+   </extension>
    
 </plugin>

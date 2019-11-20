@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.sccharts.ui.debug.hooks
+package de.cau.cs.kieler.sccharts.ui.debug.highlighting
 import java.util.ArrayList
 import java.util.HashMap
 import java.util.List
@@ -59,7 +59,9 @@ import de.cau.cs.kieler.sccharts.ui.debug.breakpoints.SCChartsBreakpointTargetAd
  * and during model synthesis it is check on possible breakpoints in the model so after a save
  * operation the highlighting is still enabled.
  * @author lgr
+ * 
  */
+@Deprecated
 class BreakpointVisualizationHook extends SynthesisHook {
     
 	static HashMap<State, KNode> states = new HashMap()
@@ -70,7 +72,7 @@ class BreakpointVisualizationHook extends SynthesisHook {
 	ViewContext viewContext
 	String ellipseId="breakpoint"
 	static KRenderingFactory factory = KRenderingFactory.eINSTANCE
-	val kNodesExpanded = new ArrayList<KNode>()
+	val kNodesExpanded = new ArrayList<KNode>
 	
 	static IProperty<Object> BREAKPOINT_HIGHLIGHTING_MARKER = 
 	   new Property<Object>("breakpoint_highlight")
@@ -85,14 +87,14 @@ class BreakpointVisualizationHook extends SynthesisHook {
 	    return isKForeground && hasBreakpointProperty
 	]
 	
-	static KColor SCCHARTSBLUE1 = factory.createKColor().setColor(60, 150, 60)
-	static KColor SCCHARTSBLUE2 = factory.createKColor().setColor(0, 150, 0)
+	static KColor SCCHARTSBLUE1 = factory.createKColor.setColor(60, 150, 60)
+	static KColor SCCHARTSBLUE2 = factory.createKColor.setColor(0, 150, 0)
 	
-	static KBackground STYLE1 = factory.createKBackground().setColors(SCCHARTSBLUE1, SCCHARTSBLUE2).setGradientAngle2(90)
-	val _kRenderingExtensions = new KRenderingExtensions()
-	val _kContainerRenderingExtensions = new KContainerRenderingExtensions()
+	static KBackground STYLE1 = factory.createKBackground.setColors(SCCHARTSBLUE1, SCCHARTSBLUE2).setGradientAngle2(90)
+	val _kRenderingExtensions = new KRenderingExtensions
+	val _kContainerRenderingExtensions = new KContainerRenderingExtensions
 	
-	val de.cau.cs.kieler.sccharts.ui.debug.breakpoints.BreakpointUtility breakpointUtility
+	val BreakpointUtility breakpointUtility
 	// --------------------------------------------------------------------------------------------
 	/** 
 	 * Constructor that also sets the instance variable.
@@ -124,8 +126,8 @@ class BreakpointVisualizationHook extends SynthesisHook {
 			SCChartsBreakpointTargetAdapter.instance.updateLineEObjectMap(scope as EObject) 
 		}
 		viewContext = usedContext;
-		states.clear() 
-		transitions.clear() 
+		states.clear 
+		transitions.clear 
 	}
 	/** 
 	 * {@inheritDoc}
@@ -164,7 +166,7 @@ class BreakpointVisualizationHook extends SynthesisHook {
 	 */
 	override void finish(Scope scope, KNode node) {
 		if (scope instanceof State) {
-			val bs = DebugPlugin.getDefault().breakpointManager.breakpoints 
+			val bs = DebugPlugin.^default.breakpointManager.breakpoints 
 			for (b : bs) {
 				val bResource = b.marker.resource 
 				val editor = PlatformUI.workbench.activeWorkbenchWindow.activePage.activeEditor
@@ -176,13 +178,13 @@ class BreakpointVisualizationHook extends SynthesisHook {
 						var obj = SCChartsBreakpointTargetAdapter.lineToModelElement.get(lb.lineNumber) 
 						handleHighlight(obj, true) 
 					} catch (CoreException e) {
-						e.printStackTrace() 
+						e.printStackTrace 
 					}
 					
 				}
 			}
-			states.clear() 
-			transitions.clear() 
+			states.clear 
+			transitions.clear 
 		}
 	}
 	/***********************************************************************************************
@@ -203,7 +205,7 @@ class BreakpointVisualizationHook extends SynthesisHook {
 	def private void handleTransitionHighlight(Transition obj, boolean highlighting) {
 		var viewElementTransition = transitions.get(obj) 
 		if (viewElementTransition === null) {
-			updateViewContext()
+			updateViewContext
 			viewElementTransition = viewContext.getTargetElement(obj, KEdge) 
 		}
 		handleTransitionHighlight(obj, highlighting, viewElementTransition) 
@@ -228,7 +230,7 @@ class BreakpointVisualizationHook extends SynthesisHook {
 		val Procedure1<KEllipse> _function = [KEllipse it | {
 			_kRenderingExtensions.<KEllipse>setDecoratorPlacementData(it, 8, 8, -4, 0.5f, false) 
 			_kRenderingExtensions.setLineWidth(it, 1) 
-			_kRenderingExtensions.setBackground(it, factory.createKColor().setColor(60, 60, 150)) 
+			_kRenderingExtensions.setBackground(it, factory.createKColor.setColor(60, 60, 150)) 
 		}] 
 		return ObjectExtensions.<KEllipse>operator_doubleArrow(_addEllipse, _function) 
 	}
@@ -257,7 +259,7 @@ class BreakpointVisualizationHook extends SynthesisHook {
 	def private void handleStateHighlight(State obj, boolean highlighting) {
 		var viewElement = states.get(obj) 
 		if (viewElement === null) {
-			updateViewContext() 
+			updateViewContext
 			viewElement = viewContext.getTargetElement(obj, KNode) 
 		}
 		handleStateHighlight(obj, highlighting, viewElement) 
@@ -286,9 +288,9 @@ class BreakpointVisualizationHook extends SynthesisHook {
 			val ren = viewElementState.getData(KContainerRendering) 
 			val flagged = Iterables.any(ren.styles, filter) 
 			if (!flagged) {
-				Display.getDefault().syncExec([
+				Display.^default.syncExec([
 				    for (viewElementStateLabel : Iterables2.toIterable(Iterators.filter(ren.eAllContents(), KText))) {
-					   viewElementStateLabel.getStyles().add(EcoreUtil.copy(labelStyle)) 
+					   viewElementStateLabel.styles.add(EcoreUtil.copy(labelStyle)) 
 				    }
 				    ren.styles.add(EcoreUtil.copy(nodeStyle)) 
 				    viewContext.viewer.scale(viewElementState, 1.0f) 
@@ -308,7 +310,7 @@ class BreakpointVisualizationHook extends SynthesisHook {
 		val notHighlightedStates = new ArrayList<KNode>() 
 		notHighlightedStates.add(viewElement) 
 		// Remove highlighting for NOT highlighted elements
-        Display.getDefault().syncExec([
+        Display.^default.syncExec([
 	       for (k : notHighlightedStates) {
                 updateViewContext() 
                 viewContext.viewer.scale(k, 1f) 
@@ -331,7 +333,7 @@ class BreakpointVisualizationHook extends SynthesisHook {
 	def private void updateViewContext() {
 		val workbenchWindow = PlatformUI.workbench.activeWorkbenchWindow 
 		if (workbenchWindow !== null) {
-			val diagramEditor = workbenchWindow.activePage.getActiveEditor 
+			val diagramEditor = workbenchWindow.activePage.activeEditor 
 			val diagramViews = DiagramView.getDiagramViews(diagramEditor) 
 			val viewPart = diagramViews.get(0) 
 			viewContext = viewPart.viewer.viewContext 

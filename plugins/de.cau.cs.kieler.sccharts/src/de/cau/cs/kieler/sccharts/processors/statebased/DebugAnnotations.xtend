@@ -41,7 +41,7 @@ class DebugAnnotations extends SCChartsProcessor implements Traceable {
     /**
      * Switch to determine whether annotations (or javadoc comments) should be used.
      */
-    public static val USE_ANNOTATIONS = true
+    public static val USE_ANNOTATIONS = false
     
     override getId() {
         ID

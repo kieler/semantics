@@ -41,6 +41,8 @@ import de.cau.cs.kieler.sccharts.text.parser.SCTXStandaloneParser
 import org.eclipse.jdt.ui.JavaUI
 import org.eclipse.jdt.core.dom.Message
 import de.cau.cs.kieler.sccharts.processors.statebased.DebugAnnotations
+import de.cau.cs.kieler.sccharts.ui.debug.view.DebugDiagramView
+import de.cau.cs.kieler.sccharts.ui.debug.highlighting.DebugHighlighter
 
 /**
  * @author peu
@@ -54,6 +56,8 @@ class JavaBreakpointListener implements IJavaBreakpointListener {
         super()
         Guice.createInjector.injectMembers(this)
     }
+    
+    val debugHighlighter = DebugHighlighter.instance
     
     var breakpointToTarget = new HashMap<IJavaBreakpoint,IJavaDebugTarget>()
     
@@ -131,6 +135,7 @@ class JavaBreakpointListener implements IJavaBreakpointListener {
         
         // TODO debug only
         for (state : activeStates) {
+            debugHighlighter.highlightActiveState(state)
             println(state.name)
         }
         
@@ -169,9 +174,9 @@ class JavaBreakpointListener implements IJavaBreakpointListener {
                 println("Code is derived from SCChart!")
                 val text = chartVar.value.valueString
                 val model = SCTXStandaloneParser.parseScope(text, StandardCharsets.UTF_8)
-                Display.getDefault().asyncExec(new Runnable {
+                Display.^default.syncExec(new Runnable {
                     override run() {
-                        DiagramViewManager.createView(null, "TestView", model)
+                        DebugDiagramView.updateOrCreateView(model)
                     }
                 })
                 findCurrentStates(thread, breakpoint, model)

@@ -17,7 +17,7 @@ import org.eclipse.core.runtime.CoreException
 import org.eclipse.debug.core.IBreakpointListener
 import org.eclipse.debug.core.model.IBreakpoint
 import org.eclipse.debug.core.model.LineBreakpoint
-import de.cau.cs.kieler.sccharts.ui.debug.hooks.BreakpointVisualizationHook
+import de.cau.cs.kieler.sccharts.ui.debug.highlighting.BreakpointVisualizationHook
 
 /** 
  * This class listens to adding breakpoints, changing them or removing them. According to the event
