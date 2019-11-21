@@ -82,6 +82,8 @@ import de.cau.cs.kieler.klighd.krendering.KRoundedRectangle
 import de.cau.cs.kieler.klighd.krendering.KContainerRendering
 import de.cau.cs.kieler.klighd.krendering.KPolygon
 import de.cau.cs.kieler.klighd.krendering.KText
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import java.util.ArrayList
 
 /**
  * @author ssm
@@ -111,9 +113,9 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
     public static val SynthesisOption ALL_SEQUENTIAL_CONSTRAINTS = SynthesisOption.createCheckOption(
         "Show all Sequential Constraints", false).setCategory(GeneralSynthesisOptions::DATAFLOW)
     public static val SynthesisOption SEQUENTIAL_CONSTRAINTS = SynthesisOption.createCheckOption(
-        "Show Sequential Constraints", false).setCategory(GeneralSynthesisOptions::DATAFLOW)
+        "Show Sequential Constraints", true).setCategory(GeneralSynthesisOptions::DATAFLOW)
     public static val SynthesisOption INSTANCE_CONSTRAINTS = SynthesisOption.createCheckOption(
-        "Connect Instances", false).setCategory(GeneralSynthesisOptions::DATAFLOW)
+        "Connect Instances", true).setCategory(GeneralSynthesisOptions::DATAFLOW)
 
     public static final IProperty<Boolean> INLINED_REFERENCE = new Property<Boolean>(
         "de.cau.cs.kieler.sccharts.ui.synthesis.dataflow.inlinedReference", false);
@@ -350,7 +352,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
             // in case of a model reference the subreference should not be in the label of the node
             text = reference.valuedObject.reference.serializeHR.toString
         }
-        if (reference.isModelReference && reference.subReference !== null) {
+        if (reference.isModelReference) {
             node = node.createReferenceNode(reference, text)
             // write the subreferences to the port labels
             if (reference.subReference !== null) {
@@ -461,6 +463,33 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
 
     // creates an equation graph for an assignment and returns the list of created nodes
     override performTranformation(Assignment element) {
+        if (element.reference.isReferenceDeclarationReference && element.expression instanceof VectorValue) {
+            // special case for vector assignments for referenced valued objects
+            val nodes = <KNode>newLinkedList
+            val sources = (element.expression as VectorValue).values.map[performTransformation(nodes, false)]
+            val target = element.reference.performTransformation(nodes, true)
+            // find the list of input valued objects of the reference
+            val List<ValuedObjectReference> params = newArrayList
+            val state = (element.reference.valuedObject.declaration as ReferenceDeclaration).reference as State
+            state.declarations.filter(VariableDeclaration).filter[isInput].forEach [
+                valuedObjects.forEach[params.add(reference)]
+            ]
+            var index = 0
+            // connect the inputs with labeled ports
+            for (source : sources) {
+                val sourcePort = source.findPortById(OUT_PORT)
+                val targetPort = target.getInputPortWithNumber(index)
+                val ref = if(params.size >= index) params.get(index) else null
+                if (ref !== null) {
+                    targetPort.setLabel(ref.serializeHR.toString, true)
+                    targetPort.associateWith(ref)
+                }
+                sourcePort.connectWith(targetPort, element.expression.serializeHR.toString)
+                index++
+            }
+            return nodes
+        }
+
         val nodes = <KNode>newLinkedList
         val source = element.expression.performTransformation(nodes, false)
         val sourcePort = source.findPortById(OUT_PORT)

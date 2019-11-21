@@ -56,12 +56,18 @@ class EquationSimplification {
     // removes sequential edges and removes the input and output nodes
     def sequentialize(List<KNode> nodes) {
         val List<KNode> sequentializedOutputs = newArrayList
+        val List<KNode> sequentializedInputs = newArrayList
         for (seq : sequentials.filter[key.isOutput && value.isInput && !key.isReference]) {
             seq.value.connectToOutput(seq.key)
-            nodes.betterRemove(seq.value)
+            if (!sequentializedInputs.contains(seq.value)) {
+                sequentializedInputs += seq.value
+            }
             if (!sequentializedOutputs.contains(seq.key)) {
                 sequentializedOutputs.add(seq.key)
             }
+        }
+        for (n : sequentializedInputs) {
+            nodes.betterRemove(n)
         }
         // removes the output nodes if it is not the last output node for the references valued object
         for (n : sequentializedOutputs) {
@@ -219,9 +225,9 @@ class EquationSimplification {
 
     // removes an input node and connects the wires to the wires of the output node
     def connectToOutput(KNode input, KNode output) {
-        for (e : input.outgoingEdges) {
+        for (e : input.outgoingEdges.filter[!isSequential && !isInstance]) {
             var targetPort = e.targetPort
-            for (e2 : output.incomingEdges) {
+            for (e2 : output.incomingEdges.filter[!isSequential && !isInstance]) {
                 var sourcePort = e2.sourcePort
                 sourcePort.connectWith(targetPort,
                     (input.sourceElement as ValuedObjectReference).valuedObject.serializeHR.toString)
