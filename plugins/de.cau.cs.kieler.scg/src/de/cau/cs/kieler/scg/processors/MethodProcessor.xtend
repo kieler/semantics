@@ -23,6 +23,7 @@ import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.MethodDeclaration
 import de.cau.cs.kieler.kexpressions.ReferenceCall
 import de.cau.cs.kieler.kexpressions.ValueType
+import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
@@ -131,6 +132,7 @@ class MethodProcessor extends InplaceProcessor<SCGraphs> implements Traceable {
         // Clean VO store of variables in methods
         methodSCGs.entrySet.forEach[
             voStore.remove(key.valuedObjects.head)
+            key.parameterDeclarations.map[valuedObjects].flatten.forEach[voStore.remove(it)]
             value.declarations.map[valuedObjects].flatten.forEach[voStore.remove(it)]
         ]
         // Remove inlined/unused methods
@@ -140,7 +142,16 @@ class MethodProcessor extends InplaceProcessor<SCGraphs> implements Traceable {
         ]
         // Remove classes without content
         for (scg : model.scgs) {
-            scg.declarations.removeIf[it instanceof ClassDeclaration && (it as ClassDeclaration).declarations.nullOrEmpty]
+            val classes = scg.declarations.filter(ClassDeclaration).toSet
+            for (classDecl : classes) {
+                if (classDecl.declarations.nullOrEmpty) {
+                    scg.declarations.remove(classDecl)
+                }
+                // Remove host classes from VO store
+                if (classDecl.host) {
+                    classDecl.eAllContents.filter(ValuedObject).forEach[voStore.remove(it)]
+                }
+            }
         }
     }
     

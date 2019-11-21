@@ -296,21 +296,14 @@ class KExpressionsValuedObjectExtensions {
     }
     
     def List<ValuedObjectReference> getAllReferences(Expression expression) {
-        <ValuedObjectReference> newArrayList => [ l |
-        	if (expression === null) {
-        	} else if (expression instanceof ValuedObjectReference) { 
-        		l += expression
-        		var sub = expression.subReference
-        		while (sub !== null) {
-        		    l += sub
-        		    sub = sub.subReference
-        		}
-        	} else { 
-        		expression.eAllContents.filter(ValuedObjectReference).forEach[
-        		    l += it   
-        		]
-        	}
-        ]  
+        val refs = <ValuedObjectReference>newArrayList
+    	if (expression !== null) {
+    	    if (expression instanceof ValuedObjectReference) { 
+    		  refs += expression
+    		}
+            refs += expression.eAllContents.filter(ValuedObjectReference).toIterable
+    	}
+        return refs
     }    
     
     def List<ValuedObjectReference> getAllReferenceFromEObject(EObject eObject) {
@@ -388,6 +381,14 @@ class KExpressionsValuedObjectExtensions {
     def Iterable<Expression> getIndicesAndSubIndices(ValuedObjectReference vor) {
         if (vor === null) return emptyList
         return (vor.indices?:emptyList) + vor.subReference.indicesAndSubIndices
+    }
+    
+    def ValuedObjectReference getLowermostReference(ValuedObjectReference vor) {
+        var ref = vor
+        while (ref.subReference !== null) {
+            ref = ref.subReference
+        }
+        return ref
     }
     
 }

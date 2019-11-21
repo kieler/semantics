@@ -483,16 +483,6 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
                     if (params.get("in0") instanceof Float && params.get("in1") instanceof Float)
                         result = (params.get("in0") as Float) > (params.get("in1") as Float)
                 }
-                case INTDIV: {
-                    if (params.get("in0") instanceof Integer && params.get("in1") instanceof Integer)
-                        result = (params.get("in0") as Integer) / (params.get("in1") as Integer)
-                    if (params.get("in0") instanceof Integer && params.get("in1") instanceof Float)
-                        result = ((params.get("in0") as Integer) / (params.get("in1") as Float)) as int
-                    if (params.get("in0") instanceof Float && params.get("in1") instanceof Integer)
-                        result = ((params.get("in0") as Float) / (params.get("in1") as Integer)) as int
-                    if (params.get("in0") instanceof Float && params.get("in1") instanceof Float)
-                        result = ((params.get("in0") as Float) / (params.get("in1") as Float)) as int
-                }
                 case LEQ: {
                     if (params.get("in0") instanceof Integer && params.get("in1") instanceof Integer)
                         result = (params.get("in0") as Integer) <= (params.get("in1") as Integer)

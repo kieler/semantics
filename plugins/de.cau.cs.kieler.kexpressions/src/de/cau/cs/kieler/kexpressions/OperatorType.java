@@ -343,7 +343,7 @@ public enum OperatorType implements Enumerator {
      * @generated
      * @ordered
      */
-    FBY(25, "FBY", "FBY"), /**
+    FBY(25, "FBY", "fby"), /**
      * The '<em><b>CURRENT</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -351,7 +351,7 @@ public enum OperatorType implements Enumerator {
      * @generated
      * @ordered
      */
-    CURRENT(26, "CURRENT", "CURRENT"), /**
+    CURRENT(26, "CURRENT", "current"), /**
      * The '<em><b>WHEN</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -359,7 +359,7 @@ public enum OperatorType implements Enumerator {
      * @generated
      * @ordered
      */
-    WHEN(27, "WHEN", "WHEN"), /**
+    WHEN(27, "WHEN", "when"), /**
      * The '<em><b>INIT</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -367,31 +367,7 @@ public enum OperatorType implements Enumerator {
      * @generated
      * @ordered
      */
-    INIT(28, "INIT", "INIT"), /**
-     * The '<em><b>INTDIV</b></em>' literal object.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #INTDIV_VALUE
-     * @generated
-     * @ordered
-     */
-    INTDIV(29, "INTDIV", "INTDIV"), /**
-     * The '<em><b>LOGICAL XOR</b></em>' literal object.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #LOGICAL_XOR_VALUE
-     * @generated
-     * @ordered
-     */
-    LOGICAL_XOR(30, "LOGICAL_XOR", "LOGICAL_XOR"), /**
-     * The '<em><b>IMPLIES</b></em>' literal object.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #IMPLIES_VALUE
-     * @generated
-     * @ordered
-     */
-    IMPLIES(31, "IMPLIES", "IMPLIES"), /**
+    INIT(28, "INIT", "->"), /**
      * The '<em><b>ATMOSTONEOF</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -399,7 +375,7 @@ public enum OperatorType implements Enumerator {
      * @generated
      * @ordered
      */
-    ATMOSTONEOF(32, "ATMOSTONEOF", "ATMOSTONEOF"), /**
+    ATMOSTONEOF(29, "ATMOSTONEOF", "#"), /**
      * The '<em><b>NOR</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -407,7 +383,23 @@ public enum OperatorType implements Enumerator {
      * @generated
      * @ordered
      */
-    NOR(33, "NOR", "NOR");
+    NOR(30, "NOR", "nor"), /**
+     * The '<em><b>IMPLIES</b></em>' literal object.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #IMPLIES_VALUE
+     * @generated
+     * @ordered
+     */
+    IMPLIES(31, "IMPLIES", "implies"), /**
+     * The '<em><b>SFBY</b></em>' literal object.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #SFBY_VALUE
+     * @generated
+     * @ordered
+     */
+    SFBY(32, "SFBY", "sfby");
 
     /**
      * The '<em><b>NOT</b></em>' literal value.
@@ -794,7 +786,7 @@ public enum OperatorType implements Enumerator {
      * </p>
      * <!-- end-user-doc -->
      * @see #FBY
-     * @model
+     * @model literal="fby"
      * @generated
      * @ordered
      */
@@ -809,7 +801,7 @@ public enum OperatorType implements Enumerator {
      * </p>
      * <!-- end-user-doc -->
      * @see #CURRENT
-     * @model
+     * @model literal="current"
      * @generated
      * @ordered
      */
@@ -824,7 +816,7 @@ public enum OperatorType implements Enumerator {
      * </p>
      * <!-- end-user-doc -->
      * @see #WHEN
-     * @model
+     * @model literal="when"
      * @generated
      * @ordered
      */
@@ -839,67 +831,22 @@ public enum OperatorType implements Enumerator {
      * </p>
      * <!-- end-user-doc -->
      * @see #INIT
-     * @model
+     * @model literal="-&gt;"
      * @generated
      * @ordered
      */
     public static final int INIT_VALUE = 28;
 
     /**
-     * The '<em><b>INTDIV</b></em>' literal value.
-     * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>INTDIV</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
-     * @see #INTDIV
-     * @model
-     * @generated
-     * @ordered
-     */
-    public static final int INTDIV_VALUE = 29;
-
-    /**
-     * The '<em><b>LOGICAL XOR</b></em>' literal value.
-     * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>LOGICAL XOR</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
-     * @see #LOGICAL_XOR
-     * @model
-     * @generated
-     * @ordered
-     */
-    public static final int LOGICAL_XOR_VALUE = 30;
-
-    /**
-     * The '<em><b>IMPLIES</b></em>' literal value.
-     * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>IMPLIES</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
-     * @see #IMPLIES
-     * @model
-     * @generated
-     * @ordered
-     */
-    public static final int IMPLIES_VALUE = 31;
-
-    /**
      * The '<em><b>ATMOSTONEOF</b></em>' literal value.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @see #ATMOSTONEOF
-     * @model
+     * @model literal="#"
      * @generated
      * @ordered
      */
-    public static final int ATMOSTONEOF_VALUE = 32;
+    public static final int ATMOSTONEOF_VALUE = 29;
 
     /**
      * The '<em><b>NOR</b></em>' literal value.
@@ -910,11 +857,37 @@ public enum OperatorType implements Enumerator {
      * </p>
      * <!-- end-user-doc -->
      * @see #NOR
-     * @model
+     * @model literal="nor"
      * @generated
      * @ordered
      */
-    public static final int NOR_VALUE = 33;
+    public static final int NOR_VALUE = 30;
+
+    /**
+     * The '<em><b>IMPLIES</b></em>' literal value.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of '<em><b>IMPLIES</b></em>' literal object isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @see #IMPLIES
+     * @model literal="implies"
+     * @generated
+     * @ordered
+     */
+    public static final int IMPLIES_VALUE = 31;
+
+    /**
+     * The '<em><b>SFBY</b></em>' literal value.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #SFBY
+     * @model literal="sfby"
+     * @generated
+     * @ordered
+     */
+    public static final int SFBY_VALUE = 32;
 
     /**
      * An array of all the '<em><b>Operator Type</b></em>' enumerators.
@@ -954,11 +927,10 @@ public enum OperatorType implements Enumerator {
             CURRENT,
             WHEN,
             INIT,
-            INTDIV,
-            LOGICAL_XOR,
-            IMPLIES,
             ATMOSTONEOF,
             NOR,
+            IMPLIES,
+            SFBY,
         };
 
     /**
@@ -1044,11 +1016,10 @@ public enum OperatorType implements Enumerator {
             case CURRENT_VALUE: return CURRENT;
             case WHEN_VALUE: return WHEN;
             case INIT_VALUE: return INIT;
-            case INTDIV_VALUE: return INTDIV;
-            case LOGICAL_XOR_VALUE: return LOGICAL_XOR;
-            case IMPLIES_VALUE: return IMPLIES;
             case ATMOSTONEOF_VALUE: return ATMOSTONEOF;
             case NOR_VALUE: return NOR;
+            case IMPLIES_VALUE: return IMPLIES;
+            case SFBY_VALUE: return SFBY;
         }
         return null;
     }

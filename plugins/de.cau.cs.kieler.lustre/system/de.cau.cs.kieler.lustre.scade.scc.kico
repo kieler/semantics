@@ -1,0 +1,5 @@
+public system de.cau.cs.kieler.lustre.scade.scadeToScc
+	label "Scade to SCCharts"
+
+de.cau.cs.kieler.lustre.scade.processors.scadeToLustre
+de.cau.cs.kieler.lustre.processors.lustreToSCC.dataFlow

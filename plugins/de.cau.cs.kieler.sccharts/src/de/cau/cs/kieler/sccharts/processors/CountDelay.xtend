@@ -37,8 +37,7 @@ import de.cau.cs.kieler.sccharts.DelayType
 import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.verification.VerificationContext
-import de.cau.cs.kieler.verification.RangeAssumption
+import de.cau.cs.kieler.kexpressions.ValuedObject
 
 /**
  * SCCharts CountDelay Transformation.
@@ -117,10 +116,7 @@ class CountDelay extends SCChartsProcessor implements Traceable {
         val counter = parentState.createValuedObject(GENERATED_PREFIX + "counter", createIntDeclaration).uniqueName
         voStore.update(counter, SCCHARTS_GENERATED)
         
-        // Add range assumption for verification
-        if(compilationContext instanceof VerificationContext) {
-            (compilationContext as VerificationContext).verificationAssumptions.add(new RangeAssumption(counter, 0, triggerDelay))
-        }
+        verificationHack(counter, triggerDelay)
 
         //Add entry action
         val entryAction = sourceState.createEntryAction
@@ -232,6 +228,20 @@ class CountDelay extends SCChartsProcessor implements Traceable {
     
     def SCCharts transform(SCCharts sccharts) {
         sccharts => [ rootStates.forEach[ transform ] ]
+    }
+    
+    /**
+     * This hacks some verification adaption into this transformation without introducing a dependency to kieler.verification
+     */
+    private def verificationHack(ValuedObject counter, int triggerDelay) {
+        try {
+            // Add range assumption for verification
+            if(compilationContext.class.simpleName.equals("VerificationContext")) {
+                compilationContext.class.getMethod("addRangeAssumtion", ValuedObject, int, int).invoke(compilationContext, counter, 0, triggerDelay)
+            }
+        } catch (Exception e) {
+            // Nobody cares
+        }
     }
 
 }

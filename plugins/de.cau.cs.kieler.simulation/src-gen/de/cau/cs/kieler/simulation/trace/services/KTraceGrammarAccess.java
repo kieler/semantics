@@ -149,7 +149,7 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 		//'%'
 		public Keyword getPercentSignKeyword_2_0() { return cPercentSignKeyword_2_0; }
 		
-		//'Output:' | 'Output' ':'
+		//('Output:' | 'Output' ':')
 		public Alternatives getAlternatives_2_1() { return cAlternatives_2_1; }
 		
 		//'Output:'
@@ -182,7 +182,7 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 		//'%%'
 		public Keyword getPercentSignPercentSignKeyword_4_0() { return cPercentSignPercentSignKeyword_4_0; }
 		
-		//'Output:' | 'Output' ':'
+		//('Output:' | 'Output' ':')
 		public Alternatives getAlternatives_4_1() { return cAlternatives_4_1; }
 		
 		//'Output:'
@@ -658,7 +658,7 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 	//// Test Entity Rule
 	//// A test entity is either an annotation expression or an effect.
 	//TestEntity kext::TestEntity:
-	//	expression=AnnotatedExpression | effect=Effect;
+	//	expression=(AnnotatedExpression | AnnotatedJsonExpression) | effect=Effect;
 	public KExtGrammarAccess.TestEntityElements getTestEntityAccess() {
 		return gaKExt.getTestEntityAccess();
 	}
@@ -680,6 +680,18 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getAnnotatedExpressionRule() {
 		return getAnnotatedExpressionAccess().getRule();
+	}
+	
+	//AnnotatedJsonExpression kext::AnnotatedExpression:
+	//	annotations+=Annotation*
+	//	'json'
+	//	expression=JsonObjectValue;
+	public KExtGrammarAccess.AnnotatedJsonExpressionElements getAnnotatedJsonExpressionAccess() {
+		return gaKExt.getAnnotatedJsonExpressionAccess();
+	}
+	
+	public ParserRule getAnnotatedJsonExpressionRule() {
+		return getAnnotatedJsonExpressionAccess().getRule();
 	}
 	
 	//// Declaration Rule
@@ -754,12 +766,12 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 	//	global?='global'?
 	//	static?='static'?
 	//	host?='host'? (type=ClassType
-	//	name=ID?
+	//	name=EString?
 	//	'{'
 	//	declarations+=DeclarationOrMethod*
 	//	'}'
 	//	| type=StructType
-	//	name=ID?
+	//	name=EString?
 	//	'{'
 	//	declarations+=Declaration*
 	//	'}') (valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*)?
@@ -792,12 +804,12 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 	//	global?='global'?
 	//	static?='static'?
 	//	host?='host'? (type=ClassType
-	//	name=ID?
+	//	name=EString?
 	//	'{'
 	//	declarations+=DeclarationOrMethodWOSemicolon*
 	//	'}'
 	//	| type=StructType
-	//	name=ID?
+	//	name=EString?
 	//	'{'
 	//	declarations+=DeclarationWOSemicolon*
 	//	'}') (valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*)?
@@ -1122,8 +1134,7 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 	//// A print functions that enables target-independent prints in the model.    
 	//PrintCallEffect keffects::PrintCallEffect:
 	//	annotations+=Annotation*
-	//	'print' ('(' parameters+=Parameter (',' parameters+=Parameter)* ')') ('schedule'
-	//	schedule+=ScheduleObjectReference+)?;
+	//	'print' ('(' parameters+=Parameter (',' parameters+=Parameter)* ')') ('schedule' schedule+=ScheduleObjectReference+)?;
 	public KEffectsGrammarAccess.PrintCallEffectElements getPrintCallEffectAccess() {
 		return gaKEffects.getPrintCallEffectAccess();
 	}
@@ -1421,10 +1432,9 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//SumExpression Expression:
-	//	ProductExpression ({OperatorExpression.subExpressions+=current} operator=AddOperator
-	//	subExpressions+=ProductExpression ('+' subExpressions+=ProductExpression)* |
-	//	{OperatorExpression.subExpressions+=current} operator=SubOperator subExpressions+=ProductExpression ('-'
-	//	subExpressions+=ProductExpression)*)*;
+	//	ProductExpression ({OperatorExpression.subExpressions+=current} operator=AddOperator subExpressions+=ProductExpression
+	//	('+' subExpressions+=ProductExpression)* | {OperatorExpression.subExpressions+=current} operator=SubOperator
+	//	subExpressions+=ProductExpression ('-' subExpressions+=ProductExpression)*)*;
 	public KExpressionsGrammarAccess.SumExpressionElements getSumExpressionAccess() {
 		return gaKExpressions.getSumExpressionAccess();
 	}
@@ -1481,8 +1491,8 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 	//// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
 	//// Example: 2 * 4
 	//MultExpression Expression:
-	//	NegExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=NegExpression)
-	//	('*' subExpressions+=NegExpression)*)?;
+	//	NegExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=NegExpression) ('*'
+	//	subExpressions+=NegExpression)*)?;
 	public KExpressionsGrammarAccess.MultExpressionElements getMultExpressionAccess() {
 		return gaKExpressions.getMultExpressionAccess();
 	}
@@ -1547,15 +1557,36 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//InitExpression Expression:
-	//	{OperatorExpression} subExpressions+=AtomicValuedExpression operator=InitOperator
-	//	subExpressions+=AtomicValuedExpression
-	//	| AtomicValuedExpression;
+	//	FbyExpression ({OperatorExpression.subExpressions+=current} (operator=InitOperator subExpressions+=FbyExpression)
+	//	('->' subExpressions+=FbyExpression)*)?;
 	public KExpressionsGrammarAccess.InitExpressionElements getInitExpressionAccess() {
 		return gaKExpressions.getInitExpressionAccess();
 	}
 	
 	public ParserRule getInitExpressionRule() {
 		return getInitExpressionAccess().getRule();
+	}
+	
+	//FbyExpression Expression:
+	//	SfbyExpression ({OperatorExpression.subExpressions+=current} (operator=FbyOperator subExpressions+=SfbyExpression)
+	//	('fby' subExpressions+=SfbyExpression)*)?;
+	public KExpressionsGrammarAccess.FbyExpressionElements getFbyExpressionAccess() {
+		return gaKExpressions.getFbyExpressionAccess();
+	}
+	
+	public ParserRule getFbyExpressionRule() {
+		return getFbyExpressionAccess().getRule();
+	}
+	
+	//SfbyExpression Expression:
+	//	AtomicValuedExpression ({OperatorExpression.subExpressions+=current} (operator=SfbyOperator
+	//	subExpressions+=AtomicValuedExpression) ('sfby' subExpressions+=AtomicValuedExpression)*)?;
+	public KExpressionsGrammarAccess.SfbyExpressionElements getSfbyExpressionAccess() {
+		return gaKExpressions.getSfbyExpressionAccess();
+	}
+	
+	public ParserRule getSfbyExpressionRule() {
+		return getSfbyExpressionAccess().getRule();
 	}
 	
 	//// Atomic Expression Rule
@@ -2041,6 +2072,26 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public EnumRule getInitOperatorRule() {
 		return getInitOperatorAccess().getRule();
+	}
+	
+	//enum FbyOperator returns OperatorType:
+	//	FBY="fby";
+	public KExpressionsGrammarAccess.FbyOperatorElements getFbyOperatorAccess() {
+		return gaKExpressions.getFbyOperatorAccess();
+	}
+	
+	public EnumRule getFbyOperatorRule() {
+		return getFbyOperatorAccess().getRule();
+	}
+	
+	//enum SfbyOperator returns OperatorType:
+	//	SFBY="sfby";
+	public KExpressionsGrammarAccess.SfbyOperatorElements getSfbyOperatorAccess() {
+		return gaKExpressions.getSfbyOperatorAccess();
+	}
+	
+	public EnumRule getSfbyOperatorRule() {
+		return getSfbyOperatorAccess().getRule();
 	}
 	
 	//enum ValueType:

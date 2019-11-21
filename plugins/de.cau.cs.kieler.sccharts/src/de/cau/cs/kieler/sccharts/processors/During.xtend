@@ -91,7 +91,8 @@ class During extends SCChartsProcessor implements Traceable {
 
         // If the state has outgoing terminations, we need to finalize the during
         // actions in case we end the states over these transitions
-        val complexDuring = ((hasOutgoingTerminations || state.isRootState) && state.regionsMayTerminate)
+        // als 21-08-2019: BUT if the state has ONLY during actions, these actions are the only behavior and should not terminate
+        val complexDuring = ((hasOutgoingTerminations || state.isRootState) && !state.regions.empty && state.regionsMayTerminate)
 
         // Create the body of the dummy state - containing the during action
         // For every during action: Create a region

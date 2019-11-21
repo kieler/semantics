@@ -33,6 +33,7 @@ public class KiCoolParser extends AbstractContentAssistParser {
 		private static void init(ImmutableMap.Builder<AbstractElement, String> builder, KiCoolGrammarAccess grammarAccess) {
 			builder.put(grammarAccess.getProcessorGroupAccess().getAlternatives_1(), "rule__ProcessorGroup__Alternatives_1");
 			builder.put(grammarAccess.getTestEntityAccess().getAlternatives(), "rule__TestEntity__Alternatives");
+			builder.put(grammarAccess.getTestEntityAccess().getExpressionAlternatives_0_0(), "rule__TestEntity__ExpressionAlternatives_0_0");
 			builder.put(grammarAccess.getDeclarationAccess().getAlternatives(), "rule__Declaration__Alternatives");
 			builder.put(grammarAccess.getDeclarationWOSemicolonAccess().getAlternatives(), "rule__DeclarationWOSemicolon__Alternatives");
 			builder.put(grammarAccess.getVariableDeclarationAccess().getAlternatives_7(), "rule__VariableDeclaration__Alternatives_7");
@@ -59,7 +60,6 @@ public class KiCoolParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getProductExpressionAccess().getAlternatives_1(), "rule__ProductExpression__Alternatives_1");
 			builder.put(grammarAccess.getNegExpressionAccess().getAlternatives(), "rule__NegExpression__Alternatives");
 			builder.put(grammarAccess.getTernaryOperationAccess().getAlternatives(), "rule__TernaryOperation__Alternatives");
-			builder.put(grammarAccess.getInitExpressionAccess().getAlternatives(), "rule__InitExpression__Alternatives");
 			builder.put(grammarAccess.getAtomicExpressionAccess().getAlternatives(), "rule__AtomicExpression__Alternatives");
 			builder.put(grammarAccess.getAtomicValuedExpressionAccess().getAlternatives(), "rule__AtomicValuedExpression__Alternatives");
 			builder.put(grammarAccess.getValuedObjectTestExpressionAccess().getAlternatives(), "rule__ValuedObjectTestExpression__Alternatives");
@@ -119,6 +119,7 @@ public class KiCoolParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getScopeAccess().getGroup(), "rule__Scope__Group__0");
 			builder.put(grammarAccess.getScopeAccess().getGroup_5(), "rule__Scope__Group_5__0");
 			builder.put(grammarAccess.getAnnotatedExpressionAccess().getGroup(), "rule__AnnotatedExpression__Group__0");
+			builder.put(grammarAccess.getAnnotatedJsonExpressionAccess().getGroup(), "rule__AnnotatedJsonExpression__Group__0");
 			builder.put(grammarAccess.getVariableDeclarationAccess().getGroup(), "rule__VariableDeclaration__Group__0");
 			builder.put(grammarAccess.getVariableDeclarationAccess().getGroup_7_0(), "rule__VariableDeclaration__Group_7_0__0");
 			builder.put(grammarAccess.getVariableDeclarationAccess().getGroup_7_2(), "rule__VariableDeclaration__Group_7_2__0");
@@ -274,7 +275,18 @@ public class KiCoolParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getNegExpressionAccess().getGroup_0(), "rule__NegExpression__Group_0__0");
 			builder.put(grammarAccess.getTernaryOperationAccess().getGroup_0(), "rule__TernaryOperation__Group_0__0");
 			builder.put(grammarAccess.getTernaryOperationAccess().getGroup_0_4(), "rule__TernaryOperation__Group_0_4__0");
-			builder.put(grammarAccess.getInitExpressionAccess().getGroup_0(), "rule__InitExpression__Group_0__0");
+			builder.put(grammarAccess.getInitExpressionAccess().getGroup(), "rule__InitExpression__Group__0");
+			builder.put(grammarAccess.getInitExpressionAccess().getGroup_1(), "rule__InitExpression__Group_1__0");
+			builder.put(grammarAccess.getInitExpressionAccess().getGroup_1_1(), "rule__InitExpression__Group_1_1__0");
+			builder.put(grammarAccess.getInitExpressionAccess().getGroup_1_2(), "rule__InitExpression__Group_1_2__0");
+			builder.put(grammarAccess.getFbyExpressionAccess().getGroup(), "rule__FbyExpression__Group__0");
+			builder.put(grammarAccess.getFbyExpressionAccess().getGroup_1(), "rule__FbyExpression__Group_1__0");
+			builder.put(grammarAccess.getFbyExpressionAccess().getGroup_1_1(), "rule__FbyExpression__Group_1_1__0");
+			builder.put(grammarAccess.getFbyExpressionAccess().getGroup_1_2(), "rule__FbyExpression__Group_1_2__0");
+			builder.put(grammarAccess.getSfbyExpressionAccess().getGroup(), "rule__SfbyExpression__Group__0");
+			builder.put(grammarAccess.getSfbyExpressionAccess().getGroup_1(), "rule__SfbyExpression__Group_1__0");
+			builder.put(grammarAccess.getSfbyExpressionAccess().getGroup_1_1(), "rule__SfbyExpression__Group_1_1__0");
+			builder.put(grammarAccess.getSfbyExpressionAccess().getGroup_1_2(), "rule__SfbyExpression__Group_1_2__0");
 			builder.put(grammarAccess.getAtomicExpressionAccess().getGroup_1(), "rule__AtomicExpression__Group_1__0");
 			builder.put(grammarAccess.getAtomicValuedExpressionAccess().getGroup_4(), "rule__AtomicValuedExpression__Group_4__0");
 			builder.put(grammarAccess.getValuedObjectTestExpressionAccess().getGroup_0(), "rule__ValuedObjectTestExpression__Group_0__0");
@@ -377,6 +389,8 @@ public class KiCoolParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getTestEntityAccess().getEffectAssignment_1(), "rule__TestEntity__EffectAssignment_1");
 			builder.put(grammarAccess.getAnnotatedExpressionAccess().getAnnotationsAssignment_0(), "rule__AnnotatedExpression__AnnotationsAssignment_0");
 			builder.put(grammarAccess.getAnnotatedExpressionAccess().getExpressionAssignment_2(), "rule__AnnotatedExpression__ExpressionAssignment_2");
+			builder.put(grammarAccess.getAnnotatedJsonExpressionAccess().getAnnotationsAssignment_0(), "rule__AnnotatedJsonExpression__AnnotationsAssignment_0");
+			builder.put(grammarAccess.getAnnotatedJsonExpressionAccess().getExpressionAssignment_2(), "rule__AnnotatedJsonExpression__ExpressionAssignment_2");
 			builder.put(grammarAccess.getVariableDeclarationAccess().getAnnotationsAssignment_0(), "rule__VariableDeclaration__AnnotationsAssignment_0");
 			builder.put(grammarAccess.getVariableDeclarationAccess().getAccessAssignment_1(), "rule__VariableDeclaration__AccessAssignment_1");
 			builder.put(grammarAccess.getVariableDeclarationAccess().getConstAssignment_2(), "rule__VariableDeclaration__ConstAssignment_2");
@@ -610,9 +624,15 @@ public class KiCoolParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getTernaryOperationAccess().getOperatorAssignment_0_2(), "rule__TernaryOperation__OperatorAssignment_0_2");
 			builder.put(grammarAccess.getTernaryOperationAccess().getSubExpressionsAssignment_0_3(), "rule__TernaryOperation__SubExpressionsAssignment_0_3");
 			builder.put(grammarAccess.getTernaryOperationAccess().getSubExpressionsAssignment_0_4_1(), "rule__TernaryOperation__SubExpressionsAssignment_0_4_1");
-			builder.put(grammarAccess.getInitExpressionAccess().getSubExpressionsAssignment_0_1(), "rule__InitExpression__SubExpressionsAssignment_0_1");
-			builder.put(grammarAccess.getInitExpressionAccess().getOperatorAssignment_0_2(), "rule__InitExpression__OperatorAssignment_0_2");
-			builder.put(grammarAccess.getInitExpressionAccess().getSubExpressionsAssignment_0_3(), "rule__InitExpression__SubExpressionsAssignment_0_3");
+			builder.put(grammarAccess.getInitExpressionAccess().getOperatorAssignment_1_1_0(), "rule__InitExpression__OperatorAssignment_1_1_0");
+			builder.put(grammarAccess.getInitExpressionAccess().getSubExpressionsAssignment_1_1_1(), "rule__InitExpression__SubExpressionsAssignment_1_1_1");
+			builder.put(grammarAccess.getInitExpressionAccess().getSubExpressionsAssignment_1_2_1(), "rule__InitExpression__SubExpressionsAssignment_1_2_1");
+			builder.put(grammarAccess.getFbyExpressionAccess().getOperatorAssignment_1_1_0(), "rule__FbyExpression__OperatorAssignment_1_1_0");
+			builder.put(grammarAccess.getFbyExpressionAccess().getSubExpressionsAssignment_1_1_1(), "rule__FbyExpression__SubExpressionsAssignment_1_1_1");
+			builder.put(grammarAccess.getFbyExpressionAccess().getSubExpressionsAssignment_1_2_1(), "rule__FbyExpression__SubExpressionsAssignment_1_2_1");
+			builder.put(grammarAccess.getSfbyExpressionAccess().getOperatorAssignment_1_1_0(), "rule__SfbyExpression__OperatorAssignment_1_1_0");
+			builder.put(grammarAccess.getSfbyExpressionAccess().getSubExpressionsAssignment_1_1_1(), "rule__SfbyExpression__SubExpressionsAssignment_1_1_1");
+			builder.put(grammarAccess.getSfbyExpressionAccess().getSubExpressionsAssignment_1_2_1(), "rule__SfbyExpression__SubExpressionsAssignment_1_2_1");
 			builder.put(grammarAccess.getValuedObjectTestExpressionAccess().getOperatorAssignment_0_1(), "rule__ValuedObjectTestExpression__OperatorAssignment_0_1");
 			builder.put(grammarAccess.getValuedObjectTestExpressionAccess().getSubExpressionsAssignment_0_3(), "rule__ValuedObjectTestExpression__SubExpressionsAssignment_0_3");
 			builder.put(grammarAccess.getValuedObjectTestExpressionAccess().getSubExpressionsAssignment_0_4_1(), "rule__ValuedObjectTestExpression__SubExpressionsAssignment_0_4_1");

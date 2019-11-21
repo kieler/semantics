@@ -41,6 +41,7 @@ import static extension de.cau.cs.kieler.klighd.kgraph.util.KGraphIterators.*
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.klighd.krendering.Trigger
 import de.cau.cs.kieler.kicool.ui.synthesis.actions.SelectNothing
+import com.google.inject.Injector
 
 /**
  * Main diagram synthesis for KiCool.
@@ -101,9 +102,9 @@ class KiCoolSynthesis extends AbstractDiagramSynthesis<System> {
 
         rootNode
     }
-
-    public static val KGTInjector = new KGraphStandaloneSetup().createInjectorAndDoEMFRegistration
-
+        
+    public static val Injector KGTInjector = new KGraphStandaloneSetup().createInjectorAndDoEMFRegistration
+    
     def static doesKGTExist(String bundleId, String resourceLocation, String skinPrefix) {
         val newURI = URI.createPlatformPluginURI("/" + bundleId + "/" + skinPrefix + resourceLocation, true)
         val newResourceSet = KGTInjector.getInstance(XtextResourceSet)
@@ -117,7 +118,7 @@ class KiCoolSynthesis extends AbstractDiagramSynthesis<System> {
             return false
         }
     }
-
+    
     /**
      * Load a KGT from a bundle.
      */

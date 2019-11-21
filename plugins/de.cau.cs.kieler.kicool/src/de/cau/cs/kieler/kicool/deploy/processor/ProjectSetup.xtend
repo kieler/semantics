@@ -25,6 +25,7 @@ import java.util.List
 import java.util.Map
 import org.eclipse.emf.common.util.URI
 
+import static extension de.cau.cs.kieler.kicool.deploy.AdditionalResources.*
 import static extension de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure.*
 
 /**
@@ -63,11 +64,19 @@ class ProjectSetup extends InplaceProcessor<CodeContainer> {
         }
         
         // Tasks
+        environment.collectAdditionalResources(logger)
+        logger.println
+        
         if (environment.getProperty(SAVE)) {
             infra.saveCode(logger)
+            logger.println
         }
-        infra.clearTask(logger)    
+        
+        infra.clearTask(logger)
+        logger.println
+        
         infra.copyTask(logger)
+        logger.println
         
         // refresh project
         infra.refresh
@@ -99,8 +108,6 @@ class ProjectSetup extends InplaceProcessor<CodeContainer> {
                 e.printStackTrace(logger)
             }
         }
-        
-        logger.println
     }
     
     // ------------------
@@ -108,7 +115,9 @@ class ProjectSetup extends InplaceProcessor<CodeContainer> {
     // ------------------    
     
     protected def copyTask(ProjectInfrastructure infra, PrintStream logger) {
-        val copyMap = environment.getProperty(COPY)?:emptyMap
+        val copyMap = newHashMap
+        copyMap += environment.getProperty(COPY)?:emptyMap
+        copyMap += environment.getAdditionalResourcesToCopy
         if (!copyMap.empty) {
             logger.println("== Copy Environment ==")
 
@@ -150,10 +159,7 @@ class ProjectSetup extends InplaceProcessor<CodeContainer> {
                     logger.print("ERROR: Exception while copying file(s)")
                     e.printStackTrace(logger)
                 }
-                logger.println
             }
-            
-            logger.println
         }
     }
     
@@ -162,7 +168,9 @@ class ProjectSetup extends InplaceProcessor<CodeContainer> {
     // -------------------    
     
     protected def clearTask(ProjectInfrastructure infra, PrintStream logger) {
-        val clearList = environment.getProperty(CLEAR)?:emptyList
+        val clearList = newArrayList
+        clearList += environment.getProperty(CLEAR)?:emptyList
+        clearList += environment.getAdditionalResourcesToClear
         if (!clearList.empty) {
             logger.println("== Clear Environment ==")
             
@@ -170,10 +178,7 @@ class ProjectSetup extends InplaceProcessor<CodeContainer> {
                 val target = new File(infra.generatedCodeFolder, entry)
                 val success = target.deleteRecursively(logger)
                 if (!success) environment.errors.add("Error while clearing file(s)")
-                logger.println
             }
-            
-            logger.println
         }
     }
 

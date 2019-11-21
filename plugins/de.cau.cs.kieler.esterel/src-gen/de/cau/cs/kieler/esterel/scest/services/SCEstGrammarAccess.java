@@ -132,7 +132,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		//EsterelParallel
 		public RuleCall getStatementsEsterelParallelParserRuleCall_5_0() { return cStatementsEsterelParallelParserRuleCall_5_0; }
 		
-		//"end" "module" | "."
+		//("end" "module" | ".")
 		public Alternatives getAlternatives_6() { return cAlternatives_6; }
 		
 		//"end" "module"
@@ -269,7 +269,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		//{EsterelThread.statements+=current}
 		public Action getEsterelThreadStatementsAction_0_1_0() { return cEsterelThreadStatementsAction_0_1_0; }
 		
-		//=> ";" statements+=EsterelThread
+		//(=> ";" statements+=EsterelThread)
 		public Group getGroup_0_1_1() { return cGroup_0_1_1; }
 		
 		//=> ";"
@@ -451,7 +451,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getSignalSignalIDTerminalRuleCall_2_0_1() { return cSignalSignalIDTerminalRuleCall_2_0_1; }
 		
-		//"(" expression=Expression ")"
+		//("(" expression=Expression ")")
 		public Group getGroup_3() { return cGroup_3; }
 		
 		//"("
@@ -2790,7 +2790,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	//// Test Entity Rule
 	//// A test entity is either an annotation expression or an effect.
 	//TestEntity kext::TestEntity:
-	//	expression=AnnotatedExpression | effect=Effect;
+	//	expression=(AnnotatedExpression | AnnotatedJsonExpression) | effect=Effect;
 	public KExtGrammarAccess.TestEntityElements getTestEntityAccess() {
 		return gaKExt.getTestEntityAccess();
 	}
@@ -2812,6 +2812,18 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getAnnotatedExpressionRule() {
 		return getAnnotatedExpressionAccess().getRule();
+	}
+	
+	//AnnotatedJsonExpression kext::AnnotatedExpression:
+	//	annotations+=super::Annotation*
+	//	'json'
+	//	expression=JsonObjectValue;
+	public KExtGrammarAccess.AnnotatedJsonExpressionElements getAnnotatedJsonExpressionAccess() {
+		return gaKExt.getAnnotatedJsonExpressionAccess();
+	}
+	
+	public ParserRule getAnnotatedJsonExpressionRule() {
+		return getAnnotatedJsonExpressionAccess().getRule();
 	}
 	
 	//// Declaration Rule
@@ -2886,12 +2898,12 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	//	global?='global'?
 	//	static?='static'?
 	//	host?='host'? (type=ClassType
-	//	name=ID?
+	//	name=EString?
 	//	'{'
 	//	declarations+=DeclarationOrMethod*
 	//	'}'
 	//	| type=StructType
-	//	name=ID?
+	//	name=EString?
 	//	'{'
 	//	declarations+=Declaration*
 	//	'}') (valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*)?
@@ -2924,12 +2936,12 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	//	global?='global'?
 	//	static?='static'?
 	//	host?='host'? (type=ClassType
-	//	name=ID?
+	//	name=EString?
 	//	'{'
 	//	declarations+=DeclarationOrMethodWOSemicolon*
 	//	'}'
 	//	| type=StructType
-	//	name=ID?
+	//	name=EString?
 	//	'{'
 	//	declarations+=DeclarationWOSemicolon*
 	//	'}') (valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*)?
@@ -3495,15 +3507,36 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//InitExpression Expression:
-	//	{OperatorExpression} subExpressions+=super::AtomicValuedExpression operator=InitOperator
-	//	subExpressions+=super::AtomicValuedExpression
-	//	| super::AtomicValuedExpression;
+	//	FbyExpression ({OperatorExpression.subExpressions+=current} (operator=InitOperator subExpressions+=FbyExpression)
+	//	('->' subExpressions+=FbyExpression)*)?;
 	public KExpressionsGrammarAccess.InitExpressionElements getInitExpressionAccess() {
 		return gaKExpressions.getInitExpressionAccess();
 	}
 	
 	public ParserRule getInitExpressionRule() {
 		return getInitExpressionAccess().getRule();
+	}
+	
+	//FbyExpression Expression:
+	//	SfbyExpression ({OperatorExpression.subExpressions+=current} (operator=FbyOperator subExpressions+=SfbyExpression)
+	//	('fby' subExpressions+=SfbyExpression)*)?;
+	public KExpressionsGrammarAccess.FbyExpressionElements getFbyExpressionAccess() {
+		return gaKExpressions.getFbyExpressionAccess();
+	}
+	
+	public ParserRule getFbyExpressionRule() {
+		return getFbyExpressionAccess().getRule();
+	}
+	
+	//SfbyExpression Expression:
+	//	super::AtomicValuedExpression ({OperatorExpression.subExpressions+=current} (operator=SfbyOperator
+	//	subExpressions+=super::AtomicValuedExpression) ('sfby' subExpressions+=super::AtomicValuedExpression)*)?;
+	public KExpressionsGrammarAccess.SfbyExpressionElements getSfbyExpressionAccess() {
+		return gaKExpressions.getSfbyExpressionAccess();
+	}
+	
+	public ParserRule getSfbyExpressionRule() {
+		return getSfbyExpressionAccess().getRule();
 	}
 	
 	//// Valued Object Test Expression Rule
@@ -3949,6 +3982,26 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public EnumRule getInitOperatorRule() {
 		return getInitOperatorAccess().getRule();
+	}
+	
+	//enum FbyOperator returns OperatorType:
+	//	FBY="fby";
+	public KExpressionsGrammarAccess.FbyOperatorElements getFbyOperatorAccess() {
+		return gaKExpressions.getFbyOperatorAccess();
+	}
+	
+	public EnumRule getFbyOperatorRule() {
+		return getFbyOperatorAccess().getRule();
+	}
+	
+	//enum SfbyOperator returns OperatorType:
+	//	SFBY="sfby";
+	public KExpressionsGrammarAccess.SfbyOperatorElements getSfbyOperatorAccess() {
+		return gaKExpressions.getSfbyOperatorAccess();
+	}
+	
+	public EnumRule getSfbyOperatorRule() {
+		return getSfbyOperatorAccess().getRule();
 	}
 	
 	//enum ValueType:

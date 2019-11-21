@@ -101,7 +101,7 @@ Transition returns sccharts::Transition:
     ('do' effects+=Effect (';' effects+=Effect)*)?
     preemption=PreemptionType 
     targetState=[sccharts::State|ID]
-    deferred?='deferred'?
+    deferred=DeferredType?
     history=HistoryType?
 	
 	('label' label=STRING)?;
@@ -268,14 +268,14 @@ ClassDeclarationWOSemicolon returns kext::ClassDeclaration:
     host?='host'?
     ((
         type = ClassType
-        (name = ID)?
+        (name = EString)?
         '{'
             policy=PolicyRegion?
             declarations+=DeclarationOrMethodWOSemicolon*
         '}'
     )|(
         type = StructType
-        (name = ID)?
+        (name = EString)?
         '{'
             declarations+=DeclarationWOSemicolon*
         '}'
@@ -339,6 +339,9 @@ enum DelayType returns sccharts::DelayType:
 
 enum HistoryType returns sccharts::HistoryType:
     RESET = 'reset' | SHALLOW = 'shallow history' | DEEP = 'history';
+    
+enum DeferredType returns sccharts::DeferredType:
+    SHALLOW = 'deferred' | DEEP = 'deep deferred';
 
 @Override  
 enum ValueType returns kexpressions::ValueType:
