@@ -85,12 +85,17 @@ class DebugAnnotations extends SCChartsProcessor implements Traceable {
         
         // If tracing info is available, annotate state with original state name and hash of full name
         if (originalState !== null) {
+            val nameHash = originalState.fullNameHash
+            val stateNameHashString = "State " + originalState.name + " (" + nameHash + ")"
+            // For tracking of executing states
             if (USE_ANNOTATIONS) {
                 state.addStringAnnotation("OriginalState", originalState.name)
-                state.addIntAnnotation("OriginalNameHash", originalState.fullNameHash)
+                state.addIntAnnotation("OriginalNameHash", nameHash)
             } else {
-                state.addCommentAnnotation("DebugAnnotation", "State " + originalState.name + " (" + originalState.fullNameHash + ")")
+                state.addCommentAnnotation("DebugAnnotation", stateNameHashString)
             }
+            // For tracking of active states
+            state.addStringAnnotation("SourceState", stateNameHashString)
         } else {
             environment.warnings.add("Cannot find original model element for " + state.name)
         }

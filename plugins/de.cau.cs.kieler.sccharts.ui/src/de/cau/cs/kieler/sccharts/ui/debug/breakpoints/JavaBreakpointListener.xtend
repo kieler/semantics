@@ -43,6 +43,7 @@ import org.eclipse.jdt.core.dom.Message
 import de.cau.cs.kieler.sccharts.processors.statebased.DebugAnnotations
 import de.cau.cs.kieler.sccharts.ui.debug.view.DebugDiagramView
 import de.cau.cs.kieler.sccharts.ui.debug.highlighting.DebugHighlighter
+import org.eclipse.jdt.debug.core.IJavaVariable
 
 /**
  * @author peu
@@ -137,6 +138,44 @@ class JavaBreakpointListener implements IJavaBreakpointListener {
     
     def List<State> findActiveStates(IJavaThread thread, IJavaBreakpoint breakpoint, SCCharts model) {
         
+        val context = thread.findVariable("rootContext")
+        val activeStates = extractStatesFromContext(context, model) 
+        println("found " + activeStates.length + " active states.")
+        return activeStates
+        
+    }
+    
+    def List<State> extractStatesFromContext(IJavaVariable context, SCCharts model) {
+        
+        val vars = context.value.variables
+        val activeStates = <State> newLinkedList
+        
+        for (variable : vars) {
+            if (variable.name.equals("threadStatus")) {
+                val status = variable.value?.variables.filter[name.equals("name")].head?.value?.valueString
+                // If region was not yet initialized or has terminated already, ignore all active states within it
+                if (status === null || status.equals("null") || status.equals("TERMINATED")) {
+                    return <State> newLinkedList
+                }
+                println("Found Thread status.")
+            } else if (variable.name.equals("activeState")) {
+                // Get the currently active state on this hierarchy level
+                val varValue = variable.value
+                if (!varValue.valueString.equals("null") ) {
+                    println("Non-null active state for context " + context.toString)
+                    val stateName = varValue.variables.filter[name.equals("origin")].head.value.toString
+                    val states = model.getStatesByID(stateName.split(" ").get(1).split("\\(").get(0))
+                    val stateHashString = stateName.split("\\(").last
+                    val stateHashValue = stateHashString.substring(0, stateHashString.length - 2)
+                    activeStates.addAll(states.filter[DebugAnnotations.getFullNameHash(it).toString.equals(stateHashValue)])
+                }
+            } else {
+                // Get the active state from a child region
+                activeStates.addAll(extractStatesFromContext(variable as IJavaVariable, model))
+            }
+        }
+        
+        return activeStates
     }
     
     /**

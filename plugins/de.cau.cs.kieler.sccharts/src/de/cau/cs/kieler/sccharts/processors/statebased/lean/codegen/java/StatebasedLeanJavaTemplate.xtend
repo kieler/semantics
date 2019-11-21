@@ -125,7 +125,13 @@ class StatebasedLeanJavaTemplate extends AbstractStatebasedLeanTemplate {
 			 * The chosen scheduling regime (IUR) uses four states to maintain the statuses of threads.
 			 */
 			  public enum ThreadStatus {
-			    TERMINATED, RUNNING, READY, PAUSING;
+			    TERMINATED("TERMINATED"), RUNNING("RUNNING"), READY("READY"), PAUSING("PAUSING");
+			    
+			    private String name;
+			    
+			    private ThreadStatus(String name) {
+			        this.name = name;
+			    }
 			  }
 			
 			  « IF rootState.declarations.filter(VariableDeclaration).map[it.valuedObjects].flatten.size > 0 »
