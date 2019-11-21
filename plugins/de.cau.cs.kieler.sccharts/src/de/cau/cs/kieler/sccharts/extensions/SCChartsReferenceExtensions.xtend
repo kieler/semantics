@@ -25,6 +25,7 @@ import de.cau.cs.kieler.kexpressions.kext.extensions.KExtReferenceExtensions
 import de.cau.cs.kieler.kexpressions.kext.extensions.Replacements
 import de.cau.cs.kieler.kexpressions.kext.extensions.Binding
 import de.cau.cs.kieler.kexpressions.kext.extensions.BindingType
+import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 
 /**
  * @author ssm
@@ -164,5 +165,22 @@ class SCChartsReferenceExtensions extends KExtReferenceExtensions {
         
         bindings
     }
-
+    
+    // finds a list of valued objects witch are inputs of the referenced SCChart
+    def getInputs(ReferenceDeclaration ref){
+        val List<ValuedObject> inputs = newArrayList;
+        (ref.reference as State).declarations.filter(VariableDeclaration).filter[isInput].forEach [
+            valuedObjects.forEach[inputs.add(it)]
+        ]
+        return inputs
+    }
+    
+    // finds a list of valued objects witch are outputs of the referenced SCChart
+    def getOutputs(ReferenceDeclaration ref){
+        val List<ValuedObject> outputs = newArrayList;
+        (ref.reference as State).declarations.filter(VariableDeclaration).filter[isOutput].forEach [
+            valuedObjects.forEach[outputs.add(it)]
+        ]
+        return outputs
+    }
 }

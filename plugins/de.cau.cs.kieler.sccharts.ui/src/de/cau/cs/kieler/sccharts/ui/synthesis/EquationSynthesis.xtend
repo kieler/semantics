@@ -16,7 +16,6 @@ import com.google.inject.Inject
 import com.google.inject.Injector
 import de.cau.cs.kieler.annotations.Annotatable
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.IgnoreValue
 import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.OperatorType
@@ -24,7 +23,6 @@ import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 import de.cau.cs.kieler.kexpressions.Value
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.VectorValue
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCompareExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
@@ -32,16 +30,15 @@ import de.cau.cs.kieler.kicool.ui.synthesis.KiCoolSynthesis
 import de.cau.cs.kieler.klighd.KlighdConstants
 import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.internal.util.KlighdInternalProperties
-import de.cau.cs.kieler.klighd.kgraph.KGraphElement
 import de.cau.cs.kieler.klighd.kgraph.KGraphFactory
 import de.cau.cs.kieler.klighd.kgraph.KIdentifier
-import de.cau.cs.kieler.klighd.kgraph.KLabel
-import de.cau.cs.kieler.klighd.kgraph.KLabeledGraphElement
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.kgraph.KPort
 import de.cau.cs.kieler.klighd.krendering.Colors
+import de.cau.cs.kieler.klighd.krendering.KPolygon
 import de.cau.cs.kieler.klighd.krendering.KPolyline
 import de.cau.cs.kieler.klighd.krendering.KRendering
+import de.cau.cs.kieler.klighd.krendering.KText
 import de.cau.cs.kieler.klighd.krendering.LineStyle
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
@@ -50,6 +47,7 @@ import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsDataflowRegionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsReferenceExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions
 import de.cau.cs.kieler.sccharts.ui.synthesis.actions.ReferenceExpandAction
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.EquationStyles
@@ -76,14 +74,6 @@ import org.eclipse.xtext.resource.XtextResourceSet
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.klighd.kgraph.KEdge
-import de.cau.cs.kieler.kexpressions.Declaration
-import de.cau.cs.kieler.klighd.krendering.KRoundedRectangle
-import de.cau.cs.kieler.klighd.krendering.KContainerRendering
-import de.cau.cs.kieler.klighd.krendering.KPolygon
-import de.cau.cs.kieler.klighd.krendering.KText
-import de.cau.cs.kieler.kexpressions.VariableDeclaration
-import java.util.ArrayList
 
 /**
  * @author ssm
@@ -144,11 +134,13 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
     @Inject extension AnnotationsExtensions
     @Inject extension KRenderingExtensions
     @Inject extension SCChartsDataflowRegionExtensions
-    @Inject extension KExpressionsCompareExtensions
+    @Inject extension SCChartsReferenceExtensions
+    @Inject extension EquationSynthesisHelper
     @Inject StateSynthesis stateSynthesis
     @Inject Injector injector
 
     val HashMap<ReferenceDeclaration, KNode> referenceNodes = newHashMap
+    protected val List<Pair<KNode, KNode>> sequentials = newArrayList
 
     static val ANNOTATION_FIGURE = "figure"
 
@@ -170,8 +162,6 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
     protected static val INOUT_PORT = "inout"
     protected static val INSTANCE_IN_PORT = "in_inst"
     protected static val INSTANCE_OUT_PORT = "out_inst"
-
-    protected val List<Pair<KNode, KNode>> sequentials = newArrayList
 
     protected val defaultFigures = #{
         "CLASS_INPUT" -> #["InputClass.kgt", "Class.kgt"],
@@ -242,51 +232,6 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
             return nodes
         }
         return new EquationSimplification(rootNode, injector).simplify(nodes)
-    }
-
-    // returns the label of the last index of the last sub reference or the label of the last sub reference
-    def String lastSubReferenceLabel(ValuedObjectReference reference) {
-        if (reference.subReference !== null) {
-            return reference.subReference.lastSubReferenceLabel
-        }
-        if (reference.indices.size > 0) {
-            return "[" + reference.indices.get(reference.indices.size - 1).serializeHR.toString + "]"
-        }
-        return reference.serializeHR.toString
-    }
-
-    // returns the last index of the last sub reference or the last sub reference
-    def Expression lastSubReference(ValuedObjectReference reference) {
-        if (reference.subReference !== null) {
-            return reference.subReference.lastSubReference
-        }
-        if (reference.indices.size > 0) {
-            return reference.indices.get(reference.indices.size - 1)
-        }
-        return reference
-    }
-
-    // returns true iff the last sub reference has indices
-    def boolean lastSubReferenceIsArray(ValuedObjectReference reference) {
-        if (reference.subReference !== null) {
-            return reference.subReference.lastSubReferenceIsArray
-        }
-        return reference.indices.size > 0
-    }
-
-    // given a reference with sub references and indices
-    // a copied reference is returned without the last index or sub reference
-    def ValuedObjectReference removeLastReference(ValuedObjectReference reference) {
-        val ref = reference.copy
-        if (ref.subReference !== null) {
-            ref.subReference = ref.subReference.removeLastReference
-            return ref
-        }
-        if (ref.indices.size > 0) {
-            ref.indices.remove(ref.indices.size - 1)
-            return ref
-        }
-        return null
     }
 
     // performTransformation:
@@ -468,18 +413,13 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
             val nodes = <KNode>newLinkedList
             val sources = (element.expression as VectorValue).values.map[performTransformation(nodes, false)]
             val target = element.reference.performTransformation(nodes, true)
-            // find the list of input valued objects of the reference
-            val List<ValuedObjectReference> params = newArrayList
-            val state = (element.reference.valuedObject.declaration as ReferenceDeclaration).reference as State
-            state.declarations.filter(VariableDeclaration).filter[isInput].forEach [
-                valuedObjects.forEach[params.add(reference)]
-            ]
+            val inputs = (element.reference.valuedObject.declaration as ReferenceDeclaration).getInputs.map[reference]
             var index = 0
             // connect the inputs with labeled ports
             for (source : sources) {
                 val sourcePort = source.findPortById(OUT_PORT)
                 val targetPort = target.getInputPortWithNumber(index)
-                val ref = if(params.size >= index) params.get(index) else null
+                val ref = if(inputs.size >= index) inputs.get(index) else null
                 if (ref !== null) {
                     targetPort.setLabel(ref.serializeHR.toString, true)
                     targetPort.associateWith(ref)
@@ -703,7 +643,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                 newNode = referenceNodes.get(declaration).copy
             } else {
                 val state = declaration.reference as State
-                newNode = stateSynthesis.transform(state).head.trimReferenceNode
+                newNode = stateSynthesis.transform(state).head
                 referenceNodes.put(declaration, newNode.copy)
             }
             if (node.getInputPortWithNumber(0) !== null) {
@@ -734,17 +674,6 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         return newNode
     }
 
-    def trimReferenceNode(KNode node) {
-        var first = true
-        for (dec : node.data.filter(KContainerRendering).get(0).children) {
-            if (!first) {
-                dec.remove
-            }
-            first = false
-        }
-        return node
-    }
-
     protected def reWireInlining(List<KNode> nodes) {
         val inlinedNodes = nodes.filter[it.getProperty(INLINED_REFERENCE)].toList
         for (node : inlinedNodes) {
@@ -752,7 +681,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
             for (child : node.eContents.filter(KNode).toList) {
                 nodes += child
                 child.setLayoutOption(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_ORDER)
-                child.data.filter(de.cau.cs.kieler.klighd.krendering.KRendering).forEach [
+                child.data.filter(KRendering).forEach [
                     placementData = null
                 ]
 
@@ -816,33 +745,6 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
             nodes.betterRemove(node)
         }
         return nodes
-    }
-
-    // removes a node from the list and from the graph
-    def betterRemove(List<KNode> nodes, KNode node) {
-        while (node.incomingEdges !== null && node.incomingEdges.size > 0) {
-            node.incomingEdges.get(0).betterRemove
-        }
-        while (node.outgoingEdges !== null && node.outgoingEdges.size > 0) {
-            node.outgoingEdges.get(0).betterRemove
-        }
-        node.remove
-        nodes.remove(node)
-    }
-
-    // removes the edge and the ports if they are not needed anymore
-    def void betterRemove(KEdge e) {
-        val source = e.source
-        val target = e.target
-        if (e.sourcePort !== null && e.sourcePort.edges !== null && e.sourcePort.edges.size == 1) {
-            e.sourcePort.remove
-        }
-        if (e.targetPort !== null && e.targetPort.edges !== null && e.targetPort.edges.size == 1) {
-            e.targetPort.remove
-        }
-        e.remove
-        source?.outgoingEdges?.remove(e)
-        target?.incomingEdges?.remove(e)
     }
 
     // create a single node from a kgt file
@@ -982,32 +884,6 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         }
     }
 
-    static def getId(KLabeledGraphElement node) {
-        node.eContents?.filter(KIdentifier)?.head?.id
-    }
-
-    def setId(KLabeledGraphElement node, String id) {
-        node.getData(KIdentifier).id = id
-        node
-    }
-
-    static def KLabel getLabel(KNode node) {
-        node.eContents.filter(KLabel).head
-    }
-
-    static def PortSide getPortSide(KPort port) {
-        port.getProperty(CoreOptions::PORT_SIDE)
-    }
-
-    def findPortById(KNode node, String id) {
-        for (p : node.ports) {
-            if (p.id == id) {
-                return p
-            }
-        }
-        return null
-    }
-
     // returns the number-th input port of a node and creates it if it doesn't exist
     def getInputPortWithNumber(KNode node, int number) {
         var maxIndex = -1
@@ -1040,18 +916,6 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         return result
     }
 
-    def isInput(KNode node) {
-        node.getProperty(EquationSynthesis.INPUT_FLAG) as boolean
-    }
-
-    def isOutput(KNode node) {
-        node.getProperty(EquationSynthesis.OUTPUT_FLAG) as boolean
-    }
-
-    def isReference(KNode node) {
-        return node.getProperty(EquationSynthesis.REFERENCE_NODE) as boolean
-    }
-
     def isSequential(KNode before, KNode after) {
         if (before.isInput && after.isInput) {
             return sequentials.exists [
@@ -1059,56 +923,5 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
             ]
         }
         return sequentials.exists[key == before && value == after]
-    }
-
-    def isSequential(KEdge edge) {
-        edge.getProperty(EquationSynthesis.SEQUENTIAL_EDGE) as boolean
-    }
-
-    def isInstance(KEdge edge) {
-        edge.getProperty(EquationSynthesis.INSTANCE_EDGE) as boolean
-    }
-
-    def getSourceElement(KGraphElement node) {
-        return node.getProperty(KlighdInternalProperties.MODEL_ELEMEMT)
-    }
-
-    // given two KGraph elements the return value is true iff the elements are associated with the same source element
-    // in case of associations with ValuedObjectReferences only the ValuedObject needs to be equal
-    def sourceEquals(KGraphElement a, KGraphElement b) {
-        if (a.sourceElement instanceof ValuedObjectReference && b.sourceElement instanceof ValuedObjectReference) {
-            return (a.sourceElement as ValuedObjectReference).valuedObject ==
-                (b.sourceElement as ValuedObjectReference).valuedObject
-        }
-        if (a.sourceElement instanceof Value && b.sourceElement instanceof Value &&
-            a.sourceElement.serializeHR == b.sourceElement.serializeHR) {
-            return true
-        }
-        if (a.sourceElement instanceof Expression && b.sourceElement instanceof Expression) {
-            return (a.sourceElement as Expression).equals2(b.sourceElement as Expression)
-        }
-        return a.sourceElement == b.sourceElement
-    }
-
-    // returns true iff input is a node for the assignment equation of output
-    // only usable when the equations are separated
-    def isInputForEquation(KNode input, KNode output) {
-        val List<KNode> queue = newArrayList
-        queue.add(input)
-        val List<KNode> visited = newArrayList
-        while (queue.size > 0) {
-            val current = queue.get(0)
-            queue.remove(current)
-            visited.add(current)
-            if (current == output) {
-                return true
-            }
-            for (e : current.outgoingEdges.filter[!isInstance]) {
-                if (!visited.exists[it == e.target] && !queue.exists[it == e.target]) {
-                    queue.add(e.target)
-                }
-            }
-        }
-        return false
     }
 }

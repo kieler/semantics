@@ -27,7 +27,6 @@ import org.eclipse.elk.core.options.Alignment
 import org.eclipse.elk.core.options.CoreOptions
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.klighd.kgraph.KEdge
 
 /**
  * @author kolja
@@ -38,6 +37,7 @@ class EquationSimplification {
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension SCChartsSerializeHRExtensions
     @Inject extension EquationSynthesis
+    @Inject extension EquationSynthesisHelper
     @Inject extension KNodeExtensionsReplacement
 
     val DataflowRegion currentRegion
