@@ -1,0 +1,33 @@
+scchart ABO {
+    input bool A, B
+    output bool O1, O2
+    
+    initial state Init
+      immediate do O1 = false; O2 = false
+      go to WaitAB 
+    
+    state WaitAB {
+        region HandleA //{
+            initial state WaitA 
+            immediate if A 
+                do B = true; O1 = true
+                go to DoneA
+            
+            final state DoneA
+        }
+
+        region HandleB {
+            initial state WaitB 
+            if B 
+                do O1 = true
+                go to DoneB
+            
+            final state DoneB
+        }
+        
+    }
+    do O1 = false; O2 = true
+     join to GotAB
+    
+    final state GotAB
+}

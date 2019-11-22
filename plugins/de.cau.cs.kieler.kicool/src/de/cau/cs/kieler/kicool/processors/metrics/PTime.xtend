@@ -51,8 +51,8 @@ class PTime extends Metric<Object, Integer> {
     }    
     
     override protected getMetricEntity() {
-        val pTime = environment.getProperty(PTIME) 
-        val value = if (pTime === null || pTime < MIN_TIME) MIN_TIME else pTime
+        val pTime = environment.getProperty(PROCESSOR_TIME) / 1000_000
+        val value = if (pTime < MIN_TIME) MIN_TIME else pTime
         value.longValue as int
     }
     

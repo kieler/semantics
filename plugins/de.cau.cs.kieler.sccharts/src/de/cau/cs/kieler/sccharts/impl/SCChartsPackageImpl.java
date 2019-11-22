@@ -21,6 +21,7 @@ import de.cau.cs.kieler.sccharts.Action;
 import de.cau.cs.kieler.sccharts.CodeEffect;
 import de.cau.cs.kieler.sccharts.ControlflowRegion;
 import de.cau.cs.kieler.sccharts.DataflowRegion;
+import de.cau.cs.kieler.sccharts.DeferredType;
 import de.cau.cs.kieler.sccharts.DelayType;
 import de.cau.cs.kieler.sccharts.DuringAction;
 import de.cau.cs.kieler.sccharts.EntryAction;
@@ -225,6 +226,13 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * @generated
      */
     private EEnum delayTypeEEnum = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EEnum deferredTypeEEnum = null;
 
     /**
      * Creates an instance of the model <b>Package</b>, registered with
@@ -859,6 +867,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getCodeEffect() {
         return codeEffectEClass;
     }
@@ -921,6 +930,16 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
     @Override
     public EEnum getDelayType() {
         return delayTypeEEnum;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EEnum getDeferredType() {
+        return deferredTypeEEnum;
     }
 
     /**
@@ -1036,6 +1055,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         preemptionTypeEEnum = createEEnum(PREEMPTION_TYPE);
         historyTypeEEnum = createEEnum(HISTORY_TYPE);
         delayTypeEEnum = createEEnum(DELAY_TYPE);
+        deferredTypeEEnum = createEEnum(DEFERRED_TYPE);
     }
 
     /**
@@ -1155,7 +1175,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         initEClass(transitionEClass, Transition.class, "Transition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getTransition_Preemption(), this.getPreemptionType(), "preemption", null, 1, 1, Transition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getTransition_History(), this.getHistoryType(), "history", "RESET", 1, 1, Transition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getTransition_Deferred(), ecorePackage.getEBoolean(), "deferred", null, 0, 1, Transition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getTransition_Deferred(), this.getDeferredType(), "deferred", null, 0, 1, Transition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getTransition_TargetState(), this.getState(), this.getState_IncomingTransitions(), "targetState", null, 1, 1, Transition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getTransition_SourceState(), this.getState(), this.getState_OutgoingTransitions(), "sourceState", null, 1, 1, Transition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -1198,6 +1218,11 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         addEEnumLiteral(delayTypeEEnum, DelayType.DELAYED);
         addEEnumLiteral(delayTypeEEnum, DelayType.IMMEDIATE);
         addEEnumLiteral(delayTypeEEnum, DelayType.AUTOMATIC);
+
+        initEEnum(deferredTypeEEnum, DeferredType.class, "DeferredType");
+        addEEnumLiteral(deferredTypeEEnum, DeferredType.NONE);
+        addEEnumLiteral(deferredTypeEEnum, DeferredType.SHALLOW);
+        addEEnumLiteral(deferredTypeEEnum, DeferredType.DEEP);
 
         // Create resource
         createResource(eNS_URI);

@@ -165,36 +165,36 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 			case KExpressionsPackage.OPERATOR_EXPRESSION:
 				if (rule == grammarAccess.getAddExpressionRule()
 						|| action == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()) {
-					sequence_AddExpression_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_InitExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NotExpression_ProductExpression_ShiftExpressions_SumExpression_TernaryOperation_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
+					sequence_AddExpression_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_FbyExpression_InitExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NotExpression_ProductExpression_SfbyExpression_ShiftExpressions_SumExpression_TernaryOperation_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getDivExpressionRule()) {
-					sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_DivExpression_InitExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NotExpression_ProductExpression_ShiftExpressions_SumExpression_TernaryOperation_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
+					sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_DivExpression_FbyExpression_InitExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NotExpression_ProductExpression_SfbyExpression_ShiftExpressions_SumExpression_TernaryOperation_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getModExpressionRule()) {
-					sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_InitExpression_LogicalAndExpression_LogicalOrExpression_ModExpression_NegExpression_NotExpression_ProductExpression_ShiftExpressions_SumExpression_TernaryOperation_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
+					sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_FbyExpression_InitExpression_LogicalAndExpression_LogicalOrExpression_ModExpression_NegExpression_NotExpression_ProductExpression_SfbyExpression_ShiftExpressions_SumExpression_TernaryOperation_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getMultExpressionRule()) {
-					sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_InitExpression_LogicalAndExpression_LogicalOrExpression_MultExpression_NegExpression_NotExpression_ProductExpression_ShiftExpressions_SumExpression_TernaryOperation_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
+					sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_FbyExpression_InitExpression_LogicalAndExpression_LogicalOrExpression_MultExpression_NegExpression_NotExpression_ProductExpression_SfbyExpression_ShiftExpressions_SumExpression_TernaryOperation_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getShiftLeftExpressionRule()) {
-					sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_InitExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NotExpression_ProductExpression_ShiftExpressions_ShiftLeftExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
+					sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_FbyExpression_InitExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NotExpression_ProductExpression_SfbyExpression_ShiftExpressions_ShiftLeftExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getShiftRightExpressionRule()) {
-					sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_InitExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NotExpression_ProductExpression_ShiftExpressions_ShiftRightExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
+					sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_FbyExpression_InitExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NotExpression_ProductExpression_SfbyExpression_ShiftExpressions_ShiftRightExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getShiftRightUnsignedExpressionRule()) {
-					sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_InitExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NotExpression_ProductExpression_ShiftExpressions_ShiftRightUnsignedExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
+					sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_FbyExpression_InitExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NotExpression_ProductExpression_SfbyExpression_ShiftExpressions_ShiftRightUnsignedExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getSubExpressionRule()
 						|| action == grammarAccess.getSubExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()) {
-					sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_InitExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NotExpression_ProductExpression_ShiftExpressions_SubExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
+					sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_FbyExpression_InitExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NotExpression_ProductExpression_SfbyExpression_ShiftExpressions_SubExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getRootRule()
@@ -236,10 +236,15 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 						|| rule == grammarAccess.getNegExpressionRule()
 						|| rule == grammarAccess.getTernaryOperationRule()
 						|| rule == grammarAccess.getInitExpressionRule()
+						|| action == grammarAccess.getInitExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getFbyExpressionRule()
+						|| action == grammarAccess.getFbyExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getSfbyExpressionRule()
+						|| action == grammarAccess.getSfbyExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getAtomicExpressionRule()
 						|| rule == grammarAccess.getAtomicValuedExpressionRule()
 						|| rule == grammarAccess.getVectorValueMemberRule()) {
-					sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_InitExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NotExpression_ProductExpression_ShiftExpressions_SumExpression_TernaryOperation_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
+					sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_FbyExpression_InitExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NotExpression_ProductExpression_SfbyExpression_ShiftExpressions_SumExpression_TernaryOperation_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getValuedObjectTestExpressionRule()) {
@@ -360,11 +365,18 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *             subExpressions+=AtomicValuedExpression 
 	 *             subExpressions+=AtomicValuedExpression?
 	 *         ) | 
-	 *         (subExpressions+=AtomicValuedExpression operator=InitOperator subExpressions+=AtomicValuedExpression) | 
+	 *         (subExpressions+=InitExpression_OperatorExpression_1_0 operator=InitOperator subExpressions+=FbyExpression subExpressions+=FbyExpression*) | 
+	 *         (subExpressions+=FbyExpression_OperatorExpression_1_0 operator=FbyOperator subExpressions+=SfbyExpression subExpressions+=SfbyExpression*) | 
+	 *         (
+	 *             subExpressions+=SfbyExpression_OperatorExpression_1_0 
+	 *             operator=SfbyOperator 
+	 *             subExpressions+=AtomicValuedExpression 
+	 *             subExpressions+=AtomicValuedExpression*
+	 *         ) | 
 	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
 	 *     )
 	 */
-	protected void sequence_AddExpression_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_InitExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NotExpression_ProductExpression_ShiftExpressions_SumExpression_TernaryOperation_ValuedObjectTestExpression(ISerializationContext context, OperatorExpression semanticObject) {
+	protected void sequence_AddExpression_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_FbyExpression_InitExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NotExpression_ProductExpression_SfbyExpression_ShiftExpressions_SumExpression_TernaryOperation_ValuedObjectTestExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -449,11 +461,18 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *             subExpressions+=AtomicValuedExpression 
 	 *             subExpressions+=AtomicValuedExpression?
 	 *         ) | 
-	 *         (subExpressions+=AtomicValuedExpression operator=InitOperator subExpressions+=AtomicValuedExpression) | 
+	 *         (subExpressions+=InitExpression_OperatorExpression_1_0 operator=InitOperator subExpressions+=FbyExpression subExpressions+=FbyExpression*) | 
+	 *         (subExpressions+=FbyExpression_OperatorExpression_1_0 operator=FbyOperator subExpressions+=SfbyExpression subExpressions+=SfbyExpression*) | 
+	 *         (
+	 *             subExpressions+=SfbyExpression_OperatorExpression_1_0 
+	 *             operator=SfbyOperator 
+	 *             subExpressions+=AtomicValuedExpression 
+	 *             subExpressions+=AtomicValuedExpression*
+	 *         ) | 
 	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
 	 *     )
 	 */
-	protected void sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_DivExpression_InitExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NotExpression_ProductExpression_ShiftExpressions_SumExpression_TernaryOperation_ValuedObjectTestExpression(ISerializationContext context, OperatorExpression semanticObject) {
+	protected void sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_DivExpression_FbyExpression_InitExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NotExpression_ProductExpression_SfbyExpression_ShiftExpressions_SumExpression_TernaryOperation_ValuedObjectTestExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -538,11 +557,18 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *             subExpressions+=AtomicValuedExpression 
 	 *             subExpressions+=AtomicValuedExpression?
 	 *         ) | 
-	 *         (subExpressions+=AtomicValuedExpression operator=InitOperator subExpressions+=AtomicValuedExpression) | 
+	 *         (subExpressions+=InitExpression_OperatorExpression_1_0 operator=InitOperator subExpressions+=FbyExpression subExpressions+=FbyExpression*) | 
+	 *         (subExpressions+=FbyExpression_OperatorExpression_1_0 operator=FbyOperator subExpressions+=SfbyExpression subExpressions+=SfbyExpression*) | 
+	 *         (
+	 *             subExpressions+=SfbyExpression_OperatorExpression_1_0 
+	 *             operator=SfbyOperator 
+	 *             subExpressions+=AtomicValuedExpression 
+	 *             subExpressions+=AtomicValuedExpression*
+	 *         ) | 
 	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
 	 *     )
 	 */
-	protected void sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_InitExpression_LogicalAndExpression_LogicalOrExpression_ModExpression_NegExpression_NotExpression_ProductExpression_ShiftExpressions_SumExpression_TernaryOperation_ValuedObjectTestExpression(ISerializationContext context, OperatorExpression semanticObject) {
+	protected void sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_FbyExpression_InitExpression_LogicalAndExpression_LogicalOrExpression_ModExpression_NegExpression_NotExpression_ProductExpression_SfbyExpression_ShiftExpressions_SumExpression_TernaryOperation_ValuedObjectTestExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -627,11 +653,18 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *             subExpressions+=AtomicValuedExpression 
 	 *             subExpressions+=AtomicValuedExpression?
 	 *         ) | 
-	 *         (subExpressions+=AtomicValuedExpression operator=InitOperator subExpressions+=AtomicValuedExpression) | 
+	 *         (subExpressions+=InitExpression_OperatorExpression_1_0 operator=InitOperator subExpressions+=FbyExpression subExpressions+=FbyExpression*) | 
+	 *         (subExpressions+=FbyExpression_OperatorExpression_1_0 operator=FbyOperator subExpressions+=SfbyExpression subExpressions+=SfbyExpression*) | 
+	 *         (
+	 *             subExpressions+=SfbyExpression_OperatorExpression_1_0 
+	 *             operator=SfbyOperator 
+	 *             subExpressions+=AtomicValuedExpression 
+	 *             subExpressions+=AtomicValuedExpression*
+	 *         ) | 
 	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
 	 *     )
 	 */
-	protected void sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_InitExpression_LogicalAndExpression_LogicalOrExpression_MultExpression_NegExpression_NotExpression_ProductExpression_ShiftExpressions_SumExpression_TernaryOperation_ValuedObjectTestExpression(ISerializationContext context, OperatorExpression semanticObject) {
+	protected void sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_FbyExpression_InitExpression_LogicalAndExpression_LogicalOrExpression_MultExpression_NegExpression_NotExpression_ProductExpression_SfbyExpression_ShiftExpressions_SumExpression_TernaryOperation_ValuedObjectTestExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -721,11 +754,18 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *             subExpressions+=AtomicValuedExpression 
 	 *             subExpressions+=AtomicValuedExpression?
 	 *         ) | 
-	 *         (subExpressions+=AtomicValuedExpression operator=InitOperator subExpressions+=AtomicValuedExpression) | 
+	 *         (subExpressions+=InitExpression_OperatorExpression_1_0 operator=InitOperator subExpressions+=FbyExpression subExpressions+=FbyExpression*) | 
+	 *         (subExpressions+=FbyExpression_OperatorExpression_1_0 operator=FbyOperator subExpressions+=SfbyExpression subExpressions+=SfbyExpression*) | 
+	 *         (
+	 *             subExpressions+=SfbyExpression_OperatorExpression_1_0 
+	 *             operator=SfbyOperator 
+	 *             subExpressions+=AtomicValuedExpression 
+	 *             subExpressions+=AtomicValuedExpression*
+	 *         ) | 
 	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
 	 *     )
 	 */
-	protected void sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_InitExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NotExpression_ProductExpression_ShiftExpressions_ShiftLeftExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression(ISerializationContext context, OperatorExpression semanticObject) {
+	protected void sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_FbyExpression_InitExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NotExpression_ProductExpression_SfbyExpression_ShiftExpressions_ShiftLeftExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -815,11 +855,18 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *             subExpressions+=AtomicValuedExpression 
 	 *             subExpressions+=AtomicValuedExpression?
 	 *         ) | 
-	 *         (subExpressions+=AtomicValuedExpression operator=InitOperator subExpressions+=AtomicValuedExpression) | 
+	 *         (subExpressions+=InitExpression_OperatorExpression_1_0 operator=InitOperator subExpressions+=FbyExpression subExpressions+=FbyExpression*) | 
+	 *         (subExpressions+=FbyExpression_OperatorExpression_1_0 operator=FbyOperator subExpressions+=SfbyExpression subExpressions+=SfbyExpression*) | 
+	 *         (
+	 *             subExpressions+=SfbyExpression_OperatorExpression_1_0 
+	 *             operator=SfbyOperator 
+	 *             subExpressions+=AtomicValuedExpression 
+	 *             subExpressions+=AtomicValuedExpression*
+	 *         ) | 
 	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
 	 *     )
 	 */
-	protected void sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_InitExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NotExpression_ProductExpression_ShiftExpressions_ShiftRightExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression(ISerializationContext context, OperatorExpression semanticObject) {
+	protected void sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_FbyExpression_InitExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NotExpression_ProductExpression_SfbyExpression_ShiftExpressions_ShiftRightExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -909,11 +956,18 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *             subExpressions+=AtomicValuedExpression 
 	 *             subExpressions+=AtomicValuedExpression?
 	 *         ) | 
-	 *         (subExpressions+=AtomicValuedExpression operator=InitOperator subExpressions+=AtomicValuedExpression) | 
+	 *         (subExpressions+=InitExpression_OperatorExpression_1_0 operator=InitOperator subExpressions+=FbyExpression subExpressions+=FbyExpression*) | 
+	 *         (subExpressions+=FbyExpression_OperatorExpression_1_0 operator=FbyOperator subExpressions+=SfbyExpression subExpressions+=SfbyExpression*) | 
+	 *         (
+	 *             subExpressions+=SfbyExpression_OperatorExpression_1_0 
+	 *             operator=SfbyOperator 
+	 *             subExpressions+=AtomicValuedExpression 
+	 *             subExpressions+=AtomicValuedExpression*
+	 *         ) | 
 	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
 	 *     )
 	 */
-	protected void sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_InitExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NotExpression_ProductExpression_ShiftExpressions_ShiftRightUnsignedExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression(ISerializationContext context, OperatorExpression semanticObject) {
+	protected void sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_FbyExpression_InitExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NotExpression_ProductExpression_SfbyExpression_ShiftExpressions_ShiftRightUnsignedExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -999,11 +1053,18 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *             subExpressions+=AtomicValuedExpression 
 	 *             subExpressions+=AtomicValuedExpression?
 	 *         ) | 
-	 *         (subExpressions+=AtomicValuedExpression operator=InitOperator subExpressions+=AtomicValuedExpression) | 
+	 *         (subExpressions+=InitExpression_OperatorExpression_1_0 operator=InitOperator subExpressions+=FbyExpression subExpressions+=FbyExpression*) | 
+	 *         (subExpressions+=FbyExpression_OperatorExpression_1_0 operator=FbyOperator subExpressions+=SfbyExpression subExpressions+=SfbyExpression*) | 
+	 *         (
+	 *             subExpressions+=SfbyExpression_OperatorExpression_1_0 
+	 *             operator=SfbyOperator 
+	 *             subExpressions+=AtomicValuedExpression 
+	 *             subExpressions+=AtomicValuedExpression*
+	 *         ) | 
 	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
 	 *     )
 	 */
-	protected void sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_InitExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NotExpression_ProductExpression_ShiftExpressions_SubExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression(ISerializationContext context, OperatorExpression semanticObject) {
+	protected void sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_FbyExpression_InitExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NotExpression_ProductExpression_SfbyExpression_ShiftExpressions_SubExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -1049,6 +1110,11 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     NegExpression returns OperatorExpression
 	 *     TernaryOperation returns OperatorExpression
 	 *     InitExpression returns OperatorExpression
+	 *     InitExpression.OperatorExpression_1_0 returns OperatorExpression
+	 *     FbyExpression returns OperatorExpression
+	 *     FbyExpression.OperatorExpression_1_0 returns OperatorExpression
+	 *     SfbyExpression returns OperatorExpression
+	 *     SfbyExpression.OperatorExpression_1_0 returns OperatorExpression
 	 *     AtomicExpression returns OperatorExpression
 	 *     AtomicValuedExpression returns OperatorExpression
 	 *     VectorValueMember returns OperatorExpression
@@ -1128,11 +1194,18 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *             subExpressions+=AtomicValuedExpression 
 	 *             subExpressions+=AtomicValuedExpression?
 	 *         ) | 
-	 *         (subExpressions+=AtomicValuedExpression operator=InitOperator subExpressions+=AtomicValuedExpression) | 
+	 *         (subExpressions+=InitExpression_OperatorExpression_1_0 operator=InitOperator subExpressions+=FbyExpression subExpressions+=FbyExpression*) | 
+	 *         (subExpressions+=FbyExpression_OperatorExpression_1_0 operator=FbyOperator subExpressions+=SfbyExpression subExpressions+=SfbyExpression*) | 
+	 *         (
+	 *             subExpressions+=SfbyExpression_OperatorExpression_1_0 
+	 *             operator=SfbyOperator 
+	 *             subExpressions+=AtomicValuedExpression 
+	 *             subExpressions+=AtomicValuedExpression*
+	 *         ) | 
 	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
 	 *     )
 	 */
-	protected void sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_InitExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NotExpression_ProductExpression_ShiftExpressions_SumExpression_TernaryOperation_ValuedObjectTestExpression(ISerializationContext context, OperatorExpression semanticObject) {
+	protected void sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_FbyExpression_InitExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NotExpression_ProductExpression_SfbyExpression_ShiftExpressions_SumExpression_TernaryOperation_ValuedObjectTestExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -1188,6 +1261,11 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     NegExpression returns BoolValue
 	 *     TernaryOperation returns BoolValue
 	 *     InitExpression returns BoolValue
+	 *     InitExpression.OperatorExpression_1_0 returns BoolValue
+	 *     FbyExpression returns BoolValue
+	 *     FbyExpression.OperatorExpression_1_0 returns BoolValue
+	 *     SfbyExpression returns BoolValue
+	 *     SfbyExpression.OperatorExpression_1_0 returns BoolValue
 	 *     AtomicExpression returns BoolValue
 	 *     AtomicValuedExpression returns BoolValue
 	 *     BoolValue returns BoolValue
@@ -1260,6 +1338,11 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     NegExpression returns FloatValue
 	 *     TernaryOperation returns FloatValue
 	 *     InitExpression returns FloatValue
+	 *     InitExpression.OperatorExpression_1_0 returns FloatValue
+	 *     FbyExpression returns FloatValue
+	 *     FbyExpression.OperatorExpression_1_0 returns FloatValue
+	 *     SfbyExpression returns FloatValue
+	 *     SfbyExpression.OperatorExpression_1_0 returns FloatValue
 	 *     AtomicExpression returns FloatValue
 	 *     AtomicValuedExpression returns FloatValue
 	 *     FloatValue returns FloatValue
@@ -1332,6 +1415,11 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     NegExpression returns FunctionCall
 	 *     TernaryOperation returns FunctionCall
 	 *     InitExpression returns FunctionCall
+	 *     InitExpression.OperatorExpression_1_0 returns FunctionCall
+	 *     FbyExpression returns FunctionCall
+	 *     FbyExpression.OperatorExpression_1_0 returns FunctionCall
+	 *     SfbyExpression returns FunctionCall
+	 *     SfbyExpression.OperatorExpression_1_0 returns FunctionCall
 	 *     AtomicExpression returns FunctionCall
 	 *     AtomicValuedExpression returns FunctionCall
 	 *     FunctionCall returns FunctionCall
@@ -1409,6 +1497,11 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     NegExpression returns IntValue
 	 *     TernaryOperation returns IntValue
 	 *     InitExpression returns IntValue
+	 *     InitExpression.OperatorExpression_1_0 returns IntValue
+	 *     FbyExpression returns IntValue
+	 *     FbyExpression.OperatorExpression_1_0 returns IntValue
+	 *     SfbyExpression returns IntValue
+	 *     SfbyExpression.OperatorExpression_1_0 returns IntValue
 	 *     AtomicExpression returns IntValue
 	 *     AtomicValuedExpression returns IntValue
 	 *     IntValue returns IntValue
@@ -1599,6 +1692,11 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     NegExpression returns RandomCall
 	 *     TernaryOperation returns RandomCall
 	 *     InitExpression returns RandomCall
+	 *     InitExpression.OperatorExpression_1_0 returns RandomCall
+	 *     FbyExpression returns RandomCall
+	 *     FbyExpression.OperatorExpression_1_0 returns RandomCall
+	 *     SfbyExpression returns RandomCall
+	 *     SfbyExpression.OperatorExpression_1_0 returns RandomCall
 	 *     AtomicExpression returns RandomCall
 	 *     AtomicValuedExpression returns RandomCall
 	 *     RandomCall returns RandomCall
@@ -1663,6 +1761,11 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     NegExpression returns RandomizeCall
 	 *     TernaryOperation returns RandomizeCall
 	 *     InitExpression returns RandomizeCall
+	 *     InitExpression.OperatorExpression_1_0 returns RandomizeCall
+	 *     FbyExpression returns RandomizeCall
+	 *     FbyExpression.OperatorExpression_1_0 returns RandomizeCall
+	 *     SfbyExpression returns RandomizeCall
+	 *     SfbyExpression.OperatorExpression_1_0 returns RandomizeCall
 	 *     AtomicExpression returns RandomizeCall
 	 *     AtomicValuedExpression returns RandomizeCall
 	 *     RandomizeCall returns RandomizeCall
@@ -1727,6 +1830,11 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     NegExpression returns ReferenceCall
 	 *     TernaryOperation returns ReferenceCall
 	 *     InitExpression returns ReferenceCall
+	 *     InitExpression.OperatorExpression_1_0 returns ReferenceCall
+	 *     FbyExpression returns ReferenceCall
+	 *     FbyExpression.OperatorExpression_1_0 returns ReferenceCall
+	 *     SfbyExpression returns ReferenceCall
+	 *     SfbyExpression.OperatorExpression_1_0 returns ReferenceCall
 	 *     AtomicExpression returns ReferenceCall
 	 *     AtomicValuedExpression returns ReferenceCall
 	 *     ReferenceCall returns ReferenceCall
@@ -1812,6 +1920,11 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     NegExpression returns StringValue
 	 *     TernaryOperation returns StringValue
 	 *     InitExpression returns StringValue
+	 *     InitExpression.OperatorExpression_1_0 returns StringValue
+	 *     FbyExpression returns StringValue
+	 *     FbyExpression.OperatorExpression_1_0 returns StringValue
+	 *     SfbyExpression returns StringValue
+	 *     SfbyExpression.OperatorExpression_1_0 returns StringValue
 	 *     AtomicExpression returns StringValue
 	 *     AtomicValuedExpression returns StringValue
 	 *     StringValue returns StringValue
@@ -1884,6 +1997,11 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     NegExpression returns TextExpression
 	 *     TernaryOperation returns TextExpression
 	 *     InitExpression returns TextExpression
+	 *     InitExpression.OperatorExpression_1_0 returns TextExpression
+	 *     FbyExpression returns TextExpression
+	 *     FbyExpression.OperatorExpression_1_0 returns TextExpression
+	 *     SfbyExpression returns TextExpression
+	 *     SfbyExpression.OperatorExpression_1_0 returns TextExpression
 	 *     AtomicExpression returns TextExpression
 	 *     AtomicValuedExpression returns TextExpression
 	 *     TextExpression returns TextExpression
@@ -1948,6 +2066,11 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     NegExpression returns ValuedObjectReference
 	 *     TernaryOperation returns ValuedObjectReference
 	 *     InitExpression returns ValuedObjectReference
+	 *     InitExpression.OperatorExpression_1_0 returns ValuedObjectReference
+	 *     FbyExpression returns ValuedObjectReference
+	 *     FbyExpression.OperatorExpression_1_0 returns ValuedObjectReference
+	 *     SfbyExpression returns ValuedObjectReference
+	 *     SfbyExpression.OperatorExpression_1_0 returns ValuedObjectReference
 	 *     AtomicExpression returns ValuedObjectReference
 	 *     AtomicValuedExpression returns ValuedObjectReference
 	 *     ValuedObjectTestExpression returns ValuedObjectReference
@@ -2025,6 +2148,11 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     NegExpression returns VectorValue
 	 *     TernaryOperation returns VectorValue
 	 *     InitExpression returns VectorValue
+	 *     InitExpression.OperatorExpression_1_0 returns VectorValue
+	 *     FbyExpression returns VectorValue
+	 *     FbyExpression.OperatorExpression_1_0 returns VectorValue
+	 *     SfbyExpression returns VectorValue
+	 *     SfbyExpression.OperatorExpression_1_0 returns VectorValue
 	 *     AtomicExpression returns VectorValue
 	 *     AtomicValuedExpression returns VectorValue
 	 *     VectorValue returns VectorValue

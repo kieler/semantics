@@ -196,12 +196,12 @@ class VariableStore implements IKiCoolCloneable {
             
             // Add print format
             var String format = null
-            if (decl.annotations.exists[PRINT_FORMAT_ANNOTAION.equals(name)]) {
-                val value = decl.annotations.filter(StringAnnotation).findLast[PRINT_FORMAT_ANNOTAION.equals(name)].values?.head
+            if (decl.annotations.exists[PRINT_FORMAT_ANNOTAION.equalsIgnoreCase(name)]) {
+                val value = decl.annotations.filter(StringAnnotation).findLast[PRINT_FORMAT_ANNOTAION.equalsIgnoreCase(name)].values?.head
                 if (!value.nullOrEmpty) format = value
             }
-            if (vo.annotations.exists[PRINT_FORMAT_ANNOTAION.equals(name)]) {
-                val value = vo.annotations.filter(StringAnnotation).findLast[PRINT_FORMAT_ANNOTAION.equals(name)].values?.head
+            if (vo.annotations.exists[PRINT_FORMAT_ANNOTAION.equalsIgnoreCase(name)]) {
+                val value = vo.annotations.filter(StringAnnotation).findLast[PRINT_FORMAT_ANNOTAION.equalsIgnoreCase(name)].values?.head
                 if (!value.nullOrEmpty) format = value
             }
             if (!format.nullOrEmpty) {

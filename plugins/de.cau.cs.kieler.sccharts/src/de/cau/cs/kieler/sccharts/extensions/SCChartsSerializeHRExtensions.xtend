@@ -48,6 +48,7 @@ import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.processors.For
 import de.cau.cs.kieler.scl.extensions.SCLSerializeExtensions
 import java.util.List
+import de.cau.cs.kieler.scl.MethodImplementationDeclaration
 
 /**
  * @author ssm
@@ -290,6 +291,10 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
     }
     
     def dispatch List<Pair<? extends CharSequence, TextFormat>> serializeHighlighted(MethodDeclaration method, boolean hr) {
+        serializeMethodHighlighted(method, hr, false)
+    }
+    
+    def List<Pair<? extends CharSequence, TextFormat>> serializeMethodHighlighted(MethodDeclaration method, boolean hr, boolean body) {
         val components = <Pair<? extends CharSequence, TextFormat>> newArrayList
         
         if (method.access != AccessModifier.PUBLIC) {
@@ -316,6 +321,24 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
             }
         }
         components.addText(")")
+        
+        if (method instanceof MethodImplementationDeclaration) {
+            if (!method.statements.empty && body) {
+                components.addText("{")
+                if (sclSerializer !== null) {
+                    var text = sclSerializer.serialize(method)
+                    if (text.charAt(text.length - 2) === Character.valueOf(';')) {
+                        text = text.subSequence(1, text.length - 2)
+                    } else {
+                        text = text.subSequence(1, text.length - 1)
+                    }
+                    components.addText(text)
+                } else {
+                    components.addText("...")
+                }
+                components.addText("}")
+            }
+        }
         
         if (!method.schedule.nullOrEmpty) {
             components.addKeyword("schedule")

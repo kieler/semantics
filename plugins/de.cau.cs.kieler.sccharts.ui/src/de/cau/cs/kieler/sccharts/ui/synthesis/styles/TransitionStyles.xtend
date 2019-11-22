@@ -184,7 +184,7 @@ class TransitionStyles {
      * Adds a deferred head arrow decorator.<br>
      * If used in combination with other head decorators set isAdditionalArrowHead to true.
      */
-    def addDeferredDecorator(KEdge edge, boolean isAdditionalArrowHead) {
+    def addDeferredDecorator(KEdge edge, boolean deep, boolean isAdditionalArrowHead) {
         if (isAdditionalArrowHead) {
             (edge.line.children.head.placementData as KDecoratorPlacementData).absolute = 26;
         } else {
@@ -194,11 +194,17 @@ class TransitionStyles {
         }
         edge.line.addEllipse() => [
             lineWidth = 1;
-            background = TRANSITION_DEFERRED_DECORATOR.color;
+            background = TRANSITION_DEFERRED.color;
             if (isAdditionalArrowHead) {
                 setDecoratorPlacementData(10, 10, -19, 1, false);
             } else {
                 setDecoratorPlacementData(10, 10, -4, 1, false);
+            }
+            if (deep) {
+                addText("*") => [
+                    setPointPlacementData(createKPosition(LEFT, 2, 0, TOP, -1, 0), H_LEFT, V_TOP, 0, 0, 0, 0);
+                    foreground = TRANSITION_DEFERRED_DECORATOR.color;
+                ]
             }
         ];
     }
