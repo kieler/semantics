@@ -3,18 +3,27 @@
  */
 package de.cau.cs.kieler.lustre.lustre.impl;
 
+import de.cau.cs.kieler.kexpressions.VariableDeclaration;
+
+import de.cau.cs.kieler.kexpressions.impl.DeclarationImpl;
+
 import de.cau.cs.kieler.lustre.lustre.ExternalNodeDeclaration;
 import de.cau.cs.kieler.lustre.lustre.LustrePackage;
-import de.cau.cs.kieler.lustre.lustre.Params;
+
+import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+
+import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -26,14 +35,13 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.lustre.lustre.impl.ExternalNodeDeclarationImpl#isIsUnsafe <em>Is Unsafe</em>}</li>
  *   <li>{@link de.cau.cs.kieler.lustre.lustre.impl.ExternalNodeDeclarationImpl#isHasState <em>Has State</em>}</li>
- *   <li>{@link de.cau.cs.kieler.lustre.lustre.impl.ExternalNodeDeclarationImpl#getName <em>Name</em>}</li>
- *   <li>{@link de.cau.cs.kieler.lustre.lustre.impl.ExternalNodeDeclarationImpl#getInput <em>Input</em>}</li>
- *   <li>{@link de.cau.cs.kieler.lustre.lustre.impl.ExternalNodeDeclarationImpl#getOutput <em>Output</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.lustre.lustre.impl.ExternalNodeDeclarationImpl#getInputs <em>Inputs</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.lustre.lustre.impl.ExternalNodeDeclarationImpl#getOutputs <em>Outputs</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class ExternalNodeDeclarationImpl extends MinimalEObjectImpl.Container implements ExternalNodeDeclaration
+public class ExternalNodeDeclarationImpl extends DeclarationImpl implements ExternalNodeDeclaration
 {
   /**
    * The default value of the '{@link #isIsUnsafe() <em>Is Unsafe</em>}' attribute.
@@ -76,44 +84,24 @@ public class ExternalNodeDeclarationImpl extends MinimalEObjectImpl.Container im
   protected boolean hasState = HAS_STATE_EDEFAULT;
 
   /**
-   * The default value of the '{@link #getName() <em>Name</em>}' attribute.
+   * The cached value of the '{@link #getInputs() <em>Inputs</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getName()
+   * @see #getInputs()
    * @generated
    * @ordered
    */
-  protected static final String NAME_EDEFAULT = null;
+  protected EList<VariableDeclaration> inputs;
 
   /**
-   * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
+   * The cached value of the '{@link #getOutputs() <em>Outputs</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getName()
+   * @see #getOutputs()
    * @generated
    * @ordered
    */
-  protected String name = NAME_EDEFAULT;
-
-  /**
-   * The cached value of the '{@link #getInput() <em>Input</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getInput()
-   * @generated
-   * @ordered
-   */
-  protected Params input;
-
-  /**
-   * The cached value of the '{@link #getOutput() <em>Output</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getOutput()
-   * @generated
-   * @ordered
-   */
-  protected Params output;
+  protected EList<VariableDeclaration> outputs;
 
   /**
    * <!-- begin-user-doc -->
@@ -192,51 +180,13 @@ public class ExternalNodeDeclarationImpl extends MinimalEObjectImpl.Container im
    * @generated
    */
   @Override
-  public String getName()
+  public EList<VariableDeclaration> getInputs()
   {
-    return name;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public void setName(String newName)
-  {
-    String oldName = name;
-    name = newName;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, LustrePackage.EXTERNAL_NODE_DECLARATION__NAME, oldName, name));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public Params getInput()
-  {
-    return input;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public NotificationChain basicSetInput(Params newInput, NotificationChain msgs)
-  {
-    Params oldInput = input;
-    input = newInput;
-    if (eNotificationRequired())
+    if (inputs == null)
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, LustrePackage.EXTERNAL_NODE_DECLARATION__INPUT, oldInput, newInput);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
+      inputs = new EObjectContainmentEList<VariableDeclaration>(VariableDeclaration.class, this, LustrePackage.EXTERNAL_NODE_DECLARATION__INPUTS);
     }
-    return msgs;
+    return inputs;
   }
 
   /**
@@ -245,70 +195,13 @@ public class ExternalNodeDeclarationImpl extends MinimalEObjectImpl.Container im
    * @generated
    */
   @Override
-  public void setInput(Params newInput)
+  public EList<VariableDeclaration> getOutputs()
   {
-    if (newInput != input)
+    if (outputs == null)
     {
-      NotificationChain msgs = null;
-      if (input != null)
-        msgs = ((InternalEObject)input).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - LustrePackage.EXTERNAL_NODE_DECLARATION__INPUT, null, msgs);
-      if (newInput != null)
-        msgs = ((InternalEObject)newInput).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - LustrePackage.EXTERNAL_NODE_DECLARATION__INPUT, null, msgs);
-      msgs = basicSetInput(newInput, msgs);
-      if (msgs != null) msgs.dispatch();
+      outputs = new EObjectContainmentEList<VariableDeclaration>(VariableDeclaration.class, this, LustrePackage.EXTERNAL_NODE_DECLARATION__OUTPUTS);
     }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, LustrePackage.EXTERNAL_NODE_DECLARATION__INPUT, newInput, newInput));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public Params getOutput()
-  {
-    return output;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public NotificationChain basicSetOutput(Params newOutput, NotificationChain msgs)
-  {
-    Params oldOutput = output;
-    output = newOutput;
-    if (eNotificationRequired())
-    {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, LustrePackage.EXTERNAL_NODE_DECLARATION__OUTPUT, oldOutput, newOutput);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
-    }
-    return msgs;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public void setOutput(Params newOutput)
-  {
-    if (newOutput != output)
-    {
-      NotificationChain msgs = null;
-      if (output != null)
-        msgs = ((InternalEObject)output).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - LustrePackage.EXTERNAL_NODE_DECLARATION__OUTPUT, null, msgs);
-      if (newOutput != null)
-        msgs = ((InternalEObject)newOutput).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - LustrePackage.EXTERNAL_NODE_DECLARATION__OUTPUT, null, msgs);
-      msgs = basicSetOutput(newOutput, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, LustrePackage.EXTERNAL_NODE_DECLARATION__OUTPUT, newOutput, newOutput));
+    return outputs;
   }
 
   /**
@@ -321,10 +214,10 @@ public class ExternalNodeDeclarationImpl extends MinimalEObjectImpl.Container im
   {
     switch (featureID)
     {
-      case LustrePackage.EXTERNAL_NODE_DECLARATION__INPUT:
-        return basicSetInput(null, msgs);
-      case LustrePackage.EXTERNAL_NODE_DECLARATION__OUTPUT:
-        return basicSetOutput(null, msgs);
+      case LustrePackage.EXTERNAL_NODE_DECLARATION__INPUTS:
+        return ((InternalEList<?>)getInputs()).basicRemove(otherEnd, msgs);
+      case LustrePackage.EXTERNAL_NODE_DECLARATION__OUTPUTS:
+        return ((InternalEList<?>)getOutputs()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -343,12 +236,10 @@ public class ExternalNodeDeclarationImpl extends MinimalEObjectImpl.Container im
         return isIsUnsafe();
       case LustrePackage.EXTERNAL_NODE_DECLARATION__HAS_STATE:
         return isHasState();
-      case LustrePackage.EXTERNAL_NODE_DECLARATION__NAME:
-        return getName();
-      case LustrePackage.EXTERNAL_NODE_DECLARATION__INPUT:
-        return getInput();
-      case LustrePackage.EXTERNAL_NODE_DECLARATION__OUTPUT:
-        return getOutput();
+      case LustrePackage.EXTERNAL_NODE_DECLARATION__INPUTS:
+        return getInputs();
+      case LustrePackage.EXTERNAL_NODE_DECLARATION__OUTPUTS:
+        return getOutputs();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -358,6 +249,7 @@ public class ExternalNodeDeclarationImpl extends MinimalEObjectImpl.Container im
    * <!-- end-user-doc -->
    * @generated
    */
+  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
@@ -369,14 +261,13 @@ public class ExternalNodeDeclarationImpl extends MinimalEObjectImpl.Container im
       case LustrePackage.EXTERNAL_NODE_DECLARATION__HAS_STATE:
         setHasState((Boolean)newValue);
         return;
-      case LustrePackage.EXTERNAL_NODE_DECLARATION__NAME:
-        setName((String)newValue);
+      case LustrePackage.EXTERNAL_NODE_DECLARATION__INPUTS:
+        getInputs().clear();
+        getInputs().addAll((Collection<? extends VariableDeclaration>)newValue);
         return;
-      case LustrePackage.EXTERNAL_NODE_DECLARATION__INPUT:
-        setInput((Params)newValue);
-        return;
-      case LustrePackage.EXTERNAL_NODE_DECLARATION__OUTPUT:
-        setOutput((Params)newValue);
+      case LustrePackage.EXTERNAL_NODE_DECLARATION__OUTPUTS:
+        getOutputs().clear();
+        getOutputs().addAll((Collection<? extends VariableDeclaration>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -398,14 +289,11 @@ public class ExternalNodeDeclarationImpl extends MinimalEObjectImpl.Container im
       case LustrePackage.EXTERNAL_NODE_DECLARATION__HAS_STATE:
         setHasState(HAS_STATE_EDEFAULT);
         return;
-      case LustrePackage.EXTERNAL_NODE_DECLARATION__NAME:
-        setName(NAME_EDEFAULT);
+      case LustrePackage.EXTERNAL_NODE_DECLARATION__INPUTS:
+        getInputs().clear();
         return;
-      case LustrePackage.EXTERNAL_NODE_DECLARATION__INPUT:
-        setInput((Params)null);
-        return;
-      case LustrePackage.EXTERNAL_NODE_DECLARATION__OUTPUT:
-        setOutput((Params)null);
+      case LustrePackage.EXTERNAL_NODE_DECLARATION__OUTPUTS:
+        getOutputs().clear();
         return;
     }
     super.eUnset(featureID);
@@ -425,12 +313,10 @@ public class ExternalNodeDeclarationImpl extends MinimalEObjectImpl.Container im
         return isUnsafe != IS_UNSAFE_EDEFAULT;
       case LustrePackage.EXTERNAL_NODE_DECLARATION__HAS_STATE:
         return hasState != HAS_STATE_EDEFAULT;
-      case LustrePackage.EXTERNAL_NODE_DECLARATION__NAME:
-        return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-      case LustrePackage.EXTERNAL_NODE_DECLARATION__INPUT:
-        return input != null;
-      case LustrePackage.EXTERNAL_NODE_DECLARATION__OUTPUT:
-        return output != null;
+      case LustrePackage.EXTERNAL_NODE_DECLARATION__INPUTS:
+        return inputs != null && !inputs.isEmpty();
+      case LustrePackage.EXTERNAL_NODE_DECLARATION__OUTPUTS:
+        return outputs != null && !outputs.isEmpty();
     }
     return super.eIsSet(featureID);
   }
@@ -450,8 +336,6 @@ public class ExternalNodeDeclarationImpl extends MinimalEObjectImpl.Container im
     result.append(isUnsafe);
     result.append(", hasState: ");
     result.append(hasState);
-    result.append(", name: ");
-    result.append(name);
     result.append(')');
     return result.toString();
   }

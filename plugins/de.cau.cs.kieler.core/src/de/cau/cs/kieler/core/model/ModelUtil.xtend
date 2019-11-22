@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.emf.ecore.resource.ResourceSet
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
+import com.google.inject.Injector
 
 /** 
  * This is a utility class for File inputs, opening and URL conversion of bundle and workspace
@@ -38,15 +39,29 @@ final class ModelUtil {
 	 * @throws IOExceptionif an error occurs while saving
 	 */
 	def static void saveModel(List<EObject> models, URI uri) throws IOException {
-		// Create a resource set.
-		var ResourceSet resourceSet=new ResourceSetImpl() 
-		// Create a resource for this file.
-		var Resource resource=resourceSet.createResource(uri) 
+		val resourceSet= new ResourceSetImpl() 
+		val resource = resourceSet.createResource(uri) 
 		// Add the model objects to the contents.
 		resource.getContents().addAll(models) 
 		// Save the contents of the resource to the file system.
 		resource.save(emptyMap) 
 	}
+	
+    /**
+     * Save a model to the given URI with a specific Injector.
+     * @param model the model to store in the new file
+     * @param urithe target file URI
+     * @param injector the injector to use
+     * @throws IOExceptionif an error occurs while saving
+     */
+    def static void saveModel(EObject model, URI uri, Injector injector) throws IOException {
+        val resourceSet= injector.getInstance(ResourceSet)
+        val resource = resourceSet.createResource(uri) 
+        // Add the model objects to the contents.
+        resource.getContents().add(model) 
+        // Save the contents of the resource to the file system.
+        resource.save(emptyMap) 
+    }
 	
 	/** 
 	 * Save a model to the given URI.

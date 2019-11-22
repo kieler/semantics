@@ -26,7 +26,8 @@
     <module>de.cau.cs.kieler.kexpressions.text.test</module> <!-- responsible: ssm  -->
     <module>de.cau.cs.kieler.sccharts.test</module> <!-- responsible: als  -->
     <module>de.cau.cs.kieler.esterel.test</module> <!-- responsible: als  -->
-    <module>de.cau.cs.kieler.lustre.test</module> <!-- responsible: als  -->
+    <module>de.cau.cs.kieler.lustre.test</module> <!-- responsible: lgr  -->
+    <!-- Does not contain any active/server-side tests <module>de.cau.cs.kieler.verification.test</module> -->
 
     <!-- BENCHMARK General infrastructure -->
     <module>de.cau.cs.kieler.benchmark.common</module>

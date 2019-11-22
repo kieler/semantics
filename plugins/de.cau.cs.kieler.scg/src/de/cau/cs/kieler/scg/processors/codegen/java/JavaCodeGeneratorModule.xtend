@@ -42,8 +42,9 @@ class JavaCodeGeneratorModule extends CCodeGeneratorModule {
     
     @Inject Injector injector
     
-    protected static val PACKAGE = PragmaRegistry.register("package", StringPragma, "Package name for the generated file(s)")
-    
+    public static val PACKAGE = PragmaRegistry.register("package", StringPragma, "Package name for the generated file(s)")
+    public static val HOSTCODE_JAVA = PragmaRegistry.register("hostcode-java", StringPragma, "Allows additional hostcode to be included (e.g. includes) only for Java.")
+
     public static val JAVA_EXTENSION = ".java"
     
     override configure() {
@@ -108,7 +109,7 @@ class JavaCodeGeneratorModule extends CCodeGeneratorModule {
             sb.append("import " + include + "\n")
         }
         
-        val hostcodePragmas = SCGraphs.getStringPragmas(HOSTCODE)
+        val hostcodePragmas = SCGraphs.getStringPragmas(HOSTCODE) + SCGraphs.getStringPragmas(HOSTCODE_JAVA)
         for (pragma : hostcodePragmas) {
             sb.append(pragma.values.head + "\n")
         }

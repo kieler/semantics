@@ -4,8 +4,11 @@
 package de.cau.cs.kieler.lustre.lustre;
 
 import de.cau.cs.kieler.kexpressions.Expression;
+import de.cau.cs.kieler.kexpressions.ValuedObject;
+import de.cau.cs.kieler.kexpressions.VariableDeclaration;
 
 import de.cau.cs.kieler.kexpressions.keffects.Assignment;
+import de.cau.cs.kieler.kexpressions.keffects.Emission;
 
 import org.eclipse.emf.common.util.EList;
 
@@ -20,8 +23,12 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.lustre.lustre.AState#getName <em>Name</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.lustre.lustre.AState#isInitial <em>Initial</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.lustre.lustre.AState#getValuedObject <em>Valued Object</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.lustre.lustre.AState#getConstants <em>Constants</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.lustre.lustre.AState#getVariables <em>Variables</em>}</li>
  *   <li>{@link de.cau.cs.kieler.lustre.lustre.AState#getEquations <em>Equations</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.lustre.lustre.AState#getEmissions <em>Emissions</em>}</li>
  *   <li>{@link de.cau.cs.kieler.lustre.lustre.AState#getAssertions <em>Assertions</em>}</li>
  *   <li>{@link de.cau.cs.kieler.lustre.lustre.AState#getAutomatons <em>Automatons</em>}</li>
  *   <li>{@link de.cau.cs.kieler.lustre.lustre.AState#getTransitions <em>Transitions</em>}</li>
@@ -34,26 +41,72 @@ import org.eclipse.emf.ecore.EObject;
 public interface AState extends EObject
 {
   /**
-   * Returns the value of the '<em><b>Name</b></em>' attribute.
+   * Returns the value of the '<em><b>Initial</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Name</em>' attribute.
-   * @see #setName(String)
-   * @see de.cau.cs.kieler.lustre.lustre.LustrePackage#getAState_Name()
+   * @return the value of the '<em>Initial</em>' attribute.
+   * @see #setInitial(boolean)
+   * @see de.cau.cs.kieler.lustre.lustre.LustrePackage#getAState_Initial()
    * @model
    * @generated
    */
-  String getName();
+  boolean isInitial();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.lustre.lustre.AState#getName <em>Name</em>}' attribute.
+   * Sets the value of the '{@link de.cau.cs.kieler.lustre.lustre.AState#isInitial <em>Initial</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Name</em>' attribute.
-   * @see #getName()
+   * @param value the new value of the '<em>Initial</em>' attribute.
+   * @see #isInitial()
    * @generated
    */
-  void setName(String value);
+  void setInitial(boolean value);
+
+  /**
+   * Returns the value of the '<em><b>Valued Object</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Valued Object</em>' containment reference.
+   * @see #setValuedObject(ValuedObject)
+   * @see de.cau.cs.kieler.lustre.lustre.LustrePackage#getAState_ValuedObject()
+   * @model containment="true"
+   * @generated
+   */
+  ValuedObject getValuedObject();
+
+  /**
+   * Sets the value of the '{@link de.cau.cs.kieler.lustre.lustre.AState#getValuedObject <em>Valued Object</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Valued Object</em>' containment reference.
+   * @see #getValuedObject()
+   * @generated
+   */
+  void setValuedObject(ValuedObject value);
+
+  /**
+   * Returns the value of the '<em><b>Constants</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.kexpressions.VariableDeclaration}.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Constants</em>' containment reference list.
+   * @see de.cau.cs.kieler.lustre.lustre.LustrePackage#getAState_Constants()
+   * @model containment="true"
+   * @generated
+   */
+  EList<VariableDeclaration> getConstants();
+
+  /**
+   * Returns the value of the '<em><b>Variables</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.kexpressions.VariableDeclaration}.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Variables</em>' containment reference list.
+   * @see de.cau.cs.kieler.lustre.lustre.LustrePackage#getAState_Variables()
+   * @model containment="true"
+   * @generated
+   */
+  EList<VariableDeclaration> getVariables();
 
   /**
    * Returns the value of the '<em><b>Equations</b></em>' containment reference list.
@@ -66,6 +119,18 @@ public interface AState extends EObject
    * @generated
    */
   EList<Assignment> getEquations();
+
+  /**
+   * Returns the value of the '<em><b>Emissions</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.kexpressions.keffects.Emission}.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Emissions</em>' containment reference list.
+   * @see de.cau.cs.kieler.lustre.lustre.LustrePackage#getAState_Emissions()
+   * @model containment="true"
+   * @generated
+   */
+  EList<Emission> getEmissions();
 
   /**
    * Returns the value of the '<em><b>Assertions</b></em>' containment reference list.

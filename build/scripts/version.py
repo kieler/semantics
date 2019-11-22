@@ -94,6 +94,16 @@ def main(args):
     else:
         setPomVersion(join(args.path, 'build'), 'de.cau.cs.kieler.semantics.product.repository', args)
 
+    print '\n- Updating CLI products -'
+    # check pom files
+    for cli in ['de.cau.cs.kieler.kicool.cli','de.cau.cs.kieler.sccharts.cli']:
+        pom = join(args.path, 'build', cli, 'pom.xml')
+        if not isfile(pom):
+            print 'pom.xml does not exist: ' + pom
+            pause(args)
+        else:
+            setPomVersion(join(args.path, 'build'), cli, args)
+
     print '\n= Finished Version Update ='
 
 

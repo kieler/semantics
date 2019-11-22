@@ -42,6 +42,16 @@ interface IPropertyHolder {
      * @return the current value, or the default value if the property is not set
      */
     def <T> T getProperty(IProperty<T> property)
+    
+    /**
+     * Retrieves a property value. If the property is not set or null, it is set to the given value and returned.
+     * 
+     * @param <T> type of property
+     * @param property the property to get
+     * @param the value to set if absent
+     * @return the current value, or the given value
+     */
+    def <T> T getPropertyAndSetIfAbsent(IProperty<T> property, T value)
 
     /** 
      * Copy all properties from another property holder to this one.

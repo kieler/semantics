@@ -140,12 +140,13 @@ class SCChartsScopeExtensions {
         }
         if (scope instanceof State) {
             if (!scope.baseStates.nullOrEmpty) {
-                map.putAll(scope.allVisibleInheritedDeclarations.map[valuedObjects].flatten.toMap[name])
+                map.putAll(scope.allInheritedDeclarations.map[valuedObjects].flatten.toMap[name])
             }
         }
-        if (scope.eContainer !== null && scope.eContainer instanceof Scope) 
+        if (scope.eContainer !== null && scope.eContainer instanceof Scope) {
             return (scope.eContainer as Scope).getValuedObjectNameMap(map)
-        map
+        }
+        return map
     }
     
     

@@ -2526,6 +2526,17 @@ public interface SCChartsPackage extends EPackage {
 
 
     /**
+     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.DeferredType <em>Deferred Type</em>}' enum.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.sccharts.DeferredType
+     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getDeferredType()
+     * @generated
+     */
+    int DEFERRED_TYPE = 23;
+
+
+    /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.SCCharts <em>SC Charts</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -3000,11 +3011,11 @@ public interface SCChartsPackage extends EPackage {
     EAttribute getTransition_History();
 
     /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.Transition#isDeferred <em>Deferred</em>}'.
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.Transition#getDeferred <em>Deferred</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Deferred</em>'.
-     * @see de.cau.cs.kieler.sccharts.Transition#isDeferred()
+     * @see de.cau.cs.kieler.sccharts.Transition#getDeferred()
      * @see #getTransition()
      * @generated
      */
@@ -3194,6 +3205,16 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      */
     EEnum getDelayType();
+
+    /**
+     * Returns the meta object for enum '{@link de.cau.cs.kieler.sccharts.DeferredType <em>Deferred Type</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for enum '<em>Deferred Type</em>'.
+     * @see de.cau.cs.kieler.sccharts.DeferredType
+     * @generated
+     */
+    EEnum getDeferredType();
 
     /**
      * Returns the factory that creates the instances of the model.
@@ -3766,6 +3787,16 @@ public interface SCChartsPackage extends EPackage {
          * @generated
          */
         EEnum DELAY_TYPE = eINSTANCE.getDelayType();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.DeferredType <em>Deferred Type</em>}' enum.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.sccharts.DeferredType
+         * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getDeferredType()
+         * @generated
+         */
+        EEnum DEFERRED_TYPE = eINSTANCE.getDeferredType();
 
     }
 

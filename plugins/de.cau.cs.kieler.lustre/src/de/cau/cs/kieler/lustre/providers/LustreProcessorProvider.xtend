@@ -28,7 +28,8 @@ class LustreProcessorProvider implements IProcessorProvider {
             de.cau.cs.kieler.lustre.processors.lustreToScc.LustreToSCCharts,
             de.cau.cs.kieler.lustre.compiler.processors.LustreSimulationPreparation,
             de.cau.cs.kieler.lustre.compiler.processors.LustreSimulationTemplateGenerator,
-            de.cau.cs.kieler.lustre.compiler.processors.LustreV6CodeGenerator
+            de.cau.cs.kieler.lustre.compiler.processors.LustreV6CodeGenerator,
+            de.cau.cs.kieler.lustre.scade.processors.ScadeEquationsToLustre
         ]
     }
     
