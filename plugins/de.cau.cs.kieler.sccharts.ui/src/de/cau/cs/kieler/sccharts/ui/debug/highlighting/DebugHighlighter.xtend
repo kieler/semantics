@@ -17,6 +17,7 @@ import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.klighd.krendering.KRenderingFactory
 import de.cau.cs.kieler.simulation.ui.visualization.Highlighting
 import de.cau.cs.kieler.sccharts.ui.debug.view.DebugDiagramView
+import de.cau.cs.kieler.klighd.krendering.Colors
 
 /**
  * @author stu121235
@@ -27,14 +28,19 @@ class DebugHighlighter {
     
     static val factory = KRenderingFactory.eINSTANCE
     
-    static val activeStateColor = factory.createKColor.setColor(0,0,255)
+    static val activeStateColor = factory.createKColor.setColor(Colors.RED)
     static val activeStateForeground = factory.createKForeground.setColor2(activeStateColor)
     
-    static val executingStateColor = factory.createKColor.setColor(0,255,0)
-    static val executingStateForeground = factory.createKForeground.setColor2(executingStateColor)
+    // Debugger line highlight green
+    static val executingStateColor = factory.createKColor.setColor(198, 219, 174)
+    static val executingStateBackground = factory.createKBackground.setColor2(executingStateColor)
+    
+    static val breakpointStateColor = factory.createKColor.setColor(Colors.BLUE)
+    static val breakpointStateBackground = factory.createKBackground.setColor2(breakpointStateColor)
     
     val activeStateHighlightings = <Highlighting> newLinkedList
     val executingStateHighlightings = <Highlighting> newLinkedList
+    val breakpointHighlights = <Highlighting> newLinkedList
     
     static var DebugHighlighter instance 
     
@@ -68,7 +74,7 @@ class DebugHighlighter {
             println("Null KNode for state " + state.name + ", nothing to highlight!")
             return
         }
-        val highlighting = new Highlighting(kNode, executingStateForeground, state)
+        val highlighting = new DebugHighlighting(kNode, executingStateBackground, state, DebugHighlighting.EXECUTING_STATE_TYPE)
         executingStateHighlightings.add(highlighting)
         highlighting.apply
     }
@@ -90,11 +96,23 @@ class DebugHighlighter {
     }
  
     def void addBreakpointHighlight(State state) {
-        
+        val kNode = DebugDiagramView.getInstance.getKNode(state)
+        if (kNode === null) {
+            //TODO debug print
+            println("Null KNode for state " + state.name + ", nothing to highlight!")
+            return
+        }
+        val highlighting = new DebugHighlighting(kNode, breakpointStateBackground, state, DebugHighlighting.BREAKPOINT_STATE_TYPE)
+        breakpointHighlights.add(highlighting)
+        highlighting.apply
     }
     
     def void removeBreakpointHighlight(State state) {
-        
+        val highlightings = breakpointHighlights.filter[eObject.equals(state)]
+        for (hl : highlightings) {
+            hl.remove
+        }
+        breakpointHighlights.removeAll(highlightings)
     }
     
     def void addBreakpointDecorator(Transition transition) {
