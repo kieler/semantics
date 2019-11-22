@@ -690,7 +690,8 @@ class KiCoModelUpdateController extends AbstractViewUpdateController implements 
         if (isActive() && syncCompilerToggleAction.isChecked()) {
             compiledModel.clear
             if (model !== null) compiledModel += model
-            update(ChangeEvent.COMPILER)
+            // If the user selected an intermediate model before, the model as to be read in again from the editor.
+            update(compiledModel.empty ? ChangeEvent.EDITOR : ChangeEvent.COMPILER)
         }
     }
     
