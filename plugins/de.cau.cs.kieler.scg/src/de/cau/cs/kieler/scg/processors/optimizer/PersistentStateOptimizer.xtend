@@ -35,6 +35,9 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.scg.processors.SimpleGuardExpressions
 import de.cau.cs.kieler.scg.extensions.SCGMethodExtensions
 
+import static de.cau.cs.kieler.kicool.compilation.VariableStore.*
+import de.cau.cs.kieler.kicool.compilation.VariableStore
+
 /**
  * Persistent State Optimizer
  * ------------------
@@ -84,6 +87,7 @@ class PersistentStateOptimizer extends InplaceProcessor<SCGraphs> {
         val candidates = <ValuedObject> newHashSet
         val resetStateCandidates = <ValuedObject> newHashSet
         val cNodes = <ValuedObject, Node> newHashMap
+        val variableStore = VariableStore.getVariableStore(environment)
         
         while (!nextNodes.empty) {
             val node = nextNodes.pop
@@ -112,9 +116,15 @@ class PersistentStateOptimizer extends InplaceProcessor<SCGraphs> {
                                 expr.subExpressions.immutableCopy.forEach[ remove ]
                                 node.expression.remove
                                 node.expression = TRUE
-                                if (!resetStateCandidates.contains(node.reference.valuedObject)) {
+                                if (!resetStateCandidates.contains(node.reference.valuedObject) || 
+                                    getProperty(PERSISTENT_STATE_OPTIMIZER_RESET_STATE_ENABLED)
+                                ) {
                                     removeList += cNodes.get(node.reference.valuedObject)
                                     candidates -= node.reference.valuedObject
+                                    
+                                    if (getProperty(PERSISTENT_STATE_OPTIMIZER_RESET_STATE_ENABLED)) {
+                                        variableStore.update(node.reference.valuedObject, newArrayList(RESET))
+                                    }
                                 }
                                 annotationModel.addInfo(node, "Persistent State")    
                             }                        
