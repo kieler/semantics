@@ -84,11 +84,12 @@ class CopyPropagationV2 extends InplaceProcessor<SCGraphs> {
         if (!environment.getProperty(COPY_PROPAGATION_ENABLED)) return;
         
         val model = getModel
-        
+        applyAnnotations
+                
         for (scg : model.scgs.ignoreMethods) {
             scg.performCopyPropagation
         }
-        
+
         VariableStore.get(environment).removeAllUncontainedVO(model, environment)
     }
     
@@ -223,7 +224,8 @@ class CopyPropagationV2 extends InplaceProcessor<SCGraphs> {
         if (expression instanceof ValuedObjectReference) {
             if (replacements.keySet.contains(expression.valuedObject.name)) { 
                 val VOR = replacements.peek(expression.valuedObject.name) as ValuedObjectReference
-                environment.infos.add("CP: " + expression.valuedObject.name + " / " + VOR.valuedObject.name, node, true)
+//                environment.infos.add("CP: " + expression.valuedObject.name + " / " + VOR.valuedObject.name, node, true)
+                annotationModel.addInfo(node, "CP: " + expression.valuedObject.name + " / " + VOR.valuedObject.name)
                 expression.valuedObject = VOR.valuedObject
                 for (i : VOR.indices) {
                     expression.indices += i.copy
