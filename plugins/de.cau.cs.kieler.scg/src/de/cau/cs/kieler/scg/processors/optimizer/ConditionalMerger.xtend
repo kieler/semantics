@@ -51,7 +51,7 @@ class ConditionalMerger extends InplaceProcessor<SCGraphs> {
     public static val IProperty<Boolean> CONDITIONAL_MERGER_ENABLED = 
         new Property<Boolean>("de.cau.cs.kieler.scg.opt.conditionalMerger", false)    
     public static val IProperty<Boolean> CONDITIONAL_MERGER_WIDESPAN_ENABLED = 
-        new Property<Boolean>("de.cau.cs.kieler.scg.opt.conditionalMerger.widespan", false)    
+        new Property<Boolean>("de.cau.cs.kieler.scg.opt.conditionalMerger.widespan", true)    
     
     override getId() {
         "de.cau.cs.kieler.scg.processors.conditionalMerger"
@@ -65,10 +65,12 @@ class ConditionalMerger extends InplaceProcessor<SCGraphs> {
         if (!environment.getProperty(CONDITIONAL_MERGER_ENABLED)) return;
         
         val model = getModel
+        applyAnnotations
         
         for (scg : model.scgs.ignoreMethods) {
             scg.performConditionalMerge
         }
+        
     }
     
     def performConditionalMerge(SCGraph scg) {
@@ -113,13 +115,13 @@ class ConditionalMerger extends InplaceProcessor<SCGraphs> {
                                 tail.target = thenNode
                                 tail = thenNode.allNext.head
                                 if (thenNode instanceof Assignment) {
-                                    if (thenNode.reference !== null && thenNode.reference.valuedObject !== null) {
-                                        environment.infos.add("CM: " + thenNode.reference.valuedObject.name , thenNode, true)
-//                                        sourceAnnotationModel.addInfo(thenNode, "CM: " + thenNode.reference.valuedObject.name)
-                                    } else {
-                                        environment.infos.add("CM", thenNode, true)
-//                                        sourceAnnotationModel.addInfo(thenNode, "CM")
-                                    }
+//                                    if (thenNode.reference !== null && thenNode.reference.valuedObject !== null) {
+////                                        environment.infos.add("CM: " + thenNode.reference.valuedObject.name , thenNode, true)
+//                                        annotationModel.addInfo(thenNode, "CM: " + thenNode.reference.valuedObject.name)
+//                                    } else {
+////                                        environment.infos.add("CM", thenNode, true)
+                                        annotationModel.addInfo(thenNode, "Conditional Merger")
+//                                    }
                                 }
                                 
                                 thenNodes += thenNode.allNext.filter[ target !== node.^else.targetNode ].map[ targetNode ] 

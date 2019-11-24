@@ -57,7 +57,7 @@ class PersistentStateOptimizer extends InplaceProcessor<SCGraphs> {
     public static val IProperty<Boolean> PERSISTENT_STATE_OPTIMIZER_ENABLED = 
         new Property<Boolean>("de.cau.cs.kieler.scg.opt.persistentStateOptimizer", false)    
     public static val IProperty<Boolean> PERSISTENT_STATE_OPTIMIZER_RESET_STATE_ENABLED = 
-        new Property<Boolean>("de.cau.cs.kieler.scg.opt.persistentStateOptimizer.resetState", false)    
+        new Property<Boolean>("de.cau.cs.kieler.scg.opt.persistentStateOptimizer.resetState", true)    
     
     override getId() {
         "de.cau.cs.kieler.scg.processors.persistentStateOptimizer"
