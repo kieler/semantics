@@ -227,8 +227,8 @@ class StatebasedLeanCTemplate extends AbstractStatebasedLeanTemplate {
               « IF state.outgoingTransitions.size == 0 »
             « if (state.isHierarchical) addDelayedEnabledCode(state, "") »
               context->threadStatus = READY;
-              « ELSE »
-            } else {« if (state.isHierarchical) addDelayedEnabledCode(state, "  ") »
+            « ELSE »
+              } else {« if (state.isHierarchical) addDelayedEnabledCode(state, "  ") »
                 context->threadStatus = READY;
               }
               « ENDIF »
