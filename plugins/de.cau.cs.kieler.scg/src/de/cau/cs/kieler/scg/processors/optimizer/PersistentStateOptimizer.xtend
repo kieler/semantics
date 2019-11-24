@@ -53,6 +53,8 @@ class PersistentStateOptimizer extends InplaceProcessor<SCGraphs> {
     
     public static val IProperty<Boolean> PERSISTENT_STATE_OPTIMIZER_ENABLED = 
         new Property<Boolean>("de.cau.cs.kieler.scg.opt.persistentStateOptimizer", false)    
+    public static val IProperty<Boolean> PERSISTENT_STATE_OPTIMIZER_RESET_STATE_ENABLED = 
+        new Property<Boolean>("de.cau.cs.kieler.scg.opt.persistentStateOptimizer.resetState", false)    
     
     override getId() {
         "de.cau.cs.kieler.scg.processors.persistentStateOptimizer"
@@ -80,6 +82,7 @@ class PersistentStateOptimizer extends InplaceProcessor<SCGraphs> {
         val removeList = <EObject> newLinkedList
         
         val candidates = <ValuedObject> newHashSet
+        val resetStateCandidates = <ValuedObject> newHashSet
         val cNodes = <ValuedObject, Node> newHashMap
         
         while (!nextNodes.empty) {
@@ -109,12 +112,26 @@ class PersistentStateOptimizer extends InplaceProcessor<SCGraphs> {
                                 expr.subExpressions.immutableCopy.forEach[ remove ]
                                 node.expression.remove
                                 node.expression = TRUE
-                                removeList += cNodes.get(node.reference.valuedObject)
-                                candidates -= node.reference.valuedObject
+                                if (!resetStateCandidates.contains(node.reference.valuedObject)) {
+                                    removeList += cNodes.get(node.reference.valuedObject)
+                                    candidates -= node.reference.valuedObject
+                                }
                                 annotationModel.addInfo(node, "Persistent State")    
                             }                        
+                    } else {
+                        for (r : expr.allReferences) {
+                            if (candidates.contains(r.valuedObject)) {
+                                resetStateCandidates += r.valuedObject
+                            }
+                        }
                     } 
                     
+                }
+            } else if (node instanceof Conditional) {
+                for (r : node.condition.allReferences) {
+                    if (candidates.contains(r.valuedObject)) {
+                        resetStateCandidates += r.valuedObject
+                    }
                 }
             }
             
