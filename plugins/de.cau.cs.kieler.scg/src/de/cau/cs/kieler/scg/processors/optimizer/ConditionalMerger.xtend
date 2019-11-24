@@ -147,6 +147,22 @@ class ConditionalMerger extends InplaceProcessor<SCGraphs> {
                         conditions.put(vo, node)
                     }
                 }
+                
+                if (node.then !== null) {
+                    val nodes = <Node> newLinkedList => [ push(node.then.target.asNode) ]
+                    while (!nodes.empty) {
+                        val node2 = nodes.pop
+                        
+                        if (node2 instanceof Assignment) {
+                            assignedVariables += node2.reference.valuedObject
+                            node2.expression.allReferences.forEach[ usedVariables += it.valuedObject ]
+                        }
+                        
+                        val next = node2.allNext.map[ target ].head.asNode
+                        if (next.incomingLinks.size == 1)
+                            nodes.push(next)
+                    }
+                }
             }
             
             else if (node instanceof Assignment) {
@@ -189,7 +205,7 @@ class ConditionalMerger extends InplaceProcessor<SCGraphs> {
         }
         
         for (v : myVariables) {
-            if (usedVariables.contains(v)) 
+            if (usedVariables.contains(v) || assignedVariables.contains(v)) 
                 return false
         }
         

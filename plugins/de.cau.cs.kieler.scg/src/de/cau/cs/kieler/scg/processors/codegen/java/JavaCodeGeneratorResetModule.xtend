@@ -65,8 +65,8 @@ class JavaCodeGeneratorResetModule extends CCodeGeneratorResetModule {
         
         for (vk : variableStore.variables.keySet) {
             if (variableStore.variables.get(vk).exists[ properties.contains(RESET) ]) {
-                indent
-                code.append(struct.getVariableName).append("->").append(vk).append(" = false;\n")
+                indent(2)
+                code.append(struct.getVariableName).append(struct.separator).append(vk).append(" = false;\n")
             }
         }
     }
