@@ -101,7 +101,7 @@ class GeneralCLITest extends AbstractCLITest {
         val dir = setupTest("nested-compiler")
         val src = new File(dir, "esterel/abro/abro.strl")
         
-        val command = #[compiler.path, "-v", "-s", "de.cau.cs.kieler.esterel.compiler.inria.xes", src.path]
+        val command = #[compiler.path, "-v", "-s", "de.cau.cs.kieler.esterel.compiler.inria.simulation", src.path]
         assertEquals("Exit value not zero", 0, command.invoke)
     }
 }
