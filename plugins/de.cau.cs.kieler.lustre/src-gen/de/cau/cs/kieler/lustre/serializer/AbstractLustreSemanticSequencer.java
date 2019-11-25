@@ -338,9 +338,9 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 						|| rule == grammarAccess.getPreExpressionRule()
 						|| rule == grammarAccess.getLastExpressionRule()
 						|| rule == grammarAccess.getBoolExpressionRule()
+						|| rule == grammarAccess.getTernaryOperationRule()
 						|| rule == grammarAccess.getInitExpressionRule()
 						|| action == grammarAccess.getInitExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
-						|| rule == grammarAccess.getTernaryOperationRule()
 						|| rule == grammarAccess.getImpliesExpressionRule()
 						|| action == grammarAccess.getImpliesExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getLogicalXorExpressionRule()
@@ -635,8 +635,13 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *         (operator=CurrentOperator subExpressions+=AtomicValuedExpression) | 
 	 *         (operator=PreOperator subExpressions+=LastExpression) | 
 	 *         (operator=LastOperator subExpressions+=AtomicValuedExpression) | 
-	 *         (subExpressions+=InitExpression_OperatorExpression_1_0 operator=InitOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation*) | 
 	 *         (operator=ConditionalOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation subExpressions+=TernaryOperation) | 
+	 *         (
+	 *             subExpressions+=InitExpression_OperatorExpression_1_0 
+	 *             operator=InitOperator 
+	 *             subExpressions+=ImpliesExpression 
+	 *             subExpressions+=ImpliesExpression*
+	 *         ) | 
 	 *         (
 	 *             subExpressions+=ImpliesExpression_OperatorExpression_1_0 
 	 *             operator=ImpliesOperator 
@@ -763,8 +768,13 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *         (operator=CurrentOperator subExpressions+=AtomicValuedExpression) | 
 	 *         (operator=PreOperator subExpressions+=LastExpression) | 
 	 *         (operator=LastOperator subExpressions+=AtomicValuedExpression) | 
-	 *         (subExpressions+=InitExpression_OperatorExpression_1_0 operator=InitOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation*) | 
 	 *         (operator=ConditionalOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation subExpressions+=TernaryOperation) | 
+	 *         (
+	 *             subExpressions+=InitExpression_OperatorExpression_1_0 
+	 *             operator=InitOperator 
+	 *             subExpressions+=ImpliesExpression 
+	 *             subExpressions+=ImpliesExpression*
+	 *         ) | 
 	 *         (
 	 *             subExpressions+=ImpliesExpression_OperatorExpression_1_0 
 	 *             operator=ImpliesOperator 
@@ -867,8 +877,13 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *         (operator=CurrentOperator subExpressions+=AtomicValuedExpression) | 
 	 *         (operator=PreOperator subExpressions+=LastExpression) | 
 	 *         (operator=LastOperator subExpressions+=AtomicValuedExpression) | 
-	 *         (subExpressions+=InitExpression_OperatorExpression_1_0 operator=InitOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation*) | 
 	 *         (operator=ConditionalOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation subExpressions+=TernaryOperation) | 
+	 *         (
+	 *             subExpressions+=InitExpression_OperatorExpression_1_0 
+	 *             operator=InitOperator 
+	 *             subExpressions+=ImpliesExpression 
+	 *             subExpressions+=ImpliesExpression*
+	 *         ) | 
 	 *         (
 	 *             subExpressions+=ImpliesExpression_OperatorExpression_1_0 
 	 *             operator=ImpliesOperator 
@@ -965,8 +980,13 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *         (operator=CurrentOperator subExpressions+=AtomicValuedExpression) | 
 	 *         (operator=PreOperator subExpressions+=LastExpression) | 
 	 *         (operator=LastOperator subExpressions+=AtomicValuedExpression) | 
-	 *         (subExpressions+=InitExpression_OperatorExpression_1_0 operator=InitOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation*) | 
 	 *         (operator=ConditionalOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation subExpressions+=TernaryOperation) | 
+	 *         (
+	 *             subExpressions+=InitExpression_OperatorExpression_1_0 
+	 *             operator=InitOperator 
+	 *             subExpressions+=ImpliesExpression 
+	 *             subExpressions+=ImpliesExpression*
+	 *         ) | 
 	 *         (
 	 *             subExpressions+=ImpliesExpression_OperatorExpression_1_0 
 	 *             operator=ImpliesOperator 
@@ -1056,8 +1076,13 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *         (operator=CurrentOperator subExpressions+=AtomicValuedExpression) | 
 	 *         (operator=PreOperator subExpressions+=LastExpression) | 
 	 *         (operator=LastOperator subExpressions+=AtomicValuedExpression) | 
-	 *         (subExpressions+=InitExpression_OperatorExpression_1_0 operator=InitOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation*) | 
 	 *         (operator=ConditionalOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation subExpressions+=TernaryOperation) | 
+	 *         (
+	 *             subExpressions+=InitExpression_OperatorExpression_1_0 
+	 *             operator=InitOperator 
+	 *             subExpressions+=ImpliesExpression 
+	 *             subExpressions+=ImpliesExpression*
+	 *         ) | 
 	 *         (
 	 *             subExpressions+=ImpliesExpression_OperatorExpression_1_0 
 	 *             operator=ImpliesOperator 
@@ -1142,8 +1167,13 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *         (operator=CurrentOperator subExpressions+=AtomicValuedExpression) | 
 	 *         (operator=PreOperator subExpressions+=LastExpression) | 
 	 *         (operator=LastOperator subExpressions+=AtomicValuedExpression) | 
-	 *         (subExpressions+=InitExpression_OperatorExpression_1_0 operator=InitOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation*) | 
 	 *         (operator=ConditionalOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation subExpressions+=TernaryOperation) | 
+	 *         (
+	 *             subExpressions+=InitExpression_OperatorExpression_1_0 
+	 *             operator=InitOperator 
+	 *             subExpressions+=ImpliesExpression 
+	 *             subExpressions+=ImpliesExpression*
+	 *         ) | 
 	 *         (
 	 *             subExpressions+=ImpliesExpression_OperatorExpression_1_0 
 	 *             operator=ImpliesOperator 
@@ -1228,8 +1258,13 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *         (operator=CurrentOperator subExpressions+=AtomicValuedExpression) | 
 	 *         (operator=PreOperator subExpressions+=LastExpression) | 
 	 *         (operator=LastOperator subExpressions+=AtomicValuedExpression) | 
-	 *         (subExpressions+=InitExpression_OperatorExpression_1_0 operator=InitOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation*) | 
 	 *         (operator=ConditionalOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation subExpressions+=TernaryOperation) | 
+	 *         (
+	 *             subExpressions+=InitExpression_OperatorExpression_1_0 
+	 *             operator=InitOperator 
+	 *             subExpressions+=ImpliesExpression 
+	 *             subExpressions+=ImpliesExpression*
+	 *         ) | 
 	 *         (
 	 *             subExpressions+=ImpliesExpression_OperatorExpression_1_0 
 	 *             operator=ImpliesOperator 
@@ -1314,8 +1349,13 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *         (operator=CurrentOperator subExpressions+=AtomicValuedExpression) | 
 	 *         (operator=PreOperator subExpressions+=LastExpression) | 
 	 *         (operator=LastOperator subExpressions+=AtomicValuedExpression) | 
-	 *         (subExpressions+=InitExpression_OperatorExpression_1_0 operator=InitOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation*) | 
 	 *         (operator=ConditionalOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation subExpressions+=TernaryOperation) | 
+	 *         (
+	 *             subExpressions+=InitExpression_OperatorExpression_1_0 
+	 *             operator=InitOperator 
+	 *             subExpressions+=ImpliesExpression 
+	 *             subExpressions+=ImpliesExpression*
+	 *         ) | 
 	 *         (
 	 *             subExpressions+=ImpliesExpression_OperatorExpression_1_0 
 	 *             operator=ImpliesOperator 
@@ -1400,8 +1440,13 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *         (operator=CurrentOperator subExpressions+=AtomicValuedExpression) | 
 	 *         (operator=PreOperator subExpressions+=LastExpression) | 
 	 *         (operator=LastOperator subExpressions+=AtomicValuedExpression) | 
-	 *         (subExpressions+=InitExpression_OperatorExpression_1_0 operator=InitOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation*) | 
 	 *         (operator=ConditionalOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation subExpressions+=TernaryOperation) | 
+	 *         (
+	 *             subExpressions+=InitExpression_OperatorExpression_1_0 
+	 *             operator=InitOperator 
+	 *             subExpressions+=ImpliesExpression 
+	 *             subExpressions+=ImpliesExpression*
+	 *         ) | 
 	 *         (
 	 *             subExpressions+=ImpliesExpression_OperatorExpression_1_0 
 	 *             operator=ImpliesOperator 
@@ -1494,8 +1539,13 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *         (operator=CurrentOperator subExpressions+=AtomicValuedExpression) | 
 	 *         (operator=PreOperator subExpressions+=LastExpression) | 
 	 *         (operator=LastOperator subExpressions+=AtomicValuedExpression) | 
-	 *         (subExpressions+=InitExpression_OperatorExpression_1_0 operator=InitOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation*) | 
 	 *         (operator=ConditionalOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation subExpressions+=TernaryOperation) | 
+	 *         (
+	 *             subExpressions+=InitExpression_OperatorExpression_1_0 
+	 *             operator=InitOperator 
+	 *             subExpressions+=ImpliesExpression 
+	 *             subExpressions+=ImpliesExpression*
+	 *         ) | 
 	 *         (
 	 *             subExpressions+=ImpliesExpression_OperatorExpression_1_0 
 	 *             operator=ImpliesOperator 
@@ -1597,8 +1647,13 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *         (operator=CurrentOperator subExpressions+=AtomicValuedExpression) | 
 	 *         (operator=PreOperator subExpressions+=LastExpression) | 
 	 *         (operator=LastOperator subExpressions+=AtomicValuedExpression) | 
-	 *         (subExpressions+=InitExpression_OperatorExpression_1_0 operator=InitOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation*) | 
 	 *         (operator=ConditionalOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation subExpressions+=TernaryOperation) | 
+	 *         (
+	 *             subExpressions+=InitExpression_OperatorExpression_1_0 
+	 *             operator=InitOperator 
+	 *             subExpressions+=ImpliesExpression 
+	 *             subExpressions+=ImpliesExpression*
+	 *         ) | 
 	 *         (
 	 *             subExpressions+=ImpliesExpression_OperatorExpression_1_0 
 	 *             operator=ImpliesOperator 
@@ -1688,8 +1743,13 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *         (operator=CurrentOperator subExpressions+=AtomicValuedExpression) | 
 	 *         (operator=PreOperator subExpressions+=LastExpression) | 
 	 *         (operator=LastOperator subExpressions+=AtomicValuedExpression) | 
-	 *         (subExpressions+=InitExpression_OperatorExpression_1_0 operator=InitOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation*) | 
 	 *         (operator=ConditionalOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation subExpressions+=TernaryOperation) | 
+	 *         (
+	 *             subExpressions+=InitExpression_OperatorExpression_1_0 
+	 *             operator=InitOperator 
+	 *             subExpressions+=ImpliesExpression 
+	 *             subExpressions+=ImpliesExpression*
+	 *         ) | 
 	 *         (
 	 *             subExpressions+=ImpliesExpression_OperatorExpression_1_0 
 	 *             operator=ImpliesOperator 
@@ -1779,8 +1839,13 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *         (operator=CurrentOperator subExpressions+=AtomicValuedExpression) | 
 	 *         (operator=PreOperator subExpressions+=LastExpression) | 
 	 *         (operator=LastOperator subExpressions+=AtomicValuedExpression) | 
-	 *         (subExpressions+=InitExpression_OperatorExpression_1_0 operator=InitOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation*) | 
 	 *         (operator=ConditionalOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation subExpressions+=TernaryOperation) | 
+	 *         (
+	 *             subExpressions+=InitExpression_OperatorExpression_1_0 
+	 *             operator=InitOperator 
+	 *             subExpressions+=ImpliesExpression 
+	 *             subExpressions+=ImpliesExpression*
+	 *         ) | 
 	 *         (
 	 *             subExpressions+=ImpliesExpression_OperatorExpression_1_0 
 	 *             operator=ImpliesOperator 
@@ -1871,8 +1936,13 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *         (operator=CurrentOperator subExpressions+=AtomicValuedExpression) | 
 	 *         (operator=PreOperator subExpressions+=LastExpression) | 
 	 *         (operator=LastOperator subExpressions+=AtomicValuedExpression) | 
-	 *         (subExpressions+=InitExpression_OperatorExpression_1_0 operator=InitOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation*) | 
 	 *         (operator=ConditionalOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation subExpressions+=TernaryOperation) | 
+	 *         (
+	 *             subExpressions+=InitExpression_OperatorExpression_1_0 
+	 *             operator=InitOperator 
+	 *             subExpressions+=ImpliesExpression 
+	 *             subExpressions+=ImpliesExpression*
+	 *         ) | 
 	 *         (
 	 *             subExpressions+=ImpliesExpression_OperatorExpression_1_0 
 	 *             operator=ImpliesOperator 
@@ -1937,9 +2007,9 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *     PreExpression returns OperatorExpression
 	 *     LastExpression returns OperatorExpression
 	 *     BoolExpression returns OperatorExpression
+	 *     TernaryOperation returns OperatorExpression
 	 *     InitExpression returns OperatorExpression
 	 *     InitExpression.OperatorExpression_1_0 returns OperatorExpression
-	 *     TernaryOperation returns OperatorExpression
 	 *     ImpliesExpression returns OperatorExpression
 	 *     ImpliesExpression.OperatorExpression_1_0 returns OperatorExpression
 	 *     LogicalXorExpression returns OperatorExpression
@@ -2002,8 +2072,13 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *         (operator=CurrentOperator subExpressions+=AtomicValuedExpression) | 
 	 *         (operator=PreOperator subExpressions+=LastExpression) | 
 	 *         (operator=LastOperator subExpressions+=AtomicValuedExpression) | 
-	 *         (subExpressions+=InitExpression_OperatorExpression_1_0 operator=InitOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation*) | 
 	 *         (operator=ConditionalOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation subExpressions+=TernaryOperation) | 
+	 *         (
+	 *             subExpressions+=InitExpression_OperatorExpression_1_0 
+	 *             operator=InitOperator 
+	 *             subExpressions+=ImpliesExpression 
+	 *             subExpressions+=ImpliesExpression*
+	 *         ) | 
 	 *         (
 	 *             subExpressions+=ImpliesExpression_OperatorExpression_1_0 
 	 *             operator=ImpliesOperator 

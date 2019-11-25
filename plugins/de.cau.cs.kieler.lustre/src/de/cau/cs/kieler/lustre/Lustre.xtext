@@ -302,24 +302,24 @@ LastExpression returns kexpressions::Expression:
 // Force TernaryOperation, InitExpression, ImpliesExpression and LogicalXorExpression inbetween BoolExpression and LogicalOrExpression
 @Override
 BoolExpression returns kexpressions::Expression: 
-    InitExpression
+    TernaryOperation
 ;
-
-@Override    
-InitExpression returns kexpressions::Expression:
-    TernaryOperation 
-    ({kexpressions::OperatorExpression.subExpressions+=current} 
-        (operator=InitOperator subExpressions+=TernaryOperation) 
-        ('->' subExpressions+=TernaryOperation)*
-    )?;
 
 // Overwide Ternary operator to support if ... then ... else
 @Override 
 TernaryOperation returns kexpressions::Expression:
     {kexpressions::OperatorExpression} 
     operator=ConditionalOperator subExpressions += TernaryOperation 'then' subExpressions += TernaryOperation 'else' subExpressions += TernaryOperation
-    | ImpliesExpression
+    | InitExpression
 ;
+
+@Override    
+InitExpression returns kexpressions::Expression:
+    ImpliesExpression 
+    ({kexpressions::OperatorExpression.subExpressions+=current} 
+        (operator=InitOperator subExpressions+=ImpliesExpression) 
+        ('->' subExpressions+=ImpliesExpression)*
+    )?;
 
 ImpliesExpression returns kexpressions::Expression:
     LogicalXorExpression

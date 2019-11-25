@@ -2131,78 +2131,15 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	public class BoolExpressionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.lustre.Lustre.BoolExpression");
-		private final RuleCall cInitExpressionParserRuleCall = (RuleCall)rule.eContents().get(1);
+		private final RuleCall cTernaryOperationParserRuleCall = (RuleCall)rule.eContents().get(1);
 		
 		//@Override
 		//BoolExpression kexpressions::Expression:
-		//	InitExpression;
+		//	TernaryOperation;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//InitExpression
-		public RuleCall getInitExpressionParserRuleCall() { return cInitExpressionParserRuleCall; }
-	}
-	public class InitExpressionElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.lustre.Lustre.InitExpression");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final RuleCall cTernaryOperationParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
-		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
-		private final Action cOperatorExpressionSubExpressionsAction_1_0 = (Action)cGroup_1.eContents().get(0);
-		private final Group cGroup_1_1 = (Group)cGroup_1.eContents().get(1);
-		private final Assignment cOperatorAssignment_1_1_0 = (Assignment)cGroup_1_1.eContents().get(0);
-		private final RuleCall cOperatorInitOperatorEnumRuleCall_1_1_0_0 = (RuleCall)cOperatorAssignment_1_1_0.eContents().get(0);
-		private final Assignment cSubExpressionsAssignment_1_1_1 = (Assignment)cGroup_1_1.eContents().get(1);
-		private final RuleCall cSubExpressionsTernaryOperationParserRuleCall_1_1_1_0 = (RuleCall)cSubExpressionsAssignment_1_1_1.eContents().get(0);
-		private final Group cGroup_1_2 = (Group)cGroup_1.eContents().get(2);
-		private final Keyword cHyphenMinusGreaterThanSignKeyword_1_2_0 = (Keyword)cGroup_1_2.eContents().get(0);
-		private final Assignment cSubExpressionsAssignment_1_2_1 = (Assignment)cGroup_1_2.eContents().get(1);
-		private final RuleCall cSubExpressionsTernaryOperationParserRuleCall_1_2_1_0 = (RuleCall)cSubExpressionsAssignment_1_2_1.eContents().get(0);
-		
-		//@Override
-		//InitExpression kexpressions::Expression:
-		//	TernaryOperation ({kexpressions::OperatorExpression.subExpressions+=current} (operator=InitOperator
-		//	subExpressions+=TernaryOperation) ('->' subExpressions+=TernaryOperation)*)?;
-		@Override public ParserRule getRule() { return rule; }
-		
-		//TernaryOperation ({kexpressions::OperatorExpression.subExpressions+=current} (operator=InitOperator
-		//subExpressions+=TernaryOperation) ('->' subExpressions+=TernaryOperation)*)?
-		public Group getGroup() { return cGroup; }
-		
 		//TernaryOperation
-		public RuleCall getTernaryOperationParserRuleCall_0() { return cTernaryOperationParserRuleCall_0; }
-		
-		//({kexpressions::OperatorExpression.subExpressions+=current} (operator=InitOperator subExpressions+=TernaryOperation)
-		//('->' subExpressions+=TernaryOperation)*)?
-		public Group getGroup_1() { return cGroup_1; }
-		
-		//{kexpressions::OperatorExpression.subExpressions+=current}
-		public Action getOperatorExpressionSubExpressionsAction_1_0() { return cOperatorExpressionSubExpressionsAction_1_0; }
-		
-		//(operator=InitOperator subExpressions+=TernaryOperation)
-		public Group getGroup_1_1() { return cGroup_1_1; }
-		
-		//operator=InitOperator
-		public Assignment getOperatorAssignment_1_1_0() { return cOperatorAssignment_1_1_0; }
-		
-		//InitOperator
-		public RuleCall getOperatorInitOperatorEnumRuleCall_1_1_0_0() { return cOperatorInitOperatorEnumRuleCall_1_1_0_0; }
-		
-		//subExpressions+=TernaryOperation
-		public Assignment getSubExpressionsAssignment_1_1_1() { return cSubExpressionsAssignment_1_1_1; }
-		
-		//TernaryOperation
-		public RuleCall getSubExpressionsTernaryOperationParserRuleCall_1_1_1_0() { return cSubExpressionsTernaryOperationParserRuleCall_1_1_1_0; }
-		
-		//('->' subExpressions+=TernaryOperation)*
-		public Group getGroup_1_2() { return cGroup_1_2; }
-		
-		//'->'
-		public Keyword getHyphenMinusGreaterThanSignKeyword_1_2_0() { return cHyphenMinusGreaterThanSignKeyword_1_2_0; }
-		
-		//subExpressions+=TernaryOperation
-		public Assignment getSubExpressionsAssignment_1_2_1() { return cSubExpressionsAssignment_1_2_1; }
-		
-		//TernaryOperation
-		public RuleCall getSubExpressionsTernaryOperationParserRuleCall_1_2_1_0() { return cSubExpressionsTernaryOperationParserRuleCall_1_2_1_0; }
+		public RuleCall getTernaryOperationParserRuleCall() { return cTernaryOperationParserRuleCall; }
 	}
 	public class TernaryOperationElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.lustre.Lustre.TernaryOperation");
@@ -2219,17 +2156,17 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cElseKeyword_0_5 = (Keyword)cGroup_0.eContents().get(5);
 		private final Assignment cSubExpressionsAssignment_0_6 = (Assignment)cGroup_0.eContents().get(6);
 		private final RuleCall cSubExpressionsTernaryOperationParserRuleCall_0_6_0 = (RuleCall)cSubExpressionsAssignment_0_6.eContents().get(0);
-		private final RuleCall cImpliesExpressionParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cInitExpressionParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		
 		//@Override
 		//TernaryOperation kexpressions::Expression:
 		//	{kexpressions::OperatorExpression} operator=ConditionalOperator subExpressions+=TernaryOperation 'then'
 		//	subExpressions+=TernaryOperation 'else' subExpressions+=TernaryOperation
-		//	| ImpliesExpression;
+		//	| InitExpression;
 		@Override public ParserRule getRule() { return rule; }
 		
 		//{kexpressions::OperatorExpression} operator=ConditionalOperator subExpressions+=TernaryOperation 'then'
-		//subExpressions+=TernaryOperation 'else' subExpressions+=TernaryOperation | ImpliesExpression
+		//subExpressions+=TernaryOperation 'else' subExpressions+=TernaryOperation | InitExpression
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
 		//{kexpressions::OperatorExpression} operator=ConditionalOperator subExpressions+=TernaryOperation 'then'
@@ -2269,8 +2206,71 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		//TernaryOperation
 		public RuleCall getSubExpressionsTernaryOperationParserRuleCall_0_6_0() { return cSubExpressionsTernaryOperationParserRuleCall_0_6_0; }
 		
+		//InitExpression
+		public RuleCall getInitExpressionParserRuleCall_1() { return cInitExpressionParserRuleCall_1; }
+	}
+	public class InitExpressionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.lustre.Lustre.InitExpression");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final RuleCall cImpliesExpressionParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
+		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
+		private final Action cOperatorExpressionSubExpressionsAction_1_0 = (Action)cGroup_1.eContents().get(0);
+		private final Group cGroup_1_1 = (Group)cGroup_1.eContents().get(1);
+		private final Assignment cOperatorAssignment_1_1_0 = (Assignment)cGroup_1_1.eContents().get(0);
+		private final RuleCall cOperatorInitOperatorEnumRuleCall_1_1_0_0 = (RuleCall)cOperatorAssignment_1_1_0.eContents().get(0);
+		private final Assignment cSubExpressionsAssignment_1_1_1 = (Assignment)cGroup_1_1.eContents().get(1);
+		private final RuleCall cSubExpressionsImpliesExpressionParserRuleCall_1_1_1_0 = (RuleCall)cSubExpressionsAssignment_1_1_1.eContents().get(0);
+		private final Group cGroup_1_2 = (Group)cGroup_1.eContents().get(2);
+		private final Keyword cHyphenMinusGreaterThanSignKeyword_1_2_0 = (Keyword)cGroup_1_2.eContents().get(0);
+		private final Assignment cSubExpressionsAssignment_1_2_1 = (Assignment)cGroup_1_2.eContents().get(1);
+		private final RuleCall cSubExpressionsImpliesExpressionParserRuleCall_1_2_1_0 = (RuleCall)cSubExpressionsAssignment_1_2_1.eContents().get(0);
+		
+		//@Override
+		//InitExpression kexpressions::Expression:
+		//	ImpliesExpression ({kexpressions::OperatorExpression.subExpressions+=current} (operator=InitOperator
+		//	subExpressions+=ImpliesExpression) ('->' subExpressions+=ImpliesExpression)*)?;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//ImpliesExpression ({kexpressions::OperatorExpression.subExpressions+=current} (operator=InitOperator
+		//subExpressions+=ImpliesExpression) ('->' subExpressions+=ImpliesExpression)*)?
+		public Group getGroup() { return cGroup; }
+		
 		//ImpliesExpression
-		public RuleCall getImpliesExpressionParserRuleCall_1() { return cImpliesExpressionParserRuleCall_1; }
+		public RuleCall getImpliesExpressionParserRuleCall_0() { return cImpliesExpressionParserRuleCall_0; }
+		
+		//({kexpressions::OperatorExpression.subExpressions+=current} (operator=InitOperator subExpressions+=ImpliesExpression)
+		//('->' subExpressions+=ImpliesExpression)*)?
+		public Group getGroup_1() { return cGroup_1; }
+		
+		//{kexpressions::OperatorExpression.subExpressions+=current}
+		public Action getOperatorExpressionSubExpressionsAction_1_0() { return cOperatorExpressionSubExpressionsAction_1_0; }
+		
+		//(operator=InitOperator subExpressions+=ImpliesExpression)
+		public Group getGroup_1_1() { return cGroup_1_1; }
+		
+		//operator=InitOperator
+		public Assignment getOperatorAssignment_1_1_0() { return cOperatorAssignment_1_1_0; }
+		
+		//InitOperator
+		public RuleCall getOperatorInitOperatorEnumRuleCall_1_1_0_0() { return cOperatorInitOperatorEnumRuleCall_1_1_0_0; }
+		
+		//subExpressions+=ImpliesExpression
+		public Assignment getSubExpressionsAssignment_1_1_1() { return cSubExpressionsAssignment_1_1_1; }
+		
+		//ImpliesExpression
+		public RuleCall getSubExpressionsImpliesExpressionParserRuleCall_1_1_1_0() { return cSubExpressionsImpliesExpressionParserRuleCall_1_1_1_0; }
+		
+		//('->' subExpressions+=ImpliesExpression)*
+		public Group getGroup_1_2() { return cGroup_1_2; }
+		
+		//'->'
+		public Keyword getHyphenMinusGreaterThanSignKeyword_1_2_0() { return cHyphenMinusGreaterThanSignKeyword_1_2_0; }
+		
+		//subExpressions+=ImpliesExpression
+		public Assignment getSubExpressionsAssignment_1_2_1() { return cSubExpressionsAssignment_1_2_1; }
+		
+		//ImpliesExpression
+		public RuleCall getSubExpressionsImpliesExpressionParserRuleCall_1_2_1_0() { return cSubExpressionsImpliesExpressionParserRuleCall_1_2_1_0; }
 	}
 	public class ImpliesExpressionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.lustre.Lustre.ImpliesExpression");
@@ -3084,8 +3084,8 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 	private final PreExpressionElements pPreExpression;
 	private final LastExpressionElements pLastExpression;
 	private final BoolExpressionElements pBoolExpression;
-	private final InitExpressionElements pInitExpression;
 	private final TernaryOperationElements pTernaryOperation;
+	private final InitExpressionElements pInitExpression;
 	private final ImpliesExpressionElements pImpliesExpression;
 	private final LogicalXorExpressionElements pLogicalXorExpression;
 	private final LogicalOrExpressionElements pLogicalOrExpression;
@@ -3167,8 +3167,8 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		this.pPreExpression = new PreExpressionElements();
 		this.pLastExpression = new LastExpressionElements();
 		this.pBoolExpression = new BoolExpressionElements();
-		this.pInitExpression = new InitExpressionElements();
 		this.pTernaryOperation = new TernaryOperationElements();
+		this.pInitExpression = new InitExpressionElements();
 		this.pImpliesExpression = new ImpliesExpressionElements();
 		this.pLogicalXorExpression = new LogicalXorExpressionElements();
 		this.pLogicalOrExpression = new LogicalOrExpressionElements();
@@ -3576,7 +3576,7 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//@Override
 	//BoolExpression kexpressions::Expression:
-	//	InitExpression;
+	//	TernaryOperation;
 	public BoolExpressionElements getBoolExpressionAccess() {
 		return pBoolExpression;
 	}
@@ -3586,28 +3586,28 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//@Override
-	//InitExpression kexpressions::Expression:
-	//	TernaryOperation ({kexpressions::OperatorExpression.subExpressions+=current} (operator=InitOperator
-	//	subExpressions+=TernaryOperation) ('->' subExpressions+=TernaryOperation)*)?;
-	public InitExpressionElements getInitExpressionAccess() {
-		return pInitExpression;
-	}
-	
-	public ParserRule getInitExpressionRule() {
-		return getInitExpressionAccess().getRule();
-	}
-	
-	//@Override
 	//TernaryOperation kexpressions::Expression:
 	//	{kexpressions::OperatorExpression} operator=ConditionalOperator subExpressions+=TernaryOperation 'then'
 	//	subExpressions+=TernaryOperation 'else' subExpressions+=TernaryOperation
-	//	| ImpliesExpression;
+	//	| InitExpression;
 	public TernaryOperationElements getTernaryOperationAccess() {
 		return pTernaryOperation;
 	}
 	
 	public ParserRule getTernaryOperationRule() {
 		return getTernaryOperationAccess().getRule();
+	}
+	
+	//@Override
+	//InitExpression kexpressions::Expression:
+	//	ImpliesExpression ({kexpressions::OperatorExpression.subExpressions+=current} (operator=InitOperator
+	//	subExpressions+=ImpliesExpression) ('->' subExpressions+=ImpliesExpression)*)?;
+	public InitExpressionElements getInitExpressionAccess() {
+		return pInitExpression;
+	}
+	
+	public ParserRule getInitExpressionRule() {
+		return getInitExpressionAccess().getRule();
 	}
 	
 	//ImpliesExpression kexpressions::Expression:
