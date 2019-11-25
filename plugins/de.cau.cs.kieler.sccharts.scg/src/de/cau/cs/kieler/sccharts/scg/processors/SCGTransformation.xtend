@@ -103,6 +103,7 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
     
     // Property to disable SuperflousForkRemover because KiCo has no proper support for processors
     public static val IProperty<Boolean> ENABLE_SFR = new Property<Boolean>("de.cau.cs.kieler.sccharts.scg.sfr", true);
+    public static val IProperty<Boolean> ENABLE_STR = new Property<Boolean>("de.cau.cs.kieler.sccharts.scg.str", true);
 
     @Inject extension KExpressionsCreateExtensions
     @Inject extension KExpressionsDeclarationExtensions
@@ -349,18 +350,16 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
         sCGraph.trimExitNodes.trimConditioanlNodes
 
         // Remove superfluous fork constructs 
-        // ssm, 04.05.2014
-        val scg = if (environment.getProperty(ENABLE_SFR)) { 
-                val SuperfluousThreadRemover superfluousThreadRemover = Guice.createInjector().
-                    getInstance(typeof(SuperfluousThreadRemover))
-                val SuperfluousForkRemover superfluousForkRemover = Guice.createInjector().
-                    getInstance(typeof(SuperfluousForkRemover))
-                val optimizedSCG = superfluousForkRemover.optimize(superfluousThreadRemover.optimize(sCGraph))
-                optimizedSCG
-            } else {
-                sCGraph
-            }
-
+        var scg = sCGraph
+        if (environment.getProperty(ENABLE_STR)) {
+            val superfluousThreadRemover = Guice.createInjector().getInstance(SuperfluousThreadRemover)
+            scg = superfluousThreadRemover.optimize(scg)
+        }
+        if (environment.getProperty(ENABLE_SFR)) {
+            val superfluousForkRemover = Guice.createInjector().getInstance(SuperfluousForkRemover)
+            scg = superfluousForkRemover.optimize(scg)
+        }
+        
         scg
     }
 

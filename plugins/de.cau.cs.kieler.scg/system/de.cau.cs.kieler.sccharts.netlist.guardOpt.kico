@@ -17,11 +17,11 @@ de.cau.cs.kieler.scg.processors.guards config {
     "de.cau.cs.kieler.scg.processors.loopAnalyzer.warningOnInstantaneousLoop": false,
     "de.cau.cs.kieler.scg.processors.guards.excludeGuardAssignmentControlDependencies": false
 }
-//post process de.cau.cs.kieler.scg.processors.guards.tickBoundaries
+post process de.cau.cs.kieler.scg.processors.guards.tickBoundaries
 //post process de.cau.cs.kieler.scg.processors.loopAnalyzerV2
 //post process de.cau.cs.kieler.scg.processors.ineffectiveGuardRemover
 //post process de.cau.cs.kieler.scg.processors.unobservableGuardRemover
-de.cau.cs.kieler.scg.processors.guards.optimization
+//de.cau.cs.kieler.scg.processors.guards.optimization
 //de.cau.cs.kieler.scg.processors.scheduler
 //de.cau.cs.kieler.scg.processors.sequentializer
 //de.cau.cs.kieler.scg.processors.codegen.c
