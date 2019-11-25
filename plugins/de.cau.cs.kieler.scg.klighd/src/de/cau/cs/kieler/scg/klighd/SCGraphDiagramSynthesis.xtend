@@ -177,6 +177,10 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     private static val SynthesisOption SHOW_SCHEDULINGBLOCKS = SynthesisOption::createCheckOption("Scheduling Blocks",
         true);
 
+    /** Show dead blocks */
+    private static val SynthesisOption SHOW_DEAD_BLOCKS = SynthesisOption::createCheckOption("Dead Blocks",
+        true);
+
     /** Show scheduling path */
     private static val SynthesisOption SHOW_SCHEDULINGPATH = SynthesisOption::createCheckOption("Scheduling path", true);
 
@@ -271,6 +275,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             SHOW_CONFLUENT,
             SHOW_BASICBLOCKS,
             SHOW_SCHEDULINGBLOCKS,
+            SHOW_DEAD_BLOCKS,
             SHOW_SCHEDULINGPATH,
             SHOW_POTENTIALPROBLEMS,
             SHOW_ANNOTATIONS,
@@ -885,7 +890,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     //                node.addPort("DEBUGPORT", MINIMALWIDTH, MINIMALHEIGHT / 2, 1, PortSide::SOUTH)
                 } else {
                     node.addPort("dummyN", 27, 0, 1, PortSide::WEST).setLayoutOption(CoreOptions::PORT_INDEX, 0)
-                    node.addPort(SCGPORTID_INCOMING, 0, 12.5f, 1, PortSide::WEST).setLayoutOption(CoreOptions::PORT_INDEX, 2)
+                    node.addPort(SCGPORTID_INCOMING, 0, 12.5f, 1, PortSide::WEST).setLayoutOption(CoreOptions::PORT_INDEX, 1)
                     node.addPort("dummyS", 27, 0, 1, PortSide::EAST).setLayoutOption(CoreOptions::PORT_INDEX, 2)
                     node.addPort(SCGPORTID_OUTGOING, 75, 12.5f, 1, PortSide::EAST).setLayoutOption(CoreOptions::PORT_INDEX, 1)
                     node.addPort(SCGPORTID_INCOMINGDEPENDENCY, 0, 19, 1, PortSide::WEST).setLayoutOption(CoreOptions::PORT_INDEX, 2)
@@ -2062,7 +2067,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 						sbName = sbName + "\n" + expText       
 					}
             	    
-            	    if (!SHOW_BASICBLOCKS.booleanValue) {
+            	    if (!SHOW_BASICBLOCKS.booleanValue || basicBlock.schedulingBlocks.size > 1) {
             	        sbName = sbName.replaceAll("_g", "g")
                 	    sbName.createLabel(sbContainer).associateWith(schedulingBlock).configureOutsideTopLeftNodeLabel(sbName, 9, KlighdConstants::DEFAULT_FONT_NAME).KRendering.foreground = SCHEDULINGBLOCKBORDER.copy
                	    }
@@ -2074,6 +2079,11 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                         ]
                         sbContainer.KRendering.background = SCHEDULING_DEADCODE.copy
                         sbContainer.KRendering.background.alpha = 128
+                        
+                        if (!SHOW_DEAD_BLOCKS.booleanValue) {
+                            sbContainer.children.clear
+                            sbContainer.remove
+                        }
                     } else if (basicBlock.termBlock) {
                         sbContainer.getData(KRoundedRectangle) => [
                             it.lineWidth = 2.0f

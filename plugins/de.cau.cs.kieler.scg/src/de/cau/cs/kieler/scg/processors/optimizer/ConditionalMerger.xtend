@@ -29,6 +29,8 @@ import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import de.cau.cs.kieler.scg.extensions.SCGMethodExtensions
+import java.util.Set
+import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 
 /**
  * Conditional Merger
@@ -42,11 +44,14 @@ import de.cau.cs.kieler.scg.extensions.SCGMethodExtensions
 class ConditionalMerger extends InplaceProcessor<SCGraphs> {
     
     @Inject extension KExpressionsValuedObjectExtensions
+    @Inject extension SCGCoreExtensions
     @Inject extension SCGControlFlowExtensions
     @Inject extension SCGMethodExtensions
     
     public static val IProperty<Boolean> CONDITIONAL_MERGER_ENABLED = 
         new Property<Boolean>("de.cau.cs.kieler.scg.opt.conditionalMerger", false)    
+    public static val IProperty<Boolean> CONDITIONAL_MERGER_WIDESPAN_ENABLED = 
+        new Property<Boolean>("de.cau.cs.kieler.scg.opt.conditionalMerger.widespan", true)    
     
     override getId() {
         "de.cau.cs.kieler.scg.processors.conditionalMerger"
@@ -60,16 +65,20 @@ class ConditionalMerger extends InplaceProcessor<SCGraphs> {
         if (!environment.getProperty(CONDITIONAL_MERGER_ENABLED)) return;
         
         val model = getModel
+        applyAnnotations
         
         for (scg : model.scgs.ignoreMethods) {
             scg.performConditionalMerge
         }
+        
     }
     
     def performConditionalMerge(SCGraph scg) {
         val nextNodes = <Node> newLinkedList(scg.nodes.head)
         val removeList = <EObject> newLinkedList
         val conditions = <ValuedObject, Conditional> newHashMap
+        val usedVariables = <ValuedObject> newHashSet
+        val assignedVariables = <ValuedObject> newHashSet
         
         while (!nextNodes.empty) {
             val node = nextNodes.pop
@@ -91,7 +100,12 @@ class ConditionalMerger extends InplaceProcessor<SCGraphs> {
                         val preceedingNodes = node.allPrevious.map[ eContainer ].toList
                         val domConditional = conditions.get(vo)
                         
-                        if (preceedingNodes.contains(domConditional)) {
+                        val merge = preceedingNodes.contains(domConditional) || 
+                            (getProperty(CONDITIONAL_MERGER_WIDESPAN_ENABLED) && 
+                                node.ineffectiveVariables(assignedVariables, usedVariables)
+                            )
+                        
+                        if (merge) {
                             var tail = domConditional.^else.targetNode.allPrevious.filter[ eContainer !== domConditional ].head
                             
                             val thenNodes = <Node> newLinkedList(node.^then.targetNode)
@@ -101,11 +115,13 @@ class ConditionalMerger extends InplaceProcessor<SCGraphs> {
                                 tail.target = thenNode
                                 tail = thenNode.allNext.head
                                 if (thenNode instanceof Assignment) {
-                                    if (thenNode.reference !== null && thenNode.reference.valuedObject !== null) {
-                                        environment.infos.add("CM: " + thenNode.reference.valuedObject.name , thenNode, true)
-                                    } else {
-                                        environment.infos.add("CM", thenNode, true)
-                                    }
+//                                    if (thenNode.reference !== null && thenNode.reference.valuedObject !== null) {
+////                                        environment.infos.add("CM: " + thenNode.reference.valuedObject.name , thenNode, true)
+//                                        annotationModel.addInfo(thenNode, "CM: " + thenNode.reference.valuedObject.name)
+//                                    } else {
+////                                        environment.infos.add("CM", thenNode, true)
+                                        annotationModel.addInfo(thenNode, "Conditional Merger")
+//                                    }
                                 }
                                 
                                 thenNodes += thenNode.allNext.filter[ target !== node.^else.targetNode ].map[ targetNode ] 
@@ -131,7 +147,29 @@ class ConditionalMerger extends InplaceProcessor<SCGraphs> {
                         conditions.put(vo, node)
                     }
                 }
+                
+                if (node.then !== null) {
+                    val nodes = <Node> newLinkedList => [ push(node.then.target.asNode) ]
+                    while (!nodes.empty) {
+                        val node2 = nodes.pop
+                        
+                        if (node2 instanceof Assignment) {
+                            assignedVariables += node2.reference.valuedObject
+                            node2.expression.allReferences.forEach[ usedVariables += it.valuedObject ]
+                        }
+                        
+                        val next = node2.allNext.map[ target ].head.asNode
+                        if (next.incomingLinks.size == 1)
+                            nodes.push(next)
+                    }
+                }
             }
+            
+            else if (node instanceof Assignment) {
+                assignedVariables += node.reference.valuedObject
+                node.expression.allReferences.forEach[ usedVariables += it.valuedObject ]    
+            }
+            
         }
         
         for (r : removeList) {
@@ -143,6 +181,35 @@ class ConditionalMerger extends InplaceProcessor<SCGraphs> {
             }
             r.remove
         }        
+    }
+    
+    private def boolean ineffectiveVariables(Conditional conditional, Set<ValuedObject> assignedVariables, 
+        Set<ValuedObject> usedVariables
+    ) {
+        val myVariables = newHashSet
+        
+        if (assignedVariables.contains(conditional.condition.asValuedObjectReference.valuedObject)) return false
+        
+        val nodes = <Node> newLinkedList => [ push(conditional.then.target.asNode) ]
+        while (!nodes.empty) {
+            val node = nodes.pop
+            
+            if (node instanceof Assignment) {
+                myVariables += node.reference.valuedObject
+                node.expression.allReferences.forEach[ myVariables += it.valuedObject ]
+            }
+            
+            val next = node.allNext.map[ target ].head.asNode
+            if (next.incomingLinks.size == 1)
+                nodes.push(next)
+        }
+        
+        for (v : myVariables) {
+            if (usedVariables.contains(v) || assignedVariables.contains(v)) 
+                return false
+        }
+        
+        return true
     }
     
 }
