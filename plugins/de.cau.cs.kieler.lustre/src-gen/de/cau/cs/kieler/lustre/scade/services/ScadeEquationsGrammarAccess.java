@@ -470,7 +470,7 @@ public class ScadeEquationsGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//java.lang.RuntimeException: No EObjectDescription could be found in Scope ParserRule.hiddenTokens for Grammar'de.cau.cs.kieler.lustre.scade.ScadeEquations'.rules[5]->TerminalRule'SL_COMMENT'
 	//Semantic Object: Grammar'de.cau.cs.kieler.lustre.Lustre'.rules[0]->ParserRule'LustreProgram'
-	//URI: file:/home/als/eclipses/kieler-semantics-oo/git/semantics/plugins/de.cau.cs.kieler.lustre/bin/de/cau/cs/kieler/lustre/Lustre.xtext
+	//URI: file:/home/herbert/Eclipses/kieler-semantics-wip/git/semantics/plugins/de.cau.cs.kieler.lustre/bin/de/cau/cs/kieler/lustre/Lustre.xtext
 	//EStructuralFeature: xtext::ParserRule.hiddenTokens
 	public LustreGrammarAccess.LustreProgramElements getLustreProgramAccess() {
 		return gaLustre.getLustreProgramAccess();
@@ -774,14 +774,25 @@ public class ScadeEquationsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//PreExpression kexpressions::Expression:
-	//	{kexpressions::OperatorExpression} operator=PreOperator subExpressions+=AtomicValuedExpression
-	//	| AtomicValuedExpression;
+	//	{kexpressions::OperatorExpression} operator=PreOperator subExpressions+=LastExpression
+	//	| LastExpression;
 	public LustreGrammarAccess.PreExpressionElements getPreExpressionAccess() {
 		return gaLustre.getPreExpressionAccess();
 	}
 	
 	public ParserRule getPreExpressionRule() {
 		return getPreExpressionAccess().getRule();
+	}
+	
+	//LastExpression kexpressions::Expression:
+	//	{kexpressions::OperatorExpression} operator=LastOperator subExpressions+=AtomicValuedExpression
+	//	| AtomicValuedExpression;
+	public LustreGrammarAccess.LastExpressionElements getLastExpressionAccess() {
+		return gaLustre.getLastExpressionAccess();
+	}
+	
+	public ParserRule getLastExpressionRule() {
+		return getLastExpressionAccess().getRule();
 	}
 	
 	//@Override
@@ -1081,6 +1092,16 @@ public class ScadeEquationsGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public EnumRule getNorOperatorRule() {
 		return getNorOperatorAccess().getRule();
+	}
+	
+	//enum LastOperator returns kexpressions::OperatorType:
+	//	LAST="last";
+	public LustreGrammarAccess.LastOperatorElements getLastOperatorAccess() {
+		return gaLustre.getLastOperatorAccess();
+	}
+	
+	public EnumRule getLastOperatorRule() {
+		return getLastOperatorAccess().getRule();
 	}
 	
 	///**
