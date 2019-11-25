@@ -44,6 +44,7 @@ import de.cau.cs.kieler.sccharts.processors.statebased.DebugAnnotations
 import de.cau.cs.kieler.sccharts.ui.debug.view.DebugDiagramView
 import de.cau.cs.kieler.sccharts.ui.debug.highlighting.DebugHighlighter
 import org.eclipse.jdt.debug.core.IJavaVariable
+import de.cau.cs.kieler.sccharts.Transition
 
 /**
  * @author peu
@@ -226,6 +227,11 @@ class JavaBreakpointListener implements IJavaBreakpointListener {
                 val executingStates = findExecutingStates(thread, breakpoint, model)
                 for (state : executingStates) {
                     debugHighlighter.highlightExecutingState(state)
+                }
+                
+                // TODO testing
+                for (transition : model.eAllContents.toIterable.filter[it instanceof Transition]) {
+                    debugHighlighter.addBreakpointDecorator(transition as Transition)
                 }
                 return SUSPEND
             }

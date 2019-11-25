@@ -18,6 +18,11 @@ import de.cau.cs.kieler.klighd.krendering.KRenderingFactory
 import de.cau.cs.kieler.simulation.ui.visualization.Highlighting
 import de.cau.cs.kieler.sccharts.ui.debug.view.DebugDiagramView
 import de.cau.cs.kieler.klighd.krendering.Colors
+import com.google.inject.Inject
+import de.cau.cs.kieler.klighd.krendering.KEllipse
+import com.google.inject.Guice
+import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 
 /**
  * @author stu121235
@@ -42,10 +47,18 @@ class DebugHighlighter {
     val executingStateHighlightings = <Highlighting> newLinkedList
     val breakpointHighlights = <Highlighting> newLinkedList
     
+    val transitionToDecorator = <Transition, KEllipse> newHashMap
+    
     static var DebugHighlighter instance 
     
+    static val ellipseID = "Debug Ellipse"
+    
+    @Inject extension KContainerRenderingExtensions
+    @Inject extension KRenderingExtensions
+    
     private new() {
-        
+        super()
+        Guice.createInjector.injectMembers(this)
     }
     
     static def DebugHighlighter getInstance() {
@@ -116,10 +129,28 @@ class DebugHighlighter {
     }
     
     def void addBreakpointDecorator(Transition transition) {
+        val kEdge = DebugDiagramView.getInstance.getKEdge(transition)
+        if (kEdge === null) {
+            // TODO debug print
+            println("Null KEdge for transition" + transition.toString + ", nothing to highlight!")
+            return
+        }
         
+        val ellipse = kEdge.KContainerRendering.addEllipse 
+        ellipse.id = ellipseID
+        ellipse.setDecoratorPlacementData(8,8,-4,0.5f,false)
+        ellipse.setLineWidth(1)
+        ellipse.setBackground(breakpointStateColor)
+        transitionToDecorator.put(transition, ellipse)
     }
     
     def void removeBreakpointDecorator(Transition transition) {
-        
+        val ellipse = transitionToDecorator.get(transition)
+        if (ellipse === null) {
+            // TODO debug print
+            print("Null map entry for transition " + transition + ", can't remove ellipse!")
+        }
+        val kEdge = DebugDiagramView.getInstance.getKEdge(transition)
+        kEdge.KContainerRendering.children.remove(ellipse)
     }
 }
