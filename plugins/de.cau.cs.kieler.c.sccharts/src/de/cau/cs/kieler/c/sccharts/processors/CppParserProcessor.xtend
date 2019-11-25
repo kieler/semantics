@@ -36,7 +36,7 @@ class CppParserProcessor extends ExogenousProcessor<CodeContainer, IASTTranslati
     }
     
     override getName() {
-        "C++ Parser"
+        "C/C++ Parser"
     }
     
     override process() {
@@ -44,7 +44,6 @@ class CppParserProcessor extends ExogenousProcessor<CodeContainer, IASTTranslati
         val infrastructure = ProjectInfrastructure.getProjectInfrastructure(environment)
         
         val cppFileName = infrastructure.modelFile.absolutePath
-        println("fileName: \n" + cppFileName)
         
         val FileContent fileContentCPP = FileContent.createForExternalFileLocation(cppFileName)
         

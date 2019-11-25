@@ -45,6 +45,7 @@ import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.OperatorType
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import org.eclipse.cdt.core.dom.ast.IASTCompoundStatement
+import de.cau.cs.kieler.c.sccharts.extensions.HighlightingExtensions
 
 /**
  * @author lewe
@@ -60,6 +61,7 @@ class SuBStatemachineExtractor extends ExogenousProcessor<IASTTranslationUnit, S
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KExpressionsCreateExtensions
     @Inject extension SMExtractorExtensions
+    @Inject extension HighlightingExtensions
     
     var State rootState
     var String stateInterfaceName
@@ -102,10 +104,13 @@ class SuBStatemachineExtractor extends ExogenousProcessor<IASTTranslationUnit, S
          val stateEnum = findStateEnum(ast)
          val enumStates = stateEnum.getEnumerators
          
+         var initial = true
          for (eState : enumStates) {
              var stateName = eState.getName.toString
              if (stateName.indexOf("a") == 0) stateName = stateName.substring(1)
              val state = createState(stateName)
+             state.initial = initial
+             initial = false
              states.put(stateName, state)
              
              cRegion.states += state
@@ -205,6 +210,8 @@ class SuBStatemachineExtractor extends ExogenousProcessor<IASTTranslationUnit, S
         println("SourceState: " + sourceState)
         val evalFunc = stateEvals.get(state)
         var IASTStatement transitionSwitch
+        
+        sourceState.insertHighlightAnnotations(evalFunc)
         
         for (child : evalFunc.getBody.children) {
             if (child instanceof IASTSwitchStatement) transitionSwitch = child.getBody

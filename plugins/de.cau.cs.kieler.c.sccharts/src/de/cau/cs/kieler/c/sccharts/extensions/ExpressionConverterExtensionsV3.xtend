@@ -33,11 +33,19 @@ import org.eclipse.cdt.core.dom.ast.IASTFunctionCallExpression
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import org.eclipse.cdt.core.dom.ast.IASTArraySubscriptExpression
+import org.eclipse.cdt.core.dom.ast.IASTNode.CopyStyle
+import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
+import org.eclipse.cdt.core.dom.ast.IASTFieldReference
+import org.eclipse.cdt.core.dom.ast.IASTConditionalExpression
+import org.eclipse.cdt.core.dom.ast.IASTCastExpression
+import de.cau.cs.kieler.sccharts.extensions.SCChartsDataflowRegionExtensions
 
 class ExpressionConverterExtensionsV3 {
     
+    @Inject extension SCChartsStateExtensions
     @Inject extension AnnotationsExtensions
     @Inject extension DataflowExtractorV25
+    @Inject extension SCChartsDataflowRegionExtensions
     @Inject extension KExpressionsCreateExtensions
     @Inject extension KExpressionsDeclarationExtensions
     @Inject extension KExpressionsValuedObjectExtensions
@@ -45,6 +53,7 @@ class ExpressionConverterExtensionsV3 {
     @Inject extension KEffectsExtensions
     @Inject extension CDTConvertExtensions
     @Inject extension ValueExtensions
+    @Inject extension HighlightingExtensions
     
     def ArrayList<Assignment> createKEffect(IASTBinaryExpression binExpr, State funcState, DataflowRegion dRegion) {
         val operator = binExpr.getOperator
@@ -105,6 +114,118 @@ class ExpressionConverterExtensionsV3 {
         res
     }
     
+    def createLazyAssignment(IASTBinaryExpression expression, State funcState, DataflowRegion dRegion, int operator) {
+        
+        val assExpr = expression.copy(CopyStyle.withLocations)
+        assExpr.setOperator = 17
+        val operatorExpr = expression.copy(CopyStyle.withLocations)
+        operatorExpr.setOperator = operator
+        
+        assExpr.setOperand2 = operatorExpr
+        
+        val kEffects = createKEffect(assExpr, funcState, dRegion)
+        for (kEffect : kEffects) {
+            dRegion.equations += kEffect
+        }
+    }
+        
+    def createBinaryAssignment(IASTBinaryExpression expression, State funcState, DataflowRegion dRegion) {
+        
+        switch (expression.getOperator) {
+            case 17: {
+                val kEffects = createKEffect(expression, funcState, dRegion)
+                for (kEffect : kEffects) {
+                    dRegion.equations += kEffect
+                }
+            }
+            case 18: {
+                val arithmeticOP = 1
+                createLazyAssignment(expression, funcState, dRegion, arithmeticOP)
+            }
+            case 19: {
+                val arithmeticOP = 2
+                createLazyAssignment(expression, funcState, dRegion, arithmeticOP)
+            }
+            case 20: {
+                val arithmeticOP = 3
+                createLazyAssignment(expression, funcState, dRegion, arithmeticOP)
+            }
+            case 21: {
+                val arithmeticOP = 4
+                createLazyAssignment(expression, funcState, dRegion, arithmeticOP)
+            }
+            case 22: {
+                val arithmeticOP = 5
+                createLazyAssignment(expression, funcState, dRegion, arithmeticOP)
+            }
+            case 23: {
+                val arithmeticOP = 6
+                createLazyAssignment(expression, funcState, dRegion, arithmeticOP)
+            }
+            case 24: {
+                val arithmeticOP = 7
+                createLazyAssignment(expression, funcState, dRegion, arithmeticOP)
+            }
+            case 25: {
+                val arithmeticOP = 12
+                createLazyAssignment(expression, funcState, dRegion, arithmeticOP)
+            }
+            case 26: {
+                val arithmeticOP = 13
+                createLazyAssignment(expression, funcState, dRegion, arithmeticOP)
+            }
+            case 27: {
+                val arithmeticOP = 14
+                createLazyAssignment(expression, funcState, dRegion, arithmeticOP)
+            }
+            
+        }
+        
+    }
+    
+    def createUnaryAssignment(IASTUnaryExpression expression, State funcState, DataflowRegion dRegion) {
+        
+        val sourceExpression = createKExpression(expression, funcState, dRegion).head
+                
+        val opName = (expression.getOperand as IASTIdExpression).getName.toString
+        val opVO = funcState.findValuedObjectByName(opName, true, dRegion)
+                
+        opVO.insertHighlightAnnotations(expression) 
+                
+        dRegion.equations += createAssignment(opVO, sourceExpression)
+        
+    }
+    
+    def createFuncCall(IASTFunctionCallExpression expression, State funcState, DataflowRegion dRegion, State refState, boolean knownFunction) {
+
+        val refDecl = createReferenceDeclaration
+        refDecl.setReference(refState)
+        refDecl.annotations += createTagAnnotation("hide")
+        dRegion.declarations += refDecl
+                
+        val refObj = refDecl.createValuedObject(refState.name)
+        refObj.insertHighlightAnnotations(expression)
+                
+        var arguments = expression.getArguments
+        for(var i = 0; i < arguments.length; i++) {
+            val argument = arguments.get(i)
+            if (argument instanceof IASTIdExpression) {
+                var ValuedObject inputVO
+                if (!knownFunction) {
+                    val varDecl = createVariableDeclaration
+                    varDecl.input = true
+                    refState.declarations += varDecl
+                            
+                    inputVO = varDecl.createValuedObject(i.toString)
+                } else {
+                    inputVO = refState.declarations.filter(VariableDeclaration).map[ valuedObjects ].flatten.get(i)
+                }
+                val stateVO = funcState.findValuedObjectByName(argument.getName.toString, false, dRegion)
+                dRegion.equations += createAssignment(refObj, inputVO, stateVO.reference)
+            }
+        }
+    }
+    
     def Expression createKExpression(IASTNode expr, State funcState, DataflowRegion dRegion) {
         var Expression res
         //println("Inside createKExpression for node: " + expr)
@@ -138,6 +259,46 @@ class ExpressionConverterExtensionsV3 {
             }
             
             
+        } else if (expr instanceof IASTConditionalExpression) {
+            
+            val condExpr = expr.getLogicalConditionExpression
+            
+            val condState = createState(condExpr.exprToString)
+            condState.insertHighlightAnnotations(expr)
+            val condDRegion = createDataflowRegion(condState.name)
+            condDRegion.label = condState.name
+            condState.regions += condDRegion
+            val refDecl = createReferenceDeclaration
+            refDecl.setReference(condState)
+            refDecl.annotations += createTagAnnotation("hide")
+            dRegion.declarations += refDecl
+            val condStateVO = refDecl.createValuedObject("?")
+            
+            setInputs(expr, funcState, condState, dRegion, condStateVO)
+            
+            
+            val outputDecl = createVariableDeclaration
+            outputDecl.output = true
+            condState.declarations += outputDecl
+            val outputVO = outputDecl.createValuedObject("res")
+            
+            condDRegion.equations += createAssignment(outputVO, expr.getPositiveResultExpression.createKExpression(condState,condDRegion))
+            outputVO.insertHighlightAnnotations(expr)
+            
+            val condNDRegion = createDataflowRegion("Else")
+            condNDRegion.label = "Else"
+            condState.regions += condNDRegion
+            
+            condNDRegion.equations += createAssignment(outputVO, expr.getNegativeResultExpression.createKExpression(condState,condNDRegion))
+            outputVO.insertHighlightAnnotations(expr)
+            
+            
+            res = condStateVO.reference => [
+                subReference = outputVO.reference
+            ]
+            
+        } else if (expr instanceof IASTCastExpression) {
+            res = expr.getOperand.createKExpression(funcState, dRegion)
         } else if(expr instanceof IASTUnaryExpression) {
            res = (expr as IASTUnaryExpression).createKExpression(funcState, dRegion).head 
         } else if(expr instanceof IASTBinaryExpression) {
@@ -161,7 +322,6 @@ class ExpressionConverterExtensionsV3 {
         } else if (expr instanceof IASTExpressionStatement) {
             res = expr.getExpression.createKExpression(funcState, dRegion)
         }
-        
         
         res
     }
@@ -242,6 +402,22 @@ class ExpressionConverterExtensionsV3 {
             val operand = expr.getOperand.exprToString
             
             res = "(" + preOperator + operand + postOperator + ")"
+        } else if (expr instanceof IASTFieldReference) {
+            
+            val structExpr = expr.getFieldOwner
+            val structName = structExpr.exprToString
+            val fieldName = expr.getFieldName
+            res = structName + "->" + fieldName
+            
+        } else if (expr instanceof IASTArraySubscriptExpression) {
+            
+            val arrayExpr = expr.getArrayExpression
+            val arrayName = arrayExpr.exprToString
+            val arrayArgExpr = expr.getArgument
+            val arrayArgName = arrayArgExpr.exprToString
+            
+            res = arrayName + "[" + arrayArgName + "]"
+            
         } else if (expr instanceof IASTIdExpression) {
             res = expr.getName.toString            
         } else if (expr instanceof IASTLiteralExpression) {

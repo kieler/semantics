@@ -26,6 +26,8 @@ import de.cau.cs.kieler.sccharts.ControlflowRegion
 import org.eclipse.cdt.core.dom.ast.IASTNode
 import org.eclipse.cdt.core.dom.ast.IASTIdExpression
 import org.eclipse.cdt.core.dom.ast.IASTNameOwner
+import org.eclipse.cdt.core.dom.ast.IASTIfStatement
+import org.eclipse.cdt.core.dom.ast.IASTFunctionCallExpression
 
 /**
  * @author lewe
@@ -100,13 +102,23 @@ class SCChartASTExtractor extends ExogenousProcessor<IASTTranslationUnit, SCChar
      def State printChildren(ControlflowRegion cRegion, IASTNode node) {
          val State res = cRegion.createState("")
          var nodeASTClass = node.toString
+         if (node instanceof IASTIdExpression) {
+             nodeASTClass = "IdExpression"
+         }
+         if (node instanceof IASTFunctionCallExpression) {
+             nodeASTClass = "FunctionCallExpression"
+         }
          if(nodeASTClass.contains("CPPAST")) {
-            nodeASTClass = nodeASTClass.substring(nodeASTClass.indexOf("CPPAST"))    
+            nodeASTClass = nodeASTClass.substring(nodeASTClass.indexOf("CPPAST") + 6)    
+         }
+         if(nodeASTClass.contains("CAST")) {
+            nodeASTClass = nodeASTClass.substring(nodeASTClass.indexOf("CPPAST") + 4)    
          }
          if(nodeASTClass.contains("@")) {
             nodeASTClass = nodeASTClass.substring(0, nodeASTClass.indexOf("@"))    
          }
          var resLabel = nodeASTClass + "\n"
+         
          
          /*if(node instanceof IASTIdExpression) {
              resLabel += "ist ne CPPASTIdExpression"

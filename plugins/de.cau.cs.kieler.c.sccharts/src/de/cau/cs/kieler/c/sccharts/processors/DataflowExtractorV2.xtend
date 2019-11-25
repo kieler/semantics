@@ -65,7 +65,6 @@ import org.eclipse.cdt.internal.core.dom.parser.c.CASTDoStatement
 import org.eclipse.cdt.internal.core.dom.parser.c.CASTCaseStatement
 import org.eclipse.cdt.internal.core.dom.parser.c.CASTBreakStatement
 import org.eclipse.cdt.internal.core.dom.parser.c.CASTDefaultStatement
-import de.cau.cs.kieler.c.sccharts.extensions.BuilderExtensions
 import org.eclipse.cdt.core.dom.ast.IASTExpression
 
 /**
@@ -89,7 +88,6 @@ class DataflowExtractorV2 extends ExogenousProcessor<IASTTranslationUnit, SCChar
     @Inject extension CDTConvertExtensions
     @Inject extension ExpressionConverterExtensionsV2
     @Inject extension ValueExtensions
-    @Inject extension BuilderExtensions
     
      var functions = <String, State> newHashMap
      var ifCounter = 0;

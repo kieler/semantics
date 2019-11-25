@@ -32,6 +32,7 @@ import de.cau.cs.kieler.c.sccharts.extensions.CDTConvertExtensions
 import de.cau.cs.kieler.sccharts.DataflowRegion
 import de.cau.cs.kieler.sccharts.extensions.SCChartsDataflowRegionExtensions
 import de.cau.cs.kieler.c.sccharts.extensions.ExpressionConverterExtensionsV3
+import de.cau.cs.kieler.c.sccharts.extensions.HighlightingExtensions
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import org.eclipse.cdt.core.dom.ast.IASTStatement
@@ -42,7 +43,6 @@ import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.OperatorType
 import de.cau.cs.kieler.c.sccharts.extensions.ValueExtensions
-import de.cau.cs.kieler.c.sccharts.extensions.BuilderExtensions
 import org.eclipse.cdt.core.dom.ast.IASTExpression
 import java.util.HashMap
 import de.cau.cs.kieler.sccharts.Region
@@ -74,6 +74,7 @@ import org.eclipse.cdt.core.dom.ast.IASTBreakStatement
 import org.eclipse.cdt.core.dom.ast.IASTDefaultStatement
 import org.eclipse.cdt.core.dom.ast.IASTFunctionCallExpression
 import org.eclipse.cdt.internal.core.dom.parser.c.CASTFunctionDeclarator
+import org.eclipse.cdt.core.dom.ast.IASTUnaryExpression
 
 /**
  * @author lan
@@ -97,7 +98,7 @@ class DataflowExtractorV25 extends ExogenousProcessor<IASTTranslationUnit, SCCha
     @Inject extension CDTConvertExtensions
     @Inject extension ExpressionConverterExtensionsV3
     @Inject extension ValueExtensions
-    @Inject extension BuilderExtensions
+    @Inject extension HighlightingExtensions
     
      var functions = <String, State> newHashMap
      var ifCounter = 0;
@@ -110,14 +111,13 @@ class DataflowExtractorV25 extends ExogenousProcessor<IASTTranslationUnit, SCCha
     
     var State baseState = null
 
-    var ControlflowRegion topCRegion
 
     override getId() {
         "de.cau.cs.kieler.c.sccharts.dataflowExtractorV25"
     }
     
     override getName() {
-        "Dataflow Extractor V2.5"
+        "Dataflow Extractor"
     }
     
     override process() {
@@ -126,8 +126,6 @@ class DataflowExtractorV25 extends ExogenousProcessor<IASTTranslationUnit, SCCha
     }    
 
     def EObject transform(IASTTranslationUnit ast) {
-        //println("")
-        //println("Start dataflowExtractor V2.5")
         
         if(ast === null) {
             return null
@@ -135,18 +133,18 @@ class DataflowExtractorV25 extends ExogenousProcessor<IASTTranslationUnit, SCCha
         
         val SCChart = createSCChart
         
-        baseState = createState("")
-        baseState.label = "Welcome to Dataflow Extractor V2.5"
+        baseState = createState("rootState")
+        baseState.label = "Welcome to Dataflow Extractor"
         
         SCChart.rootStates += baseState
         
-        topCRegion = baseState.createControlflowRegion("")
+        val topCRegion = baseState.createControlflowRegion("")
         
         //auto created dataflow graph
         for(child : ast.children) {
             
             if(child instanceof IASTFunctionDefinition) {
-                val state = buildFunction(child, baseState)
+                val state = buildFunction(child)
                 functions.put(state.label, state)
                 topCRegion.states += state
             } else if(child instanceof IASTSimpleDeclaration){
@@ -192,75 +190,86 @@ class DataflowExtractorV25 extends ExogenousProcessor<IASTTranslationUnit, SCCha
         
     }
 
-    def State buildFunction(IASTFunctionDefinition func, State rootState) {
-       //Bestimmt Func Name
+
+    //The function used to create the state representing a function
+    def State buildFunction(IASTFunctionDefinition func) {
+       //Determine function name
         val funcDeclarator = func.getDeclarator as CASTFunctionDeclarator
-        val funcName = funcDeclarator.name.toString
+        val funcName = funcDeclarator.getName.toString
         
+        //create the state
         val State res = createState(funcName)
         res.label = funcName
         
+        //insert text highlighting 
         res.insertHighlightAnnotations(func)
         
+        //create a hashmap for the functions valued objects if needed
         var HashMap<String, ArrayList<ValuedObject>> stateVariables = null
         if(VOs.containsKey(res)) {
-            stateVariables = VOs.get(baseState)
+            stateVariables = VOs.get(res)
         } else {
             stateVariables = <String,ArrayList<ValuedObject>> newHashMap
             VOs.put(res, stateVariables)    
         }
     
-        //Bestimme Inputs
+        //Create inputs for the functions parameters
         val parameters = funcDeclarator.getParameters
         for (par : parameters) {
             val parDecl = par as IASTParameterDeclaration
             
+            //Determine parameter type
             val decl = createVariableDeclaration
             decl.type = (parDecl.getDeclSpecifier as IASTSimpleDeclSpecifier).type.CDTTypeConversion
             decl.input = true
-            
             res.declarations += decl
             
+            //Determine parameter name
             val varName = parDecl.getDeclarator.getName.toString
             var varList = <ValuedObject> newArrayList
             
+            //create valued object for the input
             val VO = decl.createValuedObject(varName + "_in")
             VO.insertHighlightAnnotations(parDecl)
             
+            //attach the valued object to its list and the list to the map
             varList.add(VO)
-            stateVariables.put(varName, varList)
-            
-            
+            stateVariables.put(varName, varList) 
         }
         
-        //Bestimmt Rückgabe
+        //Determine function output
         val declSpecifier = func.getDeclSpecifier
-        if (declSpecifier !== null) {
-            if (declSpecifier instanceof IASTSimpleDeclSpecifier) {
+        if (declSpecifier instanceof IASTSimpleDeclSpecifier) {
+            val type = (declSpecifier as IASTSimpleDeclSpecifier).type.CDTTypeConversion
+            if (type !== null) {
+                //Determine output type
                 val retDecl = createVariableDeclaration
-                retDecl.type = (declSpecifier as IASTSimpleDeclSpecifier).type.CDTTypeConversion
-                retDecl.output = true   
-                
+                retDecl.type = type
+                retDecl.output = true  
                 res.declarations += retDecl
                 
+                //Set output name to res
                 var varName = "res"
                 var varList = <ValuedObject> newArrayList
                 
+                //create valued object
                 val resVO = retDecl.createValuedObject(varName + "_out")
                 resVO.insertHighlightAnnotations(declSpecifier)
                 
+                //attach valued object to the listing
                 varList.add(resVO)
-                stateVariables.put(varName, varList)            
+                stateVariables.put(varName, varList)   
             }
         }
         
+        //Translate function body
         val body = func.getBody
         if (body instanceof IASTCompoundStatement) {
             val bodyRegion = buildCompound(body, res)
             res.regions += bodyRegion
             bodyRegion.label = funcName
         } else {
-            //println("Func Body ist kein CompoundStatement")
+            println("ERROR: Body of " + funcName + " is not a Compound Statement!")
         }
         
         res
@@ -277,14 +286,6 @@ class DataflowExtractorV25 extends ExogenousProcessor<IASTTranslationUnit, SCCha
         }
         linkOutputs(bodyState, res)
         
-        //println("")
-        //println("Compound in Dataflow umgewandelt - equations:")
-        for (eq : res.equations) {
-            //println(eq.toString)
-        }
-        
-        //println("")
-        
         res
     }
     
@@ -300,21 +301,28 @@ class DataflowExtractorV25 extends ExogenousProcessor<IASTTranslationUnit, SCCha
                 
         } else if (stmt instanceof IASTExpressionStatement) {
                 
-            val expression = (stmt as IASTExpressionStatement).getExpression
+            val expression = stmt.getExpression
                 
             if (expression instanceof IASTBinaryExpression) {
                     
-                if(expression.getOperator == 17) {
-                    val kEffects = createKEffect(expression, rootState, dRegion)
-                    for (kEffect : kEffects) {
-                        dRegion.equations += kEffect
-                    }
-                } else {
-                    //println("ERROR: BinaryExpression im Compound keine Zuweisung")
-                }
+                createBinaryAssignment(expression, rootState, dRegion) 
                     
-            } else {
-                //println("ERROR: Expression Statement kein BinaryExpression")
+            } else if (expression instanceof IASTUnaryExpression) {
+                
+                createUnaryAssignment(expression, rootState, dRegion)
+                
+            } else if (expression instanceof IASTFunctionCallExpression) {
+                
+                val funcName = (expression.getFunctionNameExpression as IASTIdExpression).getName.toString
+                val knownFunction = functions.containsKey(funcName)
+                var State funcState 
+                if (knownFunction) {
+                    funcState = functions.get(funcName)
+                } else {
+                    funcState = createState(funcName)
+                }
+                createFuncCall(expression, rootState, dRegion, funcState, knownFunction)
+                
             }
                 
                 
@@ -356,10 +364,10 @@ class DataflowExtractorV25 extends ExogenousProcessor<IASTTranslationUnit, SCCha
     }
     
     def buildIf(IASTIfStatement ifStmt, State rootState, DataflowRegion dRegion) {
-        
+        //creating the state to represent the if statement
         val ifState = createState("If_" + ifCounter)
-        //topCRegion.states += ifState
         
+        //create a reference for this if state in the containing dataflow-region
         val refDecl = createReferenceDeclaration
         dRegion.declarations += refDecl
         refDecl.setReference(ifState)
@@ -367,13 +375,17 @@ class DataflowExtractorV25 extends ExogenousProcessor<IASTTranslationUnit, SCCha
         ifObj.insertHighlightAnnotations(ifStmt)
         ifCounter++
         
+        //set the in and outputs of the state
         setInputs(ifStmt, rootState, ifState, dRegion, ifObj)
         setOutputs(ifStmt, rootState, ifState, dRegion, ifObj)
+        
+        //create the controlflow region for the if state and the initial state
         val cRegion = ifState.createControlflowRegion("")
         val initState = cRegion.createState("Init")
         initState.insertHighlightAnnotations(ifStmt)
         initState.initial = true
         
+        //create the state for the then part
         val thenState = cRegion.createState("Then")
         val thenCompound = ifStmt.getThenClause as IASTCompoundStatement
         thenState.insertHighlightAnnotations(thenCompound)
@@ -383,6 +395,7 @@ class DataflowExtractorV25 extends ExogenousProcessor<IASTTranslationUnit, SCCha
         val thenTransition = initState.createTransitionTo(thenState)
         thenTransition.trigger = (ifStmt.getConditionExpression).createKExpression(ifState, dRegion)
         
+        //if an else is given the state is also created
         if (ifStmt.getElseClause !== null) {
             val elseState = cRegion.createState("Else")
             val elseCompound = ifStmt.getElseClause as IASTCompoundStatement
@@ -490,97 +503,7 @@ class DataflowExtractorV25 extends ExogenousProcessor<IASTTranslationUnit, SCCha
         println("Build Switch done")
         println("")
     }
-    /*
-    def buildSwitchOld(IASTSwitchStatement swStmt, State rootState, DataflowRegion dRegion) {
-        val swState = createState("Switch_" + swCounter)
-        
-        val refDecl = createReferenceDeclaration
-        dRegion.declarations += refDecl
-        refDecl.setReference(swState)
-        val swObj = refDecl.createValuedObject("Switch_" + swCounter)
-        
-        swObj.insertHighlightAnnotations(swStmt)
-        swCounter++
-        
-        setInputs(swStmt, rootState, swState, dRegion, swObj)
-        setOutputs(swStmt, rootState, swState, dRegion, swObj)
-        
-        val cRegion = swState.createControlflowRegion("")
-        cRegion.insertHighlightAnnotations(swStmt)
-        
-        val controller = (swStmt.getControllerExpression).createKExpression(swState, dRegion)
-        cRegion.label = "switch (" + controller.serialize + ")"
-        
-        val initState = cRegion.createState("Init")
-        initState.insertHighlightAnnotations(swStmt)
-        initState.initial = true
-        
-        val finalState = cRegion.createState("Fin")
-        finalState.insertHighlightAnnotations(swStmt)
-        finalState.final = true
-        
-        val swBody = swStmt.getBody as IASTCompoundStatement
-        
-        for (var i = 0; i < swBody.children.length; i++) {
-            
-            var child = swBody.children.get(i)
-            var State prevNoBreak = null
-            if(child instanceof IASTCaseStatement) {
-                val caseState = cRegion.createState("")
-                caseState.insertHighlightAnnotations(child)
-                
-                if(prevNoBreak !== null) {
-                    prevNoBreak.createTransitionTo(caseState)
-                    prevNoBreak = null
-                }
-                val caseTransition = initState.createTransitionTo(caseState)
-                caseTransition.trigger = (child as IASTCaseStatement).getExpression.createKExpression(swState, dRegion)
-                
-                caseState.label = controller.serialize + " == " + caseTransition.trigger.serialize
-                
-                var caseBody = new IASTCompoundStatement
-                while (!(swBody.children.get(i + 1) instanceof IASTCaseStatement) && !(swBody.children.get(i + 1) instanceof IASTBreakStatement) && !(swBody.children.get(i + 1) instanceof IASTDefaultStatement)) {
-                    i++
-                    val stmt = swBody.children.get(i).copy(CopyStyle.withLocations)
-                    caseBody.addStatement((stmt as IASTStatement).copy(CopyStyle.withLocations))
-                    //println("Statement in neues Compound kopiert! Neue Locations: ")
-                    //println(stmt.getNodeLocations.get(0).getNodeOffset)
-                    //println(stmt.getNodeLocations.get(0).getNodeLength)
-//                    //println(stmt.getFileLocation.toString)
-                }
-                val caseRegion = buildCompound(caseBody, swState)
-                caseRegion.insertHighlightAnnotations(child)
-                caseState.regions += caseRegion
-                
-                if (swBody.children.get(i + 1) instanceof IASTBreakStatement) {
-                    caseState.createTransitionTo(finalState)
-                    i++
-                } else {
-                    prevNoBreak = caseState
-                }
-            } else if (child instanceof IASTDefaultStatement) {
-                val defaultState = cRegion.createState("default")
-                defaultState.insertHighlightAnnotations(child)
-                
-                if(prevNoBreak !== null) {
-                    prevNoBreak.createTransitionTo(defaultState)
-                }
-                val defaultTransition = initState.createTransitionTo(defaultState)
-                
-                var defaultBody = new IASTCompoundStatement
-                while((i+1) < swBody.children.length) {
-                    i++
-                    val stmt = swBody.children.get(i)
-                    defaultBody.addStatement((stmt as IASTStatement).copy(CopyStyle.withLocations))
-                }
-                val defaultRegion = buildCompound(defaultBody, swState)
-                defaultRegion.insertHighlightAnnotations(child)
-                defaultState.regions += defaultRegion
-                val finTransition = defaultState.createTransitionTo(finalState)
-            }
-        }       
-    }
-    */
+   
     def buildFor(IASTForStatement forStmt, State rootState, DataflowRegion dRegion) {
         
         val forState = createState("For_" + forCounter)
@@ -594,61 +517,14 @@ class DataflowExtractorV25 extends ExogenousProcessor<IASTTranslationUnit, SCCha
         
         setInputs(forStmt, rootState, forState, dRegion, forObj)
         setOutputs(forStmt, rootState, forState, dRegion, forObj)
-        //println("")
-        //println("create For CondExpr: " + forStmt.getConditionExpression.exprToString)
+        
         val condExpr = forStmt.getConditionExpression.exprToString
-        //println("")
-        //println("create For InitExpr: " + forStmt.getInitializerStatement.exprToString)
         val initExpr = forStmt.getInitializerStatement.exprToString
-        //println("")
-        //println("Create For ItExpression: " + forStmt.getIterationExpression.exprToString)
         val itExpr = forStmt.getIterationExpression.exprToString
-        //println("")
         
         forState.label = "for (" + initExpr.serialize + "; " + condExpr.serialize + "; " + itExpr.serialize + ")"
         forCounter++
-        /*
-        val initExpr = (forStmt.getInitializerStatement() as IASTExpressionStatement).getExpression
-        if(initExpr instanceof IASTBinaryExpression) {
-            val forDInitRegion = createDataflowRegion("")
-            forState.regions += forDInitRegion
-            forDInitRegion.label = "Initialization"
-            val initBExpr = initExpr as IASTBinaryExpression
-            if(initBExpr.getOperator == 17) {
-                val source = forState.findValuedObjectByName((initBExpr.getOperand1 as IASTIdExpression).getName.toString, false, forDInitRegion)
-                val target = createKExpression(initBExpr.getOperand2, forState, forDInitRegion)
-                forDInitRegion.equations += createAssignment(source, target)
-            }
-        }
         
-        
-        val forDIterationRegion = createDataflowRegion("")
-        forState.regions += forDIterationRegion
-        forDIterationRegion.label = "Iteration"
-        
-        val itStmt = forStmt.getIterationExpression
-        if (itStmt instanceof IASTUnaryExpression) {
-            val unExpr = itStmt as IASTUnaryExpression
-            val unOp = unExpr.getOperator
-            
-            if (unOp == 9 ) {
-                val controlVarIn = forState.findValuedObjectByName((unExpr.getOperand as IASTIdExpression).getName.toString, false, forDIterationRegion)
-                val controlVarOut = forState.findValuedObjectByName((unExpr.getOperand as IASTIdExpression).getName.toString, true, forDIterationRegion)
-                val addKexpression = createOperatorExpression(OperatorType::ADD)
-                addKexpression.subExpressions += createIntValue(1)
-                addKexpression.subExpressions += controlVarIn.reference
-                
-                forDIterationRegion.equations += createAssignment(controlVarOut, addKexpression)
-            } else if (unOp == 10) {
-                val controlVar = forState.findValuedObjectByName((unExpr.getOperand as IASTIdExpression).getName.toString, true, forDIterationRegion)
-                val addKexpression = createOperatorExpression(OperatorType::SUB)
-                addKexpression.subExpressions += createIntValue(1)
-                addKexpression.subExpressions += controlVar.reference
-                
-                forDIterationRegion.equations += createAssignment(controlVar, addKexpression)
-            }
-        }
-        */
         val forDBodyRegion = buildCompound(forStmt.getBody as IASTCompoundStatement, forState) 
         forState.regions += forDBodyRegion
         forDBodyRegion.label = forState.label
@@ -959,11 +835,11 @@ class DataflowExtractorV25 extends ExogenousProcessor<IASTTranslationUnit, SCCha
     def ValuedObject findValuedObjectByName(State state, String name, boolean writing, Region dRegion) {
         var ValuedObject res
         val varList = VOs.get(state).get(name)
-//        //println("")
-//        //println("looking for " + name + " in state " + state.getName() + " with writing: " + writing)
-//        //println("current varList: " + varList)
+//        println("")
+//        println("looking for " + name + " in state " + state.getName() + " with writing: " + writing)
+//        println("current varList: " + varList)
         res = varList.get(varList.length - 1)
-//        //println("last Elem found: " + res)
+//        println("last Elem found: " + res)
         var varName = res.getName()
         var onlyOut = false
         if(varName.contains("_out")) {
@@ -1070,28 +946,7 @@ class DataflowExtractorV25 extends ExogenousProcessor<IASTTranslationUnit, SCCha
         res
     }
     
-    def insertHighlightAnnotations(Annotatable annotatable, IASTNode node) {
-        
-        val nodeLocations = node.getNodeLocations
-        
-//        val annotations = annotatable.annotations
-        
-        if (annotatable.getAnnotations("Offset").length == 0) {
-        
-            if (nodeLocations.length > 0) {        
-                val nodeOffset = node.getNodeLocations.get(0).getNodeOffset
-                val nodeLength = node.getNodeLocations.get(0).getNodeLength
-                
-                annotatable.annotations += createStringAnnotation("Offset", nodeOffset.toString)
-                annotatable.annotations += createStringAnnotation("Length", nodeLength.toString)
-            } else {
-                //println("insertHighlightAnnotations aufgerufen - node hat aber keine NodeLocations")
-            }
-        
-        } else {
-            //println("insertHighlightAnnotations aufgerufen object hat aber bereits offset annotation")
-        }
-    }
+
     
     def printVOs() {
         //println("")

@@ -1,5 +1,5 @@
 system de.cau.cs.kieler.c.dataflowSSA
-    label "C to Dataflow V2.5"
+    label "C to Dataflow"
 
 de.cau.cs.kieler.kicool.deploy.setup
 de.cau.cs.kieler.c.sccharts.cParser

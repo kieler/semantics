@@ -46,6 +46,21 @@ import org.eclipse.cdt.core.dom.ast.IASTBinaryExpression
 import org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTFunctionDeclarator
 import org.eclipse.cdt.core.dom.ast.IASTParameterDeclaration
 import org.eclipse.cdt.internal.core.dom.parser.c.CASTFunctionDeclarator
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.ValueType
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import org.eclipse.cdt.core.dom.ast.IASTExpression
+import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.kexpressions.OperatorType
+import de.cau.cs.kieler.sccharts.Transition
+import java.util.HashMap
+import de.cau.cs.kieler.kexpressions.OperatorExpression
+import org.eclipse.cdt.core.dom.ast.IASTArraySubscriptExpression
+import org.eclipse.cdt.core.dom.ast.IASTUnaryExpression
+import de.cau.cs.kieler.c.sccharts.extensions.CDTConvertExtensions
+import de.cau.cs.kieler.c.sccharts.extensions.HighlightingExtensions
 
 /**
  * @author lewe
@@ -57,20 +72,26 @@ class StatemachineCppExtractor extends ExogenousProcessor<IASTTranslationUnit, S
     @Inject extension SCChartsStateExtensions
     @Inject extension SCChartsTransitionExtensions
     @Inject extension SCChartsControlflowRegionExtensions
+    @Inject extension KExpressionsCreateExtensions
+    @Inject extension KExpressionsDeclarationExtensions
+    @Inject extension KExpressionsValuedObjectExtensions
+    @Inject extension CDTConvertExtensions
+    @Inject extension HighlightingExtensions
         
         
-     val currentStateVariableComment = "//_EXTRACTOR_CURRENT_STATE_VARIABLE"
      val stateEnumComment = "//_EXTRACTOR_STATE_ENUM"
-     val stateChageFunctionComment = "//_EXTRACTOR_STATE_CHANGE_FUNCTION"
+     val eventEnumComment = "//_EXTRACTOR_EVENT_ENUM"
      val behaviourSwitchComment = "//_EXTRACTOR_BEHAVIOUR_SWITCH"
              
      var State rootState
      var states = <String, State> newHashMap
+     var events = <String, ValuedObject> newHashMap
      var transitionContainingFunctions = <String, ArrayList<State>> newHashMap
      var String stateChangeFuncNamespace
      var String stateChangeFuncName
-     var transitions = <State, ArrayList<State>> newHashMap
+     var transitions = <State, HashMap<State,Transition>> newHashMap
      
+     var eventHandlingUsed = false
      var combineTransitions = true
      var includeTransitionContainingFunctions = true
      
@@ -79,7 +100,7 @@ class StatemachineCppExtractor extends ExogenousProcessor<IASTTranslationUnit, S
      }
      
      override getName() {
-         "Statemachine Extractor C++"
+         "Statemachine Extractor"
      }
      
      override process() {
@@ -101,7 +122,7 @@ class StatemachineCppExtractor extends ExogenousProcessor<IASTTranslationUnit, S
          rootState = createState
          SCChart.rootStates += rootState
          val cRegion = rootState.createControlflowRegion("")
-         
+         println("Base SCChart created")
          val stateEnum = findStateEnum(ast)
          val enumStates = stateEnum.getEnumerators
          
@@ -113,6 +134,23 @@ class StatemachineCppExtractor extends ExogenousProcessor<IASTTranslationUnit, S
              
              cRegion.states += state
          }
+         println("states created")
+         val eventEnum = findEventEnum(ast)
+         if (eventEnum !== null) {
+             eventHandlingUsed = true
+             val enumEvents = eventEnum.getEnumerators
+             
+             for (var i = 0; i < enumEvents.length; i++) {
+                 val enumEvent = enumEvents.get(i)
+                 val eventName = enumEvent.getName.toString
+                 val decl = createVariableDeclaration()
+                 decl.type = ValueType::BOOL
+                 val vo = decl.createValuedObject(eventName)
+                 events.put(eventName, vo)
+                 rootState.declarations += decl
+             }
+         }
+         println("optional events created")
          
          val behaviourSwitch = findBehaviourSwitch(ast)
          val switchFuncDef = findContainingFuncDef(behaviourSwitch)
@@ -129,8 +167,9 @@ class StatemachineCppExtractor extends ExogenousProcessor<IASTTranslationUnit, S
                  switchFuncName = switchFuncIASTName.toString
              }
          }
-         
+         println("switch located")
          val stateVar = findCurrentStateVariable(behaviourSwitch)//ast)
+         println("state variable determined")
          val stateVarAssignments = findStateVariableAssignments(ast, stateVar)
          var IASTNode stateChangeFuncNameNode
          var IASTBinaryExpression initStateBinExpr
@@ -143,14 +182,14 @@ class StatemachineCppExtractor extends ExogenousProcessor<IASTTranslationUnit, S
                  stateChangeFuncNameNode = findStateChangeFunc(stateVarAssignments.get(1))
                  initStateBinExpr = stateVarAssignments.get(0)
              } else {
-                 initStateBinExpr = stateVarAssignments.get(0)
+                 initStateBinExpr = stateVarAssignments.get(1)
              }
              
          } else {
              println("ERROR: wrong number of State Variable Assignments found")
          }
-         
-//         val stateChangeFuncNameNode = findStateChangeFunc(ast)//, stateVar) 
+         println("init state bin expr determined")
+         println("state change func name node determined")
          
          if(stateChangeFuncNameNode instanceof CPPASTQualifiedName) {
              val qualName = stateChangeFuncNameNode as CPPASTQualifiedName
@@ -159,8 +198,7 @@ class StatemachineCppExtractor extends ExogenousProcessor<IASTTranslationUnit, S
          } else {
              stateChangeFuncName = stateChangeFuncNameNode.toString
          }
-         
-//         val initStateBinExpr = findInitStateBinaryExpression(ast, stateVar)
+         println("state change func name determined: " + stateChangeFuncName)
          
          
          for (var i = 0; i < ast.children.length; i++) {
@@ -188,24 +226,17 @@ class StatemachineCppExtractor extends ExogenousProcessor<IASTTranslationUnit, S
                  
              }
          }
-         
-//         println(transitionContainingFunctions)
-         
-//         println("behaviourSwitch: " + behaviourSwitch)
+         println("transition containing functions determined")
+
          buildTransitions(behaviourSwitch)
-         
+         println("transitions build")
          
          if (initStateBinExpr !== null) {
-//             println("")
-//             println("Found state Init Bin Expr: ")
-//             println(initStateBinExpr.toString)
-//             println("Operator: " + initStateBinExpr.getOperator)
-//             println("Operand1: " + initStateBinExpr.getOperand1)
-//             println("Operand2: " + initStateBinExpr.getOperand2)
              
              val initState = getInitState(initStateBinExpr)
              if (initState !== null) {
                 initState.initial = true
+                println("initial state declared")
              } else {
                  println("ERROR: Could not determine the initial State")
              }
@@ -267,14 +298,7 @@ class StatemachineCppExtractor extends ExogenousProcessor<IASTTranslationUnit, S
                      
                  }
                  
-                 /*
-                 if(stateChangeFuncNameNode instanceof CPPASTQualifiedName) {
-             val qualName = stateChangeFuncNameNode as CPPASTQualifiedName
-             stateChangeFuncName = qualName.getLastName.toString
-             stateChangeFuncNamespace = qualName.getQualifier.head.resolveBinding.toString
-         } else {
-             stateChangeFuncName = stateChangeFuncNameNode.toString
-         }*/
+
                  
                  
                  if (funcName instanceof CPPASTQualifiedName) {
@@ -309,78 +333,153 @@ class StatemachineCppExtractor extends ExogenousProcessor<IASTTranslationUnit, S
      }
      
      def buildTransitions(IASTSwitchStatement sw) {
-//         println("Beginne buildTransitions")
          val startStates = <State> newArrayList
-         
          val swCompound = sw.getBody
          for(var i = 0; i < swCompound.children.length; i++) {
              var stmt = swCompound.children.get(i)
              if(stmt instanceof IASTCaseStatement) {
                  val caseStmt = stmt as IASTCaseStatement
-//                 println("Found CaseStatement")
-//                 println("Expression: " + caseStmt.getExpression)
                  val expression = caseStmt.getExpression
                  if (expression instanceof IASTIdExpression) {
                     val caseStateName = (expression as IASTIdExpression).getName.toString
                     val caseState = states.get(caseStateName)
+                    caseState.insertHighlightAnnotations(stmt)
                     startStates.add(caseState)
-//                    println("added a state - new startStates:\n" + startStates)
                  }
              } else if(stmt instanceof IASTBreakStatement) {
                  startStates.clear
              } else {
-                 val targetStates = findTargetStates(stmt)
-                 
-                 for (var j = 0; j < targetStates.length; j++) {
-    //                 if(targetStates.get(j) !== null) {
-                        for (var k = 0; k < startStates.size; k++) {
-                            if (combineTransitions) {
-                                if (!transitions.containsKey(startStates.get(k)) || !transitions.get(startStates.get(k)).contains(targetStates.get(j))) {
-//                                    println("createTransition: " + startStates.get(k).getName + " -> " + targetStates.get(j).getName)
-                                    startStates.get(k).createTransitionTo(targetStates.get(j))
-                                    if (transitions.containsKey(startStates.get(k))) {
-                                        transitions.get(startStates.get(k)).add(targetStates.get(j))
-                                    } else {
-                                        val stateTargetStateList = <State> newArrayList
-                                        stateTargetStateList.add(targetStates.get(j))
-                                        transitions.put(startStates.get(k), stateTargetStateList)
-                                    }
-                                }
-                            } else {
-//                                println("createTransition: " + startStates.get(k).getName + " -> " + targetStates.get(j).getName)
-                                startStates.get(k).createTransitionTo(targetStates.get(j))
-                                if (transitions.containsKey(startStates.get(k))) {
-                                    transitions.get(startStates.get(k)).add(targetStates.get(j))
-                                } else {
-                                    val stateTargetStateList = <State> newArrayList
-                                    stateTargetStateList.add(targetStates.get(j))
-                                    transitions.put(startStates.get(k), stateTargetStateList)
-                                }
+                 if (eventHandlingUsed) {
+                     if (stmt instanceof IASTIfStatement) {
+                         transitionFromIf(stmt, startStates)
+                     }
+                     
+                 } else {
+                     val targetStates = findTargetStates(stmt)
+                     
+                     for (var j = 0; j < targetStates.length; j++) {
+                            for (var k = 0; k < startStates.size; k++) {
+                                buildTransition(startStates.get(k), targetStates.get(j), null)
                             }
-                        }
-    //                }
+    
+                     }
+                 
                  }
-                 /*if(stmt instanceof IASTIfStatement) {
-                     /*
-                      * TODO handle Expression (transitiontrigger)
-                      /
-                      var targetState = findTargetState((stmt as IASTIfStatement).getThenClause)
-                      if (targetState !== null) {
-    //                      println("targetState found in Then: " + targetState)
-                          for (var j = 0; j < startStates.size; j++) {
-                              startStates.get(j).createTransitionTo(targetState)
-                          }
-                      }
-                      targetState = findTargetState((stmt as IASTIfStatement).getElseClause)
-                      if (targetState !== null) {
-    //                      println("targetState found in Else: " + targetState)
-                          for (var j = 0; j < startStates.size; j++) {
-                              startStates.get(j).createTransitionTo(targetState)
-                          }
-                      }
-                 }*/
+
              }
          }
+     }
+     
+     def transitionFromIf(IASTIfStatement stmt, ArrayList<State> startStates) {
+         val condExpr = stmt.getConditionExpression
+         var baseTrigger = condExpr.getTrigger
+         val thenComp = stmt.getThenClause
+         val thenTargetStates = findTargetStates(thenComp)
+                         
+         for (var j= 0; j < startStates.length; j++) {
+            for (var k = 0; k < thenTargetStates.length; k++) {
+                buildTransition(startStates.get(j), thenTargetStates.get(k), baseTrigger);
+                             
+            }
+         }
+         val elseComp = stmt.getElseClause
+         if (elseComp instanceof IASTIfStatement) {
+             transitionFromIf(elseComp, startStates)
+         } else {
+             if (elseComp !== null) {
+                val elseTargetStates = findTargetStates(elseComp)
+                var notTrigger = createOperatorExpression(OperatorType::NOT)
+                notTrigger.subExpressions += baseTrigger
+                for (var j= 0; j < startStates.length; j++) {
+                    for (var k = 0; k < elseTargetStates.length; k++) {
+                        buildTransition(startStates.get(j), elseTargetStates.get(k), notTrigger);
+                                     
+                    }
+                }
+             }
+         
+         }
+     }
+     
+     def buildTransition(State startState, State targetState, Expression trigger) {
+         if (combineTransitions) {
+            if (!transitions.containsKey(startState) || !transitions.get(startState).containsKey(targetState)) {
+                val transition = startState.createTransitionTo(targetState)
+                if (transitions.containsKey(startState)) {
+                    transitions.get(startState).put(targetState, transition)
+                } else {
+                    val stateTargetStateMap = <State, Transition> newHashMap
+                    stateTargetStateMap.put(targetState, transition)
+                    transitions.put(startState, stateTargetStateMap)
+                }
+                if (trigger !== null) {
+                    transition.trigger = trigger
+                }
+            } else if (trigger !== null) {
+                val existingTransition = transitions.get(startState).get(targetState)
+                val existingTrigger = existingTransition.trigger
+                var newTrigger = createOperatorExpression(OperatorType::LOGICAL_OR)
+                newTrigger.subExpressions += existingTrigger
+                newTrigger.subExpressions += trigger
+                existingTransition.trigger = newTrigger
+            }
+            
+         } else {
+    
+            val transition = startState.createTransitionTo(targetState)
+            if (transitions.containsKey(startState)) {
+                transitions.get(startState).put(targetState, transition)
+            } else {
+                val stateTargetStateMap = <State, Transition> newHashMap
+                stateTargetStateMap.put(targetState, transition)
+                transitions.put(startState, stateTargetStateMap)
+            }
+            if (trigger !== null) transition.trigger = trigger
+        }
+     }
+     
+     def Expression getTrigger(IASTExpression expr) {
+         var Expression res
+            
+         if (expr instanceof IASTArraySubscriptExpression) {
+             val subExp = expr.getArgument
+             if (subExp instanceof IASTIdExpression) {
+                 val eventName = subExp.getName.toString
+                 if (events.containsKey(eventName)) {
+                     res = events.get(eventName).reference
+                 } else {
+                     println("ERROR: Event used that was not declared: " + eventName)
+                 }
+             }
+         } else if (expr instanceof IASTUnaryExpression) {
+             var opType = expr.getOperator.CDTUnaryOpTypeConversion
+             if (opType !== null) {
+                 var unExpr = opType.createOperatorExpression
+                 
+                 var operand = expr.getOperand
+                 unExpr.subExpressions += getTrigger(operand)
+                 
+                 res = unExpr 
+             } else {
+                 println("ERROR: Unary Expression used that was not translateable to SCCharts")
+             }
+         } else if (expr instanceof IASTBinaryExpression) {
+             var opType = expr.getOperator.CDTBinaryOpTypeConversion
+             if (opType !== null) {
+                 var unExpr = opType.createOperatorExpression
+                 
+                 var operand1 = expr.getOperand1
+                 unExpr.subExpressions += getTrigger(operand1)
+                 var operand2 = expr.getOperand2
+                 unExpr.subExpressions += getTrigger(operand2)
+                 
+                 res = unExpr 
+             } else {
+                 println("ERROR: Binary Expression used that was not translateable to SCCharts")
+             }
+         }  
+            
+         res
      }
      
      def IASTFunctionDefinition findContainingFuncDef(IASTNode node) {
@@ -401,37 +500,25 @@ class StatemachineCppExtractor extends ExogenousProcessor<IASTTranslationUnit, S
          var res = <State> newArrayList
          
          if (stmt instanceof IASTFunctionCallExpression) {
-//            println("Is ne FunctionCallExpression")
             val funcCall = stmt as IASTFunctionCallExpression
             if(funcCall.getFunctionNameExpression instanceof IASTIdExpression) {
                 val funcName = (funcCall.getFunctionNameExpression as IASTIdExpression).getName
-//                println("FuncName: " + funcName.toString)
                 if (funcName instanceof CPPASTQualifiedName) {
-//                    println("Is CPPASTQualifiedName")
-//                    println("stateChangeFuncName: " + stateChangeFuncName)
-//                    println("stateChangeFuncNamespace: " + stateChangeFuncNamespace)
                     if(funcName.getLastName.toString.equals(stateChangeFuncName.toString) && funcName.getQualifier.head.resolveBinding.toString.equals(stateChangeFuncNamespace.toString)) {
                         if(states.containsKey((funcCall.getArguments.head as IASTIdExpression).getName.toString)) {
                             res.add(states.get((funcCall.getArguments.head as IASTIdExpression).getName.toString))
                         }
                     } else if (transitionContainingFunctions.containsKey(funcName.getLastName.toString)) {
-//                        println("is ne transition Contaiing Function")
                         res += transitionContainingFunctions.get(funcName.getLastName.toString)
                     }
                 } else {
-//                    println("function has not qualified name")
                     if(funcName.toString.equals(stateChangeFuncName.toString)) {
-//                        println("Add Transition for not QualifiedName")
                         if(states.containsKey((funcCall.getArguments.head as IASTIdExpression).getName.toString)){
                             res.add(states.get((funcCall.getArguments.head as IASTIdExpression).getName.toString))
                         }
                     } else {
-//                        println("func is nich die stateChangeFunc")
-//                        println("funcName.toString: " + funcName.toString)
-//                        println("trasitionContainingFunction.containsKey(funcName.toString): " + transitionContainingFunctions.containsKey(funcName.toString))
                         
                         if (transitionContainingFunctions.containsKey(funcName.toString)) {
-//                            println("is ne transition Contaiing Function")
                             res += transitionContainingFunctions.get(funcName.toString)
                         }
                     }    
@@ -448,25 +535,17 @@ class StatemachineCppExtractor extends ExogenousProcessor<IASTTranslationUnit, S
      
      def State findTargetState(IASTStatement stmt) {
          var State res
-//         println("Inside FindTargetState")
          if(stmt instanceof IASTCompoundStatement) {
-//             println("Stmt isntanceof IASTCompoundStatement")
              val compStmt = stmt as IASTCompoundStatement
              for(var i= 0; i < compStmt.children.length;i++) {
-//                 println("Teste child: " + i)
                  val child = compStmt.children.get(i)
                  if(child instanceof IASTExpressionStatement){
                      val expr = child as IASTExpressionStatement
                      
                      if(expr.getExpression instanceof IASTFunctionCallExpression) {
-//                         println("Is ne FunctionCallExpression")
                          val funcCall = expr.getExpression as IASTFunctionCallExpression
                          val funcName = (funcCall.getFunctionNameExpression as IASTIdExpression).getName
-                         println("FuncName: " + funcName.toString)
                          if (funcName instanceof CPPASTQualifiedName) {
-//                             println("Is CPPASTQualifiedName")
-//                             println("stateChangeFuncName: " + stateChangeFuncName)
-//                             println("stateChangeFuncNamespace: " + stateChangeFuncNamespace)
                              if(funcName.getLastName.toString.equals(stateChangeFuncName.toString) && funcName.getQualifier.head.resolveBinding.toString.equals(stateChangeFuncNamespace.toString)) {
                                  res = states.get((funcCall.getArguments.head as IASTIdExpression).getName.toString)
                              }
@@ -497,59 +576,15 @@ class StatemachineCppExtractor extends ExogenousProcessor<IASTTranslationUnit, S
      }
      
      def IASTName findStateChangeFunc(IASTBinaryExpression binExpr) {//IASTTranslationUnit ast) {//}, IASTName stateVar) {
-        println("")
-        println("Inside findStateChangeFunc")
          var IASTName res
          
          var assignSource = findAssignSource(binExpr)
-         println("assignSource: " + assignSource.getName.toString)
          
          var match = states.containsKey(assignSource.getName.toString)
          if (!match) {
              res = findContainingFuncDef(binExpr).getDeclarator.getName
          }
          
-         /*
-         val funcDef = findContainingFuncDef(binExpr)
-         val funcDecl = funcDef.getDeclarator
-         println("Containing Func: " + funcDecl.getName.toString)
-         var IASTParameterDeclaration[] arguments
-         
-         if (funcDecl instanceof CPPASTFunctionDeclarator) {
-            arguments = funcDecl.getParameters    
-         } else {
-             arguments = (funcDecl as CASTFunctionDeclarator).getParameters
-         }
-         println("parameter bestimmt: " + arguments)
-         var match = false 
-         for (var i = 0; (i < arguments.length) && !match; i++) {
-             println("argument[" + i + "]: " + arguments.get(i).getDeclarator.getName.toString)
-             match = arguments.get(i).getDeclarator.getName.toString.equals(assignSource.getName.toString)
-             println("match mit argument[" + i + "]: " + match)
-         }
-         
-         if (match) {
-             res = funcDecl.getName
-             println("res aktualisiert: " + res)
-         }
-         
-         
-         val comments = ast.getComments()
-         val idx = comments.getIdxOfComment(stateChageFunctionComment)
-         
-         val stateChangeComment = comments.get(idx)
-         val commentParentNode = ast.getCommentContainingNode(stateChangeComment)
-         
-//         println("stateChangeComment containingNode found!")
-//         println("Class: " + commentParentNode)
-//         println("Parent Class: " + commentParentNode.getParent)
-         
-         if (commentParentNode instanceof IASTCompoundStatement && commentParentNode.getParent instanceof IASTFunctionDefinition) {
-             val funcDef = commentParentNode.getParent as IASTFunctionDefinition
-//             println("function Declarator: " + funcDef.getDeclarator.getName.toString)
-             res = funcDef.getDeclarator.getName
-         }
-         */
          return res
      }
      
@@ -562,11 +597,7 @@ class StatemachineCppExtractor extends ExogenousProcessor<IASTTranslationUnit, S
          val switchComment = comments.get(idx)
          val commentParentNode = ast.getCommentContainingNode(switchComment)
          val commentFollowingNode = ast.getCommentFollowingNode(switchComment)
-                  
-         println("switchComment FollowingNode found!")
-         println("Offset: " + commentFollowingNode.getNodeLocations.get(0).getNodeOffset)
-         println("Class: " + commentFollowingNode)
-         
+      
          if (commentFollowingNode instanceof IASTSwitchStatement) {
             res = commentFollowingNode as IASTSwitchStatement
          }
@@ -583,10 +614,28 @@ class StatemachineCppExtractor extends ExogenousProcessor<IASTTranslationUnit, S
          val enumComment = comments.get(idx)
          val commentFollowingNode = ast.getCommentFollowingNode(enumComment)
          
-         println("enum commentFollowingNode: " + commentFollowingNode)
-                           
          if (commentFollowingNode instanceof IASTSimpleDeclaration && commentFollowingNode.children.head instanceof IASTEnumerationSpecifier) {
              res = commentFollowingNode.children.head as IASTEnumerationSpecifier
+         }
+         
+         res
+     }
+     
+     def IASTEnumerationSpecifier findEventEnum(IASTTranslationUnit ast) {
+         var IASTEnumerationSpecifier res
+         
+         val comments = ast.getComments()
+         val idx = comments.getIdxOfComment(eventEnumComment)
+         
+         if (idx >= 0) {
+             val enumComment = comments.get(idx)
+             val commentFollowingNode = ast.getCommentFollowingNode(enumComment)
+             
+             if (commentFollowingNode instanceof IASTSimpleDeclaration && commentFollowingNode.children.head instanceof IASTEnumerationSpecifier) {
+                 res = commentFollowingNode.children.head as IASTEnumerationSpecifier
+             } else {
+                 println("ERROR: Event Comment does not mark an enum!")
+             }
          }
          
          res
@@ -604,57 +653,6 @@ class StatemachineCppExtractor extends ExogenousProcessor<IASTTranslationUnit, S
          }
          
          res
-         /*
-         var IASTName res = null
-         
-         val comments = ast.getComments()
-         val idx = comments.getIdxOfComment(currentStateVariableComment)
-         
-         val currStateComment = comments.get(idx)
-         val currStateCommentOffset = currStateComment.getNodeLocations.get(0).getNodeOffset
-         val currStateCommentFilename = currStateComment.getContainingFilename
-         
-         var IASTNode declContainingNode = null
-         var IASTNode declNode = null
-         var possibleNodes = ast.children
-         
-         while (declNode === null) {
-             declContainingNode = null
-             
-             for (var i = 0; i < possibleNodes.length && declContainingNode === null; i++) {
-                val child = possibleNodes.get(i)
-                val childOffset = child.getNodeLocations.get(0).getNodeOffset
-                val childLength = child.getNodeLocations.get(0).getNodeLength
-                val childFilename = child.getContainingFilename
-                if ((childFilename === currStateCommentFilename) 
-                    && (childOffset <= currStateCommentOffset) && ((childOffset + childLength) > currStateCommentOffset)
-                ) {
-                    declContainingNode = child
-                    possibleNodes = child.children
-                }    
-             }
-             
-             //if no containing node is found then the comment is on the same level as the declaration
-             if (declContainingNode === null) {
-                 var childIdx = 0;
-                 var child = possibleNodes.get(childIdx)
-                 while(((child.getContainingFilename !== currStateCommentFilename) || (child.getNodeLocations.get(0).getNodeOffset < currStateCommentOffset)) && (childIdx < (possibleNodes.length - 1))) {
-                     childIdx++
-                     child = possibleNodes.get(childIdx)
-                 }
-                 if(child.getContainingFilename === currStateCommentFilename && child.getNodeLocations.get(0).getNodeOffset > currStateCommentOffset) {
-                     declNode = child
-                 } else {
-                     return null
-                 }
-             }
-         
-         }
-         
-         res = (declNode as IASTSimpleDeclaration).getDeclarators.get(0).getName
-         
-         res
-         */
      }
      
      def IASTNode getCommentFollowingNode(IASTNode ast, IASTComment comment) {

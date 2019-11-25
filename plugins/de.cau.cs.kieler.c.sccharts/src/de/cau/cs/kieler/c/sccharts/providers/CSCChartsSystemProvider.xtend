@@ -33,7 +33,8 @@ class CSCChartsSystemProvider implements ISystemProvider {
             "system/de.cau.cs.kieler.c.dataflowSSA.kico",
             "system/de.cau.cs.kieler.c.statemachine.cpp.kico",
             "system/de.cau.cs.kieler.c.statemachine.SuB.kico",
-            "system/de.cau.cs.kieler.c.ast.kico"
+            "system/de.cau.cs.kieler.c.ast.kico",
+            "system/de.cau.cs.kieler.c.structDataflow.kico"
         ]
     }
     
