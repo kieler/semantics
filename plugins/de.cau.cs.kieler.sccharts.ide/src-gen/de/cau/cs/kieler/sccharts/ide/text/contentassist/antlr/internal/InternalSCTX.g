@@ -4739,6 +4739,48 @@ finally {
 	restoreStackSize(stackSize);
 }
 
+rule__DataflowRegion__EquationsAlternatives_9_0_2_0
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+	(
+		{ before(grammarAccess.getDataflowRegionAccess().getEquationsDataflowAssignmentParserRuleCall_9_0_2_0_0()); }
+		ruleDataflowAssignment
+		{ after(grammarAccess.getDataflowRegionAccess().getEquationsDataflowAssignmentParserRuleCall_9_0_2_0_0()); }
+	)
+	|
+	(
+		{ before(grammarAccess.getDataflowRegionAccess().getEquationsAssignmentParserRuleCall_9_0_2_0_1()); }
+		ruleAssignment
+		{ after(grammarAccess.getDataflowRegionAccess().getEquationsAssignmentParserRuleCall_9_0_2_0_1()); }
+	)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__DataflowRegion__EquationsAlternatives_9_1_2_0
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+	(
+		{ before(grammarAccess.getDataflowRegionAccess().getEquationsDataflowAssignmentParserRuleCall_9_1_2_0_0()); }
+		ruleDataflowAssignment
+		{ after(grammarAccess.getDataflowRegionAccess().getEquationsDataflowAssignmentParserRuleCall_9_1_2_0_0()); }
+	)
+	|
+	(
+		{ before(grammarAccess.getDataflowRegionAccess().getEquationsAssignmentParserRuleCall_9_1_2_0_1()); }
+		ruleAssignment
+		{ after(grammarAccess.getDataflowRegionAccess().getEquationsAssignmentParserRuleCall_9_1_2_0_1()); }
+	)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
 rule__IntOrReference__Alternatives
 	@init {
 		int stackSize = keepStackSize();
@@ -38316,9 +38358,9 @@ rule__DataflowRegion__EquationsAssignment_9_0_2
 	}
 :
 	(
-		{ before(grammarAccess.getDataflowRegionAccess().getEquationsDataflowAssignmentParserRuleCall_9_0_2_0()); }
-		ruleDataflowAssignment
-		{ after(grammarAccess.getDataflowRegionAccess().getEquationsDataflowAssignmentParserRuleCall_9_0_2_0()); }
+		{ before(grammarAccess.getDataflowRegionAccess().getEquationsAlternatives_9_0_2_0()); }
+		(rule__DataflowRegion__EquationsAlternatives_9_0_2_0)
+		{ after(grammarAccess.getDataflowRegionAccess().getEquationsAlternatives_9_0_2_0()); }
 	)
 ;
 finally {
@@ -38346,9 +38388,9 @@ rule__DataflowRegion__EquationsAssignment_9_1_2
 	}
 :
 	(
-		{ before(grammarAccess.getDataflowRegionAccess().getEquationsDataflowAssignmentParserRuleCall_9_1_2_0()); }
-		ruleDataflowAssignment
-		{ after(grammarAccess.getDataflowRegionAccess().getEquationsDataflowAssignmentParserRuleCall_9_1_2_0()); }
+		{ before(grammarAccess.getDataflowRegionAccess().getEquationsAlternatives_9_1_2_0()); }
+		(rule__DataflowRegion__EquationsAlternatives_9_1_2_0)
+		{ after(grammarAccess.getDataflowRegionAccess().getEquationsAlternatives_9_1_2_0()); }
 	)
 ;
 finally {

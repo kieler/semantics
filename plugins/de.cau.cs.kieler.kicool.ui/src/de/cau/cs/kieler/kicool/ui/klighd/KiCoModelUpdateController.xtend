@@ -614,7 +614,6 @@ class KiCoModelUpdateController extends AbstractViewUpdateController implements 
                         }
                     }
                 } catch (Exception e) {
-                    e.printStackTrace()
                     StatusManager.getManager().handle(new Status(IStatus.ERROR,
                             KiCoolUiModule.PLUGIN_ID, e.getMessage(), e), StatusManager.SHOW)
                 }

@@ -88,15 +88,17 @@ class SCGCircuitDataflowProcessor extends Processor<SCGraphs, SCCharts> implemen
                             var ValuedObject goValue = null
                             for (var i = 0; i < nv.valuedObjects.length; i++) {
                                 map.put(v.valuedObjects.get(i), nv.valuedObjects.get(i))
-                                if (nv.valuedObjects.get(i).name == "_GO0")
+                                if (nv.valuedObjects.get(i).name == "_GO0") {
                                     goValue = nv.valuedObjects.get(i)
+                                }
                             }
                             nv.valuedObjects.last.name = nv.ssaOrigVO.name
-                            for (vo : nv.valuedObjects)
+                            for (vo : nv.valuedObjects) {
                                 VariableStore.getVariableStore(environment).update(vo, SCCHARTS_GENERATED)
-                            if (nv.input || nv.output)
+                            }
+                            if (nv.input || nv.output) {
                                 it.declarations.add(nv)
-                            else {
+                            } else {
                                 nr.declarations.add(nv)
                                 nv.annotations += createTagAnnotation("hide")
                             }
@@ -149,12 +151,14 @@ class SCGCircuitDataflowProcessor extends Processor<SCGraphs, SCCharts> implemen
                     globalDec.valuedObjects.clear
                     globalDec.valuedObjects.add(dec.valuedObjects.get(0))
                     dec.replace(globalDec)
-                    for (vo : globalDec.valuedObjects)
+                    for (vo : globalDec.valuedObjects) {
                         VariableStore.getVariableStore(environment).update(vo, SCCHARTS_GENERATED)
+                    }
                     dataflowRegion.declarations.add(localDec)
                     localDec.annotations += createTagAnnotation("hide")
-                    for (vo : localDec.valuedObjects)
+                    for (vo : localDec.valuedObjects) {
                         VariableStore.getVariableStore(environment).update(vo, SCCHARTS_GENERATED)
+                    }
                 }
             }
         }
@@ -163,18 +167,20 @@ class SCGCircuitDataflowProcessor extends Processor<SCGraphs, SCCharts> implemen
 
     def transformExpression(Expression e, HashMap<ValuedObject, ValuedObject> variableReplacement) {
         for (ref : e.allReferences) {
-            if (variableReplacement.containsKey(ref.valuedObject))
+            if (variableReplacement.containsKey(ref.valuedObject)) {
                 ref.replace(variableReplacement.get(ref.valuedObject).reference)
-            else
-                print("error")
+            } else {
+                ref.valuedObject.addStringAnnotation("error", "The referenced Valued Object does not exists.")
+            }
         }
     }
 
     def transformAssignment(Assignment a, HashMap<ValuedObject, ValuedObject> variableReplacement) {
         if (variableReplacement.containsKey(a.reference.valuedObject)) {
             a.reference.replace(variableReplacement.get(a.reference.valuedObject).reference)
-        } else
-            print("error")
+        } else {
+            a.addStringAnnotation("error", "The referenced Valued Object does not exists.")
+        }
         a.expression.transformExpression(variableReplacement)
         for (pre : a.eAllContents.toIterable.filter(OperatorExpression).filter[operator == OperatorType.PRE].toList) {
             pre.subExpressions.head.replace(

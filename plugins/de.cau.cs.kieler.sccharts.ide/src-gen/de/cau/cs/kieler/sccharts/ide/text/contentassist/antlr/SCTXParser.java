@@ -42,6 +42,8 @@ public class SCTXParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getControlflowRegionAccess().getAlternatives_7_1_2(), "rule__ControlflowRegion__Alternatives_7_1_2");
 			builder.put(grammarAccess.getControlflowRegionAccess().getAlternatives_7_1_2_0_3(), "rule__ControlflowRegion__Alternatives_7_1_2_0_3");
 			builder.put(grammarAccess.getDataflowRegionAccess().getAlternatives_9(), "rule__DataflowRegion__Alternatives_9");
+			builder.put(grammarAccess.getDataflowRegionAccess().getEquationsAlternatives_9_0_2_0(), "rule__DataflowRegion__EquationsAlternatives_9_0_2_0");
+			builder.put(grammarAccess.getDataflowRegionAccess().getEquationsAlternatives_9_1_2_0(), "rule__DataflowRegion__EquationsAlternatives_9_1_2_0");
 			builder.put(grammarAccess.getIntOrReferenceAccess().getAlternatives(), "rule__IntOrReference__Alternatives");
 			builder.put(grammarAccess.getLocalActionAccess().getAlternatives(), "rule__LocalAction__Alternatives");
 			builder.put(grammarAccess.getDeclarationAccess().getAlternatives(), "rule__Declaration__Alternatives");

@@ -1,6 +1,6 @@
 /*
  * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
- *
+ * 
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
  * Copyright ${year} by
@@ -14,7 +14,6 @@ package de.cau.cs.kieler.sccharts.ui.synthesis
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.Expression
-import de.cau.cs.kieler.kexpressions.Value
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCompareExtensions
 import de.cau.cs.kieler.klighd.internal.util.KlighdInternalProperties
@@ -31,18 +30,40 @@ import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.core.options.PortSide
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.kexpressions.OperatorExpression
+import de.cau.cs.kieler.kexpressions.OperatorType
+import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
+import org.eclipse.elk.alg.layered.options.LayeredOptions
+import de.cau.cs.kieler.klighd.KlighdConstants
+import de.cau.cs.kieler.sccharts.ui.synthesis.styles.EquationStyles
+import de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses
+import de.cau.cs.kieler.klighd.krendering.extensions.KLabelExtensions
+import de.cau.cs.kieler.sccharts.DataflowRegion
+import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
+import java.util.Comparator
 
 /**
  * @author kolja
- *
+ * 
  */
+@ViewSynthesisShared
 class EquationSynthesisHelper {
-    
+
     @Inject extension SCChartsSerializeHRExtensions
     @Inject extension KExpressionsCompareExtensions
+    @Inject extension KEdgeExtensions
+    @Inject extension EquationStyles
+    @Inject extension KLabelExtensions
+
+    protected val List<Pair<KNode, KNode>> sequentials = newArrayList
+    protected var alignInputOutputs = false
+    protected var hideLocals = false
+    protected var preCicles = false
+    protected var showWireLabels = false
+    protected var DataflowRegion currentRegion = null
 
     // removes a node from the list and from the graph
-    def betterRemove(List<KNode> nodes, KNode node) {
+    protected def betterRemove(List<KNode> nodes, KNode node) {
         while (node.incomingEdges !== null && node.incomingEdges.size > 0) {
             node.incomingEdges.get(0).betterRemove
         }
@@ -54,7 +75,7 @@ class EquationSynthesisHelper {
     }
 
     // removes the edge and the ports if they are not needed anymore
-    def void betterRemove(KEdge e) {
+    protected def void betterRemove(KEdge e) {
         val source = e.source
         val target = e.target
         if (e.sourcePort !== null && e.sourcePort.edges !== null && e.sourcePort.edges.size == 1) {
@@ -70,24 +91,24 @@ class EquationSynthesisHelper {
         e.targetPort?.edges?.remove(e)
     }
 
-    def getId(KLabeledGraphElement node) {
+    protected def getId(KLabeledGraphElement node) {
         node.eContents?.filter(KIdentifier)?.head?.id
     }
 
-    def setId(KLabeledGraphElement node, String id) {
+    protected def setId(KLabeledGraphElement node, String id) {
         node.getData(KIdentifier).id = id
         node
     }
 
-    def KLabel getLabel(KNode node) {
+    protected def KLabel getLabel(KNode node) {
         node.eContents.filter(KLabel).head
     }
 
-    def PortSide getPortSide(KPort port) {
+    protected def PortSide getPortSide(KPort port) {
         port.getProperty(CoreOptions::PORT_SIDE)
     }
 
-    def findPortById(KNode node, String id) {
+    protected def findPortById(KNode node, String id) {
         for (p : node.ports) {
             if (p.id == id) {
                 return p
@@ -96,50 +117,46 @@ class EquationSynthesisHelper {
         return null
     }
 
-    def isInput(KNode node) {
+    protected def isInput(KNode node) {
         node.getProperty(EquationSynthesis.INPUT_FLAG) as boolean
     }
 
-    def isOutput(KNode node) {
+    protected def isOutput(KNode node) {
         node.getProperty(EquationSynthesis.OUTPUT_FLAG) as boolean
     }
 
-    def isReference(KNode node) {
+    protected def isReference(KNode node) {
         return node.getProperty(EquationSynthesis.REFERENCE_NODE) as boolean
     }
 
     // given two KGraph elements the return value is true iff the elements are associated with the same source element
     // in case of associations with ValuedObjectReferences only the ValuedObject needs to be equal
-    def sourceEquals(KGraphElement a, KGraphElement b) {
-        if (a.sourceElement instanceof ValuedObjectReference && b.sourceElement instanceof ValuedObjectReference) {
-            return (a.sourceElement as ValuedObjectReference).valuedObject ==
-                (b.sourceElement as ValuedObjectReference).valuedObject
-        }
-        if (a.sourceElement instanceof Value && b.sourceElement instanceof Value &&
-            a.sourceElement.serializeHR == b.sourceElement.serializeHR) {
-            return true
-        }
+    protected def sourceEquals(KGraphElement a, KGraphElement b) {
         if (a.sourceElement instanceof Expression && b.sourceElement instanceof Expression) {
             return (a.sourceElement as Expression).equals2(b.sourceElement as Expression)
         }
         return a.sourceElement == b.sourceElement
     }
-    
-    def isSequential(KEdge edge) {
+
+    protected def isSequential(KEdge edge) {
         edge.getProperty(EquationSynthesis.SEQUENTIAL_EDGE) as boolean
     }
 
-    def isInstance(KEdge edge) {
+    protected def isInstance(KEdge edge) {
         edge.getProperty(EquationSynthesis.INSTANCE_EDGE) as boolean
     }
 
-    def getSourceElement(KGraphElement node) {
+    protected def isDataAccess(KNode node) {
+        node.getProperty(EquationSynthesis.DATA_ACCESS_FLAG) as boolean
+    }
+
+    protected def getSourceElement(KGraphElement node) {
         return node.getProperty(KlighdInternalProperties.MODEL_ELEMEMT)
     }
 
     // returns true iff input is a node for the assignment equation of output
     // only usable when the equations are separated
-    def isInputForEquation(KNode input, KNode output) {
+    protected def isInputForEquation(KNode input, KNode output) {
         val List<KNode> queue = newArrayList
         queue.add(input)
         val List<KNode> visited = newArrayList
@@ -150,28 +167,20 @@ class EquationSynthesisHelper {
             if (current == output) {
                 return true
             }
-            for (e : current.outgoingEdges.filter[!isInstance]) {
-                if (!visited.exists[it == e.target] && !queue.exists[it == e.target]) {
-                    queue.add(e.target)
+            if (!(current.sourceElement instanceof OperatorExpression) ||
+                (current.sourceElement as OperatorExpression).operator != OperatorType.PRE) {
+                for (e : current.outgoingEdges.filter[!isInstance]) {
+                    if (!visited.exists[it == e.target] && !queue.exists[it == e.target]) {
+                        queue.add(e.target)
+                    }
                 }
             }
         }
         return false
     }
 
-    // returns the last index of the last sub reference or the last sub reference
-    def Expression lastSubReference(ValuedObjectReference reference) {
-        if (reference.subReference !== null) {
-            return reference.subReference.lastSubReference
-        }
-        if (reference.indices.size > 0) {
-            return reference.indices.get(reference.indices.size - 1)
-        }
-        return reference
-    }
-
     // returns true iff the last sub reference has indices
-    def boolean lastSubReferenceIsArray(ValuedObjectReference reference) {
+    protected def boolean lastSubReferenceIsArray(ValuedObjectReference reference) {
         if (reference.subReference !== null) {
             return reference.subReference.lastSubReferenceIsArray
         }
@@ -180,7 +189,7 @@ class EquationSynthesisHelper {
 
     // given a reference with sub references and indices
     // a copied reference is returned without the last index or sub reference
-    def ValuedObjectReference removeLastReference(ValuedObjectReference reference) {
+    protected def ValuedObjectReference removeLastReference(ValuedObjectReference reference) {
         val ref = reference.copy
         if (ref.subReference !== null) {
             ref.subReference = ref.subReference.removeLastReference
@@ -194,7 +203,7 @@ class EquationSynthesisHelper {
     }
 
     // returns the label of the last index of the last sub reference or the label of the last sub reference
-    def String lastSubReferenceLabel(ValuedObjectReference reference) {
+    protected def String lastSubReferenceLabel(ValuedObjectReference reference) {
         if (reference.subReference !== null) {
             return reference.subReference.lastSubReferenceLabel
         }
@@ -202,5 +211,137 @@ class EquationSynthesisHelper {
             return "[" + reference.indices.get(reference.indices.size - 1).serializeHR.toString + "]"
         }
         return reference.serializeHR.toString
+    }
+
+    // returns the number-th input port of a node and creates it if it doesn't exist
+    protected def getInputPortWithNumber(KNode node, int number) {
+        var maxIndex = -1
+        var KPort maxPort = null
+        for (p : node.ports) {
+            val id = p.id
+            if (id !== null) {
+                if (id.startsWith(EquationSynthesis.PORT_IN_PREFIX)) {
+                    try {
+                        val n = Integer.parseInt(id.substring(2))
+                        if(n == number) return p
+                        if (n > maxIndex) {
+                            maxIndex = n
+                            maxPort = p
+                        }
+                    } catch (NumberFormatException e) {
+                    }
+                }
+            }
+        }
+
+        if(maxPort === null) return null
+
+        var KPort result = null
+        for (pi : (maxIndex + 1) .. number) {
+            result = maxPort.copy
+            result.id = (EquationSynthesis.PORT_IN_PREFIX + pi)
+            node.ports.add(0, result)
+        }
+        return result
+    }
+
+    // connects two ports with a wire
+    protected def connectWith(KPort source, KPort target, String label) {
+        if (source === null || target === null) {
+            return
+        }
+        val edge = createEdge
+        DiagramSyntheses.setLayoutOption(edge, LayeredOptions.INSIDE_SELF_LOOPS_YO, true)
+        edge.source = source.node
+        edge.sourcePort = source
+        edge.target = target.node
+        edge.targetPort = target
+        if (source.node.hasProperty(EquationSynthesis.DATA_ARRAY_FLAG) ||
+            target.node.hasProperty(EquationSynthesis.DATA_ARRAY_FLAG)) {
+            edge.addWireBusFigure
+        } else {
+            edge.addWireFigure
+        }
+        if (showWireLabels && (!source.node.isInput || source.node.isDataAccess) && label !== null) {
+            edge.createLabel.configureTailEdgeLabel(label, 5, KlighdConstants::DEFAULT_FONT_NAME)
+        }
+    }
+
+    protected def isSequential(KNode before, KNode after) {
+        if (before.isInput && after.isInput) {
+            return sequentials.exists [
+                key == before && sequentials.filter[value == after].map[key].toList.contains(value)
+            ]
+        }
+        return sequentials.exists[key == before && value == after]
+    }
+
+    // for a data access node the node which references to the referenced array or class variable is returned
+    protected def getDataAccessSource(KNode access) {
+        var source = access
+        while (source !== null && source.isDataAccess) {
+            val current = source
+            source = source.ports.findFirst[sourceElement === null && edges.size > 0].edges.map [
+                if(it.source !== current) it.source else target
+            ].head
+        }
+        return source
+    }
+
+    // the list will be sorted such that accesses of the same variable that are more specific comes first. 
+    // for example x[0][1] will be before x[0]
+    protected def sortSpecific(List<KNode> dataAccesses) {
+        dataAccesses.sort(new Comparator<KNode>() {
+
+            private def int compareReference(ValuedObjectReference r1, ValuedObjectReference r2) {
+                if (r1.valuedObject != r2.valuedObject) {
+                    return 0
+                }
+                if (r1.indices !== null && r2.indices !== null) {
+                    for (var i = 0; i < Math.max(r1.indices.size, r2.indices.size); i++) {
+                        var Expression e1 = if(r1.indices.size > i) r1.indices.get(i) else null
+                        var Expression e2 = if(r2.indices.size > i) r2.indices.get(i) else null
+                        if (e1 !== null && e2 !== null) {
+                            if (!e1.equals2(e2)) {
+                                return 0
+                            }
+                        } else {
+                            if (e1 !== null) {
+                                return -1
+                            }
+                            if (e2 !== null) {
+                                return 1
+                            }
+                        }
+                    }
+                } else {
+                    if (r1.indices !== null && r1.indices.size > 0)
+                        return -1
+                    if (r2.indices !== null && r2.indices.size > 0)
+                        return 1
+                }
+                if (r1.subReference !== null && r2.subReference !== null) {
+                    return r1.subReference.compareReference(r2.subReference)
+                }
+                if (r1.subReference !== null) {
+                    return -1
+                }
+                if (r2.subReference !== null) {
+                    return 1
+                }
+                return 0
+            }
+
+            override compare(KNode o1, KNode o2) {
+                if (o1.sourceElement instanceof ValuedObjectReference &&
+                    o2.sourceElement instanceof ValuedObjectReference) {
+                    return (o1.sourceElement as ValuedObjectReference).compareReference(
+                        o2.sourceElement as ValuedObjectReference)
+                }
+                return 0
+            }
+
+        })
+        return dataAccesses
     }
 }

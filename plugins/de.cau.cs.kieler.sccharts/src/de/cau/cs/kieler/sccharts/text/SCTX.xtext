@@ -163,12 +163,12 @@ DataflowRegion returns sccharts::DataflowRegion:
     ((
         '{'
         declarations+=DeclarationWOSemicolon*
-        equations+=(DataflowAssignment)*
+        equations+=(DataflowAssignment|Assignment)*
         '}'
     )|(
         ':'
         declarations+=DeclarationWOSemicolon*
-        equations+=(DataflowAssignment)*
+        equations+=(DataflowAssignment|Assignment)*
     ));
     
 IntOrReference returns kexpressions::Expression:

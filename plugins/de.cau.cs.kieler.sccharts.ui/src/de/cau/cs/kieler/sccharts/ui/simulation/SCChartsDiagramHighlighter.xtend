@@ -1,6 +1,6 @@
 /*
  * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
- *
+ * 
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
  * Copyright 2017 by
@@ -61,46 +61,46 @@ import java.util.HashMap
  * FIXME This class is instantiated via bundle start!
  * 
  * @author aas
- *
+ * 
  */
 class SCChartsDiagramHighlighter extends DiagramHighlighter {
-    
+
     extension static SCChartsStateExtensions scchartsStateExtensions = new SCChartsStateExtensions
-    
+
     /**
      * Single instance.
      */
     static var SCChartsDiagramHighlighter instance
-    
+
     /**
      * The traversed transitions.
      * This is a transition that has been used in this tick.
      */
-    protected var List<Transition> traversedTransitions = <Transition> newArrayList
+    protected var List<Transition> traversedTransitions = <Transition>newArrayList
     /**
      * The traversed states.
      * These are the states that have been left and / or entered by traversed transitions.
      * It is possible that a traversed state is reentered in the same tick (e.g. using a self loop),
      * thus traversed states can be current states as well.
      */
-    protected var List<State> traversedStates = <State> newArrayList
-    
+    protected var List<State> traversedStates = <State>newArrayList
+
     /**
      * The current states.
      * These are the states in which the control flow will continue in the next tick.
      */
-    protected var List<State> currentStates = <State> newArrayList
-    
+    protected var List<State> currentStates = <State>newArrayList
+
     /**
      * The active dataflow equations.
      */
-    protected var Set<DataflowRegion> currentActiveDataflowRegions = <DataflowRegion> newHashSet
-    
+    protected var Set<DataflowRegion> currentActiveDataflowRegions = <DataflowRegion>newHashSet
+
     /**
      * The highlighting style for traversed states and transitions
      */
     static val KForeground TRAVERSED_ELEMENT_STYLE = createTraversedElementStyle
-    
+
     /**
      * The highlighting style for current states
      */
@@ -111,27 +111,28 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
      */
     var takenTransitionArraySize = 0
 
+    private new() {
+    }
 
-    private new() {}
     static def create() {
-        if(instance === null) {
+        if (instance === null) {
             instance = new SCChartsDiagramHighlighter
         }
         instance
     }
-    
+
     /**
      * {@inheritDoc}
      */
     override getName() {
         return "SCCharts Highlighter"
     }
-    
+
     def isSupported(SimulationContext ctx) {
         val compileCtx = ctx.startEnvironment.getProperty(SimulationContext.SOURCE_COMPILATION_CONTEXT)
         return compileCtx !== null && compileCtx.originalModel instanceof SCCharts
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -140,35 +141,36 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
         currentStates = null
         update(ctx)
     }
-    
+
     /**
      * {@inheritDoc}
      */
     override update(SimulationContext ctx) {
         super.update(ctx)
         val pool = ctx.dataPool
-        
+
         // Remove highlighting
-        unhighlightDiagram      
-        
+        unhighlightDiagram
+
         // If is supported
         if (pool !== null && ctx.isSupported) {
             // Calculate the simulation controlflow to determine what must be highlighted
             calculateSimulationControlFlow(ctx)
             // Find the graph elements in the diagram for the EObjects that should be highlighted
-            val traversedGraphHighlighting = if( !traversedTransitions.isNullOrEmpty && !!traversedStates.isNullOrEmpty )
-                                                 getHighlighting(traversedTransitions + traversedStates, TRAVERSED_ELEMENT_STYLE)
-                                             else
-                                                 newArrayList
-            val currentGraphHighlighting = if(!currentStates.isNullOrEmpty)
-                                               getHighlighting(#[] + currentStates, CURRENT_ELEMENT_STYLE)
-                                           else
-                                               newArrayList
-                                               
-            val currentDataflowHighlighting = if (currentActiveDataflowRegions.nullOrEmpty) newArrayList
-                                                else getHighlighting(#[] + currentActiveDataflowRegions, CURRENT_ELEMENT_STYLE)
-            val currentWireHighlighting = <Highlighting> newArrayList
-            
+            val traversedGraphHighlighting = if (!traversedTransitions.isNullOrEmpty && !!traversedStates.isNullOrEmpty)
+                    getHighlighting(traversedTransitions + traversedStates, TRAVERSED_ELEMENT_STYLE)
+                else
+                    newArrayList
+            val currentGraphHighlighting = if (!currentStates.isNullOrEmpty)
+                    getHighlighting(#[] + currentStates, CURRENT_ELEMENT_STYLE)
+                else
+                    newArrayList
+
+            val currentDataflowHighlighting = if(currentActiveDataflowRegions.
+                    nullOrEmpty) newArrayList else getHighlighting(#[] + currentActiveDataflowRegions,
+                    CURRENT_ELEMENT_STYLE)
+            val currentWireHighlighting = <Highlighting>newArrayList
+
             var ProcessorReference key = null
             for (k : ctx.processorMap.keySet) {
                 if (k.id == "de.cau.cs.kieler.simulation.internal.step")
@@ -198,12 +200,19 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
                                     for (e : first.outgoingEdges) {
                                         if (!visited.contains(e)) {
                                             visited.add(e)
+                                            cicle.clear
                                             if (original instanceof BoolValue && (original as BoolValue).value)
                                                 currentWireHighlighting.add(new Highlighting(e, CURRENT_ELEMENT_STYLE))
                                             if (original instanceof IntValue)
-                                                currentWireHighlighting.add(new ValuedHighlighting(e, CURRENT_ELEMENT_STYLE, (original as IntValue).value, (original as IntValue).value != 0))
+                                                currentWireHighlighting.add(
+                                                    new ValuedHighlighting(e, CURRENT_ELEMENT_STYLE,
+                                                        (original as IntValue).value,
+                                                        (original as IntValue).value != 0))
                                             if (original instanceof FloatValue)
-                                                currentWireHighlighting.add(new ValuedHighlighting(e, CURRENT_ELEMENT_STYLE, new Float((original as FloatValue).value), (original as FloatValue).value != 0))
+                                                currentWireHighlighting.add(
+                                                    new ValuedHighlighting(e, CURRENT_ELEMENT_STYLE,
+                                                        new Float((original as FloatValue).value),
+                                                        (original as FloatValue).value != 0))
                                             if (!next.contains(e.target))
                                                 next.add(e.target)
                                         }
@@ -214,7 +223,8 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
                                     for (e : first.outgoingEdges) {
                                         if (!visited.contains(e)) {
                                             visited.add(e)
-                                            if( entry !== null ){
+                                            cicle.clear
+                                            if (entry !== null) {
                                                 switch ( entry.variableInformation.get(0).type ) {
                                                     case ValueType.BOOL:
                                                         if (entry.rawValue.asBoolean)
@@ -222,10 +232,13 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
                                                                 new Highlighting(e, CURRENT_ELEMENT_STYLE))
                                                     case ValueType.INT:
                                                         currentWireHighlighting.add(
-                                                            new ValuedHighlighting(e, CURRENT_ELEMENT_STYLE, entry.rawValue.asInt, entry.rawValue.asInt != 0))
+                                                            new ValuedHighlighting(e, CURRENT_ELEMENT_STYLE,
+                                                                entry.rawValue.asInt, entry.rawValue.asInt != 0))
                                                     case ValueType.FLOAT:
                                                         currentWireHighlighting.add(
-                                                            new ValuedHighlighting(e, CURRENT_ELEMENT_STYLE, new Float(entry.rawValue.asFloat), entry.rawValue.asFloat != 0))
+                                                            new ValuedHighlighting(e, CURRENT_ELEMENT_STYLE,
+                                                                new Float(entry.rawValue.asFloat),
+                                                                entry.rawValue.asFloat != 0))
                                                     default: {
                                                     }
                                                 }
@@ -237,15 +250,18 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
                                 } else if (original instanceof OperatorExpression) {
                                     var continue = false
                                     var Object value = null
-                                    if ((original as OperatorExpression).operator != OperatorType.PRE && !cicle.contains(first)) {
+                                    if ((original as OperatorExpression).operator != OperatorType.PRE &&
+                                        !cicle.contains(first)) {
                                         for (e : first.incomingEdges) {
                                             if (!visited.contains(e)) {
                                                 if (!next.contains(e.source))
                                                     next.add(e.source)
-                                                cicle.add(first)
-                                                next.add(first)
                                                 continue = true
                                             }
+                                        }
+                                        if (continue) {
+                                            cicle.add(first)
+                                            next.add(first)
                                         }
                                     }
                                     if (!continue) {
@@ -281,7 +297,7 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
                                                             case ValueType.INT:
                                                                 value = entry.rawValue.asInt
                                                             case ValueType.FLOAT:
-                                                                value = new Float( entry.rawValue.asFloat )
+                                                                value = new Float(entry.rawValue.asFloat)
                                                             default: {
                                                             }
                                                         }
@@ -299,14 +315,14 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
                                                     if (e.targetPort.data.filter(KIdentifier).map[id].get(0) == "in1") {
                                                         val h = currentWireHighlighting.filter[it.element == e]
                                                         trueValue = h.size > 0
-                                                        if( h.size > 0 && h.get( 0 ) instanceof ValuedHighlighting)
-                                                            trueValue = (h.get( 0 ) as ValuedHighlighting).value
+                                                        if (h.size > 0 && h.get(0) instanceof ValuedHighlighting)
+                                                            trueValue = (h.get(0) as ValuedHighlighting).value
                                                     }
                                                     if (e.targetPort.data.filter(KIdentifier).map[id].get(0) == "in2") {
                                                         val h = currentWireHighlighting.filter[it.element == e]
                                                         falseValue = h.size > 0
-                                                        if( h.size > 0 && h.get( 0 ) instanceof ValuedHighlighting)
-                                                            falseValue = (h.get( 0 ) as ValuedHighlighting).value
+                                                        if (h.size > 0 && h.get(0) instanceof ValuedHighlighting)
+                                                            falseValue = (h.get(0) as ValuedHighlighting).value
                                                     }
                                                 }
                                                 value = condition ? trueValue : falseValue
@@ -353,23 +369,26 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
                                                 }
                                                 value = t
                                             }
-                                            default:{
-                                                value = (original as OperatorExpression).operator.eval(first.findParams(currentWireHighlighting))
+                                            default: {
+                                                value = (original as OperatorExpression).operator.eval(
+                                                    first.findParams(currentWireHighlighting))
                                             }
                                         }
                                         for (e : first.outgoingEdges) {
                                             if (!visited.contains(e)) {
                                                 visited.add(e)
+                                                cicle.clear
                                                 if (value instanceof Boolean) {
-                                                    if( (value as Boolean) )
+                                                    if ((value as Boolean))
                                                         currentWireHighlighting.add(
                                                             new Highlighting(e, CURRENT_ELEMENT_STYLE))
-                                                }
-                                                else if( value !== null ){
-                                                    if( value instanceof Double )
-                                                        value = new Float( (value as Double).doubleValue as float )
+                                                } else if (value !== null) {
+                                                    if (value instanceof Double)
+                                                        value = new Float((value as Double).doubleValue as float)
                                                     currentWireHighlighting.add(
-                                                        new ValuedHighlighting(e, CURRENT_ELEMENT_STYLE, value, (value instanceof Integer ? (value as Integer) != 0 : (value as Float) != 0)))
+                                                        new ValuedHighlighting(e, CURRENT_ELEMENT_STYLE, value,
+                                                            (value instanceof Integer ? (value as Integer) !=
+                                                                0 : (value as Float) != 0)))
                                                 }
                                                 if (!next.contains(e.target))
                                                     next.add(e.target)
@@ -380,6 +399,7 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
                                     for (e : first.outgoingEdges) {
                                         if (!visited.contains(e)) {
                                             visited.add(e)
+                                            cicle.clear
                                             if (!next.contains(e.target))
                                                 next.add(e.target)
                                         }
@@ -390,19 +410,18 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
                     }
                 }
             }
-                                                
-                                               
+
             // Create highlighting with the corresponding styles
-            val highlighting = traversedGraphHighlighting + currentGraphHighlighting + 
-                currentDataflowHighlighting + currentWireHighlighting
+            val highlighting = traversedGraphHighlighting + currentGraphHighlighting + currentDataflowHighlighting +
+                currentWireHighlighting
             highlightDiagram(highlighting)
-            
+
             val layoutConfig = new LightDiagramLayoutConfig(diagramViewContext)
             layoutConfig.zoomStyle(ZoomStyle.NONE)
             layoutConfig.performLayout
         }
     }
-    
+
     private def findParams(KNode node, ArrayList<Highlighting> highlighting) {
         val params = newHashMap
         for (e : node.incomingEdges) {
@@ -544,38 +563,40 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
         }
         return result
     }
-    
-    def private findPreValue( SimulationContext ctx, String name ){
-        if( ctx.history.size <= 1 )
+
+    def private findPreValue(SimulationContext ctx, String name) {
+        if (ctx.history.size <= 1)
             return null
-        var pool = ctx.history.get( 1 )
+        var pool = ctx.history.get(1)
         var String key = null
-        for( k : pool.entries.keySet )
-        {
-            if( k.endsWith( name ) && (k.length == name.length || k.endsWith("_" + name)) && !k.startsWith("_pre_") && !k.startsWith("_reg_") )
-            {
-                if( key === null )
+        for (k : pool.entries.keySet) {
+            if (k.endsWith(name) && (k.length == name.length || k.endsWith("_" + name)) && !k.startsWith("_pre_") &&
+                !k.startsWith("_reg_")) {
+                if (key === null)
                     key = k
                 else
-                    System.out.println( "WARNING: unable to determine the key of the pre Variable '" + name + "'. Is it '" + key + "' or is it '" + k + "'???" );
+                    System.out.println(
+                        "WARNING: unable to determine the key of the pre Variable '" + name + "'. Is it '" + key +
+                            "' or is it '" + k + "'???");
             }
         }
-        return pool.entries.get( key )
+        return pool.entries.get(key)
     }
-    
-    def private findValue( DataPool pool, String name ){
+
+    def private findValue(DataPool pool, String name) {
         var String key = null
-        for( k : pool.entries.keySet )
-        {
-            if( k.endsWith( name ) && (k.length == name.length || k.endsWith("_" + name)) && !k.startsWith("_pre_") && !k.startsWith("_reg_") )
-            {
-                if( key === null )
+        for (k : pool.entries.keySet) {
+            if (k.endsWith(name) && (k.length == name.length || k.endsWith("_" + name)) && !k.startsWith("_pre_") &&
+                !k.startsWith("_reg_")) {
+                if (key === null)
                     key = k
                 else
-                    System.out.println( "WARNING: unable to determine the key of the Variable '" + name + "'. Is it '" + key + "' or is it '" + k + "'???" );
+                    System.out.println(
+                        "WARNING: unable to determine the key of the Variable '" + name + "'. Is it '" + key +
+                            "' or is it '" + k + "'???");
             }
         }
-        return pool.entries.get( key )
+        return pool.entries.get(key)
     }
 
 //    override loadFormerState(StepState state) {
@@ -587,7 +608,6 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
 //            currentStates = oldHighlighting.filter[it.foreground == CURRENT_ELEMENT_STYLE && it.eObject instanceof State].map[it.eObject as State].toList
 //        }
 //    }
-    
     /**
      * Creates the highlighting style for traversed elements.
      */
@@ -597,7 +617,7 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
         style.setPropagateToChildren(true)
         return style
     }
-    
+
     /**
      * Creates the highlighting style for current states.
      */
@@ -607,7 +627,7 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
         style.setPropagateToChildren(true)
         return style
     }
-    
+
     /**
      * Calculates the control flow in the SCChart from the taken transition signaling.
      * 
@@ -619,7 +639,7 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
         traversedTransitions.clear
         traversedStates.clear
         // Get the traversed transitions array from the data pool
-        if(pool === null) {
+        if (pool === null) {
             return
         }
         val transitionArrayVariable = pool.entries.get(TakenTransitionSignaling.transitionArrayName)
@@ -628,38 +648,40 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
             transitionArray = new JsonArray
         } else
             transitionArray = transitionArrayVariable.rawValue.asJsonArray
-        
+
         // Get the transitions in the SCChart in the same manner as the taken transition signaling
         var State rootState
         val currentDiagramModel = diagramViewContext.inputModel
-        if(currentDiagramModel instanceof SCCharts) {
-            if(!currentDiagramModel.rootStates.isEmpty) {
+        if (currentDiagramModel instanceof SCCharts) {
+            if (!currentDiagramModel.rootStates.isEmpty) {
                 rootState = currentDiagramModel.rootStates.get(0)
-            }            
+            }
         } else if (currentDiagramModel instanceof ModelChain) {
-            val scc = currentDiagramModel.models.findFirst[ it instanceof SCCharts ] as SCCharts
+            val scc = currentDiagramModel.models.findFirst[it instanceof SCCharts] as SCCharts
             if (!scc.rootStates.empty) {
                 rootState = scc.rootStates.head
             }
         }
-        if(rootState === null) {
+        if (rootState === null) {
             return
         }
         val transitions = TakenTransitionSignaling.getTransitions(rootState)
         // For an emitted transition in the transition array,
         // look for the transition in the model with the corresponding index.
         var index = 0
-        for(transitionArrayElement : transitionArray) {
+        for (transitionArrayElement : transitionArray) {
             // The array contains the number of times that the transition has been taken in this tick
-            if(transitionArrayElement.isJsonPrimitive && transitionArrayElement.asJsonPrimitive.isNumber) {
+            if (transitionArrayElement.isJsonPrimitive && transitionArrayElement.asJsonPrimitive.isNumber) {
                 val value = transitionArrayElement.asInt
-                if(value > 0) {
+                if (value > 0) {
                     // The transition has been taken at least once
                     try {
                         val traversedTransition = transitions.get(index)
                         traversedTransitions.add(traversedTransition)
-                    } catch(IndexOutOfBoundsException e) {
-                        throw new Exception("Could not acccess the 'taken transition array'. Please check that the shown diagram is for the simulated model.", e)
+                    } catch (IndexOutOfBoundsException e) {
+                        throw new Exception(
+                            "Could not acccess the 'taken transition array'. Please check that the shown diagram is for the simulated model.",
+                            e)
                     }
                 }
             } else {
@@ -667,32 +689,32 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
             }
             index++
         }
-        
+
         // Calculate traversed states
-        for(traversedTransition : traversedTransitions) {
+        for (traversedTransition : traversedTransitions) {
             val source = traversedTransition.sourceState
             traversedStates.add(source)
             val target = traversedTransition.targetState
             traversedStates.add(target)
             // Mark all final states as traversed if this was a termination transition
             val isTerminationTransition = traversedTransition.preemption == PreemptionType.TERMINATION
-            if(isTerminationTransition) {
+            if (isTerminationTransition) {
                 traversedStates.addAll(getFinalStates(source))
             }
         }
-        
+
         // Calculate current states
-        if(currentStates === null) {
+        if (currentStates === null) {
             currentStates = newArrayList()
             val directInitialStates = getInitialStates(rootState)
-            for(state : directInitialStates) {
+            for (state : directInitialStates) {
                 currentStates.enterState(state)
-            } 
+            }
         }
         currentStates = calculateNewCurrentStates(currentStates, traversedTransitions)
         currentActiveDataflowRegions = calculateNewActiveEquations(currentStates, rootState)
     }
-    
+
     /**
      * Calculates the current states from the last current states and taken transitions.
      * Note that this method must be called for EVERY tick in the simulation
@@ -702,55 +724,57 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
      * @param takenTransitions The transitions that have been taken in the last tick
      * @return the now current states
      */
-    private def List<State> calculateNewCurrentStates(List<State> lastCurrentStates, List<Transition> takenTransitions) {
-        val newCurrentStates = <State> newArrayList
-        
+    private def List<State> calculateNewCurrentStates(List<State> lastCurrentStates,
+        List<Transition> takenTransitions) {
+        val newCurrentStates = <State>newArrayList
+
         // Preprocessing for better performance of lookup
-        val seenStates = <State> newHashSet
-        val outgoingTransitionsForState = <State, List<Transition>> newHashMap
-        for(trans : takenTransitions) {
+        val seenStates = <State>newHashSet
+        val outgoingTransitionsForState = <State, List<Transition>>newHashMap
+        for (trans : takenTransitions) {
             val source = trans.sourceState
             val outgoingTransitionsOfSource = outgoingTransitionsForState.getOrDefault(source, newArrayList)
             outgoingTransitionsOfSource.add(trans)
             outgoingTransitionsForState.put(trans.sourceState, outgoingTransitionsOfSource)
         }
-        
+
         // Follow path of transitions from current states to the ending state, which is the new current state.
         // NOTE: This only works if the used transition for a state is unambiguous, i.e.,
         // there is at most one outgoing transition per state in this tick. 
         val states = lastCurrentStates
-        while(!states.isNullOrEmpty) {
+        while (!states.isNullOrEmpty) {
             val state = states.get(0)
             seenStates.add(state)
             val outgoingTransitions = outgoingTransitionsForState.getOrDefault(state, newArrayList)
-            if(outgoingTransitions.size == 0) {
+            if (outgoingTransitions.size == 0) {
                 // No outgoing transitions, thus the control flow stays here
                 newCurrentStates.add(state)
                 // This state is done
                 states.remove(state)
-            } else if(outgoingTransitions.size == 1) {
+            } else if (outgoingTransitions.size == 1) {
                 // Exactly one outgoing transition, thus the next state is unambiguous
                 val transition = outgoingTransitions.get(0)
                 val next = transition.targetState
 
                 // Leave state
                 states.leaveState(state)
-                
+
                 // Enter next state
                 states.enterState(next)
-                
+
                 // This transition is done
                 outgoingTransitions.remove(transition)
             } else {
                 // More than one outgoing state. It is not clear which path has been taken.
-                System.err.println("The used control flow cannot be clearly determined for this tick. Diagram highlighting of current state will not work.")
+                System.err.println(
+                    "The used control flow cannot be clearly determined for this tick. Diagram highlighting of current state will not work.")
                 return newCurrentStates
             }
         }
-        
+
         return newCurrentStates
     }
-    
+
     /**
      * Leaves a state wrt. control flow.
      * If a state is left, all inner states are left as well.
@@ -761,8 +785,8 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
      */
     private def void leaveState(List<State> states, State state) {
         // Add this state as traversed state if it was active
-        if(states.contains(state)) {
-            traversedStates.add(state)    
+        if (states.contains(state)) {
+            traversedStates.add(state)
         }
         // Leave the state
         states.remove(state)
@@ -770,7 +794,7 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
         val children = StateIterator.sccAllContainedStates(state)
         states.removeAll(children.toList)
     }
-    
+
     /**
      * Enters a state wrt. control flow.
      * If a state is entered, all initial states of this state are entered as well.
@@ -779,18 +803,18 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
         states.add(state)
         // Also enter initial child states
         val initialStates = getInitialStates(state)
-        if(!initialStates.isNullOrEmpty) {
-            for(initialState : initialStates) {
+        if (!initialStates.isNullOrEmpty) {
+            for (initialState : initialStates) {
                 enterState(states, initialState)
             }
         }
     }
-    
+
     /**
      * Calculates the currently active data flow equations by including all dataflow regions of the active states.
      */
     def calculateNewActiveEquations(List<State> states, State rootState) {
-        val result = <DataflowRegion> newHashSet
+        val result = <DataflowRegion>newHashSet
         for (state : states + newArrayList(rootState)) {
             for (dfRegion : state.regions.filter(DataflowRegion)) {
                 result += dfRegion
@@ -798,6 +822,5 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
         }
         return result
     }
-    
+
 }
-							
