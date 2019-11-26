@@ -5,6 +5,7 @@ package de.cau.cs.kieler.simulation.trace
 
 import com.google.inject.Injector
 import de.cau.cs.kieler.core.services.KielerLanguage
+import de.cau.cs.kieler.simulation.trace.ktrace.KTracePackage
 import de.cau.cs.kieler.simulation.trace.ktrace.TraceFile
 
 /**
@@ -19,6 +20,12 @@ class KTraceStandaloneSetup extends KTraceStandaloneSetupGenerated implements Ki
             injector = new KTraceStandaloneSetup().createInjectorAndDoEMFRegistration()
         }
         return injector
+    }
+    
+    override register(Injector injector) {
+        super.register(injector)
+        // Ensure package is registered 
+        KTracePackage.eINSTANCE.eClass()
     }
     
     override getInjector() {

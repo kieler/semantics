@@ -88,30 +88,36 @@ abstract class AbstractCLITest {
     static protected def invoke(List<String> command, List<String> outputs, int timeout, File workingDirectory){
         println("Invoking: " + command.join(" "))
         val pb = new ProcessBuilder(command)
-        if (workingDirectory !== null) pb.directory(workingDirectory)
+        if (workingDirectory !== null) {
+            pb.directory(workingDirectory)
+        }
         pb.redirectErrorStream(true)
         
         try {
             val p = pb.start
             val pReader = new BufferedReader(new InputStreamReader(p.inputStream));
             var String line = null;
-            while ( (line = pReader.readLine()) !== null) {
-                if( outputs !== null )
+            while ((line = pReader.readLine()) !== null) {
+                if (outputs !== null) {
                     outputs.add(line)
-                else
+                } else {
                     println(line)
+                }
             }
             
             val intime = p.waitFor(timeout, TimeUnit.SECONDS)
             if (!intime) {
                 println("ERROR: Command execution timed out (" + timeout + " sec)")
+                System.out.flush()
                 return -1
+            } else {
+                System.out.flush()
             }
             
             return p.exitValue
         } catch (Exception e) {
             println("ERROR: Exception while invoking command")
-            e.printStackTrace
+            e.printStackTrace()
         }
     }
     

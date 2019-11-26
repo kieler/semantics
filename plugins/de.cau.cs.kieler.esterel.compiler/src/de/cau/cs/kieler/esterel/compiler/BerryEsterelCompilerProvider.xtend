@@ -14,6 +14,7 @@ package de.cau.cs.kieler.esterel.compiler
 
 import de.cau.cs.kieler.kicool.external.IExternalCompilerProvider
 import org.eclipse.emf.common.util.URI
+import de.cau.cs.kieler.core.Platform
 
 /**
  * Locate compiler binaries.
@@ -28,10 +29,10 @@ class BerryEsterelCompilerProvider implements IExternalCompilerProvider {
         return "BerryEsterelV5_100"
     }
     
-    override URI getRootDir(String os, String arch) {
-        switch(os) {
-            case "linux": return URI.createPlatformPluginURI(PLUGIN + "/compiler/iec_v5_100/linux", true)
-            case "macosx": return URI.createPlatformPluginURI(PLUGIN + "/compiler/iec_v5_100/macosx", true)
+    override URI getRootDir() {
+        switch(Platform.getOS) {
+            case UNIX: return URI.createPlatformPluginURI(PLUGIN + "/compiler/iec_v5_100/linux", true)
+            case MAC: return URI.createPlatformPluginURI(PLUGIN + "/compiler/iec_v5_100/macosx", true)
             default: return null
         }
     }
