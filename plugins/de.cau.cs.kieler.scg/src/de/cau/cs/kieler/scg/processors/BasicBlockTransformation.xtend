@@ -43,6 +43,8 @@ import de.cau.cs.kieler.scg.extensions.UnsupportedSCGException
 import de.cau.cs.kieler.scg.processors.SCGFeatures
 import java.util.HashMap
 import java.util.List
+import de.cau.cs.kieler.core.properties.IProperty
+import de.cau.cs.kieler.core.properties.Property
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
@@ -78,6 +80,9 @@ class BasicBlockTransformation extends InplaceProcessor<SCGraphs> implements Tra
     @Inject extension SCGControlFlowExtensions
     @Inject extension AnnotationsExtensions
     @Inject extension SCGMethodExtensions
+    
+    public static val IProperty<Boolean> USE_SC_PLUS_SEMANTICS = 
+        new Property<Boolean>("de.cau.cs.kieler.scg.processors.scplus", false)     
     
     public static val String GUARDPREFIX = "_g"
 	protected val SPLITSCHEDULINGBLOCKSATENTRY = false
@@ -511,8 +516,14 @@ class BasicBlockTransformation extends InplaceProcessor<SCGraphs> implements Tra
     }
     
     protected def boolean schedulingBlockSplitter(Node node, Node lastNode) {
-        (!node.incomingLinks.filter(DataDependency).filter[ concurrent && !confluent].empty) ||
-        (SPLITSCHEDULINGBLOCKSATENTRY && (lastNode instanceof Entry))
+        if (environment.getProperty(USE_SC_PLUS_SEMANTICS)) {
+            return (!node.incomingLinks.filter(DataDependency).filter[ concurrent && !confluent].empty) ||
+                (SPLITSCHEDULINGBLOCKSATENTRY && (lastNode instanceof Entry)) ||
+                node.incomingLinks.filter(DataDependency).filter[ concurrent && !confluent ].empty            
+        } else {
+            return (!node.incomingLinks.filter(DataDependency).filter[ concurrent && !confluent].empty) ||
+                (SPLITSCHEDULINGBLOCKSATENTRY && (lastNode instanceof Entry))
+        }
     } 
     
     /**

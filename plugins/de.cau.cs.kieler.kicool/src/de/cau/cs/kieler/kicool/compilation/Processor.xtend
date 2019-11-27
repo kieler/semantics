@@ -270,6 +270,27 @@ abstract class Processor<Source, Target> implements IKiCoolCloneable {
         return new AnnotationModel(c.key, c.value, this)
     }
     
+    var AnnotationModel<EObject> annotationModel = null
+    
+    /** 
+     * Convenient getter for a source annotation model.
+     */
+    def AnnotationModel<?> getAnnotationModel() {
+        if (annotationModel === null) {
+            annotationModel = new AnnotationModel<EObject>()
+            return annotationModel
+        } else {
+            return annotationModel
+        }
+    }    
+    
+    def void applyAnnotations() {
+        if (annotationModel === null) getAnnotationModel;
+        val source = getTargetModel as EObject
+        val c = source.copyEObjectAndReturnCopier
+        annotationModel.apply(c.key, c.value, this)                
+    } 
+    
     /** 
      * Convenient toString method for debugging purposes.
      */
