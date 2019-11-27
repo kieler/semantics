@@ -110,6 +110,8 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
                 return createHistoryTypeFromString(eDataType, initialValue);
             case SCChartsPackage.DELAY_TYPE:
                 return createDelayTypeFromString(eDataType, initialValue);
+            case SCChartsPackage.DEFERRED_TYPE:
+                return createDeferredTypeFromString(eDataType, initialValue);
             default:
                 throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
         }
@@ -129,6 +131,8 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
                 return convertHistoryTypeToString(eDataType, instanceValue);
             case SCChartsPackage.DELAY_TYPE:
                 return convertDelayTypeToString(eDataType, instanceValue);
+            case SCChartsPackage.DEFERRED_TYPE:
+                return convertDeferredTypeToString(eDataType, instanceValue);
             default:
                 throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
         }
@@ -282,6 +286,7 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public CodeEffect createCodeEffect() {
         CodeEffectImpl codeEffect = new CodeEffectImpl();
         return codeEffect;
@@ -366,6 +371,26 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
      * @generated
      */
     public String convertDelayTypeToString(EDataType eDataType, Object instanceValue) {
+        return instanceValue == null ? null : instanceValue.toString();
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public DeferredType createDeferredTypeFromString(EDataType eDataType, String initialValue) {
+        DeferredType result = DeferredType.get(initialValue);
+        if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+        return result;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public String convertDeferredTypeToString(EDataType eDataType, Object instanceValue) {
         return instanceValue == null ? null : instanceValue.toString();
     }
 

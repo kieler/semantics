@@ -79,6 +79,7 @@ import de.cau.cs.kieler.sccharts.ScopeCall
 import de.cau.cs.kieler.sccharts.legacy.sccharts.Binding
 import org.eclipse.xtext.nodemodel.INode
 import org.eclipse.xtext.nodemodel.impl.CompositeNodeWithSemanticElement
+import de.cau.cs.kieler.sccharts.DeferredType
 
 /**
  * @author als
@@ -318,7 +319,7 @@ class SCChartsLegacyConverter {
             delay = if (trans.immediate) DelayType.IMMEDIATE else DelayType.UNDEFINED
             
             preemption = PreemptionType.getByName(trans.type.getName)
-            deferred = trans.deferred
+            deferred = trans.deferred ? DeferredType::SHALLOW : DeferredType::NONE
             history = HistoryType.getByName(trans.history.getName)
             targetState = trans.targetState.convert as State
         ]

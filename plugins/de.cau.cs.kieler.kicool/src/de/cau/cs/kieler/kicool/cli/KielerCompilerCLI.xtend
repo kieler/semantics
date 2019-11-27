@@ -165,7 +165,8 @@ class KielerCompilerCLI implements Runnable, Observer {
             }
             
             if (modelFiles.empty) {
-                if (verbose || !listSystems || !help) println("No files to compile.")
+                if (verbose || !listSystems || !listAllSystems || !help) println("No files to compile.")
+                if (files === null || files.empty) CommandLine.usage(this, System.out)
                 System.exit(-1)
             }
             

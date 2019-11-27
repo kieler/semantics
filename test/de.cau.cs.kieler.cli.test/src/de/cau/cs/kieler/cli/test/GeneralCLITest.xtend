@@ -19,6 +19,7 @@ import org.junit.BeforeClass
 import org.junit.Test
 
 import static org.junit.Assert.assertEquals
+import static org.junit.Assume.assumeTrue
 
 /** 
  * @author als
@@ -92,5 +93,15 @@ class GeneralCLITest extends AbstractCLITest {
         
         // check results
         assertExists(dest2)
+    }
+    
+    @Test
+    def void testNestedCompiler() {
+        assumeTrue(Platform.unix)
+        val dir = setupTest("nested-compiler")
+        val src = new File(dir, "esterel/abro/abro.strl")
+        
+        val command = #[compiler.path, "-v", "-s", "de.cau.cs.kieler.esterel.compiler.inria.simulation", src.path]
+        assertEquals("Exit value not zero", 0, command.invoke)
     }
 }

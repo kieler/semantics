@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil.Copier
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.kicool.compilation.Processor
+import com.google.common.collect.HashMultimap
 
 /**
  * @author ssm
@@ -25,16 +26,40 @@ import de.cau.cs.kieler.kicool.compilation.Processor
  * Convenient wrapper for Annotation Models
  *
  */
-class AnnotationModel<T> {
+class AnnotationModel<T extends EObject> {
     
     @Accessors T model
     @Accessors Copier copier
     @Accessors Processor<?,?> processor
+    var boolean stall
+    val HashMultimap<Object, String> stalledInfos  = HashMultimap.create
     
     new(T model, Copier copier, Processor<?,?> processor) {
         this.model = model
         this.copier = copier
         this.processor = processor
+        this.stall = false
+    }
+    
+    new() {
+        this.stall = true
+    }
+    
+    def apply(T model, Copier copier, Processor<?,?> processor) {
+        this.model = model 
+        this.copier = copier
+        this.processor = processor
+        this.stall = false
+        
+        for (object : stalledInfos.keySet) {
+            for (info : stalledInfos.get(object)) {
+                addInfo(object, info)
+            }
+        }
+    }
+    
+    def applyAnnotations() {
+        processor.applyAnnotations
     }
     
     def EObject get(Object obj) {
@@ -42,7 +67,11 @@ class AnnotationModel<T> {
     }
     
     def void addInfo(Object object, String info) {
-        processor.environment.infos.add(model, info, get(object), null)
+        if (stall) {
+            stalledInfos.put(object, info)            
+        } else {
+            processor.environment.infos.add(model, info, get(object), null)
+        }
     }
     
     def void addWarning(Object object, String info) {

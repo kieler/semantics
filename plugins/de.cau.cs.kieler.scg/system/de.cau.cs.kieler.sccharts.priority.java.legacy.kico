@@ -1,4 +1,4 @@
-private system de.cau.cs.kieler.sccharts.priority.java.legacy
+system de.cau.cs.kieler.sccharts.priority.java.legacy
     label "Priority-based Compilation (Java, Legacy)"
     config {
        "de.cau.cs.kieler.scg.processors.methods.inline.all": true
