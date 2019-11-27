@@ -43,7 +43,11 @@ class EquationSimplification {
 
     var List<KNode> inputNodes = null
 
-    // uses all simplifications in the correct order
+    /**
+     * Connects Tree graphs of different assignments and simplifies the resulting graph
+     * @param nodes A List of Nodes of all Assignments
+     * @returns The given List of nodes without the nodes which are not needed anymore
+     */
     def List<KNode> simplify(List<KNode> nodes) {
         inputNodes = nodes.filter[isInput].map[copy].toList
         return nodes.combineDataAccessNodes.sequentialize.connectInputWithOutput.combineInputNodes.
@@ -51,7 +55,13 @@ class EquationSimplification {
             removeDoubledLabels
     }
 
-    // removes sequential edges and removes the input and output nodes
+    /**
+     * for all sequential nodes (k,v) if k is an output node and v is an input node the source of k will be connected with the target of v
+     * The input nodes will be removed from the nodes list
+     * The output nodes will be removed if there exists another output node which will be executed sequentially after this node
+     * @param nodes A List of Nodes of the graph
+     * @returns The given List of nodes without the nodes which are not needed anymore
+     */
     private def sequentialize(List<KNode> nodes) {
         val List<KNode> sequentializedOutputs = newArrayList
         val List<KNode> sequentializedInputs = newArrayList
@@ -80,9 +90,13 @@ class EquationSimplification {
         return nodes
     }
 
-    // connects reads (input nodes) of a valued object with the write (output node) of the object
-    // only if the input nodes are from a different assignment as the output node
-    // the input nodes are removed
+    /**
+     * for all nodes (k,v) if k is an output node and v is an input node and k and v are associated with the same Value
+     * the sources of k will be connected with the targets of v
+     * The input nodes will be removed from the nodes list
+     * @param nodes A List of Nodes of the graph
+     * @returns The given List of nodes without the nodes which are not needed anymore
+     */
     private def connectInputWithOutput(List<KNode> nodes) {
         for (node : nodes.filter[isInput && !isDataAccess && !isReference].toList.clone) {
             val output = nodes.getOutputNode(node)
@@ -94,7 +108,12 @@ class EquationSimplification {
         return nodes
     }
 
-    // remove doubled input nodes
+    /**
+     * for all nodes (k,v) if k and v are input nodes and k and v are associated with the same Value
+     * the targets of v will be connected with k and v will be removed from the nodes list
+     * @param nodes A List of Nodes of the graph
+     * @returns The given List of nodes without the nodes which are not needed anymore
+     */
     private def combineInputNodes(List<KNode> nodes) {
         for (node : nodes.filter[isInput && !isDataAccess].toList) {
             if (nodes.contains(node)) {
@@ -110,7 +129,12 @@ class EquationSimplification {
         return nodes
     }
 
-    // removes doubled reference nodes
+    /**
+     * for all nodes (k,v) if k and v are reference nodes and k and v are associated with the same Value and k and v do not have any sequential constraints to each other
+     * The ports of v are merged in to k and v will be removed from the nodes list
+     * @param nodes A List of Nodes of the graph
+     * @returns The given List of nodes without the nodes which are not needed anymore
+     */
     private def combineReferenceNodes(List<KNode> nodes) {
         for (node : nodes.filter[isReference].toList) {
             if (nodes.contains(node)) {
@@ -131,13 +155,21 @@ class EquationSimplification {
         return nodes
     }
 
-    // removes doubled reference nodes
+    /**
+     * for all nodes (k,v) if k and v are data access nodes and k and v are associated with the same Value and k and v do not have any sequential constraints to each other
+     * The ports of v are merged in to k and v will be removed from the nodes list
+     * @param nodes A List of Nodes of the graph
+     * @returns The given List of nodes without the nodes which are not needed anymore
+     */
     private def combineDataAccessNodes(List<KNode> nodes) {
+        // This algorithm only works if the nodes which are more specific are merged first
+        // for example the nodes for x[0] should be merged before the nodes for x are merged 
         for (node : nodes.filter[isDataAccess].toList.sortSpecific) {
             if (nodes.contains(node)) {
                 for (unneeded : nodes.filter [
                     isDataAccess && it != node && sourceEquals(node) && !isDataArraySequential(node) &&
-                        !node.isDataArraySequential(it)
+                        !node.isDataArraySequential(it) &&
+                        (combineAllDataAccessNodes || (isInput == node.isInput && isOutput == node.isOutput))
                 ].toList) {
                     unneeded.redirectIncommingWires(node)
                     unneeded.redirectOutgoingWires(node)
@@ -149,7 +181,13 @@ class EquationSimplification {
         return nodes
     }
 
-    // removes input and output nodes of local defined variables iff they are not explicitly specified as input or output
+    /**
+     * Does nothing if HIDE_LOCALS is false
+     * For a Input or Output node n witch stands for a local Valued Object that is not declared as input or output
+     * n will be removed from the nodes list iff this would not lead to unused ports of other nodes which are connected to n
+     * @param nodes A List of Nodes of the graph
+     * @returns The given List of nodes without the nodes which are not needed anymore
+     */
     private def hideLocalObjects(List<KNode> nodes) {
         if (hideLocals) {
             // remove input nodes of local declared valued objects which are no inputs
@@ -170,7 +208,13 @@ class EquationSimplification {
         return nodes
     }
 
-    // removes doubled expression nodes
+    /**
+     * For any node n which is not an input or an output node and no reference or data access node
+     * It will be checked if a node k exists which is associated witch the same expression as n
+     * If so then the targets of k are connected with n and k will be removed from the nodes list
+     * @param nodes A List of Nodes of the graph
+     * @returns The given List of nodes without the nodes which are not needed anymore
+     */
     private def removeDublicates(List<KNode> nodes) {
         for (node : nodes.filter[!isInput && !isReference && !isDataAccess && !isOutput].toList) {
             if (nodes.contains(node)) {
@@ -184,7 +228,13 @@ class EquationSimplification {
         return nodes
     }
 
-    // removes sequential write nodes if the result is overwritten and never be used
+    /**
+     * for all nodes (k,v) if k and v are output nodes and k and v are associated with the same Value and k should be sequential before v
+     * k will be removed from the nodes list
+     * Also unneeded write Ports of reference Nodes are removed if they will be overwritten later
+     * @param nodes A List of Nodes of the graph
+     * @returns The given List of nodes without the nodes which are not needed anymore
+     */
     private def removeSequentialWrites(List<KNode> nodes) {
         val List<KNode> candidates = nodes.filter [
             ((isOutput && !isDataAccess) || isReference) && nodes.existsSequentialWrite(it)
@@ -230,6 +280,14 @@ class EquationSimplification {
         return nodes
     }
 
+    /**
+     * if PRE_CICLES is not enabled
+     * For all nodes n which represents a pre operator expression an input node will be found (which was removed by an algorithm before) that represents the expression of the pre
+     * n will be connected to the input node and the old input edge will be removed.
+     * The input node will be added to the nodes list again
+     * @param nodes A List of Nodes of the graph
+     * @returns The given List of nodes without the nodes which are not needed anymore
+     */
     private def resolvePreCicles(List<KNode> nodes) {
         if (!preCicles) {
             for (n : nodes.filter [
@@ -264,7 +322,11 @@ class EquationSimplification {
         return nodes
     }
 
-    // removes edge labels if there is another edge on the same port which has the same label
+    /**
+     * removes edge labels if there is another edge on the same port which has the same label
+     * @param nodes A List of Nodes of the graph
+     * @returns The given List of nodes without the nodes which are not needed anymore
+     */
     private def removeDoubledLabels(List<KNode> nodes) {
         val List<KEdge> edges = newArrayList
         nodes.forEach[edges += outgoingEdges]
@@ -278,14 +340,23 @@ class EquationSimplification {
         return nodes
     }
 
-    // returns true if node is a write node witch is overwritten by another sequential write node
+    /**
+     * @param nodes A List of Nodes of the graph
+     * @param node The node to be proved
+     * @returns true if node is a write node witch is overwritten by another sequential write node later
+     */
     private def existsSequentialWrite(List<KNode> nodes, KNode node) {
         return nodes.exists [
             ((isOutput && !isDataAccess) || isReference) && sourceEquals(node) && it != node && node.isSequential(it)
         ]
     }
 
-    // returns a KNode which stands for the same equation as node or returns null if no such node exists
+    /**
+     * @param nodes A List of Nodes of the graph
+     * @param node The node to find a duble
+     * @dataAccess true if the node is a data access node
+     * @returns a KNode which stands for the same equation as node or returns null if no such node exists
+     */
     private def findIndependentDublicateNode(List<KNode> nodes, KNode node, boolean dataAccess) {
         for (n : nodes) {
             if (n != node) {
@@ -298,7 +369,9 @@ class EquationSimplification {
         return null
     }
 
-    // removes an input node and connects the wires to the wires of the output node
+    /**
+     * removes an input node and connects the wires to the wires of the output node
+     */
     private def connectToOutput(KNode input, KNode output) {
         for (e : input.outgoingEdges.filter[!isSequential && !isInstance]) {
             var targetPort = e.targetPort
@@ -309,7 +382,9 @@ class EquationSimplification {
         }
     }
 
-    // redirects all incoming wires of old to target
+    /**
+     * redirects all incoming wires of old to target
+     */
     private def redirectIncommingWires(KNode old, KNode target) {
         while (old.incomingEdges.size > 0) {
             val e = old.incomingEdges.get(0)
@@ -335,7 +410,9 @@ class EquationSimplification {
         }
     }
 
-    // redirects all outgoing wires of old to source
+    /**
+     * redirects all outgoing wires of old to source
+     */
     private def redirectOutgoingWires(KNode old, KNode source) {
         while (old.outgoingEdges.size > 0) {
             val e = old.outgoingEdges.get(0)
@@ -361,7 +438,9 @@ class EquationSimplification {
         }
     }
 
-    // removes unneeded edges and nodes
+    /**
+     * removes unneeded edges and nodes
+     */
     private def void removeUnneeded(KNode node, List<KNode> nodes) {
         if (node.isInput && node.outgoingEdges.size == 0) {
             val inputs = node.incomingEdges.filter[!isSequential && !isInstance].map[source].toList
@@ -393,7 +472,9 @@ class EquationSimplification {
         }
     }
 
-    // checks if the node can be removed such that no ports of other nodes becomes unused
+    /**
+     * checks if the node can be removed such that no ports of other nodes becomes unused
+     */
     private def isNeeded(KNode node) {
         for (e : node.incomingEdges.filter[!isSequential && !isInstance]) {
             if (!e.source.outgoingEdges.exists[it != e && it.sourcePort == e.sourcePort]) {
@@ -408,7 +489,9 @@ class EquationSimplification {
         return false
     }
 
-    // returns true iff the node is associated with a valued object which is declared inside of the dataflow region
+    /**
+     * returns true iff the node is associated with a valued object which is declared inside of the dataflow region
+     */
     private def isLocalValuedObject(KNode node) {
         val element = node.sourceElement
         if (element instanceof ValuedObjectReference) {
@@ -417,14 +500,18 @@ class EquationSimplification {
         return false
     }
 
-    // checks for two reference nodes if they are sequential and use at least one same variable
+    /**
+     * checks for two reference nodes if they are sequential and use at least one same variable
+     */
     private def isReferenceSequential(KNode ref1, KNode ref2) {
         return ref1.isSequential(ref2) && ref1.ports.exists [ p |
             p.sourceElement !== null && ref2.ports.exists[sourceElement !== null && sourceEquals(p)]
         ]
     }
 
-    // finds an output node for a input node that is not sequential after the input node
+    /**
+     * finds an output node for a input node that is not sequential after the input node
+     */
     private def getOutputNode(List<KNode> nodes, KNode node) {
         val filtered = nodes.filter [
             isOutput && !isDataAccess && sourceEquals(node) && !node.isSequential(it) && !node.isInputForEquation(it)
@@ -435,7 +522,9 @@ class EquationSimplification {
         return filtered.get(0)
     }
 
-    // finds a port witch is associated with the same element as e
+    /**
+     * finds a port witch is associated with the same element as e
+     */
     private def findPort(KNode node, KGraphElement e) {
         for (port : node.ports) {
             if (port.sourceEquals(e) && (!(e instanceof KPort) || port.portSide == (e as KPort).portSide)) {
@@ -445,10 +534,14 @@ class EquationSimplification {
         return null
     }
 
+    /**
+     * returns true iff before comes sequential before after
+     */
     private def isDataArraySequential(KNode before, KNode after) {
-        return before.dataAccessSource.isSequential(after.dataAccessSource) && before.ports.exists [ p |
-            p.sourceElement !== null && after.ports.exists[sourceElement !== null && sourceEquals(p)]
-        ]
+        return before.dataAccessSource !== null && after.dataAccessSource !== null &&
+            before.dataAccessSource.isSequential(after.dataAccessSource) && before.ports.exists [ p |
+                p.sourceElement !== null && after.ports.exists[sourceElement !== null && sourceEquals(p)]
+            ]
     }
 
 }

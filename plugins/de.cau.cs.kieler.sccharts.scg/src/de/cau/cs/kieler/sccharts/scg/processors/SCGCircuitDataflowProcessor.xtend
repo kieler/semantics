@@ -56,7 +56,6 @@ class SCGCircuitDataflowProcessor extends Processor<SCGraphs, SCCharts> implemen
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KEffectsExtensions
     @Inject extension KExpressionsCreateExtensions
-    @Inject extension SCChartsSerializeHRExtensions
     @Inject extension PragmaExtensions
     @Inject extension AnnotationsExtensions
     @Inject extension KExtDeclarationExtensions
@@ -168,7 +167,7 @@ class SCGCircuitDataflowProcessor extends Processor<SCGraphs, SCCharts> implemen
     def transformExpression(Expression e, HashMap<ValuedObject, ValuedObject> variableReplacement) {
         for (ref : e.allReferences) {
             if (variableReplacement.containsKey(ref.valuedObject)) {
-                ref.replace(variableReplacement.get(ref.valuedObject).reference)
+                ref.replacedReference(variableReplacement)
             } else {
                 ref.valuedObject.addStringAnnotation("error", "The referenced Valued Object does not exists.")
             }
@@ -177,7 +176,7 @@ class SCGCircuitDataflowProcessor extends Processor<SCGraphs, SCCharts> implemen
 
     def transformAssignment(Assignment a, HashMap<ValuedObject, ValuedObject> variableReplacement) {
         if (variableReplacement.containsKey(a.reference.valuedObject)) {
-            a.reference.replace(variableReplacement.get(a.reference.valuedObject).reference)
+            a.reference.replace(a.reference.replacedReference(variableReplacement))
         } else {
             a.addStringAnnotation("error", "The referenced Valued Object does not exists.")
         }
@@ -187,7 +186,22 @@ class SCGCircuitDataflowProcessor extends Processor<SCGraphs, SCCharts> implemen
                 (pre.subExpressions.head as ValuedObjectReference).valuedObject.declaration.valuedObjects.last.
                     reference)
         }
-        a
+        return a
     }
 
+    def ValuedObjectReference replacedReference(ValuedObjectReference old, HashMap<ValuedObject, ValuedObject> variableReplacement) {
+        if (variableReplacement.containsKey(old.valuedObject)) {
+            val ref = variableReplacement.get(old.valuedObject).reference
+            for (i : old.indices) {
+                ref.indices.add(i.copy)
+            }
+            if (old.subReference !== null) {
+                ref.subReference = replacedReference(old.subReference, variableReplacement)
+            }
+            return ref
+        } else {
+            old.valuedObject.addStringAnnotation("warning", "The referenced Valued Object does not exists.")
+            return old.copy
+        }
+    }
 }

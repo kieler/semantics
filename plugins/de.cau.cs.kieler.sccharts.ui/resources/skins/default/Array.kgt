@@ -2,6 +2,7 @@ knode array {
     properties: de.cau.cs.kieler.portConstraints = FIXED_ORDER
                 org.eclipse.elk.portLabels.placement = OUTSIDE
     size: width = 3 height = 25
+    
         
     kpolyline{
         styles: lineWidth = 3
@@ -10,6 +11,7 @@ knode array {
   kport in0 {
     size: width = 4 height = 2
     properties: de.cau.cs.kieler.portSide = WEST
+                org.eclipse.elk.port.borderOffset = -5
     klabel "" { 
         ktext {
             styles: fontSize = 3pt
@@ -20,7 +22,8 @@ knode array {
   kport out {
     size: width = 4 height = 2
     pos:  x = 7
-    properties: org.eclipse.elk.port.borderOffset = -0.5
+    properties: de.cau.cs.kieler.portSide = EAST
+                org.eclipse.elk.port.borderOffset = -5
     klabel "" { 
         ktext {
             styles: fontSize = 3pt

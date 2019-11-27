@@ -112,6 +112,8 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         setCategory(GeneralSynthesisOptions::DATAFLOW)
     public static val SynthesisOption PRE_CICLES = SynthesisOption.createCheckOption("Allow Pre Cicles", false).
         setCategory(GeneralSynthesisOptions::DATAFLOW)
+    public static val SynthesisOption COMBINE_ALL_DATA_ACCESS = SynthesisOption.createCheckOption(
+        "Combine all Data Access Nodes", false).setCategory(GeneralSynthesisOptions::DATAFLOW)
 
     public static final IProperty<Boolean> INLINED_REFERENCE = new Property<Boolean>(
         "de.cau.cs.kieler.sccharts.ui.synthesis.dataflow.inlinedReference", false);
@@ -223,6 +225,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
             INSTANCE_CONSTRAINTS,
             HIDE_LOCALS,
             PRE_CICLES,
+            COMBINE_ALL_DATA_ACCESS,
             AUTOMATIC_INLINE,
             ALIGN_INPUTS_OUTPUTS,
             ALIGN_CONSTANTS,
@@ -235,13 +238,18 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         return options
     }
 
-    // creates an equation graph for a list of assignments and returns a list of created nodes
+    /**
+     * creates an equation graph for a list of assignments and returns a list of created nodes
+     * @param elements A list of assignments
+     * @param rootNode The parent node which should be associated with a dataflow Region
+     */
     def performTranformation(List<Assignment> elements, KNode rootNode) {
         sequentials.clear
         alignInputOutputs = ALIGN_INPUTS_OUTPUTS.booleanValue
         hideLocals = HIDE_LOCALS.booleanValue
         preCicles = PRE_CICLES.booleanValue
         showWireLabels = SHOW_WIRE_LABELS.booleanValue
+        combineAllDataAccessNodes = COMBINE_ALL_DATA_ACCESS.booleanValue
         currentRegion = rootNode.sourceElement as DataflowRegion
         var nodes = <KNode>newLinkedList
         val List<KNode> lastKNodes = newArrayList
@@ -270,7 +278,11 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         return nodes
     }
 
-    // creates an equation graph for an assignment and returns the list of created nodes
+    /**
+     * Creates an equation graph for an assignment and returns the list of created nodes.
+     * To create a graph from more then one assignment performTranformation(List<Assignment>, KNode) should be used
+     * @param element The assignment
+     */
     override performTranformation(Assignment element) {
         if (element.reference.isReferenceDeclarationReference && element.expression instanceof VectorValue) {
             // special case for vector assignments for referenced valued objects
@@ -309,9 +321,10 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         return nodes
     }
 
-    // combines the graphs for the assignments to a simplified connected Graph
     /**
-     * 
+     * combines the graphs for the assignments to a simplified connected Graph
+     * @param nodes List of nodes of each assignments
+     * @param rootNode The root node witch is associated with the dataflow region
      */
     private def List<KNode> simplifyAndCombine(List<KNode> nodes, KNode rootNode) {
         if (SEPARATED_ASSIGNMENTS.booleanValue) {
@@ -320,11 +333,12 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         return nodes.simplify
     }
 
-    // performTransformation:
-    // creates an equation tree graph from an expression and returns the root node of the tree
-    // all created nodes are added to the nodes list
-    // output should be true if output nodes should be generated
-    // create input or output nodes for the valued object reference
+    /**
+     * creates an equation tree graph from an expression and returns the root node of the tree
+     * @param reference The valued object reference to which the tree should be generated
+     * @param nodes All created nodes are added to this list
+     * @param output Should be true if output nodes should be generated
+     */
     private def dispatch KNode performTransformation(ValuedObjectReference reference, List<KNode> nodes,
         boolean output) {
         if ((reference.isClassReference && reference.subReference !== null) || reference.isArrayReference) {
@@ -419,7 +433,13 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         return node
     }
 
-    // create one node for each value inside of a Vector Value and connect them to a Vector node
+    /**
+     * creates an equation tree graph from an expression and returns the root node of the tree
+     * create one node for each value inside of a Vector Value and connect them to a Vector node
+     * @param e The VectorValue to which the tree should be generated
+     * @param nodes All created nodes are added to this list
+     * @param output Should be true if output nodes should be generated
+     */
     private def dispatch KNode performTransformation(VectorValue e, List<KNode> nodes, boolean output) {
         val node = e.createKGTNode(output ? "ARRAY_OUTPUT" : "ARRAY_INPUT", "")
         for (value : e.values) {
@@ -437,12 +457,17 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         return node
     }
 
-    // ignore values should not have nodes
     private def dispatch KNode performTransformation(IgnoreValue e, List<KNode> nodes, boolean output) {
         return null
     }
 
-    // create an input node for constant values
+    /**
+     * creates an equation tree graph from an expression and returns the root node of the tree
+     * create an input node for constant values
+     * @param e The Value to which the tree should be generated
+     * @param nodes All created nodes are added to this list
+     * @param output Will be ignored in this case
+     */
     private def dispatch KNode performTransformation(Value e, List<KNode> nodes, boolean output) {
         val node = e.createKGTNode("INPUT", "")
         val text = e.serializeHR.toString
@@ -458,7 +483,12 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         return node
     }
 
-    // create an input or output node for constant values
+    /**
+     * creates an equation tree graph from an expression and returns the root node of the tree
+     * @param operatorExpr The OperatorExpression to which the tree should be generated
+     * @param nodes All created nodes are added to this list
+     * @param output Should be true if output nodes should be generated
+     */
     private def dispatch KNode performTransformation(OperatorExpression operatorExpr, List<KNode> nodes,
         boolean output) {
         var figureId = operatorExpr.operator.getName()
@@ -503,7 +533,10 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         return node
     }
 
-    // add instance edges for reference nodes witch are the same instance
+    /**
+     * add instance edges for reference nodes which are the same instance if INSTANCE_CONSTRAINTS is true
+     * @param nodes A list of nodes from the Graph
+     */
     private def addInstanceEdges(List<KNode> nodes) {
         if (INSTANCE_CONSTRAINTS.booleanValue) {
             for (n : nodes.filter[isReference]) {
@@ -559,6 +592,10 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         return nodes
     }
 
+    /**
+     * add sequential edges for nodes which should be executed sequential if SEQUENTIAL_CONSTRAINTS is true
+     * @param nodes A list of nodes from the Graph
+     */
     private def addSequentialEdges(List<KNode> nodes) {
         if (SEQUENTIAL_CONSTRAINTS.booleanValue) {
             if (ALL_SEQUENTIAL_CONSTRAINTS.booleanValue) {
@@ -645,9 +682,9 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
             lineStyle.dashPattern += newArrayList(2 as float, 2 as float);
         ]
         edge.setProperty(SEQUENTIAL_EDGE, true)
-        if( before.isOutput )
+        if (before.isOutput)
             before.addLayoutParam(LayeredOptions::LAYERING_LAYER_CONSTRAINT, LayerConstraint::NONE)
-        if( after.isInput )
+        if (after.isInput)
             after.addLayoutParam(LayeredOptions::LAYERING_LAYER_CONSTRAINT, LayerConstraint::NONE)
     }
 
@@ -809,7 +846,9 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         return nodes
     }
 
-    // create a single node from a kgt file
+    /**
+     * create a single node from a kgt file
+     */
     private def KNode createKGTNode(
         EObject createExtensionObject,
         String figureId,
@@ -916,7 +955,9 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         throw new IllegalArgumentException("Resource not found")
     }
 
-    // set the label of a port
+    /**
+     * set the label of a port
+     */
     private def setLabel(KPort port, String label, boolean reference) {
         var portLabel = port.labels.head
         if (reference) {

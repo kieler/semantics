@@ -60,9 +60,12 @@ class EquationSynthesisHelper {
     protected var hideLocals = false
     protected var preCicles = false
     protected var showWireLabels = false
+    protected var combineAllDataAccessNodes = false
     protected var DataflowRegion currentRegion = null
 
-    // removes a node from the list and from the graph
+    /**
+     * removes a node from the list and from the graph
+     */ 
     protected def betterRemove(List<KNode> nodes, KNode node) {
         while (node.incomingEdges !== null && node.incomingEdges.size > 0) {
             node.incomingEdges.get(0).betterRemove
@@ -74,7 +77,9 @@ class EquationSynthesisHelper {
         nodes.remove(node)
     }
 
-    // removes the edge and the ports if they are not needed anymore
+    /**
+     * removes the edge and the ports if they are not needed anymore
+     */ 
     protected def void betterRemove(KEdge e) {
         val source = e.source
         val target = e.target
@@ -129,8 +134,10 @@ class EquationSynthesisHelper {
         return node.getProperty(EquationSynthesis.REFERENCE_NODE) as boolean
     }
 
-    // given two KGraph elements the return value is true iff the elements are associated with the same source element
-    // in case of associations with ValuedObjectReferences only the ValuedObject needs to be equal
+    /**
+     * given two KGraph elements the return value is true iff the elements are associated with the same source element
+     * in case of associations with ValuedObjectReferences only the ValuedObject needs to be equal and so on
+     */ 
     protected def sourceEquals(KGraphElement a, KGraphElement b) {
         if (a.sourceElement instanceof Expression && b.sourceElement instanceof Expression) {
             return (a.sourceElement as Expression).equals2(b.sourceElement as Expression)
@@ -154,8 +161,9 @@ class EquationSynthesisHelper {
         return node.getProperty(KlighdInternalProperties.MODEL_ELEMEMT)
     }
 
-    // returns true iff input is a node for the assignment equation of output
-    // only usable when the equations are separated
+    /**
+     * @returns true iff input is connected to output
+     */ 
     protected def isInputForEquation(KNode input, KNode output) {
         val List<KNode> queue = newArrayList
         queue.add(input)
@@ -179,7 +187,9 @@ class EquationSynthesisHelper {
         return false
     }
 
-    // returns true iff the last sub reference has indices
+    /**
+     * @returns true iff the last sub reference has indices
+     */ 
     protected def boolean lastSubReferenceIsArray(ValuedObjectReference reference) {
         if (reference.subReference !== null) {
             return reference.subReference.lastSubReferenceIsArray
@@ -187,8 +197,10 @@ class EquationSynthesisHelper {
         return reference.indices.size > 0
     }
 
-    // given a reference with sub references and indices
-    // a copied reference is returned without the last index or sub reference
+    /**
+     * given a reference with sub references and indices
+     * a copied reference is returned without the last index or sub reference
+     */ 
     protected def ValuedObjectReference removeLastReference(ValuedObjectReference reference) {
         val ref = reference.copy
         if (ref.subReference !== null) {
@@ -202,7 +214,9 @@ class EquationSynthesisHelper {
         return null
     }
 
-    // returns the label of the last index of the last sub reference or the label of the last sub reference
+    /**
+     * @returns the label of the last index of the last sub reference or the label of the last sub reference
+     */ 
     protected def String lastSubReferenceLabel(ValuedObjectReference reference) {
         if (reference.subReference !== null) {
             return reference.subReference.lastSubReferenceLabel
@@ -213,7 +227,9 @@ class EquationSynthesisHelper {
         return reference.serializeHR.toString
     }
 
-    // returns the number-th input port of a node and creates it if it doesn't exist
+    /**
+     * @returns the number-th input port of a node and creates it if it doesn't exist
+     */ 
     protected def getInputPortWithNumber(KNode node, int number) {
         var maxIndex = -1
         var KPort maxPort = null
@@ -245,7 +261,9 @@ class EquationSynthesisHelper {
         return result
     }
 
-    // connects two ports with a wire
+    /**
+     * connects two ports with a wire
+     */ 
     protected def connectWith(KPort source, KPort target, String label) {
         if (source === null || target === null) {
             return
@@ -276,20 +294,24 @@ class EquationSynthesisHelper {
         return sequentials.exists[key == before && value == after]
     }
 
-    // for a data access node the node which references to the referenced array or class variable is returned
+    /**
+     * for a data access node the node which references to the referenced array or class variable is returned
+     */ 
     protected def getDataAccessSource(KNode access) {
         var source = access
         while (source !== null && source.isDataAccess) {
             val current = source
-            source = source.ports.findFirst[sourceElement === null && edges.size > 0].edges.map [
+            source = source.ports.findFirst[sourceElement === null && edges.size > 0]?.edges?.map [
                 if(it.source !== current) it.source else target
-            ].head
+            ]?.head
         }
         return source
     }
 
-    // the list will be sorted such that accesses of the same variable that are more specific comes first. 
-    // for example x[0][1] will be before x[0]
+    /**
+     * the list will be sorted such that accesses of the same variable that are more specific comes first. 
+     * for example x[0][1] will be before x[0]
+     */ 
     protected def sortSpecific(List<KNode> dataAccesses) {
         dataAccesses.sort(new Comparator<KNode>() {
 
