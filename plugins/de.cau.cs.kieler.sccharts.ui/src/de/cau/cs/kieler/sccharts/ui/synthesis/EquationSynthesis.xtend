@@ -76,6 +76,8 @@ import org.eclipse.xtext.resource.XtextResourceSet
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
 
 /**
  * @author ssm
@@ -137,6 +139,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
     @Inject extension KLabelExtensions
     @Inject extension KPortExtensionsReplacement
     @Inject extension KExpressionsValuedObjectExtensions
+    @Inject extension KExpressionsCreateExtensions
     @Inject extension SCChartsSerializeHRExtensions
     @Inject extension SCChartsSynthesis
     @Inject extension EquationStyles
@@ -214,7 +217,9 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
             #["OperatorExpresOperatorExpressionLOGICAL_AND.kgtsionBITWISE_AND.kgt",
                 "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
         "BITWISE_OR" ->
-            #["OperatorExpressionBITWISE_OR.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"]
+            #["OperatorExpressionBITWISE_OR.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
+        "BITWISE_XOR" ->
+            #["OperatorExpressionBITWISE_XOR.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"]
     }
 
     override getDisplayedSynthesisOptions() {
@@ -279,17 +284,76 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
     }
 
     /**
+     * transform assignments like += or *= to = assignments
+     */
+    def transformToEqual(Assignment element) {
+        if (element.operator == AssignOperator.ASSIGN) {
+            return element
+        }
+        val e = element.copy
+        e.expression = createOperatorExpression => [
+            if (element.operator == AssignOperator.POSTFIXADD) {
+                operator = OperatorType.ADD
+                subExpressions += createIntValue(1)
+            } else if (element.operator == AssignOperator.POSTFIXSUB) {
+                operator = OperatorType.SUB
+                subExpressions += createIntValue(1)
+            } else if (element.operator == AssignOperator.ASSIGNMIN) {
+                operator = OperatorType.CONDITIONAL
+                subExpressions += createOperatorExpression => [
+                    operator = OperatorType.LEQ
+                    subExpressions += element.expression.copy
+                    subExpressions += element.reference.copy
+                ]
+                subExpressions += element.expression.copy
+            } else if (element.operator == AssignOperator.ASSIGNMAX) {
+                operator = OperatorType.CONDITIONAL
+                subExpressions += createOperatorExpression => [
+                    operator = OperatorType.GEQ
+                    subExpressions += element.expression.copy
+                    subExpressions += element.reference.copy
+                ]
+                subExpressions += element.expression.copy
+            } else if (element.operator.getName.startsWith("ASSIGN")) {
+                var op = OperatorType.getByName(element.operator.getName.substring(6))
+                if (op === null) {
+                    op = OperatorType.getByName("BITWISE_" + element.operator.getName.substring(6))
+                }
+                if (op === null) {
+                    op = OperatorType.getByName(element.operator.getName.substring(6) + "T")
+                }
+                if (element.operator == AssignOperator.ASSIGNSHIFTLEFT) {
+                    op = OperatorType.SHIFT_LEFT
+                }
+                if (element.operator == AssignOperator.ASSIGNSHIFTRIGHT) {
+                    op = OperatorType.SHIFT_RIGHT
+                }
+                if (element.operator == AssignOperator.ASSIGNSHIFTRIGHTUNSIGNED) {
+                    op = OperatorType.SHIFT_RIGHT_UNSIGNED
+                }
+                operator = op
+                subExpressions += element.expression.copy
+            }
+            subExpressions += element.reference.copy
+        ]
+        return e
+    }
+
+    /**
      * Creates an equation graph for an assignment and returns the list of created nodes.
      * To create a graph from more then one assignment performTranformation(List<Assignment>, KNode) should be used
      * @param element The assignment
      */
     override performTranformation(Assignment element) {
-        if (element.reference.isReferenceDeclarationReference && element.expression instanceof VectorValue) {
+        var assignment = element.transformToEqual
+        if (assignment.reference.isReferenceDeclarationReference && assignment.expression instanceof VectorValue) {
             // special case for vector assignments for referenced valued objects
             val nodes = <KNode>newLinkedList
-            val sources = (element.expression as VectorValue).values.map[performTransformation(nodes, false)]
-            val target = element.reference.performTransformation(nodes, true)
-            val inputs = (element.reference.valuedObject.declaration as ReferenceDeclaration).getInputs.map[reference]
+            val sources = (assignment.expression as VectorValue).values.map[performTransformation(nodes, false)]
+            val target = assignment.reference.performTransformation(nodes, true)
+            val inputs = (assignment.reference.valuedObject.declaration as ReferenceDeclaration).getInputs.map [
+                reference
+            ]
             var index = 0
             var portIndex = 0
             // connect the inputs with labeled ports
@@ -302,7 +366,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                         targetPort.setLabel(ref.serializeHR.toString, true)
                         targetPort.associateWith(ref)
                     }
-                    sourcePort.connectWith(targetPort, element.expression.serializeHR.toString)
+                    sourcePort.connectWith(targetPort, assignment.expression.serializeHR.toString)
                 }
                 index++
             }
@@ -313,11 +377,11 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         }
 
         val nodes = <KNode>newLinkedList
-        val source = element.expression.performTransformation(nodes, false)
+        val source = assignment.expression.performTransformation(nodes, false)
         val sourcePort = source.findPortById(OUT_PORT)
-        val target = element.reference.performTransformation(nodes, true)
+        val target = assignment.reference.performTransformation(nodes, true)
         val targetPort = target.findPortById(PORT0_IN_PREFIX)
-        sourcePort.connectWith(targetPort, element.expression.serializeHR.toString)
+        sourcePort.connectWith(targetPort, assignment.expression.serializeHR.toString)
         return nodes
     }
 
