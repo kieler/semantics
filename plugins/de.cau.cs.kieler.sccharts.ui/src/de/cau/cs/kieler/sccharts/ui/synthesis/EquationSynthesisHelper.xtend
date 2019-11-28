@@ -161,6 +161,10 @@ class EquationSynthesisHelper {
         return node.getProperty(KlighdInternalProperties.MODEL_ELEMEMT)
     }
 
+    protected def removeSourceElement(KGraphElement node){
+        node.setProperty(KlighdInternalProperties.MODEL_ELEMEMT, null)
+    }
+
     /**
      * @returns true iff input is connected to output
      */

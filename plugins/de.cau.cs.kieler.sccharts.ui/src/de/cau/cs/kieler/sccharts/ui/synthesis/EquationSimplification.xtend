@@ -63,7 +63,8 @@ class EquationSimplification {
      * @returns The given List of nodes without the nodes which are not needed anymore
      */
     private def sequentializeDataAccess(List<KNode> nodes) {
-        for (n : nodes.filter[isOutput && isDataAccess].toList.sortSpecific) {
+        val list = nodes.filter[isOutput && isDataAccess].toList.sortSpecific
+        for (n : list) {
             if (nodes.contains(n)) {
                 val writes = nodes.filter [
                     it != n && isOutput && sourceEquals(n) && n.isDataArraySequential(it) && isDataAccess
@@ -78,10 +79,21 @@ class EquationSimplification {
                         n.removeUnneeded(nodes)
                         nodes.betterRemove(read)
                     }
+                    val newPort = candidate.getInputPortWithNumber(candidate.ports.filter [ port |
+                        candidate.incomingEdges.exists[targetPort == port]
+                    ].size)
+                    newPort.removeSourceElement
+                    newPort.labels.clear
                     val e = n.outgoingEdges.filter[sourcePort.sourceElement === null].head
                     val oldTarget = e.target
-                    candidate.ports.add(e.targetPort)
+                    if (e.targetPort.edges.size == 1) {
+                        val port = e.targetPort
+                        port.remove()
+                        oldTarget.ports.remove(port)
+                    }
                     e.target = candidate
+                    e.targetPort = newPort
+                    oldTarget.incomingEdges.remove(e)
                     oldTarget.removeUnneeded(nodes)
                 }
             }
@@ -100,7 +112,8 @@ class EquationSimplification {
         val List<KNode> sequentializedOutputs = newArrayList
         val List<KNode> sequentializedInputs = newArrayList
         for (seq : sequentials.filter [
-            key.isOutput && value.isInput && !value.isDataAccess && !key.isDataAccess && !key.isReference && nodes.contains(key) && nodes.contains(value)
+            key.isOutput && value.isInput && !value.isDataAccess && !key.isDataAccess && !key.isReference &&
+                nodes.contains(key) && nodes.contains(value)
         ]) {
             if (!seq.key.getWritesAfter(nodes).exists [
                 !seq.value.isInputForEquation(it, false) && !getReadsBefore(nodes).exists[seq.key.isSequential(it)]

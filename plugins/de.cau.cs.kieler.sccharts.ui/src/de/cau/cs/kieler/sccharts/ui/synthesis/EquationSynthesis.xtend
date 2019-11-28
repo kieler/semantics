@@ -78,6 +78,7 @@ import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
+import de.cau.cs.kieler.kexpressions.IntValue
 
 /**
  * @author ssm
@@ -378,6 +379,16 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
 
         val nodes = <KNode>newLinkedList
         val source = assignment.expression.performTransformation(nodes, false)
+        if (assignment.expression instanceof VectorValue) {
+            source.associateWith(assignment.reference)
+            source.setProperty(OUTPUT_FLAG, true)
+            source.setProperty(DATA_ACCESS_FLAG, true)
+            for( p : source.ports.filter[edges.size > 0] ){
+                val ref = assignment.reference.copy
+                ref.indices.add(p.sourceElement as IntValue)
+                p.associateWith(ref)
+            }
+        }
         val sourcePort = source.findPortById(OUT_PORT)
         val target = assignment.reference.performTransformation(nodes, true)
         val targetPort = target.findPortById(PORT0_IN_PREFIX)
@@ -513,6 +524,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                 val targetPort = node.getInputPortWithNumber(e.values.indexOf(value))
                 sourcePort.connectWith(targetPort, valueNode.sourceElement?.serializeHR?.toString)
                 targetPort.setLabel(e.values.indexOf(value).toString, false)
+                targetPort.associateWith(createIntValue(e.values.indexOf(value)))
             }
         }
         node.setProperty(DATA_ARRAY_FLAG, true)
