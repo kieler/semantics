@@ -10,31 +10,29 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.sccharts.scg.processors
+package de.cau.cs.kieler.sccharts.processors.scg
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
-import java.util.Set
-import de.cau.cs.kieler.scg.Node
-import de.cau.cs.kieler.sccharts.SCCharts
-import de.cau.cs.kieler.scg.GuardDependency
-import de.cau.cs.kieler.kexpressions.keffects.Assignment
-import de.cau.cs.kieler.sccharts.DataflowRegion
-import de.cau.cs.kieler.kicool.environments.Environment
-import de.cau.cs.kieler.scg.extensions.SCGDependencyExtensions
-import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
-import java.util.List
-import de.cau.cs.kieler.scg.processors.IAnnotationModelCreator
 import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.core.properties.Property
+import de.cau.cs.kieler.kexpressions.keffects.Assignment
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.kicool.environments.Environment
+import de.cau.cs.kieler.sccharts.DataflowRegion
+import de.cau.cs.kieler.sccharts.SCCharts
+import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
+import de.cau.cs.kieler.scg.GuardDependency
+import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraphs
-import de.cau.cs.kieler.scg.processors.analyzer.TarjanSCC
+import de.cau.cs.kieler.scg.extensions.SCGDependencyExtensions
+import de.cau.cs.kieler.scg.processors.IAnnotationModelCreator
 import de.cau.cs.kieler.scg.processors.analyzer.LoopData
+import de.cau.cs.kieler.scg.processors.analyzer.TarjanSCC
+import java.util.List
+import java.util.Set
 
 /** 
  * @author ssm
- * @kieler.design 2019-02-26 proposed 
- * @kieler.rating 2019-02-26 proposed yellow
  */
 class SCChartsAnnotationModelCreatorForUnschedulableNodes implements IAnnotationModelCreator {
     

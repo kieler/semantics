@@ -4,7 +4,6 @@
       Artificial Update site for the KIELER Compiler CLI.
    </description>
    <bundle id="de.cau.cs.kieler.sccharts"/>
-   <bundle id="de.cau.cs.kieler.sccharts.scg"/>
    <bundle id="de.cau.cs.kieler.scg"/>
    <bundle id="de.cau.cs.kieler.scl"/>
    <bundle id="de.cau.cs.kieler.esterel"/>

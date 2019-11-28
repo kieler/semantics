@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.sccharts.scg.processors
+package de.cau.cs.kieler.sccharts.processors.scg
 
 import com.google.inject.Guice
 import com.google.inject.Inject
@@ -67,7 +67,6 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
-import de.cau.cs.kieler.sccharts.scg.PatternType
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.ControlFlow
@@ -117,7 +116,6 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
     @Inject extension PragmaExtensions
     
     private var SCLToSCGTransformation methodProcessor;
-
 
     public static val PREFIX_REFERENCE_VALUED_OBJECT_NAME = "_r"
     
