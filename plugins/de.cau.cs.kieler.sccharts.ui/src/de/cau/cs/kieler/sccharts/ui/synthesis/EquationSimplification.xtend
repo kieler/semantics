@@ -50,9 +50,43 @@ class EquationSimplification {
      */
     def List<KNode> simplify(List<KNode> nodes) {
         inputNodes = nodes.filter[isInput].map[copy].toList
-        return nodes.combineDataAccessNodes.sequentialize.connectInputWithOutput.combineInputNodes.
-            combineReferenceNodes.removeDublicates.removeSequentialWrites.hideLocalObjects.resolvePreCicles.
-            removeDoubledLabels
+        return nodes.sequentializeDataAccess.combineDataAccessNodes.sequentialize.connectInputWithOutput.
+            combineInputNodes.combineReferenceNodes.removeDublicates.removeSequentialWrites.hideLocalObjects.
+            resolvePreCicles.removeDoubledLabels
+    }
+
+    /**
+     * for all sequential data access nodes (k,v) if k is an output node and v is an output node the source of k will be connected with v
+     * The input nodes will be removed from the nodes list
+     * The output nodes will be removed if there exists another output node which will be executed sequentially after this node
+     * @param nodes A List of Nodes of the graph
+     * @returns The given List of nodes without the nodes which are not needed anymore
+     */
+    private def sequentializeDataAccess(List<KNode> nodes) {
+        for (n : nodes.filter[isOutput && isDataAccess].toList.sortSpecific) {
+            if (nodes.contains(n)) {
+                val writes = nodes.filter [
+                    it != n && isOutput && sourceEquals(n) && n.isDataArraySequential(it) && isDataAccess
+                ].toList
+                for (candidate : writes.filter[w|!writes.exists[isDataArraySequential(w)]].toList) {
+                    val reads = nodes.filter [
+                        it != n && isInput && sourceEquals(n) && isDataAccess && it.isDataArraySequential(candidate)
+                    ].toList
+                    for (read : reads) {
+                        read.redirectIncommingWires(n)
+                        read.redirectOutgoingWires(n)
+                        n.removeUnneeded(nodes)
+                        nodes.betterRemove(read)
+                    }
+                    val e = n.outgoingEdges.filter[sourcePort.sourceElement === null].head
+                    val oldTarget = e.target
+                    candidate.ports.add(e.targetPort)
+                    e.target = candidate
+                    oldTarget.removeUnneeded(nodes)
+                }
+            }
+        }
+        return nodes
     }
 
     /**
@@ -66,14 +100,18 @@ class EquationSimplification {
         val List<KNode> sequentializedOutputs = newArrayList
         val List<KNode> sequentializedInputs = newArrayList
         for (seq : sequentials.filter [
-            key.isOutput && value.isInput && !value.isDataAccess && !key.isDataAccess && !key.isReference
+            key.isOutput && value.isInput && !value.isDataAccess && !key.isDataAccess && !key.isReference && nodes.contains(key) && nodes.contains(value)
         ]) {
-            seq.value.connectToOutput(seq.key)
-            if (!sequentializedInputs.contains(seq.value)) {
-                sequentializedInputs += seq.value
-            }
-            if (!sequentializedOutputs.contains(seq.key)) {
-                sequentializedOutputs.add(seq.key)
+            if (!seq.key.getWritesAfter(nodes).exists [
+                !seq.value.isInputForEquation(it, false) && !getReadsBefore(nodes).exists[seq.key.isSequential(it)]
+            ]) {
+                seq.value.connectToOutput(seq.key)
+                if (!sequentializedInputs.contains(seq.value)) {
+                    sequentializedInputs += seq.value
+                }
+                if (!sequentializedOutputs.contains(seq.key)) {
+                    sequentializedOutputs.add(seq.key)
+                }
             }
         }
         for (n : sequentializedInputs) {
@@ -164,17 +202,35 @@ class EquationSimplification {
     private def combineDataAccessNodes(List<KNode> nodes) {
         // This algorithm only works if the nodes which are more specific are merged first
         // for example the nodes for x[0] should be merged before the nodes for x are merged 
-        for (node : nodes.filter[isDataAccess].toList.sortSpecific) {
+        var list = nodes.filter[isDataAccess].toList.sortSpecific
+        for (node : list) {
             if (nodes.contains(node)) {
                 for (unneeded : nodes.filter [
                     isDataAccess && it != node && sourceEquals(node) && !isDataArraySequential(node) &&
-                        !node.isDataArraySequential(it) &&
-                        (combineAllDataAccessNodes || (isInput == node.isInput && isOutput == node.isOutput))
+                        !node.isDataArraySequential(it) && isInput == node.isInput && isOutput == node.isOutput &&
+                        !isInputForEquation(node, true) && !node.isInputForEquation(it, true)
                 ].toList) {
                     unneeded.redirectIncommingWires(node)
                     unneeded.redirectOutgoingWires(node)
                     node.removeUnneeded(nodes)
                     nodes.betterRemove(unneeded)
+                }
+            }
+        }
+        // input and output nodes should be combined after input and input or output and output nodes are combined
+        if (combineAllDataAccessNodes) {
+            for (node : nodes.filter[isDataAccess].toList.sortSpecific) {
+                if (nodes.contains(node)) {
+                    for (unneeded : nodes.filter [
+                        isDataAccess && it != node && sourceEquals(node) && !isDataArraySequential(node) &&
+                            !node.isDataArraySequential(it) && !isInputForEquation(node, true) &&
+                            !node.isInputForEquation(it, true)
+                    ].toList) {
+                        unneeded.redirectIncommingWires(node)
+                        unneeded.redirectOutgoingWires(node)
+                        node.removeUnneeded(nodes)
+                        nodes.betterRemove(unneeded)
+                    }
                 }
             }
         }
@@ -209,14 +265,14 @@ class EquationSimplification {
     }
 
     /**
-     * For any node n which is not an input or an output node and no reference or data access node
+     * For any node n which is not an input node and no reference or data access node
      * It will be checked if a node k exists which is associated witch the same expression as n
      * If so then the targets of k are connected with n and k will be removed from the nodes list
      * @param nodes A List of Nodes of the graph
      * @returns The given List of nodes without the nodes which are not needed anymore
      */
     private def removeDublicates(List<KNode> nodes) {
-        for (node : nodes.filter[!isInput && !isReference && !isDataAccess && !isOutput].toList) {
+        for (node : nodes.filter[!isInput && !isReference && !isDataAccess].toList) {
             if (nodes.contains(node)) {
                 val unneed = nodes.findIndependentDublicateNode(node, false)
                 if (unneed !== null) {
@@ -360,7 +416,7 @@ class EquationSimplification {
     private def findIndependentDublicateNode(List<KNode> nodes, KNode node, boolean dataAccess) {
         for (n : nodes) {
             if (n != node) {
-                if (n.sourceEquals(node) && !n.isInputForEquation(node) && !node.isInputForEquation(n) &&
+                if (n.sourceEquals(node) && !n.isInputForEquation(node, false) && !node.isInputForEquation(n, false) &&
                     !n.isSequential(node) && !node.isSequential(n) && isDataAccess(n) == dataAccess) {
                     return n
                 }
@@ -457,14 +513,20 @@ class EquationSimplification {
             }
         }
         for (e : node.incomingEdges.immutableCopy) {
-            if (node.incomingEdges.exists[it != e && source.sourceEquals(e.source)]) {
+            if (node.incomingEdges.exists [
+                it != e && source.sourceEquals(e.source) && sourcePort.sourceEquals(e.sourcePort) &&
+                    targetPort.sourceEquals(e.targetPort)
+            ]) {
                 val source = e.source
                 e.betterRemove()
                 source.removeUnneeded(nodes)
             }
         }
         for (e : node.outgoingEdges.immutableCopy) {
-            if (node.outgoingEdges.exists[it != e && target.sourceEquals(e.target)]) {
+            if (node.outgoingEdges.exists [
+                it != e && target.sourceEquals(e.target) && targetPort.sourceEquals(e.targetPort) &&
+                    sourcePort.sourceEquals(e.sourcePort)
+            ]) {
                 val target = e.target
                 e.betterRemove()
                 target.removeUnneeded(nodes)
@@ -514,7 +576,8 @@ class EquationSimplification {
      */
     private def getOutputNode(List<KNode> nodes, KNode node) {
         val filtered = nodes.filter [
-            isOutput && !isDataAccess && sourceEquals(node) && !node.isSequential(it) && !node.isInputForEquation(it)
+            isOutput && !isDataAccess && sourceEquals(node) && !node.isSequential(it) &&
+                !node.isInputForEquation(it, false)
         ].toList
         if (filtered.size == 0) {
             return null
@@ -540,7 +603,9 @@ class EquationSimplification {
     private def isDataArraySequential(KNode before, KNode after) {
         return before.dataAccessSource !== null && after.dataAccessSource !== null &&
             before.dataAccessSource.isSequential(after.dataAccessSource) && before.ports.exists [ p |
-                p.sourceElement !== null && after.ports.exists[sourceElement !== null && sourceEquals(p)]
+                p.sourceElement !== null && after.ports.exists [
+                    sourceElement !== null && sourceEquals(p) && p.portSide == portSide
+                ]
             ]
     }
 

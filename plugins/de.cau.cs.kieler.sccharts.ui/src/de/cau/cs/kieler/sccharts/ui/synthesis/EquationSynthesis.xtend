@@ -666,14 +666,14 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                 for (seq : sequentials.reverse.filter [
                     key.isOutput && value.isInput && !key.isDataAccess && !value.isDataAccess
                 ]) {
-                    if (!seq.key.isInputForEquation(seq.value)) {
+                    if (!seq.key.isInputForEquation(seq.value, false)) {
                         seq.key.connectSequential(seq.value)
                     }
                 }
                 for (seq : sequentials.reverse.filter [
                     (!key.isOutput || !value.isInput) && !key.isDataAccess && !value.isDataAccess
                 ]) {
-                    if (!seq.key.isInputForEquation(seq.value)) {
+                    if (!seq.key.isInputForEquation(seq.value, false)) {
                         seq.key.connectSequential(seq.value)
                     }
                 }

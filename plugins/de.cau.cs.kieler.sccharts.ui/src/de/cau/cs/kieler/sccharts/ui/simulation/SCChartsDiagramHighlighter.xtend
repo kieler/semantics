@@ -49,6 +49,8 @@ import de.cau.cs.kieler.klighd.LightDiagramLayoutConfig
 import de.cau.cs.kieler.klighd.ZoomStyle
 import java.util.ArrayList
 import java.util.HashMap
+import de.cau.cs.kieler.klighd.kgraph.KEdge
+import de.cau.cs.kieler.sccharts.ui.synthesis.EquationSynthesis
 
 /**
  * Highlighter for SCCharts diagrams.
@@ -183,7 +185,7 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
                     for (highlight : currentDataflowHighlighting) {
                         if (highlight.element instanceof KNode) {
                             val region = highlight.element as KNode
-                            var next = region.children.filter[it.incomingEdges.size == 0].toList
+                            var next = region.children.filter[it.incomingEdges.filter[!isSequential && !isInstance].size == 0].toList
                             next += region.children.filter [
                                 getDiagramViewContext().getSourceElement(it) instanceof OperatorExpression &&
                                     (getDiagramViewContext().getSourceElement(it) as OperatorExpression).operator ==
@@ -197,7 +199,7 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
                                 next.remove(0)
                                 val original = getDiagramViewContext().getSourceElement(first)
                                 if (original instanceof Value) {
-                                    for (e : first.outgoingEdges) {
+                                    for (e : first.outgoingEdges.filter[!isSequential && !isInstance]) {
                                         if (!visited.contains(e)) {
                                             visited.add(e)
                                             cicle.clear
@@ -220,7 +222,7 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
                                 } else if (original instanceof ValuedObjectReference) {
                                     val object = (original as ValuedObjectReference).valuedObject
                                     val entry = sourcePool.findValue(object.name)
-                                    for (e : first.outgoingEdges) {
+                                    for (e : first.outgoingEdges.filter[!isSequential && !isInstance]) {
                                         if (!visited.contains(e)) {
                                             visited.add(e)
                                             cicle.clear
@@ -252,7 +254,7 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
                                     var Object value = null
                                     if ((original as OperatorExpression).operator != OperatorType.PRE &&
                                         !cicle.contains(first)) {
-                                        for (e : first.incomingEdges) {
+                                        for (e : first.incomingEdges.filter[!isSequential && !isInstance]) {
                                             if (!visited.contains(e)) {
                                                 if (!next.contains(e.source))
                                                     next.add(e.source)
@@ -268,20 +270,20 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
                                         switch ( (original as OperatorExpression).operator ) {
                                             case LOGICAL_AND: {
                                                 var t = true
-                                                for (e : first.incomingEdges) {
+                                                for (e : first.incomingEdges.filter[!isSequential && !isInstance]) {
                                                     t = t && currentWireHighlighting.filter[it.element == e].size > 0
                                                 }
                                                 value = t
                                             }
                                             case LOGICAL_OR: {
                                                 var t = false
-                                                for (e : first.incomingEdges) {
+                                                for (e : first.incomingEdges.filter[!isSequential && !isInstance]) {
                                                     t = t || currentWireHighlighting.filter[it.element == e].size > 0
                                                 }
                                                 value = t
                                             }
                                             case NOT: {
-                                                for (e : first.incomingEdges) {
+                                                for (e : first.incomingEdges.filter[!isSequential && !isInstance]) {
                                                     value = currentWireHighlighting.filter[it.element == e].size == 0
                                                 }
                                             }
@@ -308,7 +310,7 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
                                                 var condition = false
                                                 var Object trueValue = null
                                                 var Object falseValue = null
-                                                for (e : first.incomingEdges) {
+                                                for (e : first.incomingEdges.filter[!isSequential && !isInstance]) {
                                                     if (e.targetPort.data.filter(KIdentifier).map[id].get(0) == "in0")
                                                         condition = currentWireHighlighting.filter[it.element == e].
                                                             size > 0
@@ -330,7 +332,7 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
                                             case EQ: {
                                                 var Object last = null
                                                 var t = true
-                                                for (e : first.incomingEdges) {
+                                                for (e : first.incomingEdges.filter[!isSequential && !isInstance]) {
                                                     var Object current = null
                                                     val h = currentWireHighlighting.filter[it.element == e]
                                                     if (h.size == 0)
@@ -351,7 +353,7 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
                                             case NE: {
                                                 var t = false
                                                 var Object last = null
-                                                for (e : first.incomingEdges) {
+                                                for (e : first.incomingEdges.filter[!isSequential && !isInstance]) {
                                                     var Object current = null
                                                     val h = currentWireHighlighting.filter[it.element == e]
                                                     if (h.size == 0)
@@ -374,7 +376,7 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
                                                     first.findParams(currentWireHighlighting))
                                             }
                                         }
-                                        for (e : first.outgoingEdges) {
+                                        for (e : first.outgoingEdges.filter[!isSequential && !isInstance]) {
                                             if (!visited.contains(e)) {
                                                 visited.add(e)
                                                 cicle.clear
@@ -396,7 +398,7 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
                                         }
                                     }
                                 } else {
-                                    for (e : first.outgoingEdges) {
+                                    for (e : first.outgoingEdges.filter[!isSequential && !isInstance]) {
                                         if (!visited.contains(e)) {
                                             visited.add(e)
                                             cicle.clear
@@ -424,7 +426,7 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
 
     private def findParams(KNode node, ArrayList<Highlighting> highlighting) {
         val params = newHashMap
-        for (e : node.incomingEdges) {
+        for (e : node.incomingEdges.filter[!isSequential && !isInstance]) {
             val h = highlighting.filter[it.element == e]
             if (h.size > 0 && h.get(0) instanceof ValuedHighlighting)
                 params.put(e.targetPort.data.filter(KIdentifier).map[id].get(0), (h.get(0) as ValuedHighlighting).value)
@@ -823,4 +825,11 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
         return result
     }
 
+    protected def isSequential(KEdge edge) {
+        edge.getProperty(EquationSynthesis.SEQUENTIAL_EDGE) as boolean
+    }
+
+    protected def isInstance(KEdge edge) {
+        edge.getProperty(EquationSynthesis.INSTANCE_EDGE) as boolean
+    }
 }
