@@ -1238,7 +1238,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 if (scg.method) {
                     val method = scg.methodDeclaration
                     node.addOutsideTopCenteredNodeLabel(
-                        (method.returnType !== ValueType.PURE ? method.returnType.literal : "void") + 
+                        (method.returnType !== ValueType.PURE ? method.returnType.literal : "void") + " " +
                         method.valuedObjects.head.name +
                         "(" +
                         method.parameterDeclarations.filter(VariableDeclaration).map[type.literal].join(", ") +
