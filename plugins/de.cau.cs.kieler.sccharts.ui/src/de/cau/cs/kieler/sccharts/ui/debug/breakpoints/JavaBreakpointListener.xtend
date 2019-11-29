@@ -45,6 +45,7 @@ import de.cau.cs.kieler.sccharts.ui.debug.view.DebugDiagramView
 import de.cau.cs.kieler.sccharts.ui.debug.highlighting.DebugHighlighter
 import org.eclipse.jdt.debug.core.IJavaVariable
 import de.cau.cs.kieler.sccharts.Transition
+import org.eclipse.debug.core.model.ILineBreakpoint
 
 /**
  * @author peu
@@ -96,8 +97,6 @@ class JavaBreakpointListener implements IJavaBreakpointListener {
 
             // Extract name of method of this stack frame -----------------------------
             val typeRoot = JavaUI.getEditorInputTypeRoot(editor.editorInput)
-            
-            
             val compilationUnit = (typeRoot.getAdapter(ICompilationUnit) as ICompilationUnit)
             
             val methods = <IMethod> newLinkedList
@@ -192,20 +191,60 @@ class JavaBreakpointListener implements IJavaBreakpointListener {
         return col
     }
     
-    
-    override addingBreakpoint(IJavaDebugTarget target, IJavaBreakpoint breakpoint) {
-//        println("Adding breakpoint!")
-    }
-    
-    override breakpointHasRuntimeException(IJavaLineBreakpoint breakpoint, DebugException exception) {
-        // TODO ignore for now
+    def Transition findCurrentTransition(IJavaThread thread, IJavaBreakpoint breakpoint, SCCharts model, State lowestActiveState) {
+
+        // Use UIJob to get active editor -----------------------------------------
+        val ITextEditor[] editorArr = newArrayOfSize(1)
+
+        val job = new UIJob("getActiveEditor") {
+
+            override runInUIThread(IProgressMonitor monitor) {
+                try {
+                    editorArr.set(0,
+                        PlatformUI.getWorkbench?.activeWorkbenchWindow.getActivePage?.getActiveEditor as ITextEditor)
+                    return Status.OK_STATUS
+                } catch (Exception e) {
+                    e.printStackTrace
+                    return Status.CANCEL_STATUS
+                }
+            }
+        }
+
+        job.schedule
+        job.join
+
+        val editor = editorArr.head
+
+        // Extract line text -------------------------------------------------------
+        val lineNumber = (breakpoint as ILineBreakpoint).lineNumber - 1
+        val document = editor.documentProvider.getDocument(editor.editorInput)
+        val offset = document.getLineOffset(lineNumber)
+        val length = document.getLineLength(lineNumber)
+        val lineText = document.get(offset, length)
+        
+        val lineTextSplit = lineText.split("//")
+        if (lineTextSplit.length >= 2) {
+            val commentText = lineTextSplit.get(1)
+            if (commentText !== null) {
+                // The line has a comment, which may be a transition indicator
+                val commentTextSplit = commentText.split("\\(Priority ")
+                if (commentTextSplit.length >= 2) { 
+                    val prio = Integer.parseInt(commentTextSplit.get(1)?.charAt(0).toString)
+                    if (prio != 0) {
+                        return lowestActiveState.outgoingTransitions.get(prio - 1)
+                    }
+                }
+            }
+        }
+        
+        return null
     }
     
     override breakpointHit(IJavaThread thread, IJavaBreakpoint breakpoint) {
-//        println("Hitting breakpoint!")
+        println("Hitting breakpoint!")
         
         if (breakpointToTarget.containsKey(breakpoint)) {
-            val target = breakpointToTarget.get(breakpoint)
+            val target = thread.debugTarget as IJavaDebugTarget
             val chartVar = target.findVariable("ORIGINAL_SCCHART")
             if (chartVar !== null && chartVar.javaType.name.equals("java.lang.String")) {
                 println("Code is derived from SCChart!")
@@ -229,9 +268,15 @@ class JavaBreakpointListener implements IJavaBreakpointListener {
                     debugHighlighter.highlightExecutingState(state)
                 }
                 
+                val currentTransition = findCurrentTransition(thread, breakpoint, model, executingStates.head)
+                if (currentTransition !== null) {
+                    debugHighlighter.highlightExecutingTransition(currentTransition)
+                }
+                
+                
                 // TODO testing
                 for (transition : model.eAllContents.toIterable.filter[it instanceof Transition]) {
-                    debugHighlighter.addBreakpointDecorator(transition as Transition)
+//                    debugHighlighter.addBreakpointDecorator(transition as Transition)
                 }
                 return SUSPEND
             }
@@ -243,6 +288,11 @@ class JavaBreakpointListener implements IJavaBreakpointListener {
         return DONT_CARE
     }
     
+    
+    
+    /**************************************************************************************
+     * Unsupported Method Stubs ***********************************************************
+     **************************************************************************************/
     override breakpointInstalled(IJavaDebugTarget target, IJavaBreakpoint breakpoint) {
         breakpointToTarget.put(breakpoint, target)
         // TODO ignore for now
@@ -262,4 +312,13 @@ class JavaBreakpointListener implements IJavaBreakpointListener {
         throw new UnsupportedOperationException("TODO: auto-generated method stub")
     }
     
+    override addingBreakpoint(IJavaDebugTarget target, IJavaBreakpoint breakpoint) {
+//        println("Adding breakpoint!")
+    }
+    
+    override breakpointHasRuntimeException(IJavaLineBreakpoint breakpoint, DebugException exception) {
+        // TODO ignore for now
+    }
+    
 }
+

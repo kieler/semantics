@@ -336,7 +336,7 @@ class StatebasedLeanJavaTemplate extends AbstractStatebasedLeanTemplate {
                  state.outgoingTransitions.head.delay == DelayType.IMMEDIATE && 
                  state.outgoingTransitions.head.trigger === null &&
                  state.outgoingTransitions.head.preemption != PreemptionType.TERMINATION »
-					« addTransitionEffectCode(state.outgoingTransitions.head) »
+					« addTransitionEffectCode(state.outgoingTransitions.head) » « addTransitionComment(state.outgoingTransitions.head)»
 				«ELSE»
 					« FOR t : state.outgoingTransitions.indexed »
 						« addTransitionConditionCode(t.key, state.outgoingTransitions.size, t.value, hasDefaultTransition) »
@@ -394,12 +394,13 @@ class StatebasedLeanJavaTemplate extends AbstractStatebasedLeanTemplate {
         }
 
         valuedObjectPrefix = ""
-
+        
         return '''
 			« IF index == 0 »
-				if (« condition ») {
-			« ELSE »
-				} else « IF !(defaultTransition) »if (« condition ») « ENDIF »{
+				if (« condition ») { « addTransitionComment(transition)»
+			« ELSE /* TODO remove line break below?*/»
+				}
+				else « IF !(defaultTransition) »if (« condition ») « ENDIF »{« addTransitionComment(transition)»
 			« ENDIF » 
 			  « addTransitionEffectCode(transition) »
 			« IF index == count-1 && hasDefaultTransition »
@@ -607,5 +608,13 @@ class StatebasedLeanJavaTemplate extends AbstractStatebasedLeanTemplate {
 				 */
 			« ENDIF »
 		'''
+    }
+    
+    protected def addTransitionComment(Transition transition) {
+        val commentString = transition.annotations?.filter(CommentAnnotation).head?.values?.head
+        if (commentString !== null && !commentString.equals("")) {
+            return ''' // « commentString »'''
+        } 
+        
     }
 }
