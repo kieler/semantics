@@ -34,7 +34,8 @@ class SimulationServer {
             val server = new Server(PORT)
             server.stopAtShutdown = true
             val handler = new ServletHandler()
-            handler.addServletWithMapping(SimulationServlet, "/simulation")
+            val holder = handler.addServletWithMapping(SimulationServlet, "/simulation")
+            holder.servlet = new SimulationServlet // jetty seems to have problems instantiating servlets
             for (contribution : KielerServiceLoader.load(ISimulationServerContribution)) {
                 val entry = contribution.getServletWithMapping()
                 if (entry !== null) {
@@ -44,7 +45,7 @@ class SimulationServer {
             server.setHandler(handler);
             server.start()
 
-            monitor.subTask("Server is runnig")
+            monitor.subTask("Server is running")
             while (!monitor.canceled) {
                 Thread.sleep(100)
             }

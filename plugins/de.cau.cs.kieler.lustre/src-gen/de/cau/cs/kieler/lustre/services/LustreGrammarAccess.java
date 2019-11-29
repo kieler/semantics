@@ -4780,6 +4780,21 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		return getFunctionCallAccess().getRule();
 	}
 	
+	//// Print Call Rule
+	//// Calls the print function. They may include a parameter list.
+	//// Do not use in expressions directly, use PrintCallEffect instead
+	//PrintCall:
+	//	{PrintCall}
+	//	'print' ('(' parameters+=Parameter (',' parameters+=Parameter)* ')' |
+	//	'()');
+	public KExpressionsGrammarAccess.PrintCallElements getPrintCallAccess() {
+		return gaKExpressions.getPrintCallAccess();
+	}
+	
+	public ParserRule getPrintCallRule() {
+		return getPrintCallAccess().getRule();
+	}
+	
 	//// Parameter Rule
 	//// The parameter rule is used by the function call rule. Every expression may be a paramter.
 	//// Additionally, a parameter may be preceded by an ampersand to indicate a call by reference.
