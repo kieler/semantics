@@ -92,7 +92,7 @@ abstract class LSDiagramHighlighter extends IdeDiagramHighlighter {
     override protected applyDiagramBatchUpdate() {
         val viewer = diagramViewContext.viewer
         if (viewer instanceof SprottyViewer) {
-            viewer.stopRecording(ZoomStyle.NONE, null, 0)
+            // viewer.stopRecording(ZoomStyle.NONE, null, 0) this does nothing
             viewer.viewContext
         }
     }
