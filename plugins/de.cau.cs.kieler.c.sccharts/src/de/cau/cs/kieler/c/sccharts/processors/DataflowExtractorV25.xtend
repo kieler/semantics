@@ -656,8 +656,8 @@ class DataflowExtractorV25 extends ExogenousProcessor<IASTTranslationUnit, SCCha
                 var i = 0
                 for (argument : funcInit.getArguments) {
                     val funcObjArg = funcState.declarations.filter(VariableDeclaration).map[valuedObjects].flatten.get(i)
-                    val connectObj = state.findValuedObjectByName((argument as IASTIdExpression).getName.toString, false, dRegion)
-                    var ass = createAssignment(refObj, funcObjArg, connectObj.reference)
+                    val connectExpr = argument.createKExpression(state, dRegion)
+                    var ass = createAssignment(refObj, funcObjArg, connectExpr)
                     dRegion.equations += ass
                     i++
                 }
@@ -842,8 +842,10 @@ class DataflowExtractorV25 extends ExogenousProcessor<IASTTranslationUnit, SCCha
 //        println("last Elem found: " + res)
         var varName = res.getName()
         var onlyOut = false
-        if(varName.contains("_out")) {
-//            //println("contains _out")
+        var hasOut = false
+        if((varName.contains("_out")) && (varName.lastIndexOf("_out") == (varName.length - 4))) {
+              //println("contains _out")
+            hasOut = true
             if(varList.length > 1) {
                 res = varList.get(varList.length - 2)
 //                //println("use now: " + res)
@@ -867,7 +869,8 @@ class DataflowExtractorV25 extends ExogenousProcessor<IASTTranslationUnit, SCCha
                 if (OffsetAnno.length > 0) res.annotations += OffsetAnno.head
                 if (LengthAnno.length > 0) res.annotations += LengthAnno.head
                 
-                varList.add(0, res)
+                varList.add(0, res) 
+                
                 
             }
         } 
@@ -895,7 +898,13 @@ class DataflowExtractorV25 extends ExogenousProcessor<IASTTranslationUnit, SCCha
             
             res = varDecl.createValuedObject(newName)
 //            //println("writing==true => use: " + res)
-            varList.add(res)
+            if (hasOut) {
+                varList.add(varList.length - 1, res)
+            } else {
+                varList.add(res)    
+            }
+            println("New VO added to list.")
+            println("List: " + varList)
         }
          
 //        //println("") 

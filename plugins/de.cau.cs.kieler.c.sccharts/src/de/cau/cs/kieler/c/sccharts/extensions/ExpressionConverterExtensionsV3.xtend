@@ -65,9 +65,9 @@ class ExpressionConverterExtensionsV3 {
             if(sourceExpr instanceof IASTIdExpression) {
                 source = funcState.findValuedObjectByName((sourceExpr as IASTIdExpression).getName.toString, false, dRegion).reference
             } else if(sourceExpr instanceof IASTBinaryExpression) {
-                source = createKExpression(sourceExpr/* as IASTBinaryExpression*/, funcState, dRegion).head
+                source = createKExpression(sourceExpr/* as IASTBinaryExpression*/, funcState, dRegion)
             } else if(sourceExpr instanceof IASTUnaryExpression) {
-                source = createKExpression(sourceExpr/* as IASTUnaryExpression*/, funcState, dRegion).head
+                source = createKExpression(sourceExpr/* as IASTUnaryExpression*/, funcState, dRegion)
             } else if(sourceExpr instanceof IASTFunctionCallExpression) {
                 
                 val funcCall = sourceExpr as IASTFunctionCallExpression
@@ -185,7 +185,7 @@ class ExpressionConverterExtensionsV3 {
     
     def createUnaryAssignment(IASTUnaryExpression expression, State funcState, DataflowRegion dRegion) {
         
-        val sourceExpression = createKExpression(expression, funcState, dRegion).head
+        val sourceExpression = createKExpression(expression, funcState, dRegion)
                 
         val opName = (expression.getOperand as IASTIdExpression).getName.toString
         val opVO = funcState.findValuedObjectByName(opName, true, dRegion)
@@ -253,8 +253,8 @@ class ExpressionConverterExtensionsV3 {
             var i = 0
             for (argument : funcCall.getArguments) {
                 val funcObjArg = refState.declarations.filter(VariableDeclaration).map[ valuedObjects ].flatten.get(i)
-                val connectObj = funcState.findValuedObjectByName(argument.children.head.toString, false, dRegion)
-                dRegion.equations += createAssignment(funcObj, funcObjArg, connectObj.reference)
+                val connectExpr = argument.createKExpression(funcState, dRegion)
+                dRegion.equations += createAssignment(funcObj, funcObjArg, connectExpr)
                 i++
             }
             
@@ -300,9 +300,9 @@ class ExpressionConverterExtensionsV3 {
         } else if (expr instanceof IASTCastExpression) {
             res = expr.getOperand.createKExpression(funcState, dRegion)
         } else if(expr instanceof IASTUnaryExpression) {
-           res = (expr as IASTUnaryExpression).createKExpression(funcState, dRegion).head 
+           res = (expr as IASTUnaryExpression).createKExpression(funcState, dRegion) 
         } else if(expr instanceof IASTBinaryExpression) {
-            res = (expr as IASTBinaryExpression).createKExpression(funcState, dRegion).head
+            res = (expr as IASTBinaryExpression).createKExpression(funcState, dRegion)
         } else if(expr instanceof IASTArraySubscriptExpression) {
             
             val arrSubExp = expr as IASTArraySubscriptExpression
@@ -326,26 +326,22 @@ class ExpressionConverterExtensionsV3 {
         res
     }
     
-    def ArrayList<Expression> createKExpression(IASTBinaryExpression binExpr, State funcState, DataflowRegion dRegion) {
+    def Expression createKExpression(IASTBinaryExpression binExpr, State funcState, DataflowRegion dRegion) {
 //       //println("    Inside createKExpression with:\nbinExpr: " + binExpr.toString + "\nfuncState: " + funcState.getName + "\ndRegion: " + dRegion.toString)
-       var opType = binExpr.getOperator().CDTBinaryOpTypeConversion
-       var binKExpr = opType.createOperatorExpression
+        var opType = binExpr.getOperator().CDTBinaryOpTypeConversion
+        var binKExpr = opType.createOperatorExpression
             
-            for (operand : binExpr.children) {
+        for (operand : binExpr.children) {
                 
-                binKExpr.subExpressions += operand.createKExpression(funcState, dRegion)
+            binKExpr.subExpressions += operand.createKExpression(funcState, dRegion)
                 
-            }
-            var res = new ArrayList<Expression>
-            res.add(binKExpr)
-            res
+        }
+        binKExpr
     }
     
-    def ArrayList<Expression> createKExpression(IASTUnaryExpression unExpr, State funcState, DataflowRegion dRegion) {
-        //println("Inside createKExpression for UnaryExpressions")
-        var res = new ArrayList<Expression>
+    def Expression createKExpression(IASTUnaryExpression unExpr, State funcState, DataflowRegion dRegion) {
+        var Expression res
         var opType = unExpr.getOperator.CDTUnaryOpTypeConversion
-        //println("opType: " + opType)
         var OperatorExpression unKExpr
         
         if(opType !== null) {
@@ -353,8 +349,7 @@ class ExpressionConverterExtensionsV3 {
             
             var operand = unExpr.getOperand
             unKExpr.subExpressions += operand.createKExpression(funcState, dRegion)
-            
-            res.add(unKExpr)
+            res = unKExpr
         } else {
             var operand = unExpr.getOperand
             if(operand instanceof IASTBinaryExpression) {

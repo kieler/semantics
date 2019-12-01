@@ -126,7 +126,7 @@ class StructflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCChar
         
         
         val comments = ast.getComments
-        val idx = comments.getIdxOfComment("//EXTRACTOR_FUNCTION")
+        val idx = comments.getIdxOfComment("//_EXTRACTOR_FUNCTION")
         if(idx >= 0) {
             val exComment = comments.get(idx)
             val mFunc = getCommentFollowingNode(ast, exComment) as IASTFunctionDefinition   
@@ -153,7 +153,7 @@ class StructflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCChar
             buildStructFlowForFunction(funcName)
             
         } else {
-            baseState.name = "No function marked for Extraction!\nPlace the commen \"//EXTRACTOR_FUNCTION\" above the function to extract"
+            baseState.name = "No function marked for Extraction!\nPlace the comment \"//_EXTRACTOR_FUNCTION\" above the function to extract"
             baseState.label = baseState.name
         }
         
@@ -269,7 +269,7 @@ class StructflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCChar
                     val exprOutputElements = findOutputElements(expr)
                     val exprInputElements = findInputElements(expr)
                     val op2OutputElements = findOutputElements(expr.getOperand2)
-                    if ((exprOutputElements.length > op2OutputElements.length) && (exprInputElements.length > 0)) {
+                    if ((exprOutputElements.length > op2OutputElements.length)/* && (exprInputElements.length > 0)*/) {
                         val targetNames = findDifference(exprOutputElements, op2OutputElements)
                         if (targetNames.length == 1) {
                             
@@ -752,20 +752,19 @@ class StructflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCChar
             } else {
                 VOs.put(funcState, stateVars)    
             }
-             var i = 0
+                
+            val decl = createVariableDeclaration
+            decl.input = true
+            funcState.declarations += decl
+                
             for (input : inputs) {
                 val varList = <ValuedObject> newArrayList
-                
-                val decl = createVariableDeclaration
-                decl.input = true
-                funcState.declarations += decl
                 
                 val vo = decl.createValuedObject(input + "_in")
                 varList.add(vo)
                 stateVars.put(input, varList)
-                i++
             }
-            if(i > funcState.declarations.length) println("Mehr declarationen als input variablen für State: " + funcState.name)
+            
         }
     }
     
@@ -844,6 +843,10 @@ class StructflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCChar
             } else {
                 VOs.put(funcState, stateVars)
             }
+                
+            val decl = createVariableDeclaration
+            decl.output = true
+            funcState.declarations += decl
             
             for (output : outputs) {
                 var varList = <ValuedObject> newArrayList
@@ -852,10 +855,6 @@ class StructflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCChar
                 } else {
                     stateVars.put(output, varList)
                 }
-                
-                val decl = createVariableDeclaration
-                decl.output = true
-                funcState.declarations += decl
                 
                 val vo = decl.createValuedObject(output + "_out")
                 varList.add(vo)                
@@ -945,12 +944,10 @@ class StructflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCChar
     }
     
     def linkOutputs(State state, DataflowRegion dRegion) {
-        println("Inside LinkOutputs")
         var stateVariables = VOs.get(state)
         for (varList : stateVariables.values) {
             val outVO = findOutputVar(varList)
             if (outVO !== null && (varList.length > 1)) {
-                println("Found an output to link: " + outVO)
                 var lastVO = varList.get(varList.length - 1)
                 if(lastVO.getName.contains("_out") && (varList.length > 1)) {
                     lastVO = varList.get(varList.length - 2)

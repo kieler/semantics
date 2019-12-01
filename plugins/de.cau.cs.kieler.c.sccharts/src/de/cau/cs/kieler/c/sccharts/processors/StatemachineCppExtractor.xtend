@@ -383,17 +383,17 @@ class StatemachineCppExtractor extends ExogenousProcessor<IASTTranslationUnit, S
             }
          }
          val elseComp = stmt.getElseClause
-         if (elseComp instanceof IASTIfStatement) {
-             transitionFromIf(elseComp, startStates)
-         } else {
-             if (elseComp !== null) {
+         if (elseComp !== null) {
+             if (elseComp instanceof IASTIfStatement) {
+                 transitionFromIf(elseComp, startStates)
+             } else {
                 val elseTargetStates = findTargetStates(elseComp)
                 var notTrigger = createOperatorExpression(OperatorType::NOT)
                 notTrigger.subExpressions += baseTrigger
                 for (var j= 0; j < startStates.length; j++) {
                     for (var k = 0; k < elseTargetStates.length; k++) {
                         buildTransition(startStates.get(j), elseTargetStates.get(k), notTrigger);
-                                     
+                                         
                     }
                 }
              }
@@ -608,14 +608,21 @@ class StatemachineCppExtractor extends ExogenousProcessor<IASTTranslationUnit, S
      def IASTEnumerationSpecifier findStateEnum(IASTTranslationUnit ast) {
          var IASTEnumerationSpecifier res
          
+         //Retrieve the state enumeration comment node
          val comments = ast.getComments()
          val idx = comments.getIdxOfComment(stateEnumComment)
          
-         val enumComment = comments.get(idx)
-         val commentFollowingNode = ast.getCommentFollowingNode(enumComment)
-         
-         if (commentFollowingNode instanceof IASTSimpleDeclaration && commentFollowingNode.children.head instanceof IASTEnumerationSpecifier) {
-             res = commentFollowingNode.children.head as IASTEnumerationSpecifier
+         if (idx >= 0) {
+             val enumComment = comments.get(idx)
+             val commentFollowingNode = ast.getCommentFollowingNode(enumComment)
+             
+             if (commentFollowingNode instanceof IASTSimpleDeclaration && commentFollowingNode.children.head instanceof IASTEnumerationSpecifier) {
+                 res = commentFollowingNode.children.head as IASTEnumerationSpecifier
+             } else {
+                 println("Error: The state enumeration comment does not mark an enumeration")
+             }
+         } else {
+             println("Error: No comment marking the state enumeration found!")
          }
          
          res
@@ -658,20 +665,28 @@ class StatemachineCppExtractor extends ExogenousProcessor<IASTTranslationUnit, S
      def IASTNode getCommentFollowingNode(IASTNode ast, IASTComment comment) {
          var IASTNode res
          
+         //Get comment location information
          val commentContainingFilename = comment.getContainingFilename
          val commentOffset = comment.getNodeLocations.get(0).getNodeOffset
          
+         //iterate thourgh the ast childs to find the following node
          var found = false
          for (var i = 0; i < ast.children.length && !found; i++) {
+             //Get the node location information
              val child = ast.children.get(i)
              val childFilename = child.getContainingFilename
              val childOffset = child.getNodeLocations.get(0).getNodeOffset
              val childLength = child.getNodeLocations.get(0).getNodeLength
              
+             //Check if the node is in the same file as the comment
              if (childFilename.equals(commentContainingFilename)) {
+                 
+                 //Check if comment is inside the node
                  if (childOffset < commentOffset && (childOffset + childLength) > commentOffset) {
+                     //Following node has to be inside the current node
                      res = getCommentFollowingNode(child, comment)
                      found = true
+                 //First comment with greater offset is the comment following node    
                  } else if (childOffset > commentOffset) {
                      res = child
                      found = true

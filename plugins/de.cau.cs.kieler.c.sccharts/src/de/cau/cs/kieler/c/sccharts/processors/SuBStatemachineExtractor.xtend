@@ -123,7 +123,6 @@ class SuBStatemachineExtractor extends ExogenousProcessor<IASTTranslationUnit, S
          
          for (eEvent : enumEvents) {
              var eventName = eEvent.getName.toString
-             if (eventName.indexOf("a") == 0) eventName = eventName.substring(1)
              
              val decl = createVariableDeclaration 
              decl.type = ValueType::BOOL
@@ -204,10 +203,8 @@ class SuBStatemachineExtractor extends ExogenousProcessor<IASTTranslationUnit, S
     }
     
     def buildTransitions(String state) {
-        println("")
-        println("Inside buildTransitions")
+        
         val sourceState = states.get(state)
-        println("SourceState: " + sourceState)
         val evalFunc = stateEvals.get(state)
         var IASTStatement transitionSwitch
         
@@ -216,20 +213,13 @@ class SuBStatemachineExtractor extends ExogenousProcessor<IASTTranslationUnit, S
         for (child : evalFunc.getBody.children) {
             if (child instanceof IASTSwitchStatement) transitionSwitch = child.getBody
         }
-//        println("transitionSwitch: " + transitionSwitch)
         
         var evts = <String> newArrayList
         for (child : transitionSwitch.children) {
-            println("Prüfe switch child: " + child)
             if (child instanceof IASTCaseStatement) {
-                println("Found case Stmt")
                 val condExp = child.getExpression
-                println("condExp: " + condExp)
                 if (condExp instanceof IASTIdExpression) {
-                    println("IdExpression erkannt")
                     var expName = condExp.getName.toString
-                    if (expName.indexOf("a") == 0) expName = expName.substring(1)
-                    println("expName: " + expName)
                     if (events.keySet.contains(expName)) {
                         evts.add(expName)
                     }
@@ -239,12 +229,9 @@ class SuBStatemachineExtractor extends ExogenousProcessor<IASTTranslationUnit, S
                 evts.clear
             } else {
                 val targetStates = findTransitionTargets(child)
-//                println("targetState.size: " + targetStates.size)
                 for (targetState : targetStates) {
                     val transition = sourceState.createTransitionTo(targetState)
-                    println("transition build: " + transition)
-                    println("evts.length: " + evts.length)
-                    if (evts.length > 2) {
+                    if (evts.length >= 1) {
                         var opType = OperatorType::LOGICAL_OR
                         var Expression op1 = events.get(evts.get(0)).reference
                         var Expression op2
@@ -256,14 +243,11 @@ class SuBStatemachineExtractor extends ExogenousProcessor<IASTTranslationUnit, S
                             op1 = tmp
                         }
                         transition.trigger = op1
-                    } else if (evts.length == 1) {
-                        transition.trigger = events.get(evts.get(0)).reference
-                    }
+                    } 
                     
                 }
             }
         }
-        println("")
     }
     
     def ArrayList<State> findTransitionTargets(IASTNode stmt) {

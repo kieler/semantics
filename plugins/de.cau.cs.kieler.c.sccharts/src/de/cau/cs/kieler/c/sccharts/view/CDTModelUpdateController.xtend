@@ -60,21 +60,15 @@ class CDTModelUpdateController extends KiCoModelUpdateController {
      * {@inheritDoc}
      */
     override selectionChanged(SelectionChangedEvent event) {
-//        println("Selection made!")
-//        println("getEditor liefert: " + getEditor.toString)
-//        println("event.getSelection liefert: " + event.getSelection.toString)
         val editor = getEditor
         val selection = event.getSelection
         if (selection !== null) {
-//            println("selection !== null")
             val Iterator<EObject> itrt = Iterators.filter(
                 (selection as KlighdTreeSelection).sourceElementIterator(), EObject)
             val element = Iterators.getNext(itrt, null)
             var ValuedObject elementVO
             
             if (element !== null) {
-//                println("element !== null")
-//                println("element vom Iterator: " + element.toString)
                 var offset = 0
                 var length = 0
                 var Annotatable aElement
@@ -89,34 +83,21 @@ class CDTModelUpdateController extends KiCoModelUpdateController {
                 }
                 
                 if (aElement !== null) {
-//                    println("aElement isnot null")
                     var elementAnnotations = aElement.annotations
-//                    println("annotations: " + elementAnnotations.length)
                     if (elementVO !== null && elementAnnotations.length == 0 ) {
-//                        println("elementVO != null")
-//                        println("elementVO.eContainer: " + elementVO.eContainer)
                         var Declaration aElementDecl
                         if (elementVO.eContainer instanceof Declaration) {
-//                            println("eContainer instanceof Declaration")
                             aElementDecl = elementVO.eContainer as Declaration
                             
                         }
-//                        println("aElementDecl ist bestimmt!")
                         if (aElementDecl !== null) {
-//                            println("aElementDecl !== null")
-//                            println("aElementDecl: " + aElementDecl.toString)
                             if (aElementDecl instanceof ReferenceDeclaration) {
                                 val reference = aElementDecl.getReference
-//                                println("Is ne ReferenceDeclaration mit reference: " + reference)
                                 if (reference instanceof Annotatable) {
-//                                    println("reference hat annotations: " + reference.annotations.length)
                                     elementAnnotations = reference.annotations
                                 }
                             } else if (aElementDecl instanceof VariableDeclarationImpl) {
-//                                println("aELementDecl is VariableDeclarationImpl")
-//                                println("aElementDecl.annotations.length: " + aElementDecl.annotations.length)
                                 for (annota : aElementDecl.annotations) {
-//                                    println("annotation: " + annota.toString)
                                 }
                                 if (aElementDecl.annotations.length > 0) {
                                     elementAnnotations = aElementDecl.annotations
@@ -130,7 +111,6 @@ class CDTModelUpdateController extends KiCoModelUpdateController {
                         ]
                         if (offsetAnnotations.length > 0) {
                             val offsetStr = (offsetAnnotations.head as StringAnnotation).values.head
-//                            println("offsetStr: " + offsetStr)
                             if (!offsetStr.equals("")) {
                                 offset = Integer.parseInt(offsetStr)
                             }
@@ -141,7 +121,6 @@ class CDTModelUpdateController extends KiCoModelUpdateController {
                         ]
                         if (lengthAnnotations.length > 0) {
                             val lengthStr = (lengthAnnotations.head as StringAnnotation).values.head
-//                            println("lengthStr: " + lengthStr)
                             if (!lengthStr.equals("")) {
                                 length = Integer.parseInt(lengthStr)
                             }
@@ -153,11 +132,8 @@ class CDTModelUpdateController extends KiCoModelUpdateController {
                 }
                 
                 if (editor instanceof ITextEditor) {
-//                editor.setHighlightRange(offset, length, true)
                     editor.selectAndReveal(offset, length)
                 }
-            } else {
-//                println("element === null")
             }
         }
     }
