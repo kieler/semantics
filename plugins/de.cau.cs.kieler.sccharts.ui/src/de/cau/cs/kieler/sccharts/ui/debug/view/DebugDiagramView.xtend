@@ -26,6 +26,9 @@ import org.eclipse.swt.widgets.Composite
 import org.eclipse.swt.layout.FillLayout
 import org.eclipse.swt.widgets.Text
 import org.eclipse.core.runtime.Status
+import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties
+import org.eclipse.ui.IViewSite
+import org.eclipse.swt.widgets.Display
 
 /**
  * @author stu121235
@@ -43,11 +46,11 @@ class DebugDiagramView extends DiagramViewPart {
     }
     
     static def void updateOrCreateView(Object model) {
-        if (instance === null) {
-            DiagramViewManager.createView(ID, "Debug Diagram View", model) as DebugDiagramView
-        } else {
+//        if (instance === null) {
+//            DiagramViewManager.createView(ID, "Debug Diagram View", model) as DebugDiagramView
+//        } else {
             instance.updateDiagram(model)
-        }
+//        }
     }
     
     static def DebugDiagramView getInstance() {
@@ -59,13 +62,14 @@ class DebugDiagramView extends DiagramViewPart {
     
     def void updateDiagram(Object model) {
         
+        
         if (viewer === null || viewer.viewContext === null) {
-            val instance = this
-            new UIJob("Init" + this.getClass.getName()) {
-
-                @SuppressWarnings("deprecation")
-                public override IStatus runInUIThread(IProgressMonitor monitor) {
-                    DiagramViewManager.initializeView(instance, model, null, null);
+            instance = this
+            // TODO may want to revert this from sync to async execution?
+            
+            Display.^default.syncExec(new Runnable {
+                override void run() {
+                    DiagramViewManager.initializeView(instance, model, null, new KlighdSynthesisProperties);
 
                     val canvas = viewer.getControl() as Composite
 
@@ -77,12 +81,35 @@ class DebugDiagramView extends DiagramViewPart {
 
                     val text = new Text(container, SWT.WRAP)
                     text.setText("This is a longer text.")
-//                    container.pack
+                    container.pack
                     canvas.layout(true, true)
-
-                    return Status.OK_STATUS;
                 }
-            }.schedule
+            })
+            
+//            val job = new UIJob("Init" + this.getClass.getName()) {
+//
+//                @SuppressWarnings("deprecation")
+//                public override IStatus runInUIThread(IProgressMonitor monitor) {
+//                    DiagramViewManager.initializeView(instance, model, null, new KlighdSynthesisProperties);
+//
+//                    val canvas = viewer.getControl() as Composite
+//
+//                    val container = new Composite(canvas, SWT.BORDER) => [
+//                        setSize(400, 100)
+//                    ]
+//                    container.setLayout(new FillLayout)
+//                    container.visible = false
+//
+//                    val text = new Text(container, SWT.WRAP)
+//                    text.setText("This is a longer text.")
+////                    container.pack
+//                    canvas.layout(true, true)
+//
+//                    return Status.OK_STATUS;
+//                }
+//            }
+//            job.schedule
+//            job.join // For sync execution to ensure that the view is fully initialized before using it
         } else {
             // update case
             val context = viewer.viewContext
@@ -102,6 +129,11 @@ class DebugDiagramView extends DiagramViewPart {
      */
     def KEdge getKEdge(Transition transition) {
         return viewer?.viewContext?.getTargetElement(transition, KEdge)
+    }
+    
+    override init(IViewSite site) {
+        // TODO unnecessary, debugging only
+        super.init(site)
     }
     
 }
