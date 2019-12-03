@@ -252,7 +252,7 @@ class JavaBreakpointListener implements IJavaBreakpointListener {
                 val model = SCTXStandaloneParser.parseScope(text, StandardCharsets.UTF_8)
                 Display.^default.syncExec(new Runnable {
                     override run() {
-                        DebugDiagramView.updateOrCreateView(model)
+                        DebugDiagramView.updateView(model)
                     }
                 })
                 

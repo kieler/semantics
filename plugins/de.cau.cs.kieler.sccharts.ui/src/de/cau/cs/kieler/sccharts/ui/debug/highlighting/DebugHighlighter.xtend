@@ -72,7 +72,7 @@ class DebugHighlighter {
     }
     
     def void highlightActiveState(State state) {
-        val kNode = DebugDiagramView.getInstance.getKNode(state)
+        val kNode = DebugDiagramView.getInstance?.getKNode(state)
         if (kNode === null) {
             //TODO debug print
             println("Null KNode for state " + state.name + ", nothing to highlight!")
@@ -84,7 +84,7 @@ class DebugHighlighter {
     }
     
     def void highlightExecutingState(State state) {
-        val kNode = DebugDiagramView.getInstance.getKNode(state)
+        val kNode = DebugDiagramView.getInstance?.getKNode(state)
         if (kNode === null) {
             //TODO debug print
             println("Null KNode for state " + state.name + ", nothing to highlight!")
@@ -112,7 +112,7 @@ class DebugHighlighter {
     }
  
     def void addBreakpointHighlight(State state) {
-        val kNode = DebugDiagramView.getInstance.getKNode(state)
+        val kNode = DebugDiagramView.getInstance?.getKNode(state)
         if (kNode === null) {
             //TODO debug print
             println("Null KNode for state " + state.name + ", nothing to highlight!")
@@ -132,7 +132,7 @@ class DebugHighlighter {
     }
     
     def void highlightExecutingTransition(Transition transition) {
-        val kEdge = DebugDiagramView.getInstance.getKEdge(transition)
+        val kEdge = DebugDiagramView.getInstance?.getKEdge(transition)
         if (kEdge === null) {
             // TODO debug print
             println("Null KEdge for transition" + transition.toString + ", nothing to highlight!")
@@ -152,7 +152,7 @@ class DebugHighlighter {
     }
     
     def void addBreakpointDecorator(Transition transition) {
-        val kEdge = DebugDiagramView.getInstance.getKEdge(transition)
+        val kEdge = DebugDiagramView.getInstance?.getKEdge(transition)
         if (kEdge === null) {
             // TODO debug print
             println("Null KEdge for transition" + transition.toString + ", nothing to highlight!")
@@ -173,7 +173,7 @@ class DebugHighlighter {
             // TODO debug print
             print("Null map entry for transition " + transition + ", can't remove ellipse!")
         }
-        val kEdge = DebugDiagramView.getInstance.getKEdge(transition)
+        val kEdge = DebugDiagramView.getInstance?.getKEdge(transition)
         kEdge.KContainerRendering.children.remove(ellipse)
         transitionToDecorator.remove(transition)
     }

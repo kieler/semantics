@@ -45,18 +45,16 @@ class DebugDiagramView extends DiagramViewPart {
         instance = this
     }
     
-    static def void updateOrCreateView(Object model) {
-//        if (instance === null) {
-//            DiagramViewManager.createView(ID, "Debug Diagram View", model) as DebugDiagramView
-//        } else {
+    static def void updateView(Object model) {
+        if (instance !== null) {
             instance.updateDiagram(model)
-//        }
+        }
     }
     
     static def DebugDiagramView getInstance() {
-        if (instance === null) {
-            instance = new DebugDiagramView
-        }
+//        if (instance === null) {
+//            instance = new DebugDiagramView
+//        }
         return instance
     }
     
@@ -64,8 +62,6 @@ class DebugDiagramView extends DiagramViewPart {
         
         
         if (viewer === null || viewer.viewContext === null) {
-            instance = this
-            // TODO may want to revert this from sync to async execution?
             
             Display.^default.syncExec(new Runnable {
                 override void run() {
@@ -85,31 +81,6 @@ class DebugDiagramView extends DiagramViewPart {
                     canvas.layout(true, true)
                 }
             })
-            
-//            val job = new UIJob("Init" + this.getClass.getName()) {
-//
-//                @SuppressWarnings("deprecation")
-//                public override IStatus runInUIThread(IProgressMonitor monitor) {
-//                    DiagramViewManager.initializeView(instance, model, null, new KlighdSynthesisProperties);
-//
-//                    val canvas = viewer.getControl() as Composite
-//
-//                    val container = new Composite(canvas, SWT.BORDER) => [
-//                        setSize(400, 100)
-//                    ]
-//                    container.setLayout(new FillLayout)
-//                    container.visible = false
-//
-//                    val text = new Text(container, SWT.WRAP)
-//                    text.setText("This is a longer text.")
-////                    container.pack
-//                    canvas.layout(true, true)
-//
-//                    return Status.OK_STATUS;
-//                }
-//            }
-//            job.schedule
-//            job.join // For sync execution to ensure that the view is fully initialized before using it
         } else {
             // update case
             val context = viewer.viewContext
@@ -136,4 +107,8 @@ class DebugDiagramView extends DiagramViewPart {
         super.init(site)
     }
     
+    override void dispose() {
+        super.dispose()
+        instance = null
+    }
 }
