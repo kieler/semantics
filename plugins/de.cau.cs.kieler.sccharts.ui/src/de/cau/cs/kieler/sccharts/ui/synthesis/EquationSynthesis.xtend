@@ -106,9 +106,9 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
     public static val SynthesisOption REFERENCED_PORT_LABELS_OUTSIDE = SynthesisOption.createCheckOption(
         "Outside Referenced Port Labels", false).setCategory(GeneralSynthesisOptions::DATAFLOW)
     public static val SynthesisOption ALL_SEQUENTIAL_CONSTRAINTS = SynthesisOption.createCheckOption(
-        "Show all Sequential Constraints", false).setCategory(GeneralSynthesisOptions::DATAFLOW)
+        "All Sequential Constraints", false).setCategory(GeneralSynthesisOptions::DATAFLOW)
     public static val SynthesisOption SEQUENTIAL_CONSTRAINTS = SynthesisOption.createCheckOption(
-        "Show Sequential Constraints", true).setCategory(GeneralSynthesisOptions::DATAFLOW)
+        "Sequential Constraints", true).setCategory(GeneralSynthesisOptions::DATAFLOW)
     public static val SynthesisOption INSTANCE_CONSTRAINTS = SynthesisOption.createCheckOption(
         "Connect Instances", true).setCategory(GeneralSynthesisOptions::DATAFLOW)
     public static val SynthesisOption HIDE_LOCALS = SynthesisOption.createCheckOption("Hide Local Variables", false).
@@ -917,7 +917,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
             }
         }
         for (node : inlinedNodes) {
-            nodes.betterRemove(node)
+            nodes.betterRemove(node, null)
         }
         return nodes
     }

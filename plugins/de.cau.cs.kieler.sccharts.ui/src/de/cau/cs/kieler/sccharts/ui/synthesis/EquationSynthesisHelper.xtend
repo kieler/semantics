@@ -41,6 +41,9 @@ import de.cau.cs.kieler.klighd.krendering.extensions.KLabelExtensions
 import de.cau.cs.kieler.sccharts.DataflowRegion
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import java.util.Comparator
+import de.cau.cs.kieler.kexpressions.eval.PartialExpressionEvaluator
+import de.cau.cs.kieler.kexpressions.Value
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 
 /**
  * @author kolja
@@ -54,6 +57,7 @@ class EquationSynthesisHelper {
     @Inject extension KEdgeExtensions
     @Inject extension EquationStyles
     @Inject extension KLabelExtensions
+    @Inject extension KExpressionsValuedObjectExtensions
 
     protected val List<Pair<KNode, KNode>> sequentials = newArrayList
     protected var alignInputOutputs = false
@@ -66,7 +70,17 @@ class EquationSynthesisHelper {
     /**
      * removes a node from the list and from the graph
      */
-    protected def betterRemove(List<KNode> nodes, KNode node) {
+    protected def betterRemove(List<KNode> nodes, KNode node, KNode sequentialReplacement) {
+        if( sequentialReplacement !== null ){
+            sequentials.immutableCopy.forEach[seq, i| 
+                if( seq.key == node && seq.value != sequentialReplacement ){
+                    sequentials.set(i, new Pair(sequentialReplacement, seq.value))
+                }
+                if( seq.value == node && seq.key != sequentialReplacement ){
+                    sequentials.set(i, new Pair(seq.key, sequentialReplacement))
+                }
+            ]
+        }
         while (node.incomingEdges !== null && node.incomingEdges.size > 0) {
             node.incomingEdges.get(0).betterRemove
         }
@@ -145,6 +159,23 @@ class EquationSynthesisHelper {
         return a.sourceElement == b.sourceElement
     }
 
+    /**
+     * given two ValuedObjectReferences the return value is true iff the associated indices could be evaluated to the same values
+     * example: X[i + 1] is not equal to X[i - 1]
+     * example2: X[i + 1] is equal to X[j + 1]
+     */
+    protected def boolean maybeEquals(ValuedObjectReference a, ValuedObjectReference b) {
+        for (var i = 0; i < Math.min(a.indices.size, b.indices.size); i++) {
+            var eval = new PartialExpressionEvaluator
+            var expr1 = eval.evaluate(a.indices.get(i))
+            var expr2 = eval.evaluate(b.indices.get(i))
+            if (!expr1.equals2(expr2) && expr1.getAllReferences.size == 0 && expr2.getAllReferences.size == 0) {
+                return false
+            }
+        }
+        return true
+    }
+
     protected def isSequential(KEdge edge) {
         edge.getProperty(EquationSynthesis.SEQUENTIAL_EDGE) as boolean
     }
@@ -161,7 +192,7 @@ class EquationSynthesisHelper {
         return node.getProperty(KlighdInternalProperties.MODEL_ELEMEMT)
     }
 
-    protected def removeSourceElement(KGraphElement node){
+    protected def removeSourceElement(KGraphElement node) {
         node.setProperty(KlighdInternalProperties.MODEL_ELEMEMT, null)
     }
 
