@@ -52,7 +52,7 @@ class EquationSimplification {
         inputNodes = nodes.filter[isInput].map[copy].toList
         return nodes.sequentializeDataAccess.combineDataAccessNodes.sequentialize.connectInputWithOutput.
             combineInputNodes.combineReferenceNodes.removeDublicates.removeSequentialWrites.hideLocalObjects.
-            resolvePreCicles.removeDoubledLabels.removeSequentialCicles
+            resolvePreCicles.removeDoubledLabels.removeSequentialCicles.removeUnneededPorts
     }
 
     /**
@@ -430,6 +430,16 @@ class EquationSimplification {
         for (e : sequentialEdges) {
             if (e.target.isInputForEquation(e.source, true)) {
                 e.betterRemove
+            }
+        }
+        return nodes
+    }
+
+    private def removeUnneededPorts(List<KNode> nodes) {
+        for (n : nodes.filter[isReference]) {
+            for (p : n.ports.filter[edges.size == 0].toList) {
+                p.remove()
+                n.ports.remove(p)
             }
         }
         return nodes

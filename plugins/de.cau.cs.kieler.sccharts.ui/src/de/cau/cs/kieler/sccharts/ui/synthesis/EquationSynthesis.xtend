@@ -79,6 +79,7 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
 import de.cau.cs.kieler.kexpressions.IntValue
+import de.cau.cs.kieler.kexpressions.FunctionCall
 
 /**
  * @author ssm
@@ -182,6 +183,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         "ARRAY_INPUT" -> #["InputArray.kgt", "Array.kgt"],
         "ARRAY_OUTPUT" -> #["InputArray.kgt", "Array.kgt"],
         "OPERATOR" -> #["OperatorExpression.kgt"],
+        "FUNCTION" -> #["FunktionExpression.kgt", "OperatorExpression.kgt"],
         "PRE" -> #["OperatorExpressionPRE.kgt", "OperatorExpressionUnary.kgt", "OperatorExpression.kgt"],
         "NOT" -> #["OperatorExpressionNOT.kgt", "OperatorExpressionUnary.kgt", "OperatorExpression.kgt"],
         "EQ" -> #["OperatorExpressionEQ.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
@@ -383,7 +385,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
             source.associateWith(assignment.reference)
             source.setProperty(OUTPUT_FLAG, true)
             source.setProperty(DATA_ACCESS_FLAG, true)
-            for( p : source.ports.filter[edges.size > 0] ){
+            for (p : source.ports.filter[edges.size > 0]) {
                 val ref = assignment.reference.copy
                 ref.indices.add(p.sourceElement as IntValue)
                 p.associateWith(ref)
@@ -416,7 +418,8 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
      */
     private def dispatch KNode performTransformation(ValuedObjectReference reference, List<KNode> nodes,
         boolean output) {
-        if ((reference.isClassReference && reference.subReference !== null) || reference.isArrayReference) {
+        if (!reference.isModelReference &&
+            ((reference.isClassReference && reference.subReference !== null) || reference.isArrayReference)) {
             // go through the sub references and indices and create a data access node for each index of sub reference
             var ref = reference
             var KNode firstNode = null
@@ -476,8 +479,9 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         if (reference.isModelReference) {
             // in case of a model reference the subreference should not be in the label of the node
             text = reference.valuedObject.reference.serializeHR.toString
-        }
-        if (reference.isModelReference) {
+            for (i : reference.indices) {
+                text += "[" + i.serializeHR.toString + "]"
+            }
             node = node.createReferenceNode(reference, text)
             // write the subreferences to the port labels
             if (reference.subReference !== null) {
@@ -489,20 +493,25 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                     node.findPortById(OUT_PORT)?.associateWith(reference.subReference)
                 }
             }
-            node.associateWith(reference.valuedObject.reference)
+            var ref = reference.valuedObject.reference
+            for (i : reference.indices) {
+                ref.indices += i.copy
+            }
+            node.associateWith(ref)
         } else {
             node.associateWith(reference)
             node.addNodeLabelWithPadding(text, INPUT_OUTPUT_TEXT_SIZE,
                 output ? PADDING_OUTPUT_LEFT : PADDING_INPUT_LEFT, output ? PADDING_OUTPUT_RIGHT : PADDING_INPUT_RIGHT)
+
+            if (reference.valuedObject.array) {
+                node.setProperty(DATA_ARRAY_FLAG, true)
+            }
         }
         node.setProperty(output ? OUTPUT_FLAG : INPUT_FLAG, true)
         if (ALIGN_INPUTS_OUTPUTS.booleanValue) {
             node.addLayoutParam(LayeredOptions::LAYERING_LAYER_CONSTRAINT,
                 output ? LayerConstraint::LAST : LayerConstraint::FIRST)
             node.addLayoutParam(CoreOptions::ALIGNMENT, output ? Alignment.RIGHT : Alignment.LEFT)
-        }
-        if (reference.valuedObject.array) {
-            node.setProperty(DATA_ARRAY_FLAG, true)
         }
         nodes += node
         return node
@@ -605,6 +614,44 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
             }
         }
         node.associateWith(operatorExpr)
+        nodes += node
+        return node
+    }
+
+    /**
+     * creates an equation tree graph from an expression and returns the root node of the tree
+     * @param functionCall The FunctionCall to which the tree should be generated
+     * @param nodes All created nodes are added to this list
+     * @param output Should be true if output nodes should be generated
+     */
+    private def dispatch KNode performTransformation(FunctionCall functionCall, List<KNode> nodes, boolean output) {
+        var figureId = "FUNCTION"
+        var text = functionCall.functionName
+        // create kgt node
+        val node = functionCall.createKGTNode(figureId, text)
+        for (subExpr : functionCall.parameters.map[expression]) {
+            val source = subExpr.performTransformation(nodes, false)
+            val sourcePort = source.findPortById(OUT_PORT)
+            val targetPort = node.getInputPortWithNumber(functionCall.parameters.map[expression].indexOf(subExpr))
+            sourcePort.connectWith(targetPort, subExpr.serializeHR.toString)
+        }
+        // show or hide port labels
+        if (SHOW_EXPRESSION_PORT_LABELS.booleanValue) {
+            for (p : node.ports) {
+                val label = p.labels.head
+                if (label !== null) {
+                    label.text = functionCall.functionName
+                }
+            }
+        } else {
+            for (p : node.ports) {
+                val label = p.labels.head
+                if (label !== null) {
+                    label.text = ""
+                }
+            }
+        }
+        node.associateWith(functionCall)
         nodes += node
         return node
     }

@@ -251,8 +251,14 @@ class Dataflow extends SCChartsProcessor {
                         trace(dataflowRegion)
                 }
                 
-                eqTrans.addAssignment(equation.value)
-                for (reference : equation.value.allAssignmentReferences.filter[ isReferenceDeclarationReference ].toList) {
+                var assignment = createAssignment => [ a |
+                    a.reference = equation.value.reference?.copy
+                    a.subReference = equation.value.subReference?.copy
+                    a.operator = equation.value.operator
+                    a.expression = equation.value.expression.copy
+                ]
+                eqTrans.addAssignment(assignment)
+                for (reference : assignment.allAssignmentReferences.filter[ isReferenceDeclarationReference ].toList) {
                     if (reference.subReference !== null) {
                         val refPair = new Pair<ValuedObject, ValuedObject>(reference.valuedObject, reference.subReference.valuedObject)
                         val replacement = referenceReplacements.get(refPair)
