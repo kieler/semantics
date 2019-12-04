@@ -167,7 +167,7 @@ class SCGCircuitDataflowProcessor extends Processor<SCGraphs, SCCharts> implemen
     def transformExpression(Expression e, HashMap<ValuedObject, ValuedObject> variableReplacement) {
         for (ref : e.allReferences) {
             if (variableReplacement.containsKey(ref.valuedObject)) {
-                ref.replacedReference(variableReplacement)
+                ref.replace(ref.replacedReference(variableReplacement))
             } else {
                 ref.valuedObject.addStringAnnotation("error", "The referenced Valued Object does not exists.")
             }

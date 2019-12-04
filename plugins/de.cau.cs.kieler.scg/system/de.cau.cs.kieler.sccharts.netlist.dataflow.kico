@@ -20,4 +20,4 @@ de.cau.cs.kieler.scg.processors.ssa.sequential config {
 }
 post process de.cau.cs.kieler.scg.processors.ssa.dessa.sequential
 post process de.cau.cs.kieler.scg.processors.vhdl.ssa.prepare
-de.cau.cs.kieler.sccharts.scg.processors.SCGCircuitDataflow
+de.cau.cs.kieler.sccharts.processors.scg.SCGCircuitDataflow
