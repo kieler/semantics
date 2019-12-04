@@ -25,6 +25,7 @@ import de.cau.cs.kieler.kexpressions.JsonPragma;
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.kexpressions.NullValue;
 import de.cau.cs.kieler.kexpressions.OperatorExpression;
+import de.cau.cs.kieler.kexpressions.PrintCall;
 import de.cau.cs.kieler.kexpressions.RandomCall;
 import de.cau.cs.kieler.kexpressions.RandomizeCall;
 import de.cau.cs.kieler.kexpressions.ReferenceCall;
@@ -639,6 +640,9 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 					return; 
 				}
 				else break;
+			case KExpressionsPackage.PRINT_CALL:
+				sequence_PrintCall(context, (PrintCall) semanticObject); 
+				return; 
 			case KExpressionsPackage.RANDOM_CALL:
 				if (rule == grammarAccess.getBoolScheduleExpressionRule()) {
 					sequence_BoolScheduleExpression_RandomCall(context, (RandomCall) semanticObject); 
@@ -1315,7 +1319,11 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 					return; 
 				}
 				else if (rule == grammarAccess.getStatementRule()) {
-					sequence_SclAssignment_SclPostfixAssignment(context, (de.cau.cs.kieler.scl.Assignment) semanticObject); 
+					sequence_SclAssignment_SclEffectAssignment_SclPostfixAssignment(context, (de.cau.cs.kieler.scl.Assignment) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getSclEffectAssignmentRule()) {
+					sequence_SclEffectAssignment(context, (de.cau.cs.kieler.scl.Assignment) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getSclPostfixAssignmentRule()) {

@@ -145,9 +145,9 @@ def main(args):
             code = jar_file.read()
             # linux 
             with open(join(traget_dir, args.name + '-linux'), 'wb') as file:
-                write_script(file, 'exec java -Xmx512m %s -jar $0 "$@"\n' % java9_options, code)
+                write_script(file, '#!/usr/bin/env bash\nexec java -Xmx512m %s -jar $0 "$@"\n' % java9_options, code)
             with open(join(traget_dir, args.name + '-linuxJava8'), 'wb') as file:
-                write_script(file, 'exec java -Xmx512m -jar $0 "$@"\n', code)
+                write_script(file, '#!/usr/bin/env bash\nexec java -Xmx512m -jar $0 "$@"\n', code)
             # windows
             with open(join(traget_dir, args.name + '-win.bat'), 'wb') as file:
                 write_script(file, 'java -Xmx512m %s -jar %%0 %%* \r\n exit /b \r\n' % java9_options, code) # escaped percent sign because of format string!
@@ -155,9 +155,9 @@ def main(args):
                 write_script(file, 'java -Xmx512m -jar %0 %* \r\n exit /b \r\n', code)
             # osx
             with open(join(traget_dir, args.name + '-osx'), 'wb') as file:
-                write_script(file, 'exec java -XstartOnFirstThread -Xmx512m %s -jar $0 "$@"' % java9_options, code)
+                write_script(file, '#!/usr/bin/env bash\nexec java -XstartOnFirstThread -Xmx512m %s -jar $0 "$@"' % java9_options, code)
             with open(join(traget_dir, args.name + '-osxJava8'), 'wb') as file:
-                write_script(file, 'exec java -XstartOnFirstThread -Xmx512m -jar $0 "$@"', code)
+                write_script(file, '#!/usr/bin/env bash\nexec java -XstartOnFirstThread -Xmx512m -jar $0 "$@"', code)
 
 def write_script(file, command, code):
     print('Creating script', basename(file.name))

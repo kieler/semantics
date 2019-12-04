@@ -102,6 +102,7 @@ public class SCEstParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getNotExpressionAccess().getAlternatives(), "rule__NotExpression__Alternatives");
 			builder.put(grammarAccess.getNegExpressionAccess().getAlternatives(), "rule__NegExpression__Alternatives");
 			builder.put(grammarAccess.getAnnotationAccess().getAlternatives(), "rule__Annotation__Alternatives");
+			builder.put(grammarAccess.getSclEffectAssignmentAccess().getExpressionAlternatives_1_0(), "rule__SclEffectAssignment__ExpressionAlternatives_1_0");
 			builder.put(grammarAccess.getConditionalAccess().getAlternatives_7(), "rule__Conditional__Alternatives_7");
 			builder.put(grammarAccess.getThreadAccess().getAlternatives_1(), "rule__Thread__Alternatives_1");
 			builder.put(grammarAccess.getForLoopAccess().getAlternatives_2(), "rule__ForLoop__Alternatives_2");
@@ -137,6 +138,7 @@ public class SCEstParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getValuedObjectTestExpressionAccess().getOperatorAlternatives_0_1_0(), "rule__ValuedObjectTestExpression__OperatorAlternatives_0_1_0");
 			builder.put(grammarAccess.getReferenceCallAccess().getAlternatives_3(), "rule__ReferenceCall__Alternatives_3");
 			builder.put(grammarAccess.getFunctionCallAccess().getAlternatives_2(), "rule__FunctionCall__Alternatives_2");
+			builder.put(grammarAccess.getPrintCallAccess().getAlternatives_2(), "rule__PrintCall__Alternatives_2");
 			builder.put(grammarAccess.getVectorValueMemberAccess().getAlternatives(), "rule__VectorValueMember__Alternatives");
 			builder.put(grammarAccess.getAnyTypeAccess().getAlternatives(), "rule__AnyType__Alternatives");
 			builder.put(grammarAccess.getAnyValueAccess().getAlternatives(), "rule__AnyValue__Alternatives");
@@ -414,6 +416,8 @@ public class SCEstParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getSclAssignmentAccess().getGroup_4(), "rule__SclAssignment__Group_4__0");
 			builder.put(grammarAccess.getSclPostfixAssignmentAccess().getGroup(), "rule__SclPostfixAssignment__Group__0");
 			builder.put(grammarAccess.getSclPostfixAssignmentAccess().getGroup_3(), "rule__SclPostfixAssignment__Group_3__0");
+			builder.put(grammarAccess.getSclEffectAssignmentAccess().getGroup(), "rule__SclEffectAssignment__Group__0");
+			builder.put(grammarAccess.getSclEffectAssignmentAccess().getGroup_2(), "rule__SclEffectAssignment__Group_2__0");
 			builder.put(grammarAccess.getReturnAccess().getGroup(), "rule__Return__Group__0");
 			builder.put(grammarAccess.getConditionalAccess().getGroup(), "rule__Conditional__Group__0");
 			builder.put(grammarAccess.getElseScopeAccess().getGroup(), "rule__ElseScope__Group__0");
@@ -611,6 +615,9 @@ public class SCEstParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getFunctionCallAccess().getGroup(), "rule__FunctionCall__Group__0");
 			builder.put(grammarAccess.getFunctionCallAccess().getGroup_2_0(), "rule__FunctionCall__Group_2_0__0");
 			builder.put(grammarAccess.getFunctionCallAccess().getGroup_2_0_2(), "rule__FunctionCall__Group_2_0_2__0");
+			builder.put(grammarAccess.getPrintCallAccess().getGroup(), "rule__PrintCall__Group__0");
+			builder.put(grammarAccess.getPrintCallAccess().getGroup_2_0(), "rule__PrintCall__Group_2_0__0");
+			builder.put(grammarAccess.getPrintCallAccess().getGroup_2_0_2(), "rule__PrintCall__Group_2_0_2__0");
 			builder.put(grammarAccess.getParameterAccess().getGroup(), "rule__Parameter__Group__0");
 			builder.put(grammarAccess.getParameterAccess().getGroup_0(), "rule__Parameter__Group_0__0");
 			builder.put(grammarAccess.getTextExpressionAccess().getGroup(), "rule__TextExpression__Group__0");
@@ -991,6 +998,10 @@ public class SCEstParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getSclPostfixAssignmentAccess().getOperatorAssignment_2(), "rule__SclPostfixAssignment__OperatorAssignment_2");
 			builder.put(grammarAccess.getSclPostfixAssignmentAccess().getScheduleAssignment_3_1(), "rule__SclPostfixAssignment__ScheduleAssignment_3_1");
 			builder.put(grammarAccess.getSclPostfixAssignmentAccess().getSemicolonAssignment_4(), "rule__SclPostfixAssignment__SemicolonAssignment_4");
+			builder.put(grammarAccess.getSclEffectAssignmentAccess().getAnnotationsAssignment_0(), "rule__SclEffectAssignment__AnnotationsAssignment_0");
+			builder.put(grammarAccess.getSclEffectAssignmentAccess().getExpressionAssignment_1(), "rule__SclEffectAssignment__ExpressionAssignment_1");
+			builder.put(grammarAccess.getSclEffectAssignmentAccess().getScheduleAssignment_2_1(), "rule__SclEffectAssignment__ScheduleAssignment_2_1");
+			builder.put(grammarAccess.getSclEffectAssignmentAccess().getSemicolonAssignment_3(), "rule__SclEffectAssignment__SemicolonAssignment_3");
 			builder.put(grammarAccess.getReturnAccess().getAnnotationsAssignment_0(), "rule__Return__AnnotationsAssignment_0");
 			builder.put(grammarAccess.getReturnAccess().getExpressionAssignment_2(), "rule__Return__ExpressionAssignment_2");
 			builder.put(grammarAccess.getConditionalAccess().getAnnotationsAssignment_0(), "rule__Conditional__AnnotationsAssignment_0");
@@ -1311,6 +1322,8 @@ public class SCEstParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getFunctionCallAccess().getFunctionNameAssignment_1(), "rule__FunctionCall__FunctionNameAssignment_1");
 			builder.put(grammarAccess.getFunctionCallAccess().getParametersAssignment_2_0_1(), "rule__FunctionCall__ParametersAssignment_2_0_1");
 			builder.put(grammarAccess.getFunctionCallAccess().getParametersAssignment_2_0_2_1(), "rule__FunctionCall__ParametersAssignment_2_0_2_1");
+			builder.put(grammarAccess.getPrintCallAccess().getParametersAssignment_2_0_1(), "rule__PrintCall__ParametersAssignment_2_0_1");
+			builder.put(grammarAccess.getPrintCallAccess().getParametersAssignment_2_0_2_1(), "rule__PrintCall__ParametersAssignment_2_0_2_1");
 			builder.put(grammarAccess.getParameterAccess().getPureOutputAssignment_0_0(), "rule__Parameter__PureOutputAssignment_0_0");
 			builder.put(grammarAccess.getParameterAccess().getCallByReferenceAssignment_0_1(), "rule__Parameter__CallByReferenceAssignment_0_1");
 			builder.put(grammarAccess.getParameterAccess().getExpressionAssignment_1(), "rule__Parameter__ExpressionAssignment_1");

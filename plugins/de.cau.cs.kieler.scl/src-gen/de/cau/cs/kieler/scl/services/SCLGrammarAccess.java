@@ -117,21 +117,23 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cSclAssignmentParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
 		private final RuleCall cSclPostfixAssignmentParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		private final RuleCall cLabelParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
-		private final RuleCall cConditionalParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
-		private final RuleCall cLegacyConditionalParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
-		private final RuleCall cGotoParserRuleCall_5 = (RuleCall)cAlternatives.eContents().get(5);
-		private final RuleCall cParallelParserRuleCall_6 = (RuleCall)cAlternatives.eContents().get(6);
-		private final RuleCall cPauseParserRuleCall_7 = (RuleCall)cAlternatives.eContents().get(7);
-		private final RuleCall cModuleCallParserRuleCall_8 = (RuleCall)cAlternatives.eContents().get(8);
-		private final RuleCall cScopeStatementParserRuleCall_9 = (RuleCall)cAlternatives.eContents().get(9);
-		private final RuleCall cReturnParserRuleCall_10 = (RuleCall)cAlternatives.eContents().get(10);
-		private final RuleCall cForLoopParserRuleCall_11 = (RuleCall)cAlternatives.eContents().get(11);
-		private final RuleCall cWhileLoopParserRuleCall_12 = (RuleCall)cAlternatives.eContents().get(12);
+		private final RuleCall cSclEffectAssignmentParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
+		private final RuleCall cConditionalParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
+		private final RuleCall cLegacyConditionalParserRuleCall_5 = (RuleCall)cAlternatives.eContents().get(5);
+		private final RuleCall cGotoParserRuleCall_6 = (RuleCall)cAlternatives.eContents().get(6);
+		private final RuleCall cParallelParserRuleCall_7 = (RuleCall)cAlternatives.eContents().get(7);
+		private final RuleCall cPauseParserRuleCall_8 = (RuleCall)cAlternatives.eContents().get(8);
+		private final RuleCall cModuleCallParserRuleCall_9 = (RuleCall)cAlternatives.eContents().get(9);
+		private final RuleCall cScopeStatementParserRuleCall_10 = (RuleCall)cAlternatives.eContents().get(10);
+		private final RuleCall cReturnParserRuleCall_11 = (RuleCall)cAlternatives.eContents().get(11);
+		private final RuleCall cForLoopParserRuleCall_12 = (RuleCall)cAlternatives.eContents().get(12);
+		private final RuleCall cWhileLoopParserRuleCall_13 = (RuleCall)cAlternatives.eContents().get(13);
 		
 		//Statement:
 		//	SclAssignment
 		//	| SclPostfixAssignment
 		//	| Label
+		//	| SclEffectAssignment
 		//	| Conditional
 		//	| LegacyConditional
 		//	| Goto
@@ -144,8 +146,8 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		//	| WhileLoop;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//SclAssignment | SclPostfixAssignment | Label | Conditional | LegacyConditional | Goto | Parallel | Pause | ModuleCall |
-		//ScopeStatement | Return | ForLoop | WhileLoop
+		//SclAssignment | SclPostfixAssignment | Label | SclEffectAssignment | Conditional | LegacyConditional | Goto | Parallel |
+		//Pause | ModuleCall | ScopeStatement | Return | ForLoop | WhileLoop
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
 		//SclAssignment
@@ -157,35 +159,38 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		//Label
 		public RuleCall getLabelParserRuleCall_2() { return cLabelParserRuleCall_2; }
 		
+		//SclEffectAssignment
+		public RuleCall getSclEffectAssignmentParserRuleCall_3() { return cSclEffectAssignmentParserRuleCall_3; }
+		
 		//Conditional
-		public RuleCall getConditionalParserRuleCall_3() { return cConditionalParserRuleCall_3; }
+		public RuleCall getConditionalParserRuleCall_4() { return cConditionalParserRuleCall_4; }
 		
 		//LegacyConditional
-		public RuleCall getLegacyConditionalParserRuleCall_4() { return cLegacyConditionalParserRuleCall_4; }
+		public RuleCall getLegacyConditionalParserRuleCall_5() { return cLegacyConditionalParserRuleCall_5; }
 		
 		//Goto
-		public RuleCall getGotoParserRuleCall_5() { return cGotoParserRuleCall_5; }
+		public RuleCall getGotoParserRuleCall_6() { return cGotoParserRuleCall_6; }
 		
 		//Parallel
-		public RuleCall getParallelParserRuleCall_6() { return cParallelParserRuleCall_6; }
+		public RuleCall getParallelParserRuleCall_7() { return cParallelParserRuleCall_7; }
 		
 		//Pause
-		public RuleCall getPauseParserRuleCall_7() { return cPauseParserRuleCall_7; }
+		public RuleCall getPauseParserRuleCall_8() { return cPauseParserRuleCall_8; }
 		
 		//ModuleCall
-		public RuleCall getModuleCallParserRuleCall_8() { return cModuleCallParserRuleCall_8; }
+		public RuleCall getModuleCallParserRuleCall_9() { return cModuleCallParserRuleCall_9; }
 		
 		//ScopeStatement
-		public RuleCall getScopeStatementParserRuleCall_9() { return cScopeStatementParserRuleCall_9; }
+		public RuleCall getScopeStatementParserRuleCall_10() { return cScopeStatementParserRuleCall_10; }
 		
 		//Return
-		public RuleCall getReturnParserRuleCall_10() { return cReturnParserRuleCall_10; }
+		public RuleCall getReturnParserRuleCall_11() { return cReturnParserRuleCall_11; }
 		
 		//ForLoop
-		public RuleCall getForLoopParserRuleCall_11() { return cForLoopParserRuleCall_11; }
+		public RuleCall getForLoopParserRuleCall_12() { return cForLoopParserRuleCall_12; }
 		
 		//WhileLoop
-		public RuleCall getWhileLoopParserRuleCall_12() { return cWhileLoopParserRuleCall_12; }
+		public RuleCall getWhileLoopParserRuleCall_13() { return cWhileLoopParserRuleCall_13; }
 	}
 	public class PauseElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.scl.SCL.Pause");
@@ -434,6 +439,84 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//';'
 		public Keyword getSemicolonSemicolonKeyword_4_0() { return cSemicolonSemicolonKeyword_4_0; }
+	}
+	public class SclEffectAssignmentElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.scl.SCL.SclEffectAssignment");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cAnnotationsAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cAnnotationsAnnotationParserRuleCall_0_0 = (RuleCall)cAnnotationsAssignment_0.eContents().get(0);
+		private final Assignment cExpressionAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final Alternatives cExpressionAlternatives_1_0 = (Alternatives)cExpressionAssignment_1.eContents().get(0);
+		private final RuleCall cExpressionReferenceCallParserRuleCall_1_0_0 = (RuleCall)cExpressionAlternatives_1_0.eContents().get(0);
+		private final RuleCall cExpressionTextExpressionParserRuleCall_1_0_1 = (RuleCall)cExpressionAlternatives_1_0.eContents().get(1);
+		private final RuleCall cExpressionPrintCallParserRuleCall_1_0_2 = (RuleCall)cExpressionAlternatives_1_0.eContents().get(2);
+		private final RuleCall cExpressionRandomizeCallParserRuleCall_1_0_3 = (RuleCall)cExpressionAlternatives_1_0.eContents().get(3);
+		private final RuleCall cExpressionFunctionCallParserRuleCall_1_0_4 = (RuleCall)cExpressionAlternatives_1_0.eContents().get(4);
+		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
+		private final Keyword cScheduleKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Assignment cScheduleAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
+		private final RuleCall cScheduleScheduleObjectReferenceParserRuleCall_2_1_0 = (RuleCall)cScheduleAssignment_2_1.eContents().get(0);
+		private final Assignment cSemicolonAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final Keyword cSemicolonSemicolonKeyword_3_0 = (Keyword)cSemicolonAssignment_3.eContents().get(0);
+		
+		//SclEffectAssignment Assignment:
+		//	annotations+=Annotation*
+		//	expression=(ReferenceCall
+		//	| TextExpression
+		//	| PrintCall
+		//	| RandomizeCall
+		//	| FunctionCall) ('schedule' schedule+=ScheduleObjectReference+)?
+		//	semicolon?=';'?;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//annotations+=Annotation* expression=(ReferenceCall | TextExpression | PrintCall | RandomizeCall | FunctionCall)
+		//('schedule' schedule+=ScheduleObjectReference+)? semicolon?=';'?
+		public Group getGroup() { return cGroup; }
+		
+		//annotations+=Annotation*
+		public Assignment getAnnotationsAssignment_0() { return cAnnotationsAssignment_0; }
+		
+		//Annotation
+		public RuleCall getAnnotationsAnnotationParserRuleCall_0_0() { return cAnnotationsAnnotationParserRuleCall_0_0; }
+		
+		//expression=(ReferenceCall | TextExpression | PrintCall | RandomizeCall | FunctionCall)
+		public Assignment getExpressionAssignment_1() { return cExpressionAssignment_1; }
+		
+		//(ReferenceCall | TextExpression | PrintCall | RandomizeCall | FunctionCall)
+		public Alternatives getExpressionAlternatives_1_0() { return cExpressionAlternatives_1_0; }
+		
+		//ReferenceCall
+		public RuleCall getExpressionReferenceCallParserRuleCall_1_0_0() { return cExpressionReferenceCallParserRuleCall_1_0_0; }
+		
+		//TextExpression
+		public RuleCall getExpressionTextExpressionParserRuleCall_1_0_1() { return cExpressionTextExpressionParserRuleCall_1_0_1; }
+		
+		//PrintCall
+		public RuleCall getExpressionPrintCallParserRuleCall_1_0_2() { return cExpressionPrintCallParserRuleCall_1_0_2; }
+		
+		//RandomizeCall
+		public RuleCall getExpressionRandomizeCallParserRuleCall_1_0_3() { return cExpressionRandomizeCallParserRuleCall_1_0_3; }
+		
+		//FunctionCall
+		public RuleCall getExpressionFunctionCallParserRuleCall_1_0_4() { return cExpressionFunctionCallParserRuleCall_1_0_4; }
+		
+		//('schedule' schedule+=ScheduleObjectReference+)?
+		public Group getGroup_2() { return cGroup_2; }
+		
+		//'schedule'
+		public Keyword getScheduleKeyword_2_0() { return cScheduleKeyword_2_0; }
+		
+		//schedule+=ScheduleObjectReference+
+		public Assignment getScheduleAssignment_2_1() { return cScheduleAssignment_2_1; }
+		
+		//ScheduleObjectReference
+		public RuleCall getScheduleScheduleObjectReferenceParserRuleCall_2_1_0() { return cScheduleScheduleObjectReferenceParserRuleCall_2_1_0; }
+		
+		//semicolon?=';'?
+		public Assignment getSemicolonAssignment_3() { return cSemicolonAssignment_3; }
+		
+		//';'
+		public Keyword getSemicolonSemicolonKeyword_3_0() { return cSemicolonSemicolonKeyword_3_0; }
 	}
 	public class ReturnElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.scl.SCL.Return");
@@ -1738,6 +1821,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	private final GotoElements pGoto;
 	private final SclAssignmentElements pSclAssignment;
 	private final SclPostfixAssignmentElements pSclPostfixAssignment;
+	private final SclEffectAssignmentElements pSclEffectAssignment;
 	private final ReturnElements pReturn;
 	private final ConditionalElements pConditional;
 	private final ElseScopeElements pElseScope;
@@ -1788,6 +1872,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		this.pGoto = new GotoElements();
 		this.pSclAssignment = new SclAssignmentElements();
 		this.pSclPostfixAssignment = new SclPostfixAssignmentElements();
+		this.pSclEffectAssignment = new SclEffectAssignmentElements();
 		this.pReturn = new ReturnElements();
 		this.pConditional = new ConditionalElements();
 		this.pElseScope = new ElseScopeElements();
@@ -1877,6 +1962,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	//	SclAssignment
 	//	| SclPostfixAssignment
 	//	| Label
+	//	| SclEffectAssignment
 	//	| Conditional
 	//	| LegacyConditional
 	//	| Goto
@@ -1954,6 +2040,22 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getSclPostfixAssignmentRule() {
 		return getSclPostfixAssignmentAccess().getRule();
+	}
+	
+	//SclEffectAssignment Assignment:
+	//	annotations+=Annotation*
+	//	expression=(ReferenceCall
+	//	| TextExpression
+	//	| PrintCall
+	//	| RandomizeCall
+	//	| FunctionCall) ('schedule' schedule+=ScheduleObjectReference+)?
+	//	semicolon?=';'?;
+	public SclEffectAssignmentElements getSclEffectAssignmentAccess() {
+		return pSclEffectAssignment;
+	}
+	
+	public ParserRule getSclEffectAssignmentRule() {
+		return getSclEffectAssignmentAccess().getRule();
 	}
 	
 	//Return:
@@ -3288,6 +3390,21 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getFunctionCallRule() {
 		return getFunctionCallAccess().getRule();
+	}
+	
+	//// Print Call Rule
+	//// Calls the print function. They may include a parameter list.
+	//// Do not use in expressions directly, use PrintCallEffect instead
+	//PrintCall:
+	//	{PrintCall}
+	//	'print' ('(' parameters+=Parameter (',' parameters+=Parameter)* ')' |
+	//	'()');
+	public KExpressionsGrammarAccess.PrintCallElements getPrintCallAccess() {
+		return gaKExpressions.getPrintCallAccess();
+	}
+	
+	public ParserRule getPrintCallRule() {
+		return getPrintCallAccess().getRule();
 	}
 	
 	//// Parameter Rule

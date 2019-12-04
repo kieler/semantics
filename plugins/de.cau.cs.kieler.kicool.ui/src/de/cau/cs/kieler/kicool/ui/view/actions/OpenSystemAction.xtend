@@ -69,7 +69,7 @@ class OpenSystemAction {
         val page = window.getActivePage();
         if (page !== null) {
             try {
-                if (view.systemSelectionManager.isProjectSystem(system.id)) {
+                if (view.systemSelectionManager.getProjectSystemFilePath(system.id) !== null) {
                     IDE.openEditor(page, new File(view.systemSelectionManager.getProjectSystemFilePath(system.id)).toURI, KiCoolActivator.DE_CAU_CS_KIELER_KICOOL_KICOOL, true)
                 } else {
                     page.openEditor(input, KiCoolActivator.DE_CAU_CS_KIELER_KICOOL_KICOOL);

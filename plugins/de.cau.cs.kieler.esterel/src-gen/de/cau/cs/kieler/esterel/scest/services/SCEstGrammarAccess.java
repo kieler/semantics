@@ -2501,6 +2501,22 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		return getSclPostfixAssignmentAccess().getRule();
 	}
 	
+	//SclEffectAssignment Assignment:
+	//	annotations+=super::Annotation*
+	//	expression=(ReferenceCall
+	//	| TextExpression
+	//	| PrintCall
+	//	| RandomizeCall
+	//	| FunctionCall) ('schedule' schedule+=ScheduleObjectReference+)?
+	//	semicolon?=';'?;
+	public SCLGrammarAccess.SclEffectAssignmentElements getSclEffectAssignmentAccess() {
+		return gaSCL.getSclEffectAssignmentAccess();
+	}
+	
+	public ParserRule getSclEffectAssignmentRule() {
+		return getSclEffectAssignmentAccess().getRule();
+	}
+	
 	//Return:
 	//	annotations+=super::Annotation*
 	//	'return'
@@ -3640,6 +3656,21 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getFunctionCallRule() {
 		return getFunctionCallAccess().getRule();
+	}
+	
+	//// Print Call Rule
+	//// Calls the print function. They may include a parameter list.
+	//// Do not use in expressions directly, use PrintCallEffect instead
+	//PrintCall:
+	//	{PrintCall}
+	//	'print' ('(' parameters+=Parameter (',' parameters+=Parameter)* ')' |
+	//	'()');
+	public KExpressionsGrammarAccess.PrintCallElements getPrintCallAccess() {
+		return gaKExpressions.getPrintCallAccess();
+	}
+	
+	public ParserRule getPrintCallRule() {
+		return getPrintCallAccess().getRule();
 	}
 	
 	//// Parameter Rule

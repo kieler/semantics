@@ -5,7 +5,9 @@ package de.cau.cs.kieler.lustre
 
 import com.google.inject.Injector
 import de.cau.cs.kieler.core.services.KielerLanguage
+import de.cau.cs.kieler.lustre.lustre.LustrePackage
 import de.cau.cs.kieler.lustre.lustre.LustreProgram
+import de.cau.cs.kieler.lustre.scade.scade.ScadePackage
 
 /**
  * Initialization support for running Xtext languages without Equinox extension registry.
@@ -16,9 +18,17 @@ class LustreStandaloneSetup extends LustreStandaloneSetupGenerated implements Ki
     
     def static doSetup() {
         if (injector === null) {
+            // Ensure meta model package is registered 
+            LustrePackage.eINSTANCE.eClass()
             injector = new LustreStandaloneSetup().createInjectorAndDoEMFRegistration()
         }
         return injector
+    }
+    
+    override register(Injector injector) {
+        super.register(injector)
+        // Ensure package is registered 
+        LustrePackage.eINSTANCE.eClass()
     }
     
     override getInjector() {

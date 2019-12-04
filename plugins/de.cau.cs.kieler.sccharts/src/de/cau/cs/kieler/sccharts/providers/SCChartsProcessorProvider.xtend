@@ -23,6 +23,9 @@ class SCChartsProcessorProvider implements IProcessorProvider {
     
     override getProcessors() {
         #[
+            de.cau.cs.kieler.sccharts.processors.scg.SCGTransformation,
+            de.cau.cs.kieler.sccharts.processors.scg.SCG2SCCProcessor,
+            de.cau.cs.kieler.sccharts.processors.scg.SCGCircuitDataflowProcessor,
             de.cau.cs.kieler.sccharts.processors.ArrayInitialisation,
             de.cau.cs.kieler.sccharts.processors.SurfaceDepth,
             de.cau.cs.kieler.sccharts.processors.TriggerEffect,

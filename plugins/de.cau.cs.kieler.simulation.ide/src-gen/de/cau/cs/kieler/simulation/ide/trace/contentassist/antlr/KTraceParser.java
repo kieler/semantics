@@ -68,6 +68,7 @@ public class KTraceParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getValuedObjectTestExpressionAccess().getOperatorAlternatives_0_1_0(), "rule__ValuedObjectTestExpression__OperatorAlternatives_0_1_0");
 			builder.put(grammarAccess.getReferenceCallAccess().getAlternatives_3(), "rule__ReferenceCall__Alternatives_3");
 			builder.put(grammarAccess.getFunctionCallAccess().getAlternatives_2(), "rule__FunctionCall__Alternatives_2");
+			builder.put(grammarAccess.getPrintCallAccess().getAlternatives_2(), "rule__PrintCall__Alternatives_2");
 			builder.put(grammarAccess.getVectorValueMemberAccess().getAlternatives(), "rule__VectorValueMember__Alternatives");
 			builder.put(grammarAccess.getAnyTypeAccess().getAlternatives(), "rule__AnyType__Alternatives");
 			builder.put(grammarAccess.getAnyValueAccess().getAlternatives(), "rule__AnyValue__Alternatives");
@@ -301,6 +302,9 @@ public class KTraceParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getFunctionCallAccess().getGroup(), "rule__FunctionCall__Group__0");
 			builder.put(grammarAccess.getFunctionCallAccess().getGroup_2_0(), "rule__FunctionCall__Group_2_0__0");
 			builder.put(grammarAccess.getFunctionCallAccess().getGroup_2_0_2(), "rule__FunctionCall__Group_2_0_2__0");
+			builder.put(grammarAccess.getPrintCallAccess().getGroup(), "rule__PrintCall__Group__0");
+			builder.put(grammarAccess.getPrintCallAccess().getGroup_2_0(), "rule__PrintCall__Group_2_0__0");
+			builder.put(grammarAccess.getPrintCallAccess().getGroup_2_0_2(), "rule__PrintCall__Group_2_0_2__0");
 			builder.put(grammarAccess.getParameterAccess().getGroup(), "rule__Parameter__Group__0");
 			builder.put(grammarAccess.getParameterAccess().getGroup_0(), "rule__Parameter__Group_0__0");
 			builder.put(grammarAccess.getTextExpressionAccess().getGroup(), "rule__TextExpression__Group__0");
@@ -629,6 +633,8 @@ public class KTraceParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getFunctionCallAccess().getFunctionNameAssignment_1(), "rule__FunctionCall__FunctionNameAssignment_1");
 			builder.put(grammarAccess.getFunctionCallAccess().getParametersAssignment_2_0_1(), "rule__FunctionCall__ParametersAssignment_2_0_1");
 			builder.put(grammarAccess.getFunctionCallAccess().getParametersAssignment_2_0_2_1(), "rule__FunctionCall__ParametersAssignment_2_0_2_1");
+			builder.put(grammarAccess.getPrintCallAccess().getParametersAssignment_2_0_1(), "rule__PrintCall__ParametersAssignment_2_0_1");
+			builder.put(grammarAccess.getPrintCallAccess().getParametersAssignment_2_0_2_1(), "rule__PrintCall__ParametersAssignment_2_0_2_1");
 			builder.put(grammarAccess.getParameterAccess().getPureOutputAssignment_0_0(), "rule__Parameter__PureOutputAssignment_0_0");
 			builder.put(grammarAccess.getParameterAccess().getCallByReferenceAssignment_0_1(), "rule__Parameter__CallByReferenceAssignment_0_1");
 			builder.put(grammarAccess.getParameterAccess().getExpressionAssignment_1(), "rule__Parameter__ExpressionAssignment_1");

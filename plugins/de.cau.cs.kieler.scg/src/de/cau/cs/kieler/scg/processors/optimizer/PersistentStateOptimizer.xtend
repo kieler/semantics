@@ -35,6 +35,9 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.scg.processors.SimpleGuardExpressions
 import de.cau.cs.kieler.scg.extensions.SCGMethodExtensions
 
+import static de.cau.cs.kieler.kicool.compilation.VariableStore.*
+import de.cau.cs.kieler.kicool.compilation.VariableStore
+
 /**
  * Persistent State Optimizer
  * ------------------
@@ -53,6 +56,8 @@ class PersistentStateOptimizer extends InplaceProcessor<SCGraphs> {
     
     public static val IProperty<Boolean> PERSISTENT_STATE_OPTIMIZER_ENABLED = 
         new Property<Boolean>("de.cau.cs.kieler.scg.opt.persistentStateOptimizer", false)    
+    public static val IProperty<Boolean> PERSISTENT_STATE_OPTIMIZER_RESET_STATE_ENABLED = 
+        new Property<Boolean>("de.cau.cs.kieler.scg.opt.persistentStateOptimizer.resetState", true)    
     
     override getId() {
         "de.cau.cs.kieler.scg.processors.persistentStateOptimizer"
@@ -80,7 +85,9 @@ class PersistentStateOptimizer extends InplaceProcessor<SCGraphs> {
         val removeList = <EObject> newLinkedList
         
         val candidates = <ValuedObject> newHashSet
+        val resetStateCandidates = <ValuedObject> newHashSet
         val cNodes = <ValuedObject, Node> newHashMap
+        val variableStore = VariableStore.getVariableStore(environment)
         
         while (!nextNodes.empty) {
             val node = nextNodes.pop
@@ -109,12 +116,32 @@ class PersistentStateOptimizer extends InplaceProcessor<SCGraphs> {
                                 expr.subExpressions.immutableCopy.forEach[ remove ]
                                 node.expression.remove
                                 node.expression = TRUE
-                                removeList += cNodes.get(node.reference.valuedObject)
-                                candidates -= node.reference.valuedObject
+                                if (!resetStateCandidates.contains(node.reference.valuedObject) || 
+                                    getProperty(PERSISTENT_STATE_OPTIMIZER_RESET_STATE_ENABLED)
+                                ) {
+                                    removeList += cNodes.get(node.reference.valuedObject)
+                                    candidates -= node.reference.valuedObject
+                                    
+                                    if (getProperty(PERSISTENT_STATE_OPTIMIZER_RESET_STATE_ENABLED)) {
+                                        variableStore.update(node.reference.valuedObject, newArrayList(RESET))
+                                    }
+                                }
                                 annotationModel.addInfo(node, "Persistent State")    
                             }                        
+                    } else {
+                        for (r : expr.allReferences) {
+                            if (candidates.contains(r.valuedObject)) {
+                                resetStateCandidates += r.valuedObject
+                            }
+                        }
                     } 
                     
+                }
+            } else if (node instanceof Conditional) {
+                for (r : node.condition.allReferences) {
+                    if (candidates.contains(r.valuedObject)) {
+                        resetStateCandidates += r.valuedObject
+                    }
                 }
             }
             

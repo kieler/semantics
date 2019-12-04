@@ -154,8 +154,9 @@ class Initialization extends SCChartsProcessor implements Traceable {
                 val entryAction = scope.states.findFirst[initial].createEntryAction(0)
                 entryAction.addAssignment(assignment)
             }
-            valuedObject.setInitialValue(null)
         }
+        // Clear initial values AFTER all assignments are created because some nested VOs might need
+        initVOs.map[last].forEach[initialValue = null]
     }
 
     def SCCharts transform(SCCharts sccharts) {

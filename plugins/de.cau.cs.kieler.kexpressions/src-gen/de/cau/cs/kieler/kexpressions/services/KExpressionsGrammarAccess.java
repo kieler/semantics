@@ -2322,6 +2322,74 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//'()'
 		public Keyword getLeftParenthesisRightParenthesisKeyword_2_1() { return cLeftParenthesisRightParenthesisKeyword_2_1; }
 	}
+	public class PrintCallElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.PrintCall");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cPrintCallAction_0 = (Action)cGroup.eContents().get(0);
+		private final Keyword cPrintKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Alternatives cAlternatives_2 = (Alternatives)cGroup.eContents().get(2);
+		private final Group cGroup_2_0 = (Group)cAlternatives_2.eContents().get(0);
+		private final Keyword cLeftParenthesisKeyword_2_0_0 = (Keyword)cGroup_2_0.eContents().get(0);
+		private final Assignment cParametersAssignment_2_0_1 = (Assignment)cGroup_2_0.eContents().get(1);
+		private final RuleCall cParametersParameterParserRuleCall_2_0_1_0 = (RuleCall)cParametersAssignment_2_0_1.eContents().get(0);
+		private final Group cGroup_2_0_2 = (Group)cGroup_2_0.eContents().get(2);
+		private final Keyword cCommaKeyword_2_0_2_0 = (Keyword)cGroup_2_0_2.eContents().get(0);
+		private final Assignment cParametersAssignment_2_0_2_1 = (Assignment)cGroup_2_0_2.eContents().get(1);
+		private final RuleCall cParametersParameterParserRuleCall_2_0_2_1_0 = (RuleCall)cParametersAssignment_2_0_2_1.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_2_0_3 = (Keyword)cGroup_2_0.eContents().get(3);
+		private final Keyword cLeftParenthesisRightParenthesisKeyword_2_1 = (Keyword)cAlternatives_2.eContents().get(1);
+		
+		//// Print Call Rule
+		//// Calls the print function. They may include a parameter list.
+		//// Do not use in expressions directly, use PrintCallEffect instead
+		//PrintCall:
+		//	{PrintCall}
+		//	'print' ('(' parameters+=Parameter (',' parameters+=Parameter)* ')' |
+		//	'()');
+		@Override public ParserRule getRule() { return rule; }
+		
+		//{PrintCall} 'print' ('(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()')
+		public Group getGroup() { return cGroup; }
+		
+		//{PrintCall}
+		public Action getPrintCallAction_0() { return cPrintCallAction_0; }
+		
+		//'print'
+		public Keyword getPrintKeyword_1() { return cPrintKeyword_1; }
+		
+		//('(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()')
+		public Alternatives getAlternatives_2() { return cAlternatives_2; }
+		
+		//'(' parameters+=Parameter (',' parameters+=Parameter)* ')'
+		public Group getGroup_2_0() { return cGroup_2_0; }
+		
+		//'('
+		public Keyword getLeftParenthesisKeyword_2_0_0() { return cLeftParenthesisKeyword_2_0_0; }
+		
+		//parameters+=Parameter
+		public Assignment getParametersAssignment_2_0_1() { return cParametersAssignment_2_0_1; }
+		
+		//Parameter
+		public RuleCall getParametersParameterParserRuleCall_2_0_1_0() { return cParametersParameterParserRuleCall_2_0_1_0; }
+		
+		//(',' parameters+=Parameter)*
+		public Group getGroup_2_0_2() { return cGroup_2_0_2; }
+		
+		//','
+		public Keyword getCommaKeyword_2_0_2_0() { return cCommaKeyword_2_0_2_0; }
+		
+		//parameters+=Parameter
+		public Assignment getParametersAssignment_2_0_2_1() { return cParametersAssignment_2_0_2_1; }
+		
+		//Parameter
+		public RuleCall getParametersParameterParserRuleCall_2_0_2_1_0() { return cParametersParameterParserRuleCall_2_0_2_1_0; }
+		
+		//')'
+		public Keyword getRightParenthesisKeyword_2_0_3() { return cRightParenthesisKeyword_2_0_3; }
+		
+		//'()'
+		public Keyword getLeftParenthesisRightParenthesisKeyword_2_1() { return cLeftParenthesisRightParenthesisKeyword_2_1; }
+	}
 	public class ParameterElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.Parameter");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -3640,6 +3708,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	private final RandomCallElements pRandomCall;
 	private final RandomizeCallElements pRandomizeCall;
 	private final FunctionCallElements pFunctionCall;
+	private final PrintCallElements pPrintCall;
 	private final ParameterElements pParameter;
 	private final TextExpressionElements pTextExpression;
 	private final IntValueElements pIntValue;
@@ -3747,6 +3816,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		this.pRandomCall = new RandomCallElements();
 		this.pRandomizeCall = new RandomizeCallElements();
 		this.pFunctionCall = new FunctionCallElements();
+		this.pPrintCall = new PrintCallElements();
 		this.pParameter = new ParameterElements();
 		this.pTextExpression = new TextExpressionElements();
 		this.pIntValue = new IntValueElements();
@@ -4387,6 +4457,21 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getFunctionCallRule() {
 		return getFunctionCallAccess().getRule();
+	}
+	
+	//// Print Call Rule
+	//// Calls the print function. They may include a parameter list.
+	//// Do not use in expressions directly, use PrintCallEffect instead
+	//PrintCall:
+	//	{PrintCall}
+	//	'print' ('(' parameters+=Parameter (',' parameters+=Parameter)* ')' |
+	//	'()');
+	public PrintCallElements getPrintCallAccess() {
+		return pPrintCall;
+	}
+	
+	public ParserRule getPrintCallRule() {
+		return getPrintCallAccess().getRule();
 	}
 	
 	//// Parameter Rule
