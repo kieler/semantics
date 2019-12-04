@@ -55,6 +55,7 @@ class JavaBreakpointListener implements IJavaBreakpointListener {
     
     @Inject extension SCChartsScopeExtensions
     
+    
     new() {
         super()
         Guice.createInjector.injectMembers(this)
@@ -63,6 +64,9 @@ class JavaBreakpointListener implements IJavaBreakpointListener {
     val debugHighlighter = DebugHighlighter.instance
     
     var breakpointToTarget = new HashMap<IJavaBreakpoint,IJavaDebugTarget>()
+    
+    var lastModelString = ""
+    var SCCharts currentModel;
     
     /**
      * Find the model states in the original SCChart currently being executed.
@@ -249,41 +253,47 @@ class JavaBreakpointListener implements IJavaBreakpointListener {
             if (chartVar !== null && chartVar.javaType.name.equals("java.lang.String")) {
                 println("Code is derived from SCChart!")
                 val text = chartVar.value.valueString
-                val model = SCTXStandaloneParser.parseScope(text, StandardCharsets.UTF_8)
-                Display.^default.syncExec(new Runnable {
-                    override run() {
-                        DebugDiagramView.updateView(model)
-                    }
-                })
+                // Only re-display model if it's not the same one as before
+                if (currentModel === null || (text !== null && !text.equals(lastModelString))) {
+                    lastModelString = text
+                    currentModel = SCTXStandaloneParser.parseScope(text, StandardCharsets.UTF_8)
+                
+                    println("New model; New synthesis...")
+                    Display.^default.syncExec(new Runnable {
+                        override run() {
+                            DebugDiagramView.updateView(currentModel)
+                        }
+                    })
+                } else {
+                    // Otherwise, clear all highlightings
+                    debugHighlighter.clearAllHighlights
+                }
                 
                 // Find the currently active states on SCCharts Level
-                val activeStates = findActiveStates(thread, breakpoint, model)
+                val activeStates = findActiveStates(thread, breakpoint, currentModel)
                 for (state : activeStates) {
                     debugHighlighter.highlightActiveState(state)
                 }
                 
                 // Find and visualize the states currently being executed on Java level
-                val executingStates = findExecutingStates(thread, breakpoint, model)
+                val executingStates = findExecutingStates(thread, breakpoint, currentModel)
                 for (state : executingStates) {
                     debugHighlighter.highlightExecutingState(state)
                 }
                 
-                val currentTransition = findCurrentTransition(thread, breakpoint, model, executingStates.head)
+                val currentTransition = findCurrentTransition(thread, breakpoint, currentModel, executingStates.head)
                 if (currentTransition !== null) {
                     debugHighlighter.highlightExecutingTransition(currentTransition)
                 }
                 
                 
                 // TODO testing
-                for (transition : model.eAllContents.toIterable.filter[it instanceof Transition]) {
+//                for (transition : currentModel.eAllContents.toIterable.filter[it instanceof Transition]) {
 //                    debugHighlighter.addBreakpointDecorator(transition as Transition)
-                }
+//                }
                 return SUSPEND
             }
-        
         }
-        
-        
         
         return DONT_CARE
     }

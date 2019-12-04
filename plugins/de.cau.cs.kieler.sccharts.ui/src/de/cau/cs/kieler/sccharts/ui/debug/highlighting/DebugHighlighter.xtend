@@ -71,6 +71,15 @@ class DebugHighlighter {
         return instance
     }
     
+    def void clearAllHighlights() {
+        for (hl : #[activeStateHighlightings, executingStateHighlightings, activeEdgeHighlights].flatten) {
+            hl.remove
+        }
+        activeStateHighlightings.clear
+        executingStateHighlightings.clear
+        activeEdgeHighlights.clear
+    }
+    
     def void highlightActiveState(State state) {
         val kNode = DebugDiagramView.getInstance?.getKNode(state)
         if (kNode === null) {
