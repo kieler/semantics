@@ -741,9 +741,8 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                 var sequentialEnd = nodes.size
                 for (var i = outputs.size - 1; i >= 0; i--) {
                     val pos = nodes.indexOf(outputs.get(i));
-                    val beforePos = if(i > 0) nodes.indexOf(outputs.get(i - 1)) else -1
                     var needSequential = false
-                    for (var j = beforePos + 1; j <= pos; j++) {
+                    for (var j = 0; j <= pos; j++) {
                         for (var k = pos + 1; k < sequentialEnd; k++) {
                             needSequential = needSequential || nodes.get(j).isSequential(nodes.get(k))
                         }
