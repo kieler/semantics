@@ -18,19 +18,18 @@ import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.IntValue
 import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.OperatorType
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.VectorValue
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsComplexCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
-import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 
@@ -60,13 +59,10 @@ class ArrayAssignment extends SCChartsProcessor implements Traceable {
 
     // -------------------------------------------------------------------------
     @Inject extension KExpressionsCreateExtensions
-    @Inject extension KExpressionsComplexCreateExtensions
-    @Inject extension KExpressionsDeclarationExtensions
     @Inject extension KExpressionsValuedObjectExtensions
-    @Inject extension KEffectsExtensions
-    @Inject extension KExtDeclarationExtensions
     @Inject extension SCChartsScopeExtensions
     @Inject extension SCChartsActionExtensions
+    @Inject extension SCChartsSerializeHRExtensions
 
     // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_"
@@ -106,6 +102,7 @@ class ArrayAssignment extends SCChartsProcessor implements Traceable {
             val assignments = transition.allContainedAssignments.toList
             for (assignment : assignments) {
                 assignment.expression = assignment.expression.computeVectorValues
+                assignment.validate
                 if (assignment.reference.valuedObject !== null && assignment.reference.valuedObject.array &&
                     assignment.expression instanceof VectorValue) {
                     var index = 0
@@ -174,5 +171,61 @@ class ArrayAssignment extends SCChartsProcessor implements Traceable {
 
     private def dispatch Expression computeVectorValues(Expression e) {
         return e
+    }
+
+    private def validate(Assignment asm) {
+        if (asm.reference.valuedObject.array && !(asm.expression instanceof VectorValue) &&
+            !(asm.expression instanceof ValuedObjectReference)) {
+            if (asm.reference.indices.size != asm.reference.valuedObject.cardinalities.size) {
+                getEnvironment().errors.add(
+                    "Cardinalities do not match. " + asm.reference.serializeHR.toString + " is an array of dimension " +
+                        (asm.reference.valuedObject.cardinalities.size - asm.reference.indices.size) +
+                        " but only a single value is given.", asm.eContainer, true)
+            }
+        }
+        if (asm.reference.valuedObject.array && asm.expression instanceof VectorValue) {
+            if (asm.reference.valuedObject.cardinalities.drop(asm.reference.indices.size).empty) {
+                getEnvironment().errors.add(
+                    "Cardinalities do not match. " + asm.reference.serializeHR.toString +
+                        " is not an array but a vector of size " + (asm.expression as VectorValue).values.size +
+                        " is given.", asm.eContainer, true)
+            }
+            var depth = 0
+            for (card : asm.reference.valuedObject.cardinalities.drop(asm.reference.indices.size)) {
+                if (card instanceof IntValue) {
+                    var expressions = #[asm.expression]
+                    for (var d = 0; d < depth; d++) {
+                        val deeperExpressions = <Expression>newArrayList
+                        for (e : expressions) {
+                            if (e instanceof VectorValue) {
+                                deeperExpressions += e.values
+                            } else if (!(e instanceof ValuedObjectReference)) {
+                                getEnvironment().errors.add(
+                                    "Cardinalities do not match. " + asm.reference.serializeHR.toString +
+                                        " at dimension " + d + " is an array of size " + card.value +
+                                        " but only a single value is given.", asm.eContainer, true)
+                            }
+                        }
+                        expressions = deeperExpressions
+                    }
+                    for (e : expressions) {
+                        if (e instanceof VectorValue) {
+                            if (e.values.size > card.value) {
+                                getEnvironment().errors.add(
+                                    "Cardinalities do not match. " + asm.reference.serializeHR.toString +
+                                        " at dimension " + depth + " is an array of size " + card.value +
+                                        " but a vector of size " + e.values.size + " is given.", asm.eContainer, true)
+                            }
+                        } else if (!(e instanceof ValuedObjectReference)) {
+                            getEnvironment().errors.add(
+                                "Cardinalities do not match. " + asm.reference.serializeHR.toString +
+                                    " at dimension " + depth + " is an array of size " + card.value +
+                                    " but only a single value is given.", asm.eContainer, true)
+                        }
+                    }
+                }
+                depth++
+            }
+        }
     }
 }
