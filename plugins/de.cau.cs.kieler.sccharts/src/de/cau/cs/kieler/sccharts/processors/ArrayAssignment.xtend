@@ -32,6 +32,7 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
+import de.cau.cs.kieler.kexpressions.Declaration
 
 /**
  * SCCharts Array initialisation Transformation.
@@ -85,9 +86,7 @@ class ArrayAssignment extends SCChartsProcessor implements Traceable {
     // y[0][1][1] = 3
     def State transform(State rootState) {
         // Traverse all transitions
-        rootState.allContainedTransitions.forEach [ targetTransition |
-            targetTransition.transformTransitionTrigger;
-        ]
+        rootState.allContainedTransitions.forEach[transformTransitionTrigger]
         rootState
     }
 
