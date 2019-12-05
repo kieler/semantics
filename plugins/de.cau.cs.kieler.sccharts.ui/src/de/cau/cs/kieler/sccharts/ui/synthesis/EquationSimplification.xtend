@@ -272,16 +272,20 @@ class EquationSimplification {
             // remove input nodes of local declared valued objects which are no inputs
             for (node : nodes.filter [
                 isInput && !isDataAccess && isLocalValuedObject &&
-                    !(sourceElement as ValuedObjectReference).valuedObject.input && !isNeeded
+                    !(sourceElement as ValuedObjectReference).valuedObject.input
             ].toList) {
-                nodes.betterRemove(node, null)
+                if (!node.isNeeded) {
+                    nodes.betterRemove(node, null)
+                }
             }
             // remove output nodes of local declared valued objects which are no outputs
             for (node : nodes.filter [
                 isOutput && !isDataAccess && isLocalValuedObject &&
-                    !(sourceElement as ValuedObjectReference).valuedObject.output && !isNeeded
+                    !(sourceElement as ValuedObjectReference).valuedObject.output
             ].toList) {
-                nodes.betterRemove(node, null)
+                if (!node.isNeeded) {
+                    nodes.betterRemove(node, null)
+                }
             }
         }
         return nodes
