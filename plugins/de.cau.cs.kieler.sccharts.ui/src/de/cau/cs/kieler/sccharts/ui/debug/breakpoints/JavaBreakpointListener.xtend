@@ -254,7 +254,9 @@ class JavaBreakpointListener implements IJavaBreakpointListener {
                 println("Code is derived from SCChart!")
                 val text = chartVar.value.valueString
                 // Only re-display model if it's not the same one as before
-                if (currentModel === null || (text !== null && !text.equals(lastModelString))) {
+                val diagramView = DebugDiagramView.instance
+                if (currentModel === null || (text !== null && !text.equals(lastModelString))
+                    || diagramView === null || diagramView.needsInit) {
                     lastModelString = text
                     currentModel = SCTXStandaloneParser.parseScope(text, StandardCharsets.UTF_8)
                 

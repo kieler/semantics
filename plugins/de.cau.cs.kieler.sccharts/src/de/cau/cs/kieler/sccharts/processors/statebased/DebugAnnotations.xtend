@@ -75,6 +75,9 @@ class DebugAnnotations extends SCChartsProcessor implements Traceable {
         val mapping = tracing.getMapping(model, source)
         model => [rootStates.forEach[transform(mapping)]]
         model => [rootStates.forEach[allContainedTransitions.forEach[transform(mapping)]]]
+        
+        
+//        model => [rootStates.forEach[addStringAnnotation("ORIGINAL_SCCHART", (source as SCCharts).]]
         return model
     }
     

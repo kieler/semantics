@@ -40,6 +40,9 @@ class DebugDiagramView extends DiagramViewPart {
     
     static var DebugDiagramView instance
     
+    var needsInit = true
+    var DebugDiagramPartListener partListener
+    
     new() {
         super()
         instance = this
@@ -58,10 +61,33 @@ class DebugDiagramView extends DiagramViewPart {
         return instance
     }
     
+    static def clearInstance() {
+        instance = null
+    }
+    
+    static def setInstance(DebugDiagramView view) {
+        instance = view
+        instance.needsInit = true
+    }
+    
+    def needsInit() {
+        return needsInit
+    }
+    
+    /**
+     * Ensure to register a part listener that clears the @code{instance} variable on view close.
+     * @inheritDoc
+     */
+    override createPartControl(Composite parent) {
+        super.createPartControl(parent)
+
+        partListener = new DebugDiagramPartListener(this, parent)
+    }
+    
     def void updateDiagram(Object model) {
         
         
-        if (viewer === null || viewer.viewContext === null) {
+        if (viewer === null || viewer.viewContext === null || needsInit) {
             
             Display.^default.syncExec(new Runnable {
                 override void run() {
@@ -81,6 +107,7 @@ class DebugDiagramView extends DiagramViewPart {
                     canvas.layout(true, true)
                 }
             })
+            needsInit = false
         } else {
             // update case
             val context = viewer.viewContext
