@@ -138,7 +138,11 @@ class SimpleGuardSequentializer extends Processor<SCGraphs, SCGraphs> implements
         }
         
         for(entry : entryNodes) {
-            val entryNode = ScgFactory.eINSTANCE.createEntry => [ newSCG.nodes += it name = entry.name ]
+            val entryNode = ScgFactory.eINSTANCE.createEntry => [ 
+                newSCG.nodes += it 
+                name = entry.name
+                it.createStringAnnotation("label", "tick")
+            ]
             var exitNode = null as Node 
             val scheduledNodes = entry.getSchedule
             
