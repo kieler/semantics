@@ -141,6 +141,7 @@ class CopyPropagationV2 extends InplaceProcessor<SCGraphs> {
                         removeList += node
                     }
                     else if (node.reference.valuedObject.name.startsWith(SimpleGuardExpressions.TERM_GUARD_NAME)) {
+                        node.expression.replaceExpression(replacements, node)
                         // Term guards usually only depend on one guard. Simply replace it.
                         // The replaced guard should also not be contained in pre expression, since _TERM signals a final state.
                         if (environment.getProperty(COPY_PROPAGATION_REPLACE_TERM_GUARD_PREDECESSOR)) {
