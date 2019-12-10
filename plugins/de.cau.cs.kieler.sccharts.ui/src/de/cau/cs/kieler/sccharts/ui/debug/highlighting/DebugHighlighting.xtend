@@ -55,7 +55,7 @@ class DebugHighlighting extends Highlighting {
     }
 
     new(KLabeledGraphElement element, KBackground background, EObject obj, String type) {
-        super(element, null)
+        super(element, null, obj)
         this.background = background
         this.type = type
     }

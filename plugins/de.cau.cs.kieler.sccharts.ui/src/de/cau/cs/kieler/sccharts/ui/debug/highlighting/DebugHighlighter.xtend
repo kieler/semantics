@@ -72,12 +72,33 @@ class DebugHighlighter {
     }
     
     def void clearAllHighlights() {
-        for (hl : #[activeStateHighlightings, executingStateHighlightings, activeEdgeHighlights].flatten) {
+        for (hl : #[activeStateHighlightings, executingStateHighlightings, activeEdgeHighlights, breakpointHighlights].flatten) {
             hl.remove
         }
         activeStateHighlightings.clear
         executingStateHighlightings.clear
         activeEdgeHighlights.clear
+    }
+    
+    def void toggleBreakpointBackground(State state) {
+        val backgroundHighlights = breakpointHighlights.filter[eObject !== null && eObject.equals(state)]
+        if (backgroundHighlights.empty) {
+            println("No breakpoint highlights")
+            state.addBreakpointHighlight
+        } else {
+            println("Deactivating breakpoint highlight")
+            state.removeBreakpointHighlight
+        }
+    }
+    
+    def void toggleBreakpointDecorator(Transition transition) {
+        if (transitionToDecorator.containsKey(transition)) {
+            println("Removing breakpoint decorator")
+            transition.removeBreakpointDecorator
+        } else {
+            println("adding breakpoint decorator")
+            transition.addBreakpointDecorator
+        }
     }
     
     def void highlightActiveState(State state) {
@@ -133,7 +154,7 @@ class DebugHighlighter {
     }
     
     def void removeBreakpointHighlight(State state) {
-        val highlightings = breakpointHighlights.filter[eObject.equals(state)]
+        val highlightings = breakpointHighlights.filter[eObject !== null && eObject.equals(state)]
         for (hl : highlightings) {
             hl.remove
         }
