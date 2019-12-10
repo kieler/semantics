@@ -1,5 +1,5 @@
 knode class {
-    properties: de.cau.cs.kieler.portConstraints = FIXED_ORDER
+    properties: de.cau.cs.kieler.portConstraints = FIXED_SIDE
                 org.eclipse.elk.portLabels.placement = OUTSIDE
     size: width = 3 height = 25
         
