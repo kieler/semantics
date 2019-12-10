@@ -16,6 +16,9 @@ import de.cau.cs.kieler.scg.codegen.SCGCodeGeneratorModule
 import com.google.inject.Inject
 import de.cau.cs.kieler.scg.processors.SimpleGuardExpressions
 
+import static de.cau.cs.kieler.kicool.compilation.VariableStore.*
+import de.cau.cs.kieler.kicool.compilation.VariableStore
+
 /**
  * C Code Generator Reset Module
  * 
@@ -49,11 +52,24 @@ class CCodeGeneratorResetModule extends SCGCodeGeneratorModule {
         indent 
         code.append(struct.getVariableName).append("->").append(SimpleGuardExpressions.GO_GUARD_NAME).append(" = 1;\n")
         indent
-        code.append(struct.getVariableName).append("->").append(SimpleGuardExpressions.TERM_GUARD_NAME).append(" = 0;\n")        
+        code.append(struct.getVariableName).append("->").append(SimpleGuardExpressions.TERM_GUARD_NAME).append(" = 0;\n")     
+        
+        generateVariableStoreResetVariables   
     }
     
     override generateDone() {
         code.append("}\n")
+    }
+    
+    protected def generateVariableStoreResetVariables() {
+        val variableStore = VariableStore.getVariableStore(processorInstance.environment)
+        
+        for (vk : variableStore.variables.keySet) {
+            if (variableStore.variables.get(vk).exists[ properties.contains(RESET) ]) {
+                indent
+                code.append(struct.getVariableName).append("->").append(vk).append(" = 0;\n")
+            }
+        }
     }
     
 }

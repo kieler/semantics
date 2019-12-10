@@ -24,6 +24,7 @@ import de.cau.cs.kieler.kexpressions.JsonPragma;
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.kexpressions.NullValue;
 import de.cau.cs.kieler.kexpressions.OperatorExpression;
+import de.cau.cs.kieler.kexpressions.PrintCall;
 import de.cau.cs.kieler.kexpressions.RandomCall;
 import de.cau.cs.kieler.kexpressions.RandomizeCall;
 import de.cau.cs.kieler.kexpressions.ReferenceCall;
@@ -307,6 +308,9 @@ public abstract class AbstractKEffectsSemanticSequencer extends KExpressionsSema
 				else break;
 			case KExpressionsPackage.PARAMETER:
 				sequence_Parameter(context, (de.cau.cs.kieler.kexpressions.Parameter) semanticObject); 
+				return; 
+			case KExpressionsPackage.PRINT_CALL:
+				sequence_PrintCall(context, (PrintCall) semanticObject); 
 				return; 
 			case KExpressionsPackage.RANDOM_CALL:
 				sequence_RandomCall(context, (RandomCall) semanticObject); 

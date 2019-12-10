@@ -228,7 +228,7 @@ Declaration returns kexpressions::Declaration:
 @Override
 Statement returns scl::Statement:
     // Only allow restricted set of SCL statements
-    SclAssignment | SclPostfixAssignment | Label | Conditional | Goto | ScopeStatement | Return | ForLoop | WhileLoop
+    SclAssignment | SclPostfixAssignment | Label | SclEffectAssignment | Conditional | Goto | ScopeStatement | Return | ForLoop | WhileLoop
 ;
 
 @Override

@@ -75,7 +75,6 @@ class MethodProcessor extends InplaceProcessor<SCGraphs> implements Traceable {
     public static val GENERATED_PREFIX = "_"
     public static val SUPPORTED_RETURN_TYPES = #[ValueType.BOOL, ValueType.FLOAT, ValueType.HOST, ValueType.INT, ValueType.STRING]
     
-    
     private int fnCouter = 0
     private val simpleMethodCache = new WeakHashMap<SCGraph, Boolean>()
     
@@ -118,28 +117,54 @@ class MethodProcessor extends InplaceProcessor<SCGraphs> implements Traceable {
                 }
             }
             for (call : calls.cellSet) {
-                println(calls.cellSet.size)
                 if (methodSCGs.containsKey(call.rowKey)) {
                     val method = call.rowKey
                     val methodSCG = methodSCGs.get(method)
-                    if (!INLINE_NOTHING.property && (INLINE_ALL.property || method.hasAnnotation(SCGAnnotations.ANNOTATION_METHOD_INLINING) || methodSCG.isSimpleMethod)) {
-                        method.inlineMethod(call.value, call.columnKey, methodSCGs, newHashSet)
+                    if (methodSCG !== null && !INLINE_NOTHING.property && (INLINE_ALL.property || method.hasAnnotation(SCGAnnotations.ANNOTATION_METHOD_INLINING) || methodSCG.isSimpleMethod)) {
+                        method.inlineMethod(call.value, call.columnKey, methodSCGs, newHashSet, inlined)
                         inlined += methodSCG
                     }
                 }
             }
         }
+        
         // Clean VO store of variables in methods
         methodSCGs.entrySet.forEach[
             voStore.remove(key.valuedObjects.head)
             key.parameterDeclarations.map[valuedObjects].flatten.forEach[voStore.remove(it)]
             value.declarations.map[valuedObjects].flatten.forEach[voStore.remove(it)]
         ]
+        
         // Remove inlined/unused methods
-        methodSCGs.entrySet.filter[inlined.contains(value) || (REMOVE_UNUSED.property && !calls.containsRow(it.key))].forEach[
+        val usedMethods = newHashSet
+        usedMethods += calls.rowKeySet
+        if (REMOVE_UNUSED.property) { // check for calls in calls
+            val process = newLinkedList
+            process += usedMethods
+            while (!process.empty) {
+                val mDecl = process.pop
+                if (methodSCGs.containsKey(mDecl)) {
+                    for (refcall : methodSCGs.get(mDecl).nodes.map[eAllContents.filter(ReferenceCall).toIterable].flatten.toList) {
+                        var ValuedObjectReference vor = refcall
+                        do {
+                            val m = vor.valuedObject.eContainer
+                            if (m instanceof MethodDeclaration) {
+                                if (!usedMethods.contains(m) && !process.contains(m)) {
+                                    process += m
+                                }
+                                usedMethods += m
+                            }
+                            vor = vor.subReference
+                        } while (vor !== null)
+                    }
+                }
+            }
+        }
+        methodSCGs.entrySet.filter[inlined.contains(value) || (REMOVE_UNUSED.property && !usedMethods.contains(it.key))].forEach[
             model.scgs.remove(it.value)
             it.key.remove
         ]
+        
         // Remove classes without content
         for (scg : model.scgs) {
             val classes = scg.declarations.filter(ClassDeclaration).toSet
@@ -180,7 +205,7 @@ class MethodProcessor extends InplaceProcessor<SCGraphs> implements Traceable {
         }
     }
     
-    def void inlineMethod(MethodDeclaration method, ReferenceCall call, Node callNode, Map<MethodDeclaration, SCGraph> methodSCGs,  Set<MethodDeclaration> callStack) {
+    def void inlineMethod(MethodDeclaration method, ReferenceCall call, Node callNode, Map<MethodDeclaration, SCGraph> methodSCGs,  Set<MethodDeclaration> callStack, Set<SCGraph> inlined) {
         val methodSCG = methodSCGs.get(method)
         val voStore = VariableStore.get(environment)
         val callVOs = newLinkedList(call.valuedObject)
@@ -212,23 +237,36 @@ class MethodProcessor extends InplaceProcessor<SCGraphs> implements Traceable {
         val params = scg.declarations.map[valuedObjects].flatten.filter[isParameter].toMap([it],[parameterIndex])
         
         // Replace params
+        val methodCalls = HashBasedTable.create
         var Declaration selfDecl
-        for (vor : scg.nodes.map[eAllContents.filter(ValuedObjectReference).toIterable].flatten.toList) {
-            if (params.containsKey(vor.valuedObject)) {
-                val index = params.get(vor.valuedObject)
-                if (index == -1) { // self
-                    selfDecl = vor.valuedObject.declaration
-                    vor.valuedObject = call.valuedObject
-                    vor.indices += call.indices.map[copy]
-                } else if (index < call.parameters.size) {
-                    val exp = call.parameters.get(index).expression
-                    if (exp instanceof ValuedObjectReference) {
-                        vor.valuedObject = exp.valuedObject
-                        vor.subReference = exp.subReference.copy
-                        vor.indices.addAll(0, exp.indices.map[copy])
-                    } else {
-                        vor.replace(exp.copy)
+        for (node : scg.nodes) {
+            for (vor : node.eAllContents.filter(ValuedObjectReference).toList) {
+                if (params.containsKey(vor.valuedObject)) {
+                    val index = params.get(vor.valuedObject)
+                    if (index == -1) { // self
+                        selfDecl = vor.valuedObject.declaration
+                        vor.valuedObject = call.valuedObject
+                        vor.indices += call.indices.map[copy]
+                    } else if (index < call.parameters.size) {
+                        val exp = call.parameters.get(index).expression
+                        if (exp instanceof ValuedObjectReference) {
+                            vor.valuedObject = exp.valuedObject
+                            vor.subReference = exp.subReference.copy
+                            vor.indices.addAll(0, exp.indices.map[copy])
+                        } else {
+                            vor.replace(exp.copy)
+                        }
                     }
+                }
+                if (vor instanceof ReferenceCall) {
+                    var ValuedObjectReference mcall = vor
+                    do {
+                        val m = mcall.valuedObject.eContainer
+                        if (m instanceof MethodDeclaration) {
+                            methodCalls.put(m, node, vor)
+                        }
+                        mcall = mcall.subReference
+                    } while (mcall !== null)
                 }
             }
         }
@@ -245,6 +283,18 @@ class MethodProcessor extends InplaceProcessor<SCGraphs> implements Traceable {
             }
         }
         allVOs.forEach[name = prefix + name]
+        
+        // Handle method calls
+        for (mcall : methodCalls.cellSet) {
+            if (methodSCGs.containsKey(mcall.rowKey)) {
+                val m = mcall.rowKey
+                val mSCG = methodSCGs.get(m)
+                if (mSCG !== null && !INLINE_NOTHING.property && (INLINE_ALL.property || m.hasAnnotation(SCGAnnotations.ANNOTATION_METHOD_INLINING) || mSCG.isSimpleMethod)) {
+                    m.inlineMethod(mcall.value, mcall.columnKey, methodSCGs, newHashSet, inlined)
+                    inlined += methodSCG
+                }
+            }
+        }
         
         // Connect
         callNode.allPrevious.toList.forEach[target = entry.next.target]
