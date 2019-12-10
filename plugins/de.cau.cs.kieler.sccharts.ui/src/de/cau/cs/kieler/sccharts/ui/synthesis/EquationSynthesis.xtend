@@ -80,6 +80,7 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
 import de.cau.cs.kieler.kexpressions.IntValue
 import de.cau.cs.kieler.kexpressions.FunctionCall
+import de.cau.cs.kieler.sccharts.ui.synthesis.styles.TransitionStyles
 
 /**
  * @author ssm
@@ -118,6 +119,8 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         setCategory(GeneralSynthesisOptions::DATAFLOW)
     public static val SynthesisOption COMBINE_ALL_DATA_ACCESS = SynthesisOption.createCheckOption(
         "Combine all Data Access Nodes", false).setCategory(GeneralSynthesisOptions::DATAFLOW)
+    public static val SynthesisOption SHOW_ARROWS = SynthesisOption.createCheckOption("Arrows", false).setCategory(
+        GeneralSynthesisOptions::DATAFLOW)
 
     public static final IProperty<Boolean> INLINED_REFERENCE = new Property<Boolean>(
         "de.cau.cs.kieler.sccharts.ui.synthesis.dataflow.inlinedReference", false);
@@ -152,6 +155,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
     @Inject extension SCChartsReferenceExtensions
     @Inject extension EquationSynthesisHelper
     @Inject extension EquationSimplification
+    @Inject extension TransitionStyles
     @Inject StateSynthesis stateSynthesis
 
     val HashMap<ReferenceDeclaration, KNode> referenceNodes = newHashMap
@@ -240,7 +244,8 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
             SHOW_WIRE_LABELS,
             SHOW_EXPRESSION_PORT_LABELS,
             SHOW_REFERENCED_PORT_LABELS,
-            REFERENCED_PORT_LABELS_OUTSIDE
+            REFERENCED_PORT_LABELS_OUTSIDE,
+            SHOW_ARROWS
         )
 
         return options
@@ -258,6 +263,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         preCicles = PRE_CICLES.booleanValue
         showWireLabels = SHOW_WIRE_LABELS.booleanValue
         combineAllDataAccessNodes = COMBINE_ALL_DATA_ACCESS.booleanValue
+        showArrows = SHOW_ARROWS.booleanValue
         currentRegion = rootNode.sourceElement as DataflowRegion
         var nodes = <KNode>newLinkedList
         val List<KNode> lastKNodes = newArrayList
@@ -808,6 +814,9 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
             before.addLayoutParam(LayeredOptions::LAYERING_LAYER_CONSTRAINT, LayerConstraint::NONE)
         if (after.isInput)
             after.addLayoutParam(LayeredOptions::LAYERING_LAYER_CONSTRAINT, LayerConstraint::NONE)
+        if (showArrows) {
+            edge.addDefaultDecorator
+        }
     }
 
     private def KNode createReferenceNode(KNode node, ValuedObjectReference voRef, String label) {

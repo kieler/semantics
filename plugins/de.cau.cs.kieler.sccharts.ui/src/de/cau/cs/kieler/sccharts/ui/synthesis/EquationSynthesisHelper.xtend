@@ -44,6 +44,7 @@ import java.util.Comparator
 import de.cau.cs.kieler.kexpressions.eval.PartialExpressionEvaluator
 import de.cau.cs.kieler.kexpressions.Value
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.sccharts.ui.synthesis.styles.TransitionStyles
 
 /**
  * @author kolja
@@ -58,6 +59,7 @@ class EquationSynthesisHelper {
     @Inject extension EquationStyles
     @Inject extension KLabelExtensions
     @Inject extension KExpressionsValuedObjectExtensions
+    @Inject extension TransitionStyles
 
     protected val List<Pair<KNode, KNode>> sequentials = newArrayList
     protected var alignInputOutputs = false
@@ -65,6 +67,7 @@ class EquationSynthesisHelper {
     protected var preCicles = false
     protected var showWireLabels = false
     protected var combineAllDataAccessNodes = false
+    protected var showArrows = false
     protected var DataflowRegion currentRegion = null
 
     /**
@@ -265,7 +268,7 @@ class EquationSynthesisHelper {
     /**
      * @returns the number-th input port of a node and creates it if it doesn't exist
      */
-    protected def getInputPortWithNumber(KNode node, int number) {
+    protected def KPort getInputPortWithNumber(KNode node, int number) {
         var maxIndex = -1
         var KPort maxPort = null
         for (p : node.ports) {
@@ -317,6 +320,9 @@ class EquationSynthesisHelper {
         }
         if (showWireLabels && (!source.node.isInput || source.node.isDataAccess) && label !== null) {
             edge.createLabel.configureTailEdgeLabel(label, 5, KlighdConstants::DEFAULT_FONT_NAME)
+        }
+        if (showArrows) {
+            edge.addDefaultDecorator
         }
     }
 
