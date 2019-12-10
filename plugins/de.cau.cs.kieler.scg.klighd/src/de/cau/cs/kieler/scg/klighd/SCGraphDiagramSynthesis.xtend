@@ -114,6 +114,9 @@ import java.util.Map
 import de.cau.cs.kieler.kexpressions.keffects.ControlDependency
 import de.cau.cs.kieler.kexpressions.ReferenceCall
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
+import de.cau.cs.kieler.scg.extensions.SCGMethodExtensions
+import de.cau.cs.kieler.kexpressions.ValueType
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
 
 /** 
  * SCCGraph KlighD synthesis class. It contains all method mandatory to handle the visualization of
@@ -141,6 +144,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     @Inject extension SCGSerializeHRExtensions
     @Inject extension KEffectsExtensions
     @Inject extension SCGDependencyExtensions
+    @Inject extension SCGMethodExtensions
     @Inject extension ColorStore
 
     extension KRenderingFactory = KRenderingFactory.eINSTANCE
@@ -1216,6 +1220,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 	 */
     private def dispatch KNode synthesize(Entry entry) {
         return entry.createNode().associateWith(entry) => [ node |
+            val scg = entry.eContainer as SCGraph
             if (USE_ADAPTIVEZOOM.booleanValue) node.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.50)
             // If the corresponding option is set to true, exit nodes are placed in the first layer;
             if (ALIGN_ENTRYEXIT_NODES.booleanValue)
@@ -1232,6 +1237,16 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                         ]
                 }
                 if(SHOW_SHADOW.booleanValue) it.shadow = "black".color
+                if (scg.method) {
+                    val method = scg.methodDeclaration
+                    node.addOutsideTopCenteredNodeLabel(
+                        (method.returnType !== ValueType.PURE ? method.returnType.literal : "void") + " " +
+                        method.valuedObjects.head.name +
+                        "(" +
+                        method.parameterDeclarations.filter(VariableDeclaration).map[type.literal].join(", ") +
+                        ")"
+                    )
+                }
             ]
             
             // Add ports for control-flow routing.

@@ -25,6 +25,7 @@ import de.cau.cs.kieler.kexpressions.JsonPragma;
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.kexpressions.NullValue;
 import de.cau.cs.kieler.kexpressions.OperatorExpression;
+import de.cau.cs.kieler.kexpressions.PrintCall;
 import de.cau.cs.kieler.kexpressions.RandomCall;
 import de.cau.cs.kieler.kexpressions.RandomizeCall;
 import de.cau.cs.kieler.kexpressions.ReferenceCall;
@@ -346,6 +347,9 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 					return; 
 				}
 				else break;
+			case KExpressionsPackage.PRINT_CALL:
+				sequence_PrintCall(context, (PrintCall) semanticObject); 
+				return; 
 			case KExpressionsPackage.RANDOM_CALL:
 				sequence_RandomCall(context, (RandomCall) semanticObject); 
 				return; 
@@ -478,7 +482,11 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 					return; 
 				}
 				else if (rule == grammarAccess.getStatementRule()) {
-					sequence_SclAssignment_SclPostfixAssignment(context, (de.cau.cs.kieler.scl.Assignment) semanticObject); 
+					sequence_SclAssignment_SclEffectAssignment_SclPostfixAssignment(context, (de.cau.cs.kieler.scl.Assignment) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getSclEffectAssignmentRule()) {
+					sequence_SclEffectAssignment(context, (de.cau.cs.kieler.scl.Assignment) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getSclPostfixAssignmentRule()) {
@@ -900,10 +908,33 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 	 *             schedule+=ScheduleObjectReference* 
 	 *             semicolon?=';'?
 	 *         ) | 
-	 *         (annotations+=Annotation* reference=ValuedObjectReference operator=PostfixOperator schedule+=ScheduleObjectReference* semicolon?=';'?)
+	 *         (annotations+=Annotation* reference=ValuedObjectReference operator=PostfixOperator schedule+=ScheduleObjectReference* semicolon?=';'?) | 
+	 *         (
+	 *             annotations+=Annotation* 
+	 *             (expression=ReferenceCall | expression=TextExpression | expression=PrintCall | expression=RandomizeCall | expression=FunctionCall) 
+	 *             schedule+=ScheduleObjectReference* 
+	 *             semicolon?=';'?
+	 *         )
 	 *     )
 	 */
-	protected void sequence_SclAssignment_SclPostfixAssignment(ISerializationContext context, de.cau.cs.kieler.scl.Assignment semanticObject) {
+	protected void sequence_SclAssignment_SclEffectAssignment_SclPostfixAssignment(ISerializationContext context, de.cau.cs.kieler.scl.Assignment semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     SclEffectAssignment returns Assignment
+	 *
+	 * Constraint:
+	 *     (
+	 *         annotations+=Annotation* 
+	 *         (expression=ReferenceCall | expression=TextExpression | expression=PrintCall | expression=RandomizeCall | expression=FunctionCall) 
+	 *         schedule+=ScheduleObjectReference* 
+	 *         semicolon?=';'?
+	 *     )
+	 */
+	protected void sequence_SclEffectAssignment(ISerializationContext context, de.cau.cs.kieler.scl.Assignment semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

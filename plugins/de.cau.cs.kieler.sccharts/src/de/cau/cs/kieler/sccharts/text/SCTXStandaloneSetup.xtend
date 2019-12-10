@@ -6,6 +6,7 @@ package de.cau.cs.kieler.sccharts.text
 import com.google.inject.Injector
 import de.cau.cs.kieler.core.services.KielerLanguage
 import de.cau.cs.kieler.sccharts.SCCharts
+import de.cau.cs.kieler.sccharts.SCChartsPackage
 
 /**
  * Initialization support for running Xtext languages without Equinox extension registry.
@@ -19,6 +20,12 @@ class SCTXStandaloneSetup extends SCTXStandaloneSetupGenerated implements Kieler
             injector = new SCTXStandaloneSetup().createInjectorAndDoEMFRegistration()
         }
         return injector
+    }
+    
+    override register(Injector injector) {
+        super.register(injector)
+        // Ensure package is registered 
+        SCChartsPackage.eINSTANCE.eClass()
     }
 	
 	override getInjector() {

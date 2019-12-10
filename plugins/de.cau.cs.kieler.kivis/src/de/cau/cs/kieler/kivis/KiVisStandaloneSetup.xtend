@@ -3,13 +3,26 @@
  */
 package de.cau.cs.kieler.kivis
 
+import com.google.inject.Injector
+import de.cau.cs.kieler.kivis.kivis.KivisPackage
 
 /**
  * Initialization support for running Xtext languages without Equinox extension registry.
  */
 class KiVisStandaloneSetup extends KiVisStandaloneSetupGenerated {
 
-	def static doSetup() {
-		return new KiVisStandaloneSetup().createInjectorAndDoEMFRegistration()
-	}
+    static Injector injector
+    
+    def static doSetup() {
+        if (injector === null) {
+            injector = new KiVisStandaloneSetup().createInjectorAndDoEMFRegistration()
+        }
+        return injector
+    }
+    
+    override register(Injector injector) {
+        super.register(injector)
+        // Ensure package is registered 
+        KivisPackage.eINSTANCE.eClass()
+    }
 }

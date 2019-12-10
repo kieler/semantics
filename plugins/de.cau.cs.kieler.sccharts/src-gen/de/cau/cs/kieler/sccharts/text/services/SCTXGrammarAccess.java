@@ -2221,20 +2221,23 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cSclAssignmentParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
 		private final RuleCall cSclPostfixAssignmentParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		private final RuleCall cLabelParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
-		private final RuleCall cConditionalParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
-		private final RuleCall cGotoParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
-		private final RuleCall cScopeStatementParserRuleCall_5 = (RuleCall)cAlternatives.eContents().get(5);
-		private final RuleCall cReturnParserRuleCall_6 = (RuleCall)cAlternatives.eContents().get(6);
-		private final RuleCall cForLoopParserRuleCall_7 = (RuleCall)cAlternatives.eContents().get(7);
-		private final RuleCall cWhileLoopParserRuleCall_8 = (RuleCall)cAlternatives.eContents().get(8);
+		private final RuleCall cSclEffectAssignmentParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
+		private final RuleCall cConditionalParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
+		private final RuleCall cGotoParserRuleCall_5 = (RuleCall)cAlternatives.eContents().get(5);
+		private final RuleCall cScopeStatementParserRuleCall_6 = (RuleCall)cAlternatives.eContents().get(6);
+		private final RuleCall cReturnParserRuleCall_7 = (RuleCall)cAlternatives.eContents().get(7);
+		private final RuleCall cForLoopParserRuleCall_8 = (RuleCall)cAlternatives.eContents().get(8);
+		private final RuleCall cWhileLoopParserRuleCall_9 = (RuleCall)cAlternatives.eContents().get(9);
 		
 		//@Override
 		//Statement scl::Statement:
-		//	SclAssignment | SclPostfixAssignment | Label | Conditional | Goto | ScopeStatement | Return | ForLoop | WhileLoop;
+		//	SclAssignment | SclPostfixAssignment | Label | SclEffectAssignment | Conditional | Goto | ScopeStatement | Return |
+		//	ForLoop | WhileLoop;
 		@Override public ParserRule getRule() { return rule; }
 		
 		//// Only allow restricted set of SCL statements
-		//SclAssignment | SclPostfixAssignment | Label | Conditional | Goto | ScopeStatement | Return | ForLoop | WhileLoop
+		//SclAssignment | SclPostfixAssignment | Label | SclEffectAssignment | Conditional | Goto | ScopeStatement | Return |
+		//ForLoop | WhileLoop
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
 		//// Only allow restricted set of SCL statements
@@ -2247,23 +2250,26 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		//Label
 		public RuleCall getLabelParserRuleCall_2() { return cLabelParserRuleCall_2; }
 		
+		//SclEffectAssignment
+		public RuleCall getSclEffectAssignmentParserRuleCall_3() { return cSclEffectAssignmentParserRuleCall_3; }
+		
 		//Conditional
-		public RuleCall getConditionalParserRuleCall_3() { return cConditionalParserRuleCall_3; }
+		public RuleCall getConditionalParserRuleCall_4() { return cConditionalParserRuleCall_4; }
 		
 		//Goto
-		public RuleCall getGotoParserRuleCall_4() { return cGotoParserRuleCall_4; }
+		public RuleCall getGotoParserRuleCall_5() { return cGotoParserRuleCall_5; }
 		
 		//ScopeStatement
-		public RuleCall getScopeStatementParserRuleCall_5() { return cScopeStatementParserRuleCall_5; }
+		public RuleCall getScopeStatementParserRuleCall_6() { return cScopeStatementParserRuleCall_6; }
 		
 		//Return
-		public RuleCall getReturnParserRuleCall_6() { return cReturnParserRuleCall_6; }
+		public RuleCall getReturnParserRuleCall_7() { return cReturnParserRuleCall_7; }
 		
 		//ForLoop
-		public RuleCall getForLoopParserRuleCall_7() { return cForLoopParserRuleCall_7; }
+		public RuleCall getForLoopParserRuleCall_8() { return cForLoopParserRuleCall_8; }
 		
 		//WhileLoop
-		public RuleCall getWhileLoopParserRuleCall_8() { return cWhileLoopParserRuleCall_8; }
+		public RuleCall getWhileLoopParserRuleCall_9() { return cWhileLoopParserRuleCall_9; }
 	}
 	public class EffectElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.sccharts.text.SCTX.Effect");
@@ -3693,7 +3699,8 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//@Override
 	//Statement scl::Statement:
-	//	SclAssignment | SclPostfixAssignment | Label | Conditional | Goto | ScopeStatement | Return | ForLoop | WhileLoop;
+	//	SclAssignment | SclPostfixAssignment | Label | SclEffectAssignment | Conditional | Goto | ScopeStatement | Return |
+	//	ForLoop | WhileLoop;
 	public StatementElements getStatementAccess() {
 		return pStatement;
 	}
@@ -3978,6 +3985,22 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getSclPostfixAssignmentRule() {
 		return getSclPostfixAssignmentAccess().getRule();
+	}
+	
+	//SclEffectAssignment Assignment:
+	//	annotations+=Annotation*
+	//	expression=(ReferenceCall
+	//	| TextExpression
+	//	| PrintCall
+	//	| RandomizeCall
+	//	| FunctionCall) ('schedule' schedule+=ScheduleObjectReference+)?
+	//	semicolon?=';'?;
+	public SCLGrammarAccess.SclEffectAssignmentElements getSclEffectAssignmentAccess() {
+		return gaSCL.getSclEffectAssignmentAccess();
+	}
+	
+	public ParserRule getSclEffectAssignmentRule() {
+		return getSclEffectAssignmentAccess().getRule();
 	}
 	
 	//Return:
@@ -5283,6 +5306,21 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getFunctionCallRule() {
 		return getFunctionCallAccess().getRule();
+	}
+	
+	//// Print Call Rule
+	//// Calls the print function. They may include a parameter list.
+	//// Do not use in expressions directly, use PrintCallEffect instead
+	//PrintCall:
+	//	{PrintCall}
+	//	'print' ('(' parameters+=Parameter (',' parameters+=Parameter)* ')' |
+	//	'()');
+	public KExpressionsGrammarAccess.PrintCallElements getPrintCallAccess() {
+		return gaKExpressions.getPrintCallAccess();
+	}
+	
+	public ParserRule getPrintCallRule() {
+		return getPrintCallAccess().getRule();
 	}
 	
 	//// Parameter Rule
