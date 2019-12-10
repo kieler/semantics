@@ -268,7 +268,7 @@ class EquationSimplification {
      * @returns The given List of nodes without the nodes which are not needed anymore
      */
     private def hideLocalObjects(List<KNode> nodes) {
-        if (hideLocals) {
+        if (!showLocals) {
             // remove input nodes of local declared valued objects which are no inputs
             for (node : nodes.filter [
                 isInput && !isDataAccess && isLocalValuedObject &&

@@ -112,7 +112,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         "Sequential Constraints", true).setCategory(GeneralSynthesisOptions::DATAFLOW)
     public static val SynthesisOption INSTANCE_CONSTRAINTS = SynthesisOption.createCheckOption(
         "Connect Instances", true).setCategory(GeneralSynthesisOptions::DATAFLOW)
-    public static val SynthesisOption HIDE_LOCALS = SynthesisOption.createCheckOption("Hide Local Variables", false).
+    public static val SynthesisOption SHOW_LOCALS = SynthesisOption.createCheckOption("Local Variables", true).
         setCategory(GeneralSynthesisOptions::DATAFLOW)
     public static val SynthesisOption PRE_CICLES = SynthesisOption.createCheckOption("Allow Pre Cicles", false).
         setCategory(GeneralSynthesisOptions::DATAFLOW)
@@ -231,7 +231,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
             ALL_SEQUENTIAL_CONSTRAINTS,
             SEQUENTIAL_CONSTRAINTS,
             INSTANCE_CONSTRAINTS,
-            HIDE_LOCALS,
+            SHOW_LOCALS,
             PRE_CICLES,
             COMBINE_ALL_DATA_ACCESS,
             AUTOMATIC_INLINE,
@@ -254,7 +254,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
     def performTranformation(List<Assignment> elements, KNode rootNode) {
         sequentials.clear
         alignInputOutputs = ALIGN_INPUTS_OUTPUTS.booleanValue
-        hideLocals = HIDE_LOCALS.booleanValue
+        showLocals = SHOW_LOCALS.booleanValue
         preCicles = PRE_CICLES.booleanValue
         showWireLabels = SHOW_WIRE_LABELS.booleanValue
         combineAllDataAccessNodes = COMBINE_ALL_DATA_ACCESS.booleanValue

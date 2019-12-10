@@ -61,7 +61,7 @@ class EquationSynthesisHelper {
 
     protected val List<Pair<KNode, KNode>> sequentials = newArrayList
     protected var alignInputOutputs = false
-    protected var hideLocals = false
+    protected var showLocals = false
     protected var preCicles = false
     protected var showWireLabels = false
     protected var combineAllDataAccessNodes = false
