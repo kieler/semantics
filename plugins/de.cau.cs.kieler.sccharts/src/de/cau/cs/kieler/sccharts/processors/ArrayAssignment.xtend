@@ -100,7 +100,7 @@ class ArrayAssignment extends SCChartsProcessor implements Traceable {
             again = false
             val assignments = transition.allContainedAssignments.toList
             for (assignment : assignments) {
-                assignment.expression = assignment.expression.computeVectorValues
+                assignment.expression = assignment.expression?.computeVectorValues
                 assignment.validate
                 if (assignment.reference.valuedObject !== null && assignment.reference.valuedObject.array &&
                     assignment.expression instanceof VectorValue) {
