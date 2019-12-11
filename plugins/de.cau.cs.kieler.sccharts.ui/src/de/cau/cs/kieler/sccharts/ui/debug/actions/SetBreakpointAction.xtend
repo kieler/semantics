@@ -18,7 +18,7 @@ import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.kgraph.KEdge
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
-import de.cau.cs.kieler.sccharts.ui.debug.highlighting.DebugHighlighter
+import de.cau.cs.kieler.sccharts.ui.debug.breakpoints.DebugBreakpointManager
 
 /**
  * @author stu121235
@@ -33,20 +33,17 @@ class SetBreakpointAction implements IAction {
         val viewContext = context.activeViewer.viewContext
         val elems = selection.diagramElementsIterator
         
-        for (elem : elems.toIterable) {
-            println("Elem " + elem)
-        }
-        val selectedStates = selection.diagramElementsIterator.filter[it instanceof KNode].map[viewContext.getSourceElement(it) as State].toList
-        val selectedTransitions = selection.diagramElementsIterator.filter[it instanceof KEdge].map[viewContext.getSourceElement(it) as Transition].toList
+        val selectedStates = selection.diagramElementsIterator.filter[it instanceof KNode].map[viewContext.getSourceElement(it) as State].toIterable
+        val selectedTransitions = selection.diagramElementsIterator.filter[it instanceof KEdge].map[viewContext.getSourceElement(it) as Transition].toIterable
         
         for (state : selectedStates) {
             println("Selected state " + state.name)
-            DebugHighlighter.instance.toggleBreakpointBackground(state)
+            DebugBreakpointManager.instance.toggleBreakpoint(state)
         }
         
         for (transition : selectedTransitions) {
             println("Selected transition " + transition)
-            DebugHighlighter.instance.toggleBreakpointDecorator(transition)
+            DebugBreakpointManager.instance.toggleBreakpoint(transition)
         }
         
         ActionResult.createResult(false)
