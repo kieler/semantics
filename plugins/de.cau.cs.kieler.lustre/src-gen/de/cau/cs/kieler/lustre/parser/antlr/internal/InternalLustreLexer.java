@@ -982,10 +982,10 @@ public class InternalLustreLexer extends Lexer {
         try {
             int _type = T__57;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalLustre.g:51:7: ( 'then' )
-            // InternalLustre.g:51:9: 'then'
+            // InternalLustre.g:51:7: ( '->' )
+            // InternalLustre.g:51:9: '->'
             {
-            match("then"); 
+            match("->"); 
 
 
             }
@@ -1003,10 +1003,10 @@ public class InternalLustreLexer extends Lexer {
         try {
             int _type = T__58;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalLustre.g:52:7: ( 'else' )
-            // InternalLustre.g:52:9: 'else'
+            // InternalLustre.g:52:7: ( 'then' )
+            // InternalLustre.g:52:9: 'then'
             {
-            match("else"); 
+            match("then"); 
 
 
             }
@@ -1024,10 +1024,10 @@ public class InternalLustreLexer extends Lexer {
         try {
             int _type = T__59;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalLustre.g:53:7: ( '->' )
-            // InternalLustre.g:53:9: '->'
+            // InternalLustre.g:53:7: ( 'else' )
+            // InternalLustre.g:53:9: 'else'
             {
-            match("->"); 
+            match("else"); 
 
 
             }
@@ -4540,9 +4540,9 @@ public class InternalLustreLexer extends Lexer {
     static final String DFA28_maxS =
         "\1\uffff\1\156\1\165\1\uffff\1\171\1\76\3\uffff\1\156\1\170\2\165\1\52\1\uffff\1\145\1\uffff\1\150\1\172\1\157\1\145\1\56\1\165\1\164\1\157\1\uffff\1\57\1\157\1\76\1\157\1\165\1\163\1\154\1\157\2\uffff\1\165\1\uffff\1\76\1\53\2\uffff\1\172\2\uffff\1\157\1\76\2\uffff\1\uffff\1\146\1\uffff\4\uffff\1\164\1\172\1\uffff\1\156\1\162\1\141\1\uffff\1\160\1\154\1\145\1\165\5\uffff\2\164\1\151\1\163\1\165\1\156\1\171\1\157\1\154\1\164\1\154\4\uffff\1\164\1\156\1\uffff\1\145\1\uffff\1\162\1\151\1\164\1\163\2\uffff\1\163\1\164\1\144\1\162\1\157\1\147\1\142\1\172\1\166\4\uffff\1\144\1\170\1\156\1\uffff\1\uffff\1\uffff\1\162\1\172\1\164\2\157\1\163\2\uffff\1\157\1\142\1\uffff\1\76\11\uffff\1\157\10\uffff\1\146\3\uffff\1\154\1\164\1\165\1\172\1\uffff\1\163\1\155\1\162\1\163\1\145\1\172\1\156\1\145\1\141\1\151\2\145\1\162\1\164\1\145\1\155\1\143\1\172\1\141\1\163\1\145\2\172\1\145\1\154\2\165\1\172\1\154\1\144\1\156\2\172\1\144\1\172\1\145\1\164\1\145\1\157\1\172\1\164\1\165\1\160\1\145\1\156\1\171\1\uffff\4\172\2\uffff\1\172\1\uffff\1\160\1\156\1\142\1\164\1\166\1\172\1\164\1\154\2\uffff\1\154\1\165\1\151\1\164\1\uffff\1\164\1\154\1\151\1\165\1\145\1\163\1\172\1\uffff\2\172\1\146\1\154\1\163\1\162\1\145\3\172\1\164\1\uffff\1\164\1\145\1\172\2\uffff\2\172\1\162\1\141\1\155\1\uffff\1\172\1\157\1\172\2\uffff\1\172\1\uffff\1\154\1\172\1\162\1\155\1\uffff\1\151\1\143\1\156\1\145\1\144\1\141\1\172\5\uffff\1\165\1\172\1\141\1\172\1\164\1\141\1\uffff\1\145\1\151\1\172\1\144\1\141\2\172\1\151\1\156\1\164\1\156\1\172\3\uffff\1\145\1\172\1\163\1\156\1\163\3\uffff\1\151\2\172\3\uffff\1\156\1\162\1\145\1\uffff\1\155\2\uffff\1\172\1\uffff\1\164\1\141\1\172\1\143\1\164\1\147\1\172\1\165\1\154\1\uffff\1\164\1\uffff\1\154\1\uffff\1\172\1\164\2\143\1\uffff\1\145\1\154\2\uffff\1\143\1\145\1\151\1\164\1\uffff\1\172\1\uffff\2\172\1\163\1\157\1\uffff\1\163\1\164\1\172\1\151\1\uffff\1\172\1\164\1\uffff\3\172\1\uffff\1\154\3\172\1\uffff\1\145\1\164\3\172\1\164\1\172\1\156\1\172\3\uffff\1\151\1\156\2\172\1\uffff\1\172\1\uffff\1\157\3\uffff\1\145\3\uffff\1\172\1\145\3\uffff\1\151\1\uffff\1\147\1\uffff\1\157\1\172\2\uffff\1\145\1\156\1\172\1\uffff\1\144\1\156\1\172\1\156\1\uffff\2\172\1\uffff\1\172\1\147\1\uffff\1\172\3\uffff\1\172\2\uffff";
     static final String DFA28_acceptS =
-        "\3\uffff\1\3\2\uffff\1\6\1\7\1\10\5\uffff\1\16\1\uffff\1\21\10\uffff\1\44\10\uffff\1\73\1\74\1\uffff\1\101\2\uffff\1\106\1\107\1\uffff\1\112\1\113\2\uffff\1\136\1\137\3\uffff\2\167\1\170\1\171\2\uffff\1\167\3\uffff\1\3\4\uffff\1\54\1\5\1\6\1\7\1\10\13\uffff\1\17\1\156\1\15\1\16\2\uffff\1\21\1\uffff\1\23\4\uffff\1\33\1\27\11\uffff\1\44\1\161\1\162\1\45\3\uffff\1\53\1\uffff\1\105\6\uffff\1\73\1\74\2\uffff\1\101\1\uffff\1\123\1\122\1\133\1\104\1\106\1\107\1\110\1\112\1\113\1\uffff\1\121\1\124\1\141\1\120\1\136\1\137\1\160\1\163\1\uffff\1\164\1\166\1\170\4\uffff\1\40\56\uffff\1\41\4\uffff\1\134\1\157\1\uffff\1\56\10\uffff\1\103\1\102\4\uffff\1\115\7\uffff\1\26\13\uffff\1\50\3\uffff\1\125\1\127\5\uffff\1\72\3\uffff\1\24\1\140\1\uffff\1\25\4\uffff\1\57\7\uffff\1\47\1\46\1\146\1\147\1\55\6\uffff\1\135\14\uffff\1\4\1\51\1\165\5\uffff\1\30\1\52\1\117\3\uffff\1\14\1\145\1\111\3\uffff\1\116\1\uffff\1\22\1\153\1\uffff\1\130\11\uffff\1\142\1\uffff\1\62\1\uffff\1\70\4\uffff\1\114\2\uffff\1\63\1\2\4\uffff\1\144\1\uffff\1\36\4\uffff\1\154\4\uffff\1\76\2\uffff\1\35\3\uffff\1\60\4\uffff\1\77\11\uffff\1\11\1\37\1\12\4\uffff\1\43\1\uffff\1\31\1\uffff\1\66\1\143\1\155\1\uffff\1\67\1\64\1\65\2\uffff\1\150\1\1\1\34\1\uffff\1\75\1\uffff\1\126\2\uffff\1\20\1\42\3\uffff\1\152\4\uffff\1\13\2\uffff\1\71\2\uffff\1\132\1\uffff\1\100\1\32\1\151\1\uffff\1\61\1\131";
+        "\3\uffff\1\3\2\uffff\1\6\1\7\1\10\5\uffff\1\16\1\uffff\1\21\10\uffff\1\44\10\uffff\1\73\1\74\1\uffff\1\101\2\uffff\1\106\1\107\1\uffff\1\112\1\113\2\uffff\1\136\1\137\3\uffff\2\167\1\170\1\171\2\uffff\1\167\3\uffff\1\3\4\uffff\1\54\1\5\1\6\1\7\1\10\13\uffff\1\17\1\156\1\15\1\16\2\uffff\1\21\1\uffff\1\23\4\uffff\1\33\1\27\11\uffff\1\44\1\161\1\162\1\45\3\uffff\1\51\1\uffff\1\105\6\uffff\1\73\1\74\2\uffff\1\101\1\uffff\1\123\1\122\1\133\1\104\1\106\1\107\1\110\1\112\1\113\1\uffff\1\121\1\124\1\141\1\120\1\136\1\137\1\160\1\163\1\uffff\1\164\1\166\1\170\4\uffff\1\40\56\uffff\1\41\4\uffff\1\134\1\157\1\uffff\1\56\10\uffff\1\103\1\102\4\uffff\1\115\7\uffff\1\26\13\uffff\1\50\3\uffff\1\125\1\127\5\uffff\1\72\3\uffff\1\24\1\140\1\uffff\1\25\4\uffff\1\57\7\uffff\1\47\1\46\1\146\1\147\1\55\6\uffff\1\135\14\uffff\1\4\1\52\1\165\5\uffff\1\30\1\53\1\117\3\uffff\1\14\1\145\1\111\3\uffff\1\116\1\uffff\1\22\1\153\1\uffff\1\130\11\uffff\1\142\1\uffff\1\62\1\uffff\1\70\4\uffff\1\114\2\uffff\1\63\1\2\4\uffff\1\144\1\uffff\1\36\4\uffff\1\154\4\uffff\1\76\2\uffff\1\35\3\uffff\1\60\4\uffff\1\77\11\uffff\1\11\1\37\1\12\4\uffff\1\43\1\uffff\1\31\1\uffff\1\66\1\143\1\155\1\uffff\1\67\1\64\1\65\2\uffff\1\150\1\1\1\34\1\uffff\1\75\1\uffff\1\126\2\uffff\1\20\1\42\3\uffff\1\152\4\uffff\1\13\2\uffff\1\71\2\uffff\1\132\1\uffff\1\100\1\32\1\151\1\uffff\1\61\1\131";
     static final String DFA28_specialS =
-        "\1\0\60\uffff\1\2\1\uffff\1\3\77\uffff\1\1\u0144\uffff}>";
+        "\1\3\60\uffff\1\1\1\uffff\1\2\77\uffff\1\0\u0144\uffff}>";
     static final String[] DFA28_transitionS = {
             "\11\67\2\66\2\67\1\66\22\67\1\66\1\51\1\63\1\53\2\67\1\45\1\50\1\15\1\16\1\31\1\47\1\7\1\34\1\25\1\32\12\62\1\20\1\3\1\56\1\5\1\46\1\67\1\54\32\65\1\42\1\67\1\43\1\22\1\52\1\61\1\26\1\55\1\2\1\30\1\12\1\13\1\40\1\41\1\1\1\37\1\64\1\24\1\33\1\14\1\36\1\44\1\64\1\17\1\27\1\4\1\11\1\23\1\21\1\35\2\64\1\6\1\60\1\10\1\57\uff81\67",
             "\1\71\7\uffff\1\70",
@@ -5023,6 +5023,36 @@ public class InternalLustreLexer extends Lexer {
         	int _s = s;
             switch ( s ) {
                     case 0 : 
+                        int LA28_115 = input.LA(1);
+
+                        s = -1;
+                        if ( ((LA28_115>='\u0000' && LA28_115<='\uFFFF')) ) {s = 208;}
+
+                        else s = 207;
+
+                        if ( s>=0 ) return s;
+                        break;
+                    case 1 : 
+                        int LA28_49 = input.LA(1);
+
+                        s = -1;
+                        if ( ((LA28_49>='\u0000' && LA28_49<='\uFFFF')) ) {s = 145;}
+
+                        else s = 55;
+
+                        if ( s>=0 ) return s;
+                        break;
+                    case 2 : 
+                        int LA28_51 = input.LA(1);
+
+                        s = -1;
+                        if ( ((LA28_51>='\u0000' && LA28_51<='\uFFFF')) ) {s = 149;}
+
+                        else s = 55;
+
+                        if ( s>=0 ) return s;
+                        break;
+                    case 3 : 
                         int LA28_0 = input.LA(1);
 
                         s = -1;
@@ -5135,36 +5165,6 @@ public class InternalLustreLexer extends Lexer {
                         else if ( ((LA28_0>='\t' && LA28_0<='\n')||LA28_0=='\r'||LA28_0==' ') ) {s = 54;}
 
                         else if ( ((LA28_0>='\u0000' && LA28_0<='\b')||(LA28_0>='\u000B' && LA28_0<='\f')||(LA28_0>='\u000E' && LA28_0<='\u001F')||(LA28_0>='$' && LA28_0<='%')||LA28_0=='?'||LA28_0=='\\'||(LA28_0>='\u007F' && LA28_0<='\uFFFF')) ) {s = 55;}
-
-                        if ( s>=0 ) return s;
-                        break;
-                    case 1 : 
-                        int LA28_115 = input.LA(1);
-
-                        s = -1;
-                        if ( ((LA28_115>='\u0000' && LA28_115<='\uFFFF')) ) {s = 208;}
-
-                        else s = 207;
-
-                        if ( s>=0 ) return s;
-                        break;
-                    case 2 : 
-                        int LA28_49 = input.LA(1);
-
-                        s = -1;
-                        if ( ((LA28_49>='\u0000' && LA28_49<='\uFFFF')) ) {s = 145;}
-
-                        else s = 55;
-
-                        if ( s>=0 ) return s;
-                        break;
-                    case 3 : 
-                        int LA28_51 = input.LA(1);
-
-                        s = -1;
-                        if ( ((LA28_51>='\u0000' && LA28_51<='\uFFFF')) ) {s = 149;}
-
-                        else s = 55;
 
                         if ( s>=0 ) return s;
                         break;

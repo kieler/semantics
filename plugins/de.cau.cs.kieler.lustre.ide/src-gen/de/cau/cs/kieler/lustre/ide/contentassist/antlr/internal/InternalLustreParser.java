@@ -2352,28 +2352,28 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "ruleBoolExpression"
-    // InternalLustre.g:696:1: ruleBoolExpression : ( ruleTernaryOperation ) ;
+    // InternalLustre.g:696:1: ruleBoolExpression : ( ruleInitExpression ) ;
     public final void ruleBoolExpression() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalLustre.g:700:2: ( ( ruleTernaryOperation ) )
-            // InternalLustre.g:701:2: ( ruleTernaryOperation )
+            // InternalLustre.g:700:2: ( ( ruleInitExpression ) )
+            // InternalLustre.g:701:2: ( ruleInitExpression )
             {
-            // InternalLustre.g:701:2: ( ruleTernaryOperation )
-            // InternalLustre.g:702:3: ruleTernaryOperation
+            // InternalLustre.g:701:2: ( ruleInitExpression )
+            // InternalLustre.g:702:3: ruleInitExpression
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getBoolExpressionAccess().getTernaryOperationParserRuleCall()); 
+               before(grammarAccess.getBoolExpressionAccess().getInitExpressionParserRuleCall()); 
             }
             pushFollow(FollowSets000.FOLLOW_2);
-            ruleTernaryOperation();
+            ruleInitExpression();
 
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getBoolExpressionAccess().getTernaryOperationParserRuleCall()); 
+               after(grammarAccess.getBoolExpressionAccess().getInitExpressionParserRuleCall()); 
             }
 
             }
@@ -2396,97 +2396,12 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "ruleBoolExpression"
 
 
-    // $ANTLR start "entryRuleTernaryOperation"
-    // InternalLustre.g:712:1: entryRuleTernaryOperation : ruleTernaryOperation EOF ;
-    public final void entryRuleTernaryOperation() throws RecognitionException {
-        try {
-            // InternalLustre.g:713:1: ( ruleTernaryOperation EOF )
-            // InternalLustre.g:714:1: ruleTernaryOperation EOF
-            {
-            if ( state.backtracking==0 ) {
-               before(grammarAccess.getTernaryOperationRule()); 
-            }
-            pushFollow(FollowSets000.FOLLOW_1);
-            ruleTernaryOperation();
-
-            state._fsp--;
-            if (state.failed) return ;
-            if ( state.backtracking==0 ) {
-               after(grammarAccess.getTernaryOperationRule()); 
-            }
-            match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return ;
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-        }
-        return ;
-    }
-    // $ANTLR end "entryRuleTernaryOperation"
-
-
-    // $ANTLR start "ruleTernaryOperation"
-    // InternalLustre.g:721:1: ruleTernaryOperation : ( ( rule__TernaryOperation__Alternatives ) ) ;
-    public final void ruleTernaryOperation() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-        	
-        try {
-            // InternalLustre.g:725:2: ( ( ( rule__TernaryOperation__Alternatives ) ) )
-            // InternalLustre.g:726:2: ( ( rule__TernaryOperation__Alternatives ) )
-            {
-            // InternalLustre.g:726:2: ( ( rule__TernaryOperation__Alternatives ) )
-            // InternalLustre.g:727:3: ( rule__TernaryOperation__Alternatives )
-            {
-            if ( state.backtracking==0 ) {
-               before(grammarAccess.getTernaryOperationAccess().getAlternatives()); 
-            }
-            // InternalLustre.g:728:3: ( rule__TernaryOperation__Alternatives )
-            // InternalLustre.g:728:4: rule__TernaryOperation__Alternatives
-            {
-            pushFollow(FollowSets000.FOLLOW_2);
-            rule__TernaryOperation__Alternatives();
-
-            state._fsp--;
-            if (state.failed) return ;
-
-            }
-
-            if ( state.backtracking==0 ) {
-               after(grammarAccess.getTernaryOperationAccess().getAlternatives()); 
-            }
-
-            }
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "ruleTernaryOperation"
-
-
     // $ANTLR start "entryRuleInitExpression"
-    // InternalLustre.g:737:1: entryRuleInitExpression : ruleInitExpression EOF ;
+    // InternalLustre.g:712:1: entryRuleInitExpression : ruleInitExpression EOF ;
     public final void entryRuleInitExpression() throws RecognitionException {
         try {
-            // InternalLustre.g:738:1: ( ruleInitExpression EOF )
-            // InternalLustre.g:739:1: ruleInitExpression EOF
+            // InternalLustre.g:713:1: ( ruleInitExpression EOF )
+            // InternalLustre.g:714:1: ruleInitExpression EOF
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getInitExpressionRule()); 
@@ -2516,23 +2431,23 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "ruleInitExpression"
-    // InternalLustre.g:746:1: ruleInitExpression : ( ( rule__InitExpression__Group__0 ) ) ;
+    // InternalLustre.g:721:1: ruleInitExpression : ( ( rule__InitExpression__Group__0 ) ) ;
     public final void ruleInitExpression() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalLustre.g:750:2: ( ( ( rule__InitExpression__Group__0 ) ) )
-            // InternalLustre.g:751:2: ( ( rule__InitExpression__Group__0 ) )
+            // InternalLustre.g:725:2: ( ( ( rule__InitExpression__Group__0 ) ) )
+            // InternalLustre.g:726:2: ( ( rule__InitExpression__Group__0 ) )
             {
-            // InternalLustre.g:751:2: ( ( rule__InitExpression__Group__0 ) )
-            // InternalLustre.g:752:3: ( rule__InitExpression__Group__0 )
+            // InternalLustre.g:726:2: ( ( rule__InitExpression__Group__0 ) )
+            // InternalLustre.g:727:3: ( rule__InitExpression__Group__0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getInitExpressionAccess().getGroup()); 
             }
-            // InternalLustre.g:753:3: ( rule__InitExpression__Group__0 )
-            // InternalLustre.g:753:4: rule__InitExpression__Group__0
+            // InternalLustre.g:728:3: ( rule__InitExpression__Group__0 )
+            // InternalLustre.g:728:4: rule__InitExpression__Group__0
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__InitExpression__Group__0();
@@ -2564,6 +2479,91 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
         return ;
     }
     // $ANTLR end "ruleInitExpression"
+
+
+    // $ANTLR start "entryRuleTernaryOperation"
+    // InternalLustre.g:737:1: entryRuleTernaryOperation : ruleTernaryOperation EOF ;
+    public final void entryRuleTernaryOperation() throws RecognitionException {
+        try {
+            // InternalLustre.g:738:1: ( ruleTernaryOperation EOF )
+            // InternalLustre.g:739:1: ruleTernaryOperation EOF
+            {
+            if ( state.backtracking==0 ) {
+               before(grammarAccess.getTernaryOperationRule()); 
+            }
+            pushFollow(FollowSets000.FOLLOW_1);
+            ruleTernaryOperation();
+
+            state._fsp--;
+            if (state.failed) return ;
+            if ( state.backtracking==0 ) {
+               after(grammarAccess.getTernaryOperationRule()); 
+            }
+            match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return ;
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+        }
+        return ;
+    }
+    // $ANTLR end "entryRuleTernaryOperation"
+
+
+    // $ANTLR start "ruleTernaryOperation"
+    // InternalLustre.g:746:1: ruleTernaryOperation : ( ( rule__TernaryOperation__Alternatives ) ) ;
+    public final void ruleTernaryOperation() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+        	
+        try {
+            // InternalLustre.g:750:2: ( ( ( rule__TernaryOperation__Alternatives ) ) )
+            // InternalLustre.g:751:2: ( ( rule__TernaryOperation__Alternatives ) )
+            {
+            // InternalLustre.g:751:2: ( ( rule__TernaryOperation__Alternatives ) )
+            // InternalLustre.g:752:3: ( rule__TernaryOperation__Alternatives )
+            {
+            if ( state.backtracking==0 ) {
+               before(grammarAccess.getTernaryOperationAccess().getAlternatives()); 
+            }
+            // InternalLustre.g:753:3: ( rule__TernaryOperation__Alternatives )
+            // InternalLustre.g:753:4: rule__TernaryOperation__Alternatives
+            {
+            pushFollow(FollowSets000.FOLLOW_2);
+            rule__TernaryOperation__Alternatives();
+
+            state._fsp--;
+            if (state.failed) return ;
+
+            }
+
+            if ( state.backtracking==0 ) {
+               after(grammarAccess.getTernaryOperationAccess().getAlternatives()); 
+            }
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "ruleTernaryOperation"
 
 
     // $ANTLR start "entryRuleImpliesExpression"
@@ -15852,13 +15852,13 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TernaryOperation__Alternatives"
-    // InternalLustre.g:4476:1: rule__TernaryOperation__Alternatives : ( ( ( rule__TernaryOperation__Group_0__0 ) ) | ( ruleInitExpression ) );
+    // InternalLustre.g:4476:1: rule__TernaryOperation__Alternatives : ( ( ( rule__TernaryOperation__Group_0__0 ) ) | ( ruleImpliesExpression ) );
     public final void rule__TernaryOperation__Alternatives() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalLustre.g:4480:1: ( ( ( rule__TernaryOperation__Group_0__0 ) ) | ( ruleInitExpression ) )
+            // InternalLustre.g:4480:1: ( ( ( rule__TernaryOperation__Group_0__0 ) ) | ( ruleImpliesExpression ) )
             int alt33=2;
             int LA33_0 = input.LA(1);
 
@@ -15906,21 +15906,21 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 2 :
-                    // InternalLustre.g:4487:2: ( ruleInitExpression )
+                    // InternalLustre.g:4487:2: ( ruleImpliesExpression )
                     {
-                    // InternalLustre.g:4487:2: ( ruleInitExpression )
-                    // InternalLustre.g:4488:3: ruleInitExpression
+                    // InternalLustre.g:4487:2: ( ruleImpliesExpression )
+                    // InternalLustre.g:4488:3: ruleImpliesExpression
                     {
                     if ( state.backtracking==0 ) {
-                       before(grammarAccess.getTernaryOperationAccess().getInitExpressionParserRuleCall_1()); 
+                       before(grammarAccess.getTernaryOperationAccess().getImpliesExpressionParserRuleCall_1()); 
                     }
                     pushFollow(FollowSets000.FOLLOW_2);
-                    ruleInitExpression();
+                    ruleImpliesExpression();
 
                     state._fsp--;
                     if (state.failed) return ;
                     if ( state.backtracking==0 ) {
-                       after(grammarAccess.getTernaryOperationAccess().getInitExpressionParserRuleCall_1()); 
+                       after(grammarAccess.getTernaryOperationAccess().getImpliesExpressionParserRuleCall_1()); 
                     }
 
                     }
@@ -43195,605 +43195,17 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "rule__LastExpression__Group_0__2__Impl"
 
 
-    // $ANTLR start "rule__TernaryOperation__Group_0__0"
-    // InternalLustre.g:12543:1: rule__TernaryOperation__Group_0__0 : rule__TernaryOperation__Group_0__0__Impl rule__TernaryOperation__Group_0__1 ;
-    public final void rule__TernaryOperation__Group_0__0() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-        	
-        try {
-            // InternalLustre.g:12547:1: ( rule__TernaryOperation__Group_0__0__Impl rule__TernaryOperation__Group_0__1 )
-            // InternalLustre.g:12548:2: rule__TernaryOperation__Group_0__0__Impl rule__TernaryOperation__Group_0__1
-            {
-            pushFollow(FollowSets000.FOLLOW_69);
-            rule__TernaryOperation__Group_0__0__Impl();
-
-            state._fsp--;
-            if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_2);
-            rule__TernaryOperation__Group_0__1();
-
-            state._fsp--;
-            if (state.failed) return ;
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__TernaryOperation__Group_0__0"
-
-
-    // $ANTLR start "rule__TernaryOperation__Group_0__0__Impl"
-    // InternalLustre.g:12555:1: rule__TernaryOperation__Group_0__0__Impl : ( () ) ;
-    public final void rule__TernaryOperation__Group_0__0__Impl() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-        	
-        try {
-            // InternalLustre.g:12559:1: ( ( () ) )
-            // InternalLustre.g:12560:1: ( () )
-            {
-            // InternalLustre.g:12560:1: ( () )
-            // InternalLustre.g:12561:2: ()
-            {
-            if ( state.backtracking==0 ) {
-               before(grammarAccess.getTernaryOperationAccess().getOperatorExpressionAction_0_0()); 
-            }
-            // InternalLustre.g:12562:2: ()
-            // InternalLustre.g:12562:3: 
-            {
-            }
-
-            if ( state.backtracking==0 ) {
-               after(grammarAccess.getTernaryOperationAccess().getOperatorExpressionAction_0_0()); 
-            }
-
-            }
-
-
-            }
-
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__TernaryOperation__Group_0__0__Impl"
-
-
-    // $ANTLR start "rule__TernaryOperation__Group_0__1"
-    // InternalLustre.g:12570:1: rule__TernaryOperation__Group_0__1 : rule__TernaryOperation__Group_0__1__Impl rule__TernaryOperation__Group_0__2 ;
-    public final void rule__TernaryOperation__Group_0__1() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-        	
-        try {
-            // InternalLustre.g:12574:1: ( rule__TernaryOperation__Group_0__1__Impl rule__TernaryOperation__Group_0__2 )
-            // InternalLustre.g:12575:2: rule__TernaryOperation__Group_0__1__Impl rule__TernaryOperation__Group_0__2
-            {
-            pushFollow(FollowSets000.FOLLOW_24);
-            rule__TernaryOperation__Group_0__1__Impl();
-
-            state._fsp--;
-            if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_2);
-            rule__TernaryOperation__Group_0__2();
-
-            state._fsp--;
-            if (state.failed) return ;
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__TernaryOperation__Group_0__1"
-
-
-    // $ANTLR start "rule__TernaryOperation__Group_0__1__Impl"
-    // InternalLustre.g:12582:1: rule__TernaryOperation__Group_0__1__Impl : ( ( rule__TernaryOperation__OperatorAssignment_0_1 ) ) ;
-    public final void rule__TernaryOperation__Group_0__1__Impl() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-        	
-        try {
-            // InternalLustre.g:12586:1: ( ( ( rule__TernaryOperation__OperatorAssignment_0_1 ) ) )
-            // InternalLustre.g:12587:1: ( ( rule__TernaryOperation__OperatorAssignment_0_1 ) )
-            {
-            // InternalLustre.g:12587:1: ( ( rule__TernaryOperation__OperatorAssignment_0_1 ) )
-            // InternalLustre.g:12588:2: ( rule__TernaryOperation__OperatorAssignment_0_1 )
-            {
-            if ( state.backtracking==0 ) {
-               before(grammarAccess.getTernaryOperationAccess().getOperatorAssignment_0_1()); 
-            }
-            // InternalLustre.g:12589:2: ( rule__TernaryOperation__OperatorAssignment_0_1 )
-            // InternalLustre.g:12589:3: rule__TernaryOperation__OperatorAssignment_0_1
-            {
-            pushFollow(FollowSets000.FOLLOW_2);
-            rule__TernaryOperation__OperatorAssignment_0_1();
-
-            state._fsp--;
-            if (state.failed) return ;
-
-            }
-
-            if ( state.backtracking==0 ) {
-               after(grammarAccess.getTernaryOperationAccess().getOperatorAssignment_0_1()); 
-            }
-
-            }
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__TernaryOperation__Group_0__1__Impl"
-
-
-    // $ANTLR start "rule__TernaryOperation__Group_0__2"
-    // InternalLustre.g:12597:1: rule__TernaryOperation__Group_0__2 : rule__TernaryOperation__Group_0__2__Impl rule__TernaryOperation__Group_0__3 ;
-    public final void rule__TernaryOperation__Group_0__2() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-        	
-        try {
-            // InternalLustre.g:12601:1: ( rule__TernaryOperation__Group_0__2__Impl rule__TernaryOperation__Group_0__3 )
-            // InternalLustre.g:12602:2: rule__TernaryOperation__Group_0__2__Impl rule__TernaryOperation__Group_0__3
-            {
-            pushFollow(FollowSets000.FOLLOW_70);
-            rule__TernaryOperation__Group_0__2__Impl();
-
-            state._fsp--;
-            if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_2);
-            rule__TernaryOperation__Group_0__3();
-
-            state._fsp--;
-            if (state.failed) return ;
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__TernaryOperation__Group_0__2"
-
-
-    // $ANTLR start "rule__TernaryOperation__Group_0__2__Impl"
-    // InternalLustre.g:12609:1: rule__TernaryOperation__Group_0__2__Impl : ( ( rule__TernaryOperation__SubExpressionsAssignment_0_2 ) ) ;
-    public final void rule__TernaryOperation__Group_0__2__Impl() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-        	
-        try {
-            // InternalLustre.g:12613:1: ( ( ( rule__TernaryOperation__SubExpressionsAssignment_0_2 ) ) )
-            // InternalLustre.g:12614:1: ( ( rule__TernaryOperation__SubExpressionsAssignment_0_2 ) )
-            {
-            // InternalLustre.g:12614:1: ( ( rule__TernaryOperation__SubExpressionsAssignment_0_2 ) )
-            // InternalLustre.g:12615:2: ( rule__TernaryOperation__SubExpressionsAssignment_0_2 )
-            {
-            if ( state.backtracking==0 ) {
-               before(grammarAccess.getTernaryOperationAccess().getSubExpressionsAssignment_0_2()); 
-            }
-            // InternalLustre.g:12616:2: ( rule__TernaryOperation__SubExpressionsAssignment_0_2 )
-            // InternalLustre.g:12616:3: rule__TernaryOperation__SubExpressionsAssignment_0_2
-            {
-            pushFollow(FollowSets000.FOLLOW_2);
-            rule__TernaryOperation__SubExpressionsAssignment_0_2();
-
-            state._fsp--;
-            if (state.failed) return ;
-
-            }
-
-            if ( state.backtracking==0 ) {
-               after(grammarAccess.getTernaryOperationAccess().getSubExpressionsAssignment_0_2()); 
-            }
-
-            }
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__TernaryOperation__Group_0__2__Impl"
-
-
-    // $ANTLR start "rule__TernaryOperation__Group_0__3"
-    // InternalLustre.g:12624:1: rule__TernaryOperation__Group_0__3 : rule__TernaryOperation__Group_0__3__Impl rule__TernaryOperation__Group_0__4 ;
-    public final void rule__TernaryOperation__Group_0__3() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-        	
-        try {
-            // InternalLustre.g:12628:1: ( rule__TernaryOperation__Group_0__3__Impl rule__TernaryOperation__Group_0__4 )
-            // InternalLustre.g:12629:2: rule__TernaryOperation__Group_0__3__Impl rule__TernaryOperation__Group_0__4
-            {
-            pushFollow(FollowSets000.FOLLOW_24);
-            rule__TernaryOperation__Group_0__3__Impl();
-
-            state._fsp--;
-            if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_2);
-            rule__TernaryOperation__Group_0__4();
-
-            state._fsp--;
-            if (state.failed) return ;
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__TernaryOperation__Group_0__3"
-
-
-    // $ANTLR start "rule__TernaryOperation__Group_0__3__Impl"
-    // InternalLustre.g:12636:1: rule__TernaryOperation__Group_0__3__Impl : ( 'then' ) ;
-    public final void rule__TernaryOperation__Group_0__3__Impl() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-        	
-        try {
-            // InternalLustre.g:12640:1: ( ( 'then' ) )
-            // InternalLustre.g:12641:1: ( 'then' )
-            {
-            // InternalLustre.g:12641:1: ( 'then' )
-            // InternalLustre.g:12642:2: 'then'
-            {
-            if ( state.backtracking==0 ) {
-               before(grammarAccess.getTernaryOperationAccess().getThenKeyword_0_3()); 
-            }
-            match(input,98,FollowSets000.FOLLOW_2); if (state.failed) return ;
-            if ( state.backtracking==0 ) {
-               after(grammarAccess.getTernaryOperationAccess().getThenKeyword_0_3()); 
-            }
-
-            }
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__TernaryOperation__Group_0__3__Impl"
-
-
-    // $ANTLR start "rule__TernaryOperation__Group_0__4"
-    // InternalLustre.g:12651:1: rule__TernaryOperation__Group_0__4 : rule__TernaryOperation__Group_0__4__Impl rule__TernaryOperation__Group_0__5 ;
-    public final void rule__TernaryOperation__Group_0__4() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-        	
-        try {
-            // InternalLustre.g:12655:1: ( rule__TernaryOperation__Group_0__4__Impl rule__TernaryOperation__Group_0__5 )
-            // InternalLustre.g:12656:2: rule__TernaryOperation__Group_0__4__Impl rule__TernaryOperation__Group_0__5
-            {
-            pushFollow(FollowSets000.FOLLOW_71);
-            rule__TernaryOperation__Group_0__4__Impl();
-
-            state._fsp--;
-            if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_2);
-            rule__TernaryOperation__Group_0__5();
-
-            state._fsp--;
-            if (state.failed) return ;
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__TernaryOperation__Group_0__4"
-
-
-    // $ANTLR start "rule__TernaryOperation__Group_0__4__Impl"
-    // InternalLustre.g:12663:1: rule__TernaryOperation__Group_0__4__Impl : ( ( rule__TernaryOperation__SubExpressionsAssignment_0_4 ) ) ;
-    public final void rule__TernaryOperation__Group_0__4__Impl() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-        	
-        try {
-            // InternalLustre.g:12667:1: ( ( ( rule__TernaryOperation__SubExpressionsAssignment_0_4 ) ) )
-            // InternalLustre.g:12668:1: ( ( rule__TernaryOperation__SubExpressionsAssignment_0_4 ) )
-            {
-            // InternalLustre.g:12668:1: ( ( rule__TernaryOperation__SubExpressionsAssignment_0_4 ) )
-            // InternalLustre.g:12669:2: ( rule__TernaryOperation__SubExpressionsAssignment_0_4 )
-            {
-            if ( state.backtracking==0 ) {
-               before(grammarAccess.getTernaryOperationAccess().getSubExpressionsAssignment_0_4()); 
-            }
-            // InternalLustre.g:12670:2: ( rule__TernaryOperation__SubExpressionsAssignment_0_4 )
-            // InternalLustre.g:12670:3: rule__TernaryOperation__SubExpressionsAssignment_0_4
-            {
-            pushFollow(FollowSets000.FOLLOW_2);
-            rule__TernaryOperation__SubExpressionsAssignment_0_4();
-
-            state._fsp--;
-            if (state.failed) return ;
-
-            }
-
-            if ( state.backtracking==0 ) {
-               after(grammarAccess.getTernaryOperationAccess().getSubExpressionsAssignment_0_4()); 
-            }
-
-            }
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__TernaryOperation__Group_0__4__Impl"
-
-
-    // $ANTLR start "rule__TernaryOperation__Group_0__5"
-    // InternalLustre.g:12678:1: rule__TernaryOperation__Group_0__5 : rule__TernaryOperation__Group_0__5__Impl rule__TernaryOperation__Group_0__6 ;
-    public final void rule__TernaryOperation__Group_0__5() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-        	
-        try {
-            // InternalLustre.g:12682:1: ( rule__TernaryOperation__Group_0__5__Impl rule__TernaryOperation__Group_0__6 )
-            // InternalLustre.g:12683:2: rule__TernaryOperation__Group_0__5__Impl rule__TernaryOperation__Group_0__6
-            {
-            pushFollow(FollowSets000.FOLLOW_24);
-            rule__TernaryOperation__Group_0__5__Impl();
-
-            state._fsp--;
-            if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_2);
-            rule__TernaryOperation__Group_0__6();
-
-            state._fsp--;
-            if (state.failed) return ;
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__TernaryOperation__Group_0__5"
-
-
-    // $ANTLR start "rule__TernaryOperation__Group_0__5__Impl"
-    // InternalLustre.g:12690:1: rule__TernaryOperation__Group_0__5__Impl : ( 'else' ) ;
-    public final void rule__TernaryOperation__Group_0__5__Impl() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-        	
-        try {
-            // InternalLustre.g:12694:1: ( ( 'else' ) )
-            // InternalLustre.g:12695:1: ( 'else' )
-            {
-            // InternalLustre.g:12695:1: ( 'else' )
-            // InternalLustre.g:12696:2: 'else'
-            {
-            if ( state.backtracking==0 ) {
-               before(grammarAccess.getTernaryOperationAccess().getElseKeyword_0_5()); 
-            }
-            match(input,99,FollowSets000.FOLLOW_2); if (state.failed) return ;
-            if ( state.backtracking==0 ) {
-               after(grammarAccess.getTernaryOperationAccess().getElseKeyword_0_5()); 
-            }
-
-            }
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__TernaryOperation__Group_0__5__Impl"
-
-
-    // $ANTLR start "rule__TernaryOperation__Group_0__6"
-    // InternalLustre.g:12705:1: rule__TernaryOperation__Group_0__6 : rule__TernaryOperation__Group_0__6__Impl ;
-    public final void rule__TernaryOperation__Group_0__6() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-        	
-        try {
-            // InternalLustre.g:12709:1: ( rule__TernaryOperation__Group_0__6__Impl )
-            // InternalLustre.g:12710:2: rule__TernaryOperation__Group_0__6__Impl
-            {
-            pushFollow(FollowSets000.FOLLOW_2);
-            rule__TernaryOperation__Group_0__6__Impl();
-
-            state._fsp--;
-            if (state.failed) return ;
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__TernaryOperation__Group_0__6"
-
-
-    // $ANTLR start "rule__TernaryOperation__Group_0__6__Impl"
-    // InternalLustre.g:12716:1: rule__TernaryOperation__Group_0__6__Impl : ( ( rule__TernaryOperation__SubExpressionsAssignment_0_6 ) ) ;
-    public final void rule__TernaryOperation__Group_0__6__Impl() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-        	
-        try {
-            // InternalLustre.g:12720:1: ( ( ( rule__TernaryOperation__SubExpressionsAssignment_0_6 ) ) )
-            // InternalLustre.g:12721:1: ( ( rule__TernaryOperation__SubExpressionsAssignment_0_6 ) )
-            {
-            // InternalLustre.g:12721:1: ( ( rule__TernaryOperation__SubExpressionsAssignment_0_6 ) )
-            // InternalLustre.g:12722:2: ( rule__TernaryOperation__SubExpressionsAssignment_0_6 )
-            {
-            if ( state.backtracking==0 ) {
-               before(grammarAccess.getTernaryOperationAccess().getSubExpressionsAssignment_0_6()); 
-            }
-            // InternalLustre.g:12723:2: ( rule__TernaryOperation__SubExpressionsAssignment_0_6 )
-            // InternalLustre.g:12723:3: rule__TernaryOperation__SubExpressionsAssignment_0_6
-            {
-            pushFollow(FollowSets000.FOLLOW_2);
-            rule__TernaryOperation__SubExpressionsAssignment_0_6();
-
-            state._fsp--;
-            if (state.failed) return ;
-
-            }
-
-            if ( state.backtracking==0 ) {
-               after(grammarAccess.getTernaryOperationAccess().getSubExpressionsAssignment_0_6()); 
-            }
-
-            }
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__TernaryOperation__Group_0__6__Impl"
-
-
     // $ANTLR start "rule__InitExpression__Group__0"
-    // InternalLustre.g:12732:1: rule__InitExpression__Group__0 : rule__InitExpression__Group__0__Impl rule__InitExpression__Group__1 ;
+    // InternalLustre.g:12543:1: rule__InitExpression__Group__0 : rule__InitExpression__Group__0__Impl rule__InitExpression__Group__1 ;
     public final void rule__InitExpression__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalLustre.g:12736:1: ( rule__InitExpression__Group__0__Impl rule__InitExpression__Group__1 )
-            // InternalLustre.g:12737:2: rule__InitExpression__Group__0__Impl rule__InitExpression__Group__1
+            // InternalLustre.g:12547:1: ( rule__InitExpression__Group__0__Impl rule__InitExpression__Group__1 )
+            // InternalLustre.g:12548:2: rule__InitExpression__Group__0__Impl rule__InitExpression__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_72);
+            pushFollow(FollowSets000.FOLLOW_69);
             rule__InitExpression__Group__0__Impl();
 
             state._fsp--;
@@ -43822,28 +43234,28 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__InitExpression__Group__0__Impl"
-    // InternalLustre.g:12744:1: rule__InitExpression__Group__0__Impl : ( ruleImpliesExpression ) ;
+    // InternalLustre.g:12555:1: rule__InitExpression__Group__0__Impl : ( ruleTernaryOperation ) ;
     public final void rule__InitExpression__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalLustre.g:12748:1: ( ( ruleImpliesExpression ) )
-            // InternalLustre.g:12749:1: ( ruleImpliesExpression )
+            // InternalLustre.g:12559:1: ( ( ruleTernaryOperation ) )
+            // InternalLustre.g:12560:1: ( ruleTernaryOperation )
             {
-            // InternalLustre.g:12749:1: ( ruleImpliesExpression )
-            // InternalLustre.g:12750:2: ruleImpliesExpression
+            // InternalLustre.g:12560:1: ( ruleTernaryOperation )
+            // InternalLustre.g:12561:2: ruleTernaryOperation
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getInitExpressionAccess().getImpliesExpressionParserRuleCall_0()); 
+               before(grammarAccess.getInitExpressionAccess().getTernaryOperationParserRuleCall_0()); 
             }
             pushFollow(FollowSets000.FOLLOW_2);
-            ruleImpliesExpression();
+            ruleTernaryOperation();
 
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getInitExpressionAccess().getImpliesExpressionParserRuleCall_0()); 
+               after(grammarAccess.getInitExpressionAccess().getTernaryOperationParserRuleCall_0()); 
             }
 
             }
@@ -43867,14 +43279,14 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__InitExpression__Group__1"
-    // InternalLustre.g:12759:1: rule__InitExpression__Group__1 : rule__InitExpression__Group__1__Impl ;
+    // InternalLustre.g:12570:1: rule__InitExpression__Group__1 : rule__InitExpression__Group__1__Impl ;
     public final void rule__InitExpression__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalLustre.g:12763:1: ( rule__InitExpression__Group__1__Impl )
-            // InternalLustre.g:12764:2: rule__InitExpression__Group__1__Impl
+            // InternalLustre.g:12574:1: ( rule__InitExpression__Group__1__Impl )
+            // InternalLustre.g:12575:2: rule__InitExpression__Group__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__InitExpression__Group__1__Impl();
@@ -43900,22 +43312,22 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__InitExpression__Group__1__Impl"
-    // InternalLustre.g:12770:1: rule__InitExpression__Group__1__Impl : ( ( rule__InitExpression__Group_1__0 )? ) ;
+    // InternalLustre.g:12581:1: rule__InitExpression__Group__1__Impl : ( ( rule__InitExpression__Group_1__0 )? ) ;
     public final void rule__InitExpression__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalLustre.g:12774:1: ( ( ( rule__InitExpression__Group_1__0 )? ) )
-            // InternalLustre.g:12775:1: ( ( rule__InitExpression__Group_1__0 )? )
+            // InternalLustre.g:12585:1: ( ( ( rule__InitExpression__Group_1__0 )? ) )
+            // InternalLustre.g:12586:1: ( ( rule__InitExpression__Group_1__0 )? )
             {
-            // InternalLustre.g:12775:1: ( ( rule__InitExpression__Group_1__0 )? )
-            // InternalLustre.g:12776:2: ( rule__InitExpression__Group_1__0 )?
+            // InternalLustre.g:12586:1: ( ( rule__InitExpression__Group_1__0 )? )
+            // InternalLustre.g:12587:2: ( rule__InitExpression__Group_1__0 )?
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getInitExpressionAccess().getGroup_1()); 
             }
-            // InternalLustre.g:12777:2: ( rule__InitExpression__Group_1__0 )?
+            // InternalLustre.g:12588:2: ( rule__InitExpression__Group_1__0 )?
             int alt131=2;
             int LA131_0 = input.LA(1);
 
@@ -43924,7 +43336,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             }
             switch (alt131) {
                 case 1 :
-                    // InternalLustre.g:12777:3: rule__InitExpression__Group_1__0
+                    // InternalLustre.g:12588:3: rule__InitExpression__Group_1__0
                     {
                     pushFollow(FollowSets000.FOLLOW_2);
                     rule__InitExpression__Group_1__0();
@@ -43962,16 +43374,16 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__InitExpression__Group_1__0"
-    // InternalLustre.g:12786:1: rule__InitExpression__Group_1__0 : rule__InitExpression__Group_1__0__Impl rule__InitExpression__Group_1__1 ;
+    // InternalLustre.g:12597:1: rule__InitExpression__Group_1__0 : rule__InitExpression__Group_1__0__Impl rule__InitExpression__Group_1__1 ;
     public final void rule__InitExpression__Group_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalLustre.g:12790:1: ( rule__InitExpression__Group_1__0__Impl rule__InitExpression__Group_1__1 )
-            // InternalLustre.g:12791:2: rule__InitExpression__Group_1__0__Impl rule__InitExpression__Group_1__1
+            // InternalLustre.g:12601:1: ( rule__InitExpression__Group_1__0__Impl rule__InitExpression__Group_1__1 )
+            // InternalLustre.g:12602:2: rule__InitExpression__Group_1__0__Impl rule__InitExpression__Group_1__1
             {
-            pushFollow(FollowSets000.FOLLOW_72);
+            pushFollow(FollowSets000.FOLLOW_69);
             rule__InitExpression__Group_1__0__Impl();
 
             state._fsp--;
@@ -44000,23 +43412,23 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__InitExpression__Group_1__0__Impl"
-    // InternalLustre.g:12798:1: rule__InitExpression__Group_1__0__Impl : ( () ) ;
+    // InternalLustre.g:12609:1: rule__InitExpression__Group_1__0__Impl : ( () ) ;
     public final void rule__InitExpression__Group_1__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalLustre.g:12802:1: ( ( () ) )
-            // InternalLustre.g:12803:1: ( () )
+            // InternalLustre.g:12613:1: ( ( () ) )
+            // InternalLustre.g:12614:1: ( () )
             {
-            // InternalLustre.g:12803:1: ( () )
-            // InternalLustre.g:12804:2: ()
+            // InternalLustre.g:12614:1: ( () )
+            // InternalLustre.g:12615:2: ()
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getInitExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()); 
             }
-            // InternalLustre.g:12805:2: ()
-            // InternalLustre.g:12805:3: 
+            // InternalLustre.g:12616:2: ()
+            // InternalLustre.g:12616:3: 
             {
             }
 
@@ -44041,16 +43453,16 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__InitExpression__Group_1__1"
-    // InternalLustre.g:12813:1: rule__InitExpression__Group_1__1 : rule__InitExpression__Group_1__1__Impl rule__InitExpression__Group_1__2 ;
+    // InternalLustre.g:12624:1: rule__InitExpression__Group_1__1 : rule__InitExpression__Group_1__1__Impl rule__InitExpression__Group_1__2 ;
     public final void rule__InitExpression__Group_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalLustre.g:12817:1: ( rule__InitExpression__Group_1__1__Impl rule__InitExpression__Group_1__2 )
-            // InternalLustre.g:12818:2: rule__InitExpression__Group_1__1__Impl rule__InitExpression__Group_1__2
+            // InternalLustre.g:12628:1: ( rule__InitExpression__Group_1__1__Impl rule__InitExpression__Group_1__2 )
+            // InternalLustre.g:12629:2: rule__InitExpression__Group_1__1__Impl rule__InitExpression__Group_1__2
             {
-            pushFollow(FollowSets000.FOLLOW_72);
+            pushFollow(FollowSets000.FOLLOW_69);
             rule__InitExpression__Group_1__1__Impl();
 
             state._fsp--;
@@ -44079,23 +43491,23 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__InitExpression__Group_1__1__Impl"
-    // InternalLustre.g:12825:1: rule__InitExpression__Group_1__1__Impl : ( ( rule__InitExpression__Group_1_1__0 ) ) ;
+    // InternalLustre.g:12636:1: rule__InitExpression__Group_1__1__Impl : ( ( rule__InitExpression__Group_1_1__0 ) ) ;
     public final void rule__InitExpression__Group_1__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalLustre.g:12829:1: ( ( ( rule__InitExpression__Group_1_1__0 ) ) )
-            // InternalLustre.g:12830:1: ( ( rule__InitExpression__Group_1_1__0 ) )
+            // InternalLustre.g:12640:1: ( ( ( rule__InitExpression__Group_1_1__0 ) ) )
+            // InternalLustre.g:12641:1: ( ( rule__InitExpression__Group_1_1__0 ) )
             {
-            // InternalLustre.g:12830:1: ( ( rule__InitExpression__Group_1_1__0 ) )
-            // InternalLustre.g:12831:2: ( rule__InitExpression__Group_1_1__0 )
+            // InternalLustre.g:12641:1: ( ( rule__InitExpression__Group_1_1__0 ) )
+            // InternalLustre.g:12642:2: ( rule__InitExpression__Group_1_1__0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getInitExpressionAccess().getGroup_1_1()); 
             }
-            // InternalLustre.g:12832:2: ( rule__InitExpression__Group_1_1__0 )
-            // InternalLustre.g:12832:3: rule__InitExpression__Group_1_1__0
+            // InternalLustre.g:12643:2: ( rule__InitExpression__Group_1_1__0 )
+            // InternalLustre.g:12643:3: rule__InitExpression__Group_1_1__0
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__InitExpression__Group_1_1__0();
@@ -44130,14 +43542,14 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__InitExpression__Group_1__2"
-    // InternalLustre.g:12840:1: rule__InitExpression__Group_1__2 : rule__InitExpression__Group_1__2__Impl ;
+    // InternalLustre.g:12651:1: rule__InitExpression__Group_1__2 : rule__InitExpression__Group_1__2__Impl ;
     public final void rule__InitExpression__Group_1__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalLustre.g:12844:1: ( rule__InitExpression__Group_1__2__Impl )
-            // InternalLustre.g:12845:2: rule__InitExpression__Group_1__2__Impl
+            // InternalLustre.g:12655:1: ( rule__InitExpression__Group_1__2__Impl )
+            // InternalLustre.g:12656:2: rule__InitExpression__Group_1__2__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__InitExpression__Group_1__2__Impl();
@@ -44163,22 +43575,22 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__InitExpression__Group_1__2__Impl"
-    // InternalLustre.g:12851:1: rule__InitExpression__Group_1__2__Impl : ( ( rule__InitExpression__Group_1_2__0 )* ) ;
+    // InternalLustre.g:12662:1: rule__InitExpression__Group_1__2__Impl : ( ( rule__InitExpression__Group_1_2__0 )* ) ;
     public final void rule__InitExpression__Group_1__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalLustre.g:12855:1: ( ( ( rule__InitExpression__Group_1_2__0 )* ) )
-            // InternalLustre.g:12856:1: ( ( rule__InitExpression__Group_1_2__0 )* )
+            // InternalLustre.g:12666:1: ( ( ( rule__InitExpression__Group_1_2__0 )* ) )
+            // InternalLustre.g:12667:1: ( ( rule__InitExpression__Group_1_2__0 )* )
             {
-            // InternalLustre.g:12856:1: ( ( rule__InitExpression__Group_1_2__0 )* )
-            // InternalLustre.g:12857:2: ( rule__InitExpression__Group_1_2__0 )*
+            // InternalLustre.g:12667:1: ( ( rule__InitExpression__Group_1_2__0 )* )
+            // InternalLustre.g:12668:2: ( rule__InitExpression__Group_1_2__0 )*
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getInitExpressionAccess().getGroup_1_2()); 
             }
-            // InternalLustre.g:12858:2: ( rule__InitExpression__Group_1_2__0 )*
+            // InternalLustre.g:12669:2: ( rule__InitExpression__Group_1_2__0 )*
             loop132:
             do {
                 int alt132=2;
@@ -44191,9 +43603,9 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
 
                 switch (alt132) {
             	case 1 :
-            	    // InternalLustre.g:12858:3: rule__InitExpression__Group_1_2__0
+            	    // InternalLustre.g:12669:3: rule__InitExpression__Group_1_2__0
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_73);
+            	    pushFollow(FollowSets000.FOLLOW_70);
             	    rule__InitExpression__Group_1_2__0();
 
             	    state._fsp--;
@@ -44232,14 +43644,14 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__InitExpression__Group_1_1__0"
-    // InternalLustre.g:12867:1: rule__InitExpression__Group_1_1__0 : rule__InitExpression__Group_1_1__0__Impl rule__InitExpression__Group_1_1__1 ;
+    // InternalLustre.g:12678:1: rule__InitExpression__Group_1_1__0 : rule__InitExpression__Group_1_1__0__Impl rule__InitExpression__Group_1_1__1 ;
     public final void rule__InitExpression__Group_1_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalLustre.g:12871:1: ( rule__InitExpression__Group_1_1__0__Impl rule__InitExpression__Group_1_1__1 )
-            // InternalLustre.g:12872:2: rule__InitExpression__Group_1_1__0__Impl rule__InitExpression__Group_1_1__1
+            // InternalLustre.g:12682:1: ( rule__InitExpression__Group_1_1__0__Impl rule__InitExpression__Group_1_1__1 )
+            // InternalLustre.g:12683:2: rule__InitExpression__Group_1_1__0__Impl rule__InitExpression__Group_1_1__1
             {
             pushFollow(FollowSets000.FOLLOW_24);
             rule__InitExpression__Group_1_1__0__Impl();
@@ -44270,23 +43682,23 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__InitExpression__Group_1_1__0__Impl"
-    // InternalLustre.g:12879:1: rule__InitExpression__Group_1_1__0__Impl : ( ( rule__InitExpression__OperatorAssignment_1_1_0 ) ) ;
+    // InternalLustre.g:12690:1: rule__InitExpression__Group_1_1__0__Impl : ( ( rule__InitExpression__OperatorAssignment_1_1_0 ) ) ;
     public final void rule__InitExpression__Group_1_1__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalLustre.g:12883:1: ( ( ( rule__InitExpression__OperatorAssignment_1_1_0 ) ) )
-            // InternalLustre.g:12884:1: ( ( rule__InitExpression__OperatorAssignment_1_1_0 ) )
+            // InternalLustre.g:12694:1: ( ( ( rule__InitExpression__OperatorAssignment_1_1_0 ) ) )
+            // InternalLustre.g:12695:1: ( ( rule__InitExpression__OperatorAssignment_1_1_0 ) )
             {
-            // InternalLustre.g:12884:1: ( ( rule__InitExpression__OperatorAssignment_1_1_0 ) )
-            // InternalLustre.g:12885:2: ( rule__InitExpression__OperatorAssignment_1_1_0 )
+            // InternalLustre.g:12695:1: ( ( rule__InitExpression__OperatorAssignment_1_1_0 ) )
+            // InternalLustre.g:12696:2: ( rule__InitExpression__OperatorAssignment_1_1_0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getInitExpressionAccess().getOperatorAssignment_1_1_0()); 
             }
-            // InternalLustre.g:12886:2: ( rule__InitExpression__OperatorAssignment_1_1_0 )
-            // InternalLustre.g:12886:3: rule__InitExpression__OperatorAssignment_1_1_0
+            // InternalLustre.g:12697:2: ( rule__InitExpression__OperatorAssignment_1_1_0 )
+            // InternalLustre.g:12697:3: rule__InitExpression__OperatorAssignment_1_1_0
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__InitExpression__OperatorAssignment_1_1_0();
@@ -44321,14 +43733,14 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__InitExpression__Group_1_1__1"
-    // InternalLustre.g:12894:1: rule__InitExpression__Group_1_1__1 : rule__InitExpression__Group_1_1__1__Impl ;
+    // InternalLustre.g:12705:1: rule__InitExpression__Group_1_1__1 : rule__InitExpression__Group_1_1__1__Impl ;
     public final void rule__InitExpression__Group_1_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalLustre.g:12898:1: ( rule__InitExpression__Group_1_1__1__Impl )
-            // InternalLustre.g:12899:2: rule__InitExpression__Group_1_1__1__Impl
+            // InternalLustre.g:12709:1: ( rule__InitExpression__Group_1_1__1__Impl )
+            // InternalLustre.g:12710:2: rule__InitExpression__Group_1_1__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__InitExpression__Group_1_1__1__Impl();
@@ -44354,23 +43766,23 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__InitExpression__Group_1_1__1__Impl"
-    // InternalLustre.g:12905:1: rule__InitExpression__Group_1_1__1__Impl : ( ( rule__InitExpression__SubExpressionsAssignment_1_1_1 ) ) ;
+    // InternalLustre.g:12716:1: rule__InitExpression__Group_1_1__1__Impl : ( ( rule__InitExpression__SubExpressionsAssignment_1_1_1 ) ) ;
     public final void rule__InitExpression__Group_1_1__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalLustre.g:12909:1: ( ( ( rule__InitExpression__SubExpressionsAssignment_1_1_1 ) ) )
-            // InternalLustre.g:12910:1: ( ( rule__InitExpression__SubExpressionsAssignment_1_1_1 ) )
+            // InternalLustre.g:12720:1: ( ( ( rule__InitExpression__SubExpressionsAssignment_1_1_1 ) ) )
+            // InternalLustre.g:12721:1: ( ( rule__InitExpression__SubExpressionsAssignment_1_1_1 ) )
             {
-            // InternalLustre.g:12910:1: ( ( rule__InitExpression__SubExpressionsAssignment_1_1_1 ) )
-            // InternalLustre.g:12911:2: ( rule__InitExpression__SubExpressionsAssignment_1_1_1 )
+            // InternalLustre.g:12721:1: ( ( rule__InitExpression__SubExpressionsAssignment_1_1_1 ) )
+            // InternalLustre.g:12722:2: ( rule__InitExpression__SubExpressionsAssignment_1_1_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getInitExpressionAccess().getSubExpressionsAssignment_1_1_1()); 
             }
-            // InternalLustre.g:12912:2: ( rule__InitExpression__SubExpressionsAssignment_1_1_1 )
-            // InternalLustre.g:12912:3: rule__InitExpression__SubExpressionsAssignment_1_1_1
+            // InternalLustre.g:12723:2: ( rule__InitExpression__SubExpressionsAssignment_1_1_1 )
+            // InternalLustre.g:12723:3: rule__InitExpression__SubExpressionsAssignment_1_1_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__InitExpression__SubExpressionsAssignment_1_1_1();
@@ -44405,14 +43817,14 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__InitExpression__Group_1_2__0"
-    // InternalLustre.g:12921:1: rule__InitExpression__Group_1_2__0 : rule__InitExpression__Group_1_2__0__Impl rule__InitExpression__Group_1_2__1 ;
+    // InternalLustre.g:12732:1: rule__InitExpression__Group_1_2__0 : rule__InitExpression__Group_1_2__0__Impl rule__InitExpression__Group_1_2__1 ;
     public final void rule__InitExpression__Group_1_2__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalLustre.g:12925:1: ( rule__InitExpression__Group_1_2__0__Impl rule__InitExpression__Group_1_2__1 )
-            // InternalLustre.g:12926:2: rule__InitExpression__Group_1_2__0__Impl rule__InitExpression__Group_1_2__1
+            // InternalLustre.g:12736:1: ( rule__InitExpression__Group_1_2__0__Impl rule__InitExpression__Group_1_2__1 )
+            // InternalLustre.g:12737:2: rule__InitExpression__Group_1_2__0__Impl rule__InitExpression__Group_1_2__1
             {
             pushFollow(FollowSets000.FOLLOW_24);
             rule__InitExpression__Group_1_2__0__Impl();
@@ -44443,17 +43855,17 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__InitExpression__Group_1_2__0__Impl"
-    // InternalLustre.g:12933:1: rule__InitExpression__Group_1_2__0__Impl : ( '->' ) ;
+    // InternalLustre.g:12744:1: rule__InitExpression__Group_1_2__0__Impl : ( '->' ) ;
     public final void rule__InitExpression__Group_1_2__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalLustre.g:12937:1: ( ( '->' ) )
-            // InternalLustre.g:12938:1: ( '->' )
+            // InternalLustre.g:12748:1: ( ( '->' ) )
+            // InternalLustre.g:12749:1: ( '->' )
             {
-            // InternalLustre.g:12938:1: ( '->' )
-            // InternalLustre.g:12939:2: '->'
+            // InternalLustre.g:12749:1: ( '->' )
+            // InternalLustre.g:12750:2: '->'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getInitExpressionAccess().getHyphenMinusGreaterThanSignKeyword_1_2_0()); 
@@ -44484,14 +43896,14 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__InitExpression__Group_1_2__1"
-    // InternalLustre.g:12948:1: rule__InitExpression__Group_1_2__1 : rule__InitExpression__Group_1_2__1__Impl ;
+    // InternalLustre.g:12759:1: rule__InitExpression__Group_1_2__1 : rule__InitExpression__Group_1_2__1__Impl ;
     public final void rule__InitExpression__Group_1_2__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalLustre.g:12952:1: ( rule__InitExpression__Group_1_2__1__Impl )
-            // InternalLustre.g:12953:2: rule__InitExpression__Group_1_2__1__Impl
+            // InternalLustre.g:12763:1: ( rule__InitExpression__Group_1_2__1__Impl )
+            // InternalLustre.g:12764:2: rule__InitExpression__Group_1_2__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__InitExpression__Group_1_2__1__Impl();
@@ -44517,23 +43929,23 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__InitExpression__Group_1_2__1__Impl"
-    // InternalLustre.g:12959:1: rule__InitExpression__Group_1_2__1__Impl : ( ( rule__InitExpression__SubExpressionsAssignment_1_2_1 ) ) ;
+    // InternalLustre.g:12770:1: rule__InitExpression__Group_1_2__1__Impl : ( ( rule__InitExpression__SubExpressionsAssignment_1_2_1 ) ) ;
     public final void rule__InitExpression__Group_1_2__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalLustre.g:12963:1: ( ( ( rule__InitExpression__SubExpressionsAssignment_1_2_1 ) ) )
-            // InternalLustre.g:12964:1: ( ( rule__InitExpression__SubExpressionsAssignment_1_2_1 ) )
+            // InternalLustre.g:12774:1: ( ( ( rule__InitExpression__SubExpressionsAssignment_1_2_1 ) ) )
+            // InternalLustre.g:12775:1: ( ( rule__InitExpression__SubExpressionsAssignment_1_2_1 ) )
             {
-            // InternalLustre.g:12964:1: ( ( rule__InitExpression__SubExpressionsAssignment_1_2_1 ) )
-            // InternalLustre.g:12965:2: ( rule__InitExpression__SubExpressionsAssignment_1_2_1 )
+            // InternalLustre.g:12775:1: ( ( rule__InitExpression__SubExpressionsAssignment_1_2_1 ) )
+            // InternalLustre.g:12776:2: ( rule__InitExpression__SubExpressionsAssignment_1_2_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getInitExpressionAccess().getSubExpressionsAssignment_1_2_1()); 
             }
-            // InternalLustre.g:12966:2: ( rule__InitExpression__SubExpressionsAssignment_1_2_1 )
-            // InternalLustre.g:12966:3: rule__InitExpression__SubExpressionsAssignment_1_2_1
+            // InternalLustre.g:12777:2: ( rule__InitExpression__SubExpressionsAssignment_1_2_1 )
+            // InternalLustre.g:12777:3: rule__InitExpression__SubExpressionsAssignment_1_2_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__InitExpression__SubExpressionsAssignment_1_2_1();
@@ -44565,6 +43977,594 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
         return ;
     }
     // $ANTLR end "rule__InitExpression__Group_1_2__1__Impl"
+
+
+    // $ANTLR start "rule__TernaryOperation__Group_0__0"
+    // InternalLustre.g:12786:1: rule__TernaryOperation__Group_0__0 : rule__TernaryOperation__Group_0__0__Impl rule__TernaryOperation__Group_0__1 ;
+    public final void rule__TernaryOperation__Group_0__0() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+        	
+        try {
+            // InternalLustre.g:12790:1: ( rule__TernaryOperation__Group_0__0__Impl rule__TernaryOperation__Group_0__1 )
+            // InternalLustre.g:12791:2: rule__TernaryOperation__Group_0__0__Impl rule__TernaryOperation__Group_0__1
+            {
+            pushFollow(FollowSets000.FOLLOW_71);
+            rule__TernaryOperation__Group_0__0__Impl();
+
+            state._fsp--;
+            if (state.failed) return ;
+            pushFollow(FollowSets000.FOLLOW_2);
+            rule__TernaryOperation__Group_0__1();
+
+            state._fsp--;
+            if (state.failed) return ;
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__TernaryOperation__Group_0__0"
+
+
+    // $ANTLR start "rule__TernaryOperation__Group_0__0__Impl"
+    // InternalLustre.g:12798:1: rule__TernaryOperation__Group_0__0__Impl : ( () ) ;
+    public final void rule__TernaryOperation__Group_0__0__Impl() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+        	
+        try {
+            // InternalLustre.g:12802:1: ( ( () ) )
+            // InternalLustre.g:12803:1: ( () )
+            {
+            // InternalLustre.g:12803:1: ( () )
+            // InternalLustre.g:12804:2: ()
+            {
+            if ( state.backtracking==0 ) {
+               before(grammarAccess.getTernaryOperationAccess().getOperatorExpressionAction_0_0()); 
+            }
+            // InternalLustre.g:12805:2: ()
+            // InternalLustre.g:12805:3: 
+            {
+            }
+
+            if ( state.backtracking==0 ) {
+               after(grammarAccess.getTernaryOperationAccess().getOperatorExpressionAction_0_0()); 
+            }
+
+            }
+
+
+            }
+
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__TernaryOperation__Group_0__0__Impl"
+
+
+    // $ANTLR start "rule__TernaryOperation__Group_0__1"
+    // InternalLustre.g:12813:1: rule__TernaryOperation__Group_0__1 : rule__TernaryOperation__Group_0__1__Impl rule__TernaryOperation__Group_0__2 ;
+    public final void rule__TernaryOperation__Group_0__1() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+        	
+        try {
+            // InternalLustre.g:12817:1: ( rule__TernaryOperation__Group_0__1__Impl rule__TernaryOperation__Group_0__2 )
+            // InternalLustre.g:12818:2: rule__TernaryOperation__Group_0__1__Impl rule__TernaryOperation__Group_0__2
+            {
+            pushFollow(FollowSets000.FOLLOW_24);
+            rule__TernaryOperation__Group_0__1__Impl();
+
+            state._fsp--;
+            if (state.failed) return ;
+            pushFollow(FollowSets000.FOLLOW_2);
+            rule__TernaryOperation__Group_0__2();
+
+            state._fsp--;
+            if (state.failed) return ;
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__TernaryOperation__Group_0__1"
+
+
+    // $ANTLR start "rule__TernaryOperation__Group_0__1__Impl"
+    // InternalLustre.g:12825:1: rule__TernaryOperation__Group_0__1__Impl : ( ( rule__TernaryOperation__OperatorAssignment_0_1 ) ) ;
+    public final void rule__TernaryOperation__Group_0__1__Impl() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+        	
+        try {
+            // InternalLustre.g:12829:1: ( ( ( rule__TernaryOperation__OperatorAssignment_0_1 ) ) )
+            // InternalLustre.g:12830:1: ( ( rule__TernaryOperation__OperatorAssignment_0_1 ) )
+            {
+            // InternalLustre.g:12830:1: ( ( rule__TernaryOperation__OperatorAssignment_0_1 ) )
+            // InternalLustre.g:12831:2: ( rule__TernaryOperation__OperatorAssignment_0_1 )
+            {
+            if ( state.backtracking==0 ) {
+               before(grammarAccess.getTernaryOperationAccess().getOperatorAssignment_0_1()); 
+            }
+            // InternalLustre.g:12832:2: ( rule__TernaryOperation__OperatorAssignment_0_1 )
+            // InternalLustre.g:12832:3: rule__TernaryOperation__OperatorAssignment_0_1
+            {
+            pushFollow(FollowSets000.FOLLOW_2);
+            rule__TernaryOperation__OperatorAssignment_0_1();
+
+            state._fsp--;
+            if (state.failed) return ;
+
+            }
+
+            if ( state.backtracking==0 ) {
+               after(grammarAccess.getTernaryOperationAccess().getOperatorAssignment_0_1()); 
+            }
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__TernaryOperation__Group_0__1__Impl"
+
+
+    // $ANTLR start "rule__TernaryOperation__Group_0__2"
+    // InternalLustre.g:12840:1: rule__TernaryOperation__Group_0__2 : rule__TernaryOperation__Group_0__2__Impl rule__TernaryOperation__Group_0__3 ;
+    public final void rule__TernaryOperation__Group_0__2() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+        	
+        try {
+            // InternalLustre.g:12844:1: ( rule__TernaryOperation__Group_0__2__Impl rule__TernaryOperation__Group_0__3 )
+            // InternalLustre.g:12845:2: rule__TernaryOperation__Group_0__2__Impl rule__TernaryOperation__Group_0__3
+            {
+            pushFollow(FollowSets000.FOLLOW_72);
+            rule__TernaryOperation__Group_0__2__Impl();
+
+            state._fsp--;
+            if (state.failed) return ;
+            pushFollow(FollowSets000.FOLLOW_2);
+            rule__TernaryOperation__Group_0__3();
+
+            state._fsp--;
+            if (state.failed) return ;
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__TernaryOperation__Group_0__2"
+
+
+    // $ANTLR start "rule__TernaryOperation__Group_0__2__Impl"
+    // InternalLustre.g:12852:1: rule__TernaryOperation__Group_0__2__Impl : ( ( rule__TernaryOperation__SubExpressionsAssignment_0_2 ) ) ;
+    public final void rule__TernaryOperation__Group_0__2__Impl() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+        	
+        try {
+            // InternalLustre.g:12856:1: ( ( ( rule__TernaryOperation__SubExpressionsAssignment_0_2 ) ) )
+            // InternalLustre.g:12857:1: ( ( rule__TernaryOperation__SubExpressionsAssignment_0_2 ) )
+            {
+            // InternalLustre.g:12857:1: ( ( rule__TernaryOperation__SubExpressionsAssignment_0_2 ) )
+            // InternalLustre.g:12858:2: ( rule__TernaryOperation__SubExpressionsAssignment_0_2 )
+            {
+            if ( state.backtracking==0 ) {
+               before(grammarAccess.getTernaryOperationAccess().getSubExpressionsAssignment_0_2()); 
+            }
+            // InternalLustre.g:12859:2: ( rule__TernaryOperation__SubExpressionsAssignment_0_2 )
+            // InternalLustre.g:12859:3: rule__TernaryOperation__SubExpressionsAssignment_0_2
+            {
+            pushFollow(FollowSets000.FOLLOW_2);
+            rule__TernaryOperation__SubExpressionsAssignment_0_2();
+
+            state._fsp--;
+            if (state.failed) return ;
+
+            }
+
+            if ( state.backtracking==0 ) {
+               after(grammarAccess.getTernaryOperationAccess().getSubExpressionsAssignment_0_2()); 
+            }
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__TernaryOperation__Group_0__2__Impl"
+
+
+    // $ANTLR start "rule__TernaryOperation__Group_0__3"
+    // InternalLustre.g:12867:1: rule__TernaryOperation__Group_0__3 : rule__TernaryOperation__Group_0__3__Impl rule__TernaryOperation__Group_0__4 ;
+    public final void rule__TernaryOperation__Group_0__3() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+        	
+        try {
+            // InternalLustre.g:12871:1: ( rule__TernaryOperation__Group_0__3__Impl rule__TernaryOperation__Group_0__4 )
+            // InternalLustre.g:12872:2: rule__TernaryOperation__Group_0__3__Impl rule__TernaryOperation__Group_0__4
+            {
+            pushFollow(FollowSets000.FOLLOW_24);
+            rule__TernaryOperation__Group_0__3__Impl();
+
+            state._fsp--;
+            if (state.failed) return ;
+            pushFollow(FollowSets000.FOLLOW_2);
+            rule__TernaryOperation__Group_0__4();
+
+            state._fsp--;
+            if (state.failed) return ;
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__TernaryOperation__Group_0__3"
+
+
+    // $ANTLR start "rule__TernaryOperation__Group_0__3__Impl"
+    // InternalLustre.g:12879:1: rule__TernaryOperation__Group_0__3__Impl : ( 'then' ) ;
+    public final void rule__TernaryOperation__Group_0__3__Impl() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+        	
+        try {
+            // InternalLustre.g:12883:1: ( ( 'then' ) )
+            // InternalLustre.g:12884:1: ( 'then' )
+            {
+            // InternalLustre.g:12884:1: ( 'then' )
+            // InternalLustre.g:12885:2: 'then'
+            {
+            if ( state.backtracking==0 ) {
+               before(grammarAccess.getTernaryOperationAccess().getThenKeyword_0_3()); 
+            }
+            match(input,98,FollowSets000.FOLLOW_2); if (state.failed) return ;
+            if ( state.backtracking==0 ) {
+               after(grammarAccess.getTernaryOperationAccess().getThenKeyword_0_3()); 
+            }
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__TernaryOperation__Group_0__3__Impl"
+
+
+    // $ANTLR start "rule__TernaryOperation__Group_0__4"
+    // InternalLustre.g:12894:1: rule__TernaryOperation__Group_0__4 : rule__TernaryOperation__Group_0__4__Impl rule__TernaryOperation__Group_0__5 ;
+    public final void rule__TernaryOperation__Group_0__4() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+        	
+        try {
+            // InternalLustre.g:12898:1: ( rule__TernaryOperation__Group_0__4__Impl rule__TernaryOperation__Group_0__5 )
+            // InternalLustre.g:12899:2: rule__TernaryOperation__Group_0__4__Impl rule__TernaryOperation__Group_0__5
+            {
+            pushFollow(FollowSets000.FOLLOW_73);
+            rule__TernaryOperation__Group_0__4__Impl();
+
+            state._fsp--;
+            if (state.failed) return ;
+            pushFollow(FollowSets000.FOLLOW_2);
+            rule__TernaryOperation__Group_0__5();
+
+            state._fsp--;
+            if (state.failed) return ;
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__TernaryOperation__Group_0__4"
+
+
+    // $ANTLR start "rule__TernaryOperation__Group_0__4__Impl"
+    // InternalLustre.g:12906:1: rule__TernaryOperation__Group_0__4__Impl : ( ( rule__TernaryOperation__SubExpressionsAssignment_0_4 ) ) ;
+    public final void rule__TernaryOperation__Group_0__4__Impl() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+        	
+        try {
+            // InternalLustre.g:12910:1: ( ( ( rule__TernaryOperation__SubExpressionsAssignment_0_4 ) ) )
+            // InternalLustre.g:12911:1: ( ( rule__TernaryOperation__SubExpressionsAssignment_0_4 ) )
+            {
+            // InternalLustre.g:12911:1: ( ( rule__TernaryOperation__SubExpressionsAssignment_0_4 ) )
+            // InternalLustre.g:12912:2: ( rule__TernaryOperation__SubExpressionsAssignment_0_4 )
+            {
+            if ( state.backtracking==0 ) {
+               before(grammarAccess.getTernaryOperationAccess().getSubExpressionsAssignment_0_4()); 
+            }
+            // InternalLustre.g:12913:2: ( rule__TernaryOperation__SubExpressionsAssignment_0_4 )
+            // InternalLustre.g:12913:3: rule__TernaryOperation__SubExpressionsAssignment_0_4
+            {
+            pushFollow(FollowSets000.FOLLOW_2);
+            rule__TernaryOperation__SubExpressionsAssignment_0_4();
+
+            state._fsp--;
+            if (state.failed) return ;
+
+            }
+
+            if ( state.backtracking==0 ) {
+               after(grammarAccess.getTernaryOperationAccess().getSubExpressionsAssignment_0_4()); 
+            }
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__TernaryOperation__Group_0__4__Impl"
+
+
+    // $ANTLR start "rule__TernaryOperation__Group_0__5"
+    // InternalLustre.g:12921:1: rule__TernaryOperation__Group_0__5 : rule__TernaryOperation__Group_0__5__Impl rule__TernaryOperation__Group_0__6 ;
+    public final void rule__TernaryOperation__Group_0__5() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+        	
+        try {
+            // InternalLustre.g:12925:1: ( rule__TernaryOperation__Group_0__5__Impl rule__TernaryOperation__Group_0__6 )
+            // InternalLustre.g:12926:2: rule__TernaryOperation__Group_0__5__Impl rule__TernaryOperation__Group_0__6
+            {
+            pushFollow(FollowSets000.FOLLOW_24);
+            rule__TernaryOperation__Group_0__5__Impl();
+
+            state._fsp--;
+            if (state.failed) return ;
+            pushFollow(FollowSets000.FOLLOW_2);
+            rule__TernaryOperation__Group_0__6();
+
+            state._fsp--;
+            if (state.failed) return ;
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__TernaryOperation__Group_0__5"
+
+
+    // $ANTLR start "rule__TernaryOperation__Group_0__5__Impl"
+    // InternalLustre.g:12933:1: rule__TernaryOperation__Group_0__5__Impl : ( 'else' ) ;
+    public final void rule__TernaryOperation__Group_0__5__Impl() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+        	
+        try {
+            // InternalLustre.g:12937:1: ( ( 'else' ) )
+            // InternalLustre.g:12938:1: ( 'else' )
+            {
+            // InternalLustre.g:12938:1: ( 'else' )
+            // InternalLustre.g:12939:2: 'else'
+            {
+            if ( state.backtracking==0 ) {
+               before(grammarAccess.getTernaryOperationAccess().getElseKeyword_0_5()); 
+            }
+            match(input,99,FollowSets000.FOLLOW_2); if (state.failed) return ;
+            if ( state.backtracking==0 ) {
+               after(grammarAccess.getTernaryOperationAccess().getElseKeyword_0_5()); 
+            }
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__TernaryOperation__Group_0__5__Impl"
+
+
+    // $ANTLR start "rule__TernaryOperation__Group_0__6"
+    // InternalLustre.g:12948:1: rule__TernaryOperation__Group_0__6 : rule__TernaryOperation__Group_0__6__Impl ;
+    public final void rule__TernaryOperation__Group_0__6() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+        	
+        try {
+            // InternalLustre.g:12952:1: ( rule__TernaryOperation__Group_0__6__Impl )
+            // InternalLustre.g:12953:2: rule__TernaryOperation__Group_0__6__Impl
+            {
+            pushFollow(FollowSets000.FOLLOW_2);
+            rule__TernaryOperation__Group_0__6__Impl();
+
+            state._fsp--;
+            if (state.failed) return ;
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__TernaryOperation__Group_0__6"
+
+
+    // $ANTLR start "rule__TernaryOperation__Group_0__6__Impl"
+    // InternalLustre.g:12959:1: rule__TernaryOperation__Group_0__6__Impl : ( ( rule__TernaryOperation__SubExpressionsAssignment_0_6 ) ) ;
+    public final void rule__TernaryOperation__Group_0__6__Impl() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+        	
+        try {
+            // InternalLustre.g:12963:1: ( ( ( rule__TernaryOperation__SubExpressionsAssignment_0_6 ) ) )
+            // InternalLustre.g:12964:1: ( ( rule__TernaryOperation__SubExpressionsAssignment_0_6 ) )
+            {
+            // InternalLustre.g:12964:1: ( ( rule__TernaryOperation__SubExpressionsAssignment_0_6 ) )
+            // InternalLustre.g:12965:2: ( rule__TernaryOperation__SubExpressionsAssignment_0_6 )
+            {
+            if ( state.backtracking==0 ) {
+               before(grammarAccess.getTernaryOperationAccess().getSubExpressionsAssignment_0_6()); 
+            }
+            // InternalLustre.g:12966:2: ( rule__TernaryOperation__SubExpressionsAssignment_0_6 )
+            // InternalLustre.g:12966:3: rule__TernaryOperation__SubExpressionsAssignment_0_6
+            {
+            pushFollow(FollowSets000.FOLLOW_2);
+            rule__TernaryOperation__SubExpressionsAssignment_0_6();
+
+            state._fsp--;
+            if (state.failed) return ;
+
+            }
+
+            if ( state.backtracking==0 ) {
+               after(grammarAccess.getTernaryOperationAccess().getSubExpressionsAssignment_0_6()); 
+            }
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__TernaryOperation__Group_0__6__Impl"
 
 
     // $ANTLR start "rule__ImpliesExpression__Group__0"
@@ -99917,198 +99917,18 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "rule__LastExpression__SubExpressionsAssignment_0_2"
 
 
-    // $ANTLR start "rule__TernaryOperation__OperatorAssignment_0_1"
-    // InternalLustre.g:29980:1: rule__TernaryOperation__OperatorAssignment_0_1 : ( ruleConditionalOperator ) ;
-    public final void rule__TernaryOperation__OperatorAssignment_0_1() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-        	
-        try {
-            // InternalLustre.g:29984:1: ( ( ruleConditionalOperator ) )
-            // InternalLustre.g:29985:2: ( ruleConditionalOperator )
-            {
-            // InternalLustre.g:29985:2: ( ruleConditionalOperator )
-            // InternalLustre.g:29986:3: ruleConditionalOperator
-            {
-            if ( state.backtracking==0 ) {
-               before(grammarAccess.getTernaryOperationAccess().getOperatorConditionalOperatorEnumRuleCall_0_1_0()); 
-            }
-            pushFollow(FollowSets000.FOLLOW_2);
-            ruleConditionalOperator();
-
-            state._fsp--;
-            if (state.failed) return ;
-            if ( state.backtracking==0 ) {
-               after(grammarAccess.getTernaryOperationAccess().getOperatorConditionalOperatorEnumRuleCall_0_1_0()); 
-            }
-
-            }
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__TernaryOperation__OperatorAssignment_0_1"
-
-
-    // $ANTLR start "rule__TernaryOperation__SubExpressionsAssignment_0_2"
-    // InternalLustre.g:29995:1: rule__TernaryOperation__SubExpressionsAssignment_0_2 : ( ruleTernaryOperation ) ;
-    public final void rule__TernaryOperation__SubExpressionsAssignment_0_2() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-        	
-        try {
-            // InternalLustre.g:29999:1: ( ( ruleTernaryOperation ) )
-            // InternalLustre.g:30000:2: ( ruleTernaryOperation )
-            {
-            // InternalLustre.g:30000:2: ( ruleTernaryOperation )
-            // InternalLustre.g:30001:3: ruleTernaryOperation
-            {
-            if ( state.backtracking==0 ) {
-               before(grammarAccess.getTernaryOperationAccess().getSubExpressionsTernaryOperationParserRuleCall_0_2_0()); 
-            }
-            pushFollow(FollowSets000.FOLLOW_2);
-            ruleTernaryOperation();
-
-            state._fsp--;
-            if (state.failed) return ;
-            if ( state.backtracking==0 ) {
-               after(grammarAccess.getTernaryOperationAccess().getSubExpressionsTernaryOperationParserRuleCall_0_2_0()); 
-            }
-
-            }
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__TernaryOperation__SubExpressionsAssignment_0_2"
-
-
-    // $ANTLR start "rule__TernaryOperation__SubExpressionsAssignment_0_4"
-    // InternalLustre.g:30010:1: rule__TernaryOperation__SubExpressionsAssignment_0_4 : ( ruleTernaryOperation ) ;
-    public final void rule__TernaryOperation__SubExpressionsAssignment_0_4() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-        	
-        try {
-            // InternalLustre.g:30014:1: ( ( ruleTernaryOperation ) )
-            // InternalLustre.g:30015:2: ( ruleTernaryOperation )
-            {
-            // InternalLustre.g:30015:2: ( ruleTernaryOperation )
-            // InternalLustre.g:30016:3: ruleTernaryOperation
-            {
-            if ( state.backtracking==0 ) {
-               before(grammarAccess.getTernaryOperationAccess().getSubExpressionsTernaryOperationParserRuleCall_0_4_0()); 
-            }
-            pushFollow(FollowSets000.FOLLOW_2);
-            ruleTernaryOperation();
-
-            state._fsp--;
-            if (state.failed) return ;
-            if ( state.backtracking==0 ) {
-               after(grammarAccess.getTernaryOperationAccess().getSubExpressionsTernaryOperationParserRuleCall_0_4_0()); 
-            }
-
-            }
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__TernaryOperation__SubExpressionsAssignment_0_4"
-
-
-    // $ANTLR start "rule__TernaryOperation__SubExpressionsAssignment_0_6"
-    // InternalLustre.g:30025:1: rule__TernaryOperation__SubExpressionsAssignment_0_6 : ( ruleTernaryOperation ) ;
-    public final void rule__TernaryOperation__SubExpressionsAssignment_0_6() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-        	
-        try {
-            // InternalLustre.g:30029:1: ( ( ruleTernaryOperation ) )
-            // InternalLustre.g:30030:2: ( ruleTernaryOperation )
-            {
-            // InternalLustre.g:30030:2: ( ruleTernaryOperation )
-            // InternalLustre.g:30031:3: ruleTernaryOperation
-            {
-            if ( state.backtracking==0 ) {
-               before(grammarAccess.getTernaryOperationAccess().getSubExpressionsTernaryOperationParserRuleCall_0_6_0()); 
-            }
-            pushFollow(FollowSets000.FOLLOW_2);
-            ruleTernaryOperation();
-
-            state._fsp--;
-            if (state.failed) return ;
-            if ( state.backtracking==0 ) {
-               after(grammarAccess.getTernaryOperationAccess().getSubExpressionsTernaryOperationParserRuleCall_0_6_0()); 
-            }
-
-            }
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__TernaryOperation__SubExpressionsAssignment_0_6"
-
-
     // $ANTLR start "rule__InitExpression__OperatorAssignment_1_1_0"
-    // InternalLustre.g:30040:1: rule__InitExpression__OperatorAssignment_1_1_0 : ( ruleInitOperator ) ;
+    // InternalLustre.g:29980:1: rule__InitExpression__OperatorAssignment_1_1_0 : ( ruleInitOperator ) ;
     public final void rule__InitExpression__OperatorAssignment_1_1_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalLustre.g:30044:1: ( ( ruleInitOperator ) )
-            // InternalLustre.g:30045:2: ( ruleInitOperator )
+            // InternalLustre.g:29984:1: ( ( ruleInitOperator ) )
+            // InternalLustre.g:29985:2: ( ruleInitOperator )
             {
-            // InternalLustre.g:30045:2: ( ruleInitOperator )
-            // InternalLustre.g:30046:3: ruleInitOperator
+            // InternalLustre.g:29985:2: ( ruleInitOperator )
+            // InternalLustre.g:29986:3: ruleInitOperator
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getInitExpressionAccess().getOperatorInitOperatorEnumRuleCall_1_1_0_0()); 
@@ -100143,28 +99963,28 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__InitExpression__SubExpressionsAssignment_1_1_1"
-    // InternalLustre.g:30055:1: rule__InitExpression__SubExpressionsAssignment_1_1_1 : ( ruleImpliesExpression ) ;
+    // InternalLustre.g:29995:1: rule__InitExpression__SubExpressionsAssignment_1_1_1 : ( ruleTernaryOperation ) ;
     public final void rule__InitExpression__SubExpressionsAssignment_1_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalLustre.g:30059:1: ( ( ruleImpliesExpression ) )
-            // InternalLustre.g:30060:2: ( ruleImpliesExpression )
+            // InternalLustre.g:29999:1: ( ( ruleTernaryOperation ) )
+            // InternalLustre.g:30000:2: ( ruleTernaryOperation )
             {
-            // InternalLustre.g:30060:2: ( ruleImpliesExpression )
-            // InternalLustre.g:30061:3: ruleImpliesExpression
+            // InternalLustre.g:30000:2: ( ruleTernaryOperation )
+            // InternalLustre.g:30001:3: ruleTernaryOperation
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getInitExpressionAccess().getSubExpressionsImpliesExpressionParserRuleCall_1_1_1_0()); 
+               before(grammarAccess.getInitExpressionAccess().getSubExpressionsTernaryOperationParserRuleCall_1_1_1_0()); 
             }
             pushFollow(FollowSets000.FOLLOW_2);
-            ruleImpliesExpression();
+            ruleTernaryOperation();
 
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getInitExpressionAccess().getSubExpressionsImpliesExpressionParserRuleCall_1_1_1_0()); 
+               after(grammarAccess.getInitExpressionAccess().getSubExpressionsTernaryOperationParserRuleCall_1_1_1_0()); 
             }
 
             }
@@ -100188,28 +100008,28 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__InitExpression__SubExpressionsAssignment_1_2_1"
-    // InternalLustre.g:30070:1: rule__InitExpression__SubExpressionsAssignment_1_2_1 : ( ruleImpliesExpression ) ;
+    // InternalLustre.g:30010:1: rule__InitExpression__SubExpressionsAssignment_1_2_1 : ( ruleTernaryOperation ) ;
     public final void rule__InitExpression__SubExpressionsAssignment_1_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalLustre.g:30074:1: ( ( ruleImpliesExpression ) )
-            // InternalLustre.g:30075:2: ( ruleImpliesExpression )
+            // InternalLustre.g:30014:1: ( ( ruleTernaryOperation ) )
+            // InternalLustre.g:30015:2: ( ruleTernaryOperation )
             {
-            // InternalLustre.g:30075:2: ( ruleImpliesExpression )
-            // InternalLustre.g:30076:3: ruleImpliesExpression
+            // InternalLustre.g:30015:2: ( ruleTernaryOperation )
+            // InternalLustre.g:30016:3: ruleTernaryOperation
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getInitExpressionAccess().getSubExpressionsImpliesExpressionParserRuleCall_1_2_1_0()); 
+               before(grammarAccess.getInitExpressionAccess().getSubExpressionsTernaryOperationParserRuleCall_1_2_1_0()); 
             }
             pushFollow(FollowSets000.FOLLOW_2);
-            ruleImpliesExpression();
+            ruleTernaryOperation();
 
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getInitExpressionAccess().getSubExpressionsImpliesExpressionParserRuleCall_1_2_1_0()); 
+               after(grammarAccess.getInitExpressionAccess().getSubExpressionsTernaryOperationParserRuleCall_1_2_1_0()); 
             }
 
             }
@@ -100230,6 +100050,186 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
         return ;
     }
     // $ANTLR end "rule__InitExpression__SubExpressionsAssignment_1_2_1"
+
+
+    // $ANTLR start "rule__TernaryOperation__OperatorAssignment_0_1"
+    // InternalLustre.g:30025:1: rule__TernaryOperation__OperatorAssignment_0_1 : ( ruleConditionalOperator ) ;
+    public final void rule__TernaryOperation__OperatorAssignment_0_1() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+        	
+        try {
+            // InternalLustre.g:30029:1: ( ( ruleConditionalOperator ) )
+            // InternalLustre.g:30030:2: ( ruleConditionalOperator )
+            {
+            // InternalLustre.g:30030:2: ( ruleConditionalOperator )
+            // InternalLustre.g:30031:3: ruleConditionalOperator
+            {
+            if ( state.backtracking==0 ) {
+               before(grammarAccess.getTernaryOperationAccess().getOperatorConditionalOperatorEnumRuleCall_0_1_0()); 
+            }
+            pushFollow(FollowSets000.FOLLOW_2);
+            ruleConditionalOperator();
+
+            state._fsp--;
+            if (state.failed) return ;
+            if ( state.backtracking==0 ) {
+               after(grammarAccess.getTernaryOperationAccess().getOperatorConditionalOperatorEnumRuleCall_0_1_0()); 
+            }
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__TernaryOperation__OperatorAssignment_0_1"
+
+
+    // $ANTLR start "rule__TernaryOperation__SubExpressionsAssignment_0_2"
+    // InternalLustre.g:30040:1: rule__TernaryOperation__SubExpressionsAssignment_0_2 : ( ruleTernaryOperation ) ;
+    public final void rule__TernaryOperation__SubExpressionsAssignment_0_2() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+        	
+        try {
+            // InternalLustre.g:30044:1: ( ( ruleTernaryOperation ) )
+            // InternalLustre.g:30045:2: ( ruleTernaryOperation )
+            {
+            // InternalLustre.g:30045:2: ( ruleTernaryOperation )
+            // InternalLustre.g:30046:3: ruleTernaryOperation
+            {
+            if ( state.backtracking==0 ) {
+               before(grammarAccess.getTernaryOperationAccess().getSubExpressionsTernaryOperationParserRuleCall_0_2_0()); 
+            }
+            pushFollow(FollowSets000.FOLLOW_2);
+            ruleTernaryOperation();
+
+            state._fsp--;
+            if (state.failed) return ;
+            if ( state.backtracking==0 ) {
+               after(grammarAccess.getTernaryOperationAccess().getSubExpressionsTernaryOperationParserRuleCall_0_2_0()); 
+            }
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__TernaryOperation__SubExpressionsAssignment_0_2"
+
+
+    // $ANTLR start "rule__TernaryOperation__SubExpressionsAssignment_0_4"
+    // InternalLustre.g:30055:1: rule__TernaryOperation__SubExpressionsAssignment_0_4 : ( ruleTernaryOperation ) ;
+    public final void rule__TernaryOperation__SubExpressionsAssignment_0_4() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+        	
+        try {
+            // InternalLustre.g:30059:1: ( ( ruleTernaryOperation ) )
+            // InternalLustre.g:30060:2: ( ruleTernaryOperation )
+            {
+            // InternalLustre.g:30060:2: ( ruleTernaryOperation )
+            // InternalLustre.g:30061:3: ruleTernaryOperation
+            {
+            if ( state.backtracking==0 ) {
+               before(grammarAccess.getTernaryOperationAccess().getSubExpressionsTernaryOperationParserRuleCall_0_4_0()); 
+            }
+            pushFollow(FollowSets000.FOLLOW_2);
+            ruleTernaryOperation();
+
+            state._fsp--;
+            if (state.failed) return ;
+            if ( state.backtracking==0 ) {
+               after(grammarAccess.getTernaryOperationAccess().getSubExpressionsTernaryOperationParserRuleCall_0_4_0()); 
+            }
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__TernaryOperation__SubExpressionsAssignment_0_4"
+
+
+    // $ANTLR start "rule__TernaryOperation__SubExpressionsAssignment_0_6"
+    // InternalLustre.g:30070:1: rule__TernaryOperation__SubExpressionsAssignment_0_6 : ( ruleTernaryOperation ) ;
+    public final void rule__TernaryOperation__SubExpressionsAssignment_0_6() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+        	
+        try {
+            // InternalLustre.g:30074:1: ( ( ruleTernaryOperation ) )
+            // InternalLustre.g:30075:2: ( ruleTernaryOperation )
+            {
+            // InternalLustre.g:30075:2: ( ruleTernaryOperation )
+            // InternalLustre.g:30076:3: ruleTernaryOperation
+            {
+            if ( state.backtracking==0 ) {
+               before(grammarAccess.getTernaryOperationAccess().getSubExpressionsTernaryOperationParserRuleCall_0_6_0()); 
+            }
+            pushFollow(FollowSets000.FOLLOW_2);
+            ruleTernaryOperation();
+
+            state._fsp--;
+            if (state.failed) return ;
+            if ( state.backtracking==0 ) {
+               after(grammarAccess.getTernaryOperationAccess().getSubExpressionsTernaryOperationParserRuleCall_0_6_0()); 
+            }
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__TernaryOperation__SubExpressionsAssignment_0_6"
 
 
     // $ANTLR start "rule__ImpliesExpression__OperatorAssignment_1_1_0"
@@ -118130,11 +118130,11 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
         public static final BitSet FOLLOW_66 = new BitSet(new long[]{0x0000000001000000L});
         public static final BitSet FOLLOW_67 = new BitSet(new long[]{0x0000000400000000L});
         public static final BitSet FOLLOW_68 = new BitSet(new long[]{0x0000000200000000L});
-        public static final BitSet FOLLOW_69 = new BitSet(new long[]{0x0000000040000000L});
-        public static final BitSet FOLLOW_70 = new BitSet(new long[]{0x0000000000000000L,0x0000000400000000L});
-        public static final BitSet FOLLOW_71 = new BitSet(new long[]{0x0000000000000000L,0x0000000800000000L});
-        public static final BitSet FOLLOW_72 = new BitSet(new long[]{0x0000000004000000L});
-        public static final BitSet FOLLOW_73 = new BitSet(new long[]{0x0000000004000002L});
+        public static final BitSet FOLLOW_69 = new BitSet(new long[]{0x0000000004000000L});
+        public static final BitSet FOLLOW_70 = new BitSet(new long[]{0x0000000004000002L});
+        public static final BitSet FOLLOW_71 = new BitSet(new long[]{0x0000000040000000L});
+        public static final BitSet FOLLOW_72 = new BitSet(new long[]{0x0000000000000000L,0x0000000400000000L});
+        public static final BitSet FOLLOW_73 = new BitSet(new long[]{0x0000000000000000L,0x0000000800000000L});
         public static final BitSet FOLLOW_74 = new BitSet(new long[]{0x0000000010000000L});
         public static final BitSet FOLLOW_75 = new BitSet(new long[]{0x0000000010000002L});
         public static final BitSet FOLLOW_76 = new BitSet(new long[]{0x0000000008000000L});

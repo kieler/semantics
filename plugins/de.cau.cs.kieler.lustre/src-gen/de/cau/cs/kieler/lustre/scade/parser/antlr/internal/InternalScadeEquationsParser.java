@@ -23,7 +23,7 @@ import java.util.HashMap;
 @SuppressWarnings("all")
 public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_STRING", "RULE_HOSTCODE", "RULE_INT", "RULE_FLOAT", "RULE_BOOLEAN", "RULE_COMMENT_ANNOTATION", "RULE_SL_COMMENT_ANNOTATION", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_NUMBER", "RULE_WS", "RULE_ANY_OTHER", "'('", "','", "')'", "';'", "'='", "'{'", "'}'", "'unsafe'", "'extern'", "'function'", "'node'", "'()'", "'returns'", "':'", "'when'", "'^'", "'const'", "'var'", "'let'", "'tel'", "'.'", "'emit'", "'assert'", "'automaton'", "'..'", "'initial'", "'state'", "'until'", "'unless'", "'if'", "'do'", "'restart'", "'resume'", "'*'", "'/'", "'mod'", "'div'", "'fby'", "'then'", "'else'", "'->'", "'=>'", "'xor'", "'or'", "'and'", "'scope'", "'expression'", "'json'", "'input'", "'output'", "'global'", "'static'", "'signal'", "'host'", "'schedule'", "'ref'", "'['", "']'", "'combine'", "'label'", "'print'", "'randomize'", "'&'", "'>>'", "'>>>'", "'+'", "'-'", "'\\''", "'!'", "'_'", "'null'", "'#'", "'@'", "'bool'", "'int'", "'real'", "'enum'", "'<'", "'<='", "'>'", "'>='", "'<>'", "'not'", "'current'", "'nor'", "'last'", "'conflicting'", "'commuting'", "'++'", "'--'", "'pre'", "'~'", "'|'", "'val'", "'<<'", "'sfby'", "'struct'", "'class'", "'none'", "'max'", "'min'", "'public'", "'protected'", "'private'", "'void'", "'float'", "'string'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_STRING", "RULE_HOSTCODE", "RULE_INT", "RULE_FLOAT", "RULE_BOOLEAN", "RULE_COMMENT_ANNOTATION", "RULE_SL_COMMENT_ANNOTATION", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_NUMBER", "RULE_WS", "RULE_ANY_OTHER", "'('", "','", "')'", "';'", "'='", "'{'", "'}'", "'unsafe'", "'extern'", "'function'", "'node'", "'()'", "'returns'", "':'", "'when'", "'^'", "'const'", "'var'", "'let'", "'tel'", "'.'", "'emit'", "'assert'", "'automaton'", "'..'", "'initial'", "'state'", "'until'", "'unless'", "'if'", "'do'", "'restart'", "'resume'", "'*'", "'/'", "'mod'", "'div'", "'fby'", "'->'", "'then'", "'else'", "'=>'", "'xor'", "'or'", "'and'", "'scope'", "'expression'", "'json'", "'input'", "'output'", "'global'", "'static'", "'signal'", "'host'", "'schedule'", "'ref'", "'['", "']'", "'combine'", "'label'", "'print'", "'randomize'", "'&'", "'>>'", "'>>>'", "'+'", "'-'", "'\\''", "'!'", "'_'", "'null'", "'#'", "'@'", "'bool'", "'int'", "'real'", "'enum'", "'<'", "'<='", "'>'", "'>='", "'<>'", "'not'", "'current'", "'nor'", "'last'", "'conflicting'", "'commuting'", "'++'", "'--'", "'pre'", "'~'", "'|'", "'val'", "'<<'", "'sfby'", "'struct'", "'class'", "'none'", "'max'", "'min'", "'public'", "'protected'", "'private'", "'void'", "'float'", "'string'"
     };
     public static final int T__50=50;
     public static final int T__59=59;
@@ -10395,19 +10395,19 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleBoolExpression"
-    // InternalScadeEquations.g:3823:1: ruleBoolExpression returns [EObject current=null] : this_TernaryOperation_0= ruleTernaryOperation ;
+    // InternalScadeEquations.g:3823:1: ruleBoolExpression returns [EObject current=null] : this_InitExpression_0= ruleInitExpression ;
     public final EObject ruleBoolExpression() throws RecognitionException {
         EObject current = null;
 
-        EObject this_TernaryOperation_0 = null;
+        EObject this_InitExpression_0 = null;
 
 
 
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:3829:2: (this_TernaryOperation_0= ruleTernaryOperation )
-            // InternalScadeEquations.g:3830:2: this_TernaryOperation_0= ruleTernaryOperation
+            // InternalScadeEquations.g:3829:2: (this_InitExpression_0= ruleInitExpression )
+            // InternalScadeEquations.g:3830:2: this_InitExpression_0= ruleInitExpression
             {
             if ( state.backtracking==0 ) {
 
@@ -10416,17 +10416,17 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             }
             if ( state.backtracking==0 ) {
 
-              		newCompositeNode(grammarAccess.getBoolExpressionAccess().getTernaryOperationParserRuleCall());
+              		newCompositeNode(grammarAccess.getBoolExpressionAccess().getInitExpressionParserRuleCall());
               	
             }
             pushFollow(FollowSets000.FOLLOW_2);
-            this_TernaryOperation_0=ruleTernaryOperation();
+            this_InitExpression_0=ruleInitExpression();
 
             state._fsp--;
             if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-              		current = this_TernaryOperation_0;
+              		current = this_InitExpression_0;
               		afterParserOrEnumRuleCall();
               	
             }
@@ -10451,8 +10451,294 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
     // $ANTLR end "ruleBoolExpression"
 
 
+    // $ANTLR start "entryRuleInitExpression"
+    // InternalScadeEquations.g:3844:1: entryRuleInitExpression returns [EObject current=null] : iv_ruleInitExpression= ruleInitExpression EOF ;
+    public final EObject entryRuleInitExpression() throws RecognitionException {
+        EObject current = null;
+
+        EObject iv_ruleInitExpression = null;
+
+
+        try {
+            // InternalScadeEquations.g:3844:55: (iv_ruleInitExpression= ruleInitExpression EOF )
+            // InternalScadeEquations.g:3845:2: iv_ruleInitExpression= ruleInitExpression EOF
+            {
+            if ( state.backtracking==0 ) {
+               newCompositeNode(grammarAccess.getInitExpressionRule()); 
+            }
+            pushFollow(FollowSets000.FOLLOW_1);
+            iv_ruleInitExpression=ruleInitExpression();
+
+            state._fsp--;
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+               current =iv_ruleInitExpression; 
+            }
+            match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return current;
+
+            }
+
+        }
+
+            catch (RecognitionException re) {
+                recover(input,re);
+                appendSkippedTokens();
+            }
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end "entryRuleInitExpression"
+
+
+    // $ANTLR start "ruleInitExpression"
+    // InternalScadeEquations.g:3851:1: ruleInitExpression returns [EObject current=null] : (this_TernaryOperation_0= ruleTernaryOperation ( () ( ( (lv_operator_2_0= ruleInitOperator ) ) ( (lv_subExpressions_3_0= ruleTernaryOperation ) ) ) (otherlv_4= '->' ( (lv_subExpressions_5_0= ruleTernaryOperation ) ) )* )? ) ;
+    public final EObject ruleInitExpression() throws RecognitionException {
+        EObject current = null;
+
+        Token otherlv_4=null;
+        EObject this_TernaryOperation_0 = null;
+
+        Enumerator lv_operator_2_0 = null;
+
+        EObject lv_subExpressions_3_0 = null;
+
+        EObject lv_subExpressions_5_0 = null;
+
+
+
+        	enterRule();
+
+        try {
+            // InternalScadeEquations.g:3857:2: ( (this_TernaryOperation_0= ruleTernaryOperation ( () ( ( (lv_operator_2_0= ruleInitOperator ) ) ( (lv_subExpressions_3_0= ruleTernaryOperation ) ) ) (otherlv_4= '->' ( (lv_subExpressions_5_0= ruleTernaryOperation ) ) )* )? ) )
+            // InternalScadeEquations.g:3858:2: (this_TernaryOperation_0= ruleTernaryOperation ( () ( ( (lv_operator_2_0= ruleInitOperator ) ) ( (lv_subExpressions_3_0= ruleTernaryOperation ) ) ) (otherlv_4= '->' ( (lv_subExpressions_5_0= ruleTernaryOperation ) ) )* )? )
+            {
+            // InternalScadeEquations.g:3858:2: (this_TernaryOperation_0= ruleTernaryOperation ( () ( ( (lv_operator_2_0= ruleInitOperator ) ) ( (lv_subExpressions_3_0= ruleTernaryOperation ) ) ) (otherlv_4= '->' ( (lv_subExpressions_5_0= ruleTernaryOperation ) ) )* )? )
+            // InternalScadeEquations.g:3859:3: this_TernaryOperation_0= ruleTernaryOperation ( () ( ( (lv_operator_2_0= ruleInitOperator ) ) ( (lv_subExpressions_3_0= ruleTernaryOperation ) ) ) (otherlv_4= '->' ( (lv_subExpressions_5_0= ruleTernaryOperation ) ) )* )?
+            {
+            if ( state.backtracking==0 ) {
+
+              			/* */
+              		
+            }
+            if ( state.backtracking==0 ) {
+
+              			newCompositeNode(grammarAccess.getInitExpressionAccess().getTernaryOperationParserRuleCall_0());
+              		
+            }
+            pushFollow(FollowSets000.FOLLOW_53);
+            this_TernaryOperation_0=ruleTernaryOperation();
+
+            state._fsp--;
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              			current = this_TernaryOperation_0;
+              			afterParserOrEnumRuleCall();
+              		
+            }
+            // InternalScadeEquations.g:3870:3: ( () ( ( (lv_operator_2_0= ruleInitOperator ) ) ( (lv_subExpressions_3_0= ruleTernaryOperation ) ) ) (otherlv_4= '->' ( (lv_subExpressions_5_0= ruleTernaryOperation ) ) )* )?
+            int alt77=2;
+            int LA77_0 = input.LA(1);
+
+            if ( (LA77_0==55) ) {
+                alt77=1;
+            }
+            switch (alt77) {
+                case 1 :
+                    // InternalScadeEquations.g:3871:4: () ( ( (lv_operator_2_0= ruleInitOperator ) ) ( (lv_subExpressions_3_0= ruleTernaryOperation ) ) ) (otherlv_4= '->' ( (lv_subExpressions_5_0= ruleTernaryOperation ) ) )*
+                    {
+                    // InternalScadeEquations.g:3871:4: ()
+                    // InternalScadeEquations.g:3872:5: 
+                    {
+                    if ( state.backtracking==0 ) {
+
+                      					/* */
+                      				
+                    }
+                    if ( state.backtracking==0 ) {
+
+                      					current = forceCreateModelElementAndAdd(
+                      						grammarAccess.getInitExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0(),
+                      						current);
+                      				
+                    }
+
+                    }
+
+                    // InternalScadeEquations.g:3881:4: ( ( (lv_operator_2_0= ruleInitOperator ) ) ( (lv_subExpressions_3_0= ruleTernaryOperation ) ) )
+                    // InternalScadeEquations.g:3882:5: ( (lv_operator_2_0= ruleInitOperator ) ) ( (lv_subExpressions_3_0= ruleTernaryOperation ) )
+                    {
+                    // InternalScadeEquations.g:3882:5: ( (lv_operator_2_0= ruleInitOperator ) )
+                    // InternalScadeEquations.g:3883:6: (lv_operator_2_0= ruleInitOperator )
+                    {
+                    // InternalScadeEquations.g:3883:6: (lv_operator_2_0= ruleInitOperator )
+                    // InternalScadeEquations.g:3884:7: lv_operator_2_0= ruleInitOperator
+                    {
+                    if ( state.backtracking==0 ) {
+
+                      							newCompositeNode(grammarAccess.getInitExpressionAccess().getOperatorInitOperatorEnumRuleCall_1_1_0_0());
+                      						
+                    }
+                    pushFollow(FollowSets000.FOLLOW_9);
+                    lv_operator_2_0=ruleInitOperator();
+
+                    state._fsp--;
+                    if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
+
+                      							if (current==null) {
+                      								current = createModelElementForParent(grammarAccess.getInitExpressionRule());
+                      							}
+                      							set(
+                      								current,
+                      								"operator",
+                      								lv_operator_2_0,
+                      								"de.cau.cs.kieler.lustre.Lustre.InitOperator");
+                      							afterParserOrEnumRuleCall();
+                      						
+                    }
+
+                    }
+
+
+                    }
+
+                    // InternalScadeEquations.g:3901:5: ( (lv_subExpressions_3_0= ruleTernaryOperation ) )
+                    // InternalScadeEquations.g:3902:6: (lv_subExpressions_3_0= ruleTernaryOperation )
+                    {
+                    // InternalScadeEquations.g:3902:6: (lv_subExpressions_3_0= ruleTernaryOperation )
+                    // InternalScadeEquations.g:3903:7: lv_subExpressions_3_0= ruleTernaryOperation
+                    {
+                    if ( state.backtracking==0 ) {
+
+                      							newCompositeNode(grammarAccess.getInitExpressionAccess().getSubExpressionsTernaryOperationParserRuleCall_1_1_1_0());
+                      						
+                    }
+                    pushFollow(FollowSets000.FOLLOW_53);
+                    lv_subExpressions_3_0=ruleTernaryOperation();
+
+                    state._fsp--;
+                    if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
+
+                      							if (current==null) {
+                      								current = createModelElementForParent(grammarAccess.getInitExpressionRule());
+                      							}
+                      							add(
+                      								current,
+                      								"subExpressions",
+                      								lv_subExpressions_3_0,
+                      								"de.cau.cs.kieler.lustre.Lustre.TernaryOperation");
+                      							afterParserOrEnumRuleCall();
+                      						
+                    }
+
+                    }
+
+
+                    }
+
+
+                    }
+
+                    // InternalScadeEquations.g:3921:4: (otherlv_4= '->' ( (lv_subExpressions_5_0= ruleTernaryOperation ) ) )*
+                    loop76:
+                    do {
+                        int alt76=2;
+                        int LA76_0 = input.LA(1);
+
+                        if ( (LA76_0==55) ) {
+                            alt76=1;
+                        }
+
+
+                        switch (alt76) {
+                    	case 1 :
+                    	    // InternalScadeEquations.g:3922:5: otherlv_4= '->' ( (lv_subExpressions_5_0= ruleTernaryOperation ) )
+                    	    {
+                    	    otherlv_4=(Token)match(input,55,FollowSets000.FOLLOW_9); if (state.failed) return current;
+                    	    if ( state.backtracking==0 ) {
+
+                    	      					newLeafNode(otherlv_4, grammarAccess.getInitExpressionAccess().getHyphenMinusGreaterThanSignKeyword_1_2_0());
+                    	      				
+                    	    }
+                    	    // InternalScadeEquations.g:3926:5: ( (lv_subExpressions_5_0= ruleTernaryOperation ) )
+                    	    // InternalScadeEquations.g:3927:6: (lv_subExpressions_5_0= ruleTernaryOperation )
+                    	    {
+                    	    // InternalScadeEquations.g:3927:6: (lv_subExpressions_5_0= ruleTernaryOperation )
+                    	    // InternalScadeEquations.g:3928:7: lv_subExpressions_5_0= ruleTernaryOperation
+                    	    {
+                    	    if ( state.backtracking==0 ) {
+
+                    	      							newCompositeNode(grammarAccess.getInitExpressionAccess().getSubExpressionsTernaryOperationParserRuleCall_1_2_1_0());
+                    	      						
+                    	    }
+                    	    pushFollow(FollowSets000.FOLLOW_53);
+                    	    lv_subExpressions_5_0=ruleTernaryOperation();
+
+                    	    state._fsp--;
+                    	    if (state.failed) return current;
+                    	    if ( state.backtracking==0 ) {
+
+                    	      							if (current==null) {
+                    	      								current = createModelElementForParent(grammarAccess.getInitExpressionRule());
+                    	      							}
+                    	      							add(
+                    	      								current,
+                    	      								"subExpressions",
+                    	      								lv_subExpressions_5_0,
+                    	      								"de.cau.cs.kieler.lustre.Lustre.TernaryOperation");
+                    	      							afterParserOrEnumRuleCall();
+                    	      						
+                    	    }
+
+                    	    }
+
+
+                    	    }
+
+
+                    	    }
+                    	    break;
+
+                    	default :
+                    	    break loop76;
+                        }
+                    } while (true);
+
+
+                    }
+                    break;
+
+            }
+
+
+            }
+
+
+            }
+
+            if ( state.backtracking==0 ) {
+
+              	leaveRule();
+
+            }
+        }
+
+            catch (RecognitionException re) {
+                recover(input,re);
+                appendSkippedTokens();
+            }
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end "ruleInitExpression"
+
+
     // $ANTLR start "entryRuleTernaryOperation"
-    // InternalScadeEquations.g:3844:1: entryRuleTernaryOperation returns [EObject current=null] : iv_ruleTernaryOperation= ruleTernaryOperation EOF ;
+    // InternalScadeEquations.g:3951:1: entryRuleTernaryOperation returns [EObject current=null] : iv_ruleTernaryOperation= ruleTernaryOperation EOF ;
     public final EObject entryRuleTernaryOperation() throws RecognitionException {
         EObject current = null;
 
@@ -10460,8 +10746,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalScadeEquations.g:3844:57: (iv_ruleTernaryOperation= ruleTernaryOperation EOF )
-            // InternalScadeEquations.g:3845:2: iv_ruleTernaryOperation= ruleTernaryOperation EOF
+            // InternalScadeEquations.g:3951:57: (iv_ruleTernaryOperation= ruleTernaryOperation EOF )
+            // InternalScadeEquations.g:3952:2: iv_ruleTernaryOperation= ruleTernaryOperation EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getTernaryOperationRule()); 
@@ -10492,7 +10778,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleTernaryOperation"
-    // InternalScadeEquations.g:3851:1: ruleTernaryOperation returns [EObject current=null] : ( ( () ( (lv_operator_1_0= ruleConditionalOperator ) ) ( (lv_subExpressions_2_0= ruleTernaryOperation ) ) otherlv_3= 'then' ( (lv_subExpressions_4_0= ruleTernaryOperation ) ) otherlv_5= 'else' ( (lv_subExpressions_6_0= ruleTernaryOperation ) ) ) | this_InitExpression_7= ruleInitExpression ) ;
+    // InternalScadeEquations.g:3958:1: ruleTernaryOperation returns [EObject current=null] : ( ( () ( (lv_operator_1_0= ruleConditionalOperator ) ) ( (lv_subExpressions_2_0= ruleTernaryOperation ) ) otherlv_3= 'then' ( (lv_subExpressions_4_0= ruleTernaryOperation ) ) otherlv_5= 'else' ( (lv_subExpressions_6_0= ruleTernaryOperation ) ) ) | this_ImpliesExpression_7= ruleImpliesExpression ) ;
     public final EObject ruleTernaryOperation() throws RecognitionException {
         EObject current = null;
 
@@ -10506,42 +10792,42 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
         EObject lv_subExpressions_6_0 = null;
 
-        EObject this_InitExpression_7 = null;
+        EObject this_ImpliesExpression_7 = null;
 
 
 
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:3857:2: ( ( ( () ( (lv_operator_1_0= ruleConditionalOperator ) ) ( (lv_subExpressions_2_0= ruleTernaryOperation ) ) otherlv_3= 'then' ( (lv_subExpressions_4_0= ruleTernaryOperation ) ) otherlv_5= 'else' ( (lv_subExpressions_6_0= ruleTernaryOperation ) ) ) | this_InitExpression_7= ruleInitExpression ) )
-            // InternalScadeEquations.g:3858:2: ( ( () ( (lv_operator_1_0= ruleConditionalOperator ) ) ( (lv_subExpressions_2_0= ruleTernaryOperation ) ) otherlv_3= 'then' ( (lv_subExpressions_4_0= ruleTernaryOperation ) ) otherlv_5= 'else' ( (lv_subExpressions_6_0= ruleTernaryOperation ) ) ) | this_InitExpression_7= ruleInitExpression )
+            // InternalScadeEquations.g:3964:2: ( ( ( () ( (lv_operator_1_0= ruleConditionalOperator ) ) ( (lv_subExpressions_2_0= ruleTernaryOperation ) ) otherlv_3= 'then' ( (lv_subExpressions_4_0= ruleTernaryOperation ) ) otherlv_5= 'else' ( (lv_subExpressions_6_0= ruleTernaryOperation ) ) ) | this_ImpliesExpression_7= ruleImpliesExpression ) )
+            // InternalScadeEquations.g:3965:2: ( ( () ( (lv_operator_1_0= ruleConditionalOperator ) ) ( (lv_subExpressions_2_0= ruleTernaryOperation ) ) otherlv_3= 'then' ( (lv_subExpressions_4_0= ruleTernaryOperation ) ) otherlv_5= 'else' ( (lv_subExpressions_6_0= ruleTernaryOperation ) ) ) | this_ImpliesExpression_7= ruleImpliesExpression )
             {
-            // InternalScadeEquations.g:3858:2: ( ( () ( (lv_operator_1_0= ruleConditionalOperator ) ) ( (lv_subExpressions_2_0= ruleTernaryOperation ) ) otherlv_3= 'then' ( (lv_subExpressions_4_0= ruleTernaryOperation ) ) otherlv_5= 'else' ( (lv_subExpressions_6_0= ruleTernaryOperation ) ) ) | this_InitExpression_7= ruleInitExpression )
-            int alt76=2;
-            int LA76_0 = input.LA(1);
+            // InternalScadeEquations.g:3965:2: ( ( () ( (lv_operator_1_0= ruleConditionalOperator ) ) ( (lv_subExpressions_2_0= ruleTernaryOperation ) ) otherlv_3= 'then' ( (lv_subExpressions_4_0= ruleTernaryOperation ) ) otherlv_5= 'else' ( (lv_subExpressions_6_0= ruleTernaryOperation ) ) ) | this_ImpliesExpression_7= ruleImpliesExpression )
+            int alt78=2;
+            int LA78_0 = input.LA(1);
 
-            if ( (LA76_0==46) ) {
-                alt76=1;
+            if ( (LA78_0==46) ) {
+                alt78=1;
             }
-            else if ( ((LA76_0>=RULE_ID && LA76_0<=RULE_STRING)||(LA76_0>=RULE_INT && LA76_0<=RULE_BOOLEAN)||LA76_0==17||LA76_0==22||LA76_0==83||LA76_0==88||(LA76_0>=99 && LA76_0<=102)||LA76_0==107||LA76_0==110) ) {
-                alt76=2;
+            else if ( ((LA78_0>=RULE_ID && LA78_0<=RULE_STRING)||(LA78_0>=RULE_INT && LA78_0<=RULE_BOOLEAN)||LA78_0==17||LA78_0==22||LA78_0==83||LA78_0==88||(LA78_0>=99 && LA78_0<=102)||LA78_0==107||LA78_0==110) ) {
+                alt78=2;
             }
             else {
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 76, 0, input);
+                    new NoViableAltException("", 78, 0, input);
 
                 throw nvae;
             }
-            switch (alt76) {
+            switch (alt78) {
                 case 1 :
-                    // InternalScadeEquations.g:3859:3: ( () ( (lv_operator_1_0= ruleConditionalOperator ) ) ( (lv_subExpressions_2_0= ruleTernaryOperation ) ) otherlv_3= 'then' ( (lv_subExpressions_4_0= ruleTernaryOperation ) ) otherlv_5= 'else' ( (lv_subExpressions_6_0= ruleTernaryOperation ) ) )
+                    // InternalScadeEquations.g:3966:3: ( () ( (lv_operator_1_0= ruleConditionalOperator ) ) ( (lv_subExpressions_2_0= ruleTernaryOperation ) ) otherlv_3= 'then' ( (lv_subExpressions_4_0= ruleTernaryOperation ) ) otherlv_5= 'else' ( (lv_subExpressions_6_0= ruleTernaryOperation ) ) )
                     {
-                    // InternalScadeEquations.g:3859:3: ( () ( (lv_operator_1_0= ruleConditionalOperator ) ) ( (lv_subExpressions_2_0= ruleTernaryOperation ) ) otherlv_3= 'then' ( (lv_subExpressions_4_0= ruleTernaryOperation ) ) otherlv_5= 'else' ( (lv_subExpressions_6_0= ruleTernaryOperation ) ) )
-                    // InternalScadeEquations.g:3860:4: () ( (lv_operator_1_0= ruleConditionalOperator ) ) ( (lv_subExpressions_2_0= ruleTernaryOperation ) ) otherlv_3= 'then' ( (lv_subExpressions_4_0= ruleTernaryOperation ) ) otherlv_5= 'else' ( (lv_subExpressions_6_0= ruleTernaryOperation ) )
+                    // InternalScadeEquations.g:3966:3: ( () ( (lv_operator_1_0= ruleConditionalOperator ) ) ( (lv_subExpressions_2_0= ruleTernaryOperation ) ) otherlv_3= 'then' ( (lv_subExpressions_4_0= ruleTernaryOperation ) ) otherlv_5= 'else' ( (lv_subExpressions_6_0= ruleTernaryOperation ) ) )
+                    // InternalScadeEquations.g:3967:4: () ( (lv_operator_1_0= ruleConditionalOperator ) ) ( (lv_subExpressions_2_0= ruleTernaryOperation ) ) otherlv_3= 'then' ( (lv_subExpressions_4_0= ruleTernaryOperation ) ) otherlv_5= 'else' ( (lv_subExpressions_6_0= ruleTernaryOperation ) )
                     {
-                    // InternalScadeEquations.g:3860:4: ()
-                    // InternalScadeEquations.g:3861:5: 
+                    // InternalScadeEquations.g:3967:4: ()
+                    // InternalScadeEquations.g:3968:5: 
                     {
                     if ( state.backtracking==0 ) {
 
@@ -10558,11 +10844,11 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalScadeEquations.g:3870:4: ( (lv_operator_1_0= ruleConditionalOperator ) )
-                    // InternalScadeEquations.g:3871:5: (lv_operator_1_0= ruleConditionalOperator )
+                    // InternalScadeEquations.g:3977:4: ( (lv_operator_1_0= ruleConditionalOperator ) )
+                    // InternalScadeEquations.g:3978:5: (lv_operator_1_0= ruleConditionalOperator )
                     {
-                    // InternalScadeEquations.g:3871:5: (lv_operator_1_0= ruleConditionalOperator )
-                    // InternalScadeEquations.g:3872:6: lv_operator_1_0= ruleConditionalOperator
+                    // InternalScadeEquations.g:3978:5: (lv_operator_1_0= ruleConditionalOperator )
+                    // InternalScadeEquations.g:3979:6: lv_operator_1_0= ruleConditionalOperator
                     {
                     if ( state.backtracking==0 ) {
 
@@ -10593,18 +10879,18 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalScadeEquations.g:3889:4: ( (lv_subExpressions_2_0= ruleTernaryOperation ) )
-                    // InternalScadeEquations.g:3890:5: (lv_subExpressions_2_0= ruleTernaryOperation )
+                    // InternalScadeEquations.g:3996:4: ( (lv_subExpressions_2_0= ruleTernaryOperation ) )
+                    // InternalScadeEquations.g:3997:5: (lv_subExpressions_2_0= ruleTernaryOperation )
                     {
-                    // InternalScadeEquations.g:3890:5: (lv_subExpressions_2_0= ruleTernaryOperation )
-                    // InternalScadeEquations.g:3891:6: lv_subExpressions_2_0= ruleTernaryOperation
+                    // InternalScadeEquations.g:3997:5: (lv_subExpressions_2_0= ruleTernaryOperation )
+                    // InternalScadeEquations.g:3998:6: lv_subExpressions_2_0= ruleTernaryOperation
                     {
                     if ( state.backtracking==0 ) {
 
                       						newCompositeNode(grammarAccess.getTernaryOperationAccess().getSubExpressionsTernaryOperationParserRuleCall_0_2_0());
                       					
                     }
-                    pushFollow(FollowSets000.FOLLOW_53);
+                    pushFollow(FollowSets000.FOLLOW_54);
                     lv_subExpressions_2_0=ruleTernaryOperation();
 
                     state._fsp--;
@@ -10628,24 +10914,24 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    otherlv_3=(Token)match(input,55,FollowSets000.FOLLOW_9); if (state.failed) return current;
+                    otherlv_3=(Token)match(input,56,FollowSets000.FOLLOW_9); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       				newLeafNode(otherlv_3, grammarAccess.getTernaryOperationAccess().getThenKeyword_0_3());
                       			
                     }
-                    // InternalScadeEquations.g:3912:4: ( (lv_subExpressions_4_0= ruleTernaryOperation ) )
-                    // InternalScadeEquations.g:3913:5: (lv_subExpressions_4_0= ruleTernaryOperation )
+                    // InternalScadeEquations.g:4019:4: ( (lv_subExpressions_4_0= ruleTernaryOperation ) )
+                    // InternalScadeEquations.g:4020:5: (lv_subExpressions_4_0= ruleTernaryOperation )
                     {
-                    // InternalScadeEquations.g:3913:5: (lv_subExpressions_4_0= ruleTernaryOperation )
-                    // InternalScadeEquations.g:3914:6: lv_subExpressions_4_0= ruleTernaryOperation
+                    // InternalScadeEquations.g:4020:5: (lv_subExpressions_4_0= ruleTernaryOperation )
+                    // InternalScadeEquations.g:4021:6: lv_subExpressions_4_0= ruleTernaryOperation
                     {
                     if ( state.backtracking==0 ) {
 
                       						newCompositeNode(grammarAccess.getTernaryOperationAccess().getSubExpressionsTernaryOperationParserRuleCall_0_4_0());
                       					
                     }
-                    pushFollow(FollowSets000.FOLLOW_54);
+                    pushFollow(FollowSets000.FOLLOW_55);
                     lv_subExpressions_4_0=ruleTernaryOperation();
 
                     state._fsp--;
@@ -10669,17 +10955,17 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    otherlv_5=(Token)match(input,56,FollowSets000.FOLLOW_9); if (state.failed) return current;
+                    otherlv_5=(Token)match(input,57,FollowSets000.FOLLOW_9); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       				newLeafNode(otherlv_5, grammarAccess.getTernaryOperationAccess().getElseKeyword_0_5());
                       			
                     }
-                    // InternalScadeEquations.g:3935:4: ( (lv_subExpressions_6_0= ruleTernaryOperation ) )
-                    // InternalScadeEquations.g:3936:5: (lv_subExpressions_6_0= ruleTernaryOperation )
+                    // InternalScadeEquations.g:4042:4: ( (lv_subExpressions_6_0= ruleTernaryOperation ) )
+                    // InternalScadeEquations.g:4043:5: (lv_subExpressions_6_0= ruleTernaryOperation )
                     {
-                    // InternalScadeEquations.g:3936:5: (lv_subExpressions_6_0= ruleTernaryOperation )
-                    // InternalScadeEquations.g:3937:6: lv_subExpressions_6_0= ruleTernaryOperation
+                    // InternalScadeEquations.g:4043:5: (lv_subExpressions_6_0= ruleTernaryOperation )
+                    // InternalScadeEquations.g:4044:6: lv_subExpressions_6_0= ruleTernaryOperation
                     {
                     if ( state.backtracking==0 ) {
 
@@ -10717,7 +11003,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalScadeEquations.g:3956:3: this_InitExpression_7= ruleInitExpression
+                    // InternalScadeEquations.g:4063:3: this_ImpliesExpression_7= ruleImpliesExpression
                     {
                     if ( state.backtracking==0 ) {
 
@@ -10726,17 +11012,17 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
                     }
                     if ( state.backtracking==0 ) {
 
-                      			newCompositeNode(grammarAccess.getTernaryOperationAccess().getInitExpressionParserRuleCall_1());
+                      			newCompositeNode(grammarAccess.getTernaryOperationAccess().getImpliesExpressionParserRuleCall_1());
                       		
                     }
                     pushFollow(FollowSets000.FOLLOW_2);
-                    this_InitExpression_7=ruleInitExpression();
+                    this_ImpliesExpression_7=ruleImpliesExpression();
 
                     state._fsp--;
                     if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                      			current = this_InitExpression_7;
+                      			current = this_ImpliesExpression_7;
                       			afterParserOrEnumRuleCall();
                       		
                     }
@@ -10765,292 +11051,6 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         return current;
     }
     // $ANTLR end "ruleTernaryOperation"
-
-
-    // $ANTLR start "entryRuleInitExpression"
-    // InternalScadeEquations.g:3971:1: entryRuleInitExpression returns [EObject current=null] : iv_ruleInitExpression= ruleInitExpression EOF ;
-    public final EObject entryRuleInitExpression() throws RecognitionException {
-        EObject current = null;
-
-        EObject iv_ruleInitExpression = null;
-
-
-        try {
-            // InternalScadeEquations.g:3971:55: (iv_ruleInitExpression= ruleInitExpression EOF )
-            // InternalScadeEquations.g:3972:2: iv_ruleInitExpression= ruleInitExpression EOF
-            {
-            if ( state.backtracking==0 ) {
-               newCompositeNode(grammarAccess.getInitExpressionRule()); 
-            }
-            pushFollow(FollowSets000.FOLLOW_1);
-            iv_ruleInitExpression=ruleInitExpression();
-
-            state._fsp--;
-            if (state.failed) return current;
-            if ( state.backtracking==0 ) {
-               current =iv_ruleInitExpression; 
-            }
-            match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return current;
-
-            }
-
-        }
-
-            catch (RecognitionException re) {
-                recover(input,re);
-                appendSkippedTokens();
-            }
-        finally {
-        }
-        return current;
-    }
-    // $ANTLR end "entryRuleInitExpression"
-
-
-    // $ANTLR start "ruleInitExpression"
-    // InternalScadeEquations.g:3978:1: ruleInitExpression returns [EObject current=null] : (this_ImpliesExpression_0= ruleImpliesExpression ( () ( ( (lv_operator_2_0= ruleInitOperator ) ) ( (lv_subExpressions_3_0= ruleImpliesExpression ) ) ) (otherlv_4= '->' ( (lv_subExpressions_5_0= ruleImpliesExpression ) ) )* )? ) ;
-    public final EObject ruleInitExpression() throws RecognitionException {
-        EObject current = null;
-
-        Token otherlv_4=null;
-        EObject this_ImpliesExpression_0 = null;
-
-        Enumerator lv_operator_2_0 = null;
-
-        EObject lv_subExpressions_3_0 = null;
-
-        EObject lv_subExpressions_5_0 = null;
-
-
-
-        	enterRule();
-
-        try {
-            // InternalScadeEquations.g:3984:2: ( (this_ImpliesExpression_0= ruleImpliesExpression ( () ( ( (lv_operator_2_0= ruleInitOperator ) ) ( (lv_subExpressions_3_0= ruleImpliesExpression ) ) ) (otherlv_4= '->' ( (lv_subExpressions_5_0= ruleImpliesExpression ) ) )* )? ) )
-            // InternalScadeEquations.g:3985:2: (this_ImpliesExpression_0= ruleImpliesExpression ( () ( ( (lv_operator_2_0= ruleInitOperator ) ) ( (lv_subExpressions_3_0= ruleImpliesExpression ) ) ) (otherlv_4= '->' ( (lv_subExpressions_5_0= ruleImpliesExpression ) ) )* )? )
-            {
-            // InternalScadeEquations.g:3985:2: (this_ImpliesExpression_0= ruleImpliesExpression ( () ( ( (lv_operator_2_0= ruleInitOperator ) ) ( (lv_subExpressions_3_0= ruleImpliesExpression ) ) ) (otherlv_4= '->' ( (lv_subExpressions_5_0= ruleImpliesExpression ) ) )* )? )
-            // InternalScadeEquations.g:3986:3: this_ImpliesExpression_0= ruleImpliesExpression ( () ( ( (lv_operator_2_0= ruleInitOperator ) ) ( (lv_subExpressions_3_0= ruleImpliesExpression ) ) ) (otherlv_4= '->' ( (lv_subExpressions_5_0= ruleImpliesExpression ) ) )* )?
-            {
-            if ( state.backtracking==0 ) {
-
-              			/* */
-              		
-            }
-            if ( state.backtracking==0 ) {
-
-              			newCompositeNode(grammarAccess.getInitExpressionAccess().getImpliesExpressionParserRuleCall_0());
-              		
-            }
-            pushFollow(FollowSets000.FOLLOW_55);
-            this_ImpliesExpression_0=ruleImpliesExpression();
-
-            state._fsp--;
-            if (state.failed) return current;
-            if ( state.backtracking==0 ) {
-
-              			current = this_ImpliesExpression_0;
-              			afterParserOrEnumRuleCall();
-              		
-            }
-            // InternalScadeEquations.g:3997:3: ( () ( ( (lv_operator_2_0= ruleInitOperator ) ) ( (lv_subExpressions_3_0= ruleImpliesExpression ) ) ) (otherlv_4= '->' ( (lv_subExpressions_5_0= ruleImpliesExpression ) ) )* )?
-            int alt78=2;
-            int LA78_0 = input.LA(1);
-
-            if ( (LA78_0==57) ) {
-                alt78=1;
-            }
-            switch (alt78) {
-                case 1 :
-                    // InternalScadeEquations.g:3998:4: () ( ( (lv_operator_2_0= ruleInitOperator ) ) ( (lv_subExpressions_3_0= ruleImpliesExpression ) ) ) (otherlv_4= '->' ( (lv_subExpressions_5_0= ruleImpliesExpression ) ) )*
-                    {
-                    // InternalScadeEquations.g:3998:4: ()
-                    // InternalScadeEquations.g:3999:5: 
-                    {
-                    if ( state.backtracking==0 ) {
-
-                      					/* */
-                      				
-                    }
-                    if ( state.backtracking==0 ) {
-
-                      					current = forceCreateModelElementAndAdd(
-                      						grammarAccess.getInitExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0(),
-                      						current);
-                      				
-                    }
-
-                    }
-
-                    // InternalScadeEquations.g:4008:4: ( ( (lv_operator_2_0= ruleInitOperator ) ) ( (lv_subExpressions_3_0= ruleImpliesExpression ) ) )
-                    // InternalScadeEquations.g:4009:5: ( (lv_operator_2_0= ruleInitOperator ) ) ( (lv_subExpressions_3_0= ruleImpliesExpression ) )
-                    {
-                    // InternalScadeEquations.g:4009:5: ( (lv_operator_2_0= ruleInitOperator ) )
-                    // InternalScadeEquations.g:4010:6: (lv_operator_2_0= ruleInitOperator )
-                    {
-                    // InternalScadeEquations.g:4010:6: (lv_operator_2_0= ruleInitOperator )
-                    // InternalScadeEquations.g:4011:7: lv_operator_2_0= ruleInitOperator
-                    {
-                    if ( state.backtracking==0 ) {
-
-                      							newCompositeNode(grammarAccess.getInitExpressionAccess().getOperatorInitOperatorEnumRuleCall_1_1_0_0());
-                      						
-                    }
-                    pushFollow(FollowSets000.FOLLOW_9);
-                    lv_operator_2_0=ruleInitOperator();
-
-                    state._fsp--;
-                    if (state.failed) return current;
-                    if ( state.backtracking==0 ) {
-
-                      							if (current==null) {
-                      								current = createModelElementForParent(grammarAccess.getInitExpressionRule());
-                      							}
-                      							set(
-                      								current,
-                      								"operator",
-                      								lv_operator_2_0,
-                      								"de.cau.cs.kieler.lustre.Lustre.InitOperator");
-                      							afterParserOrEnumRuleCall();
-                      						
-                    }
-
-                    }
-
-
-                    }
-
-                    // InternalScadeEquations.g:4028:5: ( (lv_subExpressions_3_0= ruleImpliesExpression ) )
-                    // InternalScadeEquations.g:4029:6: (lv_subExpressions_3_0= ruleImpliesExpression )
-                    {
-                    // InternalScadeEquations.g:4029:6: (lv_subExpressions_3_0= ruleImpliesExpression )
-                    // InternalScadeEquations.g:4030:7: lv_subExpressions_3_0= ruleImpliesExpression
-                    {
-                    if ( state.backtracking==0 ) {
-
-                      							newCompositeNode(grammarAccess.getInitExpressionAccess().getSubExpressionsImpliesExpressionParserRuleCall_1_1_1_0());
-                      						
-                    }
-                    pushFollow(FollowSets000.FOLLOW_55);
-                    lv_subExpressions_3_0=ruleImpliesExpression();
-
-                    state._fsp--;
-                    if (state.failed) return current;
-                    if ( state.backtracking==0 ) {
-
-                      							if (current==null) {
-                      								current = createModelElementForParent(grammarAccess.getInitExpressionRule());
-                      							}
-                      							add(
-                      								current,
-                      								"subExpressions",
-                      								lv_subExpressions_3_0,
-                      								"de.cau.cs.kieler.lustre.Lustre.ImpliesExpression");
-                      							afterParserOrEnumRuleCall();
-                      						
-                    }
-
-                    }
-
-
-                    }
-
-
-                    }
-
-                    // InternalScadeEquations.g:4048:4: (otherlv_4= '->' ( (lv_subExpressions_5_0= ruleImpliesExpression ) ) )*
-                    loop77:
-                    do {
-                        int alt77=2;
-                        int LA77_0 = input.LA(1);
-
-                        if ( (LA77_0==57) ) {
-                            alt77=1;
-                        }
-
-
-                        switch (alt77) {
-                    	case 1 :
-                    	    // InternalScadeEquations.g:4049:5: otherlv_4= '->' ( (lv_subExpressions_5_0= ruleImpliesExpression ) )
-                    	    {
-                    	    otherlv_4=(Token)match(input,57,FollowSets000.FOLLOW_9); if (state.failed) return current;
-                    	    if ( state.backtracking==0 ) {
-
-                    	      					newLeafNode(otherlv_4, grammarAccess.getInitExpressionAccess().getHyphenMinusGreaterThanSignKeyword_1_2_0());
-                    	      				
-                    	    }
-                    	    // InternalScadeEquations.g:4053:5: ( (lv_subExpressions_5_0= ruleImpliesExpression ) )
-                    	    // InternalScadeEquations.g:4054:6: (lv_subExpressions_5_0= ruleImpliesExpression )
-                    	    {
-                    	    // InternalScadeEquations.g:4054:6: (lv_subExpressions_5_0= ruleImpliesExpression )
-                    	    // InternalScadeEquations.g:4055:7: lv_subExpressions_5_0= ruleImpliesExpression
-                    	    {
-                    	    if ( state.backtracking==0 ) {
-
-                    	      							newCompositeNode(grammarAccess.getInitExpressionAccess().getSubExpressionsImpliesExpressionParserRuleCall_1_2_1_0());
-                    	      						
-                    	    }
-                    	    pushFollow(FollowSets000.FOLLOW_55);
-                    	    lv_subExpressions_5_0=ruleImpliesExpression();
-
-                    	    state._fsp--;
-                    	    if (state.failed) return current;
-                    	    if ( state.backtracking==0 ) {
-
-                    	      							if (current==null) {
-                    	      								current = createModelElementForParent(grammarAccess.getInitExpressionRule());
-                    	      							}
-                    	      							add(
-                    	      								current,
-                    	      								"subExpressions",
-                    	      								lv_subExpressions_5_0,
-                    	      								"de.cau.cs.kieler.lustre.Lustre.ImpliesExpression");
-                    	      							afterParserOrEnumRuleCall();
-                    	      						
-                    	    }
-
-                    	    }
-
-
-                    	    }
-
-
-                    	    }
-                    	    break;
-
-                    	default :
-                    	    break loop77;
-                        }
-                    } while (true);
-
-
-                    }
-                    break;
-
-            }
-
-
-            }
-
-
-            }
-
-            if ( state.backtracking==0 ) {
-
-              	leaveRule();
-
-            }
-        }
-
-            catch (RecognitionException re) {
-                recover(input,re);
-                appendSkippedTokens();
-            }
-        finally {
-        }
-        return current;
-    }
-    // $ANTLR end "ruleInitExpression"
 
 
     // $ANTLR start "entryRuleImpliesExpression"
@@ -37155,7 +37155,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             // InternalScadeEquations.g:13309:2: (enumLiteral_0= '->' )
             // InternalScadeEquations.g:13310:3: enumLiteral_0= '->'
             {
-            enumLiteral_0=(Token)match(input,57,FollowSets000.FOLLOW_2); if (state.failed) return current;
+            enumLiteral_0=(Token)match(input,55,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               			current = grammarAccess.getInitOperatorAccess().getINITEnumLiteralDeclaration().getEnumLiteral().getInstance();
@@ -44926,9 +44926,9 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         public static final BitSet FOLLOW_50 = new BitSet(new long[]{0x00000000004203B0L,0x0000482001000000L});
         public static final BitSet FOLLOW_51 = new BitSet(new long[]{0x0040000000000002L});
         public static final BitSet FOLLOW_52 = new BitSet(new long[]{0x0000000080000000L});
-        public static final BitSet FOLLOW_53 = new BitSet(new long[]{0x0080000000000000L});
+        public static final BitSet FOLLOW_53 = new BitSet(new long[]{0x0080000000000002L});
         public static final BitSet FOLLOW_54 = new BitSet(new long[]{0x0100000000000000L});
-        public static final BitSet FOLLOW_55 = new BitSet(new long[]{0x0200000000000002L});
+        public static final BitSet FOLLOW_55 = new BitSet(new long[]{0x0200000000000000L});
         public static final BitSet FOLLOW_56 = new BitSet(new long[]{0x0400000000000002L});
         public static final BitSet FOLLOW_57 = new BitSet(new long[]{0x0800000000000002L});
         public static final BitSet FOLLOW_58 = new BitSet(new long[]{0x1000000000000002L});

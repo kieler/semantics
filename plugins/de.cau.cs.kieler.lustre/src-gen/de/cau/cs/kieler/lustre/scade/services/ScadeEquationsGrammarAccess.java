@@ -797,7 +797,7 @@ public class ScadeEquationsGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//@Override
 	//BoolExpression kexpressions::Expression:
-	//	TernaryOperation;
+	//	InitExpression;
 	public LustreGrammarAccess.BoolExpressionElements getBoolExpressionAccess() {
 		return gaLustre.getBoolExpressionAccess();
 	}
@@ -807,28 +807,28 @@ public class ScadeEquationsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//@Override
-	//TernaryOperation kexpressions::Expression:
-	//	{kexpressions::OperatorExpression} operator=ConditionalOperator subExpressions+=TernaryOperation 'then'
-	//	subExpressions+=TernaryOperation 'else' subExpressions+=TernaryOperation
-	//	| InitExpression;
-	public LustreGrammarAccess.TernaryOperationElements getTernaryOperationAccess() {
-		return gaLustre.getTernaryOperationAccess();
-	}
-	
-	public ParserRule getTernaryOperationRule() {
-		return getTernaryOperationAccess().getRule();
-	}
-	
-	//@Override
 	//InitExpression kexpressions::Expression:
-	//	ImpliesExpression ({kexpressions::OperatorExpression.subExpressions+=current} (operator=InitOperator
-	//	subExpressions+=ImpliesExpression) ('->' subExpressions+=ImpliesExpression)*)?;
+	//	TernaryOperation ({kexpressions::OperatorExpression.subExpressions+=current} (operator=InitOperator
+	//	subExpressions+=TernaryOperation) ('->' subExpressions+=TernaryOperation)*)?;
 	public LustreGrammarAccess.InitExpressionElements getInitExpressionAccess() {
 		return gaLustre.getInitExpressionAccess();
 	}
 	
 	public ParserRule getInitExpressionRule() {
 		return getInitExpressionAccess().getRule();
+	}
+	
+	//@Override
+	//TernaryOperation kexpressions::Expression:
+	//	{kexpressions::OperatorExpression} operator=ConditionalOperator subExpressions+=TernaryOperation 'then'
+	//	subExpressions+=TernaryOperation 'else' subExpressions+=TernaryOperation
+	//	| ImpliesExpression;
+	public LustreGrammarAccess.TernaryOperationElements getTernaryOperationAccess() {
+		return gaLustre.getTernaryOperationAccess();
+	}
+	
+	public ParserRule getTernaryOperationRule() {
+		return getTernaryOperationAccess().getRule();
 	}
 	
 	//ImpliesExpression kexpressions::Expression:
