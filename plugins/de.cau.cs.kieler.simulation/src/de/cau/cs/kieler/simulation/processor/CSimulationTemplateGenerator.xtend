@@ -109,16 +109,21 @@ class CSimulationTemplateGenerator extends AbstractSimulationTemplateGenerator {
                 size_t blocksize = «MESSAGE_BUFFER_SIZE.property»;
                 char *buffer = realloc(NULL, sizeof(char) * blocksize);
                 size_t i = 0;
-                char c;
                 
                 // read next line
-                while ((c = getchar()) != '\n') {
-                    buffer[i++] = c;
+                int c = getchar();
+                while (c != EOF && c != '\n') {
+                    buffer[i++] = (char) c;
                     if (i == blocksize) {
                         buffer = realloc(buffer, sizeof(char) * (blocksize += «MESSAGE_BUFFER_SIZE.property»));
                     }
+                    c = getchar();
                 }
                 buffer[i++] = '\0';
+                
+                if (c == EOF) {
+                    exit(EOF);
+                }
                 
                 cJSON *root = cJSON_Parse(buffer);
                 cJSON *item = NULL;
@@ -176,6 +181,7 @@ class CSimulationTemplateGenerator extends AbstractSimulationTemplateGenerator {
                 fflush(stdout);
             
                 cJSON_Delete(root);
+                free(outString);
             }
             </#macro>
             '''

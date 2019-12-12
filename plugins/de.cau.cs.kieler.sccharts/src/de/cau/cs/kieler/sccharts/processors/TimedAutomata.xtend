@@ -44,6 +44,9 @@ import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
+import de.cau.cs.kieler.kexpressions.Expression
+
+import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 
 /**
  * SCCharts Timed Automata Transformation.
@@ -319,14 +322,18 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
     
     def void handleSleep(State state, ValuedObject clock, ValuedObject sleepT) {
         val constraints = HashMultimap.<Transition, OperatorExpression>create
+        val complexConstraints = <OperatorExpression>newArrayList
         for (trans : state.outgoingTransitions.filter[trigger !== null]) {
             for (vor : trans.trigger.eAllContents.filter(ValuedObjectReference).filter[valuedObject == clock].toIterable) {
                 val exp = vor.eContainer
                 if (exp instanceof OperatorExpression) {
-                    if (exp.subExpressions.size == 2 && 
-                        exp.subExpressions.filter(ValuedObjectReference).size == 1 &&
-                        exp.subExpressions.filter(Value).size == 1) {
-                        constraints.put(trans, exp)
+                    if (exp.subExpressions.size == 2) {
+                        if (exp.subExpressions.filter(ValuedObjectReference).size == 1 &&
+                            exp.subExpressions.filter(Value).size == 1) {
+                            constraints.put(trans, exp)
+                        } else {
+                            complexConstraints += exp
+                        }
                     } else {
                         environment.errors.add("Malformed timing constraint.", vor)
                     }
@@ -336,8 +343,38 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
             }
         }
         
-        // easy case
+        // 1. Handle complex constraints
+        for (constraint : complexConstraints) {
+            val op1 = constraint.subExpressions.head
+            val op2 = constraint.subExpressions.last
+            var Expression exp = null
+            if (op1 instanceof ValuedObjectReference) {
+                if (op1.valuedObject === clock) {
+                    exp = op2
+                }
+            }
+            if (op2 instanceof ValuedObjectReference) {
+                if (op2.valuedObject === clock) {
+                    exp = op1
+                }
+            }
+            if (exp === null) {
+                environment.errors.add("Malformed timing constraint. No reference to clock.", constraint)
+            } else {
+                if (!(constraint.operator === OperatorType.GEQ && exp === op2 || constraint.operator === OperatorType.LEQ && exp === op1)) {
+                    environment.errors.add("Malformed timing constraint. Operator "+constraint.operator+" not supported in clock comparison.", constraint)
+                } else {
+                    val during = state.createImmediateDuringAction
+                    during.trigger = createLEExpression(clock.reference, exp.copy)
+                    during.createAssignment(sleepT, createSubExpression(exp.copy, clock.reference)).operator = AssignOperator.ASSIGNMIN
+                }
+            }
+            
+        }
+        
+        // 2. Handle constant constraints
         var thresholds = <Double>newLinkedList
+        // easy case
         if (constraints.keys.size == 1 && constraints.values.size == 1) {
             var double lower = 0
             val op = constraints.values.head.operator

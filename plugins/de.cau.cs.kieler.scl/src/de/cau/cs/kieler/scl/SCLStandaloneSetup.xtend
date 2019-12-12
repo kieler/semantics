@@ -5,6 +5,7 @@ package de.cau.cs.kieler.scl
 
 import com.google.inject.Injector
 import de.cau.cs.kieler.core.services.KielerLanguage
+import de.cau.cs.kieler.scg.ScgPackage
 
 /**
  * Initialization support for running Xtext languages without Equinox extension registry.
@@ -15,9 +16,19 @@ class SCLStandaloneSetup extends SCLStandaloneSetupGenerated implements KielerLa
     
     def static doSetup() {
         if (injector === null) {
+            // Ensure meta model packages are registered 
+            ScgPackage.eINSTANCE.eClass()
+            SCLPackage.eINSTANCE.eClass()
             injector = new SCLStandaloneSetup().createInjectorAndDoEMFRegistration()
         }
         return injector
+    }
+    
+    override register(Injector injector) {
+        super.register(injector)
+        // Ensure package is registered 
+        SCLPackage.eINSTANCE.eClass()
+        ScgPackage.eINSTANCE.eClass()
     }
     
     override getInjector() {

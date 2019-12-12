@@ -143,7 +143,13 @@ class CCompiler extends AbstractSystemCompilerProcessor<Object, ExecutableContai
         // Run c compiler
         var success = gcc.invoke(infra.generatedCodeFolder)?:-1 == 0
         if (!success) {
-            environment.errors.add("Compiler did not return success (exit value != 0)")
+            environment.errors.add(
+                "Compiler did not return success (exit value != 0)" + 
+                "\nEither the source code cannot be compiled or the " +
+                (environment.getProperty(CC_PATH)?:CC_PATH.^default) + 
+                " command is not available on PATH." +
+                "\nPlease check the KiCo log for further details."
+            )
             logger.println("Compilation failed")
         }
         

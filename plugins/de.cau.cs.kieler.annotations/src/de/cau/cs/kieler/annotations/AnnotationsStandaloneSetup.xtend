@@ -3,13 +3,25 @@
  */
 package de.cau.cs.kieler.annotations
 
+import com.google.inject.Injector
 
 /**
  * Initialization support for running Xtext languages without Equinox extension registry.
  */
 class AnnotationsStandaloneSetup extends AnnotationsStandaloneSetupGenerated {
 
-	def static doSetup() {
-		return new AnnotationsStandaloneSetup().createInjectorAndDoEMFRegistration()
-	}
+    static Injector injector
+    
+    def static doSetup() {
+        if (injector === null) {
+            injector = new AnnotationsStandaloneSetup().createInjectorAndDoEMFRegistration()
+        }
+        return injector
+    }
+    
+    override register(Injector injector) {
+        super.register(injector)
+        // Ensure package is registered 
+        AnnotationsPackage.eINSTANCE.eClass()
+    }
 }

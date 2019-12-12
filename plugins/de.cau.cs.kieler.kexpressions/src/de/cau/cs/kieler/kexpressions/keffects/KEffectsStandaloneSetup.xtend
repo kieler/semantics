@@ -3,13 +3,25 @@
  */
 package de.cau.cs.kieler.kexpressions.keffects
 
+import com.google.inject.Injector
 
 /**
  * Initialization support for running Xtext languages without Equinox extension registry.
  */
 class KEffectsStandaloneSetup extends KEffectsStandaloneSetupGenerated {
-
-	def static doSetup() {
-		return new KEffectsStandaloneSetup().createInjectorAndDoEMFRegistration()
-	}
+	
+    static Injector injector
+    
+    def static doSetup() {
+        if (injector === null) {
+            injector = new KEffectsStandaloneSetup().createInjectorAndDoEMFRegistration()
+        }
+        return injector
+    }
+    
+    override register(Injector injector) {
+        super.register(injector)
+        // Ensure package is registered 
+        KEffectsPackage.eINSTANCE.eClass()
+    }
 }
