@@ -168,8 +168,10 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
         
         
         if (environment.getProperty(REGION_VARIABLES) !== null && environment.getProperty(REGION_VARIABLES)) {
-            var dfRegion = rootState.dataflowRegionFromState
-            dfRegion.declarations.addAll(node.variables.map[it.createVariableDeclarationFromLustre(rootState)])
+            if (!node.variables.nullOrEmpty) {
+                var dfRegion = rootState.dataflowRegionFromState
+                dfRegion.declarations.addAll(node.variables.map[it.createVariableDeclarationFromLustre(rootState)])
+            }
         } else {
             rootState.declarations.addAll(node.variables.map[it.createVariableDeclarationFromLustre(rootState)])
         }
@@ -222,7 +224,7 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
                     case CURRENT: {
                         convertedExpression = processCurrentExpression(subExpressionList, state)
                     }
-                    case PRE: {
+                    case PRE, case LAST: {
                         convertedExpression = processPreExpression(subExpressionList.head, state)
                     }
                     default: {

@@ -87,11 +87,15 @@ class LustreToSCCharts extends CoreLustreToSCC {
     override processAutomaton(Automaton automaton, State state) {
         var controlflowRegion = state.createControlflowRegion("")
 
+        var initial = true
         for (AState lusState : automaton.states) {
             var newState = createState => [
                 name = lusState.valuedObject.name
             ]
-            newState.initial = lusState.initial
+            if (initial) {
+                newState.initial = true 
+                initial = false            
+            }
             controlflowRegion.states += newState
             lustreStateToScchartsStateMap.put(lusState.valuedObject as StateValuedObject, newState)
         }
