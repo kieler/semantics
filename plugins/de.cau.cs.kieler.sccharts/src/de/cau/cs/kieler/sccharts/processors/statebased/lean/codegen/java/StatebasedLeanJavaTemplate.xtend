@@ -611,7 +611,7 @@ class StatebasedLeanJavaTemplate extends AbstractStatebasedLeanTemplate {
     }
     
     protected def addTransitionComment(Transition transition) {
-        val commentString = transition.annotations?.filter(CommentAnnotation).head?.values?.head
+        val commentString = transition.annotations?.filter(CommentAnnotation).last?.values?.last
         if (commentString !== null && !commentString.equals("")) {
             return ''' // « commentString »'''
         } 

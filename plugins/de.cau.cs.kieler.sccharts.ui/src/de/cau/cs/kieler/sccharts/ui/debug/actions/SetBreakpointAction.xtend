@@ -31,7 +31,6 @@ class SetBreakpointAction implements IAction {
     override execute(ActionContext context) {
         val selection = context.activeViewer.selection
         val viewContext = context.activeViewer.viewContext
-        val elems = selection.diagramElementsIterator
         
         val selectedStates = selection.diagramElementsIterator.filter[it instanceof KNode].map[viewContext.getSourceElement(it) as State].toIterable
         val selectedTransitions = selection.diagramElementsIterator.filter[it instanceof KEdge].map[viewContext.getSourceElement(it) as Transition].toIterable
