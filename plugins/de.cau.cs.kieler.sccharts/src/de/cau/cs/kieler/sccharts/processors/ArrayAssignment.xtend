@@ -33,13 +33,12 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import de.cau.cs.kieler.kexpressions.Declaration
+import de.cau.cs.kieler.sccharts.Action
 
 /**
  * SCCharts Array initialisation Transformation.
  * 
- * @author cmot
- * @kieler.design 2013-09-05 proposed 
- * @kieler.rating 2013-09-05 proposed yellow
+ * @author kolja
  */
 class ArrayAssignment extends SCChartsProcessor implements Traceable {
 
@@ -71,22 +70,25 @@ class ArrayAssignment extends SCChartsProcessor implements Traceable {
     // -------------------------------------------------------------------
     // --             A R R A Y    A S S I G N M E N T                  --
     // -------------------------------------------------------------------
-    // First step:
-    // computes vector expressions like {a,b} * 4 to {a,b,a,b,a,b,a,b}
-    // and {a,b} + {c,d} to {a,b,c,d}
-    // example: {{1} * 3 + {2} * 2, 2 * {1}} * 2 will be {{1,1,1,2,2,1,1}, {1,1}, {1,1,1,2,2,1,1}, {1,1}}
-    // Second step:
-    // expand statements like y[1] = {1,2} to
-    // y[1][0] = 1
-    // y[1][1] = 2
-    // also y[0] = {{0,1},{2,3}} is replaced by
-    // y[0][0][0] = 0
-    // y[0][0][1] = 1
-    // y[0][1][0] = 2
-    // y[0][1][1] = 3
+
+    /*
+     * First step:
+     * computes vector expressions like {a,b} * 4 to {a,b,a,b,a,b,a,b}
+     * and {a,b} + {c,d} to {a,b,c,d}
+     * example: {{1} * 3 + {2} * 2, 2 * {1}} * 2 will be {{1,1,1,2,2,1,1}, {1,1}, {1,1,1,2,2,1,1}, {1,1}}
+     * Second step:
+     * expand statements like y[1] = {1,2} to
+     * y[1][0] = 1
+     * y[1][1] = 2
+     * also y[0] = {{0,1},{2,3}} is replaced by
+     * y[0][0][0] = 0
+     * y[0][0][1] = 1
+     * y[0][1][0] = 2
+     * y[0][1][1] = 3
+     */
     def State transform(State rootState) {
         // Traverse all transitions
-        rootState.allContainedTransitions.forEach[transformTransitionTrigger]
+        rootState.allContainedActions.forEach[transformArrayAssignments]
         rootState
     }
 
@@ -94,11 +96,11 @@ class ArrayAssignment extends SCChartsProcessor implements Traceable {
         sccharts => [rootStates.forEach[transform]]
     }
 
-    private def void transformTransitionTrigger(Transition transition) {
+    private def void transformArrayAssignments(Action action) {
         var again = false
         do {
             again = false
-            val assignments = transition.allContainedAssignments.toList
+            val assignments = action.allContainedVectorAssignments // only process assignmnets with vector values
             for (assignment : assignments) {
                 assignment.expression = assignment.expression?.computeVectorValues
                 assignment.validate
@@ -109,7 +111,7 @@ class ArrayAssignment extends SCChartsProcessor implements Traceable {
                     values.addAll((assignment.expression as VectorValue).values)
                     for (v : values) {
                         again = again || v instanceof VectorValue
-                        val newAss = transition.createAssignment(assignment.reference.valuedObject, v)
+                        val newAss = action.createAssignment(assignment.reference.valuedObject, v)
                         newAss.operator = assignment.operator
                         newAss.reference.indices.clear
                         for (i : assignment.reference.indices) {
@@ -117,10 +119,27 @@ class ArrayAssignment extends SCChartsProcessor implements Traceable {
                         }
                         newAss.reference.indices.add(createIntValue(index++))
                     }
-                    transition.effects.remove(assignment)
+                    
+                    action.effects.remove(assignment)
                 }
             }
         } while (again)
+    }
+    
+    private def allContainedVectorAssignments(Action a) {
+        val assignments = newHashSet
+        for (vv : a.eAllContents.filter(VectorValue).toIterable) {
+            var parent = vv.eContainer
+            while(parent !== null) {
+                if (parent instanceof Assignment) {
+                    assignments += parent
+                    parent = null
+                } else {
+                    parent = parent.eContainer
+                }
+            }
+        } 
+        return assignments
     }
 
     private def dispatch Expression computeVectorValues(OperatorExpression e) {
