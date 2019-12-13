@@ -2495,6 +2495,106 @@ public interface SCChartsPackage extends EPackage {
     int CODE_EFFECT_FEATURE_COUNT = KEffectsPackage.EFFECT_FEATURE_COUNT + 2;
 
     /**
+     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.DataflowAssignmentImpl <em>Dataflow Assignment</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.sccharts.impl.DataflowAssignmentImpl
+     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getDataflowAssignment()
+     * @generated
+     */
+    int DATAFLOW_ASSIGNMENT = 20;
+
+    /**
+     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATAFLOW_ASSIGNMENT__ANNOTATIONS = KEffectsPackage.ASSIGNMENT__ANNOTATIONS;
+
+    /**
+     * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATAFLOW_ASSIGNMENT__SCHEDULE = KEffectsPackage.ASSIGNMENT__SCHEDULE;
+
+    /**
+     * The feature id for the '<em><b>Outgoing Links</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATAFLOW_ASSIGNMENT__OUTGOING_LINKS = KEffectsPackage.ASSIGNMENT__OUTGOING_LINKS;
+
+    /**
+     * The feature id for the '<em><b>Incoming Links</b></em>' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATAFLOW_ASSIGNMENT__INCOMING_LINKS = KEffectsPackage.ASSIGNMENT__INCOMING_LINKS;
+
+    /**
+     * The feature id for the '<em><b>Reference</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATAFLOW_ASSIGNMENT__REFERENCE = KEffectsPackage.ASSIGNMENT__REFERENCE;
+
+    /**
+     * The feature id for the '<em><b>Expression</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATAFLOW_ASSIGNMENT__EXPRESSION = KEffectsPackage.ASSIGNMENT__EXPRESSION;
+
+    /**
+     * The feature id for the '<em><b>Operator</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATAFLOW_ASSIGNMENT__OPERATOR = KEffectsPackage.ASSIGNMENT__OPERATOR;
+
+    /**
+     * The feature id for the '<em><b>Sub Reference</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATAFLOW_ASSIGNMENT__SUB_REFERENCE = KEffectsPackage.ASSIGNMENT__SUB_REFERENCE;
+
+    /**
+     * The feature id for the '<em><b>Sequential</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATAFLOW_ASSIGNMENT__SEQUENTIAL = KEffectsPackage.ASSIGNMENT_FEATURE_COUNT + 0;
+
+    /**
+     * The number of structural features of the '<em>Dataflow Assignment</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATAFLOW_ASSIGNMENT_FEATURE_COUNT = KEffectsPackage.ASSIGNMENT_FEATURE_COUNT + 1;
+
+    /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.PreemptionType <em>Preemption Type</em>}' enum.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2502,7 +2602,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getPreemptionType()
      * @generated
      */
-    int PREEMPTION_TYPE = 20;
+    int PREEMPTION_TYPE = 21;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.HistoryType <em>History Type</em>}' enum.
@@ -2512,7 +2612,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getHistoryType()
      * @generated
      */
-    int HISTORY_TYPE = 21;
+    int HISTORY_TYPE = 22;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.DelayType <em>Delay Type</em>}' enum.
@@ -2522,7 +2622,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getDelayType()
      * @generated
      */
-    int DELAY_TYPE = 22;
+    int DELAY_TYPE = 23;
 
 
     /**
@@ -2533,7 +2633,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getDeferredType()
      * @generated
      */
-    int DEFERRED_TYPE = 23;
+    int DEFERRED_TYPE = 24;
 
 
     /**
@@ -3177,6 +3277,27 @@ public interface SCChartsPackage extends EPackage {
     EClass getCodeEffect();
 
     /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.DataflowAssignment <em>Dataflow Assignment</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Dataflow Assignment</em>'.
+     * @see de.cau.cs.kieler.sccharts.DataflowAssignment
+     * @generated
+     */
+    EClass getDataflowAssignment();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.DataflowAssignment#isSequential <em>Sequential</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Sequential</em>'.
+     * @see de.cau.cs.kieler.sccharts.DataflowAssignment#isSequential()
+     * @see #getDataflowAssignment()
+     * @generated
+     */
+    EAttribute getDataflowAssignment_Sequential();
+
+    /**
      * Returns the meta object for enum '{@link de.cau.cs.kieler.sccharts.PreemptionType <em>Preemption Type</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -3757,6 +3878,24 @@ public interface SCChartsPackage extends EPackage {
          * @generated
          */
         EClass CODE_EFFECT = eINSTANCE.getCodeEffect();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.DataflowAssignmentImpl <em>Dataflow Assignment</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.sccharts.impl.DataflowAssignmentImpl
+         * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getDataflowAssignment()
+         * @generated
+         */
+        EClass DATAFLOW_ASSIGNMENT = eINSTANCE.getDataflowAssignment();
+
+        /**
+         * The meta object literal for the '<em><b>Sequential</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute DATAFLOW_ASSIGNMENT__SEQUENTIAL = eINSTANCE.getDataflowAssignment_Sequential();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.PreemptionType <em>Preemption Type</em>}' enum.
