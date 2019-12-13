@@ -102,5 +102,8 @@
     </genClasses>
     <genClasses ecoreClass="sccharts.ecore#//PolicyRegion"/>
     <genClasses ecoreClass="sccharts.ecore#//CodeEffect"/>
+    <genClasses ecoreClass="sccharts.ecore#//DataflowAssignment">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute sccharts.ecore#//DataflowAssignment/sequential"/>
+    </genClasses>
   </genPackages>
 </genmodel:GenModel>

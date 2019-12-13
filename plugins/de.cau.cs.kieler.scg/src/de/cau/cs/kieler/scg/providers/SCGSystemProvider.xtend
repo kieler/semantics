@@ -27,6 +27,7 @@ class SCGSystemProvider implements ISystemProvider {
     
     override getSystems() {
         #[
+            "system/de.cau.cs.kieler.sccharts.netlist.dataflow.kico",
             "system/de.cau.cs.kieler.scg.netlist.kico", 
             "system/de.cau.cs.kieler.sccharts.netlist.simple.kico", 
             "system/de.cau.cs.kieler.sccharts.netlist.kico",  
