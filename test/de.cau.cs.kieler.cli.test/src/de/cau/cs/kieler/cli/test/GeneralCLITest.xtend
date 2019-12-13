@@ -18,7 +18,7 @@ import java.nio.file.Files
 import org.junit.BeforeClass
 import org.junit.Test
 
-import static org.junit.Assert.assertEquals
+import static org.junit.Assert.*
 import static org.junit.Assume.assumeTrue
 
 /** 
@@ -32,6 +32,116 @@ class GeneralCLITest extends AbstractCLITest {
     @BeforeClass
     static def void setUpOnce() throws Exception {
         setupCompiler(artifact, compiler)
+    }
+
+    @Test
+    def void testTryAllOption() {
+        val dir = setupTest("kicool-try-all-test")
+        val errorSrc = new File(dir, "sctx/error/syntaxerror.sctx")
+        val src = new File(dir, "sctx/abo/abo.sctx")
+        val dest = new File(dir, "sctx/result")
+        if (!dest.exists) dest.mkdir
+
+        // compiler
+        val command = #[compiler.path, "-v", "-t", errorSrc.path, src.path, "-o", dest.path]
+        assertNotEquals("Exit value not zero", 0, command.invoke)
+
+        // check results
+        assertExists(new File(dest, "abo.sctx"))
+        val srcContent = new String(Files.readAllBytes(src.toPath))
+        val destContent = new String(Files.readAllBytes(new File(dir, "sctx/result/abo.sctx").toPath))
+        assertEquals(srcContent.replaceAll("\\s+", ""), destContent.replaceAll("\\s+", ""))
+    }
+
+    @Test
+    def void testSystemFileOption() {
+        val dir = setupTest("kicool-system-file-test")
+        val src1 = new File(dir, "sctx/abo/abo.sctx")
+        val src2 = new File(dir, "sctx/abro/abro.sctx")
+        val system = new File(dir, "kico/de.cau.cs.kieler.sccharts.netlist.java.kico")
+
+        // compiler
+        val command = #[compiler.path, "-v", "-s", system.path, src1.path, src2.path]
+        assertEquals("Exit value not zero", 0, command.invoke)
+
+        // check results
+        assertExists(new File(dir, "sctx/abo/ABO.java"))
+        assertExists(new File(dir, "sctx/abro/ABRO.java"))
+    }
+
+    @Test
+    def void testIntermediateOption() {
+        val dir = setupTest("kicool-intermediate-test")
+        val src1 = new File(dir, "sctx/abo/abo.sctx")
+        val src2 = new File(dir, "sctx/abro/abro.sctx")
+        val dest = new File(dir, "intermediate")
+        if (!dest.exists) dest.mkdir
+
+        // compiler
+        val command = #[compiler.path, "-v", "-i", "-s", "de.cau.cs.kieler.sccharts.netlist", src1.path, src2.path, "-g", dest.path]
+        assertEquals("Exit value not zero", 0, command.invoke)
+
+        // check results
+        assertTrue("No intermediate models are written to the output directory '" + dest.path + "'", dest.listFiles.size > 0)
+        for (model : dest.listFiles) {
+            assertTrue("No intermediate models are written to the output directory '" + model.path + "'", model.listFiles.size > 0)
+            for (f : model.listFiles) {
+                assertTrue("Intermediate model '" + f.path + "' does not exist", f.listFiles.size > 0)
+            }
+        }
+    }
+
+    @Test
+    def void testFilterOption() {
+        val dir = setupTest("kicool-filter-test")
+        val src = new File(dir, "sctx/filter")
+        val dest = new File(dir, "output")
+        if (!dest.exists) dest.mkdir
+
+        // compiler
+        val command = #[compiler.path, "-v", "-f", "*.sctx", "-s", "de.cau.cs.kieler.sccharts.netlist", src.path, "-o", dest.path]
+        assertEquals("Exit value not zero", 0, command.invoke)
+
+        // check results
+        assertEquals("There are more output files then expected in '" + dest.path + "'", dest.listFiles.size, 4)
+        assertExists(new File(dest, "ABO.c"))
+        assertExists(new File(dest, "ABO.h"))
+        assertExists(new File(dest, "ABRO.c"))
+        assertExists(new File(dest, "ABRO.h"))
+    }
+
+    @Test
+    def void testPropertyOption() {
+        val dir = setupTest("kicool-property-test")
+        val src = new File(dir, "sctx/abo/abo.sctx")
+        val dest = new File(dir, "output")
+        if (!dest.exists) dest.mkdir
+
+        // compiler
+        val command = #[compiler.path, "-v", "-i", "-P", "de.cau.cs.kieler.kicool.deploy.project.generated.name=test",
+            "-s", "de.cau.cs.kieler.sccharts.netlist", src.path, "-o", dest.path, "-g", dest.path]
+        assertEquals("Exit value not zero", 0, command.invoke)
+
+        // check results
+        assertExists(new File(dest, "test"))
+    }
+
+    @Test
+    def void testListSystemsOption() {
+        val command = #[compiler.path, "--list-systems"]
+        val output = newArrayList
+        assertEquals("Exit value not zero", 0, command.invoke(output))
+
+        // check results
+        assertTrue("There are no public systems available", output.size > 1)
+        
+        val command2 = #[compiler.path, "--list-all-systems"]
+        val output2 = newArrayList
+        assertEquals("Exit value not zero", 0, command2.invoke(output2))
+
+        // check results
+        assertTrue("There are no systems available", output2.size > 1)
+        assertTrue("There are less systems in the all-systems list than in the systems list", output2.size > output.size)
     }
 
     @Test
