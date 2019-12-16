@@ -37,7 +37,7 @@ abstract class AbstractSimulationTemplateGenerator extends AbstractTemplateGener
     }
     
     def dropHostTypes(Iterable<Pair<String, VariableInformation>> list) {
-        return list.filter[value.type === ValueType.HOST || "host".equalsIgnoreCase(value.typeName)]
+        return list.filter[!(value.type === ValueType.HOST || "host".equalsIgnoreCase(value.typeName))]
     }
     
     protected def simpleName(String name) {
