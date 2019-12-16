@@ -24,16 +24,14 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
+import de.cau.cs.kieler.sccharts.Action
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
-import de.cau.cs.kieler.kexpressions.Declaration
-import de.cau.cs.kieler.sccharts.Action
 
 /**
  * SCCharts Array initialisation Transformation.
@@ -127,7 +125,7 @@ class ArrayAssignment extends SCChartsProcessor implements Traceable {
     }
     
     private def allContainedVectorAssignments(Action a) {
-        val assignments = newHashSet
+        val assignments = newLinkedHashSet
         for (vv : a.eAllContents.filter(VectorValue).toIterable) {
             var parent = vv.eContainer
             while(parent !== null) {
