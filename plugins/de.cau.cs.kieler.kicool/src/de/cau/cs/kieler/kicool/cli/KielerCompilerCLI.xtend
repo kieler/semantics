@@ -28,6 +28,7 @@ import de.cau.cs.kieler.kicool.compilation.observer.ProcessorError
 import de.cau.cs.kieler.kicool.compilation.observer.ProcessorFinished
 import de.cau.cs.kieler.kicool.compilation.observer.ProcessorStart
 import de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure
+import de.cau.cs.kieler.kicool.deploy.processor.AbstractSystemCompilerProcessor
 import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
 import de.cau.cs.kieler.kicool.registration.ModelInformation
@@ -263,6 +264,7 @@ class KielerCompilerCLI implements Runnable, Observer {
                     cc.startEnvironment.setProperty(SOURCE_FILE, file)
                     cc.startEnvironment.setProperty(ProjectInfrastructure.MODEL_FILE_PATH, file.canonicalPath)
                     cc.startEnvironment.setProperty(ProjectInfrastructure.USE_TEMPORARY_PROJECT, false)
+                    cc.startEnvironment.setProperty(AbstractSystemCompilerProcessor.VERBOSE, verbose)
                     if (genCodeDir !== null) {
                         cc.startEnvironment.setProperty(ProjectInfrastructure.GENERATED_FOLDER_ROOT, genCodeDir.canonicalPath)
                         cc.startEnvironment.setProperty(ProjectInfrastructure.GENERATED_NAME, file.name)
