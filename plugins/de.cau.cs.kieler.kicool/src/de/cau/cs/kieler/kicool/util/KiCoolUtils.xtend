@@ -85,7 +85,8 @@ class KiCoolUtils {
             }
             return input
         } catch (Exception e) {
-            e.printStackTrace
+            //als: Do not print as it will spam console in CLI mode if not all referenced systems are available (as intended)
+            //e.printStackTrace
         }
         return null
     }

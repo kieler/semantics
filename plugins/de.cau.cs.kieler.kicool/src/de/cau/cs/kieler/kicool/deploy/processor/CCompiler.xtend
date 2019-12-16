@@ -120,7 +120,9 @@ class CCompiler extends AbstractSystemCompilerProcessor<Object, ExecutableContai
         val gcc = newArrayList(environment.getProperty(CC_PATH)?:CC_PATH.^default)
         gcc += "-std=c99"
         gcc += "-lm"
-        gcc += "-v"
+        if (environment.getProperty(VERBOSE)) {
+            gcc += "-v"
+        }
         gcc += "-Wall"
         gcc += "-o"
         gcc += targetExePath
