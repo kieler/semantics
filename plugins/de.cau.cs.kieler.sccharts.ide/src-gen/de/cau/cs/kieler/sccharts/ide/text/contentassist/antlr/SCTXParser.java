@@ -42,6 +42,8 @@ public class SCTXParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getControlflowRegionAccess().getAlternatives_7_1_2(), "rule__ControlflowRegion__Alternatives_7_1_2");
 			builder.put(grammarAccess.getControlflowRegionAccess().getAlternatives_7_1_2_0_3(), "rule__ControlflowRegion__Alternatives_7_1_2_0_3");
 			builder.put(grammarAccess.getDataflowRegionAccess().getAlternatives_9(), "rule__DataflowRegion__Alternatives_9");
+			builder.put(grammarAccess.getDataflowRegionAccess().getEquationsAlternatives_9_0_2_0(), "rule__DataflowRegion__EquationsAlternatives_9_0_2_0");
+			builder.put(grammarAccess.getDataflowRegionAccess().getEquationsAlternatives_9_1_2_0(), "rule__DataflowRegion__EquationsAlternatives_9_1_2_0");
 			builder.put(grammarAccess.getIntOrReferenceAccess().getAlternatives(), "rule__IntOrReference__Alternatives");
 			builder.put(grammarAccess.getLocalActionAccess().getAlternatives(), "rule__LocalAction__Alternatives");
 			builder.put(grammarAccess.getDeclarationAccess().getAlternatives(), "rule__Declaration__Alternatives");
@@ -164,6 +166,8 @@ public class SCTXParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getControlflowRegionAccess().getGroup_7_1_1(), "rule__ControlflowRegion__Group_7_1_1__0");
 			builder.put(grammarAccess.getControlflowRegionAccess().getGroup_7_1_2_0(), "rule__ControlflowRegion__Group_7_1_2_0__0");
 			builder.put(grammarAccess.getControlflowRegionAccess().getGroup_7_1_2_1(), "rule__ControlflowRegion__Group_7_1_2_1__0");
+			builder.put(grammarAccess.getDataflowAssignmentAccess().getGroup(), "rule__DataflowAssignment__Group__0");
+			builder.put(grammarAccess.getDataflowAssignmentAccess().getGroup_4(), "rule__DataflowAssignment__Group_4__0");
 			builder.put(grammarAccess.getDataflowRegionAccess().getGroup(), "rule__DataflowRegion__Group__0");
 			builder.put(grammarAccess.getDataflowRegionAccess().getGroup_6(), "rule__DataflowRegion__Group_6__0");
 			builder.put(grammarAccess.getDataflowRegionAccess().getGroup_6_4(), "rule__DataflowRegion__Group_6_4__0");
@@ -567,6 +571,12 @@ public class SCTXParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getControlflowRegionAccess().getDeclarationsAssignment_7_1_2_1_1(), "rule__ControlflowRegion__DeclarationsAssignment_7_1_2_1_1");
 			builder.put(grammarAccess.getControlflowRegionAccess().getActionsAssignment_7_1_2_1_2(), "rule__ControlflowRegion__ActionsAssignment_7_1_2_1_2");
 			builder.put(grammarAccess.getControlflowRegionAccess().getStatesAssignment_7_1_2_1_3(), "rule__ControlflowRegion__StatesAssignment_7_1_2_1_3");
+			builder.put(grammarAccess.getDataflowAssignmentAccess().getAnnotationsAssignment_0(), "rule__DataflowAssignment__AnnotationsAssignment_0");
+			builder.put(grammarAccess.getDataflowAssignmentAccess().getReferenceAssignment_1(), "rule__DataflowAssignment__ReferenceAssignment_1");
+			builder.put(grammarAccess.getDataflowAssignmentAccess().getOperatorAssignment_2(), "rule__DataflowAssignment__OperatorAssignment_2");
+			builder.put(grammarAccess.getDataflowAssignmentAccess().getExpressionAssignment_3(), "rule__DataflowAssignment__ExpressionAssignment_3");
+			builder.put(grammarAccess.getDataflowAssignmentAccess().getScheduleAssignment_4_1(), "rule__DataflowAssignment__ScheduleAssignment_4_1");
+			builder.put(grammarAccess.getDataflowAssignmentAccess().getSequentialAssignment_5(), "rule__DataflowAssignment__SequentialAssignment_5");
 			builder.put(grammarAccess.getDataflowRegionAccess().getAnnotationsAssignment_1(), "rule__DataflowRegion__AnnotationsAssignment_1");
 			builder.put(grammarAccess.getDataflowRegionAccess().getOverrideAssignment_2(), "rule__DataflowRegion__OverrideAssignment_2");
 			builder.put(grammarAccess.getDataflowRegionAccess().getNameAssignment_4(), "rule__DataflowRegion__NameAssignment_4");
