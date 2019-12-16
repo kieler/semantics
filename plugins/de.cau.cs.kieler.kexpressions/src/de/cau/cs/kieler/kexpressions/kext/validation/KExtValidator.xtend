@@ -21,6 +21,7 @@ import de.cau.cs.kieler.kexpressions.kext.TestEntity
 import org.eclipse.xtext.EcoreUtil2
 import org.eclipse.xtext.validation.Check
 import de.cau.cs.kieler.kexpressions.TextExpression
+import de.cau.cs.kieler.kexpressions.VectorValue
 
 //import org.eclipse.xtext.validation.Check
 
@@ -39,6 +40,7 @@ class KExtValidator extends AbstractKExtValidator {
     
     static val WRONG_CARDINALITY_TYPE = "Array cardinalities must be an int literal or a reference to a constant int object."
     static val String NO_CONST_LITERAL = "Const objects must be bound to literals";
+    static val WRONG_ARRAY_INITIALISATION = "Initial value of an array can not be a single value."
        
     @Check
     public def void checkCheckAnnotation(TestEntity testEntity) {
@@ -92,13 +94,18 @@ class KExtValidator extends AbstractKExtValidator {
                     val refVO = card.valuedObject
                     val refDecl = refVO.eContainer as VariableDeclaration
                     if (refDecl.const && refDecl.type == ValueType.INT) {
-                        if (refVO.initialValue != null && refVO.initialValue instanceof IntValue) ok = true
+                        if (refVO.initialValue !== null && refVO.initialValue instanceof IntValue) ok = true
                     }
                 }
                 
                 if (!ok) {
                     error(WRONG_CARDINALITY_TYPE, card, null)
                 } 
+            }
+            if (vo.cardinalities.size > 0 && vo.initialValue !== null) {
+                if( vo.initialValue instanceof Value && !(vo.initialValue instanceof VectorValue) ){
+                    error(WRONG_ARRAY_INITIALISATION, vo.initialValue, null)
+                }
             }
         }
     }
