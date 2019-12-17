@@ -897,11 +897,13 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                 setAsExpandedView;
                 addDoubleClickAction(ReferenceExpandAction::ID);
             ]
-            newNode.addNodeLabelWithPadding(label, INPUT_OUTPUT_TEXT_SIZE, PADDING_INPUT_LEFT, PADDING_INPUT_RIGHT)
+            newNode.createLabel.configureInsideCenteredNodeLabel(label, INPUT_OUTPUT_TEXT_SIZE)
         }
 
         newNode.setLayoutOption(LayeredOptions::NODE_SIZE_CONSTRAINTS,
-            EnumSet.of(SizeConstraint.PORTS, SizeConstraint.PORT_LABELS, SizeConstraint.MINIMUM_SIZE))
+            EnumSet.of(SizeConstraint.PORTS, SizeConstraint.PORT_LABELS, SizeConstraint.MINIMUM_SIZE, 
+                SizeConstraint.NODE_LABELS
+            ))
         newNode.setProperty(SCChartsSynthesis.SKINPATH, getSkinPath(usedContext))
         newNode.setProperty(REFERENCE_NODE, true)
         return newNode
