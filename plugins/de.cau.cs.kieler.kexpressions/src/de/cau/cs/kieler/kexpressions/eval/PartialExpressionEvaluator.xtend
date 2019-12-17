@@ -114,17 +114,21 @@ class PartialExpressionEvaluator {
     // ------------------------------------
     
     protected dispatch def Expression eval(ValuedObjectReference vor) {
-        if (vor.indices.nullOrEmpty && vor.subReference === null) { // Cannot handle valued object references with indices or sub-references
+        var cp = if(inplace) vor else vor.copy
+        for (expr : vor.indices.immutableCopy) {
+            cp.indices.set(vor.indices.indexOf(expr), expr.evaluate)
+        }
+        if (cp.indices.nullOrEmpty && cp.subReference === null) { // Cannot handle valued object references with indices or sub-references
             var Value value = null
-            if (values !== null && values.containsKey(vor.valuedObject)) {
-                value = values.get(vor.valuedObject).copy
+            if (values !== null && values.containsKey(cp.valuedObject)) {
+                value = values.get(cp.valuedObject).copy
             }
             if (value === null && valueCallback !== null) {
-                value = valueCallback.apply(vor)
+                value = valueCallback.apply(cp)
             }
             return value
         }
-        return if (inplace) vor else vor.copy//valuedObject.reference
+        return cp
     }
     
     /**

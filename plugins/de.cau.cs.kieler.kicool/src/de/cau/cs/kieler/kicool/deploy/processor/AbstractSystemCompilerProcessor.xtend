@@ -51,6 +51,9 @@ abstract class AbstractSystemCompilerProcessor<I, O> extends Processor<I, O> {
         
     public static val IProperty<Long> TIMEOUT_SEC = 
         new Property<Long>("de.cau.cs.kieler.kicool.deploy.compiler.timeout", 60L)
+        
+    public static val IProperty<Boolean> VERBOSE = 
+        new Property<Boolean>("de.cau.cs.kieler.kicool.deploy.compiler.verbose", false)
 
     public static val IProperty<String> DEBUG_FOLDER = 
         new Property<String>("de.cau.cs.kieler.kicool.deploy.compiler.folder.debug", "debug")

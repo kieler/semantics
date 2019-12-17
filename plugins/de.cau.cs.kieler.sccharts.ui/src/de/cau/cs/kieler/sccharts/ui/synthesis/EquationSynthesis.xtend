@@ -13,60 +13,74 @@
 package de.cau.cs.kieler.sccharts.ui.synthesis
 
 import com.google.inject.Inject
+import de.cau.cs.kieler.annotations.Annotatable
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.kexpressions.IgnoreValue
 import de.cau.cs.kieler.kexpressions.OperatorExpression
+import de.cau.cs.kieler.kexpressions.OperatorType
+import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
+import de.cau.cs.kieler.kexpressions.Value
+import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.kexpressions.VectorValue
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
+import de.cau.cs.kieler.kexpressions.kext.DeclarationScope
+import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
+import de.cau.cs.kieler.kicool.ui.synthesis.KiCoolSynthesis
+import de.cau.cs.kieler.klighd.SynthesisOption
+import de.cau.cs.kieler.klighd.kgraph.KGraphFactory
+import de.cau.cs.kieler.klighd.kgraph.KIdentifier
+import de.cau.cs.kieler.klighd.kgraph.KNode
+import de.cau.cs.kieler.klighd.kgraph.KPort
+import de.cau.cs.kieler.klighd.krendering.Colors
+import de.cau.cs.kieler.klighd.krendering.KContainerRendering
+import de.cau.cs.kieler.klighd.krendering.KPolygon
+import de.cau.cs.kieler.klighd.krendering.KPolyline
+import de.cau.cs.kieler.klighd.krendering.KRendering
+import de.cau.cs.kieler.klighd.krendering.KText
+import de.cau.cs.kieler.klighd.krendering.LineStyle
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KLabelExtensions
-import de.cau.cs.kieler.sccharts.Scope
+import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
+import de.cau.cs.kieler.klighd.util.KlighdProperties
+import de.cau.cs.kieler.sccharts.DataflowRegion
+import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.sccharts.extensions.SCChartsDataflowRegionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsReferenceExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions
+import de.cau.cs.kieler.sccharts.ui.synthesis.actions.ReferenceExpandAction
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.EquationStyles
+import java.util.EnumSet
+import java.util.HashMap
 import java.util.List
-import java.util.Set
+import org.eclipse.elk.alg.layered.options.LayerConstraint
 import org.eclipse.elk.alg.layered.options.LayeredOptions
+import org.eclipse.elk.alg.layered.options.NodePlacementStrategy
+import org.eclipse.elk.core.math.ElkPadding
+import org.eclipse.elk.core.math.KVector
+import org.eclipse.elk.core.options.Alignment
 import org.eclipse.elk.core.options.CoreOptions
+import org.eclipse.elk.core.options.EdgeType
 import org.eclipse.elk.core.options.PortConstraints
 import org.eclipse.elk.core.options.PortLabelPlacement
 import org.eclipse.elk.core.options.PortSide
+import org.eclipse.elk.core.options.SizeConstraint
+import org.eclipse.elk.graph.properties.IProperty
+import org.eclipse.elk.graph.properties.Property
+import org.eclipse.emf.common.util.URI
+import org.eclipse.emf.ecore.EObject
+import org.eclipse.xtext.resource.XtextResource
+import org.eclipse.xtext.resource.XtextResourceSet
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.klighd.kgraph.KNode
-import de.cau.cs.kieler.klighd.kgraph.KPort
-import org.eclipse.elk.core.math.ElkPadding
-import de.cau.cs.kieler.klighd.SynthesisOption
-import de.cau.cs.kieler.klighd.KlighdConstants
-import org.eclipse.xtext.xbase.lib.Functions.Function1
-import com.google.inject.Injector
-import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
-import de.cau.cs.kieler.sccharts.ui.synthesis.actions.ReferenceExpandAction
-import de.cau.cs.kieler.klighd.util.KlighdProperties
-import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
-import de.cau.cs.kieler.annotations.Annotatable
-import de.cau.cs.kieler.kicool.ui.synthesis.KiCoolSynthesis
-import org.eclipse.xtext.resource.XtextResource
-import org.eclipse.xtext.resource.XtextResourceSet
-import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
-import de.cau.cs.kieler.klighd.kgraph.KIdentifier
-import org.eclipse.emf.ecore.EObject
-import java.util.EnumSet
-import org.eclipse.elk.core.options.SizeConstraint
-import de.cau.cs.kieler.klighd.kgraph.KLabel
-import de.cau.cs.kieler.klighd.kgraph.KLabeledGraphElement
-import de.cau.cs.kieler.kexpressions.OperatorType
-import org.eclipse.elk.alg.layered.options.LayerConstraint
-import de.cau.cs.kieler.kexpressions.Value
-import org.eclipse.elk.core.options.Alignment
-import org.eclipse.elk.alg.layered.options.NodePlacementStrategy
-import de.cau.cs.kieler.sccharts.State
-import org.eclipse.elk.graph.properties.IProperty
-import org.eclipse.elk.graph.properties.Property
-import de.cau.cs.kieler.klighd.krendering.KPolygon
-import de.cau.cs.kieler.klighd.krendering.KText
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
+import de.cau.cs.kieler.kexpressions.IntValue
+import de.cau.cs.kieler.kexpressions.FunctionCall
+import de.cau.cs.kieler.sccharts.ui.synthesis.styles.TransitionStyles
 
 /**
  * @author ssm
@@ -79,742 +93,1024 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
 
     public static val SynthesisOption AUTOMATIC_INLINE = SynthesisOption.createCheckOption("Automatic inline", false).
         setCategory(GeneralSynthesisOptions::DATAFLOW)
-    public static val SynthesisOption UNIQUE_WIRES = SynthesisOption.createCheckOption("Unique Wires", false).
-        setCategory(GeneralSynthesisOptions::DATAFLOW)        
-    public static val SynthesisOption ALIGN_INPUTS_OUTPUTS = SynthesisOption.createCheckOption("Inputs/Outputs Alignment", true).
-        setCategory(GeneralSynthesisOptions::DATAFLOW)
+    public static val SynthesisOption SEPARATED_ASSIGNMENTS = SynthesisOption.createCheckOption("Separated Assignments",
+        false).setCategory(GeneralSynthesisOptions::DATAFLOW)
+    public static val SynthesisOption ALIGN_INPUTS_OUTPUTS = SynthesisOption.createCheckOption(
+        "Inputs/Outputs Alignment", true).setCategory(GeneralSynthesisOptions::DATAFLOW)
     public static val SynthesisOption ALIGN_CONSTANTS = SynthesisOption.createCheckOption("Constant Alignment", false).
         setCategory(GeneralSynthesisOptions::DATAFLOW)
     public static val SynthesisOption SHOW_WIRE_LABELS = SynthesisOption.createCheckOption("Wire Labels", true).
         setCategory(GeneralSynthesisOptions::DATAFLOW)
-    public static val SynthesisOption SHOW_EXPRESSION_PORT_LABELS = SynthesisOption.createCheckOption("Expression Port Labels", false).
+    public static val SynthesisOption SHOW_EXPRESSION_PORT_LABELS = SynthesisOption.createCheckOption(
+        "Expression Port Labels", false).setCategory(GeneralSynthesisOptions::DATAFLOW)
+    public static val SynthesisOption SHOW_REFERENCED_PORT_LABELS = SynthesisOption.createCheckOption(
+        "Referenced Port Labels", true).setCategory(GeneralSynthesisOptions::DATAFLOW)
+    public static val SynthesisOption REFERENCED_PORT_LABELS_OUTSIDE = SynthesisOption.createCheckOption(
+        "Outside Referenced Port Labels", false).setCategory(GeneralSynthesisOptions::DATAFLOW)
+    public static val SynthesisOption ALL_SEQUENTIAL_CONSTRAINTS = SynthesisOption.createCheckOption(
+        "All Sequential Constraints", false).setCategory(GeneralSynthesisOptions::DATAFLOW)
+    public static val SynthesisOption SEQUENTIAL_CONSTRAINTS = SynthesisOption.createCheckOption(
+        "Sequential Constraints", true).setCategory(GeneralSynthesisOptions::DATAFLOW)
+    public static val SynthesisOption INSTANCE_CONSTRAINTS = SynthesisOption.createCheckOption(
+        "Connect Instances", true).setCategory(GeneralSynthesisOptions::DATAFLOW)
+    public static val SynthesisOption SHOW_LOCALS = SynthesisOption.createCheckOption("Local Variables", true).
         setCategory(GeneralSynthesisOptions::DATAFLOW)
-    public static val SynthesisOption SHOW_REFERENCED_PORT_LABELS = SynthesisOption.createCheckOption("Referenced Port Labels", true).
+    public static val SynthesisOption PRE_CICLES = SynthesisOption.createCheckOption("Allow Pre Cicles", false).
         setCategory(GeneralSynthesisOptions::DATAFLOW)
-    public static val SynthesisOption REFERENCED_PORT_LABELS_OUTSIDE = SynthesisOption.createCheckOption("Outside Referenced Port Labels", false).
-        setCategory(GeneralSynthesisOptions::DATAFLOW)
+    public static val SynthesisOption COMBINE_ALL_DATA_ACCESS = SynthesisOption.createCheckOption(
+        "Combine all Data Access Nodes", false).setCategory(GeneralSynthesisOptions::DATAFLOW)
+    public static val SynthesisOption SHOW_ARROWS = SynthesisOption.createCheckOption("Arrows", false).setCategory(
+        GeneralSynthesisOptions::DATAFLOW)
 
     public static final IProperty<Boolean> INLINED_REFERENCE = new Property<Boolean>(
-        "de.cau.cs.kieler.sccharts.ui.synthesis.dataflow.inlinedReference", false);        
+        "de.cau.cs.kieler.sccharts.ui.synthesis.dataflow.inlinedReference", false);
     public static final IProperty<Boolean> INPUT_FLAG = new Property<Boolean>(
-        "de.cau.cs.kieler.sccharts.ui.synthesis.dataflow.inputFlag", false);        
+        "de.cau.cs.kieler.sccharts.ui.synthesis.dataflow.inputFlag", false);
     public static final IProperty<Boolean> OUTPUT_FLAG = new Property<Boolean>(
-        "de.cau.cs.kieler.sccharts.ui.synthesis.dataflow.outputFlag", false);        
+        "de.cau.cs.kieler.sccharts.ui.synthesis.dataflow.outputFlag", false);
+    public static final IProperty<Boolean> DATA_ARRAY_FLAG = new Property<Boolean>(
+        "de.cau.cs.kieler.sccharts.ui.synthesis.dataflow.dataArrayFlag", false);
+    public static final IProperty<Boolean> DATA_ACCESS_FLAG = new Property<Boolean>(
+        "de.cau.cs.kieler.sccharts.ui.synthesis.dataflow.dataAccessFlag", false);
+    public static final IProperty<Boolean> REFERENCE_NODE = new Property<Boolean>(
+        "de.cau.cs.kieler.sccharts.ui.synthesis.dataflow.referenceNode", false);
+    public static final IProperty<Boolean> SEQUENTIAL_EDGE = new Property<Boolean>(
+        "de.cau.cs.kieler.sccharts.ui.synthesis.dataflow.sequential", false);
+    public static final IProperty<Boolean> INSTANCE_EDGE = new Property<Boolean>(
+        "de.cau.cs.kieler.sccharts.ui.synthesis.dataflow.instance", false);
 
-    @Inject extension KRenderingExtensions
     @Inject extension KNodeExtensionsReplacement
     @Inject extension KEdgeExtensions
-    @Inject extension KPortExtensionsReplacement
     @Inject extension KLabelExtensions
+    @Inject extension KPortExtensionsReplacement
     @Inject extension KExpressionsValuedObjectExtensions
-    @Inject extension KExtDeclarationExtensions
-    @Inject extension AnnotationsExtensions
+    @Inject extension KExpressionsCreateExtensions
     @Inject extension SCChartsSerializeHRExtensions
     @Inject extension SCChartsSynthesis
     @Inject extension EquationStyles
-    @Inject extension StateSynthesis
+    @Inject extension KExtDeclarationExtensions
+    @Inject extension AnnotationsExtensions
+    @Inject extension KRenderingExtensions
+    @Inject extension SCChartsDataflowRegionExtensions
+    @Inject extension SCChartsReferenceExtensions
+    @Inject extension EquationSynthesisHelper
+    @Inject extension EquationSimplification
+    @Inject extension TransitionStyles
     @Inject StateSynthesis stateSynthesis
-    @Inject Injector injector
-    
-//    public static final IProperty<String> PROPAGATED_SKINPATH = new Property<String>(
-//        "de.cau.cs.kieler.sccharts.ui.synthesis.dataflow.propagatedSkinPath", "");
 
-    
+    val HashMap<ReferenceDeclaration, KNode> referenceNodes = newHashMap
+
     static val ANNOTATION_FIGURE = "figure"
-    
+
     static val PORT_LABEL_FONT_SIZE = 5
     static val INPUT_OUTPUT_TEXT_SIZE = 9
     static val PADDING_INPUT_LEFT = 2
     static val PADDING_INPUT_RIGHT = 4
     static val PADDING_OUTPUT_LEFT = 4
     static val PADDING_OUTPUT_RIGHT = 2
-    
+
     protected static val PORT_IN_PREFIX = "in"
     protected static val PORT0_IN_PREFIX = "in0"
     protected static val PORT1_IN_PREFIX = "in1"
     protected static val PORT_OUT_PREFIX = "out"
-    protected static val INPUT_ID = "Input"
-    protected static val OUTPUT_ID = "Output"
-    protected static val INPUT_OUTPUT_ID = "InputOutput"
-    protected static val LOCAL_ID = "Local"
     protected static val IN_PORT = "in"
+    protected static val SEQUENTIAL_IN_PORT = "in_seq"
     protected static val OUT_PORT = "out"
+    protected static val SEQUENTIAL_OUT_PORT = "out_seq"
     protected static val INOUT_PORT = "inout"
-    
-    protected static val DEFAULT_FIGURE_KEY = "OperatorExpression"
-    protected static val UNARY_FIGURE_KEY = "OperatorExpressionUnary"
-    protected static val ARITHMETICAL_FIGURE_KEY = "OperatorExpressionArithmetical"
-    protected static val EXTERNAL_FUNCTION_KEY = "ExternalFunction"
-    protected static val UPDATE_FIGURE_KEY = "OperatorExpressionUPDATE"
-    
+    protected static val INSTANCE_IN_PORT = "in_inst"
+    protected static val INSTANCE_OUT_PORT = "out_inst"
+
     protected val defaultFigures = #{
-        DEFAULT_FIGURE_KEY -> 'OperatorExpression.kgt',
-        UNARY_FIGURE_KEY -> 'OperatorExpressionUnary.kgt',
-        ARITHMETICAL_FIGURE_KEY -> 'OperatorExpressionArithmetical.kgt',
-        'OperatorExpressionCONDITIONAL' -> 'OperatorExpressionCONDITIONAL.kgt',
-        'OperatorExpressionINIT' -> 'OperatorExpressionINIT.kgt',
-        'OperatorExpressionPRE' -> 'OperatorExpressionPRE.kgt',
-        'Input' -> 'Input.kgt',
-        'Output' -> 'Output.kgt',
-        'InputOutput' -> 'InputOutput.kgt',
-        'Local' -> 'Local.kgt',
-        EXTERNAL_FUNCTION_KEY -> "OperatorExpressionUnary.kgt",
-        UPDATE_FIGURE_KEY -> "OperatorExpressionUPDATE.kgt"
+        "CLASS_INPUT" -> #["InputClass.kgt", "Class.kgt"],
+        "CLASS_OUTPUT" -> #["InputClass.kgt", "Class.kgt"],
+        "ARRAY_INPUT" -> #["InputArray.kgt", "Array.kgt"],
+        "ARRAY_OUTPUT" -> #["InputArray.kgt", "Array.kgt"],
+        "OPERATOR" -> #["OperatorExpression.kgt"],
+        "FUNCTION" -> #["FunktionExpression.kgt", "OperatorExpression.kgt"],
+        "PRE" -> #["OperatorExpressionPRE.kgt", "OperatorExpressionUnary.kgt", "OperatorExpression.kgt"],
+        "NOT" -> #["OperatorExpressionNOT.kgt", "OperatorExpressionUnary.kgt", "OperatorExpression.kgt"],
+        "EQ" -> #["OperatorExpressionEQ.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
+        "LT" -> #["OperatorExpressionLT.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
+        "LEQ" -> #["OperatorExpressionLEQ.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
+        "LOGICAL_AND" -> #["OperatorExpressionLOGICAL_AND.kgt", "OperatorExpression.kgt"],
+        "LOGICAL_OR" -> #["OperatorExpressionLOGICAL_OR.kgt", "OperatorExpression.kgt"],
+        "ADD" -> #["OperatorExpressionADD.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
+        "UNARY_SUB" -> #["OperatorExpressionUnarySUB.kgt", "OperatorExpressionUnary.kgt", "OperatorExpression.kgt"],
+        "ARITHMETICAL_SUB" ->
+            #["OperatorExpressionArithmeticalSUB.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
+        "VAL" -> #["OperatorExpressionVAL.kgt", "OperatorExpressionUnary.kgt", "OperatorExpression.kgt"],
+        "NE" -> #["OperatorExpressionNE.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
+        "CONDITIONAL_UPDATE" -> #["OperatorExpressionUPDATE.kgt", "OperatorExpression.kgt"],
+        "CONDITIONAL" -> #["OperatorExpressionCONDITIONAL.kgt", "OperatorExpression.kgt"],
+        "INIT" -> #["OperatorExpressionINIT.kgt", "OperatorExpression.kgt"],
+        "MULT" -> #["OperatorExpressionMULT.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
+        "DIV" -> #["OperatorExpressionDIV.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
+        "SHIFT_LEFT" ->
+            #["OperatorExpressionSHIFT_LEFT.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
+        "SHIFT_RIGHT" ->
+            #["OperatorExpressionSHIFT_RIGHT.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
+        "SHIFT_RIGHT_UNSIGNED" -> #["OperatorExpressionSHIFT_RIGHT_UNSIGNED.kgt", "OperatorExpressionArithmetical.kgt",
+            "OperatorExpression.kgt"],
+        "MOD" -> #["OperatorExpressionMOD.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
+        "GEQ" -> #["OperatorExpressionGEQ.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
+        "GT" -> #["OperatorExpressionGT.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
+        "INPUT" -> #["Input.kgt", "OperatorExpression.kgt"],
+        "OUTPUT" -> #["Output.kgt", "OperatorExpression.kgt"],
+        "INPUT_OUTPUT" -> #["InputOutput.kgt", "OperatorExpression.kgt"],
+        "LOCAL" -> #["Local.kgt", "OperatorExpression.kgt"],
+        "EXTERNAL_FUNCTION" -> #["OperatorExpressionUnary.kgt", "OperatorExpression.kgt"],
+        "BITWISE_AND" ->
+            #["OperatorExpresOperatorExpressionLOGICAL_AND.kgtsionBITWISE_AND.kgt",
+                "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
+        "BITWISE_OR" ->
+            #["OperatorExpressionBITWISE_OR.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
+        "BITWISE_XOR" ->
+            #["OperatorExpressionBITWISE_XOR.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"]
     }
-    
-    protected val referenceNodes = <KNode> newHashSet
-    
+
     override getDisplayedSynthesisOptions() {
-        val options = newArrayList(AUTOMATIC_INLINE, ALIGN_INPUTS_OUTPUTS, ALIGN_CONSTANTS, SHOW_WIRE_LABELS, 
-            SHOW_EXPRESSION_PORT_LABELS, SHOW_REFERENCED_PORT_LABELS, REFERENCED_PORT_LABELS_OUTSIDE
+        val options = newArrayList(
+            SEPARATED_ASSIGNMENTS,
+            ALL_SEQUENTIAL_CONSTRAINTS,
+            SEQUENTIAL_CONSTRAINTS,
+            INSTANCE_CONSTRAINTS,
+            SHOW_LOCALS,
+            PRE_CICLES,
+            COMBINE_ALL_DATA_ACCESS,
+            AUTOMATIC_INLINE,
+            ALIGN_INPUTS_OUTPUTS,
+            ALIGN_CONSTANTS,
+            SHOW_WIRE_LABELS,
+            SHOW_EXPRESSION_PORT_LABELS,
+            SHOW_REFERENCED_PORT_LABELS,
+            REFERENCED_PORT_LABELS_OUTSIDE,
+            SHOW_ARROWS
         )
-        
-        return options
-    }   
-    
 
-    override performTranformation(Assignment element) {
-        null
+        return options
     }
 
+    /**
+     * creates an equation graph for a list of assignments and returns a list of created nodes
+     * @param elements A list of assignments
+     * @param rootNode The parent node which should be associated with a dataflow Region
+     */
     def performTranformation(List<Assignment> elements, KNode rootNode) {
-        val nodes = <KNode>newLinkedList
-        val usedNodes = <KNode>newHashSet
-        referenceNodes.clear
-        
-        val wiring = injector.getInstance(Wiring)
-
-        wiring.createWires(elements)
-
-        wiring.createSources(nodes)
-        wiring.createSinks(nodes)
-        wiring.connectWires()
-        if (AUTOMATIC_INLINE.booleanValue)
-            wiring.reWireInlining(nodes, rootNode)
-
+        sequentials.clear
+        alignInputOutputs = ALIGN_INPUTS_OUTPUTS.booleanValue
+        showLocals = SHOW_LOCALS.booleanValue
+        preCicles = PRE_CICLES.booleanValue
+        showWireLabels = SHOW_WIRE_LABELS.booleanValue
+        combineAllDataAccessNodes = COMBINE_ALL_DATA_ACCESS.booleanValue
+        showArrows = SHOW_ARROWS.booleanValue
+        currentRegion = rootNode.sourceElement as DataflowRegion
+        var nodes = <KNode>newLinkedList
+        val List<KNode> lastKNodes = newArrayList
+        for (assignment : elements) {
+            val knodes = assignment.performTranformation
+            nodes += knodes
+            if (lastKNodes !== null) {
+                for (n : knodes.filter[isInput || isOutput]) {
+                    for (last : lastKNodes.
+                        filter[sourceEquals(n) && (!isInput || !n.isInput) && (isInput || isOutput)]) {
+                        sequentials.add(new Pair(last, n))
+                    }
+                }
+            }
+            if (assignment.sequential) {
+                lastKNodes += knodes
+            } else {
+                lastKNodes.clear
+            }
+        }
+        nodes.addInstanceEdges.addSequentialEdges.simplifyAndCombine(rootNode).reWireInlining
+        for (n : nodes) {
+            n.addLayoutParam(CoreOptions.NODE_SIZE_MINIMUM, new KVector(0, 0))
+            n.addLayoutParam(CoreOptions.PADDING, new ElkPadding(0, 0, 0, 0))
+        }
         return nodes
     }
 
-    protected def createSources(Wiring wiring, List<KNode> nodes) {
-        for (wire : wiring.wires) {
-            wire.createSource(wiring, nodes)         
+    /**
+     * transform assignments like += or *= to = assignments
+     */
+    def transformToEqual(Assignment element) {
+        if (element.operator == AssignOperator.ASSIGN) {
+            return element
         }
+        val e = element.copy
+        e.expression = createOperatorExpression => [
+            if (element.operator == AssignOperator.POSTFIXADD) {
+                operator = OperatorType.ADD
+                subExpressions += createIntValue(1)
+            } else if (element.operator == AssignOperator.POSTFIXSUB) {
+                operator = OperatorType.SUB
+                subExpressions += createIntValue(1)
+            } else if (element.operator == AssignOperator.ASSIGNMIN) {
+                operator = OperatorType.CONDITIONAL
+                subExpressions += createOperatorExpression => [
+                    operator = OperatorType.LEQ
+                    subExpressions += element.expression.copy
+                    subExpressions += element.reference.copy
+                ]
+                subExpressions += element.expression.copy
+            } else if (element.operator == AssignOperator.ASSIGNMAX) {
+                operator = OperatorType.CONDITIONAL
+                subExpressions += createOperatorExpression => [
+                    operator = OperatorType.GEQ
+                    subExpressions += element.expression.copy
+                    subExpressions += element.reference.copy
+                ]
+                subExpressions += element.expression.copy
+            } else if (element.operator.getName.startsWith("ASSIGN")) {
+                var op = OperatorType.getByName(element.operator.getName.substring(6))
+                if (op === null) {
+                    op = OperatorType.getByName("BITWISE_" + element.operator.getName.substring(6))
+                }
+                if (op === null) {
+                    op = OperatorType.getByName(element.operator.getName.substring(6) + "T")
+                }
+                if (element.operator == AssignOperator.ASSIGNSHIFTLEFT) {
+                    op = OperatorType.SHIFT_LEFT
+                }
+                if (element.operator == AssignOperator.ASSIGNSHIFTRIGHT) {
+                    op = OperatorType.SHIFT_RIGHT
+                }
+                if (element.operator == AssignOperator.ASSIGNSHIFTRIGHTUNSIGNED) {
+                    op = OperatorType.SHIFT_RIGHT_UNSIGNED
+                }
+                operator = op
+                subExpressions += element.expression.copy
+            }
+            subExpressions += element.reference.copy
+        ]
+        return e
     }
-            
-    protected def createSource(Wire wire, Wiring wiring, List<KNode> nodes) {    
-        val nodeExists = wire.semanticSource.nodeExists(wire.externalSourceReferenceCounter, wire.sourceIsEquationTarget)
-        if (!nodeExists) {
-            if (wire.sourceIsDeclaredInEquationScope) return 
+
+    /**
+     * Creates an equation graph for an assignment and returns the list of created nodes.
+     * To create a graph from more then one assignment performTranformation(List<Assignment>, KNode) should be used
+     * @param element The assignment
+     */
+    override performTranformation(Assignment element) {
+        var assignment = element.transformToEqual
+        if (assignment.reference.isReferenceDeclarationReference && assignment.expression instanceof VectorValue) {
+            // special case for vector assignments for referenced valued objects
+            val nodes = <KNode>newLinkedList
+            val sources = (assignment.expression as VectorValue).values.map[performTransformation(nodes, false)]
+            val target = assignment.reference.performTransformation(nodes, true)
+            val inputs = (assignment.reference.valuedObject.declaration as ReferenceDeclaration).getInputs.map [
+                reference
+            ]
+            var index = 0
+            var portIndex = 0
+            // connect the inputs with labeled ports
+            for (source : sources) {
+                if (source !== null) {
+                    val sourcePort = source.findPortById(OUT_PORT)
+                    val targetPort = target.getInputPortWithNumber(portIndex++)
+                    val ref = if(inputs.size >= index) inputs.get(index) else null
+                    if (ref !== null) {
+                        targetPort.setLabel(ref.serializeHR.toString, true)
+                        targetPort.associateWith(ref)
+                    }
+                    sourcePort.connectWith(targetPort, assignment.expression.serializeHR.toString)
+                }
+                index++
+            }
+            if (portIndex == 0) {
+                target.getInputPortWithNumber(0).remove
+            }
+            return nodes
         }
-                    
-        var KNode node 
-        if (!nodeExists) {
-            if (wire.semanticSourceReferenceDeclaration !== null) {
-                
-                node = wire.semanticSource.createNode(wire.externalSourceReferenceCounter, wire.sourceIsEquationTarget)
-                
-                if (wire.externalSourceReferenceCounter > 0) {
-                    node = wire.semanticSource.createKGTNodeFromObject(wire.externalSourceReferenceCounter, 
-                        wire.sourceIsEquationTarget, EXTERNAL_FUNCTION_KEY, "", wire
-                    )                        
+
+        val nodes = <KNode>newLinkedList
+        val source = assignment.expression.performTransformation(nodes, false)
+        if (assignment.expression instanceof VectorValue) {
+            source.associateWith(assignment.reference)
+            source.setProperty(OUTPUT_FLAG, true)
+            source.setProperty(DATA_ACCESS_FLAG, true)
+            for (p : source.ports.filter[edges.size > 0]) {
+                val ref = assignment.reference.copy
+                ref.indices.add(p.sourceElement as IntValue)
+                p.associateWith(ref)
+            }
+        }
+        val sourcePort = source.findPortById(OUT_PORT)
+        val target = assignment.reference.performTransformation(nodes, true)
+        val targetPort = target.findPortById(PORT0_IN_PREFIX)
+        sourcePort.connectWith(targetPort, assignment.expression.serializeHR.toString)
+        return nodes
+    }
+
+    /**
+     * combines the graphs for the assignments to a simplified connected Graph
+     * @param nodes List of nodes of each assignments
+     * @param rootNode The root node witch is associated with the dataflow region
+     */
+    private def List<KNode> simplifyAndCombine(List<KNode> nodes, KNode rootNode) {
+        if (SEPARATED_ASSIGNMENTS.booleanValue) {
+            return nodes
+        }
+        return nodes.simplify
+    }
+
+    /**
+     * creates an equation tree graph from an expression and returns the root node of the tree
+     * @param reference The valued object reference to which the tree should be generated
+     * @param nodes All created nodes are added to this list
+     * @param output Should be true if output nodes should be generated
+     */
+    private def dispatch KNode performTransformation(ValuedObjectReference reference, List<KNode> nodes,
+        boolean output) {
+        if (!reference.isModelReference &&
+            ((reference.isClassReference && reference.subReference !== null) || reference.isArrayReference)) {
+            // go through the sub references and indices and create a data access node for each index of sub reference
+            var ref = reference
+            var KNode firstNode = null
+            var KNode lastNode = null
+            while (ref !== null) {
+                var nextRef = ref.removeLastReference
+                // create the dada access node
+                var KNode currentNode = null
+                if (ref.lastSubReferenceIsArray) {
+                    currentNode = ref.createKGTNode(output ? "ARRAY_OUTPUT" : "ARRAY_INPUT", "")
+                    currentNode.setProperty(DATA_ACCESS_FLAG, true)
+                    currentNode.setProperty(output ? OUTPUT_FLAG : INPUT_FLAG, true)
                 } else {
-                    node = node.createReferenceNode(wire.semanticSource, wire.externalSourceReferenceCounter, 
-                        wire, (wire.semanticSource as ValuedObjectReference).valuedObject.serializeHR.removeCardinalities.toString, wire.semanticSourceReferenceDeclaration
-                    )
-                    wire.semanticSource.addNode(wire.externalSourceReferenceCounter, wire.sourceIsEquationTarget, node)
+                    currentNode = ref.createKGTNode(output ? "CLASS_OUTPUT" : "CLASS_INPUT", "")
+                    currentNode.setProperty(DATA_ACCESS_FLAG, true)
+                    currentNode.setProperty(output ? OUTPUT_FLAG : INPUT_FLAG, true)
+                }
+                if (nextRef === null) {
+                    // no more data access nodes are needed so a normal input or output node will be created
+                    currentNode = ref.performTransformation(nodes, output)
+                    currentNode.associateWith(ref)
+                } else {
+                    currentNode.associateWith(nextRef)
+                    nodes += currentNode
+                }
+                if (firstNode === null) {
+                    firstNode = currentNode
+                }
+                if (lastNode !== null) {
+                    // connect the last data access node with the new data access node
+                    currentNode.setProperty(DATA_ARRAY_FLAG, true)
+                    if (output) {
+                        val sourcePort = lastNode.findPortById(OUT_PORT)
+                        sourcePort.connectWith(currentNode.findPortById(PORT0_IN_PREFIX), ref.lastSubReferenceLabel)
+                    } else {
+                        val sourcePort = currentNode.findPortById(OUT_PORT)
+                        sourcePort.connectWith(lastNode.findPortById(PORT0_IN_PREFIX), ref.lastSubReferenceLabel)
+                    }
+                }
+                if (nextRef !== null) {
+                    // set the port labels of the new data access node
+                    if (output) {
+                        currentNode.findPortById(PORT0_IN_PREFIX).setLabel(ref.lastSubReferenceLabel, false)
+                        currentNode.findPortById(PORT0_IN_PREFIX).associateWith(ref)
+                    } else {
+                        currentNode.findPortById(OUT_PORT).setLabel(ref.lastSubReferenceLabel, false)
+                        currentNode.findPortById(OUT_PORT).associateWith(ref)
+                    }
+                }
+                lastNode = currentNode
+                ref = nextRef
+            }
+            return firstNode
+        }
+        var node = reference.valuedObject.createKGTNode(output ? "OUTPUT" : "INPUT", "")
+        var text = reference.valuedObject.reference.serializeHR.toString
+        if (reference.isModelReference) {
+            // in case of a model reference the subreference should not be in the label of the node
+            text = reference.valuedObject.reference.serializeHR.toString
+            for (i : reference.indices) {
+                text += "[" + i.serializeHR.toString + "]"
+            }
+            node = node.createReferenceNode(reference, text)
+            // write the subreferences to the port labels
+            if (reference.subReference !== null) {
+                if (output) {
+                    node.getInputPortWithNumber(0).setLabel(reference.subReference.serializeHR.toString, true)
+                    node.getInputPortWithNumber(0).associateWith(reference.subReference)
+                } else {
+                    node.findPortById(OUT_PORT)?.setLabel(reference.subReference.serializeHR.toString, true)
+                    node.findPortById(OUT_PORT)?.associateWith(reference.subReference)
+                }
+            }
+            var ref = reference.valuedObject.reference
+            for (i : reference.indices) {
+                ref.indices += i.copy
+            }
+            node.associateWith(ref)
+        } else {
+            node.associateWith(reference)
+            node.addNodeLabelWithPadding(text, INPUT_OUTPUT_TEXT_SIZE,
+                output ? PADDING_OUTPUT_LEFT : PADDING_INPUT_LEFT, output ? PADDING_OUTPUT_RIGHT : PADDING_INPUT_RIGHT)
+
+            if (reference.valuedObject.array) {
+                node.setProperty(DATA_ARRAY_FLAG, true)
+            }
+        }
+        node.setProperty(output ? OUTPUT_FLAG : INPUT_FLAG, true)
+        if (ALIGN_INPUTS_OUTPUTS.booleanValue) {
+            node.addLayoutParam(LayeredOptions::LAYERING_LAYER_CONSTRAINT,
+                output ? LayerConstraint::LAST : LayerConstraint::FIRST)
+            node.addLayoutParam(CoreOptions::ALIGNMENT, output ? Alignment.RIGHT : Alignment.LEFT)
+        }
+        nodes += node
+        return node
+    }
+
+    /**
+     * creates an equation tree graph from an expression and returns the root node of the tree
+     * create one node for each value inside of a Vector Value and connect them to a Vector node
+     * @param e The VectorValue to which the tree should be generated
+     * @param nodes All created nodes are added to this list
+     * @param output Should be true if output nodes should be generated
+     */
+    private def dispatch KNode performTransformation(VectorValue e, List<KNode> nodes, boolean output) {
+        val node = e.createKGTNode(output ? "ARRAY_OUTPUT" : "ARRAY_INPUT", "")
+        for (value : e.values) {
+            if (!(value instanceof IgnoreValue)) {
+                val valueNode = value.performTransformation(nodes, false)
+                val sourcePort = valueNode.findPortById(OUT_PORT)
+                val targetPort = node.getInputPortWithNumber(e.values.indexOf(value))
+                sourcePort.connectWith(targetPort, valueNode.sourceElement?.serializeHR?.toString)
+                targetPort.setLabel(e.values.indexOf(value).toString, false)
+                targetPort.associateWith(createIntValue(e.values.indexOf(value)))
+            }
+        }
+        node.setProperty(DATA_ARRAY_FLAG, true)
+        node.associateWith(e)
+        nodes += node
+        return node
+    }
+
+    private def dispatch KNode performTransformation(IgnoreValue e, List<KNode> nodes, boolean output) {
+        return null
+    }
+
+    /**
+     * creates an equation tree graph from an expression and returns the root node of the tree
+     * create an input node for constant values
+     * @param e The Value to which the tree should be generated
+     * @param nodes All created nodes are added to this list
+     * @param output Will be ignored in this case
+     */
+    private def dispatch KNode performTransformation(Value e, List<KNode> nodes, boolean output) {
+        val node = e.createKGTNode("INPUT", "")
+        val text = e.serializeHR.toString
+        node.addNodeLabelWithPadding(text, INPUT_OUTPUT_TEXT_SIZE, PADDING_INPUT_LEFT, PADDING_INPUT_RIGHT)
+        node.setProperty(INPUT_FLAG, true)
+
+        if (ALIGN_CONSTANTS.booleanValue) {
+            node.addLayoutParam(LayeredOptions::LAYERING_LAYER_CONSTRAINT, LayerConstraint::FIRST)
+            node.addLayoutParam(CoreOptions::ALIGNMENT, Alignment.LEFT)
+        }
+        node.associateWith(e)
+        nodes += node
+        return node
+    }
+
+    /**
+     * creates an equation tree graph from an expression and returns the root node of the tree
+     * @param operatorExpr The OperatorExpression to which the tree should be generated
+     * @param nodes All created nodes are added to this list
+     * @param output Should be true if output nodes should be generated
+     */
+    private def dispatch KNode performTransformation(OperatorExpression operatorExpr, List<KNode> nodes,
+        boolean output) {
+        var figureId = operatorExpr.operator.getName()
+        if (operatorExpr.operator == OperatorType.SUB) {
+            figureId = if(operatorExpr.subExpressions.size == 1) "UNARY_SUB" else "ARITHMETICAL_SUB"
+        }
+        if (operatorExpr.operator == OperatorType.CONDITIONAL && operatorExpr.subExpressions.size == 2) {
+            figureId = "CONDITIONAL_UPDATE"
+        }
+        var text = operatorExpr.operator.toString
+        if (operatorExpr.operator == OperatorType.CONDITIONAL) {
+            text = ""
+        }
+        // create kgt node
+        val node = operatorExpr.createKGTNode(figureId, text)
+        for (subExpr : operatorExpr.subExpressions) {
+            val source = subExpr.performTransformation(nodes, false)
+            val sourcePort = source.findPortById(OUT_PORT)
+            val targetPort = node.getInputPortWithNumber(operatorExpr.subExpressions.indexOf(subExpr))
+            sourcePort.connectWith(targetPort, subExpr.serializeHR.toString)
+        }
+        // show or hide port labels
+        if (SHOW_EXPRESSION_PORT_LABELS.booleanValue) {
+            for (p : node.ports) {
+                val label = p.labels.head
+                if (label !== null) {
+                    if (operatorExpr.operator != OperatorType::CONDITIONAL) {
+                        label.text = operatorExpr.operator.serializeHR.toString
+                    }
+                }
+            }
+        } else {
+            for (p : node.ports) {
+                val label = p.labels.head
+                if (label !== null) {
+                    label.text = ""
+                }
+            }
+        }
+        node.associateWith(operatorExpr)
+        nodes += node
+        return node
+    }
+
+    /**
+     * creates an equation tree graph from an expression and returns the root node of the tree
+     * @param functionCall The FunctionCall to which the tree should be generated
+     * @param nodes All created nodes are added to this list
+     * @param output Should be true if output nodes should be generated
+     */
+    private def dispatch KNode performTransformation(FunctionCall functionCall, List<KNode> nodes, boolean output) {
+        var figureId = "FUNCTION"
+        var text = functionCall.functionName
+        // create kgt node
+        val node = functionCall.createKGTNode(figureId, text)
+        for (subExpr : functionCall.parameters.map[expression]) {
+            val source = subExpr.performTransformation(nodes, false)
+            val sourcePort = source.findPortById(OUT_PORT)
+            val targetPort = node.getInputPortWithNumber(functionCall.parameters.map[expression].indexOf(subExpr))
+            sourcePort.connectWith(targetPort, subExpr.serializeHR.toString)
+        }
+        // show or hide port labels
+        if (SHOW_EXPRESSION_PORT_LABELS.booleanValue) {
+            for (p : node.ports) {
+                val label = p.labels.head
+                if (label !== null) {
+                    label.text = functionCall.functionName
+                }
+            }
+        } else {
+            for (p : node.ports) {
+                val label = p.labels.head
+                if (label !== null) {
+                    label.text = ""
+                }
+            }
+        }
+        node.associateWith(functionCall)
+        nodes += node
+        return node
+    }
+
+    /**
+     * add instance edges for reference nodes which are the same instance if INSTANCE_CONSTRAINTS is true
+     * @param nodes A list of nodes from the Graph
+     */
+    private def addInstanceEdges(List<KNode> nodes) {
+        if (INSTANCE_CONSTRAINTS.booleanValue) {
+            for (n : nodes.filter[isReference]) {
+                for (m : nodes.filter [
+                    sourceEquals(n) && n != it && !incomingEdges.exists[source == n] && !outgoingEdges.exists [
+                        target == n
+                    ]
+                ]) {
+                    var source = n
+                    var target = m
+                    if (m.isSequential(n)) {
+                        source = m
+                        target = n
+                    }
+                    val edge = createEdge
+                    var sourcePort = source.findPortById(INSTANCE_OUT_PORT)
+                    if (sourcePort === null) {
+                        sourcePort = createPort => [
+                            data += KGraphFactory.eINSTANCE.createKIdentifier()
+                            setId(INSTANCE_OUT_PORT);
+                            setProperty(CoreOptions::PORT_SIDE, PortSide.EAST)
+                        ]
+                        source.ports.add(sourcePort)
+                    }
+                    var targetPort = target.findPortById(INSTANCE_IN_PORT)
+                    if (targetPort === null) {
+                        targetPort = createPort => [
+                            data += KGraphFactory.eINSTANCE.createKIdentifier()
+                            setId(INSTANCE_IN_PORT);
+                            setProperty(CoreOptions::PORT_SIDE, PortSide.WEST)
+                        ]
+                        target.ports.add(targetPort)
+                    }
+                    edge.setLayoutOption(LayeredOptions.INSIDE_SELF_LOOPS_YO, true)
+                    edge.source = source
+                    edge.sourcePort = sourcePort
+                    edge.target = target
+                    edge.targetPort = targetPort
+                    edge.addWireFigure
+                    edge.data.filter(KRendering).get(0).foreground = Colors.GREEN
+                    edge.setLayoutOption(CoreOptions.EDGE_TYPE, EdgeType.DEPENDENCY)
+                    edge.getKContainerRendering as KPolyline => [
+                        lineStyle = LineStyle::CUSTOM;
+                        lineStyle.dashPattern.clear;
+                        lineStyle.dashPattern += newArrayList(2 as float, 2 as float);
+                    ]
+                    edge.setProperty(INSTANCE_EDGE, true)
+                    source.addLayoutParam(LayeredOptions::LAYERING_LAYER_CONSTRAINT, LayerConstraint::NONE)
+                    target.addLayoutParam(LayeredOptions::LAYERING_LAYER_CONSTRAINT, LayerConstraint::NONE)
+                }
+            }
+        }
+        return nodes
+    }
+
+    /**
+     * add sequential edges for nodes which should be executed sequential if SEQUENTIAL_CONSTRAINTS is true
+     * @param nodes A list of nodes from the Graph
+     */
+    private def addSequentialEdges(List<KNode> nodes) {
+        if (SEQUENTIAL_CONSTRAINTS.booleanValue) {
+            if (ALL_SEQUENTIAL_CONSTRAINTS.booleanValue) {
+                for (seq : sequentials.reverse.filter [
+                    key.isOutput && value.isInput && !key.isDataAccess && !value.isDataAccess
+                ]) {
+                    if (!seq.key.isInputForEquation(seq.value, false)) {
+                        seq.key.connectSequential(seq.value)
+                    }
+                }
+                for (seq : sequentials.reverse.filter [
+                    (!key.isOutput || !value.isInput) && !key.isDataAccess && !value.isDataAccess
+                ]) {
+                    if (!seq.key.isInputForEquation(seq.value, false)) {
+                        seq.key.connectSequential(seq.value)
+                    }
                 }
             } else {
-                var text = wire.source.serializeHR.toString
-                if (wire.source instanceof OperatorExpression) {
-                    text = wire.semanticSource.asOperatorExpression.operator.toString
-                    if (wire.semanticSource.asOperatorExpression.operator == OperatorType.CONDITIONAL) {
-                        text = ""
+                val outputs = nodes.filter[isOutput && !isDataAccess]
+                var sequentialEnd = nodes.size
+                for (var i = outputs.size - 1; i >= 0; i--) {
+                    val pos = nodes.indexOf(outputs.get(i));
+                    var needSequential = false
+                    for (var j = 0; j <= pos; j++) {
+                        for (var k = pos + 1; k < sequentialEnd; k++) {
+                            needSequential = needSequential || nodes.get(j).isSequential(nodes.get(k))
+                        }
                     }
-                    node = wire.semanticSource.createKGTNodeFromObject(wire.externalSourceReferenceCounter, 
-                        wire.sourceIsEquationTarget, wire.source, text, wire
-                    )
-                    node.associateWith(wire.semanticSource)
-                } else {
-                    if (wire.sourceIsEquationTarget) {
-                        println("Equation Target: " + wire)
-                    }                    
-                    node = wire.semanticSource.createKGTNode(wire.externalSourceReferenceCounter,
-                        wire.sourceIsEquationTarget,  
-                        //if (wire.wireIsLocal) LOCAL_ID else 
-                            INPUT_ID
-                    )
-                    wire.semanticSource.addPort(OUT_PORT, node.ports.head)
-                    node.addNodeLabelWithPadding(text, INPUT_OUTPUT_TEXT_SIZE, PADDING_INPUT_LEFT, PADDING_INPUT_RIGHT)
-                    node.setProperty(INPUT_FLAG, true)
-                    
-                    val isConstant = wire.semanticSource instanceof Value
-                    if(ALIGN_INPUTS_OUTPUTS.booleanValue && !isConstant) {
-                        node.addLayoutParam(LayeredOptions::LAYERING_LAYER_CONSTRAINT, LayerConstraint::FIRST)
-                        node.addLayoutParam(CoreOptions::ALIGNMENT, Alignment.LEFT)                        
+                    if (needSequential) {
+                        for (var k = pos + 1; k < sequentialEnd; k++) {
+                            if (nodes.get(k).isInput && !nodes.get(k).isDataAccess &&
+                                nodes.get(k).sourceEquals(nodes.get(pos)) && !nodes.get(k).incomingEdges.exists [
+                                    isSequential
+                                ]) {
+                                nodes.get(pos).connectSequential(nodes.get(k))
+                                needSequential = false
+                            }
+                        }
+                        if (needSequential) {
+                            nodes.get(pos).connectSequential(nodes.get(pos + 1))
+                            needSequential = false
+                        }
+                    } else {
+                        sequentialEnd = pos + 1
                     }
-                    if(ALIGN_CONSTANTS.booleanValue && isConstant) { 
-                        node.addLayoutParam(LayeredOptions::LAYERING_LAYER_CONSTRAINT, LayerConstraint::FIRST)
-                        node.addLayoutParam(CoreOptions::ALIGNMENT, Alignment.LEFT)
-                    }
-                        
-//                    println("Source Port> KPort@" + node.ports.head.hashCode)
-                }
-            }            
-            
-//            println("Source> KNode@" + node.hashCode + ": " + wire)
-            
-            nodes += node
-        } 
-    }
-    
-
-    
-    protected def createSinks(Wiring wiring, List<KNode> nodes) {
-        for (wire : wiring.wires) {
-            wire.createSink(wiring, nodes)
-        }
-    }
-    
-    protected def createSink(Wire wire, Wiring wiring, List<KNode> nodes) {     
-        val nodeExists = wire.semanticSink.nodeExists(wire.externalSinkReferenceCounter, false)
-        
-        if (!nodeExists) {
-            if (wire.sinkIsDeclaredInEquationScope) return
-        }
-        
-        var node = wire.semanticSink.createNode(wire.externalSinkReferenceCounter, false)
-        
-        if (!nodeExists) {
-            if (wire.semanticSinkReferenceDeclaration !== null) {
-                if (wire.externalSourceReferenceCounter > 0) {
-                    node = wire.semanticSource.createKGTNode(wire.externalSourceReferenceCounter, false, EXTERNAL_FUNCTION_KEY)                        
-                } else {
-                    node = node.createReferenceNode(wire.semanticSink, wire.externalSinkReferenceCounter, 
-                        wire, (wire.semanticSink as ValuedObjectReference).valuedObject.serializeHR.removeCardinalities.toString, wire.semanticSinkReferenceDeclaration
-                    )
-//                    wire.semanticSink.addNode(wire.externalSinkReferenceCounter, wire.sourceIsEquationTarget, node)
-                    wire.semanticSink.addNode(wire.externalSinkReferenceCounter, false, node)
-                }
-            } else { 
-                node = wire.semanticSink.createKGTNode(wire.externalSinkReferenceCounter, false, 
-//                    if (wire.wireIsLocal) LOCAL_ID else 
-                        OUTPUT_ID
-                )
-//                wire.sourceIsEquationTarget = false
-                wire.semanticSink.addPort(IN_PORT, node.ports.head)
-                val text = wire.semanticSink.serializeHR.toString
-                node.addNodeLabelWithPadding(text, INPUT_OUTPUT_TEXT_SIZE, PADDING_OUTPUT_LEFT, PADDING_OUTPUT_RIGHT)
-                node.setProperty(OUTPUT_FLAG, true)
-                
-                if(ALIGN_INPUTS_OUTPUTS.booleanValue) {
-                    node.addLayoutParam(LayeredOptions::LAYERING_LAYER_CONSTRAINT, LayerConstraint::LAST)
-                    node.addLayoutParam(CoreOptions::ALIGNMENT, Alignment.RIGHT)
-                }
-                
-//                println("Target Port> KPort@" + node.ports.head.hashCode)
-                
-            }
-            
-//            println("Target> KNode@" + node.hashCode +  ": " + wire)            
-            
-            nodes += node
-        }
-    }
-
-
-
-    protected def connectWires(Wiring wiring) {
-        for (wire : wiring.wires) {
-            wire.connectWire(wiring)
-        }
-    }
-    
-    protected def connectWire(Wire wire, Wiring wiring) {
-        val sourceNode = wire.semanticSource.getExistingNode(wire.externalSourceReferenceCounter, wire.sourceIsEquationTarget)
-        var sourcePort = wire.semanticSource.getPort(OUT_PORT)
-        val targetNode = wire.semanticSink.getExistingNode(wire.externalSinkReferenceCounter, false)
-        
-        if (sourceNode === null || targetNode === null) return;
-        
-//        println("Wire> KNode@" + sourceNode.hashCode + " - " + "Node@" + targetNode.hashCode +  ": " + wire)
-         
-        var targetPort = null as KPort
-        if (wire.semanticSinkReferenceDeclaration !== null) {
-            // If it is a reference, connect it to the specific port
-            if (wire.semanticSink.asValuedObjectReference.subReference !== null) {
-                targetPort = targetNode.getPort(wire.semanticSinkSubReference.valuedObject)
-            }
-        }
-        if (wire.semanticSourceReferenceDeclaration !== null) {
-            if (wire.semanticSource.asValuedObjectReference.subReference !== null) {
-                val p = sourceNode.getPort(wire.semanticSourceSubReference.valuedObject)
-//                println("Wire> Source Port@" + p.hashCode + " for " + wire.semanticSourceSubReference.valuedObject) 
-                sourcePort = p
-            }
-        }
-        
-        if (wire.semanticSource instanceof OperatorExpression) {
-            val p = sourceNode.ports.filter[ 
-                    it.getId.startsWith(PORT_OUT_PREFIX)
-                ].head
-//            sourcePort = wire.semanticSource.getPort(OUT_PORT, p)
-            sourcePort = p
-            if (sourcePort === null) {
-//                println("Port> NULL!")            
-            } else {
-//                println("Port> " + wire.semanticSource + " " + PORT_OUT_PREFIX + " " + p + "@" + p.hashCode)
-            }    
-        }
-        
-        if (wire.semanticSink instanceof OperatorExpression) {
-            val exp = wire.semanticSink.asOperatorExpression.subExpressions.get(wire.sinkIndex)
-            if (exp instanceof ValuedObjectReference) {
-                val s = if (exp.subReference !== null) exp.subReference.valuedObject else null
-                if (targetNode.portExists(exp.valuedObject, s, wire.sinkIndex)) {
-                    targetPort = targetNode.getPort(exp.valuedObject, s, wire.sinkIndex)
                 }
             }
-            if (targetPort === null) {
-                targetPort = targetNode.createDynamicInputPort(wire)
-            }
-        } else if (targetPort === null) {
-//            targetPort = wire.sink.getPort(IN_PORT)
-            targetPort = targetNode.ports.filter[
-                    it.getId.startsWith(PORT_IN_PREFIX)
-                ].head
-//            println("Port> " + targetPort + "@" + targetPort.hashCode)
         }
+        return nodes
+    }
+
+    private def connectSequential(KNode before, KNode after) {
+        val edge = createEdge
+        var sourcePort = before.findPortById(SEQUENTIAL_OUT_PORT)
+        if (sourcePort === null) {
+            sourcePort = createPort => [
+                data += KGraphFactory.eINSTANCE.createKIdentifier()
+                setId(SEQUENTIAL_OUT_PORT);
+                setProperty(CoreOptions::PORT_SIDE, PortSide.EAST)
+            ]
+            before.ports.add(sourcePort)
+        }
+        var targetPort = after.findPortById(SEQUENTIAL_IN_PORT)
         if (targetPort === null) {
-            targetPort = targetNode.getPort(wire) => [
-                addLayoutParam(CoreOptions::PORT_SIDE, PortSide.WEST)
+            targetPort = createPort => [
+                data += KGraphFactory.eINSTANCE.createKIdentifier()
+                setId(SEQUENTIAL_IN_PORT);
+                setProperty(CoreOptions::PORT_SIDE, PortSide.WEST)
             ]
-            targetNode.ports += targetPort
-        } 
-        
-        // Only label operator expressions and only do it once.
-        var String label = null 
-        if (SHOW_WIRE_LABELS.booleanValue) {
-            if (wire.source == wire.semanticSource && wire.source instanceof OperatorExpression) {
-                label = wire.source.serializeHR.toString
-            }
+            after.ports.add(targetPort)
         }
-        
-        if (sourcePort !== null) {
-//            println("Wire> KNode@" + sourceNode.hashCode + " " + 
-//                "KPort@" + sourcePort.hashCode +
-//                " - " + "KNode@" + targetNode.hashCode + " " +
-//                "KPort@" + targetPort.hashCode +  
-//                 ": " + wire)
-         }
-        wire.source.createWireEdge(sourceNode, sourcePort, targetNode, targetPort, label)
-    }
-
-    protected def createWireEdge(Object association, KNode sourceNode, KPort sourcePort, KNode targetNode, KPort targetPort, String label) { 
-        val edge = createEdge.associateWith(association)
         edge.setLayoutOption(LayeredOptions.INSIDE_SELF_LOOPS_YO, true)
-        edge.source = sourceNode
+        edge.source = before
         edge.sourcePort = sourcePort
-        edge.target = targetNode
-        if (targetPort !== null) edge.targetPort = targetPort
+        edge.target = after
+        edge.targetPort = targetPort
         edge.addWireFigure
-        if (!label.nullOrEmpty) {
-            edge.createLabel.configureTailEdgeLabel(label, 5, KlighdConstants::DEFAULT_FONT_NAME)
+        edge.data.filter(KRendering).get(0).foreground = Colors.RED
+        edge.setLayoutOption(CoreOptions.EDGE_TYPE, EdgeType.DEPENDENCY)
+        edge.getKContainerRendering as KPolyline => [
+            lineStyle = LineStyle::CUSTOM;
+            lineStyle.dashPattern.clear;
+            lineStyle.dashPattern += newArrayList(2 as float, 2 as float);
+        ]
+        edge.setProperty(SEQUENTIAL_EDGE, true)
+        if (before.isOutput)
+            before.addLayoutParam(LayeredOptions::LAYERING_LAYER_CONSTRAINT, LayerConstraint::NONE)
+        if (after.isInput)
+            after.addLayoutParam(LayeredOptions::LAYERING_LAYER_CONSTRAINT, LayerConstraint::NONE)
+        if (showArrows) {
+            edge.addDefaultDecorator
         }
     }
 
+    private def KNode createReferenceNode(KNode node, ValuedObjectReference voRef, String label) {
 
-    
-    protected def KNode createReferenceNode(KNode node, Object association, Object association2, Wire wire, String label, ReferenceDeclaration referenceDeclaration) {
-        if (association.nodeExists(association2)) {
-            val oldNode = association.getNode(association2)
-            if (referenceNodes.contains(oldNode)) return oldNode
+        val list = node.data.filter[it instanceof KRendering].toList
+        for (x : list) {
+            node.data.remove(x)
         }
-        
         var newNode = node
-        
-        node.associateWith(association)
-        
+
         node.setLayoutOption(LayeredOptions::NODE_PLACEMENT_STRATEGY, NodePlacementStrategy.SIMPLE)
-        node.setLayoutOption(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_ORDER) 
-        node.setLayoutOption(CoreOptions.PORT_LABELS_PLACEMENT, PortLabelPlacement.INSIDE) 
-        node.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 10d); //10.5 // 8f
+        node.setLayoutOption(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_ORDER)
+        node.setLayoutOption(CoreOptions.PORT_LABELS_PLACEMENT, PortLabelPlacement.INSIDE)
+        node.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 10d); // 10.5 // 8f
         node.setLayoutOption(CoreOptions::PADDING, new ElkPadding(4d));
-        node.addLayoutParam(KlighdProperties::EXPAND, false)      
+        node.addLayoutParam(KlighdProperties::EXPAND, false)
         node.addLayoutParam(LayeredOptions::SPACING_PORT_PORT, 20d)
-  
-        
+
+        val referenceDeclaration = voRef.valuedObject.declaration as ReferenceDeclaration
         if (referenceDeclaration.hasAnnotation(ANNOTATION_FIGURE)) {
-            newNode = loadFigureFromKGT(referenceDeclaration.reference as Annotatable, association, referenceDeclaration, wire)
+            newNode = referenceDeclaration.createKGTNode("OPERATOR", label)
             newNode.setProperty(SCChartsSynthesis.SKINPATH, getSkinPath(usedContext))
-            if (newNode !== null) return newNode 
+            newNode.addNodeLabelWithPadding(label, INPUT_OUTPUT_TEXT_SIZE, PADDING_INPUT_LEFT, PADDING_INPUT_RIGHT)
+            newNode.setProperty(REFERENCE_NODE, true)
+            val rendering = newNode.data.filter(KContainerRendering).head
+            rendering.setProperty(EquationStyles.IS_CONTENT_CONTAINER, true);
+            val expanded = rendering.copy
+            rendering.setAsCollapsedView
+            rendering.addDoubleClickAction(ReferenceExpandAction::ID)
+            newNode.data.add(expanded)
+            expanded.setAsExpandedView;
+            expanded.addDoubleClickAction(ReferenceExpandAction::ID);
+            newNode.setProperty(REFERENCE_NODE, true)
+            if(newNode !== null) return newNode
         }
-        if (referenceDeclaration.reference !== null && referenceDeclaration.reference.asAnnotatable.hasAnnotation(ANNOTATION_FIGURE)) {
-            newNode = loadFigureFromKGT(referenceDeclaration.reference as Annotatable, association, referenceDeclaration.reference as Annotatable, wire)
+        if (referenceDeclaration.reference !== null &&
+            referenceDeclaration.reference.asAnnotatable.hasAnnotation(ANNOTATION_FIGURE)) {
+            newNode = referenceDeclaration.reference.createKGTNode("OPERATOR", label)
             newNode.setProperty(SCChartsSynthesis.SKINPATH, getSkinPath(usedContext))
-            if (newNode !== null) return newNode
+            newNode.addNodeLabelWithPadding(label, INPUT_OUTPUT_TEXT_SIZE, PADDING_INPUT_LEFT, PADDING_INPUT_RIGHT)
+            newNode.setProperty(REFERENCE_NODE, true)
+            val rendering = newNode.data.filter(KContainerRendering).head
+            rendering.setProperty(EquationStyles.IS_CONTENT_CONTAINER, true);
+            val expanded = rendering.copy
+            rendering.setAsCollapsedView
+            rendering.addDoubleClickAction(ReferenceExpandAction::ID)
+            newNode.data.add(expanded)
+            expanded.setAsExpandedView;
+            expanded.addDoubleClickAction(ReferenceExpandAction::ID);
+            newNode.setProperty(REFERENCE_NODE, true)
+            if(newNode !== null) return newNode
         }
-        
-        val associationVOR = association as ValuedObjectReference
-        val declaration = associationVOR.valuedObject.referenceDeclaration      
+
+        val declaration = voRef.valuedObject.referenceDeclaration
         if (AUTOMATIC_INLINE.booleanValue && declaration.reference !== null) {
-            val state = declaration.reference as State
-            newNode = stateSynthesis.transform(state).head
+            if (referenceNodes.containsKey(declaration)) {
+                newNode = referenceNodes.get(declaration).copy
+            } else {
+                val state = declaration.reference as State
+                newNode = stateSynthesis.transform(state).head
+                referenceNodes.put(declaration, newNode.copy)
+            }
+            if (node.getInputPortWithNumber(0) !== null) {
+                newNode.ports.add(node.getInputPortWithNumber(0).copy)
+            }
+            if (node.findPortById(OUT_PORT) !== null) {
+                newNode.ports.add(node.findPortById(OUT_PORT).copy)
+            }
             newNode.setProperty(INLINED_REFERENCE, true)
-        } else { 
-            newNode.addReferenceNodeFigure.associateWith(association) => [
+        } else {
+            newNode.data.filter[it instanceof KRendering]
+            newNode.addReferenceNodeFigure.associateWith(voRef) => [
                 setAsCollapsedView;
-                addDoubleClickAction(ReferenceExpandAction::ID)  
+                addDoubleClickAction(ReferenceExpandAction::ID)
             ]
-            newNode.addReferenceNodeFigure.associateWith(association) => [
+
+            newNode.addReferenceNodeFigure.associateWith(voRef) => [
                 setAsExpandedView;
                 addDoubleClickAction(ReferenceExpandAction::ID);
             ]
-            newNode.addNodeLabel(label)
-        }
-        
-        val vor = wire.sink       
-        if (referenceDeclaration.reference !== null) {
-            newNode.createReferenceNodePorts(referenceDeclaration.reference as Scope, vor, [ input ], PortSide.WEST, true)
-            newNode.createReferenceNodePorts(referenceDeclaration.reference as Scope, vor, [ output ], PortSide.EAST, false)
+            newNode.addNodeLabelWithPadding(label, INPUT_OUTPUT_TEXT_SIZE, PADDING_INPUT_LEFT, PADDING_INPUT_RIGHT)
         }
 
-         
-        newNode.setLayoutOption(LayeredOptions::NODE_SIZE_CONSTRAINTS, EnumSet.of(SizeConstraint.PORTS, SizeConstraint.MINIMUM_SIZE))
+        newNode.setLayoutOption(LayeredOptions::NODE_SIZE_CONSTRAINTS,
+            EnumSet.of(SizeConstraint.PORTS, SizeConstraint.PORT_LABELS, SizeConstraint.MINIMUM_SIZE))
         newNode.setProperty(SCChartsSynthesis.SKINPATH, getSkinPath(usedContext))
-
-        referenceNodes += newNode 
+        newNode.setProperty(REFERENCE_NODE, true)
         return newNode
     }
-    
-    protected def createReferenceNodePorts(KNode node, Scope scope, Object association, Function1<? super VariableDeclaration, Boolean> predicate, PortSide portSide, boolean reverse) {
-        val scopes = scope.declarations.filter(VariableDeclaration).filter(predicate).toList
-        val scopeView = if (reverse) scopes.reverseView else scopes        
-        for(input : scopeView) {
-            val declarationView = if (reverse) input.valuedObjects.reverseView else input.valuedObjects
-            for(v : declarationView) {
-                val port = node.createPort(v) => [
-                    if (v.hasAnnotation("hidden")) {
-                        addLayoutParam(CoreOptions::PORT_SIDE, PortSide.SOUTH)
-                    } else {
-                        addLayoutParam(CoreOptions::PORT_SIDE, portSide)
-                    }
-                    setPortSize(2, 2)
-                    if (SHOW_REFERENCED_PORT_LABELS.booleanValue) {
-                        if (REFERENCED_PORT_LABELS_OUTSIDE.booleanValue) {
-                            createLabel().configureOutsidePortLabel(v.serializeHR.removeCardinalities.toString, PORT_LABEL_FONT_SIZE)
-                        } else {
-//                            addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, -3d)
-                            createLabel().configureInsidePortLabel(v.serializeHR.removeCardinalities.toString, PORT_LABEL_FONT_SIZE)
-                        }
-                    }
-                    node.ports += it
-                ]          
-                port.associateWith(v)   
-                port.setProperty(if (portSide == PortSide.WEST) INPUT_FLAG else OUTPUT_FLAG, true)
-            }
-        }        
-    }
-    
-    protected def KNode loadFigureFromKGT(EObject eObject, Object association, Annotatable annotationObject, Wire wire) {
-        if (!annotationObject.hasAnnotation(ANNOTATION_FIGURE)) return null
-        
-        val path = getSkinPath(usedContext) 
-        val kgt = path + if (!path.endsWith("/")) "/" + annotationObject.getStringAnnotationValue(ANNOTATION_FIGURE) 
-        val sl = eObject.eResource.URI.segmentsList
-        val nsl = sl.take(sl.length - 1).drop(1)
-        val newURI = org.eclipse.emf.common.util.URI.createPlatformResourceURI(nsl.join("/") + "/" + kgt, false)
 
-        val newResourceSet = KiCoolSynthesis.KGTInjector.getInstance(XtextResourceSet)
-        newResourceSet.addLoadOption(XtextResource.OPTION_RESOLVE_ALL, Boolean.FALSE)
-        val res = newResourceSet.createResource(newURI)
-
-        try {
-            res.load(newResourceSet.loadOptions)
-            val node = (res.getContents().get(0) as KNode).children.head
-            node.associateWith(association)
-            association.addNode(false, node)
-
-            val valuedObjects = eObject.asDeclarationScope.valuedObjects.filter[ input || output ].toList        
-        
-            for(p : node.eAllContents.filter(KPort).toList) {
-                val id = p.data.filter(KIdentifier).head
-                val v = valuedObjects.filter[ it.name.equals(id.id) ].head
-                
-                p.associateWith(v)          
-                node.addPort(v, p)  
-//                println("Figure Port> KPort@" + p.hashCode + " for " + v)
-            }
-            
-//            println("Figure Node> KNode@" + node.hashCode)
-
-            return node
-        } catch (Exception e) {
-            // Display default reference actor
-        }            
-    }
-    
-    protected def KNode createKGTNode(Object createExtensionObject, Object createExtensionObject2, 
-        Object createExtensionObject3, String figureId
-    ) {
-        val node = getKGTFromBundle(defaultFigures.get(figureId))
-        createExtensionObject.addNode(createExtensionObject2, createExtensionObject3, node)
-        return node    
-    }
-    
-    protected def KNode createKGTNodeFromObject(Object createExtensionObject, Object createExtensionObject2, 
-        Object createExtensionObject3, Object figureObject, String labelText, Wire wire
-    ) {
-        var figureId = DEFAULT_FIGURE_KEY
-        var text = labelText
-        val portLabels = <Integer, String> newHashMap
-        val fixedPortLabels = <Integer> newHashSet
-        
-        if (figureObject instanceof OperatorExpression) {
-            switch(figureObject.operator) {
-            case PRE: figureId = if (figureObject.subExpressions.size == 1) UNARY_FIGURE_KEY 
-                else DEFAULT_FIGURE_KEY + figureObject.operator.getName.toString
-            case VAL,
-            case NE,
-            case NOT: figureId = UNARY_FIGURE_KEY 
-            
-            case CONDITIONAL: {
-                if (figureObject.subExpressions.size == 2) {
-                    figureId = UPDATE_FIGURE_KEY
-                    if (wire.sink instanceof ValuedObjectReference) {
-                        portLabels.put(2, wire.sink.asValuedObjectReference.valuedObject.name)
-                        fixedPortLabels.add(2)
-                    }
-                } else {
-                    figureId = DEFAULT_FIGURE_KEY + figureObject.operator.getName.toString
-                }
-                text = ""
-            } 
-            case INIT: {
-                    figureId = DEFAULT_FIGURE_KEY + figureObject.operator.getName.toString
-                    text = ""
-                }
-            
-            case SUB: figureId = if (figureObject.subExpressions.size == 1) UNARY_FIGURE_KEY else ARITHMETICAL_FIGURE_KEY  
-            case ADD,
-            case MULT,
-            case DIV,
-            case SHIFT_LEFT,
-            case SHIFT_RIGHT,
-            case SHIFT_RIGHT_UNSIGNED,
-            case MOD,
-            case EQ,
-            case GEQ,
-            case GT,
-            case LEQ,
-            case LT: {
-                figureId = ARITHMETICAL_FIGURE_KEY; 
-                portLabels.put(0, figureObject.operator.serializeHR.toString)
-                portLabels.put(1, figureObject.operator.serializeHR.toString)
-            }
-            
-            
-            default: {}  
-            }
-        } else if (figureObject instanceof String) {
-            figureId = figureObject
-        }
-        
-        val node = createExtensionObject.createKGTNode(createExtensionObject2, createExtensionObject3, figureId)
-        
-        for (p : node.ports) {
-            val id = p.getId
-            if (id !== null) {
-                if (id.startsWith(PORT_IN_PREFIX)) {
-                    if (figureObject instanceof OperatorExpression) {
-                        try {
-                            val n = Integer.parseInt(id.substring(2))
-                            if (n < figureObject.subExpressions.size) {
-                                val exp = figureObject.subExpressions.get(n)
-                                if (exp instanceof ValuedObjectReference) {
-                                    val v = exp.valuedObject
-                                    val s = if (exp.subReference !== null) exp.subReference.valuedObject else null
-                                    node.addPort(v, s, n, p)
-                                }
-                            }
-                        } catch(NumberFormatException e) {
-                            // abort at convert issues
-                        }
-                        if (id.length > 2) {
-                            val portLabelNumber = Integer.parseInt(id.substring(2))
-                            val portLabel = portLabels.get(portLabelNumber)     
-                            if (!portLabel.nullOrEmpty) {     
-                                if (SHOW_EXPRESSION_PORT_LABELS.booleanValue || fixedPortLabels.contains(portLabelNumber)) {               
-                                    val label = p.labels.head
-                                    if (label !== null) {
-                                        label.text = portLabel 
-                                    }
-                                } else {
-                                    val label = p.labels.head
-                                    if (label !== null) {
-                                        label.text = ""
-                                    }
-                                }
-                            }
-                        }
-                    } else {
-                        createExtensionObject.addPort(id, p)
-                    }
-                } 
-                else if (id.startsWith(PORT_OUT_PREFIX)) {
-                    createExtensionObject.addPort(PORT_OUT_PREFIX, p)
-//                    println("Port> " + createExtensionObject + " " + PORT_OUT_PREFIX + " " + p + "@" + p.hashCode)
-                }                   
-            }
-        }
-        
-        if (!text.nullOrEmpty) {
-            node.addNodeLabel(text, INPUT_OUTPUT_TEXT_SIZE)
-        }
-        
-        return node
-    }
-    
-    protected def KPort createDynamicInputPort(KNode node, Wire wire) {
-        var maxIndex = -1
-        var KPort maxPort = null 
-        for (p : node.ports) {
-            val id = p.getId
-            if (id !== null) {
-                if (id.startsWith(PORT_IN_PREFIX)) {
-                    
-                    try {
-                        val n = Integer.parseInt(id.substring(2))
-                        if (n == wire.sinkIndex) return p
-                        if (n > maxIndex) {
-                            maxIndex = n
-                            maxPort = p
-                        }
-                    } catch(NumberFormatException e) {
-                        // abort at convert issues
-                    }                        
-                    
-                }                    
-            }
-        }
-        
-        if (maxPort === null) return null
-        
-        var KPort result = null
-        for (pi : (maxIndex + 1) .. wire.sinkIndex) {
-            result = maxPort.copy
-            
-            result.setId(PORT_IN_PREFIX + pi)
-            
-            node.ports.add(0, result)
-        }   
-        return result     
-    } 
-    
-    protected def void reWireInlining(Wiring wiring, List<KNode> nodes, KNode rootNode) {
-        val inlinedNodes = nodes.filter[ it.getProperty(INLINED_REFERENCE) ].toList
+    private def reWireInlining(List<KNode> nodes) {
+        val inlinedNodes = nodes.filter[it.getProperty(INLINED_REFERENCE)].toList
         for (node : inlinedNodes) {
-            val parent = if (node.parent === null) rootNode else node.parent
-            
-            for (child : node.eContents.filter(KNode)) {
-                parent.children += child
-                
-                child.setLayoutOption(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_ORDER) 
-//                child.setLayoutOption(CoreOptions.PORT_LABELS_PLACEMENT, PortLabelPlacement.INSIDE) 
-//                child.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 10d); //10.5 // 8f
-//                child.setLayoutOption(CoreOptions::PADDING, new ElkPadding(18d, 7d, 7d, 7d))
-//                child.addLayoutParam(LayeredOptions::SPACING_PORT_PORT, 20d)
-                child.data.filter(de.cau.cs.kieler.klighd.krendering.KRendering).forEach[
+
+            for (child : node.eContents.filter(KNode).toList) {
+                nodes += child
+                child.setLayoutOption(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_ORDER)
+                child.data.filter(KRendering).forEach [
                     placementData = null
                 ]
-                
-                val inputNames = <String, KNode> newHashMap
-                for (inputNode : child.children.filter(KNode).filter[ getProperty(INPUT_FLAG) ]) {
-                    val name = inputNode.data.filter(KPolygon).head.children.filter(KText).head.text
-                    inputNames.put(name, inputNode)                                        
-                }
-                val outputNames = <String, KNode> newHashMap
-                for (outputNode : child.children.filter(KNode).filter[ getProperty(OUTPUT_FLAG) ]) {
-                    val name = outputNode.data.filter(KPolygon).head.children.filter(KText).head.text
-                    outputNames.put(name, outputNode)                                        
-                }
-                
-                
-                for (port : node.ports.toList.reverseView) {
-                    val portName = port.labels.head.text
-                    val portSide = port.portSide
-                    
-                    if ((portSide != PortSide.EAST && inputNames.containsKey(portName)) || 
-                        (portSide == PortSide.EAST && outputNames.containsKey(portName))
-                    ) {
-                        val newPort = port.copy
-                        
-                        newPort.addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, 0d)
-                        child.ports += newPort
 
-                        if (portSide != PortSide.EAST) {                    
-                            for (edge : node.incomingEdges.filter[ targetPort == port ]) {
-                                val newEdge = edge.copy
-                                edge.source.outgoingEdges += newEdge
-                                newEdge.target = child
-                                newEdge.targetPort = newPort
-                            }
+                val inputNames = <String, KNode>newHashMap
+                for (inputNode : child.children.filter(KNode).filter[getProperty(INPUT_FLAG)]) {
+                    val name = inputNode.data.filter(KPolygon).head.children.filter(KText).head.text
+                    inputNames.put(name, inputNode)
+                }
+                val outputNames = <String, KNode>newHashMap
+                for (outputNode : child.children.filter(KNode).filter[getProperty(OUTPUT_FLAG)]) {
+                    val name = outputNode.data.filter(KPolygon).head.children.filter(KText).head.text
+                    outputNames.put(name, outputNode)
+                }
+
+                for (port : node.ports.immutableCopy.reverseView) {
+                    val portName = port.labels.head?.text
+                    val portSide = port.portSide
+                    val newPort = port.copy
+
+                    newPort.addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, 0d)
+                    child.ports += newPort
+
+                    if (portSide != PortSide.EAST) {
+                        for (edge : node.incomingEdges.immutableCopy.filter[targetPort == port]) {
+                            edge.target = child
+                            edge.targetPort = newPort
+                        }
+                        if (portName !== null) {
                             val inputNode = inputNames.get(portName)
                             if (inputNode !== null) {
                                 for (edge : inputNode.outgoingEdges.immutableCopy) {
                                     edge.source = child
                                     edge.sourcePort = newPort
-                                }                            
+                                }
                                 inputNode.remove
-                        }
-                        }
-                        
-                        else if (portSide == PortSide.EAST) {                    
-                            for (edge : node.outgoingEdges.filter[ sourcePort == port ]) {
-                                val newEdge = edge.copy
-                                newEdge.source = child
-                                newEdge.sourcePort = newPort
-                                newEdge.target = edge.target
                             }
+                        }
+                    } else if (portSide == PortSide.EAST) {
+                        for (edge : node.outgoingEdges.immutableCopy.filter[sourcePort == port]) {
+                            edge.source = child
+                            edge.sourcePort = newPort
+                        }
+                        if (portName !== null) {
                             val outputNode = outputNames.get(portName)
                             if (outputNode !== null) {
                                 for (edge : outputNode.incomingEdges.immutableCopy) {
                                     edge.target = child
                                     edge.targetPort = newPort
-                                }                            
+                                }
                                 outputNode.remove
                             }
                         }
-                        
                     }
                 }
-                
-                child.setLayoutOption(LayeredOptions::NODE_SIZE_CONSTRAINTS, EnumSet.of(SizeConstraint.PORTS, SizeConstraint.MINIMUM_SIZE))
             }
         }
-        
         for (node : inlinedNodes) {
-            node.incomingEdges.immutableCopy.forEach[ remove ]
-            node.outgoingEdges.immutableCopy.forEach[ remove ]
-            nodes.remove(node)
+            nodes.betterRemove(node, null)
+        }
+        return nodes
+    }
+
+    /**
+     * create a single node from a kgt file
+     */
+    private def KNode createKGTNode(
+        EObject createExtensionObject,
+        String figureId,
+        String label
+    ) {
+        if (createExtensionObject instanceof Annotatable) {
+            var annotationObject = createExtensionObject as Annotatable
+            if (annotationObject.hasAnnotation(ANNOTATION_FIGURE)) {
+                val path = getSkinPath(usedContext)
+                val kgt = path +
+                    if(!path.endsWith("/")) "/" + annotationObject.getStringAnnotationValue(ANNOTATION_FIGURE)
+                val sl = createExtensionObject.eResource?.URI?.segmentsList
+                if (sl !== null) {
+                    val nsl = sl.take(sl.length - 1).drop(1)
+                    val newURI = URI.createPlatformResourceURI(nsl.join("/") + "/" + kgt, false)
+
+                    val newResourceSet = KiCoolSynthesis.KGTInjector.getInstance(XtextResourceSet)
+                    newResourceSet.addLoadOption(XtextResource.OPTION_RESOLVE_ALL, Boolean.FALSE)
+                    val res = newResourceSet.createResource(newURI)
+
+                    try {
+                        res.load(newResourceSet.loadOptions)
+                        val node = (res.getContents().get(0) as KNode).children.head
+                        var List<ValuedObject> valuedObjects = null
+                        if (createExtensionObject instanceof DeclarationScope) {
+                            valuedObjects = createExtensionObject.asDeclarationScope.valuedObjects.filter [
+                                input || output
+                            ].toList
+                        } else if (createExtensionObject instanceof ReferenceDeclaration) {
+                            valuedObjects = (createExtensionObject as ReferenceDeclaration).reference.
+                                asDeclarationScope.valuedObjects.filter [
+                                    input || output
+                                ].toList
+                        }
+                        if (valuedObjects !== null) {
+                            for (p : node.eAllContents.filter(KPort).toList) {
+                                val id = p.data.filter(KIdentifier).head
+                                val v = valuedObjects.filter[it.name.equals(id.id)].head
+
+                                p.associateWith(v)
+                                node.addPort(v, p)
+                            }
+                        }
+                        return node
+                    } catch (Exception e) {
+                        e.printStackTrace()
+                    }
+                }
+            }
+        }
+        var showLabel = false
+        // check if a figure file in the skin folder exists
+        if (createExtensionObject.eResource !== null && createExtensionObject.eResource.URI !== null) {
+            val sl = createExtensionObject.eResource.URI.segmentsList
+            val nsl = sl.take(sl.length - 1).drop(1)
+            val path = nsl.join("/") + "/" + getSkinPath(usedContext)
+            for (figure : defaultFigures.get(figureId)) {
+                val kgt = path + if(!path.endsWith("/")) "/" + figure
+                val newURI = URI.createPlatformResourceURI(kgt, false)
+                val newResourceSet = KiCoolSynthesis.KGTInjector.getInstance(XtextResourceSet)
+                newResourceSet.addLoadOption(XtextResource.OPTION_RESOLVE_ALL, Boolean.FALSE)
+                val res = newResourceSet.createResource(newURI)
+                try {
+                    res.load(newResourceSet.loadOptions)
+                    val node = (res.getContents().get(0) as KNode).children.head
+                    if (!label.nullOrEmpty && showLabel) {
+                        node.addNodeLabel(label, INPUT_OUTPUT_TEXT_SIZE)
+                    }
+                    return node
+                } catch (Exception _) {
+                    showLabel = true
+                }
+            }
+        }
+        // check if the skin folder in inside of the plugin
+        val oldSkinPrefix = skinPrefix
+        skinPrefix = getSkinPath(usedContext)
+        skinPrefix += if(!skinPrefix.endsWith("/")) "/"
+        showLabel = false
+        for (figure : defaultFigures.get(figureId)) {
+            if (doesKGTExist(figure)) {
+                val node = getKGTFromBundle(figure)
+                skinPrefix = oldSkinPrefix
+                if (!label.nullOrEmpty && showLabel) {
+                    node.addNodeLabel(label, INPUT_OUTPUT_TEXT_SIZE)
+                }
+                return node
+            } else
+                showLabel = true
+        }
+        skinPrefix = oldSkinPrefix
+        showLabel = false
+        // fall back to default figures
+        for (figure : defaultFigures.get(figureId)) {
+            if (doesKGTExist(figure)) {
+                val node = getKGTFromBundle(figure)
+                if (!label.nullOrEmpty && showLabel) {
+                    node.addNodeLabel(label, INPUT_OUTPUT_TEXT_SIZE)
+                }
+                return node
+            } else
+                showLabel = true
+        }
+        throw new IllegalArgumentException("Resource not found")
+    }
+
+    /**
+     * set the label of a port
+     */
+    private def setLabel(KPort port, String label, boolean reference) {
+        var portLabel = port.labels.head
+        if (reference) {
+            if (SHOW_REFERENCED_PORT_LABELS.booleanValue) {
+                if (REFERENCED_PORT_LABELS_OUTSIDE.booleanValue) {
+                    if (portLabel !== null) {
+                        port.labels.remove(0)
+                    }
+                    port.createLabel().configureOutsidePortLabel(label, PORT_LABEL_FONT_SIZE)
+                } else {
+                    if (portLabel !== null) {
+                        port.labels.remove(0)
+                    }
+                    port.createLabel().configureInsidePortLabel(label, PORT_LABEL_FONT_SIZE)
+                }
+            }
+        } else {
+            if (portLabel === null) {
+                port.createLabel.configureInsidePortLabel(label, PORT_LABEL_FONT_SIZE)
+            } else {
+                portLabel.text = label
+            }
         }
     }
-    
-    static def getId(KLabeledGraphElement node) {
-        node.eContents?.filter(KIdentifier)?.head?.id
-    }    
-
-    private def setId(KLabeledGraphElement node, String id) {
-        node.getData(KIdentifier).id = id
-        node
-    }
-    
-    static def KLabel getLabel(KNode node) {
-        node.eContents.filter(KLabel).head
-    }
-    
-    static def PortSide getPortSide(KPort port) {
-        port.getProperty(CoreOptions::PORT_SIDE)
-    }
-    
 }
-

@@ -31,6 +31,7 @@ import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ScheduleObjectReference
 import de.cau.cs.kieler.kexpressions.VectorValue
 import de.cau.cs.kieler.kexpressions.OperatorType
+import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
 
 /**
  * @author ssm
@@ -192,6 +193,10 @@ class KExpressionsValuedObjectExtensions {
     
     def boolean isArrayReference(ValuedObjectReference valuedObjectReference) {
         !valuedObjectReference.indices.nullOrEmpty
+    }
+    
+    def boolean isClassReference(ValuedObjectReference valuedObjectReference){
+        valuedObjectReference.valuedObject.declaration instanceof ClassDeclaration
     }
     
     def void applyIndices(ValuedObjectReference target, ValuedObjectReference source) {

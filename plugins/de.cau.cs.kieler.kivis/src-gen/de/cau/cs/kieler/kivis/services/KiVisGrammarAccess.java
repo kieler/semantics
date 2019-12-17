@@ -164,8 +164,8 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 		//ComplexKey
 		public RuleCall getVariableComplexKeyParserRuleCall_1_0() { return cVariableComplexKeyParserRuleCall_1_0; }
 		
-		//'to' domElement=STRING 'with' interface=BindingInterface1 script=SCRIPT | 'with' interface=BindingInterface2
-		//script=SCRIPT
+		//('to' domElement=STRING 'with' interface=BindingInterface1 script=SCRIPT | 'with' interface=BindingInterface2
+		//script=SCRIPT)
 		public Alternatives getAlternatives_2() { return cAlternatives_2; }
 		
 		//'to' domElement=STRING 'with' interface=BindingInterface1 script=SCRIPT
@@ -258,8 +258,8 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 		//SimpleKey
 		public RuleCall getVariableSimpleKeyParserRuleCall_1_0() { return cVariableSimpleKeyParserRuleCall_1_0; }
 		
-		//'in' multimatch?='all'? domElement=STRING 'with' interface=HandlerInterface1 script=SCRIPT | 'with'
-		//interface=HandlerInterface2 script=SCRIPT
+		//('in' multimatch?='all'? domElement=STRING 'with' interface=HandlerInterface1 script=SCRIPT | 'with'
+		//interface=HandlerInterface2 script=SCRIPT)
 		public Alternatives getAlternatives_2() { return cAlternatives_2; }
 		
 		//'in' multimatch?='all'? domElement=STRING 'with' interface=HandlerInterface1 script=SCRIPT
@@ -958,7 +958,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 		//(ID | '#' ID) ('-' ID)*
 		public Group getGroup() { return cGroup; }
 		
-		//ID | '#' ID
+		//(ID | '#' ID)
 		public Alternatives getAlternatives_0() { return cAlternatives_0; }
 		
 		//ID
@@ -1008,7 +1008,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 		//(ID | '#' ID) ('-' ID | '.' (INT | ID))*
 		public Group getGroup() { return cGroup; }
 		
-		//ID | '#' ID
+		//(ID | '#' ID)
 		public Alternatives getAlternatives_0() { return cAlternatives_0; }
 		
 		//ID
@@ -1041,7 +1041,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 		//'.'
 		public Keyword getFullStopKeyword_1_1_0() { return cFullStopKeyword_1_1_0; }
 		
-		//INT | ID
+		//(INT | ID)
 		public Alternatives getAlternatives_1_1_1() { return cAlternatives_1_1_1; }
 		
 		//INT
