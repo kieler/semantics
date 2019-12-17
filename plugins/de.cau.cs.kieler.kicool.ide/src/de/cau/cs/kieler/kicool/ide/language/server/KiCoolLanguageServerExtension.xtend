@@ -291,10 +291,7 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
      */
     def EObject getEObjectFromUri(String uri) {
         var fileUri = URLDecoder.decode(uri, "UTF-8");
-        if (fileUri.startsWith("file://")) {
-            fileUri = fileUri.substring(7)
-        }
-        val uriObject = URI.createFileURI(fileUri)
+        val uriObject = URI.createURI(fileUri)
         val ext = uriObject.fileExtension()
         if (!RegistrationLanguageServerExtension.registeredLanguageExtensions.contains(ext)) {
             return null
