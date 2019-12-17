@@ -12,10 +12,16 @@
  */
 package de.cau.cs.kieler.sccharts.test.compiler
 
+import com.google.inject.Guice
+import com.google.inject.Inject
+import com.google.inject.Injector
 import de.cau.cs.kieler.kicool.compilation.Compile
+import de.cau.cs.kieler.kicool.compilation.VariableStore
 import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.text.SCTXStandaloneSetup
+import de.cau.cs.kieler.scg.SCGraphs
+import de.cau.cs.kieler.scg.extensions.SCGValidationExtensions
 import de.cau.cs.kieler.test.common.repository.AbstractXTextModelRepositoryTest
 import de.cau.cs.kieler.test.common.repository.ModelsRepositoryTestRunner
 import de.cau.cs.kieler.test.common.repository.TestModelData
@@ -36,8 +42,10 @@ import static org.junit.Assert.*
 @RunWith(ModelsRepositoryTestRunner)
 class SCChartsNetlistTransformationTest extends AbstractXTextModelRepositoryTest<SCCharts> {
     
+    @Inject extension SCGValidationExtensions
+        
     /** Compiler configuration */
-    private val compilationSystemID = "de.cau.cs.kieler.sccharts.netlist"
+    val compilationSystemID = "de.cau.cs.kieler.sccharts.netlist"
     
     //-----------------------------------------------------------------------------------------------------------------
     
@@ -49,7 +57,9 @@ class SCChartsNetlistTransformationTest extends AbstractXTextModelRepositoryTest
      */
     new() {
         super(resourceSetInjector)
+        Guice.createInjector().injectMembers(this)
     }
+    
     
     /**
      * {@inheritDoc}
@@ -84,6 +94,22 @@ class SCChartsNetlistTransformationTest extends AbstractXTextModelRepositoryTest
         }                  
     }
     
+    @Test(timeout=60000)
+    def void testGuardDefUse(SCCharts scc, TestModelData modelData) {
+        val context = scc.compile
+        val seqSCGProcessor = context.processorInstancesSequence.get(context.processorInstancesSequence.size - 2)
+        assertTrue("The compilation result of the netlist-based compilation should be a sequentialized SCG.", 
+            seqSCGProcessor.targetModel instanceof SCGraphs
+        );
+        val seqSCG = seqSCGProcessor.targetModel as SCGraphs
+        val variableStore = VariableStore.getVariableStore(seqSCGProcessor.environment)
+        
+        val invalidGuards = (seqSCG as SCGraphs).scgs.head.invalidDefUseGuards(variableStore)
+        if (!invalidGuards.empty) {
+            fail("The following guards are used before assigned: " + invalidGuards.map[name].join(" "))
+        }
+    }
+    
     //-----------------------------------------------------------------------------------------------------------------
     
     private def compile(SCCharts scc) {        
@@ -95,5 +121,5 @@ class SCChartsNetlistTransformationTest extends AbstractXTextModelRepositoryTest
         
         return context
     }
-      
+    
 }
