@@ -222,7 +222,7 @@ class JavaBreakpointListener implements IJavaBreakpointListener {
         // Extract line text -------------------------------------------------------
         val lineNumber = (breakpoint as ILineBreakpoint).lineNumber - 1
         val document = editor.documentProvider.getDocument(editor.editorInput)
-        val offset = document.getLineOffset(lineNumber)
+        val offset = document.getLineOffset(lineNumber) // TODO throws BadLocationException sometimes
         val length = document.getLineLength(lineNumber)
         val lineText = document.get(offset, length)
         
@@ -309,7 +309,7 @@ class JavaBreakpointListener implements IJavaBreakpointListener {
         breakpointToTarget.put(breakpoint, target)
         // TODO ignore for now
     }
-    
+
     override breakpointRemoved(IJavaDebugTarget target, IJavaBreakpoint breakpoint) {
         breakpointToTarget.remove(breakpoint)
         // TODO ignore for now
