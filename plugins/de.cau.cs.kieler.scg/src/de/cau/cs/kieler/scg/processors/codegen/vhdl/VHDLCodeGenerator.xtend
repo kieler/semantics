@@ -38,6 +38,7 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import static extension java.lang.Character.*
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.ValueType
 
 /**
  * 
@@ -178,7 +179,7 @@ class VHDLCodeGenerator extends Processor<SCGraphs, CodeContainer> {
             signal Tick_output_delay: STD_LOGIC_VECTOR (3 downto 0);
             -- local variables
             «FOR decl : scg.variableDeclarations.filter[isSSA && !it.valuedObjects.empty]»
-                signal «decl.serialize» ;
+                signal «decl.serialize» := «decl.type.init»;
             «ENDFOR»
             begin
                 -- logic
@@ -269,6 +270,17 @@ class VHDLCodeGenerator extends Processor<SCGraphs, CodeContainer> {
         end behavior;
         '''
     }
+    
+    def init(ValueType type) {
+         var String int0 = ""
+        while (int0.length()< 64) int0 = "0"+ int0
+        int0= "\""+int0 +"\""
+        return switch(type) {
+            case BOOL: "false"
+            case FLOAT: "0.0"
+            case INT: int0
+            default: "false"
+    }} 
     
     def allAssignments(SCGraph scg) {
         val assignments = newArrayList
