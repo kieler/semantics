@@ -1229,11 +1229,13 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             val figure = node.addEllipse().background = "white".color;
             figure => [
                 node.setMinimalNodeSize(MINIMALWIDTH, MINIMALHEIGHT)
-                if (SHOW_CAPTION.booleanValue)
-                    node.KContainerRendering.addText("entry").setAreaPlacementData.from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT,
+                if (SHOW_CAPTION.booleanValue) {
+                    val text = if (entry.hasAnnotation("label")) entry.getStringAnnotationValue("label") else "entry"
+                    node.KContainerRendering.addText(text).setAreaPlacementData.from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT,
                         0, 0, BOTTOM, 1, 0).associateWith(entry) => [
                             if (USE_ADAPTIVEZOOM.booleanValue) it.setProperty(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.70);
                         ]
+                }
                 if(SHOW_SHADOW.booleanValue) it.shadow = "black".color
                 if (scg.method) {
                     val method = scg.methodDeclaration
