@@ -30,6 +30,8 @@ import java.util.List
 import java.util.Set
 import de.cau.cs.kieler.lustre.lustre.LustreVariableDeclaration
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.kexpressions.ReferenceCall
+import de.cau.cs.kieler.lustre.lustre.NodeDeclaration
 
 /**
  * @author lgr
@@ -80,7 +82,7 @@ class LustreUtilityExtensions {
         return null
     }
 
-    def getClockOfExpression(Expression expression) {
+    def ValuedObject getClockOfExpression(Expression expression) {
         if (expression instanceof OperatorExpression) {
             return getClockOfOperatorExpression(expression)            
         } else if (expression instanceof ValuedObjectReference) {
@@ -100,15 +102,26 @@ class LustreUtilityExtensions {
         }
     }
     
-    def getClockOfValuedObjectReference(ValuedObjectReference valuedObjectReference) {
-        var varDecl = valuedObjectReference.valuedObject.declaration
-        if (varDecl instanceof LustreVariableDeclaration) {
-            var clockExpr = varDecl.clockExpr
+    def ValuedObject getClockOfValuedObjectReference(ValuedObjectReference valuedObjectReference) {
+        var decl = valuedObjectReference.valuedObject.declaration
+        if (decl instanceof LustreVariableDeclaration) {
+            var clockExpr = decl.clockExpr
             if (clockExpr !== null) {
                 if (clockExpr instanceof ValuedObjectReference) {
                     return clockExpr.valuedObject
                 }
             }
+        } else if (valuedObjectReference instanceof ReferenceCall) {
+            // check clock of inputs
+            var inputClockSet = newHashSet
+            for (input : valuedObjectReference.parameters) {
+                var exprClock = input.expression.clockOfExpression
+                inputClockSet.add(exprClock)
+            }
+            
+            if (inputClockSet.size == 1) {
+                return inputClockSet.toList.get(0)
+            }            
         }
         
         return null
