@@ -399,7 +399,15 @@ public enum OperatorType implements Enumerator {
      * @generated
      * @ordered
      */
-    SFBY(32, "SFBY", "sfby");
+    SFBY(32, "SFBY", "sfby"), /**
+     * The '<em><b>LAST</b></em>' literal object.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #LAST_VALUE
+     * @generated
+     * @ordered
+     */
+    LAST(33, "LAST", "last");
 
     /**
      * The '<em><b>NOT</b></em>' literal value.
@@ -890,6 +898,17 @@ public enum OperatorType implements Enumerator {
     public static final int SFBY_VALUE = 32;
 
     /**
+     * The '<em><b>LAST</b></em>' literal value.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #LAST
+     * @model literal="last"
+     * @generated
+     * @ordered
+     */
+    public static final int LAST_VALUE = 33;
+
+    /**
      * An array of all the '<em><b>Operator Type</b></em>' enumerators.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -931,6 +950,7 @@ public enum OperatorType implements Enumerator {
             NOR,
             IMPLIES,
             SFBY,
+            LAST,
         };
 
     /**
@@ -1020,6 +1040,7 @@ public enum OperatorType implements Enumerator {
             case NOR_VALUE: return NOR;
             case IMPLIES_VALUE: return IMPLIES;
             case SFBY_VALUE: return SFBY;
+            case LAST_VALUE: return LAST;
         }
         return null;
     }

@@ -51,6 +51,7 @@
       <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//OperatorType/NOR"/>
       <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//OperatorType/IMPLIES"/>
       <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//OperatorType/SFBY"/>
+      <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//OperatorType/LAST"/>
     </genEnums>
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="kexpressions.ecore#//ValueType">
       <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//ValueType/PURE"/>
