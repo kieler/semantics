@@ -119,7 +119,7 @@ class DebugBreakpointManager {
         attributes.put(IMarker.LINE_NUMBER, line)
         attributes.put(IBreakpoint.ID, TransitionCheckBreakpoint.ID)
          
-        val breakpoint = new TransitionCheckBreakpoint(resource, type.fullyQualifiedName, line, -1, -1, 0, true, attributes)
+        val breakpoint = new TransitionCheckBreakpoint(resource, type.fullyQualifiedName, line + 1, -1, -1, 0, true, attributes)
         
         return breakpoint
     }
