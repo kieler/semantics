@@ -204,6 +204,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         "CONDITIONAL_UPDATE" -> #["OperatorExpressionUPDATE.kgt", "OperatorExpression.kgt"],
         "CONDITIONAL" -> #["OperatorExpressionCONDITIONAL.kgt", "OperatorExpression.kgt"],
         "INIT" -> #["OperatorExpressionINIT.kgt", "OperatorExpression.kgt"],
+        "FBY" -> #["OperatorExpressionFBY.kgt", "OperatorExpression.kgt"],
         "MULT" -> #["OperatorExpressionMULT.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
         "DIV" -> #["OperatorExpressionDIV.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
         "SHIFT_LEFT" ->
