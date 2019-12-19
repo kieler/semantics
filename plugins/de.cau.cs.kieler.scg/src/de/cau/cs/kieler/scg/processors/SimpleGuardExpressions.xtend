@@ -365,8 +365,8 @@ class SimpleGuardExpressions extends InplaceProcessor<SCGraphs> implements Trace
 //        guard.setDefaultTrace
         val basicBlock = schedulingBlock.basicBlock
 
-        val relevantPredecessors = <Predecessor>newLinkedList
-            relevantPredecessors += basicBlock.predecessors
+        val relevantPredecessors = <Predecessor> newLinkedList
+        relevantPredecessors += basicBlock.predecessors.filter[ !it.basicBlock.deadBlock ].toList
 
         // If there are more than one predecessor, create an operator expression and connect them via OR.
         if (relevantPredecessors.size > 1) {

@@ -186,6 +186,7 @@ public abstract class AbstractScadeEquationsSyntacticSequencer extends AbstractS
 	 * This ambiguous syntax occurs at:
 	 *     (rule start) (ambiguity) '{' values+=VectorValueMember
 	 *     (rule start) (ambiguity) operator=CurrentOperator
+	 *     (rule start) (ambiguity) operator=LastOperator
 	 *     (rule start) (ambiguity) operator=PreOperator
 	 *     (rule start) (ambiguity) operator=SubOperator
 	 *     (rule start) (ambiguity) subExpressions+=AtomicValuedExpression
@@ -218,6 +219,7 @@ public abstract class AbstractScadeEquationsSyntacticSequencer extends AbstractS
 	 *     (rule start) (ambiguity) name=PrimeID
 	 *     (rule start) (ambiguity) operator=AtMostOneOperator
 	 *     (rule start) (ambiguity) operator=CurrentOperator
+	 *     (rule start) (ambiguity) operator=LastOperator
 	 *     (rule start) (ambiguity) operator=NorOperator
 	 *     (rule start) (ambiguity) operator=PreOperator
 	 *     (rule start) (ambiguity) operator=SubOperator
@@ -240,6 +242,7 @@ public abstract class AbstractScadeEquationsSyntacticSequencer extends AbstractS
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     (rule start) (ambiguity) operator=CurrentOperator
+	 *     (rule start) (ambiguity) operator=LastOperator
 	 *     (rule start) (ambiguity) operator=PreOperator
 	 *     (rule start) (ambiguity) operator=SubOperator
 	 *     (rule start) (ambiguity) subExpressions+=AtomicValuedExpression

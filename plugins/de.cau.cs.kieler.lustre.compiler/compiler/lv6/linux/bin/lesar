@@ -1,0 +1,36 @@
+#!/bin/sh
+# B: 2017-09-21. use 'ec2ec -k2l' to treat input files made for kind2 
+EXE=`basename $0`
+if test $# -lt 2
+then
+   echo "lesar/ecverif version B-`ecverif -version`"
+   echo "usage: $EXE <lustre file> <main node> [<options>]"
+   echo "       $EXE <lustre file> k2l [<options>] ##EXPERIMENTAL: accept file made for kind2"
+   ecverif -options
+   echo
+   exit 1
+fi;
+FILE=$1
+MAIN=$2
+shift 
+shift
+if test "$MAIN" = "k2l"; then 
+	# try to use ec2ec -k2l
+	MAIN="LESAR_MAIN"
+	LESAR_FILE=LESAR_$FILE
+	ec2ec -k2l $MAIN $FILE > $LESAR_FILE
+	if test $? -ne 0; then
+		echo "Error: 'ec2ec -k2l' failed"
+		exit 1
+	fi
+	FILE=$LESAR_FILE
+fi
+echo "--FILE=$FILE MAIN=$MAIN"
+lus2ec $FILE $MAIN
+res=$?
+if test $res -eq 0
+then
+	ecverif $MAIN.ec $* 
+else
+	exit $res
+fi
