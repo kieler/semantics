@@ -1,47 +1,41 @@
 package de.cau.cs.kieler.c.sccharts.extensions
 
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
-import org.eclipse.cdt.core.dom.ast.IASTNode
 import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.Expression
-import org.eclipse.cdt.internal.core.dom.parser.c.CASTLiteralExpression
 import org.eclipse.cdt.core.dom.ast.IBasicType
+import org.eclipse.cdt.core.dom.ast.IASTLiteralExpression
+
+/**
+ * @author lan
+ */
 
 class ValueExtensions {
     
     @Inject extension KExpressionsCreateExtensions
     
-    def Expression createValue(IASTNode value) {
-        var Expression res
-//        println("")
-//        println("inside createvalue mit node: " + value.toString)
-//        println("")
-        if(value instanceof CASTLiteralExpression) {
-            val iastType = (value as CASTLiteralExpression).getExpressionType
-//            println("    IType vom Literal: " + iastType)
-            if(iastType instanceof IBasicType) {
+    // Creates Value KExpression for a CDT literal node
+    def Expression createValue(IASTLiteralExpression value) {
+        var Expression valExpr
+        val iastType = value.getExpressionType
+        if(iastType instanceof IBasicType) {
                 
-//                println("        iastType ist IBasicType")
-                val iastBasicKind = (iastType as IBasicType). getKind
-//                println("        BasicKind vom Literal: " + iastBasicKind)
-                switch(iastBasicKind) {
-                    case IBasicType.Kind.eInt:
-                        res = createIntValue(Integer.parseInt(value.toString))
-                    case IBasicType.Kind.eDouble:
-                        res = createFloatValue(Double.parseDouble(value.toString))
-                    case IBasicType.Kind.eFloat:
-                        res = createFloatValue(Float.parseFloat(value.toString))
-                    default:
-                        println("        keinen passenden IBasicType definiert") 
-                }
-            } else {
-//                println("    iastType ist NICHT IBasicType")
-            }  
+            val iastBasicKind = iastType.getKind
+            switch(iastBasicKind) {
+                case IBasicType.Kind.eInt:
+                    valExpr = createIntValue(Integer.parseInt(value.toString))
+                case IBasicType.Kind.eDouble:
+                    valExpr = createFloatValue(Double.parseDouble(value.toString))
+                case IBasicType.Kind.eFloat:
+                    valExpr = createFloatValue(Float.parseFloat(value.toString))
+                default:
+                    println("ValueExtensions: Type of literal node not defined!") 
+            }
         } else {
-//            println("    IASTNode ist nicht CASTLiteralExpression")
-        }     
+            println("ValueExtensions: Type of literal node not a basic type!")
+        }    
         
-        return res
+        return valExpr
     }
     
 }

@@ -3,10 +3,15 @@ package de.cau.cs.kieler.c.sccharts.extensions
 import de.cau.cs.kieler.kexpressions.OperatorType
 import de.cau.cs.kieler.kexpressions.ValueType
 
+/**
+ * @author lan
+ */
 class CDTConvertExtensions {
     
+    
+    // Converts CDT types to KExpression ValueTypes if possible
     def ValueType CDTTypeConversion(int n) {
-        switch n {
+        switch (n) {
             case 1: null
             case 2: ValueType::STRING
             case 3: ValueType::INT
@@ -23,10 +28,11 @@ class CDTConvertExtensions {
         }
     }
     
+    // Converts the type of CDT BinaryExpression Operators to KExpression OperatorTypes if possible
     def OperatorType CDTBinaryOpTypeConversion(int n) {
         var OperatorType opType
         
-        switch(n) {
+        switch (n) {
             case 1: opType = OperatorType::MULT
             case 2: opType = OperatorType::DIV
             case 3: opType = OperatorType::MOD
@@ -61,16 +67,17 @@ class CDTConvertExtensions {
             //case 32: opType = "op_max >?"
             //case 33: opType = "op_min <?"
             //case 34: opType = "op_ellipses ..."
-            default: opType = OperatorType::ADD //TODO DARF NICH ADD BLEIBEN!!!!!!!
+            default: opType = null
         }
         
         return opType
     }
     
+    // Converts CDT UnaryOperatorTypes to KExpression OperatorTypes if possible
     def OperatorType CDTUnaryOpTypeConversion(int n) {
         var OperatorType opType
         
-        switch(n) {
+        switch (n) {
             case 0: opType = OperatorType::POSTFIX_ADD  //++exp
             case 1: opType = OperatorType::POSTFIX_SUB  //--exp
             case 2: opType = OperatorType::ADD  //+exp
@@ -79,7 +86,7 @@ class CDTConvertExtensions {
             case 5: opType = OperatorType::BITWISE_AND  //&exp
             case 6: opType = OperatorType::BITWISE_NOT  //~exp
             case 7: opType = OperatorType::NOT  //!exp
-            case 8: {opType = null;println("unary Type conversion found sizeofOperator")}  //sizeof exp
+            case 8: opType = null  //sizeof exp
             case 9: opType = OperatorType::POSTFIX_ADD  //exp++
             case 10: opType = OperatorType::POSTFIX_SUB  //exp--
             case 11: opType = null  //( exp )
@@ -96,10 +103,11 @@ class CDTConvertExtensions {
         opType
     }
     
+    // Converts a CDT BinaryOperator into a String representation
     def String CDTBinaryOpTypeToString(int n) {
         var String opType
         
-        switch(n) {
+        switch (n) {
             case 1: opType = "*"
             case 2: opType = "/"
             case 3: opType = "%"
@@ -140,10 +148,11 @@ class CDTConvertExtensions {
         return opType
     }
     
+    // Converts a CDT UnaryOperator into a String representation
     def String CDTUnaryOpTypeToString(int n) {
         var String opType
         
-        switch(n) {
+        switch (n) {
             case 0: opType = "++exp"
             case 1: opType = "--exp"
             case 2: opType = "+exp"
@@ -152,7 +161,7 @@ class CDTConvertExtensions {
             case 5: opType = "&exp"
             case 6: opType = "~"
             case 7: opType = "!"
-            case 8: {opType = null;println("unary Type conversion found sizeofOperator")}  //sizeof exp
+            case 8: opType = null  //sizeof exp
             case 9: opType = "++"
             case 10: opType = "--"
             case 11: opType = null  //( exp )
@@ -163,7 +172,7 @@ class CDTConvertExtensions {
             case 16: opType = null  //sizeof parameterPack //C++ only
             case 17: opType = null  //noexcept ( exp ) //C++ only
             case 18: opType = null  //label Reference
-            default: opType = null
+            default: opType = ""
         }
         
         opType

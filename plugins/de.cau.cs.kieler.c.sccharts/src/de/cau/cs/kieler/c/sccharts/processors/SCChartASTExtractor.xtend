@@ -28,6 +28,8 @@ import org.eclipse.cdt.core.dom.ast.IASTIdExpression
 import org.eclipse.cdt.core.dom.ast.IASTNameOwner
 import org.eclipse.cdt.core.dom.ast.IASTIfStatement
 import org.eclipse.cdt.core.dom.ast.IASTFunctionCallExpression
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import java.util.ArrayList
 
 /**
  * @author lewe
@@ -39,6 +41,9 @@ class SCChartASTExtractor extends ExogenousProcessor<IASTTranslationUnit, SCChar
     @Inject extension SCChartsStateExtensions
     @Inject extension SCChartsTransitionExtensions
     @Inject extension SCChartsControlflowRegionExtensions
+    @Inject extension AnnotationsExtensions
+        
+    val layers = <Integer, ArrayList<Integer>> newHashMap    
         
      override getId() {
         "de.cau.cs.kieler.c.sccharts.scchartsASTExtractor"
@@ -70,37 +75,29 @@ class SCChartASTExtractor extends ExogenousProcessor<IASTTranslationUnit, SCChar
          val cRegion = createControlflowRegion("")
          rootState.regions += cRegion
          
-         println("AST ORDER CHECK:")
          for(var i=0;i<ast.children.length;i++) {
-             println("node Filename: " + ast.children.get(i).getContainingFilename)
-             printChildren(cRegion,ast.children.get(i))
-         }
-         println("")
-         
-         val comments = ast.getComments()
-         for (var i  = 0; i < comments.length; i++) {
-             val comment = comments.get(i)
-             println("Comment found: \n" + comment)
-             println("node Offset: \n" + comment.getNodeLocations.get(0).getNodeOffset)
-             println("node Length: \n" + comment.getNodeLocations.get(0).getNodeLength)
-             println("FileLocation: " + comment.getFileLocation)
-             println("ContainingFileName: " + comment.getContainingFilename)
-             println("Comment ParentNode: " + comment.getParent.toString + "\n")
+             printChildren(cRegion,ast.children.get(i), 0)
          }
          
-         val includes = ast.getIncludeDirectives()
-         for (var i  = 0; i < includes.length; i++) {
-             println("Include found: \n" + includes.get(i) + "\n")
-         }
-         
-//         println("This represents a header file: " + ast.isHeaderUnit)
          
          SCChart
          
      }
      
-     def State printChildren(ControlflowRegion cRegion, IASTNode node) {
+     def State printChildren(ControlflowRegion cRegion, IASTNode node, int layer) {
          val State res = cRegion.createState("")
+         
+         var layerIdx = 0
+         var layerList = <Integer> newArrayList
+         layerList.add(1)
+         if (layers.containsKey(layer)) {
+             layerList = layers.get(layer)
+             layerIdx = layerList.size
+             layerList.add(1)
+         } else {
+             layers.put(layer,layerList)
+         }
+         
          var nodeASTClass = node.toString
          if (node instanceof IASTIdExpression) {
              nodeASTClass = "IdExpression"
@@ -112,7 +109,7 @@ class SCChartASTExtractor extends ExogenousProcessor<IASTTranslationUnit, SCChar
             nodeASTClass = nodeASTClass.substring(nodeASTClass.indexOf("CPPAST") + 6)    
          }
          if(nodeASTClass.contains("CAST")) {
-            nodeASTClass = nodeASTClass.substring(nodeASTClass.indexOf("CPPAST") + 4)    
+            nodeASTClass = nodeASTClass.substring(nodeASTClass.indexOf("CAST") + 4)    
          }
          if(nodeASTClass.contains("@")) {
             nodeASTClass = nodeASTClass.substring(0, nodeASTClass.indexOf("@"))    
@@ -149,7 +146,7 @@ class SCChartASTExtractor extends ExogenousProcessor<IASTTranslationUnit, SCChar
          resLabel += "ContainingFileName: " + node.getContainingFilename
          */
          for (var i = 0; i < node.children.length; i++) {
-             var child = printChildren(cRegion, node.children.get(i))
+             var child = printChildren(cRegion, node.children.get(i), layer + 1)
              res.createTransitionTo(child)
          }
          

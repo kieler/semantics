@@ -24,6 +24,7 @@ import org.eclipse.cdt.core.parser.DefaultLogService
 import org.eclipse.cdt.core.parser.IncludeFileContentProvider
 import org.eclipse.cdt.core.dom.ast.gnu.cpp.GPPLanguage
 import org.eclipse.cdt.core.model.ILanguage
+import org.eclipse.cdt.core.dom.ast.gnu.c.GCCLanguage
 
 /**
  * @author lewe
@@ -55,10 +56,15 @@ class CppParserProcessor extends ExogenousProcessor<CodeContainer, IASTTranslati
         val IncludeFileContentProvider emptyIncludes = IncludeFileContentProvider.getSavedFilesProvider();
 
         val int opts = 0;
-        var IASTTranslationUnit translationUnitCPP = 
-            GPPLanguage.getDefault().getASTTranslationUnit(fileContentCPP, info, emptyIncludes, null, opts, log);
-            
-        setModel(translationUnitCPP)
+        var IASTTranslationUnit translationUnit = null
+        if (cppFileName.lastIndexOf("p") == (cppFileName.length - 1)) {
+            translationUnit = 
+                GPPLanguage.getDefault().getASTTranslationUnit(fileContentCPP, info, emptyIncludes, null, opts, log);
+        } else {
+            translationUnit = 
+                GCCLanguage.getDefault().getASTTranslationUnit(fileContentCPP, info, emptyIncludes, null, opts, log);
+        }
+        setModel(translationUnit)
     }
     
 }

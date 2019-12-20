@@ -1,6 +1,0 @@
-system de.cau.cs.kieler.c.statemachine
-    label "C to Statemachine"
-
-de.cau.cs.kieler.kicool.deploy.setup
-de.cau.cs.kieler.c.sccharts.cParser
-de.cau.cs.kieler.c.sccharts.statemachineExtractor

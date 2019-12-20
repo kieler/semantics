@@ -25,26 +25,28 @@ class HighlightingExtensions {
     
      @Inject extension AnnotationsExtensions
     
+    // Attaches the location information of the given CDT node as annotations to the given annotatable
     def insertHighlightAnnotations(Annotatable annotatable, IASTNode node) {
         
         val nodeLocations = node.getNodeLocations
         
-//        val annotations = annotatable.annotations
-        
+        // Do not override already existing annotations
         if (annotatable.getAnnotations("Offset").length == 0) {
         
+            // Test if the location information exists
             if (nodeLocations.length > 0) {        
                 val nodeOffset = node.getNodeLocations.get(0).getNodeOffset
                 val nodeLength = node.getNodeLocations.get(0).getNodeLength
                 
+                // Attach annotations
                 annotatable.annotations += createStringAnnotation("Offset", nodeOffset.toString)
                 annotatable.annotations += createStringAnnotation("Length", nodeLength.toString)
             } else {
-                //println("insertHighlightAnnotations aufgerufen - node hat aber keine NodeLocations")
+                println("HighlightingExtensions: Given node has no LocationInformation")
             }
         
         } else {
-            //println("insertHighlightAnnotations aufgerufen object hat aber bereits offset annotation")
+            println("HighlightingExtensions: Given annotatable has already location informations attached")
         }
     }
 }

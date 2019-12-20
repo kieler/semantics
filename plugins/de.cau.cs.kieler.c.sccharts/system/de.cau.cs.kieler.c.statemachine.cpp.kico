@@ -2,4 +2,4 @@ system de.cau.cs.kieler.c.statemachine.cpp
     label "Centralized Statemachine Extractor"
 
 de.cau.cs.kieler.c.sccharts.cppParser
-de.cau.cs.kieler.c.sccharts.statemachineCppExtractor
+de.cau.cs.kieler.c.sccharts.centralizedSMExtractor

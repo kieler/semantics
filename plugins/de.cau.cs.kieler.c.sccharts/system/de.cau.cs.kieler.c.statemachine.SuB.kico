@@ -1,6 +1,5 @@
 system de.cau.cs.kieler.c.statemachine.SuB
     label "Classbased Statemachine Extractor"
 
-de.cau.cs.kieler.kicool.deploy.setup
 de.cau.cs.kieler.c.sccharts.cppParser
-de.cau.cs.kieler.c.sccharts.SuBStatemachineExtractor
+de.cau.cs.kieler.c.sccharts.classBasedSMExtractor
