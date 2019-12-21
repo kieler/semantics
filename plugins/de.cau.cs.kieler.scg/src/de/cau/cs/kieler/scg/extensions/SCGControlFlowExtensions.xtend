@@ -98,6 +98,12 @@ class SCGControlFlowExtensions {
 	dispatch def ControlFlow createControlFlow(Surface surface) {
 		ScgFactory::eINSTANCE.createControlFlow => [ ]
 	}
+	
+	def ControlFlow createControlFlowTo(Node node, Node target) {
+	    createControlFlow(node) => [
+	        it.target = target
+	    ]
+	}
 
     // -------------------------------------------------------------------------
     // -- Control flow queries

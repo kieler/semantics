@@ -25,6 +25,7 @@ package de.cau.cs.kieler.scg;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scg.Entry#getExit <em>Exit</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.Entry#getNext <em>Next</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scg.Entry#getResetSCG <em>Reset SCG</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.scg.ScgPackage#getEntry()
@@ -85,5 +86,27 @@ public interface Entry extends Node {
      * @generated
      */
     void setNext(ControlFlow value);
+
+    /**
+     * Returns the value of the '<em><b>Reset SCG</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Reset SCG</em>' containment reference.
+     * @see #setResetSCG(SCGraph)
+     * @see de.cau.cs.kieler.scg.ScgPackage#getEntry_ResetSCG()
+     * @model containment="true"
+     * @generated
+     */
+    SCGraph getResetSCG();
+
+    /**
+     * Sets the value of the '{@link de.cau.cs.kieler.scg.Entry#getResetSCG <em>Reset SCG</em>}' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Reset SCG</em>' containment reference.
+     * @see #getResetSCG()
+     * @generated
+     */
+    void setResetSCG(SCGraph value);
 
 } // Entry

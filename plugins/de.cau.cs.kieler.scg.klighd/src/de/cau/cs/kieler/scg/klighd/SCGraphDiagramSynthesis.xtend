@@ -117,6 +117,10 @@ import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 import de.cau.cs.kieler.scg.extensions.SCGMethodExtensions
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties
+import de.cau.cs.kieler.klighd.krendering.SimpleUpdateStrategy
+import de.cau.cs.kieler.klighd.LightDiagramServices
+import de.cau.cs.kieler.klighd.krendering.Colors
 
 /** 
  * SCCGraph KlighD synthesis class. It contains all method mandatory to handle the visualization of
@@ -148,7 +152,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     @Inject extension ColorStore
 
     extension KRenderingFactory = KRenderingFactory.eINSTANCE
-
+    
     // -------------------------------------------------------------------------
     // -- KlighD Options
     // -------------------------------------------------------------------------
@@ -1264,6 +1268,21 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 node.addPort(SCGPORTID_INCOMING, 0, 12.5f, 1, PortSide::WEST)
                 node.addPort(SCGPORTID_OUTGOING, 75, 12.5f, 0, PortSide::EAST)
             }
+            
+            // If there is an reset SCG, add it to the diagram
+            if (entry.resetSCG !== null) {
+                val properties = new KlighdSynthesisProperties
+                properties.setProperty(KlighdSynthesisProperties.REQUESTED_UPDATE_STRATEGY, SimpleUpdateStrategy.ID)
+                val subDiagramViewContext = LightDiagramServices::translateModel2(entry.resetSCG, usedContext, properties)
+                usedContext.addChildViewContext(subDiagramViewContext)
+                val subDiagramNode = subDiagramViewContext.viewModel
+//                subDiagramNode.addRectangle => [invisible = true]
+                val subDiagramChildrenNodes = subDiagramNode.children.immutableCopy 
+                rootNode.children.addAll(subDiagramChildrenNodes)      
+                createResetTickEdge(subDiagramChildrenNodes.last, node)     
+                node.addLayoutParam(LayeredOptions::LAYERING_LAYER_CONSTRAINT, LayerConstraint::NONE)
+                subDiagramChildrenNodes.last.addLayoutParam(LayeredOptions::LAYERING_LAYER_CONSTRAINT, LayerConstraint::NONE)     
+            }
 
             
             // Draw the node priorities
@@ -1595,6 +1614,30 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             if (USE_ADAPTIVEZOOM.booleanValue) edge.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.70);
         ]
     }
+    
+    private def KEdge createResetTickEdge(KNode resetExit, KNode entry) {
+        entry.addHelperPort("resettick", PortSide::NORTH)
+        resetExit.addHelperPort("resettick2", PortSide::SOUTH)
+        entry.addHelperPort("resettick2", PortSide::NORTH)
+        resetExit.addHelperPort("resettick", PortSide::SOUTH)
+//        entry.addPort("resettick2", 42, 0, 1, PortSide::NORTH)
+//        resetExit.addPort("resettick2", 38, 0, 1, PortSide::SOUTH)
+        
+        val resetTickEdge = createNewEdge() => [ edge |
+            edge.source = resetExit
+            edge.target = entry
+            edge.sourcePort = resetExit.getPort("resettick")
+            edge.targetPort = entry.getPort("resettick")
+            edge.setLayoutOption(CoreOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
+            edge.addRoundedBendsPolyline(8, CONTROLFLOW_THICKNESS.floatValue) => [
+                it.lineStyle = LineStyle::DOT;
+                it.foreground = Colors.RED
+            ]
+            if (USE_ADAPTIVEZOOM.booleanValue) edge.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.70);
+        ]
+        
+        return resetTickEdge
+    }    
 
     /**
 	 * Draw a control flow edge from one node to another.
