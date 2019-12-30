@@ -3699,12 +3699,93 @@ rulePreExpression returns [EObject current=null]
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getPreExpressionAccess().getSubExpressionsAtomicValuedExpressionParserRuleCall_0_2_0());
+						newCompositeNode(grammarAccess.getPreExpressionAccess().getSubExpressionsLastExpressionParserRuleCall_0_2_0());
+					}
+					lv_subExpressions_2_0=ruleLastExpression
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getPreExpressionRule());
+						}
+						add(
+							$current,
+							"subExpressions",
+							lv_subExpressions_2_0,
+							"de.cau.cs.kieler.lustre.Lustre.LastExpression");
+						afterParserOrEnumRuleCall();
+					}
+				)
+			)
+		)
+		    |
+		{
+			/* */
+		}
+		{
+			newCompositeNode(grammarAccess.getPreExpressionAccess().getLastExpressionParserRuleCall_1());
+		}
+		this_LastExpression_3=ruleLastExpression
+		{
+			$current = $this_LastExpression_3.current;
+			afterParserOrEnumRuleCall();
+		}
+	)
+;
+
+// Entry rule entryRuleLastExpression
+entryRuleLastExpression returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getLastExpressionRule()); }
+	iv_ruleLastExpression=ruleLastExpression
+	{ $current=$iv_ruleLastExpression.current; }
+	EOF;
+
+// Rule LastExpression
+ruleLastExpression returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		(
+			(
+				{
+					/* */
+				}
+				{
+					$current = forceCreateModelElement(
+						grammarAccess.getLastExpressionAccess().getOperatorExpressionAction_0_0(),
+						$current);
+				}
+			)
+			(
+				(
+					{
+						newCompositeNode(grammarAccess.getLastExpressionAccess().getOperatorLastOperatorEnumRuleCall_0_1_0());
+					}
+					lv_operator_1_0=ruleLastOperator
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getLastExpressionRule());
+						}
+						set(
+							$current,
+							"operator",
+							lv_operator_1_0,
+							"de.cau.cs.kieler.lustre.Lustre.LastOperator");
+						afterParserOrEnumRuleCall();
+					}
+				)
+			)
+			(
+				(
+					{
+						newCompositeNode(grammarAccess.getLastExpressionAccess().getSubExpressionsAtomicValuedExpressionParserRuleCall_0_2_0());
 					}
 					lv_subExpressions_2_0=ruleAtomicValuedExpression
 					{
 						if ($current==null) {
-							$current = createModelElementForParent(grammarAccess.getPreExpressionRule());
+							$current = createModelElementForParent(grammarAccess.getLastExpressionRule());
 						}
 						add(
 							$current,
@@ -3721,7 +3802,7 @@ rulePreExpression returns [EObject current=null]
 			/* */
 		}
 		{
-			newCompositeNode(grammarAccess.getPreExpressionAccess().getAtomicValuedExpressionParserRuleCall_1());
+			newCompositeNode(grammarAccess.getLastExpressionAccess().getAtomicValuedExpressionParserRuleCall_1());
 		}
 		this_AtomicValuedExpression_3=ruleAtomicValuedExpression
 		{
@@ -13332,6 +13413,23 @@ ruleNorOperator returns [Enumerator current=null]
 		{
 			$current = grammarAccess.getNorOperatorAccess().getNOREnumLiteralDeclaration().getEnumLiteral().getInstance();
 			newLeafNode(enumLiteral_0, grammarAccess.getNorOperatorAccess().getNOREnumLiteralDeclaration());
+		}
+	)
+;
+
+// Rule LastOperator
+ruleLastOperator returns [Enumerator current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		enumLiteral_0='last'
+		{
+			$current = grammarAccess.getLastOperatorAccess().getLASTEnumLiteralDeclaration().getEnumLiteral().getInstance();
+			newLeafNode(enumLiteral_0, grammarAccess.getLastOperatorAccess().getLASTEnumLiteralDeclaration());
 		}
 	)
 ;

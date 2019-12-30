@@ -155,6 +155,7 @@
     <eLiterals name="NOR" value="30" literal="nor"/>
     <eLiterals name="IMPLIES" value="31" literal="implies"/>
     <eLiterals name="SFBY" value="32" literal="sfby"/>
+    <eLiterals name="LAST" value="33" literal="last"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ValuedObject" eSuperTypes="../../de.cau.cs.kieler.annotations/model/annotations.ecore#//NamedObject ../../de.cau.cs.kieler.annotations/model/annotations.ecore#//Annotatable #//Referenceable">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">

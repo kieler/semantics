@@ -1,0 +1,5 @@
+developer system de.cau.cs.kieler.lustre.controlflow.c
+	label "Lustre to SCCharts (CF only) to C"
+
+de.cau.cs.kieler.lustre.processors.lustreToSCC.controlFlow
+system de.cau.cs.kieler.sccharts.^simulation.netlist.c

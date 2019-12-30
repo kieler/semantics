@@ -1,0 +1,70 @@
+#!/bin/sh
+LUS2EC=lus2ec
+SIMEC=simec
+WISH=wish
+
+TOOL=`basename $0`
+
+_USAGE() {
+    echo "usage: $TOOL <file.lus> <node> [<options>]"
+    echo "usage: $TOOL <file.ec> [<options>]"
+    echo "usage: $TOOL <file.dro> [<options>]"
+};
+
+
+#
+# Au moins un parametre ?
+# Sinon appel de luciole_select
+if test $# -lt 1
+then
+        largs=`$WISH $LUSTRE_INSTALL/tcl/luciole_select.tcl`
+        if test "$largs"
+        then
+                $TOOL $largs
+        fi;
+        exit $?
+fi;
+
+#
+# Juste la version ?
+#
+if [ $1 = "-version" ] ;
+then
+   $SIMEC $*
+   exit 0
+fi
+
+#
+# Appel avec un fichier lustre ?
+#
+FILE=$1
+FILENAME=`basename $FILE`
+BASE=`expr $FILENAME : '\(.*\)\.[^.]*'`
+EXT=`expr $FILENAME : '.*\.\([^.]*\)'`
+ECFILE=""
+if test "$EXT" = "lus"
+then
+        shift
+        if test $# -lt 1
+        then
+                _USAGE
+                exit 1
+        fi
+        NODE=$1
+        shift
+        printf "#@ "    
+        $LUS2EC $FILE $NODE -o $NODE.ec
+        printf "@#\n"   
+        if test $? -ne 0
+        then
+                exit $?
+        fi
+        ECFILE=$NODE.ec
+fi;
+
+#
+# Appel de simec avec l'eventuel fichier ec et le reste des arguments
+#
+
+$SIMEC $ECFILE $*
+exit $?

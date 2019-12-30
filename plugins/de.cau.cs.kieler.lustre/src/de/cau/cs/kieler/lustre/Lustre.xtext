@@ -289,7 +289,13 @@ CurrentExpression returns kexpressions::Expression:
 
 PreExpression returns kexpressions::Expression:
     {kexpressions::OperatorExpression} 
-    operator=PreOperator subExpressions+=AtomicValuedExpression
+    operator=PreOperator subExpressions+=LastExpression
+    | LastExpression
+;
+
+LastExpression returns kexpressions::Expression:
+    {kexpressions::OperatorExpression} 
+    operator=LastOperator subExpressions+=AtomicValuedExpression
     | AtomicValuedExpression
 ;
 
@@ -462,6 +468,10 @@ enum AtMostOneOperator returns kexpressions::OperatorType:
 
 enum NorOperator returns kexpressions::OperatorType:  
     NOR="nor"
+;
+
+enum LastOperator returns kexpressions::OperatorType:  
+    LAST="last"
 ;
 
 /*
