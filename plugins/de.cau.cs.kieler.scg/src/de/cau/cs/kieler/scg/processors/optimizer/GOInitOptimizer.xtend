@@ -29,6 +29,9 @@ import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.Assignment
+import de.cau.cs.kieler.core.properties.IProperty
+import de.cau.cs.kieler.core.properties.Property
+import de.cau.cs.kieler.kicool.compilation.VariableStore
 
 /** 
  * @author ssm
@@ -40,7 +43,10 @@ class GOInitOptimizer extends InplaceProcessor<SCGraphs> {
     @Inject extension AnnotationsExtensions
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension SCGControlFlowExtensions
-    extension ScgFactory = ScgFactory::eINSTANCE 
+    extension ScgFactory = ScgFactory::eINSTANCE
+    
+    public static val IProperty<Boolean> GO_INIT_OPTIMIZER_ENABLED = 
+        new Property<Boolean>("de.cau.cs.kieler.scg.opt.goInit", false)    
 	
     override getId() {
         "de.cau.cs.kieler.scg.processors.goInitOptimizer"
@@ -51,6 +57,8 @@ class GOInitOptimizer extends InplaceProcessor<SCGraphs> {
     }
     
     override process() {
+        if (!environment.getProperty(GO_INIT_OPTIMIZER_ENABLED)) return;
+        
         val model = getModel
         applyAnnotations
 
@@ -72,39 +80,73 @@ class GOInitOptimizer extends InplaceProcessor<SCGraphs> {
     }
 	
 	private def createResetSCG(Conditional conditional, Entry entry) {
-	    val resetSCG = createSCGraph
-	    val resetSCGEntry = createEntry => [
-	        it.createStringAnnotation("label", "reset")
-	        resetSCG.nodes += it
-	    ]
-        val resetSCGExit = createExit
+	    val variableStore = VariableStore.getVariableStore(environment)
 	    
-	    val elseNode = conditional.^else.target
-	    var node = conditional.then.target as Node
+	    // Search for assignments that do not depend on input variables.
+	    // Only move those.
+        val inputAssignments = <Assignment> newLinkedList
+        val resetAssignments = <Assignment> newLinkedList
 
-        if (node != elseNode) {
-            conditional.then.remove
-            resetSCGEntry.createControlFlowTo(node)
-            // Assumption: Nested nodes are assignments
-            while (node.allNext.map[target].head != elseNode) {
-                resetSCG.nodes += node
-                node = node.allNext.map[target].head as Node
-            }
+        val elseNode = conditional.^else.target as Node
+        var node = conditional.then.target as Node
+        
+        conditional.then.target = null
+        conditional.then.remove
+
+        // Assumption: Nested nodes are assignments
+        while (node != elseNode) {
             if (node instanceof Assignment) {
-                resetSCG.nodes += node
-                node.next.remove
-                node.createControlFlowTo(resetSCGExit)
+                val hasInputReference = node.expression.allReferences.exists[ variableStore.getInfo(valuedObject)?.isInput ]
+                if (hasInputReference) {
+                    inputAssignments += node
+                } else {
+                    resetAssignments += node
+                }
             } else {
                 annotationModel.addError(node, "A node nested inside the GO conditional is not an assignment.")
             }
-        }	    
+            node = node.allNext.map[target].head as Node
+        }
+        
+        inputAssignments.forEach[ next.target = null next.remove ]
+        resetAssignments.forEach[ next.target = null next.remove ]
+        
+        if (!resetAssignments.empty) {
+    	    val resetSCG = createSCGraph
+	        val resetSCGEntry = createEntry => [
+	            it.createStringAnnotation("label", "reset")
+	            resetSCG.nodes += it
+	        ]
+            val resetSCGExit = createExit
+           
+            resetSCGEntry.createControlFlowTo(resetAssignments.head)
+            var last = resetAssignments.head
+            resetSCG.nodes += last
+            for (n : resetAssignments.drop(1)) {
+                resetSCG.nodes += n
+                last.createControlFlowTo(n)
+                last = n
+            }
+            last.createControlFlowTo(resetSCGExit)
 
-        resetSCG.nodes += resetSCGExit
-	    entry.resetSCG = resetSCG
-	    
-	    entry.next.target = elseNode
-	    conditional.^else.remove
-	    conditional.remove
+    	    entry.resetSCG = resetSCG
+	    }
+
+	    if (inputAssignments.empty) {
+            entry.next.target = elseNode
+            
+            conditional.^else.target = null
+            conditional.^else.remove
+            conditional.remove
+	    } else {
+            conditional.createControlFlowTo(inputAssignments.head)
+            var last = inputAssignments.head
+            for (n : inputAssignments.drop(1)) {
+                last.createControlFlowTo(n)
+                last = n
+            }
+            last.createControlFlowTo(elseNode)
+	    }
 	}
 }
 

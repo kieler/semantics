@@ -6,7 +6,8 @@ system de.cau.cs.kieler.scg.netlist
        "de.cau.cs.kieler.scg.opt.haltStateRemover":true,
        "de.cau.cs.kieler.scg.opt.smartRegisterAllocation":true,
        "de.cau.cs.kieler.scg.opt.persistentStateOptimizer":true,
-       "de.cau.cs.kieler.scg.opt.partialAssignmentEvaluation":true
+       "de.cau.cs.kieler.scg.opt.partialAssignmentEvaluation":true,
+       "de.cau.cs.kieler.scg.opt.goInit":true
     }
 
 de.cau.cs.kieler.scg.processors.dependency config {
