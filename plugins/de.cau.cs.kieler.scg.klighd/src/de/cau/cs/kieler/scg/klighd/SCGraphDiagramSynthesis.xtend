@@ -1629,6 +1629,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             edge.sourcePort = resetExit.getPort("resettick")
             edge.targetPort = entry.getPort("resettick")
             edge.setLayoutOption(CoreOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
+            edge.addLayoutParam(LayeredOptions::PRIORITY, 0);
             edge.addRoundedBendsPolyline(8, CONTROLFLOW_THICKNESS.floatValue) => [
                 it.lineStyle = LineStyle::DOT;
                 it.foreground = Colors.RED
@@ -1661,6 +1662,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             edge.source = sourceNode
             edge.target = targetNode
             edge.setLayoutOption(CoreOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL)
+            edge.addLayoutParam(LayeredOptions::PRIORITY, 1);
 
             if (USE_ADAPTIVEZOOM.booleanValue) edge.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.50);
             // If the source is a fork node, create a new port for this control flow and attach it.

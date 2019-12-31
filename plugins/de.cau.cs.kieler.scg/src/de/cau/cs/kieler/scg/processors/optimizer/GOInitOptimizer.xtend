@@ -117,7 +117,7 @@ class GOInitOptimizer extends InplaceProcessor<SCGraphs> {
 	            it.createStringAnnotation("label", "reset")
 	            resetSCG.nodes += it
 	        ]
-            val resetSCGExit = createExit
+            val resetSCGExit = createExit 
            
             resetSCGEntry.createControlFlowTo(resetAssignments.head)
             var last = resetAssignments.head
@@ -128,7 +128,8 @@ class GOInitOptimizer extends InplaceProcessor<SCGraphs> {
                 last = n
             }
             last.createControlFlowTo(resetSCGExit)
-
+            
+            resetSCG.nodes += resetSCGExit
     	    entry.resetSCG = resetSCG
 	    }
 
