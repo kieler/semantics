@@ -4463,33 +4463,44 @@ ruleParameter returns [EObject current=null]
 		(
 			(
 				(
-					lv_pureOutput_0_0='!'
 					{
-						newLeafNode(lv_pureOutput_0_0, grammarAccess.getParameterAccess().getPureOutputExclamationMarkKeyword_0_0_0());
+						newCompositeNode(grammarAccess.getParameterAccess().getAccessTypeParameterAccessTypeEnumRuleCall_0_0_0());
 					}
+					lv_accessType_0_0=ruleParameterAccessType
 					{
 						if ($current==null) {
-							$current = createModelElement(grammarAccess.getParameterRule());
+							$current = createModelElementForParent(grammarAccess.getParameterRule());
 						}
-						setWithLastConsumed($current, "pureOutput", true, "!");
+						set(
+							$current,
+							"accessType",
+							lv_accessType_0_0,
+							"de.cau.cs.kieler.kexpressions.KExpressions.ParameterAccessType");
+						afterParserOrEnumRuleCall();
 					}
 				)
 			)?
 			(
 				(
-					lv_callByReference_1_0='&'
 					{
-						newLeafNode(lv_callByReference_1_0, grammarAccess.getParameterAccess().getCallByReferenceAmpersandKeyword_0_1_0());
+						newCompositeNode(grammarAccess.getParameterAccess().getExpressionValuedObjectReferenceParserRuleCall_0_1_0());
 					}
+					lv_expression_1_0=ruleValuedObjectReference
 					{
 						if ($current==null) {
-							$current = createModelElement(grammarAccess.getParameterRule());
+							$current = createModelElementForParent(grammarAccess.getParameterRule());
 						}
-						setWithLastConsumed($current, "callByReference", true, "&");
+						set(
+							$current,
+							"expression",
+							lv_expression_1_0,
+							"de.cau.cs.kieler.kexpressions.KExpressions.ValuedObjectReference");
+						afterParserOrEnumRuleCall();
 					}
 				)
 			)
-		)?
+		)
+		    |
 		(
 			(
 				{
@@ -7292,6 +7303,33 @@ ruleSfbyOperator returns [Enumerator current=null]
 			$current = grammarAccess.getSfbyOperatorAccess().getSFBYEnumLiteralDeclaration().getEnumLiteral().getInstance();
 			newLeafNode(enumLiteral_0, grammarAccess.getSfbyOperatorAccess().getSFBYEnumLiteralDeclaration());
 		}
+	)
+;
+
+// Rule ParameterAccessType
+ruleParameterAccessType returns [Enumerator current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		(
+			enumLiteral_0='&'
+			{
+				$current = grammarAccess.getParameterAccessTypeAccess().getCALL_BY_REFERENCEEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
+				newLeafNode(enumLiteral_0, grammarAccess.getParameterAccessTypeAccess().getCALL_BY_REFERENCEEnumLiteralDeclaration_0());
+			}
+		)
+		    |
+		(
+			enumLiteral_1='!&'
+			{
+				$current = grammarAccess.getParameterAccessTypeAccess().getPURE_OUTPUTEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
+				newLeafNode(enumLiteral_1, grammarAccess.getParameterAccessTypeAccess().getPURE_OUTPUTEnumLiteralDeclaration_1());
+			}
+		)
 	)
 ;
 

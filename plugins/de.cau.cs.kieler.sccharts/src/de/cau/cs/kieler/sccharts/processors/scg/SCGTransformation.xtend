@@ -892,7 +892,7 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
 
     def Parameter convertToSCGParameter(Parameter parameter) {
         KExpressionsFactory.eINSTANCE.createParameter.trace(parameter) => [
-            callByReference = parameter.callByReference
+            accessType = parameter.accessType
             expression = parameter.expression.convertToSCGExpression
         ]
     }

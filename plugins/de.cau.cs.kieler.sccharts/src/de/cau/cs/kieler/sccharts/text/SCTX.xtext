@@ -70,8 +70,10 @@ ScopeCall returns sccharts::ScopeCall:
     (('(' parameters += ScopeParameter (',' parameters += ScopeParameter)* ')') | '(' ')')?;
     
 ScopeParameter returns kexpressions::Parameter:
-    ((pureOutput ?= '!')? callByReference ?= '&')?
-    expression = Expression
+    ((accessType = ParameterAccessType?
+    expression = ValuedObjectReference)
+    |
+    expression = Expression)
     ('to' explicitBinding = [kexpressions::ValuedObject|ID] ('[' explicitBindingIndices+=Expression ']')*)?
     ;    
     

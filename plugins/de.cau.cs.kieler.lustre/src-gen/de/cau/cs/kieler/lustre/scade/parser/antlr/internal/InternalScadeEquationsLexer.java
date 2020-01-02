@@ -1562,10 +1562,10 @@ public class InternalScadeEquationsLexer extends Lexer {
         try {
             int _type = T__85;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalScadeEquations.g:79:7: ( '!' )
-            // InternalScadeEquations.g:79:9: '!'
+            // InternalScadeEquations.g:79:7: ( '_' )
+            // InternalScadeEquations.g:79:9: '_'
             {
-            match('!'); 
+            match('_'); 
 
             }
 
@@ -1582,10 +1582,11 @@ public class InternalScadeEquationsLexer extends Lexer {
         try {
             int _type = T__86;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalScadeEquations.g:80:7: ( '_' )
-            // InternalScadeEquations.g:80:9: '_'
+            // InternalScadeEquations.g:80:7: ( 'null' )
+            // InternalScadeEquations.g:80:9: 'null'
             {
-            match('_'); 
+            match("null"); 
+
 
             }
 
@@ -1602,11 +1603,10 @@ public class InternalScadeEquationsLexer extends Lexer {
         try {
             int _type = T__87;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalScadeEquations.g:81:7: ( 'null' )
-            // InternalScadeEquations.g:81:9: 'null'
+            // InternalScadeEquations.g:81:7: ( '#' )
+            // InternalScadeEquations.g:81:9: '#'
             {
-            match("null"); 
-
+            match('#'); 
 
             }
 
@@ -1623,10 +1623,10 @@ public class InternalScadeEquationsLexer extends Lexer {
         try {
             int _type = T__88;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalScadeEquations.g:82:7: ( '#' )
-            // InternalScadeEquations.g:82:9: '#'
+            // InternalScadeEquations.g:82:7: ( '@' )
+            // InternalScadeEquations.g:82:9: '@'
             {
-            match('#'); 
+            match('@'); 
 
             }
 
@@ -1643,10 +1643,11 @@ public class InternalScadeEquationsLexer extends Lexer {
         try {
             int _type = T__89;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalScadeEquations.g:83:7: ( '@' )
-            // InternalScadeEquations.g:83:9: '@'
+            // InternalScadeEquations.g:83:7: ( 'bool' )
+            // InternalScadeEquations.g:83:9: 'bool'
             {
-            match('@'); 
+            match("bool"); 
+
 
             }
 
@@ -1663,10 +1664,10 @@ public class InternalScadeEquationsLexer extends Lexer {
         try {
             int _type = T__90;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalScadeEquations.g:84:7: ( 'bool' )
-            // InternalScadeEquations.g:84:9: 'bool'
+            // InternalScadeEquations.g:84:7: ( 'int' )
+            // InternalScadeEquations.g:84:9: 'int'
             {
-            match("bool"); 
+            match("int"); 
 
 
             }
@@ -1684,10 +1685,10 @@ public class InternalScadeEquationsLexer extends Lexer {
         try {
             int _type = T__91;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalScadeEquations.g:85:7: ( 'int' )
-            // InternalScadeEquations.g:85:9: 'int'
+            // InternalScadeEquations.g:85:7: ( 'real' )
+            // InternalScadeEquations.g:85:9: 'real'
             {
-            match("int"); 
+            match("real"); 
 
 
             }
@@ -1705,10 +1706,10 @@ public class InternalScadeEquationsLexer extends Lexer {
         try {
             int _type = T__92;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalScadeEquations.g:86:7: ( 'real' )
-            // InternalScadeEquations.g:86:9: 'real'
+            // InternalScadeEquations.g:86:7: ( 'enum' )
+            // InternalScadeEquations.g:86:9: 'enum'
             {
-            match("real"); 
+            match("enum"); 
 
 
             }
@@ -1726,11 +1727,10 @@ public class InternalScadeEquationsLexer extends Lexer {
         try {
             int _type = T__93;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalScadeEquations.g:87:7: ( 'enum' )
-            // InternalScadeEquations.g:87:9: 'enum'
+            // InternalScadeEquations.g:87:7: ( '<' )
+            // InternalScadeEquations.g:87:9: '<'
             {
-            match("enum"); 
-
+            match('<'); 
 
             }
 
@@ -1747,10 +1747,11 @@ public class InternalScadeEquationsLexer extends Lexer {
         try {
             int _type = T__94;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalScadeEquations.g:88:7: ( '<' )
-            // InternalScadeEquations.g:88:9: '<'
+            // InternalScadeEquations.g:88:7: ( '<=' )
+            // InternalScadeEquations.g:88:9: '<='
             {
-            match('<'); 
+            match("<="); 
+
 
             }
 
@@ -1767,11 +1768,10 @@ public class InternalScadeEquationsLexer extends Lexer {
         try {
             int _type = T__95;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalScadeEquations.g:89:7: ( '<=' )
-            // InternalScadeEquations.g:89:9: '<='
+            // InternalScadeEquations.g:89:7: ( '>' )
+            // InternalScadeEquations.g:89:9: '>'
             {
-            match("<="); 
-
+            match('>'); 
 
             }
 
@@ -1788,10 +1788,11 @@ public class InternalScadeEquationsLexer extends Lexer {
         try {
             int _type = T__96;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalScadeEquations.g:90:7: ( '>' )
-            // InternalScadeEquations.g:90:9: '>'
+            // InternalScadeEquations.g:90:7: ( '>=' )
+            // InternalScadeEquations.g:90:9: '>='
             {
-            match('>'); 
+            match(">="); 
+
 
             }
 
@@ -1808,10 +1809,10 @@ public class InternalScadeEquationsLexer extends Lexer {
         try {
             int _type = T__97;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalScadeEquations.g:91:7: ( '>=' )
-            // InternalScadeEquations.g:91:9: '>='
+            // InternalScadeEquations.g:91:7: ( '<>' )
+            // InternalScadeEquations.g:91:9: '<>'
             {
-            match(">="); 
+            match("<>"); 
 
 
             }
@@ -1829,10 +1830,10 @@ public class InternalScadeEquationsLexer extends Lexer {
         try {
             int _type = T__98;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalScadeEquations.g:92:7: ( '<>' )
-            // InternalScadeEquations.g:92:9: '<>'
+            // InternalScadeEquations.g:92:7: ( 'not' )
+            // InternalScadeEquations.g:92:9: 'not'
             {
-            match("<>"); 
+            match("not"); 
 
 
             }
@@ -1850,10 +1851,10 @@ public class InternalScadeEquationsLexer extends Lexer {
         try {
             int _type = T__99;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalScadeEquations.g:93:7: ( 'not' )
-            // InternalScadeEquations.g:93:9: 'not'
+            // InternalScadeEquations.g:93:7: ( 'current' )
+            // InternalScadeEquations.g:93:9: 'current'
             {
-            match("not"); 
+            match("current"); 
 
 
             }
@@ -1871,10 +1872,10 @@ public class InternalScadeEquationsLexer extends Lexer {
         try {
             int _type = T__100;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalScadeEquations.g:94:8: ( 'current' )
-            // InternalScadeEquations.g:94:10: 'current'
+            // InternalScadeEquations.g:94:8: ( 'nor' )
+            // InternalScadeEquations.g:94:10: 'nor'
             {
-            match("current"); 
+            match("nor"); 
 
 
             }
@@ -1892,10 +1893,10 @@ public class InternalScadeEquationsLexer extends Lexer {
         try {
             int _type = T__101;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalScadeEquations.g:95:8: ( 'nor' )
-            // InternalScadeEquations.g:95:10: 'nor'
+            // InternalScadeEquations.g:95:8: ( 'last' )
+            // InternalScadeEquations.g:95:10: 'last'
             {
-            match("nor"); 
+            match("last"); 
 
 
             }
@@ -1913,10 +1914,10 @@ public class InternalScadeEquationsLexer extends Lexer {
         try {
             int _type = T__102;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalScadeEquations.g:96:8: ( 'last' )
-            // InternalScadeEquations.g:96:10: 'last'
+            // InternalScadeEquations.g:96:8: ( 'conflicting' )
+            // InternalScadeEquations.g:96:10: 'conflicting'
             {
-            match("last"); 
+            match("conflicting"); 
 
 
             }
@@ -1934,10 +1935,10 @@ public class InternalScadeEquationsLexer extends Lexer {
         try {
             int _type = T__103;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalScadeEquations.g:97:8: ( 'conflicting' )
-            // InternalScadeEquations.g:97:10: 'conflicting'
+            // InternalScadeEquations.g:97:8: ( 'commuting' )
+            // InternalScadeEquations.g:97:10: 'commuting'
             {
-            match("conflicting"); 
+            match("commuting"); 
 
 
             }
@@ -1955,10 +1956,10 @@ public class InternalScadeEquationsLexer extends Lexer {
         try {
             int _type = T__104;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalScadeEquations.g:98:8: ( 'commuting' )
-            // InternalScadeEquations.g:98:10: 'commuting'
+            // InternalScadeEquations.g:98:8: ( '++' )
+            // InternalScadeEquations.g:98:10: '++'
             {
-            match("commuting"); 
+            match("++"); 
 
 
             }
@@ -1976,10 +1977,10 @@ public class InternalScadeEquationsLexer extends Lexer {
         try {
             int _type = T__105;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalScadeEquations.g:99:8: ( '++' )
-            // InternalScadeEquations.g:99:10: '++'
+            // InternalScadeEquations.g:99:8: ( '--' )
+            // InternalScadeEquations.g:99:10: '--'
             {
-            match("++"); 
+            match("--"); 
 
 
             }
@@ -1997,10 +1998,10 @@ public class InternalScadeEquationsLexer extends Lexer {
         try {
             int _type = T__106;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalScadeEquations.g:100:8: ( '--' )
-            // InternalScadeEquations.g:100:10: '--'
+            // InternalScadeEquations.g:100:8: ( 'pre' )
+            // InternalScadeEquations.g:100:10: 'pre'
             {
-            match("--"); 
+            match("pre"); 
 
 
             }
@@ -2018,11 +2019,10 @@ public class InternalScadeEquationsLexer extends Lexer {
         try {
             int _type = T__107;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalScadeEquations.g:101:8: ( 'pre' )
-            // InternalScadeEquations.g:101:10: 'pre'
+            // InternalScadeEquations.g:101:8: ( '~' )
+            // InternalScadeEquations.g:101:10: '~'
             {
-            match("pre"); 
-
+            match('~'); 
 
             }
 
@@ -2039,10 +2039,10 @@ public class InternalScadeEquationsLexer extends Lexer {
         try {
             int _type = T__108;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalScadeEquations.g:102:8: ( '~' )
-            // InternalScadeEquations.g:102:10: '~'
+            // InternalScadeEquations.g:102:8: ( '|' )
+            // InternalScadeEquations.g:102:10: '|'
             {
-            match('~'); 
+            match('|'); 
 
             }
 
@@ -2059,10 +2059,11 @@ public class InternalScadeEquationsLexer extends Lexer {
         try {
             int _type = T__109;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalScadeEquations.g:103:8: ( '|' )
-            // InternalScadeEquations.g:103:10: '|'
+            // InternalScadeEquations.g:103:8: ( 'val' )
+            // InternalScadeEquations.g:103:10: 'val'
             {
-            match('|'); 
+            match("val"); 
+
 
             }
 
@@ -2079,10 +2080,10 @@ public class InternalScadeEquationsLexer extends Lexer {
         try {
             int _type = T__110;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalScadeEquations.g:104:8: ( 'val' )
-            // InternalScadeEquations.g:104:10: 'val'
+            // InternalScadeEquations.g:104:8: ( '<<' )
+            // InternalScadeEquations.g:104:10: '<<'
             {
-            match("val"); 
+            match("<<"); 
 
 
             }
@@ -2100,10 +2101,10 @@ public class InternalScadeEquationsLexer extends Lexer {
         try {
             int _type = T__111;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalScadeEquations.g:105:8: ( '<<' )
-            // InternalScadeEquations.g:105:10: '<<'
+            // InternalScadeEquations.g:105:8: ( 'sfby' )
+            // InternalScadeEquations.g:105:10: 'sfby'
             {
-            match("<<"); 
+            match("sfby"); 
 
 
             }
@@ -2121,10 +2122,10 @@ public class InternalScadeEquationsLexer extends Lexer {
         try {
             int _type = T__112;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalScadeEquations.g:106:8: ( 'sfby' )
-            // InternalScadeEquations.g:106:10: 'sfby'
+            // InternalScadeEquations.g:106:8: ( 'struct' )
+            // InternalScadeEquations.g:106:10: 'struct'
             {
-            match("sfby"); 
+            match("struct"); 
 
 
             }
@@ -2142,10 +2143,10 @@ public class InternalScadeEquationsLexer extends Lexer {
         try {
             int _type = T__113;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalScadeEquations.g:107:8: ( 'struct' )
-            // InternalScadeEquations.g:107:10: 'struct'
+            // InternalScadeEquations.g:107:8: ( 'class' )
+            // InternalScadeEquations.g:107:10: 'class'
             {
-            match("struct"); 
+            match("class"); 
 
 
             }
@@ -2163,10 +2164,10 @@ public class InternalScadeEquationsLexer extends Lexer {
         try {
             int _type = T__114;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalScadeEquations.g:108:8: ( 'class' )
-            // InternalScadeEquations.g:108:10: 'class'
+            // InternalScadeEquations.g:108:8: ( 'none' )
+            // InternalScadeEquations.g:108:10: 'none'
             {
-            match("class"); 
+            match("none"); 
 
 
             }
@@ -2184,10 +2185,10 @@ public class InternalScadeEquationsLexer extends Lexer {
         try {
             int _type = T__115;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalScadeEquations.g:109:8: ( 'none' )
-            // InternalScadeEquations.g:109:10: 'none'
+            // InternalScadeEquations.g:109:8: ( 'max' )
+            // InternalScadeEquations.g:109:10: 'max'
             {
-            match("none"); 
+            match("max"); 
 
 
             }
@@ -2205,10 +2206,10 @@ public class InternalScadeEquationsLexer extends Lexer {
         try {
             int _type = T__116;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalScadeEquations.g:110:8: ( 'max' )
-            // InternalScadeEquations.g:110:10: 'max'
+            // InternalScadeEquations.g:110:8: ( 'min' )
+            // InternalScadeEquations.g:110:10: 'min'
             {
-            match("max"); 
+            match("min"); 
 
 
             }
@@ -2226,10 +2227,10 @@ public class InternalScadeEquationsLexer extends Lexer {
         try {
             int _type = T__117;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalScadeEquations.g:111:8: ( 'min' )
-            // InternalScadeEquations.g:111:10: 'min'
+            // InternalScadeEquations.g:111:8: ( 'public' )
+            // InternalScadeEquations.g:111:10: 'public'
             {
-            match("min"); 
+            match("public"); 
 
 
             }
@@ -2247,10 +2248,10 @@ public class InternalScadeEquationsLexer extends Lexer {
         try {
             int _type = T__118;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalScadeEquations.g:112:8: ( 'public' )
-            // InternalScadeEquations.g:112:10: 'public'
+            // InternalScadeEquations.g:112:8: ( 'protected' )
+            // InternalScadeEquations.g:112:10: 'protected'
             {
-            match("public"); 
+            match("protected"); 
 
 
             }
@@ -2268,10 +2269,10 @@ public class InternalScadeEquationsLexer extends Lexer {
         try {
             int _type = T__119;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalScadeEquations.g:113:8: ( 'protected' )
-            // InternalScadeEquations.g:113:10: 'protected'
+            // InternalScadeEquations.g:113:8: ( 'private' )
+            // InternalScadeEquations.g:113:10: 'private'
             {
-            match("protected"); 
+            match("private"); 
 
 
             }
@@ -2289,10 +2290,10 @@ public class InternalScadeEquationsLexer extends Lexer {
         try {
             int _type = T__120;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalScadeEquations.g:114:8: ( 'private' )
-            // InternalScadeEquations.g:114:10: 'private'
+            // InternalScadeEquations.g:114:8: ( 'void' )
+            // InternalScadeEquations.g:114:10: 'void'
             {
-            match("private"); 
+            match("void"); 
 
 
             }
@@ -2310,10 +2311,10 @@ public class InternalScadeEquationsLexer extends Lexer {
         try {
             int _type = T__121;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalScadeEquations.g:115:8: ( 'void' )
-            // InternalScadeEquations.g:115:10: 'void'
+            // InternalScadeEquations.g:115:8: ( 'float' )
+            // InternalScadeEquations.g:115:10: 'float'
             {
-            match("void"); 
+            match("float"); 
 
 
             }
@@ -2331,10 +2332,10 @@ public class InternalScadeEquationsLexer extends Lexer {
         try {
             int _type = T__122;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalScadeEquations.g:116:8: ( 'float' )
-            // InternalScadeEquations.g:116:10: 'float'
+            // InternalScadeEquations.g:116:8: ( 'string' )
+            // InternalScadeEquations.g:116:10: 'string'
             {
-            match("float"); 
+            match("string"); 
 
 
             }
@@ -2352,10 +2353,10 @@ public class InternalScadeEquationsLexer extends Lexer {
         try {
             int _type = T__123;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalScadeEquations.g:117:8: ( 'string' )
-            // InternalScadeEquations.g:117:10: 'string'
+            // InternalScadeEquations.g:117:8: ( '!&' )
+            // InternalScadeEquations.g:117:10: '!&'
             {
-            match("string"); 
+            match("!&"); 
 
 
             }
@@ -2373,12 +2374,12 @@ public class InternalScadeEquationsLexer extends Lexer {
         try {
             int _type = RULE_ML_COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalScadeEquations.g:13941:17: ( '(*' ( options {greedy=false; } : . )* '*)' )
-            // InternalScadeEquations.g:13941:19: '(*' ( options {greedy=false; } : . )* '*)'
+            // InternalScadeEquations.g:13979:17: ( '(*' ( options {greedy=false; } : . )* '*)' )
+            // InternalScadeEquations.g:13979:19: '(*' ( options {greedy=false; } : . )* '*)'
             {
             match("(*"); 
 
-            // InternalScadeEquations.g:13941:24: ( options {greedy=false; } : . )*
+            // InternalScadeEquations.g:13979:24: ( options {greedy=false; } : . )*
             loop1:
             do {
                 int alt1=2;
@@ -2403,7 +2404,7 @@ public class InternalScadeEquationsLexer extends Lexer {
 
                 switch (alt1) {
             	case 1 :
-            	    // InternalScadeEquations.g:13941:52: .
+            	    // InternalScadeEquations.g:13979:52: .
             	    {
             	    matchAny(); 
 
@@ -2433,12 +2434,12 @@ public class InternalScadeEquationsLexer extends Lexer {
         try {
             int _type = RULE_SL_COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalScadeEquations.g:13943:17: ( '--' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
-            // InternalScadeEquations.g:13943:19: '--' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
+            // InternalScadeEquations.g:13981:17: ( '--' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
+            // InternalScadeEquations.g:13981:19: '--' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
             {
             match("--"); 
 
-            // InternalScadeEquations.g:13943:24: (~ ( ( '\\n' | '\\r' ) ) )*
+            // InternalScadeEquations.g:13981:24: (~ ( ( '\\n' | '\\r' ) ) )*
             loop2:
             do {
                 int alt2=2;
@@ -2451,7 +2452,7 @@ public class InternalScadeEquationsLexer extends Lexer {
 
                 switch (alt2) {
             	case 1 :
-            	    // InternalScadeEquations.g:13943:24: ~ ( ( '\\n' | '\\r' ) )
+            	    // InternalScadeEquations.g:13981:24: ~ ( ( '\\n' | '\\r' ) )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='\t')||(input.LA(1)>='\u000B' && input.LA(1)<='\f')||(input.LA(1)>='\u000E' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -2471,7 +2472,7 @@ public class InternalScadeEquationsLexer extends Lexer {
                 }
             } while (true);
 
-            // InternalScadeEquations.g:13943:40: ( ( '\\r' )? '\\n' )?
+            // InternalScadeEquations.g:13981:40: ( ( '\\r' )? '\\n' )?
             int alt4=2;
             int LA4_0 = input.LA(1);
 
@@ -2480,9 +2481,9 @@ public class InternalScadeEquationsLexer extends Lexer {
             }
             switch (alt4) {
                 case 1 :
-                    // InternalScadeEquations.g:13943:41: ( '\\r' )? '\\n'
+                    // InternalScadeEquations.g:13981:41: ( '\\r' )? '\\n'
                     {
-                    // InternalScadeEquations.g:13943:41: ( '\\r' )?
+                    // InternalScadeEquations.g:13981:41: ( '\\r' )?
                     int alt3=2;
                     int LA3_0 = input.LA(1);
 
@@ -2491,7 +2492,7 @@ public class InternalScadeEquationsLexer extends Lexer {
                     }
                     switch (alt3) {
                         case 1 :
-                            // InternalScadeEquations.g:13943:41: '\\r'
+                            // InternalScadeEquations.g:13981:41: '\\r'
                             {
                             match('\r'); 
 
@@ -2523,11 +2524,11 @@ public class InternalScadeEquationsLexer extends Lexer {
         try {
             int _type = RULE_HOSTCODE;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalScadeEquations.g:13945:15: ( '`' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '`' ) ) )* '`' )
-            // InternalScadeEquations.g:13945:17: '`' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '`' ) ) )* '`'
+            // InternalScadeEquations.g:13983:15: ( '`' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '`' ) ) )* '`' )
+            // InternalScadeEquations.g:13983:17: '`' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '`' ) ) )* '`'
             {
             match('`'); 
-            // InternalScadeEquations.g:13945:21: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '`' ) ) )*
+            // InternalScadeEquations.g:13983:21: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '`' ) ) )*
             loop5:
             do {
                 int alt5=3;
@@ -2543,7 +2544,7 @@ public class InternalScadeEquationsLexer extends Lexer {
 
                 switch (alt5) {
             	case 1 :
-            	    // InternalScadeEquations.g:13945:22: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' )
+            	    // InternalScadeEquations.g:13983:22: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' )
             	    {
             	    match('\\'); 
             	    if ( input.LA(1)=='\"'||input.LA(1)=='\''||input.LA(1)=='\\'||input.LA(1)=='b'||input.LA(1)=='f'||input.LA(1)=='n'||input.LA(1)=='r'||input.LA(1)=='t' ) {
@@ -2559,7 +2560,7 @@ public class InternalScadeEquationsLexer extends Lexer {
             	    }
             	    break;
             	case 2 :
-            	    // InternalScadeEquations.g:13945:63: ~ ( ( '\\\\' | '`' ) )
+            	    // InternalScadeEquations.g:13983:63: ~ ( ( '\\\\' | '`' ) )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='_')||(input.LA(1)>='a' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -2596,12 +2597,12 @@ public class InternalScadeEquationsLexer extends Lexer {
         try {
             int _type = RULE_COMMENT_ANNOTATION;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalScadeEquations.g:13947:25: ( '/**' ( options {greedy=false; } : . )* '*/' )
-            // InternalScadeEquations.g:13947:27: '/**' ( options {greedy=false; } : . )* '*/'
+            // InternalScadeEquations.g:13985:25: ( '/**' ( options {greedy=false; } : . )* '*/' )
+            // InternalScadeEquations.g:13985:27: '/**' ( options {greedy=false; } : . )* '*/'
             {
             match("/**"); 
 
-            // InternalScadeEquations.g:13947:33: ( options {greedy=false; } : . )*
+            // InternalScadeEquations.g:13985:33: ( options {greedy=false; } : . )*
             loop6:
             do {
                 int alt6=2;
@@ -2626,7 +2627,7 @@ public class InternalScadeEquationsLexer extends Lexer {
 
                 switch (alt6) {
             	case 1 :
-            	    // InternalScadeEquations.g:13947:61: .
+            	    // InternalScadeEquations.g:13985:61: .
             	    {
             	    matchAny(); 
 
@@ -2656,12 +2657,12 @@ public class InternalScadeEquationsLexer extends Lexer {
         try {
             int _type = RULE_SL_COMMENT_ANNOTATION;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalScadeEquations.g:13949:28: ( '//*' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
-            // InternalScadeEquations.g:13949:30: '//*' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
+            // InternalScadeEquations.g:13987:28: ( '//*' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
+            // InternalScadeEquations.g:13987:30: '//*' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
             {
             match("//*"); 
 
-            // InternalScadeEquations.g:13949:36: (~ ( ( '\\n' | '\\r' ) ) )*
+            // InternalScadeEquations.g:13987:36: (~ ( ( '\\n' | '\\r' ) ) )*
             loop7:
             do {
                 int alt7=2;
@@ -2674,7 +2675,7 @@ public class InternalScadeEquationsLexer extends Lexer {
 
                 switch (alt7) {
             	case 1 :
-            	    // InternalScadeEquations.g:13949:36: ~ ( ( '\\n' | '\\r' ) )
+            	    // InternalScadeEquations.g:13987:36: ~ ( ( '\\n' | '\\r' ) )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='\t')||(input.LA(1)>='\u000B' && input.LA(1)<='\f')||(input.LA(1)>='\u000E' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -2694,7 +2695,7 @@ public class InternalScadeEquationsLexer extends Lexer {
                 }
             } while (true);
 
-            // InternalScadeEquations.g:13949:52: ( ( '\\r' )? '\\n' )?
+            // InternalScadeEquations.g:13987:52: ( ( '\\r' )? '\\n' )?
             int alt9=2;
             int LA9_0 = input.LA(1);
 
@@ -2703,9 +2704,9 @@ public class InternalScadeEquationsLexer extends Lexer {
             }
             switch (alt9) {
                 case 1 :
-                    // InternalScadeEquations.g:13949:53: ( '\\r' )? '\\n'
+                    // InternalScadeEquations.g:13987:53: ( '\\r' )? '\\n'
                     {
-                    // InternalScadeEquations.g:13949:53: ( '\\r' )?
+                    // InternalScadeEquations.g:13987:53: ( '\\r' )?
                     int alt8=2;
                     int LA8_0 = input.LA(1);
 
@@ -2714,7 +2715,7 @@ public class InternalScadeEquationsLexer extends Lexer {
                     }
                     switch (alt8) {
                         case 1 :
-                            // InternalScadeEquations.g:13949:53: '\\r'
+                            // InternalScadeEquations.g:13987:53: '\\r'
                             {
                             match('\r'); 
 
@@ -2744,8 +2745,8 @@ public class InternalScadeEquationsLexer extends Lexer {
     // $ANTLR start "RULE_NUMBER"
     public final void mRULE_NUMBER() throws RecognitionException {
         try {
-            // InternalScadeEquations.g:13951:22: ( '0' .. '9' )
-            // InternalScadeEquations.g:13951:24: '0' .. '9'
+            // InternalScadeEquations.g:13989:22: ( '0' .. '9' )
+            // InternalScadeEquations.g:13989:24: '0' .. '9'
             {
             matchRange('0','9'); 
 
@@ -2762,10 +2763,10 @@ public class InternalScadeEquationsLexer extends Lexer {
         try {
             int _type = RULE_INT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalScadeEquations.g:13953:10: ( ( RULE_NUMBER )+ )
-            // InternalScadeEquations.g:13953:12: ( RULE_NUMBER )+
+            // InternalScadeEquations.g:13991:10: ( ( RULE_NUMBER )+ )
+            // InternalScadeEquations.g:13991:12: ( RULE_NUMBER )+
             {
-            // InternalScadeEquations.g:13953:12: ( RULE_NUMBER )+
+            // InternalScadeEquations.g:13991:12: ( RULE_NUMBER )+
             int cnt10=0;
             loop10:
             do {
@@ -2779,7 +2780,7 @@ public class InternalScadeEquationsLexer extends Lexer {
 
                 switch (alt10) {
             	case 1 :
-            	    // InternalScadeEquations.g:13953:12: RULE_NUMBER
+            	    // InternalScadeEquations.g:13991:12: RULE_NUMBER
             	    {
             	    mRULE_NUMBER(); 
 
@@ -2811,17 +2812,17 @@ public class InternalScadeEquationsLexer extends Lexer {
         try {
             int _type = RULE_FLOAT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalScadeEquations.g:13955:12: ( ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' ) )
-            // InternalScadeEquations.g:13955:14: ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' )
+            // InternalScadeEquations.g:13993:12: ( ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' ) )
+            // InternalScadeEquations.g:13993:14: ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' )
             {
-            // InternalScadeEquations.g:13955:14: ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' )
+            // InternalScadeEquations.g:13993:14: ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' )
             int alt18=2;
             alt18 = dfa18.predict(input);
             switch (alt18) {
                 case 1 :
-                    // InternalScadeEquations.g:13955:15: ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )?
+                    // InternalScadeEquations.g:13993:15: ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )?
                     {
-                    // InternalScadeEquations.g:13955:15: ( RULE_NUMBER )+
+                    // InternalScadeEquations.g:13993:15: ( RULE_NUMBER )+
                     int cnt11=0;
                     loop11:
                     do {
@@ -2835,7 +2836,7 @@ public class InternalScadeEquationsLexer extends Lexer {
 
                         switch (alt11) {
                     	case 1 :
-                    	    // InternalScadeEquations.g:13955:15: RULE_NUMBER
+                    	    // InternalScadeEquations.g:13993:15: RULE_NUMBER
                     	    {
                     	    mRULE_NUMBER(); 
 
@@ -2852,7 +2853,7 @@ public class InternalScadeEquationsLexer extends Lexer {
                     } while (true);
 
                     match('.'); 
-                    // InternalScadeEquations.g:13955:32: ( RULE_NUMBER )*
+                    // InternalScadeEquations.g:13993:32: ( RULE_NUMBER )*
                     loop12:
                     do {
                         int alt12=2;
@@ -2865,7 +2866,7 @@ public class InternalScadeEquationsLexer extends Lexer {
 
                         switch (alt12) {
                     	case 1 :
-                    	    // InternalScadeEquations.g:13955:32: RULE_NUMBER
+                    	    // InternalScadeEquations.g:13993:32: RULE_NUMBER
                     	    {
                     	    mRULE_NUMBER(); 
 
@@ -2877,7 +2878,7 @@ public class InternalScadeEquationsLexer extends Lexer {
                         }
                     } while (true);
 
-                    // InternalScadeEquations.g:13955:45: ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )?
+                    // InternalScadeEquations.g:13993:45: ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )?
                     int alt15=2;
                     int LA15_0 = input.LA(1);
 
@@ -2886,7 +2887,7 @@ public class InternalScadeEquationsLexer extends Lexer {
                     }
                     switch (alt15) {
                         case 1 :
-                            // InternalScadeEquations.g:13955:46: ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+
+                            // InternalScadeEquations.g:13993:46: ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+
                             {
                             if ( input.LA(1)=='E'||input.LA(1)=='e' ) {
                                 input.consume();
@@ -2897,7 +2898,7 @@ public class InternalScadeEquationsLexer extends Lexer {
                                 recover(mse);
                                 throw mse;}
 
-                            // InternalScadeEquations.g:13955:56: ( '+' | '-' )?
+                            // InternalScadeEquations.g:13993:56: ( '+' | '-' )?
                             int alt13=2;
                             int LA13_0 = input.LA(1);
 
@@ -2923,7 +2924,7 @@ public class InternalScadeEquationsLexer extends Lexer {
 
                             }
 
-                            // InternalScadeEquations.g:13955:67: ( RULE_NUMBER )+
+                            // InternalScadeEquations.g:13993:67: ( RULE_NUMBER )+
                             int cnt14=0;
                             loop14:
                             do {
@@ -2937,7 +2938,7 @@ public class InternalScadeEquationsLexer extends Lexer {
 
                                 switch (alt14) {
                             	case 1 :
-                            	    // InternalScadeEquations.g:13955:67: RULE_NUMBER
+                            	    // InternalScadeEquations.g:13993:67: RULE_NUMBER
                             	    {
                             	    mRULE_NUMBER(); 
 
@@ -2959,7 +2960,7 @@ public class InternalScadeEquationsLexer extends Lexer {
 
                     }
 
-                    // InternalScadeEquations.g:13955:82: ( 'f' )?
+                    // InternalScadeEquations.g:13993:82: ( 'f' )?
                     int alt16=2;
                     int LA16_0 = input.LA(1);
 
@@ -2968,7 +2969,7 @@ public class InternalScadeEquationsLexer extends Lexer {
                     }
                     switch (alt16) {
                         case 1 :
-                            // InternalScadeEquations.g:13955:82: 'f'
+                            // InternalScadeEquations.g:13993:82: 'f'
                             {
                             match('f'); 
 
@@ -2981,9 +2982,9 @@ public class InternalScadeEquationsLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // InternalScadeEquations.g:13955:87: ( RULE_NUMBER )+ 'f'
+                    // InternalScadeEquations.g:13993:87: ( RULE_NUMBER )+ 'f'
                     {
-                    // InternalScadeEquations.g:13955:87: ( RULE_NUMBER )+
+                    // InternalScadeEquations.g:13993:87: ( RULE_NUMBER )+
                     int cnt17=0;
                     loop17:
                     do {
@@ -2997,7 +2998,7 @@ public class InternalScadeEquationsLexer extends Lexer {
 
                         switch (alt17) {
                     	case 1 :
-                    	    // InternalScadeEquations.g:13955:87: RULE_NUMBER
+                    	    // InternalScadeEquations.g:13993:87: RULE_NUMBER
                     	    {
                     	    mRULE_NUMBER(); 
 
@@ -3036,10 +3037,10 @@ public class InternalScadeEquationsLexer extends Lexer {
         try {
             int _type = RULE_BOOLEAN;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalScadeEquations.g:13957:14: ( ( 'true' | 'false' ) )
-            // InternalScadeEquations.g:13957:16: ( 'true' | 'false' )
+            // InternalScadeEquations.g:13995:14: ( ( 'true' | 'false' ) )
+            // InternalScadeEquations.g:13995:16: ( 'true' | 'false' )
             {
-            // InternalScadeEquations.g:13957:16: ( 'true' | 'false' )
+            // InternalScadeEquations.g:13995:16: ( 'true' | 'false' )
             int alt19=2;
             int LA19_0 = input.LA(1);
 
@@ -3057,7 +3058,7 @@ public class InternalScadeEquationsLexer extends Lexer {
             }
             switch (alt19) {
                 case 1 :
-                    // InternalScadeEquations.g:13957:17: 'true'
+                    // InternalScadeEquations.g:13995:17: 'true'
                     {
                     match("true"); 
 
@@ -3065,7 +3066,7 @@ public class InternalScadeEquationsLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // InternalScadeEquations.g:13957:24: 'false'
+                    // InternalScadeEquations.g:13995:24: 'false'
                     {
                     match("false"); 
 
@@ -3091,11 +3092,11 @@ public class InternalScadeEquationsLexer extends Lexer {
         try {
             int _type = RULE_STRING;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalScadeEquations.g:13959:13: ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' )
-            // InternalScadeEquations.g:13959:15: '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"'
+            // InternalScadeEquations.g:13997:13: ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' )
+            // InternalScadeEquations.g:13997:15: '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"'
             {
             match('\"'); 
-            // InternalScadeEquations.g:13959:19: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )*
+            // InternalScadeEquations.g:13997:19: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )*
             loop20:
             do {
                 int alt20=3;
@@ -3111,7 +3112,7 @@ public class InternalScadeEquationsLexer extends Lexer {
 
                 switch (alt20) {
             	case 1 :
-            	    // InternalScadeEquations.g:13959:20: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' )
+            	    // InternalScadeEquations.g:13997:20: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' )
             	    {
             	    match('\\'); 
             	    if ( input.LA(1)=='\"'||input.LA(1)=='\''||input.LA(1)=='\\'||input.LA(1)=='b'||input.LA(1)=='f'||input.LA(1)=='n'||input.LA(1)=='r'||input.LA(1)=='t' ) {
@@ -3127,7 +3128,7 @@ public class InternalScadeEquationsLexer extends Lexer {
             	    }
             	    break;
             	case 2 :
-            	    // InternalScadeEquations.g:13959:61: ~ ( ( '\\\\' | '\"' ) )
+            	    // InternalScadeEquations.g:13997:61: ~ ( ( '\\\\' | '\"' ) )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='!')||(input.LA(1)>='#' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -3164,10 +3165,10 @@ public class InternalScadeEquationsLexer extends Lexer {
         try {
             int _type = RULE_ID;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalScadeEquations.g:13961:9: ( ( '^' )? ( ( ( '_' )? 'a' .. 'z' | ( '_' )? 'A' .. 'Z' ) | '_' '0' .. '9' | '__' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )* )
-            // InternalScadeEquations.g:13961:11: ( '^' )? ( ( ( '_' )? 'a' .. 'z' | ( '_' )? 'A' .. 'Z' ) | '_' '0' .. '9' | '__' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
+            // InternalScadeEquations.g:13999:9: ( ( '^' )? ( ( ( '_' )? 'a' .. 'z' | ( '_' )? 'A' .. 'Z' ) | '_' '0' .. '9' | '__' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )* )
+            // InternalScadeEquations.g:13999:11: ( '^' )? ( ( ( '_' )? 'a' .. 'z' | ( '_' )? 'A' .. 'Z' ) | '_' '0' .. '9' | '__' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
             {
-            // InternalScadeEquations.g:13961:11: ( '^' )?
+            // InternalScadeEquations.g:13999:11: ( '^' )?
             int alt21=2;
             int LA21_0 = input.LA(1);
 
@@ -3176,7 +3177,7 @@ public class InternalScadeEquationsLexer extends Lexer {
             }
             switch (alt21) {
                 case 1 :
-                    // InternalScadeEquations.g:13961:11: '^'
+                    // InternalScadeEquations.g:13999:11: '^'
                     {
                     match('^'); 
 
@@ -3185,7 +3186,7 @@ public class InternalScadeEquationsLexer extends Lexer {
 
             }
 
-            // InternalScadeEquations.g:13961:16: ( ( ( '_' )? 'a' .. 'z' | ( '_' )? 'A' .. 'Z' ) | '_' '0' .. '9' | '__' )
+            // InternalScadeEquations.g:13999:16: ( ( ( '_' )? 'a' .. 'z' | ( '_' )? 'A' .. 'Z' ) | '_' '0' .. '9' | '__' )
             int alt25=3;
             int LA25_0 = input.LA(1);
 
@@ -3285,9 +3286,9 @@ public class InternalScadeEquationsLexer extends Lexer {
             }
             switch (alt25) {
                 case 1 :
-                    // InternalScadeEquations.g:13961:17: ( ( '_' )? 'a' .. 'z' | ( '_' )? 'A' .. 'Z' )
+                    // InternalScadeEquations.g:13999:17: ( ( '_' )? 'a' .. 'z' | ( '_' )? 'A' .. 'Z' )
                     {
-                    // InternalScadeEquations.g:13961:17: ( ( '_' )? 'a' .. 'z' | ( '_' )? 'A' .. 'Z' )
+                    // InternalScadeEquations.g:13999:17: ( ( '_' )? 'a' .. 'z' | ( '_' )? 'A' .. 'Z' )
                     int alt24=2;
                     switch ( input.LA(1) ) {
                     case '_':
@@ -3377,9 +3378,9 @@ public class InternalScadeEquationsLexer extends Lexer {
 
                     switch (alt24) {
                         case 1 :
-                            // InternalScadeEquations.g:13961:18: ( '_' )? 'a' .. 'z'
+                            // InternalScadeEquations.g:13999:18: ( '_' )? 'a' .. 'z'
                             {
-                            // InternalScadeEquations.g:13961:18: ( '_' )?
+                            // InternalScadeEquations.g:13999:18: ( '_' )?
                             int alt22=2;
                             int LA22_0 = input.LA(1);
 
@@ -3388,7 +3389,7 @@ public class InternalScadeEquationsLexer extends Lexer {
                             }
                             switch (alt22) {
                                 case 1 :
-                                    // InternalScadeEquations.g:13961:18: '_'
+                                    // InternalScadeEquations.g:13999:18: '_'
                                     {
                                     match('_'); 
 
@@ -3402,9 +3403,9 @@ public class InternalScadeEquationsLexer extends Lexer {
                             }
                             break;
                         case 2 :
-                            // InternalScadeEquations.g:13961:32: ( '_' )? 'A' .. 'Z'
+                            // InternalScadeEquations.g:13999:32: ( '_' )? 'A' .. 'Z'
                             {
-                            // InternalScadeEquations.g:13961:32: ( '_' )?
+                            // InternalScadeEquations.g:13999:32: ( '_' )?
                             int alt23=2;
                             int LA23_0 = input.LA(1);
 
@@ -3413,7 +3414,7 @@ public class InternalScadeEquationsLexer extends Lexer {
                             }
                             switch (alt23) {
                                 case 1 :
-                                    // InternalScadeEquations.g:13961:32: '_'
+                                    // InternalScadeEquations.g:13999:32: '_'
                                     {
                                     match('_'); 
 
@@ -3433,7 +3434,7 @@ public class InternalScadeEquationsLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // InternalScadeEquations.g:13961:47: '_' '0' .. '9'
+                    // InternalScadeEquations.g:13999:47: '_' '0' .. '9'
                     {
                     match('_'); 
                     matchRange('0','9'); 
@@ -3441,7 +3442,7 @@ public class InternalScadeEquationsLexer extends Lexer {
                     }
                     break;
                 case 3 :
-                    // InternalScadeEquations.g:13961:60: '__'
+                    // InternalScadeEquations.g:13999:60: '__'
                     {
                     match("__"); 
 
@@ -3451,7 +3452,7 @@ public class InternalScadeEquationsLexer extends Lexer {
 
             }
 
-            // InternalScadeEquations.g:13961:66: ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
+            // InternalScadeEquations.g:13999:66: ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
             loop26:
             do {
                 int alt26=2;
@@ -3500,10 +3501,10 @@ public class InternalScadeEquationsLexer extends Lexer {
         try {
             int _type = RULE_WS;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalScadeEquations.g:13963:9: ( ( ' ' | '\\t' | '\\r' | '\\n' )+ )
-            // InternalScadeEquations.g:13963:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
+            // InternalScadeEquations.g:14001:9: ( ( ' ' | '\\t' | '\\r' | '\\n' )+ )
+            // InternalScadeEquations.g:14001:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
             {
-            // InternalScadeEquations.g:13963:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
+            // InternalScadeEquations.g:14001:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
             int cnt27=0;
             loop27:
             do {
@@ -3557,8 +3558,8 @@ public class InternalScadeEquationsLexer extends Lexer {
         try {
             int _type = RULE_ANY_OTHER;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalScadeEquations.g:13965:16: ( . )
-            // InternalScadeEquations.g:13965:18: .
+            // InternalScadeEquations.g:14003:16: ( . )
+            // InternalScadeEquations.g:14003:18: .
             {
             matchAny(); 
 
@@ -4470,23 +4471,23 @@ public class InternalScadeEquationsLexer extends Lexer {
             this.transition = DFA18_transition;
         }
         public String getDescription() {
-            return "13955:14: ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' )";
+            return "13993:14: ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' )";
         }
     }
     static final String DFA28_eotS =
-        "\1\uffff\1\72\3\uffff\1\77\2\uffff\5\103\1\uffff\1\103\1\122\4\103\1\136\4\103\1\uffff\1\155\1\103\1\163\5\103\2\uffff\1\103\1\uffff\1\u0081\1\u0083\2\uffff\1\u0086\2\uffff\1\103\1\u008d\2\uffff\1\67\1\u0091\1\67\16\uffff\1\103\1\uffff\14\103\1\uffff\1\103\1\uffff\12\103\2\uffff\4\103\1\u00c0\4\103\1\u00c7\1\103\4\uffff\3\103\1\uffff\1\u00cc\1\uffff\1\103\1\u00cf\4\103\2\uffff\2\103\1\uffff\1\u00d9\11\uffff\1\103\10\uffff\1\u0091\3\uffff\11\103\1\u00e4\3\103\1\u00e8\1\u00e9\4\103\1\u00ef\7\103\1\u00f9\1\u00fa\1\103\1\u00fc\2\103\1\u00ff\4\103\1\u0104\2\103\1\u0107\1\uffff\6\103\1\uffff\1\u010f\1\u0110\1\u0111\1\u0112\2\uffff\1\u0113\1\uffff\5\103\1\u011a\2\103\2\uffff\6\103\1\u0123\1\u0124\1\u0125\1\103\1\uffff\2\103\1\u0129\2\uffff\1\u012a\1\u012b\3\103\1\uffff\1\u012f\1\103\1\u0131\6\103\2\uffff\1\u0138\1\uffff\1\103\1\u013a\1\uffff\1\u013b\1\u013c\2\103\1\uffff\2\103\1\uffff\6\103\1\u0148\5\uffff\1\103\1\u014a\1\103\1\u014c\2\103\1\uffff\2\103\1\u0151\1\103\1\u0153\3\103\3\uffff\1\103\1\u0158\1\u013c\3\uffff\3\103\1\uffff\1\103\1\uffff\1\u015d\4\103\1\u0162\1\uffff\1\u0163\3\uffff\3\103\1\u0167\1\u0168\3\103\1\u016c\2\103\1\uffff\1\103\1\uffff\1\103\1\uffff\1\u0171\3\103\1\uffff\1\u0175\1\uffff\1\u0176\1\u0177\2\103\1\uffff\2\103\1\u017c\1\103\1\uffff\4\103\2\uffff\1\u0182\2\103\2\uffff\1\u0185\1\u0186\1\u0187\1\uffff\1\103\1\u0189\1\u018a\1\u018b\1\uffff\2\103\1\u018e\3\uffff\2\103\1\u0191\1\u0192\1\uffff\2\103\1\u0195\1\103\1\u0197\1\uffff\1\103\1\u0199\3\uffff\1\103\3\uffff\1\u019b\1\103\1\uffff\1\103\1\u019e\2\uffff\2\103\1\uffff\1\103\1\uffff\1\103\1\uffff\1\u01a3\1\uffff\2\103\1\uffff\1\u01a6\1\103\1\u01a8\1\u01a9\1\uffff\1\u01aa\1\u01ab\1\uffff\1\103\4\uffff\1\u01ad\1\uffff";
+        "\1\uffff\1\72\3\uffff\1\77\2\uffff\5\103\1\uffff\1\103\1\122\4\103\1\136\4\103\1\uffff\1\155\1\103\1\163\5\103\2\uffff\1\103\1\uffff\1\u0081\1\u0083\1\uffff\1\u0085\2\uffff\1\103\1\u008c\2\uffff\2\67\1\u0091\1\67\16\uffff\1\103\1\uffff\14\103\1\uffff\1\103\1\uffff\12\103\2\uffff\4\103\1\u00c0\4\103\1\u00c7\1\103\4\uffff\3\103\1\uffff\1\u00cc\1\uffff\1\103\1\u00cf\4\103\2\uffff\2\103\1\uffff\1\u00d9\10\uffff\1\103\11\uffff\1\u0091\3\uffff\11\103\1\u00e4\3\103\1\u00e8\1\u00e9\4\103\1\u00ef\7\103\1\u00f9\1\u00fa\1\103\1\u00fc\2\103\1\u00ff\4\103\1\u0104\2\103\1\u0107\1\uffff\6\103\1\uffff\1\u010f\1\u0110\1\u0111\1\u0112\2\uffff\1\u0113\1\uffff\5\103\1\u011a\2\103\2\uffff\6\103\1\u0123\1\u0124\1\u0125\1\103\1\uffff\2\103\1\u0129\2\uffff\1\u012a\1\u012b\3\103\1\uffff\1\u012f\1\103\1\u0131\6\103\2\uffff\1\u0138\1\uffff\1\103\1\u013a\1\uffff\1\u013b\1\u013c\2\103\1\uffff\2\103\1\uffff\6\103\1\u0148\5\uffff\1\103\1\u014a\1\103\1\u014c\2\103\1\uffff\2\103\1\u0151\1\103\1\u0153\3\103\3\uffff\1\103\1\u0158\1\u013c\3\uffff\3\103\1\uffff\1\103\1\uffff\1\u015d\4\103\1\u0162\1\uffff\1\u0163\3\uffff\3\103\1\u0167\1\u0168\3\103\1\u016c\2\103\1\uffff\1\103\1\uffff\1\103\1\uffff\1\u0171\3\103\1\uffff\1\u0175\1\uffff\1\u0176\1\u0177\2\103\1\uffff\2\103\1\u017c\1\103\1\uffff\4\103\2\uffff\1\u0182\2\103\2\uffff\1\u0185\1\u0186\1\u0187\1\uffff\1\103\1\u0189\1\u018a\1\u018b\1\uffff\2\103\1\u018e\3\uffff\2\103\1\u0191\1\u0192\1\uffff\2\103\1\u0195\1\103\1\u0197\1\uffff\1\103\1\u0199\3\uffff\1\103\3\uffff\1\u019b\1\103\1\uffff\1\103\1\u019e\2\uffff\2\103\1\uffff\1\103\1\uffff\1\103\1\uffff\1\u01a3\1\uffff\2\103\1\uffff\1\u01a6\1\103\1\u01a8\1\u01a9\1\uffff\1\u01aa\1\u01ab\1\uffff\1\103\4\uffff\1\u01ad\1\uffff";
     static final String DFA28_eofS =
         "\u01ae\uffff";
     static final String DFA28_minS =
-        "\1\0\1\51\3\uffff\1\76\2\uffff\1\156\1\154\1\141\1\157\1\141\1\uffff\1\150\1\101\1\154\2\141\1\145\1\56\1\156\1\146\1\143\1\151\1\uffff\1\52\1\141\1\55\1\157\1\162\1\163\1\154\1\157\2\uffff\1\162\1\uffff\1\75\1\53\2\uffff\1\60\2\uffff\1\157\1\74\2\uffff\1\0\1\56\1\0\16\uffff\1\154\1\uffff\1\160\1\151\1\163\1\165\1\156\1\171\1\157\1\154\1\144\1\154\1\141\1\156\1\uffff\1\145\1\uffff\1\155\1\162\1\141\1\154\1\151\1\164\1\142\1\154\1\145\1\165\2\uffff\1\163\1\164\1\144\1\151\1\60\1\141\1\150\1\147\1\142\1\60\1\166\4\uffff\1\144\1\170\1\156\1\uffff\1\0\1\uffff\1\162\1\60\1\164\2\157\1\163\2\uffff\1\145\1\142\1\uffff\1\76\11\uffff\1\157\10\uffff\1\56\3\uffff\1\141\1\151\2\145\1\162\1\164\1\145\1\155\1\143\1\60\1\141\1\163\1\145\2\60\1\145\1\154\1\165\1\164\1\60\1\154\1\144\1\156\1\146\1\142\1\162\1\163\2\60\1\144\1\60\1\145\1\164\1\60\1\156\2\145\1\157\1\60\1\164\1\165\1\60\1\uffff\1\164\1\151\1\160\1\145\1\156\1\171\1\uffff\4\60\2\uffff\1\60\1\uffff\1\160\1\156\1\142\1\164\1\156\1\60\1\164\1\154\2\uffff\1\154\1\146\1\154\1\163\1\162\1\145\3\60\1\164\1\uffff\1\164\1\145\1\60\2\uffff\2\60\1\162\1\141\1\155\1\uffff\1\60\1\157\1\60\1\164\1\154\1\151\1\165\1\145\1\163\2\uffff\1\60\1\uffff\1\154\1\60\1\uffff\2\60\1\162\1\155\1\uffff\1\151\1\164\1\uffff\1\145\1\143\1\156\1\145\1\144\1\141\1\60\5\uffff\1\165\1\60\1\141\1\60\1\164\1\141\1\uffff\1\145\1\151\1\60\1\145\1\60\1\163\1\156\1\163\3\uffff\1\151\2\60\3\uffff\1\156\1\162\1\145\1\uffff\1\155\1\uffff\1\60\1\151\1\156\1\164\1\156\1\60\1\uffff\1\60\3\uffff\1\164\2\141\2\60\1\143\1\164\1\147\1\60\1\165\1\154\1\uffff\1\164\1\uffff\1\154\1\uffff\1\60\1\164\2\143\1\uffff\1\60\1\uffff\2\60\1\163\1\157\1\uffff\1\163\1\164\1\60\1\151\1\uffff\1\143\1\145\1\151\1\164\2\uffff\1\60\1\164\1\154\2\uffff\3\60\1\uffff\1\154\3\60\1\uffff\1\145\1\164\1\60\3\uffff\1\151\1\156\2\60\1\uffff\1\172\1\164\1\60\1\156\1\60\1\uffff\1\157\1\60\3\uffff\1\145\3\uffff\1\60\1\145\1\uffff\1\157\1\60\2\uffff\1\145\1\151\1\uffff\1\147\1\uffff\1\156\1\uffff\1\60\1\uffff\1\144\1\156\1\uffff\1\60\1\156\2\60\1\uffff\2\60\1\uffff\1\147\4\uffff\1\60\1\uffff";
+        "\1\0\1\51\3\uffff\1\76\2\uffff\1\156\1\154\1\141\1\157\1\141\1\uffff\1\150\1\101\1\154\2\141\1\145\1\56\1\156\1\146\1\143\1\151\1\uffff\1\52\1\141\1\55\1\157\1\162\1\163\1\154\1\157\2\uffff\1\162\1\uffff\1\75\1\53\1\uffff\1\60\2\uffff\1\157\1\74\2\uffff\1\46\1\0\1\56\1\0\16\uffff\1\154\1\uffff\1\160\1\151\1\163\1\165\1\156\1\171\1\157\1\154\1\144\1\154\1\141\1\156\1\uffff\1\145\1\uffff\1\155\1\162\1\141\1\154\1\151\1\164\1\142\1\154\1\145\1\165\2\uffff\1\163\1\164\1\144\1\151\1\60\1\141\1\150\1\147\1\142\1\60\1\166\4\uffff\1\144\1\170\1\156\1\uffff\1\0\1\uffff\1\162\1\60\1\164\2\157\1\163\2\uffff\1\145\1\142\1\uffff\1\76\10\uffff\1\157\11\uffff\1\56\3\uffff\1\141\1\151\2\145\1\162\1\164\1\145\1\155\1\143\1\60\1\141\1\163\1\145\2\60\1\145\1\154\1\165\1\164\1\60\1\154\1\144\1\156\1\146\1\142\1\162\1\163\2\60\1\144\1\60\1\145\1\164\1\60\1\156\2\145\1\157\1\60\1\164\1\165\1\60\1\uffff\1\164\1\151\1\160\1\145\1\156\1\171\1\uffff\4\60\2\uffff\1\60\1\uffff\1\160\1\156\1\142\1\164\1\156\1\60\1\164\1\154\2\uffff\1\154\1\146\1\154\1\163\1\162\1\145\3\60\1\164\1\uffff\1\164\1\145\1\60\2\uffff\2\60\1\162\1\141\1\155\1\uffff\1\60\1\157\1\60\1\164\1\154\1\151\1\165\1\145\1\163\2\uffff\1\60\1\uffff\1\154\1\60\1\uffff\2\60\1\162\1\155\1\uffff\1\151\1\164\1\uffff\1\145\1\143\1\156\1\145\1\144\1\141\1\60\5\uffff\1\165\1\60\1\141\1\60\1\164\1\141\1\uffff\1\145\1\151\1\60\1\145\1\60\1\163\1\156\1\163\3\uffff\1\151\2\60\3\uffff\1\156\1\162\1\145\1\uffff\1\155\1\uffff\1\60\1\151\1\156\1\164\1\156\1\60\1\uffff\1\60\3\uffff\1\164\2\141\2\60\1\143\1\164\1\147\1\60\1\165\1\154\1\uffff\1\164\1\uffff\1\154\1\uffff\1\60\1\164\2\143\1\uffff\1\60\1\uffff\2\60\1\163\1\157\1\uffff\1\163\1\164\1\60\1\151\1\uffff\1\143\1\145\1\151\1\164\2\uffff\1\60\1\164\1\154\2\uffff\3\60\1\uffff\1\154\3\60\1\uffff\1\145\1\164\1\60\3\uffff\1\151\1\156\2\60\1\uffff\1\172\1\164\1\60\1\156\1\60\1\uffff\1\157\1\60\3\uffff\1\145\3\uffff\1\60\1\145\1\uffff\1\157\1\60\2\uffff\1\145\1\151\1\uffff\1\147\1\uffff\1\156\1\uffff\1\60\1\uffff\1\144\1\156\1\uffff\1\60\1\156\2\60\1\uffff\2\60\1\uffff\1\147\4\uffff\1\60\1\uffff";
     static final String DFA28_maxS =
-        "\1\uffff\1\52\3\uffff\1\76\2\uffff\1\156\1\170\2\165\1\145\1\uffff\1\150\1\172\1\165\1\157\1\145\1\162\1\56\1\165\1\156\1\164\1\157\1\uffff\1\57\1\157\1\76\1\157\1\165\1\163\1\154\1\157\2\uffff\1\165\1\uffff\1\76\1\53\2\uffff\1\172\2\uffff\1\157\1\76\2\uffff\1\uffff\1\146\1\uffff\16\uffff\1\164\1\uffff\1\164\1\151\1\163\1\165\1\156\1\171\1\157\1\154\1\164\1\154\1\164\1\156\1\uffff\1\145\1\uffff\1\156\1\162\1\141\1\162\1\151\1\164\1\163\1\154\1\145\1\165\2\uffff\1\163\1\164\1\144\1\164\1\172\1\162\1\157\1\147\1\142\1\172\1\166\4\uffff\1\144\1\170\1\156\1\uffff\1\uffff\1\uffff\1\162\1\172\1\164\2\157\1\163\2\uffff\1\157\1\142\1\uffff\1\76\11\uffff\1\157\10\uffff\1\146\3\uffff\1\141\1\151\2\145\1\162\1\164\1\145\1\155\1\143\1\172\1\141\1\163\1\145\2\172\1\145\1\154\2\165\1\172\1\154\1\144\1\156\1\163\1\155\1\162\1\163\2\172\1\144\1\172\1\145\1\164\1\172\1\156\2\145\1\157\1\172\1\164\1\165\1\172\1\uffff\1\164\1\165\1\160\1\145\1\156\1\171\1\uffff\4\172\2\uffff\1\172\1\uffff\1\160\1\156\1\142\1\164\1\166\1\172\1\164\1\154\2\uffff\1\154\1\146\1\154\1\163\1\162\1\145\3\172\1\164\1\uffff\1\164\1\145\1\172\2\uffff\2\172\1\162\1\141\1\155\1\uffff\1\172\1\157\1\172\1\164\1\154\1\151\1\165\1\145\1\163\2\uffff\1\172\1\uffff\1\154\1\172\1\uffff\2\172\1\162\1\155\1\uffff\1\151\1\164\1\uffff\1\151\1\143\1\156\1\145\1\144\1\141\1\172\5\uffff\1\165\1\172\1\141\1\172\1\164\1\141\1\uffff\1\145\1\151\1\172\1\145\1\172\1\163\1\156\1\163\3\uffff\1\151\2\172\3\uffff\1\156\1\162\1\145\1\uffff\1\155\1\uffff\1\172\1\151\1\156\1\164\1\156\1\172\1\uffff\1\172\3\uffff\1\164\2\141\2\172\1\143\1\164\1\147\1\172\1\165\1\154\1\uffff\1\164\1\uffff\1\154\1\uffff\1\172\1\164\2\143\1\uffff\1\172\1\uffff\2\172\1\163\1\157\1\uffff\1\163\1\164\1\172\1\151\1\uffff\1\143\1\145\1\151\1\164\2\uffff\1\172\1\164\1\154\2\uffff\3\172\1\uffff\1\154\3\172\1\uffff\1\145\1\164\1\172\3\uffff\1\151\1\156\2\172\1\uffff\1\172\1\164\1\172\1\156\1\172\1\uffff\1\157\1\172\3\uffff\1\145\3\uffff\1\172\1\145\1\uffff\1\157\1\172\2\uffff\1\145\1\151\1\uffff\1\147\1\uffff\1\156\1\uffff\1\172\1\uffff\1\144\1\156\1\uffff\1\172\1\156\2\172\1\uffff\2\172\1\uffff\1\147\4\uffff\1\172\1\uffff";
+        "\1\uffff\1\52\3\uffff\1\76\2\uffff\1\156\1\170\2\165\1\145\1\uffff\1\150\1\172\1\165\1\157\1\145\1\162\1\56\1\165\1\156\1\164\1\157\1\uffff\1\57\1\157\1\76\1\157\1\165\1\163\1\154\1\157\2\uffff\1\165\1\uffff\1\76\1\53\1\uffff\1\172\2\uffff\1\157\1\76\2\uffff\1\46\1\uffff\1\146\1\uffff\16\uffff\1\164\1\uffff\1\164\1\151\1\163\1\165\1\156\1\171\1\157\1\154\1\164\1\154\1\164\1\156\1\uffff\1\145\1\uffff\1\156\1\162\1\141\1\162\1\151\1\164\1\163\1\154\1\145\1\165\2\uffff\1\163\1\164\1\144\1\164\1\172\1\162\1\157\1\147\1\142\1\172\1\166\4\uffff\1\144\1\170\1\156\1\uffff\1\uffff\1\uffff\1\162\1\172\1\164\2\157\1\163\2\uffff\1\157\1\142\1\uffff\1\76\10\uffff\1\157\11\uffff\1\146\3\uffff\1\141\1\151\2\145\1\162\1\164\1\145\1\155\1\143\1\172\1\141\1\163\1\145\2\172\1\145\1\154\2\165\1\172\1\154\1\144\1\156\1\163\1\155\1\162\1\163\2\172\1\144\1\172\1\145\1\164\1\172\1\156\2\145\1\157\1\172\1\164\1\165\1\172\1\uffff\1\164\1\165\1\160\1\145\1\156\1\171\1\uffff\4\172\2\uffff\1\172\1\uffff\1\160\1\156\1\142\1\164\1\166\1\172\1\164\1\154\2\uffff\1\154\1\146\1\154\1\163\1\162\1\145\3\172\1\164\1\uffff\1\164\1\145\1\172\2\uffff\2\172\1\162\1\141\1\155\1\uffff\1\172\1\157\1\172\1\164\1\154\1\151\1\165\1\145\1\163\2\uffff\1\172\1\uffff\1\154\1\172\1\uffff\2\172\1\162\1\155\1\uffff\1\151\1\164\1\uffff\1\151\1\143\1\156\1\145\1\144\1\141\1\172\5\uffff\1\165\1\172\1\141\1\172\1\164\1\141\1\uffff\1\145\1\151\1\172\1\145\1\172\1\163\1\156\1\163\3\uffff\1\151\2\172\3\uffff\1\156\1\162\1\145\1\uffff\1\155\1\uffff\1\172\1\151\1\156\1\164\1\156\1\172\1\uffff\1\172\3\uffff\1\164\2\141\2\172\1\143\1\164\1\147\1\172\1\165\1\154\1\uffff\1\164\1\uffff\1\154\1\uffff\1\172\1\164\2\143\1\uffff\1\172\1\uffff\2\172\1\163\1\157\1\uffff\1\163\1\164\1\172\1\151\1\uffff\1\143\1\145\1\151\1\164\2\uffff\1\172\1\164\1\154\2\uffff\3\172\1\uffff\1\154\3\172\1\uffff\1\145\1\164\1\172\3\uffff\1\151\1\156\2\172\1\uffff\1\172\1\164\1\172\1\156\1\172\1\uffff\1\157\1\172\3\uffff\1\145\3\uffff\1\172\1\145\1\uffff\1\157\1\172\2\uffff\1\145\1\151\1\uffff\1\147\1\uffff\1\156\1\uffff\1\172\1\uffff\1\144\1\156\1\uffff\1\172\1\156\2\172\1\uffff\2\172\1\uffff\1\147\4\uffff\1\172\1\uffff";
     static final String DFA28_acceptS =
-        "\2\uffff\1\2\1\3\1\4\1\uffff\1\6\1\7\5\uffff\1\16\13\uffff\1\42\10\uffff\1\71\1\72\1\uffff\1\77\2\uffff\1\104\1\105\1\uffff\1\110\1\111\2\uffff\1\134\1\135\3\uffff\2\165\1\166\1\167\1\14\1\154\1\1\1\2\1\3\1\4\1\52\1\5\1\6\1\7\1\uffff\1\165\14\uffff\1\16\1\uffff\1\20\12\uffff\1\31\1\25\13\uffff\1\42\1\157\1\160\1\43\3\uffff\1\47\1\uffff\1\103\6\uffff\1\71\1\72\2\uffff\1\77\1\uffff\1\121\1\120\1\131\1\102\1\104\1\105\1\106\1\110\1\111\1\uffff\1\117\1\122\1\137\1\116\1\134\1\135\1\156\1\161\1\uffff\1\162\1\164\1\166\52\uffff\1\36\6\uffff\1\37\4\uffff\1\132\1\155\1\uffff\1\54\10\uffff\1\101\1\100\12\uffff\1\46\3\uffff\1\123\1\125\5\uffff\1\70\11\uffff\1\22\1\136\1\uffff\1\23\2\uffff\1\24\4\uffff\1\55\2\uffff\1\113\7\uffff\1\45\1\44\1\144\1\145\1\53\6\uffff\1\133\10\uffff\1\26\1\51\1\115\3\uffff\1\13\1\143\1\107\3\uffff\1\114\1\uffff\1\17\6\uffff\1\151\1\uffff\1\126\1\50\1\163\13\uffff\1\140\1\uffff\1\60\1\uffff\1\66\4\uffff\1\112\1\uffff\1\34\4\uffff\1\152\4\uffff\1\21\4\uffff\1\142\1\74\3\uffff\1\61\1\33\3\uffff\1\56\4\uffff\1\75\3\uffff\1\10\1\35\1\11\4\uffff\1\41\5\uffff\1\27\2\uffff\1\64\1\141\1\153\1\uffff\1\65\1\62\1\63\2\uffff\1\146\2\uffff\1\15\1\40\2\uffff\1\73\1\uffff\1\124\1\uffff\1\32\1\uffff\1\150\2\uffff\1\12\4\uffff\1\67\2\uffff\1\76\1\uffff\1\130\1\30\1\147\1\57\1\uffff\1\127";
+        "\2\uffff\1\2\1\3\1\4\1\uffff\1\6\1\7\5\uffff\1\16\13\uffff\1\42\10\uffff\1\71\1\72\1\uffff\1\77\2\uffff\1\104\1\uffff\1\107\1\110\2\uffff\1\133\1\134\4\uffff\2\165\1\166\1\167\1\14\1\154\1\1\1\2\1\3\1\4\1\52\1\5\1\6\1\7\1\uffff\1\165\14\uffff\1\16\1\uffff\1\20\12\uffff\1\31\1\25\13\uffff\1\42\1\157\1\160\1\43\3\uffff\1\47\1\uffff\1\103\6\uffff\1\71\1\72\2\uffff\1\77\1\uffff\1\120\1\117\1\130\1\102\1\104\1\105\1\107\1\110\1\uffff\1\116\1\121\1\136\1\115\1\133\1\134\1\153\1\156\1\161\1\uffff\1\162\1\164\1\166\52\uffff\1\36\6\uffff\1\37\4\uffff\1\131\1\155\1\uffff\1\54\10\uffff\1\101\1\100\12\uffff\1\46\3\uffff\1\122\1\124\5\uffff\1\70\11\uffff\1\22\1\135\1\uffff\1\23\2\uffff\1\24\4\uffff\1\55\2\uffff\1\112\7\uffff\1\45\1\44\1\143\1\144\1\53\6\uffff\1\132\10\uffff\1\26\1\51\1\114\3\uffff\1\13\1\142\1\106\3\uffff\1\113\1\uffff\1\17\6\uffff\1\150\1\uffff\1\125\1\50\1\163\13\uffff\1\137\1\uffff\1\60\1\uffff\1\66\4\uffff\1\111\1\uffff\1\34\4\uffff\1\151\4\uffff\1\21\4\uffff\1\141\1\74\3\uffff\1\61\1\33\3\uffff\1\56\4\uffff\1\75\3\uffff\1\10\1\35\1\11\4\uffff\1\41\5\uffff\1\27\2\uffff\1\64\1\140\1\152\1\uffff\1\65\1\62\1\63\2\uffff\1\145\2\uffff\1\15\1\40\2\uffff\1\73\1\uffff\1\123\1\uffff\1\32\1\uffff\1\147\2\uffff\1\12\4\uffff\1\67\2\uffff\1\76\1\uffff\1\127\1\30\1\146\1\57\1\uffff\1\126";
     static final String DFA28_specialS =
-        "\1\1\60\uffff\1\2\1\uffff\1\3\76\uffff\1\0\u013b\uffff}>";
+        "\1\3\60\uffff\1\1\1\uffff\1\2\76\uffff\1\0\u013b\uffff}>";
     static final String[] DFA28_transitionS = {
-            "\11\67\2\66\2\67\1\66\22\67\1\66\1\51\1\63\1\53\2\67\1\45\1\50\1\1\1\3\1\31\1\47\1\2\1\34\1\24\1\32\12\62\1\15\1\4\1\56\1\5\1\46\1\67\1\54\32\65\1\42\1\67\1\43\1\17\1\52\1\61\1\25\1\55\1\20\1\30\1\11\1\12\1\40\1\41\1\26\1\37\1\64\1\22\1\33\1\13\1\36\1\44\1\64\1\14\1\27\1\23\1\10\1\21\1\16\1\35\2\64\1\6\1\60\1\7\1\57\uff81\67",
+            "\11\67\2\66\2\67\1\66\22\67\1\66\1\60\1\63\1\52\2\67\1\45\1\50\1\1\1\3\1\31\1\47\1\2\1\34\1\24\1\32\12\62\1\15\1\4\1\55\1\5\1\46\1\67\1\53\32\65\1\42\1\67\1\43\1\17\1\51\1\61\1\25\1\54\1\20\1\30\1\11\1\12\1\40\1\41\1\26\1\37\1\64\1\22\1\33\1\13\1\36\1\44\1\64\1\14\1\27\1\23\1\10\1\21\1\16\1\35\2\64\1\6\1\57\1\7\1\56\uff81\67",
             "\1\70\1\71",
             "",
             "",
@@ -4527,14 +4528,14 @@ public class InternalScadeEquationsLexer extends Lexer {
             "\1\u0080\1\177",
             "\1\u0082",
             "",
-            "",
             "\12\103\7\uffff\32\103\4\uffff\1\103\1\uffff\32\103",
             "",
             "",
-            "\1\u0089",
-            "\1\u008c\1\u008a\1\u008b",
+            "\1\u0088",
+            "\1\u008b\1\u0089\1\u008a",
             "",
             "",
+            "\1\u008f",
             "\0\u0090",
             "\1\u0093\1\uffff\12\u0092\54\uffff\1\u0093",
             "\0\u0094",
@@ -4622,8 +4623,8 @@ public class InternalScadeEquationsLexer extends Lexer {
             "",
             "",
             "",
-            "",
             "\1\u00da",
+            "",
             "",
             "",
             "",
@@ -4965,6 +4966,26 @@ public class InternalScadeEquationsLexer extends Lexer {
                         if ( s>=0 ) return s;
                         break;
                     case 1 : 
+                        int LA28_49 = input.LA(1);
+
+                        s = -1;
+                        if ( ((LA28_49>='\u0000' && LA28_49<='\uFFFF')) ) {s = 144;}
+
+                        else s = 55;
+
+                        if ( s>=0 ) return s;
+                        break;
+                    case 2 : 
+                        int LA28_51 = input.LA(1);
+
+                        s = -1;
+                        if ( ((LA28_51>='\u0000' && LA28_51<='\uFFFF')) ) {s = 148;}
+
+                        else s = 55;
+
+                        if ( s>=0 ) return s;
+                        break;
+                    case 3 : 
                         int LA28_0 = input.LA(1);
 
                         s = -1;
@@ -5048,21 +5069,21 @@ public class InternalScadeEquationsLexer extends Lexer {
 
                         else if ( (LA28_0=='\'') ) {s = 40;}
 
-                        else if ( (LA28_0=='!') ) {s = 41;}
+                        else if ( (LA28_0=='_') ) {s = 41;}
 
-                        else if ( (LA28_0=='_') ) {s = 42;}
+                        else if ( (LA28_0=='#') ) {s = 42;}
 
-                        else if ( (LA28_0=='#') ) {s = 43;}
+                        else if ( (LA28_0=='@') ) {s = 43;}
 
-                        else if ( (LA28_0=='@') ) {s = 44;}
+                        else if ( (LA28_0=='b') ) {s = 44;}
 
-                        else if ( (LA28_0=='b') ) {s = 45;}
+                        else if ( (LA28_0=='<') ) {s = 45;}
 
-                        else if ( (LA28_0=='<') ) {s = 46;}
+                        else if ( (LA28_0=='~') ) {s = 46;}
 
-                        else if ( (LA28_0=='~') ) {s = 47;}
+                        else if ( (LA28_0=='|') ) {s = 47;}
 
-                        else if ( (LA28_0=='|') ) {s = 48;}
+                        else if ( (LA28_0=='!') ) {s = 48;}
 
                         else if ( (LA28_0=='`') ) {s = 49;}
 
@@ -5077,26 +5098,6 @@ public class InternalScadeEquationsLexer extends Lexer {
                         else if ( ((LA28_0>='\t' && LA28_0<='\n')||LA28_0=='\r'||LA28_0==' ') ) {s = 54;}
 
                         else if ( ((LA28_0>='\u0000' && LA28_0<='\b')||(LA28_0>='\u000B' && LA28_0<='\f')||(LA28_0>='\u000E' && LA28_0<='\u001F')||(LA28_0>='$' && LA28_0<='%')||LA28_0=='?'||LA28_0=='\\'||(LA28_0>='\u007F' && LA28_0<='\uFFFF')) ) {s = 55;}
-
-                        if ( s>=0 ) return s;
-                        break;
-                    case 2 : 
-                        int LA28_49 = input.LA(1);
-
-                        s = -1;
-                        if ( ((LA28_49>='\u0000' && LA28_49<='\uFFFF')) ) {s = 144;}
-
-                        else s = 55;
-
-                        if ( s>=0 ) return s;
-                        break;
-                    case 3 : 
-                        int LA28_51 = input.LA(1);
-
-                        s = -1;
-                        if ( ((LA28_51>='\u0000' && LA28_51<='\uFFFF')) ) {s = 148;}
-
-                        else s = 55;
 
                         if ( s>=0 ) return s;
                         break;

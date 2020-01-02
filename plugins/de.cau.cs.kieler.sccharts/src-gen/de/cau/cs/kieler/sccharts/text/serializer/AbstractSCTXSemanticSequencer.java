@@ -2062,7 +2062,10 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	 *     ScopeParameter returns Parameter
 	 *
 	 * Constraint:
-	 *     ((pureOutput?='!'? callByReference?='&')? expression=Expression (explicitBinding=[ValuedObject|ID] explicitBindingIndices+=Expression*)?)
+	 *     (
+	 *         ((accessType=ParameterAccessType? expression=ValuedObjectReference) | expression=Expression) 
+	 *         (explicitBinding=[ValuedObject|ID] explicitBindingIndices+=Expression*)?
+	 *     )
 	 */
 	protected void sequence_ScopeParameter(ISerializationContext context, de.cau.cs.kieler.kexpressions.Parameter semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

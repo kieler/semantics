@@ -227,8 +227,10 @@ ModuleCall returns ModuleCall:
 ;
     
 ModuleCallParameter returns kexpressions::Parameter:
-    ((pureOutput ?= '!')? callByReference ?= '&')?
-    expression = Expression
+    ((accessType = ParameterAccessType?
+    expression = ValuedObjectReference)
+    |
+    expression = Expression)
     ('to' explicitBinding = [kexpressions::ValuedObject|ID] ('[' explicitBindingIndices+=Expression ']')*)?
 ;
 
