@@ -591,22 +591,22 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightSquareBracketKeyword_1_2_2 = (Keyword)cGroup_1_2.eContents().get(2);
 		
 		//ScopeParameter kexpressions::Parameter:
-		//	(accessType=ParameterAccessType?
+		//	(accessType=ParameterAccessType
 		//	expression=ValuedObjectReference | expression=Expression) ('to' explicitBinding=[kexpressions::ValuedObject] ('['
 		//	explicitBindingIndices+=Expression ']')*)?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//(accessType=ParameterAccessType? expression=ValuedObjectReference | expression=Expression) ('to'
+		//(accessType=ParameterAccessType expression=ValuedObjectReference | expression=Expression) ('to'
 		//explicitBinding=[kexpressions::ValuedObject] ('[' explicitBindingIndices+=Expression ']')*)?
 		public Group getGroup() { return cGroup; }
 		
-		//(accessType=ParameterAccessType? expression=ValuedObjectReference | expression=Expression)
+		//(accessType=ParameterAccessType expression=ValuedObjectReference | expression=Expression)
 		public Alternatives getAlternatives_0() { return cAlternatives_0; }
 		
-		//accessType=ParameterAccessType? expression=ValuedObjectReference
+		//accessType=ParameterAccessType expression=ValuedObjectReference
 		public Group getGroup_0_0() { return cGroup_0_0; }
 		
-		//accessType=ParameterAccessType?
+		//accessType=ParameterAccessType
 		public Assignment getAccessTypeAssignment_0_0_0() { return cAccessTypeAssignment_0_0_0; }
 		
 		//ParameterAccessType
@@ -3553,7 +3553,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//ScopeParameter kexpressions::Parameter:
-	//	(accessType=ParameterAccessType?
+	//	(accessType=ParameterAccessType
 	//	expression=ValuedObjectReference | expression=Expression) ('to' explicitBinding=[kexpressions::ValuedObject] ('['
 	//	explicitBindingIndices+=Expression ']')*)?;
 	public ScopeParameterElements getScopeParameterAccess() {
@@ -4298,7 +4298,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//ModuleCallParameter kexpressions::Parameter:
-	//	(accessType=ParameterAccessType?
+	//	(accessType=ParameterAccessType
 	//	expression=ValuedObjectReference | expression=Expression) ('to' explicitBinding=[kexpressions::ValuedObject] ('['
 	//	explicitBindingIndices+=Expression ']')*)?;
 	public SCLGrammarAccess.ModuleCallParameterElements getModuleCallParameterAccess() {
@@ -5439,7 +5439,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//// Additionally, a parameter may be preceded by an ampersand to indicate a call by reference.
 	//// Analogously, an prefixed exclamation mark marks the parameter as pure output.
 	//Parameter:
-	//	accessType=ParameterAccessType?
+	//	accessType=ParameterAccessType
 	//	expression=ValuedObjectReference | expression=Expression;
 	public KExpressionsGrammarAccess.ParameterElements getParameterAccess() {
 		return gaKExpressions.getParameterAccess();

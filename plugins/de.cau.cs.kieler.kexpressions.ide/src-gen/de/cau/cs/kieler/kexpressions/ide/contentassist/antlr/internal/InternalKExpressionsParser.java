@@ -8704,61 +8704,21 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
         try {
             // InternalKExpressions.g:2537:1: ( ( ( rule__Parameter__Group_0__0 ) ) | ( ( rule__Parameter__ExpressionAssignment_1 ) ) )
             int alt16=2;
-            switch ( input.LA(1) ) {
-            case 21:
-            case 46:
-                {
+            int LA16_0 = input.LA(1);
+
+            if ( (LA16_0==21||LA16_0==46) ) {
                 alt16=1;
-                }
-                break;
-            case RULE_ID:
-                {
-                int LA16_2 = input.LA(2);
-
-                if ( (synpred28_InternalKExpressions()) ) {
-                    alt16=1;
-                }
-                else if ( (true) ) {
-                    alt16=2;
-                }
-                else {
-                    if (state.backtracking>0) {state.failed=true; return ;}
-                    NoViableAltException nvae =
-                        new NoViableAltException("", 16, 2, input);
-
-                    throw nvae;
-                }
-                }
-                break;
-            case RULE_STRING:
-            case RULE_BOOLEAN:
-            case RULE_INT:
-            case RULE_FLOAT:
-            case RULE_HOSTCODE:
-            case RULE_COMMENT_ANNOTATION:
-            case 17:
-            case 18:
-            case 22:
-            case 24:
-            case 28:
-            case 48:
-            case 54:
-            case 55:
-            case 56:
-            case 57:
-            case 62:
-                {
+            }
+            else if ( ((LA16_0>=RULE_STRING && LA16_0<=RULE_COMMENT_ANNOTATION)||(LA16_0>=17 && LA16_0<=18)||LA16_0==22||LA16_0==24||LA16_0==28||LA16_0==48||(LA16_0>=54 && LA16_0<=57)||LA16_0==62) ) {
                 alt16=2;
-                }
-                break;
-            default:
+            }
+            else {
                 if (state.backtracking>0) {state.failed=true; return ;}
                 NoViableAltException nvae =
                     new NoViableAltException("", 16, 0, input);
 
                 throw nvae;
             }
-
             switch (alt16) {
                 case 1 :
                     // InternalKExpressions.g:2538:2: ( ( rule__Parameter__Group_0__0 ) )
@@ -29303,7 +29263,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             // InternalKExpressions.g:8852:1: ( rule__Parameter__Group_0__0__Impl rule__Parameter__Group_0__1 )
             // InternalKExpressions.g:8853:2: rule__Parameter__Group_0__0__Impl rule__Parameter__Group_0__1
             {
-            pushFollow(FollowSets000.FOLLOW_67);
+            pushFollow(FollowSets000.FOLLOW_52);
             rule__Parameter__Group_0__0__Impl();
 
             state._fsp--;
@@ -29332,40 +29292,29 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__Parameter__Group_0__0__Impl"
-    // InternalKExpressions.g:8860:1: rule__Parameter__Group_0__0__Impl : ( ( rule__Parameter__AccessTypeAssignment_0_0 )? ) ;
+    // InternalKExpressions.g:8860:1: rule__Parameter__Group_0__0__Impl : ( ( rule__Parameter__AccessTypeAssignment_0_0 ) ) ;
     public final void rule__Parameter__Group_0__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKExpressions.g:8864:1: ( ( ( rule__Parameter__AccessTypeAssignment_0_0 )? ) )
-            // InternalKExpressions.g:8865:1: ( ( rule__Parameter__AccessTypeAssignment_0_0 )? )
+            // InternalKExpressions.g:8864:1: ( ( ( rule__Parameter__AccessTypeAssignment_0_0 ) ) )
+            // InternalKExpressions.g:8865:1: ( ( rule__Parameter__AccessTypeAssignment_0_0 ) )
             {
-            // InternalKExpressions.g:8865:1: ( ( rule__Parameter__AccessTypeAssignment_0_0 )? )
-            // InternalKExpressions.g:8866:2: ( rule__Parameter__AccessTypeAssignment_0_0 )?
+            // InternalKExpressions.g:8865:1: ( ( rule__Parameter__AccessTypeAssignment_0_0 ) )
+            // InternalKExpressions.g:8866:2: ( rule__Parameter__AccessTypeAssignment_0_0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getParameterAccess().getAccessTypeAssignment_0_0()); 
             }
-            // InternalKExpressions.g:8867:2: ( rule__Parameter__AccessTypeAssignment_0_0 )?
-            int alt73=2;
-            int LA73_0 = input.LA(1);
+            // InternalKExpressions.g:8867:2: ( rule__Parameter__AccessTypeAssignment_0_0 )
+            // InternalKExpressions.g:8867:3: rule__Parameter__AccessTypeAssignment_0_0
+            {
+            pushFollow(FollowSets000.FOLLOW_2);
+            rule__Parameter__AccessTypeAssignment_0_0();
 
-            if ( (LA73_0==21||LA73_0==46) ) {
-                alt73=1;
-            }
-            switch (alt73) {
-                case 1 :
-                    // InternalKExpressions.g:8867:3: rule__Parameter__AccessTypeAssignment_0_0
-                    {
-                    pushFollow(FollowSets000.FOLLOW_2);
-                    rule__Parameter__AccessTypeAssignment_0_0();
-
-                    state._fsp--;
-                    if (state.failed) return ;
-
-                    }
-                    break;
+            state._fsp--;
+            if (state.failed) return ;
 
             }
 
@@ -29532,21 +29481,21 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
                before(grammarAccess.getTextExpressionAccess().getAnnotationsAssignment_0()); 
             }
             // InternalKExpressions.g:8921:2: ( rule__TextExpression__AnnotationsAssignment_0 )*
-            loop74:
+            loop73:
             do {
-                int alt74=2;
-                int LA74_0 = input.LA(1);
+                int alt73=2;
+                int LA73_0 = input.LA(1);
 
-                if ( (LA74_0==RULE_COMMENT_ANNOTATION||LA74_0==62) ) {
-                    alt74=1;
+                if ( (LA73_0==RULE_COMMENT_ANNOTATION||LA73_0==62) ) {
+                    alt73=1;
                 }
 
 
-                switch (alt74) {
+                switch (alt73) {
             	case 1 :
             	    // InternalKExpressions.g:8921:3: rule__TextExpression__AnnotationsAssignment_0
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_68);
+            	    pushFollow(FollowSets000.FOLLOW_67);
             	    rule__TextExpression__AnnotationsAssignment_0();
 
             	    state._fsp--;
@@ -29556,7 +29505,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             	    break;
 
             	default :
-            	    break loop74;
+            	    break loop73;
                 }
             } while (true);
 
@@ -29678,7 +29627,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             // InternalKExpressions.g:8960:1: ( rule__VectorValue__Group__0__Impl rule__VectorValue__Group__1 )
             // InternalKExpressions.g:8961:2: rule__VectorValue__Group__0__Impl rule__VectorValue__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_69);
+            pushFollow(FollowSets000.FOLLOW_68);
             rule__VectorValue__Group__0__Impl();
 
             state._fsp--;
@@ -29757,7 +29706,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             // InternalKExpressions.g:8987:1: ( rule__VectorValue__Group__1__Impl rule__VectorValue__Group__2 )
             // InternalKExpressions.g:8988:2: rule__VectorValue__Group__1__Impl rule__VectorValue__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_70);
+            pushFollow(FollowSets000.FOLLOW_69);
             rule__VectorValue__Group__1__Impl();
 
             state._fsp--;
@@ -29846,7 +29795,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             // InternalKExpressions.g:9014:1: ( rule__VectorValue__Group__2__Impl rule__VectorValue__Group__3 )
             // InternalKExpressions.g:9015:2: rule__VectorValue__Group__2__Impl rule__VectorValue__Group__3
             {
-            pushFollow(FollowSets000.FOLLOW_70);
+            pushFollow(FollowSets000.FOLLOW_69);
             rule__VectorValue__Group__2__Impl();
 
             state._fsp--;
@@ -29891,17 +29840,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
                before(grammarAccess.getVectorValueAccess().getGroup_2()); 
             }
             // InternalKExpressions.g:9029:2: ( rule__VectorValue__Group_2__0 )*
-            loop75:
+            loop74:
             do {
-                int alt75=2;
-                int LA75_0 = input.LA(1);
+                int alt74=2;
+                int LA74_0 = input.LA(1);
 
-                if ( (LA75_0==50) ) {
-                    alt75=1;
+                if ( (LA74_0==50) ) {
+                    alt74=1;
                 }
 
 
-                switch (alt75) {
+                switch (alt74) {
             	case 1 :
             	    // InternalKExpressions.g:9029:3: rule__VectorValue__Group_2__0
             	    {
@@ -29915,7 +29864,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             	    break;
 
             	default :
-            	    break loop75;
+            	    break loop74;
                 }
             } while (true);
 
@@ -30027,7 +29976,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             // InternalKExpressions.g:9068:1: ( rule__VectorValue__Group_2__0__Impl rule__VectorValue__Group_2__1 )
             // InternalKExpressions.g:9069:2: rule__VectorValue__Group_2__0__Impl rule__VectorValue__Group_2__1
             {
-            pushFollow(FollowSets000.FOLLOW_69);
+            pushFollow(FollowSets000.FOLLOW_68);
             rule__VectorValue__Group_2__0__Impl();
 
             state._fsp--;
@@ -30190,7 +30139,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             // InternalKExpressions.g:9122:1: ( rule__IgnoreValue__Group__0__Impl rule__IgnoreValue__Group__1 )
             // InternalKExpressions.g:9123:2: rule__IgnoreValue__Group__0__Impl rule__IgnoreValue__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_69);
+            pushFollow(FollowSets000.FOLLOW_68);
             rule__IgnoreValue__Group__0__Impl();
 
             state._fsp--;
@@ -30343,7 +30292,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             // InternalKExpressions.g:9176:1: ( rule__JsonObjectValue__Group__0__Impl rule__JsonObjectValue__Group__1 )
             // InternalKExpressions.g:9177:2: rule__JsonObjectValue__Group__0__Impl rule__JsonObjectValue__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_71);
+            pushFollow(FollowSets000.FOLLOW_70);
             rule__JsonObjectValue__Group__0__Impl();
 
             state._fsp--;
@@ -30422,7 +30371,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             // InternalKExpressions.g:9203:1: ( rule__JsonObjectValue__Group__1__Impl rule__JsonObjectValue__Group__2 )
             // InternalKExpressions.g:9204:2: rule__JsonObjectValue__Group__1__Impl rule__JsonObjectValue__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_72);
+            pushFollow(FollowSets000.FOLLOW_71);
             rule__JsonObjectValue__Group__1__Impl();
 
             state._fsp--;
@@ -30501,7 +30450,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             // InternalKExpressions.g:9230:1: ( rule__JsonObjectValue__Group__2__Impl rule__JsonObjectValue__Group__3 )
             // InternalKExpressions.g:9231:2: rule__JsonObjectValue__Group__2__Impl rule__JsonObjectValue__Group__3
             {
-            pushFollow(FollowSets000.FOLLOW_72);
+            pushFollow(FollowSets000.FOLLOW_71);
             rule__JsonObjectValue__Group__2__Impl();
 
             state._fsp--;
@@ -30546,13 +30495,13 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
                before(grammarAccess.getJsonObjectValueAccess().getGroup_2()); 
             }
             // InternalKExpressions.g:9245:2: ( rule__JsonObjectValue__Group_2__0 )?
-            int alt76=2;
-            int LA76_0 = input.LA(1);
+            int alt75=2;
+            int LA75_0 = input.LA(1);
 
-            if ( (LA76_0==RULE_STRING) ) {
-                alt76=1;
+            if ( (LA75_0==RULE_STRING) ) {
+                alt75=1;
             }
-            switch (alt76) {
+            switch (alt75) {
                 case 1 :
                     // InternalKExpressions.g:9245:3: rule__JsonObjectValue__Group_2__0
                     {
@@ -30675,7 +30624,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             // InternalKExpressions.g:9284:1: ( rule__JsonObjectValue__Group_2__0__Impl rule__JsonObjectValue__Group_2__1 )
             // InternalKExpressions.g:9285:2: rule__JsonObjectValue__Group_2__0__Impl rule__JsonObjectValue__Group_2__1
             {
-            pushFollow(FollowSets000.FOLLOW_73);
+            pushFollow(FollowSets000.FOLLOW_72);
             rule__JsonObjectValue__Group_2__0__Impl();
 
             state._fsp--;
@@ -30804,17 +30753,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
                before(grammarAccess.getJsonObjectValueAccess().getGroup_2_1()); 
             }
             // InternalKExpressions.g:9325:2: ( rule__JsonObjectValue__Group_2_1__0 )*
-            loop77:
+            loop76:
             do {
-                int alt77=2;
-                int LA77_0 = input.LA(1);
+                int alt76=2;
+                int LA76_0 = input.LA(1);
 
-                if ( (LA77_0==50) ) {
-                    alt77=1;
+                if ( (LA76_0==50) ) {
+                    alt76=1;
                 }
 
 
-                switch (alt77) {
+                switch (alt76) {
             	case 1 :
             	    // InternalKExpressions.g:9325:3: rule__JsonObjectValue__Group_2_1__0
             	    {
@@ -30828,7 +30777,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             	    break;
 
             	default :
-            	    break loop77;
+            	    break loop76;
                 }
             } while (true);
 
@@ -30866,7 +30815,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             // InternalKExpressions.g:9338:1: ( rule__JsonObjectValue__Group_2_1__0__Impl rule__JsonObjectValue__Group_2_1__1 )
             // InternalKExpressions.g:9339:2: rule__JsonObjectValue__Group_2_1__0__Impl rule__JsonObjectValue__Group_2_1__1
             {
-            pushFollow(FollowSets000.FOLLOW_74);
+            pushFollow(FollowSets000.FOLLOW_73);
             rule__JsonObjectValue__Group_2_1__0__Impl();
 
             state._fsp--;
@@ -31118,7 +31067,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             // InternalKExpressions.g:9419:1: ( rule__JsonObjectMember__Group__1__Impl rule__JsonObjectMember__Group__2 )
             // InternalKExpressions.g:9420:2: rule__JsonObjectMember__Group__1__Impl rule__JsonObjectMember__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_75);
+            pushFollow(FollowSets000.FOLLOW_74);
             rule__JsonObjectMember__Group__1__Impl();
 
             state._fsp--;
@@ -31281,7 +31230,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             // InternalKExpressions.g:9473:1: ( rule__JsonArrayValue__Group__0__Impl rule__JsonArrayValue__Group__1 )
             // InternalKExpressions.g:9474:2: rule__JsonArrayValue__Group__0__Impl rule__JsonArrayValue__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_76);
+            pushFollow(FollowSets000.FOLLOW_75);
             rule__JsonArrayValue__Group__0__Impl();
 
             state._fsp--;
@@ -31360,7 +31309,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             // InternalKExpressions.g:9500:1: ( rule__JsonArrayValue__Group__1__Impl rule__JsonArrayValue__Group__2 )
             // InternalKExpressions.g:9501:2: rule__JsonArrayValue__Group__1__Impl rule__JsonArrayValue__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_77);
+            pushFollow(FollowSets000.FOLLOW_76);
             rule__JsonArrayValue__Group__1__Impl();
 
             state._fsp--;
@@ -31439,7 +31388,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             // InternalKExpressions.g:9527:1: ( rule__JsonArrayValue__Group__2__Impl rule__JsonArrayValue__Group__3 )
             // InternalKExpressions.g:9528:2: rule__JsonArrayValue__Group__2__Impl rule__JsonArrayValue__Group__3
             {
-            pushFollow(FollowSets000.FOLLOW_77);
+            pushFollow(FollowSets000.FOLLOW_76);
             rule__JsonArrayValue__Group__2__Impl();
 
             state._fsp--;
@@ -31484,13 +31433,13 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
                before(grammarAccess.getJsonArrayValueAccess().getGroup_2()); 
             }
             // InternalKExpressions.g:9542:2: ( rule__JsonArrayValue__Group_2__0 )?
-            int alt78=2;
-            int LA78_0 = input.LA(1);
+            int alt77=2;
+            int LA77_0 = input.LA(1);
 
-            if ( ((LA78_0>=RULE_STRING && LA78_0<=RULE_BOOLEAN)||(LA78_0>=RULE_INT && LA78_0<=RULE_FLOAT)||LA78_0==52||LA78_0==57||LA78_0==60) ) {
-                alt78=1;
+            if ( ((LA77_0>=RULE_STRING && LA77_0<=RULE_BOOLEAN)||(LA77_0>=RULE_INT && LA77_0<=RULE_FLOAT)||LA77_0==52||LA77_0==57||LA77_0==60) ) {
+                alt77=1;
             }
-            switch (alt78) {
+            switch (alt77) {
                 case 1 :
                     // InternalKExpressions.g:9542:3: rule__JsonArrayValue__Group_2__0
                     {
@@ -31613,7 +31562,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             // InternalKExpressions.g:9581:1: ( rule__JsonArrayValue__Group_2__0__Impl rule__JsonArrayValue__Group_2__1 )
             // InternalKExpressions.g:9582:2: rule__JsonArrayValue__Group_2__0__Impl rule__JsonArrayValue__Group_2__1
             {
-            pushFollow(FollowSets000.FOLLOW_73);
+            pushFollow(FollowSets000.FOLLOW_72);
             rule__JsonArrayValue__Group_2__0__Impl();
 
             state._fsp--;
@@ -31742,17 +31691,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
                before(grammarAccess.getJsonArrayValueAccess().getGroup_2_1()); 
             }
             // InternalKExpressions.g:9622:2: ( rule__JsonArrayValue__Group_2_1__0 )*
-            loop79:
+            loop78:
             do {
-                int alt79=2;
-                int LA79_0 = input.LA(1);
+                int alt78=2;
+                int LA78_0 = input.LA(1);
 
-                if ( (LA79_0==50) ) {
-                    alt79=1;
+                if ( (LA78_0==50) ) {
+                    alt78=1;
                 }
 
 
-                switch (alt79) {
+                switch (alt78) {
             	case 1 :
             	    // InternalKExpressions.g:9622:3: rule__JsonArrayValue__Group_2_1__0
             	    {
@@ -31766,7 +31715,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             	    break;
 
             	default :
-            	    break loop79;
+            	    break loop78;
                 }
             } while (true);
 
@@ -31804,7 +31753,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             // InternalKExpressions.g:9635:1: ( rule__JsonArrayValue__Group_2_1__0__Impl rule__JsonArrayValue__Group_2_1__1 )
             // InternalKExpressions.g:9636:2: rule__JsonArrayValue__Group_2_1__0__Impl rule__JsonArrayValue__Group_2_1__1
             {
-            pushFollow(FollowSets000.FOLLOW_75);
+            pushFollow(FollowSets000.FOLLOW_74);
             rule__JsonArrayValue__Group_2_1__0__Impl();
 
             state._fsp--;
@@ -31967,7 +31916,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             // InternalKExpressions.g:9689:1: ( rule__NullValue__Group__0__Impl rule__NullValue__Group__1 )
             // InternalKExpressions.g:9690:2: rule__NullValue__Group__0__Impl rule__NullValue__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_78);
+            pushFollow(FollowSets000.FOLLOW_77);
             rule__NullValue__Group__0__Impl();
 
             state._fsp--;
@@ -32199,7 +32148,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             // InternalKExpressions.g:9770:1: ( rule__JsonPragma__Group__1__Impl rule__JsonPragma__Group__2 )
             // InternalKExpressions.g:9771:2: rule__JsonPragma__Group__1__Impl rule__JsonPragma__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_71);
+            pushFollow(FollowSets000.FOLLOW_70);
             rule__JsonPragma__Group__1__Impl();
 
             state._fsp--;
@@ -32451,7 +32400,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             // InternalKExpressions.g:9851:1: ( rule__JsonAnnotation__Group__1__Impl rule__JsonAnnotation__Group__2 )
             // InternalKExpressions.g:9852:2: rule__JsonAnnotation__Group__1__Impl rule__JsonAnnotation__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_71);
+            pushFollow(FollowSets000.FOLLOW_70);
             rule__JsonAnnotation__Group__1__Impl();
 
             state._fsp--;
@@ -33029,7 +32978,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             // InternalKExpressions.g:10040:1: ( rule__KeyStringValueAnnotation__Group__1__Impl rule__KeyStringValueAnnotation__Group__2 )
             // InternalKExpressions.g:10041:2: rule__KeyStringValueAnnotation__Group__1__Impl rule__KeyStringValueAnnotation__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_79);
+            pushFollow(FollowSets000.FOLLOW_78);
             rule__KeyStringValueAnnotation__Group__1__Impl();
 
             state._fsp--;
@@ -33118,7 +33067,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             // InternalKExpressions.g:10067:1: ( rule__KeyStringValueAnnotation__Group__2__Impl rule__KeyStringValueAnnotation__Group__3 )
             // InternalKExpressions.g:10068:2: rule__KeyStringValueAnnotation__Group__2__Impl rule__KeyStringValueAnnotation__Group__3
             {
-            pushFollow(FollowSets000.FOLLOW_73);
+            pushFollow(FollowSets000.FOLLOW_72);
             rule__KeyStringValueAnnotation__Group__2__Impl();
 
             state._fsp--;
@@ -33247,17 +33196,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
                before(grammarAccess.getKeyStringValueAnnotationAccess().getGroup_3()); 
             }
             // InternalKExpressions.g:10108:2: ( rule__KeyStringValueAnnotation__Group_3__0 )*
-            loop80:
+            loop79:
             do {
-                int alt80=2;
-                int LA80_0 = input.LA(1);
+                int alt79=2;
+                int LA79_0 = input.LA(1);
 
-                if ( (LA80_0==50) ) {
-                    alt80=1;
+                if ( (LA79_0==50) ) {
+                    alt79=1;
                 }
 
 
-                switch (alt80) {
+                switch (alt79) {
             	case 1 :
             	    // InternalKExpressions.g:10108:3: rule__KeyStringValueAnnotation__Group_3__0
             	    {
@@ -33271,7 +33220,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             	    break;
 
             	default :
-            	    break loop80;
+            	    break loop79;
                 }
             } while (true);
 
@@ -33309,7 +33258,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             // InternalKExpressions.g:10121:1: ( rule__KeyStringValueAnnotation__Group_3__0__Impl rule__KeyStringValueAnnotation__Group_3__1 )
             // InternalKExpressions.g:10122:2: rule__KeyStringValueAnnotation__Group_3__0__Impl rule__KeyStringValueAnnotation__Group_3__1
             {
-            pushFollow(FollowSets000.FOLLOW_79);
+            pushFollow(FollowSets000.FOLLOW_78);
             rule__KeyStringValueAnnotation__Group_3__0__Impl();
 
             state._fsp--;
@@ -33551,7 +33500,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             // InternalKExpressions.g:10202:1: ( rule__RestrictedKeyStringValueAnnotation__Group__1__Impl rule__RestrictedKeyStringValueAnnotation__Group__2 )
             // InternalKExpressions.g:10203:2: rule__RestrictedKeyStringValueAnnotation__Group__1__Impl rule__RestrictedKeyStringValueAnnotation__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_80);
+            pushFollow(FollowSets000.FOLLOW_79);
             rule__RestrictedKeyStringValueAnnotation__Group__1__Impl();
 
             state._fsp--;
@@ -33640,7 +33589,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             // InternalKExpressions.g:10229:1: ( rule__RestrictedKeyStringValueAnnotation__Group__2__Impl rule__RestrictedKeyStringValueAnnotation__Group__3 )
             // InternalKExpressions.g:10230:2: rule__RestrictedKeyStringValueAnnotation__Group__2__Impl rule__RestrictedKeyStringValueAnnotation__Group__3
             {
-            pushFollow(FollowSets000.FOLLOW_73);
+            pushFollow(FollowSets000.FOLLOW_72);
             rule__RestrictedKeyStringValueAnnotation__Group__2__Impl();
 
             state._fsp--;
@@ -33769,17 +33718,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
                before(grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getGroup_3()); 
             }
             // InternalKExpressions.g:10270:2: ( rule__RestrictedKeyStringValueAnnotation__Group_3__0 )*
-            loop81:
+            loop80:
             do {
-                int alt81=2;
-                int LA81_0 = input.LA(1);
+                int alt80=2;
+                int LA80_0 = input.LA(1);
 
-                if ( (LA81_0==50) ) {
-                    alt81=1;
+                if ( (LA80_0==50) ) {
+                    alt80=1;
                 }
 
 
-                switch (alt81) {
+                switch (alt80) {
             	case 1 :
             	    // InternalKExpressions.g:10270:3: rule__RestrictedKeyStringValueAnnotation__Group_3__0
             	    {
@@ -33793,7 +33742,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             	    break;
 
             	default :
-            	    break loop81;
+            	    break loop80;
                 }
             } while (true);
 
@@ -33831,7 +33780,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             // InternalKExpressions.g:10283:1: ( rule__RestrictedKeyStringValueAnnotation__Group_3__0__Impl rule__RestrictedKeyStringValueAnnotation__Group_3__1 )
             // InternalKExpressions.g:10284:2: rule__RestrictedKeyStringValueAnnotation__Group_3__0__Impl rule__RestrictedKeyStringValueAnnotation__Group_3__1
             {
-            pushFollow(FollowSets000.FOLLOW_80);
+            pushFollow(FollowSets000.FOLLOW_79);
             rule__RestrictedKeyStringValueAnnotation__Group_3__0__Impl();
 
             state._fsp--;
@@ -34073,7 +34022,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             // InternalKExpressions.g:10364:1: ( rule__StringPragma__Group__1__Impl rule__StringPragma__Group__2 )
             // InternalKExpressions.g:10365:2: rule__StringPragma__Group__1__Impl rule__StringPragma__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_79);
+            pushFollow(FollowSets000.FOLLOW_78);
             rule__StringPragma__Group__1__Impl();
 
             state._fsp--;
@@ -34162,7 +34111,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             // InternalKExpressions.g:10391:1: ( rule__StringPragma__Group__2__Impl rule__StringPragma__Group__3 )
             // InternalKExpressions.g:10392:2: rule__StringPragma__Group__2__Impl rule__StringPragma__Group__3
             {
-            pushFollow(FollowSets000.FOLLOW_73);
+            pushFollow(FollowSets000.FOLLOW_72);
             rule__StringPragma__Group__2__Impl();
 
             state._fsp--;
@@ -34291,17 +34240,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
                before(grammarAccess.getStringPragmaAccess().getGroup_3()); 
             }
             // InternalKExpressions.g:10432:2: ( rule__StringPragma__Group_3__0 )*
-            loop82:
+            loop81:
             do {
-                int alt82=2;
-                int LA82_0 = input.LA(1);
+                int alt81=2;
+                int LA81_0 = input.LA(1);
 
-                if ( (LA82_0==50) ) {
-                    alt82=1;
+                if ( (LA81_0==50) ) {
+                    alt81=1;
                 }
 
 
-                switch (alt82) {
+                switch (alt81) {
             	case 1 :
             	    // InternalKExpressions.g:10432:3: rule__StringPragma__Group_3__0
             	    {
@@ -34315,7 +34264,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             	    break;
 
             	default :
-            	    break loop82;
+            	    break loop81;
                 }
             } while (true);
 
@@ -34353,7 +34302,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             // InternalKExpressions.g:10445:1: ( rule__StringPragma__Group_3__0__Impl rule__StringPragma__Group_3__1 )
             // InternalKExpressions.g:10446:2: rule__StringPragma__Group_3__0__Impl rule__StringPragma__Group_3__1
             {
-            pushFollow(FollowSets000.FOLLOW_79);
+            pushFollow(FollowSets000.FOLLOW_78);
             rule__StringPragma__Group_3__0__Impl();
 
             state._fsp--;
@@ -34595,7 +34544,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             // InternalKExpressions.g:10526:1: ( rule__TypedKeyStringValueAnnotation__Group__1__Impl rule__TypedKeyStringValueAnnotation__Group__2 )
             // InternalKExpressions.g:10527:2: rule__TypedKeyStringValueAnnotation__Group__1__Impl rule__TypedKeyStringValueAnnotation__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_76);
+            pushFollow(FollowSets000.FOLLOW_75);
             rule__TypedKeyStringValueAnnotation__Group__1__Impl();
 
             state._fsp--;
@@ -34852,7 +34801,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             // InternalKExpressions.g:10607:1: ( rule__TypedKeyStringValueAnnotation__Group__4__Impl rule__TypedKeyStringValueAnnotation__Group__5 )
             // InternalKExpressions.g:10608:2: rule__TypedKeyStringValueAnnotation__Group__4__Impl rule__TypedKeyStringValueAnnotation__Group__5
             {
-            pushFollow(FollowSets000.FOLLOW_79);
+            pushFollow(FollowSets000.FOLLOW_78);
             rule__TypedKeyStringValueAnnotation__Group__4__Impl();
 
             state._fsp--;
@@ -34931,7 +34880,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             // InternalKExpressions.g:10634:1: ( rule__TypedKeyStringValueAnnotation__Group__5__Impl rule__TypedKeyStringValueAnnotation__Group__6 )
             // InternalKExpressions.g:10635:2: rule__TypedKeyStringValueAnnotation__Group__5__Impl rule__TypedKeyStringValueAnnotation__Group__6
             {
-            pushFollow(FollowSets000.FOLLOW_73);
+            pushFollow(FollowSets000.FOLLOW_72);
             rule__TypedKeyStringValueAnnotation__Group__5__Impl();
 
             state._fsp--;
@@ -35060,17 +35009,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
                before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getGroup_6()); 
             }
             // InternalKExpressions.g:10675:2: ( rule__TypedKeyStringValueAnnotation__Group_6__0 )*
-            loop83:
+            loop82:
             do {
-                int alt83=2;
-                int LA83_0 = input.LA(1);
+                int alt82=2;
+                int LA82_0 = input.LA(1);
 
-                if ( (LA83_0==50) ) {
-                    alt83=1;
+                if ( (LA82_0==50) ) {
+                    alt82=1;
                 }
 
 
-                switch (alt83) {
+                switch (alt82) {
             	case 1 :
             	    // InternalKExpressions.g:10675:3: rule__TypedKeyStringValueAnnotation__Group_6__0
             	    {
@@ -35084,7 +35033,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             	    break;
 
             	default :
-            	    break loop83;
+            	    break loop82;
                 }
             } while (true);
 
@@ -35122,7 +35071,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             // InternalKExpressions.g:10688:1: ( rule__TypedKeyStringValueAnnotation__Group_6__0__Impl rule__TypedKeyStringValueAnnotation__Group_6__1 )
             // InternalKExpressions.g:10689:2: rule__TypedKeyStringValueAnnotation__Group_6__0__Impl rule__TypedKeyStringValueAnnotation__Group_6__1
             {
-            pushFollow(FollowSets000.FOLLOW_79);
+            pushFollow(FollowSets000.FOLLOW_78);
             rule__TypedKeyStringValueAnnotation__Group_6__0__Impl();
 
             state._fsp--;
@@ -35364,7 +35313,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             // InternalKExpressions.g:10769:1: ( rule__RestrictedTypedKeyStringValueAnnotation__Group__1__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__2 )
             // InternalKExpressions.g:10770:2: rule__RestrictedTypedKeyStringValueAnnotation__Group__1__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_76);
+            pushFollow(FollowSets000.FOLLOW_75);
             rule__RestrictedTypedKeyStringValueAnnotation__Group__1__Impl();
 
             state._fsp--;
@@ -35621,7 +35570,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             // InternalKExpressions.g:10850:1: ( rule__RestrictedTypedKeyStringValueAnnotation__Group__4__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__5 )
             // InternalKExpressions.g:10851:2: rule__RestrictedTypedKeyStringValueAnnotation__Group__4__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__5
             {
-            pushFollow(FollowSets000.FOLLOW_80);
+            pushFollow(FollowSets000.FOLLOW_79);
             rule__RestrictedTypedKeyStringValueAnnotation__Group__4__Impl();
 
             state._fsp--;
@@ -35700,7 +35649,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             // InternalKExpressions.g:10877:1: ( rule__RestrictedTypedKeyStringValueAnnotation__Group__5__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__6 )
             // InternalKExpressions.g:10878:2: rule__RestrictedTypedKeyStringValueAnnotation__Group__5__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__6
             {
-            pushFollow(FollowSets000.FOLLOW_73);
+            pushFollow(FollowSets000.FOLLOW_72);
             rule__RestrictedTypedKeyStringValueAnnotation__Group__5__Impl();
 
             state._fsp--;
@@ -35829,17 +35778,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
                before(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getGroup_6()); 
             }
             // InternalKExpressions.g:10918:2: ( rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0 )*
-            loop84:
+            loop83:
             do {
-                int alt84=2;
-                int LA84_0 = input.LA(1);
+                int alt83=2;
+                int LA83_0 = input.LA(1);
 
-                if ( (LA84_0==50) ) {
-                    alt84=1;
+                if ( (LA83_0==50) ) {
+                    alt83=1;
                 }
 
 
-                switch (alt84) {
+                switch (alt83) {
             	case 1 :
             	    // InternalKExpressions.g:10918:3: rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0
             	    {
@@ -35853,7 +35802,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             	    break;
 
             	default :
-            	    break loop84;
+            	    break loop83;
                 }
             } while (true);
 
@@ -35891,7 +35840,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             // InternalKExpressions.g:10931:1: ( rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group_6__1 )
             // InternalKExpressions.g:10932:2: rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group_6__1
             {
-            pushFollow(FollowSets000.FOLLOW_80);
+            pushFollow(FollowSets000.FOLLOW_79);
             rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0__Impl();
 
             state._fsp--;
@@ -36133,7 +36082,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             // InternalKExpressions.g:11012:1: ( rule__QuotedKeyStringValueAnnotation__Group__1__Impl rule__QuotedKeyStringValueAnnotation__Group__2 )
             // InternalKExpressions.g:11013:2: rule__QuotedKeyStringValueAnnotation__Group__1__Impl rule__QuotedKeyStringValueAnnotation__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_74);
+            pushFollow(FollowSets000.FOLLOW_73);
             rule__QuotedKeyStringValueAnnotation__Group__1__Impl();
 
             state._fsp--;
@@ -36222,7 +36171,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             // InternalKExpressions.g:11039:1: ( rule__QuotedKeyStringValueAnnotation__Group__2__Impl rule__QuotedKeyStringValueAnnotation__Group__3 )
             // InternalKExpressions.g:11040:2: rule__QuotedKeyStringValueAnnotation__Group__2__Impl rule__QuotedKeyStringValueAnnotation__Group__3
             {
-            pushFollow(FollowSets000.FOLLOW_73);
+            pushFollow(FollowSets000.FOLLOW_72);
             rule__QuotedKeyStringValueAnnotation__Group__2__Impl();
 
             state._fsp--;
@@ -36351,17 +36300,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
                before(grammarAccess.getQuotedKeyStringValueAnnotationAccess().getGroup_3()); 
             }
             // InternalKExpressions.g:11080:2: ( rule__QuotedKeyStringValueAnnotation__Group_3__0 )*
-            loop85:
+            loop84:
             do {
-                int alt85=2;
-                int LA85_0 = input.LA(1);
+                int alt84=2;
+                int LA84_0 = input.LA(1);
 
-                if ( (LA85_0==50) ) {
-                    alt85=1;
+                if ( (LA84_0==50) ) {
+                    alt84=1;
                 }
 
 
-                switch (alt85) {
+                switch (alt84) {
             	case 1 :
             	    // InternalKExpressions.g:11080:3: rule__QuotedKeyStringValueAnnotation__Group_3__0
             	    {
@@ -36375,7 +36324,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             	    break;
 
             	default :
-            	    break loop85;
+            	    break loop84;
                 }
             } while (true);
 
@@ -36413,7 +36362,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             // InternalKExpressions.g:11093:1: ( rule__QuotedKeyStringValueAnnotation__Group_3__0__Impl rule__QuotedKeyStringValueAnnotation__Group_3__1 )
             // InternalKExpressions.g:11094:2: rule__QuotedKeyStringValueAnnotation__Group_3__0__Impl rule__QuotedKeyStringValueAnnotation__Group_3__1
             {
-            pushFollow(FollowSets000.FOLLOW_74);
+            pushFollow(FollowSets000.FOLLOW_73);
             rule__QuotedKeyStringValueAnnotation__Group_3__0__Impl();
 
             state._fsp--;
@@ -36655,7 +36604,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             // InternalKExpressions.g:11174:1: ( rule__QuotedTypedKeyStringValueAnnotation__Group__1__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__2 )
             // InternalKExpressions.g:11175:2: rule__QuotedTypedKeyStringValueAnnotation__Group__1__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_76);
+            pushFollow(FollowSets000.FOLLOW_75);
             rule__QuotedTypedKeyStringValueAnnotation__Group__1__Impl();
 
             state._fsp--;
@@ -36912,7 +36861,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             // InternalKExpressions.g:11255:1: ( rule__QuotedTypedKeyStringValueAnnotation__Group__4__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__5 )
             // InternalKExpressions.g:11256:2: rule__QuotedTypedKeyStringValueAnnotation__Group__4__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__5
             {
-            pushFollow(FollowSets000.FOLLOW_74);
+            pushFollow(FollowSets000.FOLLOW_73);
             rule__QuotedTypedKeyStringValueAnnotation__Group__4__Impl();
 
             state._fsp--;
@@ -36991,7 +36940,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             // InternalKExpressions.g:11282:1: ( rule__QuotedTypedKeyStringValueAnnotation__Group__5__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__6 )
             // InternalKExpressions.g:11283:2: rule__QuotedTypedKeyStringValueAnnotation__Group__5__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__6
             {
-            pushFollow(FollowSets000.FOLLOW_73);
+            pushFollow(FollowSets000.FOLLOW_72);
             rule__QuotedTypedKeyStringValueAnnotation__Group__5__Impl();
 
             state._fsp--;
@@ -37120,17 +37069,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
                before(grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getGroup_6()); 
             }
             // InternalKExpressions.g:11323:2: ( rule__QuotedTypedKeyStringValueAnnotation__Group_6__0 )*
-            loop86:
+            loop85:
             do {
-                int alt86=2;
-                int LA86_0 = input.LA(1);
+                int alt85=2;
+                int LA85_0 = input.LA(1);
 
-                if ( (LA86_0==50) ) {
-                    alt86=1;
+                if ( (LA85_0==50) ) {
+                    alt85=1;
                 }
 
 
-                switch (alt86) {
+                switch (alt85) {
             	case 1 :
             	    // InternalKExpressions.g:11323:3: rule__QuotedTypedKeyStringValueAnnotation__Group_6__0
             	    {
@@ -37144,7 +37093,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             	    break;
 
             	default :
-            	    break loop86;
+            	    break loop85;
                 }
             } while (true);
 
@@ -37182,7 +37131,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             // InternalKExpressions.g:11336:1: ( rule__QuotedTypedKeyStringValueAnnotation__Group_6__0__Impl rule__QuotedTypedKeyStringValueAnnotation__Group_6__1 )
             // InternalKExpressions.g:11337:2: rule__QuotedTypedKeyStringValueAnnotation__Group_6__0__Impl rule__QuotedTypedKeyStringValueAnnotation__Group_6__1
             {
-            pushFollow(FollowSets000.FOLLOW_74);
+            pushFollow(FollowSets000.FOLLOW_73);
             rule__QuotedTypedKeyStringValueAnnotation__Group_6__0__Impl();
 
             state._fsp--;
@@ -37345,7 +37294,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             // InternalKExpressions.g:11390:1: ( rule__ExtendedID__Group__0__Impl rule__ExtendedID__Group__1 )
             // InternalKExpressions.g:11391:2: rule__ExtendedID__Group__0__Impl rule__ExtendedID__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_81);
+            pushFollow(FollowSets000.FOLLOW_80);
             rule__ExtendedID__Group__0__Impl();
 
             state._fsp--;
@@ -37424,7 +37373,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             // InternalKExpressions.g:11417:1: ( rule__ExtendedID__Group__1__Impl rule__ExtendedID__Group__2 )
             // InternalKExpressions.g:11418:2: rule__ExtendedID__Group__1__Impl rule__ExtendedID__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_81);
+            pushFollow(FollowSets000.FOLLOW_80);
             rule__ExtendedID__Group__1__Impl();
 
             state._fsp--;
@@ -37469,30 +37418,30 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
                before(grammarAccess.getExtendedIDAccess().getGroup_1()); 
             }
             // InternalKExpressions.g:11432:2: ( rule__ExtendedID__Group_1__0 )*
-            loop87:
+            loop86:
             do {
-                int alt87=2;
-                int LA87_0 = input.LA(1);
+                int alt86=2;
+                int LA86_0 = input.LA(1);
 
-                if ( (LA87_0==24) ) {
-                    int LA87_2 = input.LA(2);
+                if ( (LA86_0==24) ) {
+                    int LA86_2 = input.LA(2);
 
-                    if ( (LA87_2==RULE_ID) ) {
-                        alt87=1;
+                    if ( (LA86_2==RULE_ID) ) {
+                        alt86=1;
                     }
 
 
                 }
-                else if ( (LA87_0==39) ) {
-                    alt87=1;
+                else if ( (LA86_0==39) ) {
+                    alt86=1;
                 }
 
 
-                switch (alt87) {
+                switch (alt86) {
             	case 1 :
             	    // InternalKExpressions.g:11432:3: rule__ExtendedID__Group_1__0
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_82);
+            	    pushFollow(FollowSets000.FOLLOW_81);
             	    rule__ExtendedID__Group_1__0();
 
             	    state._fsp--;
@@ -37502,7 +37451,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             	    break;
 
             	default :
-            	    break loop87;
+            	    break loop86;
                 }
             } while (true);
 
@@ -37580,13 +37529,13 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
                before(grammarAccess.getExtendedIDAccess().getGroup_2()); 
             }
             // InternalKExpressions.g:11458:2: ( rule__ExtendedID__Group_2__0 )?
-            int alt88=2;
-            int LA88_0 = input.LA(1);
+            int alt87=2;
+            int LA87_0 = input.LA(1);
 
-            if ( (LA88_0==61) ) {
-                alt88=1;
+            if ( (LA87_0==61) ) {
+                alt87=1;
             }
-            switch (alt88) {
+            switch (alt87) {
                 case 1 :
                     // InternalKExpressions.g:11458:3: rule__ExtendedID__Group_2__0
                     {
@@ -37798,7 +37747,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             // InternalKExpressions.g:11525:1: ( rule__ExtendedID__Group_2__0__Impl rule__ExtendedID__Group_2__1 )
             // InternalKExpressions.g:11526:2: rule__ExtendedID__Group_2__0__Impl rule__ExtendedID__Group_2__1
             {
-            pushFollow(FollowSets000.FOLLOW_83);
+            pushFollow(FollowSets000.FOLLOW_82);
             rule__ExtendedID__Group_2__0__Impl();
 
             state._fsp--;
@@ -37951,7 +37900,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             // InternalKExpressions.g:11579:1: ( rule__Integer__Group__0__Impl rule__Integer__Group__1 )
             // InternalKExpressions.g:11580:2: rule__Integer__Group__0__Impl rule__Integer__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_84);
+            pushFollow(FollowSets000.FOLLOW_83);
             rule__Integer__Group__0__Impl();
 
             state._fsp--;
@@ -37996,13 +37945,13 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
                before(grammarAccess.getIntegerAccess().getHyphenMinusKeyword_0()); 
             }
             // InternalKExpressions.g:11594:2: ( '-' )?
-            int alt89=2;
-            int LA89_0 = input.LA(1);
+            int alt88=2;
+            int LA88_0 = input.LA(1);
 
-            if ( (LA89_0==24) ) {
-                alt89=1;
+            if ( (LA88_0==24) ) {
+                alt88=1;
             }
-            switch (alt89) {
+            switch (alt88) {
                 case 1 :
                     // InternalKExpressions.g:11594:3: '-'
                     {
@@ -38121,7 +38070,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             // InternalKExpressions.g:11633:1: ( rule__Floateger__Group__0__Impl rule__Floateger__Group__1 )
             // InternalKExpressions.g:11634:2: rule__Floateger__Group__0__Impl rule__Floateger__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_79);
+            pushFollow(FollowSets000.FOLLOW_78);
             rule__Floateger__Group__0__Impl();
 
             state._fsp--;
@@ -38166,13 +38115,13 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
                before(grammarAccess.getFloategerAccess().getHyphenMinusKeyword_0()); 
             }
             // InternalKExpressions.g:11648:2: ( '-' )?
-            int alt90=2;
-            int LA90_0 = input.LA(1);
+            int alt89=2;
+            int LA89_0 = input.LA(1);
 
-            if ( (LA90_0==24) ) {
-                alt90=1;
+            if ( (LA89_0==24) ) {
+                alt89=1;
             }
-            switch (alt90) {
+            switch (alt89) {
                 case 1 :
                     // InternalKExpressions.g:11648:3: '-'
                     {
@@ -44178,36 +44127,6 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
     }
     // $ANTLR end synpred23_InternalKExpressions
 
-    // $ANTLR start synpred28_InternalKExpressions
-    public final void synpred28_InternalKExpressions_fragment() throws RecognitionException {   
-        // InternalKExpressions.g:2538:2: ( ( ( rule__Parameter__Group_0__0 ) ) )
-        // InternalKExpressions.g:2538:2: ( ( rule__Parameter__Group_0__0 ) )
-        {
-        // InternalKExpressions.g:2538:2: ( ( rule__Parameter__Group_0__0 ) )
-        // InternalKExpressions.g:2539:3: ( rule__Parameter__Group_0__0 )
-        {
-        if ( state.backtracking==0 ) {
-           before(grammarAccess.getParameterAccess().getGroup_0()); 
-        }
-        // InternalKExpressions.g:2540:3: ( rule__Parameter__Group_0__0 )
-        // InternalKExpressions.g:2540:4: rule__Parameter__Group_0__0
-        {
-        pushFollow(FollowSets000.FOLLOW_2);
-        rule__Parameter__Group_0__0();
-
-        state._fsp--;
-        if (state.failed) return ;
-
-        }
-
-
-        }
-
-
-        }
-    }
-    // $ANTLR end synpred28_InternalKExpressions
-
     // $ANTLR start synpred29_InternalKExpressions
     public final void synpred29_InternalKExpressions_fragment() throws RecognitionException {   
         // InternalKExpressions.g:2559:2: ( ( ruleBoolExpression ) )
@@ -44411,20 +44330,6 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
         int start = input.mark();
         try {
             synpred29_InternalKExpressions_fragment(); // can never throw exception
-        } catch (RecognitionException re) {
-            System.err.println("impossible: "+re);
-        }
-        boolean success = !state.failed;
-        input.rewind(start);
-        state.backtracking--;
-        state.failed=false;
-        return success;
-    }
-    public final boolean synpred28_InternalKExpressions() {
-        state.backtracking++;
-        int start = input.mark();
-        try {
-            synpred28_InternalKExpressions_fragment(); // can never throw exception
         } catch (RecognitionException re) {
             System.err.println("impossible: "+re);
         }
@@ -45948,24 +45853,24 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
         }
     }
     static final String dfa_44s = "\14\uffff";
-    static final String dfa_45s = "\3\uffff\1\7\6\uffff\2\7";
+    static final String dfa_45s = "\3\uffff\1\10\6\uffff\2\10";
     static final String dfa_46s = "\1\12\1\uffff\1\6\1\4\2\6\1\7\3\uffff\2\4";
     static final String dfa_47s = "\1\76\1\uffff\1\6\1\76\1\6\1\10\1\7\3\uffff\2\76";
-    static final String dfa_48s = "\1\uffff\1\1\5\uffff\1\4\1\3\1\2\2\uffff";
+    static final String dfa_48s = "\1\uffff\1\1\5\uffff\1\2\1\4\1\3\2\uffff";
     static final String dfa_49s = "\14\uffff}>";
     static final String[] dfa_50s = {
             "\1\1\63\uffff\1\2",
             "",
             "\1\3",
-            "\5\11\2\7\15\uffff\1\5\16\uffff\1\4\14\uffff\1\10\10\uffff\1\6\1\7",
+            "\5\7\2\10\15\uffff\1\5\16\uffff\1\4\14\uffff\1\11\10\uffff\1\6\1\10",
             "\1\12",
-            "\1\12\2\11",
+            "\1\12\2\7",
             "\1\13",
             "",
             "",
             "",
-            "\5\11\2\7\15\uffff\1\5\16\uffff\1\4\14\uffff\1\10\10\uffff\1\6\1\7",
-            "\5\11\2\7\15\uffff\1\11\33\uffff\1\10\11\uffff\1\7"
+            "\5\7\2\10\15\uffff\1\5\16\uffff\1\4\14\uffff\1\11\10\uffff\1\6\1\10",
+            "\5\7\2\10\15\uffff\1\7\33\uffff\1\11\11\uffff\1\10"
     };
 
     static final short[] dfa_44 = DFA.unpackEncodedString(dfa_44s);
@@ -45993,21 +45898,21 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             return "2668:1: superAnnotation__Alternatives : ( ( ruleCommentAnnotation ) | ( ruleKeyStringValueAnnotation ) | ( ruleTypedKeyStringValueAnnotation ) | ( ruleTagAnnotation ) );";
         }
     }
-    static final String dfa_51s = "\2\uffff\1\7\5\uffff\2\7";
+    static final String dfa_51s = "\2\uffff\1\6\5\uffff\2\6";
     static final String dfa_52s = "\1\75\1\6\1\4\2\6\1\7\2\uffff\2\4";
     static final String dfa_53s = "\1\75\1\6\1\75\1\6\1\10\1\7\2\uffff\1\75\1\30";
-    static final String dfa_54s = "\6\uffff\1\1\1\2\2\uffff";
+    static final String dfa_54s = "\6\uffff\1\2\1\1\2\uffff";
     static final String[] dfa_55s = {
             "\1\1",
             "\1\2",
-            "\5\6\17\uffff\1\4\16\uffff\1\3\25\uffff\1\5",
+            "\5\7\17\uffff\1\4\16\uffff\1\3\25\uffff\1\5",
             "\1\10",
-            "\1\10\2\6",
+            "\1\10\2\7",
             "\1\11",
             "",
             "",
-            "\5\6\17\uffff\1\4\16\uffff\1\3\25\uffff\1\5",
-            "\5\6\17\uffff\1\6"
+            "\5\7\17\uffff\1\4\16\uffff\1\3\25\uffff\1\5",
+            "\5\7\17\uffff\1\7"
     };
     static final short[] dfa_51 = DFA.unpackEncodedString(dfa_51s);
     static final char[] dfa_52 = DFA.unpackEncodedStringToUnsignedChars(dfa_52s);
@@ -46035,20 +45940,20 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
     static final String dfa_56s = "\13\uffff";
     static final String dfa_57s = "\1\12\1\uffff\1\6\1\4\2\6\1\7\2\uffff\2\4";
     static final String dfa_58s = "\1\76\1\uffff\1\6\1\75\1\6\1\10\1\7\2\uffff\1\75\1\64";
-    static final String dfa_59s = "\1\uffff\1\1\5\uffff\1\3\1\2\2\uffff";
+    static final String dfa_59s = "\1\uffff\1\1\5\uffff\1\2\1\3\2\uffff";
     static final String dfa_60s = "\13\uffff}>";
     static final String[] dfa_61s = {
             "\1\1\63\uffff\1\2",
             "",
             "\1\3",
-            "\5\10\17\uffff\1\5\16\uffff\1\4\14\uffff\1\7\10\uffff\1\6",
+            "\5\7\17\uffff\1\5\16\uffff\1\4\14\uffff\1\10\10\uffff\1\6",
             "\1\11",
-            "\1\11\2\10",
+            "\1\11\2\7",
             "\1\12",
             "",
             "",
-            "\5\10\17\uffff\1\5\16\uffff\1\4\14\uffff\1\7\10\uffff\1\6",
-            "\5\10\17\uffff\1\10\33\uffff\1\7"
+            "\5\7\17\uffff\1\5\16\uffff\1\4\14\uffff\1\10\10\uffff\1\6",
+            "\5\7\17\uffff\1\7\33\uffff\1\10"
     };
 
     static final short[] dfa_56 = DFA.unpackEncodedString(dfa_56s);
@@ -46080,15 +45985,15 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             "\1\1\63\uffff\1\2",
             "",
             "\1\3",
-            "\1\11\23\uffff\1\5\16\uffff\1\4\14\uffff\1\10\10\uffff\1\6",
+            "\1\7\23\uffff\1\5\16\uffff\1\4\14\uffff\1\11\10\uffff\1\6",
             "\1\12",
             "\1\12",
             "\1\13",
             "",
             "",
             "",
-            "\1\11\23\uffff\1\5\16\uffff\1\4\14\uffff\1\10\10\uffff\1\6",
-            "\1\11\57\uffff\1\10"
+            "\1\7\23\uffff\1\5\16\uffff\1\4\14\uffff\1\11\10\uffff\1\6",
+            "\1\7\57\uffff\1\11"
     };
     static final char[] dfa_62 = DFA.unpackEncodedStringToUnsignedChars(dfa_62s);
     static final short[][] dfa_63 = unpackEncodedStringArray(dfa_63s);
@@ -46809,24 +46714,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
         public static final BitSet FOLLOW_64 = new BitSet(new long[]{0x0080000000000000L});
         public static final BitSet FOLLOW_65 = new BitSet(new long[]{0x0000000000000040L});
         public static final BitSet FOLLOW_66 = new BitSet(new long[]{0x0001004000000000L});
-        public static final BitSet FOLLOW_67 = new BitSet(new long[]{0x0000400010220040L});
-        public static final BitSet FOLLOW_68 = new BitSet(new long[]{0x4000000000000402L});
-        public static final BitSet FOLLOW_69 = new BitSet(new long[]{0x4BC10000114607F0L});
-        public static final BitSet FOLLOW_70 = new BitSet(new long[]{0x0404000000000000L});
-        public static final BitSet FOLLOW_71 = new BitSet(new long[]{0x0200000000000000L});
-        public static final BitSet FOLLOW_72 = new BitSet(new long[]{0x0400000000000010L});
-        public static final BitSet FOLLOW_73 = new BitSet(new long[]{0x0004000000000000L});
-        public static final BitSet FOLLOW_74 = new BitSet(new long[]{0x0000000000000010L});
-        public static final BitSet FOLLOW_75 = new BitSet(new long[]{0x12100000000001B0L});
-        public static final BitSet FOLLOW_76 = new BitSet(new long[]{0x0010000000000000L});
-        public static final BitSet FOLLOW_77 = new BitSet(new long[]{0x12300000000001B0L});
-        public static final BitSet FOLLOW_78 = new BitSet(new long[]{0x1000000000000000L});
-        public static final BitSet FOLLOW_79 = new BitSet(new long[]{0x00000000010001F0L});
-        public static final BitSet FOLLOW_80 = new BitSet(new long[]{0x0000000000000070L});
-        public static final BitSet FOLLOW_81 = new BitSet(new long[]{0x2000008001000000L});
-        public static final BitSet FOLLOW_82 = new BitSet(new long[]{0x0000008001000002L});
-        public static final BitSet FOLLOW_83 = new BitSet(new long[]{0x0000000000000080L});
-        public static final BitSet FOLLOW_84 = new BitSet(new long[]{0x0000000001000080L});
+        public static final BitSet FOLLOW_67 = new BitSet(new long[]{0x4000000000000402L});
+        public static final BitSet FOLLOW_68 = new BitSet(new long[]{0x4BC10000114607F0L});
+        public static final BitSet FOLLOW_69 = new BitSet(new long[]{0x0404000000000000L});
+        public static final BitSet FOLLOW_70 = new BitSet(new long[]{0x0200000000000000L});
+        public static final BitSet FOLLOW_71 = new BitSet(new long[]{0x0400000000000010L});
+        public static final BitSet FOLLOW_72 = new BitSet(new long[]{0x0004000000000000L});
+        public static final BitSet FOLLOW_73 = new BitSet(new long[]{0x0000000000000010L});
+        public static final BitSet FOLLOW_74 = new BitSet(new long[]{0x12100000000001B0L});
+        public static final BitSet FOLLOW_75 = new BitSet(new long[]{0x0010000000000000L});
+        public static final BitSet FOLLOW_76 = new BitSet(new long[]{0x12300000000001B0L});
+        public static final BitSet FOLLOW_77 = new BitSet(new long[]{0x1000000000000000L});
+        public static final BitSet FOLLOW_78 = new BitSet(new long[]{0x00000000010001F0L});
+        public static final BitSet FOLLOW_79 = new BitSet(new long[]{0x0000000000000070L});
+        public static final BitSet FOLLOW_80 = new BitSet(new long[]{0x2000008001000000L});
+        public static final BitSet FOLLOW_81 = new BitSet(new long[]{0x0000008001000002L});
+        public static final BitSet FOLLOW_82 = new BitSet(new long[]{0x0000000000000080L});
+        public static final BitSet FOLLOW_83 = new BitSet(new long[]{0x0000000001000080L});
     }
 
 

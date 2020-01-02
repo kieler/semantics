@@ -16858,11 +16858,11 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
                 {
                 int LA41_1 = input.LA(2);
 
-                if ( ((LA41_1>=57 && LA41_1<=59)) ) {
-                    alt41=1;
-                }
-                else if ( (LA41_1==RULE_ID||LA41_1==RULE_COMMENT_ANNOTATION||LA41_1==116) ) {
+                if ( (LA41_1==RULE_ID||LA41_1==RULE_COMMENT_ANNOTATION||LA41_1==116) ) {
                     alt41=2;
+                }
+                else if ( ((LA41_1>=57 && LA41_1<=59)) ) {
+                    alt41=1;
                 }
                 else {
                     if (state.backtracking>0) {state.failed=true; return ;}
@@ -17012,11 +17012,11 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
                 {
                 int LA42_1 = input.LA(2);
 
-                if ( ((LA42_1>=57 && LA42_1<=59)) ) {
-                    alt42=1;
-                }
-                else if ( (LA42_1==RULE_ID||LA42_1==RULE_COMMENT_ANNOTATION||LA42_1==116) ) {
+                if ( (LA42_1==RULE_ID||LA42_1==RULE_COMMENT_ANNOTATION||LA42_1==116) ) {
                     alt42=2;
+                }
+                else if ( ((LA42_1>=57 && LA42_1<=59)) ) {
+                    alt42=1;
                 }
                 else {
                     if (state.backtracking>0) {state.failed=true; return ;}
@@ -19180,59 +19180,21 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
         try {
             // InternalLustre.g:5246:1: ( ( ( rule__Parameter__Group_0__0 ) ) | ( ( rule__Parameter__ExpressionAssignment_1 ) ) )
             int alt63=2;
-            switch ( input.LA(1) ) {
-            case 38:
-            case 78:
-                {
+            int LA63_0 = input.LA(1);
+
+            if ( (LA63_0==38||LA63_0==78) ) {
                 alt63=1;
-                }
-                break;
-            case RULE_ID:
-                {
-                int LA63_2 = input.LA(2);
-
-                if ( (synpred92_InternalLustre()) ) {
-                    alt63=1;
-                }
-                else if ( (true) ) {
-                    alt63=2;
-                }
-                else {
-                    if (state.backtracking>0) {state.failed=true; return ;}
-                    NoViableAltException nvae =
-                        new NoViableAltException("", 63, 2, input);
-
-                    throw nvae;
-                }
-                }
-                break;
-            case RULE_STRING:
-            case RULE_BOOLEAN:
-            case RULE_INT:
-            case RULE_FLOAT:
-            case 21:
-            case 24:
-            case 30:
-            case 31:
-            case 32:
-            case 33:
-            case 34:
-            case 40:
-            case 43:
-            case 82:
-            case 87:
-                {
+            }
+            else if ( ((LA63_0>=RULE_STRING && LA63_0<=RULE_FLOAT)||LA63_0==21||LA63_0==24||(LA63_0>=30 && LA63_0<=34)||LA63_0==40||LA63_0==43||LA63_0==82||LA63_0==87) ) {
                 alt63=2;
-                }
-                break;
-            default:
+            }
+            else {
                 if (state.backtracking>0) {state.failed=true; return ;}
                 NoViableAltException nvae =
                     new NoViableAltException("", 63, 0, input);
 
                 throw nvae;
             }
-
             switch (alt63) {
                 case 1 :
                     // InternalLustre.g:5247:2: ( ( rule__Parameter__Group_0__0 ) )
@@ -86258,7 +86220,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:25540:1: ( rule__Parameter__Group_0__0__Impl rule__Parameter__Group_0__1 )
             // InternalLustre.g:25541:2: rule__Parameter__Group_0__0__Impl rule__Parameter__Group_0__1
             {
-            pushFollow(FollowSets000.FOLLOW_153);
+            pushFollow(FollowSets000.FOLLOW_34);
             rule__Parameter__Group_0__0__Impl();
 
             state._fsp--;
@@ -86287,40 +86249,29 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Parameter__Group_0__0__Impl"
-    // InternalLustre.g:25548:1: rule__Parameter__Group_0__0__Impl : ( ( rule__Parameter__AccessTypeAssignment_0_0 )? ) ;
+    // InternalLustre.g:25548:1: rule__Parameter__Group_0__0__Impl : ( ( rule__Parameter__AccessTypeAssignment_0_0 ) ) ;
     public final void rule__Parameter__Group_0__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalLustre.g:25552:1: ( ( ( rule__Parameter__AccessTypeAssignment_0_0 )? ) )
-            // InternalLustre.g:25553:1: ( ( rule__Parameter__AccessTypeAssignment_0_0 )? )
+            // InternalLustre.g:25552:1: ( ( ( rule__Parameter__AccessTypeAssignment_0_0 ) ) )
+            // InternalLustre.g:25553:1: ( ( rule__Parameter__AccessTypeAssignment_0_0 ) )
             {
-            // InternalLustre.g:25553:1: ( ( rule__Parameter__AccessTypeAssignment_0_0 )? )
-            // InternalLustre.g:25554:2: ( rule__Parameter__AccessTypeAssignment_0_0 )?
+            // InternalLustre.g:25553:1: ( ( rule__Parameter__AccessTypeAssignment_0_0 ) )
+            // InternalLustre.g:25554:2: ( rule__Parameter__AccessTypeAssignment_0_0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getParameterAccess().getAccessTypeAssignment_0_0()); 
             }
-            // InternalLustre.g:25555:2: ( rule__Parameter__AccessTypeAssignment_0_0 )?
-            int alt297=2;
-            int LA297_0 = input.LA(1);
+            // InternalLustre.g:25555:2: ( rule__Parameter__AccessTypeAssignment_0_0 )
+            // InternalLustre.g:25555:3: rule__Parameter__AccessTypeAssignment_0_0
+            {
+            pushFollow(FollowSets000.FOLLOW_2);
+            rule__Parameter__AccessTypeAssignment_0_0();
 
-            if ( (LA297_0==38||LA297_0==78) ) {
-                alt297=1;
-            }
-            switch (alt297) {
-                case 1 :
-                    // InternalLustre.g:25555:3: rule__Parameter__AccessTypeAssignment_0_0
-                    {
-                    pushFollow(FollowSets000.FOLLOW_2);
-                    rule__Parameter__AccessTypeAssignment_0_0();
-
-                    state._fsp--;
-                    if (state.failed) return ;
-
-                    }
-                    break;
+            state._fsp--;
+            if (state.failed) return ;
 
             }
 
@@ -86442,7 +86393,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:25594:1: ( rule__VectorValue__Group__0__Impl rule__VectorValue__Group__1 )
             // InternalLustre.g:25595:2: rule__VectorValue__Group__0__Impl rule__VectorValue__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_154);
+            pushFollow(FollowSets000.FOLLOW_153);
             rule__VectorValue__Group__0__Impl();
 
             state._fsp--;
@@ -86655,17 +86606,17 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
                before(grammarAccess.getVectorValueAccess().getGroup_2()); 
             }
             // InternalLustre.g:25663:2: ( rule__VectorValue__Group_2__0 )*
-            loop298:
+            loop297:
             do {
-                int alt298=2;
-                int LA298_0 = input.LA(1);
+                int alt297=2;
+                int LA297_0 = input.LA(1);
 
-                if ( (LA298_0==84) ) {
-                    alt298=1;
+                if ( (LA297_0==84) ) {
+                    alt297=1;
                 }
 
 
-                switch (alt298) {
+                switch (alt297) {
             	case 1 :
             	    // InternalLustre.g:25663:3: rule__VectorValue__Group_2__0
             	    {
@@ -86679,7 +86630,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             	    break;
 
             	default :
-            	    break loop298;
+            	    break loop297;
                 }
             } while (true);
 
@@ -86791,7 +86742,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:25702:1: ( rule__VectorValue__Group_2__0__Impl rule__VectorValue__Group_2__1 )
             // InternalLustre.g:25703:2: rule__VectorValue__Group_2__0__Impl rule__VectorValue__Group_2__1
             {
-            pushFollow(FollowSets000.FOLLOW_154);
+            pushFollow(FollowSets000.FOLLOW_153);
             rule__VectorValue__Group_2__0__Impl();
 
             state._fsp--;
@@ -86954,7 +86905,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:25756:1: ( rule__IgnoreValue__Group__0__Impl rule__IgnoreValue__Group__1 )
             // InternalLustre.g:25757:2: rule__IgnoreValue__Group__0__Impl rule__IgnoreValue__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_154);
+            pushFollow(FollowSets000.FOLLOW_153);
             rule__IgnoreValue__Group__0__Impl();
 
             state._fsp--;
@@ -87186,7 +87137,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:25837:1: ( rule__JsonObjectValue__Group__1__Impl rule__JsonObjectValue__Group__2 )
             // InternalLustre.g:25838:2: rule__JsonObjectValue__Group__1__Impl rule__JsonObjectValue__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_155);
+            pushFollow(FollowSets000.FOLLOW_154);
             rule__JsonObjectValue__Group__1__Impl();
 
             state._fsp--;
@@ -87265,7 +87216,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:25864:1: ( rule__JsonObjectValue__Group__2__Impl rule__JsonObjectValue__Group__3 )
             // InternalLustre.g:25865:2: rule__JsonObjectValue__Group__2__Impl rule__JsonObjectValue__Group__3
             {
-            pushFollow(FollowSets000.FOLLOW_155);
+            pushFollow(FollowSets000.FOLLOW_154);
             rule__JsonObjectValue__Group__2__Impl();
 
             state._fsp--;
@@ -87310,13 +87261,13 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
                before(grammarAccess.getJsonObjectValueAccess().getGroup_2()); 
             }
             // InternalLustre.g:25879:2: ( rule__JsonObjectValue__Group_2__0 )?
-            int alt299=2;
-            int LA299_0 = input.LA(1);
+            int alt298=2;
+            int LA298_0 = input.LA(1);
 
-            if ( (LA299_0==RULE_STRING) ) {
-                alt299=1;
+            if ( (LA298_0==RULE_STRING) ) {
+                alt298=1;
             }
-            switch (alt299) {
+            switch (alt298) {
                 case 1 :
                     // InternalLustre.g:25879:3: rule__JsonObjectValue__Group_2__0
                     {
@@ -87568,17 +87519,17 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
                before(grammarAccess.getJsonObjectValueAccess().getGroup_2_1()); 
             }
             // InternalLustre.g:25959:2: ( rule__JsonObjectValue__Group_2_1__0 )*
-            loop300:
+            loop299:
             do {
-                int alt300=2;
-                int LA300_0 = input.LA(1);
+                int alt299=2;
+                int LA299_0 = input.LA(1);
 
-                if ( (LA300_0==84) ) {
-                    alt300=1;
+                if ( (LA299_0==84) ) {
+                    alt299=1;
                 }
 
 
-                switch (alt300) {
+                switch (alt299) {
             	case 1 :
             	    // InternalLustre.g:25959:3: rule__JsonObjectValue__Group_2_1__0
             	    {
@@ -87592,7 +87543,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             	    break;
 
             	default :
-            	    break loop300;
+            	    break loop299;
                 }
             } while (true);
 
@@ -87882,7 +87833,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:26053:1: ( rule__JsonObjectMember__Group__1__Impl rule__JsonObjectMember__Group__2 )
             // InternalLustre.g:26054:2: rule__JsonObjectMember__Group__1__Impl rule__JsonObjectMember__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_156);
+            pushFollow(FollowSets000.FOLLOW_155);
             rule__JsonObjectMember__Group__1__Impl();
 
             state._fsp--;
@@ -88045,7 +87996,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:26107:1: ( rule__JsonArrayValue__Group__0__Impl rule__JsonArrayValue__Group__1 )
             // InternalLustre.g:26108:2: rule__JsonArrayValue__Group__0__Impl rule__JsonArrayValue__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_157);
+            pushFollow(FollowSets000.FOLLOW_156);
             rule__JsonArrayValue__Group__0__Impl();
 
             state._fsp--;
@@ -88124,7 +88075,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:26134:1: ( rule__JsonArrayValue__Group__1__Impl rule__JsonArrayValue__Group__2 )
             // InternalLustre.g:26135:2: rule__JsonArrayValue__Group__1__Impl rule__JsonArrayValue__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_158);
+            pushFollow(FollowSets000.FOLLOW_157);
             rule__JsonArrayValue__Group__1__Impl();
 
             state._fsp--;
@@ -88203,7 +88154,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:26161:1: ( rule__JsonArrayValue__Group__2__Impl rule__JsonArrayValue__Group__3 )
             // InternalLustre.g:26162:2: rule__JsonArrayValue__Group__2__Impl rule__JsonArrayValue__Group__3
             {
-            pushFollow(FollowSets000.FOLLOW_158);
+            pushFollow(FollowSets000.FOLLOW_157);
             rule__JsonArrayValue__Group__2__Impl();
 
             state._fsp--;
@@ -88248,13 +88199,13 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
                before(grammarAccess.getJsonArrayValueAccess().getGroup_2()); 
             }
             // InternalLustre.g:26176:2: ( rule__JsonArrayValue__Group_2__0 )?
-            int alt301=2;
-            int LA301_0 = input.LA(1);
+            int alt300=2;
+            int LA300_0 = input.LA(1);
 
-            if ( ((LA301_0>=RULE_STRING && LA301_0<=RULE_BOOLEAN)||(LA301_0>=RULE_INT && LA301_0<=RULE_FLOAT)||LA301_0==82||LA301_0==107||LA301_0==115) ) {
-                alt301=1;
+            if ( ((LA300_0>=RULE_STRING && LA300_0<=RULE_BOOLEAN)||(LA300_0>=RULE_INT && LA300_0<=RULE_FLOAT)||LA300_0==82||LA300_0==107||LA300_0==115) ) {
+                alt300=1;
             }
-            switch (alt301) {
+            switch (alt300) {
                 case 1 :
                     // InternalLustre.g:26176:3: rule__JsonArrayValue__Group_2__0
                     {
@@ -88506,17 +88457,17 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
                before(grammarAccess.getJsonArrayValueAccess().getGroup_2_1()); 
             }
             // InternalLustre.g:26256:2: ( rule__JsonArrayValue__Group_2_1__0 )*
-            loop302:
+            loop301:
             do {
-                int alt302=2;
-                int LA302_0 = input.LA(1);
+                int alt301=2;
+                int LA301_0 = input.LA(1);
 
-                if ( (LA302_0==84) ) {
-                    alt302=1;
+                if ( (LA301_0==84) ) {
+                    alt301=1;
                 }
 
 
-                switch (alt302) {
+                switch (alt301) {
             	case 1 :
             	    // InternalLustre.g:26256:3: rule__JsonArrayValue__Group_2_1__0
             	    {
@@ -88530,7 +88481,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             	    break;
 
             	default :
-            	    break loop302;
+            	    break loop301;
                 }
             } while (true);
 
@@ -88568,7 +88519,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:26269:1: ( rule__JsonArrayValue__Group_2_1__0__Impl rule__JsonArrayValue__Group_2_1__1 )
             // InternalLustre.g:26270:2: rule__JsonArrayValue__Group_2_1__0__Impl rule__JsonArrayValue__Group_2_1__1
             {
-            pushFollow(FollowSets000.FOLLOW_156);
+            pushFollow(FollowSets000.FOLLOW_155);
             rule__JsonArrayValue__Group_2_1__0__Impl();
 
             state._fsp--;
@@ -88731,7 +88682,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:26323:1: ( rule__NullValue__Group__0__Impl rule__NullValue__Group__1 )
             // InternalLustre.g:26324:2: rule__NullValue__Group__0__Impl rule__NullValue__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_159);
+            pushFollow(FollowSets000.FOLLOW_158);
             rule__NullValue__Group__0__Impl();
 
             state._fsp--;
@@ -89793,7 +89744,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:26674:1: ( rule__KeyStringValueAnnotation__Group__1__Impl rule__KeyStringValueAnnotation__Group__2 )
             // InternalLustre.g:26675:2: rule__KeyStringValueAnnotation__Group__1__Impl rule__KeyStringValueAnnotation__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_160);
+            pushFollow(FollowSets000.FOLLOW_159);
             rule__KeyStringValueAnnotation__Group__1__Impl();
 
             state._fsp--;
@@ -90011,17 +89962,17 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
                before(grammarAccess.getKeyStringValueAnnotationAccess().getGroup_3()); 
             }
             // InternalLustre.g:26742:2: ( rule__KeyStringValueAnnotation__Group_3__0 )*
-            loop303:
+            loop302:
             do {
-                int alt303=2;
-                int LA303_0 = input.LA(1);
+                int alt302=2;
+                int LA302_0 = input.LA(1);
 
-                if ( (LA303_0==84) ) {
-                    alt303=1;
+                if ( (LA302_0==84) ) {
+                    alt302=1;
                 }
 
 
-                switch (alt303) {
+                switch (alt302) {
             	case 1 :
             	    // InternalLustre.g:26742:3: rule__KeyStringValueAnnotation__Group_3__0
             	    {
@@ -90035,7 +89986,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             	    break;
 
             	default :
-            	    break loop303;
+            	    break loop302;
                 }
             } while (true);
 
@@ -90073,7 +90024,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:26755:1: ( rule__KeyStringValueAnnotation__Group_3__0__Impl rule__KeyStringValueAnnotation__Group_3__1 )
             // InternalLustre.g:26756:2: rule__KeyStringValueAnnotation__Group_3__0__Impl rule__KeyStringValueAnnotation__Group_3__1
             {
-            pushFollow(FollowSets000.FOLLOW_160);
+            pushFollow(FollowSets000.FOLLOW_159);
             rule__KeyStringValueAnnotation__Group_3__0__Impl();
 
             state._fsp--;
@@ -90315,7 +90266,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:26836:1: ( rule__RestrictedKeyStringValueAnnotation__Group__1__Impl rule__RestrictedKeyStringValueAnnotation__Group__2 )
             // InternalLustre.g:26837:2: rule__RestrictedKeyStringValueAnnotation__Group__1__Impl rule__RestrictedKeyStringValueAnnotation__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_161);
+            pushFollow(FollowSets000.FOLLOW_160);
             rule__RestrictedKeyStringValueAnnotation__Group__1__Impl();
 
             state._fsp--;
@@ -90533,17 +90484,17 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
                before(grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getGroup_3()); 
             }
             // InternalLustre.g:26904:2: ( rule__RestrictedKeyStringValueAnnotation__Group_3__0 )*
-            loop304:
+            loop303:
             do {
-                int alt304=2;
-                int LA304_0 = input.LA(1);
+                int alt303=2;
+                int LA303_0 = input.LA(1);
 
-                if ( (LA304_0==84) ) {
-                    alt304=1;
+                if ( (LA303_0==84) ) {
+                    alt303=1;
                 }
 
 
-                switch (alt304) {
+                switch (alt303) {
             	case 1 :
             	    // InternalLustre.g:26904:3: rule__RestrictedKeyStringValueAnnotation__Group_3__0
             	    {
@@ -90557,7 +90508,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             	    break;
 
             	default :
-            	    break loop304;
+            	    break loop303;
                 }
             } while (true);
 
@@ -90595,7 +90546,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:26917:1: ( rule__RestrictedKeyStringValueAnnotation__Group_3__0__Impl rule__RestrictedKeyStringValueAnnotation__Group_3__1 )
             // InternalLustre.g:26918:2: rule__RestrictedKeyStringValueAnnotation__Group_3__0__Impl rule__RestrictedKeyStringValueAnnotation__Group_3__1
             {
-            pushFollow(FollowSets000.FOLLOW_161);
+            pushFollow(FollowSets000.FOLLOW_160);
             rule__RestrictedKeyStringValueAnnotation__Group_3__0__Impl();
 
             state._fsp--;
@@ -90837,7 +90788,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:26998:1: ( rule__StringPragma__Group__1__Impl rule__StringPragma__Group__2 )
             // InternalLustre.g:26999:2: rule__StringPragma__Group__1__Impl rule__StringPragma__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_160);
+            pushFollow(FollowSets000.FOLLOW_159);
             rule__StringPragma__Group__1__Impl();
 
             state._fsp--;
@@ -91055,17 +91006,17 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
                before(grammarAccess.getStringPragmaAccess().getGroup_3()); 
             }
             // InternalLustre.g:27066:2: ( rule__StringPragma__Group_3__0 )*
-            loop305:
+            loop304:
             do {
-                int alt305=2;
-                int LA305_0 = input.LA(1);
+                int alt304=2;
+                int LA304_0 = input.LA(1);
 
-                if ( (LA305_0==84) ) {
-                    alt305=1;
+                if ( (LA304_0==84) ) {
+                    alt304=1;
                 }
 
 
-                switch (alt305) {
+                switch (alt304) {
             	case 1 :
             	    // InternalLustre.g:27066:3: rule__StringPragma__Group_3__0
             	    {
@@ -91079,7 +91030,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             	    break;
 
             	default :
-            	    break loop305;
+            	    break loop304;
                 }
             } while (true);
 
@@ -91117,7 +91068,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:27079:1: ( rule__StringPragma__Group_3__0__Impl rule__StringPragma__Group_3__1 )
             // InternalLustre.g:27080:2: rule__StringPragma__Group_3__0__Impl rule__StringPragma__Group_3__1
             {
-            pushFollow(FollowSets000.FOLLOW_160);
+            pushFollow(FollowSets000.FOLLOW_159);
             rule__StringPragma__Group_3__0__Impl();
 
             state._fsp--;
@@ -91359,7 +91310,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:27160:1: ( rule__TypedKeyStringValueAnnotation__Group__1__Impl rule__TypedKeyStringValueAnnotation__Group__2 )
             // InternalLustre.g:27161:2: rule__TypedKeyStringValueAnnotation__Group__1__Impl rule__TypedKeyStringValueAnnotation__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_157);
+            pushFollow(FollowSets000.FOLLOW_156);
             rule__TypedKeyStringValueAnnotation__Group__1__Impl();
 
             state._fsp--;
@@ -91616,7 +91567,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:27241:1: ( rule__TypedKeyStringValueAnnotation__Group__4__Impl rule__TypedKeyStringValueAnnotation__Group__5 )
             // InternalLustre.g:27242:2: rule__TypedKeyStringValueAnnotation__Group__4__Impl rule__TypedKeyStringValueAnnotation__Group__5
             {
-            pushFollow(FollowSets000.FOLLOW_160);
+            pushFollow(FollowSets000.FOLLOW_159);
             rule__TypedKeyStringValueAnnotation__Group__4__Impl();
 
             state._fsp--;
@@ -91824,17 +91775,17 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
                before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getGroup_6()); 
             }
             // InternalLustre.g:27309:2: ( rule__TypedKeyStringValueAnnotation__Group_6__0 )*
-            loop306:
+            loop305:
             do {
-                int alt306=2;
-                int LA306_0 = input.LA(1);
+                int alt305=2;
+                int LA305_0 = input.LA(1);
 
-                if ( (LA306_0==84) ) {
-                    alt306=1;
+                if ( (LA305_0==84) ) {
+                    alt305=1;
                 }
 
 
-                switch (alt306) {
+                switch (alt305) {
             	case 1 :
             	    // InternalLustre.g:27309:3: rule__TypedKeyStringValueAnnotation__Group_6__0
             	    {
@@ -91848,7 +91799,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             	    break;
 
             	default :
-            	    break loop306;
+            	    break loop305;
                 }
             } while (true);
 
@@ -91886,7 +91837,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:27322:1: ( rule__TypedKeyStringValueAnnotation__Group_6__0__Impl rule__TypedKeyStringValueAnnotation__Group_6__1 )
             // InternalLustre.g:27323:2: rule__TypedKeyStringValueAnnotation__Group_6__0__Impl rule__TypedKeyStringValueAnnotation__Group_6__1
             {
-            pushFollow(FollowSets000.FOLLOW_160);
+            pushFollow(FollowSets000.FOLLOW_159);
             rule__TypedKeyStringValueAnnotation__Group_6__0__Impl();
 
             state._fsp--;
@@ -92128,7 +92079,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:27403:1: ( rule__RestrictedTypedKeyStringValueAnnotation__Group__1__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__2 )
             // InternalLustre.g:27404:2: rule__RestrictedTypedKeyStringValueAnnotation__Group__1__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_157);
+            pushFollow(FollowSets000.FOLLOW_156);
             rule__RestrictedTypedKeyStringValueAnnotation__Group__1__Impl();
 
             state._fsp--;
@@ -92385,7 +92336,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:27484:1: ( rule__RestrictedTypedKeyStringValueAnnotation__Group__4__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__5 )
             // InternalLustre.g:27485:2: rule__RestrictedTypedKeyStringValueAnnotation__Group__4__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__5
             {
-            pushFollow(FollowSets000.FOLLOW_161);
+            pushFollow(FollowSets000.FOLLOW_160);
             rule__RestrictedTypedKeyStringValueAnnotation__Group__4__Impl();
 
             state._fsp--;
@@ -92593,17 +92544,17 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
                before(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getGroup_6()); 
             }
             // InternalLustre.g:27552:2: ( rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0 )*
-            loop307:
+            loop306:
             do {
-                int alt307=2;
-                int LA307_0 = input.LA(1);
+                int alt306=2;
+                int LA306_0 = input.LA(1);
 
-                if ( (LA307_0==84) ) {
-                    alt307=1;
+                if ( (LA306_0==84) ) {
+                    alt306=1;
                 }
 
 
-                switch (alt307) {
+                switch (alt306) {
             	case 1 :
             	    // InternalLustre.g:27552:3: rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0
             	    {
@@ -92617,7 +92568,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             	    break;
 
             	default :
-            	    break loop307;
+            	    break loop306;
                 }
             } while (true);
 
@@ -92655,7 +92606,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:27565:1: ( rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group_6__1 )
             // InternalLustre.g:27566:2: rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group_6__1
             {
-            pushFollow(FollowSets000.FOLLOW_161);
+            pushFollow(FollowSets000.FOLLOW_160);
             rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0__Impl();
 
             state._fsp--;
@@ -93115,17 +93066,17 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
                before(grammarAccess.getQuotedKeyStringValueAnnotationAccess().getGroup_3()); 
             }
             // InternalLustre.g:27714:2: ( rule__QuotedKeyStringValueAnnotation__Group_3__0 )*
-            loop308:
+            loop307:
             do {
-                int alt308=2;
-                int LA308_0 = input.LA(1);
+                int alt307=2;
+                int LA307_0 = input.LA(1);
 
-                if ( (LA308_0==84) ) {
-                    alt308=1;
+                if ( (LA307_0==84) ) {
+                    alt307=1;
                 }
 
 
-                switch (alt308) {
+                switch (alt307) {
             	case 1 :
             	    // InternalLustre.g:27714:3: rule__QuotedKeyStringValueAnnotation__Group_3__0
             	    {
@@ -93139,7 +93090,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             	    break;
 
             	default :
-            	    break loop308;
+            	    break loop307;
                 }
             } while (true);
 
@@ -93419,7 +93370,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:27808:1: ( rule__QuotedTypedKeyStringValueAnnotation__Group__1__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__2 )
             // InternalLustre.g:27809:2: rule__QuotedTypedKeyStringValueAnnotation__Group__1__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_157);
+            pushFollow(FollowSets000.FOLLOW_156);
             rule__QuotedTypedKeyStringValueAnnotation__Group__1__Impl();
 
             state._fsp--;
@@ -93884,17 +93835,17 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
                before(grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getGroup_6()); 
             }
             // InternalLustre.g:27957:2: ( rule__QuotedTypedKeyStringValueAnnotation__Group_6__0 )*
-            loop309:
+            loop308:
             do {
-                int alt309=2;
-                int LA309_0 = input.LA(1);
+                int alt308=2;
+                int LA308_0 = input.LA(1);
 
-                if ( (LA309_0==84) ) {
-                    alt309=1;
+                if ( (LA308_0==84) ) {
+                    alt308=1;
                 }
 
 
-                switch (alt309) {
+                switch (alt308) {
             	case 1 :
             	    // InternalLustre.g:27957:3: rule__QuotedTypedKeyStringValueAnnotation__Group_6__0
             	    {
@@ -93908,7 +93859,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             	    break;
 
             	default :
-            	    break loop309;
+            	    break loop308;
                 }
             } while (true);
 
@@ -94109,7 +94060,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:28024:1: ( rule__ExtendedID__Group__0__Impl rule__ExtendedID__Group__1 )
             // InternalLustre.g:28025:2: rule__ExtendedID__Group__0__Impl rule__ExtendedID__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_162);
+            pushFollow(FollowSets000.FOLLOW_161);
             rule__ExtendedID__Group__0__Impl();
 
             state._fsp--;
@@ -94188,7 +94139,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:28051:1: ( rule__ExtendedID__Group__1__Impl rule__ExtendedID__Group__2 )
             // InternalLustre.g:28052:2: rule__ExtendedID__Group__1__Impl rule__ExtendedID__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_162);
+            pushFollow(FollowSets000.FOLLOW_161);
             rule__ExtendedID__Group__1__Impl();
 
             state._fsp--;
@@ -94233,30 +94184,30 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
                before(grammarAccess.getExtendedIDAccess().getGroup_1()); 
             }
             // InternalLustre.g:28066:2: ( rule__ExtendedID__Group_1__0 )*
-            loop310:
+            loop309:
             do {
-                int alt310=2;
-                int LA310_0 = input.LA(1);
+                int alt309=2;
+                int LA309_0 = input.LA(1);
 
-                if ( (LA310_0==40) ) {
-                    int LA310_2 = input.LA(2);
+                if ( (LA309_0==40) ) {
+                    int LA309_2 = input.LA(2);
 
-                    if ( (LA310_2==RULE_ID) ) {
-                        alt310=1;
+                    if ( (LA309_2==RULE_ID) ) {
+                        alt309=1;
                     }
 
 
                 }
-                else if ( (LA310_0==53) ) {
-                    alt310=1;
+                else if ( (LA309_0==53) ) {
+                    alt309=1;
                 }
 
 
-                switch (alt310) {
+                switch (alt309) {
             	case 1 :
             	    // InternalLustre.g:28066:3: rule__ExtendedID__Group_1__0
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_163);
+            	    pushFollow(FollowSets000.FOLLOW_162);
             	    rule__ExtendedID__Group_1__0();
 
             	    state._fsp--;
@@ -94266,7 +94217,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             	    break;
 
             	default :
-            	    break loop310;
+            	    break loop309;
                 }
             } while (true);
 
@@ -94344,13 +94295,13 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
                before(grammarAccess.getExtendedIDAccess().getGroup_2()); 
             }
             // InternalLustre.g:28092:2: ( rule__ExtendedID__Group_2__0 )?
-            int alt311=2;
-            int LA311_0 = input.LA(1);
+            int alt310=2;
+            int LA310_0 = input.LA(1);
 
-            if ( (LA311_0==31) ) {
-                alt311=1;
+            if ( (LA310_0==31) ) {
+                alt310=1;
             }
-            switch (alt311) {
+            switch (alt310) {
                 case 1 :
                     // InternalLustre.g:28092:3: rule__ExtendedID__Group_2__0
                     {
@@ -94715,7 +94666,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:28213:1: ( rule__Integer__Group__0__Impl rule__Integer__Group__1 )
             // InternalLustre.g:28214:2: rule__Integer__Group__0__Impl rule__Integer__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_164);
+            pushFollow(FollowSets000.FOLLOW_163);
             rule__Integer__Group__0__Impl();
 
             state._fsp--;
@@ -94760,13 +94711,13 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
                before(grammarAccess.getIntegerAccess().getHyphenMinusKeyword_0()); 
             }
             // InternalLustre.g:28228:2: ( '-' )?
-            int alt312=2;
-            int LA312_0 = input.LA(1);
+            int alt311=2;
+            int LA311_0 = input.LA(1);
 
-            if ( (LA312_0==40) ) {
-                alt312=1;
+            if ( (LA311_0==40) ) {
+                alt311=1;
             }
-            switch (alt312) {
+            switch (alt311) {
                 case 1 :
                     // InternalLustre.g:28228:3: '-'
                     {
@@ -94885,7 +94836,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:28267:1: ( rule__Floateger__Group__0__Impl rule__Floateger__Group__1 )
             // InternalLustre.g:28268:2: rule__Floateger__Group__0__Impl rule__Floateger__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_160);
+            pushFollow(FollowSets000.FOLLOW_159);
             rule__Floateger__Group__0__Impl();
 
             state._fsp--;
@@ -94930,13 +94881,13 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
                before(grammarAccess.getFloategerAccess().getHyphenMinusKeyword_0()); 
             }
             // InternalLustre.g:28282:2: ( '-' )?
-            int alt313=2;
-            int LA313_0 = input.LA(1);
+            int alt312=2;
+            int LA312_0 = input.LA(1);
 
-            if ( (LA313_0==40) ) {
-                alt313=1;
+            if ( (LA312_0==40) ) {
+                alt312=1;
             }
-            switch (alt313) {
+            switch (alt312) {
                 case 1 :
                     // InternalLustre.g:28282:3: '-'
                     {
@@ -113625,36 +113576,6 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
     }
     // $ANTLR end synpred88_InternalLustre
 
-    // $ANTLR start synpred92_InternalLustre
-    public final void synpred92_InternalLustre_fragment() throws RecognitionException {   
-        // InternalLustre.g:5247:2: ( ( ( rule__Parameter__Group_0__0 ) ) )
-        // InternalLustre.g:5247:2: ( ( rule__Parameter__Group_0__0 ) )
-        {
-        // InternalLustre.g:5247:2: ( ( rule__Parameter__Group_0__0 ) )
-        // InternalLustre.g:5248:3: ( rule__Parameter__Group_0__0 )
-        {
-        if ( state.backtracking==0 ) {
-           before(grammarAccess.getParameterAccess().getGroup_0()); 
-        }
-        // InternalLustre.g:5249:3: ( rule__Parameter__Group_0__0 )
-        // InternalLustre.g:5249:4: rule__Parameter__Group_0__0
-        {
-        pushFollow(FollowSets000.FOLLOW_2);
-        rule__Parameter__Group_0__0();
-
-        state._fsp--;
-        if (state.failed) return ;
-
-        }
-
-
-        }
-
-
-        }
-    }
-    // $ANTLR end synpred92_InternalLustre
-
     // $ANTLR start synpred93_InternalLustre
     public final void synpred93_InternalLustre_fragment() throws RecognitionException {   
         // InternalLustre.g:5268:2: ( ( ruleBoolExpression ) )
@@ -113913,20 +113834,6 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
         int start = input.mark();
         try {
             synpred88_InternalLustre_fragment(); // can never throw exception
-        } catch (RecognitionException re) {
-            System.err.println("impossible: "+re);
-        }
-        boolean success = !state.failed;
-        input.rewind(start);
-        state.backtracking--;
-        state.failed=false;
-        return success;
-    }
-    public final boolean synpred92_InternalLustre() {
-        state.backtracking++;
-        int start = input.mark();
-        try {
-            synpred92_InternalLustre_fragment(); // can never throw exception
         } catch (RecognitionException re) {
             System.err.println("impossible: "+re);
         }
@@ -116722,31 +116629,31 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
         }
     }
     static final String dfa_68s = "\24\uffff";
-    static final String dfa_69s = "\3\uffff\1\12\5\uffff\1\10\1\uffff\2\12\1\uffff\1\10\1\uffff\1\10\1\uffff\1\10\1\uffff";
-    static final String dfa_70s = "\1\12\1\uffff\1\6\1\4\2\6\1\7\2\uffff\1\6\1\uffff\2\4\6\6\1\0";
-    static final String dfa_71s = "\1\164\1\uffff\1\6\1\175\1\6\1\10\1\7\2\uffff\1\175\1\uffff\2\175\1\6\1\175\1\6\1\175\1\6\1\175\1\0";
-    static final String dfa_72s = "\1\uffff\1\1\5\uffff\1\3\1\2\1\uffff\1\4\11\uffff";
+    static final String dfa_69s = "\3\uffff\1\7\4\uffff\1\12\2\uffff\2\7\1\uffff\1\12\1\uffff\1\12\1\uffff\1\12\1\uffff";
+    static final String dfa_70s = "\1\12\1\uffff\1\6\1\4\2\6\1\7\1\uffff\1\6\2\uffff\2\4\6\6\1\0";
+    static final String dfa_71s = "\1\164\1\uffff\1\6\1\175\1\6\1\10\1\7\1\uffff\1\175\2\uffff\2\175\1\6\1\175\1\6\1\175\1\6\1\175\1\0";
+    static final String dfa_72s = "\1\uffff\1\1\5\uffff\1\4\1\uffff\1\3\1\2\11\uffff";
     static final String dfa_73s = "\23\uffff\1\0}>";
     static final String[] dfa_74s = {
             "\1\1\151\uffff\1\2",
             "",
             "\1\3",
-            "\2\10\1\11\2\10\2\12\24\uffff\1\6\10\uffff\1\5\7\uffff\3\12\2\uffff\1\4\3\uffff\3\12\14\uffff\6\12\2\uffff\1\12\4\uffff\1\12\20\uffff\5\12\1\7\3\uffff\2\12\3\uffff\1\12\5\uffff\4\12",
+            "\2\12\1\10\2\12\2\7\24\uffff\1\6\10\uffff\1\5\7\uffff\3\7\2\uffff\1\4\3\uffff\3\7\14\uffff\6\7\2\uffff\1\7\4\uffff\1\7\20\uffff\5\7\1\11\3\uffff\2\7\3\uffff\1\7\5\uffff\4\7",
             "\1\13",
-            "\1\13\2\10",
+            "\1\13\2\12",
             "\1\14",
             "",
+            "\1\12\2\uffff\2\12\7\uffff\1\7\14\uffff\1\12\10\uffff\1\12\7\uffff\3\12\1\uffff\1\7\1\15\3\uffff\3\12\7\uffff\2\7\3\uffff\6\12\2\uffff\1\12\3\uffff\2\12\1\uffff\1\7\16\uffff\5\12\1\7\3\uffff\2\12\1\7\2\uffff\1\12\5\uffff\4\12",
             "",
-            "\1\10\2\uffff\2\10\7\uffff\1\12\14\uffff\1\10\10\uffff\1\10\7\uffff\3\10\1\uffff\1\12\1\15\3\uffff\3\10\7\uffff\2\12\3\uffff\6\10\2\uffff\1\10\3\uffff\2\10\1\uffff\1\12\16\uffff\5\10\1\12\3\uffff\2\10\1\12\2\uffff\1\10\5\uffff\4\10",
             "",
-            "\2\10\1\11\2\10\2\12\24\uffff\1\6\10\uffff\1\5\7\uffff\3\12\2\uffff\1\4\3\uffff\3\12\14\uffff\6\12\2\uffff\1\12\4\uffff\1\12\20\uffff\5\12\1\7\3\uffff\2\12\3\uffff\1\12\5\uffff\4\12",
-            "\2\10\1\11\2\10\2\12\35\uffff\1\10\7\uffff\3\12\6\uffff\3\12\14\uffff\6\12\2\uffff\1\12\4\uffff\1\12\20\uffff\5\12\1\7\3\uffff\2\12\3\uffff\1\12\5\uffff\4\12",
+            "\2\12\1\10\2\12\2\7\24\uffff\1\6\10\uffff\1\5\7\uffff\3\7\2\uffff\1\4\3\uffff\3\7\14\uffff\6\7\2\uffff\1\7\4\uffff\1\7\20\uffff\5\7\1\11\3\uffff\2\7\3\uffff\1\7\5\uffff\4\7",
+            "\2\12\1\10\2\12\2\7\35\uffff\1\12\7\uffff\3\7\6\uffff\3\7\14\uffff\6\7\2\uffff\1\7\4\uffff\1\7\20\uffff\5\7\1\11\3\uffff\2\7\3\uffff\1\7\5\uffff\4\7",
             "\1\16",
-            "\1\10\2\uffff\2\10\7\uffff\1\12\14\uffff\1\10\10\uffff\1\10\7\uffff\3\10\1\uffff\1\12\1\17\3\uffff\3\10\7\uffff\2\12\3\uffff\6\10\2\uffff\1\10\3\uffff\2\10\1\uffff\1\12\16\uffff\5\10\1\12\3\uffff\2\10\1\12\2\uffff\1\10\5\uffff\4\10",
+            "\1\12\2\uffff\2\12\7\uffff\1\7\14\uffff\1\12\10\uffff\1\12\7\uffff\3\12\1\uffff\1\7\1\17\3\uffff\3\12\7\uffff\2\7\3\uffff\6\12\2\uffff\1\12\3\uffff\2\12\1\uffff\1\7\16\uffff\5\12\1\7\3\uffff\2\12\1\7\2\uffff\1\12\5\uffff\4\12",
             "\1\20",
-            "\1\10\2\uffff\2\10\7\uffff\1\12\14\uffff\1\10\10\uffff\1\10\7\uffff\3\10\1\uffff\1\12\1\21\3\uffff\3\10\7\uffff\2\12\3\uffff\6\10\2\uffff\1\10\3\uffff\2\10\1\uffff\1\12\16\uffff\5\10\1\12\3\uffff\2\10\1\12\2\uffff\1\10\5\uffff\4\10",
+            "\1\12\2\uffff\2\12\7\uffff\1\7\14\uffff\1\12\10\uffff\1\12\7\uffff\3\12\1\uffff\1\7\1\21\3\uffff\3\12\7\uffff\2\7\3\uffff\6\12\2\uffff\1\12\3\uffff\2\12\1\uffff\1\7\16\uffff\5\12\1\7\3\uffff\2\12\1\7\2\uffff\1\12\5\uffff\4\12",
             "\1\22",
-            "\1\10\2\uffff\2\10\7\uffff\1\12\14\uffff\1\10\10\uffff\1\10\7\uffff\3\10\1\uffff\1\12\1\23\3\uffff\3\10\7\uffff\2\12\3\uffff\6\10\2\uffff\1\10\3\uffff\2\10\1\uffff\1\12\16\uffff\5\10\1\12\3\uffff\2\10\1\12\2\uffff\1\10\5\uffff\4\10",
+            "\1\12\2\uffff\2\12\7\uffff\1\7\14\uffff\1\12\10\uffff\1\12\7\uffff\3\12\1\uffff\1\7\1\23\3\uffff\3\12\7\uffff\2\7\3\uffff\6\12\2\uffff\1\12\3\uffff\2\12\1\uffff\1\7\16\uffff\5\12\1\7\3\uffff\2\12\1\7\2\uffff\1\12\5\uffff\4\12",
             "\1\uffff"
     };
 
@@ -116785,9 +116692,9 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
                         int index69_19 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred104_InternalLustre()) ) {s = 8;}
+                        if ( (synpred104_InternalLustre()) ) {s = 10;}
 
-                        else if ( (true) ) {s = 10;}
+                        else if ( (true) ) {s = 7;}
 
                          
                         input.seek(index69_19);
@@ -116884,24 +116791,24 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
         }
     }
     static final String dfa_86s = "\14\uffff";
-    static final String dfa_87s = "\3\uffff\1\11\6\uffff\2\11";
+    static final String dfa_87s = "\3\uffff\1\7\6\uffff\2\7";
     static final String dfa_88s = "\1\12\1\uffff\1\6\1\4\2\6\1\7\3\uffff\2\4";
     static final String dfa_89s = "\1\164\1\uffff\1\6\1\164\2\6\1\7\3\uffff\2\164";
-    static final String dfa_90s = "\1\uffff\1\1\5\uffff\1\3\1\2\1\4\2\uffff";
+    static final String dfa_90s = "\1\uffff\1\1\5\uffff\1\4\1\2\1\3\2\uffff";
     static final String dfa_91s = "\14\uffff}>";
     static final String[] dfa_92s = {
             "\1\1\151\uffff\1\2",
             "",
             "\1\3",
-            "\1\10\1\uffff\1\11\3\uffff\1\11\24\uffff\1\6\10\uffff\1\5\14\uffff\1\4\65\uffff\1\7\10\uffff\1\11",
+            "\1\10\1\uffff\1\7\3\uffff\1\7\24\uffff\1\6\10\uffff\1\5\14\uffff\1\4\65\uffff\1\11\10\uffff\1\7",
             "\1\12",
             "\1\12",
             "\1\13",
             "",
             "",
             "",
-            "\1\10\1\uffff\1\11\3\uffff\1\11\24\uffff\1\6\10\uffff\1\5\14\uffff\1\4\65\uffff\1\7\10\uffff\1\11",
-            "\1\10\1\uffff\1\11\3\uffff\1\11\140\uffff\1\7\10\uffff\1\11"
+            "\1\10\1\uffff\1\7\3\uffff\1\7\24\uffff\1\6\10\uffff\1\5\14\uffff\1\4\65\uffff\1\11\10\uffff\1\7",
+            "\1\10\1\uffff\1\7\3\uffff\1\7\140\uffff\1\11\10\uffff\1\7"
     };
 
     static final short[] dfa_86 = DFA.unpackEncodedString(dfa_86s);
@@ -118339,18 +118246,17 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
         public static final BitSet FOLLOW_150 = new BitSet(new long[]{0x0000000000000002L,0x0002000000000000L});
         public static final BitSet FOLLOW_151 = new BitSet(new long[]{0x0020000000000000L,0x0000080000000000L});
         public static final BitSet FOLLOW_152 = new BitSet(new long[]{0x0000000000000080L});
-        public static final BitSet FOLLOW_153 = new BitSet(new long[]{0x0000084400000040L,0x0000000000004000L});
-        public static final BitSet FOLLOW_154 = new BitSet(new long[]{0x00000907C12001F0L,0x0004000000840000L});
-        public static final BitSet FOLLOW_155 = new BitSet(new long[]{0x0000000000000010L,0x0000000000080000L});
-        public static final BitSet FOLLOW_156 = new BitSet(new long[]{0x00000000000001B0L,0x0008080000040000L});
-        public static final BitSet FOLLOW_157 = new BitSet(new long[]{0x0000000000000000L,0x0000080000000000L});
-        public static final BitSet FOLLOW_158 = new BitSet(new long[]{0x00000000000001B0L,0x0008180000040000L});
-        public static final BitSet FOLLOW_159 = new BitSet(new long[]{0x0000000000000000L,0x0008000000000000L});
-        public static final BitSet FOLLOW_160 = new BitSet(new long[]{0x00000100000001F0L});
-        public static final BitSet FOLLOW_161 = new BitSet(new long[]{0x0000000000000070L});
-        public static final BitSet FOLLOW_162 = new BitSet(new long[]{0x0020010080000000L});
-        public static final BitSet FOLLOW_163 = new BitSet(new long[]{0x0020010000000002L});
-        public static final BitSet FOLLOW_164 = new BitSet(new long[]{0x0000010000000080L});
+        public static final BitSet FOLLOW_153 = new BitSet(new long[]{0x00000907C12001F0L,0x0004000000840000L});
+        public static final BitSet FOLLOW_154 = new BitSet(new long[]{0x0000000000000010L,0x0000000000080000L});
+        public static final BitSet FOLLOW_155 = new BitSet(new long[]{0x00000000000001B0L,0x0008080000040000L});
+        public static final BitSet FOLLOW_156 = new BitSet(new long[]{0x0000000000000000L,0x0000080000000000L});
+        public static final BitSet FOLLOW_157 = new BitSet(new long[]{0x00000000000001B0L,0x0008180000040000L});
+        public static final BitSet FOLLOW_158 = new BitSet(new long[]{0x0000000000000000L,0x0008000000000000L});
+        public static final BitSet FOLLOW_159 = new BitSet(new long[]{0x00000100000001F0L});
+        public static final BitSet FOLLOW_160 = new BitSet(new long[]{0x0000000000000070L});
+        public static final BitSet FOLLOW_161 = new BitSet(new long[]{0x0020010080000000L});
+        public static final BitSet FOLLOW_162 = new BitSet(new long[]{0x0020010000000002L});
+        public static final BitSet FOLLOW_163 = new BitSet(new long[]{0x0000010000000080L});
     }
 
 

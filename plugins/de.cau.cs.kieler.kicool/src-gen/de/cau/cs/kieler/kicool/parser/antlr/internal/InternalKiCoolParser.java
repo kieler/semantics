@@ -4477,11 +4477,11 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
                 {
                 int LA43_1 = input.LA(2);
 
-                if ( ((LA43_1>=107 && LA43_1<=111)) ) {
-                    alt43=1;
-                }
-                else if ( (LA43_1==RULE_ID||LA43_1==RULE_COMMENT_ANNOTATION||LA43_1==79) ) {
+                if ( (LA43_1==RULE_ID||LA43_1==RULE_COMMENT_ANNOTATION||LA43_1==79) ) {
                     alt43=2;
+                }
+                else if ( ((LA43_1>=107 && LA43_1<=111)) ) {
+                    alt43=1;
                 }
                 else {
                     if (state.backtracking>0) {state.failed=true; return current;}
@@ -24222,7 +24222,7 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleParameter"
-    // InternalKiCool.g:8800:1: ruleParameter returns [EObject current=null] : ( ( ( (lv_accessType_0_0= ruleParameterAccessType ) )? ( (lv_expression_1_0= ruleValuedObjectReference ) ) ) | ( (lv_expression_2_0= ruleExpression ) ) ) ;
+    // InternalKiCool.g:8800:1: ruleParameter returns [EObject current=null] : ( ( ( (lv_accessType_0_0= ruleParameterAccessType ) ) ( (lv_expression_1_0= ruleValuedObjectReference ) ) ) | ( (lv_expression_2_0= ruleExpression ) ) ) ;
     public final EObject ruleParameter() throws RecognitionException {
         EObject current = null;
 
@@ -24237,116 +24237,65 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalKiCool.g:8806:2: ( ( ( ( (lv_accessType_0_0= ruleParameterAccessType ) )? ( (lv_expression_1_0= ruleValuedObjectReference ) ) ) | ( (lv_expression_2_0= ruleExpression ) ) ) )
-            // InternalKiCool.g:8807:2: ( ( ( (lv_accessType_0_0= ruleParameterAccessType ) )? ( (lv_expression_1_0= ruleValuedObjectReference ) ) ) | ( (lv_expression_2_0= ruleExpression ) ) )
+            // InternalKiCool.g:8806:2: ( ( ( ( (lv_accessType_0_0= ruleParameterAccessType ) ) ( (lv_expression_1_0= ruleValuedObjectReference ) ) ) | ( (lv_expression_2_0= ruleExpression ) ) ) )
+            // InternalKiCool.g:8807:2: ( ( ( (lv_accessType_0_0= ruleParameterAccessType ) ) ( (lv_expression_1_0= ruleValuedObjectReference ) ) ) | ( (lv_expression_2_0= ruleExpression ) ) )
             {
-            // InternalKiCool.g:8807:2: ( ( ( (lv_accessType_0_0= ruleParameterAccessType ) )? ( (lv_expression_1_0= ruleValuedObjectReference ) ) ) | ( (lv_expression_2_0= ruleExpression ) ) )
-            int alt230=2;
-            switch ( input.LA(1) ) {
-            case 62:
-            case 120:
-                {
-                alt230=1;
-                }
-                break;
-            case RULE_ID:
-                {
-                int LA230_2 = input.LA(2);
+            // InternalKiCool.g:8807:2: ( ( ( (lv_accessType_0_0= ruleParameterAccessType ) ) ( (lv_expression_1_0= ruleValuedObjectReference ) ) ) | ( (lv_expression_2_0= ruleExpression ) ) )
+            int alt229=2;
+            int LA229_0 = input.LA(1);
 
-                if ( (synpred261_InternalKiCool()) ) {
-                    alt230=1;
-                }
-                else if ( (true) ) {
-                    alt230=2;
-                }
-                else {
-                    if (state.backtracking>0) {state.failed=true; return current;}
-                    NoViableAltException nvae =
-                        new NoViableAltException("", 230, 2, input);
-
-                    throw nvae;
-                }
-                }
-                break;
-            case RULE_STRING:
-            case RULE_HOSTCODE:
-            case RULE_INT:
-            case RULE_FLOAT:
-            case RULE_BOOLEAN:
-            case RULE_COMMENT_ANNOTATION:
-            case 28:
-            case 34:
-            case 47:
-            case 53:
-            case 58:
-            case 67:
-            case 75:
-            case 79:
-            case 103:
-            case 104:
-            case 105:
-                {
-                alt230=2;
-                }
-                break;
-            default:
+            if ( (LA229_0==62||LA229_0==120) ) {
+                alt229=1;
+            }
+            else if ( ((LA229_0>=RULE_ID && LA229_0<=RULE_COMMENT_ANNOTATION)||LA229_0==28||LA229_0==34||LA229_0==47||LA229_0==53||LA229_0==58||LA229_0==67||LA229_0==75||LA229_0==79||(LA229_0>=103 && LA229_0<=105)) ) {
+                alt229=2;
+            }
+            else {
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 230, 0, input);
+                    new NoViableAltException("", 229, 0, input);
 
                 throw nvae;
             }
-
-            switch (alt230) {
+            switch (alt229) {
                 case 1 :
-                    // InternalKiCool.g:8808:3: ( ( (lv_accessType_0_0= ruleParameterAccessType ) )? ( (lv_expression_1_0= ruleValuedObjectReference ) ) )
+                    // InternalKiCool.g:8808:3: ( ( (lv_accessType_0_0= ruleParameterAccessType ) ) ( (lv_expression_1_0= ruleValuedObjectReference ) ) )
                     {
-                    // InternalKiCool.g:8808:3: ( ( (lv_accessType_0_0= ruleParameterAccessType ) )? ( (lv_expression_1_0= ruleValuedObjectReference ) ) )
-                    // InternalKiCool.g:8809:4: ( (lv_accessType_0_0= ruleParameterAccessType ) )? ( (lv_expression_1_0= ruleValuedObjectReference ) )
+                    // InternalKiCool.g:8808:3: ( ( (lv_accessType_0_0= ruleParameterAccessType ) ) ( (lv_expression_1_0= ruleValuedObjectReference ) ) )
+                    // InternalKiCool.g:8809:4: ( (lv_accessType_0_0= ruleParameterAccessType ) ) ( (lv_expression_1_0= ruleValuedObjectReference ) )
                     {
-                    // InternalKiCool.g:8809:4: ( (lv_accessType_0_0= ruleParameterAccessType ) )?
-                    int alt229=2;
-                    int LA229_0 = input.LA(1);
+                    // InternalKiCool.g:8809:4: ( (lv_accessType_0_0= ruleParameterAccessType ) )
+                    // InternalKiCool.g:8810:5: (lv_accessType_0_0= ruleParameterAccessType )
+                    {
+                    // InternalKiCool.g:8810:5: (lv_accessType_0_0= ruleParameterAccessType )
+                    // InternalKiCool.g:8811:6: lv_accessType_0_0= ruleParameterAccessType
+                    {
+                    if ( state.backtracking==0 ) {
 
-                    if ( (LA229_0==62||LA229_0==120) ) {
-                        alt229=1;
+                      						newCompositeNode(grammarAccess.getParameterAccess().getAccessTypeParameterAccessTypeEnumRuleCall_0_0_0());
+                      					
                     }
-                    switch (alt229) {
-                        case 1 :
-                            // InternalKiCool.g:8810:5: (lv_accessType_0_0= ruleParameterAccessType )
-                            {
-                            // InternalKiCool.g:8810:5: (lv_accessType_0_0= ruleParameterAccessType )
-                            // InternalKiCool.g:8811:6: lv_accessType_0_0= ruleParameterAccessType
-                            {
-                            if ( state.backtracking==0 ) {
+                    pushFollow(FollowSets000.FOLLOW_39);
+                    lv_accessType_0_0=ruleParameterAccessType();
 
-                              						newCompositeNode(grammarAccess.getParameterAccess().getAccessTypeParameterAccessTypeEnumRuleCall_0_0_0());
-                              					
-                            }
-                            pushFollow(FollowSets000.FOLLOW_39);
-                            lv_accessType_0_0=ruleParameterAccessType();
+                    state._fsp--;
+                    if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
 
-                            state._fsp--;
-                            if (state.failed) return current;
-                            if ( state.backtracking==0 ) {
+                      						if (current==null) {
+                      							current = createModelElementForParent(grammarAccess.getParameterRule());
+                      						}
+                      						set(
+                      							current,
+                      							"accessType",
+                      							lv_accessType_0_0,
+                      							"de.cau.cs.kieler.kexpressions.KExpressions.ParameterAccessType");
+                      						afterParserOrEnumRuleCall();
+                      					
+                    }
 
-                              						if (current==null) {
-                              							current = createModelElementForParent(grammarAccess.getParameterRule());
-                              						}
-                              						set(
-                              							current,
-                              							"accessType",
-                              							lv_accessType_0_0,
-                              							"de.cau.cs.kieler.kexpressions.KExpressions.ParameterAccessType");
-                              						afterParserOrEnumRuleCall();
-                              					
-                            }
+                    }
 
-                            }
-
-
-                            }
-                            break;
 
                     }
 
@@ -24516,17 +24465,17 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
             // InternalKiCool.g:8887:3: ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_text_1_0= RULE_HOSTCODE ) )
             {
             // InternalKiCool.g:8887:3: ( (lv_annotations_0_0= ruleAnnotation ) )*
-            loop231:
+            loop230:
             do {
-                int alt231=2;
-                int LA231_0 = input.LA(1);
+                int alt230=2;
+                int LA230_0 = input.LA(1);
 
-                if ( (LA231_0==RULE_COMMENT_ANNOTATION||LA231_0==79) ) {
-                    alt231=1;
+                if ( (LA230_0==RULE_COMMENT_ANNOTATION||LA230_0==79) ) {
+                    alt230=1;
                 }
 
 
-                switch (alt231) {
+                switch (alt230) {
             	case 1 :
             	    // InternalKiCool.g:8888:4: (lv_annotations_0_0= ruleAnnotation )
             	    {
@@ -24564,7 +24513,7 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
             	    break;
 
             	default :
-            	    break loop231;
+            	    break loop230;
                 }
             } while (true);
 
@@ -25147,17 +25096,17 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
             }
 
             // InternalKiCool.g:9106:3: (otherlv_2= ',' ( (lv_values_3_0= ruleVectorValueMember ) ) )*
-            loop232:
+            loop231:
             do {
-                int alt232=2;
-                int LA232_0 = input.LA(1);
+                int alt231=2;
+                int LA231_0 = input.LA(1);
 
-                if ( (LA232_0==44) ) {
-                    alt232=1;
+                if ( (LA231_0==44) ) {
+                    alt231=1;
                 }
 
 
-                switch (alt232) {
+                switch (alt231) {
             	case 1 :
             	    // InternalKiCool.g:9107:4: otherlv_2= ',' ( (lv_values_3_0= ruleVectorValueMember ) )
             	    {
@@ -25207,7 +25156,7 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
             	    break;
 
             	default :
-            	    break loop232;
+            	    break loop231;
                 }
             } while (true);
 
@@ -25301,9 +25250,9 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
             // InternalKiCool.g:9153:2: (this_BoolExpression_0= ruleBoolExpression | this_ValuedExpression_1= ruleValuedExpression | this_IgnoreValue_2= ruleIgnoreValue )
             {
             // InternalKiCool.g:9153:2: (this_BoolExpression_0= ruleBoolExpression | this_ValuedExpression_1= ruleValuedExpression | this_IgnoreValue_2= ruleIgnoreValue )
-            int alt233=3;
-            alt233 = dfa233.predict(input);
-            switch (alt233) {
+            int alt232=3;
+            alt232 = dfa232.predict(input);
+            switch (alt232) {
                 case 1 :
                     // InternalKiCool.g:9154:3: this_BoolExpression_0= ruleBoolExpression
                     {
@@ -25576,37 +25525,37 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
             // InternalKiCool.g:9240:2: (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_BoolValue_2= ruleBoolValue | this_StringValue_3= ruleStringValue )
             {
             // InternalKiCool.g:9240:2: (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_BoolValue_2= ruleBoolValue | this_StringValue_3= ruleStringValue )
-            int alt234=4;
+            int alt233=4;
             switch ( input.LA(1) ) {
             case RULE_INT:
                 {
-                alt234=1;
+                alt233=1;
                 }
                 break;
             case RULE_FLOAT:
                 {
-                alt234=2;
+                alt233=2;
                 }
                 break;
             case RULE_BOOLEAN:
                 {
-                alt234=3;
+                alt233=3;
                 }
                 break;
             case RULE_STRING:
                 {
-                alt234=4;
+                alt233=4;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 234, 0, input);
+                    new NoViableAltException("", 233, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt234) {
+            switch (alt233) {
                 case 1 :
                     // InternalKiCool.g:9241:3: this_IntValue_0= ruleIntValue
                     {
@@ -25827,13 +25776,13 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
               		
             }
             // InternalKiCool.g:9321:3: ( ( (lv_members_2_0= ruleJsonObjectMember ) ) (otherlv_3= ',' ( (lv_members_4_0= ruleJsonObjectMember ) ) )* )?
-            int alt236=2;
-            int LA236_0 = input.LA(1);
+            int alt235=2;
+            int LA235_0 = input.LA(1);
 
-            if ( (LA236_0==RULE_STRING) ) {
-                alt236=1;
+            if ( (LA235_0==RULE_STRING) ) {
+                alt235=1;
             }
-            switch (alt236) {
+            switch (alt235) {
                 case 1 :
                     // InternalKiCool.g:9322:4: ( (lv_members_2_0= ruleJsonObjectMember ) ) (otherlv_3= ',' ( (lv_members_4_0= ruleJsonObjectMember ) ) )*
                     {
@@ -25873,17 +25822,17 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
                     }
 
                     // InternalKiCool.g:9341:4: (otherlv_3= ',' ( (lv_members_4_0= ruleJsonObjectMember ) ) )*
-                    loop235:
+                    loop234:
                     do {
-                        int alt235=2;
-                        int LA235_0 = input.LA(1);
+                        int alt234=2;
+                        int LA234_0 = input.LA(1);
 
-                        if ( (LA235_0==44) ) {
-                            alt235=1;
+                        if ( (LA234_0==44) ) {
+                            alt234=1;
                         }
 
 
-                        switch (alt235) {
+                        switch (alt234) {
                     	case 1 :
                     	    // InternalKiCool.g:9342:5: otherlv_3= ',' ( (lv_members_4_0= ruleJsonObjectMember ) )
                     	    {
@@ -25933,7 +25882,7 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
                     	    break;
 
                     	default :
-                    	    break loop235;
+                    	    break loop234;
                         }
                     } while (true);
 
@@ -26216,13 +26165,13 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
               		
             }
             // InternalKiCool.g:9464:3: ( ( (lv_elements_2_0= ruleJsonValue ) ) (otherlv_3= ',' ( (lv_elements_4_0= ruleJsonValue ) ) )* )?
-            int alt238=2;
-            int LA238_0 = input.LA(1);
+            int alt237=2;
+            int LA237_0 = input.LA(1);
 
-            if ( (LA238_0==RULE_STRING||(LA238_0>=RULE_INT && LA238_0<=RULE_BOOLEAN)||LA238_0==26||LA238_0==34||LA238_0==77) ) {
-                alt238=1;
+            if ( (LA237_0==RULE_STRING||(LA237_0>=RULE_INT && LA237_0<=RULE_BOOLEAN)||LA237_0==26||LA237_0==34||LA237_0==77) ) {
+                alt237=1;
             }
-            switch (alt238) {
+            switch (alt237) {
                 case 1 :
                     // InternalKiCool.g:9465:4: ( (lv_elements_2_0= ruleJsonValue ) ) (otherlv_3= ',' ( (lv_elements_4_0= ruleJsonValue ) ) )*
                     {
@@ -26262,17 +26211,17 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
                     }
 
                     // InternalKiCool.g:9484:4: (otherlv_3= ',' ( (lv_elements_4_0= ruleJsonValue ) ) )*
-                    loop237:
+                    loop236:
                     do {
-                        int alt237=2;
-                        int LA237_0 = input.LA(1);
+                        int alt236=2;
+                        int LA236_0 = input.LA(1);
 
-                        if ( (LA237_0==44) ) {
-                            alt237=1;
+                        if ( (LA236_0==44) ) {
+                            alt236=1;
                         }
 
 
-                        switch (alt237) {
+                        switch (alt236) {
                     	case 1 :
                     	    // InternalKiCool.g:9485:5: otherlv_3= ',' ( (lv_elements_4_0= ruleJsonValue ) )
                     	    {
@@ -26322,7 +26271,7 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
                     	    break;
 
                     	default :
-                    	    break loop237;
+                    	    break loop236;
                         }
                     } while (true);
 
@@ -26424,21 +26373,21 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
             // InternalKiCool.g:9532:2: (this_JsonObjectValue_0= ruleJsonObjectValue | this_JsonArrayValue_1= ruleJsonArrayValue | this_NullValue_2= ruleNullValue | this_AnyValue_3= ruleAnyValue )
             {
             // InternalKiCool.g:9532:2: (this_JsonObjectValue_0= ruleJsonObjectValue | this_JsonArrayValue_1= ruleJsonArrayValue | this_NullValue_2= ruleNullValue | this_AnyValue_3= ruleAnyValue )
-            int alt239=4;
+            int alt238=4;
             switch ( input.LA(1) ) {
             case 34:
                 {
-                alt239=1;
+                alt238=1;
                 }
                 break;
             case 26:
                 {
-                alt239=2;
+                alt238=2;
                 }
                 break;
             case 77:
                 {
-                alt239=3;
+                alt238=3;
                 }
                 break;
             case RULE_STRING:
@@ -26446,18 +26395,18 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
             case RULE_FLOAT:
             case RULE_BOOLEAN:
                 {
-                alt239=4;
+                alt238=4;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 239, 0, input);
+                    new NoViableAltException("", 238, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt239) {
+            switch (alt238) {
                 case 1 :
                     // InternalKiCool.g:9533:3: this_JsonObjectValue_0= ruleJsonObjectValue
                     {
@@ -27075,9 +27024,9 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
             // InternalKiCool.g:9753:2: (this_Pragma_0= superPragma | this_JsonPragma_1= ruleJsonPragma )
             {
             // InternalKiCool.g:9753:2: (this_Pragma_0= superPragma | this_JsonPragma_1= ruleJsonPragma )
-            int alt240=2;
-            alt240 = dfa240.predict(input);
-            switch (alt240) {
+            int alt239=2;
+            alt239 = dfa239.predict(input);
+            switch (alt239) {
                 case 1 :
                     // InternalKiCool.g:9754:3: this_Pragma_0= superPragma
                     {
@@ -27214,9 +27163,9 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
             // InternalKiCool.g:9795:2: (this_Annotation_0= superAnnotation | this_JsonAnnotation_1= ruleJsonAnnotation )
             {
             // InternalKiCool.g:9795:2: (this_Annotation_0= superAnnotation | this_JsonAnnotation_1= ruleJsonAnnotation )
-            int alt241=2;
-            alt241 = dfa241.predict(input);
-            switch (alt241) {
+            int alt240=2;
+            alt240 = dfa240.predict(input);
+            switch (alt240) {
                 case 1 :
                     // InternalKiCool.g:9796:3: this_Annotation_0= superAnnotation
                     {
@@ -27353,9 +27302,9 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
             // InternalKiCool.g:9837:2: (this_QuotedStringAnnotation_0= superQuotedStringAnnotation | this_JsonAnnotation_1= ruleJsonAnnotation )
             {
             // InternalKiCool.g:9837:2: (this_QuotedStringAnnotation_0= superQuotedStringAnnotation | this_JsonAnnotation_1= ruleJsonAnnotation )
-            int alt242=2;
-            alt242 = dfa242.predict(input);
-            switch (alt242) {
+            int alt241=2;
+            alt241 = dfa241.predict(input);
+            switch (alt241) {
                 case 1 :
                     // InternalKiCool.g:9838:3: this_QuotedStringAnnotation_0= superQuotedStringAnnotation
                     {
@@ -27496,9 +27445,9 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
             // InternalKiCool.g:9879:2: (this_CommentAnnotation_0= ruleCommentAnnotation | this_KeyStringValueAnnotation_1= ruleKeyStringValueAnnotation | this_TypedKeyStringValueAnnotation_2= ruleTypedKeyStringValueAnnotation | this_TagAnnotation_3= ruleTagAnnotation )
             {
             // InternalKiCool.g:9879:2: (this_CommentAnnotation_0= ruleCommentAnnotation | this_KeyStringValueAnnotation_1= ruleKeyStringValueAnnotation | this_TypedKeyStringValueAnnotation_2= ruleTypedKeyStringValueAnnotation | this_TagAnnotation_3= ruleTagAnnotation )
-            int alt243=4;
-            alt243 = dfa243.predict(input);
-            switch (alt243) {
+            int alt242=4;
+            alt242 = dfa242.predict(input);
+            switch (alt242) {
                 case 1 :
                     // InternalKiCool.g:9880:3: this_CommentAnnotation_0= ruleCommentAnnotation
                     {
@@ -27689,9 +27638,9 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
             // InternalKiCool.g:9945:2: (this_StringPragma_0= ruleStringPragma | this_PragmaTag_1= rulePragmaTag )
             {
             // InternalKiCool.g:9945:2: (this_StringPragma_0= ruleStringPragma | this_PragmaTag_1= rulePragmaTag )
-            int alt244=2;
-            alt244 = dfa244.predict(input);
-            switch (alt244) {
+            int alt243=2;
+            alt243 = dfa243.predict(input);
+            switch (alt243) {
                 case 1 :
                     // InternalKiCool.g:9946:3: this_StringPragma_0= ruleStringPragma
                     {
@@ -27830,9 +27779,9 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
             // InternalKiCool.g:9987:2: (this_CommentAnnotation_0= ruleCommentAnnotation | this_KeyStringValueAnnotation_1= ruleKeyStringValueAnnotation | this_TypedKeyStringValueAnnotation_2= ruleTypedKeyStringValueAnnotation )
             {
             // InternalKiCool.g:9987:2: (this_CommentAnnotation_0= ruleCommentAnnotation | this_KeyStringValueAnnotation_1= ruleKeyStringValueAnnotation | this_TypedKeyStringValueAnnotation_2= ruleTypedKeyStringValueAnnotation )
-            int alt245=3;
-            alt245 = dfa245.predict(input);
-            switch (alt245) {
+            int alt244=3;
+            alt244 = dfa244.predict(input);
+            switch (alt244) {
                 case 1 :
                     // InternalKiCool.g:9988:3: this_CommentAnnotation_0= ruleCommentAnnotation
                     {
@@ -28000,9 +27949,9 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
             // InternalKiCool.g:10041:2: (this_CommentAnnotation_0= ruleCommentAnnotation | this_QuotedKeyStringValueAnnotation_1= ruleQuotedKeyStringValueAnnotation | this_QuotedTypedKeyStringValueAnnotation_2= ruleQuotedTypedKeyStringValueAnnotation | this_TagAnnotation_3= ruleTagAnnotation )
             {
             // InternalKiCool.g:10041:2: (this_CommentAnnotation_0= ruleCommentAnnotation | this_QuotedKeyStringValueAnnotation_1= ruleQuotedKeyStringValueAnnotation | this_QuotedTypedKeyStringValueAnnotation_2= ruleQuotedTypedKeyStringValueAnnotation | this_TagAnnotation_3= ruleTagAnnotation )
-            int alt246=4;
-            alt246 = dfa246.predict(input);
-            switch (alt246) {
+            int alt245=4;
+            alt245 = dfa245.predict(input);
+            switch (alt245) {
                 case 1 :
                     // InternalKiCool.g:10042:3: this_CommentAnnotation_0= ruleCommentAnnotation
                     {
@@ -28734,17 +28683,17 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
             }
 
             // InternalKiCool.g:10304:3: (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )*
-            loop247:
+            loop246:
             do {
-                int alt247=2;
-                int LA247_0 = input.LA(1);
+                int alt246=2;
+                int LA246_0 = input.LA(1);
 
-                if ( (LA247_0==44) ) {
-                    alt247=1;
+                if ( (LA246_0==44) ) {
+                    alt246=1;
                 }
 
 
-                switch (alt247) {
+                switch (alt246) {
             	case 1 :
             	    // InternalKiCool.g:10305:4: otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) )
             	    {
@@ -28794,7 +28743,7 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
             	    break;
 
             	default :
-            	    break loop247;
+            	    break loop246;
                 }
             } while (true);
 
@@ -28963,17 +28912,17 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
             }
 
             // InternalKiCool.g:10390:3: (otherlv_3= ',' ( (lv_values_4_0= ruleEStringBoolean ) ) )*
-            loop248:
+            loop247:
             do {
-                int alt248=2;
-                int LA248_0 = input.LA(1);
+                int alt247=2;
+                int LA247_0 = input.LA(1);
 
-                if ( (LA248_0==44) ) {
-                    alt248=1;
+                if ( (LA247_0==44) ) {
+                    alt247=1;
                 }
 
 
-                switch (alt248) {
+                switch (alt247) {
             	case 1 :
             	    // InternalKiCool.g:10391:4: otherlv_3= ',' ( (lv_values_4_0= ruleEStringBoolean ) )
             	    {
@@ -29023,7 +28972,7 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
             	    break;
 
             	default :
-            	    break loop248;
+            	    break loop247;
                 }
             } while (true);
 
@@ -29192,17 +29141,17 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
             }
 
             // InternalKiCool.g:10476:3: (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )*
-            loop249:
+            loop248:
             do {
-                int alt249=2;
-                int LA249_0 = input.LA(1);
+                int alt248=2;
+                int LA248_0 = input.LA(1);
 
-                if ( (LA249_0==44) ) {
-                    alt249=1;
+                if ( (LA248_0==44) ) {
+                    alt248=1;
                 }
 
 
-                switch (alt249) {
+                switch (alt248) {
             	case 1 :
             	    // InternalKiCool.g:10477:4: otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) )
             	    {
@@ -29252,7 +29201,7 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
             	    break;
 
             	default :
-            	    break loop249;
+            	    break loop248;
                 }
             } while (true);
 
@@ -29472,17 +29421,17 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
             }
 
             // InternalKiCool.g:10589:3: (otherlv_6= ',' ( (lv_values_7_0= ruleEStringAllTypes ) ) )*
-            loop250:
+            loop249:
             do {
-                int alt250=2;
-                int LA250_0 = input.LA(1);
+                int alt249=2;
+                int LA249_0 = input.LA(1);
 
-                if ( (LA250_0==44) ) {
-                    alt250=1;
+                if ( (LA249_0==44) ) {
+                    alt249=1;
                 }
 
 
-                switch (alt250) {
+                switch (alt249) {
             	case 1 :
             	    // InternalKiCool.g:10590:4: otherlv_6= ',' ( (lv_values_7_0= ruleEStringAllTypes ) )
             	    {
@@ -29532,7 +29481,7 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
             	    break;
 
             	default :
-            	    break loop250;
+            	    break loop249;
                 }
             } while (true);
 
@@ -29752,17 +29701,17 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
             }
 
             // InternalKiCool.g:10702:3: (otherlv_6= ',' ( (lv_values_7_0= ruleEStringBoolean ) ) )*
-            loop251:
+            loop250:
             do {
-                int alt251=2;
-                int LA251_0 = input.LA(1);
+                int alt250=2;
+                int LA250_0 = input.LA(1);
 
-                if ( (LA251_0==44) ) {
-                    alt251=1;
+                if ( (LA250_0==44) ) {
+                    alt250=1;
                 }
 
 
-                switch (alt251) {
+                switch (alt250) {
             	case 1 :
             	    // InternalKiCool.g:10703:4: otherlv_6= ',' ( (lv_values_7_0= ruleEStringBoolean ) )
             	    {
@@ -29812,7 +29761,7 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
             	    break;
 
             	default :
-            	    break loop251;
+            	    break loop250;
                 }
             } while (true);
 
@@ -29974,17 +29923,17 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
             }
 
             // InternalKiCool.g:10787:3: (otherlv_3= ',' ( (lv_values_4_0= RULE_STRING ) ) )*
-            loop252:
+            loop251:
             do {
-                int alt252=2;
-                int LA252_0 = input.LA(1);
+                int alt251=2;
+                int LA251_0 = input.LA(1);
 
-                if ( (LA252_0==44) ) {
-                    alt252=1;
+                if ( (LA251_0==44) ) {
+                    alt251=1;
                 }
 
 
-                switch (alt252) {
+                switch (alt251) {
             	case 1 :
             	    // InternalKiCool.g:10788:4: otherlv_3= ',' ( (lv_values_4_0= RULE_STRING ) )
             	    {
@@ -30029,7 +29978,7 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
             	    break;
 
             	default :
-            	    break loop252;
+            	    break loop251;
                 }
             } while (true);
 
@@ -30242,17 +30191,17 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
             }
 
             // InternalKiCool.g:10898:3: (otherlv_6= ',' ( (lv_values_7_0= RULE_STRING ) ) )*
-            loop253:
+            loop252:
             do {
-                int alt253=2;
-                int LA253_0 = input.LA(1);
+                int alt252=2;
+                int LA252_0 = input.LA(1);
 
-                if ( (LA253_0==44) ) {
-                    alt253=1;
+                if ( (LA252_0==44) ) {
+                    alt252=1;
                 }
 
 
-                switch (alt253) {
+                switch (alt252) {
             	case 1 :
             	    // InternalKiCool.g:10899:4: otherlv_6= ',' ( (lv_values_7_0= RULE_STRING ) )
             	    {
@@ -30297,7 +30246,7 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
             	    break;
 
             	default :
-            	    break loop253;
+            	    break loop252;
                 }
             } while (true);
 
@@ -30382,23 +30331,23 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
             // InternalKiCool.g:10940:2: (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID )
             {
             // InternalKiCool.g:10940:2: (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID )
-            int alt254=2;
-            int LA254_0 = input.LA(1);
+            int alt253=2;
+            int LA253_0 = input.LA(1);
 
-            if ( (LA254_0==RULE_STRING) ) {
-                alt254=1;
+            if ( (LA253_0==RULE_STRING) ) {
+                alt253=1;
             }
-            else if ( (LA254_0==RULE_ID) ) {
-                alt254=2;
+            else if ( (LA253_0==RULE_ID) ) {
+                alt253=2;
             }
             else {
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 254, 0, input);
+                    new NoViableAltException("", 253, 0, input);
 
                 throw nvae;
             }
-            switch (alt254) {
+            switch (alt253) {
                 case 1 :
                     // InternalKiCool.g:10941:3: this_STRING_0= RULE_STRING
                     {
@@ -30524,32 +30473,32 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
             // InternalKiCool.g:10977:2: (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID | this_BOOLEAN_2= RULE_BOOLEAN )
             {
             // InternalKiCool.g:10977:2: (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID | this_BOOLEAN_2= RULE_BOOLEAN )
-            int alt255=3;
+            int alt254=3;
             switch ( input.LA(1) ) {
             case RULE_STRING:
                 {
-                alt255=1;
+                alt254=1;
                 }
                 break;
             case RULE_ID:
                 {
-                alt255=2;
+                alt254=2;
                 }
                 break;
             case RULE_BOOLEAN:
                 {
-                alt255=3;
+                alt254=3;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 255, 0, input);
+                    new NoViableAltException("", 254, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt255) {
+            switch (alt254) {
                 case 1 :
                     // InternalKiCool.g:10978:3: this_STRING_0= RULE_STRING
                     {
@@ -30696,37 +30645,37 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
             // InternalKiCool.g:11022:2: (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID | this_BOOLEAN_2= RULE_BOOLEAN | this_Integer_3= ruleInteger | this_Floateger_4= ruleFloateger )
             {
             // InternalKiCool.g:11022:2: (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID | this_BOOLEAN_2= RULE_BOOLEAN | this_Integer_3= ruleInteger | this_Floateger_4= ruleFloateger )
-            int alt256=5;
+            int alt255=5;
             switch ( input.LA(1) ) {
             case RULE_STRING:
                 {
-                alt256=1;
+                alt255=1;
                 }
                 break;
             case RULE_ID:
                 {
-                alt256=2;
+                alt255=2;
                 }
                 break;
             case RULE_BOOLEAN:
                 {
-                alt256=3;
+                alt255=3;
                 }
                 break;
             case 67:
                 {
-                int LA256_4 = input.LA(2);
+                int LA255_4 = input.LA(2);
 
-                if ( (LA256_4==RULE_INT) ) {
-                    alt256=4;
+                if ( (LA255_4==RULE_INT) ) {
+                    alt255=4;
                 }
-                else if ( (LA256_4==RULE_FLOAT) ) {
-                    alt256=5;
+                else if ( (LA255_4==RULE_FLOAT) ) {
+                    alt255=5;
                 }
                 else {
                     if (state.backtracking>0) {state.failed=true; return current;}
                     NoViableAltException nvae =
-                        new NoViableAltException("", 256, 4, input);
+                        new NoViableAltException("", 255, 4, input);
 
                     throw nvae;
                 }
@@ -30734,23 +30683,23 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
                 break;
             case RULE_INT:
                 {
-                alt256=4;
+                alt255=4;
                 }
                 break;
             case RULE_FLOAT:
                 {
-                alt256=5;
+                alt255=5;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 256, 0, input);
+                    new NoViableAltException("", 255, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt256) {
+            switch (alt255) {
                 case 1 :
                     // InternalKiCool.g:11023:3: this_STRING_0= RULE_STRING
                     {
@@ -30959,47 +30908,47 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
               		
             }
             // InternalKiCool.g:11097:3: ( (kw= '.' | kw= '-' ) this_ID_3= RULE_ID )*
-            loop258:
+            loop257:
             do {
-                int alt258=2;
-                int LA258_0 = input.LA(1);
+                int alt257=2;
+                int LA257_0 = input.LA(1);
 
-                if ( (LA258_0==67) ) {
-                    int LA258_2 = input.LA(2);
+                if ( (LA257_0==67) ) {
+                    int LA257_2 = input.LA(2);
 
-                    if ( (LA258_2==RULE_ID) ) {
-                        alt258=1;
+                    if ( (LA257_2==RULE_ID) ) {
+                        alt257=1;
                     }
 
 
                 }
-                else if ( (LA258_0==56) ) {
-                    alt258=1;
+                else if ( (LA257_0==56) ) {
+                    alt257=1;
                 }
 
 
-                switch (alt258) {
+                switch (alt257) {
             	case 1 :
             	    // InternalKiCool.g:11098:4: (kw= '.' | kw= '-' ) this_ID_3= RULE_ID
             	    {
             	    // InternalKiCool.g:11098:4: (kw= '.' | kw= '-' )
-            	    int alt257=2;
-            	    int LA257_0 = input.LA(1);
+            	    int alt256=2;
+            	    int LA256_0 = input.LA(1);
 
-            	    if ( (LA257_0==56) ) {
-            	        alt257=1;
+            	    if ( (LA256_0==56) ) {
+            	        alt256=1;
             	    }
-            	    else if ( (LA257_0==67) ) {
-            	        alt257=2;
+            	    else if ( (LA256_0==67) ) {
+            	        alt256=2;
             	    }
             	    else {
             	        if (state.backtracking>0) {state.failed=true; return current;}
             	        NoViableAltException nvae =
-            	            new NoViableAltException("", 257, 0, input);
+            	            new NoViableAltException("", 256, 0, input);
 
             	        throw nvae;
             	    }
-            	    switch (alt257) {
+            	    switch (alt256) {
             	        case 1 :
             	            // InternalKiCool.g:11099:5: kw= '.'
             	            {
@@ -31045,22 +30994,22 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
             	    break;
 
             	default :
-            	    break loop258;
+            	    break loop257;
                 }
             } while (true);
 
             // InternalKiCool.g:11119:3: (kw= '#' this_INT_5= RULE_INT )?
-            int alt259=2;
-            int LA259_0 = input.LA(1);
+            int alt258=2;
+            int LA258_0 = input.LA(1);
 
-            if ( (LA259_0==78) ) {
-                int LA259_1 = input.LA(2);
+            if ( (LA258_0==78) ) {
+                int LA258_1 = input.LA(2);
 
-                if ( (LA259_1==RULE_INT) ) {
-                    alt259=1;
+                if ( (LA258_1==RULE_INT) ) {
+                    alt258=1;
                 }
             }
-            switch (alt259) {
+            switch (alt258) {
                 case 1 :
                     // InternalKiCool.g:11120:4: kw= '#' this_INT_5= RULE_INT
                     {
@@ -31183,17 +31132,17 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
               		
             }
             // InternalKiCool.g:11159:3: (kw= '.' this_ID_2= RULE_ID )*
-            loop260:
+            loop259:
             do {
-                int alt260=2;
-                int LA260_0 = input.LA(1);
+                int alt259=2;
+                int LA259_0 = input.LA(1);
 
-                if ( (LA260_0==56) ) {
-                    alt260=1;
+                if ( (LA259_0==56) ) {
+                    alt259=1;
                 }
 
 
-                switch (alt260) {
+                switch (alt259) {
             	case 1 :
             	    // InternalKiCool.g:11160:4: kw= '.' this_ID_2= RULE_ID
             	    {
@@ -31220,7 +31169,7 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
             	    break;
 
             	default :
-            	    break loop260;
+            	    break loop259;
                 }
             } while (true);
 
@@ -31307,13 +31256,13 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
             // InternalKiCool.g:11192:3: (kw= '-' )? this_INT_1= RULE_INT
             {
             // InternalKiCool.g:11192:3: (kw= '-' )?
-            int alt261=2;
-            int LA261_0 = input.LA(1);
+            int alt260=2;
+            int LA260_0 = input.LA(1);
 
-            if ( (LA261_0==67) ) {
-                alt261=1;
+            if ( (LA260_0==67) ) {
+                alt260=1;
             }
-            switch (alt261) {
+            switch (alt260) {
                 case 1 :
                     // InternalKiCool.g:11193:4: kw= '-'
                     {
@@ -31424,13 +31373,13 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
             // InternalKiCool.g:11225:3: (kw= '-' )? this_FLOAT_1= RULE_FLOAT
             {
             // InternalKiCool.g:11225:3: (kw= '-' )?
-            int alt262=2;
-            int LA262_0 = input.LA(1);
+            int alt261=2;
+            int LA261_0 = input.LA(1);
 
-            if ( (LA262_0==67) ) {
-                alt262=1;
+            if ( (LA261_0==67) ) {
+                alt261=1;
             }
-            switch (alt262) {
+            switch (alt261) {
                 case 1 :
                     // InternalKiCool.g:11226:4: kw= '-'
                     {
@@ -31498,23 +31447,23 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
             // InternalKiCool.g:11250:2: ( (enumLiteral_0= 'conflicting' ) | (enumLiteral_1= 'commuting' ) )
             {
             // InternalKiCool.g:11250:2: ( (enumLiteral_0= 'conflicting' ) | (enumLiteral_1= 'commuting' ) )
-            int alt263=2;
-            int LA263_0 = input.LA(1);
+            int alt262=2;
+            int LA262_0 = input.LA(1);
 
-            if ( (LA263_0==80) ) {
-                alt263=1;
+            if ( (LA262_0==80) ) {
+                alt262=1;
             }
-            else if ( (LA263_0==81) ) {
-                alt263=2;
+            else if ( (LA262_0==81) ) {
+                alt262=2;
             }
             else {
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 263, 0, input);
+                    new NoViableAltException("", 262, 0, input);
 
                 throw nvae;
             }
-            switch (alt263) {
+            switch (alt262) {
                 case 1 :
                     // InternalKiCool.g:11251:3: (enumLiteral_0= 'conflicting' )
                     {
@@ -31605,87 +31554,87 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
             // InternalKiCool.g:11277:2: ( (enumLiteral_0= '=' ) | (enumLiteral_1= '+=' ) | (enumLiteral_2= '-=' ) | (enumLiteral_3= '*=' ) | (enumLiteral_4= '/=' ) | (enumLiteral_5= '%=' ) | (enumLiteral_6= '&=' ) | (enumLiteral_7= '|=' ) | (enumLiteral_8= '^=' ) | (enumLiteral_9= '<<=' ) | (enumLiteral_10= '>>=' ) | (enumLiteral_11= '>>>=' ) | (enumLiteral_12= 'min=' ) | (enumLiteral_13= 'max=' ) )
             {
             // InternalKiCool.g:11277:2: ( (enumLiteral_0= '=' ) | (enumLiteral_1= '+=' ) | (enumLiteral_2= '-=' ) | (enumLiteral_3= '*=' ) | (enumLiteral_4= '/=' ) | (enumLiteral_5= '%=' ) | (enumLiteral_6= '&=' ) | (enumLiteral_7= '|=' ) | (enumLiteral_8= '^=' ) | (enumLiteral_9= '<<=' ) | (enumLiteral_10= '>>=' ) | (enumLiteral_11= '>>>=' ) | (enumLiteral_12= 'min=' ) | (enumLiteral_13= 'max=' ) )
-            int alt264=14;
+            int alt263=14;
             switch ( input.LA(1) ) {
             case 54:
                 {
-                alt264=1;
+                alt263=1;
                 }
                 break;
             case 82:
                 {
-                alt264=2;
+                alt263=2;
                 }
                 break;
             case 83:
                 {
-                alt264=3;
+                alt263=3;
                 }
                 break;
             case 84:
                 {
-                alt264=4;
+                alt263=4;
                 }
                 break;
             case 85:
                 {
-                alt264=5;
+                alt263=5;
                 }
                 break;
             case 86:
                 {
-                alt264=6;
+                alt263=6;
                 }
                 break;
             case 87:
                 {
-                alt264=7;
+                alt263=7;
                 }
                 break;
             case 88:
                 {
-                alt264=8;
+                alt263=8;
                 }
                 break;
             case 89:
                 {
-                alt264=9;
+                alt263=9;
                 }
                 break;
             case 90:
                 {
-                alt264=10;
+                alt263=10;
                 }
                 break;
             case 91:
                 {
-                alt264=11;
+                alt263=11;
                 }
                 break;
             case 92:
                 {
-                alt264=12;
+                alt263=12;
                 }
                 break;
             case 93:
                 {
-                alt264=13;
+                alt263=13;
                 }
                 break;
             case 94:
                 {
-                alt264=14;
+                alt263=14;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 264, 0, input);
+                    new NoViableAltException("", 263, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt264) {
+            switch (alt263) {
                 case 1 :
                     // InternalKiCool.g:11278:3: (enumLiteral_0= '=' )
                     {
@@ -31992,23 +31941,23 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
             // InternalKiCool.g:11400:2: ( (enumLiteral_0= '++' ) | (enumLiteral_1= '--' ) )
             {
             // InternalKiCool.g:11400:2: ( (enumLiteral_0= '++' ) | (enumLiteral_1= '--' ) )
-            int alt265=2;
-            int LA265_0 = input.LA(1);
+            int alt264=2;
+            int LA264_0 = input.LA(1);
 
-            if ( (LA265_0==95) ) {
-                alt265=1;
+            if ( (LA264_0==95) ) {
+                alt264=1;
             }
-            else if ( (LA265_0==96) ) {
-                alt265=2;
+            else if ( (LA264_0==96) ) {
+                alt264=2;
             }
             else {
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 265, 0, input);
+                    new NoViableAltException("", 264, 0, input);
 
                 throw nvae;
             }
-            switch (alt265) {
+            switch (alt264) {
                 case 1 :
                     // InternalKiCool.g:11401:3: (enumLiteral_0= '++' )
                     {
@@ -32091,47 +32040,47 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
             // InternalKiCool.g:11427:2: ( (enumLiteral_0= '==' ) | (enumLiteral_1= '<' ) | (enumLiteral_2= '<=' ) | (enumLiteral_3= '>' ) | (enumLiteral_4= '>=' ) | (enumLiteral_5= '!=' ) )
             {
             // InternalKiCool.g:11427:2: ( (enumLiteral_0= '==' ) | (enumLiteral_1= '<' ) | (enumLiteral_2= '<=' ) | (enumLiteral_3= '>' ) | (enumLiteral_4= '>=' ) | (enumLiteral_5= '!=' ) )
-            int alt266=6;
+            int alt265=6;
             switch ( input.LA(1) ) {
             case 97:
                 {
-                alt266=1;
+                alt265=1;
                 }
                 break;
             case 98:
                 {
-                alt266=2;
+                alt265=2;
                 }
                 break;
             case 99:
                 {
-                alt266=3;
+                alt265=3;
                 }
                 break;
             case 100:
                 {
-                alt266=4;
+                alt265=4;
                 }
                 break;
             case 101:
                 {
-                alt266=5;
+                alt265=5;
                 }
                 break;
             case 102:
                 {
-                alt266=6;
+                alt265=6;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 266, 0, input);
+                    new NoViableAltException("", 265, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt266) {
+            switch (alt265) {
                 case 1 :
                     // InternalKiCool.g:11428:3: (enumLiteral_0= '==' )
                     {
@@ -33297,42 +33246,42 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
             // InternalKiCool.g:11843:2: ( (enumLiteral_0= 'pure' ) | (enumLiteral_1= 'bool' ) | (enumLiteral_2= 'int' ) | (enumLiteral_3= 'float' ) | (enumLiteral_4= 'string' ) )
             {
             // InternalKiCool.g:11843:2: ( (enumLiteral_0= 'pure' ) | (enumLiteral_1= 'bool' ) | (enumLiteral_2= 'int' ) | (enumLiteral_3= 'float' ) | (enumLiteral_4= 'string' ) )
-            int alt267=5;
+            int alt266=5;
             switch ( input.LA(1) ) {
             case 107:
                 {
-                alt267=1;
+                alt266=1;
                 }
                 break;
             case 108:
                 {
-                alt267=2;
+                alt266=2;
                 }
                 break;
             case 109:
                 {
-                alt267=3;
+                alt266=3;
                 }
                 break;
             case 110:
                 {
-                alt267=4;
+                alt266=4;
                 }
                 break;
             case 111:
                 {
-                alt267=5;
+                alt266=5;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 267, 0, input);
+                    new NoViableAltException("", 266, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt267) {
+            switch (alt266) {
                 case 1 :
                     // InternalKiCool.g:11844:3: (enumLiteral_0= 'pure' )
                     {
@@ -33618,57 +33567,57 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
             // InternalKiCool.g:11945:2: ( (enumLiteral_0= 'none' ) | (enumLiteral_1= '+' ) | (enumLiteral_2= '*' ) | (enumLiteral_3= 'max' ) | (enumLiteral_4= 'min' ) | (enumLiteral_5= '|' ) | (enumLiteral_6= '&' ) | (enumLiteral_7= 'host' ) )
             {
             // InternalKiCool.g:11945:2: ( (enumLiteral_0= 'none' ) | (enumLiteral_1= '+' ) | (enumLiteral_2= '*' ) | (enumLiteral_3= 'max' ) | (enumLiteral_4= 'min' ) | (enumLiteral_5= '|' ) | (enumLiteral_6= '&' ) | (enumLiteral_7= 'host' ) )
-            int alt268=8;
+            int alt267=8;
             switch ( input.LA(1) ) {
             case 114:
                 {
-                alt268=1;
+                alt267=1;
                 }
                 break;
             case 66:
                 {
-                alt268=2;
+                alt267=2;
                 }
                 break;
             case 68:
                 {
-                alt268=3;
+                alt267=3;
                 }
                 break;
             case 115:
                 {
-                alt268=4;
+                alt267=4;
                 }
                 break;
             case 116:
                 {
-                alt268=5;
+                alt267=5;
                 }
                 break;
             case 32:
                 {
-                alt268=6;
+                alt267=6;
                 }
                 break;
             case 62:
                 {
-                alt268=7;
+                alt267=7;
                 }
                 break;
             case 46:
                 {
-                alt268=8;
+                alt267=8;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 268, 0, input);
+                    new NoViableAltException("", 267, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt268) {
+            switch (alt267) {
                 case 1 :
                     // InternalKiCool.g:11946:3: (enumLiteral_0= 'none' )
                     {
@@ -33862,32 +33811,32 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
             // InternalKiCool.g:12020:2: ( (enumLiteral_0= 'public' ) | (enumLiteral_1= 'protected' ) | (enumLiteral_2= 'private' ) )
             {
             // InternalKiCool.g:12020:2: ( (enumLiteral_0= 'public' ) | (enumLiteral_1= 'protected' ) | (enumLiteral_2= 'private' ) )
-            int alt269=3;
+            int alt268=3;
             switch ( input.LA(1) ) {
             case 17:
                 {
-                alt269=1;
+                alt268=1;
                 }
                 break;
             case 117:
                 {
-                alt269=2;
+                alt268=2;
                 }
                 break;
             case 118:
                 {
-                alt269=3;
+                alt268=3;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 269, 0, input);
+                    new NoViableAltException("", 268, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt269) {
+            switch (alt268) {
                 case 1 :
                     // InternalKiCool.g:12021:3: (enumLiteral_0= 'public' )
                     {
@@ -33988,42 +33937,42 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
             // InternalKiCool.g:12055:2: ( (enumLiteral_0= 'void' ) | (enumLiteral_1= 'bool' ) | (enumLiteral_2= 'int' ) | (enumLiteral_3= 'float' ) | (enumLiteral_4= 'string' ) )
             {
             // InternalKiCool.g:12055:2: ( (enumLiteral_0= 'void' ) | (enumLiteral_1= 'bool' ) | (enumLiteral_2= 'int' ) | (enumLiteral_3= 'float' ) | (enumLiteral_4= 'string' ) )
-            int alt270=5;
+            int alt269=5;
             switch ( input.LA(1) ) {
             case 119:
                 {
-                alt270=1;
+                alt269=1;
                 }
                 break;
             case 108:
                 {
-                alt270=2;
+                alt269=2;
                 }
                 break;
             case 109:
                 {
-                alt270=3;
+                alt269=3;
                 }
                 break;
             case 110:
                 {
-                alt270=4;
+                alt269=4;
                 }
                 break;
             case 111:
                 {
-                alt270=5;
+                alt269=5;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 270, 0, input);
+                    new NoViableAltException("", 269, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt270) {
+            switch (alt269) {
                 case 1 :
                     // InternalKiCool.g:12056:3: (enumLiteral_0= 'void' )
                     {
@@ -34159,23 +34108,23 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
             // InternalKiCool.g:12106:2: ( (enumLiteral_0= '&' ) | (enumLiteral_1= '!&' ) )
             {
             // InternalKiCool.g:12106:2: ( (enumLiteral_0= '&' ) | (enumLiteral_1= '!&' ) )
-            int alt271=2;
-            int LA271_0 = input.LA(1);
+            int alt270=2;
+            int LA270_0 = input.LA(1);
 
-            if ( (LA271_0==62) ) {
-                alt271=1;
+            if ( (LA270_0==62) ) {
+                alt270=1;
             }
-            else if ( (LA271_0==120) ) {
-                alt271=2;
+            else if ( (LA270_0==120) ) {
+                alt270=2;
             }
             else {
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 271, 0, input);
+                    new NoViableAltException("", 270, 0, input);
 
                 throw nvae;
             }
-            switch (alt271) {
+            switch (alt270) {
                 case 1 :
                     // InternalKiCool.g:12107:3: (enumLiteral_0= '&' )
                     {
@@ -34462,22 +34411,22 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
         // InternalKiCool.g:1152:5: (lv_expression_0_1= ruleAnnotatedExpression | lv_expression_0_2= ruleAnnotatedJsonExpression )
         {
         // InternalKiCool.g:1152:5: (lv_expression_0_1= ruleAnnotatedExpression | lv_expression_0_2= ruleAnnotatedJsonExpression )
-        int alt274=2;
+        int alt273=2;
         switch ( input.LA(1) ) {
         case RULE_COMMENT_ANNOTATION:
             {
-            int LA274_1 = input.LA(2);
+            int LA273_1 = input.LA(2);
 
             if ( (synpred32_InternalKiCool()) ) {
-                alt274=1;
+                alt273=1;
             }
             else if ( (true) ) {
-                alt274=2;
+                alt273=2;
             }
             else {
                 if (state.backtracking>0) {state.failed=true; return ;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 274, 1, input);
+                    new NoViableAltException("", 273, 1, input);
 
                 throw nvae;
             }
@@ -34485,18 +34434,18 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
             break;
         case 79:
             {
-            int LA274_2 = input.LA(2);
+            int LA273_2 = input.LA(2);
 
             if ( (synpred32_InternalKiCool()) ) {
-                alt274=1;
+                alt273=1;
             }
             else if ( (true) ) {
-                alt274=2;
+                alt273=2;
             }
             else {
                 if (state.backtracking>0) {state.failed=true; return ;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 274, 2, input);
+                    new NoViableAltException("", 273, 2, input);
 
                 throw nvae;
             }
@@ -34504,23 +34453,23 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
             break;
         case 36:
             {
-            alt274=1;
+            alt273=1;
             }
             break;
         case 37:
             {
-            alt274=2;
+            alt273=2;
             }
             break;
         default:
             if (state.backtracking>0) {state.failed=true; return ;}
             NoViableAltException nvae =
-                new NoViableAltException("", 274, 0, input);
+                new NoViableAltException("", 273, 0, input);
 
             throw nvae;
         }
 
-        switch (alt274) {
+        switch (alt273) {
             case 1 :
                 // InternalKiCool.g:1153:6: lv_expression_0_1= ruleAnnotatedExpression
                 {
@@ -34794,17 +34743,17 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
         }
 
         // InternalKiCool.g:2736:4: (otherlv_20= ',' ( (lv_valuedObjects_21_0= ruleValuedObject ) ) )*
-        loop282:
+        loop281:
         do {
-            int alt282=2;
-            int LA282_0 = input.LA(1);
+            int alt281=2;
+            int LA281_0 = input.LA(1);
 
-            if ( (LA282_0==44) ) {
-                alt282=1;
+            if ( (LA281_0==44) ) {
+                alt281=1;
             }
 
 
-            switch (alt282) {
+            switch (alt281) {
         	case 1 :
         	    // InternalKiCool.g:2737:5: otherlv_20= ',' ( (lv_valuedObjects_21_0= ruleValuedObject ) )
         	    {
@@ -34836,7 +34785,7 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
         	    break;
 
         	default :
-        	    break loop282;
+        	    break loop281;
             }
         } while (true);
 
@@ -35548,13 +35497,13 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
         }
 
         // InternalKiCool.g:7560:4: (otherlv_4= ':' ( (lv_subExpressions_5_0= ruleAtomicValuedExpression ) ) )?
-        int alt313=2;
-        int LA313_0 = input.LA(1);
+        int alt312=2;
+        int LA312_0 = input.LA(1);
 
-        if ( (LA313_0==51) ) {
-            alt313=1;
+        if ( (LA312_0==51) ) {
+            alt312=1;
         }
-        switch (alt313) {
+        switch (alt312) {
             case 1 :
                 // InternalKiCool.g:7561:5: otherlv_4= ':' ( (lv_subExpressions_5_0= ruleAtomicValuedExpression ) )
                 {
@@ -35669,84 +35618,8 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
     }
     // $ANTLR end synpred245_InternalKiCool
 
-    // $ANTLR start synpred261_InternalKiCool
-    public final void synpred261_InternalKiCool_fragment() throws RecognitionException {   
-        Enumerator lv_accessType_0_0 = null;
-
-        EObject lv_expression_1_0 = null;
-
-
-        // InternalKiCool.g:8808:3: ( ( ( (lv_accessType_0_0= ruleParameterAccessType ) )? ( (lv_expression_1_0= ruleValuedObjectReference ) ) ) )
-        // InternalKiCool.g:8808:3: ( ( (lv_accessType_0_0= ruleParameterAccessType ) )? ( (lv_expression_1_0= ruleValuedObjectReference ) ) )
-        {
-        // InternalKiCool.g:8808:3: ( ( (lv_accessType_0_0= ruleParameterAccessType ) )? ( (lv_expression_1_0= ruleValuedObjectReference ) ) )
-        // InternalKiCool.g:8809:4: ( (lv_accessType_0_0= ruleParameterAccessType ) )? ( (lv_expression_1_0= ruleValuedObjectReference ) )
-        {
-        // InternalKiCool.g:8809:4: ( (lv_accessType_0_0= ruleParameterAccessType ) )?
-        int alt321=2;
-        int LA321_0 = input.LA(1);
-
-        if ( (LA321_0==62||LA321_0==120) ) {
-            alt321=1;
-        }
-        switch (alt321) {
-            case 1 :
-                // InternalKiCool.g:8810:5: (lv_accessType_0_0= ruleParameterAccessType )
-                {
-                // InternalKiCool.g:8810:5: (lv_accessType_0_0= ruleParameterAccessType )
-                // InternalKiCool.g:8811:6: lv_accessType_0_0= ruleParameterAccessType
-                {
-                if ( state.backtracking==0 ) {
-
-                  						newCompositeNode(grammarAccess.getParameterAccess().getAccessTypeParameterAccessTypeEnumRuleCall_0_0_0());
-                  					
-                }
-                pushFollow(FollowSets000.FOLLOW_39);
-                lv_accessType_0_0=ruleParameterAccessType();
-
-                state._fsp--;
-                if (state.failed) return ;
-
-                }
-
-
-                }
-                break;
-
-        }
-
-        // InternalKiCool.g:8828:4: ( (lv_expression_1_0= ruleValuedObjectReference ) )
-        // InternalKiCool.g:8829:5: (lv_expression_1_0= ruleValuedObjectReference )
-        {
-        // InternalKiCool.g:8829:5: (lv_expression_1_0= ruleValuedObjectReference )
-        // InternalKiCool.g:8830:6: lv_expression_1_0= ruleValuedObjectReference
-        {
-        if ( state.backtracking==0 ) {
-
-          						newCompositeNode(grammarAccess.getParameterAccess().getExpressionValuedObjectReferenceParserRuleCall_0_1_0());
-          					
-        }
-        pushFollow(FollowSets000.FOLLOW_2);
-        lv_expression_1_0=ruleValuedObjectReference();
-
-        state._fsp--;
-        if (state.failed) return ;
-
-        }
-
-
-        }
-
-
-        }
-
-
-        }
-    }
-    // $ANTLR end synpred261_InternalKiCool
-
-    // $ANTLR start synpred264_InternalKiCool
-    public final void synpred264_InternalKiCool_fragment() throws RecognitionException {   
+    // $ANTLR start synpred263_InternalKiCool
+    public final void synpred263_InternalKiCool_fragment() throws RecognitionException {   
         EObject this_BoolExpression_0 = null;
 
 
@@ -35766,10 +35639,10 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
 
         }
     }
-    // $ANTLR end synpred264_InternalKiCool
+    // $ANTLR end synpred263_InternalKiCool
 
-    // $ANTLR start synpred265_InternalKiCool
-    public final void synpred265_InternalKiCool_fragment() throws RecognitionException {   
+    // $ANTLR start synpred264_InternalKiCool
+    public final void synpred264_InternalKiCool_fragment() throws RecognitionException {   
         EObject this_ValuedExpression_1 = null;
 
 
@@ -35789,10 +35662,10 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
 
         }
     }
-    // $ANTLR end synpred265_InternalKiCool
+    // $ANTLR end synpred264_InternalKiCool
 
-    // $ANTLR start synpred280_InternalKiCool
-    public final void synpred280_InternalKiCool_fragment() throws RecognitionException {   
+    // $ANTLR start synpred279_InternalKiCool
+    public final void synpred279_InternalKiCool_fragment() throws RecognitionException {   
         EObject this_KeyStringValueAnnotation_1 = null;
 
 
@@ -35812,7 +35685,7 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
 
         }
     }
-    // $ANTLR end synpred280_InternalKiCool
+    // $ANTLR end synpred279_InternalKiCool
 
     // Delegated rules
 
@@ -35914,20 +35787,6 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
         state.failed=false;
         return success;
     }
-    public final boolean synpred280_InternalKiCool() {
-        state.backtracking++;
-        int start = input.mark();
-        try {
-            synpred280_InternalKiCool_fragment(); // can never throw exception
-        } catch (RecognitionException re) {
-            System.err.println("impossible: "+re);
-        }
-        boolean success = !state.failed;
-        input.rewind(start);
-        state.backtracking--;
-        state.failed=false;
-        return success;
-    }
     public final boolean synpred157_InternalKiCool() {
         state.backtracking++;
         int start = input.mark();
@@ -35998,20 +35857,6 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
         state.failed=false;
         return success;
     }
-    public final boolean synpred265_InternalKiCool() {
-        state.backtracking++;
-        int start = input.mark();
-        try {
-            synpred265_InternalKiCool_fragment(); // can never throw exception
-        } catch (RecognitionException re) {
-            System.err.println("impossible: "+re);
-        }
-        boolean success = !state.failed;
-        input.rewind(start);
-        state.backtracking--;
-        state.failed=false;
-        return success;
-    }
     public final boolean synpred23_InternalKiCool() {
         state.backtracking++;
         int start = input.mark();
@@ -36040,11 +35885,11 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
         state.failed=false;
         return success;
     }
-    public final boolean synpred261_InternalKiCool() {
+    public final boolean synpred279_InternalKiCool() {
         state.backtracking++;
         int start = input.mark();
         try {
-            synpred261_InternalKiCool_fragment(); // can never throw exception
+            synpred279_InternalKiCool_fragment(); // can never throw exception
         } catch (RecognitionException re) {
             System.err.println("impossible: "+re);
         }
@@ -36376,6 +36221,20 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
         state.failed=false;
         return success;
     }
+    public final boolean synpred263_InternalKiCool() {
+        state.backtracking++;
+        int start = input.mark();
+        try {
+            synpred263_InternalKiCool_fragment(); // can never throw exception
+        } catch (RecognitionException re) {
+            System.err.println("impossible: "+re);
+        }
+        boolean success = !state.failed;
+        input.rewind(start);
+        state.backtracking--;
+        state.failed=false;
+        return success;
+    }
     public final boolean synpred64_InternalKiCool() {
         state.backtracking++;
         int start = input.mark();
@@ -36480,14 +36339,14 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
     protected DFA206 dfa206 = new DFA206(this);
     protected DFA213 dfa213 = new DFA213(this);
     protected DFA214 dfa214 = new DFA214(this);
-    protected DFA233 dfa233 = new DFA233(this);
+    protected DFA232 dfa232 = new DFA232(this);
+    protected DFA239 dfa239 = new DFA239(this);
     protected DFA240 dfa240 = new DFA240(this);
     protected DFA241 dfa241 = new DFA241(this);
     protected DFA242 dfa242 = new DFA242(this);
     protected DFA243 dfa243 = new DFA243(this);
     protected DFA244 dfa244 = new DFA244(this);
     protected DFA245 dfa245 = new DFA245(this);
-    protected DFA246 dfa246 = new DFA246(this);
     static final String dfa_1s = "\12\uffff";
     static final String dfa_2s = "\1\1\11\uffff";
     static final String dfa_3s = "\1\4\6\uffff\1\0\2\uffff";
@@ -40141,11 +40000,11 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
     static final short[] dfa_144 = DFA.unpackEncodedString(dfa_144s);
     static final short[][] dfa_145 = unpackEncodedStringArray(dfa_145s);
 
-    class DFA233 extends DFA {
+    class DFA232 extends DFA {
 
-        public DFA233(BaseRecognizer recognizer) {
+        public DFA232(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
-            this.decisionNumber = 233;
+            this.decisionNumber = 232;
             this.eot = dfa_140;
             this.eof = dfa_140;
             this.min = dfa_141;
@@ -40162,269 +40021,269 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
         	int _s = s;
             switch ( s ) {
                     case 0 : 
-                        int LA233_1 = input.LA(1);
+                        int LA232_1 = input.LA(1);
 
                          
-                        int index233_1 = input.index();
+                        int index232_1 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred264_InternalKiCool()) ) {s = 17;}
+                        if ( (synpred263_InternalKiCool()) ) {s = 17;}
 
-                        else if ( (synpred265_InternalKiCool()) ) {s = 20;}
+                        else if ( (synpred264_InternalKiCool()) ) {s = 20;}
 
                          
-                        input.seek(index233_1);
+                        input.seek(index232_1);
                         if ( s>=0 ) return s;
                         break;
                     case 1 : 
-                        int LA233_2 = input.LA(1);
+                        int LA232_2 = input.LA(1);
 
                          
-                        int index233_2 = input.index();
+                        int index232_2 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred264_InternalKiCool()) ) {s = 17;}
+                        if ( (synpred263_InternalKiCool()) ) {s = 17;}
 
-                        else if ( (synpred265_InternalKiCool()) ) {s = 20;}
+                        else if ( (synpred264_InternalKiCool()) ) {s = 20;}
 
                          
-                        input.seek(index233_2);
+                        input.seek(index232_2);
                         if ( s>=0 ) return s;
                         break;
                     case 2 : 
-                        int LA233_3 = input.LA(1);
+                        int LA232_3 = input.LA(1);
 
                          
-                        int index233_3 = input.index();
+                        int index232_3 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred264_InternalKiCool()) ) {s = 17;}
+                        if ( (synpred263_InternalKiCool()) ) {s = 17;}
 
-                        else if ( (synpred265_InternalKiCool()) ) {s = 20;}
+                        else if ( (synpred264_InternalKiCool()) ) {s = 20;}
 
                          
-                        input.seek(index233_3);
+                        input.seek(index232_3);
                         if ( s>=0 ) return s;
                         break;
                     case 3 : 
-                        int LA233_4 = input.LA(1);
+                        int LA232_4 = input.LA(1);
 
                          
-                        int index233_4 = input.index();
+                        int index232_4 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred264_InternalKiCool()) ) {s = 17;}
+                        if ( (synpred263_InternalKiCool()) ) {s = 17;}
 
-                        else if ( (synpred265_InternalKiCool()) ) {s = 20;}
+                        else if ( (synpred264_InternalKiCool()) ) {s = 20;}
 
                          
-                        input.seek(index233_4);
+                        input.seek(index232_4);
                         if ( s>=0 ) return s;
                         break;
                     case 4 : 
-                        int LA233_5 = input.LA(1);
+                        int LA232_5 = input.LA(1);
 
                          
-                        int index233_5 = input.index();
+                        int index232_5 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred264_InternalKiCool()) ) {s = 17;}
+                        if ( (synpred263_InternalKiCool()) ) {s = 17;}
 
-                        else if ( (synpred265_InternalKiCool()) ) {s = 20;}
+                        else if ( (synpred264_InternalKiCool()) ) {s = 20;}
 
                          
-                        input.seek(index233_5);
+                        input.seek(index232_5);
                         if ( s>=0 ) return s;
                         break;
                     case 5 : 
-                        int LA233_6 = input.LA(1);
+                        int LA232_6 = input.LA(1);
 
                          
-                        int index233_6 = input.index();
+                        int index232_6 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred264_InternalKiCool()) ) {s = 17;}
+                        if ( (synpred263_InternalKiCool()) ) {s = 17;}
 
-                        else if ( (synpred265_InternalKiCool()) ) {s = 20;}
+                        else if ( (synpred264_InternalKiCool()) ) {s = 20;}
 
                          
-                        input.seek(index233_6);
+                        input.seek(index232_6);
                         if ( s>=0 ) return s;
                         break;
                     case 6 : 
-                        int LA233_7 = input.LA(1);
+                        int LA232_7 = input.LA(1);
 
                          
-                        int index233_7 = input.index();
+                        int index232_7 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred264_InternalKiCool()) ) {s = 17;}
+                        if ( (synpred263_InternalKiCool()) ) {s = 17;}
 
-                        else if ( (synpred265_InternalKiCool()) ) {s = 20;}
+                        else if ( (synpred264_InternalKiCool()) ) {s = 20;}
 
                          
-                        input.seek(index233_7);
+                        input.seek(index232_7);
                         if ( s>=0 ) return s;
                         break;
                     case 7 : 
-                        int LA233_8 = input.LA(1);
+                        int LA232_8 = input.LA(1);
 
                          
-                        int index233_8 = input.index();
+                        int index232_8 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred264_InternalKiCool()) ) {s = 17;}
+                        if ( (synpred263_InternalKiCool()) ) {s = 17;}
 
-                        else if ( (synpred265_InternalKiCool()) ) {s = 20;}
+                        else if ( (synpred264_InternalKiCool()) ) {s = 20;}
 
                          
-                        input.seek(index233_8);
+                        input.seek(index232_8);
                         if ( s>=0 ) return s;
                         break;
                     case 8 : 
-                        int LA233_9 = input.LA(1);
+                        int LA232_9 = input.LA(1);
 
                          
-                        int index233_9 = input.index();
+                        int index232_9 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred264_InternalKiCool()) ) {s = 17;}
+                        if ( (synpred263_InternalKiCool()) ) {s = 17;}
 
-                        else if ( (synpred265_InternalKiCool()) ) {s = 20;}
+                        else if ( (synpred264_InternalKiCool()) ) {s = 20;}
 
                          
-                        input.seek(index233_9);
+                        input.seek(index232_9);
                         if ( s>=0 ) return s;
                         break;
                     case 9 : 
-                        int LA233_10 = input.LA(1);
+                        int LA232_10 = input.LA(1);
 
                          
-                        int index233_10 = input.index();
+                        int index232_10 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred264_InternalKiCool()) ) {s = 17;}
+                        if ( (synpred263_InternalKiCool()) ) {s = 17;}
 
-                        else if ( (synpred265_InternalKiCool()) ) {s = 20;}
+                        else if ( (synpred264_InternalKiCool()) ) {s = 20;}
 
                          
-                        input.seek(index233_10);
+                        input.seek(index232_10);
                         if ( s>=0 ) return s;
                         break;
                     case 10 : 
-                        int LA233_11 = input.LA(1);
+                        int LA232_11 = input.LA(1);
 
                          
-                        int index233_11 = input.index();
+                        int index232_11 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred264_InternalKiCool()) ) {s = 17;}
+                        if ( (synpred263_InternalKiCool()) ) {s = 17;}
 
-                        else if ( (synpred265_InternalKiCool()) ) {s = 20;}
+                        else if ( (synpred264_InternalKiCool()) ) {s = 20;}
 
                          
-                        input.seek(index233_11);
+                        input.seek(index232_11);
                         if ( s>=0 ) return s;
                         break;
                     case 11 : 
-                        int LA233_12 = input.LA(1);
+                        int LA232_12 = input.LA(1);
 
                          
-                        int index233_12 = input.index();
+                        int index232_12 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred264_InternalKiCool()) ) {s = 17;}
+                        if ( (synpred263_InternalKiCool()) ) {s = 17;}
 
-                        else if ( (synpred265_InternalKiCool()) ) {s = 20;}
+                        else if ( (synpred264_InternalKiCool()) ) {s = 20;}
 
                          
-                        input.seek(index233_12);
+                        input.seek(index232_12);
                         if ( s>=0 ) return s;
                         break;
                     case 12 : 
-                        int LA233_13 = input.LA(1);
+                        int LA232_13 = input.LA(1);
 
                          
-                        int index233_13 = input.index();
+                        int index232_13 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred264_InternalKiCool()) ) {s = 17;}
+                        if ( (synpred263_InternalKiCool()) ) {s = 17;}
 
-                        else if ( (synpred265_InternalKiCool()) ) {s = 20;}
+                        else if ( (synpred264_InternalKiCool()) ) {s = 20;}
 
                          
-                        input.seek(index233_13);
+                        input.seek(index232_13);
                         if ( s>=0 ) return s;
                         break;
                     case 13 : 
-                        int LA233_14 = input.LA(1);
+                        int LA232_14 = input.LA(1);
 
                          
-                        int index233_14 = input.index();
+                        int index232_14 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred264_InternalKiCool()) ) {s = 17;}
+                        if ( (synpred263_InternalKiCool()) ) {s = 17;}
 
-                        else if ( (synpred265_InternalKiCool()) ) {s = 20;}
+                        else if ( (synpred264_InternalKiCool()) ) {s = 20;}
 
                          
-                        input.seek(index233_14);
+                        input.seek(index232_14);
                         if ( s>=0 ) return s;
                         break;
                     case 14 : 
-                        int LA233_15 = input.LA(1);
+                        int LA232_15 = input.LA(1);
 
                          
-                        int index233_15 = input.index();
+                        int index232_15 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred264_InternalKiCool()) ) {s = 17;}
+                        if ( (synpred263_InternalKiCool()) ) {s = 17;}
 
-                        else if ( (synpred265_InternalKiCool()) ) {s = 20;}
+                        else if ( (synpred264_InternalKiCool()) ) {s = 20;}
 
                          
-                        input.seek(index233_15);
+                        input.seek(index232_15);
                         if ( s>=0 ) return s;
                         break;
                     case 15 : 
-                        int LA233_16 = input.LA(1);
+                        int LA232_16 = input.LA(1);
 
                          
-                        int index233_16 = input.index();
+                        int index232_16 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred264_InternalKiCool()) ) {s = 17;}
+                        if ( (synpred263_InternalKiCool()) ) {s = 17;}
 
-                        else if ( (synpred265_InternalKiCool()) ) {s = 20;}
+                        else if ( (synpred264_InternalKiCool()) ) {s = 20;}
 
                          
-                        input.seek(index233_16);
+                        input.seek(index232_16);
                         if ( s>=0 ) return s;
                         break;
             }
             if (state.backtracking>0) {state.failed=true; return -1;}
             NoViableAltException nvae =
-                new NoViableAltException(getDescription(), 233, _s, input);
+                new NoViableAltException(getDescription(), 232, _s, input);
             error(nvae);
             throw nvae;
         }
     }
-    static final String dfa_146s = "\2\uffff\1\7\5\uffff\2\7";
+    static final String dfa_146s = "\2\uffff\1\6\5\uffff\2\6";
     static final String dfa_147s = "\1\116\5\4\2\uffff\2\4";
     static final String dfa_148s = "\1\116\1\4\1\117\1\4\1\10\1\7\2\uffff\2\117";
-    static final String dfa_149s = "\6\uffff\1\2\1\1\2\uffff";
+    static final String dfa_149s = "\6\uffff\1\1\1\2\2\uffff";
     static final String dfa_150s = "\12\uffff}>";
     static final String[] dfa_151s = {
             "\1\1",
             "\1\2",
-            "\2\7\1\uffff\4\7\6\uffff\4\7\15\uffff\1\6\25\uffff\1\3\12\uffff\1\4\12\uffff\1\5\1\7",
+            "\2\6\1\uffff\4\6\6\uffff\4\6\15\uffff\1\7\25\uffff\1\3\12\uffff\1\4\12\uffff\1\5\1\6",
             "\1\10",
-            "\1\10\2\uffff\2\7",
-            "\1\7\2\uffff\1\11",
+            "\1\10\2\uffff\2\6",
+            "\1\6\2\uffff\1\11",
             "",
             "",
-            "\2\7\1\uffff\4\7\6\uffff\4\7\15\uffff\1\6\25\uffff\1\3\12\uffff\1\4\12\uffff\1\5\1\7",
-            "\2\7\1\uffff\4\7\6\uffff\4\7\15\uffff\1\6\40\uffff\1\7\12\uffff\2\7"
+            "\2\6\1\uffff\4\6\6\uffff\4\6\15\uffff\1\7\25\uffff\1\3\12\uffff\1\4\12\uffff\1\5\1\6",
+            "\2\6\1\uffff\4\6\6\uffff\4\6\15\uffff\1\7\40\uffff\1\6\12\uffff\2\6"
     };
     static final short[] dfa_146 = DFA.unpackEncodedString(dfa_146s);
     static final char[] dfa_147 = DFA.unpackEncodedStringToUnsignedChars(dfa_147s);
@@ -40433,11 +40292,11 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
     static final short[] dfa_150 = DFA.unpackEncodedString(dfa_150s);
     static final short[][] dfa_151 = unpackEncodedStringArray(dfa_151s);
 
-    class DFA240 extends DFA {
+    class DFA239 extends DFA {
 
-        public DFA240(BaseRecognizer recognizer) {
+        public DFA239(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
-            this.decisionNumber = 240;
+            this.decisionNumber = 239;
             this.eot = dfa_1;
             this.eof = dfa_146;
             this.min = dfa_147;
@@ -40472,11 +40331,11 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
     static final short[] dfa_155 = DFA.unpackEncodedString(dfa_155s);
     static final short[][] dfa_156 = unpackEncodedStringArray(dfa_156s);
 
-    class DFA241 extends DFA {
+    class DFA240 extends DFA {
 
-        public DFA241(BaseRecognizer recognizer) {
+        public DFA240(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
-            this.decisionNumber = 241;
+            this.decisionNumber = 240;
             this.eot = dfa_1;
             this.eof = dfa_152;
             this.min = dfa_153;
@@ -40505,11 +40364,11 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
     static final char[] dfa_157 = DFA.unpackEncodedStringToUnsignedChars(dfa_157s);
     static final short[][] dfa_158 = unpackEncodedStringArray(dfa_158s);
 
-    class DFA242 extends DFA {
+    class DFA241 extends DFA {
 
-        public DFA242(BaseRecognizer recognizer) {
+        public DFA241(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
-            this.decisionNumber = 242;
+            this.decisionNumber = 241;
             this.eot = dfa_1;
             this.eof = dfa_152;
             this.min = dfa_153;
@@ -40523,33 +40382,33 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
         }
     }
     static final String dfa_159s = "\26\uffff";
-    static final String dfa_160s = "\3\uffff\1\11\4\uffff\1\7\2\uffff\2\11\1\uffff\1\7\1\uffff\1\7\1\uffff\1\7\1\uffff\1\7\1\uffff";
+    static final String dfa_160s = "\3\uffff\1\7\4\uffff\1\12\2\uffff\2\7\1\uffff\1\12\1\uffff\1\12\1\uffff\1\12\1\uffff\1\12\1\uffff";
     static final String dfa_161s = "\1\12\1\uffff\4\4\1\7\1\uffff\1\4\2\uffff\12\4\1\0";
     static final String dfa_162s = "\1\117\1\uffff\1\4\1\167\1\4\1\10\1\7\1\uffff\1\167\2\uffff\2\167\1\4\1\167\1\4\1\167\1\4\1\167\1\4\1\167\1\0";
-    static final String dfa_163s = "\1\uffff\1\1\5\uffff\1\2\1\uffff\1\4\1\3\13\uffff";
+    static final String dfa_163s = "\1\uffff\1\1\5\uffff\1\4\1\uffff\1\3\1\2\13\uffff";
     static final String dfa_164s = "\25\uffff\1\0}>";
     static final String[] dfa_165s = {
             "\1\1\104\uffff\1\2",
             "",
             "\1\3",
-            "\1\10\1\7\1\11\3\7\1\11\6\uffff\4\11\5\uffff\1\12\11\uffff\10\11\2\uffff\1\11\3\uffff\1\11\1\uffff\2\11\2\uffff\1\4\2\11\10\uffff\1\5\12\uffff\1\6\1\11\33\uffff\7\11\3\uffff\3\11",
+            "\1\10\1\12\1\7\3\12\1\7\6\uffff\4\7\5\uffff\1\11\11\uffff\10\7\2\uffff\1\7\3\uffff\1\7\1\uffff\2\7\2\uffff\1\4\2\7\10\uffff\1\5\12\uffff\1\6\1\7\33\uffff\7\7\3\uffff\3\7",
             "\1\13",
-            "\1\13\2\uffff\2\7",
+            "\1\13\2\uffff\2\12",
             "\1\14",
             "",
-            "\1\7\1\uffff\1\7\3\uffff\1\7\6\uffff\4\7\5\uffff\1\11\11\uffff\11\7\1\uffff\1\7\1\11\1\uffff\1\11\1\7\1\uffff\2\7\1\11\1\uffff\1\15\2\7\10\uffff\1\7\6\uffff\1\11\3\uffff\2\7\2\uffff\17\11\12\uffff\7\7\3\uffff\3\7",
+            "\1\12\1\uffff\1\12\3\uffff\1\12\6\uffff\4\12\5\uffff\1\7\11\uffff\11\12\1\uffff\1\12\1\7\1\uffff\1\7\1\12\1\uffff\2\12\1\7\1\uffff\1\15\2\12\10\uffff\1\12\6\uffff\1\7\3\uffff\2\12\2\uffff\17\7\12\uffff\7\12\3\uffff\3\12",
             "",
             "",
-            "\1\10\1\7\1\11\3\7\1\11\6\uffff\4\11\5\uffff\1\12\11\uffff\10\11\2\uffff\1\11\3\uffff\1\11\1\uffff\2\11\2\uffff\1\4\2\11\10\uffff\1\5\12\uffff\1\6\1\11\33\uffff\7\11\3\uffff\3\11",
-            "\1\10\1\7\1\11\3\7\1\11\6\uffff\4\11\5\uffff\1\12\11\uffff\10\11\2\uffff\1\11\3\uffff\1\11\1\uffff\2\11\3\uffff\2\11\10\uffff\1\7\13\uffff\1\11\33\uffff\7\11\3\uffff\3\11",
+            "\1\10\1\12\1\7\3\12\1\7\6\uffff\4\7\5\uffff\1\11\11\uffff\10\7\2\uffff\1\7\3\uffff\1\7\1\uffff\2\7\2\uffff\1\4\2\7\10\uffff\1\5\12\uffff\1\6\1\7\33\uffff\7\7\3\uffff\3\7",
+            "\1\10\1\12\1\7\3\12\1\7\6\uffff\4\7\5\uffff\1\11\11\uffff\10\7\2\uffff\1\7\3\uffff\1\7\1\uffff\2\7\3\uffff\2\7\10\uffff\1\12\13\uffff\1\7\33\uffff\7\7\3\uffff\3\7",
             "\1\16",
-            "\1\7\1\uffff\1\7\3\uffff\1\7\6\uffff\4\7\5\uffff\1\11\11\uffff\11\7\1\uffff\1\7\1\11\1\uffff\1\11\1\7\1\uffff\2\7\1\11\1\uffff\1\17\2\7\10\uffff\1\7\6\uffff\1\11\3\uffff\2\7\2\uffff\17\11\12\uffff\7\7\3\uffff\3\7",
+            "\1\12\1\uffff\1\12\3\uffff\1\12\6\uffff\4\12\5\uffff\1\7\11\uffff\11\12\1\uffff\1\12\1\7\1\uffff\1\7\1\12\1\uffff\2\12\1\7\1\uffff\1\17\2\12\10\uffff\1\12\6\uffff\1\7\3\uffff\2\12\2\uffff\17\7\12\uffff\7\12\3\uffff\3\12",
             "\1\20",
-            "\1\7\1\uffff\1\7\3\uffff\1\7\6\uffff\4\7\5\uffff\1\11\11\uffff\11\7\1\uffff\1\7\1\11\1\uffff\1\11\1\7\1\uffff\2\7\1\11\1\uffff\1\21\2\7\10\uffff\1\7\6\uffff\1\11\3\uffff\2\7\2\uffff\17\11\12\uffff\7\7\3\uffff\3\7",
+            "\1\12\1\uffff\1\12\3\uffff\1\12\6\uffff\4\12\5\uffff\1\7\11\uffff\11\12\1\uffff\1\12\1\7\1\uffff\1\7\1\12\1\uffff\2\12\1\7\1\uffff\1\21\2\12\10\uffff\1\12\6\uffff\1\7\3\uffff\2\12\2\uffff\17\7\12\uffff\7\12\3\uffff\3\12",
             "\1\22",
-            "\1\7\1\uffff\1\7\3\uffff\1\7\6\uffff\4\7\5\uffff\1\11\11\uffff\11\7\1\uffff\1\7\1\11\1\uffff\1\11\1\7\1\uffff\2\7\1\11\1\uffff\1\23\2\7\10\uffff\1\7\6\uffff\1\11\3\uffff\2\7\2\uffff\17\11\12\uffff\7\7\3\uffff\3\7",
+            "\1\12\1\uffff\1\12\3\uffff\1\12\6\uffff\4\12\5\uffff\1\7\11\uffff\11\12\1\uffff\1\12\1\7\1\uffff\1\7\1\12\1\uffff\2\12\1\7\1\uffff\1\23\2\12\10\uffff\1\12\6\uffff\1\7\3\uffff\2\12\2\uffff\17\7\12\uffff\7\12\3\uffff\3\12",
             "\1\24",
-            "\1\7\1\uffff\1\7\3\uffff\1\7\6\uffff\4\7\5\uffff\1\11\11\uffff\11\7\1\uffff\1\7\1\11\1\uffff\1\11\1\7\1\uffff\2\7\1\11\1\uffff\1\25\2\7\10\uffff\1\7\6\uffff\1\11\3\uffff\2\7\2\uffff\17\11\12\uffff\7\7\3\uffff\3\7",
+            "\1\12\1\uffff\1\12\3\uffff\1\12\6\uffff\4\12\5\uffff\1\7\11\uffff\11\12\1\uffff\1\12\1\7\1\uffff\1\7\1\12\1\uffff\2\12\1\7\1\uffff\1\25\2\12\10\uffff\1\12\6\uffff\1\7\3\uffff\2\12\2\uffff\17\7\12\uffff\7\12\3\uffff\3\12",
             "\1\uffff"
     };
 
@@ -40561,11 +40420,11 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
     static final short[] dfa_164 = DFA.unpackEncodedString(dfa_164s);
     static final short[][] dfa_165 = unpackEncodedStringArray(dfa_165s);
 
-    class DFA243 extends DFA {
+    class DFA242 extends DFA {
 
-        public DFA243(BaseRecognizer recognizer) {
+        public DFA242(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
-            this.decisionNumber = 243;
+            this.decisionNumber = 242;
             this.eot = dfa_159;
             this.eof = dfa_160;
             this.min = dfa_161;
@@ -40582,29 +40441,29 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
         	int _s = s;
             switch ( s ) {
                     case 0 : 
-                        int LA243_21 = input.LA(1);
+                        int LA242_21 = input.LA(1);
 
                          
-                        int index243_21 = input.index();
+                        int index242_21 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred280_InternalKiCool()) ) {s = 7;}
+                        if ( (synpred279_InternalKiCool()) ) {s = 10;}
 
-                        else if ( (true) ) {s = 9;}
+                        else if ( (true) ) {s = 7;}
 
                          
-                        input.seek(index243_21);
+                        input.seek(index242_21);
                         if ( s>=0 ) return s;
                         break;
             }
             if (state.backtracking>0) {state.failed=true; return -1;}
             NoViableAltException nvae =
-                new NoViableAltException(getDescription(), 243, _s, input);
+                new NoViableAltException(getDescription(), 242, _s, input);
             error(nvae);
             throw nvae;
         }
     }
-    static final String dfa_166s = "\6\uffff\1\1\1\2\2\uffff";
+    static final String dfa_166s = "\2\uffff\1\7\5\uffff\2\7";
     static final String[] dfa_167s = {
             "\1\1",
             "\1\2",
@@ -40620,16 +40479,16 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
     static final short[] dfa_166 = DFA.unpackEncodedString(dfa_166s);
     static final short[][] dfa_167 = unpackEncodedStringArray(dfa_167s);
 
-    class DFA244 extends DFA {
+    class DFA243 extends DFA {
 
-        public DFA244(BaseRecognizer recognizer) {
+        public DFA243(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
-            this.decisionNumber = 244;
+            this.decisionNumber = 243;
             this.eot = dfa_1;
-            this.eof = dfa_146;
+            this.eof = dfa_166;
             this.min = dfa_147;
             this.max = dfa_148;
-            this.accept = dfa_166;
+            this.accept = dfa_149;
             this.special = dfa_150;
             this.transition = dfa_167;
         }
@@ -40663,11 +40522,11 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
     static final short[] dfa_172 = DFA.unpackEncodedString(dfa_172s);
     static final short[][] dfa_173 = unpackEncodedStringArray(dfa_173s);
 
-    class DFA245 extends DFA {
+    class DFA244 extends DFA {
 
-        public DFA245(BaseRecognizer recognizer) {
+        public DFA244(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
-            this.decisionNumber = 245;
+            this.decisionNumber = 244;
             this.eot = dfa_168;
             this.eof = dfa_168;
             this.min = dfa_169;
@@ -40709,11 +40568,11 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
     static final short[] dfa_179 = DFA.unpackEncodedString(dfa_179s);
     static final short[][] dfa_180 = unpackEncodedStringArray(dfa_180s);
 
-    class DFA246 extends DFA {
+    class DFA245 extends DFA {
 
-        public DFA246(BaseRecognizer recognizer) {
+        public DFA245(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
-            this.decisionNumber = 246;
+            this.decisionNumber = 245;
             this.eot = dfa_174;
             this.eof = dfa_175;
             this.min = dfa_176;

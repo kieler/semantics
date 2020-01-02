@@ -29406,7 +29406,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleParameter"
-    // InternalLustre.g:10620:1: ruleParameter returns [EObject current=null] : ( ( ( (lv_accessType_0_0= ruleParameterAccessType ) )? ( (lv_expression_1_0= ruleValuedObjectReference ) ) ) | ( (lv_expression_2_0= ruleExpression ) ) ) ;
+    // InternalLustre.g:10620:1: ruleParameter returns [EObject current=null] : ( ( ( (lv_accessType_0_0= ruleParameterAccessType ) ) ( (lv_expression_1_0= ruleValuedObjectReference ) ) ) | ( (lv_expression_2_0= ruleExpression ) ) ) ;
     public final EObject ruleParameter() throws RecognitionException {
         EObject current = null;
 
@@ -29421,114 +29421,65 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalLustre.g:10626:2: ( ( ( ( (lv_accessType_0_0= ruleParameterAccessType ) )? ( (lv_expression_1_0= ruleValuedObjectReference ) ) ) | ( (lv_expression_2_0= ruleExpression ) ) ) )
-            // InternalLustre.g:10627:2: ( ( ( (lv_accessType_0_0= ruleParameterAccessType ) )? ( (lv_expression_1_0= ruleValuedObjectReference ) ) ) | ( (lv_expression_2_0= ruleExpression ) ) )
+            // InternalLustre.g:10626:2: ( ( ( ( (lv_accessType_0_0= ruleParameterAccessType ) ) ( (lv_expression_1_0= ruleValuedObjectReference ) ) ) | ( (lv_expression_2_0= ruleExpression ) ) ) )
+            // InternalLustre.g:10627:2: ( ( ( (lv_accessType_0_0= ruleParameterAccessType ) ) ( (lv_expression_1_0= ruleValuedObjectReference ) ) ) | ( (lv_expression_2_0= ruleExpression ) ) )
             {
-            // InternalLustre.g:10627:2: ( ( ( (lv_accessType_0_0= ruleParameterAccessType ) )? ( (lv_expression_1_0= ruleValuedObjectReference ) ) ) | ( (lv_expression_2_0= ruleExpression ) ) )
-            int alt268=2;
-            switch ( input.LA(1) ) {
-            case 81:
-            case 125:
-                {
-                alt268=1;
-                }
-                break;
-            case RULE_ID:
-                {
-                int LA268_2 = input.LA(2);
+            // InternalLustre.g:10627:2: ( ( ( (lv_accessType_0_0= ruleParameterAccessType ) ) ( (lv_expression_1_0= ruleValuedObjectReference ) ) ) | ( (lv_expression_2_0= ruleExpression ) ) )
+            int alt267=2;
+            int LA267_0 = input.LA(1);
 
-                if ( (synpred305_InternalLustre()) ) {
-                    alt268=1;
-                }
-                else if ( (true) ) {
-                    alt268=2;
-                }
-                else {
-                    if (state.backtracking>0) {state.failed=true; return current;}
-                    NoViableAltException nvae =
-                        new NoViableAltException("", 268, 2, input);
-
-                    throw nvae;
-                }
-                }
-                break;
-            case RULE_STRING:
-            case RULE_INT:
-            case RULE_FLOAT:
-            case RULE_BOOLEAN:
-            case 22:
-            case 29:
-            case 48:
-            case 85:
-            case 89:
-            case 100:
-            case 101:
-            case 102:
-            case 103:
-            case 108:
-            case 111:
-                {
-                alt268=2;
-                }
-                break;
-            default:
+            if ( (LA267_0==81||LA267_0==125) ) {
+                alt267=1;
+            }
+            else if ( ((LA267_0>=RULE_STRING && LA267_0<=RULE_ID)||(LA267_0>=RULE_INT && LA267_0<=RULE_BOOLEAN)||LA267_0==22||LA267_0==29||LA267_0==48||LA267_0==85||LA267_0==89||(LA267_0>=100 && LA267_0<=103)||LA267_0==108||LA267_0==111) ) {
+                alt267=2;
+            }
+            else {
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 268, 0, input);
+                    new NoViableAltException("", 267, 0, input);
 
                 throw nvae;
             }
-
-            switch (alt268) {
+            switch (alt267) {
                 case 1 :
-                    // InternalLustre.g:10628:3: ( ( (lv_accessType_0_0= ruleParameterAccessType ) )? ( (lv_expression_1_0= ruleValuedObjectReference ) ) )
+                    // InternalLustre.g:10628:3: ( ( (lv_accessType_0_0= ruleParameterAccessType ) ) ( (lv_expression_1_0= ruleValuedObjectReference ) ) )
                     {
-                    // InternalLustre.g:10628:3: ( ( (lv_accessType_0_0= ruleParameterAccessType ) )? ( (lv_expression_1_0= ruleValuedObjectReference ) ) )
-                    // InternalLustre.g:10629:4: ( (lv_accessType_0_0= ruleParameterAccessType ) )? ( (lv_expression_1_0= ruleValuedObjectReference ) )
+                    // InternalLustre.g:10628:3: ( ( (lv_accessType_0_0= ruleParameterAccessType ) ) ( (lv_expression_1_0= ruleValuedObjectReference ) ) )
+                    // InternalLustre.g:10629:4: ( (lv_accessType_0_0= ruleParameterAccessType ) ) ( (lv_expression_1_0= ruleValuedObjectReference ) )
                     {
-                    // InternalLustre.g:10629:4: ( (lv_accessType_0_0= ruleParameterAccessType ) )?
-                    int alt267=2;
-                    int LA267_0 = input.LA(1);
+                    // InternalLustre.g:10629:4: ( (lv_accessType_0_0= ruleParameterAccessType ) )
+                    // InternalLustre.g:10630:5: (lv_accessType_0_0= ruleParameterAccessType )
+                    {
+                    // InternalLustre.g:10630:5: (lv_accessType_0_0= ruleParameterAccessType )
+                    // InternalLustre.g:10631:6: lv_accessType_0_0= ruleParameterAccessType
+                    {
+                    if ( state.backtracking==0 ) {
 
-                    if ( (LA267_0==81||LA267_0==125) ) {
-                        alt267=1;
+                      						newCompositeNode(grammarAccess.getParameterAccess().getAccessTypeParameterAccessTypeEnumRuleCall_0_0_0());
+                      					
                     }
-                    switch (alt267) {
-                        case 1 :
-                            // InternalLustre.g:10630:5: (lv_accessType_0_0= ruleParameterAccessType )
-                            {
-                            // InternalLustre.g:10630:5: (lv_accessType_0_0= ruleParameterAccessType )
-                            // InternalLustre.g:10631:6: lv_accessType_0_0= ruleParameterAccessType
-                            {
-                            if ( state.backtracking==0 ) {
+                    pushFollow(FollowSets000.FOLLOW_30);
+                    lv_accessType_0_0=ruleParameterAccessType();
 
-                              						newCompositeNode(grammarAccess.getParameterAccess().getAccessTypeParameterAccessTypeEnumRuleCall_0_0_0());
-                              					
-                            }
-                            pushFollow(FollowSets000.FOLLOW_30);
-                            lv_accessType_0_0=ruleParameterAccessType();
+                    state._fsp--;
+                    if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
 
-                            state._fsp--;
-                            if (state.failed) return current;
-                            if ( state.backtracking==0 ) {
+                      						if (current==null) {
+                      							current = createModelElementForParent(grammarAccess.getParameterRule());
+                      						}
+                      						set(
+                      							current,
+                      							"accessType",
+                      							lv_accessType_0_0,
+                      							"de.cau.cs.kieler.kexpressions.KExpressions.ParameterAccessType");
+                      						afterParserOrEnumRuleCall();
+                      					
+                    }
 
-                              						if (current==null) {
-                              							current = createModelElementForParent(grammarAccess.getParameterRule());
-                              						}
-                              						set(
-                              							current,
-                              							"accessType",
-                              							lv_accessType_0_0,
-                              							"de.cau.cs.kieler.kexpressions.KExpressions.ParameterAccessType");
-                              						afterParserOrEnumRuleCall();
-                              					
-                            }
+                    }
 
-                            }
-
-
-                            }
-                            break;
 
                     }
 
@@ -30163,17 +30114,17 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             }
 
             // InternalLustre.g:10870:3: (otherlv_2= ',' ( (lv_values_3_0= ruleVectorValueMember ) ) )*
-            loop269:
+            loop268:
             do {
-                int alt269=2;
-                int LA269_0 = input.LA(1);
+                int alt268=2;
+                int LA268_0 = input.LA(1);
 
-                if ( (LA269_0==23) ) {
-                    alt269=1;
+                if ( (LA268_0==23) ) {
+                    alt268=1;
                 }
 
 
-                switch (alt269) {
+                switch (alt268) {
             	case 1 :
             	    // InternalLustre.g:10871:4: otherlv_2= ',' ( (lv_values_3_0= ruleVectorValueMember ) )
             	    {
@@ -30223,7 +30174,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             	    break;
 
             	default :
-            	    break loop269;
+            	    break loop268;
                 }
             } while (true);
 
@@ -30317,9 +30268,9 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             // InternalLustre.g:10917:2: (this_BoolExpression_0= ruleBoolExpression | this_ValuedExpression_1= ruleValuedExpression | this_IgnoreValue_2= ruleIgnoreValue )
             {
             // InternalLustre.g:10917:2: (this_BoolExpression_0= ruleBoolExpression | this_ValuedExpression_1= ruleValuedExpression | this_IgnoreValue_2= ruleIgnoreValue )
-            int alt270=3;
-            alt270 = dfa270.predict(input);
-            switch (alt270) {
+            int alt269=3;
+            alt269 = dfa269.predict(input);
+            switch (alt269) {
                 case 1 :
                     // InternalLustre.g:10918:3: this_BoolExpression_0= ruleBoolExpression
                     {
@@ -30592,37 +30543,37 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             // InternalLustre.g:11004:2: (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_BoolValue_2= ruleBoolValue | this_StringValue_3= ruleStringValue )
             {
             // InternalLustre.g:11004:2: (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_BoolValue_2= ruleBoolValue | this_StringValue_3= ruleStringValue )
-            int alt271=4;
+            int alt270=4;
             switch ( input.LA(1) ) {
             case RULE_INT:
                 {
-                alt271=1;
+                alt270=1;
                 }
                 break;
             case RULE_FLOAT:
                 {
-                alt271=2;
+                alt270=2;
                 }
                 break;
             case RULE_BOOLEAN:
                 {
-                alt271=3;
+                alt270=3;
                 }
                 break;
             case RULE_STRING:
                 {
-                alt271=4;
+                alt270=4;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 271, 0, input);
+                    new NoViableAltException("", 270, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt271) {
+            switch (alt270) {
                 case 1 :
                     // InternalLustre.g:11005:3: this_IntValue_0= ruleIntValue
                     {
@@ -30843,13 +30794,13 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
               		
             }
             // InternalLustre.g:11085:3: ( ( (lv_members_2_0= ruleJsonObjectMember ) ) (otherlv_3= ',' ( (lv_members_4_0= ruleJsonObjectMember ) ) )* )?
-            int alt273=2;
-            int LA273_0 = input.LA(1);
+            int alt272=2;
+            int LA272_0 = input.LA(1);
 
-            if ( (LA273_0==RULE_STRING) ) {
-                alt273=1;
+            if ( (LA272_0==RULE_STRING) ) {
+                alt272=1;
             }
-            switch (alt273) {
+            switch (alt272) {
                 case 1 :
                     // InternalLustre.g:11086:4: ( (lv_members_2_0= ruleJsonObjectMember ) ) (otherlv_3= ',' ( (lv_members_4_0= ruleJsonObjectMember ) ) )*
                     {
@@ -30889,17 +30840,17 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     }
 
                     // InternalLustre.g:11105:4: (otherlv_3= ',' ( (lv_members_4_0= ruleJsonObjectMember ) ) )*
-                    loop272:
+                    loop271:
                     do {
-                        int alt272=2;
-                        int LA272_0 = input.LA(1);
+                        int alt271=2;
+                        int LA271_0 = input.LA(1);
 
-                        if ( (LA272_0==23) ) {
-                            alt272=1;
+                        if ( (LA271_0==23) ) {
+                            alt271=1;
                         }
 
 
-                        switch (alt272) {
+                        switch (alt271) {
                     	case 1 :
                     	    // InternalLustre.g:11106:5: otherlv_3= ',' ( (lv_members_4_0= ruleJsonObjectMember ) )
                     	    {
@@ -30949,7 +30900,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     	    break;
 
                     	default :
-                    	    break loop272;
+                    	    break loop271;
                         }
                     } while (true);
 
@@ -31232,13 +31183,13 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
               		
             }
             // InternalLustre.g:11228:3: ( ( (lv_elements_2_0= ruleJsonValue ) ) (otherlv_3= ',' ( (lv_elements_4_0= ruleJsonValue ) ) )* )?
-            int alt275=2;
-            int LA275_0 = input.LA(1);
+            int alt274=2;
+            int LA274_0 = input.LA(1);
 
-            if ( (LA275_0==RULE_STRING||(LA275_0>=RULE_INT && LA275_0<=RULE_BOOLEAN)||LA275_0==22||LA275_0==75||LA275_0==88) ) {
-                alt275=1;
+            if ( (LA274_0==RULE_STRING||(LA274_0>=RULE_INT && LA274_0<=RULE_BOOLEAN)||LA274_0==22||LA274_0==75||LA274_0==88) ) {
+                alt274=1;
             }
-            switch (alt275) {
+            switch (alt274) {
                 case 1 :
                     // InternalLustre.g:11229:4: ( (lv_elements_2_0= ruleJsonValue ) ) (otherlv_3= ',' ( (lv_elements_4_0= ruleJsonValue ) ) )*
                     {
@@ -31278,17 +31229,17 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     }
 
                     // InternalLustre.g:11248:4: (otherlv_3= ',' ( (lv_elements_4_0= ruleJsonValue ) ) )*
-                    loop274:
+                    loop273:
                     do {
-                        int alt274=2;
-                        int LA274_0 = input.LA(1);
+                        int alt273=2;
+                        int LA273_0 = input.LA(1);
 
-                        if ( (LA274_0==23) ) {
-                            alt274=1;
+                        if ( (LA273_0==23) ) {
+                            alt273=1;
                         }
 
 
-                        switch (alt274) {
+                        switch (alt273) {
                     	case 1 :
                     	    // InternalLustre.g:11249:5: otherlv_3= ',' ( (lv_elements_4_0= ruleJsonValue ) )
                     	    {
@@ -31338,7 +31289,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     	    break;
 
                     	default :
-                    	    break loop274;
+                    	    break loop273;
                         }
                     } while (true);
 
@@ -31440,21 +31391,21 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             // InternalLustre.g:11296:2: (this_JsonObjectValue_0= ruleJsonObjectValue | this_JsonArrayValue_1= ruleJsonArrayValue | this_NullValue_2= ruleNullValue | this_AnyValue_3= ruleAnyValue )
             {
             // InternalLustre.g:11296:2: (this_JsonObjectValue_0= ruleJsonObjectValue | this_JsonArrayValue_1= ruleJsonArrayValue | this_NullValue_2= ruleNullValue | this_AnyValue_3= ruleAnyValue )
-            int alt276=4;
+            int alt275=4;
             switch ( input.LA(1) ) {
             case 22:
                 {
-                alt276=1;
+                alt275=1;
                 }
                 break;
             case 75:
                 {
-                alt276=2;
+                alt275=2;
                 }
                 break;
             case 88:
                 {
-                alt276=3;
+                alt275=3;
                 }
                 break;
             case RULE_STRING:
@@ -31462,18 +31413,18 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             case RULE_FLOAT:
             case RULE_BOOLEAN:
                 {
-                alt276=4;
+                alt275=4;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 276, 0, input);
+                    new NoViableAltException("", 275, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt276) {
+            switch (alt275) {
                 case 1 :
                     // InternalLustre.g:11297:3: this_JsonObjectValue_0= ruleJsonObjectValue
                     {
@@ -32091,9 +32042,9 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             // InternalLustre.g:11517:2: (this_Annotation_0= superAnnotation | this_JsonAnnotation_1= ruleJsonAnnotation )
             {
             // InternalLustre.g:11517:2: (this_Annotation_0= superAnnotation | this_JsonAnnotation_1= ruleJsonAnnotation )
-            int alt277=2;
-            alt277 = dfa277.predict(input);
-            switch (alt277) {
+            int alt276=2;
+            alt276 = dfa276.predict(input);
+            switch (alt276) {
                 case 1 :
                     // InternalLustre.g:11518:3: this_Annotation_0= superAnnotation
                     {
@@ -32230,9 +32181,9 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             // InternalLustre.g:11559:2: (this_QuotedStringAnnotation_0= superQuotedStringAnnotation | this_JsonAnnotation_1= ruleJsonAnnotation )
             {
             // InternalLustre.g:11559:2: (this_QuotedStringAnnotation_0= superQuotedStringAnnotation | this_JsonAnnotation_1= ruleJsonAnnotation )
-            int alt278=2;
-            alt278 = dfa278.predict(input);
-            switch (alt278) {
+            int alt277=2;
+            alt277 = dfa277.predict(input);
+            switch (alt277) {
                 case 1 :
                     // InternalLustre.g:11560:3: this_QuotedStringAnnotation_0= superQuotedStringAnnotation
                     {
@@ -32373,9 +32324,9 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             // InternalLustre.g:11601:2: (this_CommentAnnotation_0= ruleCommentAnnotation | this_KeyStringValueAnnotation_1= ruleKeyStringValueAnnotation | this_TypedKeyStringValueAnnotation_2= ruleTypedKeyStringValueAnnotation | this_TagAnnotation_3= ruleTagAnnotation )
             {
             // InternalLustre.g:11601:2: (this_CommentAnnotation_0= ruleCommentAnnotation | this_KeyStringValueAnnotation_1= ruleKeyStringValueAnnotation | this_TypedKeyStringValueAnnotation_2= ruleTypedKeyStringValueAnnotation | this_TagAnnotation_3= ruleTagAnnotation )
-            int alt279=4;
-            alt279 = dfa279.predict(input);
-            switch (alt279) {
+            int alt278=4;
+            alt278 = dfa278.predict(input);
+            switch (alt278) {
                 case 1 :
                     // InternalLustre.g:11602:3: this_CommentAnnotation_0= ruleCommentAnnotation
                     {
@@ -32566,9 +32517,9 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             // InternalLustre.g:11667:2: (this_StringPragma_0= ruleStringPragma | this_PragmaTag_1= rulePragmaTag )
             {
             // InternalLustre.g:11667:2: (this_StringPragma_0= ruleStringPragma | this_PragmaTag_1= rulePragmaTag )
-            int alt280=2;
-            alt280 = dfa280.predict(input);
-            switch (alt280) {
+            int alt279=2;
+            alt279 = dfa279.predict(input);
+            switch (alt279) {
                 case 1 :
                     // InternalLustre.g:11668:3: this_StringPragma_0= ruleStringPragma
                     {
@@ -32707,9 +32658,9 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             // InternalLustre.g:11709:2: (this_CommentAnnotation_0= ruleCommentAnnotation | this_KeyStringValueAnnotation_1= ruleKeyStringValueAnnotation | this_TypedKeyStringValueAnnotation_2= ruleTypedKeyStringValueAnnotation )
             {
             // InternalLustre.g:11709:2: (this_CommentAnnotation_0= ruleCommentAnnotation | this_KeyStringValueAnnotation_1= ruleKeyStringValueAnnotation | this_TypedKeyStringValueAnnotation_2= ruleTypedKeyStringValueAnnotation )
-            int alt281=3;
-            alt281 = dfa281.predict(input);
-            switch (alt281) {
+            int alt280=3;
+            alt280 = dfa280.predict(input);
+            switch (alt280) {
                 case 1 :
                     // InternalLustre.g:11710:3: this_CommentAnnotation_0= ruleCommentAnnotation
                     {
@@ -32877,9 +32828,9 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             // InternalLustre.g:11763:2: (this_CommentAnnotation_0= ruleCommentAnnotation | this_QuotedKeyStringValueAnnotation_1= ruleQuotedKeyStringValueAnnotation | this_QuotedTypedKeyStringValueAnnotation_2= ruleQuotedTypedKeyStringValueAnnotation | this_TagAnnotation_3= ruleTagAnnotation )
             {
             // InternalLustre.g:11763:2: (this_CommentAnnotation_0= ruleCommentAnnotation | this_QuotedKeyStringValueAnnotation_1= ruleQuotedKeyStringValueAnnotation | this_QuotedTypedKeyStringValueAnnotation_2= ruleQuotedTypedKeyStringValueAnnotation | this_TagAnnotation_3= ruleTagAnnotation )
-            int alt282=4;
-            alt282 = dfa282.predict(input);
-            switch (alt282) {
+            int alt281=4;
+            alt281 = dfa281.predict(input);
+            switch (alt281) {
                 case 1 :
                     // InternalLustre.g:11764:3: this_CommentAnnotation_0= ruleCommentAnnotation
                     {
@@ -33611,17 +33562,17 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             }
 
             // InternalLustre.g:12026:3: (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )*
-            loop283:
+            loop282:
             do {
-                int alt283=2;
-                int LA283_0 = input.LA(1);
+                int alt282=2;
+                int LA282_0 = input.LA(1);
 
-                if ( (LA283_0==23) ) {
-                    alt283=1;
+                if ( (LA282_0==23) ) {
+                    alt282=1;
                 }
 
 
-                switch (alt283) {
+                switch (alt282) {
             	case 1 :
             	    // InternalLustre.g:12027:4: otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) )
             	    {
@@ -33671,7 +33622,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             	    break;
 
             	default :
-            	    break loop283;
+            	    break loop282;
                 }
             } while (true);
 
@@ -33840,17 +33791,17 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             }
 
             // InternalLustre.g:12112:3: (otherlv_3= ',' ( (lv_values_4_0= ruleEStringBoolean ) ) )*
-            loop284:
+            loop283:
             do {
-                int alt284=2;
-                int LA284_0 = input.LA(1);
+                int alt283=2;
+                int LA283_0 = input.LA(1);
 
-                if ( (LA284_0==23) ) {
-                    alt284=1;
+                if ( (LA283_0==23) ) {
+                    alt283=1;
                 }
 
 
-                switch (alt284) {
+                switch (alt283) {
             	case 1 :
             	    // InternalLustre.g:12113:4: otherlv_3= ',' ( (lv_values_4_0= ruleEStringBoolean ) )
             	    {
@@ -33900,7 +33851,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             	    break;
 
             	default :
-            	    break loop284;
+            	    break loop283;
                 }
             } while (true);
 
@@ -34069,17 +34020,17 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             }
 
             // InternalLustre.g:12198:3: (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )*
-            loop285:
+            loop284:
             do {
-                int alt285=2;
-                int LA285_0 = input.LA(1);
+                int alt284=2;
+                int LA284_0 = input.LA(1);
 
-                if ( (LA285_0==23) ) {
-                    alt285=1;
+                if ( (LA284_0==23) ) {
+                    alt284=1;
                 }
 
 
-                switch (alt285) {
+                switch (alt284) {
             	case 1 :
             	    // InternalLustre.g:12199:4: otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) )
             	    {
@@ -34129,7 +34080,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             	    break;
 
             	default :
-            	    break loop285;
+            	    break loop284;
                 }
             } while (true);
 
@@ -34349,17 +34300,17 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             }
 
             // InternalLustre.g:12311:3: (otherlv_6= ',' ( (lv_values_7_0= ruleEStringAllTypes ) ) )*
-            loop286:
+            loop285:
             do {
-                int alt286=2;
-                int LA286_0 = input.LA(1);
+                int alt285=2;
+                int LA285_0 = input.LA(1);
 
-                if ( (LA286_0==23) ) {
-                    alt286=1;
+                if ( (LA285_0==23) ) {
+                    alt285=1;
                 }
 
 
-                switch (alt286) {
+                switch (alt285) {
             	case 1 :
             	    // InternalLustre.g:12312:4: otherlv_6= ',' ( (lv_values_7_0= ruleEStringAllTypes ) )
             	    {
@@ -34409,7 +34360,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             	    break;
 
             	default :
-            	    break loop286;
+            	    break loop285;
                 }
             } while (true);
 
@@ -34629,17 +34580,17 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             }
 
             // InternalLustre.g:12424:3: (otherlv_6= ',' ( (lv_values_7_0= ruleEStringBoolean ) ) )*
-            loop287:
+            loop286:
             do {
-                int alt287=2;
-                int LA287_0 = input.LA(1);
+                int alt286=2;
+                int LA286_0 = input.LA(1);
 
-                if ( (LA287_0==23) ) {
-                    alt287=1;
+                if ( (LA286_0==23) ) {
+                    alt286=1;
                 }
 
 
-                switch (alt287) {
+                switch (alt286) {
             	case 1 :
             	    // InternalLustre.g:12425:4: otherlv_6= ',' ( (lv_values_7_0= ruleEStringBoolean ) )
             	    {
@@ -34689,7 +34640,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             	    break;
 
             	default :
-            	    break loop287;
+            	    break loop286;
                 }
             } while (true);
 
@@ -34851,17 +34802,17 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             }
 
             // InternalLustre.g:12509:3: (otherlv_3= ',' ( (lv_values_4_0= RULE_STRING ) ) )*
-            loop288:
+            loop287:
             do {
-                int alt288=2;
-                int LA288_0 = input.LA(1);
+                int alt287=2;
+                int LA287_0 = input.LA(1);
 
-                if ( (LA288_0==23) ) {
-                    alt288=1;
+                if ( (LA287_0==23) ) {
+                    alt287=1;
                 }
 
 
-                switch (alt288) {
+                switch (alt287) {
             	case 1 :
             	    // InternalLustre.g:12510:4: otherlv_3= ',' ( (lv_values_4_0= RULE_STRING ) )
             	    {
@@ -34906,7 +34857,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             	    break;
 
             	default :
-            	    break loop288;
+            	    break loop287;
                 }
             } while (true);
 
@@ -35119,17 +35070,17 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             }
 
             // InternalLustre.g:12620:3: (otherlv_6= ',' ( (lv_values_7_0= RULE_STRING ) ) )*
-            loop289:
+            loop288:
             do {
-                int alt289=2;
-                int LA289_0 = input.LA(1);
+                int alt288=2;
+                int LA288_0 = input.LA(1);
 
-                if ( (LA289_0==23) ) {
-                    alt289=1;
+                if ( (LA288_0==23) ) {
+                    alt288=1;
                 }
 
 
-                switch (alt289) {
+                switch (alt288) {
             	case 1 :
             	    // InternalLustre.g:12621:4: otherlv_6= ',' ( (lv_values_7_0= RULE_STRING ) )
             	    {
@@ -35174,7 +35125,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             	    break;
 
             	default :
-            	    break loop289;
+            	    break loop288;
                 }
             } while (true);
 
@@ -35259,23 +35210,23 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             // InternalLustre.g:12662:2: (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID )
             {
             // InternalLustre.g:12662:2: (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID )
-            int alt290=2;
-            int LA290_0 = input.LA(1);
+            int alt289=2;
+            int LA289_0 = input.LA(1);
 
-            if ( (LA290_0==RULE_STRING) ) {
-                alt290=1;
+            if ( (LA289_0==RULE_STRING) ) {
+                alt289=1;
             }
-            else if ( (LA290_0==RULE_ID) ) {
-                alt290=2;
+            else if ( (LA289_0==RULE_ID) ) {
+                alt289=2;
             }
             else {
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 290, 0, input);
+                    new NoViableAltException("", 289, 0, input);
 
                 throw nvae;
             }
-            switch (alt290) {
+            switch (alt289) {
                 case 1 :
                     // InternalLustre.g:12663:3: this_STRING_0= RULE_STRING
                     {
@@ -35401,32 +35352,32 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             // InternalLustre.g:12699:2: (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID | this_BOOLEAN_2= RULE_BOOLEAN )
             {
             // InternalLustre.g:12699:2: (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID | this_BOOLEAN_2= RULE_BOOLEAN )
-            int alt291=3;
+            int alt290=3;
             switch ( input.LA(1) ) {
             case RULE_STRING:
                 {
-                alt291=1;
+                alt290=1;
                 }
                 break;
             case RULE_ID:
                 {
-                alt291=2;
+                alt290=2;
                 }
                 break;
             case RULE_BOOLEAN:
                 {
-                alt291=3;
+                alt290=3;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 291, 0, input);
+                    new NoViableAltException("", 290, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt291) {
+            switch (alt290) {
                 case 1 :
                     // InternalLustre.g:12700:3: this_STRING_0= RULE_STRING
                     {
@@ -35573,37 +35524,37 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             // InternalLustre.g:12744:2: (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID | this_BOOLEAN_2= RULE_BOOLEAN | this_Integer_3= ruleInteger | this_Floateger_4= ruleFloateger )
             {
             // InternalLustre.g:12744:2: (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID | this_BOOLEAN_2= RULE_BOOLEAN | this_Integer_3= ruleInteger | this_Floateger_4= ruleFloateger )
-            int alt292=5;
+            int alt291=5;
             switch ( input.LA(1) ) {
             case RULE_STRING:
                 {
-                alt292=1;
+                alt291=1;
                 }
                 break;
             case RULE_ID:
                 {
-                alt292=2;
+                alt291=2;
                 }
                 break;
             case RULE_BOOLEAN:
                 {
-                alt292=3;
+                alt291=3;
                 }
                 break;
             case 85:
                 {
-                int LA292_4 = input.LA(2);
+                int LA291_4 = input.LA(2);
 
-                if ( (LA292_4==RULE_INT) ) {
-                    alt292=4;
+                if ( (LA291_4==RULE_INT) ) {
+                    alt291=4;
                 }
-                else if ( (LA292_4==RULE_FLOAT) ) {
-                    alt292=5;
+                else if ( (LA291_4==RULE_FLOAT) ) {
+                    alt291=5;
                 }
                 else {
                     if (state.backtracking>0) {state.failed=true; return current;}
                     NoViableAltException nvae =
-                        new NoViableAltException("", 292, 4, input);
+                        new NoViableAltException("", 291, 4, input);
 
                     throw nvae;
                 }
@@ -35611,23 +35562,23 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                 break;
             case RULE_INT:
                 {
-                alt292=4;
+                alt291=4;
                 }
                 break;
             case RULE_FLOAT:
                 {
-                alt292=5;
+                alt291=5;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 292, 0, input);
+                    new NoViableAltException("", 291, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt292) {
+            switch (alt291) {
                 case 1 :
                     // InternalLustre.g:12745:3: this_STRING_0= RULE_STRING
                     {
@@ -35836,47 +35787,47 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
               		
             }
             // InternalLustre.g:12819:3: ( (kw= '.' | kw= '-' ) this_ID_3= RULE_ID )*
-            loop294:
+            loop293:
             do {
-                int alt294=2;
-                int LA294_0 = input.LA(1);
+                int alt293=2;
+                int LA293_0 = input.LA(1);
 
-                if ( (LA294_0==85) ) {
-                    int LA294_2 = input.LA(2);
+                if ( (LA293_0==85) ) {
+                    int LA293_2 = input.LA(2);
 
-                    if ( (LA294_2==RULE_ID) ) {
-                        alt294=1;
+                    if ( (LA293_2==RULE_ID) ) {
+                        alt293=1;
                     }
 
 
                 }
-                else if ( (LA294_0==39) ) {
-                    alt294=1;
+                else if ( (LA293_0==39) ) {
+                    alt293=1;
                 }
 
 
-                switch (alt294) {
+                switch (alt293) {
             	case 1 :
             	    // InternalLustre.g:12820:4: (kw= '.' | kw= '-' ) this_ID_3= RULE_ID
             	    {
             	    // InternalLustre.g:12820:4: (kw= '.' | kw= '-' )
-            	    int alt293=2;
-            	    int LA293_0 = input.LA(1);
+            	    int alt292=2;
+            	    int LA292_0 = input.LA(1);
 
-            	    if ( (LA293_0==39) ) {
-            	        alt293=1;
+            	    if ( (LA292_0==39) ) {
+            	        alt292=1;
             	    }
-            	    else if ( (LA293_0==85) ) {
-            	        alt293=2;
+            	    else if ( (LA292_0==85) ) {
+            	        alt292=2;
             	    }
             	    else {
             	        if (state.backtracking>0) {state.failed=true; return current;}
             	        NoViableAltException nvae =
-            	            new NoViableAltException("", 293, 0, input);
+            	            new NoViableAltException("", 292, 0, input);
 
             	        throw nvae;
             	    }
-            	    switch (alt293) {
+            	    switch (alt292) {
             	        case 1 :
             	            // InternalLustre.g:12821:5: kw= '.'
             	            {
@@ -35922,18 +35873,18 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             	    break;
 
             	default :
-            	    break loop294;
+            	    break loop293;
                 }
             } while (true);
 
             // InternalLustre.g:12841:3: (kw= '#' this_INT_5= RULE_INT )?
-            int alt295=2;
-            int LA295_0 = input.LA(1);
+            int alt294=2;
+            int LA294_0 = input.LA(1);
 
-            if ( (LA295_0==89) ) {
-                alt295=1;
+            if ( (LA294_0==89) ) {
+                alt294=1;
             }
-            switch (alt295) {
+            switch (alt294) {
                 case 1 :
                     // InternalLustre.g:12842:4: kw= '#' this_INT_5= RULE_INT
                     {
@@ -36044,13 +35995,13 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             // InternalLustre.g:12874:3: (kw= '-' )? this_INT_1= RULE_INT
             {
             // InternalLustre.g:12874:3: (kw= '-' )?
-            int alt296=2;
-            int LA296_0 = input.LA(1);
+            int alt295=2;
+            int LA295_0 = input.LA(1);
 
-            if ( (LA296_0==85) ) {
-                alt296=1;
+            if ( (LA295_0==85) ) {
+                alt295=1;
             }
-            switch (alt296) {
+            switch (alt295) {
                 case 1 :
                     // InternalLustre.g:12875:4: kw= '-'
                     {
@@ -36161,13 +36112,13 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             // InternalLustre.g:12907:3: (kw= '-' )? this_FLOAT_1= RULE_FLOAT
             {
             // InternalLustre.g:12907:3: (kw= '-' )?
-            int alt297=2;
-            int LA297_0 = input.LA(1);
+            int alt296=2;
+            int LA296_0 = input.LA(1);
 
-            if ( (LA297_0==85) ) {
-                alt297=1;
+            if ( (LA296_0==85) ) {
+                alt296=1;
             }
-            switch (alt297) {
+            switch (alt296) {
                 case 1 :
                     // InternalLustre.g:12908:4: kw= '-'
                     {
@@ -36236,32 +36187,32 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             // InternalLustre.g:12932:2: ( (enumLiteral_0= 'bool' ) | (enumLiteral_1= 'int' ) | (enumLiteral_2= 'real' ) )
             {
             // InternalLustre.g:12932:2: ( (enumLiteral_0= 'bool' ) | (enumLiteral_1= 'int' ) | (enumLiteral_2= 'real' ) )
-            int alt298=3;
+            int alt297=3;
             switch ( input.LA(1) ) {
             case 91:
                 {
-                alt298=1;
+                alt297=1;
                 }
                 break;
             case 92:
                 {
-                alt298=2;
+                alt297=2;
                 }
                 break;
             case 93:
                 {
-                alt298=3;
+                alt297=3;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 298, 0, input);
+                    new NoViableAltException("", 297, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt298) {
+            switch (alt297) {
                 case 1 :
                     // InternalLustre.g:12933:3: (enumLiteral_0= 'bool' )
                     {
@@ -36459,47 +36410,47 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             // InternalLustre.g:13001:2: ( (enumLiteral_0= '=' ) | (enumLiteral_1= '<' ) | (enumLiteral_2= '<=' ) | (enumLiteral_3= '>' ) | (enumLiteral_4= '>=' ) | (enumLiteral_5= '<>' ) )
             {
             // InternalLustre.g:13001:2: ( (enumLiteral_0= '=' ) | (enumLiteral_1= '<' ) | (enumLiteral_2= '<=' ) | (enumLiteral_3= '>' ) | (enumLiteral_4= '>=' ) | (enumLiteral_5= '<>' ) )
-            int alt299=6;
+            int alt298=6;
             switch ( input.LA(1) ) {
             case 21:
                 {
-                alt299=1;
+                alt298=1;
                 }
                 break;
             case 95:
                 {
-                alt299=2;
+                alt298=2;
                 }
                 break;
             case 96:
                 {
-                alt299=3;
+                alt298=3;
                 }
                 break;
             case 97:
                 {
-                alt299=4;
+                alt298=4;
                 }
                 break;
             case 98:
                 {
-                alt299=5;
+                alt298=5;
                 }
                 break;
             case 99:
                 {
-                alt299=6;
+                alt298=6;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 299, 0, input);
+                    new NoViableAltException("", 298, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt299) {
+            switch (alt298) {
                 case 1 :
                     // InternalLustre.g:13002:3: (enumLiteral_0= '=' )
                     {
@@ -37374,23 +37325,23 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             // InternalLustre.g:13315:2: ( (enumLiteral_0= 'conflicting' ) | (enumLiteral_1= 'commuting' ) )
             {
             // InternalLustre.g:13315:2: ( (enumLiteral_0= 'conflicting' ) | (enumLiteral_1= 'commuting' ) )
-            int alt300=2;
-            int LA300_0 = input.LA(1);
+            int alt299=2;
+            int LA299_0 = input.LA(1);
 
-            if ( (LA300_0==104) ) {
-                alt300=1;
+            if ( (LA299_0==104) ) {
+                alt299=1;
             }
-            else if ( (LA300_0==105) ) {
-                alt300=2;
+            else if ( (LA299_0==105) ) {
+                alt299=2;
             }
             else {
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 300, 0, input);
+                    new NoViableAltException("", 299, 0, input);
 
                 throw nvae;
             }
-            switch (alt300) {
+            switch (alt299) {
                 case 1 :
                     // InternalLustre.g:13316:3: (enumLiteral_0= 'conflicting' )
                     {
@@ -37469,23 +37420,23 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             // InternalLustre.g:13342:2: ( (enumLiteral_0= '++' ) | (enumLiteral_1= '--' ) )
             {
             // InternalLustre.g:13342:2: ( (enumLiteral_0= '++' ) | (enumLiteral_1= '--' ) )
-            int alt301=2;
-            int LA301_0 = input.LA(1);
+            int alt300=2;
+            int LA300_0 = input.LA(1);
 
-            if ( (LA301_0==106) ) {
-                alt301=1;
+            if ( (LA300_0==106) ) {
+                alt300=1;
             }
-            else if ( (LA301_0==107) ) {
-                alt301=2;
+            else if ( (LA300_0==107) ) {
+                alt300=2;
             }
             else {
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 301, 0, input);
+                    new NoViableAltException("", 300, 0, input);
 
                 throw nvae;
             }
-            switch (alt301) {
+            switch (alt300) {
                 case 1 :
                     // InternalLustre.g:13343:3: (enumLiteral_0= '++' )
                     {
@@ -38386,57 +38337,57 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             // InternalLustre.g:13658:2: ( (enumLiteral_0= 'none' ) | (enumLiteral_1= '+' ) | (enumLiteral_2= '*' ) | (enumLiteral_3= 'max' ) | (enumLiteral_4= 'min' ) | (enumLiteral_5= '|' ) | (enumLiteral_6= '&' ) | (enumLiteral_7= 'host' ) )
             {
             // InternalLustre.g:13658:2: ( (enumLiteral_0= 'none' ) | (enumLiteral_1= '+' ) | (enumLiteral_2= '*' ) | (enumLiteral_3= 'max' ) | (enumLiteral_4= 'min' ) | (enumLiteral_5= '|' ) | (enumLiteral_6= '&' ) | (enumLiteral_7= 'host' ) )
-            int alt302=8;
+            int alt301=8;
             switch ( input.LA(1) ) {
             case 116:
                 {
-                alt302=1;
+                alt301=1;
                 }
                 break;
             case 84:
                 {
-                alt302=2;
+                alt301=2;
                 }
                 break;
             case 52:
                 {
-                alt302=3;
+                alt301=3;
                 }
                 break;
             case 117:
                 {
-                alt302=4;
+                alt301=4;
                 }
                 break;
             case 118:
                 {
-                alt302=5;
+                alt301=5;
                 }
                 break;
             case 110:
                 {
-                alt302=6;
+                alt301=6;
                 }
                 break;
             case 81:
                 {
-                alt302=7;
+                alt301=7;
                 }
                 break;
             case 72:
                 {
-                alt302=8;
+                alt301=8;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 302, 0, input);
+                    new NoViableAltException("", 301, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt302) {
+            switch (alt301) {
                 case 1 :
                     // InternalLustre.g:13659:3: (enumLiteral_0= 'none' )
                     {
@@ -38630,32 +38581,32 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             // InternalLustre.g:13733:2: ( (enumLiteral_0= 'public' ) | (enumLiteral_1= 'protected' ) | (enumLiteral_2= 'private' ) )
             {
             // InternalLustre.g:13733:2: ( (enumLiteral_0= 'public' ) | (enumLiteral_1= 'protected' ) | (enumLiteral_2= 'private' ) )
-            int alt303=3;
+            int alt302=3;
             switch ( input.LA(1) ) {
             case 119:
                 {
-                alt303=1;
+                alt302=1;
                 }
                 break;
             case 120:
                 {
-                alt303=2;
+                alt302=2;
                 }
                 break;
             case 121:
                 {
-                alt303=3;
+                alt302=3;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 303, 0, input);
+                    new NoViableAltException("", 302, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt303) {
+            switch (alt302) {
                 case 1 :
                     // InternalLustre.g:13734:3: (enumLiteral_0= 'public' )
                     {
@@ -38756,42 +38707,42 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             // InternalLustre.g:13768:2: ( (enumLiteral_0= 'void' ) | (enumLiteral_1= 'bool' ) | (enumLiteral_2= 'int' ) | (enumLiteral_3= 'float' ) | (enumLiteral_4= 'string' ) )
             {
             // InternalLustre.g:13768:2: ( (enumLiteral_0= 'void' ) | (enumLiteral_1= 'bool' ) | (enumLiteral_2= 'int' ) | (enumLiteral_3= 'float' ) | (enumLiteral_4= 'string' ) )
-            int alt304=5;
+            int alt303=5;
             switch ( input.LA(1) ) {
             case 122:
                 {
-                alt304=1;
+                alt303=1;
                 }
                 break;
             case 91:
                 {
-                alt304=2;
+                alt303=2;
                 }
                 break;
             case 92:
                 {
-                alt304=3;
+                alt303=3;
                 }
                 break;
             case 123:
                 {
-                alt304=4;
+                alt303=4;
                 }
                 break;
             case 124:
                 {
-                alt304=5;
+                alt303=5;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 304, 0, input);
+                    new NoViableAltException("", 303, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt304) {
+            switch (alt303) {
                 case 1 :
                     // InternalLustre.g:13769:3: (enumLiteral_0= 'void' )
                     {
@@ -38927,23 +38878,23 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             // InternalLustre.g:13819:2: ( (enumLiteral_0= '&' ) | (enumLiteral_1= '!&' ) )
             {
             // InternalLustre.g:13819:2: ( (enumLiteral_0= '&' ) | (enumLiteral_1= '!&' ) )
-            int alt305=2;
-            int LA305_0 = input.LA(1);
+            int alt304=2;
+            int LA304_0 = input.LA(1);
 
-            if ( (LA305_0==81) ) {
-                alt305=1;
+            if ( (LA304_0==81) ) {
+                alt304=1;
             }
-            else if ( (LA305_0==125) ) {
-                alt305=2;
+            else if ( (LA304_0==125) ) {
+                alt304=2;
             }
             else {
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 305, 0, input);
+                    new NoViableAltException("", 304, 0, input);
 
                 throw nvae;
             }
-            switch (alt305) {
+            switch (alt304) {
                 case 1 :
                     // InternalLustre.g:13820:3: (enumLiteral_0= '&' )
                     {
@@ -39185,17 +39136,17 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         }
 
         // InternalLustre.g:1816:5: (otherlv_11= ',' ( (lv_references_12_0= ruleValuedObjectReference ) ) )*
-        loop327:
+        loop326:
         do {
-            int alt327=2;
-            int LA327_0 = input.LA(1);
+            int alt326=2;
+            int LA326_0 = input.LA(1);
 
-            if ( (LA327_0==23) ) {
-                alt327=1;
+            if ( (LA326_0==23) ) {
+                alt326=1;
             }
 
 
-            switch (alt327) {
+            switch (alt326) {
         	case 1 :
         	    // InternalLustre.g:1817:6: otherlv_11= ',' ( (lv_references_12_0= ruleValuedObjectReference ) )
         	    {
@@ -39227,7 +39178,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	    break;
 
         	default :
-        	    break loop327;
+        	    break loop326;
             }
         } while (true);
 
@@ -39693,22 +39644,22 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         // InternalLustre.g:4779:5: (lv_expression_0_1= ruleAnnotatedExpression | lv_expression_0_2= ruleAnnotatedJsonExpression )
         {
         // InternalLustre.g:4779:5: (lv_expression_0_1= ruleAnnotatedExpression | lv_expression_0_2= ruleAnnotatedJsonExpression )
-        int alt342=2;
+        int alt341=2;
         switch ( input.LA(1) ) {
         case RULE_COMMENT_ANNOTATION:
             {
-            int LA342_1 = input.LA(2);
+            int LA341_1 = input.LA(2);
 
             if ( (synpred115_InternalLustre()) ) {
-                alt342=1;
+                alt341=1;
             }
             else if ( (true) ) {
-                alt342=2;
+                alt341=2;
             }
             else {
                 if (state.backtracking>0) {state.failed=true; return ;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 342, 1, input);
+                    new NoViableAltException("", 341, 1, input);
 
                 throw nvae;
             }
@@ -39716,18 +39667,18 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             break;
         case 90:
             {
-            int LA342_2 = input.LA(2);
+            int LA341_2 = input.LA(2);
 
             if ( (synpred115_InternalLustre()) ) {
-                alt342=1;
+                alt341=1;
             }
             else if ( (true) ) {
-                alt342=2;
+                alt341=2;
             }
             else {
                 if (state.backtracking>0) {state.failed=true; return ;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 342, 2, input);
+                    new NoViableAltException("", 341, 2, input);
 
                 throw nvae;
             }
@@ -39735,23 +39686,23 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             break;
         case 65:
             {
-            alt342=1;
+            alt341=1;
             }
             break;
         case 66:
             {
-            alt342=2;
+            alt341=2;
             }
             break;
         default:
             if (state.backtracking>0) {state.failed=true; return ;}
             NoViableAltException nvae =
-                new NoViableAltException("", 342, 0, input);
+                new NoViableAltException("", 341, 0, input);
 
             throw nvae;
         }
 
-        switch (alt342) {
+        switch (alt341) {
             case 1 :
                 // InternalLustre.g:4780:6: lv_expression_0_1= ruleAnnotatedExpression
                 {
@@ -40025,17 +39976,17 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         }
 
         // InternalLustre.g:6363:4: (otherlv_20= ',' ( (lv_valuedObjects_21_0= ruleValuedObject ) ) )*
-        loop350:
+        loop349:
         do {
-            int alt350=2;
-            int LA350_0 = input.LA(1);
+            int alt349=2;
+            int LA349_0 = input.LA(1);
 
-            if ( (LA350_0==23) ) {
-                alt350=1;
+            if ( (LA349_0==23) ) {
+                alt349=1;
             }
 
 
-            switch (alt350) {
+            switch (alt349) {
         	case 1 :
         	    // InternalLustre.g:6364:5: otherlv_20= ',' ( (lv_valuedObjects_21_0= ruleValuedObject ) )
         	    {
@@ -40067,7 +40018,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	    break;
 
         	default :
-        	    break loop350;
+        	    break loop349;
             }
         } while (true);
 
@@ -40489,84 +40440,8 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
     }
     // $ANTLR end synpred293_InternalLustre
 
-    // $ANTLR start synpred305_InternalLustre
-    public final void synpred305_InternalLustre_fragment() throws RecognitionException {   
-        Enumerator lv_accessType_0_0 = null;
-
-        EObject lv_expression_1_0 = null;
-
-
-        // InternalLustre.g:10628:3: ( ( ( (lv_accessType_0_0= ruleParameterAccessType ) )? ( (lv_expression_1_0= ruleValuedObjectReference ) ) ) )
-        // InternalLustre.g:10628:3: ( ( (lv_accessType_0_0= ruleParameterAccessType ) )? ( (lv_expression_1_0= ruleValuedObjectReference ) ) )
-        {
-        // InternalLustre.g:10628:3: ( ( (lv_accessType_0_0= ruleParameterAccessType ) )? ( (lv_expression_1_0= ruleValuedObjectReference ) ) )
-        // InternalLustre.g:10629:4: ( (lv_accessType_0_0= ruleParameterAccessType ) )? ( (lv_expression_1_0= ruleValuedObjectReference ) )
-        {
-        // InternalLustre.g:10629:4: ( (lv_accessType_0_0= ruleParameterAccessType ) )?
-        int alt375=2;
-        int LA375_0 = input.LA(1);
-
-        if ( (LA375_0==81||LA375_0==125) ) {
-            alt375=1;
-        }
-        switch (alt375) {
-            case 1 :
-                // InternalLustre.g:10630:5: (lv_accessType_0_0= ruleParameterAccessType )
-                {
-                // InternalLustre.g:10630:5: (lv_accessType_0_0= ruleParameterAccessType )
-                // InternalLustre.g:10631:6: lv_accessType_0_0= ruleParameterAccessType
-                {
-                if ( state.backtracking==0 ) {
-
-                  						newCompositeNode(grammarAccess.getParameterAccess().getAccessTypeParameterAccessTypeEnumRuleCall_0_0_0());
-                  					
-                }
-                pushFollow(FollowSets000.FOLLOW_30);
-                lv_accessType_0_0=ruleParameterAccessType();
-
-                state._fsp--;
-                if (state.failed) return ;
-
-                }
-
-
-                }
-                break;
-
-        }
-
-        // InternalLustre.g:10648:4: ( (lv_expression_1_0= ruleValuedObjectReference ) )
-        // InternalLustre.g:10649:5: (lv_expression_1_0= ruleValuedObjectReference )
-        {
-        // InternalLustre.g:10649:5: (lv_expression_1_0= ruleValuedObjectReference )
-        // InternalLustre.g:10650:6: lv_expression_1_0= ruleValuedObjectReference
-        {
-        if ( state.backtracking==0 ) {
-
-          						newCompositeNode(grammarAccess.getParameterAccess().getExpressionValuedObjectReferenceParserRuleCall_0_1_0());
-          					
-        }
-        pushFollow(FollowSets000.FOLLOW_2);
-        lv_expression_1_0=ruleValuedObjectReference();
-
-        state._fsp--;
-        if (state.failed) return ;
-
-        }
-
-
-        }
-
-
-        }
-
-
-        }
-    }
-    // $ANTLR end synpred305_InternalLustre
-
-    // $ANTLR start synpred307_InternalLustre
-    public final void synpred307_InternalLustre_fragment() throws RecognitionException {   
+    // $ANTLR start synpred306_InternalLustre
+    public final void synpred306_InternalLustre_fragment() throws RecognitionException {   
         EObject this_BoolExpression_0 = null;
 
 
@@ -40586,10 +40461,10 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
         }
     }
-    // $ANTLR end synpred307_InternalLustre
+    // $ANTLR end synpred306_InternalLustre
 
-    // $ANTLR start synpred308_InternalLustre
-    public final void synpred308_InternalLustre_fragment() throws RecognitionException {   
+    // $ANTLR start synpred307_InternalLustre
+    public final void synpred307_InternalLustre_fragment() throws RecognitionException {   
         EObject this_ValuedExpression_1 = null;
 
 
@@ -40609,10 +40484,10 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
         }
     }
-    // $ANTLR end synpred308_InternalLustre
+    // $ANTLR end synpred307_InternalLustre
 
-    // $ANTLR start synpred322_InternalLustre
-    public final void synpred322_InternalLustre_fragment() throws RecognitionException {   
+    // $ANTLR start synpred321_InternalLustre
+    public final void synpred321_InternalLustre_fragment() throws RecognitionException {   
         EObject this_KeyStringValueAnnotation_1 = null;
 
 
@@ -40632,7 +40507,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
         }
     }
-    // $ANTLR end synpred322_InternalLustre
+    // $ANTLR end synpred321_InternalLustre
 
     // Delegated rules
 
@@ -40655,6 +40530,20 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         int start = input.mark();
         try {
             synpred108_InternalLustre_fragment(); // can never throw exception
+        } catch (RecognitionException re) {
+            System.err.println("impossible: "+re);
+        }
+        boolean success = !state.failed;
+        input.rewind(start);
+        state.backtracking--;
+        state.failed=false;
+        return success;
+    }
+    public final boolean synpred306_InternalLustre() {
+        state.backtracking++;
+        int start = input.mark();
+        try {
+            synpred306_InternalLustre_fragment(); // can never throw exception
         } catch (RecognitionException re) {
             System.err.println("impossible: "+re);
         }
@@ -40860,20 +40749,6 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         state.failed=false;
         return success;
     }
-    public final boolean synpred305_InternalLustre() {
-        state.backtracking++;
-        int start = input.mark();
-        try {
-            synpred305_InternalLustre_fragment(); // can never throw exception
-        } catch (RecognitionException re) {
-            System.err.println("impossible: "+re);
-        }
-        boolean success = !state.failed;
-        input.rewind(start);
-        state.backtracking--;
-        state.failed=false;
-        return success;
-    }
     public final boolean synpred241_InternalLustre() {
         state.backtracking++;
         int start = input.mark();
@@ -40893,20 +40768,6 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         int start = input.mark();
         try {
             synpred124_InternalLustre_fragment(); // can never throw exception
-        } catch (RecognitionException re) {
-            System.err.println("impossible: "+re);
-        }
-        boolean success = !state.failed;
-        input.rewind(start);
-        state.backtracking--;
-        state.failed=false;
-        return success;
-    }
-    public final boolean synpred322_InternalLustre() {
-        state.backtracking++;
-        int start = input.mark();
-        try {
-            synpred322_InternalLustre_fragment(); // can never throw exception
         } catch (RecognitionException re) {
             System.err.println("impossible: "+re);
         }
@@ -41070,20 +40931,6 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         state.failed=false;
         return success;
     }
-    public final boolean synpred308_InternalLustre() {
-        state.backtracking++;
-        int start = input.mark();
-        try {
-            synpred308_InternalLustre_fragment(); // can never throw exception
-        } catch (RecognitionException re) {
-            System.err.println("impossible: "+re);
-        }
-        boolean success = !state.failed;
-        input.rewind(start);
-        state.backtracking--;
-        state.failed=false;
-        return success;
-    }
     public final boolean synpred77_InternalLustre() {
         state.backtracking++;
         int start = input.mark();
@@ -41187,6 +41034,20 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         int start = input.mark();
         try {
             synpred307_InternalLustre_fragment(); // can never throw exception
+        } catch (RecognitionException re) {
+            System.err.println("impossible: "+re);
+        }
+        boolean success = !state.failed;
+        input.rewind(start);
+        state.backtracking--;
+        state.failed=false;
+        return success;
+    }
+    public final boolean synpred321_InternalLustre() {
+        state.backtracking++;
+        int start = input.mark();
+        try {
+            synpred321_InternalLustre_fragment(); // can never throw exception
         } catch (RecognitionException re) {
             System.err.println("impossible: "+re);
         }
@@ -41324,13 +41185,13 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
     protected DFA253 dfa253 = new DFA253(this);
     protected DFA254 dfa254 = new DFA254(this);
     protected DFA256 dfa256 = new DFA256(this);
-    protected DFA270 dfa270 = new DFA270(this);
+    protected DFA269 dfa269 = new DFA269(this);
+    protected DFA276 dfa276 = new DFA276(this);
     protected DFA277 dfa277 = new DFA277(this);
     protected DFA278 dfa278 = new DFA278(this);
     protected DFA279 dfa279 = new DFA279(this);
     protected DFA280 dfa280 = new DFA280(this);
     protected DFA281 dfa281 = new DFA281(this);
-    protected DFA282 dfa282 = new DFA282(this);
     static final String dfa_1s = "\104\uffff";
     static final String dfa_2s = "\1\1\103\uffff";
     static final String dfa_3s = "\1\5\77\uffff\1\0\3\uffff";
@@ -44405,11 +44266,11 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
     static final short[] dfa_124 = DFA.unpackEncodedString(dfa_124s);
     static final short[][] dfa_125 = unpackEncodedStringArray(dfa_125s);
 
-    class DFA270 extends DFA {
+    class DFA269 extends DFA {
 
-        public DFA270(BaseRecognizer recognizer) {
+        public DFA269(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
-            this.decisionNumber = 270;
+            this.decisionNumber = 269;
             this.eot = dfa_120;
             this.eof = dfa_120;
             this.min = dfa_121;
@@ -44426,219 +44287,219 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	int _s = s;
             switch ( s ) {
                     case 0 : 
-                        int LA270_2 = input.LA(1);
+                        int LA269_2 = input.LA(1);
 
                          
-                        int index270_2 = input.index();
+                        int index269_2 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred307_InternalLustre()) ) {s = 1;}
+                        if ( (synpred306_InternalLustre()) ) {s = 1;}
 
-                        else if ( (synpred308_InternalLustre()) ) {s = 18;}
+                        else if ( (synpred307_InternalLustre()) ) {s = 18;}
 
                          
-                        input.seek(index270_2);
+                        input.seek(index269_2);
                         if ( s>=0 ) return s;
                         break;
                     case 1 : 
-                        int LA270_3 = input.LA(1);
+                        int LA269_3 = input.LA(1);
 
                          
-                        int index270_3 = input.index();
+                        int index269_3 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred307_InternalLustre()) ) {s = 1;}
+                        if ( (synpred306_InternalLustre()) ) {s = 1;}
 
-                        else if ( (synpred308_InternalLustre()) ) {s = 18;}
+                        else if ( (synpred307_InternalLustre()) ) {s = 18;}
 
                          
-                        input.seek(index270_3);
+                        input.seek(index269_3);
                         if ( s>=0 ) return s;
                         break;
                     case 2 : 
-                        int LA270_4 = input.LA(1);
+                        int LA269_4 = input.LA(1);
 
                          
-                        int index270_4 = input.index();
+                        int index269_4 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred307_InternalLustre()) ) {s = 1;}
+                        if ( (synpred306_InternalLustre()) ) {s = 1;}
 
-                        else if ( (synpred308_InternalLustre()) ) {s = 18;}
+                        else if ( (synpred307_InternalLustre()) ) {s = 18;}
 
                          
-                        input.seek(index270_4);
+                        input.seek(index269_4);
                         if ( s>=0 ) return s;
                         break;
                     case 3 : 
-                        int LA270_5 = input.LA(1);
+                        int LA269_5 = input.LA(1);
 
                          
-                        int index270_5 = input.index();
+                        int index269_5 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred307_InternalLustre()) ) {s = 1;}
+                        if ( (synpred306_InternalLustre()) ) {s = 1;}
 
-                        else if ( (synpred308_InternalLustre()) ) {s = 18;}
+                        else if ( (synpred307_InternalLustre()) ) {s = 18;}
 
                          
-                        input.seek(index270_5);
+                        input.seek(index269_5);
                         if ( s>=0 ) return s;
                         break;
                     case 4 : 
-                        int LA270_6 = input.LA(1);
+                        int LA269_6 = input.LA(1);
 
                          
-                        int index270_6 = input.index();
+                        int index269_6 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred307_InternalLustre()) ) {s = 1;}
+                        if ( (synpred306_InternalLustre()) ) {s = 1;}
 
-                        else if ( (synpred308_InternalLustre()) ) {s = 18;}
+                        else if ( (synpred307_InternalLustre()) ) {s = 18;}
 
                          
-                        input.seek(index270_6);
+                        input.seek(index269_6);
                         if ( s>=0 ) return s;
                         break;
                     case 5 : 
-                        int LA270_7 = input.LA(1);
+                        int LA269_7 = input.LA(1);
 
                          
-                        int index270_7 = input.index();
+                        int index269_7 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred307_InternalLustre()) ) {s = 1;}
+                        if ( (synpred306_InternalLustre()) ) {s = 1;}
 
-                        else if ( (synpred308_InternalLustre()) ) {s = 18;}
+                        else if ( (synpred307_InternalLustre()) ) {s = 18;}
 
                          
-                        input.seek(index270_7);
+                        input.seek(index269_7);
                         if ( s>=0 ) return s;
                         break;
                     case 6 : 
-                        int LA270_8 = input.LA(1);
+                        int LA269_8 = input.LA(1);
 
                          
-                        int index270_8 = input.index();
+                        int index269_8 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred307_InternalLustre()) ) {s = 1;}
+                        if ( (synpred306_InternalLustre()) ) {s = 1;}
 
-                        else if ( (synpred308_InternalLustre()) ) {s = 18;}
+                        else if ( (synpred307_InternalLustre()) ) {s = 18;}
 
                          
-                        input.seek(index270_8);
+                        input.seek(index269_8);
                         if ( s>=0 ) return s;
                         break;
                     case 7 : 
-                        int LA270_9 = input.LA(1);
+                        int LA269_9 = input.LA(1);
 
                          
-                        int index270_9 = input.index();
+                        int index269_9 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred307_InternalLustre()) ) {s = 1;}
+                        if ( (synpred306_InternalLustre()) ) {s = 1;}
 
-                        else if ( (synpred308_InternalLustre()) ) {s = 18;}
+                        else if ( (synpred307_InternalLustre()) ) {s = 18;}
 
                          
-                        input.seek(index270_9);
+                        input.seek(index269_9);
                         if ( s>=0 ) return s;
                         break;
                     case 8 : 
-                        int LA270_10 = input.LA(1);
+                        int LA269_10 = input.LA(1);
 
                          
-                        int index270_10 = input.index();
+                        int index269_10 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred307_InternalLustre()) ) {s = 1;}
+                        if ( (synpred306_InternalLustre()) ) {s = 1;}
 
-                        else if ( (synpred308_InternalLustre()) ) {s = 18;}
+                        else if ( (synpred307_InternalLustre()) ) {s = 18;}
 
                          
-                        input.seek(index270_10);
+                        input.seek(index269_10);
                         if ( s>=0 ) return s;
                         break;
                     case 9 : 
-                        int LA270_11 = input.LA(1);
+                        int LA269_11 = input.LA(1);
 
                          
-                        int index270_11 = input.index();
+                        int index269_11 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred307_InternalLustre()) ) {s = 1;}
+                        if ( (synpred306_InternalLustre()) ) {s = 1;}
 
-                        else if ( (synpred308_InternalLustre()) ) {s = 18;}
+                        else if ( (synpred307_InternalLustre()) ) {s = 18;}
 
                          
-                        input.seek(index270_11);
+                        input.seek(index269_11);
                         if ( s>=0 ) return s;
                         break;
                     case 10 : 
-                        int LA270_12 = input.LA(1);
+                        int LA269_12 = input.LA(1);
 
                          
-                        int index270_12 = input.index();
+                        int index269_12 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred307_InternalLustre()) ) {s = 1;}
+                        if ( (synpred306_InternalLustre()) ) {s = 1;}
 
-                        else if ( (synpred308_InternalLustre()) ) {s = 18;}
+                        else if ( (synpred307_InternalLustre()) ) {s = 18;}
 
                          
-                        input.seek(index270_12);
+                        input.seek(index269_12);
                         if ( s>=0 ) return s;
                         break;
                     case 11 : 
-                        int LA270_13 = input.LA(1);
+                        int LA269_13 = input.LA(1);
 
                          
-                        int index270_13 = input.index();
+                        int index269_13 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred307_InternalLustre()) ) {s = 1;}
+                        if ( (synpred306_InternalLustre()) ) {s = 1;}
 
-                        else if ( (synpred308_InternalLustre()) ) {s = 18;}
+                        else if ( (synpred307_InternalLustre()) ) {s = 18;}
 
                          
-                        input.seek(index270_13);
+                        input.seek(index269_13);
                         if ( s>=0 ) return s;
                         break;
                     case 12 : 
-                        int LA270_14 = input.LA(1);
+                        int LA269_14 = input.LA(1);
 
                          
-                        int index270_14 = input.index();
+                        int index269_14 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred307_InternalLustre()) ) {s = 1;}
+                        if ( (synpred306_InternalLustre()) ) {s = 1;}
 
-                        else if ( (synpred308_InternalLustre()) ) {s = 18;}
+                        else if ( (synpred307_InternalLustre()) ) {s = 18;}
 
                          
-                        input.seek(index270_14);
+                        input.seek(index269_14);
                         if ( s>=0 ) return s;
                         break;
                     case 13 : 
-                        int LA270_15 = input.LA(1);
+                        int LA269_15 = input.LA(1);
 
                          
-                        int index270_15 = input.index();
+                        int index269_15 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred307_InternalLustre()) ) {s = 1;}
+                        if ( (synpred306_InternalLustre()) ) {s = 1;}
 
-                        else if ( (synpred308_InternalLustre()) ) {s = 18;}
+                        else if ( (synpred307_InternalLustre()) ) {s = 18;}
 
                          
-                        input.seek(index270_15);
+                        input.seek(index269_15);
                         if ( s>=0 ) return s;
                         break;
             }
             if (state.backtracking>0) {state.failed=true; return -1;}
             NoViableAltException nvae =
-                new NoViableAltException(getDescription(), 270, _s, input);
+                new NoViableAltException(getDescription(), 269, _s, input);
             error(nvae);
             throw nvae;
         }
@@ -44667,11 +44528,11 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
     static final short[] dfa_130 = DFA.unpackEncodedString(dfa_130s);
     static final short[][] dfa_131 = unpackEncodedStringArray(dfa_131s);
 
-    class DFA277 extends DFA {
+    class DFA276 extends DFA {
 
-        public DFA277(BaseRecognizer recognizer) {
+        public DFA276(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
-            this.decisionNumber = 277;
+            this.decisionNumber = 276;
             this.eot = dfa_36;
             this.eof = dfa_126;
             this.min = dfa_127;
@@ -44700,11 +44561,11 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
     static final char[] dfa_132 = DFA.unpackEncodedStringToUnsignedChars(dfa_132s);
     static final short[][] dfa_133 = unpackEncodedStringArray(dfa_133s);
 
-    class DFA278 extends DFA {
+    class DFA277 extends DFA {
 
-        public DFA278(BaseRecognizer recognizer) {
+        public DFA277(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
-            this.decisionNumber = 278;
+            this.decisionNumber = 277;
             this.eot = dfa_36;
             this.eof = dfa_126;
             this.min = dfa_127;
@@ -44718,33 +44579,33 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         }
     }
     static final String dfa_134s = "\26\uffff";
-    static final String dfa_135s = "\3\uffff\1\7\4\uffff\1\12\2\uffff\2\7\1\uffff\1\12\1\uffff\1\12\1\uffff\1\12\1\uffff\1\12\1\uffff";
-    static final String dfa_136s = "\1\12\1\uffff\1\5\1\4\2\5\1\7\1\uffff\1\5\2\uffff\2\4\10\5\1\0";
-    static final String dfa_137s = "\1\132\1\uffff\1\5\1\174\1\5\1\10\1\7\1\uffff\1\174\2\uffff\2\174\1\5\1\174\1\5\1\174\1\5\1\174\1\5\1\174\1\0";
-    static final String dfa_138s = "\1\uffff\1\1\5\uffff\1\4\1\uffff\1\3\1\2\13\uffff";
+    static final String dfa_135s = "\3\uffff\1\12\5\uffff\1\10\1\uffff\2\12\1\uffff\1\10\1\uffff\1\10\1\uffff\1\10\1\uffff\1\10\1\uffff";
+    static final String dfa_136s = "\1\12\1\uffff\1\5\1\4\2\5\1\7\2\uffff\1\5\1\uffff\2\4\10\5\1\0";
+    static final String dfa_137s = "\1\132\1\uffff\1\5\1\174\1\5\1\10\1\7\2\uffff\1\174\1\uffff\2\174\1\5\1\174\1\5\1\174\1\5\1\174\1\5\1\174\1\0";
+    static final String dfa_138s = "\1\uffff\1\1\5\uffff\1\3\1\2\1\uffff\1\4\13\uffff";
     static final String dfa_139s = "\25\uffff\1\0}>";
     static final String[] dfa_140s = {
             "\1\1\117\uffff\1\2",
             "",
             "\1\3",
-            "\1\12\1\10\1\7\3\12\1\7\7\uffff\1\7\7\uffff\1\7\14\uffff\1\4\31\uffff\12\7\1\11\3\uffff\2\7\4\uffff\1\5\3\uffff\1\6\4\7\24\uffff\2\7\3\uffff\6\7",
+            "\1\10\1\11\1\12\3\10\1\12\7\uffff\1\12\7\uffff\1\12\14\uffff\1\4\31\uffff\12\12\1\7\3\uffff\2\12\4\uffff\1\5\3\uffff\1\6\4\12\24\uffff\2\12\3\uffff\6\12",
             "\1\13",
-            "\1\13\1\uffff\2\12",
+            "\1\13\1\uffff\2\10",
             "\1\14",
             "",
-            "\2\12\3\uffff\1\12\7\uffff\1\12\2\uffff\1\7\1\uffff\1\12\2\uffff\1\12\2\uffff\1\7\1\uffff\1\7\7\uffff\1\15\31\uffff\12\12\1\7\3\uffff\2\12\4\uffff\1\12\1\7\2\uffff\5\12\14\uffff\2\7\6\uffff\2\12\3\uffff\6\12",
             "",
+            "\2\10\3\uffff\1\10\7\uffff\1\10\2\uffff\1\12\1\uffff\1\10\2\uffff\1\10\2\uffff\1\12\1\uffff\1\12\7\uffff\1\15\31\uffff\12\10\1\12\3\uffff\2\10\4\uffff\1\10\1\12\2\uffff\5\10\14\uffff\2\12\6\uffff\2\10\3\uffff\6\10",
             "",
-            "\1\12\1\10\1\7\3\12\1\7\7\uffff\1\7\7\uffff\1\7\14\uffff\1\4\31\uffff\12\7\1\11\3\uffff\2\7\4\uffff\1\5\3\uffff\1\6\4\7\24\uffff\2\7\3\uffff\6\7",
-            "\1\12\1\10\1\7\3\12\1\7\7\uffff\1\7\7\uffff\1\7\46\uffff\12\7\1\11\3\uffff\2\7\4\uffff\1\12\4\uffff\4\7\24\uffff\2\7\3\uffff\6\7",
+            "\1\10\1\11\1\12\3\10\1\12\7\uffff\1\12\7\uffff\1\12\14\uffff\1\4\31\uffff\12\12\1\7\3\uffff\2\12\4\uffff\1\5\3\uffff\1\6\4\12\24\uffff\2\12\3\uffff\6\12",
+            "\1\10\1\11\1\12\3\10\1\12\7\uffff\1\12\7\uffff\1\12\46\uffff\12\12\1\7\3\uffff\2\12\4\uffff\1\10\4\uffff\4\12\24\uffff\2\12\3\uffff\6\12",
             "\1\16",
-            "\2\12\3\uffff\1\12\7\uffff\1\12\2\uffff\1\7\1\uffff\1\12\2\uffff\1\12\2\uffff\1\7\1\uffff\1\7\7\uffff\1\17\31\uffff\12\12\1\7\3\uffff\2\12\4\uffff\1\12\1\7\2\uffff\5\12\14\uffff\2\7\6\uffff\2\12\3\uffff\6\12",
+            "\2\10\3\uffff\1\10\7\uffff\1\10\2\uffff\1\12\1\uffff\1\10\2\uffff\1\10\2\uffff\1\12\1\uffff\1\12\7\uffff\1\17\31\uffff\12\10\1\12\3\uffff\2\10\4\uffff\1\10\1\12\2\uffff\5\10\14\uffff\2\12\6\uffff\2\10\3\uffff\6\10",
             "\1\20",
-            "\2\12\3\uffff\1\12\7\uffff\1\12\2\uffff\1\7\1\uffff\1\12\2\uffff\1\12\2\uffff\1\7\1\uffff\1\7\7\uffff\1\21\31\uffff\12\12\1\7\3\uffff\2\12\4\uffff\1\12\1\7\2\uffff\5\12\14\uffff\2\7\6\uffff\2\12\3\uffff\6\12",
+            "\2\10\3\uffff\1\10\7\uffff\1\10\2\uffff\1\12\1\uffff\1\10\2\uffff\1\10\2\uffff\1\12\1\uffff\1\12\7\uffff\1\21\31\uffff\12\10\1\12\3\uffff\2\10\4\uffff\1\10\1\12\2\uffff\5\10\14\uffff\2\12\6\uffff\2\10\3\uffff\6\10",
             "\1\22",
-            "\2\12\3\uffff\1\12\7\uffff\1\12\2\uffff\1\7\1\uffff\1\12\2\uffff\1\12\2\uffff\1\7\1\uffff\1\7\7\uffff\1\23\31\uffff\12\12\1\7\3\uffff\2\12\4\uffff\1\12\1\7\2\uffff\5\12\14\uffff\2\7\6\uffff\2\12\3\uffff\6\12",
+            "\2\10\3\uffff\1\10\7\uffff\1\10\2\uffff\1\12\1\uffff\1\10\2\uffff\1\10\2\uffff\1\12\1\uffff\1\12\7\uffff\1\23\31\uffff\12\10\1\12\3\uffff\2\10\4\uffff\1\10\1\12\2\uffff\5\10\14\uffff\2\12\6\uffff\2\10\3\uffff\6\10",
             "\1\24",
-            "\2\12\3\uffff\1\12\7\uffff\1\12\2\uffff\1\7\1\uffff\1\12\2\uffff\1\12\2\uffff\1\7\1\uffff\1\7\7\uffff\1\25\31\uffff\12\12\1\7\3\uffff\2\12\4\uffff\1\12\1\7\2\uffff\5\12\14\uffff\2\7\6\uffff\2\12\3\uffff\6\12",
+            "\2\10\3\uffff\1\10\7\uffff\1\10\2\uffff\1\12\1\uffff\1\10\2\uffff\1\10\2\uffff\1\12\1\uffff\1\12\7\uffff\1\25\31\uffff\12\10\1\12\3\uffff\2\10\4\uffff\1\10\1\12\2\uffff\5\10\14\uffff\2\12\6\uffff\2\10\3\uffff\6\10",
             "\1\uffff"
     };
 
@@ -44756,11 +44617,11 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
     static final short[] dfa_139 = DFA.unpackEncodedString(dfa_139s);
     static final short[][] dfa_140 = unpackEncodedStringArray(dfa_140s);
 
-    class DFA279 extends DFA {
+    class DFA278 extends DFA {
 
-        public DFA279(BaseRecognizer recognizer) {
+        public DFA278(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
-            this.decisionNumber = 279;
+            this.decisionNumber = 278;
             this.eot = dfa_134;
             this.eof = dfa_135;
             this.min = dfa_136;
@@ -44777,43 +44638,43 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	int _s = s;
             switch ( s ) {
                     case 0 : 
-                        int LA279_21 = input.LA(1);
+                        int LA278_21 = input.LA(1);
 
                          
-                        int index279_21 = input.index();
+                        int index278_21 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred322_InternalLustre()) ) {s = 10;}
+                        if ( (synpred321_InternalLustre()) ) {s = 8;}
 
-                        else if ( (true) ) {s = 7;}
+                        else if ( (true) ) {s = 10;}
 
                          
-                        input.seek(index279_21);
+                        input.seek(index278_21);
                         if ( s>=0 ) return s;
                         break;
             }
             if (state.backtracking>0) {state.failed=true; return -1;}
             NoViableAltException nvae =
-                new NoViableAltException(getDescription(), 279, _s, input);
+                new NoViableAltException(getDescription(), 278, _s, input);
             error(nvae);
             throw nvae;
         }
     }
-    static final String dfa_141s = "\2\uffff\1\7\5\uffff\2\7";
+    static final String dfa_141s = "\2\uffff\1\6\5\uffff\2\6";
     static final String dfa_142s = "\1\131\1\5\1\4\2\5\1\7\2\uffff\2\4";
     static final String dfa_143s = "\1\131\1\5\1\131\1\5\1\10\1\7\2\uffff\1\131\1\125";
-    static final String dfa_144s = "\6\uffff\1\1\1\2\2\uffff";
+    static final String dfa_144s = "\6\uffff\1\2\1\1\2\uffff";
     static final String[] dfa_145s = {
             "\1\1",
             "\1\2",
-            "\2\6\1\uffff\3\6\35\uffff\1\3\55\uffff\1\4\3\uffff\1\5",
+            "\2\7\1\uffff\3\7\35\uffff\1\3\55\uffff\1\4\3\uffff\1\5",
             "\1\10",
-            "\1\10\1\uffff\2\6",
+            "\1\10\1\uffff\2\7",
             "\1\11",
             "",
             "",
-            "\2\6\1\uffff\3\6\35\uffff\1\3\55\uffff\1\4\3\uffff\1\5",
-            "\2\6\1\uffff\3\6\113\uffff\1\6"
+            "\2\7\1\uffff\3\7\35\uffff\1\3\55\uffff\1\4\3\uffff\1\5",
+            "\2\7\1\uffff\3\7\113\uffff\1\7"
     };
     static final short[] dfa_141 = DFA.unpackEncodedString(dfa_141s);
     static final char[] dfa_142 = DFA.unpackEncodedStringToUnsignedChars(dfa_142s);
@@ -44821,11 +44682,11 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
     static final short[] dfa_144 = DFA.unpackEncodedString(dfa_144s);
     static final short[][] dfa_145 = unpackEncodedStringArray(dfa_145s);
 
-    class DFA280 extends DFA {
+    class DFA279 extends DFA {
 
-        public DFA280(BaseRecognizer recognizer) {
+        public DFA279(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
-            this.decisionNumber = 280;
+            this.decisionNumber = 279;
             this.eot = dfa_36;
             this.eof = dfa_141;
             this.min = dfa_142;
@@ -44864,11 +44725,11 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
     static final short[] dfa_150 = DFA.unpackEncodedString(dfa_150s);
     static final short[][] dfa_151 = unpackEncodedStringArray(dfa_151s);
 
-    class DFA281 extends DFA {
+    class DFA280 extends DFA {
 
-        public DFA281(BaseRecognizer recognizer) {
+        public DFA280(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
-            this.decisionNumber = 281;
+            this.decisionNumber = 280;
             this.eot = dfa_146;
             this.eof = dfa_146;
             this.min = dfa_147;
@@ -44910,11 +44771,11 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
     static final short[] dfa_157 = DFA.unpackEncodedString(dfa_157s);
     static final short[][] dfa_158 = unpackEncodedStringArray(dfa_158s);
 
-    class DFA282 extends DFA {
+    class DFA281 extends DFA {
 
-        public DFA282(BaseRecognizer recognizer) {
+        public DFA281(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
-            this.decisionNumber = 282;
+            this.decisionNumber = 281;
             this.eot = dfa_152;
             this.eof = dfa_153;
             this.min = dfa_154;

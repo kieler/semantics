@@ -2703,7 +2703,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//ModuleCallParameter kexpressions::Parameter:
-	//	(accessType=ParameterAccessType?
+	//	(accessType=ParameterAccessType
 	//	expression=ValuedObjectReference | expression=super::Expression) ('to' explicitBinding=[kexpressions::ValuedObject]
 	//	('[' explicitBindingIndices+=super::Expression ']')*)?;
 	public SCLGrammarAccess.ModuleCallParameterElements getModuleCallParameterAccess() {
@@ -3678,7 +3678,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	//// Additionally, a parameter may be preceded by an ampersand to indicate a call by reference.
 	//// Analogously, an prefixed exclamation mark marks the parameter as pure output.
 	//Parameter:
-	//	accessType=ParameterAccessType?
+	//	accessType=ParameterAccessType
 	//	expression=ValuedObjectReference | expression=super::Expression;
 	public KExpressionsGrammarAccess.ParameterElements getParameterAccess() {
 		return gaKExpressions.getParameterAccess();

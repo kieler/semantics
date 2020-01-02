@@ -227,7 +227,7 @@ ModuleCall returns ModuleCall:
 ;
     
 ModuleCallParameter returns kexpressions::Parameter:
-    ((accessType = ParameterAccessType?
+    ((accessType = ParameterAccessType
     expression = ValuedObjectReference)
     |
     expression = Expression)

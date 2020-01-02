@@ -2406,17 +2406,17 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//// Additionally, a parameter may be preceded by an ampersand to indicate a call by reference.
 		//// Analogously, an prefixed exclamation mark marks the parameter as pure output.
 		//Parameter:
-		//	accessType=ParameterAccessType?
+		//	accessType=ParameterAccessType
 		//	expression=ValuedObjectReference | expression=Expression;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//accessType=ParameterAccessType? expression=ValuedObjectReference | expression=Expression
+		//accessType=ParameterAccessType expression=ValuedObjectReference | expression=Expression
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
-		//accessType=ParameterAccessType? expression=ValuedObjectReference
+		//accessType=ParameterAccessType expression=ValuedObjectReference
 		public Group getGroup_0() { return cGroup_0; }
 		
-		//accessType=ParameterAccessType?
+		//accessType=ParameterAccessType
 		public Assignment getAccessTypeAssignment_0_0() { return cAccessTypeAssignment_0_0; }
 		
 		//ParameterAccessType
@@ -4508,7 +4508,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	//// Additionally, a parameter may be preceded by an ampersand to indicate a call by reference.
 	//// Analogously, an prefixed exclamation mark marks the parameter as pure output.
 	//Parameter:
-	//	accessType=ParameterAccessType?
+	//	accessType=ParameterAccessType
 	//	expression=ValuedObjectReference | expression=Expression;
 	public ParameterElements getParameterAccess() {
 		return pParameter;

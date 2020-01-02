@@ -70,7 +70,7 @@ ScopeCall returns sccharts::ScopeCall:
     (('(' parameters += ScopeParameter (',' parameters += ScopeParameter)* ')') | '(' ')')?;
     
 ScopeParameter returns kexpressions::Parameter:
-    ((accessType = ParameterAccessType?
+    ((accessType = ParameterAccessType
     expression = ValuedObjectReference)
     |
     expression = Expression)

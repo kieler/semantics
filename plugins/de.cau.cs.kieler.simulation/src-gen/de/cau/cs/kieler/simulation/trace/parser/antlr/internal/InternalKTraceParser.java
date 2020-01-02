@@ -4194,11 +4194,11 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
                 {
                 int LA45_1 = input.LA(2);
 
-                if ( ((LA45_1>=103 && LA45_1<=107)) ) {
-                    alt45=1;
-                }
-                else if ( (LA45_1==RULE_ID||LA45_1==RULE_COMMENT_ANNOTATION||LA45_1==75) ) {
+                if ( (LA45_1==RULE_ID||LA45_1==RULE_COMMENT_ANNOTATION||LA45_1==75) ) {
                     alt45=2;
+                }
+                else if ( ((LA45_1>=103 && LA45_1<=107)) ) {
+                    alt45=1;
                 }
                 else {
                     if (state.backtracking>0) {state.failed=true; return current;}
@@ -24143,7 +24143,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleParameter"
-    // InternalKTrace.g:8627:1: ruleParameter returns [EObject current=null] : ( ( ( (lv_accessType_0_0= ruleParameterAccessType ) )? ( (lv_expression_1_0= ruleValuedObjectReference ) ) ) | ( (lv_expression_2_0= ruleExpression ) ) ) ;
+    // InternalKTrace.g:8627:1: ruleParameter returns [EObject current=null] : ( ( ( (lv_accessType_0_0= ruleParameterAccessType ) ) ( (lv_expression_1_0= ruleValuedObjectReference ) ) ) | ( (lv_expression_2_0= ruleExpression ) ) ) ;
     public final EObject ruleParameter() throws RecognitionException {
         EObject current = null;
 
@@ -24158,116 +24158,65 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalKTrace.g:8633:2: ( ( ( ( (lv_accessType_0_0= ruleParameterAccessType ) )? ( (lv_expression_1_0= ruleValuedObjectReference ) ) ) | ( (lv_expression_2_0= ruleExpression ) ) ) )
-            // InternalKTrace.g:8634:2: ( ( ( (lv_accessType_0_0= ruleParameterAccessType ) )? ( (lv_expression_1_0= ruleValuedObjectReference ) ) ) | ( (lv_expression_2_0= ruleExpression ) ) )
+            // InternalKTrace.g:8633:2: ( ( ( ( (lv_accessType_0_0= ruleParameterAccessType ) ) ( (lv_expression_1_0= ruleValuedObjectReference ) ) ) | ( (lv_expression_2_0= ruleExpression ) ) ) )
+            // InternalKTrace.g:8634:2: ( ( ( (lv_accessType_0_0= ruleParameterAccessType ) ) ( (lv_expression_1_0= ruleValuedObjectReference ) ) ) | ( (lv_expression_2_0= ruleExpression ) ) )
             {
-            // InternalKTrace.g:8634:2: ( ( ( (lv_accessType_0_0= ruleParameterAccessType ) )? ( (lv_expression_1_0= ruleValuedObjectReference ) ) ) | ( (lv_expression_2_0= ruleExpression ) ) )
-            int alt233=2;
-            switch ( input.LA(1) ) {
-            case 59:
-            case 117:
-                {
-                alt233=1;
-                }
-                break;
-            case RULE_ID:
-                {
-                int LA233_2 = input.LA(2);
+            // InternalKTrace.g:8634:2: ( ( ( (lv_accessType_0_0= ruleParameterAccessType ) ) ( (lv_expression_1_0= ruleValuedObjectReference ) ) ) | ( (lv_expression_2_0= ruleExpression ) ) )
+            int alt232=2;
+            int LA232_0 = input.LA(1);
 
-                if ( (synpred261_InternalKTrace()) ) {
-                    alt233=1;
-                }
-                else if ( (true) ) {
-                    alt233=2;
-                }
-                else {
-                    if (state.backtracking>0) {state.failed=true; return current;}
-                    NoViableAltException nvae =
-                        new NoViableAltException("", 233, 2, input);
-
-                    throw nvae;
-                }
-                }
-                break;
-            case RULE_STRING:
-            case RULE_HOSTCODE:
-            case RULE_INT:
-            case RULE_FLOAT:
-            case RULE_BOOLEAN:
-            case RULE_COMMENT_ANNOTATION:
-            case 17:
-            case 30:
-            case 42:
-            case 47:
-            case 54:
-            case 64:
-            case 71:
-            case 75:
-            case 99:
-            case 100:
-            case 101:
-                {
-                alt233=2;
-                }
-                break;
-            default:
+            if ( (LA232_0==59||LA232_0==117) ) {
+                alt232=1;
+            }
+            else if ( ((LA232_0>=RULE_ID && LA232_0<=RULE_COMMENT_ANNOTATION)||LA232_0==17||LA232_0==30||LA232_0==42||LA232_0==47||LA232_0==54||LA232_0==64||LA232_0==71||LA232_0==75||(LA232_0>=99 && LA232_0<=101)) ) {
+                alt232=2;
+            }
+            else {
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 233, 0, input);
+                    new NoViableAltException("", 232, 0, input);
 
                 throw nvae;
             }
-
-            switch (alt233) {
+            switch (alt232) {
                 case 1 :
-                    // InternalKTrace.g:8635:3: ( ( (lv_accessType_0_0= ruleParameterAccessType ) )? ( (lv_expression_1_0= ruleValuedObjectReference ) ) )
+                    // InternalKTrace.g:8635:3: ( ( (lv_accessType_0_0= ruleParameterAccessType ) ) ( (lv_expression_1_0= ruleValuedObjectReference ) ) )
                     {
-                    // InternalKTrace.g:8635:3: ( ( (lv_accessType_0_0= ruleParameterAccessType ) )? ( (lv_expression_1_0= ruleValuedObjectReference ) ) )
-                    // InternalKTrace.g:8636:4: ( (lv_accessType_0_0= ruleParameterAccessType ) )? ( (lv_expression_1_0= ruleValuedObjectReference ) )
+                    // InternalKTrace.g:8635:3: ( ( (lv_accessType_0_0= ruleParameterAccessType ) ) ( (lv_expression_1_0= ruleValuedObjectReference ) ) )
+                    // InternalKTrace.g:8636:4: ( (lv_accessType_0_0= ruleParameterAccessType ) ) ( (lv_expression_1_0= ruleValuedObjectReference ) )
                     {
-                    // InternalKTrace.g:8636:4: ( (lv_accessType_0_0= ruleParameterAccessType ) )?
-                    int alt232=2;
-                    int LA232_0 = input.LA(1);
+                    // InternalKTrace.g:8636:4: ( (lv_accessType_0_0= ruleParameterAccessType ) )
+                    // InternalKTrace.g:8637:5: (lv_accessType_0_0= ruleParameterAccessType )
+                    {
+                    // InternalKTrace.g:8637:5: (lv_accessType_0_0= ruleParameterAccessType )
+                    // InternalKTrace.g:8638:6: lv_accessType_0_0= ruleParameterAccessType
+                    {
+                    if ( state.backtracking==0 ) {
 
-                    if ( (LA232_0==59||LA232_0==117) ) {
-                        alt232=1;
+                      						newCompositeNode(grammarAccess.getParameterAccess().getAccessTypeParameterAccessTypeEnumRuleCall_0_0_0());
+                      					
                     }
-                    switch (alt232) {
-                        case 1 :
-                            // InternalKTrace.g:8637:5: (lv_accessType_0_0= ruleParameterAccessType )
-                            {
-                            // InternalKTrace.g:8637:5: (lv_accessType_0_0= ruleParameterAccessType )
-                            // InternalKTrace.g:8638:6: lv_accessType_0_0= ruleParameterAccessType
-                            {
-                            if ( state.backtracking==0 ) {
+                    pushFollow(FollowSets000.FOLLOW_19);
+                    lv_accessType_0_0=ruleParameterAccessType();
 
-                              						newCompositeNode(grammarAccess.getParameterAccess().getAccessTypeParameterAccessTypeEnumRuleCall_0_0_0());
-                              					
-                            }
-                            pushFollow(FollowSets000.FOLLOW_19);
-                            lv_accessType_0_0=ruleParameterAccessType();
+                    state._fsp--;
+                    if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
 
-                            state._fsp--;
-                            if (state.failed) return current;
-                            if ( state.backtracking==0 ) {
+                      						if (current==null) {
+                      							current = createModelElementForParent(grammarAccess.getParameterRule());
+                      						}
+                      						set(
+                      							current,
+                      							"accessType",
+                      							lv_accessType_0_0,
+                      							"de.cau.cs.kieler.kexpressions.KExpressions.ParameterAccessType");
+                      						afterParserOrEnumRuleCall();
+                      					
+                    }
 
-                              						if (current==null) {
-                              							current = createModelElementForParent(grammarAccess.getParameterRule());
-                              						}
-                              						set(
-                              							current,
-                              							"accessType",
-                              							lv_accessType_0_0,
-                              							"de.cau.cs.kieler.kexpressions.KExpressions.ParameterAccessType");
-                              						afterParserOrEnumRuleCall();
-                              					
-                            }
+                    }
 
-                            }
-
-
-                            }
-                            break;
 
                     }
 
@@ -24437,17 +24386,17 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             // InternalKTrace.g:8714:3: ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_text_1_0= RULE_HOSTCODE ) )
             {
             // InternalKTrace.g:8714:3: ( (lv_annotations_0_0= ruleAnnotation ) )*
-            loop234:
+            loop233:
             do {
-                int alt234=2;
-                int LA234_0 = input.LA(1);
+                int alt233=2;
+                int LA233_0 = input.LA(1);
 
-                if ( (LA234_0==RULE_COMMENT_ANNOTATION||LA234_0==75) ) {
-                    alt234=1;
+                if ( (LA233_0==RULE_COMMENT_ANNOTATION||LA233_0==75) ) {
+                    alt233=1;
                 }
 
 
-                switch (alt234) {
+                switch (alt233) {
             	case 1 :
             	    // InternalKTrace.g:8715:4: (lv_annotations_0_0= ruleAnnotation )
             	    {
@@ -24485,7 +24434,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             	    break;
 
             	default :
-            	    break loop234;
+            	    break loop233;
                 }
             } while (true);
 
@@ -25068,17 +25017,17 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             }
 
             // InternalKTrace.g:8933:3: (otherlv_2= ',' ( (lv_values_3_0= ruleVectorValueMember ) ) )*
-            loop235:
+            loop234:
             do {
-                int alt235=2;
-                int LA235_0 = input.LA(1);
+                int alt234=2;
+                int LA234_0 = input.LA(1);
 
-                if ( (LA235_0==40) ) {
-                    alt235=1;
+                if ( (LA234_0==40) ) {
+                    alt234=1;
                 }
 
 
-                switch (alt235) {
+                switch (alt234) {
             	case 1 :
             	    // InternalKTrace.g:8934:4: otherlv_2= ',' ( (lv_values_3_0= ruleVectorValueMember ) )
             	    {
@@ -25128,7 +25077,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             	    break;
 
             	default :
-            	    break loop235;
+            	    break loop234;
                 }
             } while (true);
 
@@ -25222,9 +25171,9 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             // InternalKTrace.g:8980:2: (this_BoolExpression_0= ruleBoolExpression | this_ValuedExpression_1= ruleValuedExpression | this_IgnoreValue_2= ruleIgnoreValue )
             {
             // InternalKTrace.g:8980:2: (this_BoolExpression_0= ruleBoolExpression | this_ValuedExpression_1= ruleValuedExpression | this_IgnoreValue_2= ruleIgnoreValue )
-            int alt236=3;
-            alt236 = dfa236.predict(input);
-            switch (alt236) {
+            int alt235=3;
+            alt235 = dfa235.predict(input);
+            switch (alt235) {
                 case 1 :
                     // InternalKTrace.g:8981:3: this_BoolExpression_0= ruleBoolExpression
                     {
@@ -25497,37 +25446,37 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             // InternalKTrace.g:9067:2: (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_BoolValue_2= ruleBoolValue | this_StringValue_3= ruleStringValue )
             {
             // InternalKTrace.g:9067:2: (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_BoolValue_2= ruleBoolValue | this_StringValue_3= ruleStringValue )
-            int alt237=4;
+            int alt236=4;
             switch ( input.LA(1) ) {
             case RULE_INT:
                 {
-                alt237=1;
+                alt236=1;
                 }
                 break;
             case RULE_FLOAT:
                 {
-                alt237=2;
+                alt236=2;
                 }
                 break;
             case RULE_BOOLEAN:
                 {
-                alt237=3;
+                alt236=3;
                 }
                 break;
             case RULE_STRING:
                 {
-                alt237=4;
+                alt236=4;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 237, 0, input);
+                    new NoViableAltException("", 236, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt237) {
+            switch (alt236) {
                 case 1 :
                     // InternalKTrace.g:9068:3: this_IntValue_0= ruleIntValue
                     {
@@ -25748,13 +25697,13 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
               		
             }
             // InternalKTrace.g:9148:3: ( ( (lv_members_2_0= ruleJsonObjectMember ) ) (otherlv_3= ',' ( (lv_members_4_0= ruleJsonObjectMember ) ) )* )?
-            int alt239=2;
-            int LA239_0 = input.LA(1);
+            int alt238=2;
+            int LA238_0 = input.LA(1);
 
-            if ( (LA239_0==RULE_STRING) ) {
-                alt239=1;
+            if ( (LA238_0==RULE_STRING) ) {
+                alt238=1;
             }
-            switch (alt239) {
+            switch (alt238) {
                 case 1 :
                     // InternalKTrace.g:9149:4: ( (lv_members_2_0= ruleJsonObjectMember ) ) (otherlv_3= ',' ( (lv_members_4_0= ruleJsonObjectMember ) ) )*
                     {
@@ -25794,17 +25743,17 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
                     }
 
                     // InternalKTrace.g:9168:4: (otherlv_3= ',' ( (lv_members_4_0= ruleJsonObjectMember ) ) )*
-                    loop238:
+                    loop237:
                     do {
-                        int alt238=2;
-                        int LA238_0 = input.LA(1);
+                        int alt237=2;
+                        int LA237_0 = input.LA(1);
 
-                        if ( (LA238_0==40) ) {
-                            alt238=1;
+                        if ( (LA237_0==40) ) {
+                            alt237=1;
                         }
 
 
-                        switch (alt238) {
+                        switch (alt237) {
                     	case 1 :
                     	    // InternalKTrace.g:9169:5: otherlv_3= ',' ( (lv_members_4_0= ruleJsonObjectMember ) )
                     	    {
@@ -25854,7 +25803,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
                     	    break;
 
                     	default :
-                    	    break loop238;
+                    	    break loop237;
                         }
                     } while (true);
 
@@ -26137,13 +26086,13 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
               		
             }
             // InternalKTrace.g:9291:3: ( ( (lv_elements_2_0= ruleJsonValue ) ) (otherlv_3= ',' ( (lv_elements_4_0= ruleJsonValue ) ) )* )?
-            int alt241=2;
-            int LA241_0 = input.LA(1);
+            int alt240=2;
+            int LA240_0 = input.LA(1);
 
-            if ( (LA241_0==RULE_STRING||(LA241_0>=RULE_INT && LA241_0<=RULE_BOOLEAN)||LA241_0==30||LA241_0==48||LA241_0==73) ) {
-                alt241=1;
+            if ( (LA240_0==RULE_STRING||(LA240_0>=RULE_INT && LA240_0<=RULE_BOOLEAN)||LA240_0==30||LA240_0==48||LA240_0==73) ) {
+                alt240=1;
             }
-            switch (alt241) {
+            switch (alt240) {
                 case 1 :
                     // InternalKTrace.g:9292:4: ( (lv_elements_2_0= ruleJsonValue ) ) (otherlv_3= ',' ( (lv_elements_4_0= ruleJsonValue ) ) )*
                     {
@@ -26183,17 +26132,17 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
                     }
 
                     // InternalKTrace.g:9311:4: (otherlv_3= ',' ( (lv_elements_4_0= ruleJsonValue ) ) )*
-                    loop240:
+                    loop239:
                     do {
-                        int alt240=2;
-                        int LA240_0 = input.LA(1);
+                        int alt239=2;
+                        int LA239_0 = input.LA(1);
 
-                        if ( (LA240_0==40) ) {
-                            alt240=1;
+                        if ( (LA239_0==40) ) {
+                            alt239=1;
                         }
 
 
-                        switch (alt240) {
+                        switch (alt239) {
                     	case 1 :
                     	    // InternalKTrace.g:9312:5: otherlv_3= ',' ( (lv_elements_4_0= ruleJsonValue ) )
                     	    {
@@ -26243,7 +26192,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
                     	    break;
 
                     	default :
-                    	    break loop240;
+                    	    break loop239;
                         }
                     } while (true);
 
@@ -26345,21 +26294,21 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             // InternalKTrace.g:9359:2: (this_JsonObjectValue_0= ruleJsonObjectValue | this_JsonArrayValue_1= ruleJsonArrayValue | this_NullValue_2= ruleNullValue | this_AnyValue_3= ruleAnyValue )
             {
             // InternalKTrace.g:9359:2: (this_JsonObjectValue_0= ruleJsonObjectValue | this_JsonArrayValue_1= ruleJsonArrayValue | this_NullValue_2= ruleNullValue | this_AnyValue_3= ruleAnyValue )
-            int alt242=4;
+            int alt241=4;
             switch ( input.LA(1) ) {
             case 30:
                 {
-                alt242=1;
+                alt241=1;
                 }
                 break;
             case 48:
                 {
-                alt242=2;
+                alt241=2;
                 }
                 break;
             case 73:
                 {
-                alt242=3;
+                alt241=3;
                 }
                 break;
             case RULE_STRING:
@@ -26367,18 +26316,18 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             case RULE_FLOAT:
             case RULE_BOOLEAN:
                 {
-                alt242=4;
+                alt241=4;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 242, 0, input);
+                    new NoViableAltException("", 241, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt242) {
+            switch (alt241) {
                 case 1 :
                     // InternalKTrace.g:9360:3: this_JsonObjectValue_0= ruleJsonObjectValue
                     {
@@ -26996,9 +26945,9 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             // InternalKTrace.g:9580:2: (this_Pragma_0= superPragma | this_JsonPragma_1= ruleJsonPragma )
             {
             // InternalKTrace.g:9580:2: (this_Pragma_0= superPragma | this_JsonPragma_1= ruleJsonPragma )
-            int alt243=2;
-            alt243 = dfa243.predict(input);
-            switch (alt243) {
+            int alt242=2;
+            alt242 = dfa242.predict(input);
+            switch (alt242) {
                 case 1 :
                     // InternalKTrace.g:9581:3: this_Pragma_0= superPragma
                     {
@@ -27135,9 +27084,9 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             // InternalKTrace.g:9622:2: (this_Annotation_0= superAnnotation | this_JsonAnnotation_1= ruleJsonAnnotation )
             {
             // InternalKTrace.g:9622:2: (this_Annotation_0= superAnnotation | this_JsonAnnotation_1= ruleJsonAnnotation )
-            int alt244=2;
-            alt244 = dfa244.predict(input);
-            switch (alt244) {
+            int alt243=2;
+            alt243 = dfa243.predict(input);
+            switch (alt243) {
                 case 1 :
                     // InternalKTrace.g:9623:3: this_Annotation_0= superAnnotation
                     {
@@ -27274,9 +27223,9 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             // InternalKTrace.g:9664:2: (this_QuotedStringAnnotation_0= superQuotedStringAnnotation | this_JsonAnnotation_1= ruleJsonAnnotation )
             {
             // InternalKTrace.g:9664:2: (this_QuotedStringAnnotation_0= superQuotedStringAnnotation | this_JsonAnnotation_1= ruleJsonAnnotation )
-            int alt245=2;
-            alt245 = dfa245.predict(input);
-            switch (alt245) {
+            int alt244=2;
+            alt244 = dfa244.predict(input);
+            switch (alt244) {
                 case 1 :
                     // InternalKTrace.g:9665:3: this_QuotedStringAnnotation_0= superQuotedStringAnnotation
                     {
@@ -27417,9 +27366,9 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             // InternalKTrace.g:9706:2: (this_CommentAnnotation_0= ruleCommentAnnotation | this_KeyStringValueAnnotation_1= ruleKeyStringValueAnnotation | this_TypedKeyStringValueAnnotation_2= ruleTypedKeyStringValueAnnotation | this_TagAnnotation_3= ruleTagAnnotation )
             {
             // InternalKTrace.g:9706:2: (this_CommentAnnotation_0= ruleCommentAnnotation | this_KeyStringValueAnnotation_1= ruleKeyStringValueAnnotation | this_TypedKeyStringValueAnnotation_2= ruleTypedKeyStringValueAnnotation | this_TagAnnotation_3= ruleTagAnnotation )
-            int alt246=4;
-            alt246 = dfa246.predict(input);
-            switch (alt246) {
+            int alt245=4;
+            alt245 = dfa245.predict(input);
+            switch (alt245) {
                 case 1 :
                     // InternalKTrace.g:9707:3: this_CommentAnnotation_0= ruleCommentAnnotation
                     {
@@ -27610,9 +27559,9 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             // InternalKTrace.g:9772:2: (this_StringPragma_0= ruleStringPragma | this_PragmaTag_1= rulePragmaTag )
             {
             // InternalKTrace.g:9772:2: (this_StringPragma_0= ruleStringPragma | this_PragmaTag_1= rulePragmaTag )
-            int alt247=2;
-            alt247 = dfa247.predict(input);
-            switch (alt247) {
+            int alt246=2;
+            alt246 = dfa246.predict(input);
+            switch (alt246) {
                 case 1 :
                     // InternalKTrace.g:9773:3: this_StringPragma_0= ruleStringPragma
                     {
@@ -27751,9 +27700,9 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             // InternalKTrace.g:9814:2: (this_CommentAnnotation_0= ruleCommentAnnotation | this_KeyStringValueAnnotation_1= ruleKeyStringValueAnnotation | this_TypedKeyStringValueAnnotation_2= ruleTypedKeyStringValueAnnotation )
             {
             // InternalKTrace.g:9814:2: (this_CommentAnnotation_0= ruleCommentAnnotation | this_KeyStringValueAnnotation_1= ruleKeyStringValueAnnotation | this_TypedKeyStringValueAnnotation_2= ruleTypedKeyStringValueAnnotation )
-            int alt248=3;
-            alt248 = dfa248.predict(input);
-            switch (alt248) {
+            int alt247=3;
+            alt247 = dfa247.predict(input);
+            switch (alt247) {
                 case 1 :
                     // InternalKTrace.g:9815:3: this_CommentAnnotation_0= ruleCommentAnnotation
                     {
@@ -27921,9 +27870,9 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             // InternalKTrace.g:9868:2: (this_CommentAnnotation_0= ruleCommentAnnotation | this_QuotedKeyStringValueAnnotation_1= ruleQuotedKeyStringValueAnnotation | this_QuotedTypedKeyStringValueAnnotation_2= ruleQuotedTypedKeyStringValueAnnotation | this_TagAnnotation_3= ruleTagAnnotation )
             {
             // InternalKTrace.g:9868:2: (this_CommentAnnotation_0= ruleCommentAnnotation | this_QuotedKeyStringValueAnnotation_1= ruleQuotedKeyStringValueAnnotation | this_QuotedTypedKeyStringValueAnnotation_2= ruleQuotedTypedKeyStringValueAnnotation | this_TagAnnotation_3= ruleTagAnnotation )
-            int alt249=4;
-            alt249 = dfa249.predict(input);
-            switch (alt249) {
+            int alt248=4;
+            alt248 = dfa248.predict(input);
+            switch (alt248) {
                 case 1 :
                     // InternalKTrace.g:9869:3: this_CommentAnnotation_0= ruleCommentAnnotation
                     {
@@ -28655,17 +28604,17 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             }
 
             // InternalKTrace.g:10131:3: (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )*
-            loop250:
+            loop249:
             do {
-                int alt250=2;
-                int LA250_0 = input.LA(1);
+                int alt249=2;
+                int LA249_0 = input.LA(1);
 
-                if ( (LA250_0==40) ) {
-                    alt250=1;
+                if ( (LA249_0==40) ) {
+                    alt249=1;
                 }
 
 
-                switch (alt250) {
+                switch (alt249) {
             	case 1 :
             	    // InternalKTrace.g:10132:4: otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) )
             	    {
@@ -28715,7 +28664,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             	    break;
 
             	default :
-            	    break loop250;
+            	    break loop249;
                 }
             } while (true);
 
@@ -28884,17 +28833,17 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             }
 
             // InternalKTrace.g:10217:3: (otherlv_3= ',' ( (lv_values_4_0= ruleEStringBoolean ) ) )*
-            loop251:
+            loop250:
             do {
-                int alt251=2;
-                int LA251_0 = input.LA(1);
+                int alt250=2;
+                int LA250_0 = input.LA(1);
 
-                if ( (LA251_0==40) ) {
-                    alt251=1;
+                if ( (LA250_0==40) ) {
+                    alt250=1;
                 }
 
 
-                switch (alt251) {
+                switch (alt250) {
             	case 1 :
             	    // InternalKTrace.g:10218:4: otherlv_3= ',' ( (lv_values_4_0= ruleEStringBoolean ) )
             	    {
@@ -28944,7 +28893,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             	    break;
 
             	default :
-            	    break loop251;
+            	    break loop250;
                 }
             } while (true);
 
@@ -29113,17 +29062,17 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             }
 
             // InternalKTrace.g:10303:3: (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )*
-            loop252:
+            loop251:
             do {
-                int alt252=2;
-                int LA252_0 = input.LA(1);
+                int alt251=2;
+                int LA251_0 = input.LA(1);
 
-                if ( (LA252_0==40) ) {
-                    alt252=1;
+                if ( (LA251_0==40) ) {
+                    alt251=1;
                 }
 
 
-                switch (alt252) {
+                switch (alt251) {
             	case 1 :
             	    // InternalKTrace.g:10304:4: otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) )
             	    {
@@ -29173,7 +29122,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             	    break;
 
             	default :
-            	    break loop252;
+            	    break loop251;
                 }
             } while (true);
 
@@ -29393,17 +29342,17 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             }
 
             // InternalKTrace.g:10416:3: (otherlv_6= ',' ( (lv_values_7_0= ruleEStringAllTypes ) ) )*
-            loop253:
+            loop252:
             do {
-                int alt253=2;
-                int LA253_0 = input.LA(1);
+                int alt252=2;
+                int LA252_0 = input.LA(1);
 
-                if ( (LA253_0==40) ) {
-                    alt253=1;
+                if ( (LA252_0==40) ) {
+                    alt252=1;
                 }
 
 
-                switch (alt253) {
+                switch (alt252) {
             	case 1 :
             	    // InternalKTrace.g:10417:4: otherlv_6= ',' ( (lv_values_7_0= ruleEStringAllTypes ) )
             	    {
@@ -29453,7 +29402,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             	    break;
 
             	default :
-            	    break loop253;
+            	    break loop252;
                 }
             } while (true);
 
@@ -29673,17 +29622,17 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             }
 
             // InternalKTrace.g:10529:3: (otherlv_6= ',' ( (lv_values_7_0= ruleEStringBoolean ) ) )*
-            loop254:
+            loop253:
             do {
-                int alt254=2;
-                int LA254_0 = input.LA(1);
+                int alt253=2;
+                int LA253_0 = input.LA(1);
 
-                if ( (LA254_0==40) ) {
-                    alt254=1;
+                if ( (LA253_0==40) ) {
+                    alt253=1;
                 }
 
 
-                switch (alt254) {
+                switch (alt253) {
             	case 1 :
             	    // InternalKTrace.g:10530:4: otherlv_6= ',' ( (lv_values_7_0= ruleEStringBoolean ) )
             	    {
@@ -29733,7 +29682,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             	    break;
 
             	default :
-            	    break loop254;
+            	    break loop253;
                 }
             } while (true);
 
@@ -29895,17 +29844,17 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             }
 
             // InternalKTrace.g:10614:3: (otherlv_3= ',' ( (lv_values_4_0= RULE_STRING ) ) )*
-            loop255:
+            loop254:
             do {
-                int alt255=2;
-                int LA255_0 = input.LA(1);
+                int alt254=2;
+                int LA254_0 = input.LA(1);
 
-                if ( (LA255_0==40) ) {
-                    alt255=1;
+                if ( (LA254_0==40) ) {
+                    alt254=1;
                 }
 
 
-                switch (alt255) {
+                switch (alt254) {
             	case 1 :
             	    // InternalKTrace.g:10615:4: otherlv_3= ',' ( (lv_values_4_0= RULE_STRING ) )
             	    {
@@ -29950,7 +29899,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             	    break;
 
             	default :
-            	    break loop255;
+            	    break loop254;
                 }
             } while (true);
 
@@ -30163,17 +30112,17 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             }
 
             // InternalKTrace.g:10725:3: (otherlv_6= ',' ( (lv_values_7_0= RULE_STRING ) ) )*
-            loop256:
+            loop255:
             do {
-                int alt256=2;
-                int LA256_0 = input.LA(1);
+                int alt255=2;
+                int LA255_0 = input.LA(1);
 
-                if ( (LA256_0==40) ) {
-                    alt256=1;
+                if ( (LA255_0==40) ) {
+                    alt255=1;
                 }
 
 
-                switch (alt256) {
+                switch (alt255) {
             	case 1 :
             	    // InternalKTrace.g:10726:4: otherlv_6= ',' ( (lv_values_7_0= RULE_STRING ) )
             	    {
@@ -30218,7 +30167,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             	    break;
 
             	default :
-            	    break loop256;
+            	    break loop255;
                 }
             } while (true);
 
@@ -30303,23 +30252,23 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             // InternalKTrace.g:10767:2: (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID )
             {
             // InternalKTrace.g:10767:2: (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID )
-            int alt257=2;
-            int LA257_0 = input.LA(1);
+            int alt256=2;
+            int LA256_0 = input.LA(1);
 
-            if ( (LA257_0==RULE_STRING) ) {
-                alt257=1;
+            if ( (LA256_0==RULE_STRING) ) {
+                alt256=1;
             }
-            else if ( (LA257_0==RULE_ID) ) {
-                alt257=2;
+            else if ( (LA256_0==RULE_ID) ) {
+                alt256=2;
             }
             else {
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 257, 0, input);
+                    new NoViableAltException("", 256, 0, input);
 
                 throw nvae;
             }
-            switch (alt257) {
+            switch (alt256) {
                 case 1 :
                     // InternalKTrace.g:10768:3: this_STRING_0= RULE_STRING
                     {
@@ -30445,32 +30394,32 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             // InternalKTrace.g:10804:2: (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID | this_BOOLEAN_2= RULE_BOOLEAN )
             {
             // InternalKTrace.g:10804:2: (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID | this_BOOLEAN_2= RULE_BOOLEAN )
-            int alt258=3;
+            int alt257=3;
             switch ( input.LA(1) ) {
             case RULE_STRING:
                 {
-                alt258=1;
+                alt257=1;
                 }
                 break;
             case RULE_ID:
                 {
-                alt258=2;
+                alt257=2;
                 }
                 break;
             case RULE_BOOLEAN:
                 {
-                alt258=3;
+                alt257=3;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 258, 0, input);
+                    new NoViableAltException("", 257, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt258) {
+            switch (alt257) {
                 case 1 :
                     // InternalKTrace.g:10805:3: this_STRING_0= RULE_STRING
                     {
@@ -30617,37 +30566,37 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             // InternalKTrace.g:10849:2: (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID | this_BOOLEAN_2= RULE_BOOLEAN | this_Integer_3= ruleInteger | this_Floateger_4= ruleFloateger )
             {
             // InternalKTrace.g:10849:2: (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID | this_BOOLEAN_2= RULE_BOOLEAN | this_Integer_3= ruleInteger | this_Floateger_4= ruleFloateger )
-            int alt259=5;
+            int alt258=5;
             switch ( input.LA(1) ) {
             case RULE_STRING:
                 {
-                alt259=1;
+                alt258=1;
                 }
                 break;
             case RULE_ID:
                 {
-                alt259=2;
+                alt258=2;
                 }
                 break;
             case RULE_BOOLEAN:
                 {
-                alt259=3;
+                alt258=3;
                 }
                 break;
             case 64:
                 {
-                int LA259_4 = input.LA(2);
+                int LA258_4 = input.LA(2);
 
-                if ( (LA259_4==RULE_INT) ) {
-                    alt259=4;
+                if ( (LA258_4==RULE_FLOAT) ) {
+                    alt258=5;
                 }
-                else if ( (LA259_4==RULE_FLOAT) ) {
-                    alt259=5;
+                else if ( (LA258_4==RULE_INT) ) {
+                    alt258=4;
                 }
                 else {
                     if (state.backtracking>0) {state.failed=true; return current;}
                     NoViableAltException nvae =
-                        new NoViableAltException("", 259, 4, input);
+                        new NoViableAltException("", 258, 4, input);
 
                     throw nvae;
                 }
@@ -30655,23 +30604,23 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
                 break;
             case RULE_INT:
                 {
-                alt259=4;
+                alt258=4;
                 }
                 break;
             case RULE_FLOAT:
                 {
-                alt259=5;
+                alt258=5;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 259, 0, input);
+                    new NoViableAltException("", 258, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt259) {
+            switch (alt258) {
                 case 1 :
                     // InternalKTrace.g:10850:3: this_STRING_0= RULE_STRING
                     {
@@ -30880,47 +30829,47 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
               		
             }
             // InternalKTrace.g:10924:3: ( (kw= '.' | kw= '-' ) this_ID_3= RULE_ID )*
-            loop261:
+            loop260:
             do {
-                int alt261=2;
-                int LA261_0 = input.LA(1);
+                int alt260=2;
+                int LA260_0 = input.LA(1);
 
-                if ( (LA261_0==64) ) {
-                    int LA261_2 = input.LA(2);
+                if ( (LA260_0==64) ) {
+                    int LA260_2 = input.LA(2);
 
-                    if ( (LA261_2==RULE_ID) ) {
-                        alt261=1;
+                    if ( (LA260_2==RULE_ID) ) {
+                        alt260=1;
                     }
 
 
                 }
-                else if ( (LA261_0==52) ) {
-                    alt261=1;
+                else if ( (LA260_0==52) ) {
+                    alt260=1;
                 }
 
 
-                switch (alt261) {
+                switch (alt260) {
             	case 1 :
             	    // InternalKTrace.g:10925:4: (kw= '.' | kw= '-' ) this_ID_3= RULE_ID
             	    {
             	    // InternalKTrace.g:10925:4: (kw= '.' | kw= '-' )
-            	    int alt260=2;
-            	    int LA260_0 = input.LA(1);
+            	    int alt259=2;
+            	    int LA259_0 = input.LA(1);
 
-            	    if ( (LA260_0==52) ) {
-            	        alt260=1;
+            	    if ( (LA259_0==52) ) {
+            	        alt259=1;
             	    }
-            	    else if ( (LA260_0==64) ) {
-            	        alt260=2;
+            	    else if ( (LA259_0==64) ) {
+            	        alt259=2;
             	    }
             	    else {
             	        if (state.backtracking>0) {state.failed=true; return current;}
             	        NoViableAltException nvae =
-            	            new NoViableAltException("", 260, 0, input);
+            	            new NoViableAltException("", 259, 0, input);
 
             	        throw nvae;
             	    }
-            	    switch (alt260) {
+            	    switch (alt259) {
             	        case 1 :
             	            // InternalKTrace.g:10926:5: kw= '.'
             	            {
@@ -30966,22 +30915,22 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             	    break;
 
             	default :
-            	    break loop261;
+            	    break loop260;
                 }
             } while (true);
 
             // InternalKTrace.g:10946:3: (kw= '#' this_INT_5= RULE_INT )?
-            int alt262=2;
-            int LA262_0 = input.LA(1);
+            int alt261=2;
+            int LA261_0 = input.LA(1);
 
-            if ( (LA262_0==74) ) {
-                int LA262_1 = input.LA(2);
+            if ( (LA261_0==74) ) {
+                int LA261_1 = input.LA(2);
 
-                if ( (LA262_1==RULE_INT) ) {
-                    alt262=1;
+                if ( (LA261_1==RULE_INT) ) {
+                    alt261=1;
                 }
             }
-            switch (alt262) {
+            switch (alt261) {
                 case 1 :
                     // InternalKTrace.g:10947:4: kw= '#' this_INT_5= RULE_INT
                     {
@@ -31092,13 +31041,13 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             // InternalKTrace.g:10979:3: (kw= '-' )? this_INT_1= RULE_INT
             {
             // InternalKTrace.g:10979:3: (kw= '-' )?
-            int alt263=2;
-            int LA263_0 = input.LA(1);
+            int alt262=2;
+            int LA262_0 = input.LA(1);
 
-            if ( (LA263_0==64) ) {
-                alt263=1;
+            if ( (LA262_0==64) ) {
+                alt262=1;
             }
-            switch (alt263) {
+            switch (alt262) {
                 case 1 :
                     // InternalKTrace.g:10980:4: kw= '-'
                     {
@@ -31209,13 +31158,13 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             // InternalKTrace.g:11012:3: (kw= '-' )? this_FLOAT_1= RULE_FLOAT
             {
             // InternalKTrace.g:11012:3: (kw= '-' )?
-            int alt264=2;
-            int LA264_0 = input.LA(1);
+            int alt263=2;
+            int LA263_0 = input.LA(1);
 
-            if ( (LA264_0==64) ) {
-                alt264=1;
+            if ( (LA263_0==64) ) {
+                alt263=1;
             }
-            switch (alt264) {
+            switch (alt263) {
                 case 1 :
                     // InternalKTrace.g:11013:4: kw= '-'
                     {
@@ -31283,23 +31232,23 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             // InternalKTrace.g:11037:2: ( (enumLiteral_0= 'conflicting' ) | (enumLiteral_1= 'commuting' ) )
             {
             // InternalKTrace.g:11037:2: ( (enumLiteral_0= 'conflicting' ) | (enumLiteral_1= 'commuting' ) )
-            int alt265=2;
-            int LA265_0 = input.LA(1);
+            int alt264=2;
+            int LA264_0 = input.LA(1);
 
-            if ( (LA265_0==76) ) {
-                alt265=1;
+            if ( (LA264_0==76) ) {
+                alt264=1;
             }
-            else if ( (LA265_0==77) ) {
-                alt265=2;
+            else if ( (LA264_0==77) ) {
+                alt264=2;
             }
             else {
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 265, 0, input);
+                    new NoViableAltException("", 264, 0, input);
 
                 throw nvae;
             }
-            switch (alt265) {
+            switch (alt264) {
                 case 1 :
                     // InternalKTrace.g:11038:3: (enumLiteral_0= 'conflicting' )
                     {
@@ -31390,87 +31339,87 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             // InternalKTrace.g:11064:2: ( (enumLiteral_0= '=' ) | (enumLiteral_1= '+=' ) | (enumLiteral_2= '-=' ) | (enumLiteral_3= '*=' ) | (enumLiteral_4= '/=' ) | (enumLiteral_5= '%=' ) | (enumLiteral_6= '&=' ) | (enumLiteral_7= '|=' ) | (enumLiteral_8= '^=' ) | (enumLiteral_9= '<<=' ) | (enumLiteral_10= '>>=' ) | (enumLiteral_11= '>>>=' ) | (enumLiteral_12= 'min=' ) | (enumLiteral_13= 'max=' ) )
             {
             // InternalKTrace.g:11064:2: ( (enumLiteral_0= '=' ) | (enumLiteral_1= '+=' ) | (enumLiteral_2= '-=' ) | (enumLiteral_3= '*=' ) | (enumLiteral_4= '/=' ) | (enumLiteral_5= '%=' ) | (enumLiteral_6= '&=' ) | (enumLiteral_7= '|=' ) | (enumLiteral_8= '^=' ) | (enumLiteral_9= '<<=' ) | (enumLiteral_10= '>>=' ) | (enumLiteral_11= '>>>=' ) | (enumLiteral_12= 'min=' ) | (enumLiteral_13= 'max=' ) )
-            int alt266=14;
+            int alt265=14;
             switch ( input.LA(1) ) {
             case 25:
                 {
-                alt266=1;
+                alt265=1;
                 }
                 break;
             case 78:
                 {
-                alt266=2;
+                alt265=2;
                 }
                 break;
             case 79:
                 {
-                alt266=3;
+                alt265=3;
                 }
                 break;
             case 80:
                 {
-                alt266=4;
+                alt265=4;
                 }
                 break;
             case 81:
                 {
-                alt266=5;
+                alt265=5;
                 }
                 break;
             case 82:
                 {
-                alt266=6;
+                alt265=6;
                 }
                 break;
             case 83:
                 {
-                alt266=7;
+                alt265=7;
                 }
                 break;
             case 84:
                 {
-                alt266=8;
+                alt265=8;
                 }
                 break;
             case 85:
                 {
-                alt266=9;
+                alt265=9;
                 }
                 break;
             case 86:
                 {
-                alt266=10;
+                alt265=10;
                 }
                 break;
             case 87:
                 {
-                alt266=11;
+                alt265=11;
                 }
                 break;
             case 88:
                 {
-                alt266=12;
+                alt265=12;
                 }
                 break;
             case 89:
                 {
-                alt266=13;
+                alt265=13;
                 }
                 break;
             case 90:
                 {
-                alt266=14;
+                alt265=14;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 266, 0, input);
+                    new NoViableAltException("", 265, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt266) {
+            switch (alt265) {
                 case 1 :
                     // InternalKTrace.g:11065:3: (enumLiteral_0= '=' )
                     {
@@ -31777,23 +31726,23 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             // InternalKTrace.g:11187:2: ( (enumLiteral_0= '++' ) | (enumLiteral_1= '--' ) )
             {
             // InternalKTrace.g:11187:2: ( (enumLiteral_0= '++' ) | (enumLiteral_1= '--' ) )
-            int alt267=2;
-            int LA267_0 = input.LA(1);
+            int alt266=2;
+            int LA266_0 = input.LA(1);
 
-            if ( (LA267_0==91) ) {
-                alt267=1;
+            if ( (LA266_0==91) ) {
+                alt266=1;
             }
-            else if ( (LA267_0==92) ) {
-                alt267=2;
+            else if ( (LA266_0==92) ) {
+                alt266=2;
             }
             else {
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 267, 0, input);
+                    new NoViableAltException("", 266, 0, input);
 
                 throw nvae;
             }
-            switch (alt267) {
+            switch (alt266) {
                 case 1 :
                     // InternalKTrace.g:11188:3: (enumLiteral_0= '++' )
                     {
@@ -31876,47 +31825,47 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             // InternalKTrace.g:11214:2: ( (enumLiteral_0= '==' ) | (enumLiteral_1= '<' ) | (enumLiteral_2= '<=' ) | (enumLiteral_3= '>' ) | (enumLiteral_4= '>=' ) | (enumLiteral_5= '!=' ) )
             {
             // InternalKTrace.g:11214:2: ( (enumLiteral_0= '==' ) | (enumLiteral_1= '<' ) | (enumLiteral_2= '<=' ) | (enumLiteral_3= '>' ) | (enumLiteral_4= '>=' ) | (enumLiteral_5= '!=' ) )
-            int alt268=6;
+            int alt267=6;
             switch ( input.LA(1) ) {
             case 93:
                 {
-                alt268=1;
+                alt267=1;
                 }
                 break;
             case 94:
                 {
-                alt268=2;
+                alt267=2;
                 }
                 break;
             case 95:
                 {
-                alt268=3;
+                alt267=3;
                 }
                 break;
             case 96:
                 {
-                alt268=4;
+                alt267=4;
                 }
                 break;
             case 97:
                 {
-                alt268=5;
+                alt267=5;
                 }
                 break;
             case 98:
                 {
-                alt268=6;
+                alt267=6;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 268, 0, input);
+                    new NoViableAltException("", 267, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt268) {
+            switch (alt267) {
                 case 1 :
                     // InternalKTrace.g:11215:3: (enumLiteral_0= '==' )
                     {
@@ -33082,42 +33031,42 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             // InternalKTrace.g:11630:2: ( (enumLiteral_0= 'pure' ) | (enumLiteral_1= 'bool' ) | (enumLiteral_2= 'int' ) | (enumLiteral_3= 'float' ) | (enumLiteral_4= 'string' ) )
             {
             // InternalKTrace.g:11630:2: ( (enumLiteral_0= 'pure' ) | (enumLiteral_1= 'bool' ) | (enumLiteral_2= 'int' ) | (enumLiteral_3= 'float' ) | (enumLiteral_4= 'string' ) )
-            int alt269=5;
+            int alt268=5;
             switch ( input.LA(1) ) {
             case 103:
                 {
-                alt269=1;
+                alt268=1;
                 }
                 break;
             case 104:
                 {
-                alt269=2;
+                alt268=2;
                 }
                 break;
             case 105:
                 {
-                alt269=3;
+                alt268=3;
                 }
                 break;
             case 106:
                 {
-                alt269=4;
+                alt268=4;
                 }
                 break;
             case 107:
                 {
-                alt269=5;
+                alt268=5;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 269, 0, input);
+                    new NoViableAltException("", 268, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt269) {
+            switch (alt268) {
                 case 1 :
                     // InternalKTrace.g:11631:3: (enumLiteral_0= 'pure' )
                     {
@@ -33403,57 +33352,57 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             // InternalKTrace.g:11732:2: ( (enumLiteral_0= 'none' ) | (enumLiteral_1= '+' ) | (enumLiteral_2= '*' ) | (enumLiteral_3= 'max' ) | (enumLiteral_4= 'min' ) | (enumLiteral_5= '|' ) | (enumLiteral_6= '&' ) | (enumLiteral_7= 'host' ) )
             {
             // InternalKTrace.g:11732:2: ( (enumLiteral_0= 'none' ) | (enumLiteral_1= '+' ) | (enumLiteral_2= '*' ) | (enumLiteral_3= 'max' ) | (enumLiteral_4= 'min' ) | (enumLiteral_5= '|' ) | (enumLiteral_6= '&' ) | (enumLiteral_7= 'host' ) )
-            int alt270=8;
+            int alt269=8;
             switch ( input.LA(1) ) {
             case 110:
                 {
-                alt270=1;
+                alt269=1;
                 }
                 break;
             case 63:
                 {
-                alt270=2;
+                alt269=2;
                 }
                 break;
             case 65:
                 {
-                alt270=3;
+                alt269=3;
                 }
                 break;
             case 111:
                 {
-                alt270=4;
+                alt269=4;
                 }
                 break;
             case 112:
                 {
-                alt270=5;
+                alt269=5;
                 }
                 break;
             case 57:
                 {
-                alt270=6;
+                alt269=6;
                 }
                 break;
             case 59:
                 {
-                alt270=7;
+                alt269=7;
                 }
                 break;
             case 41:
                 {
-                alt270=8;
+                alt269=8;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 270, 0, input);
+                    new NoViableAltException("", 269, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt270) {
+            switch (alt269) {
                 case 1 :
                     // InternalKTrace.g:11733:3: (enumLiteral_0= 'none' )
                     {
@@ -33647,32 +33596,32 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             // InternalKTrace.g:11807:2: ( (enumLiteral_0= 'public' ) | (enumLiteral_1= 'protected' ) | (enumLiteral_2= 'private' ) )
             {
             // InternalKTrace.g:11807:2: ( (enumLiteral_0= 'public' ) | (enumLiteral_1= 'protected' ) | (enumLiteral_2= 'private' ) )
-            int alt271=3;
+            int alt270=3;
             switch ( input.LA(1) ) {
             case 113:
                 {
-                alt271=1;
+                alt270=1;
                 }
                 break;
             case 114:
                 {
-                alt271=2;
+                alt270=2;
                 }
                 break;
             case 115:
                 {
-                alt271=3;
+                alt270=3;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 271, 0, input);
+                    new NoViableAltException("", 270, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt271) {
+            switch (alt270) {
                 case 1 :
                     // InternalKTrace.g:11808:3: (enumLiteral_0= 'public' )
                     {
@@ -33773,42 +33722,42 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             // InternalKTrace.g:11842:2: ( (enumLiteral_0= 'void' ) | (enumLiteral_1= 'bool' ) | (enumLiteral_2= 'int' ) | (enumLiteral_3= 'float' ) | (enumLiteral_4= 'string' ) )
             {
             // InternalKTrace.g:11842:2: ( (enumLiteral_0= 'void' ) | (enumLiteral_1= 'bool' ) | (enumLiteral_2= 'int' ) | (enumLiteral_3= 'float' ) | (enumLiteral_4= 'string' ) )
-            int alt272=5;
+            int alt271=5;
             switch ( input.LA(1) ) {
             case 116:
                 {
-                alt272=1;
+                alt271=1;
                 }
                 break;
             case 104:
                 {
-                alt272=2;
+                alt271=2;
                 }
                 break;
             case 105:
                 {
-                alt272=3;
+                alt271=3;
                 }
                 break;
             case 106:
                 {
-                alt272=4;
+                alt271=4;
                 }
                 break;
             case 107:
                 {
-                alt272=5;
+                alt271=5;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 272, 0, input);
+                    new NoViableAltException("", 271, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt272) {
+            switch (alt271) {
                 case 1 :
                     // InternalKTrace.g:11843:3: (enumLiteral_0= 'void' )
                     {
@@ -33944,23 +33893,23 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             // InternalKTrace.g:11893:2: ( (enumLiteral_0= '&' ) | (enumLiteral_1= '!&' ) )
             {
             // InternalKTrace.g:11893:2: ( (enumLiteral_0= '&' ) | (enumLiteral_1= '!&' ) )
-            int alt273=2;
-            int LA273_0 = input.LA(1);
+            int alt272=2;
+            int LA272_0 = input.LA(1);
 
-            if ( (LA273_0==59) ) {
-                alt273=1;
+            if ( (LA272_0==59) ) {
+                alt272=1;
             }
-            else if ( (LA273_0==117) ) {
-                alt273=2;
+            else if ( (LA272_0==117) ) {
+                alt272=2;
             }
             else {
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 273, 0, input);
+                    new NoViableAltException("", 272, 0, input);
 
                 throw nvae;
             }
-            switch (alt273) {
+            switch (alt272) {
                 case 1 :
                     // InternalKTrace.g:11894:3: (enumLiteral_0= '&' )
                     {
@@ -34149,22 +34098,22 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
         // InternalKTrace.g:937:5: (lv_expression_0_1= ruleAnnotatedExpression | lv_expression_0_2= ruleAnnotatedJsonExpression )
         {
         // InternalKTrace.g:937:5: (lv_expression_0_1= ruleAnnotatedExpression | lv_expression_0_2= ruleAnnotatedJsonExpression )
-        int alt279=2;
+        int alt278=2;
         switch ( input.LA(1) ) {
         case RULE_COMMENT_ANNOTATION:
             {
-            int LA279_1 = input.LA(2);
+            int LA278_1 = input.LA(2);
 
             if ( (synpred31_InternalKTrace()) ) {
-                alt279=1;
+                alt278=1;
             }
             else if ( (true) ) {
-                alt279=2;
+                alt278=2;
             }
             else {
                 if (state.backtracking>0) {state.failed=true; return ;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 279, 1, input);
+                    new NoViableAltException("", 278, 1, input);
 
                 throw nvae;
             }
@@ -34172,18 +34121,18 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             break;
         case 75:
             {
-            int LA279_2 = input.LA(2);
+            int LA278_2 = input.LA(2);
 
             if ( (synpred31_InternalKTrace()) ) {
-                alt279=1;
+                alt278=1;
             }
             else if ( (true) ) {
-                alt279=2;
+                alt278=2;
             }
             else {
                 if (state.backtracking>0) {state.failed=true; return ;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 279, 2, input);
+                    new NoViableAltException("", 278, 2, input);
 
                 throw nvae;
             }
@@ -34191,23 +34140,23 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             break;
         case 32:
             {
-            alt279=1;
+            alt278=1;
             }
             break;
         case 33:
             {
-            alt279=2;
+            alt278=2;
             }
             break;
         default:
             if (state.backtracking>0) {state.failed=true; return ;}
             NoViableAltException nvae =
-                new NoViableAltException("", 279, 0, input);
+                new NoViableAltException("", 278, 0, input);
 
             throw nvae;
         }
 
-        switch (alt279) {
+        switch (alt278) {
             case 1 :
                 // InternalKTrace.g:938:6: lv_expression_0_1= ruleAnnotatedExpression
                 {
@@ -34481,17 +34430,17 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
         }
 
         // InternalKTrace.g:2521:4: (otherlv_20= ',' ( (lv_valuedObjects_21_0= ruleValuedObject ) ) )*
-        loop287:
+        loop286:
         do {
-            int alt287=2;
-            int LA287_0 = input.LA(1);
+            int alt286=2;
+            int LA286_0 = input.LA(1);
 
-            if ( (LA287_0==40) ) {
-                alt287=1;
+            if ( (LA286_0==40) ) {
+                alt286=1;
             }
 
 
-            switch (alt287) {
+            switch (alt286) {
         	case 1 :
         	    // InternalKTrace.g:2522:5: otherlv_20= ',' ( (lv_valuedObjects_21_0= ruleValuedObject ) )
         	    {
@@ -34523,7 +34472,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
         	    break;
 
         	default :
-        	    break loop287;
+        	    break loop286;
             }
         } while (true);
 
@@ -35258,13 +35207,13 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
         }
 
         // InternalKTrace.g:7387:4: (otherlv_4= ':' ( (lv_subExpressions_5_0= ruleAtomicValuedExpression ) ) )?
-        int alt318=2;
-        int LA318_0 = input.LA(1);
+        int alt317=2;
+        int LA317_0 = input.LA(1);
 
-        if ( (LA318_0==23) ) {
-            alt318=1;
+        if ( (LA317_0==23) ) {
+            alt317=1;
         }
-        switch (alt318) {
+        switch (alt317) {
             case 1 :
                 // InternalKTrace.g:7388:5: otherlv_4= ':' ( (lv_subExpressions_5_0= ruleAtomicValuedExpression ) )
                 {
@@ -35379,84 +35328,8 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
     }
     // $ANTLR end synpred245_InternalKTrace
 
-    // $ANTLR start synpred261_InternalKTrace
-    public final void synpred261_InternalKTrace_fragment() throws RecognitionException {   
-        Enumerator lv_accessType_0_0 = null;
-
-        EObject lv_expression_1_0 = null;
-
-
-        // InternalKTrace.g:8635:3: ( ( ( (lv_accessType_0_0= ruleParameterAccessType ) )? ( (lv_expression_1_0= ruleValuedObjectReference ) ) ) )
-        // InternalKTrace.g:8635:3: ( ( (lv_accessType_0_0= ruleParameterAccessType ) )? ( (lv_expression_1_0= ruleValuedObjectReference ) ) )
-        {
-        // InternalKTrace.g:8635:3: ( ( (lv_accessType_0_0= ruleParameterAccessType ) )? ( (lv_expression_1_0= ruleValuedObjectReference ) ) )
-        // InternalKTrace.g:8636:4: ( (lv_accessType_0_0= ruleParameterAccessType ) )? ( (lv_expression_1_0= ruleValuedObjectReference ) )
-        {
-        // InternalKTrace.g:8636:4: ( (lv_accessType_0_0= ruleParameterAccessType ) )?
-        int alt326=2;
-        int LA326_0 = input.LA(1);
-
-        if ( (LA326_0==59||LA326_0==117) ) {
-            alt326=1;
-        }
-        switch (alt326) {
-            case 1 :
-                // InternalKTrace.g:8637:5: (lv_accessType_0_0= ruleParameterAccessType )
-                {
-                // InternalKTrace.g:8637:5: (lv_accessType_0_0= ruleParameterAccessType )
-                // InternalKTrace.g:8638:6: lv_accessType_0_0= ruleParameterAccessType
-                {
-                if ( state.backtracking==0 ) {
-
-                  						newCompositeNode(grammarAccess.getParameterAccess().getAccessTypeParameterAccessTypeEnumRuleCall_0_0_0());
-                  					
-                }
-                pushFollow(FollowSets000.FOLLOW_19);
-                lv_accessType_0_0=ruleParameterAccessType();
-
-                state._fsp--;
-                if (state.failed) return ;
-
-                }
-
-
-                }
-                break;
-
-        }
-
-        // InternalKTrace.g:8655:4: ( (lv_expression_1_0= ruleValuedObjectReference ) )
-        // InternalKTrace.g:8656:5: (lv_expression_1_0= ruleValuedObjectReference )
-        {
-        // InternalKTrace.g:8656:5: (lv_expression_1_0= ruleValuedObjectReference )
-        // InternalKTrace.g:8657:6: lv_expression_1_0= ruleValuedObjectReference
-        {
-        if ( state.backtracking==0 ) {
-
-          						newCompositeNode(grammarAccess.getParameterAccess().getExpressionValuedObjectReferenceParserRuleCall_0_1_0());
-          					
-        }
-        pushFollow(FollowSets000.FOLLOW_2);
-        lv_expression_1_0=ruleValuedObjectReference();
-
-        state._fsp--;
-        if (state.failed) return ;
-
-        }
-
-
-        }
-
-
-        }
-
-
-        }
-    }
-    // $ANTLR end synpred261_InternalKTrace
-
-    // $ANTLR start synpred264_InternalKTrace
-    public final void synpred264_InternalKTrace_fragment() throws RecognitionException {   
+    // $ANTLR start synpred263_InternalKTrace
+    public final void synpred263_InternalKTrace_fragment() throws RecognitionException {   
         EObject this_BoolExpression_0 = null;
 
 
@@ -35476,10 +35349,10 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
 
         }
     }
-    // $ANTLR end synpred264_InternalKTrace
+    // $ANTLR end synpred263_InternalKTrace
 
-    // $ANTLR start synpred265_InternalKTrace
-    public final void synpred265_InternalKTrace_fragment() throws RecognitionException {   
+    // $ANTLR start synpred264_InternalKTrace
+    public final void synpred264_InternalKTrace_fragment() throws RecognitionException {   
         EObject this_ValuedExpression_1 = null;
 
 
@@ -35499,10 +35372,10 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
 
         }
     }
-    // $ANTLR end synpred265_InternalKTrace
+    // $ANTLR end synpred264_InternalKTrace
 
-    // $ANTLR start synpred280_InternalKTrace
-    public final void synpred280_InternalKTrace_fragment() throws RecognitionException {   
+    // $ANTLR start synpred279_InternalKTrace
+    public final void synpred279_InternalKTrace_fragment() throws RecognitionException {   
         EObject this_KeyStringValueAnnotation_1 = null;
 
 
@@ -35522,10 +35395,10 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
 
         }
     }
-    // $ANTLR end synpred280_InternalKTrace
+    // $ANTLR end synpred279_InternalKTrace
 
-    // $ANTLR start synpred282_InternalKTrace
-    public final void synpred282_InternalKTrace_fragment() throws RecognitionException {   
+    // $ANTLR start synpred281_InternalKTrace
+    public final void synpred281_InternalKTrace_fragment() throws RecognitionException {   
         EObject this_StringPragma_0 = null;
 
 
@@ -35545,7 +35418,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
 
         }
     }
-    // $ANTLR end synpred282_InternalKTrace
+    // $ANTLR end synpred281_InternalKTrace
 
     // Delegated rules
 
@@ -35675,25 +35548,11 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
         state.failed=false;
         return success;
     }
-    public final boolean synpred261_InternalKTrace() {
+    public final boolean synpred279_InternalKTrace() {
         state.backtracking++;
         int start = input.mark();
         try {
-            synpred261_InternalKTrace_fragment(); // can never throw exception
-        } catch (RecognitionException re) {
-            System.err.println("impossible: "+re);
-        }
-        boolean success = !state.failed;
-        input.rewind(start);
-        state.backtracking--;
-        state.failed=false;
-        return success;
-    }
-    public final boolean synpred282_InternalKTrace() {
-        state.backtracking++;
-        int start = input.mark();
-        try {
-            synpred282_InternalKTrace_fragment(); // can never throw exception
+            synpred279_InternalKTrace_fragment(); // can never throw exception
         } catch (RecognitionException re) {
             System.err.println("impossible: "+re);
         }
@@ -35764,20 +35623,6 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
         int start = input.mark();
         try {
             synpred63_InternalKTrace_fragment(); // can never throw exception
-        } catch (RecognitionException re) {
-            System.err.println("impossible: "+re);
-        }
-        boolean success = !state.failed;
-        input.rewind(start);
-        state.backtracking--;
-        state.failed=false;
-        return success;
-    }
-    public final boolean synpred265_InternalKTrace() {
-        state.backtracking++;
-        int start = input.mark();
-        try {
-            synpred265_InternalKTrace_fragment(); // can never throw exception
         } catch (RecognitionException re) {
             System.err.println("impossible: "+re);
         }
@@ -35927,20 +35772,6 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
         state.failed=false;
         return success;
     }
-    public final boolean synpred280_InternalKTrace() {
-        state.backtracking++;
-        int start = input.mark();
-        try {
-            synpred280_InternalKTrace_fragment(); // can never throw exception
-        } catch (RecognitionException re) {
-            System.err.println("impossible: "+re);
-        }
-        boolean success = !state.failed;
-        input.rewind(start);
-        state.backtracking--;
-        state.failed=false;
-        return success;
-    }
     public final boolean synpred81_InternalKTrace() {
         state.backtracking++;
         int start = input.mark();
@@ -36002,6 +35833,20 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
         int start = input.mark();
         try {
             synpred157_InternalKTrace_fragment(); // can never throw exception
+        } catch (RecognitionException re) {
+            System.err.println("impossible: "+re);
+        }
+        boolean success = !state.failed;
+        input.rewind(start);
+        state.backtracking--;
+        state.failed=false;
+        return success;
+    }
+    public final boolean synpred263_InternalKTrace() {
+        state.backtracking++;
+        int start = input.mark();
+        try {
+            synpred263_InternalKTrace_fragment(); // can never throw exception
         } catch (RecognitionException re) {
             System.err.println("impossible: "+re);
         }
@@ -36165,6 +36010,20 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
         state.failed=false;
         return success;
     }
+    public final boolean synpred281_InternalKTrace() {
+        state.backtracking++;
+        int start = input.mark();
+        try {
+            synpred281_InternalKTrace_fragment(); // can never throw exception
+        } catch (RecognitionException re) {
+            System.err.println("impossible: "+re);
+        }
+        boolean success = !state.failed;
+        input.rewind(start);
+        state.backtracking--;
+        state.failed=false;
+        return success;
+    }
     public final boolean synpred156_InternalKTrace() {
         state.backtracking++;
         int start = input.mark();
@@ -36212,14 +36071,14 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
     protected DFA209 dfa209 = new DFA209(this);
     protected DFA216 dfa216 = new DFA216(this);
     protected DFA217 dfa217 = new DFA217(this);
-    protected DFA236 dfa236 = new DFA236(this);
+    protected DFA235 dfa235 = new DFA235(this);
+    protected DFA242 dfa242 = new DFA242(this);
     protected DFA243 dfa243 = new DFA243(this);
     protected DFA244 dfa244 = new DFA244(this);
     protected DFA245 dfa245 = new DFA245(this);
     protected DFA246 dfa246 = new DFA246(this);
     protected DFA247 dfa247 = new DFA247(this);
     protected DFA248 dfa248 = new DFA248(this);
-    protected DFA249 dfa249 = new DFA249(this);
     static final String dfa_1s = "\37\uffff";
     static final String dfa_2s = "\1\3\36\uffff";
     static final String dfa_3s = "\1\4\2\0\4\uffff\1\0\27\uffff";
@@ -39846,11 +39705,11 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
     static final short[] dfa_140 = DFA.unpackEncodedString(dfa_140s);
     static final short[][] dfa_141 = unpackEncodedStringArray(dfa_141s);
 
-    class DFA236 extends DFA {
+    class DFA235 extends DFA {
 
-        public DFA236(BaseRecognizer recognizer) {
+        public DFA235(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
-            this.decisionNumber = 236;
+            this.decisionNumber = 235;
             this.eot = dfa_136;
             this.eof = dfa_136;
             this.min = dfa_137;
@@ -39867,249 +39726,249 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
         	int _s = s;
             switch ( s ) {
                     case 0 : 
-                        int LA236_1 = input.LA(1);
+                        int LA235_1 = input.LA(1);
 
                          
-                        int index236_1 = input.index();
+                        int index235_1 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred264_InternalKTrace()) ) {s = 17;}
+                        if ( (synpred263_InternalKTrace()) ) {s = 17;}
 
-                        else if ( (synpred265_InternalKTrace()) ) {s = 20;}
+                        else if ( (synpred264_InternalKTrace()) ) {s = 20;}
 
                          
-                        input.seek(index236_1);
+                        input.seek(index235_1);
                         if ( s>=0 ) return s;
                         break;
                     case 1 : 
-                        int LA236_2 = input.LA(1);
+                        int LA235_2 = input.LA(1);
 
                          
-                        int index236_2 = input.index();
+                        int index235_2 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred264_InternalKTrace()) ) {s = 17;}
+                        if ( (synpred263_InternalKTrace()) ) {s = 17;}
 
-                        else if ( (synpred265_InternalKTrace()) ) {s = 20;}
+                        else if ( (synpred264_InternalKTrace()) ) {s = 20;}
 
                          
-                        input.seek(index236_2);
+                        input.seek(index235_2);
                         if ( s>=0 ) return s;
                         break;
                     case 2 : 
-                        int LA236_3 = input.LA(1);
+                        int LA235_3 = input.LA(1);
 
                          
-                        int index236_3 = input.index();
+                        int index235_3 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred264_InternalKTrace()) ) {s = 17;}
+                        if ( (synpred263_InternalKTrace()) ) {s = 17;}
 
-                        else if ( (synpred265_InternalKTrace()) ) {s = 20;}
+                        else if ( (synpred264_InternalKTrace()) ) {s = 20;}
 
                          
-                        input.seek(index236_3);
+                        input.seek(index235_3);
                         if ( s>=0 ) return s;
                         break;
                     case 3 : 
-                        int LA236_4 = input.LA(1);
+                        int LA235_4 = input.LA(1);
 
                          
-                        int index236_4 = input.index();
+                        int index235_4 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred264_InternalKTrace()) ) {s = 17;}
+                        if ( (synpred263_InternalKTrace()) ) {s = 17;}
 
-                        else if ( (synpred265_InternalKTrace()) ) {s = 20;}
+                        else if ( (synpred264_InternalKTrace()) ) {s = 20;}
 
                          
-                        input.seek(index236_4);
+                        input.seek(index235_4);
                         if ( s>=0 ) return s;
                         break;
                     case 4 : 
-                        int LA236_5 = input.LA(1);
+                        int LA235_5 = input.LA(1);
 
                          
-                        int index236_5 = input.index();
+                        int index235_5 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred264_InternalKTrace()) ) {s = 17;}
+                        if ( (synpred263_InternalKTrace()) ) {s = 17;}
 
-                        else if ( (synpred265_InternalKTrace()) ) {s = 20;}
+                        else if ( (synpred264_InternalKTrace()) ) {s = 20;}
 
                          
-                        input.seek(index236_5);
+                        input.seek(index235_5);
                         if ( s>=0 ) return s;
                         break;
                     case 5 : 
-                        int LA236_6 = input.LA(1);
+                        int LA235_6 = input.LA(1);
 
                          
-                        int index236_6 = input.index();
+                        int index235_6 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred264_InternalKTrace()) ) {s = 17;}
+                        if ( (synpred263_InternalKTrace()) ) {s = 17;}
 
-                        else if ( (synpred265_InternalKTrace()) ) {s = 20;}
+                        else if ( (synpred264_InternalKTrace()) ) {s = 20;}
 
                          
-                        input.seek(index236_6);
+                        input.seek(index235_6);
                         if ( s>=0 ) return s;
                         break;
                     case 6 : 
-                        int LA236_7 = input.LA(1);
+                        int LA235_7 = input.LA(1);
 
                          
-                        int index236_7 = input.index();
+                        int index235_7 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred264_InternalKTrace()) ) {s = 17;}
+                        if ( (synpred263_InternalKTrace()) ) {s = 17;}
 
-                        else if ( (synpred265_InternalKTrace()) ) {s = 20;}
+                        else if ( (synpred264_InternalKTrace()) ) {s = 20;}
 
                          
-                        input.seek(index236_7);
+                        input.seek(index235_7);
                         if ( s>=0 ) return s;
                         break;
                     case 7 : 
-                        int LA236_8 = input.LA(1);
+                        int LA235_8 = input.LA(1);
 
                          
-                        int index236_8 = input.index();
+                        int index235_8 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred264_InternalKTrace()) ) {s = 17;}
+                        if ( (synpred263_InternalKTrace()) ) {s = 17;}
 
-                        else if ( (synpred265_InternalKTrace()) ) {s = 20;}
+                        else if ( (synpred264_InternalKTrace()) ) {s = 20;}
 
                          
-                        input.seek(index236_8);
+                        input.seek(index235_8);
                         if ( s>=0 ) return s;
                         break;
                     case 8 : 
-                        int LA236_9 = input.LA(1);
+                        int LA235_9 = input.LA(1);
 
                          
-                        int index236_9 = input.index();
+                        int index235_9 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred264_InternalKTrace()) ) {s = 17;}
+                        if ( (synpred263_InternalKTrace()) ) {s = 17;}
 
-                        else if ( (synpred265_InternalKTrace()) ) {s = 20;}
+                        else if ( (synpred264_InternalKTrace()) ) {s = 20;}
 
                          
-                        input.seek(index236_9);
+                        input.seek(index235_9);
                         if ( s>=0 ) return s;
                         break;
                     case 9 : 
-                        int LA236_10 = input.LA(1);
+                        int LA235_10 = input.LA(1);
 
                          
-                        int index236_10 = input.index();
+                        int index235_10 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred264_InternalKTrace()) ) {s = 17;}
+                        if ( (synpred263_InternalKTrace()) ) {s = 17;}
 
-                        else if ( (synpred265_InternalKTrace()) ) {s = 20;}
+                        else if ( (synpred264_InternalKTrace()) ) {s = 20;}
 
                          
-                        input.seek(index236_10);
+                        input.seek(index235_10);
                         if ( s>=0 ) return s;
                         break;
                     case 10 : 
-                        int LA236_11 = input.LA(1);
+                        int LA235_11 = input.LA(1);
 
                          
-                        int index236_11 = input.index();
+                        int index235_11 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred264_InternalKTrace()) ) {s = 17;}
+                        if ( (synpred263_InternalKTrace()) ) {s = 17;}
 
-                        else if ( (synpred265_InternalKTrace()) ) {s = 20;}
+                        else if ( (synpred264_InternalKTrace()) ) {s = 20;}
 
                          
-                        input.seek(index236_11);
+                        input.seek(index235_11);
                         if ( s>=0 ) return s;
                         break;
                     case 11 : 
-                        int LA236_12 = input.LA(1);
+                        int LA235_12 = input.LA(1);
 
                          
-                        int index236_12 = input.index();
+                        int index235_12 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred264_InternalKTrace()) ) {s = 17;}
+                        if ( (synpred263_InternalKTrace()) ) {s = 17;}
 
-                        else if ( (synpred265_InternalKTrace()) ) {s = 20;}
+                        else if ( (synpred264_InternalKTrace()) ) {s = 20;}
 
                          
-                        input.seek(index236_12);
+                        input.seek(index235_12);
                         if ( s>=0 ) return s;
                         break;
                     case 12 : 
-                        int LA236_13 = input.LA(1);
+                        int LA235_13 = input.LA(1);
 
                          
-                        int index236_13 = input.index();
+                        int index235_13 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred264_InternalKTrace()) ) {s = 17;}
+                        if ( (synpred263_InternalKTrace()) ) {s = 17;}
 
-                        else if ( (synpred265_InternalKTrace()) ) {s = 20;}
+                        else if ( (synpred264_InternalKTrace()) ) {s = 20;}
 
                          
-                        input.seek(index236_13);
+                        input.seek(index235_13);
                         if ( s>=0 ) return s;
                         break;
                     case 13 : 
-                        int LA236_14 = input.LA(1);
+                        int LA235_14 = input.LA(1);
 
                          
-                        int index236_14 = input.index();
+                        int index235_14 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred264_InternalKTrace()) ) {s = 17;}
+                        if ( (synpred263_InternalKTrace()) ) {s = 17;}
 
-                        else if ( (synpred265_InternalKTrace()) ) {s = 20;}
+                        else if ( (synpred264_InternalKTrace()) ) {s = 20;}
 
                          
-                        input.seek(index236_14);
+                        input.seek(index235_14);
                         if ( s>=0 ) return s;
                         break;
                     case 14 : 
-                        int LA236_15 = input.LA(1);
+                        int LA235_15 = input.LA(1);
 
                          
-                        int index236_15 = input.index();
+                        int index235_15 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred264_InternalKTrace()) ) {s = 17;}
+                        if ( (synpred263_InternalKTrace()) ) {s = 17;}
 
-                        else if ( (synpred265_InternalKTrace()) ) {s = 20;}
+                        else if ( (synpred264_InternalKTrace()) ) {s = 20;}
 
                          
-                        input.seek(index236_15);
+                        input.seek(index235_15);
                         if ( s>=0 ) return s;
                         break;
                     case 15 : 
-                        int LA236_16 = input.LA(1);
+                        int LA235_16 = input.LA(1);
 
                          
-                        int index236_16 = input.index();
+                        int index235_16 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred264_InternalKTrace()) ) {s = 17;}
+                        if ( (synpred263_InternalKTrace()) ) {s = 17;}
 
-                        else if ( (synpred265_InternalKTrace()) ) {s = 20;}
+                        else if ( (synpred264_InternalKTrace()) ) {s = 20;}
 
                          
-                        input.seek(index236_16);
+                        input.seek(index235_16);
                         if ( s>=0 ) return s;
                         break;
             }
             if (state.backtracking>0) {state.failed=true; return -1;}
             NoViableAltException nvae =
-                new NoViableAltException(getDescription(), 236, _s, input);
+                new NoViableAltException(getDescription(), 235, _s, input);
             error(nvae);
             throw nvae;
         }
@@ -40138,11 +39997,11 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
     static final short[] dfa_146 = DFA.unpackEncodedString(dfa_146s);
     static final short[][] dfa_147 = unpackEncodedStringArray(dfa_147s);
 
-    class DFA243 extends DFA {
+    class DFA242 extends DFA {
 
-        public DFA243(BaseRecognizer recognizer) {
+        public DFA242(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
-            this.decisionNumber = 243;
+            this.decisionNumber = 242;
             this.eot = dfa_9;
             this.eof = dfa_142;
             this.min = dfa_143;
@@ -40177,11 +40036,11 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
     static final short[] dfa_151 = DFA.unpackEncodedString(dfa_151s);
     static final short[][] dfa_152 = unpackEncodedStringArray(dfa_152s);
 
-    class DFA244 extends DFA {
+    class DFA243 extends DFA {
 
-        public DFA244(BaseRecognizer recognizer) {
+        public DFA243(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
-            this.decisionNumber = 244;
+            this.decisionNumber = 243;
             this.eot = dfa_9;
             this.eof = dfa_148;
             this.min = dfa_149;
@@ -40210,11 +40069,11 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
     static final char[] dfa_153 = DFA.unpackEncodedStringToUnsignedChars(dfa_153s);
     static final short[][] dfa_154 = unpackEncodedStringArray(dfa_154s);
 
-    class DFA245 extends DFA {
+    class DFA244 extends DFA {
 
-        public DFA245(BaseRecognizer recognizer) {
+        public DFA244(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
-            this.decisionNumber = 245;
+            this.decisionNumber = 244;
             this.eot = dfa_9;
             this.eof = dfa_148;
             this.min = dfa_149;
@@ -40266,11 +40125,11 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
     static final short[] dfa_160 = DFA.unpackEncodedString(dfa_160s);
     static final short[][] dfa_161 = unpackEncodedStringArray(dfa_161s);
 
-    class DFA246 extends DFA {
+    class DFA245 extends DFA {
 
-        public DFA246(BaseRecognizer recognizer) {
+        public DFA245(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
-            this.decisionNumber = 246;
+            this.decisionNumber = 245;
             this.eot = dfa_155;
             this.eof = dfa_156;
             this.min = dfa_157;
@@ -40287,24 +40146,24 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
         	int _s = s;
             switch ( s ) {
                     case 0 : 
-                        int LA246_21 = input.LA(1);
+                        int LA245_21 = input.LA(1);
 
                          
-                        int index246_21 = input.index();
+                        int index245_21 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred280_InternalKTrace()) ) {s = 7;}
+                        if ( (synpred279_InternalKTrace()) ) {s = 7;}
 
                         else if ( (true) ) {s = 9;}
 
                          
-                        input.seek(index246_21);
+                        input.seek(index245_21);
                         if ( s>=0 ) return s;
                         break;
             }
             if (state.backtracking>0) {state.failed=true; return -1;}
             NoViableAltException nvae =
-                new NoViableAltException(getDescription(), 246, _s, input);
+                new NoViableAltException(getDescription(), 245, _s, input);
             error(nvae);
             throw nvae;
         }
@@ -40343,11 +40202,11 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
     static final short[] dfa_166 = DFA.unpackEncodedString(dfa_166s);
     static final short[][] dfa_167 = unpackEncodedStringArray(dfa_167s);
 
-    class DFA247 extends DFA {
+    class DFA246 extends DFA {
 
-        public DFA247(BaseRecognizer recognizer) {
+        public DFA246(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
-            this.decisionNumber = 247;
+            this.decisionNumber = 246;
             this.eot = dfa_66;
             this.eof = dfa_162;
             this.min = dfa_163;
@@ -40364,24 +40223,24 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
         	int _s = s;
             switch ( s ) {
                     case 0 : 
-                        int LA247_19 = input.LA(1);
+                        int LA246_19 = input.LA(1);
 
                          
-                        int index247_19 = input.index();
+                        int index246_19 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred282_InternalKTrace()) ) {s = 8;}
+                        if ( (synpred281_InternalKTrace()) ) {s = 8;}
 
                         else if ( (true) ) {s = 6;}
 
                          
-                        input.seek(index247_19);
+                        input.seek(index246_19);
                         if ( s>=0 ) return s;
                         break;
             }
             if (state.backtracking>0) {state.failed=true; return -1;}
             NoViableAltException nvae =
-                new NoViableAltException(getDescription(), 247, _s, input);
+                new NoViableAltException(getDescription(), 246, _s, input);
             error(nvae);
             throw nvae;
         }
@@ -40412,11 +40271,11 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
     static final short[] dfa_172 = DFA.unpackEncodedString(dfa_172s);
     static final short[][] dfa_173 = unpackEncodedStringArray(dfa_173s);
 
-    class DFA248 extends DFA {
+    class DFA247 extends DFA {
 
-        public DFA248(BaseRecognizer recognizer) {
+        public DFA247(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
-            this.decisionNumber = 248;
+            this.decisionNumber = 247;
             this.eot = dfa_168;
             this.eof = dfa_168;
             this.min = dfa_169;
@@ -40458,11 +40317,11 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
     static final short[] dfa_179 = DFA.unpackEncodedString(dfa_179s);
     static final short[][] dfa_180 = unpackEncodedStringArray(dfa_180s);
 
-    class DFA249 extends DFA {
+    class DFA248 extends DFA {
 
-        public DFA249(BaseRecognizer recognizer) {
+        public DFA248(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
-            this.decisionNumber = 249;
+            this.decisionNumber = 248;
             this.eot = dfa_174;
             this.eof = dfa_175;
             this.min = dfa_176;

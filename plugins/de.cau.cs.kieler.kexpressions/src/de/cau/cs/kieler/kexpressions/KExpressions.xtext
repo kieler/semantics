@@ -402,7 +402,7 @@ PrintCall returns PrintCall:
 // Additionally, a parameter may be preceded by an ampersand to indicate a call by reference.
 // Analogously, an prefixed exclamation mark marks the parameter as pure output.
 Parameter returns Parameter:
-    (accessType = ParameterAccessType?
+    (accessType = ParameterAccessType
     expression = ValuedObjectReference)
     |
     expression = Expression;

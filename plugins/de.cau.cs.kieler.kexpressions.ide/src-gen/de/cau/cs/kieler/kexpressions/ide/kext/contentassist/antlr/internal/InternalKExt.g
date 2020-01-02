@@ -19359,7 +19359,7 @@ rule__Parameter__Group_0__0__Impl
 :
 (
 	{ before(grammarAccess.getParameterAccess().getAccessTypeAssignment_0_0()); }
-	(rule__Parameter__AccessTypeAssignment_0_0)?
+	(rule__Parameter__AccessTypeAssignment_0_0)
 	{ after(grammarAccess.getParameterAccess().getAccessTypeAssignment_0_0()); }
 )
 ;

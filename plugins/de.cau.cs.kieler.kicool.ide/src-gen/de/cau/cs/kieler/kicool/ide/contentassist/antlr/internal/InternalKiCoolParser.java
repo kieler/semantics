@@ -12096,11 +12096,11 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
                 {
                 int LA6_1 = input.LA(2);
 
-                if ( ((LA6_1>=67 && LA6_1<=71)) ) {
-                    alt6=1;
-                }
-                else if ( (LA6_1==RULE_ID||LA6_1==RULE_COMMENT_ANNOTATION||LA6_1==112) ) {
+                if ( (LA6_1==RULE_ID||LA6_1==RULE_COMMENT_ANNOTATION||LA6_1==112) ) {
                     alt6=2;
+                }
+                else if ( ((LA6_1>=67 && LA6_1<=71)) ) {
+                    alt6=1;
                 }
                 else {
                     if (state.backtracking>0) {state.failed=true; return ;}
@@ -12252,11 +12252,11 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
                 {
                 int LA7_1 = input.LA(2);
 
-                if ( ((LA7_1>=67 && LA7_1<=71)) ) {
-                    alt7=1;
-                }
-                else if ( (LA7_1==RULE_ID||LA7_1==RULE_COMMENT_ANNOTATION||LA7_1==112) ) {
+                if ( (LA7_1==RULE_ID||LA7_1==RULE_COMMENT_ANNOTATION||LA7_1==112) ) {
                     alt7=2;
+                }
+                else if ( ((LA7_1>=67 && LA7_1<=71)) ) {
+                    alt7=1;
                 }
                 else {
                     if (state.backtracking>0) {state.failed=true; return ;}
@@ -15274,61 +15274,21 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
         try {
             // InternalKiCool.g:4311:1: ( ( ( rule__Parameter__Group_0__0 ) ) | ( ( rule__Parameter__ExpressionAssignment_1 ) ) )
             int alt35=2;
-            switch ( input.LA(1) ) {
-            case 21:
-            case 79:
-                {
+            int LA35_0 = input.LA(1);
+
+            if ( (LA35_0==21||LA35_0==79) ) {
                 alt35=1;
-                }
-                break;
-            case RULE_ID:
-                {
-                int LA35_2 = input.LA(2);
-
-                if ( (synpred62_InternalKiCool()) ) {
-                    alt35=1;
-                }
-                else if ( (true) ) {
-                    alt35=2;
-                }
-                else {
-                    if (state.backtracking>0) {state.failed=true; return ;}
-                    NoViableAltException nvae =
-                        new NoViableAltException("", 35, 2, input);
-
-                    throw nvae;
-                }
-                }
-                break;
-            case RULE_STRING:
-            case RULE_BOOLEAN:
-            case RULE_INT:
-            case RULE_FLOAT:
-            case RULE_HOSTCODE:
-            case RULE_COMMENT_ANNOTATION:
-            case 17:
-            case 18:
-            case 22:
-            case 24:
-            case 28:
-            case 91:
-            case 97:
-            case 102:
-            case 106:
-            case 108:
-            case 112:
-                {
+            }
+            else if ( ((LA35_0>=RULE_STRING && LA35_0<=RULE_COMMENT_ANNOTATION)||(LA35_0>=17 && LA35_0<=18)||LA35_0==22||LA35_0==24||LA35_0==28||LA35_0==91||LA35_0==97||LA35_0==102||LA35_0==106||LA35_0==108||LA35_0==112) ) {
                 alt35=2;
-                }
-                break;
-            default:
+            }
+            else {
                 if (state.backtracking>0) {state.failed=true; return ;}
                 NoViableAltException nvae =
                     new NoViableAltException("", 35, 0, input);
 
                 throw nvae;
             }
-
             switch (alt35) {
                 case 1 :
                     // InternalKiCool.g:4312:2: ( ( rule__Parameter__Group_0__0 ) )
@@ -72648,7 +72608,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:21478:1: ( rule__Parameter__Group_0__0__Impl rule__Parameter__Group_0__1 )
             // InternalKiCool.g:21479:2: rule__Parameter__Group_0__0__Impl rule__Parameter__Group_0__1
             {
-            pushFollow(FollowSets000.FOLLOW_131);
+            pushFollow(FollowSets000.FOLLOW_35);
             rule__Parameter__Group_0__0__Impl();
 
             state._fsp--;
@@ -72677,40 +72637,29 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Parameter__Group_0__0__Impl"
-    // InternalKiCool.g:21486:1: rule__Parameter__Group_0__0__Impl : ( ( rule__Parameter__AccessTypeAssignment_0_0 )? ) ;
+    // InternalKiCool.g:21486:1: rule__Parameter__Group_0__0__Impl : ( ( rule__Parameter__AccessTypeAssignment_0_0 ) ) ;
     public final void rule__Parameter__Group_0__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:21490:1: ( ( ( rule__Parameter__AccessTypeAssignment_0_0 )? ) )
-            // InternalKiCool.g:21491:1: ( ( rule__Parameter__AccessTypeAssignment_0_0 )? )
+            // InternalKiCool.g:21490:1: ( ( ( rule__Parameter__AccessTypeAssignment_0_0 ) ) )
+            // InternalKiCool.g:21491:1: ( ( rule__Parameter__AccessTypeAssignment_0_0 ) )
             {
-            // InternalKiCool.g:21491:1: ( ( rule__Parameter__AccessTypeAssignment_0_0 )? )
-            // InternalKiCool.g:21492:2: ( rule__Parameter__AccessTypeAssignment_0_0 )?
+            // InternalKiCool.g:21491:1: ( ( rule__Parameter__AccessTypeAssignment_0_0 ) )
+            // InternalKiCool.g:21492:2: ( rule__Parameter__AccessTypeAssignment_0_0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getParameterAccess().getAccessTypeAssignment_0_0()); 
             }
-            // InternalKiCool.g:21493:2: ( rule__Parameter__AccessTypeAssignment_0_0 )?
-            int alt257=2;
-            int LA257_0 = input.LA(1);
+            // InternalKiCool.g:21493:2: ( rule__Parameter__AccessTypeAssignment_0_0 )
+            // InternalKiCool.g:21493:3: rule__Parameter__AccessTypeAssignment_0_0
+            {
+            pushFollow(FollowSets000.FOLLOW_2);
+            rule__Parameter__AccessTypeAssignment_0_0();
 
-            if ( (LA257_0==21||LA257_0==79) ) {
-                alt257=1;
-            }
-            switch (alt257) {
-                case 1 :
-                    // InternalKiCool.g:21493:3: rule__Parameter__AccessTypeAssignment_0_0
-                    {
-                    pushFollow(FollowSets000.FOLLOW_2);
-                    rule__Parameter__AccessTypeAssignment_0_0();
-
-                    state._fsp--;
-                    if (state.failed) return ;
-
-                    }
-                    break;
+            state._fsp--;
+            if (state.failed) return ;
 
             }
 
@@ -72877,17 +72826,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
                before(grammarAccess.getTextExpressionAccess().getAnnotationsAssignment_0()); 
             }
             // InternalKiCool.g:21547:2: ( rule__TextExpression__AnnotationsAssignment_0 )*
-            loop258:
+            loop257:
             do {
-                int alt258=2;
-                int LA258_0 = input.LA(1);
+                int alt257=2;
+                int LA257_0 = input.LA(1);
 
-                if ( (LA258_0==RULE_COMMENT_ANNOTATION||LA258_0==112) ) {
-                    alt258=1;
+                if ( (LA257_0==RULE_COMMENT_ANNOTATION||LA257_0==112) ) {
+                    alt257=1;
                 }
 
 
-                switch (alt258) {
+                switch (alt257) {
             	case 1 :
             	    // InternalKiCool.g:21547:3: rule__TextExpression__AnnotationsAssignment_0
             	    {
@@ -72901,7 +72850,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             	    break;
 
             	default :
-            	    break loop258;
+            	    break loop257;
                 }
             } while (true);
 
@@ -73023,7 +72972,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:21586:1: ( rule__VectorValue__Group__0__Impl rule__VectorValue__Group__1 )
             // InternalKiCool.g:21587:2: rule__VectorValue__Group__0__Impl rule__VectorValue__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_132);
+            pushFollow(FollowSets000.FOLLOW_131);
             rule__VectorValue__Group__0__Impl();
 
             state._fsp--;
@@ -73236,17 +73185,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
                before(grammarAccess.getVectorValueAccess().getGroup_2()); 
             }
             // InternalKiCool.g:21655:2: ( rule__VectorValue__Group_2__0 )*
-            loop259:
+            loop258:
             do {
-                int alt259=2;
-                int LA259_0 = input.LA(1);
+                int alt258=2;
+                int LA258_0 = input.LA(1);
 
-                if ( (LA259_0==96) ) {
-                    alt259=1;
+                if ( (LA258_0==96) ) {
+                    alt258=1;
                 }
 
 
-                switch (alt259) {
+                switch (alt258) {
             	case 1 :
             	    // InternalKiCool.g:21655:3: rule__VectorValue__Group_2__0
             	    {
@@ -73260,7 +73209,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             	    break;
 
             	default :
-            	    break loop259;
+            	    break loop258;
                 }
             } while (true);
 
@@ -73372,7 +73321,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:21694:1: ( rule__VectorValue__Group_2__0__Impl rule__VectorValue__Group_2__1 )
             // InternalKiCool.g:21695:2: rule__VectorValue__Group_2__0__Impl rule__VectorValue__Group_2__1
             {
-            pushFollow(FollowSets000.FOLLOW_132);
+            pushFollow(FollowSets000.FOLLOW_131);
             rule__VectorValue__Group_2__0__Impl();
 
             state._fsp--;
@@ -73535,7 +73484,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:21748:1: ( rule__IgnoreValue__Group__0__Impl rule__IgnoreValue__Group__1 )
             // InternalKiCool.g:21749:2: rule__IgnoreValue__Group__0__Impl rule__IgnoreValue__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_132);
+            pushFollow(FollowSets000.FOLLOW_131);
             rule__IgnoreValue__Group__0__Impl();
 
             state._fsp--;
@@ -73767,7 +73716,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:21829:1: ( rule__JsonObjectValue__Group__1__Impl rule__JsonObjectValue__Group__2 )
             // InternalKiCool.g:21830:2: rule__JsonObjectValue__Group__1__Impl rule__JsonObjectValue__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_133);
+            pushFollow(FollowSets000.FOLLOW_132);
             rule__JsonObjectValue__Group__1__Impl();
 
             state._fsp--;
@@ -73846,7 +73795,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:21856:1: ( rule__JsonObjectValue__Group__2__Impl rule__JsonObjectValue__Group__3 )
             // InternalKiCool.g:21857:2: rule__JsonObjectValue__Group__2__Impl rule__JsonObjectValue__Group__3
             {
-            pushFollow(FollowSets000.FOLLOW_133);
+            pushFollow(FollowSets000.FOLLOW_132);
             rule__JsonObjectValue__Group__2__Impl();
 
             state._fsp--;
@@ -73891,13 +73840,13 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
                before(grammarAccess.getJsonObjectValueAccess().getGroup_2()); 
             }
             // InternalKiCool.g:21871:2: ( rule__JsonObjectValue__Group_2__0 )?
-            int alt260=2;
-            int LA260_0 = input.LA(1);
+            int alt259=2;
+            int LA259_0 = input.LA(1);
 
-            if ( (LA260_0==RULE_STRING) ) {
-                alt260=1;
+            if ( (LA259_0==RULE_STRING) ) {
+                alt259=1;
             }
-            switch (alt260) {
+            switch (alt259) {
                 case 1 :
                     // InternalKiCool.g:21871:3: rule__JsonObjectValue__Group_2__0
                     {
@@ -74149,17 +74098,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
                before(grammarAccess.getJsonObjectValueAccess().getGroup_2_1()); 
             }
             // InternalKiCool.g:21951:2: ( rule__JsonObjectValue__Group_2_1__0 )*
-            loop261:
+            loop260:
             do {
-                int alt261=2;
-                int LA261_0 = input.LA(1);
+                int alt260=2;
+                int LA260_0 = input.LA(1);
 
-                if ( (LA261_0==96) ) {
-                    alt261=1;
+                if ( (LA260_0==96) ) {
+                    alt260=1;
                 }
 
 
-                switch (alt261) {
+                switch (alt260) {
             	case 1 :
             	    // InternalKiCool.g:21951:3: rule__JsonObjectValue__Group_2_1__0
             	    {
@@ -74173,7 +74122,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             	    break;
 
             	default :
-            	    break loop261;
+            	    break loop260;
                 }
             } while (true);
 
@@ -74463,7 +74412,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:22045:1: ( rule__JsonObjectMember__Group__1__Impl rule__JsonObjectMember__Group__2 )
             // InternalKiCool.g:22046:2: rule__JsonObjectMember__Group__1__Impl rule__JsonObjectMember__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_134);
+            pushFollow(FollowSets000.FOLLOW_133);
             rule__JsonObjectMember__Group__1__Impl();
 
             state._fsp--;
@@ -74626,7 +74575,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:22099:1: ( rule__JsonArrayValue__Group__0__Impl rule__JsonArrayValue__Group__1 )
             // InternalKiCool.g:22100:2: rule__JsonArrayValue__Group__0__Impl rule__JsonArrayValue__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_135);
+            pushFollow(FollowSets000.FOLLOW_134);
             rule__JsonArrayValue__Group__0__Impl();
 
             state._fsp--;
@@ -74705,7 +74654,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:22126:1: ( rule__JsonArrayValue__Group__1__Impl rule__JsonArrayValue__Group__2 )
             // InternalKiCool.g:22127:2: rule__JsonArrayValue__Group__1__Impl rule__JsonArrayValue__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_136);
+            pushFollow(FollowSets000.FOLLOW_135);
             rule__JsonArrayValue__Group__1__Impl();
 
             state._fsp--;
@@ -74784,7 +74733,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:22153:1: ( rule__JsonArrayValue__Group__2__Impl rule__JsonArrayValue__Group__3 )
             // InternalKiCool.g:22154:2: rule__JsonArrayValue__Group__2__Impl rule__JsonArrayValue__Group__3
             {
-            pushFollow(FollowSets000.FOLLOW_136);
+            pushFollow(FollowSets000.FOLLOW_135);
             rule__JsonArrayValue__Group__2__Impl();
 
             state._fsp--;
@@ -74829,13 +74778,13 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
                before(grammarAccess.getJsonArrayValueAccess().getGroup_2()); 
             }
             // InternalKiCool.g:22168:2: ( rule__JsonArrayValue__Group_2__0 )?
-            int alt262=2;
-            int LA262_0 = input.LA(1);
+            int alt261=2;
+            int LA261_0 = input.LA(1);
 
-            if ( ((LA262_0>=RULE_STRING && LA262_0<=RULE_BOOLEAN)||(LA262_0>=RULE_INT && LA262_0<=RULE_FLOAT)||LA262_0==86||LA262_0==91||LA262_0==110) ) {
-                alt262=1;
+            if ( ((LA261_0>=RULE_STRING && LA261_0<=RULE_BOOLEAN)||(LA261_0>=RULE_INT && LA261_0<=RULE_FLOAT)||LA261_0==86||LA261_0==91||LA261_0==110) ) {
+                alt261=1;
             }
-            switch (alt262) {
+            switch (alt261) {
                 case 1 :
                     // InternalKiCool.g:22168:3: rule__JsonArrayValue__Group_2__0
                     {
@@ -75087,17 +75036,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
                before(grammarAccess.getJsonArrayValueAccess().getGroup_2_1()); 
             }
             // InternalKiCool.g:22248:2: ( rule__JsonArrayValue__Group_2_1__0 )*
-            loop263:
+            loop262:
             do {
-                int alt263=2;
-                int LA263_0 = input.LA(1);
+                int alt262=2;
+                int LA262_0 = input.LA(1);
 
-                if ( (LA263_0==96) ) {
-                    alt263=1;
+                if ( (LA262_0==96) ) {
+                    alt262=1;
                 }
 
 
-                switch (alt263) {
+                switch (alt262) {
             	case 1 :
             	    // InternalKiCool.g:22248:3: rule__JsonArrayValue__Group_2_1__0
             	    {
@@ -75111,7 +75060,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             	    break;
 
             	default :
-            	    break loop263;
+            	    break loop262;
                 }
             } while (true);
 
@@ -75149,7 +75098,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:22261:1: ( rule__JsonArrayValue__Group_2_1__0__Impl rule__JsonArrayValue__Group_2_1__1 )
             // InternalKiCool.g:22262:2: rule__JsonArrayValue__Group_2_1__0__Impl rule__JsonArrayValue__Group_2_1__1
             {
-            pushFollow(FollowSets000.FOLLOW_134);
+            pushFollow(FollowSets000.FOLLOW_133);
             rule__JsonArrayValue__Group_2_1__0__Impl();
 
             state._fsp--;
@@ -75312,7 +75261,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:22315:1: ( rule__NullValue__Group__0__Impl rule__NullValue__Group__1 )
             // InternalKiCool.g:22316:2: rule__NullValue__Group__0__Impl rule__NullValue__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_137);
+            pushFollow(FollowSets000.FOLLOW_136);
             rule__NullValue__Group__0__Impl();
 
             state._fsp--;
@@ -76374,7 +76323,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:22666:1: ( rule__KeyStringValueAnnotation__Group__1__Impl rule__KeyStringValueAnnotation__Group__2 )
             // InternalKiCool.g:22667:2: rule__KeyStringValueAnnotation__Group__1__Impl rule__KeyStringValueAnnotation__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_138);
+            pushFollow(FollowSets000.FOLLOW_137);
             rule__KeyStringValueAnnotation__Group__1__Impl();
 
             state._fsp--;
@@ -76592,17 +76541,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
                before(grammarAccess.getKeyStringValueAnnotationAccess().getGroup_3()); 
             }
             // InternalKiCool.g:22734:2: ( rule__KeyStringValueAnnotation__Group_3__0 )*
-            loop264:
+            loop263:
             do {
-                int alt264=2;
-                int LA264_0 = input.LA(1);
+                int alt263=2;
+                int LA263_0 = input.LA(1);
 
-                if ( (LA264_0==96) ) {
-                    alt264=1;
+                if ( (LA263_0==96) ) {
+                    alt263=1;
                 }
 
 
-                switch (alt264) {
+                switch (alt263) {
             	case 1 :
             	    // InternalKiCool.g:22734:3: rule__KeyStringValueAnnotation__Group_3__0
             	    {
@@ -76616,7 +76565,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             	    break;
 
             	default :
-            	    break loop264;
+            	    break loop263;
                 }
             } while (true);
 
@@ -76654,7 +76603,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:22747:1: ( rule__KeyStringValueAnnotation__Group_3__0__Impl rule__KeyStringValueAnnotation__Group_3__1 )
             // InternalKiCool.g:22748:2: rule__KeyStringValueAnnotation__Group_3__0__Impl rule__KeyStringValueAnnotation__Group_3__1
             {
-            pushFollow(FollowSets000.FOLLOW_138);
+            pushFollow(FollowSets000.FOLLOW_137);
             rule__KeyStringValueAnnotation__Group_3__0__Impl();
 
             state._fsp--;
@@ -76896,7 +76845,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:22828:1: ( rule__RestrictedKeyStringValueAnnotation__Group__1__Impl rule__RestrictedKeyStringValueAnnotation__Group__2 )
             // InternalKiCool.g:22829:2: rule__RestrictedKeyStringValueAnnotation__Group__1__Impl rule__RestrictedKeyStringValueAnnotation__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_139);
+            pushFollow(FollowSets000.FOLLOW_138);
             rule__RestrictedKeyStringValueAnnotation__Group__1__Impl();
 
             state._fsp--;
@@ -77114,17 +77063,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
                before(grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getGroup_3()); 
             }
             // InternalKiCool.g:22896:2: ( rule__RestrictedKeyStringValueAnnotation__Group_3__0 )*
-            loop265:
+            loop264:
             do {
-                int alt265=2;
-                int LA265_0 = input.LA(1);
+                int alt264=2;
+                int LA264_0 = input.LA(1);
 
-                if ( (LA265_0==96) ) {
-                    alt265=1;
+                if ( (LA264_0==96) ) {
+                    alt264=1;
                 }
 
 
-                switch (alt265) {
+                switch (alt264) {
             	case 1 :
             	    // InternalKiCool.g:22896:3: rule__RestrictedKeyStringValueAnnotation__Group_3__0
             	    {
@@ -77138,7 +77087,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             	    break;
 
             	default :
-            	    break loop265;
+            	    break loop264;
                 }
             } while (true);
 
@@ -77176,7 +77125,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:22909:1: ( rule__RestrictedKeyStringValueAnnotation__Group_3__0__Impl rule__RestrictedKeyStringValueAnnotation__Group_3__1 )
             // InternalKiCool.g:22910:2: rule__RestrictedKeyStringValueAnnotation__Group_3__0__Impl rule__RestrictedKeyStringValueAnnotation__Group_3__1
             {
-            pushFollow(FollowSets000.FOLLOW_139);
+            pushFollow(FollowSets000.FOLLOW_138);
             rule__RestrictedKeyStringValueAnnotation__Group_3__0__Impl();
 
             state._fsp--;
@@ -77418,7 +77367,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:22990:1: ( rule__StringPragma__Group__1__Impl rule__StringPragma__Group__2 )
             // InternalKiCool.g:22991:2: rule__StringPragma__Group__1__Impl rule__StringPragma__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_138);
+            pushFollow(FollowSets000.FOLLOW_137);
             rule__StringPragma__Group__1__Impl();
 
             state._fsp--;
@@ -77636,17 +77585,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
                before(grammarAccess.getStringPragmaAccess().getGroup_3()); 
             }
             // InternalKiCool.g:23058:2: ( rule__StringPragma__Group_3__0 )*
-            loop266:
+            loop265:
             do {
-                int alt266=2;
-                int LA266_0 = input.LA(1);
+                int alt265=2;
+                int LA265_0 = input.LA(1);
 
-                if ( (LA266_0==96) ) {
-                    alt266=1;
+                if ( (LA265_0==96) ) {
+                    alt265=1;
                 }
 
 
-                switch (alt266) {
+                switch (alt265) {
             	case 1 :
             	    // InternalKiCool.g:23058:3: rule__StringPragma__Group_3__0
             	    {
@@ -77660,7 +77609,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             	    break;
 
             	default :
-            	    break loop266;
+            	    break loop265;
                 }
             } while (true);
 
@@ -77698,7 +77647,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:23071:1: ( rule__StringPragma__Group_3__0__Impl rule__StringPragma__Group_3__1 )
             // InternalKiCool.g:23072:2: rule__StringPragma__Group_3__0__Impl rule__StringPragma__Group_3__1
             {
-            pushFollow(FollowSets000.FOLLOW_138);
+            pushFollow(FollowSets000.FOLLOW_137);
             rule__StringPragma__Group_3__0__Impl();
 
             state._fsp--;
@@ -77940,7 +77889,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:23152:1: ( rule__TypedKeyStringValueAnnotation__Group__1__Impl rule__TypedKeyStringValueAnnotation__Group__2 )
             // InternalKiCool.g:23153:2: rule__TypedKeyStringValueAnnotation__Group__1__Impl rule__TypedKeyStringValueAnnotation__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_135);
+            pushFollow(FollowSets000.FOLLOW_134);
             rule__TypedKeyStringValueAnnotation__Group__1__Impl();
 
             state._fsp--;
@@ -78197,7 +78146,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:23233:1: ( rule__TypedKeyStringValueAnnotation__Group__4__Impl rule__TypedKeyStringValueAnnotation__Group__5 )
             // InternalKiCool.g:23234:2: rule__TypedKeyStringValueAnnotation__Group__4__Impl rule__TypedKeyStringValueAnnotation__Group__5
             {
-            pushFollow(FollowSets000.FOLLOW_138);
+            pushFollow(FollowSets000.FOLLOW_137);
             rule__TypedKeyStringValueAnnotation__Group__4__Impl();
 
             state._fsp--;
@@ -78405,17 +78354,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
                before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getGroup_6()); 
             }
             // InternalKiCool.g:23301:2: ( rule__TypedKeyStringValueAnnotation__Group_6__0 )*
-            loop267:
+            loop266:
             do {
-                int alt267=2;
-                int LA267_0 = input.LA(1);
+                int alt266=2;
+                int LA266_0 = input.LA(1);
 
-                if ( (LA267_0==96) ) {
-                    alt267=1;
+                if ( (LA266_0==96) ) {
+                    alt266=1;
                 }
 
 
-                switch (alt267) {
+                switch (alt266) {
             	case 1 :
             	    // InternalKiCool.g:23301:3: rule__TypedKeyStringValueAnnotation__Group_6__0
             	    {
@@ -78429,7 +78378,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             	    break;
 
             	default :
-            	    break loop267;
+            	    break loop266;
                 }
             } while (true);
 
@@ -78467,7 +78416,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:23314:1: ( rule__TypedKeyStringValueAnnotation__Group_6__0__Impl rule__TypedKeyStringValueAnnotation__Group_6__1 )
             // InternalKiCool.g:23315:2: rule__TypedKeyStringValueAnnotation__Group_6__0__Impl rule__TypedKeyStringValueAnnotation__Group_6__1
             {
-            pushFollow(FollowSets000.FOLLOW_138);
+            pushFollow(FollowSets000.FOLLOW_137);
             rule__TypedKeyStringValueAnnotation__Group_6__0__Impl();
 
             state._fsp--;
@@ -78709,7 +78658,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:23395:1: ( rule__RestrictedTypedKeyStringValueAnnotation__Group__1__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__2 )
             // InternalKiCool.g:23396:2: rule__RestrictedTypedKeyStringValueAnnotation__Group__1__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_135);
+            pushFollow(FollowSets000.FOLLOW_134);
             rule__RestrictedTypedKeyStringValueAnnotation__Group__1__Impl();
 
             state._fsp--;
@@ -78966,7 +78915,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:23476:1: ( rule__RestrictedTypedKeyStringValueAnnotation__Group__4__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__5 )
             // InternalKiCool.g:23477:2: rule__RestrictedTypedKeyStringValueAnnotation__Group__4__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__5
             {
-            pushFollow(FollowSets000.FOLLOW_139);
+            pushFollow(FollowSets000.FOLLOW_138);
             rule__RestrictedTypedKeyStringValueAnnotation__Group__4__Impl();
 
             state._fsp--;
@@ -79174,17 +79123,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
                before(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getGroup_6()); 
             }
             // InternalKiCool.g:23544:2: ( rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0 )*
-            loop268:
+            loop267:
             do {
-                int alt268=2;
-                int LA268_0 = input.LA(1);
+                int alt267=2;
+                int LA267_0 = input.LA(1);
 
-                if ( (LA268_0==96) ) {
-                    alt268=1;
+                if ( (LA267_0==96) ) {
+                    alt267=1;
                 }
 
 
-                switch (alt268) {
+                switch (alt267) {
             	case 1 :
             	    // InternalKiCool.g:23544:3: rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0
             	    {
@@ -79198,7 +79147,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             	    break;
 
             	default :
-            	    break loop268;
+            	    break loop267;
                 }
             } while (true);
 
@@ -79236,7 +79185,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:23557:1: ( rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group_6__1 )
             // InternalKiCool.g:23558:2: rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group_6__1
             {
-            pushFollow(FollowSets000.FOLLOW_139);
+            pushFollow(FollowSets000.FOLLOW_138);
             rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0__Impl();
 
             state._fsp--;
@@ -79696,17 +79645,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
                before(grammarAccess.getQuotedKeyStringValueAnnotationAccess().getGroup_3()); 
             }
             // InternalKiCool.g:23706:2: ( rule__QuotedKeyStringValueAnnotation__Group_3__0 )*
-            loop269:
+            loop268:
             do {
-                int alt269=2;
-                int LA269_0 = input.LA(1);
+                int alt268=2;
+                int LA268_0 = input.LA(1);
 
-                if ( (LA269_0==96) ) {
-                    alt269=1;
+                if ( (LA268_0==96) ) {
+                    alt268=1;
                 }
 
 
-                switch (alt269) {
+                switch (alt268) {
             	case 1 :
             	    // InternalKiCool.g:23706:3: rule__QuotedKeyStringValueAnnotation__Group_3__0
             	    {
@@ -79720,7 +79669,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             	    break;
 
             	default :
-            	    break loop269;
+            	    break loop268;
                 }
             } while (true);
 
@@ -80000,7 +79949,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:23800:1: ( rule__QuotedTypedKeyStringValueAnnotation__Group__1__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__2 )
             // InternalKiCool.g:23801:2: rule__QuotedTypedKeyStringValueAnnotation__Group__1__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_135);
+            pushFollow(FollowSets000.FOLLOW_134);
             rule__QuotedTypedKeyStringValueAnnotation__Group__1__Impl();
 
             state._fsp--;
@@ -80465,17 +80414,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
                before(grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getGroup_6()); 
             }
             // InternalKiCool.g:23949:2: ( rule__QuotedTypedKeyStringValueAnnotation__Group_6__0 )*
-            loop270:
+            loop269:
             do {
-                int alt270=2;
-                int LA270_0 = input.LA(1);
+                int alt269=2;
+                int LA269_0 = input.LA(1);
 
-                if ( (LA270_0==96) ) {
-                    alt270=1;
+                if ( (LA269_0==96) ) {
+                    alt269=1;
                 }
 
 
-                switch (alt270) {
+                switch (alt269) {
             	case 1 :
             	    // InternalKiCool.g:23949:3: rule__QuotedTypedKeyStringValueAnnotation__Group_6__0
             	    {
@@ -80489,7 +80438,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             	    break;
 
             	default :
-            	    break loop270;
+            	    break loop269;
                 }
             } while (true);
 
@@ -80690,7 +80639,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:24016:1: ( rule__ExtendedID__Group__0__Impl rule__ExtendedID__Group__1 )
             // InternalKiCool.g:24017:2: rule__ExtendedID__Group__0__Impl rule__ExtendedID__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_140);
+            pushFollow(FollowSets000.FOLLOW_139);
             rule__ExtendedID__Group__0__Impl();
 
             state._fsp--;
@@ -80769,7 +80718,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:24043:1: ( rule__ExtendedID__Group__1__Impl rule__ExtendedID__Group__2 )
             // InternalKiCool.g:24044:2: rule__ExtendedID__Group__1__Impl rule__ExtendedID__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_140);
+            pushFollow(FollowSets000.FOLLOW_139);
             rule__ExtendedID__Group__1__Impl();
 
             state._fsp--;
@@ -80814,30 +80763,30 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
                before(grammarAccess.getExtendedIDAccess().getGroup_1()); 
             }
             // InternalKiCool.g:24058:2: ( rule__ExtendedID__Group_1__0 )*
-            loop271:
+            loop270:
             do {
-                int alt271=2;
-                int LA271_0 = input.LA(1);
+                int alt270=2;
+                int LA270_0 = input.LA(1);
 
-                if ( (LA271_0==24) ) {
-                    int LA271_2 = input.LA(2);
+                if ( (LA270_0==24) ) {
+                    int LA270_2 = input.LA(2);
 
-                    if ( (LA271_2==RULE_ID) ) {
-                        alt271=1;
+                    if ( (LA270_2==RULE_ID) ) {
+                        alt270=1;
                     }
 
 
                 }
-                else if ( (LA271_0==42) ) {
-                    alt271=1;
+                else if ( (LA270_0==42) ) {
+                    alt270=1;
                 }
 
 
-                switch (alt271) {
+                switch (alt270) {
             	case 1 :
             	    // InternalKiCool.g:24058:3: rule__ExtendedID__Group_1__0
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_141);
+            	    pushFollow(FollowSets000.FOLLOW_140);
             	    rule__ExtendedID__Group_1__0();
 
             	    state._fsp--;
@@ -80847,7 +80796,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             	    break;
 
             	default :
-            	    break loop271;
+            	    break loop270;
                 }
             } while (true);
 
@@ -80925,17 +80874,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
                before(grammarAccess.getExtendedIDAccess().getGroup_2()); 
             }
             // InternalKiCool.g:24084:2: ( rule__ExtendedID__Group_2__0 )?
-            int alt272=2;
-            int LA272_0 = input.LA(1);
+            int alt271=2;
+            int LA271_0 = input.LA(1);
 
-            if ( (LA272_0==111) ) {
-                int LA272_1 = input.LA(2);
+            if ( (LA271_0==111) ) {
+                int LA271_1 = input.LA(2);
 
-                if ( (LA272_1==RULE_INT) ) {
-                    alt272=1;
+                if ( (LA271_1==RULE_INT) ) {
+                    alt271=1;
                 }
             }
-            switch (alt272) {
+            switch (alt271) {
                 case 1 :
                     // InternalKiCool.g:24084:3: rule__ExtendedID__Group_2__0
                     {
@@ -81300,7 +81249,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:24205:1: ( rule__QualifiedID__Group__0__Impl rule__QualifiedID__Group__1 )
             // InternalKiCool.g:24206:2: rule__QualifiedID__Group__0__Impl rule__QualifiedID__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_142);
+            pushFollow(FollowSets000.FOLLOW_141);
             rule__QualifiedID__Group__0__Impl();
 
             state._fsp--;
@@ -81419,21 +81368,21 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
                before(grammarAccess.getQualifiedIDAccess().getGroup_1()); 
             }
             // InternalKiCool.g:24246:2: ( rule__QualifiedID__Group_1__0 )*
-            loop273:
+            loop272:
             do {
-                int alt273=2;
-                int LA273_0 = input.LA(1);
+                int alt272=2;
+                int LA272_0 = input.LA(1);
 
-                if ( (LA273_0==42) ) {
-                    alt273=1;
+                if ( (LA272_0==42) ) {
+                    alt272=1;
                 }
 
 
-                switch (alt273) {
+                switch (alt272) {
             	case 1 :
             	    // InternalKiCool.g:24246:3: rule__QualifiedID__Group_1__0
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_143);
+            	    pushFollow(FollowSets000.FOLLOW_142);
             	    rule__QualifiedID__Group_1__0();
 
             	    state._fsp--;
@@ -81443,7 +81392,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             	    break;
 
             	default :
-            	    break loop273;
+            	    break loop272;
                 }
             } while (true);
 
@@ -81634,7 +81583,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:24313:1: ( rule__Integer__Group__0__Impl rule__Integer__Group__1 )
             // InternalKiCool.g:24314:2: rule__Integer__Group__0__Impl rule__Integer__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_144);
+            pushFollow(FollowSets000.FOLLOW_143);
             rule__Integer__Group__0__Impl();
 
             state._fsp--;
@@ -81679,13 +81628,13 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
                before(grammarAccess.getIntegerAccess().getHyphenMinusKeyword_0()); 
             }
             // InternalKiCool.g:24328:2: ( '-' )?
-            int alt274=2;
-            int LA274_0 = input.LA(1);
+            int alt273=2;
+            int LA273_0 = input.LA(1);
 
-            if ( (LA274_0==24) ) {
-                alt274=1;
+            if ( (LA273_0==24) ) {
+                alt273=1;
             }
-            switch (alt274) {
+            switch (alt273) {
                 case 1 :
                     // InternalKiCool.g:24328:3: '-'
                     {
@@ -81804,7 +81753,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:24367:1: ( rule__Floateger__Group__0__Impl rule__Floateger__Group__1 )
             // InternalKiCool.g:24368:2: rule__Floateger__Group__0__Impl rule__Floateger__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_138);
+            pushFollow(FollowSets000.FOLLOW_137);
             rule__Floateger__Group__0__Impl();
 
             state._fsp--;
@@ -81849,13 +81798,13 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
                before(grammarAccess.getFloategerAccess().getHyphenMinusKeyword_0()); 
             }
             // InternalKiCool.g:24382:2: ( '-' )?
-            int alt275=2;
-            int LA275_0 = input.LA(1);
+            int alt274=2;
+            int LA274_0 = input.LA(1);
 
-            if ( (LA275_0==24) ) {
-                alt275=1;
+            if ( (LA274_0==24) ) {
+                alt274=1;
             }
-            switch (alt275) {
+            switch (alt274) {
                 case 1 :
                     // InternalKiCool.g:24382:3: '-'
                     {
@@ -97951,36 +97900,6 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
     }
     // $ANTLR end synpred57_InternalKiCool
 
-    // $ANTLR start synpred62_InternalKiCool
-    public final void synpred62_InternalKiCool_fragment() throws RecognitionException {   
-        // InternalKiCool.g:4312:2: ( ( ( rule__Parameter__Group_0__0 ) ) )
-        // InternalKiCool.g:4312:2: ( ( rule__Parameter__Group_0__0 ) )
-        {
-        // InternalKiCool.g:4312:2: ( ( rule__Parameter__Group_0__0 ) )
-        // InternalKiCool.g:4313:3: ( rule__Parameter__Group_0__0 )
-        {
-        if ( state.backtracking==0 ) {
-           before(grammarAccess.getParameterAccess().getGroup_0()); 
-        }
-        // InternalKiCool.g:4314:3: ( rule__Parameter__Group_0__0 )
-        // InternalKiCool.g:4314:4: rule__Parameter__Group_0__0
-        {
-        pushFollow(FollowSets000.FOLLOW_2);
-        rule__Parameter__Group_0__0();
-
-        state._fsp--;
-        if (state.failed) return ;
-
-        }
-
-
-        }
-
-
-        }
-    }
-    // $ANTLR end synpred62_InternalKiCool
-
     // $ANTLR start synpred63_InternalKiCool
     public final void synpred63_InternalKiCool_fragment() throws RecognitionException {   
         // InternalKiCool.g:4333:2: ( ( ruleBoolExpression ) )
@@ -98551,20 +98470,6 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
         int start = input.mark();
         try {
             synpred36_InternalKiCool_fragment(); // can never throw exception
-        } catch (RecognitionException re) {
-            System.err.println("impossible: "+re);
-        }
-        boolean success = !state.failed;
-        input.rewind(start);
-        state.backtracking--;
-        state.failed=false;
-        return success;
-    }
-    public final boolean synpred62_InternalKiCool() {
-        state.backtracking++;
-        int start = input.mark();
-        try {
-            synpred62_InternalKiCool_fragment(); // can never throw exception
         } catch (RecognitionException re) {
             System.err.println("impossible: "+re);
         }
@@ -101250,22 +101155,22 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             throw nvae;
         }
     }
-    static final String dfa_60s = "\2\uffff\1\7\5\uffff\2\7";
+    static final String dfa_60s = "\2\uffff\1\6\5\uffff\2\6";
     static final String dfa_61s = "\1\157\1\6\1\4\3\6\2\uffff\2\4";
     static final String dfa_62s = "\1\157\1\6\1\162\1\6\1\10\1\7\2\uffff\2\162";
-    static final String dfa_63s = "\6\uffff\1\2\1\1\2\uffff";
+    static final String dfa_63s = "\6\uffff\1\1\1\2\2\uffff";
     static final String dfa_64s = "\12\uffff}>";
     static final String[] dfa_65s = {
             "\1\1",
             "\1\2",
-            "\5\7\1\uffff\1\7\15\uffff\1\4\21\uffff\1\3\40\uffff\1\7\4\uffff\1\7\12\uffff\1\6\23\uffff\1\5\3\7",
+            "\5\6\1\uffff\1\6\15\uffff\1\4\21\uffff\1\3\40\uffff\1\6\4\uffff\1\6\12\uffff\1\7\23\uffff\1\5\3\6",
             "\1\10",
-            "\1\10\2\7",
-            "\1\7\1\11",
+            "\1\10\2\6",
+            "\1\6\1\11",
             "",
             "",
-            "\5\7\1\uffff\1\7\15\uffff\1\4\21\uffff\1\3\40\uffff\1\7\4\uffff\1\7\12\uffff\1\6\23\uffff\1\5\3\7",
-            "\5\7\1\uffff\1\7\15\uffff\1\7\62\uffff\1\7\4\uffff\1\7\12\uffff\1\6\23\uffff\4\7"
+            "\5\6\1\uffff\1\6\15\uffff\1\4\21\uffff\1\3\40\uffff\1\6\4\uffff\1\6\12\uffff\1\7\23\uffff\1\5\3\6",
+            "\5\6\1\uffff\1\6\15\uffff\1\6\62\uffff\1\6\4\uffff\1\6\12\uffff\1\7\23\uffff\4\6"
     };
     static final short[] dfa_60 = DFA.unpackEncodedString(dfa_60s);
     static final char[] dfa_61 = DFA.unpackEncodedStringToUnsignedChars(dfa_61s);
@@ -101363,31 +101268,31 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             return "4463:1: rule__QuotedStringAnnotation__Alternatives : ( ( superQuotedStringAnnotation ) | ( ruleJsonAnnotation ) );";
         }
     }
-    static final String dfa_73s = "\3\uffff\1\12\4\uffff\1\7\2\uffff\2\12\1\uffff\1\7\1\uffff\1\7\1\uffff\1\7\1\uffff";
-    static final String dfa_74s = "\1\12\1\uffff\1\6\1\4\2\6\1\7\1\uffff\1\6\2\uffff\2\4\6\6\1\0";
-    static final String dfa_75s = "\1\160\1\uffff\1\6\1\170\1\6\1\10\1\7\1\uffff\1\170\2\uffff\2\170\1\6\1\170\1\6\1\170\1\6\1\170\1\0";
-    static final String dfa_76s = "\1\uffff\1\1\5\uffff\1\2\1\uffff\1\3\1\4\11\uffff";
+    static final String dfa_73s = "\3\uffff\1\12\5\uffff\1\10\1\uffff\2\12\1\uffff\1\10\1\uffff\1\10\1\uffff\1\10\1\uffff";
+    static final String dfa_74s = "\1\12\1\uffff\1\6\1\4\2\6\1\7\2\uffff\1\6\1\uffff\2\4\6\6\1\0";
+    static final String dfa_75s = "\1\160\1\uffff\1\6\1\170\1\6\1\10\1\7\2\uffff\1\170\1\uffff\2\170\1\6\1\170\1\6\1\170\1\6\1\170\1\0";
+    static final String dfa_76s = "\1\uffff\1\1\5\uffff\1\3\1\2\1\uffff\1\4\11\uffff";
     static final String dfa_77s = "\23\uffff\1\0}>";
     static final String[] dfa_78s = {
             "\1\1\145\uffff\1\2",
             "",
             "\1\3",
-            "\2\7\1\10\2\7\2\12\15\uffff\1\5\15\uffff\3\12\1\uffff\1\4\30\uffff\5\12\3\uffff\4\12\1\uffff\1\12\5\uffff\1\11\6\uffff\2\12\4\uffff\1\12\1\uffff\3\12\1\uffff\2\12\4\uffff\1\6\3\12\1\uffff\5\12",
+            "\2\10\1\11\2\10\2\12\15\uffff\1\5\15\uffff\3\12\1\uffff\1\4\30\uffff\5\12\3\uffff\4\12\1\uffff\1\12\5\uffff\1\7\6\uffff\2\12\4\uffff\1\12\1\uffff\3\12\1\uffff\2\12\4\uffff\1\6\3\12\1\uffff\5\12",
             "\1\13",
-            "\1\13\2\7",
+            "\1\13\2\10",
             "\1\14",
             "",
-            "\1\7\2\uffff\2\7\15\uffff\1\7\15\uffff\3\7\1\12\1\15\2\uffff\20\12\6\uffff\5\7\3\uffff\4\7\1\uffff\1\7\5\uffff\1\12\6\uffff\2\7\1\uffff\1\7\1\12\1\uffff\1\7\1\uffff\3\7\1\uffff\2\7\1\12\3\uffff\4\7\1\uffff\5\7",
             "",
+            "\1\10\2\uffff\2\10\15\uffff\1\10\15\uffff\3\10\1\12\1\15\2\uffff\20\12\6\uffff\5\10\3\uffff\4\10\1\uffff\1\10\5\uffff\1\12\6\uffff\2\10\1\uffff\1\10\1\12\1\uffff\1\10\1\uffff\3\10\1\uffff\2\10\1\12\3\uffff\4\10\1\uffff\5\10",
             "",
-            "\2\7\1\10\2\7\2\12\15\uffff\1\5\15\uffff\3\12\1\uffff\1\4\30\uffff\5\12\3\uffff\4\12\1\uffff\1\12\5\uffff\1\11\6\uffff\2\12\4\uffff\1\12\1\uffff\3\12\1\uffff\2\12\4\uffff\1\6\3\12\1\uffff\5\12",
-            "\2\7\1\10\2\7\2\12\15\uffff\1\7\15\uffff\3\12\32\uffff\5\12\3\uffff\4\12\1\uffff\1\12\5\uffff\1\11\6\uffff\2\12\4\uffff\1\12\1\uffff\3\12\1\uffff\2\12\5\uffff\3\12\1\uffff\5\12",
+            "\2\10\1\11\2\10\2\12\15\uffff\1\5\15\uffff\3\12\1\uffff\1\4\30\uffff\5\12\3\uffff\4\12\1\uffff\1\12\5\uffff\1\7\6\uffff\2\12\4\uffff\1\12\1\uffff\3\12\1\uffff\2\12\4\uffff\1\6\3\12\1\uffff\5\12",
+            "\2\10\1\11\2\10\2\12\15\uffff\1\10\15\uffff\3\12\32\uffff\5\12\3\uffff\4\12\1\uffff\1\12\5\uffff\1\7\6\uffff\2\12\4\uffff\1\12\1\uffff\3\12\1\uffff\2\12\5\uffff\3\12\1\uffff\5\12",
             "\1\16",
-            "\1\7\2\uffff\2\7\15\uffff\1\7\15\uffff\3\7\1\12\1\17\2\uffff\20\12\6\uffff\5\7\3\uffff\4\7\1\uffff\1\7\5\uffff\1\12\6\uffff\2\7\1\uffff\1\7\1\12\1\uffff\1\7\1\uffff\3\7\1\uffff\2\7\1\12\3\uffff\4\7\1\uffff\5\7",
+            "\1\10\2\uffff\2\10\15\uffff\1\10\15\uffff\3\10\1\12\1\17\2\uffff\20\12\6\uffff\5\10\3\uffff\4\10\1\uffff\1\10\5\uffff\1\12\6\uffff\2\10\1\uffff\1\10\1\12\1\uffff\1\10\1\uffff\3\10\1\uffff\2\10\1\12\3\uffff\4\10\1\uffff\5\10",
             "\1\20",
-            "\1\7\2\uffff\2\7\15\uffff\1\7\15\uffff\3\7\1\12\1\21\2\uffff\20\12\6\uffff\5\7\3\uffff\4\7\1\uffff\1\7\5\uffff\1\12\6\uffff\2\7\1\uffff\1\7\1\12\1\uffff\1\7\1\uffff\3\7\1\uffff\2\7\1\12\3\uffff\4\7\1\uffff\5\7",
+            "\1\10\2\uffff\2\10\15\uffff\1\10\15\uffff\3\10\1\12\1\21\2\uffff\20\12\6\uffff\5\10\3\uffff\4\10\1\uffff\1\10\5\uffff\1\12\6\uffff\2\10\1\uffff\1\10\1\12\1\uffff\1\10\1\uffff\3\10\1\uffff\2\10\1\12\3\uffff\4\10\1\uffff\5\10",
             "\1\22",
-            "\1\7\2\uffff\2\7\15\uffff\1\7\15\uffff\3\7\1\12\1\23\2\uffff\20\12\6\uffff\5\7\3\uffff\4\7\1\uffff\1\7\5\uffff\1\12\6\uffff\2\7\1\uffff\1\7\1\12\1\uffff\1\7\1\uffff\3\7\1\uffff\2\7\1\12\3\uffff\4\7\1\uffff\5\7",
+            "\1\10\2\uffff\2\10\15\uffff\1\10\15\uffff\3\10\1\12\1\23\2\uffff\20\12\6\uffff\5\10\3\uffff\4\10\1\uffff\1\10\5\uffff\1\12\6\uffff\2\10\1\uffff\1\10\1\12\1\uffff\1\10\1\uffff\3\10\1\uffff\2\10\1\12\3\uffff\4\10\1\uffff\5\10",
             "\1\uffff"
     };
     static final short[] dfa_73 = DFA.unpackEncodedString(dfa_73s);
@@ -101424,7 +101329,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
                         int index42_19 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred75_InternalKiCool()) ) {s = 7;}
+                        if ( (synpred75_InternalKiCool()) ) {s = 8;}
 
                         else if ( (true) ) {s = 10;}
 
@@ -101440,18 +101345,18 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             throw nvae;
         }
     }
-    static final String dfa_79s = "\2\uffff\1\6\5\uffff\2\6";
+    static final String dfa_79s = "\2\uffff\1\7\5\uffff\2\7";
     static final String[] dfa_80s = {
             "\1\1",
             "\1\2",
-            "\5\7\1\uffff\1\6\15\uffff\1\4\21\uffff\1\3\40\uffff\1\6\4\uffff\1\6\36\uffff\1\5\3\6",
+            "\5\6\1\uffff\1\7\15\uffff\1\4\21\uffff\1\3\40\uffff\1\7\4\uffff\1\7\36\uffff\1\5\3\7",
             "\1\10",
-            "\1\10\2\7",
-            "\1\6\1\11",
+            "\1\10\2\6",
+            "\1\7\1\11",
             "",
             "",
-            "\5\7\1\uffff\1\6\15\uffff\1\4\21\uffff\1\3\40\uffff\1\6\4\uffff\1\6\36\uffff\1\5\3\6",
-            "\5\7\1\uffff\1\6\15\uffff\1\7\62\uffff\1\6\4\uffff\1\6\36\uffff\4\6"
+            "\5\6\1\uffff\1\7\15\uffff\1\4\21\uffff\1\3\40\uffff\1\7\4\uffff\1\7\36\uffff\1\5\3\7",
+            "\5\6\1\uffff\1\7\15\uffff\1\6\62\uffff\1\7\4\uffff\1\7\36\uffff\4\7"
     };
     static final short[] dfa_79 = DFA.unpackEncodedString(dfa_79s);
     static final short[][] dfa_80 = unpackEncodedStringArray(dfa_80s);
@@ -101476,20 +101381,20 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
     static final String dfa_81s = "\13\uffff";
     static final String dfa_82s = "\1\12\1\uffff\1\6\1\4\2\6\1\7\2\uffff\2\4";
     static final String dfa_83s = "\1\160\1\uffff\1\6\1\157\1\6\1\10\1\7\2\uffff\1\157\1\126";
-    static final String dfa_84s = "\1\uffff\1\1\5\uffff\1\2\1\3\2\uffff";
+    static final String dfa_84s = "\1\uffff\1\1\5\uffff\1\3\1\2\2\uffff";
     static final String dfa_85s = "\13\uffff}>";
     static final String[] dfa_86s = {
             "\1\1\145\uffff\1\2",
             "",
             "\1\3",
-            "\5\7\17\uffff\1\5\21\uffff\1\4\53\uffff\1\10\30\uffff\1\6",
+            "\5\10\17\uffff\1\5\21\uffff\1\4\53\uffff\1\7\30\uffff\1\6",
             "\1\11",
-            "\1\11\2\7",
+            "\1\11\2\10",
             "\1\12",
             "",
             "",
-            "\5\7\17\uffff\1\5\21\uffff\1\4\53\uffff\1\10\30\uffff\1\6",
-            "\5\7\17\uffff\1\7\75\uffff\1\10"
+            "\5\10\17\uffff\1\5\21\uffff\1\4\53\uffff\1\7\30\uffff\1\6",
+            "\5\10\17\uffff\1\10\75\uffff\1\7"
     };
 
     static final short[] dfa_81 = DFA.unpackEncodedString(dfa_81s);
@@ -103237,20 +103142,19 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
         public static final BitSet FOLLOW_128 = new BitSet(new long[]{0x0000000000000000L,0x0000100000000000L});
         public static final BitSet FOLLOW_129 = new BitSet(new long[]{0x0000020000000000L});
         public static final BitSet FOLLOW_130 = new BitSet(new long[]{0x0000000000000000L,0x0000040000000000L});
-        public static final BitSet FOLLOW_131 = new BitSet(new long[]{0x0000000000200440L,0x0001000000008000L});
-        public static final BitSet FOLLOW_132 = new BitSet(new long[]{0x00000000114607F0L,0x0001344208000000L});
-        public static final BitSet FOLLOW_133 = new BitSet(new long[]{0x0000000000000010L,0x0000000010000000L});
-        public static final BitSet FOLLOW_134 = new BitSet(new long[]{0x00000000000001B0L,0x0000400008400000L});
-        public static final BitSet FOLLOW_135 = new BitSet(new long[]{0x0000000000000000L,0x0000000000400000L});
-        public static final BitSet FOLLOW_136 = new BitSet(new long[]{0x00000000000001B0L,0x0000400008C00000L});
-        public static final BitSet FOLLOW_137 = new BitSet(new long[]{0x0000000000000000L,0x0000400000000000L});
-        public static final BitSet FOLLOW_138 = new BitSet(new long[]{0x00000000010001F0L});
-        public static final BitSet FOLLOW_139 = new BitSet(new long[]{0x0000000000000070L});
-        public static final BitSet FOLLOW_140 = new BitSet(new long[]{0x0000040001000000L,0x0000800000000000L});
-        public static final BitSet FOLLOW_141 = new BitSet(new long[]{0x0000040001000002L});
-        public static final BitSet FOLLOW_142 = new BitSet(new long[]{0x0000040000000000L});
-        public static final BitSet FOLLOW_143 = new BitSet(new long[]{0x0000040000000002L});
-        public static final BitSet FOLLOW_144 = new BitSet(new long[]{0x0000000001000080L});
+        public static final BitSet FOLLOW_131 = new BitSet(new long[]{0x00000000114607F0L,0x0001344208000000L});
+        public static final BitSet FOLLOW_132 = new BitSet(new long[]{0x0000000000000010L,0x0000000010000000L});
+        public static final BitSet FOLLOW_133 = new BitSet(new long[]{0x00000000000001B0L,0x0000400008400000L});
+        public static final BitSet FOLLOW_134 = new BitSet(new long[]{0x0000000000000000L,0x0000000000400000L});
+        public static final BitSet FOLLOW_135 = new BitSet(new long[]{0x00000000000001B0L,0x0000400008C00000L});
+        public static final BitSet FOLLOW_136 = new BitSet(new long[]{0x0000000000000000L,0x0000400000000000L});
+        public static final BitSet FOLLOW_137 = new BitSet(new long[]{0x00000000010001F0L});
+        public static final BitSet FOLLOW_138 = new BitSet(new long[]{0x0000000000000070L});
+        public static final BitSet FOLLOW_139 = new BitSet(new long[]{0x0000040001000000L,0x0000800000000000L});
+        public static final BitSet FOLLOW_140 = new BitSet(new long[]{0x0000040001000002L});
+        public static final BitSet FOLLOW_141 = new BitSet(new long[]{0x0000040000000000L});
+        public static final BitSet FOLLOW_142 = new BitSet(new long[]{0x0000040000000002L});
+        public static final BitSet FOLLOW_143 = new BitSet(new long[]{0x0000000001000080L});
     }
 
 

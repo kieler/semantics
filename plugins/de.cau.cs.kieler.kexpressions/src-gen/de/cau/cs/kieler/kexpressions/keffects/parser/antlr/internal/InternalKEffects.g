@@ -4479,7 +4479,7 @@ ruleParameter returns [EObject current=null]
 						afterParserOrEnumRuleCall();
 					}
 				)
-			)?
+			)
 			(
 				(
 					{

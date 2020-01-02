@@ -2565,7 +2565,7 @@ ruleModuleCallParameter returns [EObject current=null]
 							afterParserOrEnumRuleCall();
 						}
 					)
-				)?
+				)
 				(
 					(
 						{
@@ -10776,7 +10776,7 @@ ruleParameter returns [EObject current=null]
 						afterParserOrEnumRuleCall();
 					}
 				)
-			)?
+			)
 			(
 				(
 					{

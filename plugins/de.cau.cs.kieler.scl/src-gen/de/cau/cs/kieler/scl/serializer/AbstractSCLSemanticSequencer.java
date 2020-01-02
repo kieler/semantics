@@ -793,7 +793,7 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 	 *
 	 * Constraint:
 	 *     (
-	 *         ((accessType=ParameterAccessType? expression=ValuedObjectReference) | expression=Expression) 
+	 *         ((accessType=ParameterAccessType expression=ValuedObjectReference) | expression=Expression) 
 	 *         (explicitBinding=[ValuedObject|ID] explicitBindingIndices+=Expression*)?
 	 *     )
 	 */
