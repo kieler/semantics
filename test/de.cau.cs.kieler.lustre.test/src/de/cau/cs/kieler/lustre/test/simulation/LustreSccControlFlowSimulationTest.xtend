@@ -25,7 +25,7 @@ import static org.junit.Assume.*
  * 
  * @author lgr
  */
-class LustreSccControlFlowApproachSimulationTest extends AbstractSimulationTest<LustreProgram> {
+class LustreSccControlFlowSimulationTest extends AbstractSimulationTest<LustreProgram> {
     
     public static val String LUSTRE_CONTROLFLOW_NETLIST_C_SYSTEM = "de.cau.cs.kieler.lustre.controlflow.c";
     
