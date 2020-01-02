@@ -71,13 +71,16 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
     extends InplaceProcessor<P> implements Traceable {
     
     public static val IProperty<Boolean> SAVE_ONLY_CONFLICTING_DEPENDENCIES = 
-        new Property<Boolean>("de.cau.cs.kieler.kexpressions.keffects.dependencies.saveOnlyConflicting", false)
+        new Property<Boolean>("de.cau.cs.kieler.kexpressions.dependencies.saveOnlyConflicting", false)
 
     public static val IProperty<Boolean> ALLOW_OLD_SC_SYNTAX = 
-        new Property<Boolean>("de.cau.cs.kieler.kexpressions.keffects.dependencies.oldSCSyntax", true)
+        new Property<Boolean>("de.cau.cs.kieler.kexpressions.dependencies.oldSCSyntax", true)
 
     public static val IProperty<Boolean> ALLOW_MULTIPLE_RELATIVE_READERS = 
-        new Property<Boolean>("de.cau.cs.kieler.kexpressions.keffects.dependencies.multipleRelativeReaders", false)
+        new Property<Boolean>("de.cau.cs.kieler.kexpressions.dependencies.multipleRelativeReaders", false)
+
+    public static val IProperty<Boolean> PROCESS_CALL_PARAMETERS = 
+        new Property<Boolean>("de.cau.cs.kieler.kexpressions.dependencies.processCallParameters", true)
 
         
     public static val IProperty<ValuedObjectAccessors> VALUED_OBJECT_ACCESSORS = 
@@ -231,7 +234,9 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
     protected def void processCall(Call call, ForkStack forkStack, ValuedObjectAccessors valuedObjectAccessors, 
         Assignment assignment
     ) {
-       val schedules = newLinkedList(GLOBAL_SCHEDULE) + 
+        if (!getProperty(PROCESS_CALL_PARAMETERS)) return;
+        
+        val schedules = newLinkedList(GLOBAL_SCHEDULE) + 
            if (assignment.schedule !== null) assignment.schedule else #[]
         
         for (parameter : call.parameters) {
