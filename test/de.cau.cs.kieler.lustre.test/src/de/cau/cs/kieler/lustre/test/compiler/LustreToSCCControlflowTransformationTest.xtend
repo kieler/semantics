@@ -15,7 +15,7 @@ package de.cau.cs.kieler.lustre.test.compiler
 import de.cau.cs.kieler.kicool.compilation.Compile
 import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.lustre.lustre.LustreProgram
-import de.cau.cs.kieler.lustre.processors.lustreToScc.LustreToSCCharts
+import de.cau.cs.kieler.lustre.processors.lustreToScc.LustreToSCChartsControlFlow
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.text.SCTXStandaloneSetup
 import de.cau.cs.kieler.test.common.repository.AbstractXTextModelRepositoryTest
@@ -42,15 +42,15 @@ import static org.junit.Assert.*
 import static extension java.lang.String.format
 
 /**
- * Tests if the Lustre to SCC dataflow transformation produces reasonable results.
+ * Tests if the Lustre to SCC controlflow transformation produces reasonable results.
  * 
  * @author lgr
  */
 @RunWith(ModelsRepositoryTestRunner)
-class LustreToSCCTransformationTest extends AbstractXTextModelRepositoryTest<LustreProgram> {
+class LustreToSCCControlflowTransformationTest extends AbstractXTextModelRepositoryTest<LustreProgram> {
     
     /** Compiler configuration */
-    val compilationSystemID = "de.cau.cs.kieler.lustre.scc.dataflow"
+    val compilationSystemID = "de.cau.cs.kieler.lustre.scc.controlflow"
     
     /** Parser Injector */
     static val sctxInjector = new SCTXStandaloneSetup().createInjectorAndDoEMFRegistration
@@ -61,7 +61,7 @@ class LustreToSCCTransformationTest extends AbstractXTextModelRepositoryTest<Lus
      * Constructor
      */
     new() {
-        super(LustreToSCCTransformationTest.sctxInjector)
+        super(LustreToSCCControlflowTransformationTest.sctxInjector)
     }
     
     /**
@@ -70,6 +70,7 @@ class LustreToSCCTransformationTest extends AbstractXTextModelRepositoryTest<Lus
     override filter(TestModelData modelData) {
         return modelData.modelProperties.contains("lustre")
         && !modelData.modelProperties.contains("must-fail-validation")
+        && !modelData.modelProperties.contains("not-for-cf-approach")
     }
     
     @Test(timeout=20000)
@@ -94,7 +95,7 @@ class LustreToSCCTransformationTest extends AbstractXTextModelRepositoryTest<Lus
             }
             
             // -- Check SCTX
-            val sctxResult = context.processorInstancesSequence.findFirst[LustreToSCCharts.ID.equals(id)]
+            val sctxResult = context.processorInstancesSequence.findFirst[LustreToSCChartsControlFlow.ID.equals(id)]
             
             // Create resource
             val uri = URI.createURI("dummy:/test/" + modelData.modelPath.fileName.toString + ".sctx")
