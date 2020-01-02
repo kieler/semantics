@@ -46,7 +46,7 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
 /**
  * @author cpa, lgr
  */
-class LustreToSCCControlFlowApproach extends LustreToSCCharts {
+class LustreToSCChartsControlFlow extends LustreToSCCharts {
 
     /**
      * Determines whether during actions shall be used in the transformation. If true, all expressions including subs 
@@ -56,7 +56,9 @@ class LustreToSCCControlFlowApproach extends LustreToSCCharts {
     public static val IProperty<Boolean> USE_DURING_ACTIONS = new Property<Boolean>(
         "de.cau.cs.kieler.lustre.processors.lustreToSCC.controlFlow.useDuringActions", false)
 
-    @Inject extension KExpressionsCreateExtensions
+  
+    public static val ID = "de.cau.cs.kieler.lustre.processors.lustreToSCC.controlFlow"
+  @Inject extension KExpressionsCreateExtensions
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension LustreTypeExtensions
     @Inject extension KEffectsExtensions
@@ -86,8 +88,8 @@ class LustreToSCCControlFlowApproach extends LustreToSCCharts {
     }
 
     override protected processReferenceCall(ReferenceCall kExpression, State state) {
-        val cfRegion = createControlflowRegion(state, "")
-        val referenceState = createInitialState(cfRegion, "")
+        val cfRegion = createControlflowRegion(state, "_").uniqueName
+        val referenceState = createInitialState(cfRegion, "_").uniqueName
         
         val calledState = nodeToStateMap.get(kExpression.valuedObject.eContainer) as State
         val outputsOfCalledState = newArrayList
@@ -141,7 +143,7 @@ class LustreToSCCControlFlowApproach extends LustreToSCCharts {
         } else {
             if (equation.reference !== null) {
                 val transformedValObj = equation.reference.transformExpression(state)
-                val cfRegion = createControlflowRegion(state, getStringRepresentation(equation)) => [label = it.name]
+                val cfRegion = createControlflowRegion(state, "_").uniqueName => [label = it.name]
                 if (equationExpression instanceof OperatorExpression) {
                     transformExpressionToSimple((transformedValObj as ValuedObjectReference).valuedObject, equationExpression, state, state, cfRegion)
                 } else if (equationExpression.isValuedObjectReferenceOrValue) {
@@ -151,7 +153,7 @@ class LustreToSCCControlFlowApproach extends LustreToSCCharts {
                 if (equation.references !== null) {
                     for (ValuedObjectReference valObjRef : equation.references) {
                         val transformedValObj = valObjRef.transformExpression(state)
-                        val cfRegion = createControlflowRegion(state, "")
+                        val cfRegion = createControlflowRegion(state, "_").uniqueName
                         if (equationExpression instanceof OperatorExpression) {
                             transformExpressionToSimple((transformedValObj as ValuedObjectReference).valuedObject, equationExpression, state, state, cfRegion)
                         } else if (equationExpression.isValuedObjectReferenceOrValue) {
@@ -204,9 +206,9 @@ class LustreToSCCControlFlowApproach extends LustreToSCCharts {
     def transformPre(ValuedObject valObj, OperatorExpression expression, State state, State varState, ControlflowRegion controlflowRegion) {
         val newValObj = if(valObj !== null) valObj else createVariableDeclaration("v" + varNameIdx++, inferType(expression), varState)
 
-        val cfRegion = if(controlflowRegion === null) createControlflowRegion(state, "") else controlflowRegion
-        val initalState = cfRegion.createInitialState("")
-        val subExpressionState = cfRegion.createState("")
+        val cfRegion = if(controlflowRegion === null) createControlflowRegion(state, "_").uniqueName else controlflowRegion
+        val initalState = cfRegion.createInitialState("_").uniqueName
+        val subExpressionState = cfRegion.createState("_").uniqueName
 
         val transformedExpression = transformExpression(expression, state)
 
@@ -217,7 +219,7 @@ class LustreToSCCControlFlowApproach extends LustreToSCCharts {
         ]
 
         if (subExpressionState.isHierarchical) {
-            val lastState = cfRegion.createFinalState("")
+            val lastState = cfRegion.createFinalState("_").uniqueName
             var transition = createImmediateTransitionTo(subExpressionState, lastState)
             transition.preemption = PreemptionType.TERMINATION
             transition.addAssignment(assignment)
@@ -240,9 +242,9 @@ class LustreToSCCControlFlowApproach extends LustreToSCCharts {
     private def Expression transformWhen(ValuedObject valObj, OperatorExpression expression, State state, State varState, ControlflowRegion controlflowRegion) {
         val newValObj = if(valObj !== null) valObj else createVariableDeclaration("v" + varNameIdx++, inferType(expression), varState)
 
-        val cfRegion = if(controlflowRegion === null) createControlflowRegion(state, "") else controlflowRegion
-        val initalState = cfRegion.createInitialState("")
-        val subExpressionState = cfRegion.createState("")
+        val cfRegion = if(controlflowRegion === null) createControlflowRegion(state, "_").uniqueName else controlflowRegion
+        val initalState = cfRegion.createInitialState("_").uniqueName
+        val subExpressionState = cfRegion.createState("_").uniqueName
 
         val ifRef = transformExpressionToSimple(null, expression.subExpressions.get(1), initalState, varState, null)
         val thenRef = transformExpressionToSimple(null, expression.subExpressions.get(0), subExpressionState, varState, null)
@@ -271,10 +273,10 @@ class LustreToSCCControlFlowApproach extends LustreToSCCharts {
     private def Expression transformFby(ValuedObject valObj, OperatorExpression expression, State state, State varState, ControlflowRegion controlflowRegion) {
         val newValObj = if(valObj !== null) valObj else createVariableDeclaration("v" + varNameIdx++, inferType(expression), varState)
 
-        val cfRegion = if(controlflowRegion === null) createControlflowRegion(state, "") else controlflowRegion
-        val initalState = cfRegion.createInitialState("")
-        var delayState = cfRegion.createState("")
-        val nextState = cfRegion.createState("")
+        val cfRegion = if(controlflowRegion === null) createControlflowRegion(state, "_").uniqueName else controlflowRegion
+        val initalState = cfRegion.createInitialState("_").uniqueName
+        var delayState = cfRegion.createState("_").uniqueName
+        val nextState = cfRegion.createState("_").uniqueName
 
         val initExpression = transformExpressionToSimple(null, expression.subExpressions.get(0), initalState, varState, null)
         
@@ -289,7 +291,7 @@ class LustreToSCCControlFlowApproach extends LustreToSCCharts {
             var subExpr = expression.subExpressions.get(i)
             
             if (expression.subExpressions.indexOf(subExpr) < expression.subExpressions.length - 1) {
-                val newState = cfRegion.createState("")
+                val newState = cfRegion.createState("_").uniqueName
                 val thenExpression = transformExpressionToSimple(null, subExpr, newState, varState, null)
                 
                 var delayTransition = createTransitionTo(delayState, newState)
@@ -333,10 +335,10 @@ class LustreToSCCControlFlowApproach extends LustreToSCCharts {
     private def Expression transformInit(ValuedObject valObj, OperatorExpression expression, State state, State varState, ControlflowRegion controlflowRegion) {
         val newValObj = if(valObj !== null) valObj else createVariableDeclaration("v" + varNameIdx++, inferType(expression), varState)
 
-        val cfRegion = if(controlflowRegion === null) createControlflowRegion(state, "") else controlflowRegion
-        val initalState = cfRegion.createInitialState("")
-        val delayState = cfRegion.createState("")
-        val nextState = cfRegion.createState("")
+        val cfRegion = if(controlflowRegion === null) createControlflowRegion(state, "_").uniqueName else controlflowRegion
+        val initalState = cfRegion.createInitialState("_").uniqueName
+        val delayState = cfRegion.createState("_").uniqueName
+        val nextState = cfRegion.createState("_").uniqueName
 
         val initExpression = transformExpressionToSimple(null, expression.subExpressions.get(0), initalState, varState, null)
         val thenExpression = transformExpressionToSimple(null, expression.subExpressions.get(1), nextState, varState, null)
@@ -372,9 +374,9 @@ class LustreToSCCControlFlowApproach extends LustreToSCCharts {
     private def Expression transformCurrent(ValuedObject valObj, OperatorExpression expression, State state, State varState, ControlflowRegion controlflowRegion) {
         val newValObj = if(valObj !== null) valObj else createVariableDeclaration("v" + varNameIdx++, inferType(expression), varState)
 
-        val cfRegion = if(controlflowRegion === null) createControlflowRegion(state, "") else controlflowRegion
-        val initalState = cfRegion.createInitialState("")
-        val subExpressionState = cfRegion.createState("")
+        val cfRegion = if(controlflowRegion === null) createControlflowRegion(state, "_").uniqueName else controlflowRegion
+        val initalState = cfRegion.createInitialState("_").uniqueName
+        val subExpressionState = cfRegion.createState("_").uniqueName
 
         val transformedExpression = transformExpressionToSimple(null, expression.subExpressions.get(0), subExpressionState, varState, null)
 
@@ -385,7 +387,7 @@ class LustreToSCCControlFlowApproach extends LustreToSCCharts {
         ]
 
         if (subExpressionState.isHierarchical) {
-            val lastState = cfRegion.createFinalState("")
+            val lastState = cfRegion.createFinalState("_").uniqueName
             var transition = createImmediateTransitionTo(subExpressionState, lastState)
             transition.preemption = PreemptionType.TERMINATION
             transition.addAssignment(assignment)
@@ -404,10 +406,10 @@ class LustreToSCCControlFlowApproach extends LustreToSCCharts {
     private def Expression transformConditional(ValuedObject valObj, OperatorExpression expression, State state, State varState, ControlflowRegion controlflowRegion) {
         val newValObj = if(valObj !== null) valObj else createVariableDeclaration("v" + varNameIdx++, inferType(expression), varState)
 
-        val cfRegion = if(controlflowRegion === null) createControlflowRegion(state, "") else controlflowRegion
-        val initalState = cfRegion.createInitialState("")
-        val subExpressionState1 = cfRegion.createState("")
-//        val subExpressionState2 = cfRegion.createState("")
+        val cfRegion = if(controlflowRegion === null) createControlflowRegion(state, "_").uniqueName else controlflowRegion
+        val initalState = cfRegion.createInitialState("_").uniqueName
+        val subExpressionState1 = cfRegion.createState("_").uniqueName
+//        val subExpressionState2 = cfRegion.createState("_").uniqueName
         if (state.eContainer !== null) {
             subExpressionState1.final = true
 //            subExpressionState2.final = true
@@ -453,11 +455,11 @@ class LustreToSCCControlFlowApproach extends LustreToSCCharts {
     private def Expression transformDefault(ValuedObject valObj, OperatorExpression expression, State state, State varState, ControlflowRegion controlflowRegion) {
         val newValObj = if(valObj !== null) valObj else createVariableDeclaration("v" + varNameIdx++, inferType(expression), varState)
 
-        val cfRegion = if(controlflowRegion === null) createControlflowRegion(state, "") else controlflowRegion
-        val initalState = cfRegion.createInitialState("")
-        val subExpressionState = cfRegion.createState("")
+        val cfRegion = if(controlflowRegion === null) createControlflowRegion(state, "_").uniqueName else controlflowRegion
+        val initalState = cfRegion.createInitialState("_").uniqueName
+        val subExpressionState = cfRegion.createState("_").uniqueName
 
-        val transformedExpression = createOperatorExpression(expression.operator)
+        val transformedExpression = createOperatorExpression(expression.operator)   
         for (Expression subExpression : expression.subExpressions) {
             transformedExpression.subExpressions +=
                 transformExpressionToSimple(null, subExpression, subExpressionState, varState, null)
@@ -470,7 +472,7 @@ class LustreToSCCControlFlowApproach extends LustreToSCCharts {
         ]
 
         if (subExpressionState.isHierarchical) {
-            val lastState = cfRegion.createFinalState("")
+            val lastState = cfRegion.createFinalState("_").uniqueName
             var transition = createImmediateTransitionTo(subExpressionState, lastState)
             transition.preemption = PreemptionType.TERMINATION
             transition.addAssignment(assignment)
@@ -493,9 +495,9 @@ class LustreToSCCControlFlowApproach extends LustreToSCCharts {
     private def Expression transformPlainExpression(ValuedObject valObj, Expression expression, State state, State varState, ControlflowRegion controlflowRegion) {
         val newValObj = if(valObj !== null) valObj else createVariableDeclaration("v" + varNameIdx++, inferType(expression), varState)
 
-        val cfRegion = if(controlflowRegion === null) createControlflowRegion(state, "") else controlflowRegion
-        val initalState = cfRegion.createInitialState("")
-        val subExpressionState = cfRegion.createState("")
+        val cfRegion = if(controlflowRegion === null) createControlflowRegion(state, "_").uniqueName else controlflowRegion
+        val initalState = cfRegion.createInitialState("_").uniqueName
+        val subExpressionState = cfRegion.createState("_").uniqueName
 
         val transformedExpression = transformExpression(expression, state)
 
