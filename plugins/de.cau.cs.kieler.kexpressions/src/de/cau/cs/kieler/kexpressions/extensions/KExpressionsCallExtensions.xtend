@@ -16,6 +16,9 @@ import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kexpressions.ReferenceCall
 import de.cau.cs.kieler.kexpressions.Parameter
 import de.cau.cs.kieler.kexpressions.ParameterAccessType
+import java.util.List
+import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.OperatorExpression
 
 /**
  * @author ssm
@@ -33,6 +36,19 @@ class KExpressionsCallExtensions {
         return if (assignment.hasReferenceCall) assignment.expression as ReferenceCall else null
     }   
     
+    def List<ReferenceCall> getAllReferenceCalls(Expression expression) {
+        switch(expression) {
+            ReferenceCall: return <ReferenceCall> newLinkedList => [ it += expression ]
+            OperatorExpression: {
+                return <ReferenceCall> newLinkedList => [
+                    for (e : expression.subExpressions) {
+                        it += e.allReferenceCalls
+                    }
+                ]
+            }
+            default: return #[]
+        }
+    }
     def isPureOutput(Parameter parameter) {
         parameter.accessType == ParameterAccessType.PURE_OUTPUT 
     }
