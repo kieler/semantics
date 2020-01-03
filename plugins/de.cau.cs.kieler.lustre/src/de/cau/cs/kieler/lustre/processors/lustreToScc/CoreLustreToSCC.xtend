@@ -111,7 +111,7 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
         }
         val constantsLustreToScchartsMap = lustreToScchartsValuedObjectMap
         val constantsScchartsToLustreMap = scchartsToLustreValuedObjectMap
-
+        
         // ----- Nodes
         // In order for References to work, we need to transform the interface of all nodes first
         for (node : p.nodes) {
@@ -136,6 +136,10 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
                 node.processNodeBehavior(nodeState)
                 scchartsProgram.rootStates += nodeState
             }
+        }
+        
+        if (constantsExist) {
+            scchartsProgram.rootStates += constantsState
         }
 
     // Note: TypeDeclarations and ExternalNodeDeclarations are not handled

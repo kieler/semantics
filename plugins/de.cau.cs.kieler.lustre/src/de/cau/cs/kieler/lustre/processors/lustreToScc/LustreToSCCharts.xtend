@@ -42,6 +42,8 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
  */
 class LustreToSCCharts extends CoreLustreToSCC {
 
+    public static val ID = "de.cau.cs.kieler.lustre.processors.lustreToSCC.dataFlow"
+
     @Inject extension LustreUtilityExtensions
     @Inject extension SCChartsCoreExtensions
     @Inject extension SCChartsStateExtensions
@@ -49,7 +51,7 @@ class LustreToSCCharts extends CoreLustreToSCC {
     @Inject extension SCChartsTransitionExtensions
     
     override getId() {
-        return "de.cau.cs.kieler.lustre.processors.lustreToSCC.dataFlow"
+        return ID
     }
 
     override getName() {
