@@ -112,6 +112,11 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
      * The size of the taken transitions signaling array.
      */
     var takenTransitionArraySize = 0
+    
+    /**
+     * The taken transition values from the last tick
+     */
+    var lastTakenTransitionValues = <Integer> newLinkedList
 
     private new() {
     }
@@ -141,6 +146,7 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
     override initialize(SimulationContext ctx) {
         super.initialize(ctx)
         currentStates = null
+        lastTakenTransitionValues.clear
         update(ctx)
     }
 
@@ -159,7 +165,7 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
             // Calculate the simulation controlflow to determine what must be highlighted
             calculateSimulationControlFlow(ctx)
             // Find the graph elements in the diagram for the EObjects that should be highlighted
-            val traversedGraphHighlighting = if (!traversedTransitions.isNullOrEmpty && !!traversedStates.isNullOrEmpty)
+            val traversedGraphHighlighting = if (!traversedTransitions.isNullOrEmpty && !traversedStates.isNullOrEmpty)
                     getHighlighting(traversedTransitions + traversedStates, TRAVERSED_ELEMENT_STYLE)
                 else
                     newArrayList
@@ -670,12 +676,17 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
         val transitions = TakenTransitionSignaling.getTransitions(rootState)
         // For an emitted transition in the transition array,
         // look for the transition in the model with the corresponding index.
+        val newLastTakenTransitionValues = <Integer> newLinkedList
         var index = 0
         for (transitionArrayElement : transitionArray) {
             // The array contains the number of times that the transition has been taken in this tick
             if (transitionArrayElement.isJsonPrimitive && transitionArrayElement.asJsonPrimitive.isNumber) {
                 val value = transitionArrayElement.asInt
-                if (value > 0) {
+                var lastValue = 0
+                if (lastTakenTransitionValues.size > index) {
+                    lastValue = lastTakenTransitionValues.get(index)
+                } 
+                if (value != lastValue) {
                     // The transition has been taken at least once
                     try {
                         val traversedTransition = transitions.get(index)
@@ -686,10 +697,16 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
                             e)
                     }
                 }
+                newLastTakenTransitionValues.add(value)
             } else {
                 throw new Exception("The 'taken transition array' has a incompatible type for diagram highlighting")
             }
             index++
+        }
+        // Should only update new values if TakenTransitionSignaling.USE_VALUE_CHANGE_SIGNALING is true in the 
+        // original compilation contex.
+        if (ctx.sourceCompilationContext.result.getProperty(TakenTransitionSignaling.USE_VALUE_CHANGE_SIGNALING)) {
+            lastTakenTransitionValues = newLastTakenTransitionValues
         }
 
         // Calculate traversed states

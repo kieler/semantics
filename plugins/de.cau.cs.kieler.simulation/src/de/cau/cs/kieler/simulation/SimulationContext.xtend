@@ -43,7 +43,7 @@ import static extension de.cau.cs.kieler.kicool.compilation.internal.SystemTrans
 class SimulationContext extends CompilationContext implements SimulationControls, ExecutableContainerWrapper {
     
     public static val IProperty<CompilationContext> SOURCE_COMPILATION_CONTEXT = 
-        new Property<CompilationContext>("de.cau.cs.kieler.simulation.source.cmpilation", null)
+        new Property<CompilationContext>("de.cau.cs.kieler.simulation.source.compilation", null)
     public static val IProperty<Integer> REACTION_TIMEOUT_IN_SECONDS = 
         new Property<Integer>("de.cau.cs.kieler.simulation.timeout", 2)
     public static val IProperty<Integer> MAX_HISTORY_LENGTH = 
@@ -163,5 +163,5 @@ class SimulationContext extends CompilationContext implements SimulationControls
     override getExecutableContainer() {
         this.models.filter(SimulationModelWrapper).head?.executableContainer
     }
-
+    
 }
