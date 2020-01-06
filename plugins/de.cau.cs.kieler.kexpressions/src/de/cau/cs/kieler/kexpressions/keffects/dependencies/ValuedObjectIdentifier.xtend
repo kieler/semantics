@@ -108,6 +108,10 @@ class ValuedObjectIdentifier {
                 if (index.eAllContents.filter(ValuedObjectReference).size > 0) {
                     return null
                 }
+                
+                // Conservatively reject operator expressions as specific identifier. 
+                // An improvement would be to evaluate the expression and accept it if the result is a valid literal.
+                return null
             }
             indexList += index
         }         

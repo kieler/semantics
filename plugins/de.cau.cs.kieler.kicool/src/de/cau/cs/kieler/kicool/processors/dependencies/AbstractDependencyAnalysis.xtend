@@ -226,8 +226,8 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
             }
         }
         
-        if (assignment.hasReferenceCall) {
-            assignment.referenceCall.processCall(forkStack, valuedObjectAccessors, assignment)
+        for (referenceCall : assignment.expression.allReferenceCalls) {
+            referenceCall.processCall(forkStack, valuedObjectAccessors, assignment)
         }
     }
     
