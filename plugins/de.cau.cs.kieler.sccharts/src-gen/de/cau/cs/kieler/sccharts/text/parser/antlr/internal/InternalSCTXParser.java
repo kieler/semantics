@@ -7992,7 +7992,7 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleDuringAction"
-    // InternalSCTX.g:2807:1: ruleDuringAction returns [EObject current=null] : ( () ( (lv_activity_1_0= ruleActivityType ) )? ( (lv_delay_2_0= ruleDelayType ) )? otherlv_3= 'during' (otherlv_4= 'if' ( (lv_triggerDelay_5_0= RULE_INT ) )? ( (lv_trigger_6_0= ruleBoolScheduleExpression ) ) (otherlv_7= 'Pr=' ( (lv_triggerProbability_8_0= RULE_FLOAT ) ) )? )? (otherlv_9= 'do' ( (lv_effects_10_0= ruleEffect ) ) (otherlv_11= ';' ( (lv_effects_12_0= ruleEffect ) ) )* )? (otherlv_13= 'label' ( (lv_label_14_0= RULE_STRING ) ) )? ) ;
+    // InternalSCTX.g:2807:1: ruleDuringAction returns [EObject current=null] : ( () ( (lv_delay_1_0= ruleDelayType ) )? ( (lv_activity_2_0= ruleActivityType ) )? otherlv_3= 'during' (otherlv_4= 'if' ( (lv_triggerDelay_5_0= RULE_INT ) )? ( (lv_trigger_6_0= ruleBoolScheduleExpression ) ) (otherlv_7= 'Pr=' ( (lv_triggerProbability_8_0= RULE_FLOAT ) ) )? )? (otherlv_9= 'do' ( (lv_effects_10_0= ruleEffect ) ) (otherlv_11= ';' ( (lv_effects_12_0= ruleEffect ) ) )* )? (otherlv_13= 'label' ( (lv_label_14_0= RULE_STRING ) ) )? ) ;
     public final EObject ruleDuringAction() throws RecognitionException {
         EObject current = null;
 
@@ -8005,9 +8005,9 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
         Token otherlv_11=null;
         Token otherlv_13=null;
         Token lv_label_14_0=null;
-        Enumerator lv_activity_1_0 = null;
+        Enumerator lv_delay_1_0 = null;
 
-        Enumerator lv_delay_2_0 = null;
+        Enumerator lv_activity_2_0 = null;
 
         EObject lv_trigger_6_0 = null;
 
@@ -8020,11 +8020,11 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalSCTX.g:2813:2: ( ( () ( (lv_activity_1_0= ruleActivityType ) )? ( (lv_delay_2_0= ruleDelayType ) )? otherlv_3= 'during' (otherlv_4= 'if' ( (lv_triggerDelay_5_0= RULE_INT ) )? ( (lv_trigger_6_0= ruleBoolScheduleExpression ) ) (otherlv_7= 'Pr=' ( (lv_triggerProbability_8_0= RULE_FLOAT ) ) )? )? (otherlv_9= 'do' ( (lv_effects_10_0= ruleEffect ) ) (otherlv_11= ';' ( (lv_effects_12_0= ruleEffect ) ) )* )? (otherlv_13= 'label' ( (lv_label_14_0= RULE_STRING ) ) )? ) )
-            // InternalSCTX.g:2814:2: ( () ( (lv_activity_1_0= ruleActivityType ) )? ( (lv_delay_2_0= ruleDelayType ) )? otherlv_3= 'during' (otherlv_4= 'if' ( (lv_triggerDelay_5_0= RULE_INT ) )? ( (lv_trigger_6_0= ruleBoolScheduleExpression ) ) (otherlv_7= 'Pr=' ( (lv_triggerProbability_8_0= RULE_FLOAT ) ) )? )? (otherlv_9= 'do' ( (lv_effects_10_0= ruleEffect ) ) (otherlv_11= ';' ( (lv_effects_12_0= ruleEffect ) ) )* )? (otherlv_13= 'label' ( (lv_label_14_0= RULE_STRING ) ) )? )
+            // InternalSCTX.g:2813:2: ( ( () ( (lv_delay_1_0= ruleDelayType ) )? ( (lv_activity_2_0= ruleActivityType ) )? otherlv_3= 'during' (otherlv_4= 'if' ( (lv_triggerDelay_5_0= RULE_INT ) )? ( (lv_trigger_6_0= ruleBoolScheduleExpression ) ) (otherlv_7= 'Pr=' ( (lv_triggerProbability_8_0= RULE_FLOAT ) ) )? )? (otherlv_9= 'do' ( (lv_effects_10_0= ruleEffect ) ) (otherlv_11= ';' ( (lv_effects_12_0= ruleEffect ) ) )* )? (otherlv_13= 'label' ( (lv_label_14_0= RULE_STRING ) ) )? ) )
+            // InternalSCTX.g:2814:2: ( () ( (lv_delay_1_0= ruleDelayType ) )? ( (lv_activity_2_0= ruleActivityType ) )? otherlv_3= 'during' (otherlv_4= 'if' ( (lv_triggerDelay_5_0= RULE_INT ) )? ( (lv_trigger_6_0= ruleBoolScheduleExpression ) ) (otherlv_7= 'Pr=' ( (lv_triggerProbability_8_0= RULE_FLOAT ) ) )? )? (otherlv_9= 'do' ( (lv_effects_10_0= ruleEffect ) ) (otherlv_11= ';' ( (lv_effects_12_0= ruleEffect ) ) )* )? (otherlv_13= 'label' ( (lv_label_14_0= RULE_STRING ) ) )? )
             {
-            // InternalSCTX.g:2814:2: ( () ( (lv_activity_1_0= ruleActivityType ) )? ( (lv_delay_2_0= ruleDelayType ) )? otherlv_3= 'during' (otherlv_4= 'if' ( (lv_triggerDelay_5_0= RULE_INT ) )? ( (lv_trigger_6_0= ruleBoolScheduleExpression ) ) (otherlv_7= 'Pr=' ( (lv_triggerProbability_8_0= RULE_FLOAT ) ) )? )? (otherlv_9= 'do' ( (lv_effects_10_0= ruleEffect ) ) (otherlv_11= ';' ( (lv_effects_12_0= ruleEffect ) ) )* )? (otherlv_13= 'label' ( (lv_label_14_0= RULE_STRING ) ) )? )
-            // InternalSCTX.g:2815:3: () ( (lv_activity_1_0= ruleActivityType ) )? ( (lv_delay_2_0= ruleDelayType ) )? otherlv_3= 'during' (otherlv_4= 'if' ( (lv_triggerDelay_5_0= RULE_INT ) )? ( (lv_trigger_6_0= ruleBoolScheduleExpression ) ) (otherlv_7= 'Pr=' ( (lv_triggerProbability_8_0= RULE_FLOAT ) ) )? )? (otherlv_9= 'do' ( (lv_effects_10_0= ruleEffect ) ) (otherlv_11= ';' ( (lv_effects_12_0= ruleEffect ) ) )* )? (otherlv_13= 'label' ( (lv_label_14_0= RULE_STRING ) ) )?
+            // InternalSCTX.g:2814:2: ( () ( (lv_delay_1_0= ruleDelayType ) )? ( (lv_activity_2_0= ruleActivityType ) )? otherlv_3= 'during' (otherlv_4= 'if' ( (lv_triggerDelay_5_0= RULE_INT ) )? ( (lv_trigger_6_0= ruleBoolScheduleExpression ) ) (otherlv_7= 'Pr=' ( (lv_triggerProbability_8_0= RULE_FLOAT ) ) )? )? (otherlv_9= 'do' ( (lv_effects_10_0= ruleEffect ) ) (otherlv_11= ';' ( (lv_effects_12_0= ruleEffect ) ) )* )? (otherlv_13= 'label' ( (lv_label_14_0= RULE_STRING ) ) )? )
+            // InternalSCTX.g:2815:3: () ( (lv_delay_1_0= ruleDelayType ) )? ( (lv_activity_2_0= ruleActivityType ) )? otherlv_3= 'during' (otherlv_4= 'if' ( (lv_triggerDelay_5_0= RULE_INT ) )? ( (lv_trigger_6_0= ruleBoolScheduleExpression ) ) (otherlv_7= 'Pr=' ( (lv_triggerProbability_8_0= RULE_FLOAT ) ) )? )? (otherlv_9= 'do' ( (lv_effects_10_0= ruleEffect ) ) (otherlv_11= ';' ( (lv_effects_12_0= ruleEffect ) ) )* )? (otherlv_13= 'label' ( (lv_label_14_0= RULE_STRING ) ) )?
             {
             // InternalSCTX.g:2815:3: ()
             // InternalSCTX.g:2816:4: 
@@ -8044,27 +8044,27 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalSCTX.g:2825:3: ( (lv_activity_1_0= ruleActivityType ) )?
+            // InternalSCTX.g:2825:3: ( (lv_delay_1_0= ruleDelayType ) )?
             int alt101=2;
             int LA101_0 = input.LA(1);
 
-            if ( ((LA101_0>=107 && LA101_0<=108)) ) {
+            if ( ((LA101_0>=109 && LA101_0<=112)) ) {
                 alt101=1;
             }
             switch (alt101) {
                 case 1 :
-                    // InternalSCTX.g:2826:4: (lv_activity_1_0= ruleActivityType )
+                    // InternalSCTX.g:2826:4: (lv_delay_1_0= ruleDelayType )
                     {
-                    // InternalSCTX.g:2826:4: (lv_activity_1_0= ruleActivityType )
-                    // InternalSCTX.g:2827:5: lv_activity_1_0= ruleActivityType
+                    // InternalSCTX.g:2826:4: (lv_delay_1_0= ruleDelayType )
+                    // InternalSCTX.g:2827:5: lv_delay_1_0= ruleDelayType
                     {
                     if ( state.backtracking==0 ) {
 
-                      					newCompositeNode(grammarAccess.getDuringActionAccess().getActivityActivityTypeEnumRuleCall_1_0());
+                      					newCompositeNode(grammarAccess.getDuringActionAccess().getDelayDelayTypeEnumRuleCall_1_0());
                       				
                     }
                     pushFollow(FollowSets000.FOLLOW_91);
-                    lv_activity_1_0=ruleActivityType();
+                    lv_delay_1_0=ruleDelayType();
 
                     state._fsp--;
                     if (state.failed) return current;
@@ -8075,9 +8075,9 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
                       					}
                       					set(
                       						current,
-                      						"activity",
-                      						lv_activity_1_0,
-                      						"de.cau.cs.kieler.sccharts.text.SCTX.ActivityType");
+                      						"delay",
+                      						lv_delay_1_0,
+                      						"de.cau.cs.kieler.sccharts.text.SCTX.DelayType");
                       					afterParserOrEnumRuleCall();
                       				
                     }
@@ -8090,27 +8090,27 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalSCTX.g:2844:3: ( (lv_delay_2_0= ruleDelayType ) )?
+            // InternalSCTX.g:2844:3: ( (lv_activity_2_0= ruleActivityType ) )?
             int alt102=2;
             int LA102_0 = input.LA(1);
 
-            if ( ((LA102_0>=109 && LA102_0<=112)) ) {
+            if ( ((LA102_0>=107 && LA102_0<=108)) ) {
                 alt102=1;
             }
             switch (alt102) {
                 case 1 :
-                    // InternalSCTX.g:2845:4: (lv_delay_2_0= ruleDelayType )
+                    // InternalSCTX.g:2845:4: (lv_activity_2_0= ruleActivityType )
                     {
-                    // InternalSCTX.g:2845:4: (lv_delay_2_0= ruleDelayType )
-                    // InternalSCTX.g:2846:5: lv_delay_2_0= ruleDelayType
+                    // InternalSCTX.g:2845:4: (lv_activity_2_0= ruleActivityType )
+                    // InternalSCTX.g:2846:5: lv_activity_2_0= ruleActivityType
                     {
                     if ( state.backtracking==0 ) {
 
-                      					newCompositeNode(grammarAccess.getDuringActionAccess().getDelayDelayTypeEnumRuleCall_2_0());
+                      					newCompositeNode(grammarAccess.getDuringActionAccess().getActivityActivityTypeEnumRuleCall_2_0());
                       				
                     }
                     pushFollow(FollowSets000.FOLLOW_92);
-                    lv_delay_2_0=ruleDelayType();
+                    lv_activity_2_0=ruleActivityType();
 
                     state._fsp--;
                     if (state.failed) return current;
@@ -8121,9 +8121,9 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
                       					}
                       					set(
                       						current,
-                      						"delay",
-                      						lv_delay_2_0,
-                      						"de.cau.cs.kieler.sccharts.text.SCTX.DelayType");
+                      						"activity",
+                      						lv_activity_2_0,
+                      						"de.cau.cs.kieler.sccharts.text.SCTX.ActivityType");
                       					afterParserOrEnumRuleCall();
                       				
                     }
@@ -57531,20 +57531,20 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
             throw nvae;
         }
     }
-    static final String dfa_93s = "\1\12\2\61\2\uffff\4\63\3\uffff";
-    static final String dfa_94s = "\1\160\1\66\1\64\2\uffff\4\67\3\uffff";
-    static final String dfa_95s = "\3\uffff\1\1\1\2\4\uffff\1\3\1\4\1\5";
+    static final String dfa_93s = "\1\12\2\61\1\uffff\4\63\4\uffff";
+    static final String dfa_94s = "\1\160\1\66\1\64\1\uffff\4\154\4\uffff";
+    static final String dfa_95s = "\3\uffff\1\1\4\uffff\1\2\1\3\1\4\1\5";
     static final String dfa_96s = "\14\uffff}>";
     static final String[] dfa_97s = {
-            "\1\13\46\uffff\1\3\1\uffff\1\4\1\11\1\1\1\12\1\13\57\uffff\1\13\2\uffff\1\2\2\4\1\5\1\6\1\7\1\10",
+            "\1\13\46\uffff\1\3\1\uffff\1\10\1\11\1\1\1\12\1\13\57\uffff\1\13\2\uffff\1\2\2\10\1\4\1\5\1\6\1\7",
             "\1\3\2\uffff\1\11\1\uffff\1\12",
             "\1\3\2\uffff\1\11",
             "",
+            "\1\10\1\uffff\2\12\1\13\63\uffff\2\10",
+            "\1\10\1\uffff\2\12\1\13\63\uffff\2\10",
+            "\1\10\1\uffff\2\12\1\13\63\uffff\2\10",
+            "\1\10\1\uffff\2\12\1\13\63\uffff\2\10",
             "",
-            "\1\4\1\uffff\2\12\1\13",
-            "\1\4\1\uffff\2\12\1\13",
-            "\1\4\1\uffff\2\12\1\13",
-            "\1\4\1\uffff\2\12\1\13",
             "",
             "",
             ""
@@ -64319,7 +64319,7 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
     static final String dfa_303s = "\1\12\1\uffff\1\5\1\4\1\5\1\4\1\6\4\4\1\24\1\0\1\5\1\4\1\uffff\2\4\2\5\4\4\3\5\3\4\3\5\3\4\1\0\2\5\2\4\1\0\1\5\1\4\1\0";
     static final String dfa_304s = "\1\147\1\uffff\1\5\1\u00a0\1\5\1\u0096\1\6\1\u009f\3\u00a0\1\u0097\1\0\1\5\1\u0096\1\uffff\2\u00a0\2\5\1\u0096\3\u00a0\3\5\3\u00a0\3\5\3\u00a0\1\0\2\5\2\u00a0\1\0\1\5\1\u00a0\1\0";
     static final String dfa_305s = "\1\uffff\1\1\15\uffff\1\2\35\uffff";
-    static final String dfa_306s = "\14\uffff\1\1\27\uffff\1\2\4\uffff\1\3\2\uffff\1\0}>";
+    static final String dfa_306s = "\14\uffff\1\2\27\uffff\1\1\4\uffff\1\3\2\uffff\1\0}>";
     static final String[] dfa_307s = {
             "\1\1\134\uffff\1\2",
             "",
@@ -64412,21 +64412,6 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
                         if ( s>=0 ) return s;
                         break;
                     case 1 : 
-                        int LA437_12 = input.LA(1);
-
-                         
-                        int index437_12 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred491_InternalSCTX()) ) {s = 1;}
-
-                        else if ( (true) ) {s = 15;}
-
-                         
-                        input.seek(index437_12);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 2 : 
                         int LA437_36 = input.LA(1);
 
                          
@@ -64439,6 +64424,21 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
 
                          
                         input.seek(index437_36);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 2 : 
+                        int LA437_12 = input.LA(1);
+
+                         
+                        int index437_12 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred491_InternalSCTX()) ) {s = 1;}
+
+                        else if ( (true) ) {s = 15;}
+
+                         
+                        input.seek(index437_12);
                         if ( s>=0 ) return s;
                         break;
                     case 3 : 
@@ -64963,7 +64963,7 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
         public static final BitSet FOLLOW_88 = new BitSet(new long[]{0x0004028000000002L});
         public static final BitSet FOLLOW_89 = new BitSet(new long[]{0x0000028000000002L});
         public static final BitSet FOLLOW_90 = new BitSet(new long[]{0x0000030000000002L});
-        public static final BitSet FOLLOW_91 = new BitSet(new long[]{0x0008000000000000L,0x0001E00000000000L});
+        public static final BitSet FOLLOW_91 = new BitSet(new long[]{0x0008000000000000L,0x0000180000000000L});
         public static final BitSet FOLLOW_92 = new BitSet(new long[]{0x0008000000000000L});
         public static final BitSet FOLLOW_93 = new BitSet(new long[]{0x000002A000000002L});
         public static final BitSet FOLLOW_94 = new BitSet(new long[]{0x0010000000000000L});

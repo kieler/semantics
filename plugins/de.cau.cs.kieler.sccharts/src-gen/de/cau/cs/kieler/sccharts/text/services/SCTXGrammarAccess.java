@@ -1716,10 +1716,10 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.sccharts.text.SCTX.DuringAction");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Action cDuringActionAction_0 = (Action)cGroup.eContents().get(0);
-		private final Assignment cActivityAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cActivityActivityTypeEnumRuleCall_1_0 = (RuleCall)cActivityAssignment_1.eContents().get(0);
-		private final Assignment cDelayAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cDelayDelayTypeEnumRuleCall_2_0 = (RuleCall)cDelayAssignment_2.eContents().get(0);
+		private final Assignment cDelayAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cDelayDelayTypeEnumRuleCall_1_0 = (RuleCall)cDelayAssignment_1.eContents().get(0);
+		private final Assignment cActivityAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cActivityActivityTypeEnumRuleCall_2_0 = (RuleCall)cActivityAssignment_2.eContents().get(0);
 		private final Keyword cDuringKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
 		private final Keyword cIfKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
@@ -1745,12 +1745,13 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cLabelSTRINGTerminalRuleCall_6_1_0 = (RuleCall)cLabelAssignment_6_1.eContents().get(0);
 		
 		//DuringAction sccharts::DuringAction:
-		//	{sccharts::DuringAction} activity=ActivityType?
-		//	delay=DelayType? 'during' ('if' triggerDelay=INT? trigger=BoolScheduleExpression ('Pr=' triggerProbability=FLOAT)?)?
-		//	('do' effects+=Effect (';' effects+=Effect)*)? ('label' label=STRING)?;
+		//	{sccharts::DuringAction} delay=DelayType?
+		//	activity=ActivityType?
+		//	'during' ('if' triggerDelay=INT? trigger=BoolScheduleExpression ('Pr=' triggerProbability=FLOAT)?)? ('do'
+		//	effects+=Effect (';' effects+=Effect)*)? ('label' label=STRING)?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{sccharts::DuringAction} activity=ActivityType? delay=DelayType? 'during' ('if' triggerDelay=INT?
+		//{sccharts::DuringAction} delay=DelayType? activity=ActivityType? 'during' ('if' triggerDelay=INT?
 		//trigger=BoolScheduleExpression ('Pr=' triggerProbability=FLOAT)?)? ('do' effects+=Effect (';' effects+=Effect)*)?
 		//('label' label=STRING)?
 		public Group getGroup() { return cGroup; }
@@ -1758,17 +1759,17 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		//{sccharts::DuringAction}
 		public Action getDuringActionAction_0() { return cDuringActionAction_0; }
 		
-		//activity=ActivityType?
-		public Assignment getActivityAssignment_1() { return cActivityAssignment_1; }
-		
-		//ActivityType
-		public RuleCall getActivityActivityTypeEnumRuleCall_1_0() { return cActivityActivityTypeEnumRuleCall_1_0; }
-		
 		//delay=DelayType?
-		public Assignment getDelayAssignment_2() { return cDelayAssignment_2; }
+		public Assignment getDelayAssignment_1() { return cDelayAssignment_1; }
 		
 		//DelayType
-		public RuleCall getDelayDelayTypeEnumRuleCall_2_0() { return cDelayDelayTypeEnumRuleCall_2_0; }
+		public RuleCall getDelayDelayTypeEnumRuleCall_1_0() { return cDelayDelayTypeEnumRuleCall_1_0; }
+		
+		//activity=ActivityType?
+		public Assignment getActivityAssignment_2() { return cActivityAssignment_2; }
+		
+		//ActivityType
+		public RuleCall getActivityActivityTypeEnumRuleCall_2_0() { return cActivityActivityTypeEnumRuleCall_2_0; }
 		
 		//'during'
 		public Keyword getDuringKeyword_3() { return cDuringKeyword_3; }
@@ -3595,9 +3596,10 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//DuringAction sccharts::DuringAction:
-	//	{sccharts::DuringAction} activity=ActivityType?
-	//	delay=DelayType? 'during' ('if' triggerDelay=INT? trigger=BoolScheduleExpression ('Pr=' triggerProbability=FLOAT)?)?
-	//	('do' effects+=Effect (';' effects+=Effect)*)? ('label' label=STRING)?;
+	//	{sccharts::DuringAction} delay=DelayType?
+	//	activity=ActivityType?
+	//	'during' ('if' triggerDelay=INT? trigger=BoolScheduleExpression ('Pr=' triggerProbability=FLOAT)?)? ('do'
+	//	effects+=Effect (';' effects+=Effect)*)? ('label' label=STRING)?;
 	public DuringActionElements getDuringActionAccess() {
 		return pDuringAction;
 	}

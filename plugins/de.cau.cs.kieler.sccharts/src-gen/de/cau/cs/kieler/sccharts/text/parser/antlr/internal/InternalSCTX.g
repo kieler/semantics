@@ -2825,28 +2825,9 @@ ruleDuringAction returns [EObject current=null]
 		(
 			(
 				{
-					newCompositeNode(grammarAccess.getDuringActionAccess().getActivityActivityTypeEnumRuleCall_1_0());
+					newCompositeNode(grammarAccess.getDuringActionAccess().getDelayDelayTypeEnumRuleCall_1_0());
 				}
-				lv_activity_1_0=ruleActivityType
-				{
-					if ($current==null) {
-						$current = createModelElementForParent(grammarAccess.getDuringActionRule());
-					}
-					set(
-						$current,
-						"activity",
-						lv_activity_1_0,
-						"de.cau.cs.kieler.sccharts.text.SCTX.ActivityType");
-					afterParserOrEnumRuleCall();
-				}
-			)
-		)?
-		(
-			(
-				{
-					newCompositeNode(grammarAccess.getDuringActionAccess().getDelayDelayTypeEnumRuleCall_2_0());
-				}
-				lv_delay_2_0=ruleDelayType
+				lv_delay_1_0=ruleDelayType
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getDuringActionRule());
@@ -2854,8 +2835,27 @@ ruleDuringAction returns [EObject current=null]
 					set(
 						$current,
 						"delay",
-						lv_delay_2_0,
+						lv_delay_1_0,
 						"de.cau.cs.kieler.sccharts.text.SCTX.DelayType");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)?
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getDuringActionAccess().getActivityActivityTypeEnumRuleCall_2_0());
+				}
+				lv_activity_2_0=ruleActivityType
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getDuringActionRule());
+					}
+					set(
+						$current,
+						"activity",
+						lv_activity_2_0,
+						"de.cau.cs.kieler.sccharts.text.SCTX.ActivityType");
 					afterParserOrEnumRuleCall();
 				}
 			)

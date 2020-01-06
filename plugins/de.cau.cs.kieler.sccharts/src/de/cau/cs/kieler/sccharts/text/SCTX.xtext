@@ -195,8 +195,9 @@ EntryAction returns sccharts::EntryAction:
          
 DuringAction returns sccharts::DuringAction:
 	{sccharts::DuringAction}
-	activity = ActivityType?
-    delay=DelayType? 'during' ('if' triggerDelay=INT? trigger=BoolScheduleExpression ('Pr=' triggerProbability=FLOAT)?)? ('do' effects+=Effect (';' effects+=Effect)*)?
+    delay=DelayType?
+    activity = ActivityType? 
+    'during' ('if' triggerDelay=INT? trigger=BoolScheduleExpression ('Pr=' triggerProbability=FLOAT)?)? ('do' effects+=Effect (';' effects+=Effect)*)?
     ('label' label=STRING)?;
          
 ExitAction returns sccharts::ExitAction:

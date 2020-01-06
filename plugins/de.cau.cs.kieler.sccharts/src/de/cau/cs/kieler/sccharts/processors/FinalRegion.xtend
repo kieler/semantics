@@ -19,6 +19,7 @@ import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
+import de.cau.cs.kieler.core.properties.Property
 
 /**
  * SCCharts Final Region Transformation.
@@ -31,6 +32,15 @@ class FinalRegion extends SCChartsProcessor implements Traceable {
     
     @Inject extension SCChartsScopeExtensions
     
+    /** Downstream compilation supports final regions. */
+    public static val COMPILATION_SUPPORTS_FINAL_REGIONS = 
+       new Property<Boolean>("de.cau.cs.kieler.sccharts.finalRegion.supported", false)
+       
+    /** Activate the final regions transformation. */
+    public static val FINAL_REGIONS_ENABLED = 
+       new Property<Boolean>("de.cau.cs.kieler.sccharts.finalRegion.enabled", false)    
+           
+    
     override getId() {
         "de.cau.cs.kieler.sccharts.processors.finalRegion"
     }
@@ -40,6 +50,8 @@ class FinalRegion extends SCChartsProcessor implements Traceable {
     }
     
     override process() {
+        if (getProperty(COMPILATION_SUPPORTS_FINAL_REGIONS)) return;
+        
         for (rootState : getModel.rootStates) {
             rootState.transformFinalRegion
         }

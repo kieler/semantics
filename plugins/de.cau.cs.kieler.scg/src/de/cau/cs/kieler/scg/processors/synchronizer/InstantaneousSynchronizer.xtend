@@ -105,7 +105,7 @@ class InstantaneousSynchronizer extends AbstractSynchronizer {
         
         for(tpt : threadPathTypes) {
             if (tpt != ThreadPathType::INSTANTANEOUS) synchronizable = false
-        } 
+        }
         
         synchronizable
     }

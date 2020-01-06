@@ -590,8 +590,8 @@ public class SCTXParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getEntryActionAccess().getEffectsAssignment_4_1(), "rule__EntryAction__EffectsAssignment_4_1");
 			builder.put(grammarAccess.getEntryActionAccess().getEffectsAssignment_4_2_1(), "rule__EntryAction__EffectsAssignment_4_2_1");
 			builder.put(grammarAccess.getEntryActionAccess().getLabelAssignment_5_1(), "rule__EntryAction__LabelAssignment_5_1");
-			builder.put(grammarAccess.getDuringActionAccess().getActivityAssignment_1(), "rule__DuringAction__ActivityAssignment_1");
-			builder.put(grammarAccess.getDuringActionAccess().getDelayAssignment_2(), "rule__DuringAction__DelayAssignment_2");
+			builder.put(grammarAccess.getDuringActionAccess().getDelayAssignment_1(), "rule__DuringAction__DelayAssignment_1");
+			builder.put(grammarAccess.getDuringActionAccess().getActivityAssignment_2(), "rule__DuringAction__ActivityAssignment_2");
 			builder.put(grammarAccess.getDuringActionAccess().getTriggerDelayAssignment_4_1(), "rule__DuringAction__TriggerDelayAssignment_4_1");
 			builder.put(grammarAccess.getDuringActionAccess().getTriggerAssignment_4_2(), "rule__DuringAction__TriggerAssignment_4_2");
 			builder.put(grammarAccess.getDuringActionAccess().getTriggerProbabilityAssignment_4_3_1(), "rule__DuringAction__TriggerProbabilityAssignment_4_3_1");

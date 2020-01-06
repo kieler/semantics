@@ -61,25 +61,15 @@ class DepthSynchronizer extends AbstractSynchronizer {
     // -- Injections 
     // -------------------------------------------------------------------------
     
-    @Inject
-    extension KExpressionsValuedObjectExtensions
-    
-    @Inject
-    extension KExpressionsDeclarationExtensions
-    
-    @Inject
-    extension SCGCoreExtensions
-    
-    @Inject
-    extension SCGControlFlowExtensions
-    
-    @Inject
-    extension SCGThreadExtensions
-
-    @Inject
-    extension AnnotationsExtensions
-    
+    @Inject extension KExpressionsValuedObjectExtensions
+    @Inject extension KExpressionsDeclarationExtensions
+    @Inject extension SCGCoreExtensions
+    @Inject extension SCGControlFlowExtensions
+    @Inject extension SCGThreadExtensions
+    @Inject extension AnnotationsExtensions
     @Inject extension KEffectsExtensions
+    
+    @Inject var InstantaneousSynchronizer instantaneousSynchronizer
    
     protected val OPERATOREXPRESSION_DEPTHLIMIT = 16
     protected val OPERATOREXPRESSION_DEPTHLIMIT_SYNCHRONIZER = 8
@@ -116,6 +106,15 @@ class DepthSynchronizer extends AbstractSynchronizer {
 		// Since we are working we completely enriched SCGs, we can use the SCG extensions 
 		// to retrieve the scheduling block of the join node in question.
 		val joinSB = join.getCachedSchedulingBlock
+		
+		val exitNodes = join.allPrevious.map[ eContainer as Exit ].toList
+		if (exitNodes.forall[ it.basicBlock.finalBlock ]) {
+//		    instantaneousSynchronizer.build(join, guard, schedulingBlock, scg)
+            data.guardExpression.valuedObject = joinSB.guards.head.valuedObject
+            data.guardExpression.expression = join.fork.getCachedSchedulingBlock.guards.head.valuedObject.reference
+            guard.expression = data.guardExpression.expression		    
+		    return
+		}
         
         // The valued object of the GuardExpression of the synchronizer is the guard of the
         // scheduling block of the join node. 

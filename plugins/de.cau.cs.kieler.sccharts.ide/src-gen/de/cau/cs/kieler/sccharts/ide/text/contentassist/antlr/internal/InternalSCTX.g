@@ -12457,9 +12457,9 @@ rule__DuringAction__Group__1__Impl
 	}
 :
 (
-	{ before(grammarAccess.getDuringActionAccess().getActivityAssignment_1()); }
-	(rule__DuringAction__ActivityAssignment_1)?
-	{ after(grammarAccess.getDuringActionAccess().getActivityAssignment_1()); }
+	{ before(grammarAccess.getDuringActionAccess().getDelayAssignment_1()); }
+	(rule__DuringAction__DelayAssignment_1)?
+	{ after(grammarAccess.getDuringActionAccess().getDelayAssignment_1()); }
 )
 ;
 finally {
@@ -12484,9 +12484,9 @@ rule__DuringAction__Group__2__Impl
 	}
 :
 (
-	{ before(grammarAccess.getDuringActionAccess().getDelayAssignment_2()); }
-	(rule__DuringAction__DelayAssignment_2)?
-	{ after(grammarAccess.getDuringActionAccess().getDelayAssignment_2()); }
+	{ before(grammarAccess.getDuringActionAccess().getActivityAssignment_2()); }
+	(rule__DuringAction__ActivityAssignment_2)?
+	{ after(grammarAccess.getDuringActionAccess().getActivityAssignment_2()); }
 )
 ;
 finally {
@@ -38189,30 +38189,30 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__DuringAction__ActivityAssignment_1
+rule__DuringAction__DelayAssignment_1
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
 	(
-		{ before(grammarAccess.getDuringActionAccess().getActivityActivityTypeEnumRuleCall_1_0()); }
-		ruleActivityType
-		{ after(grammarAccess.getDuringActionAccess().getActivityActivityTypeEnumRuleCall_1_0()); }
+		{ before(grammarAccess.getDuringActionAccess().getDelayDelayTypeEnumRuleCall_1_0()); }
+		ruleDelayType
+		{ after(grammarAccess.getDuringActionAccess().getDelayDelayTypeEnumRuleCall_1_0()); }
 	)
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-rule__DuringAction__DelayAssignment_2
+rule__DuringAction__ActivityAssignment_2
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
 	(
-		{ before(grammarAccess.getDuringActionAccess().getDelayDelayTypeEnumRuleCall_2_0()); }
-		ruleDelayType
-		{ after(grammarAccess.getDuringActionAccess().getDelayDelayTypeEnumRuleCall_2_0()); }
+		{ before(grammarAccess.getDuringActionAccess().getActivityActivityTypeEnumRuleCall_2_0()); }
+		ruleActivityType
+		{ after(grammarAccess.getDuringActionAccess().getActivityActivityTypeEnumRuleCall_2_0()); }
 	)
 ;
 finally {
