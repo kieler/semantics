@@ -42,6 +42,7 @@ package de.cau.cs.kieler.sccharts;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.sccharts.DuringAction#getReset <em>Reset</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.DuringAction#getActivity <em>Activity</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getDuringAction()
@@ -85,5 +86,31 @@ public interface DuringAction extends LocalAction {
      * @generated
      */
     void setReset(DelayType value);
+
+    /**
+     * Returns the value of the '<em><b>Activity</b></em>' attribute.
+     * The default value is <code>"PASSIVE"</code>.
+     * The literals are from the enumeration {@link de.cau.cs.kieler.sccharts.ActivityType}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Activity</em>' attribute.
+     * @see de.cau.cs.kieler.sccharts.ActivityType
+     * @see #setActivity(ActivityType)
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getDuringAction_Activity()
+     * @model default="PASSIVE"
+     * @generated
+     */
+    ActivityType getActivity();
+
+    /**
+     * Sets the value of the '{@link de.cau.cs.kieler.sccharts.DuringAction#getActivity <em>Activity</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Activity</em>' attribute.
+     * @see de.cau.cs.kieler.sccharts.ActivityType
+     * @see #getActivity()
+     * @generated
+     */
+    void setActivity(ActivityType value);
 
 } // DuringAction

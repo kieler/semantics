@@ -85,8 +85,6 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
             case SCChartsPackage.DURING_ACTION: return createDuringAction();
             case SCChartsPackage.EXIT_ACTION: return createExitAction();
             case SCChartsPackage.SUSPEND_ACTION: return createSuspendAction();
-            case SCChartsPackage.PRECEDING_ACTION: return createPrecedingAction();
-            case SCChartsPackage.SUCCEEDING_ACTION: return createSucceedingAction();
             case SCChartsPackage.PERIOD_ACTION: return createPeriodAction();
             case SCChartsPackage.POLICY_CLASS_DECLARATION: return createPolicyClassDeclaration();
             case SCChartsPackage.POLICY_REGION: return createPolicyRegion();
@@ -111,6 +109,8 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
                 return createHistoryTypeFromString(eDataType, initialValue);
             case SCChartsPackage.DELAY_TYPE:
                 return createDelayTypeFromString(eDataType, initialValue);
+            case SCChartsPackage.ACTIVITY_TYPE:
+                return createActivityTypeFromString(eDataType, initialValue);
             case SCChartsPackage.DEFERRED_TYPE:
                 return createDeferredTypeFromString(eDataType, initialValue);
             default:
@@ -132,6 +132,8 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
                 return convertHistoryTypeToString(eDataType, instanceValue);
             case SCChartsPackage.DELAY_TYPE:
                 return convertDelayTypeToString(eDataType, instanceValue);
+            case SCChartsPackage.ACTIVITY_TYPE:
+                return convertActivityTypeToString(eDataType, instanceValue);
             case SCChartsPackage.DEFERRED_TYPE:
                 return convertDeferredTypeToString(eDataType, instanceValue);
             default:
@@ -225,28 +227,6 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
     public SuspendAction createSuspendAction() {
         SuspendActionImpl suspendAction = new SuspendActionImpl();
         return suspendAction;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public PrecedingAction createPrecedingAction() {
-        PrecedingActionImpl precedingAction = new PrecedingActionImpl();
-        return precedingAction;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public SucceedingAction createSucceedingAction() {
-        SucceedingActionImpl succeedingAction = new SucceedingActionImpl();
-        return succeedingAction;
     }
 
     /**
@@ -383,6 +363,26 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
      * @generated
      */
     public String convertDelayTypeToString(EDataType eDataType, Object instanceValue) {
+        return instanceValue == null ? null : instanceValue.toString();
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public ActivityType createActivityTypeFromString(EDataType eDataType, String initialValue) {
+        ActivityType result = ActivityType.get(initialValue);
+        if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+        return result;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public String convertActivityTypeToString(EDataType eDataType, Object instanceValue) {
         return instanceValue == null ? null : instanceValue.toString();
     }
 

@@ -155,14 +155,6 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
                 return createSuspendActionAdapter();
             }
             @Override
-            public Adapter casePrecedingAction(PrecedingAction object) {
-                return createPrecedingActionAdapter();
-            }
-            @Override
-            public Adapter caseSucceedingAction(SucceedingAction object) {
-                return createSucceedingActionAdapter();
-            }
-            @Override
             public Adapter casePeriodAction(PeriodAction object) {
                 return createPeriodActionAdapter();
             }
@@ -445,34 +437,6 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createSuspendActionAdapter() {
-        return null;
-    }
-
-    /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.PrecedingAction <em>Preceding Action</em>}'.
-     * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see de.cau.cs.kieler.sccharts.PrecedingAction
-     * @generated
-     */
-    public Adapter createPrecedingActionAdapter() {
-        return null;
-    }
-
-    /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.SucceedingAction <em>Succeeding Action</em>}'.
-     * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see de.cau.cs.kieler.sccharts.SucceedingAction
-     * @generated
-     */
-    public Adapter createSucceedingActionAdapter() {
         return null;
     }
 

@@ -62,12 +62,10 @@ import de.cau.cs.kieler.sccharts.ExitAction;
 import de.cau.cs.kieler.sccharts.PeriodAction;
 import de.cau.cs.kieler.sccharts.PolicyClassDeclaration;
 import de.cau.cs.kieler.sccharts.PolicyRegion;
-import de.cau.cs.kieler.sccharts.PrecedingAction;
 import de.cau.cs.kieler.sccharts.SCCharts;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
 import de.cau.cs.kieler.sccharts.ScopeCall;
 import de.cau.cs.kieler.sccharts.State;
-import de.cau.cs.kieler.sccharts.SucceedingAction;
 import de.cau.cs.kieler.sccharts.SuspendAction;
 import de.cau.cs.kieler.sccharts.Transition;
 import de.cau.cs.kieler.sccharts.text.services.SCTXGrammarAccess;
@@ -1267,9 +1265,6 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 			case SCChartsPackage.POLICY_REGION:
 				sequence_PolicyRegion(context, (PolicyRegion) semanticObject); 
 				return; 
-			case SCChartsPackage.PRECEDING_ACTION:
-				sequence_PrecedingAction(context, (PrecedingAction) semanticObject); 
-				return; 
 			case SCChartsPackage.SC_CHARTS:
 				sequence_SCCharts(context, (SCCharts) semanticObject); 
 				return; 
@@ -1294,9 +1289,6 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 					return; 
 				}
 				else break;
-			case SCChartsPackage.SUCCEEDING_ACTION:
-				sequence_SucceedingAction(context, (SucceedingAction) semanticObject); 
-				return; 
 			case SCChartsPackage.SUSPEND_ACTION:
 				sequence_SuspendAction(context, (SuspendAction) semanticObject); 
 				return; 
@@ -1798,6 +1790,7 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	 *
 	 * Constraint:
 	 *     (
+	 *         activity=ActivityType? 
 	 *         delay=DelayType? 
 	 *         (triggerDelay=INT? trigger=BoolScheduleExpression triggerProbability=FLOAT?)? 
 	 *         (effects+=Effect effects+=Effect*)? 
@@ -1815,7 +1808,7 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	 *     EntryAction returns EntryAction
 	 *
 	 * Constraint:
-	 *     ((trigger=BoolScheduleExpression triggerProbability=FLOAT?)? (effects+=Effect effects+=Effect*)? label=STRING?)
+	 *     (preemption=PreemptionActionType? (trigger=BoolScheduleExpression triggerProbability=FLOAT?)? (effects+=Effect effects+=Effect*)? label=STRING?)
 	 */
 	protected void sequence_EntryAction(ISerializationContext context, EntryAction semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1828,7 +1821,7 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	 *     ExitAction returns ExitAction
 	 *
 	 * Constraint:
-	 *     ((trigger=BoolScheduleExpression triggerProbability=FLOAT?)? (effects+=Effect effects+=Effect*)? label=STRING?)
+	 *     (preemption=PreemptionActionType? (trigger=BoolScheduleExpression triggerProbability=FLOAT?)? (effects+=Effect effects+=Effect*)? label=STRING?)
 	 */
 	protected void sequence_ExitAction(ISerializationContext context, ExitAction semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1932,19 +1925,6 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	 *     )
 	 */
 	protected void sequence_PolicyTransition(ISerializationContext context, Transition semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     LocalAction returns PrecedingAction
-	 *     PrecedingAction returns PrecedingAction
-	 *
-	 * Constraint:
-	 *     ((trigger=BoolScheduleExpression triggerProbability=FLOAT?)? (effects+=Effect effects+=Effect*)? label=STRING?)
-	 */
-	protected void sequence_PrecedingAction(ISerializationContext context, PrecedingAction semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -2099,19 +2079,6 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	 *     )
 	 */
 	protected void sequence_State(ISerializationContext context, State semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     LocalAction returns SucceedingAction
-	 *     SucceedingAction returns SucceedingAction
-	 *
-	 * Constraint:
-	 *     ((trigger=BoolScheduleExpression triggerProbability=FLOAT?)? (effects+=Effect effects+=Effect*)? label=STRING?)
-	 */
-	protected void sequence_SucceedingAction(ISerializationContext context, SucceedingAction semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

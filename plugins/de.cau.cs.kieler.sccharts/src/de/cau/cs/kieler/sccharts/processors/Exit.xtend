@@ -33,32 +33,18 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
 import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
+import de.cau.cs.kieler.core.properties.Property
+import de.cau.cs.kieler.sccharts.PreemptionType
+import static extension de.cau.cs.kieler.sccharts.processors.Entry.stringToPreemptionType
+
 /**
  * SCCharts Exit Transformation.
  * 
- * @author cmot
+ * @author cmot ssm
  * @kieler.design 2013-09-05 proposed 
  * @kieler.rating 2013-09-05 proposed yellow
  */
 class Exit extends SCChartsProcessor implements Traceable {
-
-    //-------------------------------------------------------------------------
-    //--                 K I C O      C O N F I G U R A T I O N              --
-    //-------------------------------------------------------------------------
-    override getId() {
-        "de.cau.cs.kieler.sccharts.processors.exitAction"
-    }
-    
-    override getName() {
-        "Exit Action"
-    }
-
-    override process() {
-        setModel(model.transform)
-    }
-
-
-    //-------------------------------------------------------------------------
 
     @Inject extension KExpressionsCreateExtensions
     @Inject extension KExpressionsDeclarationExtensions
@@ -71,23 +57,29 @@ class Exit extends SCChartsProcessor implements Traceable {
     @Inject extension SCChartsActionExtensions
     @Inject extension SCChartsTransitionExtensions
 
-    // This prefix is used for naming of all generated signals, states and regions
+    public static val EXIT_ACTION_PREEMPTION_TYPE = 
+       new Property<String>("de.cau.cs.kieler.sccharts.exit.preemptionType", "strong")  
+
+    override getId() {
+        "de.cau.cs.kieler.sccharts.processors.exitAction"
+    }
+    
+    override getName() {
+        "Exit Action"
+    }
+
+    override process() {
+        setModel(model.transform)
+    }
+
     static public final String GENERATED_PREFIX = "_"
     
-    //-------------------------------------------------------------------------
-    //--                      E X I T       A C T I O N S                    --
-    //-------------------------------------------------------------------------
     // @requires: entry actions
     // @requires: during actions
     // @requires: suspend
     // @requires: valued valuedObjects
     // Transforming Exit Actions. 
     def State transform(State rootState) {
-        // Prepare all states so that each reagion has at most one final state
-        // targetRootState.getAllStates.toList.forEach [ targetState |
-            //targetState.prepareExit(targetRootState);
-        // ]
-        
         // Traverse all states
         rootState.getAllStates.toList.forEach [ targetState |
             targetState.transformExit(rootState);
@@ -113,119 +105,126 @@ class Exit extends SCChartsProcessor implements Traceable {
 
     // Traverse all states and transform macro states that have actions to transform
     def void transformExit(State state, State targetRootState) {
-        if (!state.exitActions.nullOrEmpty && !state.final) {
+        val preemptionType = switch(getProperty(EXIT_ACTION_PREEMPTION_TYPE).stringToPreemptionType) {
+            case WEAK: PreemptionType.WEAK
+            case STRONG: PreemptionType.STRONG
+            default: {
+                environment.warnings.add("Exit action preemption type is unknown. Using default.", state)
+                PreemptionType.STRONG
+            }             
+        }
+        val exitActions = state.exitActions.filter[ preemption === preemptionType ].toList
+        
+        if (exitActions.nullOrEmpty || state.final) return;
             
-            state.setDefaultTrace //All following states etc. will be traced to state
+        state.setDefaultTrace //All following states etc. will be traced to state
 
-            val stateOutgoingTransitions = state.outgoingTransitions.size
-            var State firstState
-            var State lastState
-            val noregions = !state.controlflowRegionsContainStates
-            
-            
-            if (noregions && stateOutgoingTransitions == 0) {
-                for (exitAction : state.exitActions.toList) {
-                    state.actions.remove(exitAction);
-                }
-                return
-            }            
-
-            if (noregions) {
-                state.regions.clear // FIX: need to erase dummy single region
-                val region = state.createControlflowRegion(GENERATED_PREFIX + "Exit")
-                firstState = region.createInitialState(GENERATED_PREFIX + "Init")
-                lastState = region.createFinalState(GENERATED_PREFIX + "Done")
-            } else if (state.regions.filter(ControlflowRegion).size == 1 && !state.regions.filter(ControlflowRegion).head.allFinalStates.nullOrEmpty) {
-                val region = state.regions.filter(ControlflowRegion).head
-                lastState = region.createFinalState(GENERATED_PREFIX + "Done")
-
-                firstState = region.getOrCreateSimpleFinalState(GENERATED_PREFIX + "PriorFinal") //every region MUST have an initial state
-                //firstState = region.finalStates.get(0) //every region MUST have a final state
-                firstState.setNotFinal
-                for (otherFinalState : region.allFinalStates) {
-                    if (otherFinalState != lastState) {
-                        otherFinalState.createImmediateTransitionTo(firstState)
-                        otherFinalState.setNotFinal
-                    }
-                }
-                
-            } else { // state has several regions (or one region without any final state!)
-                val region = state.createControlflowRegion(GENERATED_PREFIX + "Entry").uniqueName
-                firstState = region.createInitialState(GENERATED_PREFIX + "Main")
-                for (mainRegion : state.regions.filter(e|e != region).toList.immutableCopy) {
-                    firstState.regions.add(mainRegion)
-                }
-                lastState = region.createFinalState(GENERATED_PREFIX + "Done")
+        val stateOutgoingTransitions = state.outgoingTransitions.size
+        var State firstState
+        var State lastState
+        val noregions = !state.controlflowRegionsContainStates
+        
+        if (noregions && stateOutgoingTransitions == 0) {
+            for (exitAction : exitActions) {
+                state.actions.remove(exitAction);
             }
+            return
+        }            
 
-            // Optimization: "&& state.outgoingTransitions.filter[trigger != null].size > 0"
-            // Do not create superfluous exitOptionStates
-            if (noregions && stateOutgoingTransitions > 0) { // && state.outgoingTransitions.filter[trigger != null].size > 0) {
+        if (noregions) {
+            state.regions.clear // FIX: need to erase dummy single region
+            val region = state.createControlflowRegion(GENERATED_PREFIX + "Exit")
+            firstState = region.createInitialState(GENERATED_PREFIX + "Init")
+            lastState = region.createFinalState(GENERATED_PREFIX + "Done")
+        } else if (state.regions.filter(ControlflowRegion).size == 1 && !state.regions.filter(ControlflowRegion).head.allFinalStates.nullOrEmpty) {
+            val region = state.regions.filter(ControlflowRegion).head
+            lastState = region.createFinalState(GENERATED_PREFIX + "Done")
 
-                // Memorize outgoing transition
-                val region = firstState.parentRegion
-                var ValuedObject memory
+            firstState = region.getOrCreateSimpleFinalState(GENERATED_PREFIX + "PriorFinal") //every region MUST have an initial state
+            //firstState = region.finalStates.get(0) //every region MUST have a final state
+            firstState.setNotFinal
+            for (otherFinalState : region.allFinalStates) {
+                if (otherFinalState != lastState) {
+                    otherFinalState.createImmediateTransitionTo(firstState)
+                    otherFinalState.setNotFinal
+                }
+            }
+        } else { // state has several regions (or one region without any final state!)
+            val region = state.createControlflowRegion(GENERATED_PREFIX + "Entry").uniqueName
+            firstState = region.createInitialState(GENERATED_PREFIX + "Main")
+            for (mainRegion : state.regions.filter(e|e != region).toList.immutableCopy) {
+                firstState.regions.add(mainRegion)
+            }
+            lastState = region.createFinalState(GENERATED_PREFIX + "Done")
+        }
+
+        // Optimization: "&& state.outgoingTransitions.filter[trigger != null].size > 0"
+        // Do not create superfluous exitOptionStates
+        if (noregions && stateOutgoingTransitions > 0) { // && state.outgoingTransitions.filter[trigger != null].size > 0) {
+
+            // Memorize outgoing transition
+            val region = firstState.parentRegion
+            var ValuedObject memory
+            if (stateOutgoingTransitions > 1) {
+                memory = state.parentRegion.parentState.createValuedObject(GENERATED_PREFIX + "exit", createIntDeclaration).uniqueName
+                voStore.update(memory, SCCHARTS_GENERATED)
+            }
+            val middleState = region.createState(GENERATED_PREFIX + "Memorize").setTypeConnector
+            val exitOptionState = state.parentRegion.createState(GENERATED_PREFIX + "ExitOption").uniqueName.
+                setTypeConnector
+            var counter = 1
+            for (transition : state.outgoingTransitions.immutableCopy) {
+                val exitTransition = exitOptionState.createImmediateTransitionTo(transition.targetState)
                 if (stateOutgoingTransitions > 1) {
-                    memory = state.parentRegion.parentState.createValuedObject(GENERATED_PREFIX + "exit", createIntDeclaration).uniqueName
-                    voStore.update(memory, SCCHARTS_GENERATED)
+                    exitTransition.setTrigger(memory.reference.createEQExpression(counter.createIntValue))
                 }
-                val middleState = region.createState(GENERATED_PREFIX + "Memorize").setTypeConnector
-                val exitOptionState = state.parentRegion.createState(GENERATED_PREFIX + "ExitOption").uniqueName.
-                    setTypeConnector
-                var counter = 1
-                for (transition : state.outgoingTransitions.immutableCopy) {
-                    val exitTransition = exitOptionState.createImmediateTransitionTo(transition.targetState)
-                    if (stateOutgoingTransitions > 1) {
-                        exitTransition.setTrigger(memory.reference.createEQExpression(counter.createIntValue))
-                    }
-                    for (effect : transition.effects.immutableCopy) {
-                        exitTransition.effects.add(effect)
-                    }
+                for (effect : transition.effects.immutableCopy) {
+                    exitTransition.effects.add(effect)
+                }
 
-                    firstState.outgoingTransitions.add(transition)
-                    transition.setImmediate(transition.implicitlyImmediate) // Ensure termination transitions are interpreted as immediate
-                    transition.setTypeWeakAbort
-                    transition.setTargetState(middleState)
-                    if (stateOutgoingTransitions > 1) {
-                        transition.addEffect(memory.createAssignment(counter.createIntValue))
-                        counter = counter + 1
-                    }
+                firstState.outgoingTransitions.add(transition)
+                transition.setImmediate(transition.implicitlyImmediate) // Ensure termination transitions are interpreted as immediate
+                transition.setTypeWeakAbort
+                transition.setTargetState(middleState)
+                if (stateOutgoingTransitions > 1) {
+                    transition.addEffect(memory.createAssignment(counter.createIntValue))
+                    counter = counter + 1
                 }
-                state.createImmediateTransitionTo(exitOptionState).setTypeTermination
-                firstState = middleState
-            } 
-
-
-            val exitRegion = firstState.parentRegion
-            val lastExitAction = state.exitActions.last
-            for (exitAction : state.exitActions.toList) {
-                var connector = lastState
-                if (exitAction != lastExitAction) {
-                    connector = exitRegion.createState(GENERATED_PREFIX + "C").uniqueName.setTypeConnector
-                }
-                val transition = firstState.createImmediateTransitionTo(connector)
-                
-                // In case the starting point of this transition has regions with final states,
-                // it is necessary to wait until these final states are reached.
-                // Thus a termination transition is needed in this case.  
-                if(firstState.controlflowRegionsContainStates) { 
-                    transition.setTypeTermination
-                }
-                
-                for (effect : exitAction.effects) {
-                    transition.addEffect(effect.copy)
-                }
-                if (exitAction.trigger !== null) {
-                    transition.setTrigger(exitAction.trigger)
-
-                    // add default transition
-                    firstState.createImmediateTransitionTo(connector)
-                }
-                firstState = connector
-
-                // After transforming exit actions, erase them
-                state.actions.remove(exitAction)
             }
+            state.createImmediateTransitionTo(exitOptionState).setTypeTermination
+            firstState = middleState
+        } 
+
+
+        val exitRegion = firstState.parentRegion
+        val lastExitAction = exitActions.last
+        for (exitAction : exitActions) {
+            var connector = lastState
+            if (exitAction != lastExitAction) {
+                connector = exitRegion.createState(GENERATED_PREFIX + "C").uniqueName.setTypeConnector
+            }
+            val transition = firstState.createImmediateTransitionTo(connector)
+            
+            // In case the starting point of this transition has regions with final states,
+            // it is necessary to wait until these final states are reached.
+            // Thus a termination transition is needed in this case.  
+            if(firstState.controlflowRegionsContainStates) { 
+                transition.setTypeTermination
+            }
+            
+            for (effect : exitAction.effects) {
+                transition.addEffect(effect.copy)
+            }
+            if (exitAction.trigger !== null) {
+                transition.setTrigger(exitAction.trigger)
+
+                // add default transition
+                firstState.createImmediateTransitionTo(connector)
+            }
+            firstState = connector
+
+            // After transforming exit actions, erase them
+            state.actions.remove(exitAction)
         }
     }
 

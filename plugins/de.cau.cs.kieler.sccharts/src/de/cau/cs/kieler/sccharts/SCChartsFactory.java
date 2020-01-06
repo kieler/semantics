@@ -130,24 +130,6 @@ public interface SCChartsFactory extends EFactory {
     SuspendAction createSuspendAction();
 
     /**
-     * Returns a new object of class '<em>Preceding Action</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Preceding Action</em>'.
-     * @generated
-     */
-    PrecedingAction createPrecedingAction();
-
-    /**
-     * Returns a new object of class '<em>Succeeding Action</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Succeeding Action</em>'.
-     * @generated
-     */
-    SucceedingAction createSucceedingAction();
-
-    /**
      * Returns a new object of class '<em>Period Action</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

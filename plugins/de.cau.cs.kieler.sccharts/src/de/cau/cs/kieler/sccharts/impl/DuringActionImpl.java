@@ -13,6 +13,7 @@
  */
 package de.cau.cs.kieler.sccharts.impl;
 
+import de.cau.cs.kieler.sccharts.ActivityType;
 import de.cau.cs.kieler.sccharts.DelayType;
 import de.cau.cs.kieler.sccharts.DuringAction;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
@@ -30,6 +31,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.DuringActionImpl#getReset <em>Reset</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.impl.DuringActionImpl#getActivity <em>Activity</em>}</li>
  * </ul>
  *
  * @generated
@@ -60,6 +62,26 @@ public class DuringActionImpl extends LocalActionImpl implements DuringAction {
      * @ordered
      */
     protected DelayType reset = RESET_EDEFAULT;
+
+                /**
+     * The default value of the '{@link #getActivity() <em>Activity</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getActivity()
+     * @generated
+     * @ordered
+     */
+    protected static final ActivityType ACTIVITY_EDEFAULT = ActivityType.PASSIVE;
+
+    /**
+     * The cached value of the '{@link #getActivity() <em>Activity</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getActivity()
+     * @generated
+     * @ordered
+     */
+    protected ActivityType activity = ACTIVITY_EDEFAULT;
 
                 /**
      * <!-- begin-user-doc -->
@@ -109,10 +131,35 @@ public class DuringActionImpl extends LocalActionImpl implements DuringAction {
      * @generated
      */
     @Override
+    public ActivityType getActivity() {
+        return activity;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public void setActivity(ActivityType newActivity) {
+        ActivityType oldActivity = activity;
+        activity = newActivity == null ? ACTIVITY_EDEFAULT : newActivity;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.DURING_ACTION__ACTIVITY, oldActivity, activity));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
             case SCChartsPackage.DURING_ACTION__RESET:
                 return getReset();
+            case SCChartsPackage.DURING_ACTION__ACTIVITY:
+                return getActivity();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -127,6 +174,9 @@ public class DuringActionImpl extends LocalActionImpl implements DuringAction {
         switch (featureID) {
             case SCChartsPackage.DURING_ACTION__RESET:
                 setReset((DelayType)newValue);
+                return;
+            case SCChartsPackage.DURING_ACTION__ACTIVITY:
+                setActivity((ActivityType)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -143,6 +193,9 @@ public class DuringActionImpl extends LocalActionImpl implements DuringAction {
             case SCChartsPackage.DURING_ACTION__RESET:
                 setReset(RESET_EDEFAULT);
                 return;
+            case SCChartsPackage.DURING_ACTION__ACTIVITY:
+                setActivity(ACTIVITY_EDEFAULT);
+                return;
         }
         super.eUnset(featureID);
     }
@@ -157,6 +210,8 @@ public class DuringActionImpl extends LocalActionImpl implements DuringAction {
         switch (featureID) {
             case SCChartsPackage.DURING_ACTION__RESET:
                 return reset != RESET_EDEFAULT;
+            case SCChartsPackage.DURING_ACTION__ACTIVITY:
+                return activity != ACTIVITY_EDEFAULT;
         }
         return super.eIsSet(featureID);
     }
@@ -173,6 +228,8 @@ public class DuringActionImpl extends LocalActionImpl implements DuringAction {
         StringBuilder result = new StringBuilder(super.toString());
         result.append(" (reset: ");
         result.append(reset);
+        result.append(", activity: ");
+        result.append(activity);
         result.append(')');
         return result.toString();
     }

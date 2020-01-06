@@ -72,9 +72,9 @@ class SRTGTransitionSynthesis extends SRTGSubSynthesis<Transition, KEdge> {
         edge.addDefaultDecorator
 
         switch (transition.preemption) {
-            case STRONGABORT: edge.addStrongAbortionDecorator
+            case STRONG: edge.addStrongAbortionDecorator
             case TERMINATION: edge.addNormalTerminationDecorator
-            case WEAKABORT: {}
+            case WEAK: {}
         };
 
         // Add Label

@@ -31,10 +31,20 @@ de.cau.cs.kieler.sccharts.processors.history
 	de.cau.cs.kieler.sccharts.processors.duringAction
 	pre process de.cau.cs.kieler.sccharts.processors.finalRegion
 	de.cau.cs.kieler.sccharts.processors.complexFinalState
+	de.cau.cs.kieler.sccharts.processors.exitAction config {
+      "de.cau.cs.kieler.sccharts.exit.preemptionType": "weak"
+    }
+	de.cau.cs.kieler.sccharts.processors.entryAction config {
+	  "de.cau.cs.kieler.sccharts.entry.preemptionType": "weak"
+	}
 	de.cau.cs.kieler.sccharts.processors.abort
-	de.cau.cs.kieler.sccharts.processors.exitAction
+	de.cau.cs.kieler.sccharts.processors.exitAction config {
+      "de.cau.cs.kieler.sccharts.exit.preemptionType": "strong"
+    }
 	de.cau.cs.kieler.sccharts.processors.initialization
-	de.cau.cs.kieler.sccharts.processors.entryAction
+	de.cau.cs.kieler.sccharts.processors.entryAction config {
+      "de.cau.cs.kieler.sccharts.entry.preemptionType": "strong"
+    }
 	de.cau.cs.kieler.sccharts.processors.connector
 ]
 de.cau.cs.kieler.sccharts.processors.arrayAssignment

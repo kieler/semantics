@@ -10,8 +10,9 @@
   <genPackages prefix="SCCharts" basePackage="de.cau.cs.kieler" disposableProviderFactory="true"
       fileExtensions="scc" ecorePackage="sccharts.ecore#/">
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="sccharts.ecore#//PreemptionType">
-      <genEnumLiterals ecoreEnumLiteral="sccharts.ecore#//PreemptionType/WEAKABORT"/>
-      <genEnumLiterals ecoreEnumLiteral="sccharts.ecore#//PreemptionType/STRONGABORT"/>
+      <genEnumLiterals ecoreEnumLiteral="sccharts.ecore#//PreemptionType/UNDEFINED"/>
+      <genEnumLiterals ecoreEnumLiteral="sccharts.ecore#//PreemptionType/WEAK"/>
+      <genEnumLiterals ecoreEnumLiteral="sccharts.ecore#//PreemptionType/STRONG"/>
       <genEnumLiterals ecoreEnumLiteral="sccharts.ecore#//PreemptionType/TERMINATION"/>
     </genEnums>
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="sccharts.ecore#//HistoryType">
@@ -24,6 +25,10 @@
       <genEnumLiterals ecoreEnumLiteral="sccharts.ecore#//DelayType/DELAYED"/>
       <genEnumLiterals ecoreEnumLiteral="sccharts.ecore#//DelayType/IMMEDIATE"/>
       <genEnumLiterals ecoreEnumLiteral="sccharts.ecore#//DelayType/AUTOMATIC"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="sccharts.ecore#//ActivityType">
+      <genEnumLiterals ecoreEnumLiteral="sccharts.ecore#//ActivityType/PASSIVE"/>
+      <genEnumLiterals ecoreEnumLiteral="sccharts.ecore#//ActivityType/ACTIVE"/>
     </genEnums>
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="sccharts.ecore#//DeferredType">
       <genEnumLiterals ecoreEnumLiteral="sccharts.ecore#//DeferredType/NONE"/>
@@ -86,16 +91,19 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference sccharts.ecore#//Transition/targetState"/>
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference sccharts.ecore#//Transition/sourceState"/>
     </genClasses>
-    <genClasses ecoreClass="sccharts.ecore#//EntryAction"/>
+    <genClasses ecoreClass="sccharts.ecore#//EntryAction">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute sccharts.ecore#//EntryAction/preemption"/>
+    </genClasses>
     <genClasses ecoreClass="sccharts.ecore#//DuringAction">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute sccharts.ecore#//DuringAction/reset"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute sccharts.ecore#//DuringAction/activity"/>
     </genClasses>
-    <genClasses ecoreClass="sccharts.ecore#//ExitAction"/>
+    <genClasses ecoreClass="sccharts.ecore#//ExitAction">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute sccharts.ecore#//ExitAction/preemption"/>
+    </genClasses>
     <genClasses ecoreClass="sccharts.ecore#//SuspendAction">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute sccharts.ecore#//SuspendAction/weak"/>
     </genClasses>
-    <genClasses ecoreClass="sccharts.ecore#//PrecedingAction"/>
-    <genClasses ecoreClass="sccharts.ecore#//SucceedingAction"/>
     <genClasses ecoreClass="sccharts.ecore#//PeriodAction"/>
     <genClasses ecoreClass="sccharts.ecore#//PolicyClassDeclaration">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference sccharts.ecore#//PolicyClassDeclaration/policy"/>
