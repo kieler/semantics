@@ -39,7 +39,6 @@ import de.cau.cs.kieler.kicool.ui.synthesis.actions.ToggleOnOffData
 import de.cau.cs.kieler.kicool.ui.synthesis.actions.ToggleProcessorOnOffAction
 import de.cau.cs.kieler.kicool.ui.synthesis.feedback.PostUpdateDoubleCollector
 import de.cau.cs.kieler.kicool.ui.synthesis.styles.ColorSystem
-import de.cau.cs.kieler.kicool.ui.synthesis.styles.SkinSelector
 import de.cau.cs.kieler.kicool.ui.view.CompilerView
 import de.cau.cs.kieler.klighd.LightDiagramLayoutConfig
 import de.cau.cs.kieler.klighd.LightDiagramServices
@@ -106,8 +105,7 @@ class ProcessorDataManager {
             node.getAllContentsOfType(KText).head.text = processorReference.id.split("\\.").last
             return;
         }
-        val nameStr = if (rtProcessor.name.length < SkinSelector.skinMaxNameSize) rtProcessor.name else
-            rtProcessor.name.substring(0, SkinSelector.skinMaxNameSize - 2) + "..."
+        val nameStr = rtProcessor.name
         node.getAllContentsOfType(KText).head.text = nameStr
         
         val toggleOnOffButton = node.getProperty(PROCESSOR_ON_OFF_BUTTON)

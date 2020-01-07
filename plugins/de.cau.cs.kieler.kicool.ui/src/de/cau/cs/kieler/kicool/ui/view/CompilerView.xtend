@@ -23,7 +23,6 @@ import de.cau.cs.kieler.kicool.ui.view.actions.DeveloperToggle
 import de.cau.cs.kieler.kicool.ui.view.actions.FlattenSystemViewToggle
 import de.cau.cs.kieler.kicool.ui.view.actions.ForwardResultToggle
 import de.cau.cs.kieler.kicool.ui.view.actions.ShowPrivateSystemsToggle
-import de.cau.cs.kieler.kicool.ui.view.actions.SkinSelectionActions
 import de.cau.cs.kieler.kicool.ui.view.actions.VisualLayoutFeedbackToggle
 import de.cau.cs.kieler.klighd.LightDiagramLayoutConfig
 import de.cau.cs.kieler.klighd.ZoomStyle
@@ -50,6 +49,7 @@ import org.eclipse.swt.layout.FormLayout
 import org.eclipse.swt.layout.RowLayout
 import org.eclipse.swt.layout.FillLayout
 import de.cau.cs.kieler.kicool.ui.InstallSystemsHandler
+import de.cau.cs.kieler.kicool.ui.view.actions.OnOffButtonsToggle
 
 /**
  * The Kieler Compiler View, formerly knownas IMB Compiler View
@@ -73,11 +73,11 @@ class CompilerView extends DiagramViewPart {
     // Must be initialized in the view contributions. Hence, maybe null!
     @Accessors private var SystemSelectionManager systemSelectionManager = null
     @Accessors private var DeveloperToggle developerToggle = null
+    @Accessors private var OnOffButtonsToggle onOffButtonsToggle = null
     @Accessors private var FlattenSystemViewToggle flattenSystemViewToggle = null
     @Accessors private var ForwardResultToggle forwardResultToggle = null
     @Accessors private var AutoCompileToggle autoCompileToggle = null
     @Accessors private var VisualLayoutFeedbackToggle visualLayoutFeedbackToggle = null
-    @Accessors private var SkinSelectionActions skinSelectionActions = null
     @Accessors private var CompileInplaceToggle compileInplaceToggle = null
     @Accessors private var CompileTracingToggle compileTracingToggle = null
     @Accessors private var DebugEnvironmentModelsToggle debugEnvironmentModelsToggle = null
@@ -138,6 +138,7 @@ class CompilerView extends DiagramViewPart {
         autoCompileToggle = new AutoCompileToggle(this)
         compileInplaceToggle = new CompileInplaceToggle(this)
         compileTracingToggle = new CompileTracingToggle(this)
+        onOffButtonsToggle = new OnOffButtonsToggle(this)
 
         developerToggle = new DeveloperToggle(this)
         flattenSystemViewToggle = new FlattenSystemViewToggle(this)
@@ -158,11 +159,8 @@ class CompilerView extends DiagramViewPart {
 
         menu.add(new Separator)
 
-        val MenuManager skinMenu = new MenuManager("Synthesis Skins")
-        skinSelectionActions = new SkinSelectionActions(this)
-        skinSelectionActions.actions.forEach[skinMenu.add(it.action)]
-        menu.add(skinMenu)
         menu.add(developerToggle.action)
+        menu.add(onOffButtonsToggle.action)
         menu.add(debugEnvironmentModelsToggle.action)
         menu.add(showPrivateSystemsToggle.action)
 
@@ -171,10 +169,10 @@ class CompilerView extends DiagramViewPart {
             memento.loadCheckedValue(autoCompileToggle)
             memento.loadCheckedValue(visualLayoutFeedbackToggle)
             memento.loadCheckedValue(developerToggle)
+            memento.loadCheckedValue(onOffButtonsToggle)
             memento.loadCheckedValue(flattenSystemViewToggle)
             memento.loadCheckedValue(compileInplaceToggle)
             memento.loadCheckedValue(compileTracingToggle)
-            memento.loadCheckedValues(skinSelectionActions.actions)
             memento.loadCheckedValue(debugEnvironmentModelsToggle)
             memento.loadCheckedValue(showPrivateSystemsToggle)
         }
@@ -194,10 +192,10 @@ class CompilerView extends DiagramViewPart {
         memento.saveCheckedValue(autoCompileToggle)
         memento.saveCheckedValue(visualLayoutFeedbackToggle)
         memento.saveCheckedValue(developerToggle)
+        memento.saveCheckedValue(onOffButtonsToggle)
         memento.saveCheckedValue(flattenSystemViewToggle)
         memento.saveCheckedValue(compileInplaceToggle)
         memento.saveCheckedValue(compileTracingToggle)
-        memento.saveCheckedValues(skinSelectionActions.actions)
         memento.saveCheckedValue(debugEnvironmentModelsToggle)
         memento.saveCheckedValue(showPrivateSystemsToggle)
     }
@@ -212,7 +210,7 @@ class CompilerView extends DiagramViewPart {
             ZoomConfigButtonsHandling.HIDE)
         properties.setProperty(KlighdSynthesisProperties.SYNTHESIS_OPTION_CONFIG, #{
             KiCoolSynthesis.FLATTEN_SYSTEM -> ((developerToggle.checked && flattenSystemViewToggle.checked) as Object),
-            KiCoolSynthesis.ON_OFF_BUTTONS -> ((developerToggle.checked) as Object)
+            KiCoolSynthesis.ON_OFF_BUTTONS -> ((onOffButtonsToggle.checked) as Object)
         })
 
         updateDiagram(editPartSystemManager.activeSystem, properties)

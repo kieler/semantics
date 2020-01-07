@@ -40,6 +40,7 @@ import static de.cau.cs.kieler.kicool.ui.synthesis.styles.ColorStore.Color.*
 
 import static extension de.cau.cs.kieler.kicool.ui.synthesis.styles.ColorStore.*
 import static extension de.cau.cs.kieler.klighd.microlayout.PlacementUtil.*
+import de.cau.cs.kieler.klighd.actions.CollapseExpandAction
 
 /**
  * User-defined KiCool synthesis styles
@@ -65,6 +66,46 @@ class ProcessorStyles {
         width = Math.max(((placement as KGridPlacement).numColumns + 1) * 6, width)
         (placement as KGridPlacement).numColumns = (width / 6 - 1) as int
         processorNode.width = width - 1
+    }
+    
+    def KNode addGroupFigure(KNode node) {
+        node.addRoundedRectangle(1.5f, 1.5f) => [
+            id = "collapsed"
+            setProperty(KlighdProperties::COLLAPSED_RENDERING, true)
+            setProperty(KlighdProperties::EXPANDED_RENDERING, false)
+            lineWidth = 1.5f
+            foreground = Colors.GRAY
+            setBackgroundGradient(Colors.GRAY, 255, Colors.GRAY_57, 243, 90)
+            addAction(Trigger::DOUBLECLICK, CollapseExpandAction.ID)
+            children += createKText => [
+                setPointPlacementData.referencePoint = createKPosition(PositionReferenceX.LEFT, 2, 0,
+                    PositionReferenceY.TOP, 1, 0)
+                fontSize = 3
+                foreground = Colors.BLACK
+                setBackground(Colors.WHITE, 0)
+                text = "ID"
+                addAction(Trigger::DOUBLECLICK, CollapseExpandAction.ID)
+            ]
+        ]
+        node.addRoundedRectangle(1.5f, 1.5f) => [
+            id = "expanded"
+            setProperty(KlighdProperties::COLLAPSED_RENDERING, false)
+            setProperty(KlighdProperties::EXPANDED_RENDERING, true)
+            lineWidth = 1f
+            foreground = Colors.GRAY
+            setBackgroundGradient(Colors.GRAY, 255, Colors.GRAY_57, 243, 90)
+            addAction(Trigger::DOUBLECLICK, CollapseExpandAction.ID)
+            children += createKText => [
+                setPointPlacementData.referencePoint = createKPosition(PositionReferenceX.LEFT, 2, 0,
+                    PositionReferenceY.TOP, 1, 0)
+                fontSize = 3
+                foreground = Colors.BLACK
+                setBackground(Colors.WHITE, 0)
+                text = "ID"
+                addAction(Trigger::DOUBLECLICK, CollapseExpandAction.ID)
+            ]
+        ]
+        node
     }
 
     def KNode addProcessorFigure(KNode node, boolean onOffButton) {

@@ -30,7 +30,6 @@ import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.kgraph.util.KGraphUtil
 import org.eclipse.elk.alg.layered.options.LayeringStrategy
 import org.eclipse.elk.alg.layered.options.FixedAlignment
-import de.cau.cs.kieler.kicool.ui.synthesis.styles.SkinSelector
 import de.cau.cs.kieler.kgraph.text.KGraphStandaloneSetup
 import org.eclipse.elk.alg.layered.options.WrappingStrategy
 import org.eclipse.elk.alg.layered.options.GraphCompactionStrategy
@@ -155,10 +154,6 @@ class KiCoolSynthesis extends AbstractDiagramSynthesis<System> {
                 }
             }
         }
-    }
-
-    def static getKGTFromBundle(String bundleId, String resourceLocation) {
-        return getKGTFromBundle(bundleId, resourceLocation, SkinSelector.skinPrefix)
     }
 
 }
