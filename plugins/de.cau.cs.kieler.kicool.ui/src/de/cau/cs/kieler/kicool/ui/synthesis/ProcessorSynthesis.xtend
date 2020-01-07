@@ -43,6 +43,13 @@ import de.cau.cs.kieler.kicool.ProcessorEntry
 import de.cau.cs.kieler.klighd.kgraph.KEdge
 import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensions
 import de.cau.cs.kieler.klighd.krendering.KRenderingFactory
+import de.cau.cs.kieler.klighd.kgraph.KGraphFactory
+import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties
+import org.eclipse.elk.core.options.CoreOptions
+import org.eclipse.elk.core.math.ElkPadding
+import org.eclipse.elk.core.options.NodeLabelPlacement
+import java.util.EnumSet
+import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
  * Main diagram synthesis for processors in KiCool.
@@ -63,11 +70,11 @@ class ProcessorSynthesis {
     @Inject IResourceServiceProvider.Registry regXtext;
     
     public static val GROUP_NODE = new org.eclipse.elk.graph.properties.Property("de.cau.cs.kieler.kicool.ui.synthesis.groupNode", false)
-    static val PROCESSOR_KGT = "processor.kgt"
     static val PROCESSOR_GROUP_KGT = "processor_group.kgt"
     static val COMPATIBILITY_ERROR_ICON = "lightning.png"
     static val COLLAPSED_ID = "collapsed"
     static val EXPANDED_ID = "expanded" 
+    @Accessors var boolean onOffButtons = false
     
     private def setId(KNode node, String id) {
         node.getData(KIdentifier).id = id
@@ -75,16 +82,21 @@ class ProcessorSynthesis {
     }
     
     def KNode processorNode() {
-        KiCoolSynthesis.getKGTFromBundle(KiCoolUiModule.BUNDLE_ID, PROCESSOR_KGT)
+        createNode => [
+            width = 60
+            height = 16.5f
+            setProperty(CoreOptions::PADDING, new ElkPadding(4d))
+            data += KGraphFactory.eINSTANCE.createKIdentifier
+            addProcessorFigure(onOffButtons)
+        ]
     }
 
     dispatch def List<KNode> transform(ProcessorReference processorReference) {
         val processorNode = processorNode
         val nodeId = processorReference.uniqueProcessorId
-//        println(nodeId)
         processorNode.setId(nodeId)
         processorReference.populateProcessorData(processorNode)        
-        
+        processorNode.adjustSize
         newArrayList(processorNode)
     }
     

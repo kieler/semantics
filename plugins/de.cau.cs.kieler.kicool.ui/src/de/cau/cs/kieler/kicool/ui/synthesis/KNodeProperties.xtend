@@ -17,6 +17,7 @@ import org.eclipse.elk.graph.properties.Property
 import de.cau.cs.kieler.kicool.ui.synthesis.actions.IntermediateData
 import de.cau.cs.kieler.kicool.ui.synthesis.actions.ToggleOnOffData
 import de.cau.cs.kieler.kicool.ProcessorEntry
+import de.cau.cs.kieler.klighd.krendering.KContainerRendering
 
 /**
  * Additional properties
@@ -35,5 +36,14 @@ class KNodeProperties {
         
     public static val IProperty<ProcessorEntry> PROCESSOR_IDENTIFIER = 
         new Property<ProcessorEntry>("de.cau.cs.kieler.kicool.processorEntry", null)
+        
+    public static final IProperty<KContainerRendering> PROCESSOR_ON_OFF_BUTTON = new Property<KContainerRendering>(
+        "de.cau.cs.kieler.kicool.ui.ProcessorOnOffButton", null);
+
+    public static final IProperty<KContainerRendering> PROCESSOR_INTERMEDIATE_CONTAINER = new Property<KContainerRendering>(
+        "de.cau.cs.kieler.kicool.ui.ProcessorIntermediateContainer", null);
+
+    public static final IProperty<Boolean> SOURCE_NODE = new Property<Boolean>(
+        "de.cau.cs.kieler.kicool.ui.SourceNode", false);
         
 }

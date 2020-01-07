@@ -59,8 +59,10 @@ class KiCoolSynthesis extends AbstractDiagramSynthesis<System> {
     @Inject extension SourceSynthesis
     
     public static final SynthesisOption FLATTEN_SYSTEM = SynthesisOption.createCheckOption("Flatten System", false)
+    public static final SynthesisOption ON_OFF_BUTTONS = SynthesisOption.createCheckOption("On Off Buttons", false)
     
     override transform(System model) {
+        onOffButtons = ON_OFF_BUTTONS.booleanValue
         val rootNode = model.createNode
         
         rootNode.setLayoutOption(CoreOptions::ALGORITHM, "org.eclipse.elk.layered");
@@ -90,7 +92,7 @@ class KiCoolSynthesis extends AbstractDiagramSynthesis<System> {
         ]
         
         val source = sourceNode
-        val processorNodes = model.processors.transform
+        val processorNodes = model.processors.transform()
         val nodes = processorNodes.head.children
         source.sourceConnect(nodes.head)
         nodes += source

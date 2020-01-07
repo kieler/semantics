@@ -35,6 +35,7 @@ import static extension de.cau.cs.kieler.kicool.ui.synthesis.updates.ProcessorDa
 import static extension de.cau.cs.kieler.kicool.ui.view.EditPartSystemManager.*
 import de.cau.cs.kieler.kicool.compilation.observer.CompilationChanged
 import de.cau.cs.kieler.kicool.compilation.observer.AbstractProcessorNotification
+import de.cau.cs.kieler.kicool.ui.synthesis.updates.ProcessorDataManager
 
 /**
  * @author ssm
@@ -54,13 +55,10 @@ class CompilationUpdate extends KiCoolUIObserver {
     }
     
     override void update(AbstractContextNotification notification) {
-        
         switch notification {
             ProcessorProgress: notification.updateProcessor(view.viewContext.viewModel, view)
             ProcessorStart: notification.resetProcessor(view.viewContext.viewModel)
-            ProcessorFinished: {
-                    notification.updateProcessor(view.viewContext.viewModel, view)
-                } 
+            ProcessorFinished: notification.updateProcessor(view.viewContext.viewModel, view)
             CompilationStart: notification.resetSystem(view.viewContext.viewModel, view)
             CompilationFinished: {
                     CompilationActionSimSalabim.simSalabim(notification)
@@ -77,15 +75,7 @@ class CompilationUpdate extends KiCoolUIObserver {
                         }
                         
                         if (view.editPartSystemManager.intermediateSelection !== null) {
-                            val modelList = retrieveIntermediateModel(view.viewContext.viewModel, view, model, view.editPartSystemManager.intermediateSelection, editor)
-                            if (modelList.nullOrEmpty) {
-                                println("Selection model list returned nothing. Falling back to default.")
-                                KiCoModelViewNotifier.notifyCompilationChanged(editor, model)
-                            } else if (modelList.size == 1) {
-//                                KiCoModelViewNotifier.notifyCompilationChanged(editor, model)
-                            } else {
-//                                KiCoModelViewNotifier.notifyCompilationChangedList(editor, modelList)
-                            }
+                            ProcessorDataManager.updateSelectedIntermediateModels(view.viewContext.viewModel, view, view.editPartSystemManager.intermediateSelection, editor)
                         } else {
                             KiCoModelViewNotifier.notifyCompilationChanged(editor, model)
                         }
@@ -98,11 +88,11 @@ class CompilationUpdate extends KiCoolUIObserver {
                     notification.applyNotifications
                 }
             CompilationChanged: {
-                notification.addNewProcessor(view.viewContext.viewModel, view)
-                view.doLayout(true)             
+                notification.addNewProcessor(view.viewContext.viewModel, view)   
+                view.doLayout(true)      
             } 
         }
-        
+        view.doLayout(false)
     }
     
     private def void reinitializeSynthesis(CompilationChanged compilationChanged) {

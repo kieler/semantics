@@ -20,6 +20,7 @@ import static de.cau.cs.kieler.kicool.ui.synthesis.updates.ProcessorDataManager.
 import static de.cau.cs.kieler.kicool.ui.synthesis.updates.ProcessorDataManager.setFBColor
 import static de.cau.cs.kieler.kicool.ui.synthesis.styles.ColorSystem.*
 import de.cau.cs.kieler.kicool.ProcessorReference
+import de.cau.cs.kieler.klighd.krendering.KContainerRendering
 
 /**
  * Class that handles on/off requests of users.
@@ -36,9 +37,9 @@ class ToggleProcessorOnOffAction implements IAction {
     @Accessors static val deactivatedProcessors = <ProcessorReference, OnOffToggle> newHashMap 
     
     override execute(ActionContext context) {
-        val kNode = context.KNode
+        val rendering = context.KRendering as KContainerRendering
         
-        val toggleOnOffData = kNode.getProperty(TOGGLE_ON_OFF_DATA)
+        val toggleOnOffData = rendering.getProperty(TOGGLE_ON_OFF_DATA)
         val processorReference = toggleOnOffData.processorReference
 //        val toggle = toggleOnOffData.toggle
         
@@ -55,9 +56,9 @@ class ToggleProcessorOnOffAction implements IAction {
         }
         
         switch (toggle) {
-            case ON: setFBColor(getContainer(kNode), ON) 
-            case OFF: setFBColor(getContainer(kNode), OFF)
-            case HALT: setFBColor(getContainer(kNode), HALT)
+            case ON: setFBColor(rendering.children.head, ON) 
+            case OFF: setFBColor(rendering.children.head, OFF)
+            case HALT: setFBColor(rendering.children.head, HALT)
         }
 
         deactivatedProcessors.put(processorReference, toggle)            

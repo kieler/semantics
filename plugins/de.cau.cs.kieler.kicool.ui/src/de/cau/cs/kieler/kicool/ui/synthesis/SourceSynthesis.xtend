@@ -17,6 +17,13 @@ import de.cau.cs.kieler.kicool.ui.KiCoolUiModule
 import com.google.inject.Inject
 import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
 import de.cau.cs.kieler.klighd.kgraph.KNode
+import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
+import org.eclipse.elk.core.options.CoreOptions
+import de.cau.cs.kieler.klighd.kgraph.KGraphFactory
+import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
+import de.cau.cs.kieler.klighd.krendering.Colors
+import de.cau.cs.kieler.klighd.krendering.extensions.KColorExtensions
+import de.cau.cs.kieler.klighd.krendering.KRenderingFactory
 
 /**
  * Main diagram synthesis for the source in KiCool.
@@ -29,12 +36,35 @@ import de.cau.cs.kieler.klighd.kgraph.KNode
 class SourceSynthesis {
     
     @Inject extension KEdgeExtensions 
-    @Inject extension ProcessorStyles    
+    @Inject extension ProcessorStyles  
+    @Inject extension KNodeExtensions  
+    @Inject extension KRenderingExtensions
+    
+    extension KRenderingFactory = KRenderingFactory::eINSTANCE
     
     static val SOURCE_KGT = "source.kgt"
     
     def KNode sourceNode() {
-        KiCoolSynthesis.getKGTFromBundle(KiCoolUiModule.BUNDLE_ID, SOURCE_KGT)
+        createNode => [
+            width = 16.5f
+            height = 16.5f
+            setProperty(KNodeProperties.SOURCE_NODE, true)
+            data += KGraphFactory.eINSTANCE.createKIdentifier => [
+                id = "source"
+            ]
+            addRoundedRectangle(10, 10) => [
+                foreground = Colors.GRAY
+                setBackgroundGradient(createKColor => [
+                    red = 248
+                    green = 249
+                    blue = 253
+                ], 255, createKColor => [
+                    red = 205
+                    green = 220
+                    blue = 243
+                ], 243, 90)
+            ]
+        ]
     }
     
     def sourceConnect(KNode source, KNode target) {

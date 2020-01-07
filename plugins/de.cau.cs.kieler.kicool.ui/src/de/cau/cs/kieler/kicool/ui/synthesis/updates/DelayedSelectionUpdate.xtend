@@ -1,6 +1,6 @@
 /*
  * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
- *
+ * 
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
  * Copyright 2018 by
@@ -12,16 +12,21 @@
  */
 package de.cau.cs.kieler.kicool.ui.synthesis.updates
 
-import de.cau.cs.kieler.klighd.kgraph.KNode
-import de.cau.cs.kieler.kicool.ui.view.CompilerView
-import de.cau.cs.kieler.kicool.ui.synthesis.actions.IntermediateSelection
-import org.eclipse.ui.progress.UIJob
+import de.cau.cs.kieler.kicool.ui.klighd.KiCoModelViewNotifier
+import java.util.List
 import org.eclipse.core.runtime.IProgressMonitor
 import org.eclipse.core.runtime.IStatus
 import org.eclipse.core.runtime.Status
-import static extension de.cau.cs.kieler.kicool.ui.synthesis.updates.ProcessorDataManager.retrieveIntermediateModel
 import org.eclipse.ui.IEditorPart
-import de.cau.cs.kieler.kicool.ui.klighd.KiCoModelViewNotifier
+import org.eclipse.ui.progress.UIJob
+import de.cau.cs.kieler.kicool.ui.synthesis.actions.IntermediateData
+import de.cau.cs.kieler.klighd.kgraph.KNode
+import de.cau.cs.kieler.kicool.ui.synthesis.KNodeProperties
+import de.cau.cs.kieler.klighd.internal.util.KlighdInternalProperties
+
+import static extension de.cau.cs.kieler.kicool.ui.synthesis.updates.ProcessorDataManager.*
+import de.cau.cs.kieler.kicool.ui.synthesis.ProcessorStyles
+import de.cau.cs.kieler.kicool.ui.view.CompilerView
 
 /**
  * Class that runs a selection setting in the UI thread after a short delay. 
@@ -31,41 +36,50 @@ import de.cau.cs.kieler.kicool.ui.klighd.KiCoModelViewNotifier
  * @author ssm
  * @kieler.design 2018-04-12 proposed 
  * @kieler.rating 2018-04-12 proposed yellow
- *
+ * 
  */
 class DelayedSelectionUpdate implements Runnable {
-    
+
+    extension ProcessorStyles = new ProcessorStyles
     static val UPDATE_DELAY = 100
-    
-    var KNode node
-    var CompilerView view
-    var Object model
-    var IntermediateSelection intermediateSelection
+
+    List<IntermediateData> selectedData
     var IEditorPart editor
-    
-    new(KNode node, CompilerView view, Object model, IntermediateSelection selection, IEditorPart editor) {
-        this.node = node
+    var CompilerView view
+
+    new(CompilerView view, List<IntermediateData> selectedData, IEditorPart editor) {
         this.view = view
-        this.model = model
-        this.intermediateSelection = selection
+        this.selectedData = selectedData
         this.editor = editor
     }
-    
+
     override run() {
         Thread.sleep(UPDATE_DELAY)
         new UIJob("Updating selection...") {
             override IStatus runInUIThread(IProgressMonitor monitor) {
-                val modelList = retrieveIntermediateModel(node, view, model, intermediateSelection, editor, false)
-                if (!modelList.nullOrEmpty) {
-                    if (modelList.size == 1) {
-                        KiCoModelViewNotifier.notifyCompilationChanged(editor, modelList.head)
+                val selectedNodes = <KNode>newArrayList
+                for (intermediate : selectedData) {
+                    if (intermediate.parentNode.getProperty(KNodeProperties.INTERMEDIATE_DATA) == selectedData.head) {
+                        intermediate.parentNode.containers.forEach [
+                            setProperty(KlighdInternalProperties.SELECTED, true)
+                        ]
+                        selectedNodes += selectedData.head.parentNode
                     } else {
-                        KiCoModelViewNotifier.notifyCompilationChangedList(editor, modelList)
+                        intermediate.parentNode.getProperty(KNodeProperties.PROCESSOR_INTERMEDIATE_CONTAINER).children.
+                            filter [
+                                getProperty(KNodeProperties.INTERMEDIATE_DATA) == intermediate
+                            ].head.selected = true
                     }
+                }
+                view.viewer.resetSelectionToDiagramElements(selectedNodes)
+                if (selectedData.size == 1) {
+                    KiCoModelViewNotifier.notifyCompilationChanged(editor, selectedData.map[model].head)
+                } else {
+                    KiCoModelViewNotifier.notifyCompilationChangedList(editor, selectedData.map[model])
                 }
                 return Status.OK_STATUS;
             }
         }.schedule
     }
-    
+
 }
