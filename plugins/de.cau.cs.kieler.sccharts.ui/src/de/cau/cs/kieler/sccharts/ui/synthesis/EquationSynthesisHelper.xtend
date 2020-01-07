@@ -161,6 +161,17 @@ class EquationSynthesisHelper {
         }
         return a.sourceElement == b.sourceElement
     }
+    
+    /**
+     * given a KGraph element the return value is true iff the associated Element equals the given Object
+     * in case of associations with ValuedObjectReferences only the ValuedObject needs to be equal and so on
+     */
+    protected def sourceEquals(KGraphElement a, Object sourceElement) {
+        if (a.sourceElement instanceof Expression && sourceElement instanceof Expression) {
+            return (a.sourceElement as Expression).equals2(sourceElement as Expression)
+        }
+        return a.sourceElement == sourceElement
+    }
 
     /**
      * given two ValuedObjectReferences the return value is true iff the associated indices could be evaluated to the same values
