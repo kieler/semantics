@@ -1,5 +1,5 @@
 knode operator {
-    size: width = 20 height = 20
+    size: width = 22 height = 20
     properties:
     org.eclipse.elk.portLabels.placement = INSIDE
     org.eclipse.elk.portConstraints = FIXED_ORDER
