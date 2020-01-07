@@ -26,6 +26,7 @@ import java.util.ArrayList
 import de.cau.cs.kieler.scg.extensions.SCGMethodExtensions
 import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.kexpressions.ParameterAccessType
 
 /**
  * @author ssm
@@ -92,7 +93,7 @@ class JavaCodeSerializeHRExtensions extends CCodeSerializeHRExtensions {
     override addPlatformDependentParamsToMethodCall(ArrayList<Parameter> params, MethodDeclaration declaration, ReferenceCall referenceCall) {
         if (declaration.hasSelfInParameter) {
             params.add(0, createParameter =>[
-                callByReference = true
+                accessType = ParameterAccessType.CALL_BY_REFERENCE
                 val ex = referenceCall.serializeVOR.toString
                 expression = ex.substring(0, ex.lastIndexOf(".")).asTextExpression
             ])

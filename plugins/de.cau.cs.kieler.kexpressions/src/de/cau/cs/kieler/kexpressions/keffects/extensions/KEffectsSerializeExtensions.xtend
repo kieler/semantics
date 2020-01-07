@@ -24,9 +24,7 @@ import org.eclipse.emf.common.util.EList
 import de.cau.cs.kieler.kexpressions.keffects.PrintCallEffect
 import de.cau.cs.kieler.kexpressions.PrintCall
 import de.cau.cs.kieler.kexpressions.keffects.ReferenceCallEffect
-import de.cau.cs.kieler.kexpressions.ReferenceCall
 import de.cau.cs.kieler.kexpressions.keffects.RandomizeCallEffect
-import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 
 /**
  * Serialization of KEffects.
@@ -38,7 +36,7 @@ import de.cau.cs.kieler.kexpressions.ValuedObjectReference
  */
 class KEffectsSerializeExtensions extends KExpressionsSerializeHRExtensions {
     
-    public def CharSequence serializeAssignOperator(AssignOperator operator) {
+    def CharSequence serializeAssignOperator(AssignOperator operator) {
         if (operator == AssignOperator::ASSIGNADD) {
             return " += " 
         } else 
@@ -88,7 +86,7 @@ class KEffectsSerializeExtensions extends KExpressionsSerializeHRExtensions {
         return " = "          
     }
     
-    public def CharSequence serializeAssignmentRoot(Assignment assignment) {
+    def CharSequence serializeAssignmentRoot(Assignment assignment) {
         var String res = ""
         if (assignment.reference !== null) {
             res = res + assignment.reference.serializeVOR
@@ -96,7 +94,7 @@ class KEffectsSerializeExtensions extends KExpressionsSerializeHRExtensions {
         return res        
     }
     
-    public def CharSequence serializeAssignment(Assignment assignment, CharSequence expressionStr) {
+    def CharSequence serializeAssignment(Assignment assignment, CharSequence expressionStr) {
         var res = assignment.serializeAssignmentRoot.toString
         
         if (!res.nullOrEmpty) {

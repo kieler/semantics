@@ -66,7 +66,8 @@ class SCGProcessorProvider implements IProcessorProvider {
             de.cau.cs.kieler.scg.processors.codegen.prio.java.JavaPrioCodeGenerator,
             de.cau.cs.kieler.scg.processors.analyzer.SCGExpressionComplexity,
             de.cau.cs.kieler.scg.processors.analyzer.SCGValuedObjectComplexity,
-            de.cau.cs.kieler.scg.processors.analyzer.GuardDefUseAnalyzer
+            de.cau.cs.kieler.scg.processors.analyzer.GuardDefUseAnalyzer,
+            de.cau.cs.kieler.scg.processors.optimizer.GOInitOptimizer
         ]
     }
     

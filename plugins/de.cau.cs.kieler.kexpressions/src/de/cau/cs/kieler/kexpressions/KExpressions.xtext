@@ -402,7 +402,9 @@ PrintCall returns PrintCall:
 // Additionally, a parameter may be preceded by an ampersand to indicate a call by reference.
 // Analogously, an prefixed exclamation mark marks the parameter as pure output.
 Parameter returns Parameter:
-    ((pureOutput ?= '!')? callByReference ?= '&')?
+    (accessType = ParameterAccessType
+    expression = ValuedObjectReference)
+    |
     expression = Expression;
     
 // Text Expression Rule
@@ -543,6 +545,10 @@ enum MethodReturnType returns ValueType:
     VOID="void" |
     BOOL="bool" | INT="int" | FLOAT="float" |
     STRING="string";
+    
+enum ParameterAccessType returns ParameterAccessType:
+    CALL_BY_REFERENCE = "&" | PURE_OUTPUT = "!&"
+;
 
 // -------------------- //
 //  JSON                // 

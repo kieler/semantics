@@ -298,7 +298,7 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
         }
         return null
     }
-
+    
     def hasErrors() {
         return !startEnvironment.errors.empty || processorInstancesSequence.map[environment?.errors].filterNull.exists[!empty]
     }

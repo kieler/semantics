@@ -391,4 +391,8 @@ class KExpressionsValuedObjectExtensions {
         return ref
     }
     
+    def asValuedObjectFromReference(Expression expression) {
+        expression.asValuedObjectReference.valuedObject
+    }
+    
 }
