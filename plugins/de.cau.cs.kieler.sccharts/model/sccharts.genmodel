@@ -26,10 +26,6 @@
       <genEnumLiterals ecoreEnumLiteral="sccharts.ecore#//DelayType/IMMEDIATE"/>
       <genEnumLiterals ecoreEnumLiteral="sccharts.ecore#//DelayType/AUTOMATIC"/>
     </genEnums>
-    <genEnums typeSafeEnumCompatible="false" ecoreEnum="sccharts.ecore#//ActivityType">
-      <genEnumLiterals ecoreEnumLiteral="sccharts.ecore#//ActivityType/PASSIVE"/>
-      <genEnumLiterals ecoreEnumLiteral="sccharts.ecore#//ActivityType/ACTIVE"/>
-    </genEnums>
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="sccharts.ecore#//DeferredType">
       <genEnumLiterals ecoreEnumLiteral="sccharts.ecore#//DeferredType/NONE"/>
       <genEnumLiterals ecoreEnumLiteral="sccharts.ecore#//DeferredType/SHALLOW"/>
@@ -96,7 +92,6 @@
     </genClasses>
     <genClasses ecoreClass="sccharts.ecore#//DuringAction">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute sccharts.ecore#//DuringAction/reset"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute sccharts.ecore#//DuringAction/activity"/>
     </genClasses>
     <genClasses ecoreClass="sccharts.ecore#//ExitAction">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute sccharts.ecore#//ExitAction/preemption"/>

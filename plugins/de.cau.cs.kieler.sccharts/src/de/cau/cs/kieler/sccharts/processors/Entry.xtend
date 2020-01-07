@@ -107,14 +107,16 @@ class Entry extends SCChartsProcessor implements Traceable {
             val region = state.createControlflowRegion(GENERATED_PREFIX + "Entry")
             firstState = region.createInitialState(GENERATED_PREFIX + "Init")
             lastState = region.createState(GENERATED_PREFIX + "Done")
-            lastState.final = state.outgoingTransitions.exists[!isTermination]
-            if (!state.outgoingTransitions.empty) {
-                val exitState = state.parentRegion.createState(GENERATED_PREFIX + "Exit").uniqueName
-                exitState.final = state.final // propagate final state
-                for (transition : state.outgoingTransitions.immutableCopy) {
-                    exitState.outgoingTransitions.add(transition)
+            if (preemptionType == PreemptionType.STRONG) {
+                lastState.final = state.outgoingTransitions.exists[!isTermination]
+                if (!state.outgoingTransitions.empty) {
+                    val exitState = state.parentRegion.createState(GENERATED_PREFIX + "Exit").uniqueName
+                    exitState.final = state.final // propagate final state
+                    for (transition : state.outgoingTransitions.immutableCopy) {
+                        exitState.outgoingTransitions.add(transition)
+                    }
+                    state.createTransitionTo(exitState).setTypeTermination
                 }
-                state.createTransitionTo(exitState).setTypeTermination
             }
             state.final = false // Do not create complex final state
         } else if (state.regions.filter(ControlflowRegion).size == 1) {

@@ -1791,7 +1791,6 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	 * Constraint:
 	 *     (
 	 *         delay=DelayType? 
-	 *         activity=ActivityType? 
 	 *         (triggerDelay=INT? trigger=BoolScheduleExpression triggerProbability=FLOAT?)? 
 	 *         (effects+=Effect effects+=Effect*)? 
 	 *         label=STRING?

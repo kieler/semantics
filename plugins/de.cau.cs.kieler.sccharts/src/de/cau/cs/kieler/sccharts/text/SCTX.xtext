@@ -196,7 +196,6 @@ EntryAction returns sccharts::EntryAction:
 DuringAction returns sccharts::DuringAction:
 	{sccharts::DuringAction}
     delay=DelayType?
-    activity = ActivityType? 
     'during' ('if' triggerDelay=INT? trigger=BoolScheduleExpression ('Pr=' triggerProbability=FLOAT)?)? ('do' effects+=Effect (';' effects+=Effect)*)?
     ('label' label=STRING)?;
          
@@ -333,9 +332,6 @@ enum PreemptionType returns sccharts::PreemptionType:
 enum PreemptionActionType returns sccharts::PreemptionType:
     WEAK = 'weak' | STRONG = 'strong';
 
-enum ActivityType returns sccharts::ActivityType:
-    PASSIVE = 'passive' | ACTIVE = 'active';
-    
 enum DelayType returns sccharts::DelayType:
     UNDEFINED = 'undefined' | DELAYED = 'delayed' | IMMEDIATE = 'immediate' | AUTOMATIC = 'auto';    
 

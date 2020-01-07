@@ -48,7 +48,6 @@ import de.cau.cs.kieler.scl.extensions.SCLSerializeExtensions
 import java.util.List
 import de.cau.cs.kieler.scl.MethodImplementationDeclaration
 import static de.cau.cs.kieler.sccharts.PreemptionType.*
-import static de.cau.cs.kieler.sccharts.ActivityType.*
 
 /**
  * @author ssm
@@ -118,7 +117,7 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
 
         components.addKeyword(switch action {
             EntryAction: if (action.preemption === WEAK) "weak entry" else "entry"
-            DuringAction: if (action.activity === ACTIVE) "active during" else "during"
+            DuringAction: "during"
             ExitAction: if (action.preemption === WEAK) "weak exit" else "exit"
             SuspendAction case action.isWeak: "weak suspend"
             SuspendAction: "suspend"

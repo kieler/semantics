@@ -26,9 +26,9 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.sccharts.ActivityType
 import de.cau.cs.kieler.sccharts.DuringAction
 import de.cau.cs.kieler.core.properties.Property
+import de.cau.cs.kieler.sccharts.PreemptionType
 
 /**
  * SCCharts During Transformation.
@@ -86,11 +86,10 @@ class During extends SCChartsProcessor implements Traceable {
             getProperty(DURING_USES_FINAL_REGIONS)
         val complexDuring = ((hasOutgoingTerminations || state.isRootState) && 
             !state.regions.empty && state.regionsMayTerminate)
-        val hasInnerBehavior = (state.controlflowRegions.exists[ !final ] || 
-            state.actions.filter(DuringAction).exists[ activity == ActivityType.ACTIVE ]) ||
-            // all other transitions create inner behavior.
+        val hasInnerBehavior = state.controlflowRegions.exists[ !final ] || 
             !state.outgoingTransitions.forall[ isImmediate && !termination && trigger === null ]
         val isNonRootHaltState = !state.isRootState && state.outgoingTransitions.empty
+        val hasStrongAbort = state.outgoingTransitions.exists[ preemption == PreemptionType.STRONG ]
 
         // Create the body of the dummy state - containing the during action
         // For every during action: Create a region
@@ -98,12 +97,12 @@ class During extends SCChartsProcessor implements Traceable {
             // Tracing
             duringAction.setDefaultTrace;
             
-            val activeDuringAction = duringAction.activity === ActivityType.ACTIVE
+            val activeDuringAction = (state.isRootState && !hasInnerBehavior)
             
             if (!activeDuringAction && !hasInnerBehavior && !isNonRootHaltState) {
                 // Passive during without inner behavior become entry actions if immediate or get discarded.
                 if (duringAction.isImmediate) {
-                    val entryAction = state.createEntryAction
+                    val entryAction = state.createEntryAction => [ preemption = PreemptionType.WEAK ]
                     entryAction.setTrigger(duringAction.trigger.copy)
                     for (action : duringAction.effects) {
                         entryAction.addEffect(action.copy)
@@ -114,13 +113,13 @@ class During extends SCChartsProcessor implements Traceable {
                 val region = state.createControlflowRegion(GENERATED_PREFIX + "During")
                 val initialState = region.createInitialState(GENERATED_PREFIX + "I")
                 
-                if (finalRegions && !activeDuringAction && !isNonRootHaltState) {
+                if (finalRegions && !activeDuringAction && !isNonRootHaltState && !hasStrongAbort) {
                     region.final = finalRegions
                 }
                 
                 var Transition duringTransition = null            
                 if (duringAction.isImmediate) {
-                    val secondState = region.createState(GENERATED_PREFIX + "S");
+                    val secondState = region.createState(GENERATED_PREFIX + "S")
                     duringTransition = initialState.createTransitionTo(secondState)
     
                     // because we have a second state, we need another transition
@@ -137,11 +136,11 @@ class During extends SCChartsProcessor implements Traceable {
                      initialState.setFinal
                 }
     
-                duringTransition.setDelay(duringAction.delay);
-                duringTransition.setImmediate(duringAction.isImmediate);
-                duringTransition.setTrigger(duringAction.trigger.copy);
+                duringTransition.setDelay(duringAction.delay)
+                duringTransition.setImmediate(duringAction.isImmediate)
+                duringTransition.setTrigger(duringAction.trigger.copy)
                 for (action : duringAction.effects) {
-                    duringTransition.addEffect(action.copy);
+                    duringTransition.addEffect(action.copy)
                 }
             
             }

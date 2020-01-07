@@ -18,7 +18,6 @@ import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage;
 import de.cau.cs.kieler.kexpressions.kext.KExtPackage;
 import de.cau.cs.kieler.sccharts.Action;
-import de.cau.cs.kieler.sccharts.ActivityType;
 import de.cau.cs.kieler.sccharts.CodeEffect;
 import de.cau.cs.kieler.sccharts.ControlflowRegion;
 import de.cau.cs.kieler.sccharts.DataflowAssignment;
@@ -219,13 +218,6 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * @generated
      */
     private EEnum delayTypeEEnum = null;
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    private EEnum activityTypeEEnum = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -788,16 +780,6 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * @generated
      */
     @Override
-    public EAttribute getDuringAction_Activity() {
-        return (EAttribute)duringActionEClass.getEStructuralFeatures().get(1);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
     public EClass getExitAction() {
         return exitActionEClass;
     }
@@ -968,16 +950,6 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * @generated
      */
     @Override
-    public EEnum getActivityType() {
-        return activityTypeEEnum;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
     public EEnum getDeferredType() {
         return deferredTypeEEnum;
     }
@@ -1073,7 +1045,6 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
 
         duringActionEClass = createEClass(DURING_ACTION);
         createEAttribute(duringActionEClass, DURING_ACTION__RESET);
-        createEAttribute(duringActionEClass, DURING_ACTION__ACTIVITY);
 
         exitActionEClass = createEClass(EXIT_ACTION);
         createEAttribute(exitActionEClass, EXIT_ACTION__PREEMPTION);
@@ -1097,7 +1068,6 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         preemptionTypeEEnum = createEEnum(PREEMPTION_TYPE);
         historyTypeEEnum = createEEnum(HISTORY_TYPE);
         delayTypeEEnum = createEEnum(DELAY_TYPE);
-        activityTypeEEnum = createEEnum(ACTIVITY_TYPE);
         deferredTypeEEnum = createEEnum(DEFERRED_TYPE);
     }
 
@@ -1226,7 +1196,6 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
 
         initEClass(duringActionEClass, DuringAction.class, "DuringAction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getDuringAction_Reset(), this.getDelayType(), "reset", "UNDEFINED", 1, 1, DuringAction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getDuringAction_Activity(), this.getActivityType(), "activity", "PASSIVE", 0, 1, DuringAction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(exitActionEClass, ExitAction.class, "ExitAction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getExitAction_Preemption(), this.getPreemptionType(), "preemption", "STRONG", 0, 1, ExitAction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1263,10 +1232,6 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         addEEnumLiteral(delayTypeEEnum, DelayType.DELAYED);
         addEEnumLiteral(delayTypeEEnum, DelayType.IMMEDIATE);
         addEEnumLiteral(delayTypeEEnum, DelayType.AUTOMATIC);
-
-        initEEnum(activityTypeEEnum, ActivityType.class, "ActivityType");
-        addEEnumLiteral(activityTypeEEnum, ActivityType.PASSIVE);
-        addEEnumLiteral(activityTypeEEnum, ActivityType.ACTIVE);
 
         initEEnum(deferredTypeEEnum, DeferredType.class, "DeferredType");
         addEEnumLiteral(deferredTypeEEnum, DeferredType.NONE);

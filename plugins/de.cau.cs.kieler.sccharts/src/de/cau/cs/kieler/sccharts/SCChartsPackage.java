@@ -1533,22 +1533,13 @@ public interface SCChartsPackage extends EPackage {
     int DURING_ACTION__RESET = LOCAL_ACTION_FEATURE_COUNT + 0;
 
     /**
-     * The feature id for the '<em><b>Activity</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int DURING_ACTION__ACTIVITY = LOCAL_ACTION_FEATURE_COUNT + 1;
-
-    /**
      * The number of structural features of the '<em>During Action</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int DURING_ACTION_FEATURE_COUNT = LOCAL_ACTION_FEATURE_COUNT + 2;
+    int DURING_ACTION_FEATURE_COUNT = LOCAL_ACTION_FEATURE_COUNT + 1;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.ExitActionImpl <em>Exit Action</em>}' class.
@@ -2435,16 +2426,6 @@ public interface SCChartsPackage extends EPackage {
 
 
     /**
-     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.ActivityType <em>Activity Type</em>}' enum.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.sccharts.ActivityType
-     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getActivityType()
-     * @generated
-     */
-    int ACTIVITY_TYPE = 22;
-
-    /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.DeferredType <em>Deferred Type</em>}' enum.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2452,7 +2433,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getDeferredType()
      * @generated
      */
-    int DEFERRED_TYPE = 23;
+    int DEFERRED_TYPE = 22;
 
 
     /**
@@ -3005,17 +2986,6 @@ public interface SCChartsPackage extends EPackage {
     EAttribute getDuringAction_Reset();
 
     /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.DuringAction#getActivity <em>Activity</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Activity</em>'.
-     * @see de.cau.cs.kieler.sccharts.DuringAction#getActivity()
-     * @see #getDuringAction()
-     * @generated
-     */
-    EAttribute getDuringAction_Activity();
-
-    /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.ExitAction <em>Exit Action</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -3158,16 +3128,6 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      */
     EEnum getDelayType();
-
-    /**
-     * Returns the meta object for enum '{@link de.cau.cs.kieler.sccharts.ActivityType <em>Activity Type</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for enum '<em>Activity Type</em>'.
-     * @see de.cau.cs.kieler.sccharts.ActivityType
-     * @generated
-     */
-    EEnum getActivityType();
 
     /**
      * Returns the meta object for enum '{@link de.cau.cs.kieler.sccharts.DeferredType <em>Deferred Type</em>}'.
@@ -3634,14 +3594,6 @@ public interface SCChartsPackage extends EPackage {
         EAttribute DURING_ACTION__RESET = eINSTANCE.getDuringAction_Reset();
 
         /**
-         * The meta object literal for the '<em><b>Activity</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute DURING_ACTION__ACTIVITY = eINSTANCE.getDuringAction_Activity();
-
-        /**
          * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.ExitActionImpl <em>Exit Action</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -3772,16 +3724,6 @@ public interface SCChartsPackage extends EPackage {
          * @generated
          */
         EEnum DELAY_TYPE = eINSTANCE.getDelayType();
-
-        /**
-         * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.ActivityType <em>Activity Type</em>}' enum.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @see de.cau.cs.kieler.sccharts.ActivityType
-         * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getActivityType()
-         * @generated
-         */
-        EEnum ACTIVITY_TYPE = eINSTANCE.getActivityType();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.DeferredType <em>Deferred Type</em>}' enum.
