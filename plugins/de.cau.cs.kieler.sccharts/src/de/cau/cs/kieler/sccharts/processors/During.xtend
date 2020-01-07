@@ -27,8 +27,8 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.sccharts.ActivityType
-import de.cau.cs.kieler.sccharts.EntryAction
 import de.cau.cs.kieler.sccharts.DuringAction
+import de.cau.cs.kieler.core.properties.Property
 
 /**
  * SCCharts During Transformation.
@@ -44,6 +44,9 @@ class During extends SCChartsProcessor implements Traceable {
     @Inject extension SCChartsStateExtensions
     @Inject extension SCChartsActionExtensions
     @Inject extension SCChartsTransitionExtensions
+    
+    public static val DURING_USES_FINAL_REGIONS = 
+       new Property<Boolean>("de.cau.cs.kieler.sccharts.during.finalRegions", true)    
 
     override getId() {
         "de.cau.cs.kieler.sccharts.processors.duringAction"
@@ -79,13 +82,15 @@ class During extends SCChartsProcessor implements Traceable {
         // If the state has outgoing terminations, we need to finalize the during
         // actions in case we end the states over these transitions
         // als 21-08-2019: BUT if the state has ONLY during actions, these actions are the only behavior and should not terminate
-        val finalRegions = getProperty(FinalRegion.COMPILATION_SUPPORTS_FINAL_REGIONS)
+        val finalRegions = getProperty(FinalRegion.COMPILATION_SUPPORTS_FINAL_REGIONS) &&
+            getProperty(DURING_USES_FINAL_REGIONS)
         val complexDuring = ((hasOutgoingTerminations || state.isRootState) && 
             !state.regions.empty && state.regionsMayTerminate)
         val hasInnerBehavior = (state.controlflowRegions.exists[ !final ] || 
             state.actions.filter(DuringAction).exists[ activity == ActivityType.ACTIVE ]) ||
             // all other transitions create inner behavior.
             !state.outgoingTransitions.forall[ isImmediate && !termination && trigger === null ]
+        val isNonRootHaltState = !state.isRootState && state.outgoingTransitions.empty
 
         // Create the body of the dummy state - containing the during action
         // For every during action: Create a region
@@ -95,7 +100,7 @@ class During extends SCChartsProcessor implements Traceable {
             
             val activeDuringAction = duringAction.activity === ActivityType.ACTIVE
             
-            if (!activeDuringAction && !hasInnerBehavior) {
+            if (!activeDuringAction && !hasInnerBehavior && !isNonRootHaltState) {
                 // Passive during without inner behavior become entry actions if immediate or get discarded.
                 if (duringAction.isImmediate) {
                     val entryAction = state.createEntryAction
@@ -109,7 +114,7 @@ class During extends SCChartsProcessor implements Traceable {
                 val region = state.createControlflowRegion(GENERATED_PREFIX + "During")
                 val initialState = region.createInitialState(GENERATED_PREFIX + "I")
                 
-                if (finalRegions && !activeDuringAction) {
+                if (finalRegions && !activeDuringAction && !isNonRootHaltState) {
                     region.final = finalRegions
                 }
                 
