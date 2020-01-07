@@ -41,6 +41,7 @@ import java.util.Collection
 import de.cau.cs.kieler.kexpressions.keffects.DataDependency
 import de.cau.cs.kieler.scg.extensions.SCGDependencyExtensions
 import de.cau.cs.kieler.scg.extensions.SCGMethodExtensions
+import de.cau.cs.kieler.kexpressions.keffects.ControlDependency
 
 /**
  * @author ssm
@@ -194,6 +195,7 @@ class StructuralDepthJoinProcessor extends InplaceProcessor<SCGraphs> {
         for(pNode : pilNodes) {
             val sNode = pNode.copyNode(true)
             sNode.schizophrenic = true
+            sNode.dependencies.filter(ControlDependency).toList.forEach[ target = null; remove ]
             schizoMapping.put(pNode, sNode)
                         
             scg.nodes += sNode
@@ -268,7 +270,6 @@ class StructuralDepthJoinProcessor extends InplaceProcessor<SCGraphs> {
         for (entry : entries) {
             if (node.isInSurface(entry)) return true
         }
-        println(node + " is not in a surface.")
         return false
     }
     

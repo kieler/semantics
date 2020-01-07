@@ -28,9 +28,6 @@ import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.scg.Depth
 import de.cau.cs.kieler.scg.extensions.SCGDependencyExtensions
 import de.cau.cs.kieler.scg.extensions.SCGMethodExtensions
-import de.cau.cs.kieler.scg.SCGraph
-import java.util.List
-import de.cau.cs.kieler.kexpressions.keffects.Dependency
 import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 
 /** 
@@ -41,7 +38,6 @@ import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 class LoopAnalyzerV2 extends InplaceProcessor<SCGraphs> {
 	
 	@Inject extension SCGControlFlowExtensions
-	@Inject extension SCGThreadExtensions
 	@Inject extension SCGDependencyExtensions
     @Inject extension SCGMethodExtensions
 	@Inject extension TarjanSCC
@@ -96,9 +92,7 @@ class LoopAnalyzerV2 extends InplaceProcessor<SCGraphs> {
         
 
         for (scg : model.scgs.ignoreMethods) {
-            val passiveDependencies = preProcessFinalRegions(scg, threadData)
             scg.findSCCs(loopData, environment.getProperty(LOOP_ANALYZER_CONSIDER_ALL_DEPENDENCIES))
-            passiveDependencies.forEach[ remove ] 
         }
        
         if (!loopData.criticalNodes.empty) {
@@ -193,25 +187,6 @@ class LoopAnalyzerV2 extends InplaceProcessor<SCGraphs> {
             nodes.addAll(iter)
         } 
         nodes
-    }
-    
-    private def List<Dependency> preProcessFinalRegions(SCGraph scg, ThreadData threadData) {
-        val frDependencies = <Dependency> newLinkedList
-        if (!getProperty(LOOP_ANALYZER_FINAL_REGIONS_ENABLED)) return frDependencies;
-        
-        val frEntries = threadData.data.keySet.filter[ exit.final ].toList
-        
-        for (entry : frEntries) {
-            val surfaceNodes = entry.getShallowSurfaceThreadNodes
-            val surfacePredecessors = surfaceNodes.filter(Surface).map[ allPrevious ].flatten.map[ eContainer ].filter(Node).
-                filter[ surfaceNodes.contains(it) ].filter[ !(it instanceof Entry) ].filter[ !schizophrenic ].toList
-            
-            for (sp : surfacePredecessors) {
-                frDependencies += sp.createControlDependency(entry.exit)
-            }
-        }
-        
-        return frDependencies
     }
     
 }
