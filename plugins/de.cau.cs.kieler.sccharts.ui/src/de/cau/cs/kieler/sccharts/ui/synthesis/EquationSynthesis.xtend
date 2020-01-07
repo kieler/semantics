@@ -898,7 +898,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                 setAsExpandedView;
                 addDoubleClickAction(ReferenceExpandAction::ID);
             ]
-            newNode.createLabel.configureInsideCenteredNodeLabel(label, INPUT_OUTPUT_TEXT_SIZE)
+            newNode.addNodeLabel(label)
         }
 
         newNode.setLayoutOption(LayeredOptions::NODE_SIZE_CONSTRAINTS,
