@@ -49,6 +49,8 @@ import de.cau.cs.kieler.kexpressions.MethodDeclaration
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import java.util.ArrayList
 import de.cau.cs.kieler.kexpressions.Parameter
+import de.cau.cs.kieler.kexpressions.ParameterAccessType
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCallExtensions
 
 /**
  * @author ssm
@@ -71,6 +73,7 @@ class CCodeSerializeHRExtensions extends CodeGeneratorSerializeHRExtensions {
     @Inject extension KExpressionsCreateExtensions
     @Inject extension KExtDeclarationExtensions
     @Inject extension KExpressionsTypeExtensions
+    @Inject extension KExpressionsCallExtensions
     @Inject extension SCGMethodExtensions
     
     @Accessors var String valuedObjectPrefix = ""
@@ -329,7 +332,7 @@ class CCodeSerializeHRExtensions extends CodeGeneratorSerializeHRExtensions {
     def addPlatformDependentParamsToMethodCall(ArrayList<Parameter> params, MethodDeclaration declaration, ReferenceCall referenceCall) {
         if (declaration.hasSelfInParameter) {
             params.add(0, createParameter =>[
-                callByReference = true
+                accessType = ParameterAccessType.CALL_BY_REFERENCE
                 val ex = referenceCall.serializeVOR.toString
                 expression = ("(" + valuedObjectPrefix + ex.substring(0, ex.lastIndexOf(".")) + ")").asTextExpression
             ])
@@ -376,10 +379,10 @@ class CCodeSerializeHRExtensions extends CodeGeneratorSerializeHRExtensions {
             if (cnt > 0) {
                 sb.append(", ")
             }
-            if (par.callByReference) {
+            if (par.isOutput) {
                 sb.append("&")
             }
-            if (par.expression instanceof ValuedObjectReference && par.callByReference) {
+            if (par.expression instanceof ValuedObjectReference && par.isOutput) {
                 sb.append("(").append(par.expression.serialize).append(")")
             } else {
                 sb.append(par.expression.serialize)
@@ -388,5 +391,27 @@ class CCodeSerializeHRExtensions extends CodeGeneratorSerializeHRExtensions {
         }
         sb.append(")") 
         return sb.toString      
-    }       
+    }     
+    
+    override CharSequence serializeHRParameters(List<Parameter> parameters) {
+        val sb = new StringBuilder
+        sb.append("(")
+        var cnt = 0
+        for (par : parameters) {
+            if (cnt > 0) {
+                sb.append(", ")
+            }
+            if (par.isOutput) {
+                sb.append("&")
+            }
+            if (par.expression instanceof ValuedObjectReference && par.isOutput) {
+                sb.append("(").append(par.expression.serialize).append(")")
+            } else {
+                sb.append(par.expression.serialize)
+            }
+            cnt = cnt + 1
+        }
+        sb.append(")") 
+        return sb.toString      
+    }        
 }

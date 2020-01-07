@@ -12,25 +12,21 @@
  */
 package de.cau.cs.kieler.kicool.ui.view.actions
 
+import de.cau.cs.kieler.kicool.compilation.CompilationContext
 import de.cau.cs.kieler.kicool.compilation.Compile
+import de.cau.cs.kieler.kicool.deploy.processor.AbstractSystemCompilerProcessor
+import de.cau.cs.kieler.kicool.environments.Environment
+import de.cau.cs.kieler.kicool.kitt.tracing.Tracing
+import de.cau.cs.kieler.kicool.ui.klighd.ModelReaderUtil
+import de.cau.cs.kieler.kicool.ui.synthesis.actions.ToggleProcessorOnOffAction
+import de.cau.cs.kieler.kicool.ui.view.CompilerView
 import org.eclipse.jface.action.Action
 import org.eclipse.jface.action.IAction
 import org.eclipse.jface.resource.ImageDescriptor
 import org.eclipse.ui.plugin.AbstractUIPlugin
 import org.eclipse.xtend.lib.annotations.Accessors
-import de.cau.cs.kieler.kicool.ui.view.CompilerView
-import org.eclipse.xtext.ui.editor.XtextEditor
-import org.eclipse.xtext.util.concurrent.IUnitOfWork
-import org.eclipse.emf.ecore.EObject
-import org.eclipse.xtext.resource.XtextResource
-import de.cau.cs.kieler.kicool.compilation.CompilationContext
-import de.cau.cs.kieler.kicool.ui.synthesis.actions.ToggleProcessorOnOffAction
-import de.cau.cs.kieler.kicool.environments.Environment
-import org.eclipse.ui.IEditorPart
+
 import static extension de.cau.cs.kieler.kicool.ui.view.EditPartSystemManager.*
-import de.cau.cs.kieler.kicool.kitt.tracing.Tracing
-import org.eclipse.ui.editors.text.TextEditor
-import de.cau.cs.kieler.kicool.ui.klighd.ModelReaderUtil
 
 /**
  * @author ssm
@@ -83,6 +79,7 @@ class CompilationAction {
         }
         if (view.developerToggle.checked) {
             cc.startEnvironment.setProperty(Environment.DEVELOPER_MODE, true)
+            cc.startEnvironment.setProperty(AbstractSystemCompilerProcessor.VERBOSE, true)
         }
         cc.stopOnError = !view.developerToggle.checked
         cc.deactiveDisabledProcessors

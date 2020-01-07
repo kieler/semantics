@@ -12,6 +12,7 @@ import de.cau.cs.kieler.scg.Assignment
 import java.util.List
 import de.cau.cs.kieler.kexpressions.RandomCall
 import de.cau.cs.kieler.kexpressions.RandomizeCall
+import de.cau.cs.kieler.kexpressions.ParameterAccessType
 
 /**
  * @author ssm
@@ -84,12 +85,12 @@ class SCGSerializeHRExtensions extends KEffectsSerializeHRExtensions {
             if (cnt > 0) {
                 funcCall = funcCall + ", "
             }
-            if (par.pureOutput) {
-                funcCall = funcCall + "!"
+            if (par.accessType === ParameterAccessType.PURE_OUTPUT) {
+                funcCall = funcCall + "!&"
             }
-            if (par.callByReference) {
+            else if (par.accessType === ParameterAccessType.CALL_BY_REFERENCE) {
                 funcCall = funcCall + "&"
-            }
+            }            
             funcCall = funcCall + par.expression.serialize
             cnt = cnt + 1
         }

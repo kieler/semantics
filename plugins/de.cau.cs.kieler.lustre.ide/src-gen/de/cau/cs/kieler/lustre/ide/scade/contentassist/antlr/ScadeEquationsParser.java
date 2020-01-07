@@ -64,6 +64,7 @@ public class ScadeEquationsParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getWhenExpressionAccess().getAlternatives(), "rule__WhenExpression__Alternatives");
 			builder.put(grammarAccess.getCurrentExpressionAccess().getAlternatives(), "rule__CurrentExpression__Alternatives");
 			builder.put(grammarAccess.getPreExpressionAccess().getAlternatives(), "rule__PreExpression__Alternatives");
+			builder.put(grammarAccess.getLastExpressionAccess().getAlternatives(), "rule__LastExpression__Alternatives");
 			builder.put(grammarAccess.getTernaryOperationAccess().getAlternatives(), "rule__TernaryOperation__Alternatives");
 			builder.put(grammarAccess.getAtomicExpressionAccess().getAlternatives(), "rule__AtomicExpression__Alternatives");
 			builder.put(grammarAccess.getNorAtMostOneExpressionAccess().getAlternatives_1(), "rule__NorAtMostOneExpression__Alternatives_1");
@@ -96,6 +97,7 @@ public class ScadeEquationsParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getReferenceCallAccess().getAlternatives_3(), "rule__ReferenceCall__Alternatives_3");
 			builder.put(grammarAccess.getFunctionCallAccess().getAlternatives_2(), "rule__FunctionCall__Alternatives_2");
 			builder.put(grammarAccess.getPrintCallAccess().getAlternatives_2(), "rule__PrintCall__Alternatives_2");
+			builder.put(grammarAccess.getParameterAccess().getAlternatives(), "rule__Parameter__Alternatives");
 			builder.put(grammarAccess.getVectorValueMemberAccess().getAlternatives(), "rule__VectorValueMember__Alternatives");
 			builder.put(grammarAccess.getAnyTypeAccess().getAlternatives(), "rule__AnyType__Alternatives");
 			builder.put(grammarAccess.getAnyValueAccess().getAlternatives(), "rule__AnyValue__Alternatives");
@@ -120,6 +122,7 @@ public class ScadeEquationsParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getCombineOperatorAccess().getAlternatives(), "rule__CombineOperator__Alternatives");
 			builder.put(grammarAccess.getAccessModifierAccess().getAlternatives(), "rule__AccessModifier__Alternatives");
 			builder.put(grammarAccess.getMethodReturnTypeAccess().getAlternatives(), "rule__MethodReturnType__Alternatives");
+			builder.put(grammarAccess.getParameterAccessTypeAccess().getAlternatives(), "rule__ParameterAccessType__Alternatives");
 			builder.put(grammarAccess.getScadeEquationAccess().getGroup(), "rule__ScadeEquation__Group__0");
 			builder.put(grammarAccess.getScadeEquationAccess().getGroup_0_0(), "rule__ScadeEquation__Group_0_0__0");
 			builder.put(grammarAccess.getScadeEquationAccess().getGroup_0_0_4(), "rule__ScadeEquation__Group_0_0_4__0");
@@ -204,6 +207,7 @@ public class ScadeEquationsParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getWhenExpressionAccess().getGroup_0(), "rule__WhenExpression__Group_0__0");
 			builder.put(grammarAccess.getCurrentExpressionAccess().getGroup_0(), "rule__CurrentExpression__Group_0__0");
 			builder.put(grammarAccess.getPreExpressionAccess().getGroup_0(), "rule__PreExpression__Group_0__0");
+			builder.put(grammarAccess.getLastExpressionAccess().getGroup_0(), "rule__LastExpression__Group_0__0");
 			builder.put(grammarAccess.getInitExpressionAccess().getGroup(), "rule__InitExpression__Group__0");
 			builder.put(grammarAccess.getInitExpressionAccess().getGroup_1(), "rule__InitExpression__Group_1__0");
 			builder.put(grammarAccess.getInitExpressionAccess().getGroup_1_1(), "rule__InitExpression__Group_1_1__0");
@@ -394,7 +398,6 @@ public class ScadeEquationsParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getPrintCallAccess().getGroup(), "rule__PrintCall__Group__0");
 			builder.put(grammarAccess.getPrintCallAccess().getGroup_2_0(), "rule__PrintCall__Group_2_0__0");
 			builder.put(grammarAccess.getPrintCallAccess().getGroup_2_0_2(), "rule__PrintCall__Group_2_0_2__0");
-			builder.put(grammarAccess.getParameterAccess().getGroup(), "rule__Parameter__Group__0");
 			builder.put(grammarAccess.getParameterAccess().getGroup_0(), "rule__Parameter__Group_0__0");
 			builder.put(grammarAccess.getTextExpressionAccess().getGroup(), "rule__TextExpression__Group__0");
 			builder.put(grammarAccess.getVectorValueAccess().getGroup(), "rule__VectorValue__Group__0");
@@ -556,6 +559,8 @@ public class ScadeEquationsParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getCurrentExpressionAccess().getSubExpressionsAssignment_0_2(), "rule__CurrentExpression__SubExpressionsAssignment_0_2");
 			builder.put(grammarAccess.getPreExpressionAccess().getOperatorAssignment_0_1(), "rule__PreExpression__OperatorAssignment_0_1");
 			builder.put(grammarAccess.getPreExpressionAccess().getSubExpressionsAssignment_0_2(), "rule__PreExpression__SubExpressionsAssignment_0_2");
+			builder.put(grammarAccess.getLastExpressionAccess().getOperatorAssignment_0_1(), "rule__LastExpression__OperatorAssignment_0_1");
+			builder.put(grammarAccess.getLastExpressionAccess().getSubExpressionsAssignment_0_2(), "rule__LastExpression__SubExpressionsAssignment_0_2");
 			builder.put(grammarAccess.getInitExpressionAccess().getOperatorAssignment_1_1_0(), "rule__InitExpression__OperatorAssignment_1_1_0");
 			builder.put(grammarAccess.getInitExpressionAccess().getSubExpressionsAssignment_1_1_1(), "rule__InitExpression__SubExpressionsAssignment_1_1_1");
 			builder.put(grammarAccess.getInitExpressionAccess().getSubExpressionsAssignment_1_2_1(), "rule__InitExpression__SubExpressionsAssignment_1_2_1");
@@ -823,8 +828,8 @@ public class ScadeEquationsParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getFunctionCallAccess().getParametersAssignment_2_0_2_1(), "rule__FunctionCall__ParametersAssignment_2_0_2_1");
 			builder.put(grammarAccess.getPrintCallAccess().getParametersAssignment_2_0_1(), "rule__PrintCall__ParametersAssignment_2_0_1");
 			builder.put(grammarAccess.getPrintCallAccess().getParametersAssignment_2_0_2_1(), "rule__PrintCall__ParametersAssignment_2_0_2_1");
-			builder.put(grammarAccess.getParameterAccess().getPureOutputAssignment_0_0(), "rule__Parameter__PureOutputAssignment_0_0");
-			builder.put(grammarAccess.getParameterAccess().getCallByReferenceAssignment_0_1(), "rule__Parameter__CallByReferenceAssignment_0_1");
+			builder.put(grammarAccess.getParameterAccess().getAccessTypeAssignment_0_0(), "rule__Parameter__AccessTypeAssignment_0_0");
+			builder.put(grammarAccess.getParameterAccess().getExpressionAssignment_0_1(), "rule__Parameter__ExpressionAssignment_0_1");
 			builder.put(grammarAccess.getParameterAccess().getExpressionAssignment_1(), "rule__Parameter__ExpressionAssignment_1");
 			builder.put(grammarAccess.getTextExpressionAccess().getAnnotationsAssignment_0(), "rule__TextExpression__AnnotationsAssignment_0");
 			builder.put(grammarAccess.getTextExpressionAccess().getTextAssignment_1(), "rule__TextExpression__TextAssignment_1");

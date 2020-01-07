@@ -108,7 +108,9 @@ class JavaCompiler extends AbstractSystemCompilerProcessor<Object, ExecutableCon
 //        val cp = environment.getAdditionalResources(Type.CLASSPATH, false)
         
         val javac = newArrayList(environment.getProperty(JAVAC_PATH)?:JAVAC_PATH.^default)
-        javac += "-verbose"
+        if (environment.getProperty(VERBOSE)) {
+            javac += "-verbose"
+        }
 //        javac += "-cp"
 //        if (cp.empty) {
 //            javac += "."
@@ -154,7 +156,7 @@ class JavaCompiler extends AbstractSystemCompilerProcessor<Object, ExecutableCon
             logger.println("Jar entry point: " + entryPoint)            
             
             val jar = newArrayList(environment.getProperty(JAR_PATH)?:JAR_PATH.^default)
-            jar += "cvfe"
+            jar += environment.getProperty(VERBOSE) ? "cvfe" : "cfe"
             jar += targetJarPath
             jar += entryPoint
             // TODO add classpath to manifest

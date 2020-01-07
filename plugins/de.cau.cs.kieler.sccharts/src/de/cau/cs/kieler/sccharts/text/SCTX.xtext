@@ -70,8 +70,10 @@ ScopeCall returns sccharts::ScopeCall:
     (('(' parameters += ScopeParameter (',' parameters += ScopeParameter)* ')') | '(' ')')?;
     
 ScopeParameter returns kexpressions::Parameter:
-    ((pureOutput ?= '!')? callByReference ?= '&')?
-    expression = Expression
+    ((accessType = ParameterAccessType
+    expression = ValuedObjectReference)
+    |
+    expression = Expression)
     ('to' explicitBinding = [kexpressions::ValuedObject|ID] ('[' explicitBindingIndices+=Expression ']')*)?
     ;    
     
@@ -145,6 +147,12 @@ ControlflowRegion returns sccharts::ControlflowRegion:
         ))
     ));
 
+DataflowAssignment returns sccharts::DataflowAssignment:
+    (annotations+=Annotation)*    
+    reference=ValuedObjectReference
+    operator=AssignOperator expression = Expression
+    ('schedule' schedule+=ScheduleObjectReference+)?
+    sequential?='seq'?;
     
 DataflowRegion returns sccharts::DataflowRegion:
     {sccharts::DataflowRegion}
@@ -157,12 +165,12 @@ DataflowRegion returns sccharts::DataflowRegion:
     ((
         '{'
         declarations+=DeclarationWOSemicolon*
-        equations+=Assignment*
+        equations+=(DataflowAssignment|Assignment)*
         '}'
     )|(
         ':'
         declarations+=DeclarationWOSemicolon*
-        equations+=Assignment*
+        equations+=(DataflowAssignment|Assignment)*
     ));
     
 IntOrReference returns kexpressions::Expression:

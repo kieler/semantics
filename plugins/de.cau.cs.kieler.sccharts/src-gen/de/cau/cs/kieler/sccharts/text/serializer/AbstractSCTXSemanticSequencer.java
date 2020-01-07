@@ -54,6 +54,7 @@ import de.cau.cs.kieler.kexpressions.kext.Kext;
 import de.cau.cs.kieler.kexpressions.kext.TestEntity;
 import de.cau.cs.kieler.sccharts.CodeEffect;
 import de.cau.cs.kieler.sccharts.ControlflowRegion;
+import de.cau.cs.kieler.sccharts.DataflowAssignment;
 import de.cau.cs.kieler.sccharts.DataflowRegion;
 import de.cau.cs.kieler.sccharts.DuringAction;
 import de.cau.cs.kieler.sccharts.EntryAction;
@@ -1242,6 +1243,9 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 					return; 
 				}
 				else break;
+			case SCChartsPackage.DATAFLOW_ASSIGNMENT:
+				sequence_DataflowAssignment(context, (DataflowAssignment) semanticObject); 
+				return; 
 			case SCChartsPackage.DATAFLOW_REGION:
 				sequence_DataflowRegion(context, (DataflowRegion) semanticObject); 
 				return; 
@@ -1745,6 +1749,25 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	
 	/**
 	 * Contexts:
+	 *     DataflowAssignment returns DataflowAssignment
+	 *
+	 * Constraint:
+	 *     (
+	 *         annotations+=Annotation* 
+	 *         reference=ValuedObjectReference 
+	 *         operator=AssignOperator 
+	 *         expression=Expression 
+	 *         schedule+=ScheduleObjectReference* 
+	 *         sequential?='seq'?
+	 *     )
+	 */
+	protected void sequence_DataflowAssignment(ISerializationContext context, DataflowAssignment semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     Region returns DataflowRegion
 	 *     DataflowRegion returns DataflowRegion
 	 *
@@ -1757,7 +1780,10 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	 *         (counterVariable=CounterVariable forStart=IntOrReference forEnd=IntOrReference?)? 
 	 *         schedule+=ScheduleObjectReference* 
 	 *         once?='once'? 
-	 *         ((declarations+=DeclarationWOSemicolon* equations+=Assignment*) | (declarations+=DeclarationWOSemicolon* equations+=Assignment*))
+	 *         (
+	 *             (declarations+=DeclarationWOSemicolon* (equations+=DataflowAssignment | equations+=Assignment)*) | 
+	 *             (declarations+=DeclarationWOSemicolon* (equations+=DataflowAssignment | equations+=Assignment)*)
+	 *         )
 	 *     )
 	 */
 	protected void sequence_DataflowRegion(ISerializationContext context, DataflowRegion semanticObject) {
@@ -2036,7 +2062,10 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	 *     ScopeParameter returns Parameter
 	 *
 	 * Constraint:
-	 *     ((pureOutput?='!'? callByReference?='&')? expression=Expression (explicitBinding=[ValuedObject|ID] explicitBindingIndices+=Expression*)?)
+	 *     (
+	 *         ((accessType=ParameterAccessType expression=ValuedObjectReference) | expression=Expression) 
+	 *         (explicitBinding=[ValuedObject|ID] explicitBindingIndices+=Expression*)?
+	 *     )
 	 */
 	protected void sequence_ScopeParameter(ISerializationContext context, de.cau.cs.kieler.kexpressions.Parameter semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

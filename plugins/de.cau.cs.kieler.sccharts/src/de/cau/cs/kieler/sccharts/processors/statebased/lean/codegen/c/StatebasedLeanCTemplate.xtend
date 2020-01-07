@@ -206,10 +206,11 @@ class StatebasedLeanCTemplate extends AbstractStatebasedLeanTemplate {
     }
     
     protected def CharSequence addSimpleStateCode(State state) {
-        val hasDefaultTransition = state.outgoingTransitions.exists[ trigger === null && 
-            delay == DelayType.IMMEDIATE && preemption != PreemptionType.TERMINATION
-        ]
-        
+        val defaultTransition = state.outgoingTransitions.indexed.findFirst[ value.trigger === null && 
+            value.delay == DelayType.IMMEDIATE && value.preemption != PreemptionType.TERMINATION]
+        val hasDefaultTransition = defaultTransition !== null
+        val defaultTransitionIndex = if (hasDefaultTransition) defaultTransition.key else -1    
+            
         if (state.isFinal) {
         '''  context->threadStatus = TERMINATED;''' 
         } else {
@@ -221,7 +222,7 @@ class StatebasedLeanCTemplate extends AbstractStatebasedLeanTemplate {
         « addTransitionEffectCode(state.outgoingTransitions.head, "  ") »
         « ELSE »
           « FOR t : state.outgoingTransitions.indexed »
-          « addTransitionConditionCode(t.key, state.outgoingTransitions.size, t.value, hasDefaultTransition) » 
+          « addTransitionConditionCode(t.key, state.outgoingTransitions.size, t.value, defaultTransitionIndex) » 
           « ENDFOR »
             « IF !hasDefaultTransition »
               « IF state.outgoingTransitions.size == 0 »
@@ -248,8 +249,13 @@ class StatebasedLeanCTemplate extends AbstractStatebasedLeanTemplate {
     }
     
     protected def CharSequence addTransitionConditionCode(int index, int count, Transition transition, 
-        boolean hasDefaultTransition
+        int defaultTransitionIndex
     ) {
+        val hasDefaultTransition = defaultTransitionIndex >= 0
+        
+        // This transition can be skipped if there is a default transition which has already been processed
+        if (hasDefaultTransition && defaultTransitionIndex < index) return "";
+        
         valuedObjectPrefix = "context->iface->"
         val defaultTransition = transition.trigger === null && transition.delay == DelayType.IMMEDIATE;
         var CharSequence condition = ""
@@ -268,7 +274,6 @@ class StatebasedLeanCTemplate extends AbstractStatebasedLeanTemplate {
                     else condition = "context->delayedEnabled && (" + transition.trigger.serializeHR + ")"
             }  
         }
-        
         valuedObjectPrefix = ""
         
         '''
@@ -278,7 +283,7 @@ class StatebasedLeanCTemplate extends AbstractStatebasedLeanTemplate {
           } else «IF !(defaultTransition) »if (« condition ») « ENDIF»{
         « ENDIF » 
         « addTransitionEffectCode(transition, "    ") »
-          « IF index == count-1 && hasDefaultTransition »
+          « IF (index == count-1 && hasDefaultTransition) || (index == defaultTransitionIndex) »
           }
         « ENDIF »
         '''

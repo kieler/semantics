@@ -35,6 +35,7 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.ParameterAccessType
 
 /**
  * SCCharts Enforcer Transformation.
@@ -268,7 +269,7 @@ class EnforcerTransformation { //extends AbstractExpansionTransformation impleme
         outputs.forEach[ input |
             KExpressionsFactory.eINSTANCE.createParameter => [
                 it.expression = input.reference
-                it.callByReference = true
+                it.accessType = ParameterAccessType.CALL_BY_REFERENCE
                 tickCallEffect.parameters += it
             ]
         ]

@@ -128,7 +128,7 @@ class CSimulationTemplateGenerator extends AbstractSimulationTemplateGenerator {
                 cJSON *root = cJSON_Parse(buffer);
                 cJSON *item = NULL;
                 if(root != NULL) {
-                    «FOR v : store.orderedVariables.dropBlacklisted.filter[!value.encapsulated && !value.container]»
+                    «FOR v : store.orderedVariables.dropHostTypes.dropBlacklisted.filter[!value.encapsulated && !value.container]»
                         // Receive «v.key»
                         item = cJSON_GetObjectItemCaseSensitive(root, "«v.key»");
                         if(item != NULL) {
@@ -150,7 +150,7 @@ class CSimulationTemplateGenerator extends AbstractSimulationTemplateGenerator {
                     cJSON *obj;
                 «ENDIF»
                 
-                «FOR v : store.orderedVariables.dropBlacklisted.filter[!value.encapsulated]»
+                «FOR v : store.orderedVariables.dropHostTypes.dropBlacklisted.filter[!value.encapsulated]»
                     // Send «v.key»
                     «v.serialize("root", "array", "obj")»
                 «ENDFOR»
@@ -159,7 +159,7 @@ class CSimulationTemplateGenerator extends AbstractSimulationTemplateGenerator {
                     cJSON *interface = cJSON_CreateObject();
                     cJSON *info, *properties;
                     
-                    «FOR v : store.orderedVariables.dropBlacklisted»
+                    «FOR v : store.orderedVariables.dropHostTypes.dropBlacklisted»
                         info = cJSON_CreateObject();
                         properties = cJSON_CreateArray();
                         «FOR p : v.value.properties»

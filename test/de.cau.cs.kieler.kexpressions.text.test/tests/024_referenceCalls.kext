@@ -42,10 +42,10 @@ B = scanf("%d", &I)
 @check "referenceCall.returnValue.parameter.byPureOutput"
 B = scanf("%d", !&I)
 
-@check "referenceCall.returnValue.parameter.byReference.nested"
+@check "referenceCall.returnValue.parameter.byValue.nested"
 B = scanf("%d", `getValue()`)
 
-@check "referenceCall.returnValue.parameter.byPureOutput.hostcode"
-B = scanf("%d", !&`x`)
+// @check "referenceCall.returnValue.parameter.byPureOutput.hostcode"
+// B = scanf("%d", !&`x`)
 
 

@@ -380,8 +380,9 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//// External Node Declaration
 		//ExternalNodeDeclaration kexpressions::Declaration:
-		//	{ExternalNodeDeclaration} isUnsafe?='unsafe'? 'extern' ('function' | hasState?='node') valuedObjects+=NodeValuedObject
-		//	('(' inputs+=VariableDeclarationNoInit (';' inputs+=VariableDeclarationNoInit)* ')' | '()')
+		//	{ExternalNodeDeclaration} isUnsafe?='unsafe'? 'extern' ('function' | hasState?='node')
+		//	valuedObjects+=NodeValuedObject ('(' inputs+=VariableDeclarationNoInit (';' inputs+=VariableDeclarationNoInit)* ')' |
+		//	'()')
 		//	'returns' ('(' outputs+=VariableDeclarationNoInit (';' outputs+=VariableDeclarationNoInit)* ')' | '()') ';'?;
 		@Override public ParserRule getRule() { return rule; }
 		
@@ -1078,8 +1079,8 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//Equation keffects::Assignment:
 		//	{Equation} ('(' references+=ValuedObjectReference ',' references+=ValuedObjectReference (','
-		//	references+=ValuedObjectReference)* ')' | references+=ValuedObjectReference ',' references+=ValuedObjectReference (','
-		//	references+=ValuedObjectReference)* | reference=ValuedObjectReference) operator=AssignOperator
+		//	references+=ValuedObjectReference)* ')' | references+=ValuedObjectReference ',' references+=ValuedObjectReference
+		//	(',' references+=ValuedObjectReference)* | reference=ValuedObjectReference) operator=AssignOperator
 		//	expression=Expression
 		//	';';
 		@Override public ParserRule getRule() { return rule; }
@@ -1696,8 +1697,8 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		//({kexpressions::OperatorExpression.subExpressions+=current} operator=MultOperator subExpressions+=IntDivExpression ('*'
 		//subExpressions+=IntDivExpression)* | {kexpressions::OperatorExpression.subExpressions+=current} operator=DivOperator
 		//subExpressions+=IntDivExpression ('/' subExpressions+=IntDivExpression)* |
-		//{kexpressions::OperatorExpression.subExpressions+=current} operator=ModOperator subExpressions+=IntDivExpression ('mod'
-		//subExpressions+=IntDivExpression)*)*
+		//{kexpressions::OperatorExpression.subExpressions+=current} operator=ModOperator subExpressions+=IntDivExpression
+		//('mod' subExpressions+=IntDivExpression)*)*
 		public Alternatives getAlternatives_1() { return cAlternatives_1; }
 		
 		//{kexpressions::OperatorExpression.subExpressions+=current} operator=MultOperator subExpressions+=IntDivExpression ('*'
@@ -2057,18 +2058,18 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cOperatorAssignment_0_1 = (Assignment)cGroup_0.eContents().get(1);
 		private final RuleCall cOperatorPreOperatorEnumRuleCall_0_1_0 = (RuleCall)cOperatorAssignment_0_1.eContents().get(0);
 		private final Assignment cSubExpressionsAssignment_0_2 = (Assignment)cGroup_0.eContents().get(2);
-		private final RuleCall cSubExpressionsAtomicValuedExpressionParserRuleCall_0_2_0 = (RuleCall)cSubExpressionsAssignment_0_2.eContents().get(0);
-		private final RuleCall cAtomicValuedExpressionParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cSubExpressionsLastExpressionParserRuleCall_0_2_0 = (RuleCall)cSubExpressionsAssignment_0_2.eContents().get(0);
+		private final RuleCall cLastExpressionParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		
 		//PreExpression kexpressions::Expression:
-		//	{kexpressions::OperatorExpression} operator=PreOperator subExpressions+=AtomicValuedExpression
-		//	| AtomicValuedExpression;
+		//	{kexpressions::OperatorExpression} operator=PreOperator subExpressions+=LastExpression
+		//	| LastExpression;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{kexpressions::OperatorExpression} operator=PreOperator subExpressions+=AtomicValuedExpression | AtomicValuedExpression
+		//{kexpressions::OperatorExpression} operator=PreOperator subExpressions+=LastExpression | LastExpression
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
-		//{kexpressions::OperatorExpression} operator=PreOperator subExpressions+=AtomicValuedExpression
+		//{kexpressions::OperatorExpression} operator=PreOperator subExpressions+=LastExpression
 		public Group getGroup_0() { return cGroup_0; }
 		
 		//{kexpressions::OperatorExpression}
@@ -2079,6 +2080,46 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//PreOperator
 		public RuleCall getOperatorPreOperatorEnumRuleCall_0_1_0() { return cOperatorPreOperatorEnumRuleCall_0_1_0; }
+		
+		//subExpressions+=LastExpression
+		public Assignment getSubExpressionsAssignment_0_2() { return cSubExpressionsAssignment_0_2; }
+		
+		//LastExpression
+		public RuleCall getSubExpressionsLastExpressionParserRuleCall_0_2_0() { return cSubExpressionsLastExpressionParserRuleCall_0_2_0; }
+		
+		//LastExpression
+		public RuleCall getLastExpressionParserRuleCall_1() { return cLastExpressionParserRuleCall_1; }
+	}
+	public class LastExpressionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.lustre.Lustre.LastExpression");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final Group cGroup_0 = (Group)cAlternatives.eContents().get(0);
+		private final Action cOperatorExpressionAction_0_0 = (Action)cGroup_0.eContents().get(0);
+		private final Assignment cOperatorAssignment_0_1 = (Assignment)cGroup_0.eContents().get(1);
+		private final RuleCall cOperatorLastOperatorEnumRuleCall_0_1_0 = (RuleCall)cOperatorAssignment_0_1.eContents().get(0);
+		private final Assignment cSubExpressionsAssignment_0_2 = (Assignment)cGroup_0.eContents().get(2);
+		private final RuleCall cSubExpressionsAtomicValuedExpressionParserRuleCall_0_2_0 = (RuleCall)cSubExpressionsAssignment_0_2.eContents().get(0);
+		private final RuleCall cAtomicValuedExpressionParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		
+		//LastExpression kexpressions::Expression:
+		//	{kexpressions::OperatorExpression} operator=LastOperator subExpressions+=AtomicValuedExpression
+		//	| AtomicValuedExpression;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//{kexpressions::OperatorExpression} operator=LastOperator subExpressions+=AtomicValuedExpression | AtomicValuedExpression
+		public Alternatives getAlternatives() { return cAlternatives; }
+		
+		//{kexpressions::OperatorExpression} operator=LastOperator subExpressions+=AtomicValuedExpression
+		public Group getGroup_0() { return cGroup_0; }
+		
+		//{kexpressions::OperatorExpression}
+		public Action getOperatorExpressionAction_0_0() { return cOperatorExpressionAction_0_0; }
+		
+		//operator=LastOperator
+		public Assignment getOperatorAssignment_0_1() { return cOperatorAssignment_0_1; }
+		
+		//LastOperator
+		public RuleCall getOperatorLastOperatorEnumRuleCall_0_1_0() { return cOperatorLastOperatorEnumRuleCall_0_1_0; }
 		
 		//subExpressions+=AtomicValuedExpression
 		public Assignment getSubExpressionsAssignment_0_2() { return cSubExpressionsAssignment_0_2; }
@@ -3000,6 +3041,21 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		//"nor"
 		public Keyword getNORNorKeyword_0() { return cNORNorKeyword_0; }
 	}
+	public class LastOperatorElements extends AbstractEnumRuleElementFinder {
+		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.lustre.Lustre.LastOperator");
+		private final EnumLiteralDeclaration cLASTEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
+		private final Keyword cLASTLastKeyword_0 = (Keyword)cLASTEnumLiteralDeclaration.eContents().get(0);
+		
+		//enum LastOperator returns kexpressions::OperatorType:
+		//	LAST="last";
+		public EnumRule getRule() { return rule; }
+		
+		//LAST="last"
+		public EnumLiteralDeclaration getLASTEnumLiteralDeclaration() { return cLASTEnumLiteralDeclaration; }
+		
+		//"last"
+		public Keyword getLASTLastKeyword_0() { return cLASTLastKeyword_0; }
+	}
 	
 	private final LustreProgramElements pLustreProgram;
 	private final ValueTypeElements eValueType;
@@ -3027,6 +3083,7 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 	private final WhenExpressionElements pWhenExpression;
 	private final CurrentExpressionElements pCurrentExpression;
 	private final PreExpressionElements pPreExpression;
+	private final LastExpressionElements pLastExpression;
 	private final BoolExpressionElements pBoolExpression;
 	private final InitExpressionElements pInitExpression;
 	private final TernaryOperationElements pTernaryOperation;
@@ -3054,6 +3111,7 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 	private final ConditionalOperatorElements eConditionalOperator;
 	private final AtMostOneOperatorElements eAtMostOneOperator;
 	private final NorOperatorElements eNorOperator;
+	private final LastOperatorElements eLastOperator;
 	private final TerminalRule tML_COMMENT;
 	private final TerminalRule tSL_COMMENT;
 	
@@ -3108,6 +3166,7 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		this.pWhenExpression = new WhenExpressionElements();
 		this.pCurrentExpression = new CurrentExpressionElements();
 		this.pPreExpression = new PreExpressionElements();
+		this.pLastExpression = new LastExpressionElements();
 		this.pBoolExpression = new BoolExpressionElements();
 		this.pInitExpression = new InitExpressionElements();
 		this.pTernaryOperation = new TernaryOperationElements();
@@ -3135,6 +3194,7 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		this.eConditionalOperator = new ConditionalOperatorElements();
 		this.eAtMostOneOperator = new AtMostOneOperatorElements();
 		this.eNorOperator = new NorOperatorElements();
+		this.eLastOperator = new LastOperatorElements();
 		this.tML_COMMENT = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.lustre.Lustre.ML_COMMENT");
 		this.tSL_COMMENT = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.lustre.Lustre.SL_COMMENT");
 	}
@@ -3243,8 +3303,9 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//// External Node Declaration
 	//ExternalNodeDeclaration kexpressions::Declaration:
-	//	{ExternalNodeDeclaration} isUnsafe?='unsafe'? 'extern' ('function' | hasState?='node') valuedObjects+=NodeValuedObject
-	//	('(' inputs+=VariableDeclarationNoInit (';' inputs+=VariableDeclarationNoInit)* ')' | '()')
+	//	{ExternalNodeDeclaration} isUnsafe?='unsafe'? 'extern' ('function' | hasState?='node')
+	//	valuedObjects+=NodeValuedObject ('(' inputs+=VariableDeclarationNoInit (';' inputs+=VariableDeclarationNoInit)* ')' |
+	//	'()')
 	//	'returns' ('(' outputs+=VariableDeclarationNoInit (';' outputs+=VariableDeclarationNoInit)* ')' | '()') ';'?;
 	public ExternalNodeDeclarationElements getExternalNodeDeclarationAccess() {
 		return pExternalNodeDeclaration;
@@ -3329,8 +3390,8 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//Equation keffects::Assignment:
 	//	{Equation} ('(' references+=ValuedObjectReference ',' references+=ValuedObjectReference (','
-	//	references+=ValuedObjectReference)* ')' | references+=ValuedObjectReference ',' references+=ValuedObjectReference (','
-	//	references+=ValuedObjectReference)* | reference=ValuedObjectReference) operator=AssignOperator
+	//	references+=ValuedObjectReference)* ')' | references+=ValuedObjectReference ',' references+=ValuedObjectReference
+	//	(',' references+=ValuedObjectReference)* | reference=ValuedObjectReference) operator=AssignOperator
 	//	expression=Expression
 	//	';';
 	public EquationElements getEquationAccess() {
@@ -3494,14 +3555,25 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//PreExpression kexpressions::Expression:
-	//	{kexpressions::OperatorExpression} operator=PreOperator subExpressions+=AtomicValuedExpression
-	//	| AtomicValuedExpression;
+	//	{kexpressions::OperatorExpression} operator=PreOperator subExpressions+=LastExpression
+	//	| LastExpression;
 	public PreExpressionElements getPreExpressionAccess() {
 		return pPreExpression;
 	}
 	
 	public ParserRule getPreExpressionRule() {
 		return getPreExpressionAccess().getRule();
+	}
+	
+	//LastExpression kexpressions::Expression:
+	//	{kexpressions::OperatorExpression} operator=LastOperator subExpressions+=AtomicValuedExpression
+	//	| AtomicValuedExpression;
+	public LastExpressionElements getLastExpressionAccess() {
+		return pLastExpression;
+	}
+	
+	public ParserRule getLastExpressionRule() {
+		return getLastExpressionAccess().getRule();
 	}
 	
 	//@Override
@@ -3801,6 +3873,16 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public EnumRule getNorOperatorRule() {
 		return getNorOperatorAccess().getRule();
+	}
+	
+	//enum LastOperator returns kexpressions::OperatorType:
+	//	LAST="last";
+	public LastOperatorElements getLastOperatorAccess() {
+		return eLastOperator;
+	}
+	
+	public EnumRule getLastOperatorRule() {
+		return getLastOperatorAccess().getRule();
 	}
 	
 	//@Override
@@ -4343,7 +4425,8 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 	//// A print functions that enables target-independent prints in the model.    
 	//PrintCallEffect keffects::PrintCallEffect:
 	//	annotations+=Annotation*
-	//	'print' ('(' parameters+=Parameter (',' parameters+=Parameter)* ')') ('schedule' schedule+=ScheduleObjectReference+)?;
+	//	'print' ('(' parameters+=Parameter (',' parameters+=Parameter)* ')') ('schedule'
+	//	schedule+=ScheduleObjectReference+)?;
 	public KEffectsGrammarAccess.PrintCallEffectElements getPrintCallEffectAccess() {
 		return gaKEffects.getPrintCallEffectAccess();
 	}
@@ -4800,8 +4883,8 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 	//// Additionally, a parameter may be preceded by an ampersand to indicate a call by reference.
 	//// Analogously, an prefixed exclamation mark marks the parameter as pure output.
 	//Parameter:
-	//	(pureOutput?='!'? callByReference?='&')?
-	//	expression=Expression;
+	//	accessType=ParameterAccessType
+	//	expression=ValuedObjectReference | expression=Expression;
 	public KExpressionsGrammarAccess.ParameterElements getParameterAccess() {
 		return gaKExpressions.getParameterAccess();
 	}
@@ -5138,6 +5221,16 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public EnumRule getMethodReturnTypeRule() {
 		return getMethodReturnTypeAccess().getRule();
+	}
+	
+	//enum ParameterAccessType:
+	//	CALL_BY_REFERENCE="&" | PURE_OUTPUT="!&";
+	public KExpressionsGrammarAccess.ParameterAccessTypeElements getParameterAccessTypeAccess() {
+		return gaKExpressions.getParameterAccessTypeAccess();
+	}
+	
+	public EnumRule getParameterAccessTypeRule() {
+		return getParameterAccessTypeAccess().getRule();
 	}
 	
 	//// -------------------- //

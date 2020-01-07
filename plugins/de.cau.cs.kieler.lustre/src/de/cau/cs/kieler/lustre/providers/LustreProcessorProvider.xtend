@@ -23,7 +23,7 @@ class LustreProcessorProvider implements IProcessorProvider {
     
     override getProcessors() {
         #[
-            de.cau.cs.kieler.lustre.processors.lustreToScc.LustreToSCCControlFlowApproach,
+            de.cau.cs.kieler.lustre.processors.lustreToScc.LustreToSCChartsControlFlow,
             de.cau.cs.kieler.lustre.processors.sccToLustre.SCChartsControlFlowToLustre,
             de.cau.cs.kieler.lustre.processors.lustreToScc.LustreToSCCharts,
             de.cau.cs.kieler.lustre.compiler.processors.LustreSimulationPreparation,

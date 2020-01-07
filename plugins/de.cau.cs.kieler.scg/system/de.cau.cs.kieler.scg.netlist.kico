@@ -6,7 +6,8 @@ system de.cau.cs.kieler.scg.netlist
        "de.cau.cs.kieler.scg.opt.haltStateRemover":true,
        "de.cau.cs.kieler.scg.opt.smartRegisterAllocation":true,
        "de.cau.cs.kieler.scg.opt.persistentStateOptimizer":true,
-       "de.cau.cs.kieler.scg.opt.partialAssignmentEvaluation":true
+       "de.cau.cs.kieler.scg.opt.partialAssignmentEvaluation":true,
+       "de.cau.cs.kieler.scg.opt.goInit":true
     }
 
 de.cau.cs.kieler.scg.processors.dependency config {
@@ -33,5 +34,7 @@ post process de.cau.cs.kieler.scg.processors.smartRegisterAllocation
 post process de.cau.cs.kieler.scg.processors.persistentStateOptimizer
 post process de.cau.cs.kieler.scg.processors.partialAssignmentEvaluation
 post process de.cau.cs.kieler.scg.processors.partialAssignmentEvaluation
+post process silent de.cau.cs.kieler.scg.processors.guardDefUseAnalyzer
+post process de.cau.cs.kieler.scg.processors.goInitOptimizer
 post process silent de.cau.cs.kieler.scg.processors.cleanupValuedObjects
 post process silent de.cau.cs.kieler.kicool.deploy.variable.store.clean

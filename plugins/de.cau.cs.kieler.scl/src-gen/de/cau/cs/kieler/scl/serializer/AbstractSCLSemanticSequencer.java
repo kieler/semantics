@@ -792,7 +792,10 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 	 *     ModuleCallParameter returns Parameter
 	 *
 	 * Constraint:
-	 *     ((pureOutput?='!'? callByReference?='&')? expression=Expression (explicitBinding=[ValuedObject|ID] explicitBindingIndices+=Expression*)?)
+	 *     (
+	 *         ((accessType=ParameterAccessType expression=ValuedObjectReference) | expression=Expression) 
+	 *         (explicitBinding=[ValuedObject|ID] explicitBindingIndices+=Expression*)?
+	 *     )
 	 */
 	protected void sequence_ModuleCallParameter(ISerializationContext context, de.cau.cs.kieler.kexpressions.Parameter semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
