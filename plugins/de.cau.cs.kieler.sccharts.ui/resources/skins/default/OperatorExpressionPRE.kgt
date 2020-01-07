@@ -5,10 +5,10 @@ knode operator {
     org.eclipse.elk.portConstraints = FIXED_ORDER
     
     klabel "pre" {
-            ktext {
-                styles: fontSize = 6pt
-            }
+        ktext {
+            styles: fontSize = 8pt
         }
+    }
 
   krectangle {
         styles: lineStyle = solid
