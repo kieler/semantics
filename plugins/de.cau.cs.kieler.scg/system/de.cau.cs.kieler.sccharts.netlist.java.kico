@@ -1,7 +1,7 @@
 public system de.cau.cs.kieler.sccharts.netlist.java
 	label "Netlist-based Compilation (Java)"
     start config {
-       "de.cau.cs.kieler.sccharts.finalRegion.supported":true,
+       "de.cau.cs.kieler.sccharts.finalRegion.supported":true
     }   	
 	
 system de.cau.cs.kieler.sccharts.extended.core
