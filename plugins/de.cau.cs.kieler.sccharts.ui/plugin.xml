@@ -693,7 +693,7 @@ controllerID="de.cau.cs.kieler.kicool.ui.klighd.KiCoModelUpdateController"
       <breakpoint
             class="de.cau.cs.kieler.sccharts.ui.debug.breakpoints.TransitionCheckBreakpoint"
             id="transitionCheckBreakpoint"
-            markerType="de.cau.cs.kieler.sccharts.ui.debug.transitionCheckMarker">
+            markerType="de.cau.cs.kieler.sccharts.ui.transitionCheckMarker">
       </breakpoint>
    </extension>
    <extension
@@ -775,11 +775,11 @@ controllerID="de.cau.cs.kieler.kicool.ui.klighd.KiCoModelUpdateController"
       </view>
    </extension>
    <extension
-         id="de.cau.cs.kieler.sccharts.ui.debug.transitionCheckMarker"
+         id="transitionCheckMarker"
          name="Transition check marker"
          point="org.eclipse.core.resources.markers">
       <super
-            type="org.eclipse.jdt.debug.javaLineBreakpointMarker">
+            type="org.eclipse.debug.core.lineBreakpointMarker">
       </super>
       <persistent
             value="true">

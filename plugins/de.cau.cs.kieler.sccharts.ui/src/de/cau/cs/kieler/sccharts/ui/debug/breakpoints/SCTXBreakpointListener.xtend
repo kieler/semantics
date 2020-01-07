@@ -17,7 +17,6 @@ import org.eclipse.core.runtime.CoreException
 import org.eclipse.debug.core.IBreakpointListener
 import org.eclipse.debug.core.model.IBreakpoint
 import org.eclipse.debug.core.model.LineBreakpoint
-import de.cau.cs.kieler.sccharts.ui.debug.highlighting.BreakpointVisualizationHook
 import de.cau.cs.kieler.sccharts.ui.debug.highlighting.DebugHighlighter
 import de.cau.cs.kieler.sccharts.State
 
@@ -29,9 +28,8 @@ import de.cau.cs.kieler.sccharts.State
  */
 class SCTXBreakpointListener implements IBreakpointListener {
     
-    BreakpointVisualizationHook visHook = BreakpointVisualizationHook.instance
     static SCTXBreakpointListener instance
-    private DebugHighlighter highlighter = DebugHighlighter.instance
+    val DebugHighlighter highlighter = DebugHighlighter.instance
 
 
     def static void create() {
@@ -78,7 +76,7 @@ class SCTXBreakpointListener implements IBreakpointListener {
 //                visHook.handleHighlight(obj, false)
             }
         } catch (CoreException e) {
-            e.printStackTrace()
+            e.printStackTrace()            
         }
 
     }

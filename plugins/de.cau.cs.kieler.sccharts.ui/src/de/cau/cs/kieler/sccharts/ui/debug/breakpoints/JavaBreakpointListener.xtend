@@ -325,7 +325,9 @@ class JavaBreakpointListener implements IJavaBreakpointListener {
     }
     
     override addingBreakpoint(IJavaDebugTarget target, IJavaBreakpoint breakpoint) {
-//        println("Adding breakpoint!")
+        
+        println("Adding breakpoint!")
+        println(breakpoint.marker.resource.getMarker(breakpoint.marker.id))
     }
     
     override breakpointHasRuntimeException(IJavaLineBreakpoint breakpoint, DebugException exception) {

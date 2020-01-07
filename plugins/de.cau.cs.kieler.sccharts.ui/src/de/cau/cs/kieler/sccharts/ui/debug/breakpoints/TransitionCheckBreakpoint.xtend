@@ -23,7 +23,7 @@ import org.eclipse.debug.core.DebugException
  */
 class TransitionCheckBreakpoint extends JavaLineBreakpoint {
     
-    public static val String TRANSITION_CHECK_BREAKPOINT = "de.cau.cs.kieler.sccharts.ui.debug.transitionCheckBreakpoint"
+    public static val String TRANSITION_CHECK_BREAKPOINT = "de.cau.cs.kieler.sccharts.ui.transitionCheckMarker"
     
     new() {
     }
