@@ -592,8 +592,11 @@ class SCGThreadExtensions {
         }
         val threadTypes = <Entry, ThreadPathType>newHashMap
         for (n : tempThreadTypes.keySet) {
-            if (n instanceof Entry)
-                threadTypes.put(n, tempThreadTypes.get(n))
+            if (n instanceof Entry) {
+                // Final regions are always potentially instantaneos.
+                val type = if (n.exit.final) ThreadPathType::POTENTIALLY_INSTANTANEOUS else tempThreadTypes.get(n) 
+                threadTypes.put(n, type)
+            }
         }
         threadTypes
     }
