@@ -24,6 +24,8 @@ import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import java.util.Map
+import de.cau.cs.kieler.scg.Entry
 
 /** 
  * This class is part of the SCG transformation chain. In particular a synchronizer is called by the scheduler
@@ -100,10 +102,10 @@ class InstantaneousSynchronizer extends AbstractSynchronizer {
         return SYNCHRONIZER_ID
     }
     
-    override isSynchronizable(Fork fork, Iterable<ThreadPathType> threadPathTypes, boolean instantaneousFeedback) {
+    override isSynchronizable(Fork fork, Map<Entry, ThreadPathType> threadPathTypes, boolean instantaneousFeedback) {
         var synchronizable = true
         
-        for(tpt : threadPathTypes) {
+        for(tpt : threadPathTypes.values) {
             if (tpt != ThreadPathType::INSTANTANEOUS) synchronizable = false
         }
         

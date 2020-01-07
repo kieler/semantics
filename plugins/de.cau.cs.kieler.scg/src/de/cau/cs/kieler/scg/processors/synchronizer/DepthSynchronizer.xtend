@@ -36,7 +36,10 @@ import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 import de.cau.cs.kieler.scg.extensions.ThreadPathType
 
 import static de.cau.cs.kieler.scg.processors.SCGAnnotations.*
+import static de.cau.cs.kieler.scg.extensions.ThreadPathType.*
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import java.util.Map
+import de.cau.cs.kieler.scg.Entry
 
 /** 
  * This class is part of the SCG transformation chain. In particular a synchronizer is called by the scheduler
@@ -385,13 +388,14 @@ class DepthSynchronizer extends AbstractSynchronizer {
         return SYNCHRONIZER_ID
     }
     
-    override isSynchronizable(Fork fork, Iterable<ThreadPathType> threadPathTypes, boolean instantaneousFeedback) {
+    override isSynchronizable(Fork fork, Map<Entry, ThreadPathType> threadPathTypes, boolean instantaneousFeedback) {
         var synchronizable = true
         var delay = false
         
-        for(tpt : threadPathTypes) {
-            if (tpt != ThreadPathType::DELAYED) {
-                if (tpt != ThreadPathType::INSTANTANEOUS) {
+        for(k : threadPathTypes.keySet) {
+            val tpt = threadPathTypes.get(k)
+            if (tpt != DELAYED) {
+                if (tpt != INSTANTANEOUS && !(tpt == POTENTIALLY_INSTANTANEOUS && k.exit.final)) {
                     synchronizable = false
                 }
             } else {
