@@ -19,7 +19,6 @@ import de.cau.cs.kieler.kexpressions.MethodDeclaration
 import de.cau.cs.kieler.kexpressions.ReferenceCall
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.kgraph.KEdge
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
@@ -166,7 +165,7 @@ class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
         }
 
         switch (transition.preemption) {
-            case STRONGABORT: edge.addStrongAbortionDecorator
+            case STRONG: edge.addStrongAbortionDecorator
             case TERMINATION: edge.addNormalTerminationDecorator
             default: {
             }

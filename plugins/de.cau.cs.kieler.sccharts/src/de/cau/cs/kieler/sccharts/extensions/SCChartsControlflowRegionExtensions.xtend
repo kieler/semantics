@@ -51,7 +51,7 @@ class SCChartsControlflowRegionExtensions {
     }    
     
     def boolean regionsMayTerminate(State state) {
-        for (region : state.controlflowRegions) {
+        for (region : state.controlflowRegions.filter[ final ]) {
             if (region.allFinalStates.nullOrEmpty) {
                 return false
             }

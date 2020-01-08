@@ -22,6 +22,7 @@ import de.cau.cs.kieler.scg.SCGraphs
 import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import com.google.inject.Injector
+import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 
 /** 
  * @author ssm
@@ -31,6 +32,7 @@ import com.google.inject.Injector
 class ThreadAnalyzer extends InplaceProcessor<SCGraphs> {
 	
 	@Inject extension AnnotationsExtensions
+	@Inject extension SCGCoreExtensions
 	@Inject extension SCGThreadExtensions
 	@Inject Injector injector
 	
@@ -61,7 +63,9 @@ class ThreadAnalyzer extends InplaceProcessor<SCGraphs> {
                 if (!threadEntry.hasAnnotation(ANNOTATION_CONTROLFLOWTHREADPATHTYPE)) {
                     threadEntry.createStringAnnotation(ANNOTATION_CONTROLFLOWTHREADPATHTYPE, threadPathTypes.get(threadEntry).toString2)
                 }                
-            }            
+            }
+            
+            threadData.createThreadNodeMaps(scg.nodes.findFirst[ it instanceof Entry ].asEntry)            
         }
         
         threadData.createForkMap

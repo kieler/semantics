@@ -37,6 +37,8 @@ import de.cau.cs.kieler.scg.extensions.ThreadPathType
 
 import static de.cau.cs.kieler.scg.processors.SCGAnnotations.*
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import java.util.Map
+import de.cau.cs.kieler.scg.Entry
 
 /** 
  * This class is part of the SCG transformation chain. In particular a synchronizer is called by the scheduler
@@ -385,11 +387,11 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
         return SYNCHRONIZER_ID
     }
     
-    override isSynchronizable(Fork fork, Iterable<ThreadPathType> threadPathTypes, boolean instantaneousFeedback) {
+    override isSynchronizable(Fork fork, Map<Entry, ThreadPathType> threadPathTypes, boolean instantaneousFeedback) {
         var synchronizable = true
         
         if (instantaneousFeedback) {
-            for(tpt : threadPathTypes) {
+            for(tpt : threadPathTypes.values) {
                 if (tpt == ThreadPathType::POTENTIALLY_INSTANTANEOUS) synchronizable = false
             } 
         }
