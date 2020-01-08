@@ -285,12 +285,12 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                 lastKNodes.clear
             }
         }
-        nodes.addInstanceEdges.addSequentialEdges.simplifyAndCombine(rootNode).reWireInlining
+        nodes.addInstanceEdges.addSequentialEdges.simplifyAndCombine(rootNode)
         for (n : nodes) {
             n.addLayoutParam(CoreOptions.NODE_SIZE_MINIMUM, new KVector(0, 0))
             n.addLayoutParam(CoreOptions.PADDING, new ElkPadding(0, 0, 0, 0))
         }
-        return nodes
+        return nodes.reWireInlining
     }
 
     /**
@@ -917,6 +917,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
             for (child : node.eContents.filter(KNode).toList) {
                 nodes += child
                 child.setLayoutOption(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_ORDER)
+                child.setLayoutOption(CoreOptions::PADDING, new ElkPadding(10))
                 child.data.filter(KRendering).forEach [
                     placementData = null
                 ]
