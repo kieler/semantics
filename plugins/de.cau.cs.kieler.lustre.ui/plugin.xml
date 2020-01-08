@@ -470,4 +470,11 @@
           editorID="de.cau.cs.kieler.lustre.scade.ScadeEquations">
     </editor>
  </extension>
+ <extension
+       point="de.cau.cs.kieler.klighd.diagramSyntheses">
+    <diagramSynthesis
+          class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.lustre.ui.synthesis.LustreSCChartsSynthesis"
+          id="de.cau.cs.kieler.lustre.ui.synthesis.LustreSCChartsSynthesis">
+    </diagramSynthesis>
+ </extension>
 </plugin>
