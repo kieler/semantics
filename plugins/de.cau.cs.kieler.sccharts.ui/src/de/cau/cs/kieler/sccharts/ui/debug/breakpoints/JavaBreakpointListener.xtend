@@ -21,7 +21,6 @@ import org.eclipse.jdt.debug.core.IJavaThread
 import org.eclipse.jdt.debug.core.IJavaType
 import java.util.HashMap
 import java.nio.charset.StandardCharsets
-import de.cau.cs.kieler.klighd.ui.DiagramViewManager
 import org.eclipse.swt.widgets.Display
 import de.cau.cs.kieler.sccharts.SCCharts
 import org.eclipse.ui.PlatformUI
@@ -260,7 +259,7 @@ class JavaBreakpointListener implements IJavaBreakpointListener {
     
     override breakpointHit(IJavaThread thread, IJavaBreakpoint breakpoint) {
         println("Hitting breakpoint!")
-        
+
         if (breakpointToTarget.containsKey(breakpoint)) {
             val target = thread.debugTarget as IJavaDebugTarget
             val chartVar = target.findVariable("ORIGINAL_SCCHART")
@@ -297,16 +296,14 @@ class JavaBreakpointListener implements IJavaBreakpointListener {
                     debugHighlighter.highlightExecutingState(state)
                 }
                 
-                val currentTransition = findCurrentTransition(thread, breakpoint, currentModel, executingStates)
-                if (currentTransition !== null) {
-                    debugHighlighter.highlightExecutingTransition(currentTransition)
-                }
-                
-                
-                // TODO testing
-//                for (transition : currentModel.eAllContents.toIterable.filter[it instanceof Transition]) {
-//                    debugHighlighter.addBreakpointDecorator(transition as Transition)
-//                }
+                // If the breakpoint was triggered when checking for a transition,
+                // display the transition currently being checked
+                if (breakpoint instanceof TransitionCheckBreakpoint) {
+                    val currentTransition = findCurrentTransition(thread, breakpoint, currentModel, executingStates)
+                    if (currentTransition !== null) {
+                        debugHighlighter.highlightExecutingTransition(currentTransition)
+                    }
+                }   
                 return SUSPEND
             }
         }
