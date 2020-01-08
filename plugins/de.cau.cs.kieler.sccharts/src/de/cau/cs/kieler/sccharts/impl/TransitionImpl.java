@@ -67,7 +67,7 @@ public class TransitionImpl extends ActionImpl implements Transition {
      * @generated
      * @ordered
      */
-    protected static final PreemptionType PREEMPTION_EDEFAULT = PreemptionType.WEAKABORT;
+    protected static final PreemptionType PREEMPTION_EDEFAULT = PreemptionType.WEAK;
 
     /**
      * The cached value of the '{@link #getPreemption() <em>Preemption</em>}' attribute.
