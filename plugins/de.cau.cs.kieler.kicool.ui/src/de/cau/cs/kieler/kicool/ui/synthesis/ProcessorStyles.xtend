@@ -41,6 +41,9 @@ import static de.cau.cs.kieler.kicool.ui.synthesis.styles.ColorStore.Color.*
 import static extension de.cau.cs.kieler.kicool.ui.synthesis.styles.ColorStore.*
 import static extension de.cau.cs.kieler.klighd.microlayout.PlacementUtil.*
 import de.cau.cs.kieler.klighd.actions.CollapseExpandAction
+import org.eclipse.elk.graph.properties.IProperty
+import org.eclipse.elk.graph.properties.Property
+import de.cau.cs.kieler.klighd.krendering.KBackground
 
 /**
  * User-defined KiCool synthesis styles
@@ -55,6 +58,9 @@ class ProcessorStyles {
     extension KRenderingExtensions = new KRenderingExtensions
 
     extension KRenderingFactory = KRenderingFactory::eINSTANCE
+    
+    static val IProperty<Boolean> SELECTED = new Property<Boolean>("de.cau.cs.kieler.kicool.ui.intermediateSelected", false);
+    static val IProperty<KBackground> BACKGROUND = new Property<KBackground>("de.cau.cs.kieler.kicool.ui.intermediateBackground", null);
 
     def adjustSize(KNode processorNode) {
         var width = processorNode.eAllContents.filter(KText).head.estimateTextSize.width + 8
@@ -236,17 +242,25 @@ class ProcessorStyles {
     }
 
     def setSelected(KRendering rendering, boolean selected) {
-        rendering.lineWidth = if (selected) 0.4f else 0 
-        val add = if(selected) 30 else 0
-        rendering.setBackgroundGradient(createKColor => [
-                red = 100 + add
-                green = 100 + add
-                blue = 255
+        if (rendering.getProperty(SELECTED) == selected) {
+            return
+        }
+        rendering.setProperty(SELECTED, selected)
+        rendering.lineWidth = if(selected) 0.4f else 0
+        if (selected) {
+            rendering.setProperty(BACKGROUND, rendering.background)
+            rendering.setBackgroundGradient(createKColor => [
+                red = Math.min(255, rendering.background.color.red + 30)
+                green = Math.min(255, rendering.background.color.green + 30)
+                blue = Math.min(255, rendering.background.color.blue + 30)
             ], 255, createKColor => [
-                red = 128 + add
-                green = 128 + add
-                blue = 255
+                red = Math.min(255, rendering.background.targetColor.red + 30)
+                green = Math.min(255, rendering.background.targetColor.green + 30)
+                blue = Math.min(255, rendering.background.targetColor.blue + 30)
             ], 255, 45)
+        } else {
+            rendering.background = rendering.getProperty(BACKGROUND)
+        }
     }
 
     def addProcessorGroupFigure(KNode node) {

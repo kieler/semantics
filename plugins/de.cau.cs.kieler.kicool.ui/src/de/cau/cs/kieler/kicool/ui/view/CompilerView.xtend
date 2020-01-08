@@ -201,6 +201,7 @@ class CompilerView extends DiagramViewPart {
     }
 
     def void updateView() {
+        //viewContext.viewModel
         if(editPartSystemManager.activeSystemId === null) return
 
         val properties = new KlighdSynthesisProperties
