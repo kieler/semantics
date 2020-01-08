@@ -35,7 +35,6 @@ import de.cau.cs.kieler.kicool.ui.synthesis.actions.IntermediateSelection
 import de.cau.cs.kieler.kicool.ui.synthesis.actions.OnOffToggle
 import de.cau.cs.kieler.kicool.ui.synthesis.actions.SelectAdditionalIntermediateAction
 import de.cau.cs.kieler.kicool.ui.synthesis.actions.SelectIntermediateAction
-import de.cau.cs.kieler.kicool.ui.synthesis.actions.ToggleOnOffData
 import de.cau.cs.kieler.kicool.ui.synthesis.actions.ToggleProcessorOnOffAction
 import de.cau.cs.kieler.kicool.ui.synthesis.feedback.PostUpdateDoubleCollector
 import de.cau.cs.kieler.kicool.ui.synthesis.styles.ColorSystem
@@ -111,7 +110,6 @@ class ProcessorDataManager {
         val toggleOnOffButton = node.getProperty(PROCESSOR_ON_OFF_BUTTON)
         if (toggleOnOffButton !== null) {
             kRenderingExtensions.addAction(toggleOnOffButton, Trigger::SINGLECLICK, ToggleProcessorOnOffAction.ID)
-            toggleOnOffButton.setProperty(TOGGLE_ON_OFF_DATA, new ToggleOnOffData(processorReference))
             val toggle = ToggleProcessorOnOffAction.deactivatedProcessors.get(processorReference)
             if (toggle === null || toggle == OnOffToggle.ON) {
                 setFBColor(toggleOnOffButton.children.head, ON)
@@ -230,6 +228,38 @@ class ProcessorDataManager {
             }
         }
         
+    }
+    
+    static def void copyIntermediateData(KNode model, List<KNode> oldModel) {
+        model.eAllContents.filter(KNode).toList.forEach([
+            val identifier = getProperty(PROCESSOR_IDENTIFIER)
+            if (identifier !== null) {
+                val matches = oldModel.filter [
+                    getProperty(PROCESSOR_IDENTIFIER) == identifier
+                ].toList
+                if (!matches.empty) {
+                    setProperty(INTERMEDIATE_DATA, matches.head.getProperty(INTERMEDIATE_DATA))
+                    if (getProperty(INTERMEDIATE_DATA) !== null) {
+                        container.removeAllActions
+                        kRenderingExtensions.addAction(container, Trigger::SINGLECLICK,
+                            SelectAdditionalIntermediateAction.ID, false, true, false)
+                        kRenderingExtensions.addAction(container, Trigger::SINGLECLICK,
+                            SelectAdditionalIntermediateAction.ID, false, false, true)
+                        kRenderingExtensions.addAction(container, Trigger::SINGLECLICK, SelectIntermediateAction.ID,
+                            false, false, false)
+                    }
+                    val intermediateContainer = getProperty(PROCESSOR_INTERMEDIATE_CONTAINER)
+                    if( intermediateContainer !== null ){
+                        intermediateContainer.children.clear
+                        val oldIntermediateContainer = matches.head.getProperty(PROCESSOR_INTERMEDIATE_CONTAINER)
+                        if(oldIntermediateContainer !== null){
+                            oldIntermediateContainer.children.immutableCopy.forEach[ intermediateContainer.children.add(it.copy) ]
+                        }
+                    }
+                }
+                processorStyles.adjustSize(it)
+            }
+        ])
     }
     
     static def void updateProcessor(AbstractProcessorNotification processorNotification, KNode node, CompilerView view) {

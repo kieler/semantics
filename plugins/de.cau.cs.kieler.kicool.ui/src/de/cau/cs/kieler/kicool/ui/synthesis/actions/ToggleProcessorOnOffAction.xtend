@@ -12,15 +12,14 @@
  */
 package de.cau.cs.kieler.kicool.ui.synthesis.actions
 
+import de.cau.cs.kieler.kicool.ProcessorReference
 import de.cau.cs.kieler.klighd.IAction
+import de.cau.cs.kieler.klighd.krendering.KContainerRendering
+import org.eclipse.xtend.lib.annotations.Accessors
 
 import static de.cau.cs.kieler.kicool.ui.synthesis.KNodeProperties.*
-import org.eclipse.xtend.lib.annotations.Accessors
-import static de.cau.cs.kieler.kicool.ui.synthesis.updates.ProcessorDataManager.getContainer
-import static de.cau.cs.kieler.kicool.ui.synthesis.updates.ProcessorDataManager.setFBColor
 import static de.cau.cs.kieler.kicool.ui.synthesis.styles.ColorSystem.*
-import de.cau.cs.kieler.kicool.ProcessorReference
-import de.cau.cs.kieler.klighd.krendering.KContainerRendering
+import static de.cau.cs.kieler.kicool.ui.synthesis.updates.ProcessorDataManager.setFBColor
 
 /**
  * Class that handles on/off requests of users.
@@ -39,9 +38,7 @@ class ToggleProcessorOnOffAction implements IAction {
     override execute(ActionContext context) {
         val rendering = context.KRendering as KContainerRendering
         
-        val toggleOnOffData = rendering.getProperty(TOGGLE_ON_OFF_DATA)
-        val processorReference = toggleOnOffData.processorReference
-//        val toggle = toggleOnOffData.toggle
+        val processorReference = rendering.getProperty(PROCESSOR_IDENTIFIER)
         
         if (!deactivatedProcessors.containsKey(processorReference)) {
             deactivatedProcessors.put(processorReference, OnOffToggle.ON)

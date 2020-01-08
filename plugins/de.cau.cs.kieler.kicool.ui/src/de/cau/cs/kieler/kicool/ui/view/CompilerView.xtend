@@ -50,6 +50,8 @@ import org.eclipse.swt.layout.RowLayout
 import org.eclipse.swt.layout.FillLayout
 import de.cau.cs.kieler.kicool.ui.InstallSystemsHandler
 import de.cau.cs.kieler.kicool.ui.view.actions.OnOffButtonsToggle
+import de.cau.cs.kieler.kicool.System
+import de.cau.cs.kieler.kicool.ui.synthesis.updates.ProcessorDataManager
 
 /**
  * The Kieler Compiler View, formerly knownas IMB Compiler View
@@ -201,7 +203,6 @@ class CompilerView extends DiagramViewPart {
     }
 
     def void updateView() {
-        //viewContext.viewModel
         if(editPartSystemManager.activeSystemId === null) return
 
         val properties = new KlighdSynthesisProperties
@@ -242,7 +243,6 @@ class CompilerView extends DiagramViewPart {
                     text.setText("This is a longer text.")
 //                    container.pack
                     canvas.layout(true, true)
-
                     return Status.OK_STATUS;
                 }
             }.schedule

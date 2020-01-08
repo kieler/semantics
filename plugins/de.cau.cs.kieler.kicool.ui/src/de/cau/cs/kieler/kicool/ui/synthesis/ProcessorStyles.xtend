@@ -63,6 +63,10 @@ class ProcessorStyles {
     static val IProperty<KBackground> BACKGROUND = new Property<KBackground>("de.cau.cs.kieler.kicool.ui.intermediateBackground", null);
 
     def adjustSize(KNode processorNode) {
+        val container = processorNode.getProperty(KNodeProperties.PROCESSOR_INTERMEDIATE_CONTAINER)
+        if (container.childPlacement instanceof KGridPlacement) {
+            (container.childPlacement as KGridPlacement).numColumns = Math.max(11, container.children.size)
+        }
         var width = processorNode.eAllContents.filter(KText).head.estimateTextSize.width + 8
         processorNode.height = processorNode.eAllContents.filter(KText).head.estimateTextSize.height + 8
         if (width % 6 != 0) {
@@ -234,9 +238,6 @@ class ProcessorStyles {
                 data.parentNode
             ))
         ]
-        if (container.childPlacement instanceof KGridPlacement) {
-            (container.childPlacement as KGridPlacement).numColumns = Math.max(11, container.children.size)
-        }
         node.adjustSize
         container.children.last
     }

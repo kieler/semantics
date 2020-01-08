@@ -41,6 +41,8 @@ import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.klighd.krendering.Trigger
 import de.cau.cs.kieler.kicool.ui.synthesis.actions.SelectNothing
 import com.google.inject.Injector
+import de.cau.cs.kieler.kicool.ui.synthesis.updates.ProcessorDataManager
+import java.util.List
 
 /**
  * Main diagram synthesis for KiCool.
@@ -56,6 +58,8 @@ class KiCoolSynthesis extends AbstractDiagramSynthesis<System> {
     @Inject extension KRenderingExtensions
     @Inject extension ProcessorSynthesis
     @Inject extension SourceSynthesis
+    private static var System lastSystem = null
+    private static var List<KNode> lastResult = null
 
     public static final SynthesisOption FLATTEN_SYSTEM = SynthesisOption.createCheckOption("Flatten System", false)
     public static final SynthesisOption ON_OFF_BUTTONS = SynthesisOption.createCheckOption("On Off Buttons", false)
@@ -100,7 +104,14 @@ class KiCoolSynthesis extends AbstractDiagramSynthesis<System> {
         rootNode.children += nodes
 
         if(FLATTEN_SYSTEM.booleanValue) rootNode.flattenHierarchy
-
+        if( lastSystem !== null && lastSystem == model ){
+            ProcessorDataManager.copyIntermediateData(rootNode, lastResult)
+        }
+        else{
+            print("Test")
+        }
+        lastSystem = model
+        lastResult = rootNode.eAllContents.filter(KNode).toList
         rootNode
     }
         
