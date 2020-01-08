@@ -321,6 +321,21 @@ class KExpressionsValuedObjectExtensions {
         }
     }
     
+    def boolean hasOperatorExpression(Expression expression, OperatorType operatorType) {
+        if (expression instanceof OperatorExpression) {
+            if (expression.operator == operatorType) {
+                return true
+            } else {
+                var r = false
+                for (se : expression.subExpressions) {
+                    r = r || se.hasOperatorExpression(operatorType)
+                }
+                return r
+            }
+        }
+        return false
+    }
+    
     def ValuedObject removeFromContainmentAndCleanup(ValuedObject valuedObject) {
         val declaration = valuedObject.declaration
         valuedObject.remove
