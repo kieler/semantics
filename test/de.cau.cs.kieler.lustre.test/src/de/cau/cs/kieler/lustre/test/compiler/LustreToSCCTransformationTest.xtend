@@ -40,6 +40,7 @@ import org.junit.runner.RunWith
 import static org.junit.Assert.*
 
 import static extension java.lang.String.format
+import de.cau.cs.kieler.lustre.LustreStandaloneSetup
 
 /**
  * Tests if the Lustre to SCC dataflow transformation produces reasonable results.
@@ -54,6 +55,7 @@ class LustreToSCCTransformationTest extends AbstractXTextModelRepositoryTest<Lus
     
     /** Parser Injector */
     static val sctxInjector = new SCTXStandaloneSetup().createInjectorAndDoEMFRegistration
+    static val lustreInjector = LustreStandaloneSetup.doSetup
     
     //-----------------------------------------------------------------------------------------------------------------
     
@@ -61,7 +63,7 @@ class LustreToSCCTransformationTest extends AbstractXTextModelRepositoryTest<Lus
      * Constructor
      */
     new() {
-        super(LustreToSCCTransformationTest.sctxInjector)
+        super(lustreInjector)
     }
     
     /**
