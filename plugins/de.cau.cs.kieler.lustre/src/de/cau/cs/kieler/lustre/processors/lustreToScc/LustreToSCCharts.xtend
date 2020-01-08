@@ -156,7 +156,7 @@ class LustreToSCCharts extends CoreLustreToSCC {
             }
             
             if (transition.strong) {
-                newTransition.preemption = PreemptionType.STRONGABORT
+                newTransition.preemption = PreemptionType.STRONG
             }
             if (action.history) {
                 newTransition.history = HistoryType.DEEP

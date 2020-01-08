@@ -28,6 +28,7 @@ import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.scg.Depth
 import de.cau.cs.kieler.scg.extensions.SCGDependencyExtensions
 import de.cau.cs.kieler.scg.extensions.SCGMethodExtensions
+import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 
 /** 
  * @author ssm
@@ -45,16 +46,22 @@ class LoopAnalyzerV2 extends InplaceProcessor<SCGraphs> {
 	   new Property<Boolean>("de.cau.cs.kieler.scg.processors.loopAnalyzer.enabled", true)
     public static val IProperty<Boolean> LOOP_ANALYZER_CONSIDER_ALL_DEPENDENCIES = 
        new Property<Boolean>("de.cau.cs.kieler.scg.processors.loopAnalyzer.considerAllDependencies", false)
+    public static val IProperty<Boolean> LOOP_ANALYZER_FINAL_REGIONS_ENABLED = 
+       new Property<Boolean>("de.cau.cs.kieler.scg.processors.loopAnalyzer.finalRegions.enabled", true)
+       
+       
     public static val IProperty<LoopData> LOOP_DATA = 
         new Property<LoopData>("de.cau.cs.kieler.scg.processors.loopAnalyzer.data", null)	
     public static val IProperty<Boolean> LOOP_DATA_PERSISTENT = 
-        new Property<Boolean>("de.cau.cs.kieler.scg.processors.loopAnalyzer.data.persistent", false)   
+        new Property<Boolean>("de.cau.cs.kieler.scg.processors.loopAnalyzer.data.persistent", false)
+           
     public static val IProperty<Boolean> ERROR_ON_INSTANTANEOUS_LOOP = 
         new Property<Boolean>("de.cau.cs.kieler.scg.processors.loopAnalyzer.errorOnInstantaneousLoop", false)
     public static val IProperty<Boolean> WARNING_ON_INSTANTANEOUS_LOOP = 
         new Property<Boolean>("de.cau.cs.kieler.scg.processors.loopAnalyzer.warningOnInstantaneousLoop", false)
     public static val IProperty<Boolean> INFO_ON_INSTANTANEOUS_LOOP = 
         new Property<Boolean>("de.cau.cs.kieler.scg.processors.loopAnalyzer.infoOnInstantaneousLoop", false)
+        
     public static val IProperty<Integer> LOOP_ANALYZER_MAX_STRIPPED_NODES = 
         new Property<Integer>("de.cau.cs.kieler.scg.processors.loopAnalyzer.maxStrippedNodes", 100)
     public static val IProperty<Boolean> LOOP_ANALYZER_STOP_AFTER_FIRST_LOOP = 
@@ -81,6 +88,8 @@ class LoopAnalyzerV2 extends InplaceProcessor<SCGraphs> {
         environment.setProperty(LOOP_DATA, loopData)
 
         if (!environment.getProperty(LOOP_ANALYZER_ENABLED)) return;
+        
+        
 
         for (scg : model.scgs.ignoreMethods) {
             scg.findSCCs(loopData, environment.getProperty(LOOP_ANALYZER_CONSIDER_ALL_DEPENDENCIES))

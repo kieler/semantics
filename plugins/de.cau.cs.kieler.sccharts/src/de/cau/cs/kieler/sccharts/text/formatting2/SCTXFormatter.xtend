@@ -16,12 +16,10 @@ import de.cau.cs.kieler.sccharts.DataflowRegion
 import de.cau.cs.kieler.sccharts.DuringAction
 import de.cau.cs.kieler.sccharts.EntryAction
 import de.cau.cs.kieler.sccharts.ExitAction
-import de.cau.cs.kieler.sccharts.PrecedingAction
 import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.ScopeCall
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.SucceedingAction
 import de.cau.cs.kieler.sccharts.SuspendAction
 import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.text.services.SCTXGrammarAccess
@@ -150,28 +148,6 @@ class SCTXFormatter extends KExtFormatter {
 	def dispatch void format(SuspendAction suspendaction, extension IFormattableDocument document) {
 		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
 		format(suspendaction.getTrigger(), document);
-	}
-
-	def dispatch void format(PrecedingAction precedingaction, extension IFormattableDocument document) {
-		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
-		format(precedingaction.getTrigger(), document);
-        if (!precedingaction.effects.empty) {
-            for (idxEffect : precedingaction.effects.indexed) {
-                format(idxEffect.value, document)
-                if (idxEffect.key < precedingaction.effects.size - 1) idxEffect.value.append[ noSpace ]
-            }
-		}
-	}
-
-	def dispatch void format(SucceedingAction succeedingaction, extension IFormattableDocument document) {
-		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
-		format(succeedingaction.getTrigger(), document);
-        if (!succeedingaction.effects.empty) {
-            for (idxEffect : succeedingaction.effects.indexed) {
-                format(idxEffect.value, document)
-                if (idxEffect.key < succeedingaction.effects.size - 1) idxEffect.value.append[ noSpace ]
-            }
-		}
 	}
 
 	def dispatch void format(ControlflowRegion controlflowregion, extension IFormattableDocument document) {

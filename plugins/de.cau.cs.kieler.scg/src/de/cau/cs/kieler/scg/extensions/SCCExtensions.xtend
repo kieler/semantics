@@ -27,6 +27,7 @@ import java.util.LinkedList
 import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.keffects.DataDependency
 import java.util.List
+import de.cau.cs.kieler.kexpressions.keffects.ControlDependency
 
 /**
  * A class with extensions for the calculation of Strongly Connected Components
@@ -225,6 +226,7 @@ class SCCExtensions {
         var neighbors = <Node> newLinkedList
         neighbors.addAll(n.neighbors)
         neighbors.addAll(n.concurrentDependencies)
+        neighbors.addAll(n.dependencies.filter(ControlDependency).map[ target ].filter(Node))
         neighbors
     }
     

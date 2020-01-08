@@ -64,6 +64,7 @@ class ComplexFinalState extends SCChartsProcessor implements Traceable {
 
     override process() {
         termTrans.setEnvironment(environments.source, environments.target)
+        setProperty(CREATE_FINAL_REGIONS, getProperty(FinalRegion.COMPILATION_SUPPORTS_FINAL_REGIONS))
         setModel(model.transform)
     }
 
@@ -165,15 +166,15 @@ class ComplexFinalState extends SCChartsProcessor implements Traceable {
         var state = parentState
         
         // If there are regions that cannot terminate, then we do not need to transform something
-        if (!state.regionsMayTerminate) {
-            // If cannot terminate then simply remove final flag
-            for (region : state.controlflowRegions) {
-                for (cfs : region.allFinalStates.filter[isComplexFinalState]) {
-                    cfs.final = false;
-                }
-            }
-           return;
-        }
+//        if (!state.regionsMayTerminate) {
+//            // If cannot terminate then simply remove final flag
+//            for (region : state.controlflowRegions) {
+//                for (cfs : region.allFinalStates.filter[isComplexFinalState]) {
+//                    cfs.final = false;
+//                }
+//            }
+//           return;
+//        }
         
         // If the parent state is the root state then make an explicit termination transition
         if (parentState.isRootState) {
