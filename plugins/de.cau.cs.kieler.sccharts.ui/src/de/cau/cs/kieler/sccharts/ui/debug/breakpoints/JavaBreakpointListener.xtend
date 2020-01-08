@@ -195,7 +195,7 @@ class JavaBreakpointListener implements IJavaBreakpointListener {
         return col
     }
     
-    def Transition findCurrentTransition(IJavaThread thread, IJavaBreakpoint breakpoint, SCCharts model, State lowestActiveState) {
+    def Transition findCurrentTransition(IJavaThread thread, IJavaBreakpoint breakpoint, SCCharts model, List<State> activeStates) {
 
         // Use UIJob to get active editor -----------------------------------------
         val ITextEditor[] editorArr = newArrayOfSize(1)
@@ -233,9 +233,23 @@ class JavaBreakpointListener implements IJavaBreakpointListener {
                 // The line has a comment, which may be a transition indicator
                 val commentTextSplit = commentText.split("\\(Priority ")
                 if (commentTextSplit.length >= 2) { 
+                    // TODO does not work with more than 9 transitions on one state
                     val prio = Integer.parseInt(commentTextSplit.get(1)?.charAt(0).toString)
                     if (prio != 0) {
-                        return lowestActiveState.outgoingTransitions.get(prio - 1)
+                        // now determine what state the transition leaves from.
+                        // Note that that is usually, but not always the lowest active state.
+                        // Special case: abort.
+                        val transitionHashString = commentTextSplit.last.split("\\(")
+                        val transitionHash = transitionHashString.last.substring(0, transitionHashString.last.length - 2)
+                        for (state : activeStates) {
+                            if (state.outgoingTransitions.length >= prio) {
+                                val transition = state.outgoingTransitions.get(prio - 1)
+                                if (DebugAnnotations.getFullNameHash(transition).toString.equals(transitionHash)) {
+                                    return transition
+                                }
+                            }
+                        }
+                        
                     }
                 }
             }
@@ -283,7 +297,7 @@ class JavaBreakpointListener implements IJavaBreakpointListener {
                     debugHighlighter.highlightExecutingState(state)
                 }
                 
-                val currentTransition = findCurrentTransition(thread, breakpoint, currentModel, executingStates.head)
+                val currentTransition = findCurrentTransition(thread, breakpoint, currentModel, executingStates)
                 if (currentTransition !== null) {
                     debugHighlighter.highlightExecutingTransition(currentTransition)
                 }
