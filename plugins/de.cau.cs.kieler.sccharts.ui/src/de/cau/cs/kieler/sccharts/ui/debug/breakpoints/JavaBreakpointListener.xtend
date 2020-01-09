@@ -57,6 +57,7 @@ class JavaBreakpointListener implements IJavaBreakpointListener {
     
     new() {
         super()
+        pendingBreakpoints = <IJavaBreakpoint> newLinkedList
         Guice.createInjector.injectMembers(this)
     }
     
@@ -66,6 +67,8 @@ class JavaBreakpointListener implements IJavaBreakpointListener {
     
     var lastModelString = ""
     var SCCharts currentModel;
+    
+    val List<IJavaBreakpoint> pendingBreakpoints
     
     /**
      * Find the model states in the original SCChart currently being executed.
@@ -221,7 +224,7 @@ class JavaBreakpointListener implements IJavaBreakpointListener {
         // Extract line text -------------------------------------------------------
         val lineNumber = (breakpoint as ILineBreakpoint).lineNumber - 1
         val document = editor.documentProvider.getDocument(editor.editorInput)
-        val offset = document.getLineOffset(lineNumber) // TODO throws BadLocationException sometimes
+        val offset = document.getLineOffset(lineNumber) // TODO throws BadLocationException sometimes since the editor switches to the active breakpoint AFTER this method is complete
         val length = document.getLineLength(lineNumber)
         val lineText = document.get(offset, length)
         
@@ -279,6 +282,13 @@ class JavaBreakpointListener implements IJavaBreakpointListener {
                             DebugDiagramView.updateView(currentModel)
                         }
                     })
+                    
+                    // make sure to register all breakpoints in the breakpoint manager
+                    for (pendingBreakpoint : pendingBreakpoints) {
+                        DebugBreakpointManager.instance.presentBreakpoint(pendingBreakpoint, currentModel)
+                    }
+                    pendingBreakpoints.clear
+                    
                 } else {
                     // Otherwise, clear all highlightings
                     debugHighlighter.clearAllHighlights
@@ -338,7 +348,12 @@ class JavaBreakpointListener implements IJavaBreakpointListener {
     override addingBreakpoint(IJavaDebugTarget target, IJavaBreakpoint breakpoint) {
         
         println("Adding breakpoint!")
-        println(breakpoint.marker.resource.getMarker(breakpoint.marker.id))
+        if (currentModel === null) {
+            // cannot register breakpoint yet, must do so later
+            pendingBreakpoints.add(breakpoint)
+        } else {
+            DebugBreakpointManager.instance.presentBreakpoint(breakpoint, currentModel)
+        }
     }
     
     override breakpointHasRuntimeException(IJavaLineBreakpoint breakpoint, DebugException exception) {

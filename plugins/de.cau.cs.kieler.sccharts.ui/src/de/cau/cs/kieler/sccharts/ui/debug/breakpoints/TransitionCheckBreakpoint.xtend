@@ -16,6 +16,8 @@ import org.eclipse.jdt.internal.debug.core.breakpoints.JavaLineBreakpoint
 import org.eclipse.core.resources.IResource
 import java.util.Map
 import org.eclipse.debug.core.DebugException
+import de.cau.cs.kieler.sccharts.Transition
+import de.cau.cs.kieler.sccharts.processors.statebased.DebugAnnotations
 
 /**
  * @author stu121235
@@ -25,14 +27,27 @@ class TransitionCheckBreakpoint extends JavaLineBreakpoint {
     
     public static val String TRANSITION_CHECK_BREAKPOINT = "de.cau.cs.kieler.sccharts.ui.transitionCheckMarker"
     
+    var Transition transition
+    var int transitionHash
+    
     new() {
     }
     
     new(IResource resource, String typeName,
             int lineNumber, int charStart, int charEnd, int hitCount,
-            boolean add, Map<String, Object> attributes) throws DebugException {
+            boolean add, Map<String, Object> attributes, Transition transition) throws DebugException {
         super(resource, typeName, lineNumber, charStart, charEnd, hitCount, add,
                 attributes, TRANSITION_CHECK_BREAKPOINT);
+        this.transition = transition
+        this.transitionHash = DebugAnnotations.getFullNameHash(transition)
     }
-       
+    
+    def getTransition() {
+        return transition
+    }
+    
+    def getTransitionHash() {
+        return transitionHash
+    }
+    
 }

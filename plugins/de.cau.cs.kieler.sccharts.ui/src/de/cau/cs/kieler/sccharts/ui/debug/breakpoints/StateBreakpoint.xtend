@@ -16,6 +16,8 @@ import org.eclipse.jdt.internal.debug.core.breakpoints.JavaLineBreakpoint
 import org.eclipse.core.resources.IResource
 import java.util.Map
 import org.eclipse.debug.core.DebugException
+import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.sccharts.processors.statebased.DebugAnnotations
 
 /**
  * @author stu121235
@@ -25,13 +27,26 @@ class StateBreakpoint extends JavaLineBreakpoint {
     
     public static val String STATE_BREAKPOINT = "de.cau.cs.kieler.sccharts.ui.stateMarker"
     
+    var State state
+    var int stateHash
+    
     new() {
     }
     
     new(IResource resource, String typeName,
             int lineNumber, int charStart, int charEnd, int hitCount,
-            boolean add, Map<String, Object> attributes) throws DebugException {
+            boolean add, Map<String, Object> attributes, State state) throws DebugException {
         super(resource, typeName, lineNumber, charStart, charEnd, hitCount, add,
                 attributes, STATE_BREAKPOINT);
+        this.state = state
+        this.stateHash = DebugAnnotations.getFullNameHash(state)
+    }
+    
+    def getState() {
+        return state
+    }
+    
+    def getStateHash() {
+        return stateHash
     }
 }
