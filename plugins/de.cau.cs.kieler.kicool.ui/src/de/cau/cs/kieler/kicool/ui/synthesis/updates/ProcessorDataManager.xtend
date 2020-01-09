@@ -142,7 +142,7 @@ class ProcessorDataManager {
                     setProperty(INTERMEDIATE_DATA, new IntermediateData(
                         null,
                         compilationNotification.compilationContext,
-                        null,
+                        compilationNotification.compilationContext.originalModel,
                         view,
                         -1,
                         it
@@ -279,7 +279,7 @@ class ProcessorDataManager {
                 "). This should not happen. I'm sorry.")
             return
         }
-        view.viewContext.layoutRecorder.startRecording
+        
         
         //switch(processorInstance.environment.status) {
         //    case ERRORS: NODE_ACTIVITY_STATUS.getContainer(nodeIdMap)?.setFBColor(ERROR)
@@ -294,7 +294,6 @@ class ProcessorDataManager {
         //NODE_ENVIRONMENT.findNode(nodeIdMap)?.setLabel(envText)
         
         var intermediateModelCounter = 0
-        
         
 // This sometimes causes a Klighd exception: Exception in thread "pool-2-thread-30" java.lang.NullPointerException
 //    at de.cau.cs.kieler.klighd.internal.macrolayout.KlighdLayoutConfigurationStore.getContainer(KlighdLayoutConfigurationStore.java:396)

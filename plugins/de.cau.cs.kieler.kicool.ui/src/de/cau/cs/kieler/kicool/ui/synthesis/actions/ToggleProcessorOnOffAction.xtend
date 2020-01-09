@@ -20,6 +20,9 @@ import org.eclipse.xtend.lib.annotations.Accessors
 import static de.cau.cs.kieler.kicool.ui.synthesis.KNodeProperties.*
 import static de.cau.cs.kieler.kicool.ui.synthesis.styles.ColorSystem.*
 import static de.cau.cs.kieler.kicool.ui.synthesis.updates.ProcessorDataManager.setFBColor
+import de.cau.cs.kieler.klighd.kgraph.KNode
+import de.cau.cs.kieler.klighd.kgraph.KGraphElement
+import org.eclipse.emf.ecore.EObject
 
 /**
  * Class that handles on/off requests of users.
@@ -37,8 +40,11 @@ class ToggleProcessorOnOffAction implements IAction {
     
     override execute(ActionContext context) {
         val rendering = context.KRendering as KContainerRendering
-        
-        val processorReference = rendering.getProperty(PROCESSOR_IDENTIFIER)
+        var EObject parent = rendering
+        while (!(parent instanceof KNode)) {
+            parent = parent.eContainer
+        }
+        val processorReference = (parent as KNode).getProperty(PROCESSOR_IDENTIFIER)
         
         if (!deactivatedProcessors.containsKey(processorReference)) {
             deactivatedProcessors.put(processorReference, OnOffToggle.ON)

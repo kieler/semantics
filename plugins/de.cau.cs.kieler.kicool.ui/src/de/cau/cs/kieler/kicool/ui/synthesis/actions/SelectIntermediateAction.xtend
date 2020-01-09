@@ -59,14 +59,16 @@ class SelectIntermediateAction implements IAction {
             }
             if (intermediateData !== null) {
                 var node = context.KNode
-                while(node.parent !== null){
+                while (node.parent !== null) {
                     node = node.parent
                 }
                 node.eAllContents.filter(KNode).forEach[
                     getProperty(PROCESSOR_INTERMEDIATE_CONTAINER)?.children?.forEach[selected = false]
                 ]
                 intermediateData.view.editPartSystemManager.intermediateSelection?.clearSelection
-                rendering.selected = true
+                if (rendering !== null) {
+                    rendering.selected = true
+                }
                 KiCoModelViewNotifier.notifyCompilationChanged(intermediateData.compilationContext.inputEditor,
                     intermediateData.model)
                 intermediateData.view.editPartSystemManager.intermediateSelection = new IntermediateSelection(
