@@ -88,7 +88,7 @@ class StatebasedLeanCTemplate extends AbstractStatebasedLeanTemplate {
             // This enum contains all states of the « r.name » region
             typedef enum {
                 « FOR s : r.states.indexed »« s.value.uniqueEnumName 
-                »« IF s.value.isHierarchical », « s.value.uniqueEnumName»RUNNING« ENDIF
+                »« IF s.value.isHierarchical || s.value.hasActions », « s.value.uniqueEnumName»RUNNING« ENDIF
                 »« IF s.value.isHierarchical && s.value.hasEntryActions », « s.value.uniqueEnumName»ENTRY« ENDIF 
                 »« IF s.key < r.states.size-1 », « ENDIF»« ENDFOR »
             } « r.uniqueName »States;
@@ -176,7 +176,7 @@ class StatebasedLeanCTemplate extends AbstractStatebasedLeanTemplate {
         '''
         static inline void « state.uniqueName »(« state.uniqueContextMemberName » *context) {
           « IF debug »printf("« state.uniqueName »\n"); fflush(stdout);« ENDIF »
-        « IF state.isHierarchical »
+        « IF state.isHierarchical || state.hasActions »
           « IF state !== rootState »
             « FOR r : state.regions.filter(ControlflowRegion) »
             
@@ -238,6 +238,7 @@ class StatebasedLeanCTemplate extends AbstractStatebasedLeanTemplate {
           
         « ENDFOR »
         « state.addSuperstateStrongAbortCode »
+        « state.addSuperstateDuringActionCode »
         « FOR r : state.regions.filter(ControlflowRegion) »
         
           « r.uniqueName »(&context->« r.uniqueContextName »);
@@ -267,6 +268,20 @@ class StatebasedLeanCTemplate extends AbstractStatebasedLeanTemplate {
             ''''''
         }
     }
+    
+    protected def CharSequence addSuperstateDuringActionCode(State state) {
+        val duringActions = state.duringActions.toList
+        
+        if (!duringActions.empty) {
+        '''
+        « FOR r : duringActions.indexed »  
+        « addActionConditionCode(r.key, duringActions.size, r.value, true, NONE) »
+        « ENDFOR »
+        '''
+        } else {
+            ''''''
+        }
+    }    
     
     protected def CharSequence addSimpleStateCode(State state) {
         if (state.isFinal) {
@@ -420,7 +435,7 @@ class StatebasedLeanCTemplate extends AbstractStatebasedLeanTemplate {
               « FOR s : region.states »
               case « s.uniqueEnumName »:
                 « s.uniqueName »(context);
-        « IF s.isHierarchical »// Superstate: intended fall-through 
+        « IF s.isHierarchical || s.hasActions »// Superstate: intended fall-through 
       « IF s.hasEntryActions »case « s.uniqueEnumName »ENTRY:
         « s.uniqueName »_entry(context);
         // Superstate: intended fall-through « ENDIF »

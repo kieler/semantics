@@ -82,7 +82,7 @@ class SCChartsStatebasedCSimulationTest extends AbstractSimulationTest<SCCharts>
     @Test
     def void testSimulationStatebasedLeanCSC(SCCharts scc, TestModelData modelData) {
         assumeTrue("Missing property lean", modelData.modelProperties.contains("lean"))
-        assumeFalse("Has 'simulation-fails' property", modelData.modelProperties.contains("simulation-fails-statebased-lean-c"))
+        assumeFalse("Has 'simulation-fails' property", modelData.modelProperties.contains("simulation-fails-statebased-lean-cs-c"))
         
         startSimulationTest(STATEBASED_LEAN_CS_SIMULATION_SYSTEM, scc, modelData, "State-based Lean CS Simulation Test (C)")
     }
@@ -90,7 +90,7 @@ class SCChartsStatebasedCSimulationTest extends AbstractSimulationTest<SCCharts>
     @Test
     def void testSimulationStatebasedLeanCSCTTS(SCCharts scc, TestModelData modelData) {
         assumeTrue("Missing property lean", modelData.modelProperties.contains("lean"))
-        assumeFalse("Has 'simulation-fails' property", modelData.modelProperties.contains("simulation-fails-statebased-lean-c"))
+        assumeFalse("Has 'simulation-fails' property", modelData.modelProperties.contains("simulation-fails-statebased-lean-cs-c"))
         
         startSimulationTest(STATEBASED_LEAN_CS_SIMULATION_SYSTEM_TTS, scc, modelData, "State-based Lean CS Simulation Test (C, TTS)")
     }
