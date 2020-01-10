@@ -31,7 +31,9 @@ class SCChartsStatebasedCSimulationTest extends AbstractSimulationTest<SCCharts>
     public static val STATEBASED_SIMULATION_SYSTEM = "de.cau.cs.kieler.sccharts.simulation.statebased.c"
     public static val STATEBASED_SIMULATION_SYSTEM_TTS = "de.cau.cs.kieler.sccharts.simulation.tts.statebased.c"
     public static val STATEBASED_LEAN_SIMULATION_SYSTEM = "de.cau.cs.kieler.sccharts.simulation.statebased.lean.c"
+    public static val STATEBASED_LEAN_CS_SIMULATION_SYSTEM = "de.cau.cs.kieler.sccharts.simulation.statebased.lean.cs.c"
     public static val STATEBASED_LEAN_SIMULATION_SYSTEM_TTS = "de.cau.cs.kieler.sccharts.simulation.tts.statebased.lean.c"
+    public static val STATEBASED_LEAN_CS_SIMULATION_SYSTEM_TTS = "de.cau.cs.kieler.sccharts.simulation.tts.statebased.lean.cs.c"
 
         
     public static val scchartsInjector = new SCTXStandaloneSetup().createInjectorAndDoEMFRegistration
@@ -43,8 +45,8 @@ class SCChartsStatebasedCSimulationTest extends AbstractSimulationTest<SCCharts>
     override filter(TestModelData modelData) {
         return modelData.modelProperties.contains("statebased")
         && !modelData.modelProperties.contains("not-core")
-        && !modelData.modelProperties.contains("simulation-fails-netlist-c")
-        && !modelData.modelProperties.contains("simulation-fails-statebased-c")
+//        && !modelData.modelProperties.contains("simulation-fails-netlist-c")
+//        && !modelData.modelProperties.contains("simulation-fails-statebased-c")
     }
     
     @Test
@@ -76,5 +78,22 @@ class SCChartsStatebasedCSimulationTest extends AbstractSimulationTest<SCCharts>
         
         startSimulationTest(STATEBASED_LEAN_SIMULATION_SYSTEM_TTS, scc, modelData, "State-based Lean Simulation Test (C, TTS)")
     }
+    
+    @Test
+    def void testSimulationStatebasedLeanCSC(SCCharts scc, TestModelData modelData) {
+        assumeTrue("Missing property lean", modelData.modelProperties.contains("lean"))
+        assumeFalse("Has 'simulation-fails' property", modelData.modelProperties.contains("simulation-fails-statebased-lean-c"))
+        
+        startSimulationTest(STATEBASED_LEAN_CS_SIMULATION_SYSTEM, scc, modelData, "State-based Lean CS Simulation Test (C)")
+    }
+    
+    @Test
+    def void testSimulationStatebasedLeanCSCTTS(SCCharts scc, TestModelData modelData) {
+        assumeTrue("Missing property lean", modelData.modelProperties.contains("lean"))
+        assumeFalse("Has 'simulation-fails' property", modelData.modelProperties.contains("simulation-fails-statebased-lean-c"))
+        
+        startSimulationTest(STATEBASED_LEAN_CS_SIMULATION_SYSTEM_TTS, scc, modelData, "State-based Lean CS Simulation Test (C, TTS)")
+    }
+    
     
 }

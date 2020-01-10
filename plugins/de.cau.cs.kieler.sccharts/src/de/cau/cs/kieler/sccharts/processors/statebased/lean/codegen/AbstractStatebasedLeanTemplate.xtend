@@ -17,13 +17,17 @@ import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
 import java.util.List
 import java.util.Map
+import de.cau.cs.kieler.core.properties.Property
 
 /**
  * Common functionality for Lean State-Based Code Generation using a template.
  * 
- * @author Wechselberg
+ * @author Wechselberg ssm
  */
 abstract class AbstractStatebasedLeanTemplate {
+    
+    public static val CONVENIENT_SET_COMPILATION = 
+       new Property<Boolean>("de.cau.cs.kieler.sccharts.statebased.convenientSet", false)      
 
     protected State rootState
 
