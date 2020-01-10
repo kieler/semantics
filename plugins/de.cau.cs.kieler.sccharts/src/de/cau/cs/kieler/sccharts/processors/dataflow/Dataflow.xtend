@@ -191,7 +191,13 @@ class Dataflow extends SCChartsProcessor {
                 
                 var idx = 0
                 if (rdInstance.isModelReference) {
-                    for (declaration : rdInstance.referenceDeclaration.reference.asDeclarationScope.declarations.filter(VariableDeclaration).filter[ input ]) {
+                    val ref = rdInstance.referenceDeclaration.reference
+                    val decls = newArrayList()
+                    decls += ref.asDeclarationScope.declarations
+                    if (ref instanceof State) {
+                        decls += ref.allInheritedDeclarations
+                    }
+                    for (declaration : decls.filter(VariableDeclaration).filter[ input ]) {
                         for (valuedObject : declaration.valuedObjects) {
                             if (vectorValues.size > 0) {
                                 // Remember: The expression will be removed from it's containment.
@@ -260,7 +266,6 @@ class Dataflow extends SCChartsProcessor {
                 
                 var assignment = createAssignment => [ a |
                     a.reference = equation.value.reference?.copy
-                    a.subReference = equation.value.subReference?.copy
                     a.operator = equation.value.operator
                     a.expression = equation.value.expression.copy
                 ]

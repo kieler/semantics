@@ -636,22 +636,13 @@ public interface ScgPackage extends EPackage {
     int ASSIGNMENT__OPERATOR = NODE_FEATURE_COUNT + 3;
 
 	/**
-     * The feature id for the '<em><b>Sub Reference</b></em>' containment reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int ASSIGNMENT__SUB_REFERENCE = NODE_FEATURE_COUNT + 4;
-
-    /**
      * The feature id for the '<em><b>Next</b></em>' containment reference.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-	int ASSIGNMENT__NEXT = NODE_FEATURE_COUNT + 5;
+	int ASSIGNMENT__NEXT = NODE_FEATURE_COUNT + 4;
 
     /**
      * The number of structural features of the '<em>Assignment</em>' class.
@@ -660,7 +651,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-	int ASSIGNMENT_FEATURE_COUNT = NODE_FEATURE_COUNT + 6;
+	int ASSIGNMENT_FEATURE_COUNT = NODE_FEATURE_COUNT + 5;
 
 	/**
      * The meta object id for the '{@link de.cau.cs.kieler.scg.impl.ForkImpl <em>Fork</em>}' class.
@@ -1394,22 +1385,13 @@ public interface ScgPackage extends EPackage {
 	int GUARD__OPERATOR = NODE_FEATURE_COUNT + 3;
 
 	/**
-     * The feature id for the '<em><b>Sub Reference</b></em>' containment reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int GUARD__SUB_REFERENCE = NODE_FEATURE_COUNT + 4;
-
-    /**
      * The number of structural features of the '<em>Guard</em>' class.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-	int GUARD_FEATURE_COUNT = NODE_FEATURE_COUNT + 5;
+	int GUARD_FEATURE_COUNT = NODE_FEATURE_COUNT + 4;
 
 	/**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
