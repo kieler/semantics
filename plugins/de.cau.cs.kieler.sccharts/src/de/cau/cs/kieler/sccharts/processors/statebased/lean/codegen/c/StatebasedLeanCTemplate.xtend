@@ -27,6 +27,7 @@ import de.cau.cs.kieler.sccharts.PreemptionType
 import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
 import de.cau.cs.kieler.sccharts.processors.statebased.lean.codegen.AbstractStatebasedLeanTemplate
 import de.cau.cs.kieler.sccharts.processors.statebased.codegen.StatebasedCCodeSerializeHRExtensions
+import java.util.List
 
 /**
  * @author ssm
@@ -183,9 +184,9 @@ class StatebasedLeanCTemplate extends AbstractStatebasedLeanTemplate {
             static inline void « state.uniqueName »_running(« state.uniqueContextMemberName » *context) {
           « ENDIF »
           « addSuperstateCode(state) »
-        « ENDIF »
-        
+        « ELSE »
         « addSimpleStateCode(state)»
+        « ENDIF »
         }
         
         '''
@@ -201,43 +202,64 @@ class StatebasedLeanCTemplate extends AbstractStatebasedLeanTemplate {
         « ENDFOR »« FOR r : state.regions.filter(ControlflowRegion) »
         
           « r.uniqueName »(&context->« r.uniqueContextName »);
-        « ENDFOR »        
+        « ENDFOR »
+        
+        « IF state.outgoingTransitions.size == 0 »
+          « if (state.isHierarchical) addDelayedEnabledCode(state, "") »
+            context->threadStatus = READY;
+        « ELSE »
+        « addTransitionCollectionCode(state.outgoingTransitions, false) »
+          } else {
+          « if (state.isHierarchical) addDelayedEnabledCode(state, "  ") »
+            context->threadStatus = READY;
+          }
+        « ENDIF »
         '''
     }
     
     protected def CharSequence addSimpleStateCode(State state) {
-        val defaultTransition = state.outgoingTransitions.indexed.findFirst[ value.trigger === null && 
-            value.delay == DelayType.IMMEDIATE && value.preemption != PreemptionType.TERMINATION]
-        val hasDefaultTransition = defaultTransition !== null
-        val defaultTransitionIndex = if (hasDefaultTransition) defaultTransition.key else -1    
-            
         if (state.isFinal) {
         '''  context->threadStatus = TERMINATED;''' 
         } else {
         '''
-        « IF state.outgoingTransitions.size == 1 && 
-             state.outgoingTransitions.head.delay == DelayType.IMMEDIATE && 
-             state.outgoingTransitions.head.trigger === null &&
-             state.outgoingTransitions.head.preemption != PreemptionType.TERMINATION »
-        « addTransitionEffectCode(state.outgoingTransitions.head, "  ") »
-        « ELSE »
-          « FOR t : state.outgoingTransitions.indexed »
-          « addTransitionConditionCode(t.key, state.outgoingTransitions.size, t.value, defaultTransitionIndex) » 
-          « ENDFOR »
-            « IF !hasDefaultTransition »
-              « IF state.outgoingTransitions.size == 0 »
-            « if (state.isHierarchical) addDelayedEnabledCode(state, "") »
+        « addTransitionCollectionCode(state.outgoingTransitions, false) »
+        « IF state.outgoingTransitions.defaultTransition === null »
+          « IF state.outgoingTransitions.size == 0 »
+            context->threadStatus = READY;
+          « ELSE »
+            } else {
               context->threadStatus = READY;
-            « ELSE »
-              } else {« if (state.isHierarchical) addDelayedEnabledCode(state, "  ") »
-                context->threadStatus = READY;
-              }
-              « ENDIF »
+            }
           « ENDIF »
         « ENDIF »
         '''
         }
     }
+    
+    protected def getDefaultTransition(List<Transition> transitions) {
+        return transitions.indexed.findFirst[ value.trigger === null && 
+            value.delay == DelayType.IMMEDIATE && value.preemption != PreemptionType.TERMINATION]
+    }
+    
+    protected def CharSequence addTransitionCollectionCode(List<Transition> transitions, boolean closeBrackets) {
+        val defaultTransition = transitions.defaultTransition
+        val hasDefaultTransition = defaultTransition !== null
+        val defaultTransitionIndex = if (hasDefaultTransition) defaultTransition.key else -1    
+            
+        '''
+        « IF transitions.size == 1 && 
+             transitions.head.delay == DelayType.IMMEDIATE && 
+             transitions.head.trigger === null &&
+             transitions.head.preemption != PreemptionType.TERMINATION »
+        « addTransitionEffectCode(transitions.head, "  ") »
+        « ELSE »
+          « FOR t : transitions.indexed »
+          « addTransitionConditionCode(t.key, transitions.size, t.value, defaultTransitionIndex) » 
+          « ENDFOR »
+          « IF transitions.size > 0 && closeBrackets »  }« ENDIF »
+        « ENDIF »
+        '''
+    }    
     
     protected def CharSequence addDelayedEnabledCode(State state, CharSequence indentation) {
         '''
