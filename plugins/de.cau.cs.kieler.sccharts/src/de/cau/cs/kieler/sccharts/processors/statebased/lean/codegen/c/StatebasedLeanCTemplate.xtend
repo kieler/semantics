@@ -28,6 +28,7 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
 import de.cau.cs.kieler.sccharts.processors.statebased.lean.codegen.AbstractStatebasedLeanTemplate
 import de.cau.cs.kieler.sccharts.processors.statebased.codegen.StatebasedCCodeSerializeHRExtensions
 import java.util.List
+import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
 
 /**
  * @author ssm
@@ -40,6 +41,7 @@ class StatebasedLeanCTemplate extends AbstractStatebasedLeanTemplate {
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension SCChartsStateExtensions
     @Inject extension SCChartsActionExtensions
+    @Inject extension SCChartsTransitionExtensions
     
     @Accessors extension StatebasedCCodeSerializeHRExtensions serializer
     
@@ -193,22 +195,27 @@ class StatebasedLeanCTemplate extends AbstractStatebasedLeanTemplate {
     }
     
     protected def CharSequence addSuperstateCode(State state) {
+        val weakAborts = state.outgoingTransitions.filter[ !isStrongAbort ].toList
+        
         '''
         « FOR r : state.regions.filter(ControlflowRegion) »
         
           if (context->« r.uniqueName ».threadStatus != TERMINATED) {
             context->« r.uniqueName ».threadStatus = RUNNING;
           }
-        « ENDFOR »« FOR r : state.regions.filter(ControlflowRegion) »
+          
+        « ENDFOR »
+        « state.addSuperstateStrongAbortCode »
+        « FOR r : state.regions.filter(ControlflowRegion) »
         
           « r.uniqueName »(&context->« r.uniqueContextName »);
         « ENDFOR »
         
-        « IF state.outgoingTransitions.size == 0 »
+        « IF weakAborts.size == 0 »
           « if (state.isHierarchical) addDelayedEnabledCode(state, "") »
             context->threadStatus = READY;
         « ELSE »
-        « addTransitionCollectionCode(state.outgoingTransitions, false) »
+        « addTransitionCollectionCode(weakAborts, false, false) »
           } else {
           « if (state.isHierarchical) addDelayedEnabledCode(state, "  ") »
             context->threadStatus = READY;
@@ -217,23 +224,33 @@ class StatebasedLeanCTemplate extends AbstractStatebasedLeanTemplate {
         '''
     }
     
+    protected def CharSequence addSuperstateStrongAbortCode(State state) {
+        val strongAborts = state.outgoingTransitions.filter[ isStrongAbort ].toList
+        
+        if (!strongAborts.empty) {
+            '''
+            « addTransitionCollectionCode(strongAborts, true, true) »
+            '''
+        } else {
+            ''''''
+        }
+    }
+    
     protected def CharSequence addSimpleStateCode(State state) {
         if (state.isFinal) {
         '''  context->threadStatus = TERMINATED;''' 
         } else {
-        '''
-        « addTransitionCollectionCode(state.outgoingTransitions, false) »
-        « IF state.outgoingTransitions.defaultTransition === null »
-          « IF state.outgoingTransitions.size == 0 »
-            context->threadStatus = READY;
-          « ELSE »
-            } else {
-              context->threadStatus = READY;
-            }
+            '''
+            « addTransitionCollectionCode(state.outgoingTransitions, false, false) »
+            « IF state.outgoingTransitions.defaultTransition === null »
+            « IF state.outgoingTransitions.size == 0 »  context->threadStatus = READY;
+            « ELSE »  } else {
+                context->threadStatus = READY;
+              }
           « ENDIF »
-        « ENDIF »
-        '''
-        }
+          « ENDIF »
+          '''
+      }
     }
     
     protected def getDefaultTransition(List<Transition> transitions) {
@@ -241,7 +258,9 @@ class StatebasedLeanCTemplate extends AbstractStatebasedLeanTemplate {
             value.delay == DelayType.IMMEDIATE && value.preemption != PreemptionType.TERMINATION]
     }
     
-    protected def CharSequence addTransitionCollectionCode(List<Transition> transitions, boolean closeBrackets) {
+    protected def CharSequence addTransitionCollectionCode(List<Transition> transitions, boolean closeBrackets, 
+        boolean addReturnCode
+    ) {
         val defaultTransition = transitions.defaultTransition
         val hasDefaultTransition = defaultTransition !== null
         val defaultTransitionIndex = if (hasDefaultTransition) defaultTransition.key else -1    
@@ -254,7 +273,7 @@ class StatebasedLeanCTemplate extends AbstractStatebasedLeanTemplate {
         « addTransitionEffectCode(transitions.head, "  ") »
         « ELSE »
           « FOR t : transitions.indexed »
-          « addTransitionConditionCode(t.key, transitions.size, t.value, defaultTransitionIndex) » 
+          « addTransitionConditionCode(t.key, transitions.size, t.value, defaultTransitionIndex, addReturnCode) » 
           « ENDFOR »
           « IF transitions.size > 0 && closeBrackets »  }« ENDIF »
         « ENDIF »
@@ -271,7 +290,7 @@ class StatebasedLeanCTemplate extends AbstractStatebasedLeanTemplate {
     }
     
     protected def CharSequence addTransitionConditionCode(int index, int count, Transition transition, 
-        int defaultTransitionIndex
+        int defaultTransitionIndex, boolean addReturnCode
     ) {
         val hasDefaultTransition = defaultTransitionIndex >= 0
         
@@ -305,6 +324,7 @@ class StatebasedLeanCTemplate extends AbstractStatebasedLeanTemplate {
           } else «IF !(defaultTransition) »if (« condition ») « ENDIF»{
         « ENDIF » 
         « addTransitionEffectCode(transition, "    ") »
+          « IF (addReturnCode) »  return;« ENDIF»
           « IF (index == count-1 && hasDefaultTransition) || (index == defaultTransitionIndex) »
           }
         « ENDIF »
