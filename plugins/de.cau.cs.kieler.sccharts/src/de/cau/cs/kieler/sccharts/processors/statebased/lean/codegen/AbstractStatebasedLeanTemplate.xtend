@@ -186,4 +186,11 @@ abstract class AbstractStatebasedLeanTemplate {
         if(string === null) return ""
         string.replaceAll("[\\s-]", "_")
     }
+   
+   
+    static protected enum ReturnSourceCode {
+        NONE, // Do not add return to action code 
+        ADD,  // Add return to action code 
+        ONLY  // Only use return at action code
+    } 
 }
