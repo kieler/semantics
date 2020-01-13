@@ -191,6 +191,8 @@ class StatebasedLeanCTemplate extends AbstractStatebasedLeanTemplate {
               context->activeState = « state.uniqueEnumName »RUNNING;
             }
             
+            « if (state.hasExitActions) state.addSuperstateExitActionCode »
+            
             static inline void « state.uniqueName »_running(« state.uniqueContextMemberName » *context) {
           « ENDIF »                
           « addSuperstateCode(state) »
@@ -218,16 +220,35 @@ class StatebasedLeanCTemplate extends AbstractStatebasedLeanTemplate {
 ''' +   '''
         static inline void « state.uniqueName »_entry(« state.uniqueContextMemberName » *context) {
         « FOR r : entryActions.filter[ isStrong ].indexed »  
-        « addActionConditionCode(r.key, entryActions.size, r.value, false, NONE) »
+        « addActionConditionCode(r.key, entryActions.size, r.value, false, NONE, null) »
         « ENDFOR »
         « IF hasWeakEntryActions »
-        « addTransitionCollectionCode(state.outgoingTransitions.filter[ isStrongAbort ].toList, true, ONLY) »
+        « addTransitionCollectionCode(state.outgoingTransitions.filter[ isStrongAbort ].toList, true, ONLY, null) »
         « FOR r : entryActions.filter[ isWeak ].indexed »
-        « addActionConditionCode(r.key, entryActions.size, r.value, false, NONE) »
+        « addActionConditionCode(r.key, entryActions.size, r.value, false, NONE, null) »
         « ENDFOR »
         « ENDIF »
         '''
     }
+    
+    protected def CharSequence addSuperstateExitActionCode(State state) {
+        val exitActions = state.exitActions.toList
+        val hasWeakExitActions = exitActions.exists[ isWeak ]
+        
+        '''
+        static inline void « state.uniqueName »_exit(« state.uniqueContextMemberName » *context, char isStrongAbort) {
+        « FOR r : exitActions.filter[ isStrong ].indexed »  
+        « addActionConditionCode(r.key, exitActions.size, r.value, false, NONE, null) »
+        « ENDFOR »
+        « IF hasWeakExitActions »
+            if (isStrongAbort) return;
+        « FOR r : exitActions.filter[ isWeak ].indexed »
+        « addActionConditionCode(r.key, exitActions.size, r.value, false, NONE, null) »
+        « ENDFOR »
+        « ENDIF »
+        }
+        '''
+    }    
     
     protected def CharSequence addSuperstateCode(State state) {
         val weakAborts = state.outgoingTransitions.filter[ !isStrongAbort ].toList
@@ -252,21 +273,29 @@ class StatebasedLeanCTemplate extends AbstractStatebasedLeanTemplate {
           « if (state.isHierarchical) addDelayedEnabledCode(state, "") »
             context->threadStatus = READY;
         « ELSE »
-        « addTransitionCollectionCode(weakAborts, false, NONE) »
+        « addTransitionCollectionCode(weakAborts, false, NONE, null) »
         « IF !onlyDefaultTransition »  } else {« ENDIF »
           « if (state.isHierarchical) addDelayedEnabledCode(state, "  ") »
             context->threadStatus = READY;
         « IF !onlyDefaultTransition »  }« ENDIF »
+        « ENDIF »
+        
+        « IF state.hasExitActions »  if (context->activeState != « state.uniqueEnumName »RUNNING) {
+            « state.uniqueName »_exit(context, 0);
+          }
         « ENDIF »
         '''
     }
     
     protected def CharSequence addSuperstateStrongAbortCode(State state) {
         val strongAborts = state.outgoingTransitions.filter[ isStrongAbort ].toList
+        val additionalEffectCode = if (!state.exitActions.filter[ isStrong ].empty)
+            "    " + state.uniqueName + "_exit(context, 1);"
+            else null 
         
         if (!strongAborts.empty) {
             '''
-            « addTransitionCollectionCode(strongAborts, true, ADD) »
+            « addTransitionCollectionCode(strongAborts, true, ADD, additionalEffectCode) »
             '''
         } else {
             ''''''
@@ -279,7 +308,7 @@ class StatebasedLeanCTemplate extends AbstractStatebasedLeanTemplate {
         if (!duringActions.empty) {
         '''
         « FOR r : duringActions.indexed »  
-        « addActionConditionCode(r.key, duringActions.size, r.value, true, NONE) »
+        « addActionConditionCode(r.key, duringActions.size, r.value, true, NONE, null) »
         « ENDFOR »
         '''
         } else {
@@ -292,7 +321,7 @@ class StatebasedLeanCTemplate extends AbstractStatebasedLeanTemplate {
         '''  context->threadStatus = TERMINATED;''' 
         } else {
             '''
-            « addTransitionCollectionCode(state.outgoingTransitions, false, NONE) »
+            « addTransitionCollectionCode(state.outgoingTransitions, false, NONE, null) »
             « IF state.outgoingTransitions.defaultTransition === null »
             « IF state.outgoingTransitions.size == 0 »  context->threadStatus = READY;
             « ELSE »  } else {
@@ -310,7 +339,7 @@ class StatebasedLeanCTemplate extends AbstractStatebasedLeanTemplate {
     }
     
     protected def CharSequence addTransitionCollectionCode(List<Transition> transitions, boolean closeBrackets, 
-        ReturnSourceCode addReturnCode
+        ReturnSourceCode addReturnCode, String additionalEffectCode
     ) {
         val defaultTransition = transitions.defaultTransition
         val hasDefaultTransition = defaultTransition !== null
@@ -321,10 +350,10 @@ class StatebasedLeanCTemplate extends AbstractStatebasedLeanTemplate {
              transitions.head.delay == DelayType.IMMEDIATE && 
              transitions.head.trigger === null &&
              transitions.head.preemption != PreemptionType.TERMINATION »
-        « addActionEffectCode(transitions.head, "  ", addReturnCode) »
+        « addActionEffectCode(transitions.head, "  ", addReturnCode, additionalEffectCode) »
         « ELSE »
           « FOR t : transitions.indexed »
-          « addTransitionConditionCode(t.key, transitions.size, t.value, defaultTransitionIndex, addReturnCode) » 
+          « addTransitionConditionCode(t.key, transitions.size, t.value, defaultTransitionIndex, addReturnCode, additionalEffectCode) » 
           « ENDFOR »
           « IF transitions.size > 0 && closeBrackets »  }« ENDIF »
         « ENDIF »
@@ -341,7 +370,7 @@ class StatebasedLeanCTemplate extends AbstractStatebasedLeanTemplate {
     }
     
     protected def CharSequence addTransitionConditionCode(int index, int count, Transition transition, 
-        int defaultTransitionIndex, ReturnSourceCode addReturnCode
+        int defaultTransitionIndex, ReturnSourceCode addReturnCode, String additionalEffectCode
     ) {
         val hasDefaultTransition = defaultTransitionIndex >= 0
         
@@ -374,7 +403,7 @@ class StatebasedLeanCTemplate extends AbstractStatebasedLeanTemplate {
         « ELSE »
           } else «IF !(defaultTransition) »if (« condition ») « ENDIF»{
         « ENDIF » 
-        « addActionEffectCode(transition, "    ", addReturnCode) »
+        « addActionEffectCode(transition, "    ", addReturnCode, additionalEffectCode) »
           « IF (index == count-1 && hasDefaultTransition) || (index == defaultTransitionIndex) »
           }
         « ENDIF »
@@ -382,7 +411,7 @@ class StatebasedLeanCTemplate extends AbstractStatebasedLeanTemplate {
     }
     
     protected def CharSequence addActionConditionCode(int index, int count, Action action, 
-        boolean addDelayEnabled, ReturnSourceCode addReturnCode
+        boolean addDelayEnabled, ReturnSourceCode addReturnCode, String additionalEffectCode
     ) {
         if (action.eContainer == rootState) {
             valuedObjectPrefix = "context->iface."
@@ -403,13 +432,13 @@ class StatebasedLeanCTemplate extends AbstractStatebasedLeanTemplate {
         
         '''
         « IF condition != "" »  if (« condition ») {« ENDIF»
-            « addActionEffectCode(action, "", addReturnCode) »
+            « addActionEffectCode(action, "", addReturnCode, additionalEffectCode) »
         « IF condition != "" »  }« ENDIF»
         '''
     }    
     
     protected def CharSequence addActionEffectCode(Action action, CharSequence indentation, 
-        ReturnSourceCode addReturnCode
+        ReturnSourceCode addReturnCode, String additionalEffectCode
     ) {
         
         if (addReturnCode == ONLY) {
@@ -432,6 +461,7 @@ class StatebasedLeanCTemplate extends AbstractStatebasedLeanTemplate {
           « indentation »context->activeState = « action.targetState.uniqueEnumName »;
           « ENDIF »
           « ENDIF »
+          « if (additionalEffectCode !== null) additionalEffectCode »
           « IF addReturnCode == ADD || addReturnCode == ONLY »    return;« ENDIF»
           « valuedObjectPrefix = "" »
         '''    
