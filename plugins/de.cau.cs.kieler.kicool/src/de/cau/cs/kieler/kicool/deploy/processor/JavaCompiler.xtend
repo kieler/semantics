@@ -17,9 +17,12 @@ import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.kicool.compilation.ExecutableContainer
 import de.cau.cs.kieler.kicool.compilation.ExecutableJarContainer
 import de.cau.cs.kieler.kicool.compilation.JavaCodeFile
+import de.cau.cs.kieler.kicool.deploy.AdditionalResources.Type
 import de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure
 import java.io.File
 import java.nio.file.Files
+
+import static extension de.cau.cs.kieler.kicool.deploy.AdditionalResources.*
 
 /**
  * @author als
@@ -42,6 +45,9 @@ class JavaCompiler extends AbstractSystemCompilerProcessor<Object, ExecutableCon
         
     public static val IProperty<String> JAR_ENTRY = 
         new Property<String>("de.cau.cs.kieler.kicool.deploy.compiler.java.jar.entry", "Main") 
+        
+    public static val IProperty<String> FILE_EXT = 
+        new Property<String>("de.cau.cs.kieler.kicool.deploy.compiler.java.fileext", "java")
     
     override getId() {
         "de.cau.cs.kieler.kicool.deploy.compiler.java"
@@ -70,11 +76,17 @@ class JavaCompiler extends AbstractSystemCompilerProcessor<Object, ExecutableCon
         
         val sources = newArrayList
         val sourcePaths = newLinkedHashSet
+        val fileExt = "." + environment.getProperty(FILE_EXT)   
+        
         if (environment.getProperty(INCLUDE_GENERATED_FILES)) {
             sources.addAll(infra.sourceCode.files.filter(JavaCodeFile).map[fileName])
         }
         sources.addAll(environment.getProperty(SOURCES)?:emptyList)
-        val sourceFiles = sources.map[new File(infra.generatedCodeFolder, it)].toList
+        val sourceFiles = newArrayList
+        sourceFiles += sources.map[new File(infra.generatedCodeFolder, it)]
+        sourceFiles += environment.getAdditionalResources(Type.COMPILE, true).filter[
+            isFile && name.toLowerCase.endsWith(fileExt)
+        ]
         
         logger.println("Files:")
         for (sourceFile : sourceFiles) {
@@ -82,7 +94,7 @@ class JavaCompiler extends AbstractSystemCompilerProcessor<Object, ExecutableCon
                 sourcePaths += infra.generatedCodeFolder.toPath.relativize(sourceFile.toPath).toString
             } else if (sourceFile.directory) {
                 for (path : Files.find(sourceFile.toPath, Integer.MAX_VALUE, [ filePath, fileAttr |
-                    return fileAttr.regularFile && filePath.fileName.toString.endsWith(".java")
+                    return fileAttr.regularFile && filePath.fileName.toString.endsWith(fileExt)
                 ]).iterator.toIterable) {
                     sourcePaths += infra.generatedCodeFolder.toPath.relativize(path).toString
                 }
@@ -93,10 +105,20 @@ class JavaCompiler extends AbstractSystemCompilerProcessor<Object, ExecutableCon
         }
         sourcePaths.forEach[logger.println("  " + it)]
         
+//        val cp = environment.getAdditionalResources(Type.CLASSPATH, false)
+        
         val javac = newArrayList(environment.getProperty(JAVAC_PATH)?:JAVAC_PATH.^default)
-        javac += "-verbose"
-        javac += "-cp"
-        javac += "."
+        if (environment.getProperty(VERBOSE)) {
+            javac += "-verbose"
+        }
+//        javac += "-cp"
+//        if (cp.empty) {
+//            javac += "."
+//        } else if (Platform.isWindows) {
+//            cp.map[absolutePath].join(";") + ";."
+//        } else {
+//            cp.map[absolutePath].join(":") + ":."
+//        }
         javac += "-d"
         javac += binPath
         if (!environment.getProperty(ADDITIONAL_OPTIONS).nullOrEmpty) {
@@ -112,7 +134,13 @@ class JavaCompiler extends AbstractSystemCompilerProcessor<Object, ExecutableCon
         // Run javac compiler
         var success = javac.invoke(infra.generatedCodeFolder)?:-1 == 0
         if (!success) {
-            environment.errors.add("Compiler did not return success (exit value != 0)")
+            environment.errors.add(
+                "Compiler did not return success (exit value != 0)" + 
+                "\nEither the source code cannot be compiled or the " +
+                environment.getProperty(JAVAC_PATH)?:JAVAC_PATH.^default + 
+                " command is not available on PATH." +
+                "\nPlease check the log for further details."
+            )
             logger.println("Aborting compilation")
         }
 
@@ -128,9 +156,10 @@ class JavaCompiler extends AbstractSystemCompilerProcessor<Object, ExecutableCon
             logger.println("Jar entry point: " + entryPoint)            
             
             val jar = newArrayList(environment.getProperty(JAR_PATH)?:JAR_PATH.^default)
-            jar += "cvfe"
+            jar += environment.getProperty(VERBOSE) ? "cvfe" : "cfe"
             jar += targetJarPath
             jar += entryPoint
+            // TODO add classpath to manifest
             for (sourceFile : sourceFiles) {
                 val path = infra.generatedCodeFolder.toPath.relativize(sourceFile.toPath).toString
                 if (sourceFile.isFile) {
@@ -151,7 +180,13 @@ class JavaCompiler extends AbstractSystemCompilerProcessor<Object, ExecutableCon
             // Run javac compiler
             success = jar.invoke(binFolder)?:-1 == 0
             if (!success) {
-                environment.errors.add("Compiler did not return success (exit value != 0)")
+                environment.errors.add(
+                    "Compiler did not return success (exit value != 0)" + 
+                    "\nEither the source code cannot be compiled or the " +
+                    (environment.getProperty(JAR_PATH)?:JAR_PATH.^default) + 
+                    " command is not available on PATH." +
+                    "\nPlease check the KiCo log for further details."
+                )
                 logger.println("Compilation failed")
             }
             
@@ -161,7 +196,7 @@ class JavaCompiler extends AbstractSystemCompilerProcessor<Object, ExecutableCon
         }
         
         // report
-        logger.closeLog("java-compiler-report.log").snapshot
+        logger.saveLog(environment, "java-compiler.log")
         infra.refresh
     }
 

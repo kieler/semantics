@@ -28,10 +28,6 @@ public interface Interface extends EObject
   /**
    * Returns the value of the '<em><b>Element</b></em>' attribute.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Element</em>' attribute isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Element</em>' attribute.
    * @see #setElement(String)
@@ -54,10 +50,6 @@ public interface Interface extends EObject
   /**
    * Returns the value of the '<em><b>Variable</b></em>' attribute.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Variable</em>' attribute isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Variable</em>' attribute.
    * @see #setVariable(String)
@@ -80,10 +72,6 @@ public interface Interface extends EObject
   /**
    * Returns the value of the '<em><b>Pool</b></em>' attribute.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Pool</em>' attribute isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Pool</em>' attribute.
    * @see #setPool(String)

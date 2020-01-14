@@ -208,7 +208,7 @@ class VisualizationGenerator extends InplaceProcessor<Object> {
                 // Register file
                 environment.setProperty(VISUALIZATION, target.absoluteFile.toURI.toURL.toString)
                 
-                logger.closeLog("visualization-generation.log").snapshot
+                logger.saveLog(environment, "visualization-generation.log")
             }
         } else if (environment.getProperty(FAIL)) {
             environment.errors.add("Cannot find visualization file")

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <description name="KIELER Compiler CLI">
+      Artificial Update site for the KIELER Compiler CLI.
+   </description>
+   <bundle id="de.cau.cs.kieler.sccharts"/>
+   <bundle id="de.cau.cs.kieler.scg"/>
+   <bundle id="de.cau.cs.kieler.scl"/>
+   <bundle id="de.cau.cs.kieler.esterel"/>
+   <bundle id="de.cau.cs.kieler.esterel.compiler"/>
+   <bundle id="de.cau.cs.kieler.lustre"/>
+   <bundle id="de.cau.cs.kieler.lustre.compiler"/>
+   <bundle id="de.cau.cs.kieler.kicool"/>
+   <bundle id="de.cau.cs.kieler.simulation"/>
+   <bundle id="de.cau.cs.kieler.kivis"/>
+   <bundle id="de.cau.cs.kieler.verification"/>
+</site>

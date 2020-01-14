@@ -63,6 +63,7 @@ class HaltStateRemover extends InplaceProcessor<SCGraphs> {
         if (!environment.getProperty(HALT_STATE_REMOVER_ENABLED)) return;
         
         val model = getModel
+        applyAnnotations
         
         for (scg : model.scgs.ignoreMethods) {
             scg.performHaltStateRemove
@@ -162,6 +163,7 @@ class HaltStateRemover extends InplaceProcessor<SCGraphs> {
                     removeList += s.next
                 }
             }
+            annotationModel.addInfo(hs, "Halt State")
         }
         
         for (r : removeList) {

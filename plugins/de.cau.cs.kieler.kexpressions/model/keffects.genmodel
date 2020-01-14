@@ -38,7 +38,6 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference keffects.ecore#//Assignment/reference"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference keffects.ecore#//Assignment/expression"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute keffects.ecore#//Assignment/operator"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference keffects.ecore#//Assignment/subReference"/>
     </genClasses>
     <genClasses ecoreClass="keffects.ecore#//Emission">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference keffects.ecore#//Emission/reference"/>

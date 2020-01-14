@@ -16,9 +16,12 @@ import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.kicool.compilation.CCodeFile
 import de.cau.cs.kieler.kicool.compilation.ExecutableContainer
+import de.cau.cs.kieler.kicool.deploy.AdditionalResources.Type
 import de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure
 import java.io.File
 import java.nio.file.Files
+
+import static extension de.cau.cs.kieler.kicool.deploy.AdditionalResources.*
 
 /**
  * @author als
@@ -32,6 +35,9 @@ class CCompiler extends AbstractSystemCompilerProcessor<Object, ExecutableContai
         
     public static val IProperty<String> EXE_NAME = 
         new Property<String>("de.cau.cs.kieler.kicool.deploy.compiler.c.result", "main.exe")
+        
+    public static val IProperty<String> FILE_EXT = 
+        new Property<String>("de.cau.cs.kieler.kicool.deploy.compiler.c.fileext", "c")
     
     override getId() {
         "de.cau.cs.kieler.kicool.deploy.compiler.c"
@@ -60,20 +66,28 @@ class CCompiler extends AbstractSystemCompilerProcessor<Object, ExecutableContai
         val sources = newArrayList
         val sourcePaths = newLinkedHashSet
         val iDir = newLinkedHashSet
+        val fileExt = "." + environment.getProperty(FILE_EXT)      
         
         if (environment.getProperty(INCLUDE_GENERATED_FILES)) {
             sources.addAll(infra.sourceCode.files.filter(CCodeFile).filter[!header].map[fileName])
         }
+        // Additional source files
         sources.addAll(environment.getProperty(SOURCES)?:emptyList)
+        sources.addAll(environment.getAdditionalResources(Type.COMPILE, true).filter[
+            isFile && name.toLowerCase.endsWith(fileExt)
+        ].map[canonicalPath])
         
         logger.println("Files:")
         for (source : sources) {
-            val sourceFile = new File(infra.generatedCodeFolder, source)
+            var sourceFile = new File(source)
+            if (!sourceFile.absolute) {
+                sourceFile = new File(infra.generatedCodeFolder, source)
+            }
             if (sourceFile.file) {
                 sourcePaths += infra.generatedCodeFolder.toPath.relativize(sourceFile.toPath).toString
             } else if (sourceFile.directory) {
                 for (path : Files.find(sourceFile.toPath, Integer.MAX_VALUE, [ filePath, fileAttr |
-                    return fileAttr.regularFile && filePath.fileName.toString.endsWith(".c")
+                    return fileAttr.regularFile && filePath.fileName.toString.endsWith(fileExt)
                 ]).iterator.toIterable) {
                     sourcePaths += infra.generatedCodeFolder.toPath.relativize(path).toString
                 }
@@ -85,9 +99,18 @@ class CCompiler extends AbstractSystemCompilerProcessor<Object, ExecutableContai
         }
         sourcePaths.forEach[logger.println("  " + it)]
         
+        // Additional include folders
+        iDir.addAll(environment.getAdditionalResources(Type.INCLUDE, false).filter[isDirectory].map[toPath.toAbsolutePath.toString])
+        
         if (!iDir.empty) {
             logger.println("Include directories:") 
-            iDir.forEach[logger.println("  " + it)] 
+            iDir.forEach[logger.println("  " + it)]
+        }
+        
+        val libDirs = environment.getAdditionalResources(Type.LIBRARY, false).filter[isDirectory].map[toPath.toAbsolutePath.toString].toList
+        if (!libDirs.empty) {
+            logger.println("Library directories:") 
+            libDirs.forEach[logger.println("  " + it)]
         }
         
         val targetExe = new File(binFolder, environment.getProperty(EXE_NAME)?:EXE_NAME.^default)
@@ -97,12 +120,17 @@ class CCompiler extends AbstractSystemCompilerProcessor<Object, ExecutableContai
         val gcc = newArrayList(environment.getProperty(CC_PATH)?:CC_PATH.^default)
         gcc += "-std=c99"
         gcc += "-lm"
-        gcc += "-v"
+        if (environment.getProperty(VERBOSE)) {
+            gcc += "-v"
+        }
         gcc += "-Wall"
         gcc += "-o"
         gcc += targetExePath
         if (!iDir.empty) {
-            iDir.forEach[ gcc += "-I"+it] 
+            iDir.forEach[ gcc += "-I"+it]
+        }
+        if (!libDirs.empty) {
+            libDirs.forEach[ gcc += "-L"+it]
         }
         if (!environment.getProperty(ADDITIONAL_OPTIONS).nullOrEmpty) {
             val args = environment.getProperty(ADDITIONAL_OPTIONS)
@@ -117,7 +145,13 @@ class CCompiler extends AbstractSystemCompilerProcessor<Object, ExecutableContai
         // Run c compiler
         var success = gcc.invoke(infra.generatedCodeFolder)?:-1 == 0
         if (!success) {
-            environment.errors.add("Compiler did not return success (exit value != 0)")
+            environment.errors.add(
+                "Compiler did not return success (exit value != 0)" + 
+                "\nEither the source code cannot be compiled or the " +
+                (environment.getProperty(CC_PATH)?:CC_PATH.^default) + 
+                " command is not available on PATH." +
+                "\nPlease check the KiCo log for further details."
+            )
             logger.println("Compilation failed")
         }
         
@@ -125,7 +159,7 @@ class CCompiler extends AbstractSystemCompilerProcessor<Object, ExecutableContai
         model = new ExecutableContainer(targetExe)
         
         // report
-        logger.closeLog("gcc-compiler-report.log").snapshot
+        logger.saveLog(environment, "gcc-compiler.log")
         infra.refresh
     }
 

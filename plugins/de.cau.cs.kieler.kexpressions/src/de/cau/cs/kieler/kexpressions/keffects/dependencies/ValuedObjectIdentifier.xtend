@@ -23,6 +23,7 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCompareExtensions
 import com.google.inject.Injector
 import com.google.inject.Guice
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsSerializeHRExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 
 /**
  * The ValuedObjectIdentifier is used to distinguish accesses to a valued object that are decidable at compile time from
@@ -40,20 +41,38 @@ class ValuedObjectIdentifier {
     @Accessors List<Expression> indices
     
     static val KExpressionsCompareExtensions compare = new KExpressionsCompareExtensions
+    static val KExpressionsValuedObjectExtensions vos = new KExpressionsValuedObjectExtensions
     
     new(Assignment assignment) {
         var ref = assignment.reference
         this.valuedObject = ref.valuedObject
+        // Include members
         while (ref.subReference !== null) {
             ref = ref.subReference
             this.valuedObject = ref.valuedObject
         }
-        this.indices = assignment.reference.indices.removeDynamicIndices
+        this.indices = vos.getIndicesAndSubIndices(assignment.reference).toList.removeDynamicIndices
     }
     
     new(ValuedObjectReference valuedObjectReference) {
         this.valuedObject = valuedObjectReference.valuedObject
-        this.indices = valuedObjectReference.indices.removeDynamicIndices
+        this.indices = valuedObjectReference.indices.immutableCopy.removeDynamicIndices
+        // Consiter enclosing arrays of classes
+        if (valuedObjectReference.eContainer instanceof ValuedObjectReference) {
+            var subReference = valuedObjectReference
+            var superReference = valuedObjectReference.eContainer as ValuedObjectReference
+            while (superReference !== null && superReference.subReference == subReference) {
+                if (this.indices === null) this.indices = newArrayList
+                this.indices.addAll(0, superReference.indices)
+                subReference = superReference
+                if (superReference.eContainer instanceof ValuedObjectReference) {
+                    superReference = superReference.eContainer as ValuedObjectReference
+                } else {
+                    superReference = null
+                }
+            }
+            this.indices = this.indices.removeDynamicIndices
+        }
     }
     
     new(ValuedObject valuedObjecT) {
@@ -89,6 +108,10 @@ class ValuedObjectIdentifier {
                 if (index.eAllContents.filter(ValuedObjectReference).size > 0) {
                     return null
                 }
+                
+                // Conservatively reject operator expressions as specific identifier. 
+                // An improvement would be to evaluate the expression and accept it if the result is a valid literal.
+                return null
             }
             indexList += index
         }         

@@ -31,7 +31,5 @@ class KiVisConstants {
     
     public static val IProperty<String> VISUALIZATION = 
         new Property<String>("de.cau.cs.kieler.kivis.visualization", null)
-    public static val IProperty<Map<String, JsonElement>> VISUALIZATION_INPUTS = 
-        new Property<Map<String, JsonElement>>("de.cau.cs.kieler.kivis.visualization.inputs", null)
     
 }

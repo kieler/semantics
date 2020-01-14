@@ -24,8 +24,7 @@ class KiVisProcessorProvider implements IProcessorProvider {
     override getProcessors() {
         #[
             de.cau.cs.kieler.kivis.processor.KiVisJSGenerator,
-            de.cau.cs.kieler.kivis.processor.VisualizationGenerator,
-            de.cau.cs.kieler.kivis.processor.SimulationVisualizationValues
+            de.cau.cs.kieler.kivis.processor.VisualizationGenerator
         ]
     }
     

@@ -118,6 +118,7 @@ public class KivisFactoryImpl extends EFactoryImpl implements KivisFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Visualization createVisualization()
   {
     VisualizationImpl visualization = new VisualizationImpl();
@@ -129,6 +130,7 @@ public class KivisFactoryImpl extends EFactoryImpl implements KivisFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Content createContent()
   {
     ContentImpl content = new ContentImpl();
@@ -140,6 +142,7 @@ public class KivisFactoryImpl extends EFactoryImpl implements KivisFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Binding createBinding()
   {
     BindingImpl binding = new BindingImpl();
@@ -151,6 +154,7 @@ public class KivisFactoryImpl extends EFactoryImpl implements KivisFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Handler createHandler()
   {
     HandlerImpl handler = new HandlerImpl();
@@ -162,6 +166,7 @@ public class KivisFactoryImpl extends EFactoryImpl implements KivisFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Action createAction()
   {
     ActionImpl action = new ActionImpl();
@@ -173,6 +178,7 @@ public class KivisFactoryImpl extends EFactoryImpl implements KivisFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Code createCode()
   {
     CodeImpl code = new CodeImpl();
@@ -184,6 +190,7 @@ public class KivisFactoryImpl extends EFactoryImpl implements KivisFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Setter createSetter()
   {
     SetterImpl setter = new SetterImpl();
@@ -195,6 +202,7 @@ public class KivisFactoryImpl extends EFactoryImpl implements KivisFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Interface createInterface()
   {
     InterfaceImpl interface_ = new InterfaceImpl();
@@ -228,6 +236,7 @@ public class KivisFactoryImpl extends EFactoryImpl implements KivisFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public KivisPackage getKivisPackage()
   {
     return (KivisPackage)getEPackage();

@@ -128,35 +128,53 @@ class NXJCompiler extends AbstractSystemCompilerProcessor<Object, GenericCompila
         escapeOptions = false
         var success = nxjc.invoke(infra.generatedCodeFolder)?:-1 == 0
         if (!success) {
-            environment.errors.add("Compiler did not return success (exit value != 0)")
+            environment.errors.add(
+                "Compiler did not return success (exit value != 0)" + 
+                "\nEither the source code cannot be compiled or the " +
+                (environment.getProperty(NXJ_PATH_NXJC)?:NXJ_PATH_NXJC.^default) + 
+                " command is not available on PATH." +
+                "\nPlease check the KiCo log for further details."
+            )
             logger.println("Compilation failed!")
         } else {
             logger.println("Compilation successful!")
         }
         
-        logger = logger.intermediateLog("nxj-compiler-report.log").snapshot.newLogger("== Linking (NXJ) ==")
+        logger = logger.saveIntermediateLog(environment, "nxj-compiler.log").newLogger("== Linking (NXJ) ==")
         
         if (success) {
             success = nxjlink.invoke(infra.generatedCodeFolder)?:-1 == 0
             if (!success) {
-                environment.errors.add("Linker did not return success (exit value != 0)")
+                environment.errors.add(
+                    "Linker did not return success (exit value != 0)" + 
+                    "\nEither the source code cannot be compiled or the " +
+                    (environment.getProperty(NXJ_PATH_NXJLINK)?:NXJ_PATH_NXJLINK.^default) + 
+                    " command is not available on PATH." +
+                    "\nPlease check the KiCo log for further details."
+                )
                 logger.println("Linking failed!")
             } else {
                 logger.println("Linking successful!")
             }
             
-            logger = logger.intermediateLog("nxj-linking-report.log").snapshot.newLogger("== Uploading (NXJ) ==")
+            logger = logger.saveIntermediateLog(environment, "nxj-linking.log").newLogger("== Uploading (NXJ) ==")
             
             if (success) {
                 success = nxjupload.invoke(infra.generatedCodeFolder)?:-1 == 0
                 if (!success) {
-                    environment.errors.add("Uploader did not return success (exit value != 0)")
+                    environment.errors.add(
+                        "Uploader did not return success (exit value != 0)" + 
+                        "\nEither the source code cannot be compiled or the " +
+                        (environment.getProperty(NXJ_PATH_NXJUPLOAD)?:NXJ_PATH_NXJUPLOAD.^default) + 
+                        " command is not available on PATH." +
+                        "\nPlease check the KiCo log for further details."
+                    )
                     logger.println("Upload failed!")
                 } else {
                     logger.println("Upload successful!")
                 }
                 
-                logger.intermediateLog("nxj-upload-report.log").snapshot
+                logger.saveIntermediateLog(environment, "nxj-upload.log")
             }
         }
         

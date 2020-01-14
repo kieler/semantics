@@ -158,7 +158,11 @@ class InriaEsterelCodeGenerator extends AbstractSystemCompilerProcessor<EsterelP
             // Run esterel compiler
             var success = compiler.generateCodeCommand(sources, options).invoke(infra.generatedCodeFolder)?:-1 == 0
             if (!success) {
-                environment.errors.add("Compiler did not return success (exit value != 0)")
+                environment.errors.add(
+                    "Compiler did not return success (exit value != 0)" + 
+                    "\nEither the source code cannot be compiled or the Esterel compiler cannot be found." +
+                    "\nPlease check the KiCo log for further details."
+                )
                 logger.println("Compilation failed")
             }
             
@@ -183,7 +187,7 @@ class InriaEsterelCodeGenerator extends AbstractSystemCompilerProcessor<EsterelP
         }
         
         // report
-        logger.closeLog("esterel-compiler-report.log").snapshot
+        logger.saveLog(environment, "esterel-compiler.log")
         infra.refresh
     }
     

@@ -57,6 +57,7 @@ class VariableStore implements IKiCoolCloneable {
     public static val SIGNAL = "signal"
     public static val CONST = "const"
     public static val EXTERN = "extern"
+    public static val RESET = "reset" // Code generators will reset this variable explicitly.
         
     public static val DECL_FLAGS = #{
         VARIABLE_DECLARATION__INPUT -> INPUT,
@@ -196,12 +197,12 @@ class VariableStore implements IKiCoolCloneable {
             
             // Add print format
             var String format = null
-            if (decl.annotations.exists[PRINT_FORMAT_ANNOTAION.equals(name)]) {
-                val value = decl.annotations.filter(StringAnnotation).findLast[PRINT_FORMAT_ANNOTAION.equals(name)].values?.head
+            if (decl.annotations.exists[PRINT_FORMAT_ANNOTAION.equalsIgnoreCase(name)]) {
+                val value = decl.annotations.filter(StringAnnotation).findLast[PRINT_FORMAT_ANNOTAION.equalsIgnoreCase(name)].values?.head
                 if (!value.nullOrEmpty) format = value
             }
-            if (vo.annotations.exists[PRINT_FORMAT_ANNOTAION.equals(name)]) {
-                val value = vo.annotations.filter(StringAnnotation).findLast[PRINT_FORMAT_ANNOTAION.equals(name)].values?.head
+            if (vo.annotations.exists[PRINT_FORMAT_ANNOTAION.equalsIgnoreCase(name)]) {
+                val value = vo.annotations.filter(StringAnnotation).findLast[PRINT_FORMAT_ANNOTAION.equalsIgnoreCase(name)].values?.head
                 if (!value.nullOrEmpty) format = value
             }
             if (!format.nullOrEmpty) {

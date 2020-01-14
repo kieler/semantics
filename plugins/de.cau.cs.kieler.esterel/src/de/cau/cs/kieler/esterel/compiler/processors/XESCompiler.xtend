@@ -125,7 +125,11 @@ class XESCompiler extends AbstractSystemCompilerProcessor<ExecutableContainer, E
                 val command = compiler.compileXESCommand(sources, options, targetExePath)
                 var success = command.invoke(infra.generatedCodeFolder)?:-1 == 0
                 if (!success) {
-                    environment.errors.add("Compiler did not return success (exit value != 0)")
+                    environment.errors.add(
+                        "Compiler did not return success (exit value != 0)" + 
+                        "\nEither the source code cannot be compiled or the XES cannot be found." +
+                        "\nPlease check the KiCo log for further details."
+                    )
                     logger.println("Compilation failed")
                 }
                 
@@ -135,7 +139,7 @@ class XESCompiler extends AbstractSystemCompilerProcessor<ExecutableContainer, E
         }
         
         // report
-        logger.closeLog("xes-compiler-report.log").snapshot
+        logger.saveLog(environment, "xes-compiler.log")
         infra.refresh
     }
     
@@ -159,7 +163,7 @@ class XESExecutableContainer extends ExecutableContainer {
         this.console = false
     }
 
-    override getEnvironment() {
+    override getProcessEnvironment() {
         val env = <String, String>newHashMap
         compiler.configureEnvironment(env)
         return env

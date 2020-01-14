@@ -79,7 +79,6 @@ class VHDLSerializeExtensions extends CCodeSerializeHRExtensions {
             case EQ: "="
             case LOGICAL_AND: "and"
             case LOGICAL_OR: "or"
-            case LOGICAL_XOR: "xor"
             case MOD: "mod"
             case NE: "/="
             case NOR: "nor"

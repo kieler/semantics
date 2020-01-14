@@ -43,6 +43,9 @@ class CCodeGeneratorModule extends SCGCodeGeneratorModule {
     @Inject Injector injector
     
     protected static val HOSTCODE = PragmaRegistry.register("hostcode", StringPragma, "Allows additional hostcode to be included (e.g. includes).")
+    protected static val HOSTCODE_C = PragmaRegistry.register("hostcode-c", StringPragma, "Allows additional hostcode to be included (e.g. includes) only for C.")
+    protected static val HOSTCODE_HEADER = PragmaRegistry.register("hostcode-c-header", StringPragma, "Allows additional hostcode to be included (e.g. includes) only for the C header fie.")
+    
     public static val C_EXTENSION = ".c"
     public static val H_EXTENSION = ".h"
     
@@ -101,6 +104,7 @@ class CCodeGeneratorModule extends SCGCodeGeneratorModule {
         val cFile = new StringBuilder
 
         hFile.addHeader
+        hFile.hostcodeAdditions
         cFile.addHeader
         cFile.hostcodeAdditions
         cFile.append("#include \"" + hFilename + "\"\n\n")
@@ -124,8 +128,8 @@ class CCodeGeneratorModule extends SCGCodeGeneratorModule {
     
     protected def generateWriteCodeModules(StringBuilder hFile, StringBuilder cFile) {
         hFile.append(struct.code)
-        cFile.append(reset.code).append("\n")
         cFile.append(logic.code).append("\n")
+        cFile.append(reset.code).append("\n")
         cFile.append(tick.code)
     }   
     
@@ -152,14 +156,33 @@ class CCodeGeneratorModule extends SCGCodeGeneratorModule {
             sb.append("#include " + include + "\n")
         }
         
-        val hostcodePragmas = SCGraphs.getStringPragmas(HOSTCODE)
+        val hostcodePragmas = SCGraphs.getStringPragmas(HOSTCODE) + SCGraphs.getStringPragmas(HOSTCODE_C)
         for (pragma : hostcodePragmas) {
             sb.append(pragma.values.head + "\n")
         }
         if (hostcodePragmas.size > 0 || includes.size > 0) {
             sb.append("\n")
         }
-    }  
+    }
+    
+    /**
+     * Adds hostcode additions for header. These can come from internal sources like the serialization, 
+     * but also from the model via hostcode pragmas.
+     */
+    protected def void hostcodeHeaderAdditions(StringBuilder sb) {
+        val includes = modifications.get(CCodeSerializeHRExtensions.HEADER_INCLUDES)
+        for (include : includes)  {
+            sb.append("#include " + include + "\n")
+        }
+        
+        val hostcodePragmas = SCGraphs.getStringPragmas(HOSTCODE_HEADER)
+        for (pragma : hostcodePragmas) {
+            sb.append(pragma.values.head + "\n")
+        }
+        if (hostcodePragmas.size > 0 || includes.size > 0) {
+            sb.append("\n")
+        }
+    } 
     
     /**
      * If debug comments are toggled, information from the context are also saved.

@@ -19,11 +19,11 @@ Require-Bundle: org.eclipse.emf.ecore;visibility:=reexport,
  de.cau.cs.kieler.core;visibility:=reexport,
  org.eclipse.core.runtime,
  org.eclipse.core.resources,
- org.eclipse.emf.compare,
- org.eclipse.emf.workspace
+ org.eclipse.emf.workspace;bundle-version="1.5.1";visibility:=reexport
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: de.cau.cs.kieler.kicool,
  de.cau.cs.kieler.kicool.classes,
+ de.cau.cs.kieler.kicool.cli,
  de.cau.cs.kieler.kicool.compilation,
  de.cau.cs.kieler.kicool.compilation.codegen,
  de.cau.cs.kieler.kicool.compilation.internal,
@@ -52,6 +52,7 @@ Export-Package: de.cau.cs.kieler.kicool,
  de.cau.cs.kieler.kicool.serializer,
  de.cau.cs.kieler.kicool.services,
  de.cau.cs.kieler.kicool.util,
- de.cau.cs.kieler.kicool.validation
+ de.cau.cs.kieler.kicool.validation,
+ picocli
 Bundle-ActivationPolicy: lazy
 Import-Package: org.apache.log4j

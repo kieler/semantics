@@ -79,6 +79,8 @@ import de.cau.cs.kieler.sccharts.ScopeCall
 import de.cau.cs.kieler.sccharts.legacy.sccharts.Binding
 import org.eclipse.xtext.nodemodel.INode
 import org.eclipse.xtext.nodemodel.impl.CompositeNodeWithSemanticElement
+import de.cau.cs.kieler.sccharts.DeferredType
+import de.cau.cs.kieler.kexpressions.ParameterAccessType
 
 /**
  * @author als
@@ -318,7 +320,7 @@ class SCChartsLegacyConverter {
             delay = if (trans.immediate) DelayType.IMMEDIATE else DelayType.UNDEFINED
             
             preemption = PreemptionType.getByName(trans.type.getName)
-            deferred = trans.deferred
+            deferred = trans.deferred ? DeferredType::SHALLOW : DeferredType::NONE
             history = HistoryType.getByName(trans.history.getName)
             targetState = trans.targetState.convert as State
         ]
@@ -513,8 +515,13 @@ class SCChartsLegacyConverter {
     
     def dispatch convert(Parameter para) {
         return createParameter => [
-            callByReference = para.callByReference
-            pureOutput = para.pureOutput
+            if (para.pureOutput) {
+                accessType = ParameterAccessType.PURE_OUTPUT
+            } else if (para.callByReference) {
+                accessType = ParameterAccessType.CALL_BY_REFERENCE
+            } else {
+                accessType = ParameterAccessType.CALL_BY_VALUE
+            }
             expression = para.expression.convert as Expression
         ]
     }

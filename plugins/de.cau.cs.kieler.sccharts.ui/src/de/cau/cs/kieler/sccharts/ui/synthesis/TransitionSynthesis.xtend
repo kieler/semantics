@@ -19,7 +19,6 @@ import de.cau.cs.kieler.kexpressions.MethodDeclaration
 import de.cau.cs.kieler.kexpressions.ReferenceCall
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.kgraph.KEdge
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
@@ -37,6 +36,7 @@ import static de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions.*
 import static de.cau.cs.kieler.sccharts.ui.synthesis.styles.ColorStore.Color.*
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
+import de.cau.cs.kieler.sccharts.DeferredType
 
 /**
  * Transforms {@link Transition} into {@link KEdge} diagram elements.
@@ -156,16 +156,16 @@ class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
         switch (transition.history) {
             case SHALLOW: edge.addShallowHistoryDecorator
             case DEEP: edge.addDeepHistoryDecorator
-            case !transition.deferred: edge.addDefaultDecorator
+            case transition.deferred == DeferredType::NONE: edge.addDefaultDecorator
         }
 
-        if (transition.deferred) {
-            edge.addDeferredDecorator(transition.history == HistoryType::DEEP ||
-                transition.history == HistoryType::SHALLOW);
+        if (transition.deferred !== DeferredType::NONE) {
+            edge.addDeferredDecorator(transition.deferred == DeferredType::DEEP, 
+                transition.history == HistoryType::DEEP || transition.history == HistoryType::SHALLOW);
         }
 
         switch (transition.preemption) {
-            case STRONGABORT: edge.addStrongAbortionDecorator
+            case STRONG: edge.addStrongAbortionDecorator
             case TERMINATION: edge.addNormalTerminationDecorator
             default: {
             }

@@ -26,10 +26,6 @@ public interface Binding extends Content
   /**
    * Returns the value of the '<em><b>Variable</b></em>' attribute.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Variable</em>' attribute isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Variable</em>' attribute.
    * @see #setVariable(String)
@@ -52,10 +48,6 @@ public interface Binding extends Content
   /**
    * Returns the value of the '<em><b>Dom Element</b></em>' attribute.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Dom Element</em>' attribute isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Dom Element</em>' attribute.
    * @see #setDomElement(String)

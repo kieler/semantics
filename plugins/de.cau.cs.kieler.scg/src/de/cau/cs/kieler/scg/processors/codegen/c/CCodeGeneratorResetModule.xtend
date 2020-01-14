@@ -16,6 +16,14 @@ import de.cau.cs.kieler.scg.codegen.SCGCodeGeneratorModule
 import com.google.inject.Inject
 import de.cau.cs.kieler.scg.processors.SimpleGuardExpressions
 
+import static de.cau.cs.kieler.kicool.compilation.VariableStore.*
+import de.cau.cs.kieler.kicool.compilation.VariableStore
+import de.cau.cs.kieler.scg.Entry
+import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
+import de.cau.cs.kieler.scg.Exit
+import org.eclipse.xtend.lib.annotations.Accessors
+import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
+
 /**
  * C Code Generator Reset Module
  * 
@@ -28,7 +36,10 @@ import de.cau.cs.kieler.scg.processors.SimpleGuardExpressions
  */
 class CCodeGeneratorResetModule extends SCGCodeGeneratorModule {
     
+    @Inject extension SCGCoreExtensions
+    @Inject extension SCGControlFlowExtensions
     @Inject CCodeGeneratorStructModule struct
+    @Accessors @Inject CCodeSerializeHRExtensions serializer
     
     override configure() {
         struct = (parent as CCodeGeneratorModule).struct as CCodeGeneratorStructModule
@@ -49,11 +60,41 @@ class CCodeGeneratorResetModule extends SCGCodeGeneratorModule {
         indent 
         code.append(struct.getVariableName).append("->").append(SimpleGuardExpressions.GO_GUARD_NAME).append(" = 1;\n")
         indent
-        code.append(struct.getVariableName).append("->").append(SimpleGuardExpressions.TERM_GUARD_NAME).append(" = 0;\n")        
+        code.append(struct.getVariableName).append("->").append(SimpleGuardExpressions.TERM_GUARD_NAME).append(" = 0;\n")     
+        
+        generateResetSCGVariables(serializer)
+        
+        generateVariableStoreResetVariables   
     }
     
     override generateDone() {
         code.append("}\n")
+    }
+    
+    protected def generateResetSCGVariables(extension CCodeSerializeHRExtensions serializer) {
+        val resetSCG = moduleObject.nodes.findFirst[ it instanceof Entry ].asEntry.resetSCG
+        if (resetSCG === null) return;
+        
+        valuedObjectPrefix = struct.getVariableName + struct.separator
+        var node = resetSCG.nodes.head.asEntry.next.target
+        while (!(node instanceof Exit)) {
+            indent
+            code.append(node.serializeHR).append(";\n")  
+            
+            node = node.asNode.allNext.map[target].head
+        }
+        valuedObjectPrefix = ""
+    }
+    
+    protected def generateVariableStoreResetVariables() {
+        val variableStore = VariableStore.getVariableStore(processorInstance.environment)
+        
+        for (vk : variableStore.variables.keySet) {
+            if (variableStore.variables.get(vk).exists[ properties.contains(RESET) ]) {
+                indent
+                code.append(struct.getVariableName).append("->").append(vk).append(" = 0;\n")
+            }
+        }
     }
     
 }

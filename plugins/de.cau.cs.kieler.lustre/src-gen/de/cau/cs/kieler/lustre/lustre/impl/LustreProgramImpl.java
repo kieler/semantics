@@ -3,14 +3,15 @@
  */
 package de.cau.cs.kieler.lustre.lustre.impl;
 
+import de.cau.cs.kieler.kexpressions.Declaration;
+import de.cau.cs.kieler.kexpressions.VariableDeclaration;
+
 import de.cau.cs.kieler.lustre.lustre.LustrePackage;
 import de.cau.cs.kieler.lustre.lustre.LustreProgram;
-import de.cau.cs.kieler.lustre.lustre.PackBody;
-import de.cau.cs.kieler.lustre.lustre.PackList;
+import de.cau.cs.kieler.lustre.lustre.TypeDeclaration;
 
 import java.util.Collection;
 
-import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.common.util.EList;
@@ -18,10 +19,11 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 import org.eclipse.emf.ecore.util.EDataTypeEList;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -32,8 +34,10 @@ import org.eclipse.emf.ecore.util.EDataTypeEList;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.lustre.lustre.impl.LustreProgramImpl#getIncludes <em>Includes</em>}</li>
- *   <li>{@link de.cau.cs.kieler.lustre.lustre.impl.LustreProgramImpl#getPackBody <em>Pack Body</em>}</li>
- *   <li>{@link de.cau.cs.kieler.lustre.lustre.impl.LustreProgramImpl#getPackList <em>Pack List</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.lustre.lustre.impl.LustreProgramImpl#getConstants <em>Constants</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.lustre.lustre.impl.LustreProgramImpl#getTypes <em>Types</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.lustre.lustre.impl.LustreProgramImpl#getExternals <em>Externals</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.lustre.lustre.impl.LustreProgramImpl#getNodes <em>Nodes</em>}</li>
  * </ul>
  *
  * @generated
@@ -51,24 +55,44 @@ public class LustreProgramImpl extends MinimalEObjectImpl.Container implements L
   protected EList<String> includes;
 
   /**
-   * The cached value of the '{@link #getPackBody() <em>Pack Body</em>}' containment reference.
+   * The cached value of the '{@link #getConstants() <em>Constants</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getPackBody()
+   * @see #getConstants()
    * @generated
    * @ordered
    */
-  protected PackBody packBody;
+  protected EList<VariableDeclaration> constants;
 
   /**
-   * The cached value of the '{@link #getPackList() <em>Pack List</em>}' containment reference.
+   * The cached value of the '{@link #getTypes() <em>Types</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getPackList()
+   * @see #getTypes()
    * @generated
    * @ordered
    */
-  protected PackList packList;
+  protected EList<TypeDeclaration> types;
+
+  /**
+   * The cached value of the '{@link #getExternals() <em>Externals</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getExternals()
+   * @generated
+   * @ordered
+   */
+  protected EList<Declaration> externals;
+
+  /**
+   * The cached value of the '{@link #getNodes() <em>Nodes</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getNodes()
+   * @generated
+   * @ordered
+   */
+  protected EList<Declaration> nodes;
 
   /**
    * <!-- begin-user-doc -->
@@ -96,6 +120,7 @@ public class LustreProgramImpl extends MinimalEObjectImpl.Container implements L
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EList<String> getIncludes()
   {
     if (includes == null)
@@ -110,26 +135,14 @@ public class LustreProgramImpl extends MinimalEObjectImpl.Container implements L
    * <!-- end-user-doc -->
    * @generated
    */
-  public PackBody getPackBody()
+  @Override
+  public EList<VariableDeclaration> getConstants()
   {
-    return packBody;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public NotificationChain basicSetPackBody(PackBody newPackBody, NotificationChain msgs)
-  {
-    PackBody oldPackBody = packBody;
-    packBody = newPackBody;
-    if (eNotificationRequired())
+    if (constants == null)
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, LustrePackage.LUSTRE_PROGRAM__PACK_BODY, oldPackBody, newPackBody);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
+      constants = new EObjectContainmentEList<VariableDeclaration>(VariableDeclaration.class, this, LustrePackage.LUSTRE_PROGRAM__CONSTANTS);
     }
-    return msgs;
+    return constants;
   }
 
   /**
@@ -137,20 +150,14 @@ public class LustreProgramImpl extends MinimalEObjectImpl.Container implements L
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setPackBody(PackBody newPackBody)
+  @Override
+  public EList<TypeDeclaration> getTypes()
   {
-    if (newPackBody != packBody)
+    if (types == null)
     {
-      NotificationChain msgs = null;
-      if (packBody != null)
-        msgs = ((InternalEObject)packBody).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - LustrePackage.LUSTRE_PROGRAM__PACK_BODY, null, msgs);
-      if (newPackBody != null)
-        msgs = ((InternalEObject)newPackBody).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - LustrePackage.LUSTRE_PROGRAM__PACK_BODY, null, msgs);
-      msgs = basicSetPackBody(newPackBody, msgs);
-      if (msgs != null) msgs.dispatch();
+      types = new EObjectContainmentEList<TypeDeclaration>(TypeDeclaration.class, this, LustrePackage.LUSTRE_PROGRAM__TYPES);
     }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, LustrePackage.LUSTRE_PROGRAM__PACK_BODY, newPackBody, newPackBody));
+    return types;
   }
 
   /**
@@ -158,26 +165,14 @@ public class LustreProgramImpl extends MinimalEObjectImpl.Container implements L
    * <!-- end-user-doc -->
    * @generated
    */
-  public PackList getPackList()
+  @Override
+  public EList<Declaration> getExternals()
   {
-    return packList;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public NotificationChain basicSetPackList(PackList newPackList, NotificationChain msgs)
-  {
-    PackList oldPackList = packList;
-    packList = newPackList;
-    if (eNotificationRequired())
+    if (externals == null)
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, LustrePackage.LUSTRE_PROGRAM__PACK_LIST, oldPackList, newPackList);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
+      externals = new EObjectContainmentEList<Declaration>(Declaration.class, this, LustrePackage.LUSTRE_PROGRAM__EXTERNALS);
     }
-    return msgs;
+    return externals;
   }
 
   /**
@@ -185,20 +180,14 @@ public class LustreProgramImpl extends MinimalEObjectImpl.Container implements L
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setPackList(PackList newPackList)
+  @Override
+  public EList<Declaration> getNodes()
   {
-    if (newPackList != packList)
+    if (nodes == null)
     {
-      NotificationChain msgs = null;
-      if (packList != null)
-        msgs = ((InternalEObject)packList).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - LustrePackage.LUSTRE_PROGRAM__PACK_LIST, null, msgs);
-      if (newPackList != null)
-        msgs = ((InternalEObject)newPackList).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - LustrePackage.LUSTRE_PROGRAM__PACK_LIST, null, msgs);
-      msgs = basicSetPackList(newPackList, msgs);
-      if (msgs != null) msgs.dispatch();
+      nodes = new EObjectContainmentEList<Declaration>(Declaration.class, this, LustrePackage.LUSTRE_PROGRAM__NODES);
     }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, LustrePackage.LUSTRE_PROGRAM__PACK_LIST, newPackList, newPackList));
+    return nodes;
   }
 
   /**
@@ -211,10 +200,14 @@ public class LustreProgramImpl extends MinimalEObjectImpl.Container implements L
   {
     switch (featureID)
     {
-      case LustrePackage.LUSTRE_PROGRAM__PACK_BODY:
-        return basicSetPackBody(null, msgs);
-      case LustrePackage.LUSTRE_PROGRAM__PACK_LIST:
-        return basicSetPackList(null, msgs);
+      case LustrePackage.LUSTRE_PROGRAM__CONSTANTS:
+        return ((InternalEList<?>)getConstants()).basicRemove(otherEnd, msgs);
+      case LustrePackage.LUSTRE_PROGRAM__TYPES:
+        return ((InternalEList<?>)getTypes()).basicRemove(otherEnd, msgs);
+      case LustrePackage.LUSTRE_PROGRAM__EXTERNALS:
+        return ((InternalEList<?>)getExternals()).basicRemove(otherEnd, msgs);
+      case LustrePackage.LUSTRE_PROGRAM__NODES:
+        return ((InternalEList<?>)getNodes()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -231,10 +224,14 @@ public class LustreProgramImpl extends MinimalEObjectImpl.Container implements L
     {
       case LustrePackage.LUSTRE_PROGRAM__INCLUDES:
         return getIncludes();
-      case LustrePackage.LUSTRE_PROGRAM__PACK_BODY:
-        return getPackBody();
-      case LustrePackage.LUSTRE_PROGRAM__PACK_LIST:
-        return getPackList();
+      case LustrePackage.LUSTRE_PROGRAM__CONSTANTS:
+        return getConstants();
+      case LustrePackage.LUSTRE_PROGRAM__TYPES:
+        return getTypes();
+      case LustrePackage.LUSTRE_PROGRAM__EXTERNALS:
+        return getExternals();
+      case LustrePackage.LUSTRE_PROGRAM__NODES:
+        return getNodes();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -254,11 +251,21 @@ public class LustreProgramImpl extends MinimalEObjectImpl.Container implements L
         getIncludes().clear();
         getIncludes().addAll((Collection<? extends String>)newValue);
         return;
-      case LustrePackage.LUSTRE_PROGRAM__PACK_BODY:
-        setPackBody((PackBody)newValue);
+      case LustrePackage.LUSTRE_PROGRAM__CONSTANTS:
+        getConstants().clear();
+        getConstants().addAll((Collection<? extends VariableDeclaration>)newValue);
         return;
-      case LustrePackage.LUSTRE_PROGRAM__PACK_LIST:
-        setPackList((PackList)newValue);
+      case LustrePackage.LUSTRE_PROGRAM__TYPES:
+        getTypes().clear();
+        getTypes().addAll((Collection<? extends TypeDeclaration>)newValue);
+        return;
+      case LustrePackage.LUSTRE_PROGRAM__EXTERNALS:
+        getExternals().clear();
+        getExternals().addAll((Collection<? extends Declaration>)newValue);
+        return;
+      case LustrePackage.LUSTRE_PROGRAM__NODES:
+        getNodes().clear();
+        getNodes().addAll((Collection<? extends Declaration>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -277,11 +284,17 @@ public class LustreProgramImpl extends MinimalEObjectImpl.Container implements L
       case LustrePackage.LUSTRE_PROGRAM__INCLUDES:
         getIncludes().clear();
         return;
-      case LustrePackage.LUSTRE_PROGRAM__PACK_BODY:
-        setPackBody((PackBody)null);
+      case LustrePackage.LUSTRE_PROGRAM__CONSTANTS:
+        getConstants().clear();
         return;
-      case LustrePackage.LUSTRE_PROGRAM__PACK_LIST:
-        setPackList((PackList)null);
+      case LustrePackage.LUSTRE_PROGRAM__TYPES:
+        getTypes().clear();
+        return;
+      case LustrePackage.LUSTRE_PROGRAM__EXTERNALS:
+        getExternals().clear();
+        return;
+      case LustrePackage.LUSTRE_PROGRAM__NODES:
+        getNodes().clear();
         return;
     }
     super.eUnset(featureID);
@@ -299,10 +312,14 @@ public class LustreProgramImpl extends MinimalEObjectImpl.Container implements L
     {
       case LustrePackage.LUSTRE_PROGRAM__INCLUDES:
         return includes != null && !includes.isEmpty();
-      case LustrePackage.LUSTRE_PROGRAM__PACK_BODY:
-        return packBody != null;
-      case LustrePackage.LUSTRE_PROGRAM__PACK_LIST:
-        return packList != null;
+      case LustrePackage.LUSTRE_PROGRAM__CONSTANTS:
+        return constants != null && !constants.isEmpty();
+      case LustrePackage.LUSTRE_PROGRAM__TYPES:
+        return types != null && !types.isEmpty();
+      case LustrePackage.LUSTRE_PROGRAM__EXTERNALS:
+        return externals != null && !externals.isEmpty();
+      case LustrePackage.LUSTRE_PROGRAM__NODES:
+        return nodes != null && !nodes.isEmpty();
     }
     return super.eIsSet(featureID);
   }

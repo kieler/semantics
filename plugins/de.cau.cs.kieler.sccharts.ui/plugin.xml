@@ -54,6 +54,9 @@
             class="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.DeclarationsHook">
       </hook>
       <hook
+            class="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.LocalDeclarationsHook">
+      </hook>
+      <hook
             class="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.StateActionsHook">
       </hook>
       <hook

@@ -56,6 +56,10 @@ import de.cau.cs.kieler.kexpressions.keffects.ControlDependency
 import java.util.Map
 import de.cau.cs.kieler.scg.extensions.SCGMethodExtensions
 import de.cau.cs.kieler.kexpressions.MethodDeclaration
+import de.cau.cs.kieler.scg.Node
+import de.cau.cs.kieler.kexpressions.keffects.DataDependency
+import de.cau.cs.kieler.scg.GuardDependency
+import de.cau.cs.kieler.kexpressions.keffects.Linkable
 
 /** 
  * @author ssm
@@ -78,7 +82,14 @@ class SimpleGuardTransformation extends Processor<SCGraphs, SCGraphs> implements
     
     public static val IProperty<Boolean> SGT_EXCLUDE_GUARD_ASSIGNMENT_CONTROL_DEPENDENCIES = 
         new Property<Boolean>("de.cau.cs.kieler.scg.processors.guards.excludeGuardAssignmentControlDependencies", true)     
-    
+
+    public static val IProperty<Boolean> REMOVE_FORK_NODES = 
+        new Property<Boolean>("de.cau.cs.kieler.scg.processors.guards.removeForkNodes", false)     
+
+    public static val IProperty<Boolean> REMOVE_JOIN_NODES = 
+        new Property<Boolean>("de.cau.cs.kieler.scg.processors.guards.removeJoinNodes", false)     
+
+  
     val globalVOMap = <ValuedObject, ValuedObject>newHashMap
     
     override getId() {
@@ -136,6 +147,8 @@ class SimpleGuardTransformation extends Processor<SCGraphs, SCGraphs> implements
             label = scg.label
             scg.copyAnnotations(it, <String> newHashSet("main", "voLink"))
         ]
+        
+        val use_sc_plus_semantics = environment.getProperty(BasicBlockTransformation.USE_SC_PLUS_SEMANTICS)
         
 //        creationalTransformation(scg,newSCG)
 //        scg.setDefaultTrace
@@ -218,7 +231,9 @@ class SimpleGuardTransformation extends Processor<SCGraphs, SCGraphs> implements
                 if (lastSB !== null && i > 1) {
                     val lastAssignment = GAMap.get(lastSB.guards.head)
                     if (lastAssignment !== null) {
-                        lastAssignment.createControlDependency(assignment)
+                        if (!use_sc_plus_semantics) {
+                            lastAssignment.createControlDependency(assignment)
+                        }
                     }
                 }
                 
@@ -248,7 +263,11 @@ class SimpleGuardTransformation extends Processor<SCGraphs, SCGraphs> implements
                     if (node instanceof Assignment) {
                         ta = VAMap.get(valuedObjectMap.get(schedulingBlockCache.get(dependency.target).guards.head.valuedObject).peek)
                     } else if (node instanceof Conditional) {
-                        ta = VAMap.get(valuedObjectMap.get((dependency.target as Guard).valuedObject).peek)
+                        if (dependency.target instanceof Guard) {
+                            ta = VAMap.get(valuedObjectMap.get((dependency.target as Guard).valuedObject).peek)
+                        } else { // method call with writer is in condition
+                            ta = VAMap.get(valuedObjectMap.get(schedulingBlockCache.get(dependency.target).guards.head.valuedObject).peek)
+                        }
                     }
                     if (ta !== null) {
                         val targetAssignment = ta
@@ -338,6 +357,28 @@ class SimpleGuardTransformation extends Processor<SCGraphs, SCGraphs> implements
            val exitNode = ScgFactory.eINSTANCE.createExit => [ newSCG.nodes += it ]
             exit.createControlDependency(exitNode)
         }
+        
+        // Remove Fork Nodes if toggled - WIP
+        if (getProperty(REMOVE_FORK_NODES)) {
+            for (assignment : newSCG.nodes.filter(Assignment).toList) {
+                if (assignment.hasAnnotation(SCGAnnotations.ANNOTATION_HEADNODE) 
+                    && assignment.getAnnotation(SCGAnnotations.ANNOTATION_HEADNODE).asStringAnnotation.values.head == "Fork"
+                ) {
+                    val allIncoming = assignment.incomingLinks.filter[!(it instanceof DataDependency)].toList
+                    val nextNodes = assignment.outgoingLinks.filter[!(it instanceof DataDependency || it instanceof GuardDependency)].map[target].toList
+                    for (nextNode : nextNodes) {
+                        for (incoming : allIncoming) {
+                            val newIncoming = incoming.copy;
+                            (incoming.eContainer as Linkable).outgoingLinks += newIncoming 
+                            newIncoming.target = nextNode
+                        }
+                    }
+                    for (guardDependency : assignment.outgoingLinks.filter(GuardDependency).toList) {
+                        (allIncoming.head.eContainer as Linkable).outgoingLinks += guardDependency
+                    } 
+                }                
+            }
+        }        
 
         newSCG      
     }

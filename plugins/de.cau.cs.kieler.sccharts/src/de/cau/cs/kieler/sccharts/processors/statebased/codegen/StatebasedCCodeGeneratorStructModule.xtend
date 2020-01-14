@@ -172,7 +172,6 @@ class StatebasedCCodeGeneratorStructModule extends SCChartsCodeGeneratorModule {
                     if (declaration.input) codeList += LEC("Input")
                     if (declaration.output) codeList += LEC("Output") 
                     codeList += NL
-                    tickData.add(s)
                 }
             }
         }
@@ -182,7 +181,6 @@ class StatebasedCCodeGeneratorStructModule extends SCChartsCodeGeneratorModule {
     
     override generateDone() {
         tickData.add(
-            NL, 
             "  ", getIfaceName, " ", getRegionIfaceName, ";", NL, 
             IFC(!leanMode, "  int ", REGION_ACTIVE_PRIORITY, ";", NL),
             "  ", getThreadStatusName, " ", REGION_THREADSTATUS, ";", NL

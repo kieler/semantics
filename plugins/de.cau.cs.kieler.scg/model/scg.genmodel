@@ -53,6 +53,7 @@
     <genClasses ecoreClass="scg.ecore#//Entry">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference scg.ecore#//Entry/exit"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference scg.ecore#//Entry/next"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference scg.ecore#//Entry/resetSCG"/>
     </genClasses>
     <genClasses ecoreClass="scg.ecore#//Exit">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference scg.ecore#//Exit/entry"/>

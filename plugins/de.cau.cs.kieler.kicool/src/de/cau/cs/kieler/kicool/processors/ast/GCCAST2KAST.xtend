@@ -60,7 +60,7 @@ class GCCAST2KAST extends AbstractSystemCompilerProcessor<CodeContainer, KAST> {
         lines.createKAST(kAST)        
         setModel(kAST)
 
-        logger.closeLog("kast-report.log").snapshot
+        logger.saveLog(environment, "kast-report.log")
     }
     
     protected def void createSubKAST(LinkedList<String> lines, KAST kAST) {

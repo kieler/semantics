@@ -57,15 +57,20 @@ Scope returns kext::KExtScope:
 // Test Entity Rule
 // A test entity is either an annotation expression or an effect.
 TestEntity returns kext::TestEntity:
-    expression=AnnotatedExpression | effect=Effect;
+    expression=(AnnotatedExpression | AnnotatedJsonExpression) | effect=Effect;
 
 // Annotated Expression Rule
 // An annotated expression is declared with the keyword "expression". It may be preceded by a list
 // of annotations. The expression itself follows the keyword.
-AnnotatedExpression  returns kext::AnnotatedExpression:
+AnnotatedExpression returns kext::AnnotatedExpression:
     annotations+=Annotation*
     'expression'
     expression=Expression;
+    
+AnnotatedJsonExpression returns kext::AnnotatedExpression:
+    annotations+=Annotation*
+    'json'
+    expression=JsonObjectValue;
 
 // Declaration Rule
 // A declaration follows the general KIELER pattern for variable declaration. More specific:
@@ -122,13 +127,13 @@ ClassDeclaration returns kext::ClassDeclaration:
     host?='host'?
     ((
         type = ClassType
-        (name = ID)?
+        (name = EString)?
         '{'
             declarations+=DeclarationOrMethod*
         '}'
     )|(
         type = StructType
-        (name = ID)?
+        (name = EString)?
         '{'
             declarations+=Declaration*
         '}'
@@ -154,13 +159,13 @@ ClassDeclarationWOSemicolon returns kext::ClassDeclaration:
     host?='host'?
     ((
         type = ClassType
-        (name = ID)?
+        (name = EString)?
         '{'
             declarations+=DeclarationOrMethodWOSemicolon*
         '}'
     )|(
         type = StructType
-        (name = ID)?
+        (name = EString)?
         '{'
             declarations+=DeclarationWOSemicolon*
         '}'
@@ -258,7 +263,8 @@ ValuedObject returns kexpressions::ValuedObject:
     ('=' initialValue=Expression)?
     ( 'combine'
       (combineOperator = CombineOperator)
-    )?;
+    )?
+    ('label' label=STRING)?;
     
 SimpleValuedObject returns kexpressions::ValuedObject:
     annotations+=QuotedStringAnnotation*

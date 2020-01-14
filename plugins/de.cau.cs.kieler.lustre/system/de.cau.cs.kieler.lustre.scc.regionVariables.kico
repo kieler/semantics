@@ -1,0 +1,6 @@
+public system de.cau.cs.kieler.lustre.scc.dataflow.regionVariables
+    label "Lustre to SCCharts (Hidden Local Variables)"
+
+de.cau.cs.kieler.lustre.processors.lustreToSCC.dataFlow config { 
+    "de.cau.cs.kieler.lustre.processors.lustreToSCC.dataFlow.regionVariables" : true
+}

@@ -4,8 +4,11 @@
 package de.cau.cs.kieler.lustre.lustre.impl;
 
 import de.cau.cs.kieler.kexpressions.Expression;
+import de.cau.cs.kieler.kexpressions.ValuedObject;
+import de.cau.cs.kieler.kexpressions.VariableDeclaration;
 
 import de.cau.cs.kieler.kexpressions.keffects.Assignment;
+import de.cau.cs.kieler.kexpressions.keffects.Emission;
 
 import de.cau.cs.kieler.lustre.lustre.AState;
 import de.cau.cs.kieler.lustre.lustre.ATransition;
@@ -36,8 +39,12 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.lustre.lustre.impl.AStateImpl#getName <em>Name</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.lustre.lustre.impl.AStateImpl#isInitial <em>Initial</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.lustre.lustre.impl.AStateImpl#getValuedObject <em>Valued Object</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.lustre.lustre.impl.AStateImpl#getConstants <em>Constants</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.lustre.lustre.impl.AStateImpl#getVariables <em>Variables</em>}</li>
  *   <li>{@link de.cau.cs.kieler.lustre.lustre.impl.AStateImpl#getEquations <em>Equations</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.lustre.lustre.impl.AStateImpl#getEmissions <em>Emissions</em>}</li>
  *   <li>{@link de.cau.cs.kieler.lustre.lustre.impl.AStateImpl#getAssertions <em>Assertions</em>}</li>
  *   <li>{@link de.cau.cs.kieler.lustre.lustre.impl.AStateImpl#getAutomatons <em>Automatons</em>}</li>
  *   <li>{@link de.cau.cs.kieler.lustre.lustre.impl.AStateImpl#getTransitions <em>Transitions</em>}</li>
@@ -48,24 +55,54 @@ import org.eclipse.emf.ecore.util.InternalEList;
 public class AStateImpl extends MinimalEObjectImpl.Container implements AState
 {
   /**
-   * The default value of the '{@link #getName() <em>Name</em>}' attribute.
+   * The default value of the '{@link #isInitial() <em>Initial</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getName()
+   * @see #isInitial()
    * @generated
    * @ordered
    */
-  protected static final String NAME_EDEFAULT = null;
+  protected static final boolean INITIAL_EDEFAULT = false;
 
   /**
-   * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
+   * The cached value of the '{@link #isInitial() <em>Initial</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getName()
+   * @see #isInitial()
    * @generated
    * @ordered
    */
-  protected String name = NAME_EDEFAULT;
+  protected boolean initial = INITIAL_EDEFAULT;
+
+  /**
+   * The cached value of the '{@link #getValuedObject() <em>Valued Object</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getValuedObject()
+   * @generated
+   * @ordered
+   */
+  protected ValuedObject valuedObject;
+
+  /**
+   * The cached value of the '{@link #getConstants() <em>Constants</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getConstants()
+   * @generated
+   * @ordered
+   */
+  protected EList<VariableDeclaration> constants;
+
+  /**
+   * The cached value of the '{@link #getVariables() <em>Variables</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getVariables()
+   * @generated
+   * @ordered
+   */
+  protected EList<VariableDeclaration> variables;
 
   /**
    * The cached value of the '{@link #getEquations() <em>Equations</em>}' containment reference list.
@@ -76,6 +113,16 @@ public class AStateImpl extends MinimalEObjectImpl.Container implements AState
    * @ordered
    */
   protected EList<Assignment> equations;
+
+  /**
+   * The cached value of the '{@link #getEmissions() <em>Emissions</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getEmissions()
+   * @generated
+   * @ordered
+   */
+  protected EList<Emission> emissions;
 
   /**
    * The cached value of the '{@link #getAssertions() <em>Assertions</em>}' containment reference list.
@@ -133,9 +180,10 @@ public class AStateImpl extends MinimalEObjectImpl.Container implements AState
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getName()
+  @Override
+  public boolean isInitial()
   {
-    return name;
+    return initial;
   }
 
   /**
@@ -143,12 +191,13 @@ public class AStateImpl extends MinimalEObjectImpl.Container implements AState
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setName(String newName)
+  @Override
+  public void setInitial(boolean newInitial)
   {
-    String oldName = name;
-    name = newName;
+    boolean oldInitial = initial;
+    initial = newInitial;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, LustrePackage.ASTATE__NAME, oldName, name));
+      eNotify(new ENotificationImpl(this, Notification.SET, LustrePackage.ASTATE__INITIAL, oldInitial, initial));
   }
 
   /**
@@ -156,6 +205,87 @@ public class AStateImpl extends MinimalEObjectImpl.Container implements AState
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
+  public ValuedObject getValuedObject()
+  {
+    return valuedObject;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public NotificationChain basicSetValuedObject(ValuedObject newValuedObject, NotificationChain msgs)
+  {
+    ValuedObject oldValuedObject = valuedObject;
+    valuedObject = newValuedObject;
+    if (eNotificationRequired())
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, LustrePackage.ASTATE__VALUED_OBJECT, oldValuedObject, newValuedObject);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setValuedObject(ValuedObject newValuedObject)
+  {
+    if (newValuedObject != valuedObject)
+    {
+      NotificationChain msgs = null;
+      if (valuedObject != null)
+        msgs = ((InternalEObject)valuedObject).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - LustrePackage.ASTATE__VALUED_OBJECT, null, msgs);
+      if (newValuedObject != null)
+        msgs = ((InternalEObject)newValuedObject).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - LustrePackage.ASTATE__VALUED_OBJECT, null, msgs);
+      msgs = basicSetValuedObject(newValuedObject, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, LustrePackage.ASTATE__VALUED_OBJECT, newValuedObject, newValuedObject));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EList<VariableDeclaration> getConstants()
+  {
+    if (constants == null)
+    {
+      constants = new EObjectContainmentEList<VariableDeclaration>(VariableDeclaration.class, this, LustrePackage.ASTATE__CONSTANTS);
+    }
+    return constants;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EList<VariableDeclaration> getVariables()
+  {
+    if (variables == null)
+    {
+      variables = new EObjectContainmentEList<VariableDeclaration>(VariableDeclaration.class, this, LustrePackage.ASTATE__VARIABLES);
+    }
+    return variables;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public EList<Assignment> getEquations()
   {
     if (equations == null)
@@ -170,6 +300,22 @@ public class AStateImpl extends MinimalEObjectImpl.Container implements AState
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
+  public EList<Emission> getEmissions()
+  {
+    if (emissions == null)
+    {
+      emissions = new EObjectContainmentEList<Emission>(Emission.class, this, LustrePackage.ASTATE__EMISSIONS);
+    }
+    return emissions;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public EList<Expression> getAssertions()
   {
     if (assertions == null)
@@ -184,6 +330,7 @@ public class AStateImpl extends MinimalEObjectImpl.Container implements AState
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EList<Automaton> getAutomatons()
   {
     if (automatons == null)
@@ -198,6 +345,7 @@ public class AStateImpl extends MinimalEObjectImpl.Container implements AState
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EList<ATransition> getTransitions()
   {
     if (transitions == null)
@@ -217,8 +365,16 @@ public class AStateImpl extends MinimalEObjectImpl.Container implements AState
   {
     switch (featureID)
     {
+      case LustrePackage.ASTATE__VALUED_OBJECT:
+        return basicSetValuedObject(null, msgs);
+      case LustrePackage.ASTATE__CONSTANTS:
+        return ((InternalEList<?>)getConstants()).basicRemove(otherEnd, msgs);
+      case LustrePackage.ASTATE__VARIABLES:
+        return ((InternalEList<?>)getVariables()).basicRemove(otherEnd, msgs);
       case LustrePackage.ASTATE__EQUATIONS:
         return ((InternalEList<?>)getEquations()).basicRemove(otherEnd, msgs);
+      case LustrePackage.ASTATE__EMISSIONS:
+        return ((InternalEList<?>)getEmissions()).basicRemove(otherEnd, msgs);
       case LustrePackage.ASTATE__ASSERTIONS:
         return ((InternalEList<?>)getAssertions()).basicRemove(otherEnd, msgs);
       case LustrePackage.ASTATE__AUTOMATONS:
@@ -239,10 +395,18 @@ public class AStateImpl extends MinimalEObjectImpl.Container implements AState
   {
     switch (featureID)
     {
-      case LustrePackage.ASTATE__NAME:
-        return getName();
+      case LustrePackage.ASTATE__INITIAL:
+        return isInitial();
+      case LustrePackage.ASTATE__VALUED_OBJECT:
+        return getValuedObject();
+      case LustrePackage.ASTATE__CONSTANTS:
+        return getConstants();
+      case LustrePackage.ASTATE__VARIABLES:
+        return getVariables();
       case LustrePackage.ASTATE__EQUATIONS:
         return getEquations();
+      case LustrePackage.ASTATE__EMISSIONS:
+        return getEmissions();
       case LustrePackage.ASTATE__ASSERTIONS:
         return getAssertions();
       case LustrePackage.ASTATE__AUTOMATONS:
@@ -264,12 +428,27 @@ public class AStateImpl extends MinimalEObjectImpl.Container implements AState
   {
     switch (featureID)
     {
-      case LustrePackage.ASTATE__NAME:
-        setName((String)newValue);
+      case LustrePackage.ASTATE__INITIAL:
+        setInitial((Boolean)newValue);
+        return;
+      case LustrePackage.ASTATE__VALUED_OBJECT:
+        setValuedObject((ValuedObject)newValue);
+        return;
+      case LustrePackage.ASTATE__CONSTANTS:
+        getConstants().clear();
+        getConstants().addAll((Collection<? extends VariableDeclaration>)newValue);
+        return;
+      case LustrePackage.ASTATE__VARIABLES:
+        getVariables().clear();
+        getVariables().addAll((Collection<? extends VariableDeclaration>)newValue);
         return;
       case LustrePackage.ASTATE__EQUATIONS:
         getEquations().clear();
         getEquations().addAll((Collection<? extends Assignment>)newValue);
+        return;
+      case LustrePackage.ASTATE__EMISSIONS:
+        getEmissions().clear();
+        getEmissions().addAll((Collection<? extends Emission>)newValue);
         return;
       case LustrePackage.ASTATE__ASSERTIONS:
         getAssertions().clear();
@@ -297,11 +476,23 @@ public class AStateImpl extends MinimalEObjectImpl.Container implements AState
   {
     switch (featureID)
     {
-      case LustrePackage.ASTATE__NAME:
-        setName(NAME_EDEFAULT);
+      case LustrePackage.ASTATE__INITIAL:
+        setInitial(INITIAL_EDEFAULT);
+        return;
+      case LustrePackage.ASTATE__VALUED_OBJECT:
+        setValuedObject((ValuedObject)null);
+        return;
+      case LustrePackage.ASTATE__CONSTANTS:
+        getConstants().clear();
+        return;
+      case LustrePackage.ASTATE__VARIABLES:
+        getVariables().clear();
         return;
       case LustrePackage.ASTATE__EQUATIONS:
         getEquations().clear();
+        return;
+      case LustrePackage.ASTATE__EMISSIONS:
+        getEmissions().clear();
         return;
       case LustrePackage.ASTATE__ASSERTIONS:
         getAssertions().clear();
@@ -326,10 +517,18 @@ public class AStateImpl extends MinimalEObjectImpl.Container implements AState
   {
     switch (featureID)
     {
-      case LustrePackage.ASTATE__NAME:
-        return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+      case LustrePackage.ASTATE__INITIAL:
+        return initial != INITIAL_EDEFAULT;
+      case LustrePackage.ASTATE__VALUED_OBJECT:
+        return valuedObject != null;
+      case LustrePackage.ASTATE__CONSTANTS:
+        return constants != null && !constants.isEmpty();
+      case LustrePackage.ASTATE__VARIABLES:
+        return variables != null && !variables.isEmpty();
       case LustrePackage.ASTATE__EQUATIONS:
         return equations != null && !equations.isEmpty();
+      case LustrePackage.ASTATE__EMISSIONS:
+        return emissions != null && !emissions.isEmpty();
       case LustrePackage.ASTATE__ASSERTIONS:
         return assertions != null && !assertions.isEmpty();
       case LustrePackage.ASTATE__AUTOMATONS:
@@ -351,8 +550,8 @@ public class AStateImpl extends MinimalEObjectImpl.Container implements AState
     if (eIsProxy()) return super.toString();
 
     StringBuilder result = new StringBuilder(super.toString());
-    result.append(" (name: ");
-    result.append(name);
+    result.append(" (initial: ");
+    result.append(initial);
     result.append(')');
     return result.toString();
   }

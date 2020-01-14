@@ -5,10 +5,10 @@ package de.cau.cs.kieler.lustre.lustre;
 
 import de.cau.cs.kieler.kexpressions.Declaration;
 import de.cau.cs.kieler.kexpressions.Expression;
-import de.cau.cs.kieler.kexpressions.ValuedObjectReference;
 import de.cau.cs.kieler.kexpressions.VariableDeclaration;
 
 import de.cau.cs.kieler.kexpressions.keffects.Assignment;
+import de.cau.cs.kieler.kexpressions.keffects.Emission;
 
 import org.eclipse.emf.common.util.EList;
 
@@ -23,14 +23,12 @@ import org.eclipse.emf.common.util.EList;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.lustre.lustre.NodeDeclaration#isIsUnsafe <em>Is Unsafe</em>}</li>
  *   <li>{@link de.cau.cs.kieler.lustre.lustre.NodeDeclaration#isHasState <em>Has State</em>}</li>
- *   <li>{@link de.cau.cs.kieler.lustre.lustre.NodeDeclaration#getStaticParams <em>Static Params</em>}</li>
- *   <li>{@link de.cau.cs.kieler.lustre.lustre.NodeDeclaration#getInput <em>Input</em>}</li>
- *   <li>{@link de.cau.cs.kieler.lustre.lustre.NodeDeclaration#getOutput <em>Output</em>}</li>
- *   <li>{@link de.cau.cs.kieler.lustre.lustre.NodeDeclaration#getEffectiveNode <em>Effective Node</em>}</li>
- *   <li>{@link de.cau.cs.kieler.lustre.lustre.NodeDeclaration#getStaticArgs <em>Static Args</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.lustre.lustre.NodeDeclaration#getInputs <em>Inputs</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.lustre.lustre.NodeDeclaration#getOutputs <em>Outputs</em>}</li>
  *   <li>{@link de.cau.cs.kieler.lustre.lustre.NodeDeclaration#getConstants <em>Constants</em>}</li>
  *   <li>{@link de.cau.cs.kieler.lustre.lustre.NodeDeclaration#getVariables <em>Variables</em>}</li>
  *   <li>{@link de.cau.cs.kieler.lustre.lustre.NodeDeclaration#getEquations <em>Equations</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.lustre.lustre.NodeDeclaration#getEmissions <em>Emissions</em>}</li>
  *   <li>{@link de.cau.cs.kieler.lustre.lustre.NodeDeclaration#getAssertions <em>Assertions</em>}</li>
  *   <li>{@link de.cau.cs.kieler.lustre.lustre.NodeDeclaration#getAutomatons <em>Automatons</em>}</li>
  * </ul>
@@ -44,10 +42,6 @@ public interface NodeDeclaration extends Declaration
   /**
    * Returns the value of the '<em><b>Is Unsafe</b></em>' attribute.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Is Unsafe</em>' attribute isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Is Unsafe</em>' attribute.
    * @see #setIsUnsafe(boolean)
@@ -70,10 +64,6 @@ public interface NodeDeclaration extends Declaration
   /**
    * Returns the value of the '<em><b>Has State</b></em>' attribute.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Has State</em>' attribute isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Has State</em>' attribute.
    * @see #setHasState(boolean)
@@ -94,123 +84,33 @@ public interface NodeDeclaration extends Declaration
   void setHasState(boolean value);
 
   /**
-   * Returns the value of the '<em><b>Static Params</b></em>' containment reference list.
-   * The list contents are of type {@link de.cau.cs.kieler.lustre.lustre.StaticParam}.
+   * Returns the value of the '<em><b>Inputs</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.kexpressions.VariableDeclaration}.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Static Params</em>' containment reference list isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Static Params</em>' containment reference list.
-   * @see de.cau.cs.kieler.lustre.lustre.LustrePackage#getNodeDeclaration_StaticParams()
+   * @return the value of the '<em>Inputs</em>' containment reference list.
+   * @see de.cau.cs.kieler.lustre.lustre.LustrePackage#getNodeDeclaration_Inputs()
    * @model containment="true"
    * @generated
    */
-  EList<StaticParam> getStaticParams();
+  EList<VariableDeclaration> getInputs();
 
   /**
-   * Returns the value of the '<em><b>Input</b></em>' containment reference.
+   * Returns the value of the '<em><b>Outputs</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.kexpressions.VariableDeclaration}.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Input</em>' containment reference isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Input</em>' containment reference.
-   * @see #setInput(Params)
-   * @see de.cau.cs.kieler.lustre.lustre.LustrePackage#getNodeDeclaration_Input()
+   * @return the value of the '<em>Outputs</em>' containment reference list.
+   * @see de.cau.cs.kieler.lustre.lustre.LustrePackage#getNodeDeclaration_Outputs()
    * @model containment="true"
    * @generated
    */
-  Params getInput();
-
-  /**
-   * Sets the value of the '{@link de.cau.cs.kieler.lustre.lustre.NodeDeclaration#getInput <em>Input</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Input</em>' containment reference.
-   * @see #getInput()
-   * @generated
-   */
-  void setInput(Params value);
-
-  /**
-   * Returns the value of the '<em><b>Output</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Output</em>' containment reference isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Output</em>' containment reference.
-   * @see #setOutput(Params)
-   * @see de.cau.cs.kieler.lustre.lustre.LustrePackage#getNodeDeclaration_Output()
-   * @model containment="true"
-   * @generated
-   */
-  Params getOutput();
-
-  /**
-   * Sets the value of the '{@link de.cau.cs.kieler.lustre.lustre.NodeDeclaration#getOutput <em>Output</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Output</em>' containment reference.
-   * @see #getOutput()
-   * @generated
-   */
-  void setOutput(Params value);
-
-  /**
-   * Returns the value of the '<em><b>Effective Node</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Effective Node</em>' containment reference isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Effective Node</em>' containment reference.
-   * @see #setEffectiveNode(ValuedObjectReference)
-   * @see de.cau.cs.kieler.lustre.lustre.LustrePackage#getNodeDeclaration_EffectiveNode()
-   * @model containment="true"
-   * @generated
-   */
-  ValuedObjectReference getEffectiveNode();
-
-  /**
-   * Sets the value of the '{@link de.cau.cs.kieler.lustre.lustre.NodeDeclaration#getEffectiveNode <em>Effective Node</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Effective Node</em>' containment reference.
-   * @see #getEffectiveNode()
-   * @generated
-   */
-  void setEffectiveNode(ValuedObjectReference value);
-
-  /**
-   * Returns the value of the '<em><b>Static Args</b></em>' containment reference list.
-   * The list contents are of type {@link de.cau.cs.kieler.lustre.lustre.StaticArg}.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Static Args</em>' containment reference list isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Static Args</em>' containment reference list.
-   * @see de.cau.cs.kieler.lustre.lustre.LustrePackage#getNodeDeclaration_StaticArgs()
-   * @model containment="true"
-   * @generated
-   */
-  EList<StaticArg> getStaticArgs();
+  EList<VariableDeclaration> getOutputs();
 
   /**
    * Returns the value of the '<em><b>Constants</b></em>' containment reference list.
    * The list contents are of type {@link de.cau.cs.kieler.kexpressions.VariableDeclaration}.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Constants</em>' containment reference list isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Constants</em>' containment reference list.
    * @see de.cau.cs.kieler.lustre.lustre.LustrePackage#getNodeDeclaration_Constants()
@@ -221,28 +121,20 @@ public interface NodeDeclaration extends Declaration
 
   /**
    * Returns the value of the '<em><b>Variables</b></em>' containment reference list.
-   * The list contents are of type {@link de.cau.cs.kieler.lustre.lustre.ClockedVariableDeclaration}.
+   * The list contents are of type {@link de.cau.cs.kieler.kexpressions.VariableDeclaration}.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Variables</em>' containment reference list isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Variables</em>' containment reference list.
    * @see de.cau.cs.kieler.lustre.lustre.LustrePackage#getNodeDeclaration_Variables()
    * @model containment="true"
    * @generated
    */
-  EList<ClockedVariableDeclaration> getVariables();
+  EList<VariableDeclaration> getVariables();
 
   /**
    * Returns the value of the '<em><b>Equations</b></em>' containment reference list.
    * The list contents are of type {@link de.cau.cs.kieler.kexpressions.keffects.Assignment}.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Equations</em>' containment reference list isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Equations</em>' containment reference list.
    * @see de.cau.cs.kieler.lustre.lustre.LustrePackage#getNodeDeclaration_Equations()
@@ -252,13 +144,21 @@ public interface NodeDeclaration extends Declaration
   EList<Assignment> getEquations();
 
   /**
+   * Returns the value of the '<em><b>Emissions</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.kexpressions.keffects.Emission}.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Emissions</em>' containment reference list.
+   * @see de.cau.cs.kieler.lustre.lustre.LustrePackage#getNodeDeclaration_Emissions()
+   * @model containment="true"
+   * @generated
+   */
+  EList<Emission> getEmissions();
+
+  /**
    * Returns the value of the '<em><b>Assertions</b></em>' containment reference list.
    * The list contents are of type {@link de.cau.cs.kieler.kexpressions.Expression}.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Assertions</em>' containment reference list isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Assertions</em>' containment reference list.
    * @see de.cau.cs.kieler.lustre.lustre.LustrePackage#getNodeDeclaration_Assertions()
@@ -271,10 +171,6 @@ public interface NodeDeclaration extends Declaration
    * Returns the value of the '<em><b>Automatons</b></em>' containment reference list.
    * The list contents are of type {@link de.cau.cs.kieler.lustre.lustre.Automaton}.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Automatons</em>' containment reference list isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Automatons</em>' containment reference list.
    * @see de.cau.cs.kieler.lustre.lustre.LustrePackage#getNodeDeclaration_Automatons()

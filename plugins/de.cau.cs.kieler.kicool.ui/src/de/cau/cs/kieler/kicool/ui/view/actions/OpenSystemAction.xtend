@@ -23,6 +23,9 @@ import org.eclipse.ui.IWorkbenchWindow
 import org.eclipse.ui.PartInitException
 import org.eclipse.ui.plugin.AbstractUIPlugin
 import org.eclipse.xtend.lib.annotations.Accessors
+import org.eclipse.ui.ide.IDE
+import java.net.URI
+import java.io.File
 
 /**
  * @author ssm
@@ -66,7 +69,11 @@ class OpenSystemAction {
         val page = window.getActivePage();
         if (page !== null) {
             try {
-                page.openEditor(input, KiCoolActivator.DE_CAU_CS_KIELER_KICOOL_KICOOL);
+                if (view.systemSelectionManager.getProjectSystemFilePath(system.id) !== null) {
+                    IDE.openEditor(page, new File(view.systemSelectionManager.getProjectSystemFilePath(system.id)).toURI, KiCoolActivator.DE_CAU_CS_KIELER_KICOOL_KICOOL, true)
+                } else {
+                    page.openEditor(input, KiCoolActivator.DE_CAU_CS_KIELER_KICOOL_KICOOL);
+                }
             } catch (PartInitException e) {
                 e.printStackTrace();
             }

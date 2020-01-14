@@ -174,7 +174,8 @@ class Abort extends SCChartsProcessor implements Traceable {
 
             // Remember all outgoing transitions and regions (important: do not consider regions without inner states! => regions2)
             val outgoingTransitions = state.outgoingTransitions.immutableCopy
-            val regions = state.controlflowRegions.toList
+            val regions = state.controlflowRegions.
+                filter[ !final || !getProperty(FinalRegion.COMPILATION_SUPPORTS_FINAL_REGIONS) ].toList
 
             val delayedWeakAborts = outgoingTransitions.filter[e|e.isWeakAbort && !e.implicitlyImmediate]
             
@@ -191,7 +192,7 @@ class Abort extends SCChartsProcessor implements Traceable {
             }
                 
             var aFinalStateInEveryRegion = true;
-            for (region : state.regions.filter(ControlflowRegion)) {
+            for (region : regions) {
                 if (!region.states.exists[isFinal]){//filter[ee|ee.final && !ee.hasAnnotation(Termination.ANNOTATION_FINALSTATE)].size == 0) {
                     aFinalStateInEveryRegion = false;
                 }

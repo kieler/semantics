@@ -118,6 +118,7 @@ public class VisualizationImpl extends MinimalEObjectImpl.Container implements V
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EList<String> getImages()
   {
     if (images == null)
@@ -132,6 +133,7 @@ public class VisualizationImpl extends MinimalEObjectImpl.Container implements V
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EList<String> getLoads()
   {
     if (loads == null)
@@ -146,6 +148,7 @@ public class VisualizationImpl extends MinimalEObjectImpl.Container implements V
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public String getInit()
   {
     return init;
@@ -156,6 +159,7 @@ public class VisualizationImpl extends MinimalEObjectImpl.Container implements V
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setInit(String newInit)
   {
     String oldInit = init;
@@ -169,6 +173,7 @@ public class VisualizationImpl extends MinimalEObjectImpl.Container implements V
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EList<Content> getContent()
   {
     if (content == null)

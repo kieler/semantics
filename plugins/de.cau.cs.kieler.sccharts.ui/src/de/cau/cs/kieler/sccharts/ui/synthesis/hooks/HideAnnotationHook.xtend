@@ -113,7 +113,7 @@ class HideAnnotationHook extends SynthesisHook {
     }
     
     override processRegion(Region region, KNode node) {
-        if (!SHOW_HIDDEN_ELEMENTS.booleanValue && region instanceof Region && !region.declarations.empty) {
+        if (!SHOW_HIDDEN_ELEMENTS.booleanValue && !region.declarations.empty) {
             // Remove hidden declarations
             val parent = node.regionExtendedContainer
             val declarationsContainer = parent?.getProperty(ControlflowRegionStyles.DECLARATIONS_CONTAINER);

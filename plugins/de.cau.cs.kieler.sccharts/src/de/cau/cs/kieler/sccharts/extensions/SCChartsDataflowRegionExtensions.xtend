@@ -15,6 +15,8 @@ package de.cau.cs.kieler.sccharts.extensions
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.DataflowRegion
 import de.cau.cs.kieler.sccharts.SCChartsFactory
+import de.cau.cs.kieler.sccharts.DataflowAssignment
+import de.cau.cs.kieler.kexpressions.keffects.Assignment
 
 /**
  * @author ssm
@@ -47,4 +49,7 @@ class SCChartsDataflowRegionExtensions {
         createDataflowRegion(id, "") => [ state.regions += it ]
     }
     
+    def isSequential(Assignment a){
+        (a instanceof DataflowAssignment) && (a as DataflowAssignment).sequential
+    }
 }

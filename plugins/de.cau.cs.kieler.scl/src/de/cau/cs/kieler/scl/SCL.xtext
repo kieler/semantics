@@ -23,6 +23,7 @@ Statement returns Statement:
       SclAssignment
     | SclPostfixAssignment
     | Label
+    | SclEffectAssignment
     | Conditional
     | LegacyConditional
     | Goto
@@ -69,6 +70,24 @@ SclPostfixAssignment returns Assignment:
     ('schedule' schedule+=ScheduleObjectReference+)?
     semicolon?=';'?
 ;
+
+SclEffectAssignment returns Assignment:
+    (annotations += Annotation)*
+    expression = (
+        ReferenceCall
+    |
+        TextExpression
+    |
+        PrintCall
+    |
+        RandomizeCall
+    |
+        FunctionCall
+    )
+    ('schedule' schedule+=ScheduleObjectReference+)?
+    semicolon?=';'?
+;
+
 
 Return returns Return:
     (annotations += Annotation)*
@@ -152,16 +171,26 @@ ScopeStatement returns ScopeStatement:
 
 ForLoop returns Loop:
     'for' '('
-    (initializationDeclaration=VariableDeclarationWOSemicolon | initialization=EffectOrAssignment)?
+    (initializationDeclaration=LoopDeclaration | initialization=EffectOrAssignment)?
     ';'
     condition=BoolExpression
     ';'
     afterthought=EffectOrAssignment?
     ')' '{'
-    (declarations+=Declaration)*
+    (declarations += Declaration)*
     (statements += Statement)*
     '}'
     semicolon?=';'?
+;
+
+LoopDeclaration returns kexpressions::VariableDeclaration:
+    annotations += Annotation*
+    (
+        (type = ValueType)
+    | 
+        (type = HostType hostType = STRING)
+    )
+    valuedObjects += ValuedObject
 ;
 
 EffectOrAssignment returns keffects::Assignment:
@@ -198,8 +227,10 @@ ModuleCall returns ModuleCall:
 ;
     
 ModuleCallParameter returns kexpressions::Parameter:
-    ((pureOutput ?= '!')? callByReference ?= '&')?
-    expression = Expression
+    ((accessType = ParameterAccessType
+    expression = ValuedObjectReference)
+    |
+    expression = Expression)
     ('to' explicitBinding = [kexpressions::ValuedObject|ID] ('[' explicitBindingIndices+=Expression ']')*)?
 ;
 

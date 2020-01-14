@@ -16,6 +16,7 @@ import java.util.Map
 import de.cau.cs.kieler.kicool.compilation.RuntimeSystems
 import de.cau.cs.kieler.klighd.krendering.KForeground
 
+import static extension java.lang.String.format
 import static extension org.eclipse.xtext.EcoreUtil2.* 
 import de.cau.cs.kieler.klighd.krendering.KColor
 import de.cau.cs.kieler.klighd.krendering.KBackground
@@ -318,8 +319,7 @@ class ProcessorDataManager {
             }
         }
         
-        val pTime = processorInstance.environment.getProperty(PTIME)
-        var envText = "pTime: " + pTime + "ms"
+        var envText = "pTime: %dms".format((processorInstance.environment.getProperty(PROCESSOR_TIME).doubleValue / 1000_000) as long)
         val mMetric = processorInstance.environment.getProperty(METRIC)
         if (mMetric !== null) envText += "\nmMetric: " + String.format(Locale.US, "%.3f", mMetric as Double) 
         NODE_ENVIRONMENT.findNode(nodeIdMap)?.setLabel(envText)
@@ -506,6 +506,21 @@ class ProcessorDataManager {
                     errorNode.container.setFBColor(ERROR)
                     intermediatePosX += intermediatePosXInc
                 }
+            }
+            
+            val logs = processorInstance.environment.getProperty(LOGS)
+            if (logs !== null && logs.files.size > 0) {
+                val logNode = intermediateKGT.copy
+                logNode.xpos = intermediatePosX
+                logNode.container.addAction(Trigger::SINGLECLICK, SelectIntermediateAction.ID)
+                logNode.container.setFBColor(LOG)
+                intermediateRootNode.children += logNode
+                 
+                logNode.setProperty(INTERMEDIATE_DATA, 
+                    new IntermediateData(processorInstance, processorNotification.compilationContext, logs, 
+                        view, intermediateModelCounter++, logNode
+                    ))
+                intermediatePosX += intermediatePosXInc
             }
         }               
         

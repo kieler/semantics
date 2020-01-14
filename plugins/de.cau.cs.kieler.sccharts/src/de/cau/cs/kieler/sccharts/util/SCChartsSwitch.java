@@ -22,6 +22,7 @@ import de.cau.cs.kieler.kexpressions.Declaration;
 import de.cau.cs.kieler.kexpressions.Expression;
 import de.cau.cs.kieler.kexpressions.Schedulable;
 import de.cau.cs.kieler.kexpressions.VariableDeclaration;
+import de.cau.cs.kieler.kexpressions.keffects.Assignment;
 import de.cau.cs.kieler.kexpressions.keffects.Effect;
 import de.cau.cs.kieler.kexpressions.keffects.Linkable;
 import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration;
@@ -245,26 +246,6 @@ public class SCChartsSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case SCChartsPackage.PRECEDING_ACTION: {
-                PrecedingAction precedingAction = (PrecedingAction)theEObject;
-                T result = casePrecedingAction(precedingAction);
-                if (result == null) result = caseLocalAction(precedingAction);
-                if (result == null) result = caseAction(precedingAction);
-                if (result == null) result = caseAnnotatable(precedingAction);
-                if (result == null) result = caseLinkable(precedingAction);
-                if (result == null) result = defaultCase(theEObject);
-                return result;
-            }
-            case SCChartsPackage.SUCCEEDING_ACTION: {
-                SucceedingAction succeedingAction = (SucceedingAction)theEObject;
-                T result = caseSucceedingAction(succeedingAction);
-                if (result == null) result = caseLocalAction(succeedingAction);
-                if (result == null) result = caseAction(succeedingAction);
-                if (result == null) result = caseAnnotatable(succeedingAction);
-                if (result == null) result = caseLinkable(succeedingAction);
-                if (result == null) result = defaultCase(theEObject);
-                return result;
-            }
             case SCChartsPackage.PERIOD_ACTION: {
                 PeriodAction periodAction = (PeriodAction)theEObject;
                 T result = casePeriodAction(periodAction);
@@ -313,6 +294,17 @@ public class SCChartsSwitch<T> extends Switch<T> {
                 if (result == null) result = caseDeclarationScope(codeEffect);
                 if (result == null) result = caseStatementContainer(codeEffect);
                 if (result == null) result = caseAnnotatable(codeEffect);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case SCChartsPackage.DATAFLOW_ASSIGNMENT: {
+                DataflowAssignment dataflowAssignment = (DataflowAssignment)theEObject;
+                T result = caseDataflowAssignment(dataflowAssignment);
+                if (result == null) result = caseAssignment(dataflowAssignment);
+                if (result == null) result = caseEffect(dataflowAssignment);
+                if (result == null) result = caseAnnotatable(dataflowAssignment);
+                if (result == null) result = caseSchedulable(dataflowAssignment);
+                if (result == null) result = caseLinkable(dataflowAssignment);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -516,36 +508,6 @@ public class SCChartsSwitch<T> extends Switch<T> {
     }
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>Preceding Action</em>'.
-     * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
-     * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Preceding Action</em>'.
-     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-     * @generated
-     */
-    public T casePrecedingAction(PrecedingAction object) {
-        return null;
-    }
-
-    /**
-     * Returns the result of interpreting the object as an instance of '<em>Succeeding Action</em>'.
-     * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
-     * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Succeeding Action</em>'.
-     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-     * @generated
-     */
-    public T caseSucceedingAction(SucceedingAction object) {
-        return null;
-    }
-
-    /**
      * Returns the result of interpreting the object as an instance of '<em>Period Action</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
@@ -636,6 +598,21 @@ public class SCChartsSwitch<T> extends Switch<T> {
     }
 
     /**
+     * Returns the result of interpreting the object as an instance of '<em>Assignment</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Assignment</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseAssignment(Assignment object) {
+        return null;
+    }
+
+    /**
      * Returns the result of interpreting the object as an instance of '<em>Policy Region</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
@@ -662,6 +639,21 @@ public class SCChartsSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseCodeEffect(CodeEffect object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Dataflow Assignment</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Dataflow Assignment</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseDataflowAssignment(DataflowAssignment object) {
         return null;
     }
 

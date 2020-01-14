@@ -13,13 +13,28 @@
 package de.cau.cs.kieler.lustre.processors.lustreToScc
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.annotations.AnnotationsFactory
+import de.cau.cs.kieler.core.properties.IProperty
+import de.cau.cs.kieler.core.properties.Property
+import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.keffects.Assignment
+import de.cau.cs.kieler.kexpressions.keffects.Effect
 import de.cau.cs.kieler.kicool.compilation.ProcessorType
+import de.cau.cs.kieler.lustre.extensions.LustreUtilityExtensions
+import de.cau.cs.kieler.lustre.lustre.AState
+import de.cau.cs.kieler.lustre.lustre.ATransition
+import de.cau.cs.kieler.lustre.lustre.AnAction
+import de.cau.cs.kieler.lustre.lustre.Assertion
+import de.cau.cs.kieler.lustre.lustre.Automaton
 import de.cau.cs.kieler.lustre.lustre.Equation
-import de.cau.cs.kieler.sccharts.DataflowRegion
+import de.cau.cs.kieler.lustre.lustre.StateValuedObject
+import de.cau.cs.kieler.sccharts.HistoryType
+import de.cau.cs.kieler.sccharts.PreemptionType
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.extensions.SCChartsDataflowRegionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
 
 /**
  * @author lgr
@@ -27,16 +42,20 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsDataflowRegionExtensions
  */
 class LustreToSCCharts extends CoreLustreToSCC {
 
-    @Inject extension KEffectsExtensions
-    @Inject extension KExpressionsValuedObjectExtensions
-    @Inject extension SCChartsDataflowRegionExtensions
+    public static val ID = "de.cau.cs.kieler.lustre.processors.lustreToSCC.dataFlow"
+
+    @Inject extension LustreUtilityExtensions
+    @Inject extension SCChartsCoreExtensions
+    @Inject extension SCChartsStateExtensions
+    @Inject extension SCChartsControlflowRegionExtensions
+    @Inject extension SCChartsTransitionExtensions
     
     override getId() {
-        return "de.cau.cs.kieler.lustre.processors.lustreToSCC.dataFlow"
+        return ID
     }
 
     override getName() {
-        return "Lustre to SC DF"
+        return "Lustre to SCCharts"
     }
 
     override ProcessorType getType() {
@@ -44,32 +63,104 @@ class LustreToSCCharts extends CoreLustreToSCC {
     }
 
     override processEquation(Equation equation, State state) {
-        // Search for a dataflow region within the state
-        val dataFlowRegionsList = getDataflowRegions(state)
-
-        // If there is no dataflow region, create one
-        if (dataFlowRegionsList.length == 0) {
-            var dfRegion = createDataflowRegion(DATAFLOW_REGION_PREFIX + state.name, DATAFLOW_REGION_PREFIX + state.name)
-            state.regions += dfRegion
+        var dataflowRegion = getDataflowRegionFromState(state)
+        
+        var assignment = getAssignmentForEquation(equation, state)
+        if (assignment !== null) {
+            dataflowRegion.equations += assignment
         }
-        
-        // Take the first dataflow region for creating the equation
-        var dataflowRegion = dataFlowRegionsList.head as DataflowRegion
-        
-        // The left side of the equation should be a known valued object (either simple like 'x = ...' or complex like '(x,y) = ...'
-        if ((equation.reference !== null && lustreToScchartsValuedObjectMap.containsKey(equation.reference.valuedObject))
-            || lustreToScchartsValuedObjectMap.keySet.containsAll(equation.references.map[valuedObject])) {
-                
-                var dataflowAssignment = createAssignment
-                if (equation.reference !== null) {
-                    var kExpressionValuedObject = lustreToScchartsValuedObjectMap.get(equation.reference.valuedObject)
-                    dataflowAssignment.reference = kExpressionValuedObject.reference
-                }
-                dataflowAssignment.expression = equation.expression.transformExpression(state)
+    }
     
-                if (dataflowAssignment.expression !== null) {
-                    dataflowRegion.equations += dataflowAssignment
-                }
+    override processAssertion(Assertion assertion, State state) {
+        try {
+            val transformedAssertion = transformExpression(assertion.expr, state)
+            val assertionAnnotation = AnnotationsFactory::eINSTANCE.createStringAnnotation => [
+                name = "Assume"
+                values += transformedAssertion?.stringRepresentation
+            ]
+
+            state.annotations += assertionAnnotation
+        } catch (Exception e) {
+            environment.warnings.add("A problem occurred in the transformation of the assertion: " +
+                assertion.expr.stringRepresentation, e)
         }
-    }   
+    }
+
+    override processAutomaton(Automaton automaton, State state) {
+        var controlflowRegion = state.createControlflowRegion("")
+
+        var initial = true
+        for (AState lusState : automaton.states) {
+            var newState = createState => [
+                name = lusState.valuedObject.name
+            ]
+            if (initial) {
+                newState.initial = true 
+                initial = false            
+            }
+            controlflowRegion.states += newState
+            lustreStateToScchartsStateMap.put(lusState.valuedObject as StateValuedObject, newState)
+        }
+
+        for (AState lusState : automaton.states) {
+            processState(lusState, lustreStateToScchartsStateMap.get(lusState.valuedObject))
+        }
+    }
+    
+    protected def processState(AState lusState, State state) {
+        for (constVariable : lusState.constants) {
+            state.declarations += constVariable.createConstantDeclaration(state)
+        }
+
+        for (variable : lusState.variables) {
+            state.declarations += variable.createVariableDeclarationFromLustre(state)
+        }
+
+        for (Assignment equation : lusState.equations) {
+            processEquation(equation as Equation, state)
+        }
+
+        for (Expression assertionExpr : lusState.assertions) {
+            processAssertion((assertionExpr as Assertion), state)
+        }
+
+        for (Automaton automaton : lusState.automatons) {
+            processAutomaton(automaton, state)
+        }
+
+        for (ATransition transition : lusState.transitions) {
+            processTransition(transition, state)
+        }
+    }
+
+    protected def processTransition(ATransition transition, State source) {
+
+        for (AnAction action : transition.actions) {
+            var newTransition = createTransition => [
+                sourceState = source
+                targetState = lustreStateToScchartsStateMap.get(action.nextState)
+            ]
+
+            var trigger = transformExpression(action.condition, source)
+            if (trigger !== null) {
+                newTransition.trigger = trigger
+            }
+
+            for (Effect effect : action.effects) {
+                if (effect instanceof Equation) {
+                    var assignment = getAssignmentForEquation(effect, source.root as State)
+                    if (assignment !== null) {
+                        newTransition.effects.add(assignment)
+                    }
+                }
+            }
+            
+            if (transition.strong) {
+                newTransition.preemption = PreemptionType.STRONG
+            }
+            if (action.history) {
+                newTransition.history = HistoryType.DEEP
+            }
+        }
+    }
 }

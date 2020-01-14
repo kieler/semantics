@@ -61,15 +61,14 @@ class SCGProcessorProvider implements IProcessorProvider {
             de.cau.cs.kieler.scg.processors.optimizer.UnobservableGuardRemover,
             de.cau.cs.kieler.scg.processors.optimizer.SimpleGuardOptimization,
             de.cau.cs.kieler.scg.processors.MethodProcessor,
-            de.cau.cs.kieler.scg.processors.codegen.promela.PromelaCodeGenerator,
-            de.cau.cs.kieler.scg.processors.codegen.smv.SmvCodeGenerator,
-            de.cau.cs.kieler.scg.processors.codegen.smv.SimplifyNamesOfSSA,
-            de.cau.cs.kieler.scg.processors.codegen.smv.DefineUnboundVariablesOfSSA,
-            de.cau.cs.kieler.scg.processors.codegen.smv.PreFinalVariableValuesOfSSA,
-            de.cau.cs.kieler.scg.processors.StoreVariableDeclarations,
             de.cau.cs.kieler.scg.processors.codegen.vhdl.VHDLCodeGenerator,
             de.cau.cs.kieler.scg.processors.codegen.prio.c.CPrioCodeGenerator,
-            de.cau.cs.kieler.scg.processors.codegen.prio.java.JavaPrioCodeGenerator
+            de.cau.cs.kieler.scg.processors.codegen.prio.java.JavaPrioCodeGenerator,
+            de.cau.cs.kieler.scg.processors.analyzer.SCGExpressionComplexity,
+            de.cau.cs.kieler.scg.processors.analyzer.SCGValuedObjectComplexity,
+            de.cau.cs.kieler.scg.processors.analyzer.GuardDefUseAnalyzer,
+            de.cau.cs.kieler.scg.processors.optimizer.GOInitOptimizer,
+            de.cau.cs.kieler.scg.processors.FinalThreadProcessor
         ]
     }
     

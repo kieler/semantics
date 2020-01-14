@@ -9,8 +9,6 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="expression" eType="ecore:EClass kexpressions.ecore#//Expression"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="operator" eType="#//AssignOperator"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="subReference" eType="ecore:EClass kexpressions.ecore#//ValuedObjectReference"
-        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="AssignOperator">
     <eLiterals name="ASSIGN"/>

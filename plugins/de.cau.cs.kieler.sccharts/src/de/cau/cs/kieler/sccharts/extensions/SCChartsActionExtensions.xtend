@@ -32,6 +32,7 @@ import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsReplacementExtensions
 import org.eclipse.emf.ecore.EObject
+import de.cau.cs.kieler.sccharts.PreemptionType
 
 /**
  * @author ssm
@@ -58,6 +59,8 @@ class SCChartsActionExtensions {
     
     def isImmediate(Action action) {
         action.delay == DelayType.IMMEDIATE
+        || action instanceof EntryAction 
+        || action instanceof ExitAction
     }
 
     def isDelayed(Action action) {
@@ -152,7 +155,39 @@ class SCChartsActionExtensions {
     def getSuspendActions(Scope scope) {
         scope.actions.filter(SuspendAction)
     }
+    
+    def hasEntryActions(Scope scope) {
+        !scope.entryActions.empty
+    }
+    
+    def hasDuringActions(Scope scope) {
+        !scope.duringActions.empty
+    }
 
+    def hasExitActions(Scope scope) {
+        !scope.exitActions.empty
+    }
+
+    def hasSuspendActions(Scope scope) {
+        !scope.suspendActions.empty
+    }
+    
+    def isWeak(EntryAction entryAction) {
+        entryAction.preemption == PreemptionType.WEAK
+    }
+
+    def isStrong(EntryAction entryAction) {
+        entryAction.preemption == PreemptionType.STRONG
+    }
+
+    def isWeak(ExitAction exitAction) {
+        exitAction.preemption == PreemptionType.WEAK
+    }
+
+    def isStrong(ExitAction exitAction) {
+        exitAction.preemption == PreemptionType.STRONG
+    }
+    
     // These are actions that expand to INNER content like during or exit actions.
     def boolean containsInnerActions(State state) {
         return (!state.duringActions.nullOrEmpty || !state.exitActions.nullOrEmpty || !state.entryActions.nullOrEmpty)

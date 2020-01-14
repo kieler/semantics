@@ -53,10 +53,10 @@ class ColorAnnotationHook extends SynthesisHook {
     override void finish(Scope scope, KNode node) {
         val relevantObjects = scope.eAllContents.filter(Annotatable).filter[ annotations.exists[
                 name != null && (
-                    name.equals(BACKGROUND_ANNOTATION_KEYWORD) ||
-                    name.equals(BACKGROUND_TARGET_ANNOTATION_KEYWORD) ||
-                    name.equals(FOREGROUND_ANNOTATION_KEYWORD) ||
-                    name.equals(ALPHA_ANNOTATION_KEYWORD)
+                    name.equalsIgnoreCase(BACKGROUND_ANNOTATION_KEYWORD) ||
+                    name.equalsIgnoreCase(BACKGROUND_TARGET_ANNOTATION_KEYWORD) ||
+                    name.equalsIgnoreCase(FOREGROUND_ANNOTATION_KEYWORD) ||
+                    name.equalsIgnoreCase(ALPHA_ANNOTATION_KEYWORD)
                     )
             ] 
         ].toIterable

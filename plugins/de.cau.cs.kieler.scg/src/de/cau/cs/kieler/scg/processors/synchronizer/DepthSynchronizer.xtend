@@ -36,7 +36,10 @@ import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 import de.cau.cs.kieler.scg.extensions.ThreadPathType
 
 import static de.cau.cs.kieler.scg.processors.SCGAnnotations.*
+import static de.cau.cs.kieler.scg.extensions.ThreadPathType.*
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import java.util.Map
+import de.cau.cs.kieler.scg.Entry
 
 /** 
  * This class is part of the SCG transformation chain. In particular a synchronizer is called by the scheduler
@@ -61,25 +64,15 @@ class DepthSynchronizer extends AbstractSynchronizer {
     // -- Injections 
     // -------------------------------------------------------------------------
     
-    @Inject
-    extension KExpressionsValuedObjectExtensions
-    
-    @Inject
-    extension KExpressionsDeclarationExtensions
-    
-    @Inject
-    extension SCGCoreExtensions
-    
-    @Inject
-    extension SCGControlFlowExtensions
-    
-    @Inject
-    extension SCGThreadExtensions
-
-    @Inject
-    extension AnnotationsExtensions
-    
+    @Inject extension KExpressionsValuedObjectExtensions
+    @Inject extension KExpressionsDeclarationExtensions
+    @Inject extension SCGCoreExtensions
+    @Inject extension SCGControlFlowExtensions
+    @Inject extension SCGThreadExtensions
+    @Inject extension AnnotationsExtensions
     @Inject extension KEffectsExtensions
+    
+    @Inject var InstantaneousSynchronizer instantaneousSynchronizer
    
     protected val OPERATOREXPRESSION_DEPTHLIMIT = 16
     protected val OPERATOREXPRESSION_DEPTHLIMIT_SYNCHRONIZER = 8
@@ -116,6 +109,15 @@ class DepthSynchronizer extends AbstractSynchronizer {
 		// Since we are working we completely enriched SCGs, we can use the SCG extensions 
 		// to retrieve the scheduling block of the join node in question.
 		val joinSB = join.getCachedSchedulingBlock
+		
+		val exitNodes = join.allPrevious.map[ eContainer as Exit ].toList
+		if (exitNodes.forall[ it.basicBlock.finalBlock ]) {
+//		    instantaneousSynchronizer.build(join, guard, schedulingBlock, scg)
+            data.guardExpression.valuedObject = joinSB.guards.head.valuedObject
+            data.guardExpression.expression = join.fork.getCachedSchedulingBlock.guards.head.valuedObject.reference
+            guard.expression = data.guardExpression.expression		    
+		    return
+		}
         
         // The valued object of the GuardExpression of the synchronizer is the guard of the
         // scheduling block of the join node. 
@@ -166,7 +168,8 @@ class DepthSynchronizer extends AbstractSynchronizer {
 		// Create a new list for all exit nodes of the threads of the fork-join-combination...
         val exitNodes = <Exit> newLinkedList
         // ... and fill the list with the exit nodes of all threads.
-        data.join.allPrevious.map[ eContainer ].filter(Exit).filter[ !final ].forEach[ exitNodes += it ]        
+        data.join.allPrevious.map[ eContainer ].filter(Exit).filter[ !final ].
+            filter[ !getCachedSchedulingBlock.basicBlock.deadBlock ].forEach[ exitNodes += it ]        
         
         // Build an empty expression for each exit node.
         for(exit:exitNodes){
@@ -181,7 +184,9 @@ class DepthSynchronizer extends AbstractSynchronizer {
 	            data.predecessors.add(exitSB)
 	            
 	            // Now, retrieve all surfaces of the actual thread.
-	            val threadSurfaces = exit.entry.getThreadNodes.filter(typeof(Depth)).toList
+	            val threadSurfaces = exit.entry.getThreadNodes.filter(typeof(Depth)).
+	               filter[ !getCachedSchedulingBlock.basicBlock.deadBlock ].
+	               toList
 	            
 	            // If there are surface, build an empty expression.
 	            if (threadSurfaces.size>0) {
@@ -383,13 +388,14 @@ class DepthSynchronizer extends AbstractSynchronizer {
         return SYNCHRONIZER_ID
     }
     
-    override isSynchronizable(Fork fork, Iterable<ThreadPathType> threadPathTypes, boolean instantaneousFeedback) {
+    override isSynchronizable(Fork fork, Map<Entry, ThreadPathType> threadPathTypes, boolean instantaneousFeedback) {
         var synchronizable = true
         var delay = false
         
-        for(tpt : threadPathTypes) {
-            if (tpt != ThreadPathType::DELAYED) {
-                if (tpt != ThreadPathType::INSTANTANEOUS) {
+        for(k : threadPathTypes.keySet) {
+            val tpt = threadPathTypes.get(k)
+            if (tpt != DELAYED) {
+                if (tpt != INSTANTANEOUS && !(tpt == POTENTIALLY_INSTANTANEOUS && k.exit.final)) {
                     synchronizable = false
                 }
             } else {

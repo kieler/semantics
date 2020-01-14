@@ -29,6 +29,7 @@ import de.cau.cs.kieler.kexpressions.VectorValue
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
 import de.cau.cs.kieler.kexpressions.kext.extensions.KExtReferenceExtensions
 import de.cau.cs.kieler.kicool.compilation.VariableStore
 import de.cau.cs.kieler.scg.Assignment
@@ -48,6 +49,7 @@ import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.kexpressions.MethodDeclaration
 
 /**
  * C Code Generator Logic Module
@@ -148,7 +150,11 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
                 if (declaration instanceof ReferenceDeclaration && declaration.asReferenceDeclaration.reference instanceof SCGraph) {
                     code.append(callToSCG(referenceCall, declaration as ReferenceDeclaration, conditionalStack.size + 1, serializer))
                 } else {
-                    code.append((assignment.expression as ReferenceCall).serialize).append(";\n")
+                    if (declaration instanceof ClassDeclaration || declaration instanceof MethodDeclaration) {
+                        valuedObjectPrefix = struct.getVariableName + struct.separator
+                        prePrefix = CCodeGeneratorStructModule.STRUCT_PRE_PREFIX
+                    }
+                    code.append((assignment.expression as ReferenceCall).serializeHR).append(";\n")
                 }
             } else {
                 throw new NullPointerException("Assigned valued object is null or not supported")
@@ -344,7 +350,7 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
     
 
     protected def generateMethods(extension CCodeSerializeHRExtensions serializer) {
-        for (scg : SCGraphs.scgs.filter[method]) {
+        for (scg : SCGraphs.scgs.filter[method]) {            
             val method = scg.methodDeclaration
             if (method.hasSelfInParameter) {
                 val selfVO = scg.declarations.map[valuedObjects].flatten.filter[parameter].findFirst[parameterIndex == -1]
@@ -352,7 +358,6 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
                     selfVO.name = "(*" + selfVO.name + ")" // simulate pointer access
                 }
             }
-            
             indent(0)
             code.append(method.returnType.serialize)
             code.append(" ").append(method.valuedObjects.head.name)

@@ -15,6 +15,8 @@ package de.cau.cs.kieler.kicool.deploy.processor
 import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
+import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
+import de.cau.cs.kieler.kicool.deploy.Logger
 import de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure
 import java.io.File
 import java.io.FileWriter
@@ -23,6 +25,7 @@ import java.util.List
 import java.util.Map
 import org.eclipse.emf.common.util.URI
 
+import static extension de.cau.cs.kieler.kicool.deploy.AdditionalResources.*
 import static extension de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure.*
 
 /**
@@ -30,7 +33,7 @@ import static extension de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure.*
  * @kieler.design proposed
  * @kieler.rating proposed yellow
  */
-class ProjectSetup extends AbstractDeploymentProcessor<CodeContainer> {
+class ProjectSetup extends InplaceProcessor<CodeContainer> {
 
     public static val IProperty<List<String>> CLEAR = 
         new Property<List<String>>("de.cau.cs.kieler.kicool.deploy.setup.clear", null)
@@ -40,6 +43,8 @@ class ProjectSetup extends AbstractDeploymentProcessor<CodeContainer> {
         
     public static val IProperty<Boolean> SAVE = 
         new Property<Boolean>("de.cau.cs.kieler.kicool.deploy.setup.save.input", true)
+    
+    val logger = new Logger
     
     override getId() {
         "de.cau.cs.kieler.kicool.deploy.setup"
@@ -59,17 +64,25 @@ class ProjectSetup extends AbstractDeploymentProcessor<CodeContainer> {
         }
         
         // Tasks
+        environment.collectAdditionalResources(logger)
+        logger.println
+        
         if (environment.getProperty(SAVE)) {
             infra.saveCode(logger)
+            logger.println
         }
-        infra.clearTask(logger)    
+        
+        infra.clearTask(logger)
+        logger.println
+        
         infra.copyTask(logger)
+        logger.println
         
         // refresh project
         infra.refresh
         
         // report
-        saveLog("setup-report.log")
+        logger.saveLog(environment, "setup-report.log")
     }
     
     // ---------------
@@ -95,8 +108,6 @@ class ProjectSetup extends AbstractDeploymentProcessor<CodeContainer> {
                 e.printStackTrace(logger)
             }
         }
-        
-        logger.println
     }
     
     // ------------------
@@ -104,7 +115,9 @@ class ProjectSetup extends AbstractDeploymentProcessor<CodeContainer> {
     // ------------------    
     
     protected def copyTask(ProjectInfrastructure infra, PrintStream logger) {
-        val copyMap = environment.getProperty(COPY)?:emptyMap
+        val copyMap = newHashMap
+        copyMap += environment.getProperty(COPY)?:emptyMap
+        copyMap += environment.getAdditionalResourcesToCopy
         if (!copyMap.empty) {
             logger.println("== Copy Environment ==")
 
@@ -146,10 +159,7 @@ class ProjectSetup extends AbstractDeploymentProcessor<CodeContainer> {
                     logger.print("ERROR: Exception while copying file(s)")
                     e.printStackTrace(logger)
                 }
-                logger.println
             }
-            
-            logger.println
         }
     }
     
@@ -158,7 +168,9 @@ class ProjectSetup extends AbstractDeploymentProcessor<CodeContainer> {
     // -------------------    
     
     protected def clearTask(ProjectInfrastructure infra, PrintStream logger) {
-        val clearList = environment.getProperty(CLEAR)?:emptyList
+        val clearList = newArrayList
+        clearList += environment.getProperty(CLEAR)?:emptyList
+        clearList += environment.getAdditionalResourcesToClear
         if (!clearList.empty) {
             logger.println("== Clear Environment ==")
             
@@ -166,10 +178,7 @@ class ProjectSetup extends AbstractDeploymentProcessor<CodeContainer> {
                 val target = new File(infra.generatedCodeFolder, entry)
                 val success = target.deleteRecursively(logger)
                 if (!success) environment.errors.add("Error while clearing file(s)")
-                logger.println
             }
-            
-            logger.println
         }
     }
 

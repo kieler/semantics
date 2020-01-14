@@ -1,4 +1,4 @@
-public system de.cau.cs.kieler.lustre.scc.controlflow
-	label "Lustre to (cf) SCC"
+developer system de.cau.cs.kieler.lustre.scc.controlflow
+	label "Lustre to SCCharts (CF only)"
 
 de.cau.cs.kieler.lustre.processors.lustreToSCC.controlFlow

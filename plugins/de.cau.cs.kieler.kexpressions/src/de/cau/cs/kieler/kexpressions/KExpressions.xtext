@@ -279,8 +279,25 @@ TernaryOperation returns Expression:
     | InitExpression;
     
 InitExpression returns Expression:
-    {OperatorExpression} subExpressions += AtomicValuedExpression operator=InitOperator subExpressions += AtomicValuedExpression
-    | AtomicValuedExpression;    
+    FbyExpression 
+    ({OperatorExpression.subExpressions+=current} 
+        (operator=InitOperator subExpressions+=FbyExpression) 
+        ('->' subExpressions+=FbyExpression)*
+    )?;
+    
+FbyExpression returns Expression:
+    SfbyExpression
+    ({OperatorExpression.subExpressions+=current}
+        (operator=FbyOperator subExpressions+=SfbyExpression)
+        ('fby' subExpressions+=SfbyExpression)*
+    )?;
+    
+SfbyExpression returns Expression:
+    AtomicValuedExpression
+    ({OperatorExpression.subExpressions+=current}
+        (operator=SfbyOperator subExpressions+=AtomicValuedExpression)
+        ('sfby' subExpressions+=AtomicValuedExpression)*
+    )?;
     
 // Atomic Expression Rule
 // An atomic expression is either a simple boolean value, a test expression, another boolean expression
@@ -366,14 +383,28 @@ FunctionCall returns FunctionCall:
         (('(' parameters += Parameter 
             (',' parameters += Parameter)* ')'
         ) | '()')
-    );        
+    ); 
+    
+// Print Call Rule
+// Calls the print function. They may include a parameter list.
+// Do not use in expressions directly, use PrintCallEffect instead
+PrintCall returns PrintCall:
+    {PrintCall}
+    'print'
+    (   
+        ('(' parameters += Parameter (',' parameters += Parameter)* ')' )
+    | 
+        '()'
+    );      
 
 // Parameter Rule
 // The parameter rule is used by the function call rule. Every expression may be a paramter.
 // Additionally, a parameter may be preceded by an ampersand to indicate a call by reference.
 // Analogously, an prefixed exclamation mark marks the parameter as pure output.
 Parameter returns Parameter:
-    ((pureOutput ?= '!')? callByReference ?= '&')?
+    (accessType = ParameterAccessType
+    expression = ValuedObjectReference)
+    |
     expression = Expression;
     
 // Text Expression Rule
@@ -478,11 +509,17 @@ enum PostfixSub returns OperatorType:
     POSTFIX_SUB="--";
     
 enum ConditionalOperator returns OperatorType:
-    CONDITIONAL = "?";        
+    CONDITIONAL = "?";
     
 enum InitOperator returns OperatorType:
     INIT = "->";
-
+    
+enum FbyOperator returns OperatorType:
+    FBY = "fby";
+    
+enum SfbyOperator returns OperatorType:
+    SFBY = "sfby";
+    
 enum ValueType returns ValueType:
 	PURE="pure" | BOOL="bool" | 
 	INT="int" | FLOAT="float" |
@@ -508,6 +545,10 @@ enum MethodReturnType returns ValueType:
     VOID="void" |
     BOOL="bool" | INT="int" | FLOAT="float" |
     STRING="string";
+    
+enum ParameterAccessType returns ParameterAccessType:
+    CALL_BY_REFERENCE = "&" | PURE_OUTPUT = "!&"
+;
 
 // -------------------- //
 //  JSON                // 

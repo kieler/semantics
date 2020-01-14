@@ -38,7 +38,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.cau.cs.kieler.lustre.lustre.impl.TypeDeclarationImpl#getType <em>Type</em>}</li>
  *   <li>{@link de.cau.cs.kieler.lustre.lustre.impl.TypeDeclarationImpl#getEnums <em>Enums</em>}</li>
  *   <li>{@link de.cau.cs.kieler.lustre.lustre.impl.TypeDeclarationImpl#getVariables <em>Variables</em>}</li>
- *   <li>{@link de.cau.cs.kieler.lustre.lustre.impl.TypeDeclarationImpl#getValues <em>Values</em>}</li>
  * </ul>
  *
  * @generated
@@ -96,24 +95,14 @@ public class TypeDeclarationImpl extends MinimalEObjectImpl.Container implements
   protected EList<String> enums;
 
   /**
-   * The cached value of the '{@link #getVariables() <em>Variables</em>}' containment reference.
+   * The cached value of the '{@link #getVariables() <em>Variables</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @see #getVariables()
    * @generated
    * @ordered
    */
-  protected VariableDeclaration variables;
-
-  /**
-   * The cached value of the '{@link #getValues() <em>Values</em>}' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getValues()
-   * @generated
-   * @ordered
-   */
-  protected EList<VariableDeclaration> values;
+  protected EList<VariableDeclaration> variables;
 
   /**
    * <!-- begin-user-doc -->
@@ -141,6 +130,7 @@ public class TypeDeclarationImpl extends MinimalEObjectImpl.Container implements
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public String getName()
   {
     return name;
@@ -151,6 +141,7 @@ public class TypeDeclarationImpl extends MinimalEObjectImpl.Container implements
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setName(String newName)
   {
     String oldName = name;
@@ -164,6 +155,7 @@ public class TypeDeclarationImpl extends MinimalEObjectImpl.Container implements
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public ValueType getType()
   {
     return type;
@@ -174,6 +166,7 @@ public class TypeDeclarationImpl extends MinimalEObjectImpl.Container implements
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setType(ValueType newType)
   {
     ValueType oldType = type;
@@ -187,6 +180,7 @@ public class TypeDeclarationImpl extends MinimalEObjectImpl.Container implements
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EList<String> getEnums()
   {
     if (enums == null)
@@ -201,61 +195,14 @@ public class TypeDeclarationImpl extends MinimalEObjectImpl.Container implements
    * <!-- end-user-doc -->
    * @generated
    */
-  public VariableDeclaration getVariables()
+  @Override
+  public EList<VariableDeclaration> getVariables()
   {
+    if (variables == null)
+    {
+      variables = new EObjectContainmentEList<VariableDeclaration>(VariableDeclaration.class, this, LustrePackage.TYPE_DECLARATION__VARIABLES);
+    }
     return variables;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public NotificationChain basicSetVariables(VariableDeclaration newVariables, NotificationChain msgs)
-  {
-    VariableDeclaration oldVariables = variables;
-    variables = newVariables;
-    if (eNotificationRequired())
-    {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, LustrePackage.TYPE_DECLARATION__VARIABLES, oldVariables, newVariables);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
-    }
-    return msgs;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setVariables(VariableDeclaration newVariables)
-  {
-    if (newVariables != variables)
-    {
-      NotificationChain msgs = null;
-      if (variables != null)
-        msgs = ((InternalEObject)variables).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - LustrePackage.TYPE_DECLARATION__VARIABLES, null, msgs);
-      if (newVariables != null)
-        msgs = ((InternalEObject)newVariables).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - LustrePackage.TYPE_DECLARATION__VARIABLES, null, msgs);
-      msgs = basicSetVariables(newVariables, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, LustrePackage.TYPE_DECLARATION__VARIABLES, newVariables, newVariables));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EList<VariableDeclaration> getValues()
-  {
-    if (values == null)
-    {
-      values = new EObjectContainmentEList<VariableDeclaration>(VariableDeclaration.class, this, LustrePackage.TYPE_DECLARATION__VALUES);
-    }
-    return values;
   }
 
   /**
@@ -269,9 +216,7 @@ public class TypeDeclarationImpl extends MinimalEObjectImpl.Container implements
     switch (featureID)
     {
       case LustrePackage.TYPE_DECLARATION__VARIABLES:
-        return basicSetVariables(null, msgs);
-      case LustrePackage.TYPE_DECLARATION__VALUES:
-        return ((InternalEList<?>)getValues()).basicRemove(otherEnd, msgs);
+        return ((InternalEList<?>)getVariables()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -294,8 +239,6 @@ public class TypeDeclarationImpl extends MinimalEObjectImpl.Container implements
         return getEnums();
       case LustrePackage.TYPE_DECLARATION__VARIABLES:
         return getVariables();
-      case LustrePackage.TYPE_DECLARATION__VALUES:
-        return getValues();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -322,11 +265,8 @@ public class TypeDeclarationImpl extends MinimalEObjectImpl.Container implements
         getEnums().addAll((Collection<? extends String>)newValue);
         return;
       case LustrePackage.TYPE_DECLARATION__VARIABLES:
-        setVariables((VariableDeclaration)newValue);
-        return;
-      case LustrePackage.TYPE_DECLARATION__VALUES:
-        getValues().clear();
-        getValues().addAll((Collection<? extends VariableDeclaration>)newValue);
+        getVariables().clear();
+        getVariables().addAll((Collection<? extends VariableDeclaration>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -352,10 +292,7 @@ public class TypeDeclarationImpl extends MinimalEObjectImpl.Container implements
         getEnums().clear();
         return;
       case LustrePackage.TYPE_DECLARATION__VARIABLES:
-        setVariables((VariableDeclaration)null);
-        return;
-      case LustrePackage.TYPE_DECLARATION__VALUES:
-        getValues().clear();
+        getVariables().clear();
         return;
     }
     super.eUnset(featureID);
@@ -378,9 +315,7 @@ public class TypeDeclarationImpl extends MinimalEObjectImpl.Container implements
       case LustrePackage.TYPE_DECLARATION__ENUMS:
         return enums != null && !enums.isEmpty();
       case LustrePackage.TYPE_DECLARATION__VARIABLES:
-        return variables != null;
-      case LustrePackage.TYPE_DECLARATION__VALUES:
-        return values != null && !values.isEmpty();
+        return variables != null && !variables.isEmpty();
     }
     return super.eIsSet(featureID);
   }

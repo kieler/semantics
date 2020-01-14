@@ -80,6 +80,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.esterel.PresentCase
 import de.cau.cs.kieler.esterel.TickReference
+import de.cau.cs.kieler.kexpressions.ParameterAccessType
 
 /**
  * Methods and static variables which are used by the transformations which
@@ -1752,7 +1753,7 @@ class EsterelTransformationExtensions {
      */
     def createParameter(Expression expr, boolean reference) {
         KExpressionsFactory::eINSTANCE.createParameter => [
-            it.callByReference = reference
+            it.accessType = if (reference) ParameterAccessType.CALL_BY_REFERENCE else ParameterAccessType.CALL_BY_VALUE
             it.expression = expr
         ]
     }
