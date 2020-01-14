@@ -290,7 +290,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
             n.addLayoutParam(CoreOptions.NODE_SIZE_MINIMUM, new KVector(0, 0))
             n.addLayoutParam(CoreOptions.PADDING, new ElkPadding(0, 0, 0, 0))
         }
-        return nodes.reWireInlining
+        return nodes.reWireInlining.addMissingReferenceInputs
     }
 
     /**
@@ -978,6 +978,19 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         for (node : inlinedNodes) {
             nodes.betterRemove(node, null)
         }
+        return nodes
+    }
+    
+    private def addMissingReferenceInputs(List<KNode> nodes) {
+        nodes.filter[isReference].forEach [ node |
+            val refDec = (node.sourceElement as ValuedObjectReference).valuedObject.declaration as ReferenceDeclaration
+            refDec.getInputs.forEach [ input |
+                if (!node.ports.exists[(sourceElement as ValuedObjectReference).valuedObject == input]) {
+                    node.getInputPortWithNumber(node.incomingEdges.size).setLabel(input.serializeHR.toString, true).
+                        associateWith(input)
+                }
+            ]
+        ]
         return nodes
     }
 
