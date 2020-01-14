@@ -154,6 +154,7 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
      * {@inheritDoc}
      */
     override update(SimulationContext ctx) {
+        diagramViewContext.layoutRecorder.stopRecording(0)
         super.update(ctx)
         val pool = ctx.dataPool
 
@@ -463,6 +464,7 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
             layoutConfig.zoomStyle(ZoomStyle.NONE)
             layoutConfig.performLayout
         }
+        diagramViewContext.layoutRecorder.stopRecording(0)
     }
 
     private def findParams(KNode node, ArrayList<Highlighting> highlighting) {
