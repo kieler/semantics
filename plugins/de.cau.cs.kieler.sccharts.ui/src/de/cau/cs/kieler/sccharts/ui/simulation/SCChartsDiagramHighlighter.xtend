@@ -187,11 +187,12 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
             val proc = ctx.processorMap.get(key)
             if (proc !== null) {
                 val sourcePool = proc.sourceEnvironment.getProperty(Environment.MODEL) as DataPool
+                val targetPool = proc.environment.getProperty(Environment.MODEL) as DataPool
                 if (!currentDataflowHighlighting.empty) {
                     for (highlight : currentDataflowHighlighting) {
                         if (highlight.element instanceof KNode) {
                             val region = highlight.element as KNode
-                            var next = region.children.filter[it.incomingEdges.filter[!isSequential && !isInstance].size == 0].toList
+                            var next = region.children.filter[it.incomingEdges.filter[!isSequential && !isInstance].size == 0 || getProperty(EquationSynthesis.REFERENCE_NODE)].toList
                             next += region.children.filter [
                                 getDiagramViewContext().getSourceElement(it) instanceof OperatorExpression &&
                                     (getDiagramViewContext().getSourceElement(it) as OperatorExpression).operator ==
@@ -223,6 +224,40 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
                                                         (original as FloatValue).value != 0))
                                             if (!next.contains(e.target))
                                                 next.add(e.target)
+                                        }
+                                    }
+                                } else if (first.getProperty(EquationSynthesis.REFERENCE_NODE)) {
+                                    for (e : first.outgoingEdges.filter[!isSequential && !isInstance]) {
+                                        if (!visited.contains(e)) {
+                                            visited.add(e)
+                                            cicle.clear
+                                            val referenced = getDiagramViewContext().getSourceElement(e.sourcePort)
+                                            if (referenced instanceof ValuedObjectReference) {
+                                                val name = (original as ValuedObjectReference).valuedObject.name + '_' +
+                                                    referenced.valuedObject.name
+                                                val value = targetPool.findValue(name)
+                                                if (value !== null) {
+                                                    switch ( value.variableInformation.get(0).type ) {
+                                                        case ValueType.BOOL:
+                                                            if (value.rawValue.asBoolean)
+                                                                currentWireHighlighting.add(
+                                                                    new Highlighting(e, CURRENT_ELEMENT_STYLE))
+                                                        case ValueType.INT:
+                                                            currentWireHighlighting.add(
+                                                                new ValuedHighlighting(e, CURRENT_ELEMENT_STYLE,
+                                                                    value.rawValue.asInt, value.rawValue.asInt != 0))
+                                                        case ValueType.FLOAT:
+                                                            currentWireHighlighting.add(
+                                                                new ValuedHighlighting(e, CURRENT_ELEMENT_STYLE,
+                                                                    new Float(value.rawValue.asFloat),
+                                                                    value.rawValue.asFloat != 0))
+                                                        default: {
+                                                        }
+                                                    }
+                                                }
+                                                if (!next.contains(e.target))
+                                                    next.add(e.target)
+                                            }
                                         }
                                     }
                                 } else if (original instanceof ValuedObjectReference) {
@@ -577,15 +612,14 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
             return null
         var pool = ctx.history.get(1)
         var String key = null
+        var min = -1
         for (k : pool.entries.keySet) {
             if (k.endsWith(name) && (k.length == name.length || k.endsWith("_" + name)) && !k.startsWith("_pre_") &&
                 !k.startsWith("_reg_")) {
-                if (key === null)
+                if (key === null || min > k.length - name.length){
+                    min = k.length - name.length
                     key = k
-                else
-                    System.out.println(
-                        "WARNING: unable to determine the key of the pre Variable '" + name + "'. Is it '" + key +
-                            "' or is it '" + k + "'???");
+                }
             }
         }
         return pool.entries.get(key)
@@ -593,15 +627,14 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
 
     def private findValue(DataPool pool, String name) {
         var String key = null
+        var min = -1
         for (k : pool.entries.keySet) {
             if (k.endsWith(name) && (k.length == name.length || k.endsWith("_" + name)) && !k.startsWith("_pre_") &&
                 !k.startsWith("_reg_")) {
-                if (key === null)
+                if (key === null || min > k.length - name.length){
+                    min = k.length - name.length
                     key = k
-                else
-                    System.out.println(
-                        "WARNING: unable to determine the key of the Variable '" + name + "'. Is it '" + key +
-                            "' or is it '" + k + "'???");
+                }
             }
         }
         return pool.entries.get(key)
