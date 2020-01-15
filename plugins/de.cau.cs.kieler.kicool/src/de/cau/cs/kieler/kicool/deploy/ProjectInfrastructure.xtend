@@ -250,7 +250,7 @@ class ProjectInfrastructure {
     
     def findResourceLocation(Resource resource) {
         val uri = resource?.URI?.toPlatformString(true)
-        val file = ResourcesPlugin.workspace.root.findMember(uri)
+        val file = uri !== null ? ResourcesPlugin.workspace.root.findMember(uri) : null
         return file?.rawLocation?.toFile
     }
     
