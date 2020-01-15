@@ -40,7 +40,6 @@ import org.eclipse.core.runtime.Platform
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.resource.Resource
-import org.eclipse.emf.workspace.util.WorkspaceSynchronizer
 import org.eclipse.xtend.lib.annotations.AccessorType
 import org.eclipse.xtend.lib.annotations.Accessors
 
@@ -250,7 +249,9 @@ class ProjectInfrastructure {
     }
     
     def findResourceLocation(Resource resource) {
-        return WorkspaceSynchronizer.getFile(resource)?.rawLocation?.toFile
+        val uri = resource?.URI?.toPlatformString(true)
+        val file = ResourcesPlugin.workspace.root.findMember(uri)
+        return file?.rawLocation?.toFile
     }
     
     // == UTILS ==
