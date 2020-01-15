@@ -54,6 +54,8 @@ import picocli.CommandLine.Parameters
 
 import static extension de.cau.cs.kieler.core.uri.URIUtils.*
 import static extension java.lang.String.format
+import java.net.URL
+import java.net.URLClassLoader
 
 /**
  * @author als
@@ -69,6 +71,9 @@ class KielerCompilerCLI implements Runnable, Observer {
 
     @Option(names = #["-t", "--try-all"], description = "prevents the compiler from stopping at the first error when compiling multiple source files.")
     protected boolean tryall;
+    
+    @Option(names = #["-c", "--class-path"], paramLabel = "FILE", description = "one or multiple .jar files where the compiler searches for additional processors and compilation systems.")
+    protected List<String> paths
     
     @Option(names = #["-s", "--system"], paramLabel = "SYSTEM-ID/FILE", description = "the ID of the compilation system or local .kico-file. (default: ${DEFAULT-VALUE})")
     protected String systemId = "de.cau.cs.kieler.kicool.identity";
@@ -120,6 +125,11 @@ class KielerCompilerCLI implements Runnable, Observer {
     }
     
     override run() {
+        if (paths !== null) {
+            for (path : paths) {
+                addURLToClassLoader(new File(path).toURI().toURL())
+            }
+        }
         try {
             // List all systems
             val availableSystems = availableSystemsMap
@@ -511,6 +521,18 @@ class KielerCompilerCLI implements Runnable, Observer {
             return false
         }
         return true
+    }
+    
+    public static def addURLToClassLoader(URL u) {
+        val sysloader = ClassLoader.getSystemClassLoader() as URLClassLoader;
+        val sysclass = typeof(URLClassLoader);
+        try {
+            val method = sysclass.getDeclaredMethod("addURL", #[typeof(URL)]);
+            method.setAccessible(true);
+            method.invoke(sysloader, #[u]);
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
     }
 
 }
