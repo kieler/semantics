@@ -147,8 +147,10 @@ class Inheritance extends SCChartsProcessor implements Traceable {
     
     def replaceVOR(EObject object, java.util.Map<ValuedObject, ValuedObject> replacements) {
         for (vor: object.eAllContents.filter(ValuedObjectReference).filter[replacements.containsKey(valuedObject)].toList) {
-            vor.valuedObject = replacements.get(vor.valuedObject)
-            vor.subReference.replaceSubVOR(vor.valuedObject)
+            if (!(vor.eContainer instanceof ValuedObjectReference)) {
+                vor.valuedObject = replacements.get(vor.valuedObject)
+                vor.subReference.replaceSubVOR(vor.valuedObject)
+            }
         }
     }
     

@@ -41,7 +41,6 @@ class KEffectsFormatter extends KExpressionsFormatter {
 		
 		format(assignment.reference, document)
 		format(assignment.getExpression(), document)
-		format(assignment.getSubReference(), document)
 	}
 
 	def dispatch void format(HostcodeEffect hostcodeeffect, extension IFormattableDocument document) {

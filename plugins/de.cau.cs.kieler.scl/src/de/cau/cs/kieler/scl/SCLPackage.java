@@ -476,15 +476,6 @@ public interface SCLPackage extends EPackage {
     int ASSIGNMENT__OPERATOR = KEffectsPackage.ASSIGNMENT__OPERATOR;
 
     /**
-     * The feature id for the '<em><b>Sub Reference</b></em>' containment reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int ASSIGNMENT__SUB_REFERENCE = KEffectsPackage.ASSIGNMENT__SUB_REFERENCE;
-
-    /**
      * The feature id for the '<em><b>Semicolon</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
