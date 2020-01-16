@@ -45,6 +45,8 @@ import de.cau.cs.kieler.kexpressions.eval.PartialExpressionEvaluator
 import de.cau.cs.kieler.kexpressions.Value
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.TransitionStyles
+import de.cau.cs.kieler.klighd.krendering.extensions.KPortExtensions
+import de.cau.cs.kieler.klighd.kgraph.KGraphFactory
 
 /**
  * @author kolja
@@ -60,6 +62,7 @@ class EquationSynthesisHelper {
     @Inject extension KLabelExtensions
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension TransitionStyles
+    @Inject extension KPortExtensions
 
     protected val List<Pair<KNode, KNode>> sequentials = newArrayList
     protected var alignInputOutputs = false
@@ -275,11 +278,15 @@ class EquationSynthesisHelper {
         }
         return reference.serializeHR.toString
     }
+    
+    protected def KPort getInputPortWithNumber(KNode node, int number) {
+        getInputPortWithNumber( node, number, false );
+    }
 
     /**
      * @returns the number-th input port of a node and creates it if it doesn't exist
      */
-    protected def KPort getInputPortWithNumber(KNode node, int number) {
+    protected def KPort getInputPortWithNumber(KNode node, int number, boolean create) {
         var maxIndex = -1
         var KPort maxPort = null
         for (p : node.ports) {
@@ -299,7 +306,20 @@ class EquationSynthesisHelper {
             }
         }
 
-        if(maxPort === null) return null
+        if (maxPort === null && create) {
+            val port = createPort => [
+                data += KGraphFactory.eINSTANCE.createKIdentifier => [
+                    id = "in0"
+                ]
+                it.setPortSize(2, 2)
+                it.addLayoutParam(CoreOptions::PORT_SIDE, PortSide::WEST);
+                it.labels += createLabel => [
+                    it.text = ""
+                ]
+            ]
+            node.ports += port
+            return port
+        }
 
         var KPort result = null
         for (pi : (maxIndex + 1) .. number) {

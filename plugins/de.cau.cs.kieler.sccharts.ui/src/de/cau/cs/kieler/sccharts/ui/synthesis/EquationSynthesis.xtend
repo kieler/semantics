@@ -986,7 +986,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
             val refDec = (node.sourceElement as ValuedObjectReference).valuedObject.declaration as ReferenceDeclaration
             refDec.getInputs.forEach [ input |
                 if (!node.ports.exists[(sourceElement as ValuedObjectReference).valuedObject == input]) {
-                    node.getInputPortWithNumber(node.incomingEdges.size).setLabel(input.serializeHR.toString, true).
+                    node.getInputPortWithNumber(node.incomingEdges.size, true).setLabel(input.serializeHR.toString, true).
                         associateWith(input)
                 }
             ]
