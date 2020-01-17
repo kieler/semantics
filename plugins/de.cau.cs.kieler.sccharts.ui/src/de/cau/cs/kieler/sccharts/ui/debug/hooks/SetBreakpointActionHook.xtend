@@ -21,6 +21,7 @@ import de.cau.cs.kieler.sccharts.ui.debug.actions.SetBreakpointAction
 import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.klighd.kgraph.KEdge
 import de.cau.cs.kieler.sccharts.ui.debug.view.DebugDiagramView
+import de.cau.cs.kieler.sccharts.ui.debug.actions.SetCheckBreakpointAction
 
 /**
  * @author stu121235
@@ -38,7 +39,10 @@ class SetBreakpointActionHook extends SynthesisHook {
     
     override processTransition(Transition transition, KEdge edge) {
         if (usedContext.diagramWorkbenchPart instanceof DebugDiagramView) {
-            edge.KRendering.addDoubleClickAction(SetBreakpointAction.ID)
+            // regular double click sets transition taken breakpoint
+            edge.KRendering.addDoubleClickAction(SetBreakpointAction.ID, false, false, false)
+            // ALT + Double click sets check breakpoint
+            edge.KRendering.addDoubleClickAction(SetCheckBreakpointAction.ID, false, false, true)
         }
     }
     

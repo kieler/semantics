@@ -42,6 +42,11 @@ class StateBreakpoint extends JavaLineBreakpoint {
         this.stateHash = DebugAnnotations.getFullNameHash(state)
     }
     
+    def setState(State state) {
+        this.state = state
+        this.stateHash = DebugAnnotations.getFullNameHash(state)
+    }
+    
     def getState() {
         return state
     }

@@ -105,6 +105,8 @@ class DebugDiagramView extends DiagramViewPart {
                     text.setText("This is a longer text.")
                     container.pack
                     canvas.layout(true, true)
+                    
+                    
                 }
             })
             needsInit = false

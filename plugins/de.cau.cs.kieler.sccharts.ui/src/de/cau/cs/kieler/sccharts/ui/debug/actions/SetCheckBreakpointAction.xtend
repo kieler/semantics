@@ -14,40 +14,33 @@ package de.cau.cs.kieler.sccharts.ui.debug.actions
 
 import de.cau.cs.kieler.klighd.IAction
 import de.cau.cs.kieler.klighd.IAction.ActionContext
-import de.cau.cs.kieler.klighd.kgraph.KNode
-import de.cau.cs.kieler.klighd.kgraph.KEdge
-import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.ui.debug.breakpoints.DebugBreakpointManager
+import de.cau.cs.kieler.klighd.kgraph.KEdge
+import de.cau.cs.kieler.sccharts.Transition
 
 /**
- * Double-Click action to allow setting breakpoints via the debug diagram view.
- * 
  * @author stu121235
  *
  */
-class SetBreakpointAction implements IAction {
+class SetCheckBreakpointAction implements IAction {
     
-    public static val ID = "de.cau.cs.kieler.sccharts.ui.debug.actions.setBreakpointAction"
+    public static val ID = "de.cau.cs.kieler.sccharts.ui.debug.actions.setCheckBreakpointAction"
     
     override execute(ActionContext context) {
-        println("Setting taken breakpoint.")
+        println("setting check breakpoint.")
         val selection = context.activeViewer.selection
         val viewContext = context.activeViewer.viewContext
         
         // use getSourceElement() to retrieve selected states and transitions from selected view elements
-        val selectedStates = selection.diagramElementsIterator.filter[it instanceof KNode].map[viewContext.getSourceElement(it) as State].toIterable
         val selectedTransitions = selection.diagramElementsIterator.filter[it instanceof KEdge].map[viewContext.getSourceElement(it) as Transition].toIterable
         
-        for (state : selectedStates) {
-            DebugBreakpointManager.instance.toggleBreakpoint(state)
-        }
-        
         for (transition : selectedTransitions) {
-            DebugBreakpointManager.instance.toggleBreakpoint(transition)
+            DebugBreakpointManager.instance.toggleCheckBreakpoint(transition)
         }
         
         ActionResult.createResult(false)
     }
+    
+    
     
 }
