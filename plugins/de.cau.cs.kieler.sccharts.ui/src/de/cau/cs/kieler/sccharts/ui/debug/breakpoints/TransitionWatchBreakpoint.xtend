@@ -12,17 +12,18 @@
  */
 package de.cau.cs.kieler.sccharts.ui.debug.breakpoints
 
-import de.cau.cs.kieler.sccharts.Transition
 import org.eclipse.core.resources.IResource
 import java.util.Map
+import de.cau.cs.kieler.sccharts.Transition
 import org.eclipse.debug.core.DebugException
 
 /**
  * @author stu121235
  *
  */
-class TransitionTakenBreakpoint extends TransitionBreakpoint {
-    public static val String TRANSITION_TAKEN_BREAKPOINT = "de.cau.cs.kieler.sccharts.ui.transitionTakenMarker"
+class TransitionWatchBreakpoint extends TransitionBreakpoint {
+    
+    public static val String TRANSITION_WATCH_BREAKPOINT = "de.cau.cs.kieler.sccharts.ui.transitionWatchMarker"
     
     new() {
     }
@@ -31,7 +32,6 @@ class TransitionTakenBreakpoint extends TransitionBreakpoint {
             int lineNumber, int charStart, int charEnd, int hitCount,
             boolean add, Map<String, Object> attributes, Transition transition) throws DebugException {
         super(resource, typeName, lineNumber, charStart, charEnd, hitCount, add,
-                attributes, TRANSITION_TAKEN_BREAKPOINT, transition);
+                attributes, TRANSITION_WATCH_BREAKPOINT, transition);
     }
-
 }

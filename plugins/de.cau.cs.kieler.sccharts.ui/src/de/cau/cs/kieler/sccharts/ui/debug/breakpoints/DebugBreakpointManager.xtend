@@ -58,6 +58,7 @@ class DebugBreakpointManager {
     
     // Keep map of breakpoints associated with model elements for later removal
     val stateToBreakpoint = <State, List<IJavaBreakpoint>> newHashMap
+    val stateToWatchBreakpoints = <State, List<IJavaBreakpoint>> newHashMap
     val transitionToBreakpoint = <Transition, List<IJavaBreakpoint>> newHashMap
     val transitionToCheckBreakpoint = <Transition, List<IJavaBreakpoint>> newHashMap
     
@@ -90,16 +91,27 @@ class DebugBreakpointManager {
             debugHighlighter.removeBreakpointHighlight(state)
             state.clearBreakpoints
             stateToBreakpoint.remove(state)
+            stateToWatchBreakpoints.remove(state)
         } else {
             // No breakpoint yet, need to find all appropriate breakpoint locations and add them
             statesWithBreakpoint.add(state)
             debugHighlighter.addBreakpointHighlight(state)
-            val breakpoints = <IJavaBreakpoint> newLinkedList
+            val stateBreakpoints = <IJavaBreakpoint> newLinkedList
             for (line : state.findStateLines) {
                 val bp = createBreakpointOnLine(line, BreakpointType.STATE_BREAKPOINT, state, null)
-                breakpoints.add(bp)
+                stateBreakpoints.add(bp)
             }
-            stateToBreakpoint.put(state, breakpoints)
+            stateToBreakpoint.put(state, stateBreakpoints)
+            
+            val transitionCheckBreakpoints = <IJavaBreakpoint> newLinkedList
+            for (transition : state.outgoingTransitions) {
+                for (line : transition.findTransitionLines) {
+                    val bp = createBreakpointOnLine(line, BreakpointType.TRANSITION_WATCH_BREAKPOINT, null, transition)
+                    println(bp)
+                    transitionCheckBreakpoints.add(bp)
+                }
+            }
+            stateToWatchBreakpoints.put(state, transitionCheckBreakpoints)
         }
     }
     
@@ -202,6 +214,23 @@ class DebugBreakpointManager {
         }
     }
     
+    def stateBreakpointHit(StateBreakpoint breakpoint) {
+        val state = breakpoint.state
+        for (bp : stateToBreakpoint.get(state)) {
+            bp.enabled = false
+        }
+    }
+    
+    def watchBreakpointHit(TransitionWatchBreakpoint breakpoint) {
+        // TODO may make more sense to save the state, not the transition here.
+        val state = breakpoint.transition.sourceState
+        if (statesWithBreakpoint.contains(state)) {
+            for (bp : stateToBreakpoint.get(state)) {
+                bp.enabled = true
+            }
+        }
+    }
+    
     /**
      * Helper method to create a breakpoint of the given type on the given line.
      * Either one of @code{state} or @code{transition} must be non-null.
@@ -221,10 +250,18 @@ class DebugBreakpointManager {
          * true: Register in breakpoint manager
          */
         val attributes = <String, Object> newHashMap
-        attributes.put(IBreakpoint.ENABLED, true) // Start with an enabled breakpoint
-        attributes.put(IBreakpoint.PERSISTED, true) // conserve this breakpoint across Eclipse restarts
-        attributes.put(IMarker.LINE_NUMBER, line) // associated line number for the marker
         
+        
+        // TODO tidy up
+        if (breakpointType != BreakpointType.TRANSITION_WATCH_BREAKPOINT) {
+            attributes.put(IBreakpoint.ENABLED, true) // Start with an enabled breakpoint
+            attributes.put(IBreakpoint.PERSISTED, true) // conserve this breakpoint across Eclipse restarts
+            attributes.put(IMarker.LINE_NUMBER, line) // associated line number for the marker
+        } else {
+            attributes.put(IBreakpoint.ENABLED, true)
+            attributes.put(IBreakpoint.PERSISTED, false)
+            attributes.put(IMarker.LINE_NUMBER, line) // associated line number for the marker
+        }
         var IJavaBreakpoint breakpoint
          
         switch(breakpointType) {
@@ -239,6 +276,18 @@ class DebugBreakpointManager {
                     // Add state name hash for mapping after restart
                     attributes.put(MODEL_ELEMENT, DebugAnnotations.getFullNameHash(state))
                     breakpoint =  new StateBreakpoint(resource, type.fullyQualifiedName, line + 1, -1, -1, 0, true, attributes, state)
+                }
+            case TRANSITION_TAKEN_BREAKPOINT:
+                {
+                    // Add transition name hash for mapping after restart
+                    attributes.put(MODEL_ELEMENT, DebugAnnotations.getFullNameHash(transition))
+                    breakpoint = new TransitionTakenBreakpoint(resource, type.fullyQualifiedName, line + 1, -1, -1, 0, true, attributes, transition)
+                }
+            case TRANSITION_WATCH_BREAKPOINT:
+                {
+                    // Add transition name hash for mapping after restart
+                    attributes.put(MODEL_ELEMENT, DebugAnnotations.getFullNameHash(transition))
+                    breakpoint = new TransitionWatchBreakpoint(resource, type.fullyQualifiedName, line + 1, -1, -1, 0, true, attributes, transition)
                 }
         } 
         
@@ -333,7 +382,14 @@ class DebugBreakpointManager {
     }
     
     private def clearBreakpoints(State state) {
+        
+        // remove state breakpoints
         for (breakpoint : stateToBreakpoint.get(state)) {
+            breakpoint.delete
+        }
+        
+        // remove associated transition watch breakpoints
+        for (breakpoint : stateToWatchBreakpoints.get(state)) {
             breakpoint.delete
         }
     }

@@ -170,7 +170,7 @@ class JavaBreakpointListener implements IJavaBreakpointListener {
                 val varValue = variable.value
                 if (!varValue.valueString.equals("null") ) {
                     val stateName = varValue.variables.filter[name.equals("origin")].head.value.toString
-                    // TODO redo this with regex matchers
+                    // TODO redo this with regex matchers, throws exceptions
                     val states = model.getStatesByID(stateName.split(" ").get(1).split("\\(").get(0))
                     val stateHashString = stateName.split("\\(").last
                     val stateHashValue = stateHashString.substring(0, stateHashString.length - 2)
@@ -270,51 +270,61 @@ class JavaBreakpointListener implements IJavaBreakpointListener {
     }
     
     override breakpointHit(IJavaThread thread, IJavaBreakpoint breakpoint) {
+        if (!breakpoint.isEnabled) {
+            println("Disabled breakpoint, skipping...")
+            return DONT_SUSPEND
+        }
         println("Hitting breakpoint!")
+        println(breakpoint)
 
-        
-            val target = thread.debugTarget as IJavaDebugTarget
-            val chartVar = target.findVariable("ORIGINAL_SCCHART")
-            if (chartVar !== null && chartVar.javaType.name.equals("java.lang.String")) {
-                println("Code is derived from SCChart!")
-                val text = chartVar.value.valueString
-                // Only re-display model if it's not the same one as before
-                val diagramView = DebugDiagramView.instance
-                if (currentModel === null || (text !== null && !text.equals(lastModelString))
-                    || diagramView === null || diagramView.needsInit) {
-                    lastModelString = text
-                    currentModel = SCTXStandaloneParser.parseScope(text, StandardCharsets.UTF_8)
-                
-                    println("New model; New synthesis...")
-                    Display.^default.syncExec(new Runnable {
-                        override run() {
-                            DebugDiagramView.updateView(currentModel)
-                        }
-                    })
-                    
-                    // make sure to register all breakpoints in the breakpoint manager
-                    for (pendingBreakpoint : pendingBreakpoints) {
-                        DebugBreakpointManager.instance.presentBreakpoint(pendingBreakpoint, currentModel)
+        val target = thread.debugTarget as IJavaDebugTarget
+        val chartVar = target.findVariable("ORIGINAL_SCCHART")
+        if (chartVar !== null && chartVar.javaType.name.equals("java.lang.String")) {
+            println("Code is derived from SCChart!")
+            val text = chartVar.value.valueString
+            // Only re-display model if it's not the same one as before
+            val diagramView = DebugDiagramView.instance
+            if (currentModel === null || (text !== null && !text.equals(lastModelString)) || diagramView === null ||
+                diagramView.needsInit) {
+                lastModelString = text
+                currentModel = SCTXStandaloneParser.parseScope(text, StandardCharsets.UTF_8)
+
+                println("New model; New synthesis...")
+                Display.^default.syncExec(new Runnable {
+                    override run() {
+                        DebugDiagramView.updateView(currentModel)
                     }
-                    pendingBreakpoints.clear
-                    
-                } else {
-                    // Otherwise, clear all highlightings
-                    debugHighlighter.clearAllHighlights
+                })
+
+                // make sure to register all breakpoints in the breakpoint manager
+                for (pendingBreakpoint : pendingBreakpoints) {
+                    DebugBreakpointManager.instance.presentBreakpoint(pendingBreakpoint, currentModel)
                 }
-                
+                pendingBreakpoints.clear
+
+            } else {
+                // Otherwise, clear all highlightings
+                debugHighlighter.clearAllHighlights
+            }
+
+            if (breakpoint instanceof TransitionWatchBreakpoint) {
+                println("Hit watch breakpoint.")
+                DebugBreakpointManager.instance.watchBreakpointHit(breakpoint)
+                return DONT_SUSPEND
+            } else {
+
                 // Find the currently active states on SCCharts Level
                 val activeStates = findActiveStates(thread, breakpoint, currentModel)
                 for (state : activeStates) {
                     debugHighlighter.highlightActiveState(state)
                 }
-                
+
                 // Find and visualize the states currently being executed on Java level
                 val executingStates = findExecutingStates(thread, breakpoint, currentModel)
                 for (state : executingStates) {
                     debugHighlighter.highlightExecutingState(state)
                 }
-                
+
                 // If the breakpoint was triggered when checking for a transition,
                 // display the transition currently being checked
                 if (breakpoint instanceof TransitionCheckBreakpoint) {
@@ -322,10 +332,13 @@ class JavaBreakpointListener implements IJavaBreakpointListener {
                     if (currentTransition !== null) {
                         debugHighlighter.highlightExecutingTransition(currentTransition)
                     }
-                }   
+                } else if (breakpoint instanceof StateBreakpoint) {
+                    DebugBreakpointManager.instance.stateBreakpointHit(breakpoint)
+                }
                 return SUSPEND
             }
-        
+        }
+
         return DONT_CARE
     }
     

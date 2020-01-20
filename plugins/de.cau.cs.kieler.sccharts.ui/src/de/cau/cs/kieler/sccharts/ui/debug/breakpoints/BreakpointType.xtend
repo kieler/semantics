@@ -33,5 +33,12 @@ enum BreakpointType {
      * Is triggered whenever the associated state is entered.
      * Staying within the same state should not trigger the breakpoint multiple times.
      */
-    STATE_BREAKPOINT
+    STATE_BREAKPOINT,
+    
+    /**
+     * Used to determine whether a transition has been taken.
+     * This is necessary to re-enable state breakpoints whenever a state is left.
+     * The execution does NOT suspend on these breakpoints.
+     */
+    TRANSITION_WATCH_BREAKPOINT
 }
