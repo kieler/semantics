@@ -319,6 +319,8 @@ class EquationSynthesisHelper {
             ]
             node.ports += port
             return port
+        } else if (maxPort == null) {
+            return null
         }
 
         var KPort result = null

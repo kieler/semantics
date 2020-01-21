@@ -257,7 +257,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
      * @param elements A list of assignments
      * @param rootNode The parent node which should be associated with a dataflow Region
      */
-    def performTranformation(List<Assignment> elements, KNode rootNode) {
+    def List<KNode> performTranformation(List<Assignment> elements, KNode rootNode) {
         sequentials.clear
         alignInputOutputs = ALIGN_INPUTS_OUTPUTS.booleanValue
         showLocals = SHOW_LOCALS.booleanValue
@@ -985,8 +985,11 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         nodes.filter[isReference].forEach [ node |
             val refDec = (node.sourceElement as ValuedObjectReference).valuedObject.declaration as ReferenceDeclaration
             refDec.getInputs.forEach [ input |
-                if (!node.ports.exists[(sourceElement as ValuedObjectReference).valuedObject == input]) {
-                    node.getInputPortWithNumber(node.incomingEdges.size, true).setLabel(input.serializeHR.toString, true).
+                if (!node.ports.exists [
+                    sourceElement !== null && (sourceElement as ValuedObjectReference).valuedObject == input
+                ]) {
+                    node.getInputPortWithNumber(node.incomingEdges.filter[!isInstance && !isSequential].size +
+                        node.ports.filter[it.edges.empty].size, true).setLabel(input.serializeHR.toString, true).
                         associateWith(input)
                 }
             ]
