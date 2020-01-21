@@ -524,15 +524,12 @@ class KielerCompilerCLI implements Runnable, Observer {
     }
     
     public static def addURLToClassLoader(URL u) {
-        val sysloader = ClassLoader.getSystemClassLoader() as URLClassLoader;
-        val sysclass = typeof(URLClassLoader);
-        try {
-            val method = sysclass.getDeclaredMethod("addURL", #[typeof(URL)]);
-            method.setAccessible(true);
-            method.invoke(sysloader, #[u]);
-        } catch (Throwable t) {
-            t.printStackTrace();
+        val sysloader = ClassLoader.getSystemClassLoader();
+        if(sysloader instanceof CLILoader){
+            sysloader.addURL(u)
+        }
+        else{
+            println("WARNING: The system class loader was not set to 'de.cau.cs.kieler.kicool.cli.KielerCompilerCLI.CLILoader'. In this case the option -c or --class-path is not supported and will be ignored.")
         }
     }
-
 }
