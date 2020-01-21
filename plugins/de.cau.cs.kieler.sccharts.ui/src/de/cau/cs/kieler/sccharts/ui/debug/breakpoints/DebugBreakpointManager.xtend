@@ -133,7 +133,7 @@ class DebugBreakpointManager {
             debugHighlighter.addBreakpointDecorator(transition)
             val breakpoints = <IJavaBreakpoint> newLinkedList
             for (line : transition.findTransitionLines) {
-                val bp = createBreakpointOnLine(line, BreakpointType.TRANSITION_CHECK_BREAKPOINT, null, transition) // TODO
+                val bp = createBreakpointOnLine(line, BreakpointType.TRANSITION_TAKEN_BREAKPOINT, null, transition)
                 breakpoints.add(bp)
             }
             transitionToBreakpoint.put(transition, breakpoints)
@@ -144,13 +144,13 @@ class DebugBreakpointManager {
         if (transitionsWithCheckBreakpoint.contains(transition)) {
             // Transition already has a breakpoint, remove all associated Java breakpoints
             transitionsWithCheckBreakpoint.remove(transition)
-            debugHighlighter.removeBreakpointDecorator(transition) // TODO
+            debugHighlighter.removeCheckBreakpointDecorator(transition)
             transition.clearCheckBreakpoints
             transitionToCheckBreakpoint.remove(transition)
         } else {
             // No breakpoint yet, need to find all appropriate breakpoint locations and add them
             transitionsWithCheckBreakpoint.add(transition)
-            debugHighlighter.addBreakpointDecorator(transition) // TODO
+            debugHighlighter.addCheckBreakpointDecorator(transition)
             val breakpoints = <IJavaBreakpoint> newLinkedList
             for (line : transition.findTransitionCheckLines) {
                 val bp = createBreakpointOnLine(line, BreakpointType.TRANSITION_CHECK_BREAKPOINT, null, transition)
@@ -166,7 +166,7 @@ class DebugBreakpointManager {
      */
     def presentBreakpoint(IJavaBreakpoint breakpoint, SCCharts model) {
         
-        if (breakpoint instanceof TransitionCheckBreakpoint) {
+        if (breakpoint instanceof TransitionBreakpoint) {
             var transition = breakpoint.transition
             if (transition === null) {
                 // the transition reference was lost over the restart of Eclipse.
@@ -177,16 +177,33 @@ class DebugBreakpointManager {
                 transition = allTransitions.findFirst[DebugAnnotations.getFullNameHash(it) == hash]
                 breakpoint.setTransition(transition)
             }
-            if (!transitionsWithBreakpoint.contains(transition)) {
-                // There are no breakpoints registered for this transition yet
-                transitionsWithBreakpoint.add(transition)
-                transitionToBreakpoint.put(transition, newLinkedList(breakpoint))
-            } else {
-                // else, check whether this one is registered and if not, add it to the list
-                val breakpoints = transitionToBreakpoint.get(transition)
-                if (breakpoints !== null && !breakpoints.contains(breakpoint)) {
-                    // null check required to catch the initialization case
-                    breakpoints.add(breakpoint)
+            if (breakpoint instanceof TransitionCheckBreakpoint) {
+                if (!transitionsWithCheckBreakpoint.contains(transition)) {
+                    // There are no breakpoints registered for this transition yet
+                    transitionsWithCheckBreakpoint.add(transition)
+                    transitionToCheckBreakpoint.put(transition, newLinkedList(breakpoint))
+                    debugHighlighter.addCheckBreakpointDecorator(transition)
+                } else {
+                    // else, check whether this one is registered and if not, add it to the list
+                    val breakpoints = transitionToCheckBreakpoint.get(transition)
+                    if (breakpoints !== null && !breakpoints.contains(breakpoint)) {
+                        // null check required to catch the initialization case
+                        breakpoints.add(breakpoint)
+                    }
+                }
+            } else if (breakpoint instanceof TransitionTakenBreakpoint) {
+                if (!transitionsWithBreakpoint.contains(transition)) {
+                    // There are no breakpoints registered for this transition yet
+                    transitionsWithBreakpoint.add(transition)
+                    transitionToBreakpoint.put(transition, newLinkedList(breakpoint))
+                    debugHighlighter.addBreakpointDecorator(transition)
+                } else {
+                    // else, check whether this one is registered and if not, add it to the list
+                    val breakpoints = transitionToBreakpoint.get(transition)
+                    if (breakpoints !== null && !breakpoints.contains(breakpoint)) {
+                        // null check required to catch the initialization case
+                        breakpoints.add(breakpoint)
+                    }
                 }
             }
         } else if (breakpoint instanceof StateBreakpoint) {
@@ -203,6 +220,18 @@ class DebugBreakpointManager {
                 // There are no breakpoints registered for this state yet
                 statesWithBreakpoint.add(state)
                 stateToBreakpoint.put(state, newLinkedList(breakpoint))
+                debugHighlighter.addBreakpointHighlight(state)
+                
+                val transitionWatchBreakpoints = <IJavaBreakpoint> newLinkedList
+                for (transition : state.outgoingTransitions) {
+                    for (line : transition.findTransitionLines) {
+                        val bp = createBreakpointOnLine(line, BreakpointType.TRANSITION_WATCH_BREAKPOINT, null, transition)
+                        println(bp)
+                        transitionWatchBreakpoints.add(bp)
+                    }
+                }
+                stateToWatchBreakpoints.put(state, transitionWatchBreakpoints)
+                
             } else {
                 // else, check whether this one is registered and if not, add it to the list
                 val breakpoints = stateToBreakpoint.get(state)

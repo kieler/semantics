@@ -44,6 +44,7 @@ class DebugHighlighter {
     
     static val breakpointStateColor = factory.createKColor.setColor(Colors.BLUE)
     static val breakpointStateBackground = factory.createKBackground.setColor2(breakpointStateColor)
+    static val checkBreakpointColor = factory.createKColor.setColor(Colors.YELLOW)
     
     val activeStateHighlightings = <Highlighting> newLinkedList
     val executingStateHighlightings = <Highlighting> newLinkedList
@@ -51,10 +52,12 @@ class DebugHighlighter {
     val activeEdgeHighlights = <Highlighting> newLinkedList
     
     val transitionToDecorator = <Transition, KEllipse> newHashMap
+    val transitionToCheckDecorator = <Transition, KEllipse> newHashMap
     
     static var DebugHighlighter instance 
     
-    static val ellipseID = "Debug Ellipse"
+    static val takenEllipseID = "Taken Ellipse"
+    static val checkEllipseID = "Check Ellipse"
     
     @Inject extension KContainerRenderingExtensions
     @Inject extension KRenderingExtensions
@@ -98,6 +101,14 @@ class DebugHighlighter {
         } else {
             println("adding breakpoint decorator")
             transition.addBreakpointDecorator
+        }
+    }
+    
+    def void toggleWatchBreakpointDecorator(Transition transition) {
+        if (transitionToCheckDecorator.containsKey(transition)) {
+            transition.removeCheckBreakpointDecorator
+        } else {
+            transition.addCheckBreakpointDecorator
         }
     }
     
@@ -190,8 +201,8 @@ class DebugHighlighter {
         }
         
         val ellipse = kEdge.KContainerRendering.addEllipse 
-        ellipse.id = ellipseID
-        ellipse.setDecoratorPlacementData(8,8,-4,0.5f,false)
+        ellipse.id = de.cau.cs.kieler.sccharts.ui.debug.highlighting.DebugHighlighter.takenEllipseID
+        ellipse.setDecoratorPlacementData(8,8,-8,0.5f,false)
         ellipse.setLineWidth(1)
         ellipse.setBackground(breakpointStateColor)
         transitionToDecorator.put(transition, ellipse)
@@ -202,9 +213,37 @@ class DebugHighlighter {
         if (ellipse === null) {
             // TODO debug print
             print("Null map entry for transition " + transition + ", can't remove ellipse!")
+            return
         }
         val kEdge = DebugDiagramView.getInstance?.getKEdge(transition)
         kEdge.KContainerRendering.children.remove(ellipse)
         transitionToDecorator.remove(transition)
+    }
+    
+    def void addCheckBreakpointDecorator(Transition transition) {
+        val kEdge = DebugDiagramView.getInstance?.getKEdge(transition)
+        if (kEdge === null) {
+            // TODO debug print
+            println("Null KEdge for transition" + transition.toString + ", nothing to highlight!")
+            return
+        }
+        val ellipse = kEdge.KContainerRendering.addEllipse 
+        ellipse.id = de.cau.cs.kieler.sccharts.ui.debug.highlighting.DebugHighlighter.checkEllipseID
+        ellipse.setDecoratorPlacementData(8,8,0,0.5f,false)
+        ellipse.setLineWidth(1)
+        ellipse.setBackground(checkBreakpointColor)
+        transitionToCheckDecorator.put(transition, ellipse)
+    }
+    
+    def void removeCheckBreakpointDecorator(Transition transition) {
+        val ellipse = transitionToCheckDecorator.get(transition)
+        if (ellipse === null) {
+            // TODO debug print
+            print("Null map entry for transition " + transition + ", can't remove ellipse!")
+            return
+        }
+        val kEdge = DebugDiagramView.getInstance?.getKEdge(transition)
+        kEdge.KContainerRendering.children.remove(ellipse)
+        transitionToCheckDecorator.remove(transition)
     }
 }
