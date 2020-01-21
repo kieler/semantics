@@ -80,6 +80,7 @@ import de.cau.cs.kieler.sccharts.legacy.sccharts.Binding
 import org.eclipse.xtext.nodemodel.INode
 import org.eclipse.xtext.nodemodel.impl.CompositeNodeWithSemanticElement
 import de.cau.cs.kieler.sccharts.DeferredType
+import de.cau.cs.kieler.kexpressions.ParameterAccessType
 
 /**
  * @author als
@@ -514,8 +515,13 @@ class SCChartsLegacyConverter {
     
     def dispatch convert(Parameter para) {
         return createParameter => [
-            callByReference = para.callByReference
-            pureOutput = para.pureOutput
+            if (para.pureOutput) {
+                accessType = ParameterAccessType.PURE_OUTPUT
+            } else if (para.callByReference) {
+                accessType = ParameterAccessType.CALL_BY_REFERENCE
+            } else {
+                accessType = ParameterAccessType.CALL_BY_VALUE
+            }
             expression = para.expression.convert as Expression
         ]
     }

@@ -2703,9 +2703,9 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//ModuleCallParameter kexpressions::Parameter:
-	//	(pureOutput?='!'? callByReference?='&')?
-	//	expression=super::Expression ('to' explicitBinding=[kexpressions::ValuedObject] ('['
-	//	explicitBindingIndices+=super::Expression ']')*)?;
+	//	(accessType=ParameterAccessType
+	//	expression=ValuedObjectReference | expression=super::Expression) ('to' explicitBinding=[kexpressions::ValuedObject]
+	//	('[' explicitBindingIndices+=super::Expression ']')*)?;
 	public SCLGrammarAccess.ModuleCallParameterElements getModuleCallParameterAccess() {
 		return gaSCL.getModuleCallParameterAccess();
 	}
@@ -3251,7 +3251,8 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	//// A print functions that enables target-independent prints in the model.    
 	//PrintCallEffect keffects::PrintCallEffect:
 	//	annotations+=super::Annotation*
-	//	'print' ('(' parameters+=Parameter (',' parameters+=Parameter)* ')') ('schedule' schedule+=ScheduleObjectReference+)?;
+	//	'print' ('(' parameters+=Parameter (',' parameters+=Parameter)* ')') ('schedule'
+	//	schedule+=ScheduleObjectReference+)?;
 	public KEffectsGrammarAccess.PrintCallEffectElements getPrintCallEffectAccess() {
 		return gaKEffects.getPrintCallEffectAccess();
 	}
@@ -3483,9 +3484,10 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//SumExpression Expression:
-	//	ProductExpression ({OperatorExpression.subExpressions+=current} operator=AddOperator subExpressions+=ProductExpression
-	//	('+' subExpressions+=ProductExpression)* | {OperatorExpression.subExpressions+=current} operator=SubOperator
-	//	subExpressions+=ProductExpression ('-' subExpressions+=ProductExpression)*)*;
+	//	ProductExpression ({OperatorExpression.subExpressions+=current} operator=AddOperator
+	//	subExpressions+=ProductExpression ('+' subExpressions+=ProductExpression)* |
+	//	{OperatorExpression.subExpressions+=current} operator=SubOperator subExpressions+=ProductExpression ('-'
+	//	subExpressions+=ProductExpression)*)*;
 	public KExpressionsGrammarAccess.SumExpressionElements getSumExpressionAccess() {
 		return gaKExpressions.getSumExpressionAccess();
 	}
@@ -3676,8 +3678,8 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	//// Additionally, a parameter may be preceded by an ampersand to indicate a call by reference.
 	//// Analogously, an prefixed exclamation mark marks the parameter as pure output.
 	//Parameter:
-	//	(pureOutput?='!'? callByReference?='&')?
-	//	expression=super::Expression;
+	//	accessType=ParameterAccessType
+	//	expression=ValuedObjectReference | expression=super::Expression;
 	public KExpressionsGrammarAccess.ParameterElements getParameterAccess() {
 		return gaKExpressions.getParameterAccess();
 	}
@@ -4106,6 +4108,16 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public EnumRule getMethodReturnTypeRule() {
 		return getMethodReturnTypeAccess().getRule();
+	}
+	
+	//enum ParameterAccessType:
+	//	CALL_BY_REFERENCE="&" | PURE_OUTPUT="!&";
+	public KExpressionsGrammarAccess.ParameterAccessTypeElements getParameterAccessTypeAccess() {
+		return gaKExpressions.getParameterAccessTypeAccess();
+	}
+	
+	public EnumRule getParameterAccessTypeRule() {
+		return getParameterAccessTypeAccess().getRule();
 	}
 	
 	//// -------------------- //

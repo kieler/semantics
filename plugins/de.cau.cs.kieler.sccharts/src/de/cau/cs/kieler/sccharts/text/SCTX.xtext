@@ -70,8 +70,10 @@ ScopeCall returns sccharts::ScopeCall:
     (('(' parameters += ScopeParameter (',' parameters += ScopeParameter)* ')') | '(' ')')?;
     
 ScopeParameter returns kexpressions::Parameter:
-    ((pureOutput ?= '!')? callByReference ?= '&')?
-    expression = Expression
+    ((accessType = ParameterAccessType
+    expression = ValuedObjectReference)
+    |
+    expression = Expression)
     ('to' explicitBinding = [kexpressions::ValuedObject|ID] ('[' explicitBindingIndices+=Expression ']')*)?
     ;    
     
@@ -183,20 +185,23 @@ CounterVariable returns kexpressions::ValuedObject:
 // -------------- //
 	
 LocalAction returns sccharts::LocalAction:
-    EntryAction | DuringAction | ExitAction | SuspendAction | PrecedingAction | SucceedingAction | PeriodAction;    
+    EntryAction | DuringAction | ExitAction | SuspendAction | PeriodAction;    
 
 EntryAction returns sccharts::EntryAction:
 	{sccharts::EntryAction}
-   'entry' ('if' trigger=BoolScheduleExpression ('Pr' triggerProbability=FLOAT)?)? ('do' effects+=Effect (';' effects+=Effect)*)?
-   ('label' label=STRING)?;
+	preemption = PreemptionActionType?
+    'entry' ('if' trigger=BoolScheduleExpression ('Pr' triggerProbability=FLOAT)?)? ('do' effects+=Effect (';' effects+=Effect)*)?
+    ('label' label=STRING)?;
          
 DuringAction returns sccharts::DuringAction:
 	{sccharts::DuringAction}
-    delay=DelayType? 'during' ('if' triggerDelay=INT? trigger=BoolScheduleExpression ('Pr=' triggerProbability=FLOAT)?)? ('do' effects+=Effect (';' effects+=Effect)*)?
+    delay=DelayType?
+    'during' ('if' triggerDelay=INT? trigger=BoolScheduleExpression ('Pr=' triggerProbability=FLOAT)?)? ('do' effects+=Effect (';' effects+=Effect)*)?
     ('label' label=STRING)?;
          
 ExitAction returns sccharts::ExitAction:
 	{sccharts::ExitAction}
+	preemption = PreemptionActionType?
 	'exit' ('if' trigger=BoolScheduleExpression ('Pr' triggerProbability=FLOAT)?)? ('do' effects+=Effect (';' effects+=Effect)*)?
 	('label' label=STRING)?;  
        
@@ -205,16 +210,6 @@ SuspendAction returns sccharts::SuspendAction:
 	delay=DelayType? weak?='weak'? 'suspend' ('if' triggerDelay=INT? trigger=BoolScheduleExpression ('Pr=' triggerProbability=FLOAT)?)?
 	('label' label=STRING)?;
       
-PrecedingAction returns sccharts::PrecedingAction:
-	{sccharts::PrecedingAction}
-   'preceding' ('if' trigger=BoolScheduleExpression ('Pr' triggerProbability=FLOAT)?)? ('do' effects+=Effect (';' effects+=Effect)*)?
-   ('label' label=STRING)?;
-         
-SucceedingAction returns sccharts::SucceedingAction:
-	{sccharts::SucceedingAction}
-	'succeeding' ('if' trigger=BoolScheduleExpression ('Pr' triggerProbability=FLOAT)?)? ('do' effects+=Effect (';' effects+=Effect)*)?
-	('label' label=STRING)?;  
-
 PeriodAction returns sccharts::PeriodAction:
     {sccharts::PeriodAction}
     annotations+=RestrictedTypeAnnotation*
@@ -332,8 +327,11 @@ KeywordMethodDeclarationWOSemicolon returns kexpressions::MethodDeclaration:
 // ------------ //
 
 enum PreemptionType returns sccharts::PreemptionType:
-	WEAKABORT = 'go to' | STRONGABORT = 'abort to' | TERMINATION = 'join to';
-    
+	WEAK = 'go to' | STRONG = 'abort to' | TERMINATION = 'join to';
+
+enum PreemptionActionType returns sccharts::PreemptionType:
+    WEAK = 'weak' | STRONG = 'strong';
+
 enum DelayType returns sccharts::DelayType:
     UNDEFINED = 'undefined' | DELAYED = 'delayed' | IMMEDIATE = 'immediate' | AUTOMATIC = 'auto';    
 

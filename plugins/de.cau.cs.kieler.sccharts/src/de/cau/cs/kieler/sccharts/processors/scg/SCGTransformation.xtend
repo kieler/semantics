@@ -283,8 +283,8 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
         sCGraph.trace(rootState)
         
         // Handle declarations
-        val declMapping = newHashMap
-        val voMapping = newHashMap
+        val declMapping = newLinkedHashMap
+        val voMapping = newLinkedHashMap
         sCGraph.declarations += rootState.declarations.copyDeclarations(voMapping, declMapping)
         declMapping.entrySet.forEach[
             value.trace(key)
@@ -892,7 +892,7 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
 
     def Parameter convertToSCGParameter(Parameter parameter) {
         KExpressionsFactory.eINSTANCE.createParameter.trace(parameter) => [
-            callByReference = parameter.callByReference
+            accessType = parameter.accessType
             expression = parameter.expression.convertToSCGExpression
         ]
     }

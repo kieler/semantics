@@ -1638,7 +1638,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     Parameter returns Parameter
 	 *
 	 * Constraint:
-	 *     ((pureOutput?='!'? callByReference?='&')? expression=Expression)
+	 *     ((accessType=ParameterAccessType expression=ValuedObjectReference) | expression=Expression)
 	 */
 	protected void sequence_Parameter(ISerializationContext context, de.cau.cs.kieler.kexpressions.Parameter semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

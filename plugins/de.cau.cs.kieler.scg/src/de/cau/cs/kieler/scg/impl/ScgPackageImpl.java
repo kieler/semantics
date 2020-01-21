@@ -540,6 +540,15 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 
 	/**
      * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getEntry_ResetSCG() {
+        return (EReference)entryEClass.getEStructuralFeatures().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
      */
@@ -893,6 +902,7 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
         entryEClass = createEClass(ENTRY);
         createEReference(entryEClass, ENTRY__EXIT);
         createEReference(entryEClass, ENTRY__NEXT);
+        createEReference(entryEClass, ENTRY__RESET_SCG);
 
         exitEClass = createEClass(EXIT);
         createEReference(exitEClass, EXIT__ENTRY);
@@ -1037,6 +1047,7 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
         initEClass(entryEClass, Entry.class, "Entry", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getEntry_Exit(), this.getExit(), this.getExit_Entry(), "exit", null, 1, 1, Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getEntry_Next(), this.getControlFlow(), null, "next", null, 0, 1, Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getEntry_ResetSCG(), this.getSCGraph(), null, "resetSCG", null, 0, 1, Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(exitEClass, Exit.class, "Exit", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getExit_Entry(), this.getEntry(), this.getEntry_Exit(), "entry", null, 1, 1, Exit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

@@ -246,26 +246,6 @@ public class SCChartsSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case SCChartsPackage.PRECEDING_ACTION: {
-                PrecedingAction precedingAction = (PrecedingAction)theEObject;
-                T result = casePrecedingAction(precedingAction);
-                if (result == null) result = caseLocalAction(precedingAction);
-                if (result == null) result = caseAction(precedingAction);
-                if (result == null) result = caseAnnotatable(precedingAction);
-                if (result == null) result = caseLinkable(precedingAction);
-                if (result == null) result = defaultCase(theEObject);
-                return result;
-            }
-            case SCChartsPackage.SUCCEEDING_ACTION: {
-                SucceedingAction succeedingAction = (SucceedingAction)theEObject;
-                T result = caseSucceedingAction(succeedingAction);
-                if (result == null) result = caseLocalAction(succeedingAction);
-                if (result == null) result = caseAction(succeedingAction);
-                if (result == null) result = caseAnnotatable(succeedingAction);
-                if (result == null) result = caseLinkable(succeedingAction);
-                if (result == null) result = defaultCase(theEObject);
-                return result;
-            }
             case SCChartsPackage.PERIOD_ACTION: {
                 PeriodAction periodAction = (PeriodAction)theEObject;
                 T result = casePeriodAction(periodAction);
@@ -524,36 +504,6 @@ public class SCChartsSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseSuspendAction(SuspendAction object) {
-        return null;
-    }
-
-    /**
-     * Returns the result of interpreting the object as an instance of '<em>Preceding Action</em>'.
-     * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
-     * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Preceding Action</em>'.
-     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-     * @generated
-     */
-    public T casePrecedingAction(PrecedingAction object) {
-        return null;
-    }
-
-    /**
-     * Returns the result of interpreting the object as an instance of '<em>Succeeding Action</em>'.
-     * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
-     * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Succeeding Action</em>'.
-     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-     * @generated
-     */
-    public T caseSucceedingAction(SucceedingAction object) {
         return null;
     }
 

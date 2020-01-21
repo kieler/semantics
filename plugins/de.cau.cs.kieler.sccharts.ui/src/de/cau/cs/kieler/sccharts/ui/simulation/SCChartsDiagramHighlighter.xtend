@@ -112,6 +112,11 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
      * The size of the taken transitions signaling array.
      */
     var takenTransitionArraySize = 0
+    
+    /**
+     * The taken transition values from the last tick
+     */
+    var lastTakenTransitionValues = <Integer> newLinkedList
 
     private new() {
     }
@@ -141,6 +146,7 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
     override initialize(SimulationContext ctx) {
         super.initialize(ctx)
         currentStates = null
+        lastTakenTransitionValues.clear
         update(ctx)
     }
 
@@ -148,6 +154,7 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
      * {@inheritDoc}
      */
     override update(SimulationContext ctx) {
+        diagramViewContext.layoutRecorder.stopRecording(0)
         super.update(ctx)
         val pool = ctx.dataPool
 
@@ -159,7 +166,7 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
             // Calculate the simulation controlflow to determine what must be highlighted
             calculateSimulationControlFlow(ctx)
             // Find the graph elements in the diagram for the EObjects that should be highlighted
-            val traversedGraphHighlighting = if (!traversedTransitions.isNullOrEmpty && !!traversedStates.isNullOrEmpty)
+            val traversedGraphHighlighting = if (!traversedTransitions.isNullOrEmpty && !traversedStates.isNullOrEmpty)
                     getHighlighting(traversedTransitions + traversedStates, TRAVERSED_ELEMENT_STYLE)
                 else
                     newArrayList
@@ -181,11 +188,12 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
             val proc = ctx.processorMap.get(key)
             if (proc !== null) {
                 val sourcePool = proc.sourceEnvironment.getProperty(Environment.MODEL) as DataPool
+                val targetPool = proc.environment.getProperty(Environment.MODEL) as DataPool
                 if (!currentDataflowHighlighting.empty) {
                     for (highlight : currentDataflowHighlighting) {
                         if (highlight.element instanceof KNode) {
                             val region = highlight.element as KNode
-                            var next = region.children.filter[it.incomingEdges.filter[!isSequential && !isInstance].size == 0].toList
+                            var next = region.children.filter[it.incomingEdges.filter[!isSequential && !isInstance].size == 0 || getProperty(EquationSynthesis.REFERENCE_NODE)].toList
                             next += region.children.filter [
                                 getDiagramViewContext().getSourceElement(it) instanceof OperatorExpression &&
                                     (getDiagramViewContext().getSourceElement(it) as OperatorExpression).operator ==
@@ -217,6 +225,40 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
                                                         (original as FloatValue).value != 0))
                                             if (!next.contains(e.target))
                                                 next.add(e.target)
+                                        }
+                                    }
+                                } else if (first.getProperty(EquationSynthesis.REFERENCE_NODE)) {
+                                    for (e : first.outgoingEdges.filter[!isSequential && !isInstance]) {
+                                        if (!visited.contains(e)) {
+                                            visited.add(e)
+                                            cicle.clear
+                                            val referenced = getDiagramViewContext().getSourceElement(e.sourcePort)
+                                            if (referenced instanceof ValuedObjectReference) {
+                                                val name = (original as ValuedObjectReference).valuedObject.name + '_' +
+                                                    referenced.valuedObject.name
+                                                val value = targetPool.findValue(name)
+                                                if (value !== null) {
+                                                    switch ( value.variableInformation.get(0).type ) {
+                                                        case ValueType.BOOL:
+                                                            if (value.rawValue.asBoolean)
+                                                                currentWireHighlighting.add(
+                                                                    new Highlighting(e, CURRENT_ELEMENT_STYLE))
+                                                        case ValueType.INT:
+                                                            currentWireHighlighting.add(
+                                                                new ValuedHighlighting(e, CURRENT_ELEMENT_STYLE,
+                                                                    value.rawValue.asInt, value.rawValue.asInt != 0))
+                                                        case ValueType.FLOAT:
+                                                            currentWireHighlighting.add(
+                                                                new ValuedHighlighting(e, CURRENT_ELEMENT_STYLE,
+                                                                    new Float(value.rawValue.asFloat),
+                                                                    value.rawValue.asFloat != 0))
+                                                        default: {
+                                                        }
+                                                    }
+                                                }
+                                                if (!next.contains(e.target))
+                                                    next.add(e.target)
+                                            }
                                         }
                                     }
                                 } else if (original instanceof ValuedObjectReference) {
@@ -422,6 +464,7 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
             layoutConfig.zoomStyle(ZoomStyle.NONE)
             layoutConfig.performLayout
         }
+        diagramViewContext.layoutRecorder.stopRecording(0)
     }
 
     private def findParams(KNode node, ArrayList<Highlighting> highlighting) {
@@ -571,15 +614,14 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
             return null
         var pool = ctx.history.get(1)
         var String key = null
+        var min = -1
         for (k : pool.entries.keySet) {
             if (k.endsWith(name) && (k.length == name.length || k.endsWith("_" + name)) && !k.startsWith("_pre_") &&
                 !k.startsWith("_reg_")) {
-                if (key === null)
+                if (key === null || min > k.length - name.length){
+                    min = k.length - name.length
                     key = k
-                else
-                    System.out.println(
-                        "WARNING: unable to determine the key of the pre Variable '" + name + "'. Is it '" + key +
-                            "' or is it '" + k + "'???");
+                }
             }
         }
         return pool.entries.get(key)
@@ -587,15 +629,14 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
 
     def private findValue(DataPool pool, String name) {
         var String key = null
+        var min = -1
         for (k : pool.entries.keySet) {
             if (k.endsWith(name) && (k.length == name.length || k.endsWith("_" + name)) && !k.startsWith("_pre_") &&
                 !k.startsWith("_reg_")) {
-                if (key === null)
+                if (key === null || min > k.length - name.length){
+                    min = k.length - name.length
                     key = k
-                else
-                    System.out.println(
-                        "WARNING: unable to determine the key of the Variable '" + name + "'. Is it '" + key +
-                            "' or is it '" + k + "'???");
+                }
             }
         }
         return pool.entries.get(key)
@@ -670,12 +711,17 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
         val transitions = TakenTransitionSignaling.getTransitions(rootState)
         // For an emitted transition in the transition array,
         // look for the transition in the model with the corresponding index.
+        val newLastTakenTransitionValues = <Integer> newLinkedList
         var index = 0
         for (transitionArrayElement : transitionArray) {
             // The array contains the number of times that the transition has been taken in this tick
             if (transitionArrayElement.isJsonPrimitive && transitionArrayElement.asJsonPrimitive.isNumber) {
                 val value = transitionArrayElement.asInt
-                if (value > 0) {
+                var lastValue = 0
+                if (lastTakenTransitionValues.size > index) {
+                    lastValue = lastTakenTransitionValues.get(index)
+                } 
+                if (value != lastValue) {
                     // The transition has been taken at least once
                     try {
                         val traversedTransition = transitions.get(index)
@@ -686,10 +732,16 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
                             e)
                     }
                 }
+                newLastTakenTransitionValues.add(value)
             } else {
                 throw new Exception("The 'taken transition array' has a incompatible type for diagram highlighting")
             }
             index++
+        }
+        // Should only update new values if TakenTransitionSignaling.USE_VALUE_CHANGE_SIGNALING is true in the 
+        // original compilation contex.
+        if (ctx.sourceCompilationContext.result.getProperty(TakenTransitionSignaling.USE_VALUE_CHANGE_SIGNALING)) {
+            lastTakenTransitionValues = newLastTakenTransitionValues
         }
 
         // Calculate traversed states

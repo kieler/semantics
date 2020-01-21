@@ -66,6 +66,7 @@ public interface Transition extends Action {
 
     /**
      * Returns the value of the '<em><b>Preemption</b></em>' attribute.
+     * The default value is <code>"WEAK"</code>.
      * The literals are from the enumeration {@link de.cau.cs.kieler.sccharts.PreemptionType}.
      * <!-- begin-user-doc -->
      * <p>
@@ -77,7 +78,7 @@ public interface Transition extends Action {
      * @see de.cau.cs.kieler.sccharts.PreemptionType
      * @see #setPreemption(PreemptionType)
      * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getTransition_Preemption()
-     * @model required="true"
+     * @model default="WEAK" required="true"
      * @generated
      */
     PreemptionType getPreemption();

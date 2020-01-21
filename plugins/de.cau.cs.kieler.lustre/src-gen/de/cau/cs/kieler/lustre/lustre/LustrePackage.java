@@ -1001,15 +1001,6 @@ public interface LustrePackage extends EPackage
   int EQUATION__OPERATOR = KEffectsPackage.ASSIGNMENT__OPERATOR;
 
   /**
-   * The feature id for the '<em><b>Sub Reference</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int EQUATION__SUB_REFERENCE = KEffectsPackage.ASSIGNMENT__SUB_REFERENCE;
-
-  /**
    * The feature id for the '<em><b>References</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

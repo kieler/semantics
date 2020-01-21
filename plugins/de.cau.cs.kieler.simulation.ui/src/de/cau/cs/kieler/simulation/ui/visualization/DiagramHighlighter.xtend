@@ -192,7 +192,7 @@ abstract class DiagramHighlighter implements ISimulationListener {
         val highlighting = <Highlighting> newArrayList
         for (eObject : eObjects) {
             val element = diagramViewContext.getTargetElement(eObject, typeof(KLabeledGraphElement));
-            if (element != null) {
+            if (element !== null) {
                 highlighting.add(new Highlighting(element, style, eObject))
             }
         }

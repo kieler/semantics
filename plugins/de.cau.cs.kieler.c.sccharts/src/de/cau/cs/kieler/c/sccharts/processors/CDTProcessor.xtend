@@ -85,6 +85,7 @@ import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.kicool.ui.view.EditPartSystemManager
 import org.eclipse.cdt.core.dom.ast.IASTTranslationUnit
 import org.eclipse.cdt.internal.core.dom.parser.c.CASTLiteralExpression
+import de.cau.cs.kieler.kexpressions.ParameterAccessType
 
 /**
  * @author ssm
@@ -237,7 +238,7 @@ class CDTProcessor extends ExogenousProcessor<IASTTranslationUnit, SCCharts> {
                 val CASTIdExpression assignedVar = getAssignedVariableForReturnVal(funcCallExp)
                 if (assignedVar !== null) {
                     kex.createParameter => [ p |
-                        p.callByReference = true
+                        p.accessType = ParameterAccessType.CALL_BY_REFERENCE
                         p.expression = assignedVar.createKExpression
                         referencingState.reference.parameters.add(p)
                     ]

@@ -46,7 +46,6 @@ import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
 		switch(context) {
 		    ValuedObjectReference: return getScopeForValuedObjectReference(context, reference)
 		    ReferenceDeclaration: return getScopeForReferenceDeclaration(context, reference)  
-		    Assignment: return getScopeForAssignment(context, reference) 
 		}
 		
 		if (reference == KEffectsPackage.Literals.ASSIGNMENT__REFERENCE) {
@@ -56,15 +55,6 @@ import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
 		}
 		
 		return super.getScope(context, reference);
-	}
-	
-	protected def IScope getScopeForAssignment(EObject context, EReference reference) {
-	    if (context instanceof Assignment) {
-	        if (context.subReference !== null && context.subReference.valuedObject == null) {
-	            return context.getScopeForReferencedDeclarationFromAssignment(reference)
-	        }
-	    }
-	    return context.getScopeHierarchical(reference)
 	}
 	
 	protected def IScope getScopeForValuedObjectReference(EObject context, EReference reference) {

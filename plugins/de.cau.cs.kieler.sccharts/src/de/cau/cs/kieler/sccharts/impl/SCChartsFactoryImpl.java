@@ -85,8 +85,6 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
             case SCChartsPackage.DURING_ACTION: return createDuringAction();
             case SCChartsPackage.EXIT_ACTION: return createExitAction();
             case SCChartsPackage.SUSPEND_ACTION: return createSuspendAction();
-            case SCChartsPackage.PRECEDING_ACTION: return createPrecedingAction();
-            case SCChartsPackage.SUCCEEDING_ACTION: return createSucceedingAction();
             case SCChartsPackage.PERIOD_ACTION: return createPeriodAction();
             case SCChartsPackage.POLICY_CLASS_DECLARATION: return createPolicyClassDeclaration();
             case SCChartsPackage.POLICY_REGION: return createPolicyRegion();
@@ -225,28 +223,6 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
     public SuspendAction createSuspendAction() {
         SuspendActionImpl suspendAction = new SuspendActionImpl();
         return suspendAction;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public PrecedingAction createPrecedingAction() {
-        PrecedingActionImpl precedingAction = new PrecedingActionImpl();
-        return precedingAction;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public SucceedingAction createSucceedingAction() {
-        SucceedingActionImpl succeedingAction = new SucceedingActionImpl();
-        return succeedingAction;
     }
 
     /**

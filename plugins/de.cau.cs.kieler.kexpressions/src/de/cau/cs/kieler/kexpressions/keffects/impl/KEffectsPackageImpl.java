@@ -265,16 +265,6 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
      * @generated
      */
     @Override
-    public EReference getAssignment_SubReference() {
-        return (EReference)assignmentEClass.getEStructuralFeatures().get(3);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
     public EClass getEmission() {
         return emissionEClass;
     }
@@ -554,7 +544,6 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
         createEReference(assignmentEClass, ASSIGNMENT__REFERENCE);
         createEReference(assignmentEClass, ASSIGNMENT__EXPRESSION);
         createEAttribute(assignmentEClass, ASSIGNMENT__OPERATOR);
-        createEReference(assignmentEClass, ASSIGNMENT__SUB_REFERENCE);
 
         emissionEClass = createEClass(EMISSION);
         createEReference(emissionEClass, EMISSION__REFERENCE);
@@ -654,7 +643,6 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
         initEReference(getAssignment_Reference(), theKExpressionsPackage.getValuedObjectReference(), null, "reference", null, 0, 1, Assignment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getAssignment_Expression(), theKExpressionsPackage.getExpression(), null, "expression", null, 0, 1, Assignment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getAssignment_Operator(), this.getAssignOperator(), "operator", null, 0, 1, Assignment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getAssignment_SubReference(), theKExpressionsPackage.getValuedObjectReference(), null, "subReference", null, 0, 1, Assignment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(emissionEClass, Emission.class, "Emission", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getEmission_Reference(), theKExpressionsPackage.getValuedObjectReference(), null, "reference", null, 1, 1, Emission.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
