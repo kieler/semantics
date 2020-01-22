@@ -17,7 +17,7 @@ import de.cau.cs.kieler.kicool.registration.IProcessorProvider;
 /**
  * Provider to make processors available to KiCool.
  * 
- * @author Wechselberg
+ * @author Kolja
  */
 class KicoolUIProcessorProvider implements IProcessorProvider {
     
