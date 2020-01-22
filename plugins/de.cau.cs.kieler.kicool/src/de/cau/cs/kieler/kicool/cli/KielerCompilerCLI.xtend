@@ -529,7 +529,7 @@ class KielerCompilerCLI implements Runnable, Observer {
             sysloader.addURL(u)
         }
         else{
-            println("WARNING: The system class loader was not set to 'de.cau.cs.kieler.kicool.cli.KielerCompilerCLI.CLILoader'. In this case the option -c or --class-path is not supported and will be ignored.")
+            println("WARNING: The system class loader was not set to 'de.cau.cs.kieler.kicool.cli.CLILoader'. In this case the option -c or --class-path is not supported and will be ignored.")
         }
     }
 }
