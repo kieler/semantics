@@ -13,6 +13,7 @@ import java.util.List
 import de.cau.cs.kieler.kexpressions.RandomCall
 import de.cau.cs.kieler.kexpressions.RandomizeCall
 import de.cau.cs.kieler.kexpressions.ParameterAccessType
+import de.cau.cs.kieler.scg.Conditional
 
 /**
  * @author ssm
@@ -100,6 +101,10 @@ class SCGSerializeHRExtensions extends KEffectsSerializeHRExtensions {
     
     dispatch override CharSequence serializeHR(FunctionCall fc) {
         return fc.serialize
+    }
+    
+    dispatch def CharSequence serializeHR(Conditional cond){
+        return cond.condition.serializeHR
     }
     
     protected def CharSequence serializeIndices(List<Expression> indices) {

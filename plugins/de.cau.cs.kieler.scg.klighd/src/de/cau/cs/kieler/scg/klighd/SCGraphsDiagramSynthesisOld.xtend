@@ -28,9 +28,9 @@ import javax.inject.Inject
  * @kieler.design 2013-10-23 proposed 
  * @kieler.rating 2013-10-23 proposed yellow
  */
-class SCGraphsDiagramSynthesis extends AbstractDiagramSynthesis<SCGraphs> {
+class SCGraphsDiagramSynthesisOld extends AbstractDiagramSynthesis<SCGraphs> {
     
-    @Inject var SCGraphDiagramSynthesis scgSynthesisDelegate
+    @Inject var SCGraphDiagramSynthesisOld scgSynthesisDelegate
     @Inject extension KNodeExtensions
     @Inject extension KRenderingExtensions
 
@@ -57,11 +57,11 @@ class SCGraphsDiagramSynthesis extends AbstractDiagramSynthesis<SCGraphs> {
 	    node
 	}
 	
-    override getDisplayedSynthesisOptions() {
+    override public getDisplayedSynthesisOptions() {
         return scgSynthesisDelegate.displayedSynthesisOptions
     }
 
-    override getDisplayedLayoutOptions() {
+    override public getDisplayedLayoutOptions() {
         return scgSynthesisDelegate.displayedLayoutOptions
     }
 	

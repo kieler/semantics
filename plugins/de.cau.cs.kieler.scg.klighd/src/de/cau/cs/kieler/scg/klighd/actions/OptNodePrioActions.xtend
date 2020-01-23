@@ -19,7 +19,7 @@ import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.ViewContext
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
-import de.cau.cs.kieler.scg.klighd.SCGraphDiagramSynthesis
+import de.cau.cs.kieler.scg.klighd.SCGraphSynthesisHelper
 
 import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
 
@@ -46,7 +46,7 @@ class OptNodePrioActions implements IAction {
             if (viewContext.getSourceElement(node) != null) {
                 val container = node.KContainerRendering
                 for (text : container.children) {
-                    if (text.getProperty(SCGraphDiagramSynthesis.OPT_PRIO_PROPERTY)) {
+                    if (text.getProperty(SCGraphSynthesisHelper.OPT_PRIO_PROPERTY)) {
                         if (SHOW_OPT_PRIO_ID.booleanValue(viewContext)) {
                             text.invisible = false
                         } else {

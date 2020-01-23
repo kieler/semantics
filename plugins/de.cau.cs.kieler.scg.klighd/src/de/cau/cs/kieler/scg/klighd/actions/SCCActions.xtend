@@ -26,6 +26,7 @@ import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import org.eclipse.elk.graph.properties.IProperty
 import de.cau.cs.kieler.klighd.krendering.KRenderingFactory
+import de.cau.cs.kieler.scg.klighd.ColorStore
 
 /**
  * Action class to display Strongly Connected Components in the SCG.
@@ -41,8 +42,8 @@ class SCCActions implements IAction {
         
     public static val IProperty<Boolean> P = new org.eclipse.elk.graph.properties.Property("id")
         
-    @Inject
-    extension KRenderingExtensions
+    @Inject extension KRenderingExtensions
+    @Inject extension ColorStore
     /** Bound rendering extensions */
     extension KRenderingFactory = KRenderingFactory.eINSTANCE
             
@@ -57,7 +58,7 @@ class SCCActions implements IAction {
                     if(getBooleanValue(SHOW_SCC, viewContext)) {
                         container.lineWidth.lineWidth = getFloatValue(SCGraphDiagramSynthesis.CONTROLFLOW_THICKNESS, viewContext) * 2
                         //container.foreground = SCGraphDiagramSynthesis.STRONGLY_CONNECTED_COMPONENT_COLOR.copy   
-                        val style = createKForeground().setColor2(SCGraphDiagramSynthesis.STRONGLY_CONNECTED_COMPONENT_COLOR.copy)
+                        val style = createKForeground().setColor2(ColorStore.Color.STRONGLY_CONNECTED_COMPONENT_COLOR.color)
                         style.properties.put(P, true)
                         style.propagateToChildren = true
                         container.styles += style                    

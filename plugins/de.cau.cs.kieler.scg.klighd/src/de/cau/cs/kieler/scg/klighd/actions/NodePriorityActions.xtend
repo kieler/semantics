@@ -17,7 +17,7 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.klighd.IAction
 import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.ViewContext
-import de.cau.cs.kieler.scg.klighd.SCGraphDiagramSynthesis
+import de.cau.cs.kieler.scg.klighd.SCGraphSynthesisHelper
 
 import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
@@ -47,7 +47,7 @@ class NodePriorityActions implements IAction {
             if (viewContext.getSourceElement(node) != null) {
                 val container = node.KContainerRendering
                 for (text : container.children) {
-                    if (text.getProperty(SCGraphDiagramSynthesis.NODE_PRIO_PROPERTY)) {
+                    if (text.getProperty(SCGraphSynthesisHelper.NODE_PRIO_PROPERTY)) {
                         if (SHOW_NODE_PRIORITY.booleanValue(viewContext)) {
                             text.invisible = false
                         } else {

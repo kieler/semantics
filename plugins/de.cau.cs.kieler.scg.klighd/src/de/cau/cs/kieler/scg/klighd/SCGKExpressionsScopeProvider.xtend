@@ -35,8 +35,8 @@ import org.eclipse.xtext.scoping.Scopesimport java.util.List
 @Singleton
 class SCGKExpressionsScopeProvider extends KExpressionsScopeProvider {
 
-    private SCGraph parent;
-    private List<ValuedObject> valuedObjects = <ValuedObject> newArrayList;
+    SCGraph parent;
+    List<ValuedObject> valuedObjects = <ValuedObject> newArrayList;
 
     /**
      * Since all declarations are stored in the parent SCG, set parent to the SCGraph.
