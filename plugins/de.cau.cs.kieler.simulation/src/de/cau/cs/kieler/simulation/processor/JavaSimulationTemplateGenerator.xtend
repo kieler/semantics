@@ -150,7 +150,7 @@ class JavaSimulationTemplateGenerator extends AbstractSimulationTemplateGenerato
         } else if (info.isContainer) {
             throw new UnsupportedOperationException("Cannot handle class type variables.")
         } else {
-            return '''«json».put("«varName»", ${tickdata_name}.«varName»);'''
+            return '''«json».put("«varName»", JSONObject.wrap(${tickdata_name}.«varName»));'''
         }
     }
     
