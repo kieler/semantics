@@ -44,7 +44,7 @@ class GeneralCLITest extends AbstractCLITest {
 
         // compiler
         val command = #[compiler.path, "-v", "-t", errorSrc.path, src.path, "-o", dest.path]
-        assertNotEquals("Exit value not zero", 0, command.invoke)
+        assertEquals("Exit value not zero", 0, command.invoke)
 
         // check results
         assertExists(new File(dest, "abo.sctx"))
@@ -213,5 +213,15 @@ class GeneralCLITest extends AbstractCLITest {
         
         val command = #[compiler.path, "-v", "-s", "de.cau.cs.kieler.esterel.compiler.inria.simulation", src.path]
         assertEquals("Exit value not zero", 0, command.invoke)
+    }
+    
+    @Test
+    def void testCustomSystem(){
+        val dir = setupTest("class-path-test")
+        val custom = new File(dir, "external/custom.jar")
+        val command = #[compiler.path, "-c", custom.path, '--list-systems']
+        val outputs = <String>newArrayList
+        assertEquals("Exit value not zero", 0, command.invoke(outputs))
+        assertTrue( "option -c does not work", outputs.exists[contains("Custom Identity System") && contains("de.cau.cs.kieler.custom")] )
     }
 }
