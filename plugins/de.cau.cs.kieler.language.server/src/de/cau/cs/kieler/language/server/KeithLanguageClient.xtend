@@ -13,7 +13,7 @@
 package de.cau.cs.kieler.language.server
 
 import com.google.gson.JsonObject
-import de.cau.cs.kieler.klighd.lsp.constraints.ConstraintsLanguageClient
+import de.cau.cs.kieler.klighd.lsp.interactive.layered.ConstraintsLanguageClient
 import org.eclipse.lsp4j.jsonrpc.services.JsonNotification
 import org.eclipse.lsp4j.jsonrpc.services.JsonSegment
 import org.eclipse.lsp4j.services.LanguageClient

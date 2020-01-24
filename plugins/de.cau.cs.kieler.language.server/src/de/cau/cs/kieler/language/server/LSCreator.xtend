@@ -18,8 +18,11 @@ import de.cau.cs.kieler.core.services.KielerServiceLoader
 import de.cau.cs.kieler.klighd.lsp.KGraphDiagramModule
 import de.cau.cs.kieler.klighd.lsp.KGraphDiagramServerModule
 import de.cau.cs.kieler.klighd.lsp.gson_utils.KGraphTypeAdapterUtil
+import de.cau.cs.kieler.klighd.lsp.interactive.layered.ConstraintsLanguageClient
+import de.cau.cs.kieler.klighd.lsp.interactive.layered.ConstraintsLanguageServerExtension
 import java.io.InputStream
 import java.io.OutputStream
+import java.util.List
 import java.util.concurrent.ExecutorService
 import java.util.function.Consumer
 import java.util.function.Function
@@ -34,9 +37,6 @@ import org.eclipse.xtext.ide.server.LanguageServerImpl
 import org.eclipse.xtext.ide.server.ServerLauncher
 import org.eclipse.xtext.resource.IResourceServiceProvider
 import org.eclipse.xtext.util.Modules2
-import de.cau.cs.kieler.klighd.lsp.constraints.ConstraintsLanguageServerExtension
-import de.cau.cs.kieler.klighd.lsp.constraints.ConstraintsLanguageClient
-import java.util.List
 
 /** 
  * Provides methods to create a LS.
