@@ -6,6 +6,7 @@ knode operator {
     
     klabel "pre" {
         ktext {
+	    gridData: topLeftAnchor=left 13%, top 17%
             styles: fontSize = 8pt
         }
     }
