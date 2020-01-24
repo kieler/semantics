@@ -41,7 +41,7 @@ B = extern scanf("%d", !&I)
 @check "functionCall.returnValue.parameter.byReference.nested"
 B = extern scanf("%d", extern getValue())
 
-@check "functionCall.returnValue.parameter.byPureOutput.hostcode"
-B = extern scanf("%d", !&`x`)
+// @check "functionCall.returnValue.parameter.byPureOutput.hostcode"
+// B = extern scanf("%d", !&`x`)
 
 

@@ -22,6 +22,11 @@ import de.cau.cs.kieler.scg.Fork
 import com.google.common.collect.Multimap
 import com.google.common.collect.LinkedHashMultimap
 import de.cau.cs.kieler.scg.ControlFlow
+import java.util.Set
+import de.cau.cs.kieler.scg.Node
+import java.util.List
+import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
+import com.google.inject.Inject
 
 /**
  * @author ssm
@@ -29,8 +34,12 @@ import de.cau.cs.kieler.scg.ControlFlow
  */
 class ThreadData implements IKiCoolCloneable {
     
+    @Inject extension SCGThreadExtensions
+    
     @Accessors var Map<Entry, ThreadPathType> data = <Entry, ThreadPathType> newLinkedHashMap
     @Accessors var Multimap<Fork, Entry> forkMap = LinkedHashMultimap.create
+    @Accessors var Map<Entry, Set<Node>> threadMapping = newLinkedHashMap
+    @Accessors var Map<Node, List<Entry>> nodeMapping = newLinkedHashMap
     
     def createForkMap() {
         for (entry : data.keySet) {
@@ -43,6 +52,18 @@ class ThreadData implements IKiCoolCloneable {
         }
     }
     
+    def createThreadNodeMaps(Entry entry) {
+        val localTM = <Entry, Set<Node>> newLinkedHashMap
+        val localNM = <Node, List<Entry>> newLinkedHashMap
+        entry.getAllThreadNodesAndThreads(localTM, localNM)
+        for (tm : localTM.keySet) {
+            threadMapping.put(tm, localTM.get(tm))
+        }
+        for (nm : localNM.keySet) {
+            nodeMapping.put(nm, localNM.get(nm))
+        }
+    }
+    
     override isMutable() {
         false
     }
@@ -51,6 +72,8 @@ class ThreadData implements IKiCoolCloneable {
         new ThreadData => [ td |
             td.data.putAll(data)
             td.forkMap.putAll(forkMap)
+            td.threadMapping.putAll(threadMapping)
+            td.nodeMapping.putAll(nodeMapping)
         ] 
     }
     
@@ -63,6 +86,29 @@ class ThreadData implements IKiCoolCloneable {
         data = resolvedThreadData
         forkMap.clear
         createForkMap
+        
+        val Map<Entry, Set<Node>> resolvedThreadMapping = newLinkedHashMap
+        val Map<Node, List<Entry>> resolvedNodeMapping = newLinkedHashMap
+        
+        for (e : threadMapping.keySet) {
+            val newE = copier.get(e) as Entry
+            val newSet = <Node> newLinkedHashSet
+            for (n : threadMapping.get(e)) {
+                newSet.add(copier.get(n) as Node)
+            }
+            resolvedThreadMapping.put(newE, newSet)
+        }
+        for (n : nodeMapping.keySet) {
+            val newN = copier.get(n) as Node
+            val newList = <Entry> newLinkedList
+            for (e : nodeMapping.get(n)) {
+                newList.add(copier.get(e) as Entry)
+            }
+            resolvedNodeMapping.put(newN, newList)
+        }        
+
+        threadMapping = resolvedThreadMapping
+        nodeMapping = resolvedNodeMapping                
     }    
     
 }

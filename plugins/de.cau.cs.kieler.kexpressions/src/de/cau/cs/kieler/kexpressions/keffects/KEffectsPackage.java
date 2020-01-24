@@ -187,22 +187,13 @@ public interface KEffectsPackage extends EPackage {
     int ASSIGNMENT__OPERATOR = EFFECT_FEATURE_COUNT + 2;
 
     /**
-     * The feature id for the '<em><b>Sub Reference</b></em>' containment reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int ASSIGNMENT__SUB_REFERENCE = EFFECT_FEATURE_COUNT + 3;
-
-    /**
      * The number of structural features of the '<em>Assignment</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int ASSIGNMENT_FEATURE_COUNT = EFFECT_FEATURE_COUNT + 4;
+    int ASSIGNMENT_FEATURE_COUNT = EFFECT_FEATURE_COUNT + 3;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.keffects.impl.EmissionImpl <em>Emission</em>}' class.
@@ -1065,17 +1056,6 @@ public interface KEffectsPackage extends EPackage {
     EAttribute getAssignment_Operator();
 
     /**
-     * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.kexpressions.keffects.Assignment#getSubReference <em>Sub Reference</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the containment reference '<em>Sub Reference</em>'.
-     * @see de.cau.cs.kieler.kexpressions.keffects.Assignment#getSubReference()
-     * @see #getAssignment()
-     * @generated
-     */
-    EReference getAssignment_SubReference();
-
-    /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.kexpressions.keffects.Emission <em>Emission</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1402,14 +1382,6 @@ public interface KEffectsPackage extends EPackage {
          * @generated
          */
         EAttribute ASSIGNMENT__OPERATOR = eINSTANCE.getAssignment_Operator();
-
-        /**
-         * The meta object literal for the '<em><b>Sub Reference</b></em>' containment reference feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference ASSIGNMENT__SUB_REFERENCE = eINSTANCE.getAssignment_SubReference();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.kexpressions.keffects.impl.EmissionImpl <em>Emission</em>}' class.

@@ -98,7 +98,7 @@ class SCGDiagramHighlighter extends DiagramHighlighter {
             }            
         } else if (currentDiagramModel instanceof ModelChain) {
             val scgs = currentDiagramModel.models.findFirst[ it instanceof SCGraphs ] as SCGraphs
-            if (!scgs.scgs.empty) {
+            if (scgs !== null && scgs.scgs !== null && !scgs.scgs.empty) {
                 scg = scgs.scgs.head
             }
         }

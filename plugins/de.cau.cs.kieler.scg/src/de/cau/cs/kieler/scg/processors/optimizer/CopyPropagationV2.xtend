@@ -84,11 +84,12 @@ class CopyPropagationV2 extends InplaceProcessor<SCGraphs> {
         if (!environment.getProperty(COPY_PROPAGATION_ENABLED)) return;
         
         val model = getModel
-        
+        applyAnnotations
+                
         for (scg : model.scgs.ignoreMethods) {
             scg.performCopyPropagation
         }
-        
+
         VariableStore.get(environment).removeAllUncontainedVO(model, environment)
     }
     
@@ -140,6 +141,9 @@ class CopyPropagationV2 extends InplaceProcessor<SCGraphs> {
                         removeList += node
                     }
                     else if (node.reference.valuedObject.name.startsWith(SimpleGuardExpressions.TERM_GUARD_NAME)) {
+                        val vo = node.expression.asValuedObjectReference.valuedObject
+                        node.expression.replaceExpression(replacements, node)
+                        replacements.push(vo, node.reference)
                         // Term guards usually only depend on one guard. Simply replace it.
                         // The replaced guard should also not be contained in pre expression, since _TERM signals a final state.
                         if (environment.getProperty(COPY_PROPAGATION_REPLACE_TERM_GUARD_PREDECESSOR)) {
@@ -161,13 +165,10 @@ class CopyPropagationV2 extends InplaceProcessor<SCGraphs> {
                         }
                     }
                 } else {
-                    if (node.expression instanceof OperatorExpression && 
-                        node.expression.asOperatorExpression.operator == OperatorType.PRE) {
-                        preNodes += node  
-                        node.expression.replaceExpression(replacements, node)                          
-                    } else {
-                        node.expression.replaceExpression(replacements, node)
-                    }                
+                    if (node.expression.hasOperatorExpression(OperatorType.PRE)) {
+                        preNodes += node
+                    }
+                    node.expression.replaceExpression(replacements, node)
                         
                     if (environment.getProperty(COPY_PROPAGATION_PROPAGATE_EQUAL_EXPRESSIONS)) {
                         val serializedExpression = node.expression.serializeHR.toString
@@ -223,7 +224,8 @@ class CopyPropagationV2 extends InplaceProcessor<SCGraphs> {
         if (expression instanceof ValuedObjectReference) {
             if (replacements.keySet.contains(expression.valuedObject.name)) { 
                 val VOR = replacements.peek(expression.valuedObject.name) as ValuedObjectReference
-                environment.infos.add("CP: " + expression.valuedObject.name + " / " + VOR.valuedObject.name, node, true)
+//                environment.infos.add("CP: " + expression.valuedObject.name + " / " + VOR.valuedObject.name, node, true)
+                annotationModel.addInfo(node, "CP: " + expression.valuedObject.name + " / " + VOR.valuedObject.name)
                 expression.valuedObject = VOR.valuedObject
                 for (i : VOR.indices) {
                     expression.indices += i.copy

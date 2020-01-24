@@ -13,6 +13,7 @@
 package de.cau.cs.kieler.simulation.processor
 
 import de.cau.cs.kieler.core.properties.Property
+import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kicool.compilation.VariableInformation
 import de.cau.cs.kieler.kicool.deploy.processor.AbstractTemplateGeneratorProcessor
 import java.util.List
@@ -33,6 +34,10 @@ abstract class AbstractSimulationTemplateGenerator extends AbstractTemplateGener
         } else {
             return list
         }
+    }
+    
+    def dropHostTypes(Iterable<Pair<String, VariableInformation>> list) {
+        return list.filter[!(value.type === ValueType.HOST || "host".equalsIgnoreCase(value.typeName))]
     }
     
     protected def simpleName(String name) {

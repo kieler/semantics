@@ -36,6 +36,7 @@ import de.cau.cs.kieler.kexpressions.IgnoreValue
 import de.cau.cs.kieler.kexpressions.RandomCall
 import de.cau.cs.kieler.kexpressions.RandomizeCall
 import de.cau.cs.kieler.annotations.NamedObject
+import de.cau.cs.kieler.kexpressions.ParameterAccessType
 
 /**
  * Serialization of KExpressions.
@@ -326,7 +327,15 @@ class KExpressionsSerializeExtensions {
     }
     
     def dispatch CharSequence serialize(ReferenceCall referenceCall) {
-        return referenceCall.valuedObject.serialize.toString + referenceCall.parameters.serializeParameters
+        var text = referenceCall.valuedObject.name
+        for (index : referenceCall.indices) {
+            text = text + "[" + index.serialize + "]"
+        }
+        if (referenceCall.subReference !== null && referenceCall.subReference.valuedObject !== null) {
+            text = text + "." + referenceCall.subReference.serialize
+        }
+        text += referenceCall.parameters.serializeParameters  
+        return text
     }
 
     def dispatch CharSequence serialize(FunctionCall functionCall) {
@@ -349,10 +358,10 @@ class KExpressionsSerializeExtensions {
             if (cnt > 0) {
                 sb.append(", ")
             }
-            if (par.pureOutput) {
-                sb.append("!")
+            if (par.accessType === ParameterAccessType.PURE_OUTPUT) {
+                sb.append("!&")
             }
-            if (par.callByReference) {
+            else if (par.accessType === ParameterAccessType.CALL_BY_REFERENCE) {
                 sb.append("&")
             }
             sb.append(par.expression.serialize)

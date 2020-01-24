@@ -1,4 +1,4 @@
-public system de.cau.cs.kieler.sccharts.netlist.references
+system de.cau.cs.kieler.sccharts.netlist.references
 	label "Netlist-based Compilation (C) References"
     start config {
        "de.cau.cs.kieler.sccharts.reference.expandStates":false

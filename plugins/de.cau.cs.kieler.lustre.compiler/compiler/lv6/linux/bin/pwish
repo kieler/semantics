@@ -1,0 +1,14 @@
+#!/bin/sh
+echo "
+###############################################################
+### WARNING : since lustre-v4, distrib III style, 
+### 'pwish' is no longer distributed as a tcltk toplevel
+### but as tcltk DYNAMIC stub LIBRARY
+###
+### USE the tcl command:
+###
+###    load $::env(LUSTRE_INSTALL)/tcl/pwish.so
+###
+### in a standard 'wish' (>= 8.4) interpretor
+############################################################### 
+"

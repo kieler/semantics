@@ -1,0 +1,4 @@
+public system de.cau.cs.kieler.lustre.scade.scadeToLustre
+	label "Scade to Lustre"
+
+de.cau.cs.kieler.lustre.scade.processors.scadeToLustre

@@ -162,7 +162,7 @@ class SurfaceDepth extends SCChartsProcessor implements Traceable {
                 // Optimization according to decision in SYNCHRON meeting 22. Aug 2016
                 return
             } else {
-                val haltState = state.parentRegion.createState(GENERATED_PREFIX + "HaltState")
+                val haltState = state.parentRegion.createState(GENERATED_PREFIX + "HaltState").uniqueName
                 val halt = state.createTransitionTo(haltState)
                 halt.setTypeTermination
                 haltState.createTransitionTo(haltState)

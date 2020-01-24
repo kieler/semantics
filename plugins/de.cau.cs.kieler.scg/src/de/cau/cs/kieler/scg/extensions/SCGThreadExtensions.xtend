@@ -190,7 +190,7 @@ class SCGThreadExtensions {
 
         val entryList = <Entry>newArrayList => [
             add(entry)
-            val previousNode = entry.allPrevious.head?.eContainer as Node
+            val previousNode = entry.allPrevious.head?.eContainer
             if (previousNode !== null) {
                 val nodes = nodeMapping.get(previousNode)
                 if (nodes !== null) {
@@ -384,6 +384,59 @@ class SCGThreadExtensions {
         nodeSet.add(exit)
         nodeSet
     }
+    
+    def Set<Node> getShallowSurfaceThreadNodes(Entry entry) {
+        // Create a new list of nodes and 
+        // a list of control flows that mark paths within the thread.
+        val nodeSet = <Node>newHashSet
+        val controlFlows = <ControlFlow>newLinkedList
+
+        // Add the entry node itself and retrieve the exit of the thread
+        // with aid of the opposite relation in the entry node. 
+        val exit = entry.exit
+
+        // If the exit node follows the entry node directly, exit here.
+        if (entry.next.target == exit) {
+            nodeSet.add(exit)
+            return nodeSet
+        }
+
+        // Now, follow the control flow until the exit node is reached 
+        // and add each node that is not already in the node list.
+        controlFlows.addAll(entry.allNext)
+        while (!controlFlows.empty) {
+            // Next node is the first target in the control flow list.
+            var nextNode = controlFlows.head.targetNode
+
+            // Remove this control flow.
+            controlFlows.remove(0)
+
+            nodeSet.add(nextNode);
+
+            if (nextNode instanceof Fork) {
+                nodeSet.add(nextNode);
+            }
+            else if (nextNode instanceof Surface) {
+                // Since surface node do not have extra control flows to their 
+                // corresponding depth, set the next node manually.
+                nodeSet.add(nextNode);
+            }
+
+            // Now, add all succeeding control flow provided 
+            // - that the flow is not already included in the flow list
+            // - the target of the flow is not already processed
+            // - and the target of the flow is not the exit node.  
+            if (nextNode !== null)
+                nextNode.allNext.filter [
+                    (!nodeSet.contains(it.target)) && (!controlFlows.contains(it)) && (!it.target.equals(exit)) &&
+                        (!hasAnnotation(
+                            de.cau.cs.kieler.scg.extensions.SCGThreadExtensions.IGNORE_INTER_THREAD_CF_ANNOTATION))
+                ] => [controlFlows.addAll(it)]
+        }
+
+        nodeSet
+    }
+    
 
     /** 
      * Finds the immediate entry node of a node.
@@ -592,8 +645,11 @@ class SCGThreadExtensions {
         }
         val threadTypes = <Entry, ThreadPathType>newHashMap
         for (n : tempThreadTypes.keySet) {
-            if (n instanceof Entry)
-                threadTypes.put(n, tempThreadTypes.get(n))
+            if (n instanceof Entry) {
+                // Final regions are always potentially instantaneos.
+                val type = if (n.exit.final) ThreadPathType::POTENTIALLY_INSTANTANEOUS else tempThreadTypes.get(n) 
+                threadTypes.put(n, type)
+            }
         }
         threadTypes
     }

@@ -23,6 +23,7 @@ Statement returns Statement:
       SclAssignment
     | SclPostfixAssignment
     | Label
+    | SclEffectAssignment
     | Conditional
     | LegacyConditional
     | Goto
@@ -69,6 +70,24 @@ SclPostfixAssignment returns Assignment:
     ('schedule' schedule+=ScheduleObjectReference+)?
     semicolon?=';'?
 ;
+
+SclEffectAssignment returns Assignment:
+    (annotations += Annotation)*
+    expression = (
+        ReferenceCall
+    |
+        TextExpression
+    |
+        PrintCall
+    |
+        RandomizeCall
+    |
+        FunctionCall
+    )
+    ('schedule' schedule+=ScheduleObjectReference+)?
+    semicolon?=';'?
+;
+
 
 Return returns Return:
     (annotations += Annotation)*
@@ -208,8 +227,10 @@ ModuleCall returns ModuleCall:
 ;
     
 ModuleCallParameter returns kexpressions::Parameter:
-    ((pureOutput ?= '!')? callByReference ?= '&')?
-    expression = Expression
+    ((accessType = ParameterAccessType
+    expression = ValuedObjectReference)
+    |
+    expression = Expression)
     ('to' explicitBinding = [kexpressions::ValuedObject|ID] ('[' explicitBindingIndices+=Expression ']')*)?
 ;
 

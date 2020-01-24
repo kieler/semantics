@@ -31,15 +31,31 @@
     <!-- The Semantics updatesite. -->
     <profile>
       <id>semantics</id>
-      
+
       <activation>
         <activeByDefault>true</activeByDefault>
       </activation>
 
       <modules>
         <module>../plugins</module>
+        <module>de.cau.cs.kieler.semantics.targetplatform</module>
         <module>../features</module>
         <module>de.cau.cs.kieler.semantics.repository</module>
+      </modules>
+    </profile>
+
+
+    <!-- Test profile including cli tests. -->
+    <profile>
+      <id>semantics.test</id>
+
+      <modules>
+        <module>../plugins</module>
+        <module>de.cau.cs.kieler.semantics.targetplatform</module>
+        <module>../test</module>
+        <module>de.cau.cs.kieler.sccharts.cli</module>
+        <module>de.cau.cs.kieler.kicool.cli</module>
+        <module>../test/de.cau.cs.kieler.cli.test</module>
       </modules>
     </profile>
   
@@ -61,6 +77,8 @@
         <module>../plugins/de.cau.cs.kieler.core.product</module>
         <module>../features/de.cau.cs.kieler.product.feature</module>
         <module>de.cau.cs.kieler.semantics.product.repository</module>
+        <module>de.cau.cs.kieler.kicool.cli</module>
+        <module>de.cau.cs.kieler.sccharts.cli</module>
       </modules>
     </profile>  
 
@@ -83,7 +101,7 @@
         <module>de.cau.cs.kieler.semantics.benchmark.repository</module>
         <module>de.cau.cs.kieler.semantics.targetplatform</module>  
       </modules>
-    </profile> 
+    </profile>
   
   </profiles>
 

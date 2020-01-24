@@ -26,6 +26,9 @@ import java.util.ArrayList
 import de.cau.cs.kieler.scg.extensions.SCGMethodExtensions
 import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.kexpressions.ParameterAccessType
+import de.cau.cs.kieler.kexpressions.OperatorExpression
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsTypeExtensions
 
 /**
  * @author ssm
@@ -38,6 +41,7 @@ class JavaCodeSerializeHRExtensions extends CCodeSerializeHRExtensions {
     
     @Inject extension SCGMethodExtensions
     @Inject extension KExpressionsCreateExtensions
+    @Inject extension KExpressionsTypeExtensions
     
     public static val GLOBAL_OBJECTS = "globalObjects"
     
@@ -92,11 +96,17 @@ class JavaCodeSerializeHRExtensions extends CCodeSerializeHRExtensions {
     override addPlatformDependentParamsToMethodCall(ArrayList<Parameter> params, MethodDeclaration declaration, ReferenceCall referenceCall) {
         if (declaration.hasSelfInParameter) {
             params.add(0, createParameter =>[
-                callByReference = true
+                accessType = ParameterAccessType.CALL_BY_REFERENCE
                 val ex = referenceCall.serializeVOR.toString
                 expression = ex.substring(0, ex.lastIndexOf(".")).asTextExpression
             ])
         }
     }
     
+    override def CharSequence serializeHROperatorExpressionEQ(OperatorExpression expression) {
+        if (expression.subExpressions.forall[hasString]) {
+            return "(" + combineOperatorsHR(expression.subExpressions.iterator, ").equals( ") + " )"
+        }
+        combineOperatorsHR(expression.subExpressions.iterator, " == ")
+    }
 }

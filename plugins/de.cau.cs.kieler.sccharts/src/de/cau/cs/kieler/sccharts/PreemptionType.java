@@ -34,21 +34,27 @@ import org.eclipse.emf.common.util.Enumerator;
  */
 public enum PreemptionType implements Enumerator {
     /**
-     * The '<em><b>WEAKABORT</b></em>' literal object.
+     * The '<em><b>UNDEFINED</b></em>' literal object.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #UNDEFINED_VALUE
+     * @generated
+     * @ordered
+     */
+    UNDEFINED(0, "UNDEFINED", "UNDEFINED"), /**
+     * The '<em><b>WEAK</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
      * A WEAKABORT transition allows the
      * exited State to execute its contents in that tick.
      * <!-- end-model-doc -->
-     * @see #WEAKABORT_VALUE
+     * @see #WEAK_VALUE
      * @generated
      * @ordered
      */
-    WEAKABORT(0, "WEAKABORT", "WEAKABORT"),
-
-    /**
-     * The '<em><b>STRONGABORT</b></em>' literal object.
+    WEAK(1, "WEAK", "WEAK"), /**
+     * The '<em><b>STRONG</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
@@ -56,13 +62,11 @@ public enum PreemptionType implements Enumerator {
      * leave the state and not allow any actions in
      * the source State in that tick. 
      * <!-- end-model-doc -->
-     * @see #STRONGABORT_VALUE
+     * @see #STRONG_VALUE
      * @generated
      * @ordered
      */
-    STRONGABORT(1, "STRONGABORT", "STRONGABORT"),
-
-    /**
+    STRONG(2, "STRONG", "STRONG"), /**
      * The '<em><b>TERMINATION</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -74,7 +78,7 @@ public enum PreemptionType implements Enumerator {
      * @generated
      * @ordered
      */
-    TERMINATION(2, "TERMINATION", "TERMINATION");
+    TERMINATION(3, "TERMINATION", "TERMINATION");
 
     /**
      * <!-- begin-user-doc -->
@@ -84,22 +88,33 @@ public enum PreemptionType implements Enumerator {
     public static final String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\r\n\r\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\r\n\r\nCopyright 2013 by\r\n+ Kiel University\r\n  + Department of Computer Science\r\n    + Real-Time and Embedded Systems Group\r\n\r\nThis code is provided under the terms of the Eclipse Public License (EPL).\r\nSee the file epl-v10.html for the license text.";
 
     /**
-     * The '<em><b>WEAKABORT</b></em>' literal value.
+     * The '<em><b>UNDEFINED</b></em>' literal value.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #UNDEFINED
+     * @model
+     * @generated
+     * @ordered
+     */
+    public static final int UNDEFINED_VALUE = 0;
+
+    /**
+     * The '<em><b>WEAK</b></em>' literal value.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
      * A WEAKABORT transition allows the
      * exited State to execute its contents in that tick.
      * <!-- end-model-doc -->
-     * @see #WEAKABORT
+     * @see #WEAK
      * @model
      * @generated
      * @ordered
      */
-    public static final int WEAKABORT_VALUE = 0;
+    public static final int WEAK_VALUE = 1;
 
     /**
-     * The '<em><b>STRONGABORT</b></em>' literal value.
+     * The '<em><b>STRONG</b></em>' literal value.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
@@ -107,12 +122,12 @@ public enum PreemptionType implements Enumerator {
      * leave the state and not allow any actions in
      * the source State in that tick. 
      * <!-- end-model-doc -->
-     * @see #STRONGABORT
+     * @see #STRONG
      * @model
      * @generated
      * @ordered
      */
-    public static final int STRONGABORT_VALUE = 1;
+    public static final int STRONG_VALUE = 2;
 
     /**
      * The '<em><b>TERMINATION</b></em>' literal value.
@@ -127,7 +142,7 @@ public enum PreemptionType implements Enumerator {
      * @generated
      * @ordered
      */
-    public static final int TERMINATION_VALUE = 2;
+    public static final int TERMINATION_VALUE = 3;
 
     /**
      * An array of all the '<em><b>Preemption Type</b></em>' enumerators.
@@ -137,8 +152,9 @@ public enum PreemptionType implements Enumerator {
      */
     private static final PreemptionType[] VALUES_ARRAY =
         new PreemptionType[] {
-            WEAKABORT,
-            STRONGABORT,
+            UNDEFINED,
+            WEAK,
+            STRONG,
             TERMINATION,
         };
 
@@ -196,8 +212,9 @@ public enum PreemptionType implements Enumerator {
      */
     public static PreemptionType get(int value) {
         switch (value) {
-            case WEAKABORT_VALUE: return WEAKABORT;
-            case STRONGABORT_VALUE: return STRONGABORT;
+            case UNDEFINED_VALUE: return UNDEFINED;
+            case WEAK_VALUE: return WEAK;
+            case STRONG_VALUE: return STRONG;
             case TERMINATION_VALUE: return TERMINATION;
         }
         return null;

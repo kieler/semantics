@@ -3,20 +3,25 @@
  */
 package de.cau.cs.kieler.lustre.lustre.impl;
 
-import de.cau.cs.kieler.kexpressions.Expression;
-
-import de.cau.cs.kieler.lustre.lustre.AState;
 import de.cau.cs.kieler.lustre.lustre.ATransition;
+import de.cau.cs.kieler.lustre.lustre.AnAction;
 import de.cau.cs.kieler.lustre.lustre.LustrePackage;
+
+import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+
+import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -27,9 +32,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.lustre.lustre.impl.ATransitionImpl#isStrong <em>Strong</em>}</li>
- *   <li>{@link de.cau.cs.kieler.lustre.lustre.impl.ATransitionImpl#getCondition <em>Condition</em>}</li>
- *   <li>{@link de.cau.cs.kieler.lustre.lustre.impl.ATransitionImpl#isHistory <em>History</em>}</li>
- *   <li>{@link de.cau.cs.kieler.lustre.lustre.impl.ATransitionImpl#getNextState <em>Next State</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.lustre.lustre.impl.ATransitionImpl#getActions <em>Actions</em>}</li>
  * </ul>
  *
  * @generated
@@ -57,44 +60,14 @@ public class ATransitionImpl extends MinimalEObjectImpl.Container implements ATr
   protected boolean strong = STRONG_EDEFAULT;
 
   /**
-   * The cached value of the '{@link #getCondition() <em>Condition</em>}' containment reference.
+   * The cached value of the '{@link #getActions() <em>Actions</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getCondition()
+   * @see #getActions()
    * @generated
    * @ordered
    */
-  protected Expression condition;
-
-  /**
-   * The default value of the '{@link #isHistory() <em>History</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #isHistory()
-   * @generated
-   * @ordered
-   */
-  protected static final boolean HISTORY_EDEFAULT = false;
-
-  /**
-   * The cached value of the '{@link #isHistory() <em>History</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #isHistory()
-   * @generated
-   * @ordered
-   */
-  protected boolean history = HISTORY_EDEFAULT;
-
-  /**
-   * The cached value of the '{@link #getNextState() <em>Next State</em>}' reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getNextState()
-   * @generated
-   * @ordered
-   */
-  protected AState nextState;
+  protected EList<AnAction> actions;
 
   /**
    * <!-- begin-user-doc -->
@@ -148,118 +121,13 @@ public class ATransitionImpl extends MinimalEObjectImpl.Container implements ATr
    * @generated
    */
   @Override
-  public Expression getCondition()
+  public EList<AnAction> getActions()
   {
-    return condition;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public NotificationChain basicSetCondition(Expression newCondition, NotificationChain msgs)
-  {
-    Expression oldCondition = condition;
-    condition = newCondition;
-    if (eNotificationRequired())
+    if (actions == null)
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, LustrePackage.ATRANSITION__CONDITION, oldCondition, newCondition);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
+      actions = new EObjectContainmentEList<AnAction>(AnAction.class, this, LustrePackage.ATRANSITION__ACTIONS);
     }
-    return msgs;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public void setCondition(Expression newCondition)
-  {
-    if (newCondition != condition)
-    {
-      NotificationChain msgs = null;
-      if (condition != null)
-        msgs = ((InternalEObject)condition).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - LustrePackage.ATRANSITION__CONDITION, null, msgs);
-      if (newCondition != null)
-        msgs = ((InternalEObject)newCondition).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - LustrePackage.ATRANSITION__CONDITION, null, msgs);
-      msgs = basicSetCondition(newCondition, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, LustrePackage.ATRANSITION__CONDITION, newCondition, newCondition));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public boolean isHistory()
-  {
-    return history;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public void setHistory(boolean newHistory)
-  {
-    boolean oldHistory = history;
-    history = newHistory;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, LustrePackage.ATRANSITION__HISTORY, oldHistory, history));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public AState getNextState()
-  {
-    if (nextState != null && nextState.eIsProxy())
-    {
-      InternalEObject oldNextState = (InternalEObject)nextState;
-      nextState = (AState)eResolveProxy(oldNextState);
-      if (nextState != oldNextState)
-      {
-        if (eNotificationRequired())
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE, LustrePackage.ATRANSITION__NEXT_STATE, oldNextState, nextState));
-      }
-    }
-    return nextState;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public AState basicGetNextState()
-  {
-    return nextState;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public void setNextState(AState newNextState)
-  {
-    AState oldNextState = nextState;
-    nextState = newNextState;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, LustrePackage.ATRANSITION__NEXT_STATE, oldNextState, nextState));
+    return actions;
   }
 
   /**
@@ -272,8 +140,8 @@ public class ATransitionImpl extends MinimalEObjectImpl.Container implements ATr
   {
     switch (featureID)
     {
-      case LustrePackage.ATRANSITION__CONDITION:
-        return basicSetCondition(null, msgs);
+      case LustrePackage.ATRANSITION__ACTIONS:
+        return ((InternalEList<?>)getActions()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -290,13 +158,8 @@ public class ATransitionImpl extends MinimalEObjectImpl.Container implements ATr
     {
       case LustrePackage.ATRANSITION__STRONG:
         return isStrong();
-      case LustrePackage.ATRANSITION__CONDITION:
-        return getCondition();
-      case LustrePackage.ATRANSITION__HISTORY:
-        return isHistory();
-      case LustrePackage.ATRANSITION__NEXT_STATE:
-        if (resolve) return getNextState();
-        return basicGetNextState();
+      case LustrePackage.ATRANSITION__ACTIONS:
+        return getActions();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -306,6 +169,7 @@ public class ATransitionImpl extends MinimalEObjectImpl.Container implements ATr
    * <!-- end-user-doc -->
    * @generated
    */
+  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
@@ -314,14 +178,9 @@ public class ATransitionImpl extends MinimalEObjectImpl.Container implements ATr
       case LustrePackage.ATRANSITION__STRONG:
         setStrong((Boolean)newValue);
         return;
-      case LustrePackage.ATRANSITION__CONDITION:
-        setCondition((Expression)newValue);
-        return;
-      case LustrePackage.ATRANSITION__HISTORY:
-        setHistory((Boolean)newValue);
-        return;
-      case LustrePackage.ATRANSITION__NEXT_STATE:
-        setNextState((AState)newValue);
+      case LustrePackage.ATRANSITION__ACTIONS:
+        getActions().clear();
+        getActions().addAll((Collection<? extends AnAction>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -340,14 +199,8 @@ public class ATransitionImpl extends MinimalEObjectImpl.Container implements ATr
       case LustrePackage.ATRANSITION__STRONG:
         setStrong(STRONG_EDEFAULT);
         return;
-      case LustrePackage.ATRANSITION__CONDITION:
-        setCondition((Expression)null);
-        return;
-      case LustrePackage.ATRANSITION__HISTORY:
-        setHistory(HISTORY_EDEFAULT);
-        return;
-      case LustrePackage.ATRANSITION__NEXT_STATE:
-        setNextState((AState)null);
+      case LustrePackage.ATRANSITION__ACTIONS:
+        getActions().clear();
         return;
     }
     super.eUnset(featureID);
@@ -365,12 +218,8 @@ public class ATransitionImpl extends MinimalEObjectImpl.Container implements ATr
     {
       case LustrePackage.ATRANSITION__STRONG:
         return strong != STRONG_EDEFAULT;
-      case LustrePackage.ATRANSITION__CONDITION:
-        return condition != null;
-      case LustrePackage.ATRANSITION__HISTORY:
-        return history != HISTORY_EDEFAULT;
-      case LustrePackage.ATRANSITION__NEXT_STATE:
-        return nextState != null;
+      case LustrePackage.ATRANSITION__ACTIONS:
+        return actions != null && !actions.isEmpty();
     }
     return super.eIsSet(featureID);
   }
@@ -388,8 +237,6 @@ public class ATransitionImpl extends MinimalEObjectImpl.Container implements ATr
     StringBuilder result = new StringBuilder(super.toString());
     result.append(" (strong: ");
     result.append(strong);
-    result.append(", history: ");
-    result.append(history);
     result.append(')');
     return result.toString();
   }

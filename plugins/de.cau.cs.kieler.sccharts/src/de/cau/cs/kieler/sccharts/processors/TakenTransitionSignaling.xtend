@@ -31,7 +31,7 @@ import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
 import java.util.List
 
 /**
- * @author aas
+ * @author aas ssm
  *
  */
 class TakenTransitionSignaling extends SCChartsProcessor {
@@ -44,6 +44,9 @@ class TakenTransitionSignaling extends SCChartsProcessor {
     @Inject extension SCChartsScopeExtensions
     @Inject extension SCChartsActionExtensions
     @Inject extension KEffectsExtensions
+    
+    public static val USE_VALUE_CHANGE_SIGNALING = 
+        new Property<Boolean>("de.cau.cs.kieler.sccharts.takenTransitionSignaling.useValueChangeSignaling", true)
     
     public static val ARRAY_SIZE = new Property<Integer>("takenTransitionSignaling.arraySize", 0)
     
@@ -89,7 +92,9 @@ class TakenTransitionSignaling extends SCChartsProcessor {
                 // Create assignments to taken transition array
                 rootState.createEmitForTakenTransitions(transitions, transitionArray)
                 // Create reset
-                val reset = rootState.createImmediateDuringAction
+                val reset = if (getProperty(USE_VALUE_CHANGE_SIGNALING))
+                    rootState.createEntryAction 
+                    else rootState.createImmediateDuringAction
                 // Add assignment to false for all variables in the transition array 
                 val cardinalities = transitionArray.cardinalities
                 if(!cardinalities.isNullOrEmpty) {

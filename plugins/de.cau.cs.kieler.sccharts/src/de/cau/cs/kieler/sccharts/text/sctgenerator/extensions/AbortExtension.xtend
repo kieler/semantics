@@ -92,9 +92,9 @@ class AbortExtension implements ISCTGeneratorExtension {
          * check whether or not it should get marked as strong or weak abort. */
         if (transition.sourceState.isSuperstate) {
             if (CHANCE_FOR_STRONG_ABORTS.random != 0) {
-                transition.preemption = PreemptionType.STRONGABORT
+                transition.preemption = PreemptionType.STRONG
             } else if (CHANCE_FOR_WEAK_ABORTS.random != 0) {
-                transition.preemption = PreemptionType.WEAKABORT
+                transition.preemption = PreemptionType.WEAK
             }
         }
     }

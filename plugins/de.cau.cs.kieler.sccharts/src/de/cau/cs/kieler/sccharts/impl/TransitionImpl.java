@@ -15,6 +15,7 @@ package de.cau.cs.kieler.sccharts.impl;
 
 import de.cau.cs.kieler.kexpressions.Expression;
 import de.cau.cs.kieler.kexpressions.keffects.Effect;
+import de.cau.cs.kieler.sccharts.DeferredType;
 import de.cau.cs.kieler.sccharts.HistoryType;
 import de.cau.cs.kieler.sccharts.PreemptionType;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
@@ -43,7 +44,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.TransitionImpl#getPreemption <em>Preemption</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.TransitionImpl#getHistory <em>History</em>}</li>
- *   <li>{@link de.cau.cs.kieler.sccharts.impl.TransitionImpl#isDeferred <em>Deferred</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.impl.TransitionImpl#getDeferred <em>Deferred</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.TransitionImpl#getTargetState <em>Target State</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.TransitionImpl#getSourceState <em>Source State</em>}</li>
  * </ul>
@@ -66,7 +67,7 @@ public class TransitionImpl extends ActionImpl implements Transition {
      * @generated
      * @ordered
      */
-    protected static final PreemptionType PREEMPTION_EDEFAULT = PreemptionType.WEAKABORT;
+    protected static final PreemptionType PREEMPTION_EDEFAULT = PreemptionType.WEAK;
 
     /**
      * The cached value of the '{@link #getPreemption() <em>Preemption</em>}' attribute.
@@ -99,24 +100,24 @@ public class TransitionImpl extends ActionImpl implements Transition {
     protected HistoryType history = HISTORY_EDEFAULT;
 
     /**
-     * The default value of the '{@link #isDeferred() <em>Deferred</em>}' attribute.
+     * The default value of the '{@link #getDeferred() <em>Deferred</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #isDeferred()
+     * @see #getDeferred()
      * @generated
      * @ordered
      */
-    protected static final boolean DEFERRED_EDEFAULT = false;
+    protected static final DeferredType DEFERRED_EDEFAULT = DeferredType.NONE;
 
     /**
-     * The cached value of the '{@link #isDeferred() <em>Deferred</em>}' attribute.
+     * The cached value of the '{@link #getDeferred() <em>Deferred</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #isDeferred()
+     * @see #getDeferred()
      * @generated
      * @ordered
      */
-    protected boolean deferred = DEFERRED_EDEFAULT;
+    protected DeferredType deferred = DEFERRED_EDEFAULT;
 
     /**
      * The cached value of the '{@link #getTargetState() <em>Target State</em>}' reference.
@@ -176,29 +177,6 @@ public class TransitionImpl extends ActionImpl implements Transition {
      * @generated
      */
     @Override
-    public boolean isDeferred() {
-        return deferred;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public void setDeferred(boolean newDeferred) {
-        boolean oldDeferred = deferred;
-        deferred = newDeferred;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.TRANSITION__DEFERRED, oldDeferred, deferred));
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
     public HistoryType getHistory() {
         return history;
     }
@@ -214,6 +192,29 @@ public class TransitionImpl extends ActionImpl implements Transition {
         history = newHistory == null ? HISTORY_EDEFAULT : newHistory;
         if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.TRANSITION__HISTORY, oldHistory, history));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public DeferredType getDeferred() {
+        return deferred;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public void setDeferred(DeferredType newDeferred) {
+        DeferredType oldDeferred = deferred;
+        deferred = newDeferred == null ? DEFERRED_EDEFAULT : newDeferred;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.TRANSITION__DEFERRED, oldDeferred, deferred));
     }
 
     /**
@@ -384,7 +385,7 @@ public class TransitionImpl extends ActionImpl implements Transition {
             case SCChartsPackage.TRANSITION__HISTORY:
                 return getHistory();
             case SCChartsPackage.TRANSITION__DEFERRED:
-                return isDeferred();
+                return getDeferred();
             case SCChartsPackage.TRANSITION__TARGET_STATE:
                 if (resolve) return getTargetState();
                 return basicGetTargetState();
@@ -409,7 +410,7 @@ public class TransitionImpl extends ActionImpl implements Transition {
                 setHistory((HistoryType)newValue);
                 return;
             case SCChartsPackage.TRANSITION__DEFERRED:
-                setDeferred((Boolean)newValue);
+                setDeferred((DeferredType)newValue);
                 return;
             case SCChartsPackage.TRANSITION__TARGET_STATE:
                 setTargetState((State)newValue);

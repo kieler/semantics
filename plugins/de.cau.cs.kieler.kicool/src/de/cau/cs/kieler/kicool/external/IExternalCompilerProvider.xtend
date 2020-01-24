@@ -21,6 +21,6 @@ interface IExternalCompilerProvider {
     
     abstract def String getId()
     
-    abstract def URI getRootDir(String os, String arch)
+    abstract def URI getRootDir()
     
 }

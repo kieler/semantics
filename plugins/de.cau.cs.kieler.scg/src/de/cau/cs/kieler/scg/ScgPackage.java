@@ -636,22 +636,13 @@ public interface ScgPackage extends EPackage {
     int ASSIGNMENT__OPERATOR = NODE_FEATURE_COUNT + 3;
 
 	/**
-     * The feature id for the '<em><b>Sub Reference</b></em>' containment reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int ASSIGNMENT__SUB_REFERENCE = NODE_FEATURE_COUNT + 4;
-
-    /**
      * The feature id for the '<em><b>Next</b></em>' containment reference.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-	int ASSIGNMENT__NEXT = NODE_FEATURE_COUNT + 5;
+	int ASSIGNMENT__NEXT = NODE_FEATURE_COUNT + 4;
 
     /**
      * The number of structural features of the '<em>Assignment</em>' class.
@@ -660,7 +651,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-	int ASSIGNMENT_FEATURE_COUNT = NODE_FEATURE_COUNT + 6;
+	int ASSIGNMENT_FEATURE_COUNT = NODE_FEATURE_COUNT + 5;
 
 	/**
      * The meta object id for the '{@link de.cau.cs.kieler.scg.impl.ForkImpl <em>Fork</em>}' class.
@@ -927,13 +918,22 @@ public interface ScgPackage extends EPackage {
 	int ENTRY__NEXT = NODE_FEATURE_COUNT + 1;
 
 	/**
+     * The feature id for the '<em><b>Reset SCG</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ENTRY__RESET_SCG = NODE_FEATURE_COUNT + 2;
+
+    /**
      * The number of structural features of the '<em>Entry</em>' class.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-	int ENTRY_FEATURE_COUNT = NODE_FEATURE_COUNT + 2;
+	int ENTRY_FEATURE_COUNT = NODE_FEATURE_COUNT + 3;
 
 	/**
      * The meta object id for the '{@link de.cau.cs.kieler.scg.impl.ExitImpl <em>Exit</em>}' class.
@@ -1385,22 +1385,13 @@ public interface ScgPackage extends EPackage {
 	int GUARD__OPERATOR = NODE_FEATURE_COUNT + 3;
 
 	/**
-     * The feature id for the '<em><b>Sub Reference</b></em>' containment reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int GUARD__SUB_REFERENCE = NODE_FEATURE_COUNT + 4;
-
-    /**
      * The number of structural features of the '<em>Guard</em>' class.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-	int GUARD_FEATURE_COUNT = NODE_FEATURE_COUNT + 5;
+	int GUARD_FEATURE_COUNT = NODE_FEATURE_COUNT + 4;
 
 	/**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -1437,6 +1428,24 @@ public interface ScgPackage extends EPackage {
      * @ordered
      */
     int CONTROL_FLOW__REFERENCE = KEffectsPackage.LINK__REFERENCE;
+
+    /**
+     * The feature id for the '<em><b>Original Source</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CONTROL_FLOW__ORIGINAL_SOURCE = KEffectsPackage.LINK__ORIGINAL_SOURCE;
+
+    /**
+     * The feature id for the '<em><b>Original Target</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CONTROL_FLOW__ORIGINAL_TARGET = KEffectsPackage.LINK__ORIGINAL_TARGET;
 
     /**
      * The number of structural features of the '<em>Control Flow</em>' class.
@@ -1484,6 +1493,24 @@ public interface ScgPackage extends EPackage {
     int EXPRESSION_DEPENDENCY__REFERENCE = KEffectsPackage.DEPENDENCY__REFERENCE;
 
                 /**
+     * The feature id for the '<em><b>Original Source</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int EXPRESSION_DEPENDENCY__ORIGINAL_SOURCE = KEffectsPackage.DEPENDENCY__ORIGINAL_SOURCE;
+
+                /**
+     * The feature id for the '<em><b>Original Target</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int EXPRESSION_DEPENDENCY__ORIGINAL_TARGET = KEffectsPackage.DEPENDENCY__ORIGINAL_TARGET;
+
+                /**
      * The number of structural features of the '<em>Expression Dependency</em>' class.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1527,6 +1554,24 @@ public interface ScgPackage extends EPackage {
      * @ordered
      */
     int GUARD_DEPENDENCY__REFERENCE = KEffectsPackage.DEPENDENCY__REFERENCE;
+
+                /**
+     * The feature id for the '<em><b>Original Source</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int GUARD_DEPENDENCY__ORIGINAL_SOURCE = KEffectsPackage.DEPENDENCY__ORIGINAL_SOURCE;
+
+                /**
+     * The feature id for the '<em><b>Original Target</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int GUARD_DEPENDENCY__ORIGINAL_TARGET = KEffectsPackage.DEPENDENCY__ORIGINAL_TARGET;
 
                 /**
      * The number of structural features of the '<em>Guard Dependency</em>' class.
@@ -1584,6 +1629,24 @@ public interface ScgPackage extends EPackage {
     int SCHEDULE_DEPENDENCY__REFERENCE = KEffectsPackage.DEPENDENCY__REFERENCE;
 
                 /**
+     * The feature id for the '<em><b>Original Source</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SCHEDULE_DEPENDENCY__ORIGINAL_SOURCE = KEffectsPackage.DEPENDENCY__ORIGINAL_SOURCE;
+
+                /**
+     * The feature id for the '<em><b>Original Target</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SCHEDULE_DEPENDENCY__ORIGINAL_TARGET = KEffectsPackage.DEPENDENCY__ORIGINAL_TARGET;
+
+                /**
      * The number of structural features of the '<em>Schedule Dependency</em>' class.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1637,6 +1700,24 @@ public interface ScgPackage extends EPackage {
      * @ordered
      */
     int TICK_BOUNDARY_DEPENDENCY__REFERENCE = KEffectsPackage.DEPENDENCY__REFERENCE;
+
+                /**
+     * The feature id for the '<em><b>Original Source</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TICK_BOUNDARY_DEPENDENCY__ORIGINAL_SOURCE = KEffectsPackage.DEPENDENCY__ORIGINAL_SOURCE;
+
+                /**
+     * The feature id for the '<em><b>Original Target</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TICK_BOUNDARY_DEPENDENCY__ORIGINAL_TARGET = KEffectsPackage.DEPENDENCY__ORIGINAL_TARGET;
 
                 /**
      * The number of structural features of the '<em>Tick Boundary Dependency</em>' class.
@@ -1979,6 +2060,17 @@ public interface ScgPackage extends EPackage {
 	EReference getEntry_Next();
 
 	/**
+     * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.scg.Entry#getResetSCG <em>Reset SCG</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference '<em>Reset SCG</em>'.
+     * @see de.cau.cs.kieler.scg.Entry#getResetSCG()
+     * @see #getEntry()
+     * @generated
+     */
+    EReference getEntry_ResetSCG();
+
+    /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.scg.Exit <em>Exit</em>}'.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2602,6 +2694,14 @@ public interface ScgPackage extends EPackage {
 		EReference ENTRY__NEXT = eINSTANCE.getEntry_Next();
 
 		/**
+         * The meta object literal for the '<em><b>Reset SCG</b></em>' containment reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference ENTRY__RESET_SCG = eINSTANCE.getEntry_ResetSCG();
+
+        /**
          * The meta object literal for the '{@link de.cau.cs.kieler.scg.impl.ExitImpl <em>Exit</em>}' class.
          * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->

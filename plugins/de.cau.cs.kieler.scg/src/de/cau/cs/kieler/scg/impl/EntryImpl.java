@@ -5,6 +5,7 @@ package de.cau.cs.kieler.scg.impl;
 import de.cau.cs.kieler.scg.ControlFlow;
 import de.cau.cs.kieler.scg.Entry;
 import de.cau.cs.kieler.scg.Exit;
+import de.cau.cs.kieler.scg.SCGraph;
 import de.cau.cs.kieler.scg.ScgPackage;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -25,6 +26,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scg.impl.EntryImpl#getExit <em>Exit</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.EntryImpl#getNext <em>Next</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scg.impl.EntryImpl#getResetSCG <em>Reset SCG</em>}</li>
  * </ul>
  *
  * @generated
@@ -49,6 +51,16 @@ public class EntryImpl extends NodeImpl implements Entry {
      * @ordered
      */
     protected ControlFlow next;
+
+    /**
+     * The cached value of the '{@link #getResetSCG() <em>Reset SCG</em>}' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getResetSCG()
+     * @generated
+     * @ordered
+     */
+    protected SCGraph resetSCG;
 
     /**
      * <!-- begin-user-doc -->
@@ -177,6 +189,49 @@ public class EntryImpl extends NodeImpl implements Entry {
      * <!-- end-user-doc -->
      * @generated
      */
+    public SCGraph getResetSCG() {
+        return resetSCG;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public NotificationChain basicSetResetSCG(SCGraph newResetSCG, NotificationChain msgs) {
+        SCGraph oldResetSCG = resetSCG;
+        resetSCG = newResetSCG;
+        if (eNotificationRequired()) {
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ScgPackage.ENTRY__RESET_SCG, oldResetSCG, newResetSCG);
+            if (msgs == null) msgs = notification; else msgs.add(notification);
+        }
+        return msgs;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setResetSCG(SCGraph newResetSCG) {
+        if (newResetSCG != resetSCG) {
+            NotificationChain msgs = null;
+            if (resetSCG != null)
+                msgs = ((InternalEObject)resetSCG).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ScgPackage.ENTRY__RESET_SCG, null, msgs);
+            if (newResetSCG != null)
+                msgs = ((InternalEObject)newResetSCG).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ScgPackage.ENTRY__RESET_SCG, null, msgs);
+            msgs = basicSetResetSCG(newResetSCG, msgs);
+            if (msgs != null) msgs.dispatch();
+        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.ENTRY__RESET_SCG, newResetSCG, newResetSCG));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     @Override
     public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
@@ -200,6 +255,8 @@ public class EntryImpl extends NodeImpl implements Entry {
                 return basicSetExit(null, msgs);
             case ScgPackage.ENTRY__NEXT:
                 return basicSetNext(null, msgs);
+            case ScgPackage.ENTRY__RESET_SCG:
+                return basicSetResetSCG(null, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
@@ -217,6 +274,8 @@ public class EntryImpl extends NodeImpl implements Entry {
                 return basicGetExit();
             case ScgPackage.ENTRY__NEXT:
                 return getNext();
+            case ScgPackage.ENTRY__RESET_SCG:
+                return getResetSCG();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -234,6 +293,9 @@ public class EntryImpl extends NodeImpl implements Entry {
                 return;
             case ScgPackage.ENTRY__NEXT:
                 setNext((ControlFlow)newValue);
+                return;
+            case ScgPackage.ENTRY__RESET_SCG:
+                setResetSCG((SCGraph)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -253,6 +315,9 @@ public class EntryImpl extends NodeImpl implements Entry {
             case ScgPackage.ENTRY__NEXT:
                 setNext((ControlFlow)null);
                 return;
+            case ScgPackage.ENTRY__RESET_SCG:
+                setResetSCG((SCGraph)null);
+                return;
         }
         super.eUnset(featureID);
     }
@@ -269,6 +334,8 @@ public class EntryImpl extends NodeImpl implements Entry {
                 return exit != null;
             case ScgPackage.ENTRY__NEXT:
                 return next != null;
+            case ScgPackage.ENTRY__RESET_SCG:
+                return resetSCG != null;
         }
         return super.eIsSet(featureID);
     }
