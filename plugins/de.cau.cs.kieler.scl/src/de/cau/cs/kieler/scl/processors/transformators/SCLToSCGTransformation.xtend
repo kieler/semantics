@@ -74,18 +74,19 @@ import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 import de.cau.cs.kieler.scg.extensions.SCGMethodExtensions
 import de.cau.cs.kieler.kexpressions.ValueType
+import de.cau.cs.kieler.kexpressions.ScheduleObjectReference
 
 /** 
  * SCL to SCG Transformation 
  * 
- * @author ssm, cmot, als
+ * @author ssm cmot als
  * @kieler.design 2014-01-27 proposed 
  * @kieler.rating 2014-01-27 proposed yellow
  */
 class SCLToSCGTransformation extends Processor<SCLProgram, SCGraphs> implements Traceable {
 
-    private static val String ANNOTATION_HOSTCODE = "hostcode"
-    private static val String ANNOTATION_CONTROLFLOWTHREADPATHTYPE = "cfPathType"
+    static val String ANNOTATION_HOSTCODE = "hostcode"
+    static val String ANNOTATION_CONTROLFLOWTHREADPATHTYPE = "cfPathType"
 
     @Inject extension SCGControlFlowExtensions 
     @Inject extension SCGThreadExtensions   
@@ -131,13 +132,13 @@ class SCLToSCGTransformation extends Processor<SCLProgram, SCGraphs> implements 
     // -------------------------------------------------------------------------
 
     // M2M Mapping
-    private val valuedObjectMapping = new HashMap<ValuedObject, ValuedObject>
-    private val nodeMapping = new HashMap<EObject, List<Node>>()
-    private val reverseNodeMapping = new HashMap<Node, EObject>()
-    private val labelMapping = new HashMap<Label, Node>()
-    private val gotoFlows = new HashMap<Goto, List<ControlFlow>>()
-    private val unmappedLabels = new LinkedList<Label>
-    private var ValuedObject returnVO = null
+    val valuedObjectMapping = new HashMap<ValuedObject, ValuedObject>
+    val nodeMapping = new HashMap<EObject, List<Node>>()
+    val reverseNodeMapping = new HashMap<Node, EObject>()
+    val labelMapping = new HashMap<Label, Node>()
+    val gotoFlows = new HashMap<Goto, List<ControlFlow>>()
+    val unmappedLabels = new LinkedList<Label>
+    var ValuedObject returnVO = null
     
     /*
      * Transformation method
@@ -490,6 +491,12 @@ class SCLToSCGTransformation extends Processor<SCLProgram, SCGraphs> implements 
                     for(annotation : assignment.annotations) {
                         it.annotations += annotation.copy
                     }
+                    
+                    for (s : assignment.schedule) {
+                        it.schedule += valuedObjectMapping.get(s.valuedObject).createScheduleReference => [
+                            it.priority = s.priority
+                        ]
+                    }
                 ]
                 controlFlows += node.createControlFlow
             ]
@@ -690,6 +697,15 @@ class SCLToSCGTransformation extends Processor<SCLProgram, SCGraphs> implements 
         newVOR.indices += vor.indices.map[copyExpression]
         return newVOR
     }
+    
+    private def ScheduleObjectReference copyScheduleReference(ScheduleObjectReference sor) {
+        if (sor === null) return null
+        if (sor.valuedObject === null) return null.createScheduleReference
+        
+        val newSOR = sor.valuedObject.copyValuedObject.createScheduleReference
+        newSOR.priority = sor.priority
+        return newSOR
+    }
 
     // References in expressions must be corrected as well!
     private def Expression copyExpression(Expression expression) {
@@ -699,6 +715,7 @@ class SCLToSCGTransformation extends Processor<SCLProgram, SCGraphs> implements 
             newExpression.subReference = (expression as ValuedObjectReference).subReference.copyReference
             newExpression.indices.clear
             newExpression.indices += (expression as ValuedObjectReference).indices.map[copyExpression]
+            newExpression.schedule += (expression as ValuedObjectReference).schedule.map[copyScheduleReference]
         } else if (newExpression !== null) {
             newExpression.eAllContents.filter(typeof(ValuedObjectReference)).forEach[vor|
                 vor.valuedObject = vor.valuedObject.copyValuedObject]
