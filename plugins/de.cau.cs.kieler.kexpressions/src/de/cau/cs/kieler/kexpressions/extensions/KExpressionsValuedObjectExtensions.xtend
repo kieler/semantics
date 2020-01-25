@@ -306,6 +306,17 @@ class KExpressionsValuedObjectExtensions {
         return refs
     }    
     
+    def List<ScheduleObjectReference> getAllSchedulingReferences(Expression expression) {
+        val refs = <ScheduleObjectReference>newArrayList
+        if (expression !== null) {
+            if (expression instanceof ScheduleObjectReference) {
+                refs += expression
+            }
+            refs += expression.eAllContents.filter(ScheduleObjectReference).toIterable
+        }
+        return refs
+    }
+    
     def List<ValuedObjectReference> getAllReferenceFromEObject(EObject eObject) {
         if (eObject === null) {
             return <ValuedObjectReference> newArrayList

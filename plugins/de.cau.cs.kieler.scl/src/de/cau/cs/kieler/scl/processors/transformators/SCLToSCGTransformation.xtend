@@ -75,6 +75,7 @@ import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTraci
 import de.cau.cs.kieler.scg.extensions.SCGMethodExtensions
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ScheduleObjectReference
+import de.cau.cs.kieler.kexpressions.Schedulable
 
 /** 
  * SCL to SCG Transformation 
@@ -492,10 +493,15 @@ class SCLToSCGTransformation extends Processor<SCLProgram, SCGraphs> implements 
                         it.annotations += annotation.copy
                     }
                     
+                    // Copy SDs for assignments
                     for (s : assignment.schedule) {
                         it.schedule += valuedObjectMapping.get(s.valuedObject).createScheduleReference => [
                             it.priority = s.priority
                         ]
+                    }
+                    // Add nested expression SDs to the assignment
+                    for (s : expression.allSchedulingReferences) {
+                        it.schedule += s.copy
                     }
                 ]
                 controlFlows += node.createControlFlow
@@ -715,10 +721,12 @@ class SCLToSCGTransformation extends Processor<SCLProgram, SCGraphs> implements 
             newExpression.subReference = (expression as ValuedObjectReference).subReference.copyReference
             newExpression.indices.clear
             newExpression.indices += (expression as ValuedObjectReference).indices.map[copyExpression]
-            newExpression.schedule += (expression as ValuedObjectReference).schedule.map[copyScheduleReference]
         } else if (newExpression !== null) {
             newExpression.eAllContents.filter(typeof(ValuedObjectReference)).forEach[vor|
                 vor.valuedObject = vor.valuedObject.copyValuedObject]
+        }
+        if (newExpression instanceof Schedulable) {
+            newExpression.schedule += (expression as Schedulable).schedule.map[copyScheduleReference]
         }
         newExpression
     }
