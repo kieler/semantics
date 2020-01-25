@@ -380,6 +380,8 @@ public class ScadeEquationsParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getSfbyExpressionAccess().getGroup_1_1(), "rule__SfbyExpression__Group_1_1__0");
 			builder.put(grammarAccess.getSfbyExpressionAccess().getGroup_1_2(), "rule__SfbyExpression__Group_1_2__0");
 			builder.put(grammarAccess.getAtomicValuedExpressionAccess().getGroup_4(), "rule__AtomicValuedExpression__Group_4__0");
+			builder.put(grammarAccess.getBoolScheduleExpressionAccess().getGroup(), "rule__BoolScheduleExpression__Group__0");
+			builder.put(grammarAccess.getBoolScheduleExpressionAccess().getGroup_1(), "rule__BoolScheduleExpression__Group_1__0");
 			builder.put(grammarAccess.getPrimeIDAccess().getGroup(), "rule__PrimeID__Group__0");
 			builder.put(grammarAccess.getValuedObjectReferenceAccess().getGroup(), "rule__ValuedObjectReference__Group__0");
 			builder.put(grammarAccess.getValuedObjectReferenceAccess().getGroup_1(), "rule__ValuedObjectReference__Group_1__0");
@@ -813,6 +815,7 @@ public class ScadeEquationsParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getSfbyExpressionAccess().getOperatorAssignment_1_1_0(), "rule__SfbyExpression__OperatorAssignment_1_1_0");
 			builder.put(grammarAccess.getSfbyExpressionAccess().getSubExpressionsAssignment_1_1_1(), "rule__SfbyExpression__SubExpressionsAssignment_1_1_1");
 			builder.put(grammarAccess.getSfbyExpressionAccess().getSubExpressionsAssignment_1_2_1(), "rule__SfbyExpression__SubExpressionsAssignment_1_2_1");
+			builder.put(grammarAccess.getBoolScheduleExpressionAccess().getScheduleAssignment_1_1(), "rule__BoolScheduleExpression__ScheduleAssignment_1_1");
 			builder.put(grammarAccess.getValuedObjectReferenceAccess().getValuedObjectAssignment_0(), "rule__ValuedObjectReference__ValuedObjectAssignment_0");
 			builder.put(grammarAccess.getValuedObjectReferenceAccess().getIndicesAssignment_1_1(), "rule__ValuedObjectReference__IndicesAssignment_1_1");
 			builder.put(grammarAccess.getValuedObjectReferenceAccess().getSubReferenceAssignment_2_1(), "rule__ValuedObjectReference__SubReferenceAssignment_2_1");

@@ -654,40 +654,6 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		//']'
 		public Keyword getRightSquareBracketKeyword_1_2_2() { return cRightSquareBracketKeyword_1_2_2; }
 	}
-	public class BoolScheduleExpressionElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.sccharts.text.SCTX.BoolScheduleExpression");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final RuleCall cLogicalOrExpressionParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
-		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
-		private final Keyword cScheduleKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
-		private final Assignment cScheduleAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
-		private final RuleCall cScheduleScheduleObjectReferenceParserRuleCall_1_1_0 = (RuleCall)cScheduleAssignment_1_1.eContents().get(0);
-		
-		//// ------------------ //
-		////  Transition Rules  // 
-		//// ------------------ //
-		//BoolScheduleExpression kexpressions::Expression:
-		//	LogicalOrExpression ('schedule' schedule+=ScheduleObjectReference)?;
-		@Override public ParserRule getRule() { return rule; }
-		
-		//LogicalOrExpression ('schedule' schedule+=ScheduleObjectReference)?
-		public Group getGroup() { return cGroup; }
-		
-		//LogicalOrExpression
-		public RuleCall getLogicalOrExpressionParserRuleCall_0() { return cLogicalOrExpressionParserRuleCall_0; }
-		
-		//('schedule' schedule+=ScheduleObjectReference)?
-		public Group getGroup_1() { return cGroup_1; }
-		
-		//'schedule'
-		public Keyword getScheduleKeyword_1_0() { return cScheduleKeyword_1_0; }
-		
-		//schedule+=ScheduleObjectReference
-		public Assignment getScheduleAssignment_1_1() { return cScheduleAssignment_1_1; }
-		
-		//ScheduleObjectReference
-		public RuleCall getScheduleScheduleObjectReferenceParserRuleCall_1_1_0() { return cScheduleScheduleObjectReferenceParserRuleCall_1_1_0; }
-	}
 	public class TransitionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.sccharts.text.SCTX.Transition");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -733,6 +699,9 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cLabelAssignment_9_1 = (Assignment)cGroup_9.eContents().get(1);
 		private final RuleCall cLabelSTRINGTerminalRuleCall_9_1_0 = (RuleCall)cLabelAssignment_9_1.eContents().get(0);
 		
+		//// ------------------ //
+		////  Transition Rules  // 
+		//// ------------------ //
 		//Transition sccharts::Transition:
 		//	{sccharts::Transition} annotations+=RestrictedTypeAnnotation*
 		//	/*
@@ -3154,7 +3123,6 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	private final ImplicitStateElements pImplicitState;
 	private final ScopeCallElements pScopeCall;
 	private final ScopeParameterElements pScopeParameter;
-	private final BoolScheduleExpressionElements pBoolScheduleExpression;
 	private final TransitionElements pTransition;
 	private final RegionElements pRegion;
 	private final ImplicitControlflowRegionElements pImplicitControlflowRegion;
@@ -3222,7 +3190,6 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		this.pImplicitState = new ImplicitStateElements();
 		this.pScopeCall = new ScopeCallElements();
 		this.pScopeParameter = new ScopeParameterElements();
-		this.pBoolScheduleExpression = new BoolScheduleExpressionElements();
 		this.pTransition = new TransitionElements();
 		this.pRegion = new RegionElements();
 		this.pImplicitControlflowRegion = new ImplicitControlflowRegionElements();
@@ -3397,16 +3364,6 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//// ------------------ //
 	////  Transition Rules  // 
 	//// ------------------ //
-	//BoolScheduleExpression kexpressions::Expression:
-	//	LogicalOrExpression ('schedule' schedule+=ScheduleObjectReference)?;
-	public BoolScheduleExpressionElements getBoolScheduleExpressionAccess() {
-		return pBoolScheduleExpression;
-	}
-	
-	public ParserRule getBoolScheduleExpressionRule() {
-		return getBoolScheduleExpressionAccess().getRule();
-	}
-	
 	//Transition sccharts::Transition:
 	//	{sccharts::Transition} annotations+=RestrictedTypeAnnotation*
 	//	/*
@@ -3943,7 +3900,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//Conditional:
 	//	annotations+=Annotation*
-	//	'if' expression=AtomicExpression
+	//	'if' expression=(BoolScheduleExpression | AtomicExpression)
 	//	'{'
 	//	declarations+=super::Declaration*
 	//	statements+=super::Statement*
@@ -5131,6 +5088,18 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getAtomicValuedExpressionRule() {
 		return getAtomicValuedExpressionAccess().getRule();
+	}
+	
+	//// Boolean expression with scheduling directives.
+	//// Is meant to be used in derived grammars. Do not delete this rule.     
+	//BoolScheduleExpression Expression:
+	//	LogicalOrExpression ('schedule' schedule+=ScheduleObjectReference)?;
+	public KExpressionsGrammarAccess.BoolScheduleExpressionElements getBoolScheduleExpressionAccess() {
+		return gaKExpressions.getBoolScheduleExpressionAccess();
+	}
+	
+	public ParserRule getBoolScheduleExpressionRule() {
+		return getBoolScheduleExpressionAccess().getRule();
 	}
 	
 	//// Valued Object Test Expression Rule

@@ -97,7 +97,7 @@ Return returns Return:
 
 Conditional returns Conditional: 
     (annotations += Annotation)*
-    'if' expression = AtomicExpression
+    'if' expression = (BoolScheduleExpression | AtomicExpression)
     '{'
     (declarations+=Declaration)*
     (statements += Statement)*
