@@ -39,7 +39,8 @@ class SCLSystemProvider implements ISystemProvider {
             "system/de.cau.cs.kieler.scl.ssa.scssa.kico",
             "system/de.cau.cs.kieler.scl.ssa.cssa.kico",
             "system/de.cau.cs.kieler.scl.ssa.cssa.sccp.kico",
-            "system/de.cau.cs.kieler.scl.scc.kico"
+            "system/de.cau.cs.kieler.scl.scc.kico",
+            "system/de.cau.cs.kieler.slic.schedule.kico"
         ]
     }
     
