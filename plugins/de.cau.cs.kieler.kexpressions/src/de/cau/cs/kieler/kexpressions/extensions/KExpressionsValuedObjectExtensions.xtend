@@ -377,7 +377,7 @@ class KExpressionsValuedObjectExtensions {
     def ValuedObject findValuedObjectByName(Declaration declaration, String name) {
         declaration.valuedObjects.filter[ it.name.equals(name) ]?.head
     }
-    
+   
     def List<OperatorExpression> getPreOperatorExpressions(OperatorExpression operatorExpression) {
         if (operatorExpression.operator == OperatorType.PRE) {
             return <OperatorExpression> newLinkedList(operatorExpression)
