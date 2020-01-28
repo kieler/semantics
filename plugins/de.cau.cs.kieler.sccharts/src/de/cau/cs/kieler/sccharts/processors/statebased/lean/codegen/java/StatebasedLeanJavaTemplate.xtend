@@ -101,6 +101,9 @@ class StatebasedLeanJavaTemplate extends AbstractStatebasedLeanTemplate {
 			  « IF needsContextInterface »
 			  	private final «rootState.uniqueName»Context externalContext; // Auto-Created context interface
 			  « ENDIF »
+			  
+			  public static final String ORIGINAL_SCCHART = "« rootState.getAnnotation("ORIGINAL_SCCHART").asStringAnnotation.values.head »";
+			  
 			  « IF DebugAnnotations.USE_ANNOTATIONS »
 			  
 			  /**

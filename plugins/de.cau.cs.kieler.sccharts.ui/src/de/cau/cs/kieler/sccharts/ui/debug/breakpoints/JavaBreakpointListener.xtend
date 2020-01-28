@@ -43,6 +43,11 @@ import de.cau.cs.kieler.sccharts.ui.debug.view.DebugDiagramView
 import de.cau.cs.kieler.sccharts.ui.debug.highlighting.DebugHighlighter
 import org.eclipse.jdt.debug.core.IJavaVariable
 import de.cau.cs.kieler.sccharts.Transition
+import org.eclipse.core.resources.IResource
+import org.eclipse.core.runtime.Path
+import java.nio.file.Files
+import org.eclipse.core.internal.resources.Workspace
+import org.eclipse.core.resources.ResourcesPlugin
 
 /**
  * @author peu
@@ -287,7 +292,13 @@ class JavaBreakpointListener implements IJavaBreakpointListener {
             if (currentModel === null || (text !== null && !text.equals(lastModelString)) || diagramView === null ||
                 diagramView.needsInit) {
                 lastModelString = text
-                currentModel = SCTXStandaloneParser.parseScope(text, StandardCharsets.UTF_8)
+                
+                val bpResource = breakpoint.marker.resource
+                
+                
+                
+                
+                currentModel = retrieveModel(text, bpResource);
 
                 println("New model; New synthesis...")
                 Display.^default.syncExec(new Runnable {
@@ -340,6 +351,19 @@ class JavaBreakpointListener implements IJavaBreakpointListener {
         }
 
         return DONT_CARE
+    }
+    
+    private def retrieveModel(String path, IResource resource) {
+        val fileContents = ResourcesPlugin.workspace.root.getFile(new Path(path))?.contents
+//        val fileContents = resource.project.getFile(path)?.contents
+        if (fileContents !== null) {
+            val text = new String(fileContents.readAllBytes)
+            fileContents.close
+            if (text !== null) {
+                return SCTXStandaloneParser.parseScope(text, StandardCharsets.UTF_8)
+            }
+        }
+        return null
     }
     
     
