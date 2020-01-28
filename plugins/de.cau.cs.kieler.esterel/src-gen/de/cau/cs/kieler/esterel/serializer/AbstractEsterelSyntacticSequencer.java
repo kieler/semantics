@@ -416,6 +416,7 @@ public abstract class AbstractEsterelSyntacticSequencer extends AbstractSyntacti
 	 *     ('(' ')') | '()'
 	 *
 	 * This ambiguous syntax occurs at:
+	 *     function=[Function|ID] (ambiguity) 'schedule' schedule+=ScheduleObjectReference
 	 *     function=[Function|ID] (ambiguity) (rule end)
 	 */
 	protected void emit_EsterelFunctionCall_LeftParenthesisRightParenthesisKeyword_1_1_or___LeftParenthesisKeyword_1_0_0_RightParenthesisKeyword_1_0_2__(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {

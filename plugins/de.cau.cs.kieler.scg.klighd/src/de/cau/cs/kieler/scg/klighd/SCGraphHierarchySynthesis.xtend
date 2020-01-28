@@ -282,34 +282,31 @@ class SCGraphHierarchySynthesis {
             }
         }
     }
-
+    
     def void synthesizeScheduleGroups(SCGraph scg) {
-        if(!(scg.hasSchedulingData && SCGraphDiagramSynthesis.SHOW_SCHEDULINGPATH.booleanValue)) return;
+        if (!(scg.hasSchedulingData && SCGraphDiagramSynthesis.SHOW_SCHEDULINGPATH.booleanValue)) return;
+        
+        val schedules = <List<Node>> newArrayList
 
-        val schedules = <List<Node>>newArrayList
-
-        for (node : scg.nodes.filter [
-            incomingLinks.filter(ScheduleDependency).empty && incomingLinks.filter(GuardDependency).empty
-        ]) {
-            val newSchedule = <Node>newArrayList => [ s |
+        for (node : scg.nodes.filter[ incomingLinks.filter(ScheduleDependency).empty && incomingLinks.filter(GuardDependency).empty ]) {
+            val newSchedule = <Node> newArrayList => [ s | 
                 s += node
-                node.dependencies.filter(GuardDependency).forEach[s += it.targetNode]
+                node.dependencies.filter(GuardDependency).forEach[ s += it.targetNode ]
             ]
             var next = node.dependencies.filter(ScheduleDependency).head?.targetNode
             while (next !== null) {
                 newSchedule += next
-                next.dependencies.filter(GuardDependency).forEach[newSchedule += it.targetNode]
+                next.dependencies.filter(GuardDependency).forEach[ newSchedule += it.targetNode ]
                 next = next.dependencies.filter(ScheduleDependency).head?.targetNode
-            }
-
+            }            
+            
             schedules += newSchedule
-        }
-
+        }        
+        
         System.out.println("Schedules " + schedules.size)
-        for (schedule : schedules) {
-            System.out.println(schedule)
+        for(schedule : schedules) {
             schedule.createHierarchy(NODEGROUPING_SCHEDULE, null)
-        }
+        }        
     }
 
     def void synthesizeSCCInGuardSCG(SCGraph scg) {

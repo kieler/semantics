@@ -1,0 +1,5 @@
+system de.cau.cs.kieler.slic.^schedule
+	label "SLIC Schedule"
+
+de.cau.cs.kieler.scl.slic.^schedule
+system de.cau.cs.kieler.scl.netlist.c

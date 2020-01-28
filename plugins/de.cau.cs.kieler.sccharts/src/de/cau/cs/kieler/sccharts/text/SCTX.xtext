@@ -81,10 +81,6 @@ ScopeParameter returns kexpressions::Parameter:
 //  Transition Rules  // 
 // ------------------ //
 
-BoolScheduleExpression returns kexpressions::Expression:
-    LogicalOrExpression
-    ('schedule' schedule += ScheduleObjectReference)?;
-
 Transition returns sccharts::Transition:
     {sccharts::Transition}
 	annotations+=RestrictedTypeAnnotation*
