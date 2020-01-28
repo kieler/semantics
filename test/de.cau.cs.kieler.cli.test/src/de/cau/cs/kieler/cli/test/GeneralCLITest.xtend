@@ -44,7 +44,7 @@ class GeneralCLITest extends AbstractCLITest {
 
         // compiler
         val command = #[compiler.path, "-v", "-t", errorSrc.path, src.path, "-o", dest.path]
-        assertEquals("Exit value not zero", 0, command.invoke)
+        assertNotEquals("Exit value not zero", 0, command.invoke)
 
         // check results
         assertExists(new File(dest, "abo.sctx"))
