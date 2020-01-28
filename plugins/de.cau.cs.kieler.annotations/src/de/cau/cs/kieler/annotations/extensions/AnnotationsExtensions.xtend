@@ -44,6 +44,14 @@ class AnnotationsExtensions {
 		else
 			""
 	}
+	
+    def List<String> getStringAnnotationValues(Annotatable annotatable, String name) {
+        val annotation = annotatable.getAnnotation(name)
+        if (annotation !== null)
+            (annotation as StringAnnotation).values
+        else
+            <String> newLinkedList
+    }	
 
 	def Annotatable createStringAnnotation(Annotatable source, String name, String value) {
 		source => [ annotations += name.createStringAnnotation(value) ]

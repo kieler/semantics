@@ -11691,21 +11691,39 @@ ruleConditional returns [EObject current=null]
 		}
 		(
 			(
-				{
-					newCompositeNode(grammarAccess.getConditionalAccess().getExpressionAtomicExpressionParserRuleCall_2_0());
-				}
-				lv_expression_2_0=ruleAtomicExpression
-				{
-					if ($current==null) {
-						$current = createModelElementForParent(grammarAccess.getConditionalRule());
+				(
+					{
+						newCompositeNode(grammarAccess.getConditionalAccess().getExpressionBoolScheduleExpressionParserRuleCall_2_0_0());
 					}
-					set(
-						$current,
-						"expression",
-						lv_expression_2_0,
-						"de.cau.cs.kieler.esterel.Esterel.AtomicExpression");
-					afterParserOrEnumRuleCall();
-				}
+					lv_expression_2_1=ruleBoolScheduleExpression
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getConditionalRule());
+						}
+						set(
+							$current,
+							"expression",
+							lv_expression_2_1,
+							"de.cau.cs.kieler.kexpressions.KExpressions.BoolScheduleExpression");
+						afterParserOrEnumRuleCall();
+					}
+					    |
+					{
+						newCompositeNode(grammarAccess.getConditionalAccess().getExpressionAtomicExpressionParserRuleCall_2_0_1());
+					}
+					lv_expression_2_2=ruleAtomicExpression
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getConditionalRule());
+						}
+						set(
+							$current,
+							"expression",
+							lv_expression_2_2,
+							"de.cau.cs.kieler.esterel.Esterel.AtomicExpression");
+						afterParserOrEnumRuleCall();
+					}
+				)
 			)
 		)
 		otherlv_3='{'
@@ -19601,6 +19619,61 @@ ruleSfbyExpression returns [EObject current=null]
 					)
 				)
 			)*
+		)?
+	)
+;
+
+// Entry rule entryRuleBoolScheduleExpression
+entryRuleBoolScheduleExpression returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getBoolScheduleExpressionRule()); }
+	iv_ruleBoolScheduleExpression=ruleBoolScheduleExpression
+	{ $current=$iv_ruleBoolScheduleExpression.current; }
+	EOF;
+
+// Rule BoolScheduleExpression
+ruleBoolScheduleExpression returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		{
+			/* */
+		}
+		{
+			newCompositeNode(grammarAccess.getBoolScheduleExpressionAccess().getLogicalOrExpressionParserRuleCall_0());
+		}
+		this_LogicalOrExpression_0=ruleLogicalOrExpression
+		{
+			$current = $this_LogicalOrExpression_0.current;
+			afterParserOrEnumRuleCall();
+		}
+		(
+			otherlv_1='schedule'
+			{
+				newLeafNode(otherlv_1, grammarAccess.getBoolScheduleExpressionAccess().getScheduleKeyword_1_0());
+			}
+			(
+				(
+					{
+						newCompositeNode(grammarAccess.getBoolScheduleExpressionAccess().getScheduleScheduleObjectReferenceParserRuleCall_1_1_0());
+					}
+					lv_schedule_2_0=ruleScheduleObjectReference
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getBoolScheduleExpressionRule());
+						}
+						add(
+							$current,
+							"schedule",
+							lv_schedule_2_0,
+							"de.cau.cs.kieler.kexpressions.KExpressions.ScheduleObjectReference");
+						afterParserOrEnumRuleCall();
+					}
+				)
+			)
 		)?
 	)
 ;

@@ -56,6 +56,7 @@ public class SCTXParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getKeywordMethodDeclarationWOSemicolonAccess().getAlternatives_6(), "rule__KeywordMethodDeclarationWOSemicolon__Alternatives_6");
 			builder.put(grammarAccess.getHiddenKeywordsAccess().getAlternatives(), "rule__HiddenKeywords__Alternatives");
 			builder.put(grammarAccess.getSclEffectAssignmentAccess().getExpressionAlternatives_1_0(), "rule__SclEffectAssignment__ExpressionAlternatives_1_0");
+			builder.put(grammarAccess.getConditionalAccess().getExpressionAlternatives_2_0(), "rule__Conditional__ExpressionAlternatives_2_0");
 			builder.put(grammarAccess.getConditionalAccess().getAlternatives_7(), "rule__Conditional__Alternatives_7");
 			builder.put(grammarAccess.getThreadAccess().getAlternatives_1(), "rule__Thread__Alternatives_1");
 			builder.put(grammarAccess.getForLoopAccess().getAlternatives_2(), "rule__ForLoop__Alternatives_2");
@@ -151,8 +152,6 @@ public class SCTXParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getScopeParameterAccess().getGroup_0_0(), "rule__ScopeParameter__Group_0_0__0");
 			builder.put(grammarAccess.getScopeParameterAccess().getGroup_1(), "rule__ScopeParameter__Group_1__0");
 			builder.put(grammarAccess.getScopeParameterAccess().getGroup_1_2(), "rule__ScopeParameter__Group_1_2__0");
-			builder.put(grammarAccess.getBoolScheduleExpressionAccess().getGroup(), "rule__BoolScheduleExpression__Group__0");
-			builder.put(grammarAccess.getBoolScheduleExpressionAccess().getGroup_1(), "rule__BoolScheduleExpression__Group_1__0");
 			builder.put(grammarAccess.getTransitionAccess().getGroup(), "rule__Transition__Group__0");
 			builder.put(grammarAccess.getTransitionAccess().getGroup_3(), "rule__Transition__Group_3__0");
 			builder.put(grammarAccess.getTransitionAccess().getGroup_3_3(), "rule__Transition__Group_3_3__0");
@@ -429,6 +428,8 @@ public class SCTXParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getSfbyExpressionAccess().getGroup_1_2(), "rule__SfbyExpression__Group_1_2__0");
 			builder.put(grammarAccess.getAtomicExpressionAccess().getGroup_1(), "rule__AtomicExpression__Group_1__0");
 			builder.put(grammarAccess.getAtomicValuedExpressionAccess().getGroup_4(), "rule__AtomicValuedExpression__Group_4__0");
+			builder.put(grammarAccess.getBoolScheduleExpressionAccess().getGroup(), "rule__BoolScheduleExpression__Group__0");
+			builder.put(grammarAccess.getBoolScheduleExpressionAccess().getGroup_1(), "rule__BoolScheduleExpression__Group_1__0");
 			builder.put(grammarAccess.getValuedObjectTestExpressionAccess().getGroup_0(), "rule__ValuedObjectTestExpression__Group_0__0");
 			builder.put(grammarAccess.getValuedObjectTestExpressionAccess().getGroup_0_4(), "rule__ValuedObjectTestExpression__Group_0_4__0");
 			builder.put(grammarAccess.getPrimeIDAccess().getGroup(), "rule__PrimeID__Group__0");
@@ -526,7 +527,6 @@ public class SCTXParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getScopeParameterAccess().getExpressionAssignment_0_1(), "rule__ScopeParameter__ExpressionAssignment_0_1");
 			builder.put(grammarAccess.getScopeParameterAccess().getExplicitBindingAssignment_1_1(), "rule__ScopeParameter__ExplicitBindingAssignment_1_1");
 			builder.put(grammarAccess.getScopeParameterAccess().getExplicitBindingIndicesAssignment_1_2_1(), "rule__ScopeParameter__ExplicitBindingIndicesAssignment_1_2_1");
-			builder.put(grammarAccess.getBoolScheduleExpressionAccess().getScheduleAssignment_1_1(), "rule__BoolScheduleExpression__ScheduleAssignment_1_1");
 			builder.put(grammarAccess.getTransitionAccess().getAnnotationsAssignment_1(), "rule__Transition__AnnotationsAssignment_1");
 			builder.put(grammarAccess.getTransitionAccess().getDelayAssignment_2(), "rule__Transition__DelayAssignment_2");
 			builder.put(grammarAccess.getTransitionAccess().getTriggerDelayAssignment_3_1(), "rule__Transition__TriggerDelayAssignment_3_1");
@@ -993,6 +993,7 @@ public class SCTXParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getSfbyExpressionAccess().getOperatorAssignment_1_1_0(), "rule__SfbyExpression__OperatorAssignment_1_1_0");
 			builder.put(grammarAccess.getSfbyExpressionAccess().getSubExpressionsAssignment_1_1_1(), "rule__SfbyExpression__SubExpressionsAssignment_1_1_1");
 			builder.put(grammarAccess.getSfbyExpressionAccess().getSubExpressionsAssignment_1_2_1(), "rule__SfbyExpression__SubExpressionsAssignment_1_2_1");
+			builder.put(grammarAccess.getBoolScheduleExpressionAccess().getScheduleAssignment_1_1(), "rule__BoolScheduleExpression__ScheduleAssignment_1_1");
 			builder.put(grammarAccess.getValuedObjectTestExpressionAccess().getOperatorAssignment_0_1(), "rule__ValuedObjectTestExpression__OperatorAssignment_0_1");
 			builder.put(grammarAccess.getValuedObjectTestExpressionAccess().getSubExpressionsAssignment_0_3(), "rule__ValuedObjectTestExpression__SubExpressionsAssignment_0_3");
 			builder.put(grammarAccess.getValuedObjectTestExpressionAccess().getSubExpressionsAssignment_0_4_1(), "rule__ValuedObjectTestExpression__SubExpressionsAssignment_0_4_1");

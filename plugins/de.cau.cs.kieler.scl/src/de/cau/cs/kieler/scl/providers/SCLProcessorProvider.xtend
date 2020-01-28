@@ -26,7 +26,8 @@ class SCLProcessorProvider implements IProcessorProvider {
             de.cau.cs.kieler.scl.processors.transformators.SCGToSCLTransformation,
             de.cau.cs.kieler.scl.processors.transformators.SCLToSCGTransformation,
             de.cau.cs.kieler.scl.processors.transformators.RestrictedSCG2SCL,
-            de.cau.cs.kieler.scl.processors.transformators.ssa.SSASCG2SSASCL
+            de.cau.cs.kieler.scl.processors.transformators.ssa.SSASCG2SSASCL,
+            de.cau.cs.kieler.scl.processors.transformators.SLICScheduleProcessor
         ]
     }
     

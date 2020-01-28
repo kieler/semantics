@@ -89,4 +89,12 @@ class KExpressionsValueExtensions {
             }
         ]  
     }  	
+    
+    def boolean isGenericTrue(Expression expression) {
+        switch(expression) {
+            IntValue: { if (expression.value === 1) return true; }
+            BoolValue: { return expression.value; }
+        }
+        return false
+    }
 }

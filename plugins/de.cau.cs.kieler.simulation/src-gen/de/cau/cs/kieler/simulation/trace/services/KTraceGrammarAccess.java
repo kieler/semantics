@@ -1631,6 +1631,18 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 		return getAtomicValuedExpressionAccess().getRule();
 	}
 	
+	//// Boolean expression with scheduling directives.
+	//// Is meant to be used in derived grammars. Do not delete this rule.     
+	//BoolScheduleExpression Expression:
+	//	LogicalOrExpression ('schedule' schedule+=ScheduleObjectReference)?;
+	public KExpressionsGrammarAccess.BoolScheduleExpressionElements getBoolScheduleExpressionAccess() {
+		return gaKExpressions.getBoolScheduleExpressionAccess();
+	}
+	
+	public ParserRule getBoolScheduleExpressionRule() {
+		return getBoolScheduleExpressionAccess().getRule();
+	}
+	
 	//// Valued Object Test Expression Rule
 	//// This rules creates an operator expression for pre or val tests. Alternatively, it directs to a
 	//// valued object reference.
