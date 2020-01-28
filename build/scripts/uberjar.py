@@ -150,9 +150,9 @@ def main(args):
                 write_script(file, '#!/usr/bin/env bash\nexec java -Djava.system.class.loader=de.cau.cs.kieler.kicool.cli.CLILoader -Xmx512m -jar $0 "$@"\n', code)
             # windows
             with open(join(traget_dir, args.name + '-win.bat'), 'wb') as file:
-                write_script(file, 'java -Djava.system.class.loader=de.cau.cs.kieler.kicool.cli.CLILoader -Xmx512m %s -jar %%0 %%* \r\n exit /b \r\n' % java9_options, code) # escaped percent sign because of format string!
+                write_script(file, 'java -Djava.system.class.loader=de.cau.cs.kieler.kicool.cli.CLILoader -Xmx512m %s -jar %%0 %%* \r\n exit /b %errorlevel%\r\n' % java9_options, code) # escaped percent sign because of format string!
             with open(join(traget_dir, args.name + '-winJava8.bat'), 'wb') as file:
-                write_script(file, 'java -Djava.system.class.loader=de.cau.cs.kieler.kicool.cli.CLILoader -Xmx512m -jar %0 %* \r\n exit /b \r\n', code)
+                write_script(file, 'java -Djava.system.class.loader=de.cau.cs.kieler.kicool.cli.CLILoader -Xmx512m -jar %0 %* \r\n exit /b %errorlevel%\r\n', code)
             # osx
             with open(join(traget_dir, args.name + '-osx'), 'wb') as file:
                 write_script(file, '#!/usr/bin/env bash\nexec java -Djava.system.class.loader=de.cau.cs.kieler.kicool.cli.CLILoader -XstartOnFirstThread -Xmx512m %s -jar $0 "$@"' % java9_options, code)
