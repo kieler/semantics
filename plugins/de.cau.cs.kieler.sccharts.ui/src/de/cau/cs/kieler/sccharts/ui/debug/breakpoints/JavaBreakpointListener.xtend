@@ -1,6 +1,6 @@
 /*
  * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
- *
+ * 
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
  * Copyright ${year} by
@@ -45,243 +45,264 @@ import org.eclipse.jdt.debug.core.IJavaVariable
 import de.cau.cs.kieler.sccharts.Transition
 import org.eclipse.core.resources.IResource
 import org.eclipse.core.runtime.Path
-import java.nio.file.Files
-import org.eclipse.core.internal.resources.Workspace
 import org.eclipse.core.resources.ResourcesPlugin
+import org.eclipse.debug.core.IDebugEventSetListener
+import org.eclipse.debug.core.DebugEvent
 
 /**
  * @author peu
- *
+ * 
  */
-class JavaBreakpointListener implements IJavaBreakpointListener {
-    
+class JavaBreakpointListener implements IJavaBreakpointListener, IDebugEventSetListener {
+
     @Inject extension SCChartsScopeExtensions
-    
-    
+
     new() {
         super()
-        pendingBreakpoints = <IJavaBreakpoint> newLinkedList
+        pendingBreakpoints = <IJavaBreakpoint>newLinkedList
         Guice.createInjector.injectMembers(this)
     }
-    
+
     val debugHighlighter = DebugHighlighter.instance
-    
-//    var breakpointToTarget = new HashMap<IJavaBreakpoint,IJavaDebugTarget>()
-    
+
     var lastModelString = ""
     var SCCharts currentModel;
-    
+
     val List<IJavaBreakpoint> pendingBreakpoints
-    
+
     /**
      * Find the model states in the original SCChart currently being executed.
      */
-    def List<State> findExecutingStates(IJavaThread thread, IJavaBreakpoint breakpoint, SCCharts model) {
-        
-        val executingStates = <State> newLinkedList
-        
+    def List<State> findExecutingStates(IJavaThread thread) {
+
+        val executingStates = <State>newLinkedList
+
         // Each stack frame corresponds to one method call, each of which may correspond to a state's method
         for (frame : thread.stackFrames) {
             val methodName = (frame as JDIStackFrame).methodName
-            
-            // Use UIJob to get active editor -----------------------------------------
-            val ITextEditor[] editorArr = newArrayOfSize(1)
-            
-            val job = new UIJob("getActiveEditor") {
-                
-                override runInUIThread(IProgressMonitor monitor) {
-                    try {
-                        editorArr.set(0, PlatformUI.getWorkbench?.activeWorkbenchWindow.getActivePage?.getActiveEditor as ITextEditor)
-                        return Status.OK_STATUS
-                    } catch (Exception e){
-                        e.printStackTrace
-                        return Status.CANCEL_STATUS
-                    }
-                }   
-            }
-            
-            job.schedule
-            job.join
-            
-            val editor = editorArr.head
+
+            val editor = retrieveActiveEditor
 
             // Extract method object from editor corresponding the current stack frame 
             val typeRoot = JavaUI.getEditorInputTypeRoot(editor.editorInput)
             val compilationUnit = (typeRoot.getAdapter(ICompilationUnit) as ICompilationUnit)
-            
-            val methods = <IMethod> newLinkedList
+
+            val methods = <IMethod>newLinkedList
             for (type : compilationUnit.allTypes) {
                 methods.addAll(type.methods)
             }
-            
-            val foundMethods = <IMethod> newLinkedList
-            
+
+            val foundMethods = <IMethod>newLinkedList
+
             for (method : methods) {
                 if (method.elementName.equals(methodName)) {
                     foundMethods.add(method)
                 }
             }
-            
+
             // Get Javadoc attached to method(s) and resolve to SCCharts States in original model
             for (method : foundMethods) {
-                
+
                 val javadocRange = method.javadocRange
                 if (javadocRange !== null) {
-                    val comment = compilationUnit.source.substring(javadocRange.offset, javadocRange.offset + javadocRange.length)
+                    val comment = compilationUnit.source.substring(javadocRange.offset,
+                        javadocRange.offset + javadocRange.length)
                     // TODO redo this with regex matchers
                     val commentLines = comment.split("\n")
                     // get last-but-first line, which is the last text line of the comment
                     val stateNameString = commentLines.get(commentLines.length - 2)
                     val stateName = stateNameString.split("\\* ").get(1)
-                    val states = model.getStatesByID(stateName.split(" ").get(1).split("\\(").get(0))
+                    val states = getStatesByID(stateName.split(" ").get(1).split("\\(").get(0))
                     val stateHashString = stateName.split("\\(").last
                     val stateHashValue = stateHashString.substring(0, stateHashString.length - 1)
-                    executingStates.addAll(states.filter[DebugAnnotations.getFullNameHash(it).toString.equals(stateHashValue)].toList)
+                    executingStates.addAll(states.filter [
+                        DebugAnnotations.getFullNameHash(it).toString.equals(stateHashValue)
+                    ].toList)
                 }
             }
         }
-        
+
         return executingStates
     }
-    
+
     /**
      * Extract all active states from the current model
      */
-    def List<State> findActiveStates(IJavaThread thread, IJavaBreakpoint breakpoint, SCCharts model) {
-        
+    def List<State> findActiveStates(IJavaThread thread) {
+
         val context = thread.findVariable("rootContext")
-        val activeStates = extractStatesFromContext(context, model) 
+        val activeStates = extractStatesFromContext(context)
         return activeStates
-        
+
     }
-    
+
     /**
      * Recursively extract active states from this and all enclosed contexts
      */
-    def List<State> extractStatesFromContext(IJavaVariable context, SCCharts model) {
-        
+    def List<State> extractStatesFromContext(IJavaVariable context) {
+
         val vars = context.value.variables
-        val activeStates = <State> newLinkedList
-        
+        val activeStates = <State>newLinkedList
+
         for (variable : vars) {
             if (variable.name.equals("threadStatus")) {
                 val status = variable.value?.variables.filter[name.equals("name")].head?.value?.valueString
                 // If region was not yet initialized or has terminated already, ignore all active states within it
                 if (status === null || status.equals("null") || status.equals("TERMINATED")) {
-                    return <State> newLinkedList
+                    return <State>newLinkedList
                 }
             } else if (variable.name.equals("activeState")) {
                 // Get the currently active state on this hierarchy level
                 val varValue = variable.value
-                if (!varValue.valueString.equals("null") ) {
+                if (!varValue.valueString.equals("null")) {
                     val stateName = varValue.variables.filter[name.equals("origin")].head.value.toString
                     // TODO redo this with regex matchers, throws exceptions
-                    val states = model.getStatesByID(stateName.split(" ").get(1).split("\\(").get(0))
+                    val states = getStatesByID(stateName.split(" ").get(1).split("\\(").get(0))
                     val stateHashString = stateName.split("\\(").last
                     val stateHashValue = stateHashString.substring(0, stateHashString.length - 2)
-                    activeStates.addAll(states.filter[DebugAnnotations.getFullNameHash(it).toString.equals(stateHashValue)])
+                    activeStates.addAll(states.filter [
+                        DebugAnnotations.getFullNameHash(it).toString.equals(stateHashValue)
+                    ])
                 }
             } else {
                 // Get the active state from a child region
-                activeStates.addAll(extractStatesFromContext(variable as IJavaVariable, model))
+                activeStates.addAll(extractStatesFromContext(variable as IJavaVariable))
             }
         }
-        
+
         return activeStates
     }
-    
+
     /**
      * Return all states with a given name in a given model.
      * TODO move this to some helper method
      */
-    def List<State> getStatesByID(SCCharts model, String stateName) {
-        var col = <State> newLinkedList
-        
-        for (state : model.rootStates) {
+    def List<State> getStatesByID(String stateName) {
+        var col = <State>newLinkedList
+
+        for (state : currentModel.rootStates) {
             col.addAll(state.allStates.filter[name.equals(stateName)].toList)
         }
-        
+
         return col
     }
-    
+
     /**
      * Determine the transition associated with the given breakpoint.
      */
-    def Transition findCurrentTransition(IJavaThread thread, IJavaBreakpoint breakpoint, SCCharts model, List<State> activeStates) {
+    private def Transition findCurrentTransition(IJavaBreakpoint breakpoint) {
 
         if (breakpoint instanceof TransitionCheckBreakpoint) {
             return breakpoint.transition
         }
-
-//        // Use UIJob to get active editor -----------------------------------------
-//        val ITextEditor[] editorArr = newArrayOfSize(1)
-//
-//        val job = new UIJob("getActiveEditor") {
-//
-//            override runInUIThread(IProgressMonitor monitor) {
-//                try {
-//                    editorArr.set(0,
-//                        PlatformUI.getWorkbench?.activeWorkbenchWindow.getActivePage?.getActiveEditor as ITextEditor)
-//                    return Status.OK_STATUS
-//                } catch (Exception e) {
-//                    e.printStackTrace
-//                    return Status.CANCEL_STATUS
-//                }
-//            }
-//        }
-//
-//        job.schedule
-//        job.join
-//
-//        val editor = editorArr.head
-//
-//        // Extract line text -------------------------------------------------------
-//        val lineNumber = (breakpoint as ILineBreakpoint).lineNumber - 1
-//        val document = editor.documentProvider.getDocument(editor.editorInput)
-//        val offset = document.getLineOffset(lineNumber) // TODO throws BadLocationException sometimes since the editor switches to the active breakpoint AFTER this method is complete
-//        val length = document.getLineLength(lineNumber)
-//        val lineText = document.get(offset, length)
-//        
-//        val lineTextSplit = lineText.split("//")
-//        if (lineTextSplit.length >= 2) {
-//            val commentText = lineTextSplit.get(1)
-//            if (commentText !== null) {
-//                // The line has a comment, which may be a transition indicator
-//                val commentTextSplit = commentText.split("\\(Priority ")
-//                if (commentTextSplit.length >= 2) { 
-//                    // TODO does not work with more than 9 transitions on one state
-//                    val prio = Integer.parseInt(commentTextSplit.get(1)?.charAt(0).toString)
-//                    if (prio != 0) {
-//                        // now determine what state the transition leaves from.
-//                        // Note that that is usually, but not always the lowest active state.
-//                        // Special case: abort.
-//                        val transitionHashString = commentTextSplit.last.split("\\(")
-//                        val transitionHash = transitionHashString.last.substring(0, transitionHashString.last.length - 2)
-//                        for (state : activeStates) {
-//                            if (state.outgoingTransitions.length >= prio) {
-//                                val transition = state.outgoingTransitions.get(prio - 1)
-//                                if (DebugAnnotations.getFullNameHash(transition).toString.equals(transitionHash)) {
-//                                    return transition
-//                                }
-//                            }
-//                        }
-//                        
-//                    }
-//                }
-//            }
-//        }
-        
         return null
     }
-    
+
+    private def Transition findCurrentTransition(IJavaThread thread, int lineNumber, List<State> activeStates) {
+
+        val editor = retrieveActiveEditor
+
+        // Extract line text
+        val document = editor.documentProvider.getDocument(editor.editorInput)
+        val offset = document.getLineOffset(lineNumber) // TODO throws BadLocationException sometimes since the editor switches to the active breakpoint AFTER this method is complete
+        val length = document.getLineLength(lineNumber)
+        val lineText = document.get(offset, length)
+        
+        val lineTextSplit = lineText.split("//")
+        if (lineTextSplit.length >= 2) {
+            val commentText = lineTextSplit.get(1)
+            if (commentText !== null) {
+                // The line has a comment, which may be a transition indicator
+                val commentTextSplit = commentText.split("\\(Priority ")
+                if (commentTextSplit.length >= 2) { 
+                    // TODO does not work with more than 9 transitions on one state
+                    val prio = Integer.parseInt(commentTextSplit.get(1)?.charAt(0).toString)
+                    if (prio != 0) {
+                        // now determine what state the transition leaves from.
+                        // Note that that is usually, but not always the lowest active state.
+                        // Special case: abort.
+                        val transitionHashString = commentTextSplit.last.split("\\(")
+                        val transitionHash = transitionHashString.last.substring(0, transitionHashString.last.length - 2)
+                        for (state : activeStates) {
+                            if (state.outgoingTransitions.length >= prio) {
+                                val transition = state.outgoingTransitions.get(prio - 1)
+                                if (DebugAnnotations.getFullNameHash(transition).toString.equals(transitionHash)) {
+                                    return transition
+                                }
+                            }
+                        }
+                        
+                    }
+                }
+            }
+        }
+    }
+
     override breakpointHit(IJavaThread thread, IJavaBreakpoint breakpoint) {
         if (!breakpoint.isEnabled) {
             println("Disabled breakpoint, skipping...")
             return DONT_SUSPEND
         }
-        println("Hitting breakpoint!")
-        println(breakpoint)
+        try {
+            ensureCorrectModel(thread)        
+        } catch (IllegalStateException e) {
+            return DONT_CARE
+        }
 
+        // make sure to register all breakpoints in the breakpoint manager
+        for (pendingBreakpoint : pendingBreakpoints) {
+            DebugBreakpointManager.instance.presentBreakpoint(pendingBreakpoint, currentModel)
+        }
+        pendingBreakpoints.clear
+
+        if (breakpoint instanceof TransitionWatchBreakpoint) {
+            println("Hit watch breakpoint.")
+            DebugBreakpointManager.instance.watchBreakpointHit(breakpoint)
+            return DONT_SUSPEND
+        } else {
+            
+            findAndHighlightStates(thread)
+            
+            // If the breakpoint was triggered when checking for a transition,
+            // display the transition currently being checked
+            if (breakpoint instanceof TransitionCheckBreakpoint) {
+                val currentTransition = findCurrentTransition(breakpoint)
+                if (currentTransition !== null) {
+                    debugHighlighter.highlightExecutingTransition(currentTransition)
+                }
+            } else if (breakpoint instanceof StateBreakpoint) {
+                DebugBreakpointManager.instance.stateBreakpointHit(breakpoint)
+            }
+            return SUSPEND
+        }
+    }
+
+    override handleDebugEvents(DebugEvent[] events) {
+        for (event : events) {
+            if (event.kind == DebugEvent.SUSPEND && event.detail == DebugEvent.STEP_END) {
+                println("Step ending.")
+                val thread = event.source
+                if (thread instanceof IJavaThread) {
+                    val lineNumber = thread.topStackFrame.lineNumber
+                    
+                    try {
+                        ensureCorrectModel(thread)
+                        findAndHighlightStates(thread)
+                        val currentTransition = findCurrentTransition(thread, lineNumber - 1, findActiveStates(thread))
+                        
+                        if (currentTransition !== null) {
+                            debugHighlighter.highlightExecutingTransition(currentTransition)
+                        }
+                        println("Ending in line " + lineNumber)
+                    } catch (IllegalStateException e) {
+                        // silent catch
+                    }
+                }
+            }
+        }
+    }
+
+    private def ensureCorrectModel(IJavaThread thread) {
         val target = thread.debugTarget as IJavaDebugTarget
         val chartVar = target.findVariable("ORIGINAL_SCCHART")
         if (chartVar !== null && chartVar.javaType.name.equals("java.lang.String")) {
@@ -292,13 +313,7 @@ class JavaBreakpointListener implements IJavaBreakpointListener {
             if (currentModel === null || (text !== null && !text.equals(lastModelString)) || diagramView === null ||
                 diagramView.needsInit) {
                 lastModelString = text
-                
-                val bpResource = breakpoint.marker.resource
-                
-                
-                
-                
-                currentModel = retrieveModel(text, bpResource);
+                currentModel = retrieveModel(text);
 
                 println("New model; New synthesis...")
                 Display.^default.syncExec(new Runnable {
@@ -306,54 +321,16 @@ class JavaBreakpointListener implements IJavaBreakpointListener {
                         DebugDiagramView.updateView(currentModel)
                     }
                 })
-
-                // make sure to register all breakpoints in the breakpoint manager
-                for (pendingBreakpoint : pendingBreakpoints) {
-                    DebugBreakpointManager.instance.presentBreakpoint(pendingBreakpoint, currentModel)
-                }
-                pendingBreakpoints.clear
-
             } else {
                 // Otherwise, clear all highlightings
                 debugHighlighter.clearAllHighlights
             }
-
-            if (breakpoint instanceof TransitionWatchBreakpoint) {
-                println("Hit watch breakpoint.")
-                DebugBreakpointManager.instance.watchBreakpointHit(breakpoint)
-                return DONT_SUSPEND
-            } else {
-
-                // Find the currently active states on SCCharts Level
-                val activeStates = findActiveStates(thread, breakpoint, currentModel)
-                for (state : activeStates) {
-                    debugHighlighter.highlightActiveState(state)
-                }
-
-                // Find and visualize the states currently being executed on Java level
-                val executingStates = findExecutingStates(thread, breakpoint, currentModel)
-                for (state : executingStates) {
-                    debugHighlighter.highlightExecutingState(state)
-                }
-
-                // If the breakpoint was triggered when checking for a transition,
-                // display the transition currently being checked
-                if (breakpoint instanceof TransitionCheckBreakpoint) {
-                    val currentTransition = findCurrentTransition(thread, breakpoint, currentModel, executingStates)
-                    if (currentTransition !== null) {
-                        debugHighlighter.highlightExecutingTransition(currentTransition)
-                    }
-                } else if (breakpoint instanceof StateBreakpoint) {
-                    DebugBreakpointManager.instance.stateBreakpointHit(breakpoint)
-                }
-                return SUSPEND
-            }
+        } else {
+            throw new IllegalStateException("Cannot retrieve model; Code not generated from SCCharts.")
         }
-
-        return DONT_CARE
     }
-    
-    private def retrieveModel(String path, IResource resource) {
+
+    private def retrieveModel(String path) {
         val fileContents = ResourcesPlugin.workspace.root.getFile(new Path(path))?.contents
 //        val fileContents = resource.project.getFile(path)?.contents
         if (fileContents !== null) {
@@ -365,9 +342,47 @@ class JavaBreakpointListener implements IJavaBreakpointListener {
         }
         return null
     }
-    
-    
-    
+
+    private def findAndHighlightStates(IJavaThread thread) {
+        // Find the currently active states on SCCharts Level
+        val activeStates = findActiveStates(thread)
+        for (state : activeStates) {
+            debugHighlighter.highlightActiveState(state)
+        }
+
+        // Find and visualize the states currently being executed on Java level
+        val executingStates = findExecutingStates(thread)
+        for (state : executingStates) {
+            debugHighlighter.highlightExecutingState(state)
+        }
+
+    }
+
+    private def retrieveActiveEditor() {
+        // Use UIJob to get active editor -----------------------------------------
+            val ITextEditor[] editorArr = newArrayOfSize(1)
+
+            val job = new UIJob("getActiveEditor") {
+
+                override runInUIThread(IProgressMonitor monitor) {
+                    try {
+                        editorArr.set(0,
+                            PlatformUI.getWorkbench?.activeWorkbenchWindow.getActivePage?.
+                                getActiveEditor as ITextEditor)
+                        return Status.OK_STATUS
+                    } catch (Exception e) {
+                        e.printStackTrace
+                        return Status.CANCEL_STATUS
+                    }
+                }
+            }
+
+            job.schedule
+            job.join
+
+            return editorArr.head
+    }
+
     /**************************************************************************************
      * Unsupported Method Stubs ***********************************************************
      **************************************************************************************/
@@ -378,18 +393,18 @@ class JavaBreakpointListener implements IJavaBreakpointListener {
     override breakpointRemoved(IJavaDebugTarget target, IJavaBreakpoint breakpoint) {
         // TODO ignore for now
     }
-    
+
     override installingBreakpoint(IJavaDebugTarget target, IJavaBreakpoint breakpoint, IJavaType type) {
         println("Installing Breakpoint!")
         return DONT_CARE
     }
-    
+
     override breakpointHasCompilationErrors(IJavaLineBreakpoint breakpoint, Message[] errors) {
         throw new UnsupportedOperationException("TODO: auto-generated method stub")
     }
-    
+
     override addingBreakpoint(IJavaDebugTarget target, IJavaBreakpoint breakpoint) {
-        
+
         println("Adding breakpoint!")
         if (currentModel === null) {
             // cannot register breakpoint yet, must do so later
@@ -398,10 +413,9 @@ class JavaBreakpointListener implements IJavaBreakpointListener {
             DebugBreakpointManager.instance.presentBreakpoint(breakpoint, currentModel)
         }
     }
-    
+
     override breakpointHasRuntimeException(IJavaLineBreakpoint breakpoint, DebugException exception) {
         // TODO ignore for now
     }
-    
-}
 
+}

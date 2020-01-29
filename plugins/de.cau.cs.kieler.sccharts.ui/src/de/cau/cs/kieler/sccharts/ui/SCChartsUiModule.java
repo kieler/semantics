@@ -3,9 +3,11 @@
  */
 package de.cau.cs.kieler.sccharts.ui;
 
+import org.eclipse.debug.core.DebugPlugin;
 import org.osgi.framework.BundleContext;
 
 import de.cau.cs.kieler.sccharts.ui.debug.breakpoints.BreakpointUtility;
+import de.cau.cs.kieler.sccharts.ui.debug.breakpoints.JavaBreakpointListener;
 import de.cau.cs.kieler.sccharts.ui.debug.breakpoints.SCTXBreakpointListener;
 import de.cau.cs.kieler.sccharts.processors.scg.SCChartsAnnotationModelCreatorForUnschedulableNodes;
 import de.cau.cs.kieler.sccharts.ui.internal.SCTXActivator;
@@ -31,6 +33,8 @@ public class SCChartsUiModule extends SCTXActivator {
         SCChartsDiagramHighlighter.create();
         SCChartsDiagramLiveValues.create();
         SCTXBreakpointListener.create();
+        // TODO properly use the correct instance here
+        DebugPlugin.getDefault().addDebugEventListener(new JavaBreakpointListener());
         BreakpointUtility.create();
         
         // Some reverse-dependency injection magic for ssm
