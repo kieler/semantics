@@ -28,6 +28,7 @@ class DefaultProcessorProvider implements IProcessorProvider {
             de.cau.cs.kieler.kicool.processors.Delay,
             de.cau.cs.kieler.kicool.processors.metrics.PTime,
             de.cau.cs.kieler.kicool.processors.DynamicIdentity,
+            de.cau.cs.kieler.kicool.processors.metrics.LinesOfCode,
             de.cau.cs.kieler.kicool.deploy.processor.ProjectSetup,
             de.cau.cs.kieler.kicool.deploy.processor.TemplateEngine,
             de.cau.cs.kieler.kicool.deploy.processor.VariableStoreInitializer,

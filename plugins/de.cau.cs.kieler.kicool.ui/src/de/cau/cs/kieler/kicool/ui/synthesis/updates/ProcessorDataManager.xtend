@@ -324,6 +324,10 @@ class ProcessorDataManager {
         if (mMetric !== null) envText += "\nmMetric: " + String.format(Locale.US, "%.3f", mMetric as Double) 
         NODE_ENVIRONMENT.findNode(nodeIdMap)?.setLabel(envText)
         
+        if (processorInstance.environment.getProperty(CAPTION) !== null) {
+            nodeIdMap.findNode(NODE_NAME).label.text = processorInstance.environment.getProperty(CAPTION)            
+        }
+        
         var intermediateModelCounter = 0
         
         
