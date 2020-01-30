@@ -269,7 +269,7 @@ class CompilerView extends DiagramViewPart {
     def void doLayout(boolean zoomToFit) {
         val layoutConfig = new LightDiagramLayoutConfig(viewContext)
         layoutConfig.zoomStyle(if(zoomToFit) ZoomStyle.ZOOM_TO_FIT else ZoomStyle.NONE)
-        layoutConfig.performLayout
+        layoutConfig.performUpdate()
     }
 
     private def void loadCheckedValue(IMemento memento, AbstractAction action) {

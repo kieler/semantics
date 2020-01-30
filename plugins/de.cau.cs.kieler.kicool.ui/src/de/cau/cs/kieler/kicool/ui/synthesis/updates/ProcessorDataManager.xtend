@@ -77,6 +77,7 @@ import static extension de.cau.cs.kieler.kicool.ui.synthesis.updates.MessageObje
 import static extension de.cau.cs.kieler.kicool.util.KiCoolUtils.uniqueProcessorId
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import static extension org.eclipse.xtext.EcoreUtil2.*
+import org.eclipse.swt.widgets.Display
 
 /**
  * The data manager handles all synthesis updates.
@@ -378,7 +379,6 @@ class ProcessorDataManager {
                 //NODE_ACTIVITY_STATUS.getContainer(nodeIdMap)?.setFBColor(OK)
             }        
         }
-        view.viewContext.layoutRecorder.stopRecording(0)
     }
     
     

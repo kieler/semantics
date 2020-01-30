@@ -107,9 +107,6 @@ class KiCoolSynthesis extends AbstractDiagramSynthesis<System> {
         if( lastSystem !== null && lastSystem == model ){
             ProcessorDataManager.copyIntermediateData(rootNode, lastResult)
         }
-        else{
-            print("Test")
-        }
         lastSystem = model
         lastResult = rootNode.eAllContents.filter(KNode).toList
         rootNode
