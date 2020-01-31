@@ -88,14 +88,14 @@ class DebugBreakpointManager {
         if (statesWithBreakpoint.contains(state)) {
             // State already has a breakpoint, remove all associated Java breakpoints
             statesWithBreakpoint.remove(state)
-            debugHighlighter.removeBreakpointHighlight(state)
+            debugHighlighter.removeBreakpointDecorator(state)
             state.clearBreakpoints
             stateToBreakpoint.remove(state)
             stateToWatchBreakpoints.remove(state)
         } else {
             // No breakpoint yet, need to find all appropriate breakpoint locations and add them
             statesWithBreakpoint.add(state)
-            debugHighlighter.addBreakpointHighlight(state)
+            debugHighlighter.addBreakpointDecorator(state)
             val stateBreakpoints = <IJavaBreakpoint> newLinkedList
             for (line : state.findStateLines) {
                 val bp = createBreakpointOnLine(line, BreakpointType.STATE_BREAKPOINT, state, null)
@@ -220,7 +220,7 @@ class DebugBreakpointManager {
                 // There are no breakpoints registered for this state yet
                 statesWithBreakpoint.add(state)
                 stateToBreakpoint.put(state, newLinkedList(breakpoint))
-                debugHighlighter.addBreakpointHighlight(state)
+                debugHighlighter.addBreakpointDecorator(state)
                 
                 val transitionWatchBreakpoints = <IJavaBreakpoint> newLinkedList
                 for (transition : state.outgoingTransitions) {

@@ -51,7 +51,7 @@ class SCTXBreakpointListener implements IBreakpointListener {
                 val obj = SCChartsBreakpointTargetAdapter.lineToModelElement.get(line)
                 // TODO handle transitions
                 if (obj instanceof State) {
-                    highlighter.addBreakpointHighlight(obj as State)
+                    highlighter.addBreakpointDecorator(obj as State)
                 }
 //                visHook.handleHighlight(obj, true)
             }
@@ -71,7 +71,7 @@ class SCTXBreakpointListener implements IBreakpointListener {
                 val obj = SCChartsBreakpointTargetAdapter.lineToModelElement.get(line)
                 //TODO handle transitions
                 if (obj instanceof State) {
-                    highlighter.removeBreakpointHighlight(obj as State)
+                    highlighter.removeBreakpointDecorator(obj as State)
                 }
 //                visHook.handleHighlight(obj, false)
             }
@@ -93,10 +93,10 @@ class SCTXBreakpointListener implements IBreakpointListener {
                 val obj = SCChartsBreakpointTargetAdapter.lineToModelElement.get(line)
                 if (obj instanceof State) {
                     if (breakpoint.enabled) {
-                        highlighter.addBreakpointHighlight(obj as State)
+                        highlighter.addBreakpointDecorator(obj as State)
 //                        visHook.handleHighlight(obj, true)
                     } else {
-                        highlighter.removeBreakpointHighlight(obj as State)
+                        highlighter.removeBreakpointDecorator(obj as State)
 //                        visHook.handleHighlight(obj, false)
                     }
                 }

@@ -24,6 +24,10 @@ import com.google.inject.Guice
 import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import org.eclipse.emf.ecore.util.EcoreUtil
+import de.cau.cs.kieler.sccharts.ui.synthesis.styles.StateStyles
+import de.cau.cs.kieler.klighd.kgraph.KNode
+import de.cau.cs.kieler.klighd.krendering.KContainerRendering
+import de.cau.cs.kieler.klighd.krendering.KRectangle
 
 /**
  * @author stu121235
@@ -48,16 +52,18 @@ class DebugHighlighter {
     
     val activeStateHighlightings = <Highlighting> newLinkedList
     val executingStateHighlightings = <Highlighting> newLinkedList
-    val breakpointHighlights = <Highlighting> newLinkedList
+//    val breakpointHighlights = <Highlighting> newLinkedList
     val activeEdgeHighlights = <Highlighting> newLinkedList
     
     val transitionToDecorator = <Transition, KEllipse> newHashMap
     val transitionToCheckDecorator = <Transition, KEllipse> newHashMap
+    val stateToEllipse = <State, KEllipse> newHashMap
     
     static var DebugHighlighter instance 
     
     static val takenEllipseID = "Taken Ellipse"
     static val checkEllipseID = "Check Ellipse"
+    static val stateEllipseID = "State Ellipse"
     
     @Inject extension KContainerRenderingExtensions
     @Inject extension KRenderingExtensions
@@ -75,7 +81,7 @@ class DebugHighlighter {
     }
     
     def void clearAllHighlights() {
-        for (hl : #[activeStateHighlightings, executingStateHighlightings, activeEdgeHighlights, breakpointHighlights].flatten) {
+        for (hl : #[activeStateHighlightings, executingStateHighlightings, activeEdgeHighlights].flatten) {
             hl.remove
         }
         activeStateHighlightings.clear
@@ -84,14 +90,21 @@ class DebugHighlighter {
     }
     
     def void toggleBreakpointBackground(State state) {
-        val backgroundHighlights = breakpointHighlights.filter[eObject !== null && eObject.equals(state)]
-        if (backgroundHighlights.empty) {
-            println("No breakpoint highlights")
-            state.addBreakpointHighlight
+        if (stateToEllipse.containsKey(state)) {
+            println("Removing state decorator")
+            state.removeBreakpointDecorator
         } else {
-            println("Deactivating breakpoint highlight")
-            state.removeBreakpointHighlight
+            println("Adding state decorator")
+            state.addBreakpointDecorator
         }
+//        val backgroundHighlights = breakpointHighlights.filter[eObject !== null && eObject.equals(state)]
+//        if (backgroundHighlights.empty) {
+//            println("No breakpoint highlights")
+//            state.addBreakpointHighlight
+//        } else {
+//            println("Deactivating breakpoint highlight")
+//            state.removeBreakpointHighlight
+//        }
     }
     
     def void toggleBreakpointDecorator(Transition transition) {
@@ -152,25 +165,25 @@ class DebugHighlighter {
         executingStateHighlightings.removeAll(highlightings)
     }
  
-    def void addBreakpointHighlight(State state) {
-        val kNode = DebugDiagramView.getInstance?.getKNode(state)
-        if (kNode === null) {
-            //TODO debug print
-            println("Null KNode for state " + state.name + ", nothing to highlight!")
-            return
-        }
-        val highlighting = new DebugHighlighting(kNode, breakpointStateBackground, state, DebugHighlighting.BREAKPOINT_STATE_TYPE)
-        breakpointHighlights.add(highlighting)
-        highlighting.apply
-    }
-    
-    def void removeBreakpointHighlight(State state) {
-        val highlightings = breakpointHighlights.filter[eObject !== null && eObject.equals(state)]
-        for (hl : highlightings) {
-            hl.remove
-        }
-        breakpointHighlights.removeAll(highlightings)
-    }
+//    def void addBreakpointHighlight(State state) {
+//        val kNode = DebugDiagramView.getInstance?.getKNode(state)
+//        if (kNode === null) {
+//            //TODO debug print
+//            println("Null KNode for state " + state.name + ", nothing to highlight!")
+//            return
+//        }
+//        val highlighting = new DebugHighlighting(kNode, breakpointStateBackground, state, DebugHighlighting.BREAKPOINT_STATE_TYPE)
+//        breakpointHighlights.add(highlighting)
+//        highlighting.apply
+//    }
+//    
+//    def void removeBreakpointHighlight(State state) {
+//        val highlightings = breakpointHighlights.filter[eObject !== null && eObject.equals(state)]
+//        for (hl : highlightings) {
+//            hl.remove
+//        }
+//        breakpointHighlights.removeAll(highlightings)
+//    }
     
     def void highlightExecutingTransition(Transition transition) {
         val kEdge = DebugDiagramView.getInstance?.getKEdge(transition)
@@ -201,7 +214,7 @@ class DebugHighlighter {
         }
         
         val ellipse = kEdge.KContainerRendering.addEllipse 
-        ellipse.id = de.cau.cs.kieler.sccharts.ui.debug.highlighting.DebugHighlighter.takenEllipseID
+        ellipse.id = takenEllipseID
         ellipse.setDecoratorPlacementData(8,8,-8,0.5f,false)
         ellipse.setLineWidth(1)
         ellipse.setBackground(breakpointStateColor)
@@ -215,21 +228,22 @@ class DebugHighlighter {
             print("Null map entry for transition " + transition + ", can't remove ellipse!")
             return
         }
-        val kEdge = DebugDiagramView.getInstance?.getKEdge(transition)
+        val kEdge = DebugDiagramView.instance?.getKEdge(transition)
         kEdge.KContainerRendering.children.remove(ellipse)
         transitionToDecorator.remove(transition)
     }
     
     def void addCheckBreakpointDecorator(Transition transition) {
-        val kEdge = DebugDiagramView.getInstance?.getKEdge(transition)
+        val kEdge = DebugDiagramView.instance?.getKEdge(transition)
         if (kEdge === null) {
             // TODO debug print
-            println("Null KEdge for transition" + transition.toString + ", nothing to highlight!")
+            println("Null KEdge for transition" + transition + ", nothing to highlight!")
             return
         }
         val ellipse = kEdge.KContainerRendering.addEllipse 
-        ellipse.id = de.cau.cs.kieler.sccharts.ui.debug.highlighting.DebugHighlighter.checkEllipseID
+        ellipse.id = checkEllipseID
         ellipse.setDecoratorPlacementData(8,8,0,0.5f,false)
+//        ellipse.setGridPlacementData(8,8)
         ellipse.setLineWidth(1)
         ellipse.setBackground(checkBreakpointColor)
         transitionToCheckDecorator.put(transition, ellipse)
@@ -242,8 +256,64 @@ class DebugHighlighter {
             print("Null map entry for transition " + transition + ", can't remove ellipse!")
             return
         }
-        val kEdge = DebugDiagramView.getInstance?.getKEdge(transition)
+        val kEdge = DebugDiagramView.instance?.getKEdge(transition)
         kEdge.KContainerRendering.children.remove(ellipse)
         transitionToCheckDecorator.remove(transition)
+    }
+    
+    def void addBreakpointDecorator(State state) {
+        val kNode = DebugDiagramView.instance?.getKNode(state)
+        if (kNode === null) {
+            println("Null KNode for State " + state + ", nothing to highlight!")
+            return
+        }
+        val contentContainer = kNode.getContentContainer
+        val rectangle = (contentContainer.children.head as KRectangle) as KRectangle
+        
+        val ellipse = factory.createKEllipse
+        
+        
+//        val ellipse = kNode.KContainerRendering.addEllipse
+        
+        ellipse.id = stateEllipseID
+//        ellipse.setDecoratorPlacementData(8,8,5,0.5f, false)
+        ellipse.setLineWidth(1)
+        ellipse.setBackground(breakpointStateBackground)
+        rectangle.addChild(ellipse)
+        ellipse.setPointPlacementData(LEFT, 10, 0, TOP, 10, 0, H_CENTRAL, V_CENTRAL, 0, 0, 8, 8)
+//        ellipse.setGridPlacementData().from(LEFT, 10, 0, TOP, 5, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0)
+        
+        stateToEllipse.put(state, ellipse)
+    }
+    
+    def void removeBreakpointDecorator(State state) {
+        val ellipse = stateToEllipse.get(state)
+        if (ellipse === null) {
+            println("Null map entry for state " + state + ", can't remove ellipse!")
+            return
+        }
+        
+        ellipse.parent.children.remove(ellipse)
+//        val kNode = DebugDiagramView.instance?.getKNode(state)
+//        val contentContainer = kNode.getContentContainer
+//        val rectangle = (contentContainer.children.head as KRectangle) as KRectangle
+//        
+//        rectangle.children.remove(ellipse)
+        stateToEllipse.remove(state)
+    }
+    
+    /**
+     * Returns the content container of a state figure.
+     */
+    def getContentContainer(KNode node) {
+        var KContainerRendering figure = node.getKContainerRendering;
+        while (figure !== null) {
+            if (figure.getProperty(StateStyles.IS_CONTENT_CONTAINER)) {
+                return figure;
+            } else {
+                figure = figure.children.findFirst[it instanceof KContainerRendering] as KContainerRendering;
+            }
+        }
+        return null
     }
 }
