@@ -12,14 +12,17 @@
  */
 package de.cau.cs.kieler.kicool.ui.synthesis.actions
 
+import de.cau.cs.kieler.kicool.ProcessorReference
 import de.cau.cs.kieler.klighd.IAction
+import de.cau.cs.kieler.klighd.krendering.KContainerRendering
+import org.eclipse.xtend.lib.annotations.Accessors
 
 import static de.cau.cs.kieler.kicool.ui.synthesis.KNodeProperties.*
-import org.eclipse.xtend.lib.annotations.Accessors
-import static de.cau.cs.kieler.kicool.ui.synthesis.updates.ProcessorDataManager.getContainer
-import static de.cau.cs.kieler.kicool.ui.synthesis.updates.ProcessorDataManager.setFBColor
 import static de.cau.cs.kieler.kicool.ui.synthesis.styles.ColorSystem.*
-import de.cau.cs.kieler.kicool.ProcessorReference
+import static de.cau.cs.kieler.kicool.ui.synthesis.updates.ProcessorDataManager.setFBColor
+import de.cau.cs.kieler.klighd.kgraph.KNode
+import de.cau.cs.kieler.klighd.kgraph.KGraphElement
+import org.eclipse.emf.ecore.EObject
 
 /**
  * Class that handles on/off requests of users.
@@ -36,11 +39,12 @@ class ToggleProcessorOnOffAction implements IAction {
     @Accessors static val deactivatedProcessors = <ProcessorReference, OnOffToggle> newHashMap 
     
     override execute(ActionContext context) {
-        val kNode = context.KNode
-        
-        val toggleOnOffData = kNode.getProperty(TOGGLE_ON_OFF_DATA)
-        val processorReference = toggleOnOffData.processorReference
-//        val toggle = toggleOnOffData.toggle
+        val rendering = context.KRendering as KContainerRendering
+        var EObject parent = rendering
+        while (!(parent instanceof KNode)) {
+            parent = parent.eContainer
+        }
+        val processorReference = (parent as KNode).getProperty(PROCESSOR_IDENTIFIER)
         
         if (!deactivatedProcessors.containsKey(processorReference)) {
             deactivatedProcessors.put(processorReference, OnOffToggle.ON)
@@ -55,9 +59,9 @@ class ToggleProcessorOnOffAction implements IAction {
         }
         
         switch (toggle) {
-            case ON: setFBColor(getContainer(kNode), ON) 
-            case OFF: setFBColor(getContainer(kNode), OFF)
-            case HALT: setFBColor(getContainer(kNode), HALT)
+            case ON: setFBColor(rendering.children.head, ON) 
+            case OFF: setFBColor(rendering.children.head, OFF)
+            case HALT: setFBColor(rendering.children.head, HALT)
         }
 
         deactivatedProcessors.put(processorReference, toggle)            
