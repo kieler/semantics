@@ -340,9 +340,16 @@ class JavaBreakpointListener implements IJavaBreakpointListener, IDebugEventSetL
         val fileContents = ResourcesPlugin.workspace.root.getFile(new Path(path))?.contents
 //        val fileContents = resource.project.getFile(path)?.contents
         if (fileContents !== null) {
-            val text = new String(fileContents.readAllBytes)
+            // TODO readAllBytes since 9
+            var text = ""
+            var byte[] bytes = newByteArrayOfSize(128)
+            while (fileContents.available > 0) {
+                fileContents.read(bytes)
+                text += new String(bytes)
+                bytes.clear
+            }
             fileContents.close
-            if (text !== null) {
+            if (text !== "") {
                 return SCTXStandaloneParser.parseScope(text, StandardCharsets.UTF_8)
             }
         }
