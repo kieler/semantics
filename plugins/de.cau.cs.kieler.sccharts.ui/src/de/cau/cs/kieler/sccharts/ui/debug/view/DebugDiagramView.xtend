@@ -29,6 +29,10 @@ import org.eclipse.core.runtime.Status
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties
 import org.eclipse.ui.IViewSite
 import org.eclipse.swt.widgets.Display
+import org.eclipse.core.resources.ResourcesPlugin
+import org.eclipse.core.resources.IFile
+import de.cau.cs.kieler.sccharts.ui.debug.breakpoints.DebugBreakpointManager
+import de.cau.cs.kieler.sccharts.ui.debug.breakpoints.BreakpointType
 
 /**
  * @author stu121235
@@ -46,6 +50,7 @@ class DebugDiagramView extends DiagramViewPart {
     new() {
         super()
         instance = this
+        createWatchBreakpoints
     }
     
     static def void updateView(Object model) {
@@ -129,6 +134,17 @@ class DebugDiagramView extends DiagramViewPart {
      */
     def KEdge getKEdge(Transition transition) {
         return viewer?.viewContext?.getTargetElement(transition, KEdge)
+    }
+    
+    private def createWatchBreakpoints () {
+        val projects = ResourcesPlugin.workspace.root.projects
+        
+        for (project : projects) {
+            for (javaFile : project.members.filter["java" == it.fileExtension]) {
+                // TODO init breakpoint?
+//                DebugBreakpointManager.instance.createBreakpointOnLine(0, BreakpointType.INIT_BREAKPOINT, null, null)
+            }
+        }
     }
     
     override init(IViewSite site) {

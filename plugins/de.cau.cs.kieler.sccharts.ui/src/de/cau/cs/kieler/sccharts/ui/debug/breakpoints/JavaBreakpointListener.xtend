@@ -249,7 +249,7 @@ class JavaBreakpointListener implements IJavaBreakpointListener, IDebugEventSetL
             return DONT_CARE
         }
 
-        // make sure to register all breakpoints in the breakpoint manager
+        //make sure to register all breakpoints in the breakpoint manager
         for (pendingBreakpoint : pendingBreakpoints) {
             DebugBreakpointManager.instance.presentBreakpoint(pendingBreakpoint, currentModel)
         }
@@ -298,6 +298,12 @@ class JavaBreakpointListener implements IJavaBreakpointListener, IDebugEventSetL
                         // silent catch
                     }
                 }
+//            } else if (event.kind == DebugEvent.SUSPEND && event.detail == DebugEvent.BREAKPOINT) {
+//                // make sure to register all breakpoints in the breakpoint manager
+//                for (pendingBreakpoint : pendingBreakpoints) {
+//                    DebugBreakpointManager.instance.presentBreakpoint(pendingBreakpoint, currentModel)
+//                }
+//                pendingBreakpoints.clear
             }
         }
     }

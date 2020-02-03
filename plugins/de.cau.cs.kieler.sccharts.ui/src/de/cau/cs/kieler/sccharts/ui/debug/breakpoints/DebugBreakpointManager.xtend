@@ -205,8 +205,16 @@ class DebugBreakpointManager {
                         breakpoints.add(breakpoint)
                     }
                 }
+            } else if (breakpoint instanceof TransitionWatchBreakpoint) {
+                val state = breakpoint.transition.sourceState
+                if (!stateToWatchBreakpoints.containsKey(state)) {
+                    stateToWatchBreakpoints.put(state, newLinkedList(breakpoint))
+                } else {
+                    stateToWatchBreakpoints.get(state).add(breakpoint)
+                }
             }
         } else if (breakpoint instanceof StateBreakpoint) {
+            breakpoint.enabled = true
             var state = breakpoint.state
             if (state === null) {
                 // the state reference was lost over the restart of Eclipse.
@@ -222,15 +230,15 @@ class DebugBreakpointManager {
                 stateToBreakpoint.put(state, newLinkedList(breakpoint))
                 debugHighlighter.addBreakpointDecorator(state)
                 
-                val transitionWatchBreakpoints = <IJavaBreakpoint> newLinkedList
-                for (transition : state.outgoingTransitions) {
-                    for (line : transition.findTransitionLines) {
-                        val bp = createBreakpointOnLine(line, BreakpointType.TRANSITION_WATCH_BREAKPOINT, null, transition)
-                        println(bp)
-                        transitionWatchBreakpoints.add(bp)
-                    }
-                }
-                stateToWatchBreakpoints.put(state, transitionWatchBreakpoints)
+//                val transitionWatchBreakpoints = <IJavaBreakpoint> newLinkedList
+//                for (transition : state.outgoingTransitions) {
+//                    for (line : transition.findTransitionLines) {
+//                        val bp = createBreakpointOnLine(line, BreakpointType.TRANSITION_WATCH_BREAKPOINT, null, transition)
+//                        println(bp)
+//                        transitionWatchBreakpoints.add(bp)
+//                    }
+//                }
+//                stateToWatchBreakpoints.put(state, transitionWatchBreakpoints)
                 
             } else {
                 // else, check whether this one is registered and if not, add it to the list
@@ -264,7 +272,7 @@ class DebugBreakpointManager {
      * Helper method to create a breakpoint of the given type on the given line.
      * Either one of @code{state} or @code{transition} must be non-null.
      */
-    private def IJavaBreakpoint createBreakpointOnLine(int line, BreakpointType breakpointType, State state, Transition transition) {
+    def IJavaBreakpoint createBreakpointOnLine(int line, BreakpointType breakpointType, State state, Transition transition) {
         
         // Retrieve resource and associated type
         val editor = activeEditor
@@ -282,15 +290,15 @@ class DebugBreakpointManager {
         
         
         // TODO tidy up
-        if (breakpointType != BreakpointType.TRANSITION_WATCH_BREAKPOINT) {
+//        if (breakpointType != BreakpointType.TRANSITION_WATCH_BREAKPOINT /*  && breakpointType != BreakpointType.INIT_BREAKPOINT */) {
             attributes.put(IBreakpoint.ENABLED, true) // Start with an enabled breakpoint
             attributes.put(IBreakpoint.PERSISTED, true) // conserve this breakpoint across Eclipse restarts
             attributes.put(IMarker.LINE_NUMBER, line) // associated line number for the marker
-        } else {
-            attributes.put(IBreakpoint.ENABLED, true)
-            attributes.put(IBreakpoint.PERSISTED, false)
-            attributes.put(IMarker.LINE_NUMBER, line) // associated line number for the marker
-        }
+//        } else {
+//            attributes.put(IBreakpoint.ENABLED, true)
+//            attributes.put(IBreakpoint.PERSISTED, false)
+//            attributes.put(IMarker.LINE_NUMBER, line) // associated line number for the marker
+//        }
         var IJavaBreakpoint breakpoint
          
         switch(breakpointType) {

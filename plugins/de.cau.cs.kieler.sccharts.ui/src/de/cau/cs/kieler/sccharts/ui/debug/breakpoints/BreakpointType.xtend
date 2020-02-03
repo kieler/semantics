@@ -41,4 +41,6 @@ enum BreakpointType {
      * The execution does NOT suspend on these breakpoints.
      */
     TRANSITION_WATCH_BREAKPOINT
+    
+//    INIT_BREAKPOINT
 }

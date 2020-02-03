@@ -827,13 +827,14 @@ controllerID="de.cau.cs.kieler.kicool.ui.klighd.KiCoModelUpdateController"
       </super>
    </extension>
    <extension
-         id="id1"
+         id="transitionWatchMarker"
+         name="Transition Watch Marker"
          point="org.eclipse.core.resources.markers">
       <super
             type="org.eclipse.debug.core.lineBreakpointMarker">
       </super>
       <persistent
-            value="false">
+            value="true">
       </persistent>
    </extension>
    
