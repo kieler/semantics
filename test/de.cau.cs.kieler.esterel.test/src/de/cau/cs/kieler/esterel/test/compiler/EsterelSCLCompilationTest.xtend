@@ -93,7 +93,7 @@ class EsterelSCLCompilationTest extends AbstractXTextModelRepositoryTest<Esterel
         && (!modelData.modelProperties.contains("must-fail") || modelData.modelProperties.contains("must-fail-validation"))
     }
     
-    @Test(timeout=15000)
+    @Test(timeout=20000)
     @StopOnFailure
     def void testValidationDynamic(EsterelProgram est, TestModelData modelData) {
         assumeFalse("Has 'scest-dynamic-fails' property", modelData.modelProperties.contains("scest-dynamic-fails"))
@@ -101,7 +101,7 @@ class EsterelSCLCompilationTest extends AbstractXTextModelRepositoryTest<Esterel
         checkValidation(est, modelData, est.compile(compilationSystemID))
     }
     
-    @Test(timeout=15000)
+    @Test(timeout=20000)
     @StopOnFailure
     def void testValidationSLIC(EsterelProgram est, TestModelData modelData) {
         assumeFalse("Has 'scest-slic-fails' property", modelData.modelProperties.contains("scest-slic-fails"))
@@ -144,14 +144,14 @@ class EsterelSCLCompilationTest extends AbstractXTextModelRepositoryTest<Esterel
         }        
     }
     
-    @Test(timeout=10000)
+    @Test(timeout=20000)
     def void testSerializabilityDynamic(EsterelProgram est, TestModelData modelData) {
         assumeFalse("Has 'scest-dynamic-fails' property", modelData.modelProperties.contains("scest-dynamic-fails"))
         assumeTrue("Program contains unsupported data types", est.hasNoEsterelType) // skip if program includes esterel type
         checkSerializability(est, modelData, est.compile(compilationSystemID))
     }
     
-    @Test(timeout=10000)
+    @Test(timeout=20000)
     def void testSerializabilitySLIC(EsterelProgram est, TestModelData modelData) {
         assumeFalse("Has 'scest-slic-fails' property", modelData.modelProperties.contains("scest-slic-fails"))
         assumeTrue("Program contains unsupported data types", est.hasNoEsterelType) // skip if program includes esterel type

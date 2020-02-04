@@ -128,8 +128,8 @@ class CCodeGeneratorModule extends SCGCodeGeneratorModule {
     
     protected def generateWriteCodeModules(StringBuilder hFile, StringBuilder cFile) {
         hFile.append(struct.code)
-        cFile.append(reset.code).append("\n")
         cFile.append(logic.code).append("\n")
+        cFile.append(reset.code).append("\n")
         cFile.append(tick.code)
     }   
     

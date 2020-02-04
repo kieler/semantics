@@ -13,31 +13,32 @@
 package de.cau.cs.kieler.sccharts.processors.dataflow
 
 import com.google.inject.Inject
+import de.cau.cs.kieler.kexpressions.IgnoreValue
+import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
+import de.cau.cs.kieler.kexpressions.ScheduleDeclaration
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.kexpressions.VectorValue
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
-import de.cau.cs.kieler.sccharts.Scope
-import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
-
-//import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.kexpressions.VariableDeclaration
-import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
 import de.cau.cs.kieler.sccharts.DataflowRegion
-import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
-import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.sccharts.DelayType
 import de.cau.cs.kieler.sccharts.PreemptionType
 import de.cau.cs.kieler.sccharts.SCChartsFactory
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
-import de.cau.cs.kieler.kexpressions.VectorValue
-import de.cau.cs.kieler.kexpressions.keffects.Assignment
-import de.cau.cs.kieler.kexpressions.IgnoreValue
-import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
+import de.cau.cs.kieler.sccharts.Scope
+import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsDataflowRegionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsInheritanceExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
+import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
+import org.eclipse.emf.ecore.EObject
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
@@ -50,6 +51,7 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 class Dataflow extends SCChartsProcessor {
     
     @Inject extension SCChartsControlflowRegionExtensions
+    @Inject extension SCChartsDataflowRegionExtensions
     @Inject extension SCChartsStateExtensions
     @Inject extension SCChartsTransitionExtensions
     @Inject extension SCChartsActionExtensions
@@ -58,6 +60,7 @@ class Dataflow extends SCChartsProcessor {
     @Inject extension KExtDeclarationExtensions
     @Inject extension KExpressionsDeclarationExtensions
     @Inject extension KExpressionsCreateExtensions
+    @Inject extension SCChartsInheritanceExtensions
     
     
     extension SCChartsFactory sccFactory = SCChartsFactory.eINSTANCE
@@ -145,8 +148,15 @@ class Dataflow extends SCChartsProcessor {
             ]
             newRefDelayState.createTransitionTo(newRefState).trace(rdEquationMappingForTracing.get(rdInstance.value))
             
-            newRefState.reference.scope = rdInstance.value.referenceDeclaration.reference as Scope
-            for (declaration : rdInstance.value.referenceDeclaration.reference.asDeclarationScope.declarations.filter(VariableDeclaration).filter[ input || output ]) {
+            val ref = rdInstance.value.referenceDeclaration.reference
+            newRefState.reference.scope = ref as Scope
+            
+            val decls = newArrayList()
+            decls += ref.asDeclarationScope.declarations
+            if (ref instanceof State) {
+                decls += ref.allInheritedDeclarations
+            }
+            for (declaration : decls.filter(VariableDeclaration).filter[ input || output ]) {
                 val localDeclaration = createVariableDeclaration(declaration.type).trace(declaration)
                 
                 for (valuedObject : declaration.valuedObjects) {
@@ -165,6 +175,11 @@ class Dataflow extends SCChartsProcessor {
                 rdInstance.value.getDeclarationScope.declarations += localDeclaration
             }
         }
+
+        val schedules = dataflowRegion.createScheduleDeclaration(newMainState)
+        var scheduleIndex = -1
+        var schedulePriority = 0
+        var lastSequential = false
         
         // Replace the equations and correct external references.
         for (eq : dataflowRegion.equations.immutableCopy.indexed) {
@@ -176,7 +191,13 @@ class Dataflow extends SCChartsProcessor {
                 
                 var idx = 0
                 if (rdInstance.isModelReference) {
-                    for (declaration : rdInstance.referenceDeclaration.reference.asDeclarationScope.declarations.filter(VariableDeclaration).filter[ input ]) {
+                    val ref = rdInstance.referenceDeclaration.reference
+                    val decls = newArrayList()
+                    decls += ref.asDeclarationScope.declarations
+                    if (ref instanceof State) {
+                        decls += ref.allInheritedDeclarations
+                    }
+                    for (declaration : decls.filter(VariableDeclaration).filter[ input ]) {
                         for (valuedObject : declaration.valuedObjects) {
                             if (vectorValues.size > 0) {
                                 // Remember: The expression will be removed from it's containment.
@@ -213,9 +234,19 @@ class Dataflow extends SCChartsProcessor {
                 processedEquations += eq
             }
             
+            if (eq.value.isSequential && !lastSequential) {
+                scheduleIndex += 1
+                schedulePriority = 0
+            }
+            
             for (equation : processedEquations) {
                 val newEqCfRegion = newMainState.createControlflowRegion(GENERATED_PREFIX + "subRegion_" + equation.key).
                     trace(dataflowRegion)
+                if (eq.value.isSequential || lastSequential) {
+                    newEqCfRegion.schedule +=
+                        schedules.valuedObjects.get(scheduleIndex).createScheduleReference(schedulePriority)
+                    schedulePriority += 1
+                }
                 val newEqState = newEqCfRegion.createState(GENERATED_PREFIX + "" + equation.key) => [ 
                     initial = true
                     trace(dataflowRegion)
@@ -233,8 +264,13 @@ class Dataflow extends SCChartsProcessor {
                         trace(dataflowRegion)
                 }
                 
-                eqTrans.addAssignment(equation.value)
-                for (reference : equation.value.allAssignmentReferences.filter[ isReferenceDeclarationReference ].toList) {
+                var assignment = createAssignment => [ a |
+                    a.reference = equation.value.reference?.copy
+                    a.operator = equation.value.operator
+                    a.expression = equation.value.expression.copy
+                ]
+                eqTrans.addAssignment(assignment)
+                for (reference : assignment.allAssignmentReferences.filter[ isReferenceDeclarationReference ].toList) {
                     if (reference.subReference !== null) {
                         val refPair = new Pair<ValuedObject, ValuedObject>(reference.valuedObject, reference.subReference.valuedObject)
                         val replacement = referenceReplacements.get(refPair)
@@ -245,6 +281,7 @@ class Dataflow extends SCChartsProcessor {
                     }
                 }
             }
+            lastSequential = eq.value.isSequential
         }
         
         // Remove df artifacts.
@@ -256,4 +293,24 @@ class Dataflow extends SCChartsProcessor {
         }
     }
     
+
+    def ScheduleDeclaration createScheduleDeclaration(DataflowRegion r, State parent) {
+        var number = 0
+        var lastSeq = false
+        for (eq : r.equations) {
+            if (!lastSeq && eq.isSequential) {
+                number += 1
+            }
+            lastSeq = eq.isSequential
+        }
+        if (number > 0) {
+            val schedule = createScheduleDeclaration
+            for (var i = 0; i < number; i++) {
+                schedule.valuedObjects += createValuedObject("seq" + i).uniqueName
+            }
+            parent.declarations += schedule
+            return schedule
+        }
+        return null
+    }
 }

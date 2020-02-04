@@ -51,6 +51,7 @@
       <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//OperatorType/NOR"/>
       <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//OperatorType/IMPLIES"/>
       <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//OperatorType/SFBY"/>
+      <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//OperatorType/LAST"/>
     </genEnums>
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="kexpressions.ecore#//ValueType">
       <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//ValueType/PURE"/>
@@ -74,6 +75,11 @@
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="kexpressions.ecore#//PriorityProtocol">
       <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//PriorityProtocol/CONFLICT"/>
       <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//PriorityProtocol/CONFLUENT"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="kexpressions.ecore#//ParameterAccessType">
+      <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//ParameterAccessType/CALL_BY_VALUE"/>
+      <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//ParameterAccessType/CALL_BY_REFERENCE"/>
+      <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//ParameterAccessType/PURE_OUTPUT"/>
     </genEnums>
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="kexpressions.ecore#//AccessModifier">
       <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//AccessModifier/PUBLIC"/>
@@ -168,8 +174,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute kexpressions.ecore#//ScheduleObjectReference/priority"/>
     </genClasses>
     <genClasses ecoreClass="kexpressions.ecore#//Parameter">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute kexpressions.ecore#//Parameter/callByReference"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute kexpressions.ecore#//Parameter/pureOutput"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute kexpressions.ecore#//Parameter/accessType"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference kexpressions.ecore#//Parameter/expression"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference kexpressions.ecore#//Parameter/explicitBinding"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference kexpressions.ecore#//Parameter/explicitBindingIndices"/>

@@ -50,6 +50,8 @@ import java.util.HashMap
 import java.util.Stack
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
+import de.cau.cs.kieler.core.properties.IProperty
+import de.cau.cs.kieler.core.properties.Property
 
 /**
  * Basic class for Lustre to ScCharts transformations.
@@ -83,6 +85,10 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
     protected HashMap<NodeDeclaration, State> nodeToStateMap = new HashMap
     protected HashMap<StateValuedObject, State> lustreStateToScchartsStateMap = new HashMap
 
+    
+    public static val IProperty<Boolean> REGION_VARIABLES = new Property<Boolean>(
+        "de.cau.cs.kieler.lustre.processors.lustreToSCC.dataFlow.regionVariables", false)
+
     override process() {
         reset()
         model = model.transform
@@ -105,7 +111,7 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
         }
         val constantsLustreToScchartsMap = lustreToScchartsValuedObjectMap
         val constantsScchartsToLustreMap = scchartsToLustreValuedObjectMap
-
+        
         // ----- Nodes
         // In order for References to work, we need to transform the interface of all nodes first
         for (node : p.nodes) {
@@ -130,6 +136,10 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
                 node.processNodeBehavior(nodeState)
                 scchartsProgram.rootStates += nodeState
             }
+        }
+        
+        if (constantsExist) {
+            scchartsProgram.rootStates += constantsState
         }
 
     // Note: TypeDeclarations and ExternalNodeDeclarations are not handled
@@ -159,7 +169,16 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
         rootState.declarations.addAll(node.inputs.map[it.createInputDeclaration(rootState)])
         rootState.declarations.addAll(node.outputs.map[it.createOutputDeclaration(rootState)])
         rootState.declarations.addAll(node.constants.map[it.createConstantDeclaration(rootState)])
-        rootState.declarations.addAll(node.variables.map[it.createVariableDeclarationFromLustre(rootState)])
+        
+        
+        if (environment.getProperty(REGION_VARIABLES) !== null && environment.getProperty(REGION_VARIABLES)) {
+            if (!node.variables.nullOrEmpty) {
+                var dfRegion = rootState.dataflowRegionFromState
+                dfRegion.declarations.addAll(node.variables.map[it.createVariableDeclarationFromLustre(rootState)])
+            }
+        } else {
+            rootState.declarations.addAll(node.variables.map[it.createVariableDeclarationFromLustre(rootState)])
+        }
     }
 
     protected def processNodeBehavior(NodeDeclaration node, State rootState) {
@@ -209,7 +228,7 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
                     case CURRENT: {
                         convertedExpression = processCurrentExpression(subExpressionList, state)
                     }
-                    case PRE: {
+                    case PRE, case LAST: {
                         convertedExpression = processPreExpression(subExpressionList.head, state)
                     }
                     default: {
@@ -602,5 +621,17 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
         val isKnownComplexReference = equation.reference === null && lustreToScchartsValuedObjectMap.keySet.containsAll(equation.references.map[valuedObject])
         
         return isKnownSimpleReference || isKnownComplexReference
+    }
+    
+    
+    protected def getDataflowRegionFromState(State state) {
+        val dataFlowRegionsList = getDataflowRegions(state)
+
+        // If there is no dataflow region, create one
+        if (dataFlowRegionsList.length == 0) {
+            createDataflowRegion(state, "")
+        }
+        
+        return dataFlowRegionsList.head as DataflowRegion
     }
 }

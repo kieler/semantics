@@ -67,14 +67,18 @@ class CleanupValuedObjects extends InplaceProcessor<SCGraphs> {
             val node = nextNodes.pop
             
             if (node instanceof Assignment) {
-                usedValuedObjects += node.reference.valuedObject
-                for (ref : node.expression.allReferences) {
-                    usedValuedObjects += ref.valuedObject
-                } 
+                if (node.reference !== null) {
+                    usedValuedObjects += node.reference.valuedObject
+                }
+                if (node.expression !== null) {
+                    for (ref : node.expression.allReferences) {
+                        usedValuedObjects += ref.valuedObject
+                    } 
+                }
             } else if (node instanceof Conditional) {
                 for (ref : node.condition.allReferences) {
                     usedValuedObjects += ref.valuedObject
-                } 
+                }
             }
             
             if (node instanceof Conditional) {

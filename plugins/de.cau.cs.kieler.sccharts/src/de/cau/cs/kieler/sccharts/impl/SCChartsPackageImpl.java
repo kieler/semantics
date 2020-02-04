@@ -20,6 +20,7 @@ import de.cau.cs.kieler.kexpressions.kext.KExtPackage;
 import de.cau.cs.kieler.sccharts.Action;
 import de.cau.cs.kieler.sccharts.CodeEffect;
 import de.cau.cs.kieler.sccharts.ControlflowRegion;
+import de.cau.cs.kieler.sccharts.DataflowAssignment;
 import de.cau.cs.kieler.sccharts.DataflowRegion;
 import de.cau.cs.kieler.sccharts.DeferredType;
 import de.cau.cs.kieler.sccharts.DelayType;
@@ -31,7 +32,6 @@ import de.cau.cs.kieler.sccharts.LocalAction;
 import de.cau.cs.kieler.sccharts.PeriodAction;
 import de.cau.cs.kieler.sccharts.PolicyClassDeclaration;
 import de.cau.cs.kieler.sccharts.PolicyRegion;
-import de.cau.cs.kieler.sccharts.PrecedingAction;
 import de.cau.cs.kieler.sccharts.PreemptionType;
 import de.cau.cs.kieler.sccharts.Region;
 import de.cau.cs.kieler.sccharts.SCCharts;
@@ -40,7 +40,6 @@ import de.cau.cs.kieler.sccharts.SCChartsPackage;
 import de.cau.cs.kieler.sccharts.Scope;
 import de.cau.cs.kieler.sccharts.ScopeCall;
 import de.cau.cs.kieler.sccharts.State;
-import de.cau.cs.kieler.sccharts.SucceedingAction;
 import de.cau.cs.kieler.sccharts.SuspendAction;
 import de.cau.cs.kieler.sccharts.Transition;
 import de.cau.cs.kieler.scl.SCLPackage;
@@ -162,20 +161,6 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    private EClass precedingActionEClass = null;
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    private EClass succeedingActionEClass = null;
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     private EClass periodActionEClass = null;
 
     /**
@@ -198,6 +183,13 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * @generated
      */
     private EClass codeEffectEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass dataflowAssignmentEClass = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -758,6 +750,16 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * @generated
      */
     @Override
+    public EAttribute getEntryAction_Preemption() {
+        return (EAttribute)entryActionEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public EClass getDuringAction() {
         return duringActionEClass;
     }
@@ -788,6 +790,16 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * @generated
      */
     @Override
+    public EAttribute getExitAction_Preemption() {
+        return (EAttribute)exitActionEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public EClass getSuspendAction() {
         return suspendActionEClass;
     }
@@ -800,26 +812,6 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
     @Override
     public EAttribute getSuspendAction_Weak() {
         return (EAttribute)suspendActionEClass.getEStructuralFeatures().get(0);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public EClass getPrecedingAction() {
-        return precedingActionEClass;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public EClass getSucceedingAction() {
-        return succeedingActionEClass;
     }
 
     /**
@@ -870,6 +862,26 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
     @Override
     public EClass getCodeEffect() {
         return codeEffectEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EClass getDataflowAssignment() {
+        return dataflowAssignmentEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EAttribute getDataflowAssignment_Sequential() {
+        return (EAttribute)dataflowAssignmentEClass.getEStructuralFeatures().get(0);
     }
 
     /**
@@ -1029,18 +1041,16 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         createEReference(transitionEClass, TRANSITION__SOURCE_STATE);
 
         entryActionEClass = createEClass(ENTRY_ACTION);
+        createEAttribute(entryActionEClass, ENTRY_ACTION__PREEMPTION);
 
         duringActionEClass = createEClass(DURING_ACTION);
         createEAttribute(duringActionEClass, DURING_ACTION__RESET);
 
         exitActionEClass = createEClass(EXIT_ACTION);
+        createEAttribute(exitActionEClass, EXIT_ACTION__PREEMPTION);
 
         suspendActionEClass = createEClass(SUSPEND_ACTION);
         createEAttribute(suspendActionEClass, SUSPEND_ACTION__WEAK);
-
-        precedingActionEClass = createEClass(PRECEDING_ACTION);
-
-        succeedingActionEClass = createEClass(SUCCEEDING_ACTION);
 
         periodActionEClass = createEClass(PERIOD_ACTION);
 
@@ -1050,6 +1060,9 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         policyRegionEClass = createEClass(POLICY_REGION);
 
         codeEffectEClass = createEClass(CODE_EFFECT);
+
+        dataflowAssignmentEClass = createEClass(DATAFLOW_ASSIGNMENT);
+        createEAttribute(dataflowAssignmentEClass, DATAFLOW_ASSIGNMENT__SEQUENTIAL);
 
         // Create enums
         preemptionTypeEEnum = createEEnum(PREEMPTION_TYPE);
@@ -1113,13 +1126,12 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         duringActionEClass.getESuperTypes().add(this.getLocalAction());
         exitActionEClass.getESuperTypes().add(this.getLocalAction());
         suspendActionEClass.getESuperTypes().add(this.getLocalAction());
-        precedingActionEClass.getESuperTypes().add(this.getLocalAction());
-        succeedingActionEClass.getESuperTypes().add(this.getLocalAction());
         periodActionEClass.getESuperTypes().add(this.getLocalAction());
         policyClassDeclarationEClass.getESuperTypes().add(theKExtPackage.getClassDeclaration());
         policyRegionEClass.getESuperTypes().add(this.getControlflowRegion());
         codeEffectEClass.getESuperTypes().add(theKEffectsPackage.getEffect());
         codeEffectEClass.getESuperTypes().add(theSCLPackage.getScope());
+        dataflowAssignmentEClass.getESuperTypes().add(theKEffectsPackage.getAssignment());
 
         // Initialize classes and features; add operations and parameters
         initEClass(scChartsEClass, SCCharts.class, "SCCharts", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -1173,25 +1185,23 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         initEAttribute(getDataflowRegion_Once(), ecorePackage.getEBoolean(), "once", null, 1, 1, DataflowRegion.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(transitionEClass, Transition.class, "Transition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getTransition_Preemption(), this.getPreemptionType(), "preemption", null, 1, 1, Transition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getTransition_Preemption(), this.getPreemptionType(), "preemption", "WEAK", 1, 1, Transition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getTransition_History(), this.getHistoryType(), "history", "RESET", 1, 1, Transition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getTransition_Deferred(), this.getDeferredType(), "deferred", null, 0, 1, Transition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getTransition_TargetState(), this.getState(), this.getState_IncomingTransitions(), "targetState", null, 1, 1, Transition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getTransition_SourceState(), this.getState(), this.getState_OutgoingTransitions(), "sourceState", null, 1, 1, Transition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(entryActionEClass, EntryAction.class, "EntryAction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getEntryAction_Preemption(), this.getPreemptionType(), "preemption", "STRONG", 0, 1, EntryAction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(duringActionEClass, DuringAction.class, "DuringAction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getDuringAction_Reset(), this.getDelayType(), "reset", "UNDEFINED", 1, 1, DuringAction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(exitActionEClass, ExitAction.class, "ExitAction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getExitAction_Preemption(), this.getPreemptionType(), "preemption", "STRONG", 0, 1, ExitAction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(suspendActionEClass, SuspendAction.class, "SuspendAction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getSuspendAction_Weak(), ecorePackage.getEBoolean(), "weak", null, 0, 1, SuspendAction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-        initEClass(precedingActionEClass, PrecedingAction.class, "PrecedingAction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
-        initEClass(succeedingActionEClass, SucceedingAction.class, "SucceedingAction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
         initEClass(periodActionEClass, PeriodAction.class, "PeriodAction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
@@ -1202,10 +1212,14 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
 
         initEClass(codeEffectEClass, CodeEffect.class, "CodeEffect", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
+        initEClass(dataflowAssignmentEClass, DataflowAssignment.class, "DataflowAssignment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getDataflowAssignment_Sequential(), ecorePackage.getEBoolean(), "sequential", "false", 0, 1, DataflowAssignment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
         // Initialize enums and add enum literals
         initEEnum(preemptionTypeEEnum, PreemptionType.class, "PreemptionType");
-        addEEnumLiteral(preemptionTypeEEnum, PreemptionType.WEAKABORT);
-        addEEnumLiteral(preemptionTypeEEnum, PreemptionType.STRONGABORT);
+        addEEnumLiteral(preemptionTypeEEnum, PreemptionType.UNDEFINED);
+        addEEnumLiteral(preemptionTypeEEnum, PreemptionType.WEAK);
+        addEEnumLiteral(preemptionTypeEEnum, PreemptionType.STRONG);
         addEEnumLiteral(preemptionTypeEEnum, PreemptionType.TERMINATION);
 
         initEEnum(historyTypeEEnum, HistoryType.class, "HistoryType");

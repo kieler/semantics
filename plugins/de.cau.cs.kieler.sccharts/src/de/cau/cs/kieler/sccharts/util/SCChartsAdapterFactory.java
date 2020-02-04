@@ -22,6 +22,7 @@ import de.cau.cs.kieler.kexpressions.Declaration;
 import de.cau.cs.kieler.kexpressions.Expression;
 import de.cau.cs.kieler.kexpressions.Schedulable;
 import de.cau.cs.kieler.kexpressions.VariableDeclaration;
+import de.cau.cs.kieler.kexpressions.keffects.Assignment;
 import de.cau.cs.kieler.kexpressions.keffects.Effect;
 import de.cau.cs.kieler.kexpressions.keffects.Linkable;
 import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration;
@@ -154,14 +155,6 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
                 return createSuspendActionAdapter();
             }
             @Override
-            public Adapter casePrecedingAction(PrecedingAction object) {
-                return createPrecedingActionAdapter();
-            }
-            @Override
-            public Adapter caseSucceedingAction(SucceedingAction object) {
-                return createSucceedingActionAdapter();
-            }
-            @Override
             public Adapter casePeriodAction(PeriodAction object) {
                 return createPeriodActionAdapter();
             }
@@ -176,6 +169,10 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
             @Override
             public Adapter caseCodeEffect(CodeEffect object) {
                 return createCodeEffectAdapter();
+            }
+            @Override
+            public Adapter caseDataflowAssignment(DataflowAssignment object) {
+                return createDataflowAssignmentAdapter();
             }
             @Override
             public Adapter casePragmatable(Pragmatable object) {
@@ -236,6 +233,10 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
             @Override
             public Adapter caseSCL_Scope(de.cau.cs.kieler.scl.Scope object) {
                 return createSCL_ScopeAdapter();
+            }
+            @Override
+            public Adapter caseAssignment(Assignment object) {
+                return createAssignmentAdapter();
             }
             @Override
             public Adapter defaultCase(EObject object) {
@@ -440,34 +441,6 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.PrecedingAction <em>Preceding Action</em>}'.
-     * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see de.cau.cs.kieler.sccharts.PrecedingAction
-     * @generated
-     */
-    public Adapter createPrecedingActionAdapter() {
-        return null;
-    }
-
-    /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.SucceedingAction <em>Succeeding Action</em>}'.
-     * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see de.cau.cs.kieler.sccharts.SucceedingAction
-     * @generated
-     */
-    public Adapter createSucceedingActionAdapter() {
-        return null;
-    }
-
-    /**
      * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.PeriodAction <em>Period Action</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
@@ -552,6 +525,20 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.keffects.Assignment <em>Assignment</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.kexpressions.keffects.Assignment
+     * @generated
+     */
+    public Adapter createAssignmentAdapter() {
+        return null;
+    }
+
+    /**
      * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.PolicyRegion <em>Policy Region</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
@@ -576,6 +563,20 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createCodeEffectAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.DataflowAssignment <em>Dataflow Assignment</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.sccharts.DataflowAssignment
+     * @generated
+     */
+    public Adapter createDataflowAssignmentAdapter() {
         return null;
     }
 

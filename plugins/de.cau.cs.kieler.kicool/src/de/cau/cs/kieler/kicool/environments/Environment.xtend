@@ -132,6 +132,10 @@ class Environment extends EnvironmentPropertyHolder {
         return property.getProperty
     }    
     
+    def getCompilationContext() {
+        getProperty(COMPILATION_CONTEXT)
+    }
+    
     def getErrors() {
         getProperty(ERRORS)
     }

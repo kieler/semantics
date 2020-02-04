@@ -37,6 +37,8 @@ import de.cau.cs.kieler.scg.extensions.ThreadPathType
 
 import static de.cau.cs.kieler.scg.processors.SCGAnnotations.*
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import java.util.Map
+import de.cau.cs.kieler.scg.Entry
 
 /** 
  * This class is part of the SCG transformation chain. In particular a synchronizer is called by the scheduler
@@ -165,8 +167,9 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
 		// Create a new list for all exit nodes of the threads of the fork-join-combination...
         val exitNodes = <Exit> newLinkedList
         // ... and fill the list with the exit nodes of all threads.
-        data.join.allPrevious.map[ eContainer ].filter(Exit).filter[ !final ].forEach[ exitNodes += it ]        
-        
+        data.join.allPrevious.map[ eContainer ].filter(Exit).filter[ !final ].
+            filter[ !getCachedSchedulingBlock.basicBlock.deadBlock ].forEach[ exitNodes += it ]
+                    
         // Build an empty expression for each exit node.
         for(exit:exitNodes){
             
@@ -180,7 +183,9 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
 	            data.predecessors.add(exitSB)
 	            
 	            // Now, retrieve all surfaces of the actual thread.
-	            val threadSurfaces = exit.entry.getThreadNodes.filter(typeof(Surface)).toList
+	            val threadSurfaces = exit.entry.getThreadNodes.filter(typeof(Surface)).
+	               filter[ !getCachedSchedulingBlock.basicBlock.deadBlock ].
+	               toList
 	            
 	            // If there are surface, build an empty expression.
 	            if (threadSurfaces.size>0) {
@@ -382,11 +387,11 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
         return SYNCHRONIZER_ID
     }
     
-    override isSynchronizable(Fork fork, Iterable<ThreadPathType> threadPathTypes, boolean instantaneousFeedback) {
+    override isSynchronizable(Fork fork, Map<Entry, ThreadPathType> threadPathTypes, boolean instantaneousFeedback) {
         var synchronizable = true
         
         if (instantaneousFeedback) {
-            for(tpt : threadPathTypes) {
+            for(tpt : threadPathTypes.values) {
                 if (tpt == ThreadPathType::POTENTIALLY_INSTANTANEOUS) synchronizable = false
             } 
         }

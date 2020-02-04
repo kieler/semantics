@@ -20,6 +20,9 @@ import de.cau.cs.kieler.kexpressions.RandomizeCall
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.sccharts.processors.statebased.codegen.StatebasedCCodeSerializeHRExtensions
 import de.cau.cs.kieler.kexpressions.keffects.PrintCallEffect
+import de.cau.cs.kieler.kexpressions.OperatorExpression
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsTypeExtensions
+import com.google.inject.Inject
 
 /**
  * @author wechselberg
@@ -27,6 +30,8 @@ import de.cau.cs.kieler.kexpressions.keffects.PrintCallEffect
  */
 @Singleton
 class StatebasedJavaCodeSerializeHRExtensions extends StatebasedCCodeSerializeHRExtensions {
+    
+    @Inject static extension KExpressionsTypeExtensions
     
     public static val IMPORTS = "imports"
     public static val GLOBAL_OBJECTS = "globalObjects"
@@ -96,5 +101,12 @@ class StatebasedJavaCodeSerializeHRExtensions extends StatebasedCCodeSerializeHR
         modifications.put(IMPORTS, "java.util.Random;")
             
         return "random.setSeed(System.currentTimeMillis())"
+    }  
+    
+    override def CharSequence serializeHROperatorExpressionEQ(OperatorExpression expression) {
+        if (expression.subExpressions.forall[hasString]) {
+            return "(" + combineOperatorsHR(expression.subExpressions.iterator, ").equals( ") + " )"
+        }
+        combineOperatorsHR(expression.subExpressions.iterator, " == ")
     }
 }

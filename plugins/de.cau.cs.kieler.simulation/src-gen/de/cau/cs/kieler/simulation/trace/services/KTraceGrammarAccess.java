@@ -1134,7 +1134,8 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 	//// A print functions that enables target-independent prints in the model.    
 	//PrintCallEffect keffects::PrintCallEffect:
 	//	annotations+=Annotation*
-	//	'print' ('(' parameters+=Parameter (',' parameters+=Parameter)* ')') ('schedule' schedule+=ScheduleObjectReference+)?;
+	//	'print' ('(' parameters+=Parameter (',' parameters+=Parameter)* ')') ('schedule'
+	//	schedule+=ScheduleObjectReference+)?;
 	public KEffectsGrammarAccess.PrintCallEffectElements getPrintCallEffectAccess() {
 		return gaKEffects.getPrintCallEffectAccess();
 	}
@@ -1432,9 +1433,10 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//SumExpression Expression:
-	//	ProductExpression ({OperatorExpression.subExpressions+=current} operator=AddOperator subExpressions+=ProductExpression
-	//	('+' subExpressions+=ProductExpression)* | {OperatorExpression.subExpressions+=current} operator=SubOperator
-	//	subExpressions+=ProductExpression ('-' subExpressions+=ProductExpression)*)*;
+	//	ProductExpression ({OperatorExpression.subExpressions+=current} operator=AddOperator
+	//	subExpressions+=ProductExpression ('+' subExpressions+=ProductExpression)* |
+	//	{OperatorExpression.subExpressions+=current} operator=SubOperator subExpressions+=ProductExpression ('-'
+	//	subExpressions+=ProductExpression)*)*;
 	public KExpressionsGrammarAccess.SumExpressionElements getSumExpressionAccess() {
 		return gaKExpressions.getSumExpressionAccess();
 	}
@@ -1491,8 +1493,8 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 	//// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
 	//// Example: 2 * 4
 	//MultExpression Expression:
-	//	NegExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=NegExpression) ('*'
-	//	subExpressions+=NegExpression)*)?;
+	//	NegExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=NegExpression)
+	//	('*' subExpressions+=NegExpression)*)?;
 	public KExpressionsGrammarAccess.MultExpressionElements getMultExpressionAccess() {
 		return gaKExpressions.getMultExpressionAccess();
 	}
@@ -1629,6 +1631,18 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 		return getAtomicValuedExpressionAccess().getRule();
 	}
 	
+	//// Boolean expression with scheduling directives.
+	//// Is meant to be used in derived grammars. Do not delete this rule.     
+	//BoolScheduleExpression Expression:
+	//	LogicalOrExpression ('schedule' schedule+=ScheduleObjectReference)?;
+	public KExpressionsGrammarAccess.BoolScheduleExpressionElements getBoolScheduleExpressionAccess() {
+		return gaKExpressions.getBoolScheduleExpressionAccess();
+	}
+	
+	public ParserRule getBoolScheduleExpressionRule() {
+		return getBoolScheduleExpressionAccess().getRule();
+	}
+	
 	//// Valued Object Test Expression Rule
 	//// This rules creates an operator expression for pre or val tests. Alternatively, it directs to a
 	//// valued object reference.
@@ -1732,13 +1746,28 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 		return getFunctionCallAccess().getRule();
 	}
 	
+	//// Print Call Rule
+	//// Calls the print function. They may include a parameter list.
+	//// Do not use in expressions directly, use PrintCallEffect instead
+	//PrintCall:
+	//	{PrintCall}
+	//	'print' ('(' parameters+=Parameter (',' parameters+=Parameter)* ')' |
+	//	'()');
+	public KExpressionsGrammarAccess.PrintCallElements getPrintCallAccess() {
+		return gaKExpressions.getPrintCallAccess();
+	}
+	
+	public ParserRule getPrintCallRule() {
+		return getPrintCallAccess().getRule();
+	}
+	
 	//// Parameter Rule
 	//// The parameter rule is used by the function call rule. Every expression may be a paramter.
 	//// Additionally, a parameter may be preceded by an ampersand to indicate a call by reference.
 	//// Analogously, an prefixed exclamation mark marks the parameter as pure output.
 	//Parameter:
-	//	(pureOutput?='!'? callByReference?='&')?
-	//	expression=Expression;
+	//	accessType=ParameterAccessType
+	//	expression=ValuedObjectReference | expression=Expression;
 	public KExpressionsGrammarAccess.ParameterElements getParameterAccess() {
 		return gaKExpressions.getParameterAccess();
 	}
@@ -2167,6 +2196,16 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public EnumRule getMethodReturnTypeRule() {
 		return getMethodReturnTypeAccess().getRule();
+	}
+	
+	//enum ParameterAccessType:
+	//	CALL_BY_REFERENCE="&" | PURE_OUTPUT="!&";
+	public KExpressionsGrammarAccess.ParameterAccessTypeElements getParameterAccessTypeAccess() {
+		return gaKExpressions.getParameterAccessTypeAccess();
+	}
+	
+	public EnumRule getParameterAccessTypeRule() {
+		return getParameterAccessTypeAccess().getRule();
 	}
 	
 	//// -------------------- //

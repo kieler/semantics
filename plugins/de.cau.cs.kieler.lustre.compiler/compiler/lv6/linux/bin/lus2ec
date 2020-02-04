@@ -1,0 +1,48 @@
+#!/bin/sh
+POLLUX=pollux
+
+TOOL=`basename $0`
+USAGE=\
+"usage: $TOOL <file>.lus <node> [-o <file>.ec] [-no] [-twice]\n\
+        -o <file>.ec : define output file\n\
+        -no : output on stdout\n\
+        -twice : expand twice (eval static node calls)"
+#echo $#
+if test $# -lt 2
+then
+   echo
+   echo $USAGE
+   echo
+   exit 1
+fi;
+FILE=$1
+MAIN=$2
+OUT="-o $MAIN.ec"
+shift 
+shift
+while test $# -ne 0
+do
+	if test $1 = "-o" 
+	then
+		shift
+		if test $# -eq 0
+		then
+   		echo
+			echo $USAGE
+   		echo
+			exit 1
+		fi;
+		OUT="-o $1"
+	elif test $1 = "-no"
+	then
+		OUT=""
+	else
+   	echo
+		echo $USAGE
+   	echo
+		exit 1
+	fi;
+	shift
+done;
+#echo $#
+$POLLUX -e -v -E -i $FILE -n $MAIN $OUT $*

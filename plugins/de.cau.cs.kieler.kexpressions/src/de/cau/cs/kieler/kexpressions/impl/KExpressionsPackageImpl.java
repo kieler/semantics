@@ -27,6 +27,8 @@ import de.cau.cs.kieler.kexpressions.NullValue;
 import de.cau.cs.kieler.kexpressions.OperatorExpression;
 import de.cau.cs.kieler.kexpressions.OperatorType;
 import de.cau.cs.kieler.kexpressions.Parameter;
+import de.cau.cs.kieler.kexpressions.ParameterAccessType;
+import de.cau.cs.kieler.kexpressions.ParamterAccessType;
 import de.cau.cs.kieler.kexpressions.PrintCall;
 import de.cau.cs.kieler.kexpressions.PriorityProtocol;
 import de.cau.cs.kieler.kexpressions.RandomCall;
@@ -328,6 +330,13 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * @generated
      */
     private EEnum priorityProtocolEEnum = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EEnum parameterAccessTypeEEnum = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -1076,7 +1085,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * @generated
      */
     @Override
-    public EAttribute getParameter_CallByReference() {
+    public EAttribute getParameter_AccessType() {
         return (EAttribute)parameterEClass.getEStructuralFeatures().get(0);
     }
 
@@ -1086,18 +1095,8 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * @generated
      */
     @Override
-    public EAttribute getParameter_PureOutput() {
-        return (EAttribute)parameterEClass.getEStructuralFeatures().get(1);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
     public EReference getParameter_Expression() {
-        return (EReference)parameterEClass.getEStructuralFeatures().get(2);
+        return (EReference)parameterEClass.getEStructuralFeatures().get(1);
     }
 
     /**
@@ -1107,7 +1106,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      */
     @Override
     public EReference getParameter_ExplicitBinding() {
-        return (EReference)parameterEClass.getEStructuralFeatures().get(3);
+        return (EReference)parameterEClass.getEStructuralFeatures().get(2);
     }
 
     /**
@@ -1117,7 +1116,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      */
     @Override
     public EReference getParameter_ExplicitBindingIndices() {
-        return (EReference)parameterEClass.getEStructuralFeatures().get(4);
+        return (EReference)parameterEClass.getEStructuralFeatures().get(3);
     }
 
     /**
@@ -1296,6 +1295,16 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * @generated
      */
     @Override
+    public EEnum getParameterAccessType() {
+        return parameterAccessTypeEEnum;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public EEnum getAccessModifier() {
         return accessModifierEEnum;
     }
@@ -1420,8 +1429,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         createEAttribute(scheduleObjectReferenceEClass, SCHEDULE_OBJECT_REFERENCE__PRIORITY);
 
         parameterEClass = createEClass(PARAMETER);
-        createEAttribute(parameterEClass, PARAMETER__CALL_BY_REFERENCE);
-        createEAttribute(parameterEClass, PARAMETER__PURE_OUTPUT);
+        createEAttribute(parameterEClass, PARAMETER__ACCESS_TYPE);
         createEReference(parameterEClass, PARAMETER__EXPRESSION);
         createEReference(parameterEClass, PARAMETER__EXPLICIT_BINDING);
         createEReference(parameterEClass, PARAMETER__EXPLICIT_BINDING_INDICES);
@@ -1453,6 +1461,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         operatorTypeEEnum = createEEnum(OPERATOR_TYPE);
         valueTypeEEnum = createEEnum(VALUE_TYPE);
         priorityProtocolEEnum = createEEnum(PRIORITY_PROTOCOL);
+        parameterAccessTypeEEnum = createEEnum(PARAMETER_ACCESS_TYPE);
         accessModifierEEnum = createEEnum(ACCESS_MODIFIER);
     }
 
@@ -1624,8 +1633,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         initEAttribute(getScheduleObjectReference_Priority(), ecorePackage.getEInt(), "priority", null, 0, 1, ScheduleObjectReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(parameterEClass, Parameter.class, "Parameter", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getParameter_CallByReference(), ecorePackage.getEBoolean(), "callByReference", null, 0, 1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getParameter_PureOutput(), ecorePackage.getEBoolean(), "pureOutput", null, 0, 1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getParameter_AccessType(), this.getParameterAccessType(), "accessType", "CALL_BY_VALUE", 0, 1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getParameter_Expression(), this.getExpression(), null, "expression", null, 0, 1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getParameter_ExplicitBinding(), this.getValuedObject(), null, "explicitBinding", null, 0, 1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getParameter_ExplicitBindingIndices(), this.getExpression(), null, "explicitBindingIndices", null, 0, -1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1698,6 +1706,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         addEEnumLiteral(operatorTypeEEnum, OperatorType.NOR);
         addEEnumLiteral(operatorTypeEEnum, OperatorType.IMPLIES);
         addEEnumLiteral(operatorTypeEEnum, OperatorType.SFBY);
+        addEEnumLiteral(operatorTypeEEnum, OperatorType.LAST);
 
         initEEnum(valueTypeEEnum, ValueType.class, "ValueType");
         addEEnumLiteral(valueTypeEEnum, ValueType.PURE);
@@ -1721,6 +1730,11 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         initEEnum(priorityProtocolEEnum, PriorityProtocol.class, "PriorityProtocol");
         addEEnumLiteral(priorityProtocolEEnum, PriorityProtocol.CONFLICT);
         addEEnumLiteral(priorityProtocolEEnum, PriorityProtocol.CONFLUENT);
+
+        initEEnum(parameterAccessTypeEEnum, ParameterAccessType.class, "ParameterAccessType");
+        addEEnumLiteral(parameterAccessTypeEEnum, ParameterAccessType.CALL_BY_VALUE);
+        addEEnumLiteral(parameterAccessTypeEEnum, ParameterAccessType.CALL_BY_REFERENCE);
+        addEEnumLiteral(parameterAccessTypeEEnum, ParameterAccessType.PURE_OUTPUT);
 
         initEEnum(accessModifierEEnum, AccessModifier.class, "AccessModifier");
         addEEnumLiteral(accessModifierEEnum, AccessModifier.PUBLIC);

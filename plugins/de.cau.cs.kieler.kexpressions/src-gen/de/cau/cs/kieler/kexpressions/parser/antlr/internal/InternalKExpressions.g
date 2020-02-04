@@ -2935,6 +2935,62 @@ ruleValuedObjectReference returns [EObject current=null]
 	)
 ;
 
+// Entry rule entryRuleScheduleObjectReference
+entryRuleScheduleObjectReference returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getScheduleObjectReferenceRule()); }
+	iv_ruleScheduleObjectReference=ruleScheduleObjectReference
+	{ $current=$iv_ruleScheduleObjectReference.current; }
+	EOF;
+
+// Rule ScheduleObjectReference
+ruleScheduleObjectReference returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		(
+			(
+				{
+					/* */
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getScheduleObjectReferenceRule());
+					}
+				}
+				{
+					newCompositeNode(grammarAccess.getScheduleObjectReferenceAccess().getValuedObjectValuedObjectCrossReference_0_0());
+				}
+				rulePrimeID
+				{
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)
+		(
+			(
+				lv_priority_1_0=RULE_INT
+				{
+					newLeafNode(lv_priority_1_0, grammarAccess.getScheduleObjectReferenceAccess().getPriorityINTTerminalRuleCall_1_0());
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getScheduleObjectReferenceRule());
+					}
+					setWithLastConsumed(
+						$current,
+						"priority",
+						lv_priority_1_0,
+						"de.cau.cs.kieler.annotations.Annotations.INT");
+				}
+			)
+		)
+	)
+;
+
 // Entry rule entryRuleReferenceCall
 entryRuleReferenceCall returns [EObject current=null]:
 	{ newCompositeNode(grammarAccess.getReferenceCallRule()); }
@@ -3287,33 +3343,44 @@ ruleParameter returns [EObject current=null]
 		(
 			(
 				(
-					lv_pureOutput_0_0='!'
 					{
-						newLeafNode(lv_pureOutput_0_0, grammarAccess.getParameterAccess().getPureOutputExclamationMarkKeyword_0_0_0());
+						newCompositeNode(grammarAccess.getParameterAccess().getAccessTypeParameterAccessTypeEnumRuleCall_0_0_0());
 					}
+					lv_accessType_0_0=ruleParameterAccessType
 					{
 						if ($current==null) {
-							$current = createModelElement(grammarAccess.getParameterRule());
+							$current = createModelElementForParent(grammarAccess.getParameterRule());
 						}
-						setWithLastConsumed($current, "pureOutput", true, "!");
-					}
-				)
-			)?
-			(
-				(
-					lv_callByReference_1_0='&'
-					{
-						newLeafNode(lv_callByReference_1_0, grammarAccess.getParameterAccess().getCallByReferenceAmpersandKeyword_0_1_0());
-					}
-					{
-						if ($current==null) {
-							$current = createModelElement(grammarAccess.getParameterRule());
-						}
-						setWithLastConsumed($current, "callByReference", true, "&");
+						set(
+							$current,
+							"accessType",
+							lv_accessType_0_0,
+							"de.cau.cs.kieler.kexpressions.KExpressions.ParameterAccessType");
+						afterParserOrEnumRuleCall();
 					}
 				)
 			)
-		)?
+			(
+				(
+					{
+						newCompositeNode(grammarAccess.getParameterAccess().getExpressionValuedObjectReferenceParserRuleCall_0_1_0());
+					}
+					lv_expression_1_0=ruleValuedObjectReference
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getParameterRule());
+						}
+						set(
+							$current,
+							"expression",
+							lv_expression_1_0,
+							"de.cau.cs.kieler.kexpressions.KExpressions.ValuedObjectReference");
+						afterParserOrEnumRuleCall();
+					}
+				)
+			)
+		)
+		    |
 		(
 			(
 				{
@@ -5924,6 +5991,33 @@ ruleSfbyOperator returns [Enumerator current=null]
 			$current = grammarAccess.getSfbyOperatorAccess().getSFBYEnumLiteralDeclaration().getEnumLiteral().getInstance();
 			newLeafNode(enumLiteral_0, grammarAccess.getSfbyOperatorAccess().getSFBYEnumLiteralDeclaration());
 		}
+	)
+;
+
+// Rule ParameterAccessType
+ruleParameterAccessType returns [Enumerator current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		(
+			enumLiteral_0='&'
+			{
+				$current = grammarAccess.getParameterAccessTypeAccess().getCALL_BY_REFERENCEEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
+				newLeafNode(enumLiteral_0, grammarAccess.getParameterAccessTypeAccess().getCALL_BY_REFERENCEEnumLiteralDeclaration_0());
+			}
+		)
+		    |
+		(
+			enumLiteral_1='!&'
+			{
+				$current = grammarAccess.getParameterAccessTypeAccess().getPURE_OUTPUTEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
+				newLeafNode(enumLiteral_1, grammarAccess.getParameterAccessTypeAccess().getPURE_OUTPUTEnumLiteralDeclaration_1());
+			}
+		)
 	)
 ;
 

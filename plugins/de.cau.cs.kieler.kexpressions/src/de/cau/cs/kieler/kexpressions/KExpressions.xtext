@@ -325,7 +325,11 @@ AtomicValuedExpression returns Expression:
     | '(' ValuedExpression ')'
     | AtomicExpression;
     
-    
+// Boolean expression with scheduling directives.
+// Is meant to be used in derived grammars. Do not delete this rule.     
+BoolScheduleExpression returns Expression:
+    LogicalOrExpression
+    ('schedule' schedule += ScheduleObjectReference)?;    
 
 // Valued Object Test Expression Rule
 // This rules creates an operator expression for pre or val tests. Alternatively, it directs to a
@@ -383,14 +387,28 @@ FunctionCall returns FunctionCall:
         (('(' parameters += Parameter 
             (',' parameters += Parameter)* ')'
         ) | '()')
-    );        
+    ); 
+    
+// Print Call Rule
+// Calls the print function. They may include a parameter list.
+// Do not use in expressions directly, use PrintCallEffect instead
+PrintCall returns PrintCall:
+    {PrintCall}
+    'print'
+    (   
+        ('(' parameters += Parameter (',' parameters += Parameter)* ')' )
+    | 
+        '()'
+    );      
 
 // Parameter Rule
 // The parameter rule is used by the function call rule. Every expression may be a paramter.
 // Additionally, a parameter may be preceded by an ampersand to indicate a call by reference.
 // Analogously, an prefixed exclamation mark marks the parameter as pure output.
 Parameter returns Parameter:
-    ((pureOutput ?= '!')? callByReference ?= '&')?
+    (accessType = ParameterAccessType
+    expression = ValuedObjectReference)
+    |
     expression = Expression;
     
 // Text Expression Rule
@@ -531,6 +549,10 @@ enum MethodReturnType returns ValueType:
     VOID="void" |
     BOOL="bool" | INT="int" | FLOAT="float" |
     STRING="string";
+    
+enum ParameterAccessType returns ParameterAccessType:
+    CALL_BY_REFERENCE = "&" | PURE_OUTPUT = "!&"
+;
 
 // -------------------- //
 //  JSON                // 

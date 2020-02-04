@@ -16,7 +16,6 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.xtext.xbase.lib,
  de.cau.cs.kieler.sccharts,
  de.cau.cs.kieler.scg,
- de.cau.cs.kieler.sccharts.scg,
  de.cau.cs.kieler.kicool,
  de.cau.cs.kieler.simulation,
  de.cau.cs.kieler.klighd,
@@ -26,8 +25,7 @@ Require-Bundle: org.eclipse.ui,
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Export-Package: de.cau.cs.kieler.sccharts.test,
- de.cau.cs.kieler.sccharts.test.a.structure,
- de.cau.cs.kieler.sccharts.test.b.compiler,
- de.cau.cs.kieler.sccharts.test.c.simulation,
- de.cau.cs.kieler.sccharts.test.d.synthesis
+ de.cau.cs.kieler.sccharts.test.structure,
+ de.cau.cs.kieler.sccharts.test.compiler,
+ de.cau.cs.kieler.sccharts.test.synthesis
 

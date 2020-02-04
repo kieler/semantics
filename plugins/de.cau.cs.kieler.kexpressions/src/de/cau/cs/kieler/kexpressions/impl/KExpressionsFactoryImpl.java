@@ -106,6 +106,8 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
                 return createValueTypeFromString(eDataType, initialValue);
             case KExpressionsPackage.PRIORITY_PROTOCOL:
                 return createPriorityProtocolFromString(eDataType, initialValue);
+            case KExpressionsPackage.PARAMETER_ACCESS_TYPE:
+                return createParameterAccessTypeFromString(eDataType, initialValue);
             case KExpressionsPackage.ACCESS_MODIFIER:
                 return createAccessModifierFromString(eDataType, initialValue);
             default:
@@ -129,6 +131,8 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
                 return convertValueTypeToString(eDataType, instanceValue);
             case KExpressionsPackage.PRIORITY_PROTOCOL:
                 return convertPriorityProtocolToString(eDataType, instanceValue);
+            case KExpressionsPackage.PARAMETER_ACCESS_TYPE:
+                return convertParameterAccessTypeToString(eDataType, instanceValue);
             case KExpressionsPackage.ACCESS_MODIFIER:
                 return convertAccessModifierToString(eDataType, instanceValue);
             default:
@@ -521,6 +525,26 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
      * @generated
      */
     public String convertPriorityProtocolToString(EDataType eDataType, Object instanceValue) {
+        return instanceValue == null ? null : instanceValue.toString();
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public ParameterAccessType createParameterAccessTypeFromString(EDataType eDataType, String initialValue) {
+        ParameterAccessType result = ParameterAccessType.get(initialValue);
+        if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+        return result;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public String convertParameterAccessTypeToString(EDataType eDataType, Object instanceValue) {
         return instanceValue == null ? null : instanceValue.toString();
     }
 

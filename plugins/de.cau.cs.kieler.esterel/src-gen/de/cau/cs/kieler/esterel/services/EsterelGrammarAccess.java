@@ -1258,8 +1258,8 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//name=ID ((":=" initialValue=Expression)? ":" (type=EsterelValueType | idType=ID | "combine" (type=EsterelValueType |
 		//idType=ID) "with" (combineFunction=[Function] | combineOperator=EsterelCombineOperator)) | "(" (":="
-		//initialValue=Expression ":")? (type=EsterelValueType | idType=ID | "combine" (type=EsterelValueType | idType=ID) "with"
-		//(combineFunction=[Function] | combineOperator=EsterelCombineOperator)) ")")?
+		//initialValue=Expression ":")? (type=EsterelValueType | idType=ID | "combine" (type=EsterelValueType | idType=ID)
+		//"with" (combineFunction=[Function] | combineOperator=EsterelCombineOperator)) ")")?
 		public Group getGroup() { return cGroup; }
 		
 		//name=ID
@@ -1269,9 +1269,9 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		public RuleCall getNameIDTerminalRuleCall_0_0() { return cNameIDTerminalRuleCall_0_0; }
 		
 		//((":=" initialValue=Expression)? ":" (type=EsterelValueType | idType=ID | "combine" (type=EsterelValueType | idType=ID)
-		//"with" (combineFunction=[Function] | combineOperator=EsterelCombineOperator)) | "(" (":=" initialValue=Expression ":")?
-		//(type=EsterelValueType | idType=ID | "combine" (type=EsterelValueType | idType=ID) "with" (combineFunction=[Function] |
-		//combineOperator=EsterelCombineOperator)) ")")?
+		//"with" (combineFunction=[Function] | combineOperator=EsterelCombineOperator)) | "(" (":=" initialValue=Expression
+		//":")? (type=EsterelValueType | idType=ID | "combine" (type=EsterelValueType | idType=ID) "with"
+		//(combineFunction=[Function] | combineOperator=EsterelCombineOperator)) ")")?
 		public Alternatives getAlternatives_1() { return cAlternatives_1; }
 		
 		//(":=" initialValue=Expression)? ":" (type=EsterelValueType | idType=ID | "combine" (type=EsterelValueType | idType=ID)
@@ -1763,8 +1763,8 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		// * ###               7.5 Statements                ###
 		// * ###################################################
 		// */ InstructionStatement scl::Statement:
-		//	Nothing | EsterelPause | Halt | Emit | Exit | Present | Await | EsterelAssignment | Abort | Loop | EveryDo | Sustain |
-		//	Trap | Suspend | LocalSignalDeclaration | LocalVariableDeclaration | IfTest | Exec | Run | ProcedureCall | Repeat |
+		//	Nothing | EsterelPause | Halt | Emit | Exit | Present | Await | EsterelAssignment | Abort | Loop | EveryDo | Sustain
+		//	| Trap | Suspend | LocalSignalDeclaration | LocalVariableDeclaration | IfTest | Exec | Run | ProcedureCall | Repeat |
 		//	Block | LegacyDo;
 		@Override public ParserRule getRule() { return rule; }
 		
@@ -2302,8 +2302,8 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		@Override public ParserRule getRule() { return rule; }
 		
 		//annotations+=Annotation* "call" procedure=[Procedure] ("(" (referenceArguments+=[Variable] (","
-		//referenceArguments+=[Variable])*)? ")" | '()') ("(" (valueArguments+=Expression ("," valueArguments+=Expression)*)? ")"
-		//| '()')
+		//referenceArguments+=[Variable])*)? ")" | '()') ("(" (valueArguments+=Expression ("," valueArguments+=Expression)*)?
+		//")" | '()')
 		public Group getGroup() { return cGroup; }
 		
 		//annotations+=Annotation*
@@ -3421,9 +3421,9 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		@Override public ParserRule getRule() { return rule; }
 		
 		//{TrapSignal} name=ID (":=" initialValue=Expression ":" (type=EsterelValueType | idType=ID | "combine"
-		//(type=EsterelValueType | idType=ID) "with" (combineFunction=[Function] | combineOperator=EsterelCombineOperator)) | ":"
-		//(type=EsterelValueType | idType=ID | "combine" (type=EsterelValueType | idType=ID) "with" (combineFunction=[Function] |
-		//combineOperator=EsterelCombineOperator)))?
+		//(type=EsterelValueType | idType=ID) "with" (combineFunction=[Function] | combineOperator=EsterelCombineOperator)) |
+		//":" (type=EsterelValueType | idType=ID | "combine" (type=EsterelValueType | idType=ID) "with"
+		//(combineFunction=[Function] | combineOperator=EsterelCombineOperator)))?
 		public Group getGroup() { return cGroup; }
 		
 		//{TrapSignal}
@@ -4576,8 +4576,8 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		public RuleCall getAnnotationsAnnotationParserRuleCall_0_0() { return cAnnotationsAnnotationParserRuleCall_0_0; }
 		
 		//("type" renamings+=TypeRenaming ("," renamings+=TypeRenaming)* | "constant" renamings+=ConstantRenaming (","
-		//renamings+=ConstantRenaming)* | "function" renamings+=FunctionRenaming ("," renamings+=FunctionRenaming)* | "procedure"
-		//renamings+=ProcedureRenaming ("," renamings+=ProcedureRenaming)* | "task" renamings+=TaskRenaming (","
+		//renamings+=ConstantRenaming)* | "function" renamings+=FunctionRenaming ("," renamings+=FunctionRenaming)* |
+		//"procedure" renamings+=ProcedureRenaming ("," renamings+=ProcedureRenaming)* | "task" renamings+=TaskRenaming (","
 		//renamings+=TaskRenaming)* | "signal" renamings+=SignalRenaming ("," renamings+=SignalRenaming)*)
 		public Alternatives getAlternatives_1() { return cAlternatives_1; }
 		
@@ -7665,8 +7665,8 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	// * ###               7.5 Statements                ###
 	// * ###################################################
 	// */ InstructionStatement scl::Statement:
-	//	Nothing | EsterelPause | Halt | Emit | Exit | Present | Await | EsterelAssignment | Abort | Loop | EveryDo | Sustain |
-	//	Trap | Suspend | LocalSignalDeclaration | LocalVariableDeclaration | IfTest | Exec | Run | ProcedureCall | Repeat |
+	//	Nothing | EsterelPause | Halt | Emit | Exit | Present | Await | EsterelAssignment | Abort | Loop | EveryDo | Sustain
+	//	| Trap | Suspend | LocalSignalDeclaration | LocalVariableDeclaration | IfTest | Exec | Run | ProcedureCall | Repeat |
 	//	Block | LegacyDo;
 	public InstructionStatementElements getInstructionStatementAccess() {
 		return pInstructionStatement;
@@ -8881,6 +8881,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	//	SclAssignment
 	//	| SclPostfixAssignment
 	//	| Label
+	//	| SclEffectAssignment
 	//	| Conditional
 	//	| LegacyConditional
 	//	| Goto
@@ -8960,6 +8961,22 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		return getSclPostfixAssignmentAccess().getRule();
 	}
 	
+	//SclEffectAssignment Assignment:
+	//	annotations+=super::Annotation*
+	//	expression=(ReferenceCall
+	//	| TextExpression
+	//	| PrintCall
+	//	| RandomizeCall
+	//	| FunctionCall) ('schedule' schedule+=ScheduleObjectReference+)?
+	//	semicolon?=';'?;
+	public SCLGrammarAccess.SclEffectAssignmentElements getSclEffectAssignmentAccess() {
+		return gaSCL.getSclEffectAssignmentAccess();
+	}
+	
+	public ParserRule getSclEffectAssignmentRule() {
+		return getSclEffectAssignmentAccess().getRule();
+	}
+	
 	//Return:
 	//	annotations+=super::Annotation*
 	//	'return'
@@ -8974,7 +8991,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//Conditional:
 	//	annotations+=super::Annotation*
-	//	'if' expression=super::AtomicExpression
+	//	'if' expression=(BoolScheduleExpression | super::AtomicExpression)
 	//	'{'
 	//	declarations+=Declaration*
 	//	statements+=Statement*
@@ -9146,9 +9163,9 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//ModuleCallParameter kexpressions::Parameter:
-	//	(pureOutput?='!'? callByReference?='&')?
-	//	expression=super::Expression ('to' explicitBinding=[kexpressions::ValuedObject] ('['
-	//	explicitBindingIndices+=super::Expression ']')*)?;
+	//	(accessType=ParameterAccessType
+	//	expression=ValuedObjectReference | expression=super::Expression) ('to' explicitBinding=[kexpressions::ValuedObject]
+	//	('[' explicitBindingIndices+=super::Expression ']')*)?;
 	public SCLGrammarAccess.ModuleCallParameterElements getModuleCallParameterAccess() {
 		return gaSCL.getModuleCallParameterAccess();
 	}
@@ -9694,7 +9711,8 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	//// A print functions that enables target-independent prints in the model.    
 	//PrintCallEffect keffects::PrintCallEffect:
 	//	annotations+=super::Annotation*
-	//	'print' ('(' parameters+=Parameter (',' parameters+=Parameter)* ')') ('schedule' schedule+=ScheduleObjectReference+)?;
+	//	'print' ('(' parameters+=Parameter (',' parameters+=Parameter)* ')') ('schedule'
+	//	schedule+=ScheduleObjectReference+)?;
 	public KEffectsGrammarAccess.PrintCallEffectElements getPrintCallEffectAccess() {
 		return gaKEffects.getPrintCallEffectAccess();
 	}
@@ -9926,9 +9944,10 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//SumExpression Expression:
-	//	ProductExpression ({OperatorExpression.subExpressions+=current} operator=AddOperator subExpressions+=ProductExpression
-	//	('+' subExpressions+=ProductExpression)* | {OperatorExpression.subExpressions+=current} operator=SubOperator
-	//	subExpressions+=ProductExpression ('-' subExpressions+=ProductExpression)*)*;
+	//	ProductExpression ({OperatorExpression.subExpressions+=current} operator=AddOperator
+	//	subExpressions+=ProductExpression ('+' subExpressions+=ProductExpression)* |
+	//	{OperatorExpression.subExpressions+=current} operator=SubOperator subExpressions+=ProductExpression ('-'
+	//	subExpressions+=ProductExpression)*)*;
 	public KExpressionsGrammarAccess.SumExpressionElements getSumExpressionAccess() {
 		return gaKExpressions.getSumExpressionAccess();
 	}
@@ -9994,6 +10013,18 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getSfbyExpressionRule() {
 		return getSfbyExpressionAccess().getRule();
+	}
+	
+	//// Boolean expression with scheduling directives.
+	//// Is meant to be used in derived grammars. Do not delete this rule.     
+	//BoolScheduleExpression Expression:
+	//	LogicalOrExpression ('schedule' schedule+=ScheduleObjectReference)?;
+	public KExpressionsGrammarAccess.BoolScheduleExpressionElements getBoolScheduleExpressionAccess() {
+		return gaKExpressions.getBoolScheduleExpressionAccess();
+	}
+	
+	public ParserRule getBoolScheduleExpressionRule() {
+		return getBoolScheduleExpressionAccess().getRule();
 	}
 	
 	//// Valued Object Test Expression Rule
@@ -10099,13 +10130,28 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		return getFunctionCallAccess().getRule();
 	}
 	
+	//// Print Call Rule
+	//// Calls the print function. They may include a parameter list.
+	//// Do not use in expressions directly, use PrintCallEffect instead
+	//PrintCall:
+	//	{PrintCall}
+	//	'print' ('(' parameters+=Parameter (',' parameters+=Parameter)* ')' |
+	//	'()');
+	public KExpressionsGrammarAccess.PrintCallElements getPrintCallAccess() {
+		return gaKExpressions.getPrintCallAccess();
+	}
+	
+	public ParserRule getPrintCallRule() {
+		return getPrintCallAccess().getRule();
+	}
+	
 	//// Parameter Rule
 	//// The parameter rule is used by the function call rule. Every expression may be a paramter.
 	//// Additionally, a parameter may be preceded by an ampersand to indicate a call by reference.
 	//// Analogously, an prefixed exclamation mark marks the parameter as pure output.
 	//Parameter:
-	//	(pureOutput?='!'? callByReference?='&')?
-	//	expression=super::Expression;
+	//	accessType=ParameterAccessType
+	//	expression=ValuedObjectReference | expression=super::Expression;
 	public KExpressionsGrammarAccess.ParameterElements getParameterAccess() {
 		return gaKExpressions.getParameterAccess();
 	}
@@ -10534,6 +10580,16 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public EnumRule getMethodReturnTypeRule() {
 		return getMethodReturnTypeAccess().getRule();
+	}
+	
+	//enum ParameterAccessType:
+	//	CALL_BY_REFERENCE="&" | PURE_OUTPUT="!&";
+	public KExpressionsGrammarAccess.ParameterAccessTypeElements getParameterAccessTypeAccess() {
+		return gaKExpressions.getParameterAccessTypeAccess();
+	}
+	
+	public EnumRule getParameterAccessTypeRule() {
+		return getParameterAccessTypeAccess().getRule();
 	}
 	
 	//// -------------------- //

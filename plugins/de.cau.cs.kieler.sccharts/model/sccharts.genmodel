@@ -10,8 +10,9 @@
   <genPackages prefix="SCCharts" basePackage="de.cau.cs.kieler" disposableProviderFactory="true"
       fileExtensions="scc" ecorePackage="sccharts.ecore#/">
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="sccharts.ecore#//PreemptionType">
-      <genEnumLiterals ecoreEnumLiteral="sccharts.ecore#//PreemptionType/WEAKABORT"/>
-      <genEnumLiterals ecoreEnumLiteral="sccharts.ecore#//PreemptionType/STRONGABORT"/>
+      <genEnumLiterals ecoreEnumLiteral="sccharts.ecore#//PreemptionType/UNDEFINED"/>
+      <genEnumLiterals ecoreEnumLiteral="sccharts.ecore#//PreemptionType/WEAK"/>
+      <genEnumLiterals ecoreEnumLiteral="sccharts.ecore#//PreemptionType/STRONG"/>
       <genEnumLiterals ecoreEnumLiteral="sccharts.ecore#//PreemptionType/TERMINATION"/>
     </genEnums>
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="sccharts.ecore#//HistoryType">
@@ -86,21 +87,26 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference sccharts.ecore#//Transition/targetState"/>
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference sccharts.ecore#//Transition/sourceState"/>
     </genClasses>
-    <genClasses ecoreClass="sccharts.ecore#//EntryAction"/>
+    <genClasses ecoreClass="sccharts.ecore#//EntryAction">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute sccharts.ecore#//EntryAction/preemption"/>
+    </genClasses>
     <genClasses ecoreClass="sccharts.ecore#//DuringAction">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute sccharts.ecore#//DuringAction/reset"/>
     </genClasses>
-    <genClasses ecoreClass="sccharts.ecore#//ExitAction"/>
+    <genClasses ecoreClass="sccharts.ecore#//ExitAction">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute sccharts.ecore#//ExitAction/preemption"/>
+    </genClasses>
     <genClasses ecoreClass="sccharts.ecore#//SuspendAction">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute sccharts.ecore#//SuspendAction/weak"/>
     </genClasses>
-    <genClasses ecoreClass="sccharts.ecore#//PrecedingAction"/>
-    <genClasses ecoreClass="sccharts.ecore#//SucceedingAction"/>
     <genClasses ecoreClass="sccharts.ecore#//PeriodAction"/>
     <genClasses ecoreClass="sccharts.ecore#//PolicyClassDeclaration">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference sccharts.ecore#//PolicyClassDeclaration/policy"/>
     </genClasses>
     <genClasses ecoreClass="sccharts.ecore#//PolicyRegion"/>
     <genClasses ecoreClass="sccharts.ecore#//CodeEffect"/>
+    <genClasses ecoreClass="sccharts.ecore#//DataflowAssignment">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute sccharts.ecore#//DataflowAssignment/sequential"/>
+    </genClasses>
   </genPackages>
 </genmodel:GenModel>

@@ -16,6 +16,7 @@ import de.cau.cs.kieler.kexpressions.IgnoreValue
 import de.cau.cs.kieler.kexpressions.RandomCall
 import de.cau.cs.kieler.kexpressions.RandomizeCall
 import de.cau.cs.kieler.annotations.NamedObject
+import de.cau.cs.kieler.kexpressions.ParameterAccessType
 
 /**
  * Serialization of KExpressions in human readable form.
@@ -98,7 +99,7 @@ class KExpressionsSerializeHRExtensions extends KExpressionsSerializeExtensions 
         return "randomize"
     }
         
-    def public CharSequence serializeHRParameters(List<Parameter> parameters) {
+    def CharSequence serializeHRParameters(List<Parameter> parameters) {
         val sb = new StringBuilder
         sb.append("(")
         var cnt = 0
@@ -106,10 +107,10 @@ class KExpressionsSerializeHRExtensions extends KExpressionsSerializeExtensions 
             if (cnt > 0) {
                 sb.append(", ")
             }
-            if (par.pureOutput) {
-                sb.append("!")
+            if (par.accessType === ParameterAccessType.PURE_OUTPUT) {
+                sb.append("!&")
             }
-            if (par.callByReference) {
+            else if (par.accessType === ParameterAccessType.CALL_BY_REFERENCE) {
                 sb.append("&")
             }
             if (par.expression === null) sb.append("NULL!!!") else 

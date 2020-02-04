@@ -963,9 +963,10 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cSubExpressionsProductExpressionParserRuleCall_1_1_3_1_0 = (RuleCall)cSubExpressionsAssignment_1_1_3_1.eContents().get(0);
 		
 		//SumExpression Expression:
-		//	ProductExpression ({OperatorExpression.subExpressions+=current} operator=AddOperator subExpressions+=ProductExpression
-		//	('+' subExpressions+=ProductExpression)* | {OperatorExpression.subExpressions+=current} operator=SubOperator
-		//	subExpressions+=ProductExpression ('-' subExpressions+=ProductExpression)*)*;
+		//	ProductExpression ({OperatorExpression.subExpressions+=current} operator=AddOperator
+		//	subExpressions+=ProductExpression ('+' subExpressions+=ProductExpression)* |
+		//	{OperatorExpression.subExpressions+=current} operator=SubOperator subExpressions+=ProductExpression ('-'
+		//	subExpressions+=ProductExpression)*)*;
 		@Override public ParserRule getRule() { return rule; }
 		
 		//ProductExpression ({OperatorExpression.subExpressions+=current} operator=AddOperator subExpressions+=ProductExpression
@@ -1303,8 +1304,8 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
 		//// Example: 2 * 4
 		//MultExpression Expression:
-		//	NegExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=NegExpression) ('*'
-		//	subExpressions+=NegExpression)*)?;
+		//	NegExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=NegExpression)
+		//	('*' subExpressions+=NegExpression)*)?;
 		@Override public ParserRule getRule() { return rule; }
 		
 		//NegExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=NegExpression) ('*'
@@ -1899,6 +1900,39 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//AtomicExpression
 		public RuleCall getAtomicExpressionParserRuleCall_5() { return cAtomicExpressionParserRuleCall_5; }
 	}
+	public class BoolScheduleExpressionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.BoolScheduleExpression");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final RuleCall cLogicalOrExpressionParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
+		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
+		private final Keyword cScheduleKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
+		private final Assignment cScheduleAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
+		private final RuleCall cScheduleScheduleObjectReferenceParserRuleCall_1_1_0 = (RuleCall)cScheduleAssignment_1_1.eContents().get(0);
+		
+		//// Boolean expression with scheduling directives.
+		//// Is meant to be used in derived grammars. Do not delete this rule.     
+		//BoolScheduleExpression Expression:
+		//	LogicalOrExpression ('schedule' schedule+=ScheduleObjectReference)?;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//LogicalOrExpression ('schedule' schedule+=ScheduleObjectReference)?
+		public Group getGroup() { return cGroup; }
+		
+		//LogicalOrExpression
+		public RuleCall getLogicalOrExpressionParserRuleCall_0() { return cLogicalOrExpressionParserRuleCall_0; }
+		
+		//('schedule' schedule+=ScheduleObjectReference)?
+		public Group getGroup_1() { return cGroup_1; }
+		
+		//'schedule'
+		public Keyword getScheduleKeyword_1_0() { return cScheduleKeyword_1_0; }
+		
+		//schedule+=ScheduleObjectReference
+		public Assignment getScheduleAssignment_1_1() { return cScheduleAssignment_1_1; }
+		
+		//ScheduleObjectReference
+		public RuleCall getScheduleScheduleObjectReferenceParserRuleCall_1_1_0() { return cScheduleScheduleObjectReferenceParserRuleCall_1_1_0; }
+	}
 	public class ValuedObjectTestExpressionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.ValuedObjectTestExpression");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
@@ -2321,15 +2355,83 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//'()'
 		public Keyword getLeftParenthesisRightParenthesisKeyword_2_1() { return cLeftParenthesisRightParenthesisKeyword_2_1; }
 	}
+	public class PrintCallElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.PrintCall");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cPrintCallAction_0 = (Action)cGroup.eContents().get(0);
+		private final Keyword cPrintKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Alternatives cAlternatives_2 = (Alternatives)cGroup.eContents().get(2);
+		private final Group cGroup_2_0 = (Group)cAlternatives_2.eContents().get(0);
+		private final Keyword cLeftParenthesisKeyword_2_0_0 = (Keyword)cGroup_2_0.eContents().get(0);
+		private final Assignment cParametersAssignment_2_0_1 = (Assignment)cGroup_2_0.eContents().get(1);
+		private final RuleCall cParametersParameterParserRuleCall_2_0_1_0 = (RuleCall)cParametersAssignment_2_0_1.eContents().get(0);
+		private final Group cGroup_2_0_2 = (Group)cGroup_2_0.eContents().get(2);
+		private final Keyword cCommaKeyword_2_0_2_0 = (Keyword)cGroup_2_0_2.eContents().get(0);
+		private final Assignment cParametersAssignment_2_0_2_1 = (Assignment)cGroup_2_0_2.eContents().get(1);
+		private final RuleCall cParametersParameterParserRuleCall_2_0_2_1_0 = (RuleCall)cParametersAssignment_2_0_2_1.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_2_0_3 = (Keyword)cGroup_2_0.eContents().get(3);
+		private final Keyword cLeftParenthesisRightParenthesisKeyword_2_1 = (Keyword)cAlternatives_2.eContents().get(1);
+		
+		//// Print Call Rule
+		//// Calls the print function. They may include a parameter list.
+		//// Do not use in expressions directly, use PrintCallEffect instead
+		//PrintCall:
+		//	{PrintCall}
+		//	'print' ('(' parameters+=Parameter (',' parameters+=Parameter)* ')' |
+		//	'()');
+		@Override public ParserRule getRule() { return rule; }
+		
+		//{PrintCall} 'print' ('(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()')
+		public Group getGroup() { return cGroup; }
+		
+		//{PrintCall}
+		public Action getPrintCallAction_0() { return cPrintCallAction_0; }
+		
+		//'print'
+		public Keyword getPrintKeyword_1() { return cPrintKeyword_1; }
+		
+		//('(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()')
+		public Alternatives getAlternatives_2() { return cAlternatives_2; }
+		
+		//'(' parameters+=Parameter (',' parameters+=Parameter)* ')'
+		public Group getGroup_2_0() { return cGroup_2_0; }
+		
+		//'('
+		public Keyword getLeftParenthesisKeyword_2_0_0() { return cLeftParenthesisKeyword_2_0_0; }
+		
+		//parameters+=Parameter
+		public Assignment getParametersAssignment_2_0_1() { return cParametersAssignment_2_0_1; }
+		
+		//Parameter
+		public RuleCall getParametersParameterParserRuleCall_2_0_1_0() { return cParametersParameterParserRuleCall_2_0_1_0; }
+		
+		//(',' parameters+=Parameter)*
+		public Group getGroup_2_0_2() { return cGroup_2_0_2; }
+		
+		//','
+		public Keyword getCommaKeyword_2_0_2_0() { return cCommaKeyword_2_0_2_0; }
+		
+		//parameters+=Parameter
+		public Assignment getParametersAssignment_2_0_2_1() { return cParametersAssignment_2_0_2_1; }
+		
+		//Parameter
+		public RuleCall getParametersParameterParserRuleCall_2_0_2_1_0() { return cParametersParameterParserRuleCall_2_0_2_1_0; }
+		
+		//')'
+		public Keyword getRightParenthesisKeyword_2_0_3() { return cRightParenthesisKeyword_2_0_3; }
+		
+		//'()'
+		public Keyword getLeftParenthesisRightParenthesisKeyword_2_1() { return cLeftParenthesisRightParenthesisKeyword_2_1; }
+	}
 	public class ParameterElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.Parameter");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Group cGroup_0 = (Group)cGroup.eContents().get(0);
-		private final Assignment cPureOutputAssignment_0_0 = (Assignment)cGroup_0.eContents().get(0);
-		private final Keyword cPureOutputExclamationMarkKeyword_0_0_0 = (Keyword)cPureOutputAssignment_0_0.eContents().get(0);
-		private final Assignment cCallByReferenceAssignment_0_1 = (Assignment)cGroup_0.eContents().get(1);
-		private final Keyword cCallByReferenceAmpersandKeyword_0_1_0 = (Keyword)cCallByReferenceAssignment_0_1.eContents().get(0);
-		private final Assignment cExpressionAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final Group cGroup_0 = (Group)cAlternatives.eContents().get(0);
+		private final Assignment cAccessTypeAssignment_0_0 = (Assignment)cGroup_0.eContents().get(0);
+		private final RuleCall cAccessTypeParameterAccessTypeEnumRuleCall_0_0_0 = (RuleCall)cAccessTypeAssignment_0_0.eContents().get(0);
+		private final Assignment cExpressionAssignment_0_1 = (Assignment)cGroup_0.eContents().get(1);
+		private final RuleCall cExpressionValuedObjectReferenceParserRuleCall_0_1_0 = (RuleCall)cExpressionAssignment_0_1.eContents().get(0);
+		private final Assignment cExpressionAssignment_1 = (Assignment)cAlternatives.eContents().get(1);
 		private final RuleCall cExpressionExpressionParserRuleCall_1_0 = (RuleCall)cExpressionAssignment_1.eContents().get(0);
 		
 		//// Parameter Rule
@@ -2337,27 +2439,27 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//// Additionally, a parameter may be preceded by an ampersand to indicate a call by reference.
 		//// Analogously, an prefixed exclamation mark marks the parameter as pure output.
 		//Parameter:
-		//	(pureOutput?='!'? callByReference?='&')?
-		//	expression=Expression;
+		//	accessType=ParameterAccessType
+		//	expression=ValuedObjectReference | expression=Expression;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//(pureOutput?='!'? callByReference?='&')? expression=Expression
-		public Group getGroup() { return cGroup; }
+		//accessType=ParameterAccessType expression=ValuedObjectReference | expression=Expression
+		public Alternatives getAlternatives() { return cAlternatives; }
 		
-		//(pureOutput?='!'? callByReference?='&')?
+		//accessType=ParameterAccessType expression=ValuedObjectReference
 		public Group getGroup_0() { return cGroup_0; }
 		
-		//pureOutput?='!'?
-		public Assignment getPureOutputAssignment_0_0() { return cPureOutputAssignment_0_0; }
+		//accessType=ParameterAccessType
+		public Assignment getAccessTypeAssignment_0_0() { return cAccessTypeAssignment_0_0; }
 		
-		//'!'
-		public Keyword getPureOutputExclamationMarkKeyword_0_0_0() { return cPureOutputExclamationMarkKeyword_0_0_0; }
+		//ParameterAccessType
+		public RuleCall getAccessTypeParameterAccessTypeEnumRuleCall_0_0_0() { return cAccessTypeParameterAccessTypeEnumRuleCall_0_0_0; }
 		
-		//callByReference?='&'
-		public Assignment getCallByReferenceAssignment_0_1() { return cCallByReferenceAssignment_0_1; }
+		//expression=ValuedObjectReference
+		public Assignment getExpressionAssignment_0_1() { return cExpressionAssignment_0_1; }
 		
-		//'&'
-		public Keyword getCallByReferenceAmpersandKeyword_0_1_0() { return cCallByReferenceAmpersandKeyword_0_1_0; }
+		//ValuedObjectReference
+		public RuleCall getExpressionValuedObjectReferenceParserRuleCall_0_1_0() { return cExpressionValuedObjectReferenceParserRuleCall_0_1_0; }
 		
 		//expression=Expression
 		public Assignment getExpressionAssignment_1() { return cExpressionAssignment_1; }
@@ -3599,6 +3701,33 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//"string"
 		public Keyword getSTRINGStringKeyword_4_0() { return cSTRINGStringKeyword_4_0; }
 	}
+	public class ParameterAccessTypeElements extends AbstractEnumRuleElementFinder {
+		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.ParameterAccessType");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final EnumLiteralDeclaration cCALL_BY_REFERENCEEnumLiteralDeclaration_0 = (EnumLiteralDeclaration)cAlternatives.eContents().get(0);
+		private final Keyword cCALL_BY_REFERENCEAmpersandKeyword_0_0 = (Keyword)cCALL_BY_REFERENCEEnumLiteralDeclaration_0.eContents().get(0);
+		private final EnumLiteralDeclaration cPURE_OUTPUTEnumLiteralDeclaration_1 = (EnumLiteralDeclaration)cAlternatives.eContents().get(1);
+		private final Keyword cPURE_OUTPUTExclamationMarkAmpersandKeyword_1_0 = (Keyword)cPURE_OUTPUTEnumLiteralDeclaration_1.eContents().get(0);
+		
+		//enum ParameterAccessType:
+		//	CALL_BY_REFERENCE="&" | PURE_OUTPUT="!&";
+		public EnumRule getRule() { return rule; }
+		
+		//CALL_BY_REFERENCE="&" | PURE_OUTPUT="!&"
+		public Alternatives getAlternatives() { return cAlternatives; }
+		
+		//CALL_BY_REFERENCE="&"
+		public EnumLiteralDeclaration getCALL_BY_REFERENCEEnumLiteralDeclaration_0() { return cCALL_BY_REFERENCEEnumLiteralDeclaration_0; }
+		
+		//"&"
+		public Keyword getCALL_BY_REFERENCEAmpersandKeyword_0_0() { return cCALL_BY_REFERENCEAmpersandKeyword_0_0; }
+		
+		//PURE_OUTPUT="!&"
+		public EnumLiteralDeclaration getPURE_OUTPUTEnumLiteralDeclaration_1() { return cPURE_OUTPUTEnumLiteralDeclaration_1; }
+		
+		//"!&"
+		public Keyword getPURE_OUTPUTExclamationMarkAmpersandKeyword_1_0() { return cPURE_OUTPUTExclamationMarkAmpersandKeyword_1_0; }
+	}
 	
 	private final RootElements pRoot;
 	private final ExpressionElements pExpression;
@@ -3631,6 +3760,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	private final SfbyExpressionElements pSfbyExpression;
 	private final AtomicExpressionElements pAtomicExpression;
 	private final AtomicValuedExpressionElements pAtomicValuedExpression;
+	private final BoolScheduleExpressionElements pBoolScheduleExpression;
 	private final ValuedObjectTestExpressionElements pValuedObjectTestExpression;
 	private final PrimeIDElements pPrimeID;
 	private final ValuedObjectReferenceElements pValuedObjectReference;
@@ -3639,6 +3769,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	private final RandomCallElements pRandomCall;
 	private final RandomizeCallElements pRandomizeCall;
 	private final FunctionCallElements pFunctionCall;
+	private final PrintCallElements pPrintCall;
 	private final ParameterElements pParameter;
 	private final TextExpressionElements pTextExpression;
 	private final IntValueElements pIntValue;
@@ -3681,6 +3812,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	private final CombineOperatorElements eCombineOperator;
 	private final AccessModifierElements eAccessModifier;
 	private final MethodReturnTypeElements eMethodReturnType;
+	private final ParameterAccessTypeElements eParameterAccessType;
 	private final JsonObjectValueElements pJsonObjectValue;
 	private final JsonObjectMemberElements pJsonObjectMember;
 	private final JsonArrayValueElements pJsonArrayValue;
@@ -3738,6 +3870,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		this.pSfbyExpression = new SfbyExpressionElements();
 		this.pAtomicExpression = new AtomicExpressionElements();
 		this.pAtomicValuedExpression = new AtomicValuedExpressionElements();
+		this.pBoolScheduleExpression = new BoolScheduleExpressionElements();
 		this.pValuedObjectTestExpression = new ValuedObjectTestExpressionElements();
 		this.pPrimeID = new PrimeIDElements();
 		this.pValuedObjectReference = new ValuedObjectReferenceElements();
@@ -3746,6 +3879,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		this.pRandomCall = new RandomCallElements();
 		this.pRandomizeCall = new RandomizeCallElements();
 		this.pFunctionCall = new FunctionCallElements();
+		this.pPrintCall = new PrintCallElements();
 		this.pParameter = new ParameterElements();
 		this.pTextExpression = new TextExpressionElements();
 		this.pIntValue = new IntValueElements();
@@ -3788,6 +3922,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		this.eCombineOperator = new CombineOperatorElements();
 		this.eAccessModifier = new AccessModifierElements();
 		this.eMethodReturnType = new MethodReturnTypeElements();
+		this.eParameterAccessType = new ParameterAccessTypeElements();
 		this.pJsonObjectValue = new JsonObjectValueElements();
 		this.pJsonObjectMember = new JsonObjectMemberElements();
 		this.pJsonArrayValue = new JsonArrayValueElements();
@@ -4087,9 +4222,10 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//SumExpression Expression:
-	//	ProductExpression ({OperatorExpression.subExpressions+=current} operator=AddOperator subExpressions+=ProductExpression
-	//	('+' subExpressions+=ProductExpression)* | {OperatorExpression.subExpressions+=current} operator=SubOperator
-	//	subExpressions+=ProductExpression ('-' subExpressions+=ProductExpression)*)*;
+	//	ProductExpression ({OperatorExpression.subExpressions+=current} operator=AddOperator
+	//	subExpressions+=ProductExpression ('+' subExpressions+=ProductExpression)* |
+	//	{OperatorExpression.subExpressions+=current} operator=SubOperator subExpressions+=ProductExpression ('-'
+	//	subExpressions+=ProductExpression)*)*;
 	public SumExpressionElements getSumExpressionAccess() {
 		return pSumExpression;
 	}
@@ -4146,8 +4282,8 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	//// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
 	//// Example: 2 * 4
 	//MultExpression Expression:
-	//	NegExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=NegExpression) ('*'
-	//	subExpressions+=NegExpression)*)?;
+	//	NegExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=NegExpression)
+	//	('*' subExpressions+=NegExpression)*)?;
 	public MultExpressionElements getMultExpressionAccess() {
 		return pMultExpression;
 	}
@@ -4284,6 +4420,18 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getAtomicValuedExpressionAccess().getRule();
 	}
 	
+	//// Boolean expression with scheduling directives.
+	//// Is meant to be used in derived grammars. Do not delete this rule.     
+	//BoolScheduleExpression Expression:
+	//	LogicalOrExpression ('schedule' schedule+=ScheduleObjectReference)?;
+	public BoolScheduleExpressionElements getBoolScheduleExpressionAccess() {
+		return pBoolScheduleExpression;
+	}
+	
+	public ParserRule getBoolScheduleExpressionRule() {
+		return getBoolScheduleExpressionAccess().getRule();
+	}
+	
 	//// Valued Object Test Expression Rule
 	//// This rules creates an operator expression for pre or val tests. Alternatively, it directs to a
 	//// valued object reference.
@@ -4387,13 +4535,28 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getFunctionCallAccess().getRule();
 	}
 	
+	//// Print Call Rule
+	//// Calls the print function. They may include a parameter list.
+	//// Do not use in expressions directly, use PrintCallEffect instead
+	//PrintCall:
+	//	{PrintCall}
+	//	'print' ('(' parameters+=Parameter (',' parameters+=Parameter)* ')' |
+	//	'()');
+	public PrintCallElements getPrintCallAccess() {
+		return pPrintCall;
+	}
+	
+	public ParserRule getPrintCallRule() {
+		return getPrintCallAccess().getRule();
+	}
+	
 	//// Parameter Rule
 	//// The parameter rule is used by the function call rule. Every expression may be a paramter.
 	//// Additionally, a parameter may be preceded by an ampersand to indicate a call by reference.
 	//// Analogously, an prefixed exclamation mark marks the parameter as pure output.
 	//Parameter:
-	//	(pureOutput?='!'? callByReference?='&')?
-	//	expression=Expression;
+	//	accessType=ParameterAccessType
+	//	expression=ValuedObjectReference | expression=Expression;
 	public ParameterElements getParameterAccess() {
 		return pParameter;
 	}
@@ -4822,6 +4985,16 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public EnumRule getMethodReturnTypeRule() {
 		return getMethodReturnTypeAccess().getRule();
+	}
+	
+	//enum ParameterAccessType:
+	//	CALL_BY_REFERENCE="&" | PURE_OUTPUT="!&";
+	public ParameterAccessTypeElements getParameterAccessTypeAccess() {
+		return eParameterAccessType;
+	}
+	
+	public EnumRule getParameterAccessTypeRule() {
+		return getParameterAccessTypeAccess().getRule();
 	}
 	
 	//// -------------------- //

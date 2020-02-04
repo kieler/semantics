@@ -144,6 +144,9 @@ abstract class AbstractSubSynthesis<I extends EObject, O extends KGraphElement> 
         return parent.getUsedContext()
     }
 
+    def static doesKGTExist(String resourceLocation) {
+        KiCoolSynthesis.doesKGTExist(SCChartsUiModule.PLUGIN_ID, resourceLocation, SKIN_FOLDER + skinPrefix)
+    }
     /** 
      * Loads a KGT from the bundle.
      * @param resourceLocation

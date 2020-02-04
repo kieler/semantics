@@ -18,6 +18,11 @@ import de.cau.cs.kieler.scg.processors.SimpleGuardExpressions
 
 import static de.cau.cs.kieler.kicool.compilation.VariableStore.*
 import de.cau.cs.kieler.kicool.compilation.VariableStore
+import de.cau.cs.kieler.scg.processors.codegen.c.CCodeSerializeHRExtensions
+import de.cau.cs.kieler.scg.Exit
+import de.cau.cs.kieler.scg.Entry
+import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
+import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 
 /**
  * Java Code Generator Reset Module
@@ -31,7 +36,10 @@ import de.cau.cs.kieler.kicool.compilation.VariableStore
  */
 class JavaCodeGeneratorResetModule extends CCodeGeneratorResetModule {
     
+    @Inject extension SCGCoreExtensions
+    @Inject extension SCGControlFlowExtensions
     @Inject JavaCodeGeneratorStructModule struct
+    @Inject JavaCodeSerializeHRExtensions javaSerializer
     
     override configure() {
         struct = (parent as JavaCodeGeneratorModule).struct as JavaCodeGeneratorStructModule
@@ -52,6 +60,8 @@ class JavaCodeGeneratorResetModule extends CCodeGeneratorResetModule {
         indent(2)
         code.append(struct.getVariableName).append(struct.separator).append(SimpleGuardExpressions.TERM_GUARD_NAME).append(" = false;\n")
         
+        generateResetSCGVariables(javaSerializer)
+        
         generateVariableStoreResetVariables
     }    
     
@@ -59,8 +69,21 @@ class JavaCodeGeneratorResetModule extends CCodeGeneratorResetModule {
         indent
         code.append("}\n")
     }
+    
+    override generateResetSCGVariables(extension CCodeSerializeHRExtensions serializer) {
+        val resetSCG = moduleObject.nodes.findFirst[ it instanceof Entry ].asEntry.resetSCG
+        if (resetSCG === null) return;
+        
+        var node = resetSCG.nodes.head.asEntry.next.target
+        while (!(node instanceof Exit)) {
+            indent(2)
+            code.append(node.serializeHR).append(";\n")  
+            
+            node = node.asNode.allNext.map[target].head
+        }
+    }    
  
-    override def generateVariableStoreResetVariables() {
+    override generateVariableStoreResetVariables() {
         val variableStore = VariableStore.getVariableStore(processorInstance.environment)
         
         for (vk : variableStore.variables.keySet) {

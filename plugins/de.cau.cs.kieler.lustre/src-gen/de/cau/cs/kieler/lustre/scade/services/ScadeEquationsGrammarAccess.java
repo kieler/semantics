@@ -470,7 +470,7 @@ public class ScadeEquationsGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//java.lang.RuntimeException: No EObjectDescription could be found in Scope ParserRule.hiddenTokens for Grammar'de.cau.cs.kieler.lustre.scade.ScadeEquations'.rules[5]->TerminalRule'SL_COMMENT'
 	//Semantic Object: Grammar'de.cau.cs.kieler.lustre.Lustre'.rules[0]->ParserRule'LustreProgram'
-	//URI: file:/home/als/eclipses/kieler-semantics-oo/git/semantics/plugins/de.cau.cs.kieler.lustre/bin/de/cau/cs/kieler/lustre/Lustre.xtext
+	//URI: file:/C:/KIELER/semantics-ssm4/git/semantics/plugins/de.cau.cs.kieler.lustre/bin/de/cau/cs/kieler/lustre/Lustre.xtext
 	//EStructuralFeature: xtext::ParserRule.hiddenTokens
 	public LustreGrammarAccess.LustreProgramElements getLustreProgramAccess() {
 		return gaLustre.getLustreProgramAccess();
@@ -523,8 +523,9 @@ public class ScadeEquationsGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//// External Node Declaration
 	//ExternalNodeDeclaration kexpressions::Declaration:
-	//	{ExternalNodeDeclaration} isUnsafe?='unsafe'? 'extern' ('function' | hasState?='node') valuedObjects+=NodeValuedObject
-	//	('(' inputs+=VariableDeclarationNoInit (';' inputs+=VariableDeclarationNoInit)* ')' | '()')
+	//	{ExternalNodeDeclaration} isUnsafe?='unsafe'? 'extern' ('function' | hasState?='node')
+	//	valuedObjects+=NodeValuedObject ('(' inputs+=VariableDeclarationNoInit (';' inputs+=VariableDeclarationNoInit)* ')' |
+	//	'()')
 	//	'returns' ('(' outputs+=VariableDeclarationNoInit (';' outputs+=VariableDeclarationNoInit)* ')' | '()') ';'?;
 	public LustreGrammarAccess.ExternalNodeDeclarationElements getExternalNodeDeclarationAccess() {
 		return gaLustre.getExternalNodeDeclarationAccess();
@@ -609,8 +610,8 @@ public class ScadeEquationsGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//Equation keffects::Assignment:
 	//	{Equation} ('(' references+=ValuedObjectReference ',' references+=ValuedObjectReference (','
-	//	references+=ValuedObjectReference)* ')' | references+=ValuedObjectReference ',' references+=ValuedObjectReference (','
-	//	references+=ValuedObjectReference)* | reference=ValuedObjectReference) operator=AssignOperator
+	//	references+=ValuedObjectReference)* ')' | references+=ValuedObjectReference ',' references+=ValuedObjectReference
+	//	(',' references+=ValuedObjectReference)* | reference=ValuedObjectReference) operator=AssignOperator
 	//	expression=Expression
 	//	';';
 	public LustreGrammarAccess.EquationElements getEquationAccess() {
@@ -774,14 +775,25 @@ public class ScadeEquationsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//PreExpression kexpressions::Expression:
-	//	{kexpressions::OperatorExpression} operator=PreOperator subExpressions+=AtomicValuedExpression
-	//	| AtomicValuedExpression;
+	//	{kexpressions::OperatorExpression} operator=PreOperator subExpressions+=LastExpression
+	//	| LastExpression;
 	public LustreGrammarAccess.PreExpressionElements getPreExpressionAccess() {
 		return gaLustre.getPreExpressionAccess();
 	}
 	
 	public ParserRule getPreExpressionRule() {
 		return getPreExpressionAccess().getRule();
+	}
+	
+	//LastExpression kexpressions::Expression:
+	//	{kexpressions::OperatorExpression} operator=LastOperator subExpressions+=AtomicValuedExpression
+	//	| AtomicValuedExpression;
+	public LustreGrammarAccess.LastExpressionElements getLastExpressionAccess() {
+		return gaLustre.getLastExpressionAccess();
+	}
+	
+	public ParserRule getLastExpressionRule() {
+		return getLastExpressionAccess().getRule();
 	}
 	
 	//@Override
@@ -1081,6 +1093,16 @@ public class ScadeEquationsGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public EnumRule getNorOperatorRule() {
 		return getNorOperatorAccess().getRule();
+	}
+	
+	//enum LastOperator returns kexpressions::OperatorType:
+	//	LAST="last";
+	public LustreGrammarAccess.LastOperatorElements getLastOperatorAccess() {
+		return gaLustre.getLastOperatorAccess();
+	}
+	
+	public EnumRule getLastOperatorRule() {
+		return getLastOperatorAccess().getRule();
 	}
 	
 	///**
@@ -1609,7 +1631,8 @@ public class ScadeEquationsGrammarAccess extends AbstractGrammarElementFinder {
 	//// A print functions that enables target-independent prints in the model.    
 	//PrintCallEffect keffects::PrintCallEffect:
 	//	annotations+=Annotation*
-	//	'print' ('(' parameters+=Parameter (',' parameters+=Parameter)* ')') ('schedule' schedule+=ScheduleObjectReference+)?;
+	//	'print' ('(' parameters+=Parameter (',' parameters+=Parameter)* ')') ('schedule'
+	//	schedule+=ScheduleObjectReference+)?;
 	public KEffectsGrammarAccess.PrintCallEffectElements getPrintCallEffectAccess() {
 		return gaKEffects.getPrintCallEffectAccess();
 	}
@@ -1943,6 +1966,18 @@ public class ScadeEquationsGrammarAccess extends AbstractGrammarElementFinder {
 		return getAtomicValuedExpressionAccess().getRule();
 	}
 	
+	//// Boolean expression with scheduling directives.
+	//// Is meant to be used in derived grammars. Do not delete this rule.     
+	//BoolScheduleExpression Expression:
+	//	super::LogicalOrExpression ('schedule' schedule+=ScheduleObjectReference)?;
+	public KExpressionsGrammarAccess.BoolScheduleExpressionElements getBoolScheduleExpressionAccess() {
+		return gaKExpressions.getBoolScheduleExpressionAccess();
+	}
+	
+	public ParserRule getBoolScheduleExpressionRule() {
+		return getBoolScheduleExpressionAccess().getRule();
+	}
+	
 	//// ID with primes
 	//PrimeID:
 	//	ID "'"*;
@@ -2030,13 +2065,28 @@ public class ScadeEquationsGrammarAccess extends AbstractGrammarElementFinder {
 		return getFunctionCallAccess().getRule();
 	}
 	
+	//// Print Call Rule
+	//// Calls the print function. They may include a parameter list.
+	//// Do not use in expressions directly, use PrintCallEffect instead
+	//PrintCall:
+	//	{PrintCall}
+	//	'print' ('(' parameters+=Parameter (',' parameters+=Parameter)* ')' |
+	//	'()');
+	public KExpressionsGrammarAccess.PrintCallElements getPrintCallAccess() {
+		return gaKExpressions.getPrintCallAccess();
+	}
+	
+	public ParserRule getPrintCallRule() {
+		return getPrintCallAccess().getRule();
+	}
+	
 	//// Parameter Rule
 	//// The parameter rule is used by the function call rule. Every expression may be a paramter.
 	//// Additionally, a parameter may be preceded by an ampersand to indicate a call by reference.
 	//// Analogously, an prefixed exclamation mark marks the parameter as pure output.
 	//Parameter:
-	//	(pureOutput?='!'? callByReference?='&')?
-	//	expression=Expression;
+	//	accessType=ParameterAccessType
+	//	expression=ValuedObjectReference | expression=Expression;
 	public KExpressionsGrammarAccess.ParameterElements getParameterAccess() {
 		return gaKExpressions.getParameterAccess();
 	}
@@ -2373,6 +2423,16 @@ public class ScadeEquationsGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public EnumRule getMethodReturnTypeRule() {
 		return getMethodReturnTypeAccess().getRule();
+	}
+	
+	//enum ParameterAccessType:
+	//	CALL_BY_REFERENCE="&" | PURE_OUTPUT="!&";
+	public KExpressionsGrammarAccess.ParameterAccessTypeElements getParameterAccessTypeAccess() {
+		return gaKExpressions.getParameterAccessTypeAccess();
+	}
+	
+	public EnumRule getParameterAccessTypeRule() {
+		return getParameterAccessTypeAccess().getRule();
 	}
 	
 	//// -------------------- //
