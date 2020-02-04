@@ -57,10 +57,13 @@ class JavaBreakpointListener implements IJavaBreakpointListener, IDebugEventSetL
 
     @Inject extension SCChartsScopeExtensions
 
+    public static var JavaBreakpointListener instance
+
     new() {
         super()
         pendingBreakpoints = <IJavaBreakpoint>newLinkedList
         Guice.createInjector.injectMembers(this)
+        instance = this
     }
 
     val debugHighlighter = DebugHighlighter.instance
@@ -298,12 +301,6 @@ class JavaBreakpointListener implements IJavaBreakpointListener, IDebugEventSetL
                         // silent catch
                     }
                 }
-//            } else if (event.kind == DebugEvent.SUSPEND && event.detail == DebugEvent.BREAKPOINT) {
-//                // make sure to register all breakpoints in the breakpoint manager
-//                for (pendingBreakpoint : pendingBreakpoints) {
-//                    DebugBreakpointManager.instance.presentBreakpoint(pendingBreakpoint, currentModel)
-//                }
-//                pendingBreakpoints.clear
             }
         }
     }
@@ -314,42 +311,44 @@ class JavaBreakpointListener implements IJavaBreakpointListener, IDebugEventSetL
         if (chartVar !== null && chartVar.javaType.name.equals("java.lang.String")) {
             println("Code is derived from SCChart!")
             val text = chartVar.value.valueString
-            // Only re-display model if it's not the same one as before
-            val diagramView = DebugDiagramView.instance
-            if (currentModel === null || (text !== null && !text.equals(lastModelString)) || diagramView === null ||
-                diagramView.needsInit) {
-                lastModelString = text
-                currentModel = retrieveModel(text);
-
-                println("New model; New synthesis...")
-                Display.^default.syncExec(new Runnable {
-                    override run() {
-                        DebugDiagramView.updateView(currentModel)
-                    }
-                })
-            } else {
-                // Otherwise, clear all highlightings
-                debugHighlighter.clearAllHighlights
-            }
+            
+            setModel(text)
         } else {
             throw new IllegalStateException("Cannot retrieve model; Code not generated from SCCharts.")
         }
     }
 
+    def setModel(String text) {
+        // Only re-display model if it's not the same one as before
+        val diagramView = DebugDiagramView.instance
+        if (currentModel === null || (text !== null && !text.equals(lastModelString)) || diagramView === null ||
+            diagramView.needsInit) {
+            lastModelString = text
+            currentModel = retrieveModel(text);
+
+            println("New model; New synthesis...")
+            Display.^default.syncExec(new Runnable {
+                override run() {
+                    DebugDiagramView.updateView(currentModel)
+                }
+            })
+        } else {
+            // Otherwise, clear all highlightings
+            debugHighlighter.clearAllHighlights
+        }
+    }
+
     private def retrieveModel(String path) {
         val fileContents = ResourcesPlugin.workspace.root.getFile(new Path(path))?.contents
-//        val fileContents = resource.project.getFile(path)?.contents
         if (fileContents !== null) {
-            // TODO readAllBytes since 9
             var text = ""
-            var byte[] bytes = newByteArrayOfSize(128)
             while (fileContents.available > 0) {
+                var byte[] bytes = newByteArrayOfSize(128)
                 fileContents.read(bytes)
                 text += new String(bytes)
-                bytes.clear
             }
             fileContents.close
-            if (text !== "") {
+            if (text != "") {
                 return SCTXStandaloneParser.parseScope(text, StandardCharsets.UTF_8)
             }
         }
