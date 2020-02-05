@@ -27,6 +27,10 @@ import de.cau.cs.kieler.sccharts.PreemptionType
 import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
 import de.cau.cs.kieler.sccharts.processors.statebased.lean.codegen.AbstractStatebasedLeanTemplate
 import de.cau.cs.kieler.sccharts.processors.statebased.codegen.StatebasedCCodeSerializeHRExtensions
+import java.util.List
+import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
+import de.cau.cs.kieler.sccharts.Action
+import static extension de.cau.cs.kieler.sccharts.processors.statebased.lean.codegen.AbstractStatebasedLeanTemplate.ReturnSourceCode.*
 
 /**
  * @author ssm
@@ -39,6 +43,7 @@ class StatebasedLeanCTemplate extends AbstractStatebasedLeanTemplate {
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension SCChartsStateExtensions
     @Inject extension SCChartsActionExtensions
+    @Inject extension SCChartsTransitionExtensions
     
     @Accessors extension StatebasedCCodeSerializeHRExtensions serializer
     
@@ -83,7 +88,8 @@ class StatebasedLeanCTemplate extends AbstractStatebasedLeanTemplate {
             // This enum contains all states of the « r.name » region
             typedef enum {
                 « FOR s : r.states.indexed »« s.value.uniqueEnumName 
-                »« IF s.value.isHierarchical », « s.value.uniqueEnumName»RUNNING« ENDIF 
+                »« IF s.value.isHierarchical || s.value.hasActions », « s.value.uniqueEnumName»RUNNING« ENDIF
+                »« IF s.value.hasEntryActions », « s.value.uniqueEnumName»ENTRY« ENDIF 
                 »« IF s.key < r.states.size-1 », « ENDIF»« ENDFOR »
             } « r.uniqueName »States;
             
@@ -103,6 +109,7 @@ class StatebasedLeanCTemplate extends AbstractStatebasedLeanTemplate {
             typedef struct {
               Iface iface;
               ThreadStatus threadStatus;
+              char delayedEnabled;
               
               « FOR r : rootState.regions.filter(ControlflowRegion) »
               « r.uniqueContextMemberName » « r.uniqueName »;
@@ -147,6 +154,9 @@ class StatebasedLeanCTemplate extends AbstractStatebasedLeanTemplate {
           « ENDFOR »
           
           context->threadStatus = READY;
+          context->delayedEnabled = 0;
+        « IF rootState.hasEntryActions »  « rootState.uniqueName »_entry(context);
+        « ENDIF »
         }
         
         '''
@@ -159,6 +169,7 @@ class StatebasedLeanCTemplate extends AbstractStatebasedLeanTemplate {
           if (context->threadStatus == TERMINATED) return;
           
           « rootState.uniqueName »(context);
+          context->delayedEnabled = 1;
         }
         
         '''
@@ -168,7 +179,7 @@ class StatebasedLeanCTemplate extends AbstractStatebasedLeanTemplate {
         '''
         static inline void « state.uniqueName »(« state.uniqueContextMemberName » *context) {
           « IF debug »printf("« state.uniqueName »\n"); fflush(stdout);« ENDIF »
-        « IF state.isHierarchical »
+        « IF state.isHierarchical || state.hasActions »
           « IF state !== rootState »
             « FOR r : state.regions.filter(ControlflowRegion) »
             
@@ -176,68 +187,178 @@ class StatebasedLeanCTemplate extends AbstractStatebasedLeanTemplate {
               context->« r.uniqueContextName ».delayedEnabled = 0;
               context->« r.uniqueContextName ».threadStatus = READY;
             « ENDFOR »
-            
+            « if (state.hasEntryActions) state.addSuperstateEntryActionCode(true) »
               context->activeState = « state.uniqueEnumName »RUNNING;
             }
             
+            « if (state.hasExitActions) state.addSuperstateExitActionCode »
+            
             static inline void « state.uniqueName »_running(« state.uniqueContextMemberName » *context) {
-          « ENDIF »
+          « ENDIF »                
           « addSuperstateCode(state) »
-        « ENDIF »
-        
+          « IF state == rootState && state.hasEntryActions »
+«««       // Root state has entry actions
+          « state.addSuperstateEntryActionCode(false) »
+          « ENDIF »
+        « ELSE »
         « addSimpleStateCode(state)»
+        « ENDIF »
         }
         
         '''
     }
     
+    protected def CharSequence addSuperstateEntryActionCode(State state, boolean redirect) {
+        val entryActions = state.entryActions.toList
+        val hasWeakEntryActions = entryActions.exists[ isWeak ]
+        val redirectCode = if (redirect) '''  context->activeState = « state.uniqueEnumName »ENTRY;
+''' else '';
+
+        redirectCode + '''
+}
+
+''' +   '''
+        static inline void « state.uniqueName »_entry(« state.uniqueContextMemberName » *context) {
+        « FOR r : entryActions.filter[ isStrong ].indexed »  
+        « addActionConditionCode(r.key, entryActions.size, r.value, false, NONE, null) »
+        « ENDFOR »
+        « IF hasWeakEntryActions »
+        « addTransitionCollectionCode(state.outgoingTransitions.filter[ isStrongAbort ].toList, true, ONLY, null) »
+        « FOR r : entryActions.filter[ isWeak ].indexed »
+        « addActionConditionCode(r.key, entryActions.size, r.value, false, NONE, null) »
+        « ENDFOR »
+        « ENDIF »
+        '''
+    }
+    
+    protected def CharSequence addSuperstateExitActionCode(State state) {
+        val exitActions = state.exitActions.toList
+        val hasWeakExitActions = exitActions.exists[ isWeak ]
+        
+        '''
+        static inline void « state.uniqueName »_exit(« state.uniqueContextMemberName » *context, char isStrongAbort) {
+        « FOR r : exitActions.filter[ isStrong ].indexed »  
+        « addActionConditionCode(r.key, exitActions.size, r.value, false, NONE, null) »
+        « ENDFOR »
+        « IF hasWeakExitActions »
+            if (isStrongAbort) return;
+        « FOR r : exitActions.filter[ isWeak ].indexed »
+        « addActionConditionCode(r.key, exitActions.size, r.value, false, NONE, null) »
+        « ENDFOR »
+        « ENDIF »
+        }
+        '''
+    }    
+    
     protected def CharSequence addSuperstateCode(State state) {
+        val weakAborts = state.outgoingTransitions.filter[ !isStrongAbort ].toList
+        val onlyDefaultTransition = weakAborts.size == 1 && weakAborts.getDefaultTransition !== null
+        
         '''
         « FOR r : state.regions.filter(ControlflowRegion) »
         
           if (context->« r.uniqueName ».threadStatus != TERMINATED) {
             context->« r.uniqueName ».threadStatus = RUNNING;
           }
-        « ENDFOR »« FOR r : state.regions.filter(ControlflowRegion) »
+          
+        « ENDFOR »
+        « state.addSuperstateStrongAbortCode »
+        « state.addSuperstateDuringActionCode »
+        « FOR r : state.regions.filter(ControlflowRegion) »
         
           « r.uniqueName »(&context->« r.uniqueContextName »);
-        « ENDFOR »        
+        « ENDFOR »
+        
+        « IF weakAborts.size == 0 »
+          « if (state.isHierarchical) addDelayedEnabledCode(state, "") »
+            context->threadStatus = READY;
+        « ELSE »
+        « addTransitionCollectionCode(weakAborts, false, NONE, null) »
+        « IF !onlyDefaultTransition »  } else {« ENDIF »
+          « if (state.isHierarchical) addDelayedEnabledCode(state, "  ") »
+            context->threadStatus = READY;
+        « IF !onlyDefaultTransition »  }« ENDIF »
+        « ENDIF »
+        
+        « IF state.hasExitActions »  if (context->activeState != « state.uniqueEnumName »RUNNING) {
+            « state.uniqueName »_exit(context, 0);
+          }
+        « ENDIF »
         '''
     }
     
+    protected def CharSequence addSuperstateStrongAbortCode(State state) {
+        val strongAborts = state.outgoingTransitions.filter[ isStrongAbort ].toList
+        val additionalEffectCode = if (!state.exitActions.filter[ isStrong ].empty)
+            "    " + state.uniqueName + "_exit(context, 1);"
+            else null 
+        
+        if (!strongAborts.empty) {
+            '''
+            « addTransitionCollectionCode(strongAborts, true, ADD, additionalEffectCode) »
+            '''
+        } else {
+            ''''''
+        }
+    }
+    
+    protected def CharSequence addSuperstateDuringActionCode(State state) {
+        val duringActions = state.duringActions.toList
+        
+        if (!duringActions.empty) {
+        '''
+        « FOR r : duringActions.indexed »  
+        « addActionConditionCode(r.key, duringActions.size, r.value, true, NONE, null) »
+        « ENDFOR »
+        '''
+        } else {
+            ''''''
+        }
+    }    
+    
     protected def CharSequence addSimpleStateCode(State state) {
-        val defaultTransition = state.outgoingTransitions.indexed.findFirst[ value.trigger === null && 
-            value.delay == DelayType.IMMEDIATE && value.preemption != PreemptionType.TERMINATION]
-        val hasDefaultTransition = defaultTransition !== null
-        val defaultTransitionIndex = if (hasDefaultTransition) defaultTransition.key else -1    
-            
         if (state.isFinal) {
         '''  context->threadStatus = TERMINATED;''' 
         } else {
-        '''
-        « IF state.outgoingTransitions.size == 1 && 
-             state.outgoingTransitions.head.delay == DelayType.IMMEDIATE && 
-             state.outgoingTransitions.head.trigger === null &&
-             state.outgoingTransitions.head.preemption != PreemptionType.TERMINATION »
-        « addTransitionEffectCode(state.outgoingTransitions.head, "  ") »
-        « ELSE »
-          « FOR t : state.outgoingTransitions.indexed »
-          « addTransitionConditionCode(t.key, state.outgoingTransitions.size, t.value, defaultTransitionIndex) » 
-          « ENDFOR »
-            « IF !hasDefaultTransition »
-              « IF state.outgoingTransitions.size == 0 »
-            « if (state.isHierarchical) addDelayedEnabledCode(state, "") »
-              context->threadStatus = READY;
-            « ELSE »
-              } else {« if (state.isHierarchical) addDelayedEnabledCode(state, "  ") »
+            '''
+            « addTransitionCollectionCode(state.outgoingTransitions, false, NONE, null) »
+            « IF state.outgoingTransitions.defaultTransition === null »
+            « IF state.outgoingTransitions.size == 0 »  context->threadStatus = READY;
+            « ELSE »  } else {
                 context->threadStatus = READY;
               }
-              « ENDIF »
           « ENDIF »
+          « ENDIF »
+          '''
+      }
+    }
+    
+    protected def getDefaultTransition(List<Transition> transitions) {
+        return transitions.indexed.findFirst[ value.trigger === null && 
+            value.delay == DelayType.IMMEDIATE && value.preemption != PreemptionType.TERMINATION]
+    }
+    
+    protected def CharSequence addTransitionCollectionCode(List<Transition> transitions, boolean closeBrackets, 
+        ReturnSourceCode addReturnCode, String additionalEffectCode
+    ) {
+        val defaultTransition = transitions.defaultTransition
+        val hasDefaultTransition = defaultTransition !== null
+        val defaultTransitionIndex = if (hasDefaultTransition) defaultTransition.key else -1    
+            
+        '''
+        « IF transitions.size == 1 && 
+             transitions.head.delay == DelayType.IMMEDIATE && 
+             transitions.head.trigger === null &&
+             transitions.head.preemption != PreemptionType.TERMINATION »
+        « addActionEffectCode(transitions.head, "  ", addReturnCode, additionalEffectCode) »
+        « ELSE »
+          « FOR t : transitions.indexed »
+          « addTransitionConditionCode(t.key, transitions.size, t.value, defaultTransitionIndex, addReturnCode, additionalEffectCode) » 
+          « ENDFOR »
+          « IF transitions.size > 0 && closeBrackets »  }« ENDIF »
         « ENDIF »
         '''
-        }
-    }
+    }    
     
     protected def CharSequence addDelayedEnabledCode(State state, CharSequence indentation) {
         '''
@@ -249,7 +370,7 @@ class StatebasedLeanCTemplate extends AbstractStatebasedLeanTemplate {
     }
     
     protected def CharSequence addTransitionConditionCode(int index, int count, Transition transition, 
-        int defaultTransitionIndex
+        int defaultTransitionIndex, ReturnSourceCode addReturnCode, String additionalEffectCode
     ) {
         val hasDefaultTransition = defaultTransitionIndex >= 0
         
@@ -282,23 +403,66 @@ class StatebasedLeanCTemplate extends AbstractStatebasedLeanTemplate {
         « ELSE »
           } else «IF !(defaultTransition) »if (« condition ») « ENDIF»{
         « ENDIF » 
-        « addTransitionEffectCode(transition, "    ") »
+        « addActionEffectCode(transition, "    ", addReturnCode, additionalEffectCode) »
           « IF (index == count-1 && hasDefaultTransition) || (index == defaultTransitionIndex) »
           }
         « ENDIF »
         '''
     }
     
-    protected def CharSequence addTransitionEffectCode(Transition transition, CharSequence indentation) {
-        valuedObjectPrefix = "context->iface->"     
+    protected def CharSequence addActionConditionCode(int index, int count, Action action, 
+        boolean addDelayEnabled, ReturnSourceCode addReturnCode, String additionalEffectCode
+    ) {
+        if (action.eContainer == rootState) {
+            valuedObjectPrefix = "context->iface."
+        } else {
+            valuedObjectPrefix = "context->iface->"
+        }
+        var CharSequence condition = ""
+        if (action.immediate) {
+            if (action.trigger !== null) condition = action.trigger.serializeHR 
+                else condition = ""
+        } else {
+            if (addDelayEnabled) condition = "context->delayedEnabled" 
+            if (action.trigger !== null) {
+                condition = condition + " && (" + action.trigger.serializeHR + ")"
+             }
+        }  
+        valuedObjectPrefix = ""
+        
         '''
-          « FOR e : transition.effects »
+        « IF condition != "" »  if (« condition ») {« ENDIF»
+            « addActionEffectCode(action, "", addReturnCode, additionalEffectCode) »
+        « IF condition != "" »  }« ENDIF»
+        '''
+    }    
+    
+    protected def CharSequence addActionEffectCode(Action action, CharSequence indentation, 
+        ReturnSourceCode addReturnCode, String additionalEffectCode
+    ) {
+        
+        if (addReturnCode == ONLY) {
+            return '''    return;'''
+        }
+        
+        if (action.eContainer == rootState) {
+            valuedObjectPrefix = "context->iface."
+        } else {
+            valuedObjectPrefix = "context->iface->"
+        }
+     
+        '''
+          « FOR e : action.effects »
           « indentation »« e.serializeHR »;
           « ENDFOR »
+          « IF action instanceof Transition »
           « indentation »context->delayedEnabled = 0;
-          « IF transition.sourceState != transition.targetState || transition.targetState.isHierarchical »
-          « indentation »context->activeState = « transition.targetState.uniqueEnumName »;
+          « IF action.sourceState != action.targetState || action.targetState.isHierarchical »
+          « indentation »context->activeState = « action.targetState.uniqueEnumName »;
           « ENDIF »
+          « ENDIF »
+          « if (additionalEffectCode !== null) additionalEffectCode »
+          « IF addReturnCode == ADD || addReturnCode == ONLY »    return;« ENDIF»
           « valuedObjectPrefix = "" »
         '''    
     }
@@ -311,12 +475,13 @@ class StatebasedLeanCTemplate extends AbstractStatebasedLeanTemplate {
               « FOR s : region.states »
               case « s.uniqueEnumName »:
                 « s.uniqueName »(context);
-                « IF s.isHierarchical »
-                      // Superstate: intended fall-through 
-              
-                    case « s.uniqueEnumName »RUNNING:
-                      « s.uniqueName »_running(context);
-                      break;
+        « IF s.isHierarchical || s.hasActions »// Superstate: intended fall-through 
+      « IF s.hasEntryActions »case « s.uniqueEnumName »ENTRY:
+        « s.uniqueName »_entry(context);
+        // Superstate: intended fall-through « ENDIF »
+      case « s.uniqueEnumName »RUNNING:
+        « s.uniqueName »_running(context);
+        break;
                 « ELSE »
                 break;
                 « ENDIF »

@@ -1900,6 +1900,39 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//AtomicExpression
 		public RuleCall getAtomicExpressionParserRuleCall_5() { return cAtomicExpressionParserRuleCall_5; }
 	}
+	public class BoolScheduleExpressionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.BoolScheduleExpression");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final RuleCall cLogicalOrExpressionParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
+		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
+		private final Keyword cScheduleKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
+		private final Assignment cScheduleAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
+		private final RuleCall cScheduleScheduleObjectReferenceParserRuleCall_1_1_0 = (RuleCall)cScheduleAssignment_1_1.eContents().get(0);
+		
+		//// Boolean expression with scheduling directives.
+		//// Is meant to be used in derived grammars. Do not delete this rule.     
+		//BoolScheduleExpression Expression:
+		//	LogicalOrExpression ('schedule' schedule+=ScheduleObjectReference)?;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//LogicalOrExpression ('schedule' schedule+=ScheduleObjectReference)?
+		public Group getGroup() { return cGroup; }
+		
+		//LogicalOrExpression
+		public RuleCall getLogicalOrExpressionParserRuleCall_0() { return cLogicalOrExpressionParserRuleCall_0; }
+		
+		//('schedule' schedule+=ScheduleObjectReference)?
+		public Group getGroup_1() { return cGroup_1; }
+		
+		//'schedule'
+		public Keyword getScheduleKeyword_1_0() { return cScheduleKeyword_1_0; }
+		
+		//schedule+=ScheduleObjectReference
+		public Assignment getScheduleAssignment_1_1() { return cScheduleAssignment_1_1; }
+		
+		//ScheduleObjectReference
+		public RuleCall getScheduleScheduleObjectReferenceParserRuleCall_1_1_0() { return cScheduleScheduleObjectReferenceParserRuleCall_1_1_0; }
+	}
 	public class ValuedObjectTestExpressionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.ValuedObjectTestExpression");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
@@ -3727,6 +3760,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	private final SfbyExpressionElements pSfbyExpression;
 	private final AtomicExpressionElements pAtomicExpression;
 	private final AtomicValuedExpressionElements pAtomicValuedExpression;
+	private final BoolScheduleExpressionElements pBoolScheduleExpression;
 	private final ValuedObjectTestExpressionElements pValuedObjectTestExpression;
 	private final PrimeIDElements pPrimeID;
 	private final ValuedObjectReferenceElements pValuedObjectReference;
@@ -3836,6 +3870,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		this.pSfbyExpression = new SfbyExpressionElements();
 		this.pAtomicExpression = new AtomicExpressionElements();
 		this.pAtomicValuedExpression = new AtomicValuedExpressionElements();
+		this.pBoolScheduleExpression = new BoolScheduleExpressionElements();
 		this.pValuedObjectTestExpression = new ValuedObjectTestExpressionElements();
 		this.pPrimeID = new PrimeIDElements();
 		this.pValuedObjectReference = new ValuedObjectReferenceElements();
@@ -4383,6 +4418,18 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getAtomicValuedExpressionRule() {
 		return getAtomicValuedExpressionAccess().getRule();
+	}
+	
+	//// Boolean expression with scheduling directives.
+	//// Is meant to be used in derived grammars. Do not delete this rule.     
+	//BoolScheduleExpression Expression:
+	//	LogicalOrExpression ('schedule' schedule+=ScheduleObjectReference)?;
+	public BoolScheduleExpressionElements getBoolScheduleExpressionAccess() {
+		return pBoolScheduleExpression;
+	}
+	
+	public ParserRule getBoolScheduleExpressionRule() {
+		return getBoolScheduleExpressionAccess().getRule();
 	}
 	
 	//// Valued Object Test Expression Rule

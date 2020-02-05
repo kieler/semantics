@@ -382,24 +382,19 @@ class EquationSimplification {
                         ]
                     ]
             ].toList) {
-                val List<Pair<KPort, KNode>> outputs = newArrayList
-                n.incomingEdges.map[sourcePort].forEach [ port |
-                    port.edges.map[target].filter [
-                        isOutput && !isDataAccess && sourceElement instanceof ValuedObjectReference
-                    ].forEach [
-                        outputs += new Pair(port, it)
-                    ]
-                ]
-                val source = inputNodes.findFirst[sourceEquals(outputs.get(0).value)].copy
-                nodes += source
-                source.incomingEdges.immutableCopy.forEach[source.incomingEdges.remove(it)]
-                source.outgoingEdges.immutableCopy.forEach[source.outgoingEdges.remove(it)]
-                source.ports.immutableCopy.forEach[p|p.edges.immutableCopy.forEach[p.edges.remove(it)]]
-                val sourcePort = source.findPortById(EquationSynthesis.OUT_PORT)
-                sourcePort.connectWith(
-                    n.incomingEdges.filter[it.sourcePort == outputs.get(0).key].map[targetPort].get(0),
-                    source.sourceElement.serializeHR.toString)
-                n.incomingEdges.filter[it.sourcePort == outputs.get(0).key].toList.forEach[betterRemove]
+                val source = inputNodes.findFirst[sourceEquals((n.sourceElement as OperatorExpression).subExpressions.get(0))].copy
+                if(source !== null){
+                    nodes += source
+                    source.incomingEdges.immutableCopy.forEach[source.incomingEdges.remove(it)]
+                    source.outgoingEdges.immutableCopy.forEach[source.outgoingEdges.remove(it)]
+                    source.ports.immutableCopy.forEach[p|p.edges.immutableCopy.forEach[p.edges.remove(it)]]
+                    val sourcePort = source.findPortById(EquationSynthesis.OUT_PORT)
+                    val oldEdges = n.incomingEdges.immutableCopy
+                    sourcePort.connectWith(
+                        n.incomingEdges.map[targetPort].get(0),
+                        source.sourceElement.serializeHR.toString)
+                    oldEdges.forEach[betterRemove]
+                }
             }
         }
         return nodes

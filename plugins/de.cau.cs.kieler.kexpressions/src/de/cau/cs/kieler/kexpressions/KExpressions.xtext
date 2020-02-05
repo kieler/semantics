@@ -325,7 +325,11 @@ AtomicValuedExpression returns Expression:
     | '(' ValuedExpression ')'
     | AtomicExpression;
     
-    
+// Boolean expression with scheduling directives.
+// Is meant to be used in derived grammars. Do not delete this rule.     
+BoolScheduleExpression returns Expression:
+    LogicalOrExpression
+    ('schedule' schedule += ScheduleObjectReference)?;    
 
 // Valued Object Test Expression Rule
 // This rules creates an operator expression for pre or val tests. Alternatively, it directs to a
