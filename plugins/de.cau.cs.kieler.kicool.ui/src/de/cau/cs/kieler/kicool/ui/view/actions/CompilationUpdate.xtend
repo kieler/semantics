@@ -95,6 +95,7 @@ class CompilationUpdate extends KiCoolUIObserver {
                         }
 
                         notification.applyNotifications
+                        view.doLayout(false)
                     }
                     CompilationChanged: {
                         notification.addNewProcessor(view.viewContext.viewModel, view)
@@ -102,7 +103,6 @@ class CompilationUpdate extends KiCoolUIObserver {
                         return
                     }
                 }
-                view.doLayout(false)
             }
         })
     }

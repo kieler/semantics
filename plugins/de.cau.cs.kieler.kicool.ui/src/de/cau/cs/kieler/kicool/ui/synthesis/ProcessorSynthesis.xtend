@@ -54,6 +54,10 @@ import org.eclipse.elk.core.options.EdgeRouting
 import org.eclipse.elk.core.options.Direction
 import org.eclipse.elk.alg.layered.options.LayeredOptions
 import org.eclipse.elk.alg.layered.options.NodePlacementStrategy
+import org.eclipse.elk.core.math.KVector
+import org.eclipse.elk.core.options.PortConstraints
+import de.cau.cs.kieler.klighd.krendering.extensions.KPortExtensions
+import org.eclipse.elk.core.options.PortSide
 
 /**
  * Main diagram synthesis for processors in KiCool.
@@ -68,6 +72,7 @@ class ProcessorSynthesis {
     extension KRenderingFactory = KRenderingFactory::eINSTANCE
     @Inject extension KNodeExtensions
     @Inject extension KEdgeExtensions 
+    @Inject extension KPortExtensions 
     @Inject extension KRenderingExtensions  
     @Inject extension KContainerRenderingExtensions    
     @Inject extension ProcessorStyles 
@@ -143,8 +148,13 @@ class ProcessorSynthesis {
             groupNode.children += processorNodes
             for(node : processorNodes) {
                 for(lastNode : lastNodes) {
+                    val port = createPort()
+                    port.setProperty(CoreOptions::PORT_SIDE, PortSide.EAST)
+                    lastNode.ports.add(port)
+                    lastNode.setProperty(CoreOptions::PORT_CONSTRAINTS, PortConstraints.FIXED_ORDER)
                     val edge = createEdge 
                     edge.source = lastNode
+                    edge.sourcePort = port
                     edge.target = node
                     edge.addRoundedBendsPolyline(2.55f) => [
                         foreground = ACTIVE_ENVIRONMENT.color
@@ -204,7 +214,6 @@ class ProcessorSynthesis {
         if (processorAlternativeGroup.processors.filter(ProcessorGroup).filter[ processors.size == 1].size == 
             processorAlternativeGroup.processors.size
         ) {
-            
             processorAlternativeGroup.processors.filter(ProcessorGroup).forEach[
                 alternativeGroupNodes += it.processors.head.transform
             ]
