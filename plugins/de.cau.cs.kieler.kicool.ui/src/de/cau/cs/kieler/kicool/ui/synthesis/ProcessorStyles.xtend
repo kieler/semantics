@@ -67,14 +67,15 @@ class ProcessorStyles {
         val container = processorNode.getProperty(KNodeProperties.PROCESSOR_INTERMEDIATE_CONTAINER)
         var width = processorNode.eAllContents.filter(KText).head.estimateTextSize.width + 8
         processorNode.height = processorNode.eAllContents.filter(KText).head.estimateTextSize.height + 8
-        if (width % 6 != 0) {
-            width += 6 - width % 6
+        if ((width - 3) %6 != 0) {
+            width += 6 - (width-3) % 6
         }
         val placement = container.childPlacement;
         val numColumns = Math.max(11, container.children.size)
-        width = Math.max((numColumns + 1) * 6, width)
-        (placement as KGridPlacement).numColumns = (width / 6 - 1) as int
+        width = Math.max((numColumns) * 6 + 3, width)
+        (placement as KGridPlacement).numColumns = ((width - 3) / 6) as int
         processorNode.width = width - 1
+        print('width: ' + (width - 1) + " columns: " + (placement as KGridPlacement).numColumns);
     }
     
     def KNode addGroupFigure(KNode node) {
@@ -216,7 +217,7 @@ class ProcessorStyles {
         // Work around end
         container.children += createKRectangle => [
             if( container.children.size > 0) {
-                setGridPlacementData(5, 5).from(PositionReferenceX.LEFT, 1, 0, PositionReferenceY.TOP, 0, 0)
+                setGridPlacementData.from(PositionReferenceX.LEFT, 1, 0, PositionReferenceY.TOP, 0, 0)
             }
             lineWidth = 0
             setForeground(createKColor => [
