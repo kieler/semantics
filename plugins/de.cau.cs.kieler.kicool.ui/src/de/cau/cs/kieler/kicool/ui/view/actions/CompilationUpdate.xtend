@@ -56,55 +56,51 @@ class CompilationUpdate extends KiCoolUIObserver {
     }
     
     override void update(AbstractContextNotification notification) {
-        Display.getDefault().asyncExec(new Runnable() {
-            override run() {
-                switch notification {
-                    ProcessorProgress:
-                        notification.updateProcessor(view.viewContext.viewModel, view)
-                    ProcessorStart:
-                        notification.resetProcessor(view.viewContext.viewModel)
-                    ProcessorFinished:
-                        notification.updateProcessor(view.viewContext.viewModel, view)
-                    CompilationStart:
-                        notification.resetSystem(view.viewContext.viewModel, view)
-                    CompilationFinished: {
-                        CompilationActionSimSalabim.simSalabim(notification)
+        switch notification {
+            ProcessorProgress:
+                notification.updateProcessor(view.viewContext.viewModel, view)
+            ProcessorStart:
+                notification.resetProcessor(view.viewContext.viewModel)
+            ProcessorFinished:
+                notification.updateProcessor(view.viewContext.viewModel, view)
+            CompilationStart:
+                notification.resetSystem(view.viewContext.viewModel, view)
+            CompilationFinished: {
+                CompilationActionSimSalabim.simSalabim(notification)
 
-                        if (view.forwardResultToggle.checked) {
-                            val editor = notification.compilationContext.inputEditor
-                            var model = notification.environment.getProperty(Environment.MODEL)
-                            view.editPartSystemManager.attachCompilationContextToEditorPart(editor,
-                                notification.compilationContext)
+                if (view.forwardResultToggle.checked) {
+                    val editor = notification.compilationContext.inputEditor
+                    var model = notification.environment.getProperty(Environment.MODEL)
+                    view.editPartSystemManager.attachCompilationContextToEditorPart(editor,
+                        notification.compilationContext)
 
-                            if (model instanceof String) {
-                                model = new CodePlaceHolder(editor.title + ".c", model)
-                            } else if (model instanceof CodeContainer) {
+                    if (model instanceof String) {
+                        model = new CodePlaceHolder(editor.title + ".c", model)
+                    } else if (model instanceof CodeContainer) {
 //                            model = new CodePlaceHolder(editor.title + ".c", model.head)
-                            }
-
-                            if (view.editPartSystemManager.intermediateSelection !== null) {
-                                ProcessorDataManager.updateSelectedIntermediateModels(view.viewContext.viewModel, view,
-                                    view.editPartSystemManager.intermediateSelection, editor)
-                            } else {
-                                KiCoModelViewNotifier.notifyCompilationChanged(editor, model)
-                            }
-                        }
-
-                        if (view.visualLayoutFeedbackToggle.checked) {
-                            notification.postUpdateProcessors(view.viewContext.viewModel, view)
-                        }
-
-                        notification.applyNotifications
-                        view.doLayout(false)
                     }
-                    CompilationChanged: {
-                        notification.addNewProcessor(view.viewContext.viewModel, view)
-                        view.doLayout(true)
-                        return
+
+                    if (view.editPartSystemManager.intermediateSelection !== null) {
+                        ProcessorDataManager.updateSelectedIntermediateModels(view.viewContext.viewModel, view,
+                            view.editPartSystemManager.intermediateSelection, editor)
+                    } else {
+                        KiCoModelViewNotifier.notifyCompilationChanged(editor, model)
                     }
                 }
+
+                if (view.visualLayoutFeedbackToggle.checked) {
+                    notification.postUpdateProcessors(view.viewContext.viewModel, view)
+                }
+
+                notification.applyNotifications
+                view.doLayout(false)
             }
-        })
+            CompilationChanged: {
+                notification.addNewProcessor(view.viewContext.viewModel, view)
+                view.doLayout(true)
+                return
+            }
+        }
     }
     
     private def void reinitializeSynthesis(CompilationChanged compilationChanged) {

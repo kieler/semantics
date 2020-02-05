@@ -263,6 +263,7 @@ class ProcessorDataManager {
     }
     
     static def void updateProcessor(AbstractProcessorNotification processorNotification, KNode node, CompilerView view) {
+        view.viewContext.layoutRecorder.startRecording
         val compilationContext = processorNotification.compilationContext
         val processorReference = processorNotification.processorReference
         val processorInstance = processorNotification.processorInstance
@@ -385,6 +386,7 @@ class ProcessorDataManager {
                 //NODE_ACTIVITY_STATUS.getContainer(nodeIdMap)?.setFBColor(OK)
             }        
         }
+        view.viewContext.layoutRecorder.stopRecording(0)
     }
     
     

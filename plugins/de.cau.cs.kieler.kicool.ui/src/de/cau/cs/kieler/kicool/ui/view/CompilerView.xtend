@@ -251,6 +251,7 @@ class CompilerView extends DiagramViewPart {
             val viewContext = this.getViewer.getViewContext
             viewContext.configure(properties)
             DiagramViewManager.updateView(viewContext, model)
+            doLayout(false) // this line my look like a unneeded update but without it it doesn't work anymore
         }
     }
 

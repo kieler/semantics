@@ -44,6 +44,7 @@ import de.cau.cs.kieler.klighd.actions.CollapseExpandAction
 import org.eclipse.elk.graph.properties.IProperty
 import org.eclipse.elk.graph.properties.Property
 import de.cau.cs.kieler.klighd.krendering.KBackground
+import de.cau.cs.kieler.klighd.microlayout.GridPlacementUtil
 
 /**
  * User-defined KiCool synthesis styles
@@ -64,16 +65,14 @@ class ProcessorStyles {
 
     def adjustSize(KNode processorNode) {
         val container = processorNode.getProperty(KNodeProperties.PROCESSOR_INTERMEDIATE_CONTAINER)
-        if (container.childPlacement instanceof KGridPlacement) {
-            (container.childPlacement as KGridPlacement).numColumns = Math.max(11, container.children.size)
-        }
         var width = processorNode.eAllContents.filter(KText).head.estimateTextSize.width + 8
         processorNode.height = processorNode.eAllContents.filter(KText).head.estimateTextSize.height + 8
         if (width % 6 != 0) {
             width += 6 - width % 6
         }
-        val placement = processorNode.getProperty(KNodeProperties.PROCESSOR_INTERMEDIATE_CONTAINER).childPlacement;
-        width = Math.max(((placement as KGridPlacement).numColumns + 1) * 6, width)
+        val placement = container.childPlacement;
+        val numColumns = Math.max(11, container.children.size)
+        width = Math.max((numColumns + 1) * 6, width)
         (placement as KGridPlacement).numColumns = (width / 6 - 1) as int
         processorNode.width = width - 1
     }
@@ -208,9 +207,16 @@ class ProcessorStyles {
 
     def KRendering addIntermediateModel(KNode node, IntermediateData data, Object model) {
         val container = node.getProperty(KNodeProperties.PROCESSOR_INTERMEDIATE_CONTAINER)
+        // Work around for a klighd bug
+        //container.setProperty(GridPlacementUtil.ESTIMATED_GRID_DATA, null);
+        val wrongKlighdProperty = container.properties.filter[it.key.id == "klighd.grid.estimatedGridData"].head
+        if (wrongKlighdProperty !== null) {
+            wrongKlighdProperty.value = null;
+        }
+        // Work around end
         container.children += createKRectangle => [
             if( container.children.size > 0) {
-                setGridPlacementData.from(PositionReferenceX.LEFT, 1, 0, PositionReferenceY.TOP, 0, 0)
+                setGridPlacementData(5, 5).from(PositionReferenceX.LEFT, 1, 0, PositionReferenceY.TOP, 0, 0)
             }
             lineWidth = 0
             setForeground(createKColor => [
