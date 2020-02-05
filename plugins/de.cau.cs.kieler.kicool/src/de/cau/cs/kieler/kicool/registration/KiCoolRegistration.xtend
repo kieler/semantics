@@ -48,6 +48,9 @@ import org.eclipse.xtext.validation.IResourceValidator
 import static com.google.common.base.Preconditions.*
 
 import static extension java.lang.String.format
+import org.eclipse.xtext.resource.XtextResource
+import org.eclipse.emf.ecore.resource.Resource
+import org.eclipse.emf.ecore.EObject
 
 /**
  * Main class for the registration of systems and processors.
@@ -122,8 +125,10 @@ class KiCoolRegistration {
     }
     
     static def System getSystemById(String id) {
-        if (temporarySystems.containsKey(id)) {
-            return temporarySystems.get(id)
+        for(ts : temporarySystems.keySet) {
+            if (ts.startsWith(id)) {
+                return temporarySystems.get(ts)
+            }
         }
         checkArgument(modelsIdMap.containsKey(id), "No processor system registered with id: " + id)
         modelsIdMap.get(id)
@@ -303,6 +308,50 @@ class KiCoolRegistration {
     
     static def dispatch ProcessorReference getLastProcessor(System system) {
         return system.processors.getLastProcessor
+    }
+    
+    static def String getResourcePath(Resource resource) {
+        if (resource.URI.toString.startsWith("file")) {
+            var s = resource.URI.toString
+            return s.trimLastSegment 
+        } else {
+            val sl = resource.URI.segmentsList
+            val nsl = sl.take(sl.length - 1).drop(1)
+            return nsl.join("/")
+        }
+    }
+    
+    private static def String trimLastSegment(String s) {
+        return s.replaceAll("(.+)/(.+?)$", "$1") 
+    }
+    
+    static def System getProcessorSystemFromModelFile(ProcessorSystem processorSystem) {
+        processorSystem.id.getProcessorSystemFromModelFile(processorSystem.eResource.getResourcePath)
+    }
+
+    static def System getProcessorSystemFromModelFile(String processorSystemId, String path) {
+        val newURI = if (path.startsWith("file:"))
+            URI.createURI(path + "/" + processorSystemId + '.kico')
+            else URI.createPlatformResourceURI(path + "/" + processorSystemId + '.kico', false)   
+        val XtextResourceSet resourceSet = kicoolXtextInjector.getInstance(XtextResourceSet)
+        resourceSet.addLoadOption(XtextResource.OPTION_RESOLVE_ALL, Boolean.FALSE)
+        val res = resourceSet.createResource(newURI)
+        try {
+            res.load(resourceSet.loadOptions)
+            val node = (res.getContents().get(0) as System)
+            return node
+        } catch (Exception e) {
+            val rSystem = KiCoolRegistration.getSystemById(processorSystemId)
+            return rSystem
+        }         
+    }    
+    
+    static def System getOwnSystem(ProcessorSystem processorSystem) {
+        var EObject eObj = processorSystem.eContainer
+        while ((!(eObj instanceof System)) && (eObj !== null)) {
+            eObj = eObj.eContainer
+        }
+        return if (eObj instanceof System) eObj else null
     }
     
 }

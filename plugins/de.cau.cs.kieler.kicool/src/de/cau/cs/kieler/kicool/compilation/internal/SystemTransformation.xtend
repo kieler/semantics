@@ -46,26 +46,26 @@ class SystemTransformation {
      * Expand all system entries to full flat group entries.
      */
     static protected def dispatch ProcessorEntry replaceSystemsByGroups(ProcessorSystem processorSystem, CompilationContext cc) {
-         val system = KiCoolRegistration.getSystemById(processorSystem.id).copyAndAddToSystemMap(cc) as System
+        val system = KiCoolRegistration.getSystemById(processorSystem.id).copyAndAddToSystemMap(cc) as System
          
-         system.processors = system.processors.replaceSystemsByGroups(cc)
-         if (system.config !== null) {
+        system.processors = system.processors.replaceSystemsByGroups(cc)
+        if (system.config !== null) {
              // Move system config into first processor
-            val first = system.processors.firstProcessorReference
-            if (first.preconfig === null) {
-                first.preconfig = KExpressionsFactory.eINSTANCE.createJsonObjectValue
+           val first = system.processors.firstProcessorReference
+           if (first.preconfig === null) {
+               first.preconfig = KExpressionsFactory.eINSTANCE.createJsonObjectValue
+           }
+           first.preconfig.members.addAll(0, system.config.members.map[copy])
+        }
+         
+        if (processorSystem !== cc.system && system.startConfig !== null) {
+            if (cc.system.startConfig === null) {
+                cc.system.startConfig = KExpressionsFactory.eINSTANCE.createJsonObjectValue
             }
-            first.preconfig.members.addAll(0, system.config.members.map[copy])
-         }
-         
-         if (processorSystem !== cc.system && system.startConfig !== null) {
-             if (cc.system.startConfig === null) {
-                 cc.system.startConfig = KExpressionsFactory.eINSTANCE.createJsonObjectValue
-             }
-             cc.system.startConfig.members.addAll(0, system.startConfig.members.map[copy])
-         }
-         
-         return system.processors
+            cc.system.startConfig.members.addAll(0, system.startConfig.members.map[copy])
+        }
+        
+        return system.processors
     }
     
     static protected def dispatch ProcessorEntry replaceSystemsByGroups(ProcessorReference processorReference, CompilationContext cc) {

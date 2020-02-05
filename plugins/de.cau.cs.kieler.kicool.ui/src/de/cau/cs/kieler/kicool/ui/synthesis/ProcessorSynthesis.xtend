@@ -207,7 +207,11 @@ class ProcessorSynthesis {
     protected def System getProcessorSystemFromModelFile(ProcessorSystem processorSystem) {
         val sl = processorSystem.eResource.URI.segmentsList
         val nsl = sl.take(sl.length - 1).drop(1)
-        val newURI = URI.createPlatformResourceURI(nsl.join("/") + "/" + processorSystem.id + '.kico', false)   
+        processorSystem.id.getProcessorSystemFromModelFile(nsl.join("/"))
+    }
+
+    protected def System getProcessorSystemFromModelFile(String processorSystemId, String path) {
+        val newURI = URI.createPlatformResourceURI(path + "/" + processorSystemId + '.kico', false)   
         val provider = regXtext.getResourceServiceProvider(newURI)
         val newResourceSet = provider.get(XtextResourceSet)
         newResourceSet.addLoadOption(XtextResource.OPTION_RESOLVE_ALL, Boolean.FALSE)
@@ -217,7 +221,7 @@ class ProcessorSynthesis {
             val node = (res.getContents().get(0) as System)
             return node
         } catch (Exception e) {
-            val rSystem = KiCoolRegistration.getSystemById(processorSystem.id)
+            val rSystem = KiCoolRegistration.getSystemById(processorSystemId)
             return rSystem
         }         
     }
