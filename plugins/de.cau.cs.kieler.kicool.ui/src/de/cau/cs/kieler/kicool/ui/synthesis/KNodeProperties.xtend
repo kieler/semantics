@@ -43,7 +43,7 @@ class KNodeProperties {
     public static final IProperty<Boolean> SOURCE_NODE = new Property<Boolean>(
         "de.cau.cs.kieler.kicool.ui.SourceNode", false);
         
-    public static final IProperty<Boolean> PROCESSOR_CAPTION = new Property<Boolean>(
-        "de.cau.cs.kieler.kicool.ui.ProcessorCaption", false);
+    public static final IProperty<String> PROCESSOR_CAPTION = new Property<String>(
+        "de.cau.cs.kieler.kicool.ui.ProcessorCaption", null);
         
 }

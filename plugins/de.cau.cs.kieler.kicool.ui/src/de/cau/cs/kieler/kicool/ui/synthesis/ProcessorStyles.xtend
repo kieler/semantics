@@ -15,9 +15,11 @@ package de.cau.cs.kieler.kicool.ui.synthesis
 import de.cau.cs.kieler.kicool.ui.synthesis.actions.IntermediateData
 import de.cau.cs.kieler.kicool.ui.synthesis.actions.SelectAdditionalIntermediateAction
 import de.cau.cs.kieler.kicool.ui.synthesis.actions.SelectIntermediateAction
+import de.cau.cs.kieler.klighd.actions.CollapseExpandAction
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.Colors
 import de.cau.cs.kieler.klighd.krendering.HorizontalAlignment
+import de.cau.cs.kieler.klighd.krendering.KBackground
 import de.cau.cs.kieler.klighd.krendering.KContainerRendering
 import de.cau.cs.kieler.klighd.krendering.KGridPlacement
 import de.cau.cs.kieler.klighd.krendering.KPolygon
@@ -35,16 +37,14 @@ import de.cau.cs.kieler.klighd.krendering.extensions.PositionReferenceX
 import de.cau.cs.kieler.klighd.krendering.extensions.PositionReferenceY
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import org.eclipse.elk.core.options.CoreOptions
+import org.eclipse.elk.graph.properties.IProperty
+import org.eclipse.elk.graph.properties.Property
 
 import static de.cau.cs.kieler.kicool.ui.synthesis.styles.ColorStore.Color.*
 
 import static extension de.cau.cs.kieler.kicool.ui.synthesis.styles.ColorStore.*
 import static extension de.cau.cs.kieler.klighd.microlayout.PlacementUtil.*
-import de.cau.cs.kieler.klighd.actions.CollapseExpandAction
-import org.eclipse.elk.graph.properties.IProperty
-import org.eclipse.elk.graph.properties.Property
-import de.cau.cs.kieler.klighd.krendering.KBackground
-import de.cau.cs.kieler.klighd.microlayout.GridPlacementUtil
+import org.eclipse.elk.core.math.KVector
 
 /**
  * User-defined KiCool synthesis styles
@@ -74,8 +74,8 @@ class ProcessorStyles {
         val numColumns = Math.max(11, container.children.size)
         width = Math.max((numColumns) * 6 + 3, width)
         (placement as KGridPlacement).numColumns = ((width - 3) / 6) as int
-        processorNode.width = width - 1
-        print('width: ' + (width - 1) + " columns: " + (placement as KGridPlacement).numColumns);
+        //processorNode.width = width - 1
+        //processorNode.setProperty(CoreOptions::NODE_SIZE_MINIMUM, new KVector(width - 1, processorNode.height))
     }
     
     def KNode addGroupFigure(KNode node) {
@@ -131,7 +131,6 @@ class ProcessorStyles {
                 blue = 234
             ], 255, 90)
             children += createKText => [
-                node.setProperty(KNodeProperties.PROCESSOR_CAPTION, true)
                 setPointPlacementData.referencePoint = createKPosition(PositionReferenceX.LEFT, 2, 0, PositionReferenceY.TOP, 1, 0)
                 setProperty(CoreOptions::NO_LAYOUT, true)
                 setProperty(KlighdProperties::NOT_SELECTABLE, true)
@@ -216,9 +215,14 @@ class ProcessorStyles {
         }
         // Work around end
         container.children += createKRectangle => [
-            if( container.children.size > 0) {
-                setGridPlacementData.from(PositionReferenceX.LEFT, 1, 0, PositionReferenceY.TOP, 0, 0)
-            }
+            setGridPlacementData(5, 4) => [
+                if (container.children.size > 0) {
+                    from(PositionReferenceX.LEFT, 1, 0, PositionReferenceY.TOP, 0, 0)
+                    minCellWidth = 6
+                }
+                flexibleWidth = false
+                flexibleHeight = false
+            ]
             lineWidth = 0
             setForeground(createKColor => [
                 red = 255

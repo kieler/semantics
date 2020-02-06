@@ -238,6 +238,10 @@ class ProcessorDataManager {
                     getProperty(PROCESSOR_IDENTIFIER) == identifier
                 ].toList
                 if (!matches.empty) {
+                    if(matches.head.getProperty(PROCESSOR_CAPTION) !== null){
+                        setProperty(PROCESSOR_CAPTION, matches.head.getProperty(PROCESSOR_CAPTION))
+                        container.children.filter(KText)?.head.text = matches.head.getProperty(PROCESSOR_CAPTION)
+                    }
                     setProperty(INTERMEDIATE_DATA, matches.head.getProperty(INTERMEDIATE_DATA))
                     if (getProperty(INTERMEDIATE_DATA) !== null) {
                         container.removeAllActions
@@ -254,6 +258,13 @@ class ProcessorDataManager {
                         val oldIntermediateContainer = matches.head.getProperty(PROCESSOR_INTERMEDIATE_CONTAINER)
                         if(oldIntermediateContainer !== null){
                             oldIntermediateContainer.children.immutableCopy.forEach[ intermediateContainer.children.add(it.copy) ]
+                            // Work around for a klighd bug
+                            //container.setProperty(GridPlacementUtil.ESTIMATED_GRID_DATA, null);
+                            val wrongKlighdProperty = intermediateContainer.properties.filter[it.key.id == "klighd.grid.estimatedGridData"].head
+                            if (wrongKlighdProperty !== null) {
+                                wrongKlighdProperty.value = null;
+                            }
+                            // Work around end
                         }
                     }
                 }
@@ -297,8 +308,7 @@ class ProcessorDataManager {
         if (processorInstance.environment.getProperty(CAPTION) !== null) {
             val c = processorNode.container
             c.children.filter(KText)?.head.text = processorInstance.environment.getProperty(CAPTION)
-//            val caption = processorNode.eAllContents.filter(KText).filter[ getProperty(PROCESSOR_CAPTION) ].head
-//            caption.text = processorInstance.environment.getProperty(CAPTION)            
+            processorNode.setProperty(PROCESSOR_CAPTION, processorInstance.environment.getProperty(CAPTION))      
         }
         
         var intermediateModelCounter = 0

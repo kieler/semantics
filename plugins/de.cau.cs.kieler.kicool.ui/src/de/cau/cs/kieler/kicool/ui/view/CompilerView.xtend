@@ -12,6 +12,7 @@
  */
 package de.cau.cs.kieler.kicool.ui.view
 
+import de.cau.cs.kieler.kicool.ui.InstallSystemsHandler
 import de.cau.cs.kieler.kicool.ui.synthesis.KiCoolSynthesis
 import de.cau.cs.kieler.kicool.ui.view.actions.AbstractAction
 import de.cau.cs.kieler.kicool.ui.view.actions.AutoCompileToggle
@@ -22,10 +23,12 @@ import de.cau.cs.kieler.kicool.ui.view.actions.DebugEnvironmentModelsToggle
 import de.cau.cs.kieler.kicool.ui.view.actions.DeveloperToggle
 import de.cau.cs.kieler.kicool.ui.view.actions.FlattenSystemViewToggle
 import de.cau.cs.kieler.kicool.ui.view.actions.ForwardResultToggle
+import de.cau.cs.kieler.kicool.ui.view.actions.OnOffButtonsToggle
 import de.cau.cs.kieler.kicool.ui.view.actions.ShowPrivateSystemsToggle
 import de.cau.cs.kieler.kicool.ui.view.actions.VisualLayoutFeedbackToggle
 import de.cau.cs.kieler.klighd.LightDiagramLayoutConfig
 import de.cau.cs.kieler.klighd.ZoomStyle
+import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.ui.DiagramViewManager
 import de.cau.cs.kieler.klighd.ui.parts.DiagramViewPart
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties
@@ -36,22 +39,20 @@ import org.eclipse.core.runtime.IStatus
 import org.eclipse.core.runtime.Status
 import org.eclipse.jface.action.IMenuManager
 import org.eclipse.jface.action.IToolBarManager
-import org.eclipse.jface.action.MenuManager
 import org.eclipse.jface.action.Separator
+import org.eclipse.swt.SWT
+import org.eclipse.swt.layout.FillLayout
 import org.eclipse.swt.widgets.Composite
+import org.eclipse.swt.widgets.Text
 import org.eclipse.ui.IMemento
 import org.eclipse.ui.IViewSite
 import org.eclipse.ui.progress.UIJob
 import org.eclipse.xtend.lib.annotations.Accessors
-import org.eclipse.swt.widgets.Text
-import org.eclipse.swt.SWT
-import org.eclipse.swt.layout.FormLayout
-import org.eclipse.swt.layout.RowLayout
-import org.eclipse.swt.layout.FillLayout
-import de.cau.cs.kieler.kicool.ui.InstallSystemsHandler
-import de.cau.cs.kieler.kicool.ui.view.actions.OnOffButtonsToggle
-import de.cau.cs.kieler.kicool.System
-import de.cau.cs.kieler.kicool.ui.synthesis.updates.ProcessorDataManager
+
+import static de.cau.cs.kieler.kicool.ui.InstallSystemsHandler.*
+
+import static extension de.cau.cs.kieler.kicool.ui.synthesis.updates.ProcessorDataManager.*
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
 /**
  * The Kieler Compiler View, formerly knownas IMB Compiler View
@@ -251,7 +252,9 @@ class CompilerView extends DiagramViewPart {
             val viewContext = this.getViewer.getViewContext
             viewContext.configure(properties)
             DiagramViewManager.updateView(viewContext, model)
-            doLayout(false) // this line my look like a unneeded update but without it it doesn't work anymore
+            val layoutConfig = new LightDiagramLayoutConfig(viewContext)
+            layoutConfig.zoomStyle(ZoomStyle.NONE)
+            layoutConfig.performUpdate()// this line my look like a unneeded update but without it it doesn't work anymore
         }
     }
 
@@ -270,7 +273,7 @@ class CompilerView extends DiagramViewPart {
     def void doLayout(boolean zoomToFit) {
         val layoutConfig = new LightDiagramLayoutConfig(viewContext)
         layoutConfig.zoomStyle(if(zoomToFit) ZoomStyle.ZOOM_TO_FIT else ZoomStyle.NONE)
-        layoutConfig.performUpdate()
+        layoutConfig.performLayout()
     }
 
     private def void loadCheckedValue(IMemento memento, AbstractAction action) {
