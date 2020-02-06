@@ -108,7 +108,7 @@ class JavaPrioCodeGeneratorModule extends CPrioCodeGeneratorModule {
     }
     
     def getProgramName() {
-        return if (scg.label.nullOrEmpty) "Program" else scg.label;
+        return codeFilename // In Java, class name must be file name
     }
     
     override void hostcodeAdditions(StringBuilder sb) {
