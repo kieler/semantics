@@ -24,6 +24,7 @@ import org.eclipse.jdt.core.IJavaElement
 import org.eclipse.jdt.core.IField
 import de.cau.cs.kieler.sccharts.ui.debug.breakpoints.DebugBreakpointManager
 import de.cau.cs.kieler.sccharts.ui.debug.breakpoints.JavaBreakpointListener
+import org.eclipse.core.resources.ResourcesPlugin
 
 /**
  * @author stu121235
@@ -50,7 +51,32 @@ class DebugDiagramPartListener implements IPartListener2 {
     }
     
     override partBroughtToTop(IWorkbenchPartReference partRef) {
-//        throw new UnsupportedOperationException("TODO: auto-generated method stub")
+        println("Part brought to top!")
+        if (partRef === null) {
+            return
+        }
+        
+        val part = partRef.getPart(false)
+        if (part instanceof JavaEditor) {
+            val typeRoot = JavaUI.getEditorInputTypeRoot(part.editorInput)
+            val compilationUnit = (typeRoot.getAdapter(ICompilationUnit) as ICompilationUnit)
+            val originalVars = <IField>newLinkedList
+            for (type : compilationUnit.allTypes) {
+                originalVars.addAll(type.fields.filter[it.elementName == "ORIGINAL_SCCHART"])
+            }
+            
+            if (!originalVars.empty) {
+                val doc = part.documentProvider.getDocument(part.editorInput)
+                val lineNumber = doc.getLineOfOffset(originalVars.head.sourceRange.offset)
+                val lineOffset = doc.getLineOffset(lineNumber)
+                val lineLength = doc.getLineLength(lineNumber)
+                val modelPath = doc.get(lineOffset, lineLength).split(" = ").last.replaceAll("[;\n\"]", "")
+                JavaBreakpointListener.instance.setModel(modelPath)
+                JavaBreakpointListener.instance.loadBreakpoints(compilationUnit.resource)                
+            } else {
+                JavaBreakpointListener.instance.clearModel
+            }
+        }
     }
     
     override partClosed(IWorkbenchPartReference partRef) {
@@ -102,9 +128,10 @@ class DebugDiagramPartListener implements IPartListener2 {
                 val lineLength = doc.getLineLength(lineNumber)
                 val modelPath = doc.get(lineOffset, lineLength).split(" = ").last.replaceAll("[;\n\"]", "")
                 JavaBreakpointListener.instance.setModel(modelPath)
-                
+                JavaBreakpointListener.instance.loadBreakpoints(compilationUnit.resource)                
+            } else {
+                JavaBreakpointListener.instance.clearModel
             }
-            
         }
     }
     

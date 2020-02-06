@@ -48,6 +48,10 @@ import org.eclipse.core.runtime.Path
 import org.eclipse.core.resources.ResourcesPlugin
 import org.eclipse.debug.core.IDebugEventSetListener
 import org.eclipse.debug.core.DebugEvent
+import org.eclipse.jdt.internal.debug.core.breakpoints.JavaLineBreakpoint
+import org.eclipse.debug.core.DebugPlugin
+import de.cau.cs.kieler.klighd.ui.DiagramViewManager
+import de.cau.cs.kieler.klighd.ui.view.model.MessageModel
 
 /**
  * @author peu
@@ -70,6 +74,7 @@ class JavaBreakpointListener implements IJavaBreakpointListener, IDebugEventSetL
 
     var lastModelString = ""
     var SCCharts currentModel;
+    var modelBeingDisplayed = false
 
     val List<IJavaBreakpoint> pendingBreakpoints
 
@@ -318,24 +323,49 @@ class JavaBreakpointListener implements IJavaBreakpointListener, IDebugEventSetL
         }
     }
 
+    def loadBreakpoints (IResource resource) {
+        val bpManager = DebugPlugin.^default.breakpointManager 
+        val debugBpManager = DebugBreakpointManager.instance
+        for (marker : resource.findMarkers(JavaLineBreakpoint.LINE_BREAKPOINT_MARKER, true, 0)) {
+
+            debugBpManager.presentBreakpoint(bpManager.getBreakpoint(marker) as IJavaBreakpoint, currentModel)
+        }
+    }
+
     def setModel(String text) {
-        // Only re-display model if it's not the same one as before
+        // Only re-display model if it's not the same one as before or there is none currently being displayed
         val diagramView = DebugDiagramView.instance
         if (currentModel === null || (text !== null && !text.equals(lastModelString)) || diagramView === null ||
-            diagramView.needsInit) {
-            lastModelString = text
-            currentModel = retrieveModel(text);
-
-            println("New model; New synthesis...")
+            diagramView.needsInit || !modelBeingDisplayed) {
+            
+            // Only re-parse and reload the model if it is not the same one as before
+            if (modelBeingDisplayed) {
+                lastModelString = text
+                currentModel = retrieveModel(text);
+                println("New model; New synthesis...")
+            
+            }
             Display.^default.syncExec(new Runnable {
                 override run() {
                     DebugDiagramView.updateView(currentModel)
                 }
             })
+            modelBeingDisplayed = true
         } else {
             // Otherwise, clear all highlightings
             debugHighlighter.clearAllHighlights
         }
+    }
+
+    def clearModel() {
+        println("clearing view...")
+        DebugBreakpointManager.instance.forgetAllBreakpoints
+        modelBeingDisplayed = false
+        Display.^default.syncExec(new Runnable {
+            override run() {
+                DebugDiagramView.updateView(new MessageModel("No model in active editor."))
+            }
+        })
     }
 
     private def retrieveModel(String path) {

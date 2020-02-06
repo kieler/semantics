@@ -406,6 +406,16 @@ class DebugBreakpointManager {
         return stateLines
     }
     
+    def forgetAllBreakpoints() {
+        transitionToBreakpoint.clear
+        transitionToCheckBreakpoint.clear
+        stateToBreakpoint.clear
+        stateToWatchBreakpoints.clear
+        statesWithBreakpoint.clear
+        transitionsWithBreakpoint.clear
+        transitionsWithCheckBreakpoint.clear
+    }
+    
     private def clearBreakpoints(Transition transition) {
         for (breakpoint : transitionToBreakpoint.get(transition)) {
             breakpoint.delete
