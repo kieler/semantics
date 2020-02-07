@@ -70,10 +70,15 @@ class JavaBreakpointListener implements IJavaBreakpointListener, IDebugEventSetL
         instance = this
     }
 
-    val debugHighlighter = DebugHighlighter.instance
+//    val debugHighlighter = DebugHighlighter.instance
 
     var lastModelString = ""
     var SCCharts currentModel;
+    
+    val pathToModel = <String, SCCharts> newHashMap
+    val pathToHighlighter = <String, DebugHighlighter> newHashMap
+    val pathToBpManager = <String, DebugBreakpointManager> newHashMap
+    
     var modelBeingDisplayed = false
 
     val List<IJavaBreakpoint> pendingBreakpoints
@@ -137,11 +142,9 @@ class JavaBreakpointListener implements IJavaBreakpointListener, IDebugEventSetL
      * Extract all active states from the current model
      */
     def List<State> findActiveStates(IJavaThread thread) {
-
         val context = thread.findVariable("rootContext")
         val activeStates = extractStatesFromContext(context)
         return activeStates
-
     }
 
     /**
@@ -256,16 +259,18 @@ class JavaBreakpointListener implements IJavaBreakpointListener, IDebugEventSetL
         } catch (IllegalStateException e) {
             return DONT_CARE
         }
-
+        
+        val bpManager = pathToBpManager.get(lastModelString)
+        
         //make sure to register all breakpoints in the breakpoint manager
         for (pendingBreakpoint : pendingBreakpoints) {
-            DebugBreakpointManager.instance.presentBreakpoint(pendingBreakpoint, currentModel)
+            val success = bpManager.presentBreakpoint(pendingBreakpoint, currentModel)
         }
         pendingBreakpoints.clear
 
         if (breakpoint instanceof TransitionWatchBreakpoint) {
             println("Hit watch breakpoint.")
-            DebugBreakpointManager.instance.watchBreakpointHit(breakpoint)
+            bpManager.watchBreakpointHit(breakpoint)
             return DONT_SUSPEND
         } else {
             
@@ -276,10 +281,10 @@ class JavaBreakpointListener implements IJavaBreakpointListener, IDebugEventSetL
             if (breakpoint instanceof TransitionCheckBreakpoint) {
                 val currentTransition = findCurrentTransition(breakpoint)
                 if (currentTransition !== null) {
-                    debugHighlighter.highlightExecutingTransition(currentTransition)
+                    pathToHighlighter.get(lastModelString).highlightExecutingTransition(currentTransition)
                 }
             } else if (breakpoint instanceof StateBreakpoint) {
-                DebugBreakpointManager.instance.stateBreakpointHit(breakpoint)
+                bpManager.stateBreakpointHit(breakpoint)
             }
             return SUSPEND
         }
@@ -299,7 +304,7 @@ class JavaBreakpointListener implements IJavaBreakpointListener, IDebugEventSetL
                         val currentTransition = findCurrentTransition(thread, lineNumber - 1, findActiveStates(thread))
                         
                         if (currentTransition !== null) {
-                            debugHighlighter.highlightExecutingTransition(currentTransition)
+                            pathToHighlighter.get(lastModelString).highlightExecutingTransition(currentTransition)
                         }
                         println("Ending in line " + lineNumber)
                     } catch (IllegalStateException e) {
@@ -325,7 +330,7 @@ class JavaBreakpointListener implements IJavaBreakpointListener, IDebugEventSetL
 
     def loadBreakpoints (IResource resource) {
         val bpManager = DebugPlugin.^default.breakpointManager 
-        val debugBpManager = DebugBreakpointManager.instance
+        val debugBpManager = pathToBpManager.get(lastModelString)
         for (marker : resource.findMarkers(JavaLineBreakpoint.LINE_BREAKPOINT_MARKER, true, 0)) {
 
             debugBpManager.presentBreakpoint(bpManager.getBreakpoint(marker) as IJavaBreakpoint, currentModel)
@@ -333,33 +338,47 @@ class JavaBreakpointListener implements IJavaBreakpointListener, IDebugEventSetL
     }
 
     def setModel(String text) {
+        if (text === null) {
+            return
+        }
         // Only re-display model if it's not the same one as before or there is none currently being displayed
         val diagramView = DebugDiagramView.instance
-        if (currentModel === null || (text !== null && !text.equals(lastModelString)) || diagramView === null ||
-            diagramView.needsInit || !modelBeingDisplayed) {
+        if (currentModel === null || diagramView === null || diagramView.needsInit
+            || (!text.equals(lastModelString))
+            || (text.equals(lastModelString) && !modelBeingDisplayed)) {
             
             // Only re-parse and reload the model if it is not the same one as before
-            if (modelBeingDisplayed) {
+            if (!text.equals(lastModelString)) {
                 lastModelString = text
-                currentModel = retrieveModel(text);
-                println("New model; New synthesis...")
-            
+                val mapEntry = pathToModel.get(text)
+                if (mapEntry !== null) {
+                    println("Found matching model in map.")
+                    currentModel = mapEntry
+                } else {
+                    currentModel = retrieveModel(text);
+                    pathToModel.put(text, currentModel)
+                    val hl = new DebugHighlighter
+                    pathToHighlighter.put(text, hl)
+                    pathToBpManager.put(text, new DebugBreakpointManager(hl))
+                }
             }
+            println("New synthesis...")
             Display.^default.syncExec(new Runnable {
                 override run() {
                     DebugDiagramView.updateView(currentModel)
                 }
             })
             modelBeingDisplayed = true
+            pathToHighlighter.get(text).reapplyAllHighlights
         } else {
             // Otherwise, clear all highlightings
-            debugHighlighter.clearAllHighlights
+            pathToHighlighter.get(lastModelString).clearAllHighlights
         }
     }
 
     def clearModel() {
         println("clearing view...")
-        DebugBreakpointManager.instance.forgetAllBreakpoints
+//        DebugBreakpointManager.instance.forgetAllBreakpoints
         modelBeingDisplayed = false
         Display.^default.syncExec(new Runnable {
             override run() {
@@ -389,15 +408,27 @@ class JavaBreakpointListener implements IJavaBreakpointListener, IDebugEventSetL
         // Find the currently active states on SCCharts Level
         val activeStates = findActiveStates(thread)
         for (state : activeStates) {
-            debugHighlighter.highlightActiveState(state)
+            pathToHighlighter.get(lastModelString).highlightActiveState(state)
         }
 
         // Find and visualize the states currently being executed on Java level
         val executingStates = findExecutingStates(thread)
         for (state : executingStates) {
-            debugHighlighter.highlightExecutingState(state)
+            pathToHighlighter.get(lastModelString).highlightExecutingState(state)
         }
 
+    }
+
+    def toggleBreakpoint(State state) {
+        pathToBpManager.get(lastModelString).toggleBreakpoint(state)
+    }
+
+    def toggleBreakpoint(Transition transition) {
+        pathToBpManager.get(lastModelString).toggleBreakpoint(transition)
+    }
+
+    def toggleCheckBreakpoint(Transition transition) {
+        pathToBpManager.get(lastModelString).toggleCheckBreakpoint(transition)
     }
 
     private def retrieveActiveEditor() {
@@ -452,7 +483,7 @@ class JavaBreakpointListener implements IJavaBreakpointListener, IDebugEventSetL
             // cannot register breakpoint yet, must do so later
             pendingBreakpoints.add(breakpoint)
         } else {
-            DebugBreakpointManager.instance.presentBreakpoint(breakpoint, currentModel)
+            pathToBpManager.get(lastModelString).presentBreakpoint(breakpoint, currentModel)
         }
     }
 

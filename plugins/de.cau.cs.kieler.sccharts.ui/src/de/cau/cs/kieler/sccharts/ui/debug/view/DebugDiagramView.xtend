@@ -33,6 +33,7 @@ import org.eclipse.core.resources.ResourcesPlugin
 import org.eclipse.core.resources.IFile
 import de.cau.cs.kieler.sccharts.ui.debug.breakpoints.DebugBreakpointManager
 import de.cau.cs.kieler.sccharts.ui.debug.breakpoints.BreakpointType
+import de.cau.cs.kieler.klighd.LightDiagramLayoutConfig
 
 /**
  * @author stu121235
@@ -118,7 +119,8 @@ class DebugDiagramView extends DiagramViewPart {
         } else {
             // update case
             val context = viewer.viewContext
-            DiagramViewManager.updateView(context, model)
+            val config = new LightDiagramLayoutConfig(context).model(model).animate(false)
+            println(config.performUpdate)
         }
     }
     

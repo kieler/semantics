@@ -23,6 +23,9 @@ import de.cau.cs.kieler.klighd.krendering.KText
 import org.eclipse.elk.graph.properties.Property
 import java.util.List
 import de.cau.cs.kieler.klighd.krendering.KStyle
+import de.cau.cs.kieler.sccharts.ui.debug.view.DebugDiagramView
+import de.cau.cs.kieler.sccharts.Transition
+import de.cau.cs.kieler.sccharts.State
 
 /**
  * Extension of the regular Highlighting class with two main differences.
@@ -35,29 +38,39 @@ import de.cau.cs.kieler.klighd.krendering.KStyle
 class DebugHighlighting extends Highlighting {
 
     private val KBackground background
-    private val String type
-
-    public static val EXECUTING_STATE_TYPE = "Executing State"
-    public static val BREAKPOINT_STATE_TYPE = "Breakpoint"
 
     private static val Property<String> MARKER_TYPE_PROPERTY = new Property<String>("Marker Type")
 
     new(KLabeledGraphElement element, KForeground foreground) {
         super(element, foreground)
         background = null
-        type = null
     }
 
     new(KLabeledGraphElement element, KForeground foreground, EObject obj) {
         super(element, foreground, obj)
         background = null
-        type = null
     }
 
-    new(KLabeledGraphElement element, KBackground background, EObject obj, String type) {
+    new(KLabeledGraphElement element, KBackground background, EObject obj) {
         super(element, null, obj)
         this.background = background
-        this.type = type
+    }
+
+    def void reapply() {
+        if (eObject === null) {
+            println("Can't reapply highlighting: Unknown EObject.")
+            return
+        }
+        
+        // Reload KGraphElements from newly synthesized view model
+        if (eObject instanceof Transition) {
+            element = DebugDiagramView.instance.getKEdge(eObject)
+        } else if (eObject instanceof State) {
+            element = DebugDiagramView.instance.getKNode(eObject)
+        }
+        
+        // Then apply the same highlighting to the new element
+        apply
     }
 
     override void apply() {
@@ -67,7 +80,6 @@ class DebugHighlighting extends Highlighting {
             // Remember that this style is to highlight the diagram.
             // This is used to filter for highlighting styles when they should be removed.
             background.setProperty(HIGHLIGHTING_MARKER, this)
-            background.setProperty(MARKER_TYPE_PROPERTY, type)
             // Highlight container of this element
             val ren = element.getData(typeof(KContainerRendering))
             ren.styles.add(EcoreUtil.copy(background))
@@ -94,10 +106,7 @@ class DebugHighlighting extends Highlighting {
             for(s : styles.clone) {
                 // Make sure to only remove the highlighting corresponding to this marker type
                 if(s.isHighlighting && s.hasProperty(MARKER_TYPE_PROPERTY)) {
-                    val type = s.getProperty(MARKER_TYPE_PROPERTY)
-                    if (type.equals(this.type)) {
-                        styles.remove(s)
-                    }
+                    styles.remove(s)
                 }
             }
         }

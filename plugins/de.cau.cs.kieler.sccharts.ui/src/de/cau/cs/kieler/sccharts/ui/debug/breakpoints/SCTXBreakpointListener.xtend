@@ -29,7 +29,7 @@ import de.cau.cs.kieler.sccharts.State
 class SCTXBreakpointListener implements IBreakpointListener {
     
     static SCTXBreakpointListener instance
-    val DebugHighlighter highlighter = DebugHighlighter.instance
+//    val DebugHighlighter highlighter = DebugHighlighter.instance
 
 
     def static void create() {
@@ -51,7 +51,7 @@ class SCTXBreakpointListener implements IBreakpointListener {
                 val obj = SCChartsBreakpointTargetAdapter.lineToModelElement.get(line)
                 // TODO handle transitions
                 if (obj instanceof State) {
-                    highlighter.addBreakpointDecorator(obj as State)
+//                    highlighter.addBreakpointDecorator(obj as State)
                 }
 //                visHook.handleHighlight(obj, true)
             }
@@ -71,7 +71,7 @@ class SCTXBreakpointListener implements IBreakpointListener {
                 val obj = SCChartsBreakpointTargetAdapter.lineToModelElement.get(line)
                 //TODO handle transitions
                 if (obj instanceof State) {
-                    highlighter.removeBreakpointDecorator(obj as State)
+//                    highlighter.removeBreakpointDecorator(obj as State)
                 }
 //                visHook.handleHighlight(obj, false)
             }
@@ -93,10 +93,10 @@ class SCTXBreakpointListener implements IBreakpointListener {
                 val obj = SCChartsBreakpointTargetAdapter.lineToModelElement.get(line)
                 if (obj instanceof State) {
                     if (breakpoint.enabled) {
-                        highlighter.addBreakpointDecorator(obj as State)
+//                        highlighter.addBreakpointDecorator(obj as State)
 //                        visHook.handleHighlight(obj, true)
                     } else {
-                        highlighter.removeBreakpointDecorator(obj as State)
+//                        highlighter.removeBreakpointDecorator(obj as State)
 //                        visHook.handleHighlight(obj, false)
                     }
                 }

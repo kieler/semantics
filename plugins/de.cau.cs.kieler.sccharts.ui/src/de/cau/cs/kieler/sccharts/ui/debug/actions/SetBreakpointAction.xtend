@@ -18,7 +18,7 @@ import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.kgraph.KEdge
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
-import de.cau.cs.kieler.sccharts.ui.debug.breakpoints.DebugBreakpointManager
+import de.cau.cs.kieler.sccharts.ui.debug.breakpoints.JavaBreakpointListener
 
 /**
  * Double-Click action to allow setting breakpoints via the debug diagram view.
@@ -40,11 +40,11 @@ class SetBreakpointAction implements IAction {
         val selectedTransitions = selection.diagramElementsIterator.filter[it instanceof KEdge].map[viewContext.getSourceElement(it) as Transition].toIterable
         
         for (state : selectedStates) {
-            DebugBreakpointManager.instance.toggleBreakpoint(state)
+            JavaBreakpointListener.instance.toggleBreakpoint(state)
         }
         
         for (transition : selectedTransitions) {
-            DebugBreakpointManager.instance.toggleBreakpoint(transition)
+            JavaBreakpointListener.instance.toggleBreakpoint(transition)
         }
         
         ActionResult.createResult(false)
