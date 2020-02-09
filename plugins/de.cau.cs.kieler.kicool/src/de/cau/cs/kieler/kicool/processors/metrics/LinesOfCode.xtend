@@ -43,6 +43,10 @@ class LinesOfCode extends EndogenousProcessor<CodeContainer> {
         logger.println("LoC: " + count)
         setProperty(Environment.CAPTION, "LoC: " + count)
         logger.saveLog(environment, "loc.log")
+        
+        val meterObjects = getProperty(MeterObject.METER_OBJECTS) => 
+            [ it += new MeterObject("LoC", count, true) ]
+        setProperty(MeterObject.METER_OBJECTS, meterObjects)
     }
     
     private def countLines(String s) {

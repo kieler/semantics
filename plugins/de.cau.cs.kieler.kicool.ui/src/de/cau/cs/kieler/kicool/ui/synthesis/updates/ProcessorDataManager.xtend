@@ -93,6 +93,8 @@ import de.cau.cs.kieler.kicool.ui.synthesis.actions.SelectParent
 import de.cau.cs.kieler.kicool.ui.synthesis.styles.SkinSelector
 import java.util.List
 import org.eclipse.ui.IEditorPart
+import de.cau.cs.kieler.kicool.processors.metrics.MeterObject
+import com.google.common.collect.HashMultimap
 
 /**
  * The data manager handles all synthesis updates.
@@ -139,8 +141,9 @@ class ProcessorDataManager {
         }
         
         val nameNode = nodeIdMap.findNode(NODE_NAME)
-        val nameStr = if (rtProcessor.name.length < SkinSelector.skinMaxNameSize) rtProcessor.name else
-            rtProcessor.name.substring(0, SkinSelector.skinMaxNameSize - 2) + "..."
+        val nameStr = if (!processorReference.label.nullOrEmpty) processorReference.label 
+            else if (rtProcessor.name.length < SkinSelector.skinMaxNameSize) rtProcessor.name 
+            else rtProcessor.name.substring(0, SkinSelector.skinMaxNameSize - 2) + "..."
         val label = nameNode.label
         label.text = nameStr
 //        label.data.filter(KText).head.setProperty(KlighdProperties.NOT_SELECTABLE, true)
@@ -550,30 +553,83 @@ class ProcessorDataManager {
     
     static def void postUpdateProcessors(AbstractContextNotification contextNotification, KNode node, CompilerView view) {
         val postUpdateCollector = new PostUpdateDoubleCollector(METRIC)
-        val allProcessors = contextNotification.compilationContext.processorMap.keySet
-        
-        // Gather data.       
-        for(processor : allProcessors) {
-            val processorNode = node.findNode(processor.uniqueProcessorId)    
-            if (processorNode === null) {
-                // This can happen because metrics are also listed in the processor map.
-            } else {
-                val compilationUnit = contextNotification.compilationContext.getProcessorInstance(processor)
-                postUpdateCollector.addProcessor(compilationUnit)
-            }
+        val compilationContext = contextNotification.compilationContext
+        val allProcessors = compilationContext.processorInstancesSequence
+        val meterObjectsValues = HashMultimap.create
+        val meterObjectsMaxValues = <String, Double> newHashMap
+        val meterObjectsMinValues = <String, Double> newHashMap
+
+        for (processor : allProcessors) {
+            val meterObjects = processor.environment.getProperty(MeterObject.METER_OBJECTS)         
+            for (mo : meterObjects) {
+                meterObjectsValues.put(mo.name, mo.value)
+                if (meterObjectsMaxValues.containsKey(mo.name)) {
+                    if (meterObjectsMaxValues.get(mo.name) < mo.value) {
+                        meterObjectsMaxValues.put(mo.name, mo.value)    
+                    }
+                    if (meterObjectsMinValues.get(mo.name) > mo.value) {
+                        meterObjectsMinValues.put(mo.name, mo.value)    
+                    }
+                } else {
+                    meterObjectsMaxValues.put(mo.name, mo.value)
+                    meterObjectsMinValues.put(mo.name, mo.value)
+                }
+            }   
         }
-        
-        // Update view.
-        for(processor : allProcessors) {
-            val processorNode = node.findNode(processor.uniqueProcessorId)    
-            if (processorNode === null) {
-                // This can happen because metrics are also listed in the processor map.
-            } else {
-                val compilationUnit = contextNotification.compilationContext.getProcessorInstance(processor)
-                val perc = postUpdateCollector.getPercentile(compilationUnit)
-                processorNode.setProperty(CoreOptions.SCALE_FACTOR, perc)
-            }
-        }
+
+        for (processor : allProcessors) {
+            val meterObjects = processor.environment.getProperty(MeterObject.METER_OBJECTS)
+            if (meterObjects.size > 0) {
+                val processorReference = processor.getProcessorReference
+                val originalProcessorReference = compilationContext.getOriginalProcessorEntry(processorReference)
+                var KNode processorNodeCandidate = null
+                if (originalProcessorReference === null) {
+                    processorNodeCandidate = node.findNode(processorReference.uniqueProcessorId)
+                } else {
+                    processorNodeCandidate = node.findNode(originalProcessorReference.uniqueProcessorId) 
+                }
+                val processorNode = processorNodeCandidate
+                if (processorNode !== null) {
+                    for (mo : meterObjects) {
+                        val maxValue = meterObjectsMaxValues.get(mo.name)
+                        val minValue = meterObjectsMinValues.get(mo.name)
+                        if (maxValue > 0) {
+                            var factor = 1.0
+                            if (mo.reverse) {
+                                factor = 1 - ((mo.value - minValue) / (maxValue - minValue) / 2) 
+                            } else {
+                                factor = mo.value / maxValue
+                            }
+                            if (factor <= 0.1) factor = 0.1
+                            processorNode.setProperty(CoreOptions.SCALE_FACTOR, factor)
+                        }
+                    }
+                }
+            }         
+        }     
+           
+//        // Gather data.       
+//        for(processor : allProcessors) {
+//            val processorNode = node.findNode(processor.uniqueProcessorId)    
+//            if (processorNode === null) {
+//                // This can happen because metrics are also listed in the processor map.
+//            } else {
+//                val compilationUnit = contextNotification.compilationContext.getProcessorInstance(processor)
+//                postUpdateCollector.addProcessor(compilationUnit)
+//            }
+//        }
+//        
+//        // Update view.
+//        for(processor : allProcessors) {
+//            val processorNode = node.findNode(processor.uniqueProcessorId)    
+//            if (processorNode === null) {
+//                // This can happen because metrics are also listed in the processor map.
+//            } else {
+//                val compilationUnit = contextNotification.compilationContext.getProcessorInstance(processor)
+//                val perc = postUpdateCollector.getPercentile(compilationUnit)
+//                processorNode.setProperty(CoreOptions.SCALE_FACTOR, perc)
+//            }
+//        }
         
         LightDiagramServices.layoutDiagram(new LightDiagramLayoutConfig(view))
     }
