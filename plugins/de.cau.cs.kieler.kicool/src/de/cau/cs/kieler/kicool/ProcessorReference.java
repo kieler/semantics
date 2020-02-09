@@ -14,6 +14,7 @@ import org.eclipse.emf.common.util.EList;
  * The following features are supported:
  * </p>
  * <ul>
+ *   <li>{@link de.cau.cs.kieler.kicool.ProcessorReference#getLabel <em>Label</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kicool.ProcessorReference#getPreconfig <em>Preconfig</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kicool.ProcessorReference#getPostconfig <em>Postconfig</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kicool.ProcessorReference#getMetric <em>Metric</em>}</li>
@@ -27,6 +28,28 @@ import org.eclipse.emf.common.util.EList;
  * @generated
  */
 public interface ProcessorReference extends ProcessorEntry {
+    /**
+     * Returns the value of the '<em><b>Label</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Label</em>' attribute.
+     * @see #setLabel(String)
+     * @see de.cau.cs.kieler.kicool.KiCoolPackage#getProcessorReference_Label()
+     * @model
+     * @generated
+     */
+    String getLabel();
+
+    /**
+     * Sets the value of the '{@link de.cau.cs.kieler.kicool.ProcessorReference#getLabel <em>Label</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Label</em>' attribute.
+     * @see #getLabel()
+     * @generated
+     */
+    void setLabel(String value);
+
     /**
      * Returns the value of the '<em><b>Preconfig</b></em>' containment reference.
      * <!-- begin-user-doc -->

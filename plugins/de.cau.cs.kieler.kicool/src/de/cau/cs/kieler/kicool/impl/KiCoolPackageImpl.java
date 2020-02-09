@@ -281,8 +281,8 @@ public class KiCoolPackageImpl extends EPackageImpl implements KiCoolPackage {
      * @generated
      */
     @Override
-    public EReference getProcessorReference_Preconfig() {
-        return (EReference)processorReferenceEClass.getEStructuralFeatures().get(0);
+    public EAttribute getProcessorReference_Label() {
+        return (EAttribute)processorReferenceEClass.getEStructuralFeatures().get(0);
     }
 
     /**
@@ -291,7 +291,7 @@ public class KiCoolPackageImpl extends EPackageImpl implements KiCoolPackage {
      * @generated
      */
     @Override
-    public EReference getProcessorReference_Postconfig() {
+    public EReference getProcessorReference_Preconfig() {
         return (EReference)processorReferenceEClass.getEStructuralFeatures().get(1);
     }
 
@@ -301,7 +301,7 @@ public class KiCoolPackageImpl extends EPackageImpl implements KiCoolPackage {
      * @generated
      */
     @Override
-    public EReference getProcessorReference_Metric() {
+    public EReference getProcessorReference_Postconfig() {
         return (EReference)processorReferenceEClass.getEStructuralFeatures().get(2);
     }
 
@@ -311,7 +311,7 @@ public class KiCoolPackageImpl extends EPackageImpl implements KiCoolPackage {
      * @generated
      */
     @Override
-    public EReference getProcessorReference_Preprocesses() {
+    public EReference getProcessorReference_Metric() {
         return (EReference)processorReferenceEClass.getEStructuralFeatures().get(3);
     }
 
@@ -321,7 +321,7 @@ public class KiCoolPackageImpl extends EPackageImpl implements KiCoolPackage {
      * @generated
      */
     @Override
-    public EReference getProcessorReference_Postprocesses() {
+    public EReference getProcessorReference_Preprocesses() {
         return (EReference)processorReferenceEClass.getEStructuralFeatures().get(4);
     }
 
@@ -331,8 +331,18 @@ public class KiCoolPackageImpl extends EPackageImpl implements KiCoolPackage {
      * @generated
      */
     @Override
+    public EReference getProcessorReference_Postprocesses() {
+        return (EReference)processorReferenceEClass.getEStructuralFeatures().get(5);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public EAttribute getProcessorReference_Silent() {
-        return (EAttribute)processorReferenceEClass.getEStructuralFeatures().get(5);
+        return (EAttribute)processorReferenceEClass.getEStructuralFeatures().get(6);
     }
 
     /**
@@ -449,6 +459,7 @@ public class KiCoolPackageImpl extends EPackageImpl implements KiCoolPackage {
         createEAttribute(processorEntryEClass, PROCESSOR_ENTRY__ID);
 
         processorReferenceEClass = createEClass(PROCESSOR_REFERENCE);
+        createEAttribute(processorReferenceEClass, PROCESSOR_REFERENCE__LABEL);
         createEReference(processorReferenceEClass, PROCESSOR_REFERENCE__PRECONFIG);
         createEReference(processorReferenceEClass, PROCESSOR_REFERENCE__POSTCONFIG);
         createEReference(processorReferenceEClass, PROCESSOR_REFERENCE__METRIC);
@@ -524,6 +535,7 @@ public class KiCoolPackageImpl extends EPackageImpl implements KiCoolPackage {
         initEAttribute(getProcessorEntry_Id(), ecorePackage.getEString(), "id", null, 0, 1, ProcessorEntry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(processorReferenceEClass, ProcessorReference.class, "ProcessorReference", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getProcessorReference_Label(), ecorePackage.getEString(), "label", null, 0, 1, ProcessorReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getProcessorReference_Preconfig(), theKExpressionsPackage.getJsonObjectValue(), null, "preconfig", null, 0, 1, ProcessorReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getProcessorReference_Postconfig(), theKExpressionsPackage.getJsonObjectValue(), null, "postconfig", null, 0, 1, ProcessorReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getProcessorReference_Metric(), this.getIntermediateReference(), null, "metric", null, 0, 1, ProcessorReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

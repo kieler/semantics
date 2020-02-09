@@ -65,6 +65,7 @@ ProcessorGroup returns kicool::ProcessorGroup:
 Processor returns kicool::ProcessorReference:
     ('pre' 'process' preprocesses += CoProcessor)*
     id = QualifiedID
+    ('label' label = EString)?
     ('config' preconfig = JsonObjectValue ('post' postconfig = JsonObjectValue)?)?
     ('intermediate' metric = [kicool::IntermediateReference|QualifiedID])?
     ('post' 'process' postprocesses += CoProcessor)*

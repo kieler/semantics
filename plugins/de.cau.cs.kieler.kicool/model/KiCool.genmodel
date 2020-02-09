@@ -23,6 +23,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KiCool.ecore#//ProcessorEntry/id"/>
     </genClasses>
     <genClasses ecoreClass="KiCool.ecore#//ProcessorReference">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KiCool.ecore#//ProcessorReference/label"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiCool.ecore#//ProcessorReference/preconfig"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiCool.ecore#//ProcessorReference/postconfig"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference KiCool.ecore#//ProcessorReference/metric"/>

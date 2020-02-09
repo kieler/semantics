@@ -1290,6 +1290,7 @@ public abstract class AbstractKiCoolSemanticSequencer extends KExtSemanticSequen
 	 *     (
 	 *         preprocesses+=CoProcessor* 
 	 *         id=QualifiedID 
+	 *         label=EString? 
 	 *         (preconfig=JsonObjectValue postconfig=JsonObjectValue?)? 
 	 *         metric=[IntermediateReference|QualifiedID]? 
 	 *         postprocesses+=CoProcessor*

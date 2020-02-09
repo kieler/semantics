@@ -224,13 +224,22 @@ public interface KiCoolPackage extends EPackage {
     int PROCESSOR_REFERENCE__ID = PROCESSOR_ENTRY__ID;
 
     /**
+     * The feature id for the '<em><b>Label</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int PROCESSOR_REFERENCE__LABEL = PROCESSOR_ENTRY_FEATURE_COUNT + 0;
+
+    /**
      * The feature id for the '<em><b>Preconfig</b></em>' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int PROCESSOR_REFERENCE__PRECONFIG = PROCESSOR_ENTRY_FEATURE_COUNT + 0;
+    int PROCESSOR_REFERENCE__PRECONFIG = PROCESSOR_ENTRY_FEATURE_COUNT + 1;
 
     /**
      * The feature id for the '<em><b>Postconfig</b></em>' containment reference.
@@ -239,7 +248,7 @@ public interface KiCoolPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int PROCESSOR_REFERENCE__POSTCONFIG = PROCESSOR_ENTRY_FEATURE_COUNT + 1;
+    int PROCESSOR_REFERENCE__POSTCONFIG = PROCESSOR_ENTRY_FEATURE_COUNT + 2;
 
     /**
      * The feature id for the '<em><b>Metric</b></em>' reference.
@@ -248,7 +257,7 @@ public interface KiCoolPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int PROCESSOR_REFERENCE__METRIC = PROCESSOR_ENTRY_FEATURE_COUNT + 2;
+    int PROCESSOR_REFERENCE__METRIC = PROCESSOR_ENTRY_FEATURE_COUNT + 3;
 
     /**
      * The feature id for the '<em><b>Preprocesses</b></em>' containment reference list.
@@ -257,7 +266,7 @@ public interface KiCoolPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int PROCESSOR_REFERENCE__PREPROCESSES = PROCESSOR_ENTRY_FEATURE_COUNT + 3;
+    int PROCESSOR_REFERENCE__PREPROCESSES = PROCESSOR_ENTRY_FEATURE_COUNT + 4;
 
     /**
      * The feature id for the '<em><b>Postprocesses</b></em>' containment reference list.
@@ -266,7 +275,7 @@ public interface KiCoolPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int PROCESSOR_REFERENCE__POSTPROCESSES = PROCESSOR_ENTRY_FEATURE_COUNT + 4;
+    int PROCESSOR_REFERENCE__POSTPROCESSES = PROCESSOR_ENTRY_FEATURE_COUNT + 5;
 
     /**
      * The feature id for the '<em><b>Silent</b></em>' attribute.
@@ -275,7 +284,7 @@ public interface KiCoolPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int PROCESSOR_REFERENCE__SILENT = PROCESSOR_ENTRY_FEATURE_COUNT + 5;
+    int PROCESSOR_REFERENCE__SILENT = PROCESSOR_ENTRY_FEATURE_COUNT + 6;
 
     /**
      * The number of structural features of the '<em>Processor Reference</em>' class.
@@ -284,7 +293,7 @@ public interface KiCoolPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int PROCESSOR_REFERENCE_FEATURE_COUNT = PROCESSOR_ENTRY_FEATURE_COUNT + 6;
+    int PROCESSOR_REFERENCE_FEATURE_COUNT = PROCESSOR_ENTRY_FEATURE_COUNT + 7;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.kicool.impl.ProcessorSystemImpl <em>Processor System</em>}' class.
@@ -424,6 +433,15 @@ public interface KiCoolPackage extends EPackage {
      * @ordered
      */
     int INTERMEDIATE_REFERENCE__ID = PROCESSOR_REFERENCE__ID;
+
+    /**
+     * The feature id for the '<em><b>Label</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_REFERENCE__LABEL = PROCESSOR_REFERENCE__LABEL;
 
     /**
      * The feature id for the '<em><b>Preconfig</b></em>' containment reference.
@@ -636,6 +654,17 @@ public interface KiCoolPackage extends EPackage {
      * @generated
      */
     EClass getProcessorReference();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kicool.ProcessorReference#getLabel <em>Label</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Label</em>'.
+     * @see de.cau.cs.kieler.kicool.ProcessorReference#getLabel()
+     * @see #getProcessorReference()
+     * @generated
+     */
+    EAttribute getProcessorReference_Label();
 
     /**
      * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.kicool.ProcessorReference#getPreconfig <em>Preconfig</em>}'.
@@ -908,6 +937,14 @@ public interface KiCoolPackage extends EPackage {
          * @generated
          */
         EClass PROCESSOR_REFERENCE = eINSTANCE.getProcessorReference();
+
+        /**
+         * The meta object literal for the '<em><b>Label</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute PROCESSOR_REFERENCE__LABEL = eINSTANCE.getProcessorReference_Label();
 
         /**
          * The meta object literal for the '<em><b>Preconfig</b></em>' containment reference feature.

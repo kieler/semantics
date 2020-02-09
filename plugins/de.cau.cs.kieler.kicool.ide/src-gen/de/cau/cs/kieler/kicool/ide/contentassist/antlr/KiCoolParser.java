@@ -107,9 +107,10 @@ public class KiCoolParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getProcessorAccess().getGroup(), "rule__Processor__Group__0");
 			builder.put(grammarAccess.getProcessorAccess().getGroup_0(), "rule__Processor__Group_0__0");
 			builder.put(grammarAccess.getProcessorAccess().getGroup_2(), "rule__Processor__Group_2__0");
-			builder.put(grammarAccess.getProcessorAccess().getGroup_2_2(), "rule__Processor__Group_2_2__0");
 			builder.put(grammarAccess.getProcessorAccess().getGroup_3(), "rule__Processor__Group_3__0");
+			builder.put(grammarAccess.getProcessorAccess().getGroup_3_2(), "rule__Processor__Group_3_2__0");
 			builder.put(grammarAccess.getProcessorAccess().getGroup_4(), "rule__Processor__Group_4__0");
+			builder.put(grammarAccess.getProcessorAccess().getGroup_5(), "rule__Processor__Group_5__0");
 			builder.put(grammarAccess.getCoProcessorAccess().getGroup(), "rule__CoProcessor__Group__0");
 			builder.put(grammarAccess.getCoProcessorAccess().getGroup_2(), "rule__CoProcessor__Group_2__0");
 			builder.put(grammarAccess.getCoProcessorAccess().getGroup_2_2(), "rule__CoProcessor__Group_2_2__0");
@@ -372,10 +373,11 @@ public class KiCoolParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getProcessorGroupAccess().getProcessorsAssignment_1_3_1(), "rule__ProcessorGroup__ProcessorsAssignment_1_3_1");
 			builder.put(grammarAccess.getProcessorAccess().getPreprocessesAssignment_0_2(), "rule__Processor__PreprocessesAssignment_0_2");
 			builder.put(grammarAccess.getProcessorAccess().getIdAssignment_1(), "rule__Processor__IdAssignment_1");
-			builder.put(grammarAccess.getProcessorAccess().getPreconfigAssignment_2_1(), "rule__Processor__PreconfigAssignment_2_1");
-			builder.put(grammarAccess.getProcessorAccess().getPostconfigAssignment_2_2_1(), "rule__Processor__PostconfigAssignment_2_2_1");
-			builder.put(grammarAccess.getProcessorAccess().getMetricAssignment_3_1(), "rule__Processor__MetricAssignment_3_1");
-			builder.put(grammarAccess.getProcessorAccess().getPostprocessesAssignment_4_2(), "rule__Processor__PostprocessesAssignment_4_2");
+			builder.put(grammarAccess.getProcessorAccess().getLabelAssignment_2_1(), "rule__Processor__LabelAssignment_2_1");
+			builder.put(grammarAccess.getProcessorAccess().getPreconfigAssignment_3_1(), "rule__Processor__PreconfigAssignment_3_1");
+			builder.put(grammarAccess.getProcessorAccess().getPostconfigAssignment_3_2_1(), "rule__Processor__PostconfigAssignment_3_2_1");
+			builder.put(grammarAccess.getProcessorAccess().getMetricAssignment_4_1(), "rule__Processor__MetricAssignment_4_1");
+			builder.put(grammarAccess.getProcessorAccess().getPostprocessesAssignment_5_2(), "rule__Processor__PostprocessesAssignment_5_2");
 			builder.put(grammarAccess.getCoProcessorAccess().getSilentAssignment_0(), "rule__CoProcessor__SilentAssignment_0");
 			builder.put(grammarAccess.getCoProcessorAccess().getIdAssignment_1(), "rule__CoProcessor__IdAssignment_1");
 			builder.put(grammarAccess.getCoProcessorAccess().getPreconfigAssignment_2_1(), "rule__CoProcessor__PreconfigAssignment_2_1");

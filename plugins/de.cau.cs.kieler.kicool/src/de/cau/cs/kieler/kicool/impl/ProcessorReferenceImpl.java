@@ -29,6 +29,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link de.cau.cs.kieler.kicool.impl.ProcessorReferenceImpl#getLabel <em>Label</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kicool.impl.ProcessorReferenceImpl#getPreconfig <em>Preconfig</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kicool.impl.ProcessorReferenceImpl#getPostconfig <em>Postconfig</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kicool.impl.ProcessorReferenceImpl#getMetric <em>Metric</em>}</li>
@@ -40,6 +41,26 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * @generated
  */
 public class ProcessorReferenceImpl extends ProcessorEntryImpl implements ProcessorReference {
+    /**
+     * The default value of the '{@link #getLabel() <em>Label</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getLabel()
+     * @generated
+     * @ordered
+     */
+    protected static final String LABEL_EDEFAULT = null;
+
+    /**
+     * The cached value of the '{@link #getLabel() <em>Label</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getLabel()
+     * @generated
+     * @ordered
+     */
+    protected String label = LABEL_EDEFAULT;
+
     /**
      * The cached value of the '{@link #getPreconfig() <em>Preconfig</em>}' containment reference.
      * <!-- begin-user-doc -->
@@ -127,6 +148,29 @@ public class ProcessorReferenceImpl extends ProcessorEntryImpl implements Proces
     @Override
     protected EClass eStaticClass() {
         return KiCoolPackage.Literals.PROCESSOR_REFERENCE;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public String getLabel() {
+        return label;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public void setLabel(String newLabel) {
+        String oldLabel = label;
+        label = newLabel;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, KiCoolPackage.PROCESSOR_REFERENCE__LABEL, oldLabel, label));
     }
 
     /**
@@ -336,6 +380,8 @@ public class ProcessorReferenceImpl extends ProcessorEntryImpl implements Proces
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
+            case KiCoolPackage.PROCESSOR_REFERENCE__LABEL:
+                return getLabel();
             case KiCoolPackage.PROCESSOR_REFERENCE__PRECONFIG:
                 return getPreconfig();
             case KiCoolPackage.PROCESSOR_REFERENCE__POSTCONFIG:
@@ -362,6 +408,9 @@ public class ProcessorReferenceImpl extends ProcessorEntryImpl implements Proces
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
+            case KiCoolPackage.PROCESSOR_REFERENCE__LABEL:
+                setLabel((String)newValue);
+                return;
             case KiCoolPackage.PROCESSOR_REFERENCE__PRECONFIG:
                 setPreconfig((JsonObjectValue)newValue);
                 return;
@@ -394,6 +443,9 @@ public class ProcessorReferenceImpl extends ProcessorEntryImpl implements Proces
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
+            case KiCoolPackage.PROCESSOR_REFERENCE__LABEL:
+                setLabel(LABEL_EDEFAULT);
+                return;
             case KiCoolPackage.PROCESSOR_REFERENCE__PRECONFIG:
                 setPreconfig((JsonObjectValue)null);
                 return;
@@ -424,6 +476,8 @@ public class ProcessorReferenceImpl extends ProcessorEntryImpl implements Proces
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
+            case KiCoolPackage.PROCESSOR_REFERENCE__LABEL:
+                return LABEL_EDEFAULT == null ? label != null : !LABEL_EDEFAULT.equals(label);
             case KiCoolPackage.PROCESSOR_REFERENCE__PRECONFIG:
                 return preconfig != null;
             case KiCoolPackage.PROCESSOR_REFERENCE__POSTCONFIG:
@@ -450,7 +504,9 @@ public class ProcessorReferenceImpl extends ProcessorEntryImpl implements Proces
         if (eIsProxy()) return super.toString();
 
         StringBuilder result = new StringBuilder(super.toString());
-        result.append(" (silent: ");
+        result.append(" (label: ");
+        result.append(label);
+        result.append(", silent: ");
         result.append(silent);
         result.append(')');
         return result.toString();

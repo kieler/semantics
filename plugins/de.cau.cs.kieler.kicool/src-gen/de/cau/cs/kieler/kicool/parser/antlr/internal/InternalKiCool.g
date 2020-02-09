@@ -587,16 +587,41 @@ ruleProcessor returns [EObject current=null]
 			)
 		)
 		(
-			otherlv_4='config'
+			otherlv_4='label'
 			{
-				newLeafNode(otherlv_4, grammarAccess.getProcessorAccess().getConfigKeyword_2_0());
+				newLeafNode(otherlv_4, grammarAccess.getProcessorAccess().getLabelKeyword_2_0());
 			}
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getProcessorAccess().getPreconfigJsonObjectValueParserRuleCall_2_1_0());
+						newCompositeNode(grammarAccess.getProcessorAccess().getLabelEStringParserRuleCall_2_1_0());
 					}
-					lv_preconfig_5_0=ruleJsonObjectValue
+					lv_label_5_0=ruleEString
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getProcessorRule());
+						}
+						set(
+							$current,
+							"label",
+							lv_label_5_0,
+							"de.cau.cs.kieler.annotations.Annotations.EString");
+						afterParserOrEnumRuleCall();
+					}
+				)
+			)
+		)?
+		(
+			otherlv_6='config'
+			{
+				newLeafNode(otherlv_6, grammarAccess.getProcessorAccess().getConfigKeyword_3_0());
+			}
+			(
+				(
+					{
+						newCompositeNode(grammarAccess.getProcessorAccess().getPreconfigJsonObjectValueParserRuleCall_3_1_0());
+					}
+					lv_preconfig_7_0=ruleJsonObjectValue
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getProcessorRule());
@@ -604,23 +629,23 @@ ruleProcessor returns [EObject current=null]
 						set(
 							$current,
 							"preconfig",
-							lv_preconfig_5_0,
+							lv_preconfig_7_0,
 							"de.cau.cs.kieler.kexpressions.KExpressions.JsonObjectValue");
 						afterParserOrEnumRuleCall();
 					}
 				)
 			)
 			(
-				otherlv_6='post'
+				otherlv_8='post'
 				{
-					newLeafNode(otherlv_6, grammarAccess.getProcessorAccess().getPostKeyword_2_2_0());
+					newLeafNode(otherlv_8, grammarAccess.getProcessorAccess().getPostKeyword_3_2_0());
 				}
 				(
 					(
 						{
-							newCompositeNode(grammarAccess.getProcessorAccess().getPostconfigJsonObjectValueParserRuleCall_2_2_1_0());
+							newCompositeNode(grammarAccess.getProcessorAccess().getPostconfigJsonObjectValueParserRuleCall_3_2_1_0());
 						}
-						lv_postconfig_7_0=ruleJsonObjectValue
+						lv_postconfig_9_0=ruleJsonObjectValue
 						{
 							if ($current==null) {
 								$current = createModelElementForParent(grammarAccess.getProcessorRule());
@@ -628,7 +653,7 @@ ruleProcessor returns [EObject current=null]
 							set(
 								$current,
 								"postconfig",
-								lv_postconfig_7_0,
+								lv_postconfig_9_0,
 								"de.cau.cs.kieler.kexpressions.KExpressions.JsonObjectValue");
 							afterParserOrEnumRuleCall();
 						}
@@ -637,9 +662,9 @@ ruleProcessor returns [EObject current=null]
 			)?
 		)?
 		(
-			otherlv_8='intermediate'
+			otherlv_10='intermediate'
 			{
-				newLeafNode(otherlv_8, grammarAccess.getProcessorAccess().getIntermediateKeyword_3_0());
+				newLeafNode(otherlv_10, grammarAccess.getProcessorAccess().getIntermediateKeyword_4_0());
 			}
 			(
 				(
@@ -652,7 +677,7 @@ ruleProcessor returns [EObject current=null]
 						}
 					}
 					{
-						newCompositeNode(grammarAccess.getProcessorAccess().getMetricIntermediateReferenceCrossReference_3_1_0());
+						newCompositeNode(grammarAccess.getProcessorAccess().getMetricIntermediateReferenceCrossReference_4_1_0());
 					}
 					ruleQualifiedID
 					{
@@ -662,20 +687,20 @@ ruleProcessor returns [EObject current=null]
 			)
 		)?
 		(
-			otherlv_10='post'
+			otherlv_12='post'
 			{
-				newLeafNode(otherlv_10, grammarAccess.getProcessorAccess().getPostKeyword_4_0());
+				newLeafNode(otherlv_12, grammarAccess.getProcessorAccess().getPostKeyword_5_0());
 			}
-			otherlv_11='process'
+			otherlv_13='process'
 			{
-				newLeafNode(otherlv_11, grammarAccess.getProcessorAccess().getProcessKeyword_4_1());
+				newLeafNode(otherlv_13, grammarAccess.getProcessorAccess().getProcessKeyword_5_1());
 			}
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getProcessorAccess().getPostprocessesCoProcessorParserRuleCall_4_2_0());
+						newCompositeNode(grammarAccess.getProcessorAccess().getPostprocessesCoProcessorParserRuleCall_5_2_0());
 					}
-					lv_postprocesses_12_0=ruleCoProcessor
+					lv_postprocesses_14_0=ruleCoProcessor
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getProcessorRule());
@@ -683,7 +708,7 @@ ruleProcessor returns [EObject current=null]
 						add(
 							$current,
 							"postprocesses",
-							lv_postprocesses_12_0,
+							lv_postprocesses_14_0,
 							"de.cau.cs.kieler.kicool.KiCool.CoProcessor");
 						afterParserOrEnumRuleCall();
 					}

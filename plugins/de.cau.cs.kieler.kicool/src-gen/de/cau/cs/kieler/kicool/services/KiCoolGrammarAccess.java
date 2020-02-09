@@ -323,33 +323,37 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cIdAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cIdQualifiedIDParserRuleCall_1_0 = (RuleCall)cIdAssignment_1.eContents().get(0);
 		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
-		private final Keyword cConfigKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
-		private final Assignment cPreconfigAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
-		private final RuleCall cPreconfigJsonObjectValueParserRuleCall_2_1_0 = (RuleCall)cPreconfigAssignment_2_1.eContents().get(0);
-		private final Group cGroup_2_2 = (Group)cGroup_2.eContents().get(2);
-		private final Keyword cPostKeyword_2_2_0 = (Keyword)cGroup_2_2.eContents().get(0);
-		private final Assignment cPostconfigAssignment_2_2_1 = (Assignment)cGroup_2_2.eContents().get(1);
-		private final RuleCall cPostconfigJsonObjectValueParserRuleCall_2_2_1_0 = (RuleCall)cPostconfigAssignment_2_2_1.eContents().get(0);
+		private final Keyword cLabelKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Assignment cLabelAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
+		private final RuleCall cLabelEStringParserRuleCall_2_1_0 = (RuleCall)cLabelAssignment_2_1.eContents().get(0);
 		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
-		private final Keyword cIntermediateKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
-		private final Assignment cMetricAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
-		private final CrossReference cMetricIntermediateReferenceCrossReference_3_1_0 = (CrossReference)cMetricAssignment_3_1.eContents().get(0);
-		private final RuleCall cMetricIntermediateReferenceQualifiedIDParserRuleCall_3_1_0_1 = (RuleCall)cMetricIntermediateReferenceCrossReference_3_1_0.eContents().get(1);
+		private final Keyword cConfigKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
+		private final Assignment cPreconfigAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
+		private final RuleCall cPreconfigJsonObjectValueParserRuleCall_3_1_0 = (RuleCall)cPreconfigAssignment_3_1.eContents().get(0);
+		private final Group cGroup_3_2 = (Group)cGroup_3.eContents().get(2);
+		private final Keyword cPostKeyword_3_2_0 = (Keyword)cGroup_3_2.eContents().get(0);
+		private final Assignment cPostconfigAssignment_3_2_1 = (Assignment)cGroup_3_2.eContents().get(1);
+		private final RuleCall cPostconfigJsonObjectValueParserRuleCall_3_2_1_0 = (RuleCall)cPostconfigAssignment_3_2_1.eContents().get(0);
 		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
-		private final Keyword cPostKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
-		private final Keyword cProcessKeyword_4_1 = (Keyword)cGroup_4.eContents().get(1);
-		private final Assignment cPostprocessesAssignment_4_2 = (Assignment)cGroup_4.eContents().get(2);
-		private final RuleCall cPostprocessesCoProcessorParserRuleCall_4_2_0 = (RuleCall)cPostprocessesAssignment_4_2.eContents().get(0);
+		private final Keyword cIntermediateKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
+		private final Assignment cMetricAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
+		private final CrossReference cMetricIntermediateReferenceCrossReference_4_1_0 = (CrossReference)cMetricAssignment_4_1.eContents().get(0);
+		private final RuleCall cMetricIntermediateReferenceQualifiedIDParserRuleCall_4_1_0_1 = (RuleCall)cMetricIntermediateReferenceCrossReference_4_1_0.eContents().get(1);
+		private final Group cGroup_5 = (Group)cGroup.eContents().get(5);
+		private final Keyword cPostKeyword_5_0 = (Keyword)cGroup_5.eContents().get(0);
+		private final Keyword cProcessKeyword_5_1 = (Keyword)cGroup_5.eContents().get(1);
+		private final Assignment cPostprocessesAssignment_5_2 = (Assignment)cGroup_5.eContents().get(2);
+		private final RuleCall cPostprocessesCoProcessorParserRuleCall_5_2_0 = (RuleCall)cPostprocessesAssignment_5_2.eContents().get(0);
 		
 		//Processor kicool::ProcessorReference:
 		//	('pre' 'process' preprocesses+=CoProcessor)*
-		//	id=QualifiedID ('config' preconfig=JsonObjectValue ('post' postconfig=JsonObjectValue)?)? ('intermediate'
-		//	metric=[kicool::IntermediateReference|QualifiedID])? ('post' 'process' postprocesses+=CoProcessor)*;
+		//	id=QualifiedID ('label' label=EString)? ('config' preconfig=JsonObjectValue ('post' postconfig=JsonObjectValue)?)?
+		//	('intermediate' metric=[kicool::IntermediateReference|QualifiedID])? ('post' 'process' postprocesses+=CoProcessor)*;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//('pre' 'process' preprocesses+=CoProcessor)* id=QualifiedID ('config' preconfig=JsonObjectValue ('post'
-		//postconfig=JsonObjectValue)?)? ('intermediate' metric=[kicool::IntermediateReference|QualifiedID])? ('post' 'process'
-		//postprocesses+=CoProcessor)*
+		//('pre' 'process' preprocesses+=CoProcessor)* id=QualifiedID ('label' label=EString)? ('config' preconfig=JsonObjectValue
+		//('post' postconfig=JsonObjectValue)?)? ('intermediate' metric=[kicool::IntermediateReference|QualifiedID])? ('post'
+		//'process' postprocesses+=CoProcessor)*
 		public Group getGroup() { return cGroup; }
 		
 		//('pre' 'process' preprocesses+=CoProcessor)*
@@ -373,59 +377,71 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 		//QualifiedID
 		public RuleCall getIdQualifiedIDParserRuleCall_1_0() { return cIdQualifiedIDParserRuleCall_1_0; }
 		
-		//('config' preconfig=JsonObjectValue ('post' postconfig=JsonObjectValue)?)?
+		//('label' label=EString)?
 		public Group getGroup_2() { return cGroup_2; }
 		
-		//'config'
-		public Keyword getConfigKeyword_2_0() { return cConfigKeyword_2_0; }
+		//'label'
+		public Keyword getLabelKeyword_2_0() { return cLabelKeyword_2_0; }
 		
-		//preconfig=JsonObjectValue
-		public Assignment getPreconfigAssignment_2_1() { return cPreconfigAssignment_2_1; }
+		//label=EString
+		public Assignment getLabelAssignment_2_1() { return cLabelAssignment_2_1; }
 		
-		//JsonObjectValue
-		public RuleCall getPreconfigJsonObjectValueParserRuleCall_2_1_0() { return cPreconfigJsonObjectValueParserRuleCall_2_1_0; }
+		//EString
+		public RuleCall getLabelEStringParserRuleCall_2_1_0() { return cLabelEStringParserRuleCall_2_1_0; }
 		
-		//('post' postconfig=JsonObjectValue)?
-		public Group getGroup_2_2() { return cGroup_2_2; }
-		
-		//'post'
-		public Keyword getPostKeyword_2_2_0() { return cPostKeyword_2_2_0; }
-		
-		//postconfig=JsonObjectValue
-		public Assignment getPostconfigAssignment_2_2_1() { return cPostconfigAssignment_2_2_1; }
-		
-		//JsonObjectValue
-		public RuleCall getPostconfigJsonObjectValueParserRuleCall_2_2_1_0() { return cPostconfigJsonObjectValueParserRuleCall_2_2_1_0; }
-		
-		//('intermediate' metric=[kicool::IntermediateReference|QualifiedID])?
+		//('config' preconfig=JsonObjectValue ('post' postconfig=JsonObjectValue)?)?
 		public Group getGroup_3() { return cGroup_3; }
 		
-		//'intermediate'
-		public Keyword getIntermediateKeyword_3_0() { return cIntermediateKeyword_3_0; }
+		//'config'
+		public Keyword getConfigKeyword_3_0() { return cConfigKeyword_3_0; }
 		
-		//metric=[kicool::IntermediateReference|QualifiedID]
-		public Assignment getMetricAssignment_3_1() { return cMetricAssignment_3_1; }
+		//preconfig=JsonObjectValue
+		public Assignment getPreconfigAssignment_3_1() { return cPreconfigAssignment_3_1; }
 		
-		//[kicool::IntermediateReference|QualifiedID]
-		public CrossReference getMetricIntermediateReferenceCrossReference_3_1_0() { return cMetricIntermediateReferenceCrossReference_3_1_0; }
+		//JsonObjectValue
+		public RuleCall getPreconfigJsonObjectValueParserRuleCall_3_1_0() { return cPreconfigJsonObjectValueParserRuleCall_3_1_0; }
 		
-		//QualifiedID
-		public RuleCall getMetricIntermediateReferenceQualifiedIDParserRuleCall_3_1_0_1() { return cMetricIntermediateReferenceQualifiedIDParserRuleCall_3_1_0_1; }
-		
-		//('post' 'process' postprocesses+=CoProcessor)*
-		public Group getGroup_4() { return cGroup_4; }
+		//('post' postconfig=JsonObjectValue)?
+		public Group getGroup_3_2() { return cGroup_3_2; }
 		
 		//'post'
-		public Keyword getPostKeyword_4_0() { return cPostKeyword_4_0; }
+		public Keyword getPostKeyword_3_2_0() { return cPostKeyword_3_2_0; }
+		
+		//postconfig=JsonObjectValue
+		public Assignment getPostconfigAssignment_3_2_1() { return cPostconfigAssignment_3_2_1; }
+		
+		//JsonObjectValue
+		public RuleCall getPostconfigJsonObjectValueParserRuleCall_3_2_1_0() { return cPostconfigJsonObjectValueParserRuleCall_3_2_1_0; }
+		
+		//('intermediate' metric=[kicool::IntermediateReference|QualifiedID])?
+		public Group getGroup_4() { return cGroup_4; }
+		
+		//'intermediate'
+		public Keyword getIntermediateKeyword_4_0() { return cIntermediateKeyword_4_0; }
+		
+		//metric=[kicool::IntermediateReference|QualifiedID]
+		public Assignment getMetricAssignment_4_1() { return cMetricAssignment_4_1; }
+		
+		//[kicool::IntermediateReference|QualifiedID]
+		public CrossReference getMetricIntermediateReferenceCrossReference_4_1_0() { return cMetricIntermediateReferenceCrossReference_4_1_0; }
+		
+		//QualifiedID
+		public RuleCall getMetricIntermediateReferenceQualifiedIDParserRuleCall_4_1_0_1() { return cMetricIntermediateReferenceQualifiedIDParserRuleCall_4_1_0_1; }
+		
+		//('post' 'process' postprocesses+=CoProcessor)*
+		public Group getGroup_5() { return cGroup_5; }
+		
+		//'post'
+		public Keyword getPostKeyword_5_0() { return cPostKeyword_5_0; }
 		
 		//'process'
-		public Keyword getProcessKeyword_4_1() { return cProcessKeyword_4_1; }
+		public Keyword getProcessKeyword_5_1() { return cProcessKeyword_5_1; }
 		
 		//postprocesses+=CoProcessor
-		public Assignment getPostprocessesAssignment_4_2() { return cPostprocessesAssignment_4_2; }
+		public Assignment getPostprocessesAssignment_5_2() { return cPostprocessesAssignment_5_2; }
 		
 		//CoProcessor
-		public RuleCall getPostprocessesCoProcessorParserRuleCall_4_2_0() { return cPostprocessesCoProcessorParserRuleCall_4_2_0; }
+		public RuleCall getPostprocessesCoProcessorParserRuleCall_5_2_0() { return cPostprocessesCoProcessorParserRuleCall_5_2_0; }
 	}
 	public class CoProcessorElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kicool.KiCool.CoProcessor");
@@ -696,8 +712,8 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//Processor kicool::ProcessorReference:
 	//	('pre' 'process' preprocesses+=CoProcessor)*
-	//	id=QualifiedID ('config' preconfig=JsonObjectValue ('post' postconfig=JsonObjectValue)?)? ('intermediate'
-	//	metric=[kicool::IntermediateReference|QualifiedID])? ('post' 'process' postprocesses+=CoProcessor)*;
+	//	id=QualifiedID ('label' label=EString)? ('config' preconfig=JsonObjectValue ('post' postconfig=JsonObjectValue)?)?
+	//	('intermediate' metric=[kicool::IntermediateReference|QualifiedID])? ('post' 'process' postprocesses+=CoProcessor)*;
 	public ProcessorElements getProcessorAccess() {
 		return pProcessor;
 	}
