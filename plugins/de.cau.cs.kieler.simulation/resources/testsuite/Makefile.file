@@ -14,12 +14,13 @@ SIMULATOR_EXE := $(MAKEFILE_FOLDER)simulator.exe
 MODELS    := $(shell test -f deps.d && find . -name main.c)
 #DEP_FILES := $(shell find . -name deps.d)
 
+all: $(OUTPUT_CSV)
+
 $(LIB_FOLDER)cJSON.o: $(LIB_FOLDER)cJSON.c $(LIB_FOLDER)cJSON.h
 -include deps_custom.d
 -include deps.d
 
 
-all: $(OUTPUT_CSV)
 
 simulator: $(SIMULATOR_EXE)
 
@@ -35,18 +36,9 @@ eco:
 
 
 $(OUTPUT_CSV): $(SIMULATOR_EXE) models
-	echo "Model;Ticks;Time;AvgTime;MinTime;MaxTime;num output errors;terminated Early;fileSize;diskUsage" > $(OUTPUT_CSV)
-	@find . \
-		-name '*.test.json' \
-		-exec \
-			/bin/bash -c ' \
-				TESTFILE="{}" ; \
-				MODEL="$${TESTFILE/%.test.json/.exe}" ; \
-				LOG="$${TESTFILE/%.test.json/.log.csv}" ; \
-				test -x $$MODEL && \
-				(echo "\"$$MODEL\";"$$(cat "$$TESTFILE" | $(SIMULATOR_EXE) "$$MODEL" | tee "$$LOG" | tail --lines=1)";"$$(du -b "$$MODEL"|cut -f1)";"$$(du --block-size=1 "$$MODEL"|cut -f1) \
-				>> $(OUTPUT_CSV)) ; \
-			' \;
+	export OUTPUT_CSV="$(OUTPUT_CSV)"; \
+	export SIMULATOR_EXE="$(SIMULATOR_EXE)"; \
+	./runtest.sh
 
 
 local_models: $(patsubst %.c,%.exe,$(MODELS))
@@ -61,33 +53,36 @@ models:
 				cd $$(dirname {}) ; \
 				make -f $$MKFILE local_models ; \
 			' \;
+	@find . -name 'errors.log' -a -size 0 -delete
 
 
 %.o: %.c $(DEPS)
 	@echo "Createing object file $@"
-	@$(CC) -c -o $@ $< $(CFLAGS)
+	@$(CC) -c -o $@ $< $(CFLAGS) >> errors.log 2>&1
 
 %.exe: %.o $(LIB_FOLDER)cJSON.o
 	@echo "Createing executeable $@"
-	@$(CC) -o $@ $^ $(CFLAGS)
+	@$(CC) -o $@ $^ $(CFLAGS) >> errors.log 2>&1
 
 suite.zip:
-	zip -R $@ '*.sctx' '*.eso' '*.esi' '*.ktrace' '*.c' '*.h' '*.test.json' '*deps.d' 'deps_custom.d' 'Makefile' 'main.test.json.base' 'dumbtick.bash'
+	zip -R $@ '*.sctx' '*.eso' '*.esi' '*.ktrace' '*.c' '*.h' '*.test.json' '*deps.d' 'deps_custom.d' 'Makefile' 'main.test.json.base' 'simple_tick.bash'
 
 min_suite.zip:
 	zip -R $@ '*.c' '*.h' '*.test.json' '*deps.d' 'deps_custom.d' 'Makefile'
 
 logs.zip: $(wildcard logs/*.csv) $(wildcard logs/*.zip)
-	zip -r $@ logs -i "*.csv" "*.zip"
+	zip -r $@ logs -i "*.csv.log" "*.zip"
 
 log: $(OUTPUT_CSV) archive
 log_all: $(OUTPUT_CSV) archive_all
 
 archive:
-	mv $(OUTPUT_CSV) logs/`date +%Y_%m_%d_%H_%M`.csv
+	mkdir -f logs
+	mv $(OUTPUT_CSV) logs/`date +%Y_%m_%d_%H_%M`.csv.log
 
 archive_all:
-	zip -R logs/`date +%Y_%m_%d_%H_%M`.zip '*.csv'
+	mkdir -f logs
+	zip -R logs/`date +%Y_%m_%d_%H_%M`.zip '*.csv' 'errors.log'
 
 .PHONY: clean reset all simulator local_models models log archive log_all archive_all
 
@@ -97,3 +92,5 @@ clean:
 	find -P . -name "*.o"   -delete
 	find -P . -name "*.exe" -delete
 	find -P . -name "*.csv" -delete
+	find -P . -name "errors.log" -delete
+	
