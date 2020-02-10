@@ -41,9 +41,10 @@ class DebugHighlighter {
     static val activeStateForeground = factory.createKForeground.setColor2(activeStateColor)
     
     // Debugger line highlight green
-    static val executingStateColor = factory.createKColor.setColor(198, 219, 174)
-    static val executingStateBackground = factory.createKBackground.setColor2(executingStateColor)
-    static val executingTransitionForeground = factory.createKForeground.setColor2(EcoreUtil.copy(executingStateColor))
+    static val executingStateColor2 = factory.createKColor.setColor(198, 219, 174)
+    static val executingStateColor1 = factory.createKColor.setColor(240,251, 228)
+    static val executingStateBackground = factory.createKBackground.setColors(executingStateColor1, executingStateColor2, 90)
+    static val executingTransitionForeground = factory.createKForeground.setColor2(EcoreUtil.copy(executingStateColor2))
     
     static val breakpointStateColor = factory.createKColor.setColor(Colors.BLUE)
     static val breakpointStateBackground = factory.createKBackground.setColor2(breakpointStateColor)
