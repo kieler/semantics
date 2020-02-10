@@ -1,6 +1,7 @@
 
 #include <stdlib.h>
 
+#include <signal.h>
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
@@ -42,6 +43,18 @@ typedef struct _struct_ModelStack{
 
 #define TRUE  1
 #define FALSE 0
+
+// boolean: should a "*_val" value of the expected output
+// be ignored if model doesnt provide one
+static int ignore_noneexistent_val;
+// boolean: should a "*_val" value of the expected output with value 1
+// be ignored if model doesnt provide one
+static int ignore_noneexistent_val1;
+// boolean: use the "_val" variant of the expected output
+// if there is one in the expected output but not in the model output.
+static int overwrite_with_val;
+// boolean: fuzzy-boolean: allow 0 and 1 to be equal to false and true resp..
+static int fuzzy_bool;
 
 static int err = 0;
 static volatile int signals = 0;
@@ -155,8 +168,12 @@ static cJSON* get_data(ReadBuffer * read_buffer) {
 	char *buffer_end = buffer + read_buffer->offset;
 	
 	while (TRUE) { // abort with 'break' (or 'return' in case of error)
-		//// Only read JSON-Objects.
-		//while (buffer_start < buffer_end && (*buffer_start) != '{') {buffer_start++;}
+		// Only read JSON-Objects/Strings.
+		while (
+			buffer_start < buffer_end &&
+			*buffer_start != '{' &&
+			*buffer_start != '"'
+		) { buffer_start++; }
 		
 		// Try to read next json element.
 		if ((json = cJSON_ParseWithOpts(buffer_start, &end, 0)) != NULL) {
@@ -173,55 +190,55 @@ static cJSON* get_data(ReadBuffer * read_buffer) {
 			break;
 		}
 		
-		if (end < buffer_end) {
-			buffer_start++;
-		} else { // need more data
+		// can't differenciate from errors vs not enought data
+		// since the end marker is at the beginning of the last unfinished token
+		// so the input is always expected to be correct and more data is read.
+
+		// need more data
+		
+		// Is there data to be removed?
+		if (buffer < buffer_start) {
+			memmove(buffer, buffer_start, buffer_end - buffer_start + 1);
+			//offset = buffer_end - buffer_start;
 			
-			// Is there data to be removed?
-			if (buffer < buffer_start) {
-				memmove(buffer, buffer_start, buffer_end - buffer_start + 1);
-				//offset = buffer_end - buffer_start;
+			// update pointer
+			buffer_end = buffer_end - buffer_start + buffer;
+			buffer_start = buffer;
+			
+		// is a larger buffer needed?
+		} else if (length == (unsigned)(buffer_end - buffer)) { // note: length doesn't count trailing '\0'
+			buffer = realloc(buffer, (length + 1) * 2);
+			if (!buffer) { // error in realloc?
+				// save offset to keep data valid/correct
+				read_buffer->offset = buffer_end - read_buffer->buffer;
+				return NULL;
+			} else {
+				length = length * 2 + 1; // (length + 1) * 2 - 1 // 1 subtracted for trailing '\0'
 				
-				// update pointer
+				// update pointer (read points to old buffer)
 				buffer_end = buffer_end - buffer_start + buffer;
 				buffer_start = buffer;
 				
-			// is a larger buffer needed?
-			} else if (length == (unsigned)(buffer_end - buffer)) { // note: length doesn't count trailing '\0'
-				buffer = realloc(buffer, (length + 1) * 2);
-				if (!buffer) { // error in realloc?
-					// save offset to keep data valid/correct
-					read_buffer->offset = buffer_end - read_buffer->buffer;
-					return NULL;
-				} else {
-					length = length * 2 + 1; // (length + 1) * 2 - 1 // 1 subtracted for trailing '\0'
-					
-					// update pointer (read points to old buffer)
-					buffer_end = buffer_end - buffer_start + buffer;
-					buffer_start = buffer;
-					
-					// save status back into the read_buffer
-					read_buffer->buffer = buffer;
-					read_buffer->length = length + 1;
-				}
-			}
-			
-			// get more data
-			read_num = read(fd, buffer_end, length - (buffer_end - buffer));
-			if (read_num < 0) {
-				fprintf(stderr, "ERROR: reading input\n");
-				break;
-			}
-			
-			buffer_end += read_num;
-			// always terminate buffer with '\0'
-			*buffer_end = '\0';
-			
-			if (read_num == 0) { // EOF
-				break;
+				// save status back into the read_buffer
+				read_buffer->buffer = buffer;
+				read_buffer->length = length + 1;
 			}
 		}
 		
+		// get more data
+		read_num = read(fd, buffer_end, length - (buffer_end - buffer));
+		if (read_num < 0) {
+			fprintf(stderr, "ERROR: reading input\n");
+			break;
+		}
+		
+		buffer_end += read_num;
+		// always terminate buffer with '\0'
+		*buffer_end = '\0';
+		
+		if (read_num == 0) { // EOF
+			break;
+		}
 	}
 	
 	// save status back into the read_buffer
@@ -260,6 +277,36 @@ static cJSON* run_tick(Model *model, cJSON *setInput) {
 }
 
 /**
+ * This function returns a boolean expressing wether the given
+ * variable is a value-variable
+ */
+static int isValueVariable(const char* name) {
+	int len = strlen(name);
+	return len>4 && strcmp(name+len-4, "_val") == 0;
+}
+/**
+ * This function gets the cJSON value of a variable from a cJSON-Object.
+ * This function returns NULL if no value was found.
+ */
+static cJSON *getVariable(cJSON *object, const char* name) {
+	return cJSON_GetObjectItemCaseSensitive(object, name);
+}
+/**
+ * This function gets the cJSON value of the value-variable
+ * for the given variable from a cJSON-Object
+ * This function returns NULL if no value was found.
+ */
+static cJSON *getVariableValue(cJSON *object, const char* name) {
+	int len = strlen(name);
+	char* valname = malloc(sizeof(char)*len+sizeof("_val"));
+	memcpy(valname, name, len);
+	memcpy(valname+len, "_val", sizeof("_val"));
+	cJSON *val = cJSON_GetObjectItemCaseSensitive(object, valname);
+	free(valname);
+	return val;
+}
+
+/**
  * This function gets two JSON Objects and check if each element in the expectedOutput is the same in the output JSON.
  * The return value is the number of missing or different values, or -1 if one of the arguments isn't a JSON object.
  */
@@ -272,16 +319,72 @@ static int validate_data(cJSON* output, cJSON* expectedOutput, int tick_num) {
 	// loop thru all expected element entries
 	while (expectedElem) {
 		// get actual result for current key
-		cJSON *outputElem = cJSON_GetObjectItemCaseSensitive(output, expectedElem->string);
+		cJSON *compareExpected = expectedElem;
+		cJSON *outputElem = getVariable(output, expectedElem->string);
+		int valueVariable = isValueVariable(expectedElem->string);
+
+		// check if expected variable should be overwritten by the value-variable
+		if (overwrite_with_val && !valueVariable) {
+			cJSON *expectedElemVal = getVariableValue(expectedOutput, expectedElem->string);
+			cJSON *outputElemVal = getVariableValue(output, expectedElem->string);
+
+			if (outputElemVal == NULL && expectedElemVal != NULL) {
+				// perform the overwrite
+
+				compareExpected = expectedElemVal;
+			}
+		}
+
 		if (!outputElem) {
-			errors++;
-			fprintf(stderr, "OUTPUT ERROR: expected some output for '%s'. Got none in tick %d.\n", expectedElem->string, tick_num);
+			if (
+				valueVariable && (
+					ignore_noneexistent_val ||
+					(ignore_noneexistent_val1 &&
+						cJSON_IsNumber(expectedElem) &&
+						expectedElem->valuedouble == 1.0
+					)
+				)
+			) {
+				// ignore "*_val" outputs with value 1 if this output doesn't exist
+				// (this happens when booleans are traced in an .eso file)
+			} else {
+				errors++;
+				char *outE = cJSON_PrintUnformatted(compareExpected);
+				fprintf(
+					stderr,
+					"OUTPUT ERROR: expected some output for '%s'%s. Got none instead of %s in tick %d.\n",
+					expectedElem->string,
+					expectedElem == compareExpected ? "" : "_val overwrite",
+					outE,
+					tick_num
+				);
+				cJSON_free(outE);
+			}
 		} else {
-			
-			if (!cJSON_Compare(expectedElem, outputElem, 1)) {
+			int fuzzyEqual = FALSE;
+			if (
+				compareExpected->type != outputElem->type &&
+				(cJSON_IsBool(compareExpected) || cJSON_IsBool(outputElem))
+			) {
+				if (cJSON_IsNumber(compareExpected)) {
+					if (compareExpected->valuedouble == 0.0 && cJSON_IsFalse(outputElem)) {
+						fuzzyEqual = TRUE;
+					} else if (compareExpected->valuedouble == 1.0 && cJSON_IsTrue(outputElem)) {
+						fuzzyEqual = TRUE;
+					}
+				} else if (cJSON_IsNumber(outputElem)) {
+					if (outputElem->valuedouble == 0.0 && cJSON_IsFalse(compareExpected)) {
+						fuzzyEqual = TRUE;
+					} else if (outputElem->valuedouble == 1.0 && cJSON_IsTrue(compareExpected)) {
+						fuzzyEqual = TRUE;
+					}
+				}
+			}
+
+			if (!fuzzyEqual && !cJSON_Compare(compareExpected, outputElem, 1)) {
 				errors++;
 				char *outO = cJSON_PrintUnformatted(outputElem);
-				char *outE = cJSON_PrintUnformatted(expectedElem);
+				char *outE = cJSON_PrintUnformatted(compareExpected);
 				fprintf(stderr, "OUTPUT ERROR: different outputs for '%s'. Got %s instead of %s in tick %d.\n",
 						expectedElem->string, outO, outE, tick_num);
 				cJSON_free(outO);
@@ -354,6 +457,11 @@ static Model getNewModel(char **args, int verbose_lvl) {
 int main(int argc, char **argv) {
 	int verbose_lvl = 0;
 	int mode = MODE_ANALYSIS;
+
+	ignore_noneexistent_val  = TRUE;
+	ignore_noneexistent_val1 = TRUE;
+	overwrite_with_val = TRUE;
+	fuzzy_bool = TRUE;
 	
 	// extract the command to run (started by '--')
 	int run_args = -1;
@@ -364,11 +472,40 @@ int main(int argc, char **argv) {
 		} else if (strcmp(argv[i], "-vv") == 0) {
 			verbose_lvl = 2;
 			run_args = i+1;
+		} else if (strcmp(argv[i], "--overwrite-val") == 0) {
+			run_args = i+1;
+			ignore_noneexistent_val  = TRUE;
+			ignore_noneexistent_val1 = FALSE;
+			overwrite_with_val = TRUE;
+		} else if (strcmp(argv[i], "--enforce-output-match") == 0) {
+			run_args = i+1;
+			ignore_noneexistent_val  = FALSE;
+			ignore_noneexistent_val1 = FALSE;
+			overwrite_with_val = FALSE;
+		} else if (strcmp(argv[i], "--lazy-val") == 0) {
+			run_args = i+1;
+			ignore_noneexistent_val  = TRUE;
 		} else if (strcmp(argv[i], "--trace") == 0) {
 			run_args = i+1;
 			mode = MODE_TRACE_OUT;
 		} else if (strcmp(argv[i], "-?") == 0 || strcmp(argv[i], "--help") == 0) {
-			printf("usage: %s [-?|--help|-v|-vv|--trace] <ModelExecuteable> [<model params> ...]\n -? -help: shows this help\n -v: all JSON values get printed to stderr.\n", argv[0]);
+			printf("usage: %s [-?|--help|-v|-vv|--trace|--enforce-output-match|--lazy-val] <ModelExecuteable> [<model params> ...]\n\n", argv[0]);
+			printf("This simulator expects a multiple of 2 JSON-Objects on stdin.\n");
+			printf("The first of every 2 Objects is passed to the model over stdin.\n");
+			printf("The model is expected to respond with a JSON-Object on stdout.\n");
+			printf("The second JSON-Object is compared to the output of the model.\n");
+			printf("Between those tuples of JSON-Objects the JSON-String \"reset\" may occur\n");
+			printf("which causes a new model to be started.\n");
+			printf("The model is expected to output a JSON-Object on startup which is ignored.\n");
+			printf("For timing the model is expected to output it's reaction time as a number\n");
+			printf("in the output JSON-Object with the key \"#ticktime\".\n\n");
+			printf(" -? -help: shows this help\n");
+			printf(" -v: all JSON values get printed to stderr. (without values which key starts with '_' or '#')\n");
+			printf(" -vv: all JSON values get printed to stderr.\n");
+			printf(" --trace: outputs a new valid tracefile which expects all given model outputs.\n");
+			printf(" matching: by default \"*_val\" outputs with value 1 must not match if the model doesn't provide them.\n");
+			printf(" --enforce-output-match: every given output has to exist and match.\n");
+			printf(" --lazy-val: \"*_val\" outpus may be omitted by the model.\n");
 			return 0;
 		} else {
 			break; // don't read model parameters
@@ -390,9 +527,9 @@ int main(int argc, char **argv) {
 	
 	int output_errors = 0;
 	int tick_num      = 0;
-	double time       = 0.0d;
+	double time       = 0.0;
 	double minTime    = INFINITY;
-	double maxTime    = 0.0d;
+	double maxTime    = 0.0;
 	cJSON *json;
 	cJSON *json_result;
 	
