@@ -53,9 +53,10 @@ class TestsuiteTransformation extends ExogenousProcessor<CodeContainer, CodeCont
         // interpret config file line-by-line
         var String[] code = {}
         if (value.files.size == 1) {
-            code = value.files.get(0).code.split("\\r\\n|\\r|\\n")
-            if (value.files.get(0).proxy) {
-                basePath = Paths.get(value.files.get(0).file.parentFile.absolutePath)
+            val containerFile = value.files.get(0);
+            code = containerFile.code.split("\\r\\n|\\r|\\n")
+            if (containerFile.proxy) {
+                basePath = Paths.get(containerFile.file.parentFile.absolutePath)
             }
         } else if (value.files.size > 1) {
             environment.errors.add("Testsuite Creation allows only one Config-File.")
