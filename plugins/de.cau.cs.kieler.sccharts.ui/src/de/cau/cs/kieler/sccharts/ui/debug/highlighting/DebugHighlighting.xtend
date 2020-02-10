@@ -37,9 +37,9 @@ import de.cau.cs.kieler.sccharts.State
  */
 class DebugHighlighting extends Highlighting {
 
-    private val KBackground background
+    val KBackground background
 
-    private static val Property<String> MARKER_TYPE_PROPERTY = new Property<String>("Marker Type")
+    static val Property<Boolean> BACKGROUND_TYPE_PROPERTY = new Property<Boolean>("Marker Type")
 
     new(KLabeledGraphElement element, KForeground foreground) {
         super(element, foreground)
@@ -80,6 +80,7 @@ class DebugHighlighting extends Highlighting {
             // Remember that this style is to highlight the diagram.
             // This is used to filter for highlighting styles when they should be removed.
             background.setProperty(HIGHLIGHTING_MARKER, this)
+            background.setProperty(BACKGROUND_TYPE_PROPERTY, true)
             // Highlight container of this element
             val ren = element.getData(typeof(KContainerRendering))
             ren.styles.add(EcoreUtil.copy(background))
@@ -94,18 +95,36 @@ class DebugHighlighting extends Highlighting {
         }
     }
     
+    override void remove() {
+        if (foreground !== null) {
+            super.remove
+        } else {
+            // Remove highlighting from container of this element
+            val ren = element.getData(typeof(KContainerRendering));
+            removeHighlighting(ren.styles)
+            // Remove highlighting from label of this element
+            if (!element.labels.isNullOrEmpty) {
+                val label = element.labels.get(0)
+                val ren2 = label.getData(typeof(KText));
+                if(ren2 !== null) {
+                    removeHighlighting(ren2.styles)    
+                }
+            }
+        }
+    }
+    
     override void removeHighlighting(List<KStyle> styles) {
         if (foreground !== null) {
             for(s : styles.clone) {
                 // Make sure to only remove the highlighting using foregrounds
-                if(s.isHighlighting && !s.hasProperty(MARKER_TYPE_PROPERTY)) {
+                if(s.isHighlighting && !s.hasProperty(BACKGROUND_TYPE_PROPERTY)) {
                         styles.remove(s)
                 }
             }
         } else {
             for(s : styles.clone) {
                 // Make sure to only remove the highlighting corresponding to this marker type
-                if(s.isHighlighting && s.hasProperty(MARKER_TYPE_PROPERTY)) {
+                if(s.isHighlighting && s.hasProperty(BACKGROUND_TYPE_PROPERTY)) {
                     styles.remove(s)
                 }
             }

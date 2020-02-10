@@ -34,7 +34,7 @@ public class SCChartsUiModule extends SCTXActivator {
         SCChartsDiagramLiveValues.create();
         SCTXBreakpointListener.create();
         // TODO properly use the correct instance here
-        DebugPlugin.getDefault().addDebugEventListener(new JavaBreakpointListener());
+        DebugPlugin.getDefault().addDebugEventListener(JavaBreakpointListener.getInstance());
         BreakpointUtility.create();
         
         // Some reverse-dependency injection magic for ssm

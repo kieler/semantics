@@ -61,27 +61,33 @@ class JavaBreakpointListener implements IJavaBreakpointListener, IDebugEventSetL
 
     @Inject extension SCChartsScopeExtensions
 
-    public static var JavaBreakpointListener instance
+    private static var JavaBreakpointListener instance
+
+    static def getInstance() {
+        if (instance === null) {
+            instance = new JavaBreakpointListener
+        }
+        return instance
+    }
 
     new() {
         super()
-        pendingBreakpoints = <IJavaBreakpoint>newLinkedList
         Guice.createInjector.injectMembers(this)
         instance = this
     }
 
 //    val debugHighlighter = DebugHighlighter.instance
 
-    var lastModelString = ""
-    var SCCharts currentModel;
+    static var lastModelString = ""
+    static var SCCharts currentModel;
     
-    val pathToModel = <String, SCCharts> newHashMap
-    val pathToHighlighter = <String, DebugHighlighter> newHashMap
-    val pathToBpManager = <String, DebugBreakpointManager> newHashMap
+    static val pathToModel = <String, SCCharts> newHashMap
+    static val pathToHighlighter = <String, DebugHighlighter> newHashMap
+    static val pathToBpManager = <String, DebugBreakpointManager> newHashMap
     
-    var modelBeingDisplayed = false
+    static var modelBeingDisplayed = false
 
-    val List<IJavaBreakpoint> pendingBreakpoints
+    static val List<IJavaBreakpoint> pendingBreakpoints = <IJavaBreakpoint> newLinkedList
 
     /**
      * Find the model states in the original SCChart currently being executed.
@@ -261,12 +267,15 @@ class JavaBreakpointListener implements IJavaBreakpointListener, IDebugEventSetL
         }
         
         val bpManager = pathToBpManager.get(lastModelString)
-        
+        val remove = <IJavaBreakpoint> newLinkedList
         //make sure to register all breakpoints in the breakpoint manager
         for (pendingBreakpoint : pendingBreakpoints) {
             val success = bpManager.presentBreakpoint(pendingBreakpoint, currentModel)
+            if (success) {
+                remove.add(pendingBreakpoint)
+            }
         }
-        pendingBreakpoints.clear
+        pendingBreakpoints.removeAll(remove)
 
         if (breakpoint instanceof TransitionWatchBreakpoint) {
             println("Hit watch breakpoint.")
@@ -355,6 +364,7 @@ class JavaBreakpointListener implements IJavaBreakpointListener, IDebugEventSetL
                     println("Found matching model in map.")
                     currentModel = mapEntry
                 } else {
+                    println("Creating new highlighter and BP manager for model " + text)
                     currentModel = retrieveModel(text);
                     pathToModel.put(text, currentModel)
                     val hl = new DebugHighlighter
@@ -370,6 +380,7 @@ class JavaBreakpointListener implements IJavaBreakpointListener, IDebugEventSetL
             })
             modelBeingDisplayed = true
             pathToHighlighter.get(text).reapplyAllHighlights
+            pathToBpManager.get(text).reAddBreakpointDecorators
         } else {
             // Otherwise, clear all highlightings
             pathToHighlighter.get(lastModelString).clearAllHighlights
