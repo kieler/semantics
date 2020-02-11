@@ -320,6 +320,11 @@ class JavaBreakpointListener implements IJavaBreakpointListener, IDebugEventSetL
                         // silent catch
                     }
                 }
+            } else if (event.kind == DebugEvent.TERMINATE) {
+                println("Ending debug run.")
+                for (hl : pathToHighlighter.values) {
+                    hl.clearAllHighlights
+                }
             }
         }
     }

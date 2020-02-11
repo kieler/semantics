@@ -28,6 +28,7 @@ import de.cau.cs.kieler.sccharts.ui.synthesis.styles.StateStyles
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.KContainerRendering
 import de.cau.cs.kieler.klighd.krendering.KRectangle
+import de.cau.cs.kieler.klighd.krendering.KForeground
 
 /**
  * @author stu121235
@@ -45,7 +46,7 @@ class DebugHighlighter {
 static val executingStateColor1 = factory.createKColor.setColor(215, 238, 188)
     static val executingStateColor2 = factory.createKColor.setColor(180, 200, 158)
     static val executingStateBackground = factory.createKBackground.setColors(executingStateColor1, executingStateColor2, 90)
-    static val executingTransitionForeground = factory.createKForeground.setColor2(EcoreUtil.copy(executingStateColor2))
+    static val executingTransitionForeground = factory.createKForeground.setColor2(EcoreUtil.copy(executingStateColor2)).setPropagateToChildren
     
     static val breakpointStateColor = factory.createKColor.setColor(Colors.BLUE)
     static val breakpointStateBackground = factory.createKBackground.setColor2(breakpointStateColor)
@@ -281,5 +282,10 @@ static val executingStateColor1 = factory.createKColor.setColor(215, 238, 188)
             }
         }
         return null
+    }
+    
+    static def setPropagateToChildren(KForeground foreground) {
+        foreground.propagateToChildren = true
+        foreground
     }
 }
