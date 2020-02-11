@@ -46,4 +46,7 @@ class KNodeProperties {
     public static final IProperty<String> PROCESSOR_CAPTION = new Property<String>(
         "de.cau.cs.kieler.kicool.ui.ProcessorCaption", null);
         
+    public static final IProperty<Boolean> TEMPORARY_PROCESSOR = new Property<Boolean>(
+        "de.cau.cs.kieler.kicool.ui.ProcessorTemporary", false);
+        
 }

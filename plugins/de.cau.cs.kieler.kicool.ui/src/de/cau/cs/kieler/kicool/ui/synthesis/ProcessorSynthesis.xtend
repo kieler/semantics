@@ -70,12 +70,12 @@ import org.eclipse.elk.core.options.PortSide
 class ProcessorSynthesis {
     
     extension KRenderingFactory = KRenderingFactory::eINSTANCE
-    @Inject extension KNodeExtensions
-    @Inject extension KEdgeExtensions 
-    @Inject extension KPortExtensions 
-    @Inject extension KRenderingExtensions  
-    @Inject extension KContainerRenderingExtensions    
-    @Inject extension ProcessorStyles 
+    extension KNodeExtensions = new KNodeExtensions
+    extension ProcessorStyles = new ProcessorStyles
+    extension KEdgeExtensions = new KEdgeExtensions
+    extension KPortExtensions = new KPortExtensions 
+    extension KRenderingExtensions = new KRenderingExtensions  
+    extension KContainerRenderingExtensions = new KContainerRenderingExtensions 
     @Inject IResourceServiceProvider.Registry regXtext;
     
     public static val GROUP_NODE = new org.eclipse.elk.graph.properties.Property("de.cau.cs.kieler.kicool.ui.synthesis.groupNode", false)

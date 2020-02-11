@@ -130,6 +130,7 @@ class ProcessorDataManager {
         CompilerView view) {
 
         if (compilationNotification instanceof CompilationStart) {
+            node.eAllOfType(KNode).filter[getProperty(TEMPORARY_PROCESSOR)].forEach[remove]
             // Clear all intermediate results and data
             node.eAllOfType(KNode).forEach [
                 getProperty(PROCESSOR_INTERMEDIATE_CONTAINER)?.children?.clear
@@ -175,7 +176,7 @@ class ProcessorDataManager {
         }
         val processorNode = processorNodeCandidate
         if (processorNode === null) {
-            System.err.println("There was an update notification for an non-existing processor (" + originalProcessorReference.uniqueProcessorId + 
+            System.err.println("There was an update notification for an non-existing processor (" + processorReference.uniqueProcessorId + 
                 "). This should not happen. I'm very sorry.")
             return
         }
@@ -199,7 +200,7 @@ class ProcessorDataManager {
     static def void addNewProcessor(CompilationChanged notification, KNode node, CompilerView view) {
         val compilationContext = notification.compilationContext
         val newNode = processorSynthesis.transform(notification.processorEntry)
-        
+        newNode.forEach[setProperty(TEMPORARY_PROCESSOR, true)]
         node.children += newNode
         
         val parent = notification.processorEntry.eContainer
@@ -217,7 +218,7 @@ class ProcessorDataManager {
                 }
                 val edge = kEdgeExtensions.createEdge 
                 edge.source = predecessorNode
-                edge.target = node.findNode(notification.processorEntry.uniqueProcessorId)
+                edge.target = newNode.head
                 
                 renderingFactory.createKPolyline() => [
                     edge.data += it
@@ -244,7 +245,7 @@ class ProcessorDataManager {
         }
         val processorNode = processorNodeCandidate
         if (processorNode === null) {
-            System.err.println("There was an update notification for an non-existing processor system (" + originalProcessorReference.uniqueProcessorId + 
+            System.err.println("There was an update notification for an non-existing processor system (" + processorReference.uniqueProcessorId + 
                 "). This should not happen. I'm sorry.")
             return
         }
