@@ -93,4 +93,3 @@ clean:
 	find -P . -name "*.exe" -delete
 	find -P . -name "*.csv" -delete
 	find -P . -name "errors.log" -delete
-	
