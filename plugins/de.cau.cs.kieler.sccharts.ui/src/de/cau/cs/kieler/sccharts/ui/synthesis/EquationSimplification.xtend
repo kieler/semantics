@@ -274,7 +274,7 @@ class EquationSimplification {
                 isInput && !isDataAccess && isLocalValuedObject &&
                     !(sourceElement as ValuedObjectReference).valuedObject.input
             ].toList) {
-                if (!node.isNeeded) {
+                if (!node.isNeeded || !showUnused) {
                     nodes.betterRemove(node, null)
                 }
             }
@@ -283,7 +283,7 @@ class EquationSimplification {
                 isOutput && !isDataAccess && isLocalValuedObject &&
                     !(sourceElement as ValuedObjectReference).valuedObject.output
             ].toList) {
-                if (!node.isNeeded) {
+                if (!node.isNeeded || !showUnused) {
                     nodes.betterRemove(node, null)
                 }
             }
