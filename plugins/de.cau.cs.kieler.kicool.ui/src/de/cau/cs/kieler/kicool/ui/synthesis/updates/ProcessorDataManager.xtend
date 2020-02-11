@@ -230,49 +230,6 @@ class ProcessorDataManager {
         
     }
     
-    static def void copyIntermediateData(KNode model, List<KNode> oldModel) {
-        model.eAllContents.filter(KNode).toList.forEach([
-            val identifier = getProperty(PROCESSOR_IDENTIFIER)
-            if (identifier !== null) {
-                val matches = oldModel.filter [
-                    getProperty(PROCESSOR_IDENTIFIER) == identifier
-                ].toList
-                if (!matches.empty) {
-                    if(matches.head.getProperty(PROCESSOR_CAPTION) !== null){
-                        setProperty(PROCESSOR_CAPTION, matches.head.getProperty(PROCESSOR_CAPTION))
-                        container.children.filter(KText)?.head.text = matches.head.getProperty(PROCESSOR_CAPTION)
-                    }
-                    setProperty(INTERMEDIATE_DATA, matches.head.getProperty(INTERMEDIATE_DATA))
-                    if (getProperty(INTERMEDIATE_DATA) !== null) {
-                        container.removeAllActions
-                        kRenderingExtensions.addAction(container, Trigger::SINGLECLICK,
-                            SelectAdditionalIntermediateAction.ID, false, true, false)
-                        kRenderingExtensions.addAction(container, Trigger::SINGLECLICK,
-                            SelectAdditionalIntermediateAction.ID, false, false, true)
-                        kRenderingExtensions.addAction(container, Trigger::SINGLECLICK, SelectIntermediateAction.ID,
-                            false, false, false)
-                    }
-                    val intermediateContainer = getProperty(PROCESSOR_INTERMEDIATE_CONTAINER)
-                    if( intermediateContainer !== null ){
-                        intermediateContainer.children.clear
-                        val oldIntermediateContainer = matches.head.getProperty(PROCESSOR_INTERMEDIATE_CONTAINER)
-                        if(oldIntermediateContainer !== null){
-                            oldIntermediateContainer.children.immutableCopy.forEach[ intermediateContainer.children.add(it.copy) ]
-                            // Work around for a klighd bug
-                            //container.setProperty(GridPlacementUtil.ESTIMATED_GRID_DATA, null);
-                            val wrongKlighdProperty = intermediateContainer.properties.filter[it.key.id == "klighd.grid.estimatedGridData"].head
-                            if (wrongKlighdProperty !== null) {
-                                wrongKlighdProperty.value = null;
-                            }
-                            // Work around end
-                        }
-                    }
-                }
-                processorStyles.adjustSize(it)
-            }
-        ])
-    }
-    
     static def void updateProcessor(AbstractProcessorNotification processorNotification, KNode node, CompilerView view) {
         view.viewContext.layoutRecorder.startRecording
         val compilationContext = processorNotification.compilationContext
