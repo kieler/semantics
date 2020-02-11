@@ -41,8 +41,9 @@ class DebugHighlighter {
     static val activeStateForeground = factory.createKForeground.setColor2(activeStateColor)
     
     // Debugger line highlight green
-    static val executingStateColor2 = factory.createKColor.setColor(198, 219, 174)
-    static val executingStateColor1 = factory.createKColor.setColor(240,251, 228)
+//    static val executingStateColor1 = factory.createKColor.setColor(198, 219, 174)
+static val executingStateColor1 = factory.createKColor.setColor(215, 238, 188)
+    static val executingStateColor2 = factory.createKColor.setColor(180, 200, 158)
     static val executingStateBackground = factory.createKBackground.setColors(executingStateColor1, executingStateColor2, 90)
     static val executingTransitionForeground = factory.createKForeground.setColor2(EcoreUtil.copy(executingStateColor2))
     
@@ -236,8 +237,13 @@ class DebugHighlighter {
             return
         }
         val contentContainer = kNode.getContentContainer
-        // TODO breaks for simple states
-        val rectangle = (contentContainer.children.head as KRectangle) as KRectangle
+        val firstChild = contentContainer.children.head
+        var KContainerRendering ellipseTarget
+        if (firstChild instanceof KRectangle) {
+            ellipseTarget = firstChild
+        } else {
+            ellipseTarget = contentContainer
+        }
         
         val ellipse = factory.createKEllipse
         
@@ -245,7 +251,7 @@ class DebugHighlighter {
         ellipse.id = stateEllipseID
         ellipse.setLineWidth(1)
         ellipse.setBackground(breakpointStateBackground)
-        rectangle.addChild(ellipse)
+        ellipseTarget.addChild(ellipse)
         ellipse.setPointPlacementData(LEFT, 10, 0, TOP, 10, 0, H_CENTRAL, V_CENTRAL, 0, 0, 8, 8)
         
         stateToEllipse.put(state, ellipse)
