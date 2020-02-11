@@ -209,7 +209,7 @@ class JavaBreakpointListener implements IJavaBreakpointListener, IDebugEventSetL
      */
     private def Transition findCurrentTransition(IJavaBreakpoint breakpoint) {
 
-        if (breakpoint instanceof TransitionCheckBreakpoint) {
+        if (breakpoint instanceof TransitionBreakpoint) {
             return breakpoint.transition
         }
         return null
@@ -287,7 +287,7 @@ class JavaBreakpointListener implements IJavaBreakpointListener, IDebugEventSetL
             
             // If the breakpoint was triggered when checking for a transition,
             // display the transition currently being checked
-            if (breakpoint instanceof TransitionCheckBreakpoint) {
+            if (breakpoint instanceof TransitionCheckBreakpoint || breakpoint instanceof TransitionTakenBreakpoint) {
                 val currentTransition = findCurrentTransition(breakpoint)
                 if (currentTransition !== null) {
                     pathToHighlighter.get(lastModelString).highlightExecutingTransition(currentTransition)

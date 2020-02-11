@@ -111,6 +111,7 @@ class DebugDiagramPartListener implements IPartListener2 {
             return
         }
         val part = partRef.getPart(false)
+        println(part)
         if (part instanceof DebugDiagramView) {
             DebugDiagramView.setInstance(part)
         } else if (part instanceof JavaEditor) {
