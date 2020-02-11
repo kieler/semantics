@@ -22,6 +22,7 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
 import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 
 /**
  * SCCharts Region Actions Transformation.
@@ -53,6 +54,7 @@ class RegionActionsAndDeclarations extends SCChartsProcessor implements Traceabl
     @Inject extension SCChartsStateExtensions
     @Inject extension SCChartsTransitionExtensions
     @Inject extension ComplexFinalState
+    @Inject extension AnnotationsExtensions
     
     // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_"
@@ -66,7 +68,7 @@ class RegionActionsAndDeclarations extends SCChartsProcessor implements Traceabl
             if (region.actions.empty) {
                 val regionId = GENERATED_PREFIX + "region" + region.parentState.regions.indexOf(region) + GENERATED_PREFIX + region.name
                 
-                for (valuedObject : region.declarations.map[valuedObjects].flatten) {
+                for (valuedObject : region.declarations.map[valuedObjects].flatten.filter[ !hasAnnotation("uniqueName") ]) {
                     valuedObject.setName(regionId + GENERATED_PREFIX +
                         valuedObject.name)
                     voStore.update(valuedObject)
