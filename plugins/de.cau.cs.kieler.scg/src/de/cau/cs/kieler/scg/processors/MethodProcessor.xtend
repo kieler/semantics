@@ -21,6 +21,7 @@ import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.MethodDeclaration
+import de.cau.cs.kieler.kexpressions.Parameter
 import de.cau.cs.kieler.kexpressions.ReferenceCall
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObject
@@ -314,6 +315,7 @@ class MethodProcessor extends InplaceProcessor<SCGraphs> implements Traceable {
         val callContainer = call.eContainer
         val isRead = callContainer instanceof Expression
             || callContainer instanceof Conditional
+            || callContainer instanceof Parameter
             || (callContainer instanceof Assignment && (callContainer as Assignment).valuedObject !== null)
         if (isRead) {
             if (returnVO !== null) {
