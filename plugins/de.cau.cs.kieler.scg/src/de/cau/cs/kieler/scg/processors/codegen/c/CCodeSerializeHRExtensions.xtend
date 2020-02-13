@@ -312,10 +312,14 @@ class CCodeSerializeHRExtensions extends CodeGeneratorSerializeHRExtensions {
     }  
     
     override dispatch CharSequence serialize(RandomCall randomCall) {
+        if (!modifications.containsEntry(INCLUDES, "<stdlib.h>"))
+            modifications.put(INCLUDES, "<stdlib.h>")        
         return "((float) rand() / RAND_MAX)"
     }
     
     override dispatch CharSequence serializeHR(RandomCall randomCall) {
+        if (!modifications.containsEntry(INCLUDES, "<stdlib.h>"))
+            modifications.put(INCLUDES, "<stdlib.h>")        
         return "((float) rand() / RAND_MAX)"
     }
     
