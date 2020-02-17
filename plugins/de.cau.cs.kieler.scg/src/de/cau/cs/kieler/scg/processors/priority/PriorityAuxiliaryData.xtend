@@ -46,6 +46,10 @@ class PriorityAuxiliaryData implements IKiCoolCloneable {
         this.stronglyConnectedComponents = scc
     }
     
+    def void addStronglyConnectedComponents(LinkedList<LinkedList<Node>> scc) {
+        this.stronglyConnectedComponents.addAll(scc)
+    }    
+    
     override isMutable() {
         false
     }

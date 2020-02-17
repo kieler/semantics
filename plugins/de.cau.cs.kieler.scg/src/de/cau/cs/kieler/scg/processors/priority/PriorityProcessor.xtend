@@ -20,6 +20,8 @@ import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.core.properties.Property
 import com.google.inject.Inject
+import de.cau.cs.kieler.scg.Node
+import java.util.LinkedList
 
 /**
  * Class to calculate the priorities of nodes of an SCG for the priority based compilation.
@@ -70,7 +72,10 @@ class PriorityProcessor extends InplaceProcessor<SCGraphs> implements Traceable 
         val sccMap = createNodeToSCCMap(scc)
         val schizoSccMap = createNodeToSCCMap(schizoSccList)
         val auxData = new PriorityAuxiliaryData()
-        auxData.stronglyConnectedComponents = schizoSccList
+        auxData.stronglyConnectedComponents = <LinkedList<Node>> newLinkedList
+        auxData.addStronglyConnectedComponents(scc)
+        auxData.addStronglyConnectedComponents(schizoSccList)
+        
         
         // If we find a viable schedule, calculate the Priorities of the nodes.
         if(schedulable(scc)) {
