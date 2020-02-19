@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.test.common.repository
+package de.cau.cs.kieler.simulation.testing
 
 import com.google.common.io.Files
 import java.nio.file.Path
@@ -23,8 +23,6 @@ import org.eclipse.xtend.lib.annotations.Data
  * Data holder for test models in the models repository.
  * 
  * @author als
- * @kieler.design proposed
- * @kieler.rating proposed yellow
  */
 @Data
 class TestModelData {
@@ -46,12 +44,12 @@ class TestModelData {
     val boolean confidential
     
     /** The file name (incl. extension) of the loaded model. */
-    public def String modelFile() {
+    def String modelFile() {
         return modelPath.fileName.toString
     }
     
     /** The file name without extension of the loaded model. */
-    public def String modelFileBasename() {
+    def String modelFileBasename() {
         return Files.getNameWithoutExtension(modelFile)
     }
 }

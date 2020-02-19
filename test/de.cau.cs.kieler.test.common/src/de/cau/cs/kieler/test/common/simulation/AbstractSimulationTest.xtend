@@ -28,7 +28,7 @@ import de.cau.cs.kieler.simulation.mode.ManualMode
 import de.cau.cs.kieler.simulation.trace.TraceFileUtil
 import de.cau.cs.kieler.test.common.repository.AbstractXTextModelRepositoryTest
 import de.cau.cs.kieler.test.common.repository.ModelsRepositoryTestRunner
-import de.cau.cs.kieler.test.common.repository.TestModelData
+import de.cau.cs.kieler.simulation.testing.TestModelData
 import java.io.PrintWriter
 import java.io.StringWriter
 import java.util.Collections

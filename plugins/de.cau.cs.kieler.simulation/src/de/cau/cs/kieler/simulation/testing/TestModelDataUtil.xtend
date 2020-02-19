@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.test.common.repository
+package de.cau.cs.kieler.simulation.testing
 
 import java.util.Comparator
 import java.util.List
@@ -19,8 +19,6 @@ import java.util.List
  * Common utility for the {@link TestModelData}.
  * 
  * @author als
- * @kieler.design proposed
- * @kieler.rating proposed yellow
  */
 class TestModelDataUtil {
     

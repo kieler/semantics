@@ -12,8 +12,10 @@
  */
 package de.cau.cs.kieler.test.common.repository
 
+import com.google.common.reflect.TypeToken
 import com.google.inject.Guice
-import java.io.FileInputStream
+import com.google.inject.Injector
+import de.cau.cs.kieler.simulation.testing.TestModelData
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.resource.IResourceServiceProvider
@@ -21,9 +23,7 @@ import org.eclipse.xtext.resource.XtextResource
 import org.eclipse.xtext.resource.XtextResourceSet
 
 import static extension com.google.common.base.Preconditions.*
-import static extension de.cau.cs.kieler.test.common.repository.TestModelDataUtil.*
-import com.google.common.reflect.TypeToken
-import com.google.inject.Injector
+import static extension de.cau.cs.kieler.simulation.testing.TestModelDataUtil.*
 
 /**
  * An abstract {@link IModelsRepositoryTest} which automatically parses XText models.
