@@ -62,6 +62,11 @@ class DebugHighlighting extends Highlighting {
             return
         }
         
+        if (DebugDiagramView.instance === null) {
+            println("Can't reapply highlighting: No DebugDiagramView.")
+            return
+        }
+        
         // Reload KGraphElements from newly synthesized view model
         if (eObject instanceof Transition) {
             element = DebugDiagramView.instance.getKEdge(eObject)
@@ -74,6 +79,12 @@ class DebugHighlighting extends Highlighting {
     }
 
     override void apply() {
+        
+        if (element === null) {
+            println("Can't apply highlighting: null element.")
+            return
+        }
+        
         if (foreground !== null) {
             super.apply()
         } else {
@@ -96,6 +107,10 @@ class DebugHighlighting extends Highlighting {
     }
     
     override void remove() {
+        if (element === null) {
+            println("Can't remove highlighting: null element.")
+            return
+        }
         if (foreground !== null) {
             super.remove
         } else {

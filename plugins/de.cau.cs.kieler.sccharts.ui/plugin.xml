@@ -837,5 +837,11 @@ controllerID="de.cau.cs.kieler.kicool.ui.klighd.KiCoModelUpdateController"
             value="true">
       </persistent>
    </extension>
+   <extension
+         point="org.eclipse.ui.startup">
+      <startup
+            class="de.cau.cs.kieler.sccharts.ui.debug.view.DebugDiagramPartListener">
+      </startup>
+   </extension>
    
 </plugin>

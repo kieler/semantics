@@ -18,21 +18,12 @@ import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.klighd.kgraph.KEdge
-import org.eclipse.ui.progress.UIJob
-import org.eclipse.core.runtime.IStatus
-import org.eclipse.core.runtime.IProgressMonitor
 import org.eclipse.swt.SWT
 import org.eclipse.swt.widgets.Composite
 import org.eclipse.swt.layout.FillLayout
 import org.eclipse.swt.widgets.Text
-import org.eclipse.core.runtime.Status
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties
-import org.eclipse.ui.IViewSite
 import org.eclipse.swt.widgets.Display
-import org.eclipse.core.resources.ResourcesPlugin
-import org.eclipse.core.resources.IFile
-import de.cau.cs.kieler.sccharts.ui.debug.breakpoints.DebugBreakpointManager
-import de.cau.cs.kieler.sccharts.ui.debug.breakpoints.BreakpointType
 import de.cau.cs.kieler.klighd.LightDiagramLayoutConfig
 
 /**
@@ -46,12 +37,11 @@ class DebugDiagramView extends DiagramViewPart {
     static var DebugDiagramView instance
     
     var needsInit = true
-    var DebugDiagramPartListener partListener
     
     new() {
         super()
         instance = this
-        createWatchBreakpoints
+        
     }
     
     static def void updateView(Object model) {
@@ -80,26 +70,15 @@ class DebugDiagramView extends DiagramViewPart {
         return needsInit
     }
     
-    /**
-     * Ensure to register a part listener that clears the @code{instance} variable on view close.
-     * @inheritDoc
-     */
-    override createPartControl(Composite parent) {
-        super.createPartControl(parent)
-
-        partListener = new DebugDiagramPartListener(this, parent)
-    }
-    
     def void updateDiagram(Object model) {
-        
         
         if (viewer === null || viewer.viewContext === null || needsInit) {
             
             Display.^default.syncExec(new Runnable {
                 override void run() {
-                    DiagramViewManager.initializeView(instance, model, null, new KlighdSynthesisProperties);
+                    initialize(model, null, new KlighdSynthesisProperties);
 
-                    val canvas = viewer.getControl() as Composite
+                    val canvas = viewer.control as Composite
 
                     val container = new Composite(canvas, SWT.BORDER) => [
                         setSize(400, 100)
@@ -111,8 +90,6 @@ class DebugDiagramView extends DiagramViewPart {
                     text.setText("This is a longer text.")
                     container.pack
                     canvas.layout(true, true)
-                    
-                    
                 }
             })
             needsInit = false
@@ -120,7 +97,7 @@ class DebugDiagramView extends DiagramViewPart {
             // update case
             val context = viewer.viewContext
             val config = new LightDiagramLayoutConfig(context).model(model).animate(false)
-            println(config.performUpdate)
+            config.performUpdate
         }
     }
     
@@ -136,22 +113,6 @@ class DebugDiagramView extends DiagramViewPart {
      */
     def KEdge getKEdge(Transition transition) {
         return viewer?.viewContext?.getTargetElement(transition, KEdge)
-    }
-    
-    private def createWatchBreakpoints () {
-        val projects = ResourcesPlugin.workspace.root.projects
-        
-        for (project : projects) {
-            for (javaFile : project.members.filter["java" == it.fileExtension]) {
-                // TODO init breakpoint?
-//                DebugBreakpointManager.instance.createBreakpointOnLine(0, BreakpointType.INIT_BREAKPOINT, null, null)
-            }
-        }
-    }
-    
-    override init(IViewSite site) {
-        // TODO unnecessary, debugging only
-        super.init(site)
     }
     
     override void dispose() {

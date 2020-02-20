@@ -52,6 +52,8 @@ import org.eclipse.jdt.internal.debug.core.breakpoints.JavaLineBreakpoint
 import org.eclipse.debug.core.DebugPlugin
 import de.cau.cs.kieler.klighd.ui.DiagramViewManager
 import de.cau.cs.kieler.klighd.ui.view.model.MessageModel
+import org.eclipse.jdt.internal.ui.javaeditor.JavaEditor
+import org.eclipse.jdt.core.IField
 
 /**
  * @author peu
@@ -281,22 +283,44 @@ class JavaBreakpointListener implements IJavaBreakpointListener, IDebugEventSetL
             println("Hit watch breakpoint.")
             bpManager.watchBreakpointHit(breakpoint)
             return DONT_SUSPEND
-        } else {
+        }  else if (breakpoint instanceof StateBreakpoint) {
+            pathToBpManager.get(lastModelString).stateBreakpointHit(breakpoint)
             
-            findAndHighlightStates(thread)
-            
-            // If the breakpoint was triggered when checking for a transition,
-            // display the transition currently being checked
-            if (breakpoint instanceof TransitionCheckBreakpoint || breakpoint instanceof TransitionTakenBreakpoint) {
-                val currentTransition = findCurrentTransition(breakpoint)
-                if (currentTransition !== null) {
-                    pathToHighlighter.get(lastModelString).highlightExecutingTransition(currentTransition)
-                }
-            } else if (breakpoint instanceof StateBreakpoint) {
-                bpManager.stateBreakpointHit(breakpoint)
-            }
-            return SUSPEND
         }
+        
+        val editor = retrieveActiveEditor
+        // TODO copied
+        var String modelPath = ""
+        if (editor instanceof JavaEditor) {
+            val typeRoot = JavaUI.getEditorInputTypeRoot(editor.editorInput)
+            val compilationUnit = (typeRoot.getAdapter(ICompilationUnit) as ICompilationUnit)
+            val originalVars = <IField>newLinkedList
+            for (type : compilationUnit.allTypes) {
+                originalVars.addAll(type.fields.filter[it.elementName == "ORIGINAL_SCCHART"])
+            }
+            if (!originalVars.empty) {
+                val doc = editor.documentProvider.getDocument(editor.editorInput)
+                val lineNumber = doc.getLineOfOffset(originalVars.head.sourceRange.offset)
+                val lineOffset = doc.getLineOffset(lineNumber)
+                val lineLength = doc.getLineLength(lineNumber)
+                modelPath = doc.get(lineOffset, lineLength).split(" = ").last.replaceAll("[;\n\"]", "")
+            }
+        }
+        
+        if (modelPath != lastModelString) {
+            // This breakpoint belongs to an editor that has not yet been opened
+            pathToBpManager.get(lastModelString).breakpointHit(thread, breakpoint)
+        } else {
+            // The matching editor is open already, we can directly do the highlighting
+            val activeStates = findActiveStates(thread)
+            val executingStates = findExecutingStates(thread)
+            var Transition executingTransition
+            if (breakpoint instanceof TransitionBreakpoint) {
+                executingTransition = findCurrentTransition(breakpoint)
+            }
+            highlight(activeStates, executingStates, executingTransition)
+        }
+        return SUSPEND
     }
 
     override handleDebugEvents(DebugEvent[] events) {
@@ -309,13 +333,11 @@ class JavaBreakpointListener implements IJavaBreakpointListener, IDebugEventSetL
                     
                     try {
                         ensureCorrectModel(thread)
-                        findAndHighlightStates(thread)
+                        val activeStates = findActiveStates(thread)
+                        val executingStates = findExecutingStates(thread)
                         val currentTransition = findCurrentTransition(thread, lineNumber - 1, findActiveStates(thread))
                         
-                        if (currentTransition !== null) {
-                            pathToHighlighter.get(lastModelString).highlightExecutingTransition(currentTransition)
-                        }
-                        println("Ending in line " + lineNumber)
+                        highlight(activeStates, executingStates, currentTransition)
                     } catch (IllegalStateException e) {
                         // silent catch
                     }
@@ -325,8 +347,31 @@ class JavaBreakpointListener implements IJavaBreakpointListener, IDebugEventSetL
                 for (hl : pathToHighlighter.values) {
                     hl.clearAllHighlights
                 }
+            } else if (event.kind == DebugEvent.RESUME) {
+                println("Resuming execution.")
+                for (hl : pathToHighlighter.values) {
+                    hl.clearAllHighlights
+                }
             }
         }
+    }
+
+    private def highlight(List<State> activeStates, List<State> executingStates, Transition currentTransition) {
+        new UIJob("Diagram Highlighting") {
+            val hl = pathToHighlighter.get(lastModelString)
+            override runInUIThread(IProgressMonitor monitor) {
+                for (activeState : activeStates) {
+                    hl.highlightActiveState(activeState)
+                }
+                for (executingState : executingStates) {
+                    hl.highlightExecutingState(executingState)
+                }
+                if (currentTransition !== null) {
+                    hl.highlightExecutingTransition(currentTransition)
+                }
+                return Status.OK_STATUS
+            }
+        }.schedule(2)
     }
 
     private def ensureCorrectModel(IJavaThread thread) {
@@ -345,9 +390,26 @@ class JavaBreakpointListener implements IJavaBreakpointListener, IDebugEventSetL
     def loadBreakpoints (IResource resource) {
         val bpManager = DebugPlugin.^default.breakpointManager 
         val debugBpManager = pathToBpManager.get(lastModelString)
+        // present all breakpoints to the manager to ensure all of them are registered
         for (marker : resource.findMarkers(JavaLineBreakpoint.LINE_BREAKPOINT_MARKER, true, 0)) {
-
             debugBpManager.presentBreakpoint(bpManager.getBreakpoint(marker) as IJavaBreakpoint, currentModel)
+        }
+        // process any breakpoints that have been hit while the editor was hidden
+        
+        val thread = debugBpManager.lastThread
+        val breakpoint = debugBpManager.lastBreakpoint
+        if (thread !== null && breakpoint !== null) {
+            val activeStates = findActiveStates(thread)
+            val executingStates = findExecutingStates(thread)
+            var Transition currentTransition = null
+            // If the breakpoint was triggered when checking for a transition,
+            // display the transition currently being checked
+            if (breakpoint instanceof TransitionCheckBreakpoint ||
+                breakpoint instanceof TransitionTakenBreakpoint) {
+                currentTransition = findCurrentTransition(breakpoint)
+
+            }
+            highlight(activeStates, executingStates, currentTransition)
         }
     }
 
@@ -357,8 +419,7 @@ class JavaBreakpointListener implements IJavaBreakpointListener, IDebugEventSetL
         }
         // Only re-display model if it's not the same one as before or there is none currently being displayed
         val diagramView = DebugDiagramView.instance
-        if (currentModel === null || diagramView === null || diagramView.needsInit
-            || (!text.equals(lastModelString))
+        if (currentModel === null || diagramView?.needsInit || (!text.equals(lastModelString))
             || (text.equals(lastModelString) && !modelBeingDisplayed)) {
             
             // Only re-parse and reload the model if it is not the same one as before
@@ -383,12 +444,15 @@ class JavaBreakpointListener implements IJavaBreakpointListener, IDebugEventSetL
                     DebugDiagramView.updateView(currentModel)
                 }
             })
-            modelBeingDisplayed = true
-            pathToHighlighter.get(text).reapplyAllHighlights
-            pathToBpManager.get(text).reAddBreakpointDecorators
+            if (diagramView !== null) {
+                modelBeingDisplayed = true
+                pathToHighlighter.get(text).reapplyAllHighlights
+                pathToBpManager.get(text).reAddBreakpointDecorators
+            }
         } else {
             // Otherwise, clear all highlightings
-            pathToHighlighter.get(lastModelString).clearAllHighlights
+            // TODO
+//            pathToHighlighter.get(lastModelString).clearAllHighlights
         }
     }
 
@@ -419,22 +483,7 @@ class JavaBreakpointListener implements IJavaBreakpointListener, IDebugEventSetL
         }
         return null
     }
-
-    private def findAndHighlightStates(IJavaThread thread) {
-        // Find the currently active states on SCCharts Level
-        val activeStates = findActiveStates(thread)
-        for (state : activeStates) {
-            pathToHighlighter.get(lastModelString).highlightActiveState(state)
-        }
-
-        // Find and visualize the states currently being executed on Java level
-        val executingStates = findExecutingStates(thread)
-        for (state : executingStates) {
-            pathToHighlighter.get(lastModelString).highlightExecutingState(state)
-        }
-
-    }
-
+    
     def toggleBreakpoint(State state) {
         pathToBpManager.get(lastModelString).toggleBreakpoint(state)
     }
@@ -466,7 +515,7 @@ class JavaBreakpointListener implements IJavaBreakpointListener, IDebugEventSetL
                 }
             }
 
-            job.schedule
+            job.schedule(2)
             job.join
 
             return editorArr.head

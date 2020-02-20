@@ -42,8 +42,7 @@ class DebugHighlighter {
     static val activeStateForeground = factory.createKForeground.setColor2(activeStateColor)
     
     // Debugger line highlight green
-//    static val executingStateColor1 = factory.createKColor.setColor(198, 219, 174)
-static val executingStateColor1 = factory.createKColor.setColor(215, 238, 188)
+    static val executingStateColor1 = factory.createKColor.setColor(215, 238, 188)
     static val executingStateColor2 = factory.createKColor.setColor(180, 200, 158)
     static val executingStateBackground = factory.createKBackground.setColors(executingStateColor1, executingStateColor2, 90)
     static val executingTransitionForeground = factory.createKForeground.setColor2(EcoreUtil.copy(executingStateColor2)).setPropagateToChildren
@@ -54,7 +53,6 @@ static val executingStateColor1 = factory.createKColor.setColor(215, 238, 188)
     
     val activeStateHighlightings = <DebugHighlighting> newLinkedList
     val executingStateHighlightings = <DebugHighlighting> newLinkedList
-//    val breakpointHighlights = <Highlighting> newLinkedList
     val activeEdgeHighlights = <DebugHighlighting> newLinkedList
     
     val transitionToDecorator = <Transition, KEllipse> newHashMap
@@ -116,24 +114,18 @@ static val executingStateColor1 = factory.createKColor.setColor(215, 238, 188)
     }
     
     def void highlightActiveState(State state) {
+        // Caution: kNode may be null if there is no debug diagram view.
+        // Reapply will handle this as soon as one is opened.
         val kNode = DebugDiagramView.getInstance?.getKNode(state)
-        if (kNode === null) {
-            //TODO debug print
-            println("Null KNode for state " + state.name + ", nothing to highlight!")
-            return
-        }
         val highlighting = new DebugHighlighting(kNode, activeStateForeground, state)
         activeStateHighlightings.add(highlighting)
         highlighting.apply
     }
     
     def void highlightExecutingState(State state) {
+        // Caution: kNode may be null if there is no debug diagram view.
+        // Reapply will handle this as soon as one is opened.
         val kNode = DebugDiagramView.getInstance?.getKNode(state)
-        if (kNode === null) {
-            //TODO debug print
-            println("Null KNode for state " + state.name + ", nothing to highlight!")
-            return
-        }
         val highlighting = new DebugHighlighting(kNode, executingStateBackground, state)
         executingStateHighlightings.add(highlighting)
         highlighting.apply
@@ -156,12 +148,9 @@ static val executingStateColor1 = factory.createKColor.setColor(215, 238, 188)
     }
  
     def void highlightExecutingTransition(Transition transition) {
+        // Caution: kEdge may be null if there is no debug diagram view.
+        // Reapply will handle this as soon as one is opened.
         val kEdge = DebugDiagramView.getInstance?.getKEdge(transition)
-        if (kEdge === null) {
-            // TODO debug print
-            println("Null KEdge for transition" + transition.toString + ", nothing to highlight!")
-            return
-        }
         val highlighting = new DebugHighlighting(kEdge, executingTransitionForeground, transition)
         activeEdgeHighlights.add(highlighting)
         highlighting.apply
