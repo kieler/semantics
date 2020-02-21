@@ -41,6 +41,7 @@ import org.eclipse.xtext.ide.server.LanguageServerImpl
 import org.eclipse.xtext.ide.server.ServerLauncher
 import org.eclipse.xtext.resource.IResourceServiceProvider
 import org.eclipse.xtext.util.Modules2
+import de.cau.cs.kieler.klighd.lsp.interactive.rectpack.RectPackInterativeLanguageServerExtension
 
 /** 
  * Provides methods to create a LS.
@@ -104,8 +105,9 @@ class LSCreator {
         ]
         
         var constraintsLSExt = injector.getInstance(ConstraintsLanguageServerExtension)
+        var rectPackLSExt = injector.getInstance(RectPackInterativeLanguageServerExtension)
         // Get all LSExtensions to use them as local services
-        var iLanguageServerExtensions = <Object>newArrayList(ls, constraintsLSExt)
+        var iLanguageServerExtensions = <Object>newArrayList(ls, constraintsLSExt, rectPackLSExt)
         for (lse : KielerServiceLoader.load(ILanguageServerContribution)) {
             iLanguageServerExtensions.add(lse.getLanguageServerExtension(injector))
         }
