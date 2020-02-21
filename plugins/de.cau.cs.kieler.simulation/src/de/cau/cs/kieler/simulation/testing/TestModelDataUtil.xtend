@@ -23,20 +23,6 @@ import java.util.List
 class TestModelDataUtil {
     
     /**
-     * @return the name of the test model.
-     */
-    static def getName(TestModelData data) {
-        return if (data.confidential) {
-            "confidential"
-        } else if (data.additionalProperties.containsKey("name")) {
-            data.additionalProperties.get("name")
-        } else {
-            val file = data.modelPath.fileName.toString
-            file.substring(0, file.lastIndexOf('.'))
-        }
-    }
-    
-    /**
      * @return the value of the name property or the given default value if not available.
      */
     static def boolean getAdditionalBooleanProperty(TestModelData data, String name, boolean defaultValue ) {

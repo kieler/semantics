@@ -19,6 +19,7 @@ import de.cau.cs.kieler.kicool.ProcessorGroup
 import de.cau.cs.kieler.kicool.compilation.CompilationContext
 import de.cau.cs.kieler.kicool.compilation.ExecutableContainerWrapper
 import de.cau.cs.kieler.kicool.compilation.internal.EnvironmentPropertyHolder
+import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
 import de.cau.cs.kieler.simulation.internal.processor.CheckTrace
 import de.cau.cs.kieler.simulation.internal.processor.ReadTrace
@@ -41,9 +42,7 @@ import static extension de.cau.cs.kieler.kicool.compilation.internal.SystemTrans
  * @kieler.rating proposed yellow
  */
 class SimulationContext extends CompilationContext implements SimulationControls, ExecutableContainerWrapper {
-    
-    public static val IProperty<CompilationContext> SOURCE_COMPILATION_CONTEXT = 
-        new Property<CompilationContext>("de.cau.cs.kieler.simulation.source.compilation", null)
+
     public static val IProperty<Integer> REACTION_TIMEOUT_IN_SECONDS = 
         new Property<Integer>("de.cau.cs.kieler.simulation.timeout", 2)
     public static val IProperty<Integer> MAX_HISTORY_LENGTH = 
@@ -72,9 +71,22 @@ class SimulationContext extends CompilationContext implements SimulationControls
 
     new() {
         controller = new SimulationController(this)
+        setUpSystem()
+    }
+    new(CompilationContext parentContext, Environment parentEnvironment) {
+        this()
+        startEnvironment.setProperty(Environment.PRECEEDING_COMPILATION_CONTEXT, parentContext)
+        startEnvironment.copyProperties(parentEnvironment)
+        setUpSystem()
+    }
+    
+    private def setUpSystem() {
         startEnvironment.setProperty(INPLACE, false)        
         startEnvironment.setProperty(ONGOING_WORKING_COPY, false)
         startEnvironment.setProperty(ORIGINAL_MODEL, null)
+        startEnvironment.setProperty(COMPILATION_CONTEXT, this)
+        startEnvironment.setProperty(UNIQUE_NAME_CACHE_ENABLED, false)
+        startEnvironment.setProperty(UNIQUE_NAME_CACHE, null)
         
         originalSystem = KiCoolRegistration.getSystemById(DEFAULT_SIMULATION_SYSTEM)
         transformSystem()
@@ -84,7 +96,7 @@ class SimulationContext extends CompilationContext implements SimulationControls
     }
     
     def getSourceCompilationContext() {
-        return startEnvironment.getProperty(SOURCE_COMPILATION_CONTEXT)
+        return startEnvironment.getProperty(Environment.PRECEEDING_COMPILATION_CONTEXT)
     }
 
     package def initialize() {

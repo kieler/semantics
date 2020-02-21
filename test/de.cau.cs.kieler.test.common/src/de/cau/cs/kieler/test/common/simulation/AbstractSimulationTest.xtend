@@ -15,40 +15,29 @@ package de.cau.cs.kieler.test.common.simulation
 import com.google.common.io.Files
 import com.google.inject.Injector
 import de.cau.cs.kieler.core.Platform
-import de.cau.cs.kieler.kicool.compilation.CodeContainer
 import de.cau.cs.kieler.kicool.compilation.CompilationContext
 import de.cau.cs.kieler.kicool.compilation.Compile
 import de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure
 import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.simulation.SimulationContext
-import de.cau.cs.kieler.simulation.events.SimulationEvent
-import de.cau.cs.kieler.simulation.events.TraceFinishedEvent
-import de.cau.cs.kieler.simulation.events.TraceMismatchEvent
-import de.cau.cs.kieler.simulation.mode.ManualMode
+import de.cau.cs.kieler.simulation.testing.TestModelData
+import de.cau.cs.kieler.simulation.testing.TraceSimulation
 import de.cau.cs.kieler.simulation.trace.TraceFileUtil
 import de.cau.cs.kieler.test.common.repository.AbstractXTextModelRepositoryTest
 import de.cau.cs.kieler.test.common.repository.ModelsRepositoryTestRunner
-import de.cau.cs.kieler.simulation.testing.TestModelData
 import java.io.PrintWriter
 import java.io.StringWriter
-import java.util.Collections
-import java.util.WeakHashMap
 import org.eclipse.emf.ecore.EObject
 import org.junit.runner.RunWith
 
 import static org.junit.Assert.*
-import de.cau.cs.kieler.simulation.events.ISimulationListener
 
 /**
  * @author aas, als
  *
  */
 @RunWith(ModelsRepositoryTestRunner)
-abstract class AbstractSimulationTest<T extends EObject> extends AbstractXTextModelRepositoryTest<T> implements ISimulationListener {
-
-    private val simulationTraceEventData = Collections.synchronizedMap(new WeakHashMap<SimulationContext, SimulationEvent>)
-    
-    //-----------------------------------------------------------------------------------------------------------------
+abstract class AbstractSimulationTest<T extends EObject> extends AbstractXTextModelRepositoryTest<T> {
     
     /**
      * Constructor
@@ -124,54 +113,21 @@ abstract class AbstractSimulationTest<T extends EObject> extends AbstractXTextMo
      * If a trace mismatch occurs then the test fails.
      */
     private def void runSimulationTraces(SimulationContext context, TestModelData modelData) {
-        try {
-            // Register for events
-            context.addObserver(this)
-            
-            // Iterate over trace files and run each
-            for (traceFilePath : modelData.tracePaths.filter[fileName.toString.endsWith("eso") || fileName.toString.endsWith("ktrace")]) {
-                assertTrue("Could not find trace file " + traceFilePath, traceFilePath.toFile.isFile)
-                val traceFile = TraceFileUtil.loadTraceFile(traceFilePath.toFile)
-                
-                // Run each trace in the trace file
-                for (var i = 0; i < traceFile.traces.size; i++) {
-                    simulationTraceEventData.remove(context)
-
-                    // Configure trace
-                    context.setTrace(traceFile.traces.get(i), true, false)
-                    context.mode = ManualMode
-                    
-                    // Start simulation
-                    context.start(false)
-                    
-                    // Run simulation until end of trace
-                    while(!simulationTraceEventData.containsKey(context)) {
-                        context.step
-                        if (context.hasErrors) {
-                            context.stop
-                            fail("Error(s) in simulation: \n- " + context.allErrors.map[ err |
-                                if (err.exception !== null) {
-                                   ((new StringWriter) => [err.exception.printStackTrace(new PrintWriter(it))]).toString()
-                                } else {
-                                   err.message
-                                }
-                            ])
-                        }
-                    }
-                    
-                    // Stop and reset the simulation
-                    context.stop
-                    context.reset
-                    
-                    // Print mismatches if occured
-                    val event = simulationTraceEventData.get(context)
-                    if (event instanceof TraceMismatchEvent) {
-                        fail(event.toString)
-                    }
-                }
-            }
-        } finally {
-            context.stop
+        // Prepare traces
+        val traceFilePaths = modelData.tracePaths.filter[fileName.toString.endsWith("eso") || fileName.toString.endsWith("ktrace")].toList
+        traceFilePaths.forEach[assertTrue("Could not find trace file " + it, it.toFile.isFile)]
+        
+        // We do not need a history for testing
+        context.startEnvironment.setProperty(SimulationContext.MAX_HISTORY_LENGTH, 1)
+        
+        val runner = new TraceSimulation(context, traceFilePaths.map[TraceFileUtil.loadTraceFile(it.toFile)])        
+        val result = runner.simulate()
+        
+        if (result.hasErrors) {
+            fail("Error(s) in simulation: \n- " + result.errors.toList)
+        }
+        if (result.hasMismatches) {
+            fail(result.mismatches.join("\n")[toString])
         }
     }
     
@@ -202,23 +158,6 @@ abstract class AbstractSimulationTest<T extends EObject> extends AbstractXTextMo
         }
         return knownToFail
     }
-    
-    /**
-     * Implementation of SimulationListener.
-     * Looks for trace mismatches.
-     */
-    override update(SimulationContext ctx, SimulationEvent e) {
-        if (e instanceof TraceMismatchEvent || e instanceof TraceFinishedEvent) {
-            simulationTraceEventData.put(ctx, e)
-        }
-    }
-    
-    /**
-     * Implementation of SimulationListener.
-     * Returns the name of this listener.
-     */
-    override getName() {
-        return class.simpleName
-    }
+
 }
 			
