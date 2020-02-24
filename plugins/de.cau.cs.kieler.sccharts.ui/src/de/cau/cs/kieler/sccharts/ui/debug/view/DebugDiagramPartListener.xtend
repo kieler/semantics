@@ -34,6 +34,7 @@ import org.eclipse.core.runtime.Status
 import org.eclipse.core.runtime.jobs.Job
 import org.eclipse.core.runtime.ICoreRunnable
 import org.eclipse.core.runtime.CoreException
+import de.cau.cs.kieler.sccharts.ui.debug.breakpoints.DebugBreakpointManager
 
 /**
  * @author stu121235
@@ -98,14 +99,14 @@ class DebugDiagramPartListener implements IPartListener2, IStartup {
                 val modelJob = Job.create("Load model", new ICoreRunnable {
                     
                     override run(IProgressMonitor monitor) throws CoreException {
-                        JavaBreakpointListener.instance.setModel(modelPath)
-                        JavaBreakpointListener.instance.loadBreakpoints(compilationUnit.resource)                
+                        DebugBreakpointManager.instance.setModel(modelPath)
+                        DebugBreakpointManager.instance.loadBreakpoints(compilationUnit.resource)                
                     }
                 })
                 modelJob.schedule
                 
             } else {
-                JavaBreakpointListener.instance.clearModel
+                DebugBreakpointManager.instance.clearModel
             }
         }
     }
@@ -149,7 +150,7 @@ class DebugDiagramPartListener implements IPartListener2, IStartup {
             // delayed to prevent KLighD init error
             new UIJob("Display Model") {
                 override IStatus runInUIThread(IProgressMonitor monitor) {
-                    JavaBreakpointListener.instance.clearModel
+                    DebugBreakpointManager.instance.clearModel
                     page.getReference(page.activeEditor).partOpened
                     return Status.OK_STATUS;
                 }
@@ -168,10 +169,10 @@ class DebugDiagramPartListener implements IPartListener2, IStartup {
                 val lineOffset = doc.getLineOffset(lineNumber)
                 val lineLength = doc.getLineLength(lineNumber)
                 val modelPath = doc.get(lineOffset, lineLength).split(" = ").last.replaceAll("[;\n\"]", "")
-                JavaBreakpointListener.instance.setModel(modelPath)
-                JavaBreakpointListener.instance.loadBreakpoints(compilationUnit.resource)                
+                DebugBreakpointManager.instance.setModel(modelPath)
+                DebugBreakpointManager.instance.loadBreakpoints(compilationUnit.resource)                
             } else {
-                JavaBreakpointListener.instance.clearModel
+                DebugBreakpointManager.instance.clearModel
             }
         }
     }

@@ -17,6 +17,7 @@ import de.cau.cs.kieler.klighd.IAction.ActionContext
 import de.cau.cs.kieler.klighd.kgraph.KEdge
 import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.ui.debug.breakpoints.JavaBreakpointListener
+import de.cau.cs.kieler.sccharts.ui.debug.breakpoints.DebugBreakpointManager
 
 /**
  * @author stu121235
@@ -35,7 +36,7 @@ class SetCheckBreakpointAction implements IAction {
         val selectedTransitions = selection.diagramElementsIterator.filter[it instanceof KEdge].map[viewContext.getSourceElement(it) as Transition].toIterable
         
         for (transition : selectedTransitions) {
-            JavaBreakpointListener.instance.toggleCheckBreakpoint(transition)
+            DebugBreakpointManager.instance.toggleCheckBreakpoint(transition)
         }
         
         ActionResult.createResult(false)
