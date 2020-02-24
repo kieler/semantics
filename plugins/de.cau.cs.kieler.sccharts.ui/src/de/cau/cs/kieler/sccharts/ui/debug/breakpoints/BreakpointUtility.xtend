@@ -32,7 +32,7 @@ import org.eclipse.core.resources.IResource
  * Wrapper for legacy functionality from SCCharts Debug Plugin by lgr.
  * Probably temporary.
  * 
- * @author stu121235
+ * @author peu
  *
  */
 class BreakpointUtility {

@@ -14,7 +14,8 @@ package de.cau.cs.kieler.sccharts.ui.debug.breakpoints
 
 /** 
  * Enum to differentiate between the different types of breakpoints used.
- * @author stu121235
+ * 
+ * @author peu
  */
 enum BreakpointType {
     /**
@@ -31,7 +32,7 @@ enum BreakpointType {
     
     /**
      * Is triggered whenever the associated state is entered.
-     * Staying within the same state should not trigger the breakpoint multiple times.
+     * Staying within the same state does not trigger the breakpoint multiple times.
      */
     STATE_BREAKPOINT,
     
@@ -41,6 +42,4 @@ enum BreakpointType {
      * The execution does NOT suspend on these breakpoints.
      */
     TRANSITION_WATCH_BREAKPOINT
-    
-//    INIT_BREAKPOINT
 }

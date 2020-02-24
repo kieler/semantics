@@ -31,7 +31,6 @@ import org.eclipse.jdt.debug.core.IJavaType
  */
 class JavaBreakpointListener implements IJavaBreakpointListener, IDebugEventSetListener {
 
-
     override breakpointHit(IJavaThread thread, IJavaBreakpoint breakpoint) {
         if (!breakpoint.isEnabled) {
             println("Disabled breakpoint, skipping...")
@@ -60,34 +59,32 @@ class JavaBreakpointListener implements IJavaBreakpointListener, IDebugEventSetL
         }
     }
 
+    override addingBreakpoint(IJavaDebugTarget target, IJavaBreakpoint breakpoint) {
+        DebugBreakpointManager.instance.addBreakpoint(breakpoint)
+    }
 
     /**************************************************************************************
      * Unsupported Method Stubs ***********************************************************
      **************************************************************************************/
     override breakpointInstalled(IJavaDebugTarget target, IJavaBreakpoint breakpoint) {
-        // TODO ignore for now
+        // UNSUPPORTED
     }
 
     override breakpointRemoved(IJavaDebugTarget target, IJavaBreakpoint breakpoint) {
-        // TODO ignore for now
+        // UNSUPPORTED
     }
 
     override installingBreakpoint(IJavaDebugTarget target, IJavaBreakpoint breakpoint, IJavaType type) {
-        println("Installing Breakpoint!")
+        // UNSUPPORTED
         return DONT_CARE
     }
 
     override breakpointHasCompilationErrors(IJavaLineBreakpoint breakpoint, Message[] errors) {
-        throw new UnsupportedOperationException("TODO: auto-generated method stub")
-    }
-
-    override addingBreakpoint(IJavaDebugTarget target, IJavaBreakpoint breakpoint) {
-        println("Adding breakpoint!")
-        DebugBreakpointManager.instance.addBreakpoint(breakpoint)
+        // UNSUPPORTED
     }
 
     override breakpointHasRuntimeException(IJavaLineBreakpoint breakpoint, DebugException exception) {
-        // TODO ignore for now
+        // UNSUPPORTED
     }
 
 }

@@ -46,8 +46,6 @@ import org.eclipse.jdt.debug.core.IJavaThread
  *
  */
 class ModelBreakpointManager {
-   
-//    static var DebugBreakpointManager instance
     
     public static val MODEL_ELEMENT = "Model Element"
     
@@ -70,20 +68,10 @@ class ModelBreakpointManager {
     var IJavaBreakpoint lastBreakpoint
     var IJavaThread lastThread
     
-    /**
-     * Private for singleton behavior.
-     */
     new(DebugHighlighter hl) {
         Guice.createInjector.injectMembers(this)
         this.highlighter = hl
     }
-    
-//    static def getInstance() {
-//        if (instance === null) {
-//            instance = new DebugBreakpointManager()
-//        }
-//        return instance
-//    }
     
     /**
      * Toggles all breakpoints associated with the given state.
@@ -109,20 +97,21 @@ class ModelBreakpointManager {
             }
             stateToBreakpoint.put(state, stateBreakpoints)
             
-            val transitionCheckBreakpoints = <IJavaBreakpoint> newLinkedList
+            // Add a TransitionWatchBreakpoint to each outgoing transition
+            val transitionWatchBreakpoints = <IJavaBreakpoint> newLinkedList
             for (transition : state.outgoingTransitions) {
                 for (line : transition.findTransitionLines) {
                     val bp = createBreakpointOnLine(line, BreakpointType.TRANSITION_WATCH_BREAKPOINT, null, transition)
                     println(bp)
-                    transitionCheckBreakpoints.add(bp)
+                    transitionWatchBreakpoints.add(bp)
                 }
             }
-            stateToWatchBreakpoints.put(state, transitionCheckBreakpoints)
+            stateToWatchBreakpoints.put(state, transitionWatchBreakpoints)
         }
     }
     
     /**
-     * Toggles all breakpoints associated with the given transition.
+     * Toggles all regular breakpoints associated with the given transition.
      * Appropriate positions in the editor for setting the breakpoint(s)
      * will be determined here.
      */
@@ -146,6 +135,11 @@ class ModelBreakpointManager {
         }
     }
     
+    /**
+     * Toggles all check breakpoints associated with the given transition.
+     * Appropriate positions in the editor for setting the breakpoint(s)
+     * will be determined here.
+     */
     def toggleCheckBreakpoint(Transition transition) {
         if (transitionsWithCheckBreakpoint.contains(transition)) {
             // Transition already has a breakpoint, remove all associated Java breakpoints
@@ -188,7 +182,7 @@ class ModelBreakpointManager {
                 breakpoint.setTransition(transition)
             }
             if (transition.root != model) {
-                println("Breakpoint does not belong to this model; skipping.")
+                // The transition does not belong to this model.
                 return false
             }
             if (breakpoint instanceof TransitionCheckBreakpoint) {
@@ -260,6 +254,10 @@ class ModelBreakpointManager {
         return true
     }
     
+    /**
+     * Reapplies all breakpoint decorators currently registered.
+     * This is used after the model has been reloaded in the view without any changes to the breakpoints list.
+     */
     def reAddBreakpointDecorators() {
         for (state : statesWithBreakpoint) {
             highlighter.addBreakpointDecorator(state)
@@ -272,13 +270,21 @@ class ModelBreakpointManager {
         }
     }
     
-    def enableStateBreakpoints(StateBreakpoint breakpoint) {
+    /**
+     * Disables all java breakpoints associated with this state.
+     * This is used to ensure that the same state only suspends once
+     * until it is left and re-entered-
+     */
+    def disableStateBreakpoints(StateBreakpoint breakpoint) {
         val state = breakpoint.state
         for (bp : stateToBreakpoint.get(state)) {
             bp.enabled = false
         }
     }
     
+    /**
+     * Re-enables all breakpoints associated with the state.
+     */
     def watchBreakpointHit(TransitionWatchBreakpoint breakpoint) {
         // TODO may make more sense to save the state, not the transition here.
         val state = breakpoint.transition.sourceState
@@ -289,17 +295,26 @@ class ModelBreakpointManager {
         }
     }
     
+    /**
+     * Saves the breakpoint and associated thread to apply the highlighting after the editor has been opened
+     */
     def breakpointHit(IJavaThread thread, IJavaBreakpoint breakpoint) {
         lastBreakpoint = breakpoint
         lastThread = thread
     }
     
+    /**
+     * Returns and clears the last breakpoint.
+     */
     def getLastBreakpoint() {
         val bp = lastBreakpoint
         lastBreakpoint = null
         return bp        
     }
     
+    /**
+     * Returns and clears the last thread.
+     */
     def getLastThread() {
         val t = lastThread
         lastThread = null
@@ -325,18 +340,10 @@ class ModelBreakpointManager {
          * true: Register in breakpoint manager
          */
         val attributes = <String, Object> newHashMap
-        
-        
-        // TODO tidy up
-//        if (breakpointType != BreakpointType.TRANSITION_WATCH_BREAKPOINT /*  && breakpointType != BreakpointType.INIT_BREAKPOINT */) {
-            attributes.put(IBreakpoint.ENABLED, true) // Start with an enabled breakpoint
-            attributes.put(IBreakpoint.PERSISTED, true) // conserve this breakpoint across Eclipse restarts
-            attributes.put(IMarker.LINE_NUMBER, line) // associated line number for the marker
-//        } else {
-//            attributes.put(IBreakpoint.ENABLED, true)
-//            attributes.put(IBreakpoint.PERSISTED, false)
-//            attributes.put(IMarker.LINE_NUMBER, line) // associated line number for the marker
-//        }
+
+        attributes.put(IBreakpoint.ENABLED, true) // Start with an enabled breakpoint
+        attributes.put(IBreakpoint.PERSISTED, true) // conserve this breakpoint across Eclipse restarts
+        attributes.put(IMarker.LINE_NUMBER, line) // associated line number for the marker
         var IJavaBreakpoint breakpoint
          
         switch(breakpointType) {
@@ -367,6 +374,7 @@ class ModelBreakpointManager {
         } 
         
         // Update editor to display new breakpoints
+        // TODO may be unnecessary
         Display.^default.asyncExec(new Runnable() {
             override run() {
                 Display.^default.update
@@ -377,7 +385,7 @@ class ModelBreakpointManager {
     }
     
     /**
-     * Find all lines where breakpoints for the given transition need to be set.
+     * Find all lines where check breakpoints for the given transition need to be set.
      * For simple transition, this will just be one, however more complex ones
      * (e.g. hierarchical abort) will require multiple breakpoints
      */
@@ -400,6 +408,11 @@ class ModelBreakpointManager {
         return transitionLines
     }
     
+    /**
+     * Find all lines where breakpoints for the given transition need to be set.
+     * For simple transition, this will just be one, however more complex ones
+     * (e.g. hierarchical abort) will require multiple breakpoints
+     */
     private def findTransitionLines(Transition transition) {
         val editor = getActiveEditor
         val transitionLines = <Integer> newLinkedList
@@ -444,6 +457,9 @@ class ModelBreakpointManager {
         return stateLines
     }
     
+    /**
+     * Clears all breakpoints for the associated model.
+     */
     def forgetAllBreakpoints() {
         transitionToBreakpoint.clear
         transitionToCheckBreakpoint.clear
@@ -454,18 +470,27 @@ class ModelBreakpointManager {
         transitionsWithCheckBreakpoint.clear
     }
     
+    /**
+     * Clears all regular breakpoints for the given transition. 
+     */
     private def clearBreakpoints(Transition transition) {
         for (breakpoint : transitionToBreakpoint.get(transition)) {
             breakpoint.delete
         }
     }
     
+    /**
+     * Clears all check breakpoints for the given transition.
+     */
     private def clearCheckBreakpoints(Transition transition) {
         for (breakpoint : transitionToCheckBreakpoint.get(transition)) {
             breakpoint.delete
         }
     }
     
+    /**
+     * Clears all breakpoints for the given state.
+     */
     private def clearBreakpoints(State state) {
         
         // remove state breakpoints
@@ -487,7 +512,7 @@ class ModelBreakpointManager {
      * Helper method to retrieve the active editor
      */
     private def getActiveEditor() {
-        // Use UIJob to get active editor -----------------------------------------
+        // TODO why not do this in DebugBreakpointManager?
         val ITextEditor[] editorArr = newArrayOfSize(1)
 
         Display.^default.syncExec(new Runnable() {
