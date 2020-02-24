@@ -12,7 +12,9 @@
  */
 package de.cau.cs.kieler.kicool.ui.klighd
 
+import de.cau.cs.kieler.kicool.compilation.CodeContainer
 import de.cau.cs.kieler.kicool.kitt.tracing.Tracing
+import de.cau.cs.kieler.kicool.registration.ModelInformation
 import de.cau.cs.kieler.kicool.ui.KiCoolUiModule
 import de.cau.cs.kieler.kicool.ui.kitt.update.TracingVisualizationUpdateStrategy
 import de.cau.cs.kieler.kicool.ui.klighd.models.ModelChain
@@ -20,12 +22,14 @@ import de.cau.cs.kieler.kicool.ui.view.CompilerView
 import de.cau.cs.kieler.klighd.IViewer
 import de.cau.cs.kieler.klighd.ui.view.controller.AbstractViewUpdateController
 import de.cau.cs.kieler.klighd.ui.view.controllers.EditorSaveAdapter
-import de.cau.cs.kieler.klighd.ui.view.controllers.EditorUtil
 import de.cau.cs.kieler.klighd.ui.view.controllers.XtextSelectionHighlighter
 import de.cau.cs.kieler.klighd.ui.view.model.MessageModel
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties
+import java.io.File
 import java.io.IOException
+import java.nio.file.Files
 import java.util.Collections
+import java.util.List
 import org.eclipse.core.resources.IMarker
 import org.eclipse.core.resources.IResource
 import org.eclipse.core.resources.ResourcesPlugin
@@ -39,7 +43,6 @@ import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
 import org.eclipse.emf.ecore.util.Diagnostician
-import org.eclipse.emf.edit.domain.IEditingDomainProvider
 import org.eclipse.jface.action.Action
 import org.eclipse.jface.action.IAction
 import org.eclipse.jface.action.IMenuManager
@@ -57,6 +60,7 @@ import org.eclipse.swt.graphics.Image
 import org.eclipse.swt.graphics.RGB
 import org.eclipse.swt.layout.RowLayout
 import org.eclipse.swt.widgets.Composite
+import org.eclipse.swt.widgets.DirectoryDialog
 import org.eclipse.swt.widgets.Label
 import org.eclipse.ui.IEditorPart
 import org.eclipse.ui.IMemento
@@ -66,8 +70,6 @@ import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.xtext.ui.editor.XtextEditor
 import org.eclipse.xtext.ui.util.ResourceUtil
 import org.eclipse.xtext.util.StringInputStream
-import java.util.List
-import de.cau.cs.kieler.kicool.registration.ModelInformation
 
 /**
  * Controller for the ModelView to handle models interacting with KiCo.
@@ -551,71 +553,86 @@ class KiCoModelUpdateController extends AbstractViewUpdateController implements 
             val root = workspace.getRoot()
 
             // get filename with correct extension
-            val filename = getResourceName(getEditor(), model)
-
-            val saveAsDialog = new SaveAsDialog(getDiagramView().getSite().getShell())
-
-            // Configure dialog
-            if (lastSaveDirectory !== null) {
-                var path = lastSaveDirectory
-                // add new filename
-                path = path.append(filename)
-                try {
-                    saveAsDialog.setOriginalFile(root.getFile(path))
-                } catch (Exception e) {
-                    // In case of any path error
-                    saveAsDialog.setOriginalName(filename)
+            var filename = getResourceName(getEditor(), model)
+            if (model instanceof CodeContainer) {
+                if (model.files.size == 1) {
+                    filename = model.files.head.fileName
+                }
+            }
+            
+            if (model instanceof CodeContainer) {
+                val dialog = new DirectoryDialog(getDiagramView().getSite().getShell())
+                val path = dialog.open()
+                val dest = new File(path)
+                for (code : (model as CodeContainer).files) {
+                    val target = new File(dest, code.fileName)
+                    Files.write(target.toPath, code.code.getBytes())
                 }
             } else {
-                saveAsDialog.setOriginalName(filename)
-            }
-
-            saveAsDialog.setTitle("Save Model")
-            saveAsDialog.setBlockOnOpen(true)
-
-            // open and get result
-            saveAsDialog.open()
-            val path = saveAsDialog.getResult()
-
-            // save
-            if (path !== null && !path.isEmpty()) {
-                val file = root.getFile(path)
-                val uri = URI.createPlatformResourceURI(path.toString(), false)
-
-                // remove filename to just store the path
-                lastSaveDirectory = file.getFullPath().removeLastSegments(1)
-
-                // refresh workspace to prevent out of sync with file-system
-                if (file.exists()) {
+                val saveAsDialog = new SaveAsDialog(getDiagramView().getSite().getShell())
+    
+                // Configure dialog
+                if (lastSaveDirectory !== null) {
+                    var lastpath = lastSaveDirectory
+                    // add new filename
+                    lastpath = lastpath.append(filename)
                     try {
-                        file.refreshLocal(IResource.DEPTH_INFINITE, null)
-                    } catch (CoreException e) {
-                        StatusManager.getManager().handle(new Status(IStatus.WARNING,
-                                KiCoolUiModule.PLUGIN_ID, e.getMessage(), e), StatusManager.LOG)
+                        saveAsDialog.setOriginalFile(root.getFile(lastpath))
+                    } catch (Exception e) {
+                        // In case of any path error
+                        saveAsDialog.setOriginalName(filename)
                     }
+                } else {
+                    saveAsDialog.setOriginalName(filename)
                 }
-
-                // perform saving
-                try {
-                    var saveModel = model
-                    // decompose chain
-                    if (model instanceof ModelChain) {
-                        saveModel = model.getSelectedModel()
-                    }
-                    // save
-                    if (saveModel instanceof EObject) {
-                        saveModel(saveModel, uri)
-                    } else {
-                        // save to text file (create it if necessary)
-                        if (!file.exists()) {
-                            file.create(new StringInputStream(saveModel.toString()), 0, null)
-                        } else {
-                            file.setContents(new StringInputStream(saveModel.toString()), 0, null)
+    
+                saveAsDialog.setTitle("Save Model")
+                saveAsDialog.setBlockOnOpen(true)
+    
+                // open and get result
+                saveAsDialog.open()
+                val path = saveAsDialog.getResult()
+    
+                // save
+                if (path !== null && !path.isEmpty()) {
+                    val file = root.getFile(path)
+                    val uri = URI.createPlatformResourceURI(path.toString(), false)
+    
+                    // remove filename to just store the path
+                    lastSaveDirectory = file.getFullPath().removeLastSegments(1)
+    
+                    // refresh workspace to prevent out of sync with file-system
+                    if (file.exists()) {
+                        try {
+                            file.refreshLocal(IResource.DEPTH_INFINITE, null)
+                        } catch (CoreException e) {
+                            StatusManager.getManager().handle(new Status(IStatus.WARNING,
+                                    KiCoolUiModule.PLUGIN_ID, e.getMessage(), e), StatusManager.LOG)
                         }
                     }
-                } catch (Exception e) {
-                    StatusManager.getManager().handle(new Status(IStatus.ERROR,
-                            KiCoolUiModule.PLUGIN_ID, e.getMessage(), e), StatusManager.SHOW)
+    
+                    // perform saving
+                    try {
+                        var saveModel = model
+                        // decompose chain
+                        if (model instanceof ModelChain) {
+                            saveModel = model.getSelectedModel()
+                        }
+                        // save
+                        if (saveModel instanceof EObject) {
+                            saveModel(saveModel, uri)
+                        } else {
+                            // save to text file (create it if necessary)
+                            if (!file.exists()) {
+                                file.create(new StringInputStream(saveModel.toString()), 0, null)
+                            } else {
+                                file.setContents(new StringInputStream(saveModel.toString()), 0, null)
+                            }
+                        }
+                    } catch (Exception e) {
+                        StatusManager.getManager().handle(new Status(IStatus.ERROR,
+                                KiCoolUiModule.PLUGIN_ID, e.getMessage(), e), StatusManager.SHOW)
+                    }
                 }
             }
         }

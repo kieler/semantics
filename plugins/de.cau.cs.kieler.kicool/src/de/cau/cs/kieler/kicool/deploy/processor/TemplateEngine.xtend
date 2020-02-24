@@ -74,7 +74,7 @@ class TemplateEngine extends InplaceProcessor<CodeContainer> {
         
         // Defaults
         generalTemplateEnvironment.putAll(CommonTemplateVariables.DEFAULTS)
-        val sourceFile = infra.sourceCode.files.head
+        val sourceFile = infra.sourceCode.files.filter[!library].head
         if (sourceFile !== null) {
             generalTemplateEnvironment.put(CommonTemplateVariables.MODEL_DATA_FILE, sourceFile.fileName)
             val name = if (sourceFile.fileName.contains(".")) sourceFile.fileName.substring(0, sourceFile.fileName.lastIndexOf(".")) else sourceFile.fileName

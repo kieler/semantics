@@ -257,7 +257,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
      * @param elements A list of assignments
      * @param rootNode The parent node which should be associated with a dataflow Region
      */
-    def performTranformation(List<Assignment> elements, KNode rootNode) {
+    def List<KNode> performTranformation(List<Assignment> elements, KNode rootNode) {
         sequentials.clear
         alignInputOutputs = ALIGN_INPUTS_OUTPUTS.booleanValue
         showLocals = SHOW_LOCALS.booleanValue
@@ -285,12 +285,12 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                 lastKNodes.clear
             }
         }
-        nodes.addInstanceEdges.addSequentialEdges.simplifyAndCombine(rootNode).reWireInlining
+        nodes.addInstanceEdges.addSequentialEdges.simplifyAndCombine(rootNode)
         for (n : nodes) {
             n.addLayoutParam(CoreOptions.NODE_SIZE_MINIMUM, new KVector(0, 0))
             n.addLayoutParam(CoreOptions.PADDING, new ElkPadding(0, 0, 0, 0))
         }
-        return nodes
+        return nodes.reWireInlining.addMissingReferenceInputs
     }
 
     /**
@@ -898,7 +898,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                 setAsExpandedView;
                 addDoubleClickAction(ReferenceExpandAction::ID);
             ]
-            newNode.createLabel.configureInsideCenteredNodeLabel(label, INPUT_OUTPUT_TEXT_SIZE)
+            newNode.addNodeLabel(label)
         }
 
         newNode.setLayoutOption(LayeredOptions::NODE_SIZE_CONSTRAINTS,
@@ -917,6 +917,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
             for (child : node.eContents.filter(KNode).toList) {
                 nodes += child
                 child.setLayoutOption(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_ORDER)
+                child.setLayoutOption(CoreOptions::PADDING, new ElkPadding(10))
                 child.data.filter(KRendering).forEach [
                     placementData = null
                 ]
@@ -977,6 +978,22 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         for (node : inlinedNodes) {
             nodes.betterRemove(node, null)
         }
+        return nodes
+    }
+    
+    private def addMissingReferenceInputs(List<KNode> nodes) {
+        nodes.filter[isReference].forEach [ node |
+            val refDec = (node.sourceElement as ValuedObjectReference).valuedObject.declaration as ReferenceDeclaration
+            refDec.getInputs.forEach [ input |
+                if (!node.ports.exists [
+                    sourceElement !== null && (sourceElement as ValuedObjectReference).valuedObject == input
+                ]) {
+                    node.getInputPortWithNumber(node.incomingEdges.filter[!isInstance && !isSequential].size +
+                        node.ports.filter[it.edges.empty].size, true).setLabel(input.serializeHR.toString, true).
+                        associateWith(input)
+                }
+            ]
+        ]
         return nodes
     }
 

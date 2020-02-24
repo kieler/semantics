@@ -32,6 +32,7 @@ import de.cau.cs.kieler.kexpressions.ScheduleObjectReference
 import de.cau.cs.kieler.kexpressions.VectorValue
 import de.cau.cs.kieler.kexpressions.OperatorType
 import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
+import de.cau.cs.kieler.kexpressions.Schedulable
 
 /**
  * @author ssm
@@ -98,6 +99,13 @@ class KExpressionsValuedObjectExtensions {
             setPriority(priority)
         ]
     }
+    
+    def ValuedObject createScheduleTo(Schedulable from, Schedulable to, int fromPriority, int toPriority, String name) {
+        val schedule = createValuedObject(name)
+        from.schedule += createScheduleReference(schedule, fromPriority)
+        to.schedule += createScheduleReference(schedule, toPriority)
+        schedule
+    } 
     
     def boolean isVariableReference(ValuedObject valuedObject) {
         valuedObject.declaration instanceof VariableDeclaration
@@ -306,6 +314,17 @@ class KExpressionsValuedObjectExtensions {
         return refs
     }    
     
+    def List<ScheduleObjectReference> getAllSchedulingReferences(Expression expression) {
+        val refs = <ScheduleObjectReference>newArrayList
+        if (expression !== null) {
+            if (expression instanceof ScheduleObjectReference) {
+                refs += expression
+            }
+            refs += expression.eAllContents.filter(ScheduleObjectReference).toIterable
+        }
+        return refs
+    }
+    
     def List<ValuedObjectReference> getAllReferenceFromEObject(EObject eObject) {
         if (eObject === null) {
             return <ValuedObjectReference> newArrayList
@@ -358,7 +377,7 @@ class KExpressionsValuedObjectExtensions {
     def ValuedObject findValuedObjectByName(Declaration declaration, String name) {
         declaration.valuedObjects.filter[ it.name.equals(name) ]?.head
     }
-    
+   
     def List<OperatorExpression> getPreOperatorExpressions(OperatorExpression operatorExpression) {
         if (operatorExpression.operator == OperatorType.PRE) {
             return <OperatorExpression> newLinkedList(operatorExpression)

@@ -45,6 +45,8 @@ import de.cau.cs.kieler.kexpressions.eval.PartialExpressionEvaluator
 import de.cau.cs.kieler.kexpressions.Value
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.TransitionStyles
+import de.cau.cs.kieler.klighd.krendering.extensions.KPortExtensions
+import de.cau.cs.kieler.klighd.kgraph.KGraphFactory
 
 /**
  * @author kolja
@@ -60,6 +62,7 @@ class EquationSynthesisHelper {
     @Inject extension KLabelExtensions
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension TransitionStyles
+    @Inject extension KPortExtensions
 
     protected val List<Pair<KNode, KNode>> sequentials = newArrayList
     protected var alignInputOutputs = false
@@ -160,6 +163,17 @@ class EquationSynthesisHelper {
             return (a.sourceElement as Expression).equals2(b.sourceElement as Expression)
         }
         return a.sourceElement == b.sourceElement
+    }
+    
+    /**
+     * given a KGraph element the return value is true iff the associated Element equals the given Object
+     * in case of associations with ValuedObjectReferences only the ValuedObject needs to be equal and so on
+     */
+    protected def sourceEquals(KGraphElement a, Object sourceElement) {
+        if (a.sourceElement instanceof Expression && sourceElement instanceof Expression) {
+            return (a.sourceElement as Expression).equals2(sourceElement as Expression)
+        }
+        return a.sourceElement == sourceElement
     }
 
     /**
@@ -264,11 +278,15 @@ class EquationSynthesisHelper {
         }
         return reference.serializeHR.toString
     }
+    
+    protected def KPort getInputPortWithNumber(KNode node, int number) {
+        getInputPortWithNumber( node, number, false );
+    }
 
     /**
      * @returns the number-th input port of a node and creates it if it doesn't exist
      */
-    protected def KPort getInputPortWithNumber(KNode node, int number) {
+    protected def KPort getInputPortWithNumber(KNode node, int number, boolean create) {
         var maxIndex = -1
         var KPort maxPort = null
         for (p : node.ports) {
@@ -288,7 +306,22 @@ class EquationSynthesisHelper {
             }
         }
 
-        if(maxPort === null) return null
+        if (maxPort === null && create) {
+            val port = createPort => [
+                data += KGraphFactory.eINSTANCE.createKIdentifier => [
+                    id = "in0"
+                ]
+                it.setPortSize(2, 2)
+                it.addLayoutParam(CoreOptions::PORT_SIDE, PortSide::WEST);
+                it.labels += createLabel => [
+                    it.text = ""
+                ]
+            ]
+            node.ports += port
+            return port
+        } else if (maxPort == null) {
+            return null
+        }
 
         var KPort result = null
         for (pi : (maxIndex + 1) .. number) {

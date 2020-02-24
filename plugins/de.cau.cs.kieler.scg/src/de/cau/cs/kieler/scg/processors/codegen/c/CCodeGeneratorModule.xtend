@@ -99,10 +99,12 @@ class CCodeGeneratorModule extends SCGCodeGeneratorModule {
      */
     override generateWrite(CodeContainer codeContainer) {
         val hFilename = codeFilename + H_EXTENSION
+        val hDefine = hFilename.toUpperCase.replaceAll("\\W", "_")
         val cFilename = codeFilename + C_EXTENSION
         val hFile = new StringBuilder
         val cFile = new StringBuilder
 
+        hFile.pragmaOnceStart(hDefine)
         hFile.addHeader
         hFile.hostcodeAdditions
         cFile.addHeader
@@ -111,6 +113,7 @@ class CCodeGeneratorModule extends SCGCodeGeneratorModule {
         
         generateWriteCodeModules(hFile, cFile)        
 
+        hFile.pragmaOnceEnd(hDefine)
         naming.put(TICK, tick.getName)
         naming.put(RESET, reset.getName)
         naming.put(LOGIC, logic.getName)
@@ -197,6 +200,19 @@ class CCodeGeneratorModule extends SCGCodeGeneratorModule {
         }
         
         sb.append(" */\n\n")
+    }
+    
+    /**
+     * Add pragma for single header include.
+     */
+    protected def void pragmaOnceStart(StringBuilder sb, String define) {
+        sb.append("#ifndef " + define)
+        sb.append("\n#define " + define)
+        sb.append("\n")
+    }
+    protected def void pragmaOnceEnd(StringBuilder sb, String define) {
+        sb.append("\n#endif /* !" + define + " */")
+        sb.append("\n")
     }
     
 }
