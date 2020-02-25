@@ -27,7 +27,12 @@ import org.eclipse.swt.widgets.Display
 import de.cau.cs.kieler.klighd.LightDiagramLayoutConfig
 
 /**
- * @author stu121235
+ * Custom DiagramView that only displays diagrams associated with generated code open in an editor.
+ * The view will transiently adapt to the open editor and show debugging information (breakpoints and highlightings)
+ * to facilitate debugging.
+ * The user can interact with the view by adding and removing breakpoints through double-clicking certain model elements.
+ * 
+ * @author peu
  *
  */
 class DebugDiagramView extends DiagramViewPart {
@@ -41,7 +46,6 @@ class DebugDiagramView extends DiagramViewPart {
     new() {
         super()
         instance = this
-        
     }
     
     static def void updateView(Object model) {
@@ -49,31 +53,11 @@ class DebugDiagramView extends DiagramViewPart {
             instance.updateDiagram(model)
         }
     }
-    
-    static def DebugDiagramView getInstance() {
-//        if (instance === null) {
-//            instance = new DebugDiagramView
-//        }
-        return instance
-    }
-    
-    static def clearInstance() {
-        instance = null
-    }
-    
-    static def setInstance(DebugDiagramView view) {
-        instance = view
-        instance.needsInit = true
-    }
-    
-    def needsInit() {
-        return needsInit
-    }
-    
+   
     def void updateDiagram(Object model) {
         
         if (viewer === null || viewer.viewContext === null || needsInit) {
-            
+            // The view has not been initialized yet
             Display.^default.syncExec(new Runnable {
                 override void run() {
                     initialize(model, null, new KlighdSynthesisProperties);
@@ -94,7 +78,7 @@ class DebugDiagramView extends DiagramViewPart {
             })
             needsInit = false
         } else {
-            // update case
+            // The view has been initialized; It is sufficient to perform an update.
             val context = viewer.viewContext
             val config = new LightDiagramLayoutConfig(context).model(model).animate(false)
             config.performUpdate
@@ -115,6 +99,22 @@ class DebugDiagramView extends DiagramViewPart {
         return viewer?.viewContext?.getTargetElement(transition, KEdge)
     }
     
+    def needsInit() {
+        return needsInit
+    }
+    
+    static def DebugDiagramView getInstance() {
+        return instance
+    }
+    static def clearInstance() {
+        instance = null
+    }
+    
+    static def setInstance(DebugDiagramView view) {
+        instance = view
+        instance.needsInit = true
+    }
+
     override void dispose() {
         super.dispose()
         instance = null

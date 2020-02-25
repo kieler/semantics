@@ -18,8 +18,11 @@ import de.cau.cs.kieler.sccharts.Transition
 import org.eclipse.debug.core.DebugException
 
 /**
- * @author stu121235
- *
+ * Breakpoint that is triggered whenever a State's outgoing transition is taken.
+ * This is to keep track of whether the state has been left between two breakpoint activations.
+ * This breakpoint does not suspend when hit; If that is desired, @link{TransitionTakenBreakpoint}s should be used.
+ * 
+ * @author peu
  */
 class TransitionWatchBreakpoint extends TransitionBreakpoint {
     

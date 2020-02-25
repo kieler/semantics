@@ -24,7 +24,9 @@ import de.cau.cs.kieler.sccharts.ui.debug.view.DebugDiagramView
 import de.cau.cs.kieler.sccharts.ui.debug.actions.SetCheckBreakpointAction
 
 /**
- * @author stu121235
+ * Synthesis hook to add double click actions for setting breakpoints to the SCChart.
+ * 
+ * @author peu
  *
  */
 class SetBreakpointActionHook extends SynthesisHook {

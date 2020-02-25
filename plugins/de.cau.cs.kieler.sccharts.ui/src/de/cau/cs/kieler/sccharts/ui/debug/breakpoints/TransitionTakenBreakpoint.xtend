@@ -18,10 +18,14 @@ import java.util.Map
 import org.eclipse.debug.core.DebugException
 
 /**
- * @author stu121235
- *
+ * Breakpoint that is triggered whenever a transition is taken.
+ * If the breakpoint should also be triggered when the guard is evaluated to false
+ * (i.e. the transition is checked, but not taken), @link{TransitionCheckBreakpoint}s should be used.
+ * 
+ * @author peu
  */
 class TransitionTakenBreakpoint extends TransitionBreakpoint {
+    
     public static val String TRANSITION_TAKEN_BREAKPOINT = "de.cau.cs.kieler.sccharts.ui.transitionTakenMarker"
     
     new() {
@@ -33,5 +37,4 @@ class TransitionTakenBreakpoint extends TransitionBreakpoint {
         super(resource, typeName, lineNumber, charStart, charEnd, hitCount, add,
                 attributes, TRANSITION_TAKEN_BREAKPOINT, transition);
     }
-
 }

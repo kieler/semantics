@@ -37,11 +37,17 @@ import org.eclipse.core.runtime.CoreException
 import de.cau.cs.kieler.sccharts.ui.debug.breakpoints.DebugBreakpointManager
 
 /**
- * @author stu121235
- *
+ * Listener to couple the active editor with the diagram view.
+ * 
+ * @author peu
  */
 class DebugDiagramPartListener implements IPartListener2, IStartup {
     
+    /**
+     * Ensures that the listener is registered on startup.
+     * 
+     * {@inheritDoc}
+     */
     override earlyStartup() {
         var IWorkbenchPage page = null
         var IWorkbenchWindow window = PlatformUI.workbench.activeWorkbenchWindow
@@ -66,15 +72,14 @@ class DebugDiagramPartListener implements IPartListener2, IStartup {
             }
         }
         page.addPartListener(this)
-        
-        val editor = page.activeEditor
         page.getReference(page.activeEditor).partOpened        
     }
     
-    override partActivated(IWorkbenchPartReference partRef) {
-//        throw new UnsupportedOperationException("TODO: auto-generated method stub")
-    }
-    
+    /**
+     * Used to detect when the editor tab has changed.
+     * 
+     * {@inheritDoc}
+     */
     override partBroughtToTop(IWorkbenchPartReference partRef) {
         if (partRef === null) {
             return
@@ -82,6 +87,7 @@ class DebugDiagramPartListener implements IPartListener2, IStartup {
         
         val part = partRef.getPart(false)
         if (part instanceof JavaEditor) {
+            // Extract model path from editor
             val typeRoot = JavaUI.getEditorInputTypeRoot(part.editorInput)
             val compilationUnit = (typeRoot.getAdapter(ICompilationUnit) as ICompilationUnit)
             val originalVars = <IField>newLinkedList
@@ -96,6 +102,7 @@ class DebugDiagramPartListener implements IPartListener2, IStartup {
                 val lineLength = doc.getLineLength(lineNumber)
                 val modelPath = doc.get(lineOffset, lineLength).split(" = ").last.replaceAll("[;\n\"]", "")
                 
+                // Use a Job to load the breakpoints to not block the main thread
                 val modelJob = Job.create("Load model", new ICoreRunnable {
                     
                     override run(IProgressMonitor monitor) throws CoreException {
@@ -118,25 +125,15 @@ class DebugDiagramPartListener implements IPartListener2, IStartup {
         val part = partRef.getPart(false)
         // Ensure that no properties of a closed view are accessed
         if (part instanceof DebugDiagramView) {
-            // TODO debug
-            println("Clearing instance...")
             DebugDiagramView.clearInstance
-//            JavaBreakpointListener.instance.clearModel
         }
     }
     
-    override partDeactivated(IWorkbenchPartReference partRef) {
-//        throw new UnsupportedOperationException("TODO: auto-generated method stub")
-    }
-    
-    override partHidden(IWorkbenchPartReference partRef) {
-//        throw new UnsupportedOperationException("TODO: auto-generated method stub")
-    }
-    
-    override partInputChanged(IWorkbenchPartReference partRef) {
-//        throw new UnsupportedOperationException("TODO: auto-generated method stub")
-    }
-    
+    /**
+     * Used to detect a new editor or the DebugDiagramView opening.
+     * 
+     * {@inheritDoc}
+     */
     override partOpened(IWorkbenchPartReference partRef) {
         println("part opened")
         if (partRef === null) {
@@ -144,7 +141,6 @@ class DebugDiagramPartListener implements IPartListener2, IStartup {
         }
         val part = partRef.getPart(false)
         if (part instanceof DebugDiagramView) {
-//            DebugDiagramView.setInstance(part)
             val page = part.site.page
             
             // delayed to prevent KLighD init error
@@ -177,8 +173,22 @@ class DebugDiagramPartListener implements IPartListener2, IStartup {
         }
     }
     
-    override partVisible(IWorkbenchPartReference partRef) {
-//        throw new UnsupportedOperationException("TODO: auto-generated method stub")
+    override partDeactivated(IWorkbenchPartReference partRef) {
+        // unsupported
     }
     
+    override partHidden(IWorkbenchPartReference partRef) {
+        // unsupported
+    }
+    
+    override partInputChanged(IWorkbenchPartReference partRef) {
+        // unsupported
+    }
+    
+    override partVisible(IWorkbenchPartReference partRef) {
+        // unsupported
+    }
+    override partActivated(IWorkbenchPartReference partRef) {
+        // unsupported
+    }
 }

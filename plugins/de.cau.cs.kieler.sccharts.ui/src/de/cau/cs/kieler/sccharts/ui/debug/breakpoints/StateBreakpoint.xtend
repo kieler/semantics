@@ -20,7 +20,12 @@ import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.processors.statebased.DebugAnnotations
 
 /**
- * @author stu121235
+ * Breakpoint triggered whenever a certain SCCharts state is entered.
+ * These breakpoints are disabled after entering the state and only
+ * re-activated after leaving it again to ensure a single suspension
+ * per state entry.
+ * 
+ * @author peu
  *
  */
 class StateBreakpoint extends JavaLineBreakpoint {

@@ -32,7 +32,7 @@ import de.cau.cs.kieler.sccharts.State
  * This version also supports highlighting via background, not only foregrounds.
  * Also, it allows to selectively remove markers of one type while not clearing the others.
  * 
- * @author stu121235
+ * @author peu
  * 
  */
 class DebugHighlighting extends Highlighting {
@@ -56,6 +56,11 @@ class DebugHighlighting extends Highlighting {
         this.background = background
     }
 
+    /**
+     * Reapplies the highlighting after the model has been reloaded.
+     * The saved graph elements are no longer valid, therefore they are reloaded
+     * from the DebugDiagramView.
+     */
     def void reapply() {
         if (eObject === null) {
             println("Can't reapply highlighting: Unknown EObject.")

@@ -18,8 +18,12 @@ import org.eclipse.debug.core.DebugException
 import de.cau.cs.kieler.sccharts.Transition
 
 /**
- * @author stu121235
- *
+ * Breakpoint that triggers each time a transition's guard is evaluated.
+ * This happens regardless of whether the transition is actually taken.
+ * If the breakpoint should only be triggered when the transition is in fact taken,
+ * @link{TransitionTakenBreakpoint}s should be used.
+ * 
+ * @author peu
  */
 class TransitionCheckBreakpoint extends TransitionBreakpoint {
     

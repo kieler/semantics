@@ -20,8 +20,9 @@ import de.cau.cs.kieler.sccharts.processors.statebased.DebugAnnotations
 import org.eclipse.debug.core.DebugException
 
 /**
- * @author stu121235
- *
+ * Abstract superclass for all breakpoints placed on transitions.
+ * 
+ * @author peu
  */
 abstract class TransitionBreakpoint extends JavaLineBreakpoint {
     
