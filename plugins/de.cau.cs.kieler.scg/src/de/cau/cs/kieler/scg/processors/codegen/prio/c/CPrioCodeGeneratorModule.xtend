@@ -14,9 +14,11 @@ package de.cau.cs.kieler.scg.processors.codegen.prio.c
 
 import com.google.inject.Inject
 import com.google.inject.Injector
-import de.cau.cs.kieler.scg.processors.codegen.c.CCodeGeneratorModule
 import de.cau.cs.kieler.annotations.StringPragma
 import de.cau.cs.kieler.annotations.registry.PragmaRegistry
+import de.cau.cs.kieler.kicool.compilation.CodeContainer
+import de.cau.cs.kieler.scg.processors.codegen.c.CCodeGeneratorModule
+import org.eclipse.emf.common.util.URI
 
 import static de.cau.cs.kieler.kicool.compilation.codegen.AbstractCodeGenerator.*
 
@@ -64,6 +66,21 @@ class CPrioCodeGeneratorModule extends CCodeGeneratorModule {
         logic?.generateDone
         tick.code.append(logic.code)
         tick?.generateDone
+    }
+    
+    override generateWrite(CodeContainer codeContainer) {
+        super.generateWrite(codeContainer)
+        
+        for (uri : #[
+            "/de.cau.cs.kieler.scg/resources/sc/sc-generic.h",
+            "/de.cau.cs.kieler.scg/resources/sc/sc.h",
+            "/de.cau.cs.kieler.scg/resources/sc/scl.h",
+            "/de.cau.cs.kieler.scg/resources/sc/sc.c"
+        ]) {
+            codeContainer.addProxyCCodeFile(URI.createPlatformPluginURI(uri, true)) => [
+                library = true
+            ]
+        }
     }
     
     override generateWriteCodeModules(StringBuilder hFile, StringBuilder cFile) {

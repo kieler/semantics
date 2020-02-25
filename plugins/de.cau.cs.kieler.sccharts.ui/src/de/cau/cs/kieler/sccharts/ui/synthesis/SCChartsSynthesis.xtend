@@ -88,7 +88,7 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
     static val PRAGMA_FONT = "font"        
     static val PRAGMA_SKINPATH = "skinpath"
     
-    static val PRAGMA_VISUALIZE_IMPORTED_SCCHARTS = "VisualizeImportedSCCharts"
+    static val PRAGMA_HIDE_IMPORTED_SCCHARTS = "HideImportedSCCharts"
           
     val ID = "de.cau.cs.kieler.sccharts.ui.synthesis.SCChartsSynthesis"
     
@@ -181,7 +181,7 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
             val rootStateNodes = <State, KNode> newHashMap
             val rootStates = newLinkedHashSet
             rootStates += scc.rootStates
-            if (sccharts.hasPragma(PRAGMA_VISUALIZE_IMPORTED_SCCHARTS)) {
+            if (!sccharts.hasPragma(PRAGMA_HIDE_IMPORTED_SCCHARTS)) {
                 val rs = sccharts.eResource?.resourceSet
                 if (rs !== null) {
                     for (res : rs.resources.filterNull) {

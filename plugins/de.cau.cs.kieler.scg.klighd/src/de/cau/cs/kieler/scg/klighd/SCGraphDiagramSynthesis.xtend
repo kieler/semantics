@@ -2224,7 +2224,6 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         
         System.out.println("Schedules " + schedules.size)
         for(schedule : schedules) {
-            System.out.println(schedule)
             schedule.createHierarchy(NODEGROUPING_SCHEDULE, null)
         }        
     }

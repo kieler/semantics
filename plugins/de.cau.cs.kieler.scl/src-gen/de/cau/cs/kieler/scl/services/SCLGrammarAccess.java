@@ -558,7 +558,9 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cAnnotationsAnnotationParserRuleCall_0_0 = (RuleCall)cAnnotationsAssignment_0.eContents().get(0);
 		private final Keyword cIfKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		private final Assignment cExpressionAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cExpressionAtomicExpressionParserRuleCall_2_0 = (RuleCall)cExpressionAssignment_2.eContents().get(0);
+		private final Alternatives cExpressionAlternatives_2_0 = (Alternatives)cExpressionAssignment_2.eContents().get(0);
+		private final RuleCall cExpressionBoolScheduleExpressionParserRuleCall_2_0_0 = (RuleCall)cExpressionAlternatives_2_0.eContents().get(0);
+		private final RuleCall cExpressionAtomicExpressionParserRuleCall_2_0_1 = (RuleCall)cExpressionAlternatives_2_0.eContents().get(1);
 		private final Keyword cLeftCurlyBracketKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		private final Assignment cDeclarationsAssignment_4 = (Assignment)cGroup.eContents().get(4);
 		private final RuleCall cDeclarationsDeclarationParserRuleCall_4_0 = (RuleCall)cDeclarationsAssignment_4.eContents().get(0);
@@ -573,15 +575,15 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//Conditional:
 		//	annotations+=Annotation*
-		//	'if' expression=AtomicExpression
+		//	'if' expression=(BoolScheduleExpression | AtomicExpression)
 		//	'{'
 		//	declarations+=Declaration*
 		//	statements+=Statement*
 		//	'}' (else=ElseScope | semicolon?=';')?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//annotations+=Annotation* 'if' expression=AtomicExpression '{' declarations+=Declaration* statements+=Statement* '}'
-		//(else=ElseScope | semicolon?=';')?
+		//annotations+=Annotation* 'if' expression=(BoolScheduleExpression | AtomicExpression) '{' declarations+=Declaration*
+		//statements+=Statement* '}' (else=ElseScope | semicolon?=';')?
 		public Group getGroup() { return cGroup; }
 		
 		//annotations+=Annotation*
@@ -593,11 +595,17 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		//'if'
 		public Keyword getIfKeyword_1() { return cIfKeyword_1; }
 		
-		//expression=AtomicExpression
+		//expression=(BoolScheduleExpression | AtomicExpression)
 		public Assignment getExpressionAssignment_2() { return cExpressionAssignment_2; }
 		
+		//(BoolScheduleExpression | AtomicExpression)
+		public Alternatives getExpressionAlternatives_2_0() { return cExpressionAlternatives_2_0; }
+		
+		//BoolScheduleExpression
+		public RuleCall getExpressionBoolScheduleExpressionParserRuleCall_2_0_0() { return cExpressionBoolScheduleExpressionParserRuleCall_2_0_0; }
+		
 		//AtomicExpression
-		public RuleCall getExpressionAtomicExpressionParserRuleCall_2_0() { return cExpressionAtomicExpressionParserRuleCall_2_0; }
+		public RuleCall getExpressionAtomicExpressionParserRuleCall_2_0_1() { return cExpressionAtomicExpressionParserRuleCall_2_0_1; }
 		
 		//'{'
 		public Keyword getLeftCurlyBracketKeyword_3() { return cLeftCurlyBracketKeyword_3; }
@@ -2076,7 +2084,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//Conditional:
 	//	annotations+=Annotation*
-	//	'if' expression=AtomicExpression
+	//	'if' expression=(BoolScheduleExpression | AtomicExpression)
 	//	'{'
 	//	declarations+=Declaration*
 	//	statements+=Statement*
@@ -3289,6 +3297,18 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getAtomicValuedExpressionRule() {
 		return getAtomicValuedExpressionAccess().getRule();
+	}
+	
+	//// Boolean expression with scheduling directives.
+	//// Is meant to be used in derived grammars. Do not delete this rule.     
+	//BoolScheduleExpression Expression:
+	//	LogicalOrExpression ('schedule' schedule+=ScheduleObjectReference)?;
+	public KExpressionsGrammarAccess.BoolScheduleExpressionElements getBoolScheduleExpressionAccess() {
+		return gaKExpressions.getBoolScheduleExpressionAccess();
+	}
+	
+	public ParserRule getBoolScheduleExpressionRule() {
+		return getBoolScheduleExpressionAccess().getRule();
 	}
 	
 	//// Valued Object Test Expression Rule
