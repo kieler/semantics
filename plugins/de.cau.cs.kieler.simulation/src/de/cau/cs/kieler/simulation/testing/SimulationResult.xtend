@@ -15,13 +15,14 @@ package de.cau.cs.kieler.simulation.testing
 import com.google.common.collect.HashBasedTable
 import com.google.common.collect.Table
 import de.cau.cs.kieler.simulation.SimulationContext
+import de.cau.cs.kieler.simulation.SimulationHistory
+import de.cau.cs.kieler.simulation.events.TraceMismatchEvent
 import de.cau.cs.kieler.simulation.trace.ktrace.Trace
 import de.cau.cs.kieler.simulation.trace.ktrace.TraceFile
+import java.util.Collection
+import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor
-import java.util.List
-import de.cau.cs.kieler.simulation.events.TraceMismatchEvent
-import de.cau.cs.kieler.simulation.SimulationHistory
 
 /**
  * @author als
@@ -47,6 +48,10 @@ class SimulationResult {
     
     def TraceResult get(TraceFile file, int traceNum) {
         results.get(file, file.traces.get(traceNum))
+    }
+    
+    def Collection<TraceResult> getAll() {
+        return results.values
     }
     
     def boolean hasErrors() {

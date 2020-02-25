@@ -1,0 +1,6 @@
+developer system de.cau.cs.kieler.^simulation.benchmarks
+    label "Benchmarks"
+
+de.cau.cs.kieler.^simulation.testing.models.collector
+de.cau.cs.kieler.^simulation.testing.suite.generator
+de.cau.cs.kieler.^simulation.testing.benchmark.runner

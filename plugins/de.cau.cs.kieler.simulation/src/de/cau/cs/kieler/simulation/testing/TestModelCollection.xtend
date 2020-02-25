@@ -62,6 +62,10 @@ class TestModelCollection {
     def getModels() {
         return models.unmodifiableView
     }
+    
+    def size() {
+        return models.size
+    }
 
     /**
      * Repository Traverser.

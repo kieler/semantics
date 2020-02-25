@@ -80,7 +80,7 @@ class TestModelsCollector extends Processor<Object, TestModelCollection> {
                 }
             }
         } else {
-            environment.errors.add("Missing arguments! There are no paths for searching test models.")
+            environment.errors.add("Missing configuration! There are no paths for searching test models.")
         }
         model = new TestModelCollection(dirs)
     }
