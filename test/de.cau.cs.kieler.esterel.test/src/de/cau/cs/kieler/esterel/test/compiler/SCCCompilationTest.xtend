@@ -21,9 +21,9 @@ import de.cau.cs.kieler.kicool.compilation.Compile
 import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.scl.SCLProgram
 import de.cau.cs.kieler.scl.SCLStandaloneSetup
+import de.cau.cs.kieler.simulation.testing.TestModelData
 import de.cau.cs.kieler.test.common.repository.AbstractXTextModelRepositoryTest
 import de.cau.cs.kieler.test.common.repository.ModelsRepositoryTestRunner
-import de.cau.cs.kieler.test.common.repository.TestModelData
 import java.io.ByteArrayOutputStream
 import java.io.PrintWriter
 import java.io.StringWriter
@@ -42,8 +42,8 @@ import org.junit.runner.RunWith
 import static org.junit.Assert.*
 import static org.junit.Assume.*
 
-import static extension java.lang.Boolean.*
 import static extension java.lang.String.format
+import static extension java.lang.Boolean.parseBoolean
 
 /**
  * Tests if all sensible intermediate results of the SCC compilation for Esterel fullfill basic sanity properties.

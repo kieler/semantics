@@ -65,7 +65,7 @@ class SCGDiagramHighlighter extends DiagramHighlighter {
     }
     
     def isSupported(SimulationContext ctx) {
-        val compileCtx = ctx.startEnvironment.getProperty(SimulationContext.SOURCE_COMPILATION_CONTEXT)
+        val compileCtx = ctx.sourceCompilationContext
         return compileCtx !== null 
     }
     
