@@ -12,8 +12,10 @@
  */
 package de.cau.cs.kieler.test.common.repository
 
+import com.google.common.reflect.TypeToken
 import com.google.inject.Guice
-import java.io.FileInputStream
+import com.google.inject.Injector
+import de.cau.cs.kieler.simulation.testing.TestModelData
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.resource.IResourceServiceProvider
@@ -21,9 +23,7 @@ import org.eclipse.xtext.resource.XtextResource
 import org.eclipse.xtext.resource.XtextResourceSet
 
 import static extension com.google.common.base.Preconditions.*
-import static extension de.cau.cs.kieler.test.common.repository.TestModelDataUtil.*
-import com.google.common.reflect.TypeToken
-import com.google.inject.Injector
+import static extension de.cau.cs.kieler.simulation.testing.TestModelDataUtil.*
 
 /**
  * An abstract {@link IModelsRepositoryTest} which automatically parses XText models.
@@ -58,30 +58,16 @@ abstract class AbstractXTextModelRepositoryTest<T extends EObject> implements IM
      * {@inheritDoc}
      */
     override T loadModel(TestModelData data) {
-        val absModelPath = data.repositoryPath.resolve(data.modelPath)
-        try {
-            val uri = URI.createFileURI(absModelPath.toFile.absolutePath)
-            // Get resource set
-            var resourceSet = uri.xtextResourceSet
-            resourceSet.addLoadOption(XtextResource.OPTION_RESOLVE_ALL, Boolean.FALSE)
-            // Load referenced model
-            for (absRelatedPath : data.resourceSetModels.filter[it != data.modelPath].map[data.repositoryPath.resolve(it)]) {
-                val relatedURI = URI.createFileURI(absRelatedPath.toFile.absolutePath)
-                resourceSet.getResource(relatedURI, true)
-            }
-            // Load file
-            val resource = resourceSet.getResource(uri, true)
-            
-            // Fix references
-            if (resourceSet.resources.size > 1) {
-                resourceSet.resources.filter(XtextResource).forEach[relink]
-            }
-            return resource.getContents().head as T
-        } catch (Exception e) {
-            throw new Exception("Cannot load model from "+absModelPath.toString, e)
-        }
+        return data.load(resourceSetInjector) as T
     }
     
+    /**
+     * {@inheritDoc}
+     */   
+    override compare(TestModelData a, TestModelData b) {
+        return compareHierarchy.hierachicalCompare(a, b)
+    }
+
     /**
      * @return the correct XtextResourceSet for the given uri based in its file extension.
      */
@@ -93,13 +79,6 @@ abstract class AbstractXTextModelRepositoryTest<T extends EObject> implements IM
             val registry = Guice.createInjector().getInstance(IResourceServiceProvider.Registry)
             return registry.getResourceServiceProvider(uri).get(XtextResourceSet)
         }
-    }
-    
-    /**
-     * {@inheritDoc}
-     */   
-    override compare(TestModelData a, TestModelData b) {
-        return compareHierarchy.hierachicalCompare(a, b)
     }
 
 }

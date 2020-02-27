@@ -13,9 +13,9 @@
 package de.cau.cs.kieler.lustre.test.simulation
 
 import de.cau.cs.kieler.lustre.LustreStandaloneSetup
-import de.cau.cs.kieler.test.common.simulation.AbstractSimulationTest
 import de.cau.cs.kieler.lustre.lustre.LustreProgram
-import de.cau.cs.kieler.test.common.repository.TestModelData
+import de.cau.cs.kieler.simulation.testing.TestModelData
+import de.cau.cs.kieler.test.common.simulation.AbstractSimulationTest
 import org.junit.Test
 
 import static org.junit.Assume.*
