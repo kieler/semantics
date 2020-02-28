@@ -54,13 +54,6 @@ def main(args):
         pause(args)
     else:
         updateCategory(features, category, args)
-    # check benchmark category file
-    category = join(args.path, 'build/de.cau.cs.kieler.semantics.benchmark.repository/category.xml')
-    if not isfile(category):
-        print 'category.xml does not exist: ' + category
-        pause(args)
-    else:
-        updateCategory(features, category, args)
     # check pom file
     pom = join(args.path, 'build/de.cau.cs.kieler.semantics.repository/pom.xml')
     if not isfile(pom):

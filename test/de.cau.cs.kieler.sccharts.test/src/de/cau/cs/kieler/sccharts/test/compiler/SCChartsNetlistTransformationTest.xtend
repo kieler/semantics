@@ -14,7 +14,6 @@ package de.cau.cs.kieler.sccharts.test.compiler
 
 import com.google.inject.Guice
 import com.google.inject.Inject
-import com.google.inject.Injector
 import de.cau.cs.kieler.kicool.compilation.Compile
 import de.cau.cs.kieler.kicool.compilation.VariableStore
 import de.cau.cs.kieler.kicool.environments.Environment
@@ -22,9 +21,9 @@ import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.text.SCTXStandaloneSetup
 import de.cau.cs.kieler.scg.SCGraphs
 import de.cau.cs.kieler.scg.extensions.SCGValidationExtensions
+import de.cau.cs.kieler.simulation.testing.TestModelData
 import de.cau.cs.kieler.test.common.repository.AbstractXTextModelRepositoryTest
 import de.cau.cs.kieler.test.common.repository.ModelsRepositoryTestRunner
-import de.cau.cs.kieler.test.common.repository.TestModelData
 import java.io.PrintWriter
 import java.io.StringWriter
 import org.junit.Test
