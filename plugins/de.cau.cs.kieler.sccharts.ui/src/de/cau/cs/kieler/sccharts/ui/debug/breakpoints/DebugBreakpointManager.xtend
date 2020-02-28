@@ -259,12 +259,14 @@ class DebugBreakpointManager {
                 if (!varValue.valueString.equals("null")) {
                     val stateName = varValue.variables.filter[name.equals("origin")].head.value.toString
                     // TODO redo this with regex matchers, throws exceptions
-                    val states = getStatesByID(stateName.split(" ").get(1).split("\\(").get(0))
-                    val stateHashString = stateName.split("\\(").last
-                    val stateHashValue = stateHashString.substring(0, stateHashString.length - 2)
-                    activeStates.addAll(states.filter [
-                        DebugAnnotations.getFullNameHash(it).toString.equals(stateHashValue)
-                    ])
+                    if (stateName != "\"\"") {
+                        val states = getStatesByID(stateName.split(" ").get(1).split("\\(").get(0))
+                        val stateHashString = stateName.split("\\(").last
+                        val stateHashValue = stateHashString.substring(0, stateHashString.length - 2)
+                        activeStates.addAll(states.filter [
+                            DebugAnnotations.getFullNameHash(it).toString.equals(stateHashValue)
+                        ])
+                    }
                 }
             } else {
                 // Get the active state from a child region

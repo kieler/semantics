@@ -477,7 +477,7 @@ class StatebasedLeanJavaTemplate extends AbstractStatebasedLeanTemplate {
             }
 
         return '''
-			«voType» «vo.name»«voCardinals»;«IF vo.input » // Input«ENDIF»«IF vo.output » // Output«ENDIF»
+			«voType» «vo.name»«IF vo.isArray» [] = new «voType»«ENDIF»«voCardinals»;«IF vo.input » // Input«ENDIF»«IF vo.output » // Output«ENDIF»
 		'''
     }
 
