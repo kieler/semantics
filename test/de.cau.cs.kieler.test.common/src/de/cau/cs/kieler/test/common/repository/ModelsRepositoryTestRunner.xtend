@@ -12,6 +12,9 @@
  */
 package de.cau.cs.kieler.test.common.repository
 
+import com.google.inject.Guice
+import com.google.inject.Injector
+import de.cau.cs.kieler.simulation.testing.TestModelData
 import de.cau.cs.kieler.test.common.runners.ModelCollectionTestRunner
 import java.lang.annotation.ElementType
 import java.lang.annotation.Retention
@@ -34,11 +37,8 @@ import org.junit.runners.model.InitializationError
 import org.junit.runners.model.Statement
 
 import static org.junit.Assert.*
-
-import static extension de.cau.cs.kieler.test.common.repository.TestModelDataUtil.*
+import static extension de.cau.cs.kieler.simulation.testing.TestModelDataUtil.*
 import static extension java.lang.Integer.*
-import com.google.inject.Guice
-import com.google.inject.Injector
 
 /**
  * The {@link Runner} for {@link IModelsRepositoryTest}.
