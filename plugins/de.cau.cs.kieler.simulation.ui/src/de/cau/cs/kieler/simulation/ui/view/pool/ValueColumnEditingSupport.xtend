@@ -62,7 +62,10 @@ class ValueColumnEditingSupport extends EditingSupport implements ICellEditorVal
      * {@inheritDoc}
      */
     override protected canEdit(Object element) {
-        return true
+        if (element instanceof DataPoolEntry) {
+            return element.isInput || view.nonInputUserValues
+        }
+        return false
     }
     
     /**
