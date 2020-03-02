@@ -22,7 +22,7 @@
  *
  */
 
-#if defined WIN32
+#if (defined(WIN32) || defined(WIN64) || defined(_MSC_VER) || defined(_WIN32))
 // - Windows case -
 #include <stdio.h>
 #include <stdlib.h>
@@ -47,7 +47,7 @@ long int remembered_time;
 
 
 void resetticktime() {
-#if defined WIN32
+#if (defined(WIN32) || defined(WIN64) || defined(_MSC_VER) || defined(_WIN32))
     QueryPerformanceFrequency(&frequency);
     QueryPerformanceCounter(&remembered_time);
     return;
@@ -59,7 +59,7 @@ void resetticktime() {
 }
 
 double getticktime() {
-#if defined WIN32
+#if (defined(WIN32) || defined(WIN64) || defined(_MSC_VER) || defined(_WIN32))
     LARGE_INTEGER current_time;
     QueryPerformanceCounter(&current_time);
 
