@@ -16,9 +16,9 @@ import de.cau.cs.kieler.annotations.CommentAnnotation
 import de.cau.cs.kieler.kexpressions.TextExpression
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.text.SCTXStandaloneSetup
+import de.cau.cs.kieler.simulation.testing.TestModelData
 import de.cau.cs.kieler.test.common.repository.AbstractXTextModelRepositoryTest
 import de.cau.cs.kieler.test.common.repository.ModelsRepositoryTestRunner
-import de.cau.cs.kieler.test.common.repository.TestModelData
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import org.eclipse.emf.common.util.URI
@@ -27,7 +27,6 @@ import org.eclipse.emf.compare.match.impl.MatchEngineFactoryImpl
 import org.eclipse.emf.compare.match.impl.MatchEngineFactoryRegistryImpl
 import org.eclipse.emf.compare.scope.FilterComparisonScope
 import org.eclipse.emf.compare.utils.UseIdentifiers
-import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.resource.XtextResource
 import org.eclipse.xtext.resource.XtextResourceSet
 import org.junit.Test
@@ -38,8 +37,6 @@ import static org.junit.Assume.*
 
 import static extension java.lang.String.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.kexpressions.keffects.Assignment
-import java.util.function.Predicate
 
 /**
  * Tests if all SCCharts can be serializer and parsed and yield the same model.

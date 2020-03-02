@@ -49,11 +49,22 @@ class SimulationHistory implements Iterable<DataPool> {
         history.clear
     }
     
+    def length() {
+        history.size
+    }
+    
     /**
      * Iterates over history in revese order.<br>
-     * Oldest to youndgest pool.
+     * Oldest to latest pool.
      */
     def reverseIterator() {
         return history.descendingIterator
+    }
+    
+    override SimulationHistory clone() {
+        new SimulationHistory() => [
+            it.maxLength = this.maxLength
+            it.history.addAll(this.history)
+        ]
     }
 }
