@@ -34,7 +34,7 @@ Require-Bundle: de.cau.cs.kieler.klighd,
  org.eclipse.ui.ide;bundle-version="3.14.0",
  de.cau.cs.kieler.scl.ui,
  de.cau.cs.kieler.klighd.ui.view,
- org.eclipse.elk.alg.packing.rectangles;bundle-version="0.6.1"
+ org.eclipse.elk.alg.rectpacking;bundle-version="0.6.1"
 Bundle-Vendor: Kiel University
 Bundle-ActivationPolicy: lazy
 Export-Package: de.cau.cs.kieler.sccharts.ui,

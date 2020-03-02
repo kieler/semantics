@@ -75,7 +75,7 @@ import java.util.List
 import java.util.Map
 import org.eclipse.elk.alg.layered.options.LayerConstraint
 import org.eclipse.elk.alg.layered.options.LayeredOptions
-import org.eclipse.elk.alg.packing.rectangles.options.RectPackingOptions
+import org.eclipse.elk.alg.rectpacking.options.RectPackingOptions
 import org.eclipse.elk.core.math.ElkPadding
 import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.core.options.Direction
