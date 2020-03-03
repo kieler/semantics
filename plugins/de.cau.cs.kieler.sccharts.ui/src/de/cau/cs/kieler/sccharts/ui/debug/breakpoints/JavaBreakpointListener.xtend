@@ -42,8 +42,9 @@ class JavaBreakpointListener implements IJavaBreakpointListener, IDebugEventSetL
 
     override handleDebugEvents(DebugEvent[] events) {
         for (event : events) {
-            if (event.kind == DebugEvent.SUSPEND && event.detail == DebugEvent.STEP_END) {
-                println("Step ending.")
+            if (event.kind == DebugEvent.SUSPEND && 
+                (event.detail == DebugEvent.STEP_END || event.detail == DebugEvent.CLIENT_REQUEST)
+            ) {
                 val thread = event.source
                 if (thread instanceof IJavaThread) {
                     DebugBreakpointManager.instance.stepEnding(thread)
@@ -53,7 +54,6 @@ class JavaBreakpointListener implements IJavaBreakpointListener, IDebugEventSetL
                 println("Ending debug run.")
                 
             } else if (event.kind == DebugEvent.RESUME) {
-                println("Resuming execution.")
                 DebugBreakpointManager.instance.resuming
             }
         }
