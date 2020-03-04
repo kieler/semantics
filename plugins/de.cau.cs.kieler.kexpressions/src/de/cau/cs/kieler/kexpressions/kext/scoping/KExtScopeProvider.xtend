@@ -69,30 +69,29 @@ import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
 		    // The context is a subreference!
 		    return contextContainer.getScopeForReferencedDeclarationFromSubReference(reference)
 		} 
-		else if (context instanceof ValuedObjectReference) {
-		    if (contextContainer instanceof Assignment) {
-		        // The context is a subreference inside of an assignment!
-		        if (context.subReference !== null && context.subReference.valuedObject === null) {
-                    return context.getScopeForReferencedDeclarationFromSubReference(reference)
-		        }
-		        
-            } else if (contextContainer instanceof Emission) {
-                if (context === contextContainer.reference) {
-                    // The context is the reference of a standard emission.
-                    return context.getScopeHierarchical(reference)    
-                }
-	       	} else if (context.subReference != null && context.subReference.valuedObject == null) {
-		        var parentVO = context as ValuedObjectReference
-		        return parentVO.getScopeForReferencedDeclarationFromSubReference(reference)
-            }
-        }
+//		else if (context instanceof ValuedObjectReference) {
+//		    if (contextContainer instanceof Assignment) {
+//		        // The context is a subreference inside of an assignment!
+//		        if (context.subReference !== null && context.subReference.valuedObject === null) {
+//                    return context.getScopeForReferencedDeclarationFromSubReference(reference)
+//		        }
+//            } else if (contextContainer instanceof Emission) {
+//                if (context === contextContainer.reference) {
+//                    // The context is the reference of a standard emission.
+//                    return context.getScopeHierarchical(reference)    
+//                }
+//	       	} else if (context.subReference !== null && context.subReference.valuedObject === null) {
+//		        var parentVO = context as ValuedObjectReference
+//		        return parentVO.getScopeForReferencedDeclarationFromSubReference(reference)
+//            }
+//        }
 		return context.getScopeHierarchical(reference)
 	}
 	
 	 protected def IScope getScopeForReferencedDeclarationFromAssignment(EObject context, EReference reference) {
         if (context instanceof Assignment) {
-            if (context.reference.valuedObject != null) {
-                if (context.reference.valuedObject.eContainer != null) {
+            if (context.reference.valuedObject !== null) {
+                if (context.reference.valuedObject.eContainer !== null) {
                     if (context.reference.valuedObject.eContainer instanceof ReferenceDeclaration) {
                         return (context.reference.valuedObject.eContainer as ReferenceDeclaration).
                             getScopeForReferencedDeclarationObject(context.reference)[ input ]
@@ -122,7 +121,8 @@ import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
                 }
             }
         }
-        return context.getScopeHierarchical(reference)	    
+        // SubReferences must only be linked against members of their parents
+        return IScope.NULLSCOPE
 	}
 	
 	protected def IScope getScopeForStruct(ClassDeclaration struct) {
@@ -194,21 +194,3 @@ import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
 	} 
 
 }
-
-
-// Xtext example: 
-
-//	override getScope(EObject context, EReference reference) {
-//		// We want to define the Scope for the Element's superElement cross-reference
-//		if (context instanceof ValuedObjectReference && reference == KextPackage.Literals.TEST_ENTITY__EFFECT) {
-//			// Collect a list of candidates by going through the model
-//			// EcoreUtil2 provides useful functionality to do that
-//			// For example searching for all elements within the root Object's tree
-//			val rootElement = EcoreUtil2.getRootContainer(context)
-//			val candidates = EcoreUtil2.getAllContentsOfType(rootElement, Element)
-//			// Create IEObjectDescriptions and puts them into an IScope instance
-//			return Scopes.scopeFor(candidates)
-//		}
-//		return super.getScope(context, reference);
-//	}
-
