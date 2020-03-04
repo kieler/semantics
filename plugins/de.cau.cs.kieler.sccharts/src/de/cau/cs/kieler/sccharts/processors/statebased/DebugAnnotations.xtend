@@ -66,8 +66,6 @@ class DebugAnnotations extends SCChartsProcessor implements Traceable {
         }
         
         val tracing = environment.getProperty(Tracing.TRACING_DATA)
-//        val sourceFile = environment.compilationContext.
-
 
         val source = tracing.tracingChain.models.head
         if (!(source instanceof SCCharts)) {
@@ -78,12 +76,10 @@ class DebugAnnotations extends SCChartsProcessor implements Traceable {
         val sourceFile = environment.findResource(source) as SCTXResource
         val sourcePath = ProjectInfrastructure.getProjectInfrastructure(environment).getProjectRelativeFile(sourceFile.underlyingFile)
         
-        
         // Retrieve mapping information for each current model element
         val mapping = tracing.getMapping(model, source)
         model => [rootStates.forEach[transform(mapping)]]
         model => [rootStates.forEach[allContainedTransitions.forEach[transform(mapping)]]]
-        
         
         model => [rootStates.forEach[addStringAnnotation("ORIGINAL_SCCHART", sourcePath.toString)]]
         return model
@@ -138,15 +134,11 @@ class DebugAnnotations extends SCChartsProcessor implements Traceable {
         transition.getFullName.hashCode
     }
     
-    // TODO move to some utility
     static def int getFullNameHash(State state) {
         state.getFullName.hashCode
     }
     
     static def String getFullName(Transition transition) {
-//        var name = "Transition " + transition.sourceState.fullName + " -> " + transition.targetState.fullName + "\n"
-//        name += "Delay: " + transition.delay + ", Deferred: " transition.deferred + ", Trigger: " transition.trigger
-//        name += ", Effects: [" transition.effects.map[toString].join("]")
         var name = "Transition " + transition.sourceState.fullName + " -> " + transition.targetState.fullName + "\n"
         name += "Priority: " + transition.priority
         name
@@ -160,11 +152,7 @@ class DebugAnnotations extends SCChartsProcessor implements Traceable {
             parentRegion.parentState.getFullName + "_Region" + parentRegion.name + "_State" + state.name
         }
     }
-    
-    
-    
-    
-    // TODO use from SCChartsTransitionExtensions and find a way to inject static members
+
     static def getPriority(Transition transition) {
         val state = transition.eContainer
         if (state === null) return 0
