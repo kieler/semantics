@@ -325,11 +325,11 @@ class DebugBreakpointManager {
                     // TODO redo this with regex matchers
                     val commentLines = comment.split("\n")
                     // get last-but-first line, which is the last text line of the comment
-                    val stateNameString = commentLines.get(commentLines.length - 2)
+                    val stateNameString = commentLines.get(commentLines.length - 2).trim
                     val stateName = stateNameString.split("\\* ").get(1)
                     val states = getStatesByID(stateName.split(" ").get(1).split("\\(").get(0))
                     val stateHashString = stateName.split("\\(").last
-                    val stateHashValue = stateHashString.substring(0, stateHashString.length - 1)
+                    val stateHashValue = stateHashString.substring(0, stateHashString.length - 1).trim
                     executingStates.addAll(states.filter [
                         DebugAnnotations.getFullNameHash(it).toString.equals(stateHashValue)
                     ].toList)
@@ -456,11 +456,11 @@ class DebugBreakpointManager {
         }
         // Only re-display model if it's not the same one as before or there is none currently being displayed
         val diagramView = DebugDiagramView.instance
-        if (currentModel === null || diagramView?.needsInit || (!text.equals(currentModelPath))
-            || (text.equals(currentModelPath) && !modelBeingDisplayed)) {
+        if (currentModel === null || diagramView?.needsInit || (text != currentModelPath)
+            || ((text == currentModelPath) && !modelBeingDisplayed)) {
             
             // Only re-parse / reload the model if it is not the same one as before
-            if (!text.equals(currentModelPath)) {
+            if (text != currentModelPath) {
                 currentModelPath = text
                 val mapEntry = pathToModel.get(text)
                 if (mapEntry !== null) {
@@ -595,7 +595,7 @@ class DebugBreakpointManager {
                 val lineNumber = doc.getLineOfOffset(originalVars.head.sourceRange.offset)
                 val lineOffset = doc.getLineOffset(lineNumber)
                 val lineLength = doc.getLineLength(lineNumber)
-                modelPath = doc.get(lineOffset, lineLength).split(" = ").last.replaceAll("[;\n\"]", "")
+                modelPath = doc.get(lineOffset, lineLength).split(" = ").last.replaceAll("[;\"]", "").trim
             }
         }
         return modelPath
