@@ -100,7 +100,7 @@ class DebugDiagramPartListener implements IPartListener2, IStartup {
                 val lineNumber = doc.getLineOfOffset(originalVars.head.sourceRange.offset)
                 val lineOffset = doc.getLineOffset(lineNumber)
                 val lineLength = doc.getLineLength(lineNumber)
-                val modelPath = doc.get(lineOffset, lineLength).split(" = ").last.replaceAll("\";", "").strip
+                val modelPath = doc.get(lineOffset, lineLength).split(" = ").last.replaceAll("\";", "").trim
                 // Use a Job to load the breakpoints to not block the main thread
                 val modelJob = Job.create("Load model", new ICoreRunnable {
                     
@@ -163,7 +163,7 @@ class DebugDiagramPartListener implements IPartListener2, IStartup {
                 val lineNumber = doc.getLineOfOffset(originalVars.head.sourceRange.offset)
                 val lineOffset = doc.getLineOffset(lineNumber)
                 val lineLength = doc.getLineLength(lineNumber)
-                val modelPath = doc.get(lineOffset, lineLength).split(" = ").last.replaceAll("[\";]", "").strip
+                val modelPath = doc.get(lineOffset, lineLength).split(" = ").last.replaceAll("[\";]", "").trim
                 DebugBreakpointManager.instance.setModel(modelPath)
                 DebugBreakpointManager.instance.loadBreakpoints(compilationUnit.resource)                
             } else {
