@@ -66,13 +66,14 @@ class DebugDiagramPartListener implements IPartListener2, IStartup {
                         if (page !== null) {
                             // ugly fix for missing break in xtend
                             i = windows.length
-                            println("found a page!")
                         }
                 }
             }
         }
-        page.addPartListener(this)
-        page.getReference(page.activeEditor).partOpened        
+        if (page !== null) {
+            page.addPartListener(this)
+            page.getReference(page.activeEditor).partOpened        
+        }
     }
     
     /**
@@ -91,16 +92,17 @@ class DebugDiagramPartListener implements IPartListener2, IStartup {
             val typeRoot = JavaUI.getEditorInputTypeRoot(part.editorInput)
             val compilationUnit = (typeRoot.getAdapter(ICompilationUnit) as ICompilationUnit)
             val originalVars = <IField>newLinkedList
-            for (type : compilationUnit.allTypes) {
-                originalVars.addAll(type.fields.filter[it.elementName == "ORIGINAL_SCCHART"])
+            if (compilationUnit !== null) {
+                for (type : compilationUnit.allTypes) {
+                    originalVars.addAll(type.fields.filter[it.elementName == "ORIGINAL_SCCHART"])
+                }
             }
-            
             if (!originalVars.empty) {
                 val doc = part.documentProvider.getDocument(part.editorInput)
                 val lineNumber = doc.getLineOfOffset(originalVars.head.sourceRange.offset)
                 val lineOffset = doc.getLineOffset(lineNumber)
                 val lineLength = doc.getLineLength(lineNumber)
-                val modelPath = doc.get(lineOffset, lineLength).split(" = ").last.replaceAll("\";", "").trim
+                val modelPath = doc.get(lineOffset, lineLength).split(" = ").last.replaceAll("[\";]", "").trim
                 // Use a Job to load the breakpoints to not block the main thread
                 val modelJob = Job.create("Load model", new ICoreRunnable {
                     
