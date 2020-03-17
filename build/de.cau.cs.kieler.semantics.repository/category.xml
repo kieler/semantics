@@ -32,11 +32,12 @@
     <category name="kieler-sources"/>
   </feature>
   <!-- Repository references to associated sites -->
-  <repository-reference location="http://download.eclipse.org/releases/photon" enabled="true"/>
-  <repository-reference location="http://download.eclipse.org/tools/orbit/downloads/drops/R20180606145124/repository/" enabled="true"/>
-  <repository-reference location="http://download.eclipse.org/modeling/tmf/xtext/updates/releases/2.16.0/" enabled="true"/>
-  <repository-reference location="http://download.eclipse.org/lsp4j/updates/releases/0.6.0/" enabled="true"/>
+  <repository-reference location="http://download.eclipse.org/releases/2019-12" enabled="true"/>
+  <repository-reference location="http://download.eclipse.org/tools/orbit/downloads/drops/R20191126223242/repository/" enabled="true"/>
+  <repository-reference location="http://download.eclipse.org/modeling/tmf/xtext/updates/releases/2.20.0/" enabled="true"/>
+  <repository-reference location="http://download.eclipse.org/lsp4j/updates/releases/0.8.1/" enabled="true"/>
   <repository-reference location="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/release_pragmatics_2018-06.U2/" enabled="true"/>
   <repository-reference location="http://download.eclipse.org/elk/updates/releases/0.4.0/" enabled="true"/>
   <repository-reference location="http://download.eclipse.org/egit/updates" enabled="true"/>
+  <repository-reference location="http://download.eclipse.org/jetty/updates/jetty-bundles-9.x/" enabled="true"/>
 </site>
