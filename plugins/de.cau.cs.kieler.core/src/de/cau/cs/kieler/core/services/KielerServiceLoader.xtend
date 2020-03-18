@@ -18,7 +18,7 @@ import java.util.ServiceLoader
 import org.osgi.framework.FrameworkUtil
 
 /**
- * ServiceLoader adaoted to the KIELER project.
+ * ServiceLoader adapted to the KIELER project.
  * 
  * @author als
  */
