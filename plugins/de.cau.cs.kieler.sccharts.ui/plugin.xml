@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
-   <extension-point id="de.cau.cs.kieler.sccharts.ui.synthesis.hooks" name="Synthesis Hooks" schema="schema/hooks.exsd"/>
    <extension
          point="de.cau.cs.kieler.klighd.extensions">
       <action
@@ -55,60 +54,6 @@
             class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.sccharts.ui.synthesis.ScopeSynthesis"
             id="de.cau.cs.kieler.sccharts.ui.synthesis.ScopeSynthesis">
       </diagramSynthesis>
-   </extension>
-   <extension
-         point="de.cau.cs.kieler.sccharts.ui.synthesis.hooks">
-      <hook
-            class="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.DeclarationsHook">
-      </hook>
-      <hook
-            class="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.LocalDeclarationsHook">
-      </hook>
-      <hook
-            class="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.StateActionsHook">
-      </hook>
-      <hook
-            class="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.BlackWhiteModeHook">
-      </hook>
-      <hook
-            class="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.ShadowHook">
-      </hook>
-      <hook
-            class="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.ShowAnnotationsHook">
-      </hook>
-      <hook
-            class="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.HideAnnotationHook">
-      </hook>
-      <hook
-            class="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.LabelPlacementSideHook">
-      </hook>
-      <hook
-            class="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.LabelShorteningHook">
-      </hook>
-      <hook
-            class="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.SynthesisAnnotationHook">
-      </hook>
-      <hook
-            class="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.LayoutHook">
-      </hook>
-      <hook
-            class="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.ExpandCollapseHook">
-      </hook>
-      <hook
-            class="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.ColorAnnotationHook">
-      </hook>
-      <hook
-            class="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.InducedDataflowHook">
-      </hook>
-      <hook
-            class="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.ShowStateDependencyHook">
-      </hook>
-      <hook
-            class="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.ActionsAsDataflowHook">
-      </hook>
-      <hook
-            class="de.cau.cs.kieler.sccharts.ui.debug.hooks.SetBreakpointActionHook">
-      </hook>
    </extension>
     <extension
             point="org.eclipse.ui.editors">
