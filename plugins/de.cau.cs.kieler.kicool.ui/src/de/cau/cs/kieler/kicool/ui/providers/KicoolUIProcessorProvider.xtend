@@ -23,7 +23,7 @@ class KicoolUIProcessorProvider implements IProcessorProvider {
     
     override getProcessors() {
         #[
-            de.cau.cs.kieler.kicool.ui.processors.JavaParserProcessor
+//            de.cau.cs.kieler.kicool.ui.processors.JavaParserProcessor
         ]
     }
     
