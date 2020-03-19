@@ -68,6 +68,7 @@ import org.eclipse.cdt.core.dom.ast.IASTCaseStatement
 import org.eclipse.cdt.core.dom.ast.IASTDefaultStatement
 import org.eclipse.cdt.core.dom.ast.IASTBreakStatement
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsSerializeExtensions
+import org.eclipse.cdt.core.dom.ast.IASTExpression
 
 /**
  * @author lewe
@@ -241,6 +242,9 @@ class StructflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCChar
                 val funcState = functionStates.get(funcName)
                 dRegion = createDataflowRegion("")
                 funcState.regions += dRegion
+                for (annote : funcState.annotations) {
+                    dRegion.annotations += annote
+                }
                 // Translate each statement
                 for (stmt : funcDef.getBody.children) {
                     buildStructFlow(stmt, funcState, dRegion)    
@@ -377,6 +381,7 @@ class StructflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCChar
         
         // Translate the body            
         val forDRegion = createDataflowRegion("")
+        forDRegion.insertHighlightAnnotations(stmt)
         forState.regions += forDRegion
         val forBody = stmt.getBody
         for (bStmt : forBody.children) {
@@ -403,6 +408,7 @@ class StructflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCChar
         
         // Translate the body          
         val wDRegion = createDataflowRegion("")
+        wDRegion.insertHighlightAnnotations(stmt)
         wState.regions += wDRegion
         val wBody = stmt.getBody
         for (bStmt : wBody.children) {
@@ -429,6 +435,7 @@ class StructflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCChar
         
         // Translate the body            
         val doDRegion = createDataflowRegion("")
+        doDRegion.insertHighlightAnnotations(stmt)
         doState.regions += doDRegion
         val doBody = stmt.getBody
         for (bStmt : doBody.children) {
@@ -455,6 +462,7 @@ class StructflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCChar
         
         // Translate the body       
         val ifCRegion = createControlflowRegion("")
+        ifCRegion.insertHighlightAnnotations(stmt)
         ifState.regions += ifCRegion
         val initState = ifCRegion.createState("Init")
         initState.initial = true
@@ -470,6 +478,7 @@ class StructflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCChar
         // Translate the then branch            
         val thenBody = stmt.getThenClause
         thenState.insertHighlightAnnotations(thenBody)
+        thenDRegion.insertHighlightAnnotations(thenBody)
         for (tStmt : thenBody.children) {
             buildStructFlow(tStmt, ifState, thenDRegion)
         }      
@@ -481,6 +490,7 @@ class StructflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCChar
             val elseState = ifCRegion.createState("Else")
             elseState.insertHighlightAnnotations(elseBody)
             val elseDRegion = createDataflowRegion("")
+            elseDRegion.insertHighlightAnnotations(elseBody)
             elseState.regions += elseDRegion
             // Create the else transition
             initState.createTransitionTo(elseState)
@@ -670,18 +680,20 @@ class StructflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCChar
                     dRegion.equations += createAssignment(funcCallVO, funcCallInputVO, inputVO.reference)
                 }
                 
-                // Connect the function outputs            
-                for (funcCallOutput : funcCallOutputs) {
-                    val funcCallOutputVOList = VOs.get(funcCallState).get(funcCallOutput)
-                    val funcCallOutputVO = findOutputVar(funcCallOutputVOList)
-                    if (funcCallOutputVO !== null) {
-                        val outputVO = funcState.findValuedObjectByName(funcCallOutput, true, dRegion)
-                                    
-                        val sourceReference = funcCallVO.reference => [
-                            subReference = funcCallOutputVO.reference
-                        ]
-                        dRegion.equations += createAssignment(outputVO, sourceReference)
-                        outputVO.insertHighlightAnnotations(expr)
+                // Connect the function outputs   
+                if (funcCallOutputs !== null) {         
+                    for (funcCallOutput : funcCallOutputs) {
+                        val funcCallOutputVOList = VOs.get(funcCallState).get(funcCallOutput)
+                        val funcCallOutputVO = findOutputVar(funcCallOutputVOList)
+                        if (funcCallOutputVO !== null) {
+                            val outputVO = funcState.findValuedObjectByName(funcCallOutput, true, dRegion)
+                                        
+                            val sourceReference = funcCallVO.reference => [
+                                subReference = funcCallOutputVO.reference
+                            ]
+                            dRegion.equations += createAssignment(outputVO, sourceReference)
+                            outputVO.insertHighlightAnnotations(expr)
+                        }
                     }
                 }
                 
@@ -696,15 +708,21 @@ class StructflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCChar
     // Translate an expression
     def Expression createStructFlowKExpression(IASTNode expr, State funcState, DataflowRegion dRegion) {
         var Expression res
-        
+        println("createStructFlowKExpression für expr: " + expr)
         // Create a reference expression for a use of a struct element
         if (expr instanceof IASTFieldReference) {
             val structExpr = expr.getFieldOwner
+            println("   expr is fieldReference und filed owner is: " + structExpr)
             if (structExpr instanceof IASTIdExpression) {
+                println("    field owner is idexpression")
                 if (structExpr.getName.toString.equals(structName)) {
+                    println("filed owner is central struct")
                     val elemVO = funcState.findValuedObjectByName(expr.getFieldName.toString, false, dRegion)
                     res = elemVO.reference
                 }
+            } else if (structExpr instanceof IASTFieldReference) {
+                println("field owner is wieder ne field reference")
+                res = structExpr.createStructFlowKExpression(funcState, dRegion)
             }
         // Translate the unary expression    
         } else if (expr instanceof IASTUnaryExpression) {
@@ -868,6 +886,15 @@ class StructflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCChar
         res
     }
     
+    def printASTHead(IASTNode node, String prefix) {
+        println(prefix + node.toString)
+        for (child : node.children) {
+            if (!(child instanceof IASTCompoundStatement)) {
+                printASTHead(child, prefix + "  ")
+            }
+        }
+    }
+    
     // Return all elements of set1 that are not contained in set2
     def ArrayList<String> findDifference(HashSet<String> set1, HashSet<String> set2) {
         val res = <String> newArrayList
@@ -901,6 +928,8 @@ class StructflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCChar
                     if (structExpr.getName.toString.equals(structName)) {
                         res += stmt.getFieldName.toString
                     }
+                } else if (structExpr instanceof IASTFieldReference) {
+                    res = findInputElements(structExpr)
                 }
             // Test if the array is a struct element    
             } else if (stmt instanceof IASTArraySubscriptExpression) {
@@ -933,8 +962,17 @@ class StructflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCChar
                     funcName = (stmt.getFunctionNameExpression as IASTIdExpression).getName.toString
                 
                 } else {
-                    val nameExpression = stmt.getFunctionNameExpression as IASTUnaryExpression
-                    funcName = (nameExpression.getOperand as IASTIdExpression).getName.toString
+                    println("FUNC CALL!!!")
+                    println("containingFile: " + stmt.getContainingFilename)
+                    println("location Offset: " + stmt.getNodeLocations.get(0).getNodeOffset)
+                    println("FunctionName: " + stmt.FUNCTION_NAME)
+                    printASTHead(stmt, "")
+                    /*var IASTExpression nameExpression = stmt.getFunctionNameExpression
+                    while (!(nameExpression instanceof IASTIdExpression)) {
+                        nameExpression = (nameExpression as IASTUnaryExpression).getOperand
+                    }
+                    funcName = (nameExpression as IASTIdExpression).getName.toString*/
+                    funcName = "Weird Func Call!"
                 }
                 if (functionInputElements.containsKey(funcName)) {
                     res = functionInputElements.get(funcName)
@@ -1016,6 +1054,8 @@ class StructflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCChar
                             if (structExpr.getName.toString.equals(structName)) {
                                 res += op1.getFieldName.toString
                             }
+                        } else if (structExpr instanceof IASTFieldReference) {
+                            res = findInputElements(structExpr)
                         }
                     // Test if the array is a struct element     
                     } else if (op1 instanceof IASTArraySubscriptExpression) {
@@ -1026,6 +1066,8 @@ class StructflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCChar
                                 if (structExpr.getName.toString.equals(structName)) {
                                     res += array.getFieldName.toString
                                 }
+                            } else if (structExpr instanceof IASTFieldReference) {
+                                res = findInputElements(structExpr)
                             }
                         }
                     }
