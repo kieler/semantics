@@ -185,7 +185,11 @@ class SimulationModelWrapper implements Simulatable, ExecutableContainerWrapper 
     
     protected def writeInput(DataPool pool) {
         // Create json for this model from data pool
-        val jsonInput = DataPool.serializeJSON(pool.getInput(this))
+        val jsonInput = if (context.startEnvironment.getProperty(SimulationContext.ONLY_INPUTS)) {
+            DataPool.serializeJSON(pool.getInput(this))
+        } else {
+            DataPool.serializeJSON(pool.rawData)
+        }
         
         // Write data pool to process
         in.print(jsonInput)

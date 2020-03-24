@@ -14,7 +14,6 @@ package de.cau.cs.kieler.sccharts.ui.synthesis.labels
 
 import com.google.inject.Guice
 import com.google.inject.Inject
-import de.cau.cs.kieler.klighd.krendering.KRenderingOptions
 import de.cau.cs.kieler.klighd.internal.util.KlighdInternalProperties
 import de.cau.cs.kieler.klighd.kgraph.KLabel
 import de.cau.cs.kieler.klighd.krendering.KRenderingRef
@@ -23,6 +22,7 @@ import de.cau.cs.kieler.sccharts.Transition
 import org.eclipse.elk.graph.ElkLabel
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.klighd.krendering.KRenderingOptions
 
 /**
  * @author als

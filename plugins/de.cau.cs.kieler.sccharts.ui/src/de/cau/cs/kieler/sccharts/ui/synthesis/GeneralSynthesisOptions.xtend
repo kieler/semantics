@@ -72,7 +72,7 @@ final class GeneralSynthesisOptions {
     /** 
      * inherited declarations and regions synthesis option 
      */
-    public static final SynthesisOption SHOW_INHERITANCE = SynthesisOption.createCheckOption("Inherited Parts", true).setCategory(OO)
+    public static final SynthesisOption SHOW_INHERITANCE = SynthesisOption.createCheckOption("Inheritance Preview", true).setCategory(OO)
     public static final SynthesisOption SHOW_INHERITANCE_EDGES = SynthesisOption.createCheckOption("Inheritance Hierarchy", false).setCategory(OO)
     public static final SynthesisOption SHOW_METHOD_BODY = SynthesisOption.createCheckOption("Method Implementation", true).setCategory(OO)
     /** 

@@ -12,15 +12,16 @@
  */
 package de.cau.cs.kieler.scg.processors.priority
 
+import com.google.inject.Inject
 import de.cau.cs.kieler.scg.Entry
+import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.Join
 import de.cau.cs.kieler.scg.Node
+import de.cau.cs.kieler.scg.extensions.SCCExtensions
 import java.util.HashMap
 import java.util.LinkedList
 import java.util.List
-import de.cau.cs.kieler.scg.extensions.SCCExtensions
-import com.google.inject.Inject
 
 /**
  * Class for the calculation of node priorities of an SCG.
@@ -170,6 +171,7 @@ class NodePriorities {
                 }
             }
         }
+        
         maxPrio = Math.max(maxPrio, prio)
         min.put(currentSCC, prio)
         
@@ -261,6 +263,17 @@ class NodePriorities {
             }            
         }
         
+        // Fix prio for unreachable exit
+        for (exit : currentSCC.filter(Exit).filter[incomingLinks.empty]) {
+            if (nodePrio.containsKey(exit.entry)) {
+                nodePrio.put(exit, nodePrio.get(exit.entry))
+            } else {
+                val entrySCC = sccs.get(sccMap.get(exit.entry))
+                visited.put(entrySCC, true)   
+                val extryPrio = calculateNodePrios(entrySCC)
+                nodePrio.put(exit, extryPrio)
+            }
+        }
         
         return nextPrio
     }
