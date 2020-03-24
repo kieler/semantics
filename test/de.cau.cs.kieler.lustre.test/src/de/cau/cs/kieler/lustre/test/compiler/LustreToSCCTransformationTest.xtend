@@ -14,14 +14,15 @@ package de.cau.cs.kieler.lustre.test.compiler
 
 import de.cau.cs.kieler.kicool.compilation.Compile
 import de.cau.cs.kieler.kicool.environments.Environment
+import de.cau.cs.kieler.lustre.LustreStandaloneSetup
 import de.cau.cs.kieler.lustre.lustre.LustreProgram
 import de.cau.cs.kieler.lustre.processors.lustreToScc.LustreToSCCharts
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.text.SCTXStandaloneSetup
+import de.cau.cs.kieler.simulation.testing.TestModelData
 import de.cau.cs.kieler.test.common.repository.AbstractXTextModelRepositoryTest
 import de.cau.cs.kieler.test.common.repository.ModelsRepositoryTestRunner
 import de.cau.cs.kieler.test.common.repository.ModelsRepositoryTestRunner.StopOnFailure
-import de.cau.cs.kieler.test.common.repository.TestModelData
 import java.io.ByteArrayOutputStream
 import java.io.PrintWriter
 import java.io.StringWriter
@@ -40,7 +41,6 @@ import org.junit.runner.RunWith
 import static org.junit.Assert.*
 
 import static extension java.lang.String.format
-import de.cau.cs.kieler.lustre.LustreStandaloneSetup
 
 /**
  * Tests if the Lustre to SCC dataflow transformation produces reasonable results.

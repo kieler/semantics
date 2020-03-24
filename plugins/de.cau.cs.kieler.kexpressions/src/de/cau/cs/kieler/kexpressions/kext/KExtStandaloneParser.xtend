@@ -40,7 +40,7 @@ class KExtStandaloneParser {
      */
     static def JsonObjectValue parseJsonObject(String text) {
         val exp = ("json " + text).parseScope(StandardCharsets.UTF_8).entities.head?.expression?.expression
-        if (exp === null) {
+        if (exp instanceof JsonObjectValue) {
             return exp as JsonObjectValue
         }
         return null

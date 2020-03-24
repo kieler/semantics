@@ -448,6 +448,10 @@
             class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kicool.ui.view.registry.KiCoolSystemsSynthesis"
             id="de.cau.cs.kieler.kicool.ui.view.registry.KiCoolSystemsSynthesis">
       </diagramSynthesis>
+      <diagramSynthesis
+            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kicool.ui.synthesis.JavaASTSynthesis"
+            id="de.cau.cs.kieler.kicool.ui.JavaASTSynthesis">
+      </diagramSynthesis>
    </extension>
        <extension
              point="org.eclipse.ui.views">

@@ -12,15 +12,18 @@
  */
 package de.cau.cs.kieler.kicool.compilation
 
+import de.cau.cs.kieler.core.uri.URIUtils
+import de.cau.cs.kieler.kicool.compilation.codegen.CodeGeneratorNames
+import de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure
 import java.io.File
 import java.nio.file.Files
 import java.util.List
+import java.util.Map
+import org.eclipse.emf.common.util.URI
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor
 
 import static com.google.common.base.Preconditions.*
-import java.util.Map
-import de.cau.cs.kieler.kicool.compilation.codegen.CodeGeneratorNames
 
 /**
  * A CodeContainer contains a map of files. Each file is represented by a string.
@@ -75,8 +78,26 @@ class CodeContainer {
         return new CCodeFile(file) => [files += it]
     }
     
+    def addProxyCCodeFile(URI uri) {
+        if (uri.file) {
+            addProxyCCodeFile(URIUtils.getJavaFile(uri))
+        } else if (uri.lastSegment.endsWith(".h")) {
+            addCHeader(uri.lastSegment, ProjectInfrastructure.readContent(uri))
+        } else {
+            addCCode(uri.lastSegment, ProjectInfrastructure.readContent(uri))
+        }
+    }
+    
     def addProxyJavaFile(File file) {
         return new JavaCodeFile(file) => [files += it]
+    }
+    
+    def addProxyJavaFile(URI uri) {
+        if (uri.file) {
+            addProxyJavaFile(URIUtils.getJavaFile(uri))
+        } else {
+            addJavaCode(uri.lastSegment, ProjectInfrastructure.readContent(uri))
+        }
     }
 }
 
@@ -88,6 +109,8 @@ class CodeFile {
     @Accessors var File underlyingFile = null
     @Accessors val Map<CodeGeneratorNames, String> naming = <CodeGeneratorNames, String> newHashMap 
     @Accessors var String modelName
+    @Accessors var boolean library
+    
     
     new(File underlyingFile) {
         this(underlyingFile, null)
