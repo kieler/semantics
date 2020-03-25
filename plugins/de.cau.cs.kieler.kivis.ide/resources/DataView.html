@@ -1,46 +1,179 @@
 <html>
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=11,chrome=1">
     <!--Load the AJAX API-->
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gridstack@1.1.1/dist/gridstack.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/gridstack@1.1.1/dist/gridstack.all.js"></script>
     <script type="text/javascript">
-
-      // Load the Visualization API and the corechart package.
-      google.charts.load('current', {'packages':['corechart']});
-
-      // Set a callback to run when the Google Visualization API is loaded.
-      google.charts.setOnLoadCallback(drawChart);
-
-      // Callback that creates and populates a data table,
-      // instantiates the pie chart, passes in the data and
-      // draws it.
-      function drawChart() {
-
-        // Create the data table.
-        var data = new google.visualization.DataTable();
-        data.addColumn('string', 'Topping');
-        data.addColumn('number', 'Slices');
-        data.addRows([
-          ['Mushrooms', 3],
-          ['Onions', 1],
-          ['Olives', 1],
-          ['Zucchini', 1],
-          ['Pepperoni', 2]
-        ]);
-
-        // Set chart options
-        var options = {'title':'How Much Pizza I Ate Last Night',
-                       'width':400,
-                       'height':300};
-
-        // Instantiate and draw our chart, passing in some options.
-        var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
-        chart.draw(data, options);
-      }
+    
+        var internal_browser = false
+        var ticks = []
+        var charts = []
+        var grid = null;
+        
+        var available_grids = [
+            {
+                "name": "Current Values",
+                "id": "current_values",
+                "default_width": 3,
+                "default_height": 5,
+                "create": function(){
+                    this.data = new google.visualization.DataTable();
+                    this.data.addColumn('string', 'Name');
+                    this.data.addColumn('string', 'Value');
+                    this.table = new google.visualization.ChartWrapper({
+                        chartType: 'Table',
+                        dataTable: this.data,
+                        options: {showRowNumber: true, width: '100%', height: 'auto'},
+                        container: this.container
+                    });
+                    this.table.draw();
+                    if (ticks.length > 0 ) this.update()
+                    _this = this
+                    google.visualization.events.addListener(this.table, 'select', function() {
+                        if (_this.table.getChart().getSelection().length > 0){
+                            var row = _this.table.getChart().getSelection()[0].row;
+                            showGrid('history', _this.data.getValue(row, 0))
+                        }
+                    });
+                },
+                "update": function(){
+                    _this = this
+                    current_tick = ticks[ticks.length - 1]
+                    Object.keys(current_tick).forEach(function(k){
+                        found = false
+                        for (var i = 0; i < _this.data.getNumberOfRows(); i++){
+                            if (_this.data.getValue(i, 0) == k){
+                                found = true
+                                _this.data.setValue(i, 1, current_tick[k].toString())
+                                break;
+                            }
+                        }
+                        if (!found){
+                            _this.data.addRow([k, current_tick[k].toString()])
+                        }
+                    })
+                    this.table.draw();
+                }
+            },
+            {
+                "name": "History",
+                "id": "history",
+                "default_width": 5,
+                "default_height": 2,
+                "create": function(){
+                    this.data = new google.visualization.DataTable();
+                    this.data.addColumn('number', 'Tick');
+                    if (Array.isArray(this.param)) this.culumns = parameter; else this.columns = [this.param]
+                    this.columns.forEach(c => this.data.addColumn('number', c))
+                    this.table = new google.visualization.ChartWrapper({
+                        chartType: 'Line',
+                        dataTable: this.data,
+                        options: {width: '100%', height: 'auto'},
+                        container: this.container
+                    });
+                    _this = this
+                    ticks.forEach(function(tick, i){
+                        _this.data.addRow()
+                        _this.data.setValue(i, 0, i)
+                        Object.keys(tick).forEach(function(k){
+                            pos = _this.columns.findIndex(x => x == k)
+                            if (pos >= 0){
+                                _this.data.setValue(i, pos + 1, parseFloat(tick[k]))
+                            }
+                        })
+                    })
+                    this.table.draw();
+                },
+                "update": function(){
+                    row = ticks.length - 1
+                    current_tick = ticks[row]
+                    this.data.addRow()
+                    this.data.setValue(row, 0, row)
+                    _this = this
+                    Object.keys(current_tick).forEach(function(k){
+                        pos = _this.columns.findIndex(x => x == k)
+                        if (pos >= 0){
+                            _this.data.setValue(row, pos + 1, parseFloat(current_tick[k]))
+                        }
+                    })
+                    this.table.draw();
+                }
+            }
+        ]
+        
+        function showGrid(id, param){
+            data = available_grids.find(x => x.id == id)
+            chart = new Object()
+            chart.create = data.create
+            chart.update = data.update
+            chart.param = param
+            charts.push(chart)
+            grid.addWidget('<div><div id="' + id + '" class="grid-stack-item-content grid card box-shadow"><div class="card-header"><h4 class="my-0 font-weight-normal">' + data.name + 
+                '</h4></div><div class="card-body"></div></div></div>', {width: data.default_width, height: data.default_height});
+            chart.container = $('#' + id + ' .card-body')[0]
+            chart.create()
+        }
+        
+        // Communication with simulation server
+        if (!internal_browser) {
+            // Not in eclipse embedded mode -> connect to simulation web socket
+            var connection = new WebSocket("ws://" + window.location.hostname + ":" + window.location.port + "/simulation");
+            
+            connection.onmessage = function (msg) {
+                if (msg && msg.data) {
+                    var msgObj = JSON.parse(msg.data);
+                    if (msgObj.event === "step") {
+                        js_function_kivis_visualize(msgObj.pool);
+                        connection.send(JSON.stringify({
+                            "action": "patch",
+                            "tick": msgObj.tick,
+                            "pool": msgObj.pool
+                        }));
+                    }
+                }
+            };
+        }
+            
+        function java_callback_kivis_simulation_control(action) {
+            connection.send(JSON.stringify({
+                "action": action
+            }));
+        }
+        
+        function java_callback_kivis_action_setter(name, value) {
+            var data = {
+                "action": "set",
+                "pool": {}
+            };
+            data.pool[name] = JSON.parse(value);
+            connection.send(JSON.stringify(data));
+        }
+      
+        function js_function_kivis_visualize(tick_data){
+            ticks.push(tick_data)
+            charts.forEach(c => c.update())
+        }
+        
+        function initialize(){
+            grid = GridStack.init()
+            showGrid('current_values', undefined)
+        }
+        
+        $( document ).ready(function(){
+            google.charts.load('current', {'packages':['controls', 'table', 'corechart']});
+            google.charts.setOnLoadCallback(initialize);
+        })
     </script>
   </head>
 
   <body>
     <!--Div that will hold the pie chart-->
-    <div id="chart_div"></div>
+    <div class="grid-stack"></div>
   </body>
 </html>

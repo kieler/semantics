@@ -313,7 +313,9 @@ class KiVisDataView extends ViewPart implements ISimulationListener {
             os.write(buffer, 0, len);
         }
         val bytes = os.toByteArray();
-        isLoaded = browser.setText(new String(bytes, StandardCharsets.UTF_8))
+        var html = new String(bytes, StandardCharsets.UTF_8)
+        html = html.replace("var internal_browser = false", "var internal_browser = true")
+        isLoaded = browser.setText(html)
     }
 
 }
