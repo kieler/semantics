@@ -21,8 +21,15 @@ import org.eclipse.jetty.websocket.servlet.WebSocketServletFactory
  * @author als
  */
 class SimulationServlet extends WebSocketServlet {
+    
+    static val MAX_MESSAGE_SIZE = 1 * 1024 * 1024 // 1MB
 
     override configure(WebSocketServletFactory factory) {
+        // configure socket
+        factory.policy.maxBinaryMessageSize = MAX_MESSAGE_SIZE
+        factory.policy.maxBinaryMessageBufferSize = MAX_MESSAGE_SIZE
+        factory.policy.maxTextMessageSize = MAX_MESSAGE_SIZE
+        factory.policy.maxTextMessageBufferSize = MAX_MESSAGE_SIZE
         // register SimulationSocket as the WebSocket to create on Upgrade
         factory.register(SimulationSocket)
     }

@@ -16,15 +16,17 @@ import de.cau.cs.kieler.kicool.compilation.Compile
 import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.lustre.LustreStandaloneSetup
 import de.cau.cs.kieler.lustre.lustre.LustreProgram
+import de.cau.cs.kieler.lustre.processors.lustreToScc.LustreToSCCharts
+import de.cau.cs.kieler.sccharts.SCCharts
+import de.cau.cs.kieler.sccharts.text.SCTXStandaloneSetup
+import de.cau.cs.kieler.simulation.testing.TestModelData
 import de.cau.cs.kieler.test.common.repository.AbstractXTextModelRepositoryTest
 import de.cau.cs.kieler.test.common.repository.ModelsRepositoryTestRunner
 import de.cau.cs.kieler.test.common.repository.ModelsRepositoryTestRunner.StopOnFailure
-import de.cau.cs.kieler.test.common.repository.TestModelData
 import java.io.ByteArrayOutputStream
 import java.io.PrintWriter
 import java.io.StringWriter
 import org.eclipse.emf.common.util.URI
-import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.emf.ecore.xmi.XMLResource
 import org.eclipse.xtext.diagnostics.Severity
@@ -51,8 +53,9 @@ class LustreToSCCTransformationTest extends AbstractXTextModelRepositoryTest<Lus
     /** Compiler configuration */
     val compilationSystemID = "de.cau.cs.kieler.lustre.scc.dataflow"
     
-    /** Lustre Parser Injector */
-    static val lustreInjector = new LustreStandaloneSetup().createInjectorAndDoEMFRegistration
+    /** Parser Injector */
+    static val sctxInjector = new SCTXStandaloneSetup().createInjectorAndDoEMFRegistration
+    static val lustreInjector = LustreStandaloneSetup.doSetup
     
     //-----------------------------------------------------------------------------------------------------------------
     
@@ -60,7 +63,7 @@ class LustreToSCCTransformationTest extends AbstractXTextModelRepositoryTest<Lus
      * Constructor
      */
     new() {
-        super(LustreToSCCTransformationTest.lustreInjector)
+        super(lustreInjector)
     }
     
     /**
@@ -92,36 +95,34 @@ class LustreToSCCTransformationTest extends AbstractXTextModelRepositoryTest<Lus
                 ].join("\n- "))
             }
             
+            // -- Check SCTX
+            val sctxResult = context.processorInstancesSequence.findFirst[LustreToSCCharts.ID.equals(id)]
+            
             // Create resource
-            val uri = URI.createURI("dummy:/test/" + modelData.modelPath.fileName.toString + ".lus")
-            val resourceSet = lustreInjector.getInstance(XtextResourceSet)
+            val uri = URI.createURI("dummy:/test/" + modelData.modelPath.fileName.toString + ".sctx")
+            val resourceSet = sctxInjector.getInstance(XtextResourceSet)
             val resource = resourceSet.createResource(uri) as XtextResource
-            resource.getContents().add(iResult.model as EObject)
+            resource.getContents().add(sctxResult.targetModel as SCCharts)
             
             // Check if validator marks no errors
-            val validator = LustreToSCCTransformationTest.lustreInjector.getInstance(IResourceValidator)
+            val validator = sctxInjector.getInstance(IResourceValidator)
             val validatorResults = validator.validate(lus.eResource, CheckMode.ALL, CancelIndicator.NullImpl).filter[severity === Severity.ERROR].toList
-            assertTrue("Intermediate result of transformation " + iResult.id + " contains validation error markers: \n- " + validatorResults.map[message].join("\n- "), validatorResults.empty)            
+            assertTrue("Intermediate result of transformation " + sctxResult.id + " contains validation error markers: \n- " + validatorResults.map[message].join("\n- "), validatorResults.empty)            
             
-            val name = "intermediate result of transformation " + iResult.id
-            
-            assertNotNull("The %s is null".format(name), iResult.model)
-            assertTrue("Intermediate result of transformation " + iResult.id + " is not a Lustre Program", iResult.model instanceof LustreProgram)
-
+            // Serialize
             try {
                 // Serialize
                 val outputStream = new ByteArrayOutputStream(25000);
                 resource.save(outputStream, saveOptions)
                 
-                assertTrue("Serialized %s is empty".format(name), outputStream.size > 0)
+                assertTrue("Serialized %s is empty".format(sctxResult.id), outputStream.size > 0)
             } catch (AssertionError ae) {
                 throw ae
             } catch (Exception e) {
-                throw new Exception("Error while serializing %s caused by: %s".format(name, e.message), e)
+                throw new Exception("Error while serializing %s caused by: %s".format(sctxResult.id, e.message), e)
             }
             
-            
-        }        
+        }
     }
     
     //-----------------------------------------------------------------------------------------------------------------

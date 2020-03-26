@@ -12,10 +12,8 @@
  */
 package de.cau.cs.kieler.verification.extensions
 
-import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kicool.compilation.CompilationContext
 import de.cau.cs.kieler.kicool.compilation.codegen.CodeGeneratorModule
-import de.cau.cs.kieler.verification.RangeAssumption
 import de.cau.cs.kieler.verification.VerificationContext
 
 /** 
@@ -33,19 +31,6 @@ class VerificationContextExtensions {
     
     public static def VerificationContext getVerificationContext(CodeGeneratorModule<?, ?> codeGenModule) {
         return codeGenModule.processorInstance.compilationContext.asVerificationContext
-    }
-    
-    public static def void copyAssumptions(VerificationContext context, ValuedObject vo, ValuedObject source) {
-        for(assumption : context.verificationAssumptions.clone) {
-            switch(assumption) {
-                RangeAssumption : {
-                    if(assumption.valuedObject !== null && assumption.valuedObject.name == source.name) {
-                        val assumptionCopy = new RangeAssumption(vo, assumption.minValue, assumption.maxValue)
-                        context.verificationAssumptions.add(assumptionCopy)
-                    }
-                }
-            }
-        }
     }
     
     public static def boolean isVerificationContext(CompilationContext context) {

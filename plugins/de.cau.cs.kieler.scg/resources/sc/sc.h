@@ -303,6 +303,7 @@ unsigned long _longBit;
   _BitScanReverse(active, _cid)
 #else
 # define selectCid() {				\
+	int _i;			\
     for (_i = _idsetSize - 1; ; _i--) {		\
       _SC_ERROR_DETECT_NONE_ACTIVE		\
 	_setPart = active[_i];			\

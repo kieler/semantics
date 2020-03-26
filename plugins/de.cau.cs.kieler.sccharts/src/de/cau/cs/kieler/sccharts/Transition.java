@@ -47,7 +47,7 @@ package de.cau.cs.kieler.sccharts;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.sccharts.Transition#getPreemption <em>Preemption</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.Transition#getHistory <em>History</em>}</li>
- *   <li>{@link de.cau.cs.kieler.sccharts.Transition#isDeferred <em>Deferred</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.Transition#getDeferred <em>Deferred</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.Transition#getTargetState <em>Target State</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.Transition#getSourceState <em>Source State</em>}</li>
  * </ul>
@@ -66,6 +66,7 @@ public interface Transition extends Action {
 
     /**
      * Returns the value of the '<em><b>Preemption</b></em>' attribute.
+     * The default value is <code>"WEAK"</code>.
      * The literals are from the enumeration {@link de.cau.cs.kieler.sccharts.PreemptionType}.
      * <!-- begin-user-doc -->
      * <p>
@@ -77,7 +78,7 @@ public interface Transition extends Action {
      * @see de.cau.cs.kieler.sccharts.PreemptionType
      * @see #setPreemption(PreemptionType)
      * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getTransition_Preemption()
-     * @model required="true"
+     * @model default="WEAK" required="true"
      * @generated
      */
     PreemptionType getPreemption();
@@ -125,29 +126,28 @@ public interface Transition extends Action {
 
     /**
      * Returns the value of the '<em><b>Deferred</b></em>' attribute.
+     * The literals are from the enumeration {@link de.cau.cs.kieler.sccharts.DeferredType}.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Deferred</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Deferred</em>' attribute.
-     * @see #setDeferred(boolean)
+     * @see de.cau.cs.kieler.sccharts.DeferredType
+     * @see #setDeferred(DeferredType)
      * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getTransition_Deferred()
      * @model
      * @generated
      */
-    boolean isDeferred();
+    DeferredType getDeferred();
 
     /**
-     * Sets the value of the '{@link de.cau.cs.kieler.sccharts.Transition#isDeferred <em>Deferred</em>}' attribute.
+     * Sets the value of the '{@link de.cau.cs.kieler.sccharts.Transition#getDeferred <em>Deferred</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @param value the new value of the '<em>Deferred</em>' attribute.
-     * @see #isDeferred()
+     * @see de.cau.cs.kieler.sccharts.DeferredType
+     * @see #getDeferred()
      * @generated
      */
-    void setDeferred(boolean value);
+    void setDeferred(DeferredType value);
 
     /**
      * Returns the value of the '<em><b>Target State</b></em>' reference.

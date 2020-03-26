@@ -14,19 +14,24 @@ package de.cau.cs.kieler.esterel.test.compiler
 
 import de.cau.cs.kieler.esterel.EsterelProgram
 import de.cau.cs.kieler.esterel.EsterelStandaloneSetup
+import de.cau.cs.kieler.esterel.Signal
+import de.cau.cs.kieler.esterel.TypeIdentifier
 import de.cau.cs.kieler.esterel.processors.transformators.incremental.SCEstTransformation
 import de.cau.cs.kieler.esterel.scest.SCEstStandaloneSetup
+import de.cau.cs.kieler.kicool.compilation.CompilationContext
 import de.cau.cs.kieler.kicool.compilation.Compile
+import de.cau.cs.kieler.kicool.compilation.Processor
 import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.scl.SCLProgram
 import de.cau.cs.kieler.scl.SCLStandaloneSetup
+import de.cau.cs.kieler.simulation.testing.TestModelData
 import de.cau.cs.kieler.test.common.repository.AbstractXTextModelRepositoryTest
 import de.cau.cs.kieler.test.common.repository.ModelsRepositoryTestRunner
 import de.cau.cs.kieler.test.common.repository.ModelsRepositoryTestRunner.StopOnFailure
-import de.cau.cs.kieler.test.common.repository.TestModelData
 import java.io.ByteArrayOutputStream
 import java.io.PrintWriter
 import java.io.StringWriter
+import java.util.List
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.resource.Resource
@@ -43,14 +48,8 @@ import org.junit.runner.RunWith
 import static org.junit.Assert.*
 import static org.junit.Assume.*
 
-import static extension java.lang.Boolean.parseBoolean
 import static extension java.lang.String.format
-import de.cau.cs.kieler.esterel.Signal
-import de.cau.cs.kieler.esterel.TypeIdentifier
-import java.util.ArrayList
-import de.cau.cs.kieler.kicool.compilation.CompilationContext
-import java.util.List
-import de.cau.cs.kieler.kicool.compilation.Processor
+import static extension java.lang.Boolean.parseBoolean
 
 /**
  * Tests if all sensible intermediate results of the Esterel to SCL compilation fullfill basic sanity properties.
@@ -93,7 +92,7 @@ class EsterelSCLCompilationTest extends AbstractXTextModelRepositoryTest<Esterel
         && (!modelData.modelProperties.contains("must-fail") || modelData.modelProperties.contains("must-fail-validation"))
     }
     
-    @Test(timeout=15000)
+    @Test(timeout=20000)
     @StopOnFailure
     def void testValidationDynamic(EsterelProgram est, TestModelData modelData) {
         assumeFalse("Has 'scest-dynamic-fails' property", modelData.modelProperties.contains("scest-dynamic-fails"))
@@ -101,7 +100,7 @@ class EsterelSCLCompilationTest extends AbstractXTextModelRepositoryTest<Esterel
         checkValidation(est, modelData, est.compile(compilationSystemID))
     }
     
-    @Test(timeout=15000)
+    @Test(timeout=20000)
     @StopOnFailure
     def void testValidationSLIC(EsterelProgram est, TestModelData modelData) {
         assumeFalse("Has 'scest-slic-fails' property", modelData.modelProperties.contains("scest-slic-fails"))
@@ -144,14 +143,14 @@ class EsterelSCLCompilationTest extends AbstractXTextModelRepositoryTest<Esterel
         }        
     }
     
-    @Test(timeout=10000)
+    @Test(timeout=20000)
     def void testSerializabilityDynamic(EsterelProgram est, TestModelData modelData) {
         assumeFalse("Has 'scest-dynamic-fails' property", modelData.modelProperties.contains("scest-dynamic-fails"))
         assumeTrue("Program contains unsupported data types", est.hasNoEsterelType) // skip if program includes esterel type
         checkSerializability(est, modelData, est.compile(compilationSystemID))
     }
     
-    @Test(timeout=10000)
+    @Test(timeout=20000)
     def void testSerializabilitySLIC(EsterelProgram est, TestModelData modelData) {
         assumeFalse("Has 'scest-slic-fails' property", modelData.modelProperties.contains("scest-slic-fails"))
         assumeTrue("Program contains unsupported data types", est.hasNoEsterelType) // skip if program includes esterel type

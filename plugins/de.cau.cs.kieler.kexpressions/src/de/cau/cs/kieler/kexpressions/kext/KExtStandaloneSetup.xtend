@@ -20,13 +20,19 @@ import com.google.inject.Injector
  * @author sdo
  */
 class KExtStandaloneSetup extends KExtStandaloneSetupGenerated {
-
+    
     static Injector injector
     
-	def static doSetup() {
-	    if (injector === null) {
-	        injector = new KExtStandaloneSetup().createInjectorAndDoEMFRegistration()
-	    }
-		return injector
-	}
+    def static doSetup() {
+        if (injector === null) {
+            injector = new KExtStandaloneSetup().createInjectorAndDoEMFRegistration()
+        }
+        return injector
+    }
+    
+    override register(Injector injector) {
+        super.register(injector)
+        // Ensure package is registered 
+        KExtPackage.eINSTANCE.eClass()
+    }
 }

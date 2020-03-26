@@ -17,6 +17,8 @@ import org.eclipse.emf.ecore.util.InternalEList;
 import de.cau.cs.kieler.kexpressions.Expression;
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.kexpressions.Parameter;
+import de.cau.cs.kieler.kexpressions.ParameterAccessType;
+import de.cau.cs.kieler.kexpressions.ParamterAccessType;
 import de.cau.cs.kieler.kexpressions.ValuedObject;
 import java.util.Collection;
 
@@ -28,8 +30,7 @@ import java.util.Collection;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.kexpressions.impl.ParameterImpl#isCallByReference <em>Call By Reference</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kexpressions.impl.ParameterImpl#isPureOutput <em>Pure Output</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.impl.ParameterImpl#getAccessType <em>Access Type</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.impl.ParameterImpl#getExpression <em>Expression</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.impl.ParameterImpl#getExplicitBinding <em>Explicit Binding</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.impl.ParameterImpl#getExplicitBindingIndices <em>Explicit Binding Indices</em>}</li>
@@ -39,44 +40,24 @@ import java.util.Collection;
  */
 public class ParameterImpl extends EObjectImpl implements Parameter {
     /**
-     * The default value of the '{@link #isCallByReference() <em>Call By Reference</em>}' attribute.
+     * The default value of the '{@link #getAccessType() <em>Access Type</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #isCallByReference()
+     * @see #getAccessType()
      * @generated
      * @ordered
      */
-    protected static final boolean CALL_BY_REFERENCE_EDEFAULT = false;
+    protected static final ParameterAccessType ACCESS_TYPE_EDEFAULT = ParameterAccessType.CALL_BY_VALUE;
 
     /**
-     * The cached value of the '{@link #isCallByReference() <em>Call By Reference</em>}' attribute.
+     * The cached value of the '{@link #getAccessType() <em>Access Type</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #isCallByReference()
+     * @see #getAccessType()
      * @generated
      * @ordered
      */
-    protected boolean callByReference = CALL_BY_REFERENCE_EDEFAULT;
-
-    /**
-     * The default value of the '{@link #isPureOutput() <em>Pure Output</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #isPureOutput()
-     * @generated
-     * @ordered
-     */
-    protected static final boolean PURE_OUTPUT_EDEFAULT = false;
-
-    /**
-     * The cached value of the '{@link #isPureOutput() <em>Pure Output</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #isPureOutput()
-     * @generated
-     * @ordered
-     */
-    protected boolean pureOutput = PURE_OUTPUT_EDEFAULT;
+    protected ParameterAccessType accessType = ACCESS_TYPE_EDEFAULT;
 
     /**
      * The cached value of the '{@link #getExpression() <em>Expression</em>}' containment reference.
@@ -133,8 +114,8 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
      * @generated
      */
     @Override
-    public boolean isCallByReference() {
-        return callByReference;
+    public ParameterAccessType getAccessType() {
+        return accessType;
     }
 
     /**
@@ -143,34 +124,11 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
      * @generated
      */
     @Override
-    public void setCallByReference(boolean newCallByReference) {
-        boolean oldCallByReference = callByReference;
-        callByReference = newCallByReference;
+    public void setAccessType(ParameterAccessType newAccessType) {
+        ParameterAccessType oldAccessType = accessType;
+        accessType = newAccessType == null ? ACCESS_TYPE_EDEFAULT : newAccessType;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, KExpressionsPackage.PARAMETER__CALL_BY_REFERENCE, oldCallByReference, callByReference));
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public boolean isPureOutput() {
-        return pureOutput;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public void setPureOutput(boolean newPureOutput) {
-        boolean oldPureOutput = pureOutput;
-        pureOutput = newPureOutput;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, KExpressionsPackage.PARAMETER__PURE_OUTPUT, oldPureOutput, pureOutput));
+            eNotify(new ENotificationImpl(this, Notification.SET, KExpressionsPackage.PARAMETER__ACCESS_TYPE, oldAccessType, accessType));
     }
 
     /**
@@ -295,10 +253,8 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
-            case KExpressionsPackage.PARAMETER__CALL_BY_REFERENCE:
-                return isCallByReference();
-            case KExpressionsPackage.PARAMETER__PURE_OUTPUT:
-                return isPureOutput();
+            case KExpressionsPackage.PARAMETER__ACCESS_TYPE:
+                return getAccessType();
             case KExpressionsPackage.PARAMETER__EXPRESSION:
                 return getExpression();
             case KExpressionsPackage.PARAMETER__EXPLICIT_BINDING:
@@ -319,11 +275,8 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
-            case KExpressionsPackage.PARAMETER__CALL_BY_REFERENCE:
-                setCallByReference((Boolean)newValue);
-                return;
-            case KExpressionsPackage.PARAMETER__PURE_OUTPUT:
-                setPureOutput((Boolean)newValue);
+            case KExpressionsPackage.PARAMETER__ACCESS_TYPE:
+                setAccessType((ParameterAccessType)newValue);
                 return;
             case KExpressionsPackage.PARAMETER__EXPRESSION:
                 setExpression((Expression)newValue);
@@ -347,11 +300,8 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
-            case KExpressionsPackage.PARAMETER__CALL_BY_REFERENCE:
-                setCallByReference(CALL_BY_REFERENCE_EDEFAULT);
-                return;
-            case KExpressionsPackage.PARAMETER__PURE_OUTPUT:
-                setPureOutput(PURE_OUTPUT_EDEFAULT);
+            case KExpressionsPackage.PARAMETER__ACCESS_TYPE:
+                setAccessType(ACCESS_TYPE_EDEFAULT);
                 return;
             case KExpressionsPackage.PARAMETER__EXPRESSION:
                 setExpression((Expression)null);
@@ -374,10 +324,8 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
-            case KExpressionsPackage.PARAMETER__CALL_BY_REFERENCE:
-                return callByReference != CALL_BY_REFERENCE_EDEFAULT;
-            case KExpressionsPackage.PARAMETER__PURE_OUTPUT:
-                return pureOutput != PURE_OUTPUT_EDEFAULT;
+            case KExpressionsPackage.PARAMETER__ACCESS_TYPE:
+                return accessType != ACCESS_TYPE_EDEFAULT;
             case KExpressionsPackage.PARAMETER__EXPRESSION:
                 return expression != null;
             case KExpressionsPackage.PARAMETER__EXPLICIT_BINDING:
@@ -398,10 +346,8 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
         if (eIsProxy()) return super.toString();
 
         StringBuilder result = new StringBuilder(super.toString());
-        result.append(" (callByReference: ");
-        result.append(callByReference);
-        result.append(", pureOutput: ");
-        result.append(pureOutput);
+        result.append(" (accessType: ");
+        result.append(accessType);
         result.append(')');
         return result.toString();
     }

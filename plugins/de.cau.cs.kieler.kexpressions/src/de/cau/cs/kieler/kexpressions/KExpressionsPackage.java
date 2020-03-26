@@ -1264,22 +1264,13 @@ public interface KExpressionsPackage extends EPackage {
     int PARAMETER = 24;
 
     /**
-     * The feature id for the '<em><b>Call By Reference</b></em>' attribute.
+     * The feature id for the '<em><b>Access Type</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int PARAMETER__CALL_BY_REFERENCE = 0;
-
-    /**
-     * The feature id for the '<em><b>Pure Output</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int PARAMETER__PURE_OUTPUT = 1;
+    int PARAMETER__ACCESS_TYPE = 0;
 
     /**
      * The feature id for the '<em><b>Expression</b></em>' containment reference.
@@ -1288,7 +1279,7 @@ public interface KExpressionsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int PARAMETER__EXPRESSION = 2;
+    int PARAMETER__EXPRESSION = 1;
 
     /**
      * The feature id for the '<em><b>Explicit Binding</b></em>' reference.
@@ -1297,7 +1288,7 @@ public interface KExpressionsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int PARAMETER__EXPLICIT_BINDING = 3;
+    int PARAMETER__EXPLICIT_BINDING = 2;
 
     /**
      * The feature id for the '<em><b>Explicit Binding Indices</b></em>' containment reference list.
@@ -1306,7 +1297,7 @@ public interface KExpressionsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int PARAMETER__EXPLICIT_BINDING_INDICES = 4;
+    int PARAMETER__EXPLICIT_BINDING_INDICES = 3;
 
     /**
      * The number of structural features of the '<em>Parameter</em>' class.
@@ -1315,7 +1306,7 @@ public interface KExpressionsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int PARAMETER_FEATURE_COUNT = 5;
+    int PARAMETER_FEATURE_COUNT = 4;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.Call <em>Call</em>}' class.
@@ -1673,6 +1664,16 @@ public interface KExpressionsPackage extends EPackage {
 
 
     /**
+     * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.ParameterAccessType <em>Parameter Access Type</em>}' enum.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.kexpressions.ParameterAccessType
+     * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getParameterAccessType()
+     * @generated
+     */
+    int PARAMETER_ACCESS_TYPE = 38;
+
+    /**
      * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.AccessModifier <em>Access Modifier</em>}' enum.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1680,7 +1681,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getAccessModifier()
      * @generated
      */
-    int ACCESS_MODIFIER = 38;
+    int ACCESS_MODIFIER = 39;
 
 
     /**
@@ -2396,26 +2397,15 @@ public interface KExpressionsPackage extends EPackage {
     EClass getParameter();
 
     /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kexpressions.Parameter#isCallByReference <em>Call By Reference</em>}'.
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kexpressions.Parameter#getAccessType <em>Access Type</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Call By Reference</em>'.
-     * @see de.cau.cs.kieler.kexpressions.Parameter#isCallByReference()
+     * @return the meta object for the attribute '<em>Access Type</em>'.
+     * @see de.cau.cs.kieler.kexpressions.Parameter#getAccessType()
      * @see #getParameter()
      * @generated
      */
-    EAttribute getParameter_CallByReference();
-
-    /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kexpressions.Parameter#isPureOutput <em>Pure Output</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Pure Output</em>'.
-     * @see de.cau.cs.kieler.kexpressions.Parameter#isPureOutput()
-     * @see #getParameter()
-     * @generated
-     */
-    EAttribute getParameter_PureOutput();
+    EAttribute getParameter_AccessType();
 
     /**
      * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.kexpressions.Parameter#getExpression <em>Expression</em>}'.
@@ -2623,6 +2613,16 @@ public interface KExpressionsPackage extends EPackage {
      * @generated
      */
     EEnum getPriorityProtocol();
+
+    /**
+     * Returns the meta object for enum '{@link de.cau.cs.kieler.kexpressions.ParameterAccessType <em>Parameter Access Type</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for enum '<em>Parameter Access Type</em>'.
+     * @see de.cau.cs.kieler.kexpressions.ParameterAccessType
+     * @generated
+     */
+    EEnum getParameterAccessType();
 
     /**
      * Returns the meta object for enum '{@link de.cau.cs.kieler.kexpressions.AccessModifier <em>Access Modifier</em>}'.
@@ -3243,20 +3243,12 @@ public interface KExpressionsPackage extends EPackage {
         EClass PARAMETER = eINSTANCE.getParameter();
 
         /**
-         * The meta object literal for the '<em><b>Call By Reference</b></em>' attribute feature.
+         * The meta object literal for the '<em><b>Access Type</b></em>' attribute feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EAttribute PARAMETER__CALL_BY_REFERENCE = eINSTANCE.getParameter_CallByReference();
-
-        /**
-         * The meta object literal for the '<em><b>Pure Output</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute PARAMETER__PURE_OUTPUT = eINSTANCE.getParameter_PureOutput();
+        EAttribute PARAMETER__ACCESS_TYPE = eINSTANCE.getParameter_AccessType();
 
         /**
          * The meta object literal for the '<em><b>Expression</b></em>' containment reference feature.
@@ -3443,6 +3435,16 @@ public interface KExpressionsPackage extends EPackage {
          * @generated
          */
         EEnum PRIORITY_PROTOCOL = eINSTANCE.getPriorityProtocol();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.kexpressions.ParameterAccessType <em>Parameter Access Type</em>}' enum.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.kexpressions.ParameterAccessType
+         * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getParameterAccessType()
+         * @generated
+         */
+        EEnum PARAMETER_ACCESS_TYPE = eINSTANCE.getParameterAccessType();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.kexpressions.AccessModifier <em>Access Modifier</em>}' enum.

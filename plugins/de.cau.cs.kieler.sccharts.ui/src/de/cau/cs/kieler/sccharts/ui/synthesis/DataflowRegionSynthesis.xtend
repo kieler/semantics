@@ -61,7 +61,7 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
     @Inject extension KExpressionsDeclarationExtensions
     @Inject extension DataflowRegionStyles
     @Inject extension SCChartsSerializeHRExtensions
-    @Inject extension EquationSynthesis 
+    @Inject extension EquationSynthesis
     @Inject extension AnnotationsExtensions
     @Inject extension CommentSynthesis
     @Inject extension AdaptiveZoom
@@ -133,6 +133,7 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
             }
             setAsExpandedView
             addDoubleClickAction(MemorizingExpandCollapseAction::ID)
+            if (region.override) addOverrideRegionStyle
             if (region.declarations.empty) {
                 addStatesArea(!label.nullOrEmpty);
             } else {
@@ -160,6 +161,7 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
             setAsCollapsedView
             if (sLabel.length > 0) it.setUserScheduleStyle
             addDoubleClickAction(MemorizingExpandCollapseAction::ID)
+            if (region.override) addOverrideRegionStyle
             if (!CIRCUIT.booleanValue)
                 addExpandButton(label) => [
                     addSingleClickAction(MemorizingExpandCollapseAction.ID)

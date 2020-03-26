@@ -25,7 +25,6 @@ import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.sccharts.text.SCTXStandaloneSetup
 import de.cau.cs.kieler.sccharts.DataflowRegion
-import de.cau.cs.kieler.sccharts.ui.synthesis.Wiring
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.KPolygon
@@ -33,6 +32,7 @@ import de.cau.cs.kieler.klighd.ZoomStyle
 import de.cau.cs.kieler.simulation.ui.visualization.DiagramHighlighter
 import de.cau.cs.kieler.simulation.SimulationContext
 import de.cau.cs.kieler.simulation.DataPool
+import de.cau.cs.kieler.sccharts.ui.synthesis.EquationSynthesis
 
 /**
  * FIXME This class is instantiated via bundle start!
@@ -81,7 +81,7 @@ class SCChartsDiagramLiveValues extends DiagramHighlighter {
     }
     
     def isSupported(SimulationContext ctx) {
-        val compileCtx = ctx.startEnvironment.getProperty(SimulationContext.SOURCE_COMPILATION_CONTEXT)
+        val compileCtx = ctx.sourceCompilationContext
         return compileCtx !== null && compileCtx.originalModel instanceof SCCharts
     }
     
@@ -123,24 +123,14 @@ class SCChartsDiagramLiveValues extends DiagramHighlighter {
             }
             
             if (scope instanceof DataflowRegion) {
-                val wiring = SCTXInjector.getInstance(Wiring)
-                wiring.createWires(scope.equations)
-                for (wire : wiring.wires) {    
-                    if (wire.source instanceof ValuedObjectReference) {
-                        val elements = diagramViewContext.getTargetElements(wire.source).filter(KNode)
-                        if (!elements.empty) { 
-                            val polygon = elements.head.data.filter(KPolygon).head //.filter(KRectangle).head
-                            val text = polygon.children.filter(KText).filter[ text.contains(wire.source.asValuedObjectReference.valuedObject.name) ].head
-                            wireTextMap.put(wire.source.asValuedObjectReference, text)
-                        }
-                    }
-                    if (wire.sink instanceof ValuedObjectReference) {
-                        val elements = diagramViewContext.getTargetElements(wire.sink).filter(KNode)
-                        if (!elements.empty) { 
-                            val polygon = elements.head.data.filter(KPolygon).head //.filter(KRectangle).head
-                            val text = polygon.children.filter(KText).filter[ text.contains(wire.sink.asValuedObjectReference.valuedObject.name) ].head
-                            wireTextMap.put(wire.sink.asValuedObjectReference, text)
-                        }
+                var node = diagramViewContext.getTargetElements(scope).filter(KNode).head
+                var nodes = node.children.filter[getProperty(EquationSynthesis.INPUT_FLAG) || getProperty(EquationSynthesis.OUTPUT_FLAG)]
+                for (n : nodes) {
+                    val voRef = diagramViewContext.getSourceElement(n)
+                    if( voRef instanceof ValuedObjectReference){
+                        val polygon = n.data.filter(KPolygon).head //.filter(KRectangle).head
+                        val text = polygon.children.filter(KText).filter[ text.contains(voRef.asValuedObjectReference.valuedObject.name) ].head
+                        wireTextMap.put(voRef.asValuedObjectReference, text)
                     }
                 }            
             }

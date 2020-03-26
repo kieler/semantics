@@ -48,7 +48,7 @@ class JavaSimulationTemplateGenerator extends AbstractSimulationTemplateGenerato
         environment.setProperty(TemplateEngine.GENRAL_ENVIRONMENT, generalTemplateEnvironment)
         
         if (infra.sourceCode !== null) {
-            val javaClassFile = infra.sourceCode.files.filter(JavaCodeFile).head
+            val javaClassFile = infra.sourceCode.files.filter(JavaCodeFile).filter[!library].head
             if (javaClassFile !== null && !javaClassFile.className.nullOrEmpty) {
                 generalTemplateEnvironment.put(CommonTemplateVariables.MODEL_DATA_TYPE, javaClassFile.className)
                 generalTemplateEnvironment.put(CommonTemplateVariables.MODEL_DATA_FILE, javaClassFile.fileName)
@@ -101,7 +101,7 @@ class JavaSimulationTemplateGenerator extends AbstractSimulationTemplateGenerato
                         String line = stdInReader.readLine();
                         JSONObject json = new JSONObject(line);
                         
-                        «FOR v : store.orderedVariables.dropBlacklisted.filter[!value.encapsulated && !value.container]»
+                        «FOR v : store.orderedVariables.dropHostTypes.dropBlacklisted.filter[!value.encapsulated && !value.container]»
                             // Receive «v.key»
                             if (json.has("«v.key»")) {
                                 «v.parse("json")»
@@ -117,7 +117,7 @@ class JavaSimulationTemplateGenerator extends AbstractSimulationTemplateGenerato
                 private static void sendVariables() {
                     JSONObject json = new JSONObject();
                     
-                    «FOR v : store.orderedVariables.dropBlacklisted.filter[!value.encapsulated && !value.container]»
+                    «FOR v : store.orderedVariables.dropHostTypes.dropBlacklisted.filter[!value.encapsulated && !value.container]»
                         // Send «v.key»
                         «v.serialize("json")»
                     «ENDFOR»
@@ -150,7 +150,7 @@ class JavaSimulationTemplateGenerator extends AbstractSimulationTemplateGenerato
         } else if (info.isContainer) {
             throw new UnsupportedOperationException("Cannot handle class type variables.")
         } else {
-            return '''«json».put("«varName»", ${tickdata_name}.«varName»);'''
+            return '''«json».put("«varName»", JSONObject.wrap(${tickdata_name}.«varName»));'''
         }
     }
     

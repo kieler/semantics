@@ -3,11 +3,17 @@
  */
 package de.cau.cs.kieler.sccharts.ui;
 
+import org.eclipse.debug.core.DebugPlugin;
 import org.osgi.framework.BundleContext;
 
+import de.cau.cs.kieler.sccharts.ui.debug.breakpoints.BreakpointUtility;
+import de.cau.cs.kieler.sccharts.ui.debug.breakpoints.JavaBreakpointListener;
+import de.cau.cs.kieler.sccharts.ui.debug.breakpoints.SCTXBreakpointListener;
+import de.cau.cs.kieler.sccharts.processors.scg.SCChartsAnnotationModelCreatorForUnschedulableNodes;
 import de.cau.cs.kieler.sccharts.ui.internal.SCTXActivator;
 import de.cau.cs.kieler.sccharts.ui.simulation.SCChartsDiagramHighlighter;
 import de.cau.cs.kieler.sccharts.ui.simulation.SCChartsDiagramLiveValues;
+import de.cau.cs.kieler.scg.processors.SimpleGuardScheduler;
 
 /**
  * Use this class to register components to be used within the IDE.
@@ -26,6 +32,15 @@ public class SCChartsUiModule extends SCTXActivator {
         // FIXME magic registration
         SCChartsDiagramHighlighter.create();
         SCChartsDiagramLiveValues.create();
+        SCTXBreakpointListener.create();
+        // TODO properly use the correct instance here
+        DebugPlugin.getDefault().addDebugEventListener(new JavaBreakpointListener());
+        BreakpointUtility.create();
+        
+        // Some reverse-dependency injection magic for ssm
+        SimpleGuardScheduler.annotationModelCreatorDelegate = getInjector(DE_CAU_CS_KIELER_SCCHARTS_TEXT_SCTX)
+                .getInstance(SCChartsAnnotationModelCreatorForUnschedulableNodes.class);
+
     } //$NON-NLS-1$
     
     

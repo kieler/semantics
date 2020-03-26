@@ -22,12 +22,18 @@ import com.google.inject.Injector
  */
 class KiCoolStandaloneSetup extends KiCoolStandaloneSetupGenerated {
 
-    static var Injector injector
-
-	def static doSetup() {
-	    if (injector === null) {
-	        injector = new KiCoolStandaloneSetup().createInjectorAndDoEMFRegistration()
-	    }
-		return injector
-	}
+    static Injector injector
+    
+    def static doSetup() {
+        if (injector === null) {
+            injector = new KiCoolStandaloneSetup().createInjectorAndDoEMFRegistration()
+        }
+        return injector
+    }
+    
+    override register(Injector injector) {
+        super.register(injector)
+        // Ensure package is registered 
+        KiCoolPackage.eINSTANCE.eClass()
+    }
 }

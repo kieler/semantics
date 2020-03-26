@@ -40,7 +40,8 @@ class DefaultProcessorProvider implements IProcessorProvider {
             de.cau.cs.kieler.kicool.deploy.processor.ModelIncludes,
             de.cau.cs.kieler.kicool.processors.Snapshot,
             de.cau.cs.kieler.kicool.processors.ast.GCCAST,
-            de.cau.cs.kieler.kicool.processors.ast.GCCAST2KAST
+            de.cau.cs.kieler.kicool.processors.ast.GCCAST2KAST,
+            de.cau.cs.kieler.kicool.processors.EnvironmentConfigurationReader
         ]
     }
     

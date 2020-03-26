@@ -41,6 +41,13 @@ import de.cau.cs.kieler.klighd.krendering.Trigger
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import org.eclipse.elk.alg.layered.options.LayerConstraint
+import org.eclipse.elk.alg.layered.options.NodePlacementStrategy
+import org.eclipse.elk.alg.layered.options.FixedAlignment
+import org.eclipse.elk.core.math.ElkPadding
+import org.eclipse.elk.alg.layered.options.LayeringStrategy
+import org.eclipse.elk.alg.layered.options.WrappingStrategy
+import org.eclipse.elk.alg.layered.options.GraphCompactionStrategy
+import org.eclipse.elk.alg.layered.options.ConstraintCalculationStrategy
 
 /**
  * @author ssm
@@ -71,6 +78,8 @@ class KiCoolRegistrySynthesis extends AbstractDiagramSynthesis<KiCoolRegistrySum
     public static val SynthesisOption FULLY_QUALIFIED_KIELER_PREFIX = SynthesisOption::createCheckOption("Show KIELER Qualified Name Prefix", false)
     public static val SynthesisOption FULLY_QUALIFIED_PROCESSOR_NAMES = SynthesisOption::createCheckOption("Show Long Processor Names", false)
     
+    public static val SynthesisOption USE_LEFT_TO_RIGHT = SynthesisOption::createCheckOption("Use Left-to-Right Layout", false)
+    
     
     val processorConnections = <String, Integer> newHashMap
     
@@ -82,6 +91,7 @@ class KiCoolRegistrySynthesis extends AbstractDiagramSynthesis<KiCoolRegistrySum
             add(SHOW_PROCESSORS)
             add(FULLY_QUALIFIED_KIELER_PREFIX)
             add(FULLY_QUALIFIED_PROCESSOR_NAMES)
+            add(USE_LEFT_TO_RIGHT)
         ]
     }    
     
@@ -103,6 +113,23 @@ class KiCoolRegistrySynthesis extends AbstractDiagramSynthesis<KiCoolRegistrySum
         rootNode.setLayoutOption(LayeredOptions::SPACING_EDGE_NODE, 80d)
         rootNode.setLayoutOption(LayeredOptions::SPACING_EDGE_EDGE, 10d)
         
+        rootNode.setLayoutOption(CoreOptions::ALGORITHM, "org.eclipse.elk.layered");
+        rootNode.setLayoutOption(CoreOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
+        if (USE_LEFT_TO_RIGHT.booleanValue) rootNode.setLayoutOption(CoreOptions::DIRECTION, Direction::RIGHT);
+        rootNode.setLayoutOption(LayeredOptions::NODE_PLACEMENT_STRATEGY, NodePlacementStrategy::NETWORK_SIMPLEX)
+        rootNode.setLayoutOption(LayeredOptions::NODE_PLACEMENT_BK_FIXED_ALIGNMENT, FixedAlignment.BALANCED)
+//        rootNode.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 10d);
+        rootNode.setLayoutOption(LayeredOptions::SPACING_NODE_NODE_BETWEEN_LAYERS, 12d)
+        rootNode.setLayoutOption(CoreOptions::PADDING, new ElkPadding(10d))
+        rootNode.setLayoutOption(LayeredOptions::LAYERING_STRATEGY, LayeringStrategy::COFFMAN_GRAHAM)
+//        rootNode.setLayoutOption(LayeredOptions::WRAPPING_STRATEGY, WrappingStrategy.SINGLE_EDGE)
+//        rootNode.setLayoutOption(LayeredOptions::COMPACTION_POST_COMPACTION_STRATEGY, GraphCompactionStrategy.LEFT)
+//        rootNode.setLayoutOption(LayeredOptions::COMPACTION_POST_COMPACTION_CONSTRAINTS, ConstraintCalculationStrategy.QUADRATIC)
+        rootNode.setLayoutOption(LayeredOptions::SPACING_EDGE_NODE, 10.0)
+        rootNode.setLayoutOption(LayeredOptions::SPACING_NODE_NODE, 10.0)
+//        rootNode.setLayoutOption(LayeredOptions::WRAPPING_ADDITIONAL_EDGE_SPACING, 0.0)      
+//        rootNode.setLayoutOption(LayeredOptions::WRAPPING_CORRECTION_FACTOR, 1.4)  
+        
         
         rootNode.children += model.createSystemNodes
         rootNode.children += model.createProcessorNodes
@@ -118,8 +145,9 @@ class KiCoolRegistrySynthesis extends AbstractDiagramSynthesis<KiCoolRegistrySum
             it.addAction(Trigger.DOUBLECLICK, KLIGHD_ACTION_DEFOCUS_NODE)
         ]
         
-        rootRootNode.children += rootNode
-        rootRootNode
+        rootNode
+//        rootRootNode.children += rootNode
+//        rootRootNode
     }
     
     def protected Collection<KNode> createSystemNodes(KiCoolRegistrySummary model) {

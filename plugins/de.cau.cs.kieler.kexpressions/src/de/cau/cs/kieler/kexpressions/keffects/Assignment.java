@@ -18,7 +18,6 @@ import de.cau.cs.kieler.kexpressions.keffects.Assignment;
  *   <li>{@link de.cau.cs.kieler.kexpressions.keffects.Assignment#getReference <em>Reference</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.keffects.Assignment#getExpression <em>Expression</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.keffects.Assignment#getOperator <em>Operator</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kexpressions.keffects.Assignment#getSubReference <em>Sub Reference</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage#getAssignment()
@@ -106,31 +105,5 @@ public interface Assignment extends Effect {
      * @generated
      */
     void setOperator(AssignOperator value);
-
-    /**
-     * Returns the value of the '<em><b>Sub Reference</b></em>' containment reference.
-     * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Sub Reference</em>' containment reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
-     * @return the value of the '<em>Sub Reference</em>' containment reference.
-     * @see #setSubReference(ValuedObjectReference)
-     * @see de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage#getAssignment_SubReference()
-     * @model containment="true"
-     * @generated
-     */
-    ValuedObjectReference getSubReference();
-
-    /**
-     * Sets the value of the '{@link de.cau.cs.kieler.kexpressions.keffects.Assignment#getSubReference <em>Sub Reference</em>}' containment reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Sub Reference</em>' containment reference.
-     * @see #getSubReference()
-     * @generated
-     */
-    void setSubReference(ValuedObjectReference value);
     
 } // Assignment

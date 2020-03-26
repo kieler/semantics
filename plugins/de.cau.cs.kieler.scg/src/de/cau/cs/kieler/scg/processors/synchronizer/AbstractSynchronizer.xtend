@@ -93,7 +93,7 @@ abstract class AbstractSynchronizer {
      */
     protected abstract def void build(Join join, Guard guard, SchedulingBlock schedulingBlock, SCGraph scg);
     
-    abstract def boolean isSynchronizable(Fork fork, Iterable<ThreadPathType> threadPathTypes, boolean instantaneousFeedback);
+    abstract def boolean isSynchronizable(Fork fork, Map<Entry, ThreadPathType> threadPathTypes, boolean instantaneousFeedback);
     
 //    public abstract def Set<Predecessor> getExcludedPredecessors(Join join, Map<Node, SchedulingBlock> schedulingBlockCache, 
 //    	List<AbstractKielerCompilerAncillaryData> ancillaryData);
@@ -121,7 +121,11 @@ abstract class AbstractSynchronizer {
     }    
     
     def boolean isSynchronizable(Join join) {
-        val threadPathTypes = join.getEntryNodes.map[ getStringAnnotationValue(ANNOTATION_CONTROLFLOWTHREADPATHTYPE) ].map[ fromString2 ]
+        val threadPathTypes = <Entry, ThreadPathType> newHashMap => [ map |
+            join.getEntryNodes.filter[ !hasAnnotation(ANNOTATION_IGNORETHREAD) ].forEach [ entry |
+                map.put(entry, entry.getStringAnnotationValue(ANNOTATION_CONTROLFLOWTHREADPATHTYPE).fromString2)
+            ]
+        ] 
         isSynchronizable(join.fork, threadPathTypes, false)
     }
    

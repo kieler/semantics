@@ -13,18 +13,20 @@
 package de.cau.cs.kieler.sccharts.extensions
 
 import com.google.inject.Inject
+import de.cau.cs.kieler.kexpressions.AccessModifier
+import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kexpressions.kext.extensions.Binding
+import de.cau.cs.kieler.kexpressions.kext.extensions.BindingType
+import de.cau.cs.kieler.kexpressions.kext.extensions.KExtReferenceExtensions
+import de.cau.cs.kieler.kexpressions.kext.extensions.Replacements
 import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
 import java.util.List
-import de.cau.cs.kieler.kexpressions.kext.extensions.KExtReferenceExtensions
-import de.cau.cs.kieler.kexpressions.kext.extensions.Replacements
-import de.cau.cs.kieler.kexpressions.kext.extensions.Binding
-import de.cau.cs.kieler.kexpressions.kext.extensions.BindingType
 
 /**
  * @author ssm
@@ -150,8 +152,14 @@ class SCChartsReferenceExtensions extends KExtReferenceExtensions {
                     ]
                     
                     if (voNameMap.containsKey(vo.name)) {
-                        val sourceVO = voNameMap.get(vo.name)
-                        binding.sourceExpression = sourceVO.reference
+                        binding.sourceExpression = voNameMap.get(vo.name).reference
+                    } else if (vo.declaration.access !== AccessModifier.PUBLIC) {
+                        val privateName = "_" + (vo.declaration.eContainer as Scope).name + "_" + vo.name // FIXME this should be solved via an annotation on the renamed variable
+                        if (voNameMap.containsKey(privateName)) {
+                            binding.sourceExpression = voNameMap.get(privateName).reference
+                        } else {
+                            binding.addErrorMessage("Valued object in the referenced scope was not bound properly: " + vo.name)
+                        }
                     } else {
                         binding.addErrorMessage("Valued object in the referenced scope was not bound properly: " + vo.name)
                     }
@@ -164,5 +172,22 @@ class SCChartsReferenceExtensions extends KExtReferenceExtensions {
         
         bindings
     }
-
+    
+    // finds a list of valued objects witch are inputs of the referenced SCChart
+    def getInputs(ReferenceDeclaration ref){
+        val List<ValuedObject> inputs = newArrayList;
+        (ref.reference as State).declarations.filter(VariableDeclaration).filter[isInput].forEach [
+            valuedObjects.forEach[inputs.add(it)]
+        ]
+        return inputs
+    }
+    
+    // finds a list of valued objects witch are outputs of the referenced SCChart
+    def getOutputs(ReferenceDeclaration ref){
+        val List<ValuedObject> outputs = newArrayList;
+        (ref.reference as State).declarations.filter(VariableDeclaration).filter[isOutput].forEach [
+            valuedObjects.forEach[outputs.add(it)]
+        ]
+        return outputs
+    }
 }

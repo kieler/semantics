@@ -1,3 +1,16 @@
+/*
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ * 
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * Copyright 2015 by
+ * + Kiel University
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
+ */
 grammar de.cau.cs.kieler.lustre.Lustre with de.cau.cs.kieler.kexpressions.kext.KExt
 
 generate lustre "http://www.cau.de/cs/kieler/lustre/Lustre"
@@ -7,89 +20,21 @@ import "http://kieler.cs.cau.de/kexpressions/0.1.2" as kexpressions
 import "http://kieler.cs.cau.de/keffects/0.1.0" as keffects
 import "http://kieler.cs.cau.de/kext/0.1.0" as kext
 
-/*
- * This implementation of the grammar (except for the automatons) is based on 
- * the Lustre V6 Reference manual. 
+/**
+ * The syntax for this grammar is extracted from the Lustre V6 reference manual.
+ * http://www-verimag.imag.fr/DIST-TOOLS/SYNCHRONE/lustre-v6/doc/lv6-ref-man.pdf
+ * 
+ * @author lgr
  */
 
 LustreProgram hidden(WS, SL_COMMENT, ML_COMMENT):
     ('include' (includes+=STRING | includes+=STRING))*
-    (packBody=PackBody | packList=PackList)
-;
-
-/*
- * -------------------- PACKLIST
- */
-PackList:
     (
-        modelDeclarations+=ModelDeclaration
-        | packageDeclarations+=PackageDeclaration
-        | packageEquations+=PackageEquation
-    )+
-;
-
-ModelDeclaration:
-   'model' name=ID 
-   ('uses' usesIds+=ID (',' usesIds+=ID)* ';')?
-   'needs' needsParams+=StaticParam (';' needsParams+=StaticParam)* ';'
-   ('provides' provisions+=Provide ';' (provisions+=Provide ';')*)?
-   'body'
-   body=PackBody
-   'end'
-;
-
-Provide:
-    'const' name=ID ':' type=ValueType ('=' value=Expression)?
-    | 'type' types=TypeDeclaration
-    | (
-        ('unsafe')? ('node' | 'function') 
-        name=ID 
-        ('<<' staticParams+=StaticParam (';' staticParams+=StaticParam)* '>>')?
-        input=Params 'returns' output=Params)
-;
-
-PackageDeclaration:
-    'package' name=ID 
-    ('uses' usesIds+=ID (',' usesIds+=ID)* ';')?
-    ('provides' provisions+=Provide ';' (provisions+=Provide ';')*)?
-    'body'
-    body=PackBody
-    'end'
-;
-
-PackageEquation:    
-    'package' name=ID
-    // Lv6 reference manual referes to using 'Eq_Or_Is' which is not defined
-    eqOrIs=ID
-    '(' byNameStaticArgs+=ByNameStaticArg ((','|';') byNameStaticArgs+=ByNameStaticArg)* ')' ';'  
-;
-
-/*
- * -------------------- PACKBODY
- */
-PackBody:
-    {PackBody}
-    (
-        ('const' (constants+=VariableDeclaration ';')+)
-        | ('type' (types+=TypeDeclaration)+)
+        ('const' constants+=VariableDeclarationInit (';' constants+=VariableDeclarationInit)* ';')
+        | ('type' types+=TypeDeclaration (';' types+=TypeDeclaration)* ';')
         | externals+=ExternalNodeDeclaration
         | nodes+=NodeDeclaration
     )*
-;
-
-// Type Declaration
-// TODO: This should be a VariableDeclaration too, since it can be a node parameter and thus must be scoped
-TypeDeclaration:
-    name=ID 
-    ('=' 
-        (
-            type=ValueType
-            | type=EnumType '{' enums+=PrimeID (',' enums+=PrimeID)* '}'
-            // TODO: StructType may also be left empty
-            | type=StructType '{' variables=VariableDeclaration (';' values+=VariableDeclaration)* (';')? '}'
-        )
-    )?    
-    ';'
 ;
 
 @Override 
@@ -103,14 +48,60 @@ enum EnumType returns kexpressions::ValueType:
     ENUM="enum" 
 ;
 
-// External Node Declaration
-ExternalNodeDeclaration:
-    (isUnsafe?='unsafe')? 'extern' ('function' | hasState?='node') 
+// Type Declaration
+// TODO: Does not work: this should be a VariableDeclaration too, since it can be a node parameter and thus must be scoped
+TypeDeclaration:
+    {TypeDeclaration}
     name=ID 
-    input=Params
+    ('=' 
+        (
+            type=ValueType
+            | (type=EnumType '{' enums+=PrimeID (',' enums+=PrimeID)* '}')
+            // TODO: StructType may also be left empty
+            | (
+                type=StructType 
+                '{' 
+                variables+=(VariableDeclarationInit|VariableDeclarationNoInit) 
+                (';' variables+=(VariableDeclarationInit|VariableDeclarationNoInit))* 
+                (';')? 
+                '}'
+            )
+        )
+    )?
+;
+
+// External Node Declaration
+ExternalNodeDeclaration returns kexpressions::Declaration:
+    {ExternalNodeDeclaration}
+    (isUnsafe?='unsafe')? 'extern' ('function' | hasState?='node') 
+    valuedObjects+=NodeValuedObject
+    ('(' inputs+=VariableDeclarationNoInit (';' inputs+=VariableDeclarationNoInit)* ')' | '()')
     'returns' 
-    output=Params
+    ('(' outputs+=VariableDeclarationNoInit (';' outputs+=VariableDeclarationNoInit)* ')' | '()')
     (';')?
+;
+
+VariableDeclarationNoInit returns kexpressions::VariableDeclaration:
+    {LustreVariableDeclaration}
+    valuedObjects+=ValuedObjectNoInit (',' valuedObjects+=ValuedObjectNoInit)* ':' type=ValueType ('when' clockExpr=BoolExpression)?
+;
+
+VariableDeclarationInit returns kexpressions::VariableDeclaration:
+    {LustreVariableDeclaration}
+    valuedObjects+=ValuedObjectInit ('when' clockExpr=BoolExpression)?
+;
+
+ValuedObjectNoInit returns kexpressions::ValuedObject:
+    name=PrimeID
+    ('^' cardinalities+=Expression)*
+;
+
+ValuedObjectInit returns kexpressions::ValuedObject:
+    {LustreValuedObject}
+    name=PrimeID
+    ('^' cardinalities+=Expression)*
+    (':' type=ValueType)
+    ('=' initialValue=Expression)?
 ;
 
 // Node Declaration
@@ -118,43 +109,23 @@ NodeDeclaration returns kexpressions::Declaration:
     {NodeDeclaration}
     (isUnsafe?='unsafe')? ('function' | hasState?='node')
     valuedObjects+=NodeValuedObject
-    
-    // Allows parametric nodes
-    ('<<' staticParams+=StaticParam (';' staticParams+=StaticParam)* '>>')?
-    
-    (( 
-        input=Params 'returns' output=Params
-        ( // --- Effective Node (with interface)
-            ('=' effectiveNode=NodeReference ('<<' staticArgs+=StaticArg (';' staticArgs+=StaticArg)* '>>')?)
-        | // Regular Body
-            (
-                (';')?
-                
-                // Local Declarations
-                (
-                    ('const' constants+=VariableDeclaration ';' (constants+=VariableDeclaration ';')* ) 
-                    | 
-                    ('var' variables+=ClockedVariableDeclaration (';' variables+=ClockedVariableDeclaration)* ';')
-                )*
-                
-                // Body 
-                'let' 
-                (
-                    equations+=Equation 
-                    | assertions+=Assertion 
-                    | automatons+=Automaton
-                )*
-                'tel'
-                
-                ('.' | (';')?)  
-            )
-        )
-              
-    )
-    | ( // --- Effective Node (without interface)
-        '=' effectiveNode=NodeReference 
-        ('<<' staticArgs+=StaticArg (';' staticArgs+=StaticArg)* '>>')?        
-    ))
+    ('(' inputs+=VariableDeclarationNoInit (';' inputs+=VariableDeclarationNoInit)* ')' | '()')
+    'returns' 
+    ('(' outputs+=VariableDeclarationNoInit (';' outputs+=VariableDeclarationNoInit)* ')' | '()')
+    ';'? 
+    (
+        ('const' constants+=VariableDeclarationInit (';' constants+=VariableDeclarationInit)* ';')
+        | ('var' variables+=(VariableDeclarationInit|VariableDeclarationNoInit) (';' variables+=(VariableDeclarationInit|VariableDeclarationNoInit))* ';')
+    )*
+    'let'
+    (
+        equations+=Equation 
+        | emissions+=Emission
+        | assertions+=Assertion 
+        | automatons+=Automaton
+    )*
+    'tel'
+    ('.' | (';')?)  
 ;
 
 NodeValuedObject returns kexpressions::ValuedObject:
@@ -162,7 +133,6 @@ NodeValuedObject returns kexpressions::ValuedObject:
     name=ID
 ;
 
-// Node Declaration - Body Part 1: Equations
 Equation returns keffects::Assignment:
     {Equation}
     (
@@ -176,29 +146,54 @@ Equation returns keffects::Assignment:
     ';' 
 ;
 
-// Node Declaration - Body Part 2: Assertions
+Emission returns keffects::Emission:
+    'emit' (ValuedEmission | PureEmission) ';'
+;
+
 Assertion returns kexpressions::Expression:
     {Assertion}
     'assert' expr=Expression ';'
 ;
 
-// Node Declaration - Body Part 3: Automatons
 Automaton:
-    'automaton' states+=AState ('|' states+=AState)* 'end' ';' 
+    'automaton' name=ID states+=AState (states+=AState)* 'returns' '..' ';' 
 ;
 
 AState:
-    name=ID '->'
+    (initial?='initial')? 
+    'state' 
+    valuedObject=StateValuedObject
     (
-        equations+=Equation | 
-        assertions+=Assertion |
-        automatons+=Automaton
+        ('const' constants+=VariableDeclarationInit ';' (constants+=VariableDeclarationInit ';')* ) 
+        | ('var' variables+=VariableDeclarationInit (';' variables+=VariableDeclarationInit)* ';')
     )*
+    
+    // Body 
+    ('let' 
+        (
+            equations+=Equation
+            | emissions+=Emission
+            | assertions+=Assertion 
+            | automatons+=Automaton
+        )*
+    'tel')?
+    
+    ('.' | (';')?)
     transitions+=ATransition*
 ;
 
+StateValuedObject returns kexpressions::ValuedObject:
+    {StateValuedObject}
+    name=ID
+;
+
 ATransition:
-    ('until'|strong?='unless') condition=Expression ('then'|history?='continue') nextState=[AState|ID] ';'    
+    {ATransition} 
+    ('until'|strong?='unless') actions+=AnAction*
+;
+
+AnAction:
+    ('if' condition=BoolExpression)? ('do' (effects+=Equation | effects+=Emission)*)? ('restart'|history?='resume') nextState=[StateValuedObject] ';'
 ;
 
 /**
@@ -231,7 +226,7 @@ ATransition:
  *      + ProductExpression
  *                  + IntDivExpression
  *                    + NegExpression *
- *                      + FBYExpression
+ *                      + FbyExpression
  *                        + WhenExpression
  *                          + CurrentExpression
  *                            + PreExpression
@@ -266,47 +261,65 @@ IntDivExpression returns kexpressions::Expression:
 // Skip TernaryOperation after NegExpression
 @Override 
 NegExpression returns kexpressions::Expression:
-    {kexpressions::OperatorExpression} operator=SubOperator subExpressions+=(NegExpression)
-    | FBYExpression;
+    {kexpressions::OperatorExpression} 
+    operator=SubOperator subExpressions+=(NegExpression)
+    | FbyExpression
+;
 
-// Force WhenExpression, CurrentExpression and PreExpression inbetween FBYExpression and AtomicValuedExpression
-FBYExpression returns kexpressions::Expression:
+// Force WhenExpression, CurrentExpression and PreExpression inbetween FbyExpression and AtomicValuedExpression
+@Override 
+FbyExpression returns kexpressions::Expression:
     WhenExpression
-    (
-        {kexpressions::OperatorExpression.subExpressions+=current}
-        (operator=FBYOperator subExpressions+=AtomicValuedExpression)
-        ('fby' subExpressions+=AtomicValuedExpression)*
+    ({kexpressions::OperatorExpression.subExpressions+=current}
+        (operator=FbyOperator subExpressions+=WhenExpression)
+        ('fby' subExpressions+=WhenExpression)*
     )?;
 
 WhenExpression returns kexpressions::Expression:
-    {kexpressions::OperatorExpression} subExpressions += AtomicValuedExpression operator=WhenOperator subExpressions += AtomicValuedExpression
-    | CurrentExpression;   
+    {kexpressions::OperatorExpression} 
+    subExpressions += AtomicValuedExpression operator=WhenOperator subExpressions += AtomicValuedExpression
+    | CurrentExpression
+;
 
 CurrentExpression returns kexpressions::Expression:
-    {kexpressions::OperatorExpression} operator=CurrentOperator subExpressions += AtomicValuedExpression
-    | PreExpression;
+    {kexpressions::OperatorExpression} 
+    operator=CurrentOperator subExpressions += AtomicValuedExpression
+    | PreExpression
+;
 
 PreExpression returns kexpressions::Expression:
-    {kexpressions::OperatorExpression} operator=PreOperator subExpressions+=AtomicValuedExpression
-    | AtomicValuedExpression;
+    {kexpressions::OperatorExpression} 
+    operator=PreOperator subExpressions+=LastExpression
+    | LastExpression
+;
+
+LastExpression returns kexpressions::Expression:
+    {kexpressions::OperatorExpression} 
+    operator=LastOperator subExpressions+=AtomicValuedExpression
+    | AtomicValuedExpression
+;
 
 // Force TernaryOperation, InitExpression, ImpliesExpression and LogicalXorExpression inbetween BoolExpression and LogicalOrExpression
 @Override
 BoolExpression returns kexpressions::Expression: 
-    InitExpression;
+    InitExpression
+;
 
 @Override    
 InitExpression returns kexpressions::Expression:
-    {kexpressions::OperatorExpression} subExpressions += TernaryOperation operator=InitOperator subExpressions += TernaryOperation
-    | TernaryOperation;   
+    TernaryOperation 
+    ({kexpressions::OperatorExpression.subExpressions+=current} 
+        (operator=InitOperator subExpressions+=TernaryOperation) 
+        ('->' subExpressions+=TernaryOperation)*
+    )?;
 
 // Overwide Ternary operator to support if ... then ... else
 @Override 
 TernaryOperation returns kexpressions::Expression:
     {kexpressions::OperatorExpression} 
     operator=ConditionalOperator subExpressions += TernaryOperation 'then' subExpressions += TernaryOperation 'else' subExpressions += TernaryOperation
-    | 
-    ImpliesExpression;
+    | ImpliesExpression
+;
 
 ImpliesExpression returns kexpressions::Expression:
     LogicalXorExpression
@@ -314,38 +327,45 @@ ImpliesExpression returns kexpressions::Expression:
         {kexpressions::OperatorExpression.subExpressions+=current}
         (operator=ImpliesOperator subExpressions+=LogicalXorExpression)
         ('=>' subExpressions+=LogicalXorExpression)*
-    )?;
-    
+    )?
+;
+
 LogicalXorExpression returns kexpressions::Expression:
     LogicalOrExpression
     (
         {kexpressions::OperatorExpression.subExpressions+=current}
         (operator=LogicalXorOperator subExpressions+=LogicalOrExpression)
         ('xor' subExpressions+=LogicalOrExpression)*
-    )?;
-    
+    )?
+;
+
 // Override LogicalAndExpresssion and LogicalOrExpression to allow asssociativity
 @Override 
 LogicalOrExpression returns kexpressions::Expression:
     LogicalAndExpression 
-    ({kexpressions::OperatorExpression.subExpressions+=current} 
+    (
+        {kexpressions::OperatorExpression.subExpressions+=current} 
         (operator=LogicalOrOperator subExpressions+=LogicalAndExpression)
         ('or' subExpressions+=LogicalAndExpression)*
-    )?;
+    )?
+;
 
 // Directly redirect to CompareOperation to exclude the bitwise operations
 @Override 
 LogicalAndExpression returns kexpressions::Expression:
     CompareOperation 
-    ({kexpressions::OperatorExpression.subExpressions+=current} 
+    (
+        {kexpressions::OperatorExpression.subExpressions+=current} 
         (operator=LogicalAndOperator subExpressions+=CompareOperation)
         ('and' subExpressions+=CompareOperation)*
-    )?;
+    )?
+;
 
 // Directly redirect to SumExpression to exclude shift operations
 @Override
 ValuedExpression returns kexpressions::Expression:
-    SumExpression;
+    SumExpression
+;
 
 // Exclude FunctionCall, RandomCall, RandomizeCall and TextExpression
 @Override
@@ -355,20 +375,19 @@ AtomicExpression returns kexpressions::Expression:
     | ReferenceCall
     | ValuedObjectTestExpression // Last to allow detection of calls
     | NorAtMostOneExpression
-    ;
+;
 
 NorAtMostOneExpression returns kexpressions::Expression:
     {kexpressions::OperatorExpression}
     (operator=AtMostOneOperator | operator=NorOperator)
-    '('
-    subExpressions+=Expression (',' subExpressions+=Expression)*
-    ')'
+    '('subExpressions+=Expression (',' subExpressions+=Expression)* ')'
 ;
 
 // Exclude BitwiseNotExpression
 @Override 
 NotExpression returns kexpressions::Expression:
-    {kexpressions::OperatorExpression} operator=NotOperator subExpressions+=(NotExpression)
+    {kexpressions::OperatorExpression} 
+    operator=NotOperator subExpressions+=(NotExpression)
     | AtomicExpression
 ;
 
@@ -379,143 +398,80 @@ NotExpression returns kexpressions::Expression:
 @Override 
 enum AssignOperator returns keffects::AssignOperator:
     // Reduce possible assignments to only work with '='
-    ASSIGN="=";
-    
+    ASSIGN="="
+;
+
 @Override 
 enum CompareOperator returns kexpressions::OperatorType:
-    EQ="=" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NE="<>";
+    EQ="=" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NE="<>"
+;
 
 @Override 
 enum LogicalOrOperator returns kexpressions::OperatorType:
-    LOGICAL_OR="or";
+    LOGICAL_OR="or"
+;
 
 @Override 
 enum LogicalAndOperator returns kexpressions::OperatorType:
-    LOGICAL_AND="and";
+    LOGICAL_AND="and"
+;
 
 @Override 
 enum NotOperator returns kexpressions::OperatorType:
-    NOT="not";
+    NOT="not"
+;
 
-enum FBYOperator returns kexpressions::OperatorType:  
-    FBY="fby";
+@Override 
+enum FbyOperator returns kexpressions::OperatorType:  
+    FBY="fby"
+;
 
 @Override 
 enum ModOperator returns kexpressions::OperatorType:  
-    MOD="mod";
+    MOD="mod"
+;
 
 // Define operators that are Lustre specific
 enum CurrentOperator returns kexpressions::OperatorType:  
-    CURRENT="current";
-    
+    CURRENT="current"
+;
+
 enum WhenOperator returns kexpressions::OperatorType:  
-    WHEN="when";
+    WHEN="when"
+;
 
 @Override 
 enum InitOperator returns kexpressions::OperatorType:  
-    INIT="->";
+    INIT="->"
+;
 
 enum LogicalXorOperator returns kexpressions::OperatorType:  
-    LOGICAL_XOR="xor";
+    BITWISE_XOR="xor"
+;
 
 enum ImpliesOperator returns kexpressions::OperatorType:  
-    IMPLIES="=>";
+    IMPLIES="=>"
+;
 
-enum IntDivOperator returns kexpressions::OperatorType:  
-    INTDIV="div";
+enum IntDivOperator returns kexpressions::OperatorType:
+    DIV = "div"
+;
 
 @Override 
 enum ConditionalOperator returns kexpressions::OperatorType:
-    CONDITIONAL = "if";
+    CONDITIONAL = "if"
+;
 
 enum AtMostOneOperator returns kexpressions::OperatorType:  
-    ATMOSTONEOF="#";
+    ATMOSTONEOF="#"
+;
 
 enum NorOperator returns kexpressions::OperatorType:  
-    NOR="nor";
-
- 
-/**
- * -------------------- Variable parameter types.
- */ 
- 
-// Used everywhere where there need to be parameter
-Params:
-    {Params} 
-    (
-        ('(' (parameter+=VariableDeclaration (';' parameter+=VariableDeclaration)*)? ')')
-        | '()'
-    )
+    NOR="nor"
 ;
 
-// Declarations and used within << ... >>
-// Examples: type test
-//           const a : int
-//           node ydd( ) returns( )
-StaticParam:
-    'type' name=ID
-    | 'const' name=ID ':' type=ValueType
-    | ('unsafe')? ('node'|'function') name=ID nodeInput=Params 'returns' nodeOutput=Params
-;
-
-// Calls and used within << ... >>
-StaticArg:
-    'type' type=ValueType
-    | 'const' expr=Expression
-    | ('node'|'function') name=NodeReference ('<<' staticArgs+=StaticArg ((';'|',') staticArgs+=StaticArg)* '>>')?      
-//    | PredefOp
-//    | SimpleExpr
-//    | SurelyType
-//    | SurelyNode
-;
-
-// Used in package equation
-// Examples: const ddd = 5
-//           type three = bool
-//           node whatever = He::ne<<type b; const 6, node b>>
-ByNameStaticArg:  
-    ('type' name=ID '=' type=ValueType)
-    | ('const' name=ID '=' expr=Expression)
-//    | (('function' | 'node') name=ID '=' (nodePath=ID '::')? nodeRef=ID ('<<' staticArgs+=StaticArg ((';'|',') staticArgs+=StaticArg)* '>>')?)
-    | (name=ID '=' /*(PredefOp | SimpleExpr | SurelyType | SurelyNode))*/ )    
-;
-
-/**
- * -------------------- Variable declaration
- */
-@Override 
-VariableDeclaration returns kexpressions::VariableDeclaration:
-    // TODO: Constants use this too, and they may be declared without specifying a type.
-    // This is not possible at the moment.
-    (
-        valuedObjects+=LustreValuedObjectInit
-        |
-        valuedObjects+=LustreValuedObjectList (',' valuedObjects+=LustreValuedObjectList)* ':' type=ValueType
-    )
-;
-
-LustreValuedObjectInit returns kexpressions::ValuedObject:
-    {LustreValuedObject}
-    annotations+=QuotedStringAnnotation*
-    name=PrimeID
-    ('^' cardinalities+=Expression)*
-    (':' type=ValueType)
-    ('=' initialValue=Expression)
-;
-
-LustreValuedObjectList returns kexpressions::ValuedObject:
-    annotations+=QuotedStringAnnotation*
-    name=PrimeID
-    ('^' cardinalities+=Expression)*
-;
-
-ClockedVariableDeclaration: 
-    vardecl=VariableDeclaration ('when' clockExpr=BoolExpression)?
-;
-
-NodeReference returns kexpressions::ValuedObjectReference:
-    {NodeReference}
-    valuedObject=[NodeValuedObject]    
+enum LastOperator returns kexpressions::OperatorType:  
+    LAST="last"
 ;
 
 /*

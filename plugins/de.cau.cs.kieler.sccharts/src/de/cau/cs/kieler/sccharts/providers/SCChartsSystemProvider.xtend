@@ -39,6 +39,7 @@ class SCChartsSystemProvider implements ISystemProvider {
             "system/de.cau.cs.kieler.sccharts.statebased.woComments.kico",
             "system/de.cau.cs.kieler.sccharts.statebased.lean.kico",
             "system/de.cau.cs.kieler.sccharts.statebased.lean.c.template.kico",
+            "system/de.cau.cs.kieler.sccharts.statebased.lean.cs.c.template.kico",
             "system/de.cau.cs.kieler.sccharts.statebased.lean.java.template.kico",
             "system/de.cau.cs.kieler.sccharts.csv.kico",
             "system/de.cau.cs.kieler.sccharts.statebased.lean.arduino.deploy.kico",
@@ -58,8 +59,10 @@ class SCChartsSystemProvider implements ISystemProvider {
             "system/de.cau.cs.kieler.sccharts.simulation.tts.priority.java.kico",
             "system/de.cau.cs.kieler.sccharts.simulation.statebased.c.kico",
             "system/de.cau.cs.kieler.sccharts.simulation.statebased.lean.c.kico",
+            "system/de.cau.cs.kieler.sccharts.simulation.statebased.lean.cs.c.kico",
             "system/de.cau.cs.kieler.sccharts.simulation.tts.statebased.c.kico",
             "system/de.cau.cs.kieler.sccharts.simulation.tts.statebased.lean.c.kico",
+            "system/de.cau.cs.kieler.sccharts.simulation.tts.statebased.lean.cs.c.kico",
             "system/de.cau.cs.kieler.c.sccharts.dataflow.kico",
             "system/de.cau.cs.kieler.sccharts.simulation.priority.java.legacy.kico",
             "system/de.cau.cs.kieler.sccharts.simulation.tts.priority.java.legacy.kico"

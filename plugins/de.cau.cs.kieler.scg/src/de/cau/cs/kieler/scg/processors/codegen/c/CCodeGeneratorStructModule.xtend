@@ -12,16 +12,17 @@
  */
 package de.cau.cs.kieler.scg.processors.codegen.c
 
-import de.cau.cs.kieler.scg.codegen.SCGCodeGeneratorModule
-import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import com.google.inject.Inject
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import org.eclipse.xtend.lib.annotations.Accessors
-import de.cau.cs.kieler.kexpressions.ValueType
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kexpressions.Declaration
-import java.util.List
-import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
+import de.cau.cs.kieler.kexpressions.ValueType
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
+import de.cau.cs.kieler.scg.codegen.SCGCodeGeneratorModule
+import java.util.List
+import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
  * C Code Generator Struct Module
@@ -36,6 +37,7 @@ import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 class CCodeGeneratorStructModule extends SCGCodeGeneratorModule {
     
     @Inject extension KExpressionsValuedObjectExtensions
+    @Inject extension AnnotationsExtensions
     @Accessors @Inject CCodeSerializeHRExtensions serializer
     
     public static val STRUCT_VARIABLE_NAME = "d"
@@ -68,7 +70,9 @@ class CCodeGeneratorStructModule extends SCGCodeGeneratorModule {
         for (declaration : declarations) {
             if (declaration instanceof ClassDeclaration) {
                 (0..depth).forEach[code.append(indentation)]
-                code.append("struct ")
+                if (!declaration.host || !declaration.hasAnnotation("typedef")) {
+                    code.append("struct ")
+                }
                 code.append(declaration.name)
                 if (!declaration.host) {
                     code.append(" {\n")

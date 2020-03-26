@@ -62,6 +62,14 @@ class SCChartsInheritanceExtensions {
     }
     
     /**
+     * Returns an iterator of all declarations in all states contained in the inheritance hierarchy of the given state.
+     * Conflicting duplicates will be included.
+     */
+    def Iterable<Declaration> getAllInheritedDeclarations(State state) {
+        return state.getAllInheritedStates.map[it.declarations].flatten
+    }
+    
+    /**
      * Returns an iterator of all actions of all states contained in the inheritance hierarchy of the given state.
      */
     def Iterable<LocalAction> getAllVisibleInheritedActions(State state) {

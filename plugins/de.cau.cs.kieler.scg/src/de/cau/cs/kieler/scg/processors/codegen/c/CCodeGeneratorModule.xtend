@@ -43,6 +43,9 @@ class CCodeGeneratorModule extends SCGCodeGeneratorModule {
     @Inject Injector injector
     
     protected static val HOSTCODE = PragmaRegistry.register("hostcode", StringPragma, "Allows additional hostcode to be included (e.g. includes).")
+    protected static val HOSTCODE_C = PragmaRegistry.register("hostcode-c", StringPragma, "Allows additional hostcode to be included (e.g. includes) only for C.")
+    protected static val HOSTCODE_HEADER = PragmaRegistry.register("hostcode-c-header", StringPragma, "Allows additional hostcode to be included (e.g. includes) only for the C header fie.")
+    
     public static val C_EXTENSION = ".c"
     public static val H_EXTENSION = ".h"
     
@@ -96,17 +99,21 @@ class CCodeGeneratorModule extends SCGCodeGeneratorModule {
      */
     override generateWrite(CodeContainer codeContainer) {
         val hFilename = codeFilename + H_EXTENSION
+        val hDefine = hFilename.toUpperCase.replaceAll("\\W", "_")
         val cFilename = codeFilename + C_EXTENSION
         val hFile = new StringBuilder
         val cFile = new StringBuilder
 
+        hFile.pragmaOnceStart(hDefine)
         hFile.addHeader
+        hFile.hostcodeAdditions
         cFile.addHeader
         cFile.hostcodeAdditions
         cFile.append("#include \"" + hFilename + "\"\n\n")
         
         generateWriteCodeModules(hFile, cFile)        
 
+        hFile.pragmaOnceEnd(hDefine)
         naming.put(TICK, tick.getName)
         naming.put(RESET, reset.getName)
         naming.put(LOGIC, logic.getName)
@@ -124,8 +131,8 @@ class CCodeGeneratorModule extends SCGCodeGeneratorModule {
     
     protected def generateWriteCodeModules(StringBuilder hFile, StringBuilder cFile) {
         hFile.append(struct.code)
-        cFile.append(reset.code).append("\n")
         cFile.append(logic.code).append("\n")
+        cFile.append(reset.code).append("\n")
         cFile.append(tick.code)
     }   
     
@@ -152,14 +159,33 @@ class CCodeGeneratorModule extends SCGCodeGeneratorModule {
             sb.append("#include " + include + "\n")
         }
         
-        val hostcodePragmas = SCGraphs.getStringPragmas(HOSTCODE)
+        val hostcodePragmas = SCGraphs.getStringPragmas(HOSTCODE) + SCGraphs.getStringPragmas(HOSTCODE_C)
         for (pragma : hostcodePragmas) {
             sb.append(pragma.values.head + "\n")
         }
         if (hostcodePragmas.size > 0 || includes.size > 0) {
             sb.append("\n")
         }
-    }  
+    }
+    
+    /**
+     * Adds hostcode additions for header. These can come from internal sources like the serialization, 
+     * but also from the model via hostcode pragmas.
+     */
+    protected def void hostcodeHeaderAdditions(StringBuilder sb) {
+        val includes = modifications.get(CCodeSerializeHRExtensions.HEADER_INCLUDES)
+        for (include : includes)  {
+            sb.append("#include " + include + "\n")
+        }
+        
+        val hostcodePragmas = SCGraphs.getStringPragmas(HOSTCODE_HEADER)
+        for (pragma : hostcodePragmas) {
+            sb.append(pragma.values.head + "\n")
+        }
+        if (hostcodePragmas.size > 0 || includes.size > 0) {
+            sb.append("\n")
+        }
+    } 
     
     /**
      * If debug comments are toggled, information from the context are also saved.
@@ -174,6 +200,19 @@ class CCodeGeneratorModule extends SCGCodeGeneratorModule {
         }
         
         sb.append(" */\n\n")
+    }
+    
+    /**
+     * Add pragma for single header include.
+     */
+    protected def void pragmaOnceStart(StringBuilder sb, String define) {
+        sb.append("#ifndef " + define)
+        sb.append("\n#define " + define)
+        sb.append("\n")
+    }
+    protected def void pragmaOnceEnd(StringBuilder sb, String define) {
+        sb.append("\n#endif /* !" + define + " */")
+        sb.append("\n")
     }
     
 }

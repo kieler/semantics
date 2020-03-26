@@ -23,6 +23,8 @@ import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 import de.cau.cs.kieler.scg.extensions.UnsupportedSCGException
 import java.util.List
+import de.cau.cs.kieler.scg.Entry
+import de.cau.cs.kieler.scg.extensions.ThreadPathType
 
 /**
  * @author ssm
@@ -67,8 +69,11 @@ class SynchronizerSelector {
     }
     
     def AbstractSynchronizer chooseSynchronizer(Join join) {
-        val threadPathTypes = join.getEntryNodes.filter[ !hasAnnotation(ANNOTATION_IGNORETHREAD) ].
-        map[ getStringAnnotationValue(ANNOTATION_CONTROLFLOWTHREADPATHTYPE) ].map[ fromString2 ].toList
+        val threadPathTypes = <Entry, ThreadPathType> newHashMap => [ map |
+            join.getEntryNodes.filter[ !hasAnnotation(ANNOTATION_IGNORETHREAD) ].forEach [ entry |
+                map.put(entry, entry.getStringAnnotationValue(ANNOTATION_CONTROLFLOWTHREADPATHTYPE).fromString2)
+            ]
+        ] 
         for(synchronizer : synchronizerInstances) {
             if (synchronizer.isSynchronizable(join.fork, threadPathTypes, false)) {
                 return synchronizer

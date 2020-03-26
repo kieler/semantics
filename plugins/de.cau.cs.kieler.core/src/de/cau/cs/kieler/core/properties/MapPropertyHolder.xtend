@@ -71,6 +71,22 @@ class MapPropertyHolder implements IPropertyHolder, Serializable {
         return defaultValue
     }
     
+    /**
+     * {@inheritDoc}
+     */
+    override <T> T getPropertyAndSetIfAbsent(IProperty<T> property, T value) {
+        if (propertyMap !== null) {
+            val T currValue = propertyMap.get(property) as T
+            if (!propertyMap.containsKey(property) || currValue === null) {
+                propertyMap.put(property, value)
+                return value
+            } else {
+                return currValue
+            }
+        }
+        return this.getProperty(property)
+    }
+    
     def protected Object getPropertyById(String id) {
         return propertyMap.get(new Property(id))
     }

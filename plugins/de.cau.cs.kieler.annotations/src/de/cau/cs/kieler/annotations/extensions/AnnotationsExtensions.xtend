@@ -27,17 +27,31 @@ class AnnotationsExtensions {
 
     def Iterable<Annotation> getAnnotations(Annotatable annotatable, String name) {
         annotatable.annotations?.filter[ 
+            it.name !== null && it.name.equalsIgnoreCase(name)
+        ]
+    }
+    
+    def Iterable<Annotation> getAnnotationsCS(Annotatable annotatable, String name) {
+        annotatable.annotations?.filter[ 
             it.name !== null && it.name.equals(name)
         ]
     } 
     
 	def String getStringAnnotationValue(Annotatable annotatable, String name) {
 		val annotation = annotatable.getAnnotation(name)
-		if (annotation !== null) 
+		if (annotation !== null)
 			(annotation as StringAnnotation).values.head
 		else
 			""
-	}	
+	}
+	
+    def List<String> getStringAnnotationValues(Annotatable annotatable, String name) {
+        val annotation = annotatable.getAnnotation(name)
+        if (annotation !== null)
+            (annotation as StringAnnotation).values
+        else
+            <String> newLinkedList
+    }	
 
 	def Annotatable createStringAnnotation(Annotatable source, String name, String value) {
 		source => [ annotations += name.createStringAnnotation(value) ]
@@ -84,14 +98,24 @@ class AnnotationsExtensions {
     }
 	
 	def boolean hasAnnotation(Annotatable annotatable, String name) {
-		!annotatable.annotations.nullOrEmpty && !annotatable.annotations.filter[ it.name == name ].empty
+	    annotatable?.annotations?.exists[it.name !== null && it.name.equalsIgnoreCase(name)]
 	}
-
+    
+    def boolean hasAnnotationCS(Annotatable annotatable, String name) {
+        !annotatable.annotations.nullOrEmpty && !annotatable.annotations.filter[ it.name.equals(name) ].empty
+    }
+    
     def void removeAnnotations(Annotatable annotatable, String name) {
         if (!annotatable.annotations.nullOrEmpty) {
+            !annotatable.annotations.removeIf[ it.name.equalsIgnoreCase(name) ]
+        }
+    }
+    
+    def void removeAnnotationsCS(Annotatable annotatable, String name) {
+        if (!annotatable.annotations.nullOrEmpty) {
             !annotatable.annotations.removeIf[ it.name.equals(name) ]
-        }    
-    }	
+        }
+    }
 	
 	def boolean hasCommentAnnotation(Annotatable annotatable) {
 	   !annotatable.annotations.nullOrEmpty && !annotatable.annotations.filter(typeof(CommentAnnotation)).empty    

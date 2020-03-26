@@ -14,15 +14,17 @@ package de.cau.cs.kieler.scg.processors.codegen.prio.java
 
 import com.google.inject.Inject
 import com.google.inject.Injector
-import de.cau.cs.kieler.kicool.compilation.CodeContainer
+import de.cau.cs.kieler.annotations.Nameable
 import de.cau.cs.kieler.annotations.StringPragma
+import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
 import de.cau.cs.kieler.annotations.registry.PragmaRegistry
+import de.cau.cs.kieler.kicool.compilation.CodeContainer
+import de.cau.cs.kieler.scg.processors.codegen.java.JavaCodeGeneratorModule
+import de.cau.cs.kieler.scg.processors.codegen.prio.c.CPrioCodeGeneratorModule
+import org.eclipse.emf.common.util.URI
 
 import static de.cau.cs.kieler.kicool.compilation.codegen.AbstractCodeGenerator.*
 import static de.cau.cs.kieler.kicool.compilation.codegen.CodeGeneratorNames.*
-import de.cau.cs.kieler.annotations.Nameable
-import de.cau.cs.kieler.scg.processors.codegen.prio.c.CPrioCodeGeneratorModule
-import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
 
 /**
  * Root Java Code Generator Module
@@ -93,7 +95,11 @@ class JavaPrioCodeGeneratorModule extends CPrioCodeGeneratorModule {
         codeContainer.addJavaCode(classFilename, classFile.toString) => [
             it.naming.putAll(this.naming)
             modelName = if (moduleObject instanceof Nameable) moduleObject.name else "_default"   
-        ]        
+        ]
+        
+        codeContainer.addProxyJavaFile(URI.createPlatformPluginURI("/de.cau.cs.kieler.scg/resources/sj/SJLProgramForPriorities.java", true)) => [
+            library = true
+        ]
     } 
    
     protected def addClass(StringBuilder sb) {
@@ -102,7 +108,7 @@ class JavaPrioCodeGeneratorModule extends CPrioCodeGeneratorModule {
     }
     
     def getProgramName() {
-        return if (scg.label.nullOrEmpty) "Program" else scg.label;
+        return codeFilename // In Java, class name must be file name
     }
     
     override void hostcodeAdditions(StringBuilder sb) {
@@ -111,7 +117,7 @@ class JavaPrioCodeGeneratorModule extends CPrioCodeGeneratorModule {
             sb.append("import " + include + "\n")
         }
         
-        val hostcodePragmas = SCGraphs.getStringPragmas(HOSTCODE)
+        val hostcodePragmas = SCGraphs.getStringPragmas(HOSTCODE) + SCGraphs.getStringPragmas(JavaCodeGeneratorModule.HOSTCODE_JAVA)
         for (pragma : hostcodePragmas) {
             sb.append(pragma.values.head + "\n")
         }

@@ -34,5 +34,16 @@ Export-Package: de.cau.cs.kieler.lustre,
  de.cau.cs.kieler.lustre.scoping,
  de.cau.cs.kieler.lustre.serializer,
  de.cau.cs.kieler.lustre.services,
- de.cau.cs.kieler.lustre.validation
+ de.cau.cs.kieler.lustre.validation,
+ de.cau.cs.kieler.lustre.scade.scade.impl,
+ de.cau.cs.kieler.lustre.scade,
+ de.cau.cs.kieler.lustre.scade.scade.util,
+ de.cau.cs.kieler.lustre.scade.validation,
+ de.cau.cs.kieler.lustre.scade.formatting2,
+ de.cau.cs.kieler.lustre.scade.serializer,
+ de.cau.cs.kieler.lustre.scade.parser.antlr.internal,
+ de.cau.cs.kieler.lustre.scade.services,
+ de.cau.cs.kieler.lustre.scade.parser.antlr,
+ de.cau.cs.kieler.lustre.scade.scoping,
+ de.cau.cs.kieler.lustre.scade.scade
 Import-Package: org.apache.log4j

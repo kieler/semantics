@@ -17,6 +17,7 @@ import java.nio.charset.StandardCharsets
 import java.nio.charset.Charset
 import java.io.ByteArrayInputStream
 import de.cau.cs.kieler.kexpressions.keffects.Effect
+import de.cau.cs.kieler.kexpressions.JsonObjectValue
 
 /**
  * @author als
@@ -31,25 +32,36 @@ class KExtStandaloneParser {
      * Parses a Expression from the given text.
      */
     static def Expression parseExpression(String text) {
-        return text.parseScope(true, StandardCharsets.UTF_8).entities.head?.expression?.expression
+        return ("expression " + text).parseScope(StandardCharsets.UTF_8).entities.head?.expression?.expression
+    }
+    
+    /**
+     * Parses a JsonObjectValue from the given text.
+     */
+    static def JsonObjectValue parseJsonObject(String text) {
+        val exp = ("json " + text).parseScope(StandardCharsets.UTF_8).entities.head?.expression?.expression
+        if (exp instanceof JsonObjectValue) {
+            return exp as JsonObjectValue
+        }
+        return null
     }
     
     /**
      * Parses a Expression from the given text.
      */
     static def Effect parseEffect(String text) {
-        return text.parseScope(false, StandardCharsets.UTF_8).entities.head?.effect
+        return text.parseScope(StandardCharsets.UTF_8).entities.head?.effect
     }
     
     /**
      * Parses a KExt scope from the given text with given encoding
      */
-    static def KExtScope parseScope(String text, boolean expression, Charset encoding) {
+    static def KExtScope parseScope(String text, Charset encoding) {
         var res = injector.getInstance(KExtResource)
         res.standaloneParse = true
-        res.load(new ByteArrayInputStream((if (expression) "expression " + text else text).getBytes(encoding)), emptyMap)
+        res.load(new ByteArrayInputStream(text.getBytes(encoding)), emptyMap)
         
-        if (!res.contents.empty) {
+        if (!res.contents.empty && res.errors.empty) {
             val kext = res.contents.head
             if (kext instanceof Kext) {
                 if (!kext.scopes.empty) {

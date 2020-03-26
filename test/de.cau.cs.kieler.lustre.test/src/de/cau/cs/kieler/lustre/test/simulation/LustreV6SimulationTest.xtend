@@ -12,15 +12,15 @@
  */
 package de.cau.cs.kieler.lustre.test.simulation
 
+import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.lustre.LustreStandaloneSetup
+import de.cau.cs.kieler.lustre.compiler.LustreV6Compiler
 import de.cau.cs.kieler.lustre.lustre.LustreProgram
-import de.cau.cs.kieler.test.common.repository.TestModelData
+import de.cau.cs.kieler.simulation.testing.TestModelData
 import de.cau.cs.kieler.test.common.simulation.AbstractSimulationTest
 import org.junit.Test
 
 import static org.junit.Assume.*
-import de.cau.cs.kieler.kicool.environments.Environment
-import de.cau.cs.kieler.lustre.compiler.LustreV6Compiler
 
 /**
  * Tests if the Lustre V6 compiler behaves in correspondance to the trace files. 

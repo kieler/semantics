@@ -125,9 +125,9 @@ abstract class Processor<Source, Target> implements IKiCoolCloneable {
      */
     protected def void updateProgress(double progress) {
         // Set the actual pTime before triggering the notification.
-        val startTimestamp = environments.target.getProperty(START_TIMESTAMP).longValue
+        val startTimestamp = environments.target.getProperty(TRANSFORMATION_TIME_START).longValue
         val intermediateTimestamp = System.nanoTime
-        environments.target.setProperty(PTIME, (intermediateTimestamp - startTimestamp) / 1000_000)
+        environments.target.setProperty(TRANSFORMATION_INTERMEDIATE_TIME, (intermediateTimestamp - startTimestamp))
         
         // Create the notification.
         compilationContext.notify(
@@ -269,6 +269,27 @@ abstract class Processor<Source, Target> implements IKiCoolCloneable {
         val c = model.copyEObjectAndReturnCopier
         return new AnnotationModel(c.key, c.value, this)
     }
+    
+    var AnnotationModel<EObject> annotationModel = null
+    
+    /** 
+     * Convenient getter for a source annotation model.
+     */
+    def AnnotationModel<?> getAnnotationModel() {
+        if (annotationModel === null) {
+            annotationModel = new AnnotationModel<EObject>()
+            return annotationModel
+        } else {
+            return annotationModel
+        }
+    }    
+    
+    def void applyAnnotations() {
+        if (annotationModel === null) getAnnotationModel;
+        val source = getTargetModel as EObject
+        val c = source.copyEObjectAndReturnCopier
+        annotationModel.apply(c.key, c.value, this)                
+    } 
     
     /** 
      * Convenient toString method for debugging purposes.

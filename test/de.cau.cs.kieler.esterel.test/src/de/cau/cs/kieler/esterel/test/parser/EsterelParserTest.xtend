@@ -16,10 +16,10 @@ import de.cau.cs.kieler.esterel.EsterelProgram
 import de.cau.cs.kieler.esterel.EsterelStandaloneSetup
 import de.cau.cs.kieler.kicool.compilation.Compile
 import de.cau.cs.kieler.kicool.environments.Environment
+import de.cau.cs.kieler.simulation.testing.TestModelData
 import de.cau.cs.kieler.test.common.repository.AbstractXTextModelRepositoryTest
 import de.cau.cs.kieler.test.common.repository.ModelsRepositoryTestRunner
 import de.cau.cs.kieler.test.common.repository.ModelsRepositoryTestRunner.StopOnFailure
-import de.cau.cs.kieler.test.common.repository.TestModelData
 import java.io.ByteArrayOutputStream
 import java.util.List
 import org.eclipse.emf.common.util.URI
@@ -38,7 +38,6 @@ import org.junit.runner.RunWith
 import static org.junit.Assert.*
 
 import static extension java.lang.Boolean.parseBoolean
-import static extension java.lang.String.format
 
 /**
  * Tests if all can be parsed and serialized.

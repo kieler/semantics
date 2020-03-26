@@ -31,6 +31,8 @@ import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ScheduleObjectReference
 import de.cau.cs.kieler.kexpressions.VectorValue
 import de.cau.cs.kieler.kexpressions.OperatorType
+import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
+import de.cau.cs.kieler.kexpressions.Schedulable
 
 /**
  * @author ssm
@@ -97,6 +99,13 @@ class KExpressionsValuedObjectExtensions {
             setPriority(priority)
         ]
     }
+    
+    def ValuedObject createScheduleTo(Schedulable from, Schedulable to, int fromPriority, int toPriority, String name) {
+        val schedule = createValuedObject(name)
+        from.schedule += createScheduleReference(schedule, fromPriority)
+        to.schedule += createScheduleReference(schedule, toPriority)
+        schedule
+    } 
     
     def boolean isVariableReference(ValuedObject valuedObject) {
         valuedObject.declaration instanceof VariableDeclaration
@@ -192,6 +201,10 @@ class KExpressionsValuedObjectExtensions {
     
     def boolean isArrayReference(ValuedObjectReference valuedObjectReference) {
         !valuedObjectReference.indices.nullOrEmpty
+    }
+    
+    def boolean isClassReference(ValuedObjectReference valuedObjectReference){
+        valuedObjectReference.valuedObject.declaration instanceof ClassDeclaration
     }
     
     def void applyIndices(ValuedObjectReference target, ValuedObjectReference source) {
@@ -291,22 +304,26 @@ class KExpressionsValuedObjectExtensions {
     }
     
     def List<ValuedObjectReference> getAllReferences(Expression expression) {
-        <ValuedObjectReference> newArrayList => [ l |
-        	if (expression === null) {
-        	} else if (expression instanceof ValuedObjectReference) { 
-        		l += expression
-        		var sub = expression.subReference
-        		while (sub !== null) {
-        		    l += sub
-        		    sub = sub.subReference
-        		}
-        	} else { 
-        		expression.eAllContents.filter(ValuedObjectReference).forEach[
-        		    l += it   
-        		]
-        	}
-        ]  
+        val refs = <ValuedObjectReference>newArrayList
+    	if (expression !== null) {
+    	    if (expression instanceof ValuedObjectReference) { 
+    		  refs += expression
+    		}
+            refs += expression.eAllContents.filter(ValuedObjectReference).toIterable
+    	}
+        return refs
     }    
+    
+    def List<ScheduleObjectReference> getAllSchedulingReferences(Expression expression) {
+        val refs = <ScheduleObjectReference>newArrayList
+        if (expression !== null) {
+            if (expression instanceof ScheduleObjectReference) {
+                refs += expression
+            }
+            refs += expression.eAllContents.filter(ScheduleObjectReference).toIterable
+        }
+        return refs
+    }
     
     def List<ValuedObjectReference> getAllReferenceFromEObject(EObject eObject) {
         if (eObject === null) {
@@ -321,6 +338,21 @@ class KExpressionsValuedObjectExtensions {
             }
             return l
         }
+    }
+    
+    def boolean hasOperatorExpression(Expression expression, OperatorType operatorType) {
+        if (expression instanceof OperatorExpression) {
+            if (expression.operator == operatorType) {
+                return true
+            } else {
+                var r = false
+                for (se : expression.subExpressions) {
+                    r = r || se.hasOperatorExpression(operatorType)
+                }
+                return r
+            }
+        }
+        return false
     }
     
     def ValuedObject removeFromContainmentAndCleanup(ValuedObject valuedObject) {
@@ -345,7 +377,7 @@ class KExpressionsValuedObjectExtensions {
     def ValuedObject findValuedObjectByName(Declaration declaration, String name) {
         declaration.valuedObjects.filter[ it.name.equals(name) ]?.head
     }
-    
+   
     def List<OperatorExpression> getPreOperatorExpressions(OperatorExpression operatorExpression) {
         if (operatorExpression.operator == OperatorType.PRE) {
             return <OperatorExpression> newLinkedList(operatorExpression)
@@ -383,6 +415,18 @@ class KExpressionsValuedObjectExtensions {
     def Iterable<Expression> getIndicesAndSubIndices(ValuedObjectReference vor) {
         if (vor === null) return emptyList
         return (vor.indices?:emptyList) + vor.subReference.indicesAndSubIndices
+    }
+    
+    def ValuedObjectReference getLowermostReference(ValuedObjectReference vor) {
+        var ref = vor
+        while (ref.subReference !== null) {
+            ref = ref.subReference
+        }
+        return ref
+    }
+    
+    def asValuedObjectFromReference(Expression expression) {
+        expression.asValuedObjectReference.valuedObject
     }
     
 }

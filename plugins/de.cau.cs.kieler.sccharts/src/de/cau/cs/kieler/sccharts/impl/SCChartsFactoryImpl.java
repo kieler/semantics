@@ -85,12 +85,11 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
             case SCChartsPackage.DURING_ACTION: return createDuringAction();
             case SCChartsPackage.EXIT_ACTION: return createExitAction();
             case SCChartsPackage.SUSPEND_ACTION: return createSuspendAction();
-            case SCChartsPackage.PRECEDING_ACTION: return createPrecedingAction();
-            case SCChartsPackage.SUCCEEDING_ACTION: return createSucceedingAction();
             case SCChartsPackage.PERIOD_ACTION: return createPeriodAction();
             case SCChartsPackage.POLICY_CLASS_DECLARATION: return createPolicyClassDeclaration();
             case SCChartsPackage.POLICY_REGION: return createPolicyRegion();
             case SCChartsPackage.CODE_EFFECT: return createCodeEffect();
+            case SCChartsPackage.DATAFLOW_ASSIGNMENT: return createDataflowAssignment();
             default:
                 throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
         }
@@ -110,6 +109,8 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
                 return createHistoryTypeFromString(eDataType, initialValue);
             case SCChartsPackage.DELAY_TYPE:
                 return createDelayTypeFromString(eDataType, initialValue);
+            case SCChartsPackage.DEFERRED_TYPE:
+                return createDeferredTypeFromString(eDataType, initialValue);
             default:
                 throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
         }
@@ -129,6 +130,8 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
                 return convertHistoryTypeToString(eDataType, instanceValue);
             case SCChartsPackage.DELAY_TYPE:
                 return convertDelayTypeToString(eDataType, instanceValue);
+            case SCChartsPackage.DEFERRED_TYPE:
+                return convertDeferredTypeToString(eDataType, instanceValue);
             default:
                 throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
         }
@@ -228,28 +231,6 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
      * @generated
      */
     @Override
-    public PrecedingAction createPrecedingAction() {
-        PrecedingActionImpl precedingAction = new PrecedingActionImpl();
-        return precedingAction;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public SucceedingAction createSucceedingAction() {
-        SucceedingActionImpl succeedingAction = new SucceedingActionImpl();
-        return succeedingAction;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
     public PeriodAction createPeriodAction() {
         PeriodActionImpl periodAction = new PeriodActionImpl();
         return periodAction;
@@ -282,9 +263,21 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public CodeEffect createCodeEffect() {
         CodeEffectImpl codeEffect = new CodeEffectImpl();
         return codeEffect;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public DataflowAssignment createDataflowAssignment() {
+        DataflowAssignmentImpl dataflowAssignment = new DataflowAssignmentImpl();
+        return dataflowAssignment;
     }
 
     /**
@@ -366,6 +359,26 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
      * @generated
      */
     public String convertDelayTypeToString(EDataType eDataType, Object instanceValue) {
+        return instanceValue == null ? null : instanceValue.toString();
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public DeferredType createDeferredTypeFromString(EDataType eDataType, String initialValue) {
+        DeferredType result = DeferredType.get(initialValue);
+        if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+        return result;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public String convertDeferredTypeToString(EDataType eDataType, Object instanceValue) {
         return instanceValue == null ? null : instanceValue.toString();
     }
 

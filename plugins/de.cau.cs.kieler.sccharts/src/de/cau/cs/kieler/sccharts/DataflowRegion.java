@@ -14,7 +14,6 @@
 package de.cau.cs.kieler.sccharts;
 
 import de.cau.cs.kieler.kexpressions.keffects.Assignment;
-
 import org.eclipse.emf.common.util.EList;
 
 /**

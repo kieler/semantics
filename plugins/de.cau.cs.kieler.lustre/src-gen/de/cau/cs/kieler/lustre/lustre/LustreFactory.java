@@ -33,60 +33,6 @@ public interface LustreFactory extends EFactory
   LustreProgram createLustreProgram();
 
   /**
-   * Returns a new object of class '<em>Pack List</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Pack List</em>'.
-   * @generated
-   */
-  PackList createPackList();
-
-  /**
-   * Returns a new object of class '<em>Model Declaration</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Model Declaration</em>'.
-   * @generated
-   */
-  ModelDeclaration createModelDeclaration();
-
-  /**
-   * Returns a new object of class '<em>Provide</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Provide</em>'.
-   * @generated
-   */
-  Provide createProvide();
-
-  /**
-   * Returns a new object of class '<em>Package Declaration</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Package Declaration</em>'.
-   * @generated
-   */
-  PackageDeclaration createPackageDeclaration();
-
-  /**
-   * Returns a new object of class '<em>Package Equation</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Package Equation</em>'.
-   * @generated
-   */
-  PackageEquation createPackageEquation();
-
-  /**
-   * Returns a new object of class '<em>Pack Body</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Pack Body</em>'.
-   * @generated
-   */
-  PackBody createPackBody();
-
-  /**
    * Returns a new object of class '<em>Type Declaration</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -94,15 +40,6 @@ public interface LustreFactory extends EFactory
    * @generated
    */
   TypeDeclaration createTypeDeclaration();
-
-  /**
-   * Returns a new object of class '<em>External Node Declaration</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>External Node Declaration</em>'.
-   * @generated
-   */
-  ExternalNodeDeclaration createExternalNodeDeclaration();
 
   /**
    * Returns a new object of class '<em>Automaton</em>'.
@@ -132,49 +69,40 @@ public interface LustreFactory extends EFactory
   ATransition createATransition();
 
   /**
-   * Returns a new object of class '<em>Params</em>'.
+   * Returns a new object of class '<em>An Action</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Params</em>'.
+   * @return a new object of class '<em>An Action</em>'.
    * @generated
    */
-  Params createParams();
+  AnAction createAnAction();
 
   /**
-   * Returns a new object of class '<em>Static Param</em>'.
+   * Returns a new object of class '<em>External Node Declaration</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Static Param</em>'.
+   * @return a new object of class '<em>External Node Declaration</em>'.
    * @generated
    */
-  StaticParam createStaticParam();
+  ExternalNodeDeclaration createExternalNodeDeclaration();
 
   /**
-   * Returns a new object of class '<em>Static Arg</em>'.
+   * Returns a new object of class '<em>Variable Declaration</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Static Arg</em>'.
+   * @return a new object of class '<em>Variable Declaration</em>'.
    * @generated
    */
-  StaticArg createStaticArg();
+  LustreVariableDeclaration createLustreVariableDeclaration();
 
   /**
-   * Returns a new object of class '<em>By Name Static Arg</em>'.
+   * Returns a new object of class '<em>Valued Object</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>By Name Static Arg</em>'.
+   * @return a new object of class '<em>Valued Object</em>'.
    * @generated
    */
-  ByNameStaticArg createByNameStaticArg();
-
-  /**
-   * Returns a new object of class '<em>Clocked Variable Declaration</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Clocked Variable Declaration</em>'.
-   * @generated
-   */
-  ClockedVariableDeclaration createClockedVariableDeclaration();
+  LustreValuedObject createLustreValuedObject();
 
   /**
    * Returns a new object of class '<em>Node Declaration</em>'.
@@ -213,22 +141,13 @@ public interface LustreFactory extends EFactory
   Assertion createAssertion();
 
   /**
-   * Returns a new object of class '<em>Valued Object</em>'.
+   * Returns a new object of class '<em>State Valued Object</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Valued Object</em>'.
+   * @return a new object of class '<em>State Valued Object</em>'.
    * @generated
    */
-  LustreValuedObject createLustreValuedObject();
-
-  /**
-   * Returns a new object of class '<em>Node Reference</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Node Reference</em>'.
-   * @generated
-   */
-  NodeReference createNodeReference();
+  StateValuedObject createStateValuedObject();
 
   /**
    * Returns the package supported by this factory.

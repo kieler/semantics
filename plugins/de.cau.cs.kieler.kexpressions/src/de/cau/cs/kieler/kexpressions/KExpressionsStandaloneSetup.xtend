@@ -22,11 +22,17 @@ import com.google.inject.Injector
 class KExpressionsStandaloneSetup extends KExpressionsStandaloneSetupGenerated {
 
     static Injector injector
-
-	def static doSetup() {
-	    if (injector === null) {
-	        injector = new KExpressionsStandaloneSetup().createInjectorAndDoEMFRegistration()
-	    }
-		return injector
-	}
+    
+    def static doSetup() {
+        if (injector === null) {
+            injector = new KExpressionsStandaloneSetup().createInjectorAndDoEMFRegistration()
+        }
+        return injector
+    }
+    
+    override register(Injector injector) {
+        super.register(injector)
+        // Ensure package is registered 
+        KExpressionsPackage.eINSTANCE.eClass()
+    }
 }

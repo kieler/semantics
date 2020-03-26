@@ -32,8 +32,11 @@ class SCTXIdeSetup extends SCTXStandaloneSetup {
 	
 	def static doSetup() {
 	    // Check whether the current injector is already an injector created by this class
-        force = injector.getInstance(SCTXIdeModule) !== null
-        if (injector === null || force) {
+//        force = injector.getInstance(SCTXIdeModule) !== null
+        if (injector === null) {
+            injector = new SCTXIdeSetup().createInjectorAndDoEMFRegistration()
+        } else if (injector.getInstance(SCTXIdeModule) !== null) {
+            force = true
             injector = new SCTXIdeSetup().createInjectorAndDoEMFRegistration()
         }
         force = false

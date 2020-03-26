@@ -41,11 +41,11 @@ class SCChartsTransitionExtensions {
     }
 
     def setTypeStrongAbort(Transition transition) {
-        transition => [ preemption =  PreemptionType::STRONGABORT ]
+        transition => [ preemption =  PreemptionType::STRONG ]
     }
 
     def setTypeWeakAbort(Transition transition) {
-        transition => [ preemption =  PreemptionType::WEAKABORT ]
+        transition => [ preemption =  PreemptionType::WEAK ]
     }
 
     // previously isTypeTermination
@@ -55,12 +55,12 @@ class SCChartsTransitionExtensions {
     
     // previously isTypeStrongAbort
     def isStrongAbort(Transition transition) {
-        transition.preemption == PreemptionType::STRONGABORT
+        transition.preemption == PreemptionType::STRONG
     }
 
     // previously isTypeWeakAbort
     def isWeakAbort(Transition transition) {
-        transition.preemption == PreemptionType::WEAKABORT
+        transition.preemption == PreemptionType::WEAK
     }    
     
     def isHistory(Transition transition) {

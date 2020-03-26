@@ -567,9 +567,10 @@ class Reference extends SCChartsProcessor implements Traceable {
     
     /** Replace parameters of reference calls if necessary. */
     protected dispatch def void replaceReferences(ReferenceCall referenceCall, Replacements replacements) {
+        (referenceCall as ValuedObjectReference)._replaceReferences(replacements) // Bypass dispatch to prevent infinite recursion
         for (parameter : referenceCall.parameters) {
             parameter.replaceReferences(replacements)
-        }        
+        }
     }
     
     /** Handle Code Effect. */

@@ -1,0 +1,5 @@
+{
+    "--files": "../sctx/abo/abo.sctx",
+    "--system": "de.cau.cs.kieler.sccharts.simulation.netlist.c",
+    "de.cau.cs.kieler.kicool.deploy.project.generated.name": "test"
+}

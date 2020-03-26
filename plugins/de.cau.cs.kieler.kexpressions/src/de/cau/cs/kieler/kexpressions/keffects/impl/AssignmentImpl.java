@@ -46,7 +46,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.cau.cs.kieler.kexpressions.keffects.impl.AssignmentImpl#getReference <em>Reference</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.keffects.impl.AssignmentImpl#getExpression <em>Expression</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.keffects.impl.AssignmentImpl#getOperator <em>Operator</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kexpressions.keffects.impl.AssignmentImpl#getSubReference <em>Sub Reference</em>}</li>
  * </ul>
  *
  * @generated
@@ -121,16 +120,6 @@ public class AssignmentImpl extends AnnotatableImpl implements Assignment {
      * @ordered
      */
     protected AssignOperator operator = OPERATOR_EDEFAULT;
-
-    /**
-     * The cached value of the '{@link #getSubReference() <em>Sub Reference</em>}' containment reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getSubReference()
-     * @generated
-     * @ordered
-     */
-    protected ValuedObjectReference subReference;
 
     /**
      * <!-- begin-user-doc -->
@@ -308,51 +297,6 @@ public class AssignmentImpl extends AnnotatableImpl implements Assignment {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
-    public ValuedObjectReference getSubReference() {
-        return subReference;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public NotificationChain basicSetSubReference(ValuedObjectReference newSubReference, NotificationChain msgs) {
-        ValuedObjectReference oldSubReference = subReference;
-        subReference = newSubReference;
-        if (eNotificationRequired()) {
-            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, KEffectsPackage.ASSIGNMENT__SUB_REFERENCE, oldSubReference, newSubReference);
-            if (msgs == null) msgs = notification; else msgs.add(notification);
-        }
-        return msgs;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public void setSubReference(ValuedObjectReference newSubReference) {
-        if (newSubReference != subReference) {
-            NotificationChain msgs = null;
-            if (subReference != null)
-                msgs = ((InternalEObject)subReference).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - KEffectsPackage.ASSIGNMENT__SUB_REFERENCE, null, msgs);
-            if (newSubReference != null)
-                msgs = ((InternalEObject)newSubReference).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - KEffectsPackage.ASSIGNMENT__SUB_REFERENCE, null, msgs);
-            msgs = basicSetSubReference(newSubReference, msgs);
-            if (msgs != null) msgs.dispatch();
-        }
-        else if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, KEffectsPackage.ASSIGNMENT__SUB_REFERENCE, newSubReference, newSubReference));
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     @SuppressWarnings("unchecked")
     @Override
     public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
@@ -381,8 +325,6 @@ public class AssignmentImpl extends AnnotatableImpl implements Assignment {
                 return basicSetReference(null, msgs);
             case KEffectsPackage.ASSIGNMENT__EXPRESSION:
                 return basicSetExpression(null, msgs);
-            case KEffectsPackage.ASSIGNMENT__SUB_REFERENCE:
-                return basicSetSubReference(null, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
@@ -407,8 +349,6 @@ public class AssignmentImpl extends AnnotatableImpl implements Assignment {
                 return getExpression();
             case KEffectsPackage.ASSIGNMENT__OPERATOR:
                 return getOperator();
-            case KEffectsPackage.ASSIGNMENT__SUB_REFERENCE:
-                return getSubReference();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -443,9 +383,6 @@ public class AssignmentImpl extends AnnotatableImpl implements Assignment {
             case KEffectsPackage.ASSIGNMENT__OPERATOR:
                 setOperator((AssignOperator)newValue);
                 return;
-            case KEffectsPackage.ASSIGNMENT__SUB_REFERENCE:
-                setSubReference((ValuedObjectReference)newValue);
-                return;
         }
         super.eSet(featureID, newValue);
     }
@@ -476,9 +413,6 @@ public class AssignmentImpl extends AnnotatableImpl implements Assignment {
             case KEffectsPackage.ASSIGNMENT__OPERATOR:
                 setOperator(OPERATOR_EDEFAULT);
                 return;
-            case KEffectsPackage.ASSIGNMENT__SUB_REFERENCE:
-                setSubReference((ValuedObjectReference)null);
-                return;
         }
         super.eUnset(featureID);
     }
@@ -503,8 +437,6 @@ public class AssignmentImpl extends AnnotatableImpl implements Assignment {
                 return expression != null;
             case KEffectsPackage.ASSIGNMENT__OPERATOR:
                 return operator != OPERATOR_EDEFAULT;
-            case KEffectsPackage.ASSIGNMENT__SUB_REFERENCE:
-                return subReference != null;
         }
         return super.eIsSet(featureID);
     }

@@ -14,6 +14,8 @@
 package de.cau.cs.kieler.sccharts.processors
 
 import com.google.inject.Inject
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.kexpressions.TextExpression
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
@@ -65,6 +67,7 @@ class Initialization extends SCChartsProcessor implements Traceable {
     @Inject extension KExtDeclarationExtensions
     @Inject extension SCChartsScopeExtensions
     @Inject extension SCChartsActionExtensions
+    @Inject extension AnnotationsExtensions
     
     // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_"
@@ -88,31 +91,39 @@ class Initialization extends SCChartsProcessor implements Traceable {
         // Find VO that need to be initialized
         for (decl : scope.declarations) {
             if (decl instanceof ClassDeclaration) {
-                for (nestedVO : decl.allNestedValuedObjects.filter[initialValue !== null]) {
-                    // Calculate paths to all initialized members
-                    var paths = newArrayList(newArrayList(nestedVO))
-                    var ClassDeclaration parent = nestedVO.declaration.eContainer as ClassDeclaration
-                    while(parent !== null) {
-                        val oldPaths = paths
-                        paths = newArrayList
-                        for (parentVO : parent.valuedObjects) {
-                            if (parentVO.cardinalities.nullOrEmpty) {
-                                for (oldPath : oldPaths) {
-                                    val newPath = newArrayList(parentVO)
-                                    newPath.addAll(oldPath)
-                                    paths += newPath
+                if (decl.host) {
+                    val vos = decl.valuedObjects.filter[initialValue instanceof TextExpression]
+                    if (!vos.empty) {
+                        initVOs += vos.map[newArrayList(it)]
+                        vos.forEach[it.addTagAnnotation("skipClassInit")] // FIXME magic keyword affects code generation
+                    }
+                } else {
+                    for (nestedVO : decl.allNestedValuedObjects.filter[initialValue !== null]) {
+                        // Calculate paths to all initialized members
+                        var paths = newArrayList(newArrayList(nestedVO))
+                        var ClassDeclaration parent = nestedVO.declaration.eContainer as ClassDeclaration
+                        while(parent !== null) {
+                            val oldPaths = paths
+                            paths = newArrayList
+                            for (parentVO : parent.valuedObjects) {
+                                if (parentVO.cardinalities.nullOrEmpty) {
+                                    for (oldPath : oldPaths) {
+                                        val newPath = newArrayList(parentVO)
+                                        newPath.addAll(oldPath)
+                                        paths += newPath
+                                    }
+                                } else {
+                                    environment.errors.add("Cannot initialize members of class/sturct types. Feature is currently not supported, please initialize manually.")
                                 }
+                            }
+                            if (parent == decl) {
+                                parent = null
                             } else {
-                                environment.errors.add("Cannot initialize members of class/sturct types. Feature is currently not supported, please initialize manually.")
+                                parent = parent.eContainer as ClassDeclaration
                             }
                         }
-                        if (parent == decl) {
-                            parent = null
-                        } else {
-                            parent = parent.eContainer as ClassDeclaration
-                        }
+                        initVOs += paths
                     }
-                    initVOs += paths
                 }
             } else {
                 initVOs += decl.valuedObjects.filter[initialValue !== null].map[newArrayList(it)]
@@ -143,8 +154,9 @@ class Initialization extends SCChartsProcessor implements Traceable {
                 val entryAction = scope.states.findFirst[initial].createEntryAction(0)
                 entryAction.addAssignment(assignment)
             }
-            valuedObject.setInitialValue(null)
         }
+        // Clear initial values AFTER all assignments are created because some nested VOs might need
+        initVOs.map[last].forEach[initialValue = null]
     }
 
     def SCCharts transform(SCCharts sccharts) {

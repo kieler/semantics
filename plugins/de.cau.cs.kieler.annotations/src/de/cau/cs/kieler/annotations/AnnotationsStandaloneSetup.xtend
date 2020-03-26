@@ -23,11 +23,17 @@ import com.google.inject.Injector
 class AnnotationsStandaloneSetup extends AnnotationsStandaloneSetupGenerated {
     
     static Injector injector
-
+    
     def static doSetup() {
         if (injector === null) {
             injector = new AnnotationsStandaloneSetup().createInjectorAndDoEMFRegistration()
         }
         return injector
+    }
+    
+    override register(Injector injector) {
+        super.register(injector)
+        // Ensure package is registered 
+        AnnotationsPackage.eINSTANCE.eClass()
     }
 }

@@ -53,6 +53,10 @@ import static de.cau.cs.kieler.kexpressions.keffects.DataDependencyType.*
 import static de.cau.cs.kieler.kexpressions.keffects.dependencies.ValuedObjectAccess.*
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
+import de.cau.cs.kieler.kexpressions.MethodDeclaration
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCallExtensions
+import de.cau.cs.kieler.kexpressions.Call
+import de.cau.cs.kieler.kexpressions.KExpressionsFactory
 
 /** 
  * @author ssm
@@ -68,13 +72,22 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
     extends InplaceProcessor<P> implements Traceable {
     
     public static val IProperty<Boolean> SAVE_ONLY_CONFLICTING_DEPENDENCIES = 
-        new Property<Boolean>("de.cau.cs.kieler.kexpressions.keffects.dependencies.saveOnlyConflicting", false)
+        new Property<Boolean>("de.cau.cs.kieler.kexpressions.dependencies.saveOnlyConflicting", false)
 
     public static val IProperty<Boolean> ALLOW_OLD_SC_SYNTAX = 
-        new Property<Boolean>("de.cau.cs.kieler.kexpressions.keffects.dependencies.oldSCSyntax", true)
+        new Property<Boolean>("de.cau.cs.kieler.kexpressions.dependencies.oldSCSyntax", true)
 
     public static val IProperty<Boolean> ALLOW_MULTIPLE_RELATIVE_READERS = 
-        new Property<Boolean>("de.cau.cs.kieler.kexpressions.keffects.dependencies.multipleRelativeReaders", false)
+        new Property<Boolean>("de.cau.cs.kieler.kexpressions.dependencies.multipleRelativeReaders", false)
+
+    public static val IProperty<Boolean> PROCESS_CALL_PARAMETERS = 
+        new Property<Boolean>("de.cau.cs.kieler.kexpressions.dependencies.processCallParameters", true)
+
+    /** Adds a global identifier to hostcode effects, which allows scheduling via SDs 
+     * of effects that do not share common variables. */
+    public static val IProperty<Boolean> ADD_DEFAULT_ARTIFICAL_HOSTCODE_WRITER = 
+        new Property<Boolean>("de.cau.cs.kieler.kexpressions.dependencies.addDefaultArtificialHostcodeWriter", false)
+    static val ARTIFICIAL_HOSTCODE_WRITER = new ValuedObjectIdentifier(KExpressionsFactory::eINSTANCE.createValuedObject)
 
         
     public static val IProperty<ValuedObjectAccessors> VALUED_OBJECT_ACCESSORS = 
@@ -88,6 +101,7 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
     @Inject extension KExpressionsCompareExtensions
     @Inject extension KEffectsExtensions
     @Inject extension KEffectsDependencyExtensions
+    @Inject extension KExpressionsCallExtensions
     
     protected val dependencies = <Dependency> newLinkedList
     
@@ -147,6 +161,9 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
             // User defined schedules on assignments without VOs e.g. RefCallEffects
             if (!assignment.schedule.nullOrEmpty) {
                 val artificialWriters = assignment.eAllContents.filter(ReferenceCall).map[new ValuedObjectIdentifier(it)].toList
+                if (getProperty(ADD_DEFAULT_ARTIFICAL_HOSTCODE_WRITER)) {
+                    artificialWriters += ARTIFICIAL_HOSTCODE_WRITER
+                }
                 // Respect user-defined schedules.
                 for(sched : assignment.schedule) {
                     val schedule = sched.valuedObject.declaration as ScheduleDeclaration
@@ -218,18 +235,63 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
                 valuedObjectAccessors.addAccess(writeVOI, writeAccess)
             }
         }
+        
+        for (referenceCall : assignment.expression.allReferenceCalls) {
+            referenceCall.processCall(forkStack, valuedObjectAccessors, assignment)
+        }
+    }
+    
+    protected def void processCall(Call call, ForkStack forkStack, ValuedObjectAccessors valuedObjectAccessors, 
+        Assignment assignment
+    ) {
+        if (!getProperty(PROCESS_CALL_PARAMETERS)) return;
+        
+        val schedules = newLinkedList(GLOBAL_SCHEDULE) + 
+           if (assignment.schedule !== null) assignment.schedule else #[]
+        
+        for (parameter : call.parameters) {
+            for (sched : schedules) {
+                var schedule = GLOBAL_SCHEDULE
+                var ValuedObject scheduleObject = null       
+                var priority = GLOBAL_READ
+                if (parameter.isPureOutput) priority = GLOBAL_WRITE
+                else if (parameter.isReferenceOutput) priority = GLOBAL_RELATIVE_WRITE
+                if (sched instanceof ScheduleObjectReference) {
+                    schedule = sched.valuedObject.declaration as ScheduleDeclaration
+                    scheduleObject = sched.valuedObject 
+                    priority = sched.priority    
+                }                
+                                
+                for (vor : parameter.expression.allReferences) { 
+                    val VOI = new ValuedObjectIdentifier(vor)
+                    val access = new ValuedObjectAccess(assignment, assignment.association, schedule, scheduleObject, priority, forkStack, false)
+                    access.isWriteAccess = parameter.isOutput
+                    valuedObjectAccessors.addAccess(VOI, access)
+                }
+            }
+        }
     }
     
     /** Protected prototype method to find dependencies in keffects assignments. */
     protected def void processEffect(Effect effect, ForkStack forkStack, ValuedObjectAccessors valuedObjectAccessors) {
-        val writeVOI = if (effect instanceof ReferenceCallEffect) {
-            new ValuedObjectIdentifier(effect)
+        val vor = if (effect instanceof ReferenceCallEffect) {
+            effect
         } else if (effect instanceof PrintCallEffect) {
-            new ValuedObjectIdentifier(effect.parameters.head.expression.asValuedObjectReference)
+            effect.parameters.head.expression.asValuedObjectReference
         }
+        val writeVOI = new ValuedObjectIdentifier(vor)
 
         // Respect user-defined schedules.
-        for(sched : effect.schedule) {
+        val schedules = newArrayList
+        schedules += effect.schedule
+        var sub = vor
+        do {
+            if (sub.valuedObject.declaration instanceof MethodDeclaration) {
+                schedules += (sub.valuedObject.declaration as MethodDeclaration).schedule
+            }
+            sub = sub.subReference
+        } while (sub !== null)
+        for(sched : schedules) {
             val schedule = sched.valuedObject.declaration as ScheduleDeclaration
             val scheduleObject = sched.valuedObject        
             val priority = sched.priority

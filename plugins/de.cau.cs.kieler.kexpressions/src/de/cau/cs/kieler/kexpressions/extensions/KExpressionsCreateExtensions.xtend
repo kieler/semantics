@@ -382,7 +382,7 @@ class KExpressionsCreateExtensions {
 
     def TextExpression createTextExpression(String text) {
         KExpressionsFactory::eINSTANCE.createTextExpression() => [
-            setText("'" + text + "'")
+            setText(text)
         ]
     }
     

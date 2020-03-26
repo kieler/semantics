@@ -55,7 +55,7 @@ class CSimulationTemplateGenerator extends AbstractSimulationTemplateGenerator {
         environment.setProperty(TemplateEngine.GENRAL_ENVIRONMENT, generalTemplateEnvironment)
         
         if (infra.sourceCode !== null) {
-            val structFiles = infra.sourceCode.files.filter(CCodeFile).filter[!naming.empty].toList
+            val structFiles = infra.sourceCode.files.filter(CCodeFile).filter[!library && !naming.empty].toList
             var structFile = structFiles.findFirst[header]
             if (structFile === null) {
                 structFile = structFiles.head
@@ -109,21 +109,26 @@ class CSimulationTemplateGenerator extends AbstractSimulationTemplateGenerator {
                 size_t blocksize = «MESSAGE_BUFFER_SIZE.property»;
                 char *buffer = realloc(NULL, sizeof(char) * blocksize);
                 size_t i = 0;
-                char c;
                 
                 // read next line
-                while ((c = getchar()) != '\n') {
-                    buffer[i++] = c;
+                int c = getchar();
+                while (c != EOF && c != '\n') {
+                    buffer[i++] = (char) c;
                     if (i == blocksize) {
                         buffer = realloc(buffer, sizeof(char) * (blocksize += «MESSAGE_BUFFER_SIZE.property»));
                     }
+                    c = getchar();
                 }
                 buffer[i++] = '\0';
+                
+                if (c == EOF) {
+                    exit(EOF);
+                }
                 
                 cJSON *root = cJSON_Parse(buffer);
                 cJSON *item = NULL;
                 if(root != NULL) {
-                    «FOR v : store.orderedVariables.dropBlacklisted.filter[!value.encapsulated && !value.container]»
+                    «FOR v : store.orderedVariables.dropHostTypes.dropBlacklisted.filter[!value.encapsulated && !value.container]»
                         // Receive «v.key»
                         item = cJSON_GetObjectItemCaseSensitive(root, "«v.key»");
                         if(item != NULL) {
@@ -145,7 +150,7 @@ class CSimulationTemplateGenerator extends AbstractSimulationTemplateGenerator {
                     cJSON *obj;
                 «ENDIF»
                 
-                «FOR v : store.orderedVariables.dropBlacklisted.filter[!value.encapsulated]»
+                «FOR v : store.orderedVariables.dropHostTypes.dropBlacklisted.filter[!value.encapsulated]»
                     // Send «v.key»
                     «v.serialize("root", "array", "obj")»
                 «ENDFOR»
@@ -154,7 +159,7 @@ class CSimulationTemplateGenerator extends AbstractSimulationTemplateGenerator {
                     cJSON *interface = cJSON_CreateObject();
                     cJSON *info, *properties;
                     
-                    «FOR v : store.orderedVariables.dropBlacklisted»
+                    «FOR v : store.orderedVariables.dropHostTypes.dropBlacklisted»
                         info = cJSON_CreateObject();
                         properties = cJSON_CreateArray();
                         «FOR p : v.value.properties»
@@ -176,6 +181,7 @@ class CSimulationTemplateGenerator extends AbstractSimulationTemplateGenerator {
                 fflush(stdout);
             
                 cJSON_Delete(root);
+                free(outString);
             }
             </#macro>
             '''

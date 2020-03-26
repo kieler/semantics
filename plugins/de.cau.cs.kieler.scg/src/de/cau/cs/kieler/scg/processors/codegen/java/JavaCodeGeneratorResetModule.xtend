@@ -16,6 +16,14 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.scg.processors.codegen.c.CCodeGeneratorResetModule
 import de.cau.cs.kieler.scg.processors.SimpleGuardExpressions
 
+import static de.cau.cs.kieler.kicool.compilation.VariableStore.*
+import de.cau.cs.kieler.kicool.compilation.VariableStore
+import de.cau.cs.kieler.scg.processors.codegen.c.CCodeSerializeHRExtensions
+import de.cau.cs.kieler.scg.Exit
+import de.cau.cs.kieler.scg.Entry
+import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
+import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
+
 /**
  * Java Code Generator Reset Module
  * 
@@ -28,7 +36,10 @@ import de.cau.cs.kieler.scg.processors.SimpleGuardExpressions
  */
 class JavaCodeGeneratorResetModule extends CCodeGeneratorResetModule {
     
+    @Inject extension SCGCoreExtensions
+    @Inject extension SCGControlFlowExtensions
     @Inject JavaCodeGeneratorStructModule struct
+    @Inject JavaCodeSerializeHRExtensions javaSerializer
     
     override configure() {
         struct = (parent as JavaCodeGeneratorModule).struct as JavaCodeGeneratorStructModule
@@ -48,11 +59,39 @@ class JavaCodeGeneratorResetModule extends CCodeGeneratorResetModule {
         code.append(struct.getVariableName).append(struct.separator).append(SimpleGuardExpressions.GO_GUARD_NAME).append(" = true;\n")
         indent(2)
         code.append(struct.getVariableName).append(struct.separator).append(SimpleGuardExpressions.TERM_GUARD_NAME).append(" = false;\n")
+        
+        generateResetSCGVariables(javaSerializer)
+        
+        generateVariableStoreResetVariables
     }    
     
     override generateDone() {
         indent
         code.append("}\n")
+    }
+    
+    override generateResetSCGVariables(extension CCodeSerializeHRExtensions serializer) {
+        val resetSCG = moduleObject.nodes.findFirst[ it instanceof Entry ].asEntry.resetSCG
+        if (resetSCG === null) return;
+        
+        var node = resetSCG.nodes.head.asEntry.next.target
+        while (!(node instanceof Exit)) {
+            indent(2)
+            code.append(node.serializeHR).append(";\n")  
+            
+            node = node.asNode.allNext.map[target].head
+        }
+    }    
+ 
+    override generateVariableStoreResetVariables() {
+        val variableStore = VariableStore.getVariableStore(processorInstance.environment)
+        
+        for (vk : variableStore.variables.keySet) {
+            if (variableStore.variables.get(vk).exists[ properties.contains(RESET) ]) {
+                indent(2)
+                code.append(struct.getVariableName).append(struct.separator).append(vk).append(" = false;\n")
+            }
+        }
     }
     
 }

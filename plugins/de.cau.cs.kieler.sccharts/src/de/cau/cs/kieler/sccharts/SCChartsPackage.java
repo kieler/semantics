@@ -1406,13 +1406,22 @@ public interface SCChartsPackage extends EPackage {
     int ENTRY_ACTION__NONDETERMINISTIC = LOCAL_ACTION__NONDETERMINISTIC;
 
     /**
+     * The feature id for the '<em><b>Preemption</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ENTRY_ACTION__PREEMPTION = LOCAL_ACTION_FEATURE_COUNT + 0;
+
+    /**
      * The number of structural features of the '<em>Entry Action</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int ENTRY_ACTION_FEATURE_COUNT = LOCAL_ACTION_FEATURE_COUNT + 0;
+    int ENTRY_ACTION_FEATURE_COUNT = LOCAL_ACTION_FEATURE_COUNT + 1;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.DuringActionImpl <em>During Action</em>}' class.
@@ -1633,13 +1642,22 @@ public interface SCChartsPackage extends EPackage {
     int EXIT_ACTION__NONDETERMINISTIC = LOCAL_ACTION__NONDETERMINISTIC;
 
     /**
+     * The feature id for the '<em><b>Preemption</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int EXIT_ACTION__PREEMPTION = LOCAL_ACTION_FEATURE_COUNT + 0;
+
+    /**
      * The number of structural features of the '<em>Exit Action</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int EXIT_ACTION_FEATURE_COUNT = LOCAL_ACTION_FEATURE_COUNT + 0;
+    int EXIT_ACTION_FEATURE_COUNT = LOCAL_ACTION_FEATURE_COUNT + 1;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.SuspendActionImpl <em>Suspend Action</em>}' class.
@@ -1760,224 +1778,6 @@ public interface SCChartsPackage extends EPackage {
     int SUSPEND_ACTION_FEATURE_COUNT = LOCAL_ACTION_FEATURE_COUNT + 1;
 
     /**
-     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.PrecedingActionImpl <em>Preceding Action</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.sccharts.impl.PrecedingActionImpl
-     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getPrecedingAction()
-     * @generated
-     */
-    int PRECEDING_ACTION = 14;
-
-    /**
-     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int PRECEDING_ACTION__ANNOTATIONS = LOCAL_ACTION__ANNOTATIONS;
-
-    /**
-     * The feature id for the '<em><b>Outgoing Links</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int PRECEDING_ACTION__OUTGOING_LINKS = LOCAL_ACTION__OUTGOING_LINKS;
-
-    /**
-     * The feature id for the '<em><b>Incoming Links</b></em>' reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int PRECEDING_ACTION__INCOMING_LINKS = LOCAL_ACTION__INCOMING_LINKS;
-
-    /**
-     * The feature id for the '<em><b>Effects</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int PRECEDING_ACTION__EFFECTS = LOCAL_ACTION__EFFECTS;
-
-    /**
-     * The feature id for the '<em><b>Trigger</b></em>' containment reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int PRECEDING_ACTION__TRIGGER = LOCAL_ACTION__TRIGGER;
-
-    /**
-     * The feature id for the '<em><b>Trigger Delay</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int PRECEDING_ACTION__TRIGGER_DELAY = LOCAL_ACTION__TRIGGER_DELAY;
-
-    /**
-     * The feature id for the '<em><b>Trigger Probability</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int PRECEDING_ACTION__TRIGGER_PROBABILITY = LOCAL_ACTION__TRIGGER_PROBABILITY;
-
-    /**
-     * The feature id for the '<em><b>Label</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int PRECEDING_ACTION__LABEL = LOCAL_ACTION__LABEL;
-
-    /**
-     * The feature id for the '<em><b>Delay</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int PRECEDING_ACTION__DELAY = LOCAL_ACTION__DELAY;
-
-    /**
-     * The feature id for the '<em><b>Nondeterministic</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int PRECEDING_ACTION__NONDETERMINISTIC = LOCAL_ACTION__NONDETERMINISTIC;
-
-    /**
-     * The number of structural features of the '<em>Preceding Action</em>' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int PRECEDING_ACTION_FEATURE_COUNT = LOCAL_ACTION_FEATURE_COUNT + 0;
-
-    /**
-     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.SucceedingActionImpl <em>Succeeding Action</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.sccharts.impl.SucceedingActionImpl
-     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getSucceedingAction()
-     * @generated
-     */
-    int SUCCEEDING_ACTION = 15;
-
-    /**
-     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int SUCCEEDING_ACTION__ANNOTATIONS = LOCAL_ACTION__ANNOTATIONS;
-
-    /**
-     * The feature id for the '<em><b>Outgoing Links</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int SUCCEEDING_ACTION__OUTGOING_LINKS = LOCAL_ACTION__OUTGOING_LINKS;
-
-    /**
-     * The feature id for the '<em><b>Incoming Links</b></em>' reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int SUCCEEDING_ACTION__INCOMING_LINKS = LOCAL_ACTION__INCOMING_LINKS;
-
-    /**
-     * The feature id for the '<em><b>Effects</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int SUCCEEDING_ACTION__EFFECTS = LOCAL_ACTION__EFFECTS;
-
-    /**
-     * The feature id for the '<em><b>Trigger</b></em>' containment reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int SUCCEEDING_ACTION__TRIGGER = LOCAL_ACTION__TRIGGER;
-
-    /**
-     * The feature id for the '<em><b>Trigger Delay</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int SUCCEEDING_ACTION__TRIGGER_DELAY = LOCAL_ACTION__TRIGGER_DELAY;
-
-    /**
-     * The feature id for the '<em><b>Trigger Probability</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int SUCCEEDING_ACTION__TRIGGER_PROBABILITY = LOCAL_ACTION__TRIGGER_PROBABILITY;
-
-    /**
-     * The feature id for the '<em><b>Label</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int SUCCEEDING_ACTION__LABEL = LOCAL_ACTION__LABEL;
-
-    /**
-     * The feature id for the '<em><b>Delay</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int SUCCEEDING_ACTION__DELAY = LOCAL_ACTION__DELAY;
-
-    /**
-     * The feature id for the '<em><b>Nondeterministic</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int SUCCEEDING_ACTION__NONDETERMINISTIC = LOCAL_ACTION__NONDETERMINISTIC;
-
-    /**
-     * The number of structural features of the '<em>Succeeding Action</em>' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int SUCCEEDING_ACTION_FEATURE_COUNT = LOCAL_ACTION_FEATURE_COUNT + 0;
-
-    /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.PeriodActionImpl <em>Period Action</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1985,7 +1785,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getPeriodAction()
      * @generated
      */
-    int PERIOD_ACTION = 16;
+    int PERIOD_ACTION = 14;
 
     /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -2094,7 +1894,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getPolicyClassDeclaration()
      * @generated
      */
-    int POLICY_CLASS_DECLARATION = 17;
+    int POLICY_CLASS_DECLARATION = 15;
 
     /**
      * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
@@ -2266,7 +2066,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getPolicyRegion()
      * @generated
      */
-    int POLICY_REGION = 18;
+    int POLICY_REGION = 16;
 
     /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -2429,7 +2229,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getCodeEffect()
      * @generated
      */
-    int CODE_EFFECT = 19;
+    int CODE_EFFECT = 17;
 
     /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -2495,6 +2295,97 @@ public interface SCChartsPackage extends EPackage {
     int CODE_EFFECT_FEATURE_COUNT = KEffectsPackage.EFFECT_FEATURE_COUNT + 2;
 
     /**
+     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.DataflowAssignmentImpl <em>Dataflow Assignment</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.sccharts.impl.DataflowAssignmentImpl
+     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getDataflowAssignment()
+     * @generated
+     */
+    int DATAFLOW_ASSIGNMENT = 18;
+
+    /**
+     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATAFLOW_ASSIGNMENT__ANNOTATIONS = KEffectsPackage.ASSIGNMENT__ANNOTATIONS;
+
+    /**
+     * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATAFLOW_ASSIGNMENT__SCHEDULE = KEffectsPackage.ASSIGNMENT__SCHEDULE;
+
+    /**
+     * The feature id for the '<em><b>Outgoing Links</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATAFLOW_ASSIGNMENT__OUTGOING_LINKS = KEffectsPackage.ASSIGNMENT__OUTGOING_LINKS;
+
+    /**
+     * The feature id for the '<em><b>Incoming Links</b></em>' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATAFLOW_ASSIGNMENT__INCOMING_LINKS = KEffectsPackage.ASSIGNMENT__INCOMING_LINKS;
+
+    /**
+     * The feature id for the '<em><b>Reference</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATAFLOW_ASSIGNMENT__REFERENCE = KEffectsPackage.ASSIGNMENT__REFERENCE;
+
+    /**
+     * The feature id for the '<em><b>Expression</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATAFLOW_ASSIGNMENT__EXPRESSION = KEffectsPackage.ASSIGNMENT__EXPRESSION;
+
+    /**
+     * The feature id for the '<em><b>Operator</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATAFLOW_ASSIGNMENT__OPERATOR = KEffectsPackage.ASSIGNMENT__OPERATOR;
+
+    /**
+     * The feature id for the '<em><b>Sequential</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATAFLOW_ASSIGNMENT__SEQUENTIAL = KEffectsPackage.ASSIGNMENT_FEATURE_COUNT + 0;
+
+    /**
+     * The number of structural features of the '<em>Dataflow Assignment</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATAFLOW_ASSIGNMENT_FEATURE_COUNT = KEffectsPackage.ASSIGNMENT_FEATURE_COUNT + 1;
+
+    /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.PreemptionType <em>Preemption Type</em>}' enum.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2502,7 +2393,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getPreemptionType()
      * @generated
      */
-    int PREEMPTION_TYPE = 20;
+    int PREEMPTION_TYPE = 19;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.HistoryType <em>History Type</em>}' enum.
@@ -2512,7 +2403,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getHistoryType()
      * @generated
      */
-    int HISTORY_TYPE = 21;
+    int HISTORY_TYPE = 20;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.DelayType <em>Delay Type</em>}' enum.
@@ -2522,7 +2413,18 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getDelayType()
      * @generated
      */
-    int DELAY_TYPE = 22;
+    int DELAY_TYPE = 21;
+
+
+    /**
+     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.DeferredType <em>Deferred Type</em>}' enum.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.sccharts.DeferredType
+     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getDeferredType()
+     * @generated
+     */
+    int DEFERRED_TYPE = 22;
 
 
     /**
@@ -3000,11 +2902,11 @@ public interface SCChartsPackage extends EPackage {
     EAttribute getTransition_History();
 
     /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.Transition#isDeferred <em>Deferred</em>}'.
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.Transition#getDeferred <em>Deferred</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Deferred</em>'.
-     * @see de.cau.cs.kieler.sccharts.Transition#isDeferred()
+     * @see de.cau.cs.kieler.sccharts.Transition#getDeferred()
      * @see #getTransition()
      * @generated
      */
@@ -3043,6 +2945,17 @@ public interface SCChartsPackage extends EPackage {
     EClass getEntryAction();
 
     /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.EntryAction#getPreemption <em>Preemption</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Preemption</em>'.
+     * @see de.cau.cs.kieler.sccharts.EntryAction#getPreemption()
+     * @see #getEntryAction()
+     * @generated
+     */
+    EAttribute getEntryAction_Preemption();
+
+    /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.DuringAction <em>During Action</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -3074,6 +2987,17 @@ public interface SCChartsPackage extends EPackage {
     EClass getExitAction();
 
     /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.ExitAction#getPreemption <em>Preemption</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Preemption</em>'.
+     * @see de.cau.cs.kieler.sccharts.ExitAction#getPreemption()
+     * @see #getExitAction()
+     * @generated
+     */
+    EAttribute getExitAction_Preemption();
+
+    /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.SuspendAction <em>Suspend Action</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -3093,26 +3017,6 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      */
     EAttribute getSuspendAction_Weak();
-
-    /**
-     * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.PrecedingAction <em>Preceding Action</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Preceding Action</em>'.
-     * @see de.cau.cs.kieler.sccharts.PrecedingAction
-     * @generated
-     */
-    EClass getPrecedingAction();
-
-    /**
-     * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.SucceedingAction <em>Succeeding Action</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Succeeding Action</em>'.
-     * @see de.cau.cs.kieler.sccharts.SucceedingAction
-     * @generated
-     */
-    EClass getSucceedingAction();
 
     /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.PeriodAction <em>Period Action</em>}'.
@@ -3166,6 +3070,27 @@ public interface SCChartsPackage extends EPackage {
     EClass getCodeEffect();
 
     /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.DataflowAssignment <em>Dataflow Assignment</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Dataflow Assignment</em>'.
+     * @see de.cau.cs.kieler.sccharts.DataflowAssignment
+     * @generated
+     */
+    EClass getDataflowAssignment();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.DataflowAssignment#isSequential <em>Sequential</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Sequential</em>'.
+     * @see de.cau.cs.kieler.sccharts.DataflowAssignment#isSequential()
+     * @see #getDataflowAssignment()
+     * @generated
+     */
+    EAttribute getDataflowAssignment_Sequential();
+
+    /**
      * Returns the meta object for enum '{@link de.cau.cs.kieler.sccharts.PreemptionType <em>Preemption Type</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -3194,6 +3119,16 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      */
     EEnum getDelayType();
+
+    /**
+     * Returns the meta object for enum '{@link de.cau.cs.kieler.sccharts.DeferredType <em>Deferred Type</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for enum '<em>Deferred Type</em>'.
+     * @see de.cau.cs.kieler.sccharts.DeferredType
+     * @generated
+     */
+    EEnum getDeferredType();
 
     /**
      * Returns the factory that creates the instances of the model.
@@ -3624,6 +3559,14 @@ public interface SCChartsPackage extends EPackage {
         EClass ENTRY_ACTION = eINSTANCE.getEntryAction();
 
         /**
+         * The meta object literal for the '<em><b>Preemption</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute ENTRY_ACTION__PREEMPTION = eINSTANCE.getEntryAction_Preemption();
+
+        /**
          * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.DuringActionImpl <em>During Action</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -3652,6 +3595,14 @@ public interface SCChartsPackage extends EPackage {
         EClass EXIT_ACTION = eINSTANCE.getExitAction();
 
         /**
+         * The meta object literal for the '<em><b>Preemption</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute EXIT_ACTION__PREEMPTION = eINSTANCE.getExitAction_Preemption();
+
+        /**
          * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.SuspendActionImpl <em>Suspend Action</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -3668,26 +3619,6 @@ public interface SCChartsPackage extends EPackage {
          * @generated
          */
         EAttribute SUSPEND_ACTION__WEAK = eINSTANCE.getSuspendAction_Weak();
-
-        /**
-         * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.PrecedingActionImpl <em>Preceding Action</em>}' class.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @see de.cau.cs.kieler.sccharts.impl.PrecedingActionImpl
-         * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getPrecedingAction()
-         * @generated
-         */
-        EClass PRECEDING_ACTION = eINSTANCE.getPrecedingAction();
-
-        /**
-         * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.SucceedingActionImpl <em>Succeeding Action</em>}' class.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @see de.cau.cs.kieler.sccharts.impl.SucceedingActionImpl
-         * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getSucceedingAction()
-         * @generated
-         */
-        EClass SUCCEEDING_ACTION = eINSTANCE.getSucceedingAction();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.PeriodActionImpl <em>Period Action</em>}' class.
@@ -3738,6 +3669,24 @@ public interface SCChartsPackage extends EPackage {
         EClass CODE_EFFECT = eINSTANCE.getCodeEffect();
 
         /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.DataflowAssignmentImpl <em>Dataflow Assignment</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.sccharts.impl.DataflowAssignmentImpl
+         * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getDataflowAssignment()
+         * @generated
+         */
+        EClass DATAFLOW_ASSIGNMENT = eINSTANCE.getDataflowAssignment();
+
+        /**
+         * The meta object literal for the '<em><b>Sequential</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute DATAFLOW_ASSIGNMENT__SEQUENTIAL = eINSTANCE.getDataflowAssignment_Sequential();
+
+        /**
          * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.PreemptionType <em>Preemption Type</em>}' enum.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -3766,6 +3715,16 @@ public interface SCChartsPackage extends EPackage {
          * @generated
          */
         EEnum DELAY_TYPE = eINSTANCE.getDelayType();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.DeferredType <em>Deferred Type</em>}' enum.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.sccharts.DeferredType
+         * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getDeferredType()
+         * @generated
+         */
+        EEnum DEFERRED_TYPE = eINSTANCE.getDeferredType();
 
     }
 

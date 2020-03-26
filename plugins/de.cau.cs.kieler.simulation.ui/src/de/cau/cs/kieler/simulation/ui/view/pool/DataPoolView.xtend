@@ -17,11 +17,13 @@ import de.cau.cs.kieler.kicool.compilation.VariableStore
 import de.cau.cs.kieler.simulation.DataPool
 import de.cau.cs.kieler.simulation.DataPoolEntry
 import de.cau.cs.kieler.simulation.SimulationContext
+import de.cau.cs.kieler.simulation.events.ISimulationListener
 import de.cau.cs.kieler.simulation.events.SimulationControlEvent
 import de.cau.cs.kieler.simulation.events.SimulationEvent
 import de.cau.cs.kieler.simulation.events.TraceFinishedEvent
 import de.cau.cs.kieler.simulation.events.TraceMismatchEvent
 import de.cau.cs.kieler.simulation.ide.CentralSimulation
+import de.cau.cs.kieler.simulation.ide.server.SimulationServer
 import de.cau.cs.kieler.simulation.trace.TraceFileUtil
 import de.cau.cs.kieler.simulation.ui.SimulationUIPlugin
 import de.cau.cs.kieler.simulation.ui.view.SimulationControlButtons
@@ -57,31 +59,35 @@ import org.eclipse.jface.viewers.TableViewerColumn
 import org.eclipse.jface.viewers.TableViewerEditor
 import org.eclipse.jface.viewers.TableViewerFocusCellManager
 import org.eclipse.jface.viewers.ViewerCell
+import org.eclipse.jface.viewers.ViewerDropAdapter
 import org.eclipse.jface.window.Window
 import org.eclipse.swt.SWT
 import org.eclipse.swt.dnd.DND
 import org.eclipse.swt.dnd.DragSource
 import org.eclipse.swt.dnd.DragSourceEvent
 import org.eclipse.swt.dnd.DragSourceListener
+import org.eclipse.swt.dnd.FileTransfer
 import org.eclipse.swt.dnd.TextTransfer
+import org.eclipse.swt.dnd.TransferData
 import org.eclipse.swt.events.KeyAdapter
 import org.eclipse.swt.events.KeyEvent
+import org.eclipse.swt.graphics.Color
 import org.eclipse.swt.graphics.Image
 import org.eclipse.swt.widgets.Composite
+import org.eclipse.swt.widgets.Display
+import org.eclipse.swt.widgets.FileDialog
 import org.eclipse.swt.widgets.Table
 import org.eclipse.ui.IWorkbenchPart
 import org.eclipse.ui.PlatformUI
 import org.eclipse.ui.dialogs.ElementListSelectionDialog
-import org.eclipse.ui.dialogs.ResourceSelectionDialog
 import org.eclipse.ui.dialogs.SaveAsDialog
 import org.eclipse.ui.ide.ResourceUtil
+import org.eclipse.ui.part.ResourceTransfer
 import org.eclipse.ui.part.ViewPart
 import org.eclipse.ui.statushandlers.StatusManager
 import org.eclipse.xtend.lib.annotations.Accessors
 
 import static de.cau.cs.kieler.simulation.ui.SimulationUI.*
-import de.cau.cs.kieler.simulation.events.ISimulationListener
-import de.cau.cs.kieler.simulation.ide.server.SimulationServer
 
 /**
  * Displays the data of a running simulation.
@@ -136,6 +142,7 @@ class DataPoolView extends ViewPart implements ISimulationListener {
     private var IAction menuLoadTrace
     private var IAction menuSaveTrace
     private var IAction menuCheckTrace
+    private var IAction menuEnableNonInputUserValues
     private var IAction menuResetAllUserValues
     private var IAction menuResetSelectedUserValue
     private var MenuManager menuSimulationListenersSubmenu
@@ -224,6 +231,49 @@ class DataPoolView extends ViewPart implements ISimulationListener {
      * Creates the menu.
      */
     private def void createMenu() {
+        val kTraceExtensions = #{"*.ktrace", "*.eso", "*.esi"}
+        viewer.addDropSupport(
+            DND.DROP_COPY.bitwiseOr(DND.DROP_MOVE).bitwiseOr(DND.DROP_DEFAULT).bitwiseOr(DND.DROP_LINK),
+            #{ResourceTransfer.getInstance(), FileTransfer.getInstance()}, new ViewerDropAdapter(viewer) {
+
+                override performDrop(Object data) {
+                    if (data instanceof IResource[]) {
+                        if (kTraceExtensions.contains('*.' + data.head.fileExtension)) {
+                            val traceFile = TraceFileUtil.loadTraceFile(new File(data.head.locationURI))
+                            if (traceFile !== null) {
+                                if (traceFile.traces.size == 1) {
+                                    currentSimulation.setTrace(traceFile.traces.head, menuCheckTrace.checked, true)
+                                    MessageDialog.openInformation(instance.site.shell, "Success",
+                                        "Trace loading successfull.")
+                                } else if (traceFile.traces.size > 1) {
+                                    val dialog2 = new ElementListSelectionDialog(instance.site.shell,
+                                        new LabelProvider())
+                                    val elements = (0 ..< traceFile.traces.size).map["Trace " + it].toList
+                                    dialog2.setElements(elements.toArray)
+                                    dialog2.setTitle("Select Trace");
+                                    dialog2.setMessage("Trace file successfully loaded. Please select trace!");
+                                    if (dialog2.open() == Window.OK) {
+                                        val selection = dialog2.getResult()
+                                        if (selection !== null) {
+                                            currentSimulation.setTrace(
+                                                traceFile.traces.get(elements.indexOf(selection.head)),
+                                                menuCheckTrace.checked, true)
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    // never return true because then the resource would be removed from the project
+                    false
+                }
+
+                override validateDrop(Object target, int operation, TransferData transferType) {
+                    // no access to the element that is dragged :(
+                    menuLoadTrace.enabled
+                }
+
+            })
         menuLoadTrace = new Action("Load Trace", IAction.AS_PUSH_BUTTON) {
             override run() {
                 if (currentSimulation !== null) {
@@ -231,23 +281,24 @@ class DataPoolView extends ViewPart implements ISimulationListener {
                     val workspace = ResourcesPlugin.getWorkspace()
                     val root = workspace.getRoot()
                     val activeEditor = PlatformUI.workbench.activeWorkbenchWindow.activePage.activeEditor
-                    val extensions = newHashSet("ktrace", "eso", "esi")
 
                     // Configure dialog
                     val res = if (activeEditor !== null && activeEditor.editorInput !== null) {
-                            ResourceUtil.getFile(activeEditor.editorInput)
+                            ResourceUtil.getResource(activeEditor.editorInput)
                         }
-                    val dialog = new ResourceSelectionDialog(shell, root,
-                        "Select single trace file. " + extensions.join(", ")["*." + it])
-                    dialog.open
-                    val results = dialog.result
-                    if (results !== null) {
+                        
+                    val dialog = new FileDialog(shell);
+                    dialog.setFilterExtensions(kTraceExtensions);
+                    val path = res.rawLocation.makeAbsolute.toString
+                    dialog.setFilterPath(path.substring(0, path.lastIndexOf("/")));
+                    val result = dialog.open();
+                    if (result !== null) {
                         try {
                             var error = ""
-                            val file = results.head
+                            val file = ResourcesPlugin.getWorkspace().getRoot().getFile(new Path(result));
                             if (file instanceof IFile) {
-                                if (extensions.contains(file.fileExtension)) {
-                                    val traceFile = TraceFileUtil.loadTraceFile(new File(file.locationURI))
+                                if (kTraceExtensions.contains('*.' + file.fileExtension)) {
+                                    val traceFile = TraceFileUtil.loadTraceFile(new File(result))
                                     if (traceFile !== null) {
                                         if (traceFile.traces.size == 1) {
                                             currentSimulation.setTrace(traceFile.traces.head, menuCheckTrace.checked, true)
@@ -351,6 +402,17 @@ class DataPoolView extends ViewPart implements ISimulationListener {
                 }
             }
         }
+        menuEnableNonInputUserValues = new Action("User Values for Non-Inputs", IAction.AS_CHECK_BOX) {
+            override run() {
+                if (currentSimulation !== null) {
+                    currentSimulation.startEnvironment.setProperty(SimulationContext.ONLY_INPUTS, !this.checked)
+                    viewer.refresh
+                }
+            }
+        } => [
+            checked = false
+            toolTipText = "Enables user values for non-input variables. This allows to manipulate the internal state of the program."
+        ]
         menuResetAllUserValues = new Action("Reset All User Values") {
             override run() {
                 userValues.clear
@@ -416,6 +478,7 @@ class DataPoolView extends ViewPart implements ISimulationListener {
             add(menuLoadTrace)
             add(menuCheckTrace)
             add(new Separator)
+            add(menuEnableNonInputUserValues)
             add(menuResetAllUserValues)
             add(menuResetSelectedUserValue)
             add(new Separator)
@@ -523,17 +586,20 @@ class DataPoolView extends ViewPart implements ISimulationListener {
         viewer.addFilter(filter)
 
         // Create columns
-        inputOutputColumn = viewer.createTableColumn("I/O", 10, false)
+        inputOutputColumn = viewer.createTableColumn("IO", 20, true)
         inputOutputColumn.labelProvider = new AbstractDataPoolColumnLabelProvider(this) {
             private val inputImageDescriptor = SimulationUIPlugin.imageDescriptorFromPlugin(
-                SimulationUIPlugin.PLUGIN_ID, "icons/input.png");
+                SimulationUIPlugin.PLUGIN_ID, "icons/input.png")
             private val outputImageDescriptor = SimulationUIPlugin.imageDescriptorFromPlugin(
-                SimulationUIPlugin.PLUGIN_ID, "icons/output.png");
+                SimulationUIPlugin.PLUGIN_ID, "icons/output.png")
             private val inputOutputImageDescriptor = SimulationUIPlugin.imageDescriptorFromPlugin(
-                SimulationUIPlugin.PLUGIN_ID, "icons/inputOutput.png");
+                SimulationUIPlugin.PLUGIN_ID, "icons/inputOutput.png")
+            private val internalImageDescriptor = SimulationUIPlugin.imageDescriptorFromPlugin(
+                SimulationUIPlugin.PLUGIN_ID, "icons/internal.png")
             private var Image inputImage
             private var Image outputImage
             private var Image inputOutputImage
+            private var Image internalImage
 
             override getImage(Object element) {
                 if (element instanceof DataPoolEntry) {
@@ -552,6 +618,11 @@ class DataPoolView extends ViewPart implements ISimulationListener {
                             outputImage = outputImageDescriptor.createImage
                         }
                         return outputImage
+                    } else {
+                        if (internalImage === null) {
+                            internalImage = internalImageDescriptor.createImage
+                        }
+                        return internalImage
                     }
                 }
 
@@ -584,7 +655,7 @@ class DataPoolView extends ViewPart implements ISimulationListener {
                 inputOutputImage?.dispose()
                 inputOutputImage = null
             }
-        };
+        }
 
         variableColumn = viewer.createTableColumn("Variable", 120, true)
         variableColumn.labelProvider = new AbstractDataPoolColumnLabelProvider(this) {
@@ -618,9 +689,29 @@ class DataPoolView extends ViewPart implements ISimulationListener {
                 if (element instanceof DataPoolEntry) {
                     if (element.hasUserValue) {
                         return userValues.get(element.name).toString
+                    } else if (!element.isInput && !menuEnableNonInputUserValues.checked) {
+                        return "---"
                     }
                 }
                 return ""
+            }
+            
+            override Color getForeground(Object element) {
+                if (element instanceof DataPoolEntry) {
+                    if (!element.isInput && !menuEnableNonInputUserValues.checked) {
+                        return Display.getDefault().getSystemColor(SWT.COLOR_GRAY)
+                    }
+                }
+                return super.getForeground(element)
+            }
+            
+            override String getToolTipText(Object element) {
+                if (element instanceof DataPoolEntry) {
+                    if (!element.isInput && !menuEnableNonInputUserValues.checked) {
+                        return "User values for non-input variables are disabled by default. Use menu to activate.\nNote that manipulation of internal variables may lead to unexpected behavior."
+                    }
+                }
+                return null
             }
         }
         historyColumn = viewer.createTableColumn("History", 200, true)
@@ -799,14 +890,22 @@ class DataPoolView extends ViewPart implements ISimulationListener {
     protected def boolean hasUserValue(DataPoolEntry element) {
         return userValues.containsKey(element.name)
     }
+    
+    def boolean nonInputUserValues() {
+        return menuEnableNonInputUserValues.checked
+    }
 
     override update(SimulationContext ctx, SimulationEvent e) {
         if (e instanceof SimulationControlEvent) {
             updateUI[
                 switch (e.operation) {
-                    case START,
-                    case STEP:
+                    case START: {
+                        ctx.startEnvironment.setProperty(SimulationContext.ONLY_INPUTS, !nonInputUserValues)
                         dataPool = e.context.dataPool
+                    }
+                    case STEP: {
+                        dataPool = e.context.dataPool
+                    }
                     case STOP: {
                         dataPool = null
                         userValues.clear

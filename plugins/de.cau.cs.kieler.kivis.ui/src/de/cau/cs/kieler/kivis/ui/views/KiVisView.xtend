@@ -36,6 +36,7 @@ import org.eclipse.core.runtime.IProgressMonitor
 import org.eclipse.core.runtime.Status
 import org.eclipse.jface.action.Action
 import org.eclipse.jface.action.IAction
+import org.eclipse.jface.action.Separator
 import org.eclipse.jface.resource.JFaceResources
 import org.eclipse.swt.SWT
 import org.eclipse.swt.SWTError
@@ -80,14 +81,19 @@ class KiVisView extends ViewPart implements ISimulationListener {
     Browser browser;
 
     /**
-     * Indicated if visulaization is ready (svg loaded)
+     * Indicates if visulaization is ready (svg loaded)
      */
     var isReady = false;
     
     /**
-     * Indicated if visulaization is ready (svg loaded)
+     * Indicates if visulaization is loaded (svg loaded)
      */
     var isLoaded = false;
+    
+    /**
+     * Indicates that external browser is used.
+     */
+    var externalMode = false;
 
     /**
      * Callback for simulation control
@@ -174,6 +180,13 @@ class KiVisView extends ViewPart implements ISimulationListener {
                     browserSupport.externalBrowser?.openURL(new URL("http://localhost:" + SimulationServer.PORT + "/visualization"))
                 }
             })
+            add(new Separator)
+            add(new Action("Use internal Browser", IAction.AS_CHECK_BOX) {
+                override run() {
+                    browser.visible = this.checked
+                    externalMode = !this.checked
+                }
+            } => [checked = !externalMode])
         ]
 
         try {
@@ -247,33 +260,35 @@ class KiVisView extends ViewPart implements ISimulationListener {
 
     override update(SimulationContext ctx, SimulationEvent e) {
         if (e instanceof SimulationControlEvent) {
-            SimulationUI.updateUI [
-                switch (e.operation) {
-                    case START: {
-                        // Add visualization value processor
-                        val root = ctx.system.processors as ProcessorGroup
-                        if (!root.processors.exists[SimulationVisualizationValues.ID.equals(id)]) {
-                            root.processors.add(0, KiCoolFactory.eINSTANCE.createProcessorReference => [
-                                id = SimulationVisualizationValues.ID
-                            ])
-                        }
-                        ctx.startEnvironment.setProperty(SimulationVisualizationValues.VALUES, <String, JsonElement>newHashMap);
-                        SimulationUI.updateUI[loadVisualization(ctx)]
-                    }
-                    case STEP: {
-                        if (!isLoaded) {
+            if (!externalMode) {
+                SimulationUI.updateUI [
+                    switch (e.operation) {
+                        case START: {
+                            // Add visualization value processor
+                            val root = ctx.system.processors as ProcessorGroup
+                            if (!root.processors.exists[SimulationVisualizationValues.ID.equals(id)]) {
+                                root.processors.add(0, KiCoolFactory.eINSTANCE.createProcessorReference => [
+                                    id = SimulationVisualizationValues.ID
+                                ])
+                            }
+                            ctx.startEnvironment.setProperty(SimulationVisualizationValues.VALUES, <String, JsonElement>newHashMap);
                             SimulationUI.updateUI[loadVisualization(ctx)]
                         }
-                        updateView(ctx)
-                    } 
-                    case STOP: {
-                        isReady = false
-                        isLoaded = false
+                        case STEP: {
+                            if (!isLoaded) {
+                                SimulationUI.updateUI[loadVisualization(ctx)]
+                            }
+                            updateView(ctx)
+                        } 
+                        case STOP: {
+                            isReady = false
+                            isLoaded = false
+                        }
+                        default: {
+                        }
                     }
-                    default: {
-                    }
-                }
-            ]
+                ]
+            }
         }
     }
 

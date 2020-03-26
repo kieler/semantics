@@ -4,18 +4,46 @@
 package de.cau.cs.kieler.simulation.trace
 
 import com.google.inject.Injector
+import de.cau.cs.kieler.core.services.KielerLanguage
+import de.cau.cs.kieler.simulation.trace.ktrace.KTracePackage
+import de.cau.cs.kieler.simulation.trace.ktrace.TraceFile
 
 /**
  * Initialization support for running Xtext languages without Equinox extension registry.
  */
-class KTraceStandaloneSetup extends KTraceStandaloneSetupGenerated {
+class KTraceStandaloneSetup extends KTraceStandaloneSetupGenerated implements KielerLanguage {
+    
+    static Injector injector
+    
+    def static doSetup() {
+        if (injector === null) {
+            injector = new KTraceStandaloneSetup().createInjectorAndDoEMFRegistration()
+        }
+        return injector
+    }
+    
+    override register(Injector injector) {
+        super.register(injector)
+        // Ensure package is registered 
+        KTracePackage.eINSTANCE.eClass()
+    }
+    
+    override getInjector() {
+        return doSetup()
+    }
 
-    static var Injector injector
-
-	def static doSetup() {
-	    if (injector === null) {
-	        injector = new KTraceStandaloneSetup().createInjectorAndDoEMFRegistration()
-	    }
-		return injector
-	}
+    override getSupportedModels() {
+        #[TraceFile]
+    }
+    
+    override getSupportedResourceExtensions() {
+        #["ktrace", "eso", "esi"]
+    }
+    
+    override getResourceExtension(Object model) {
+        if (model instanceof TraceFile) {
+            return "ktrace"
+        }
+        return null
+    }
 }

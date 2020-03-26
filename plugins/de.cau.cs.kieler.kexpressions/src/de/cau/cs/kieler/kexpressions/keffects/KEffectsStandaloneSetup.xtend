@@ -20,13 +20,19 @@ import com.google.inject.Injector
  * @author sdo
  */
 class KEffectsStandaloneSetup extends KEffectsStandaloneSetupGenerated {
-
+	
     static Injector injector
-
-	def static doSetup() {
-	    if (injector === null) {
-	        injector = new KEffectsStandaloneSetup().createInjectorAndDoEMFRegistration()
-	    }
-		return injector
-	}
+    
+    def static doSetup() {
+        if (injector === null) {
+            injector = new KEffectsStandaloneSetup().createInjectorAndDoEMFRegistration()
+        }
+        return injector
+    }
+    
+    override register(Injector injector) {
+        super.register(injector)
+        // Ensure package is registered 
+        KEffectsPackage.eINSTANCE.eClass()
+    }
 }

@@ -12,22 +12,29 @@
  */
 package de.cau.cs.kieler.kicool.deploy
 
+import com.google.common.io.CharStreams
 import de.cau.cs.kieler.annotations.Nameable
 import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.core.properties.Property
+import de.cau.cs.kieler.core.uri.URIUtils
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
 import de.cau.cs.kieler.kicool.environments.Environment
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 import java.io.InputStream
+import java.io.InputStreamReader
 import java.io.OutputStream
 import java.io.PrintStream
 import java.net.URL
+import java.nio.file.FileSystems
 import java.nio.file.Files
 import java.util.Comparator
+import java.util.Enumeration
+import java.util.Iterator
 import java.util.List
 import java.util.Set
+import java.util.stream.Collectors
 import org.eclipse.core.resources.IProject
 import org.eclipse.core.resources.IResource
 import org.eclipse.core.resources.ResourcesPlugin
@@ -66,6 +73,9 @@ class ProjectInfrastructure {
         
     public static val IProperty<Boolean> USE_GENERATED_FOLDER = 
         new Property<Boolean>("de.cau.cs.kieler.kicool.deploy.project.generated.use", true)
+        
+    public static val IProperty<String> GENERATED_FOLDER_ROOT = 
+        new Property<String>("de.cau.cs.kieler.kicool.deploy.project.generated.root", null)
 
     public static val IProperty<String> GENERATED_NAME = 
         new Property<String>("de.cau.cs.kieler.kicool.deploy.project.generated.name", "kieler-gen")
@@ -141,6 +151,9 @@ class ProjectInfrastructure {
                 resource = inputModel.eResource
                 if (resource !== null) {
                     modelFile = resource.findResourceLocation
+                    if (modelFile === null && resource.URI !== null) {
+                        modelFile = URIUtils.getJavaFile(resource.URI)
+                    }
                 }
             } else if (inputModel instanceof CodeContainer) {
                 if (!inputModel.files.empty) {
@@ -193,7 +206,12 @@ class ProjectInfrastructure {
                     }
                     generatedCodeFolder = gen.rawLocation.toFile
                 } else {
-                    generatedCodeFolder = new File(modelFolder, environment.getProperty(GENERATED_NAME))
+                    val folder = if (environment.getProperty(GENERATED_FOLDER_ROOT).nullOrEmpty) {
+                        modelFolder
+                    } else {
+                        new File(environment.getProperty(GENERATED_FOLDER_ROOT))
+                    }
+                    generatedCodeFolder = new File(folder, environment.getProperty(GENERATED_NAME))
                     if (!generatedCodeFolder.exists) {
                         generatedCodeFolder.mkdir
                     }
@@ -281,14 +299,45 @@ class ProjectInfrastructure {
         checkArgument(src.segmentCount > 2, "Source is not a valid plugin platform URI (i.e. 'platform:/plugin/org.myplugin/path/to/directory')")
         checkArgument(src.fileExtension.nullOrEmpty, "Source is not a directory")
 
-        val bundle = Platform.getBundle(src.segment(1))
         val path = src.segments.drop(2).join("/")
-        val entries = bundle.findEntries(path, "*", true)
-        if (entries.hasMoreElements) {
-            while (entries.hasMoreElements) {
-                val fileUrl = entries.nextElement
+        var Iterator<URL> entries
+        if (src.isPlatformPlugin) {
+            if (Platform.isRunning) {
+                val bundle = Platform.getBundle(src.segment(1))
+                entries = bundle.findEntries(path, "*", true).toIterator
+            } else {
+                val uri = ClassLoader.getSystemResource(path).toURI
+                if (uri.scheme.equals("jar")) {
+                    val fs = FileSystems.newFileSystem(uri, emptyMap)
+                    val files = Files.walk(fs.getPath(path)).filter[
+                        Files.isRegularFile(it)
+                    ].map[
+                        val filePath = it.toString
+                        ClassLoader.getSystemResource(filePath.startsWith("/") ? filePath.substring(1) : filePath)
+                    ].collect(Collectors.toList)
+                    fs.close
+                    entries = files.iterator
+                } else {
+                    entries = Files.walk(new File(uri).toPath).filter[
+                        Files.isRegularFile(it)
+                    ].map[
+                        it.toUri.toURL
+                    ].collect(Collectors.toList).iterator
+                }
+            }
+        } else {
+            entries = Files.walk(new File(src.toFileString).toPath).filter[
+                Files.isRegularFile(it)
+            ].map[
+                it.toUri.toURL
+            ].collect(Collectors.toList).iterator
+        }
+        if (entries.hasNext) {
+            while (entries.hasNext) {
+                val fileUrl = entries.next
                 val fileUrlPath = fileUrl.toString
-                if (!fileUrlPath.endsWith("/")) { // is file
+                val relStart = fileUrlPath.indexOf(path) + 1 + path.length
+                if (!fileUrlPath.endsWith("/") && relStart < fileUrlPath.length) { // is file
                     val relativePath = fileUrlPath.substring(fileUrlPath.indexOf(path) + path.length + 1)
                     val destFile = new File(dest, relativePath)
     
@@ -322,6 +371,14 @@ class ProjectInfrastructure {
         if (!dest.exists || overrideFile) {
             logger?.println("Copying file: " + src)
             try {
+                if (dest.exists)  {
+                    dest.delete
+                } else {
+                    val parent = dest.canonicalFile.parentFile
+                    if (!parent.exists) {
+                        parent.mkdirs
+                    }
+                }
                 Files.copy(src.toPath, dest.toPath)
                 return true
             } catch (IOException e) {
@@ -342,10 +399,20 @@ class ProjectInfrastructure {
         checkArgument(src.segmentCount > 2, "Source is not a valid plugin platform URI (i.e. 'platform:/plugin/org.myplugin/path/to/directory')")
         checkArgument(!src.fileExtension.nullOrEmpty, "Source is not a file")
 
-        val bundle = Platform.getBundle(src.segment(1))
-        val path = src.segments.drop(2).take(src.segmentCount - 3).join("/")
-        val entries = bundle.findEntries(path, src.lastSegment, true)
-        val fileUrl = entries?.nextElement
+        var URL fileUrl
+        if (src.isPlatformPlugin) {
+            if (Platform.isRunning) {
+                val bundle = Platform.getBundle(src.segment(1))
+                val path = src.segments.drop(2).take(src.segmentCount - 3).join("/")
+                val entries = bundle.findEntries(path, src.lastSegment, true)
+                fileUrl = entries?.nextElement
+            } else {
+                val path = src.segments.drop(2).join("/")
+                fileUrl = ClassLoader.getSystemResource(path)
+            }
+        } else {
+            fileUrl = URIUtils.getURL(src)
+        }
         if (fileUrl !== null) {
             val fileUrlPath = fileUrl.toString
             logger?.println("Copying file: " + fileUrlPath)
@@ -415,5 +482,34 @@ class ProjectInfrastructure {
             e.printStackTrace(logger)
             return false
         }
+    }
+    
+    /**
+     * Read the content of a file denoted by the given URI into a string.
+     */
+    static def readContent(URI uri) {
+        var String content
+        var InputStream in
+        try {
+            in = URIUtils.getURL(uri).openStream
+            content = CharStreams.toString(new InputStreamReader(in))
+        } finally {
+            in?.close
+        }
+        return content
+    }
+    
+    /**
+     * Only available in Enumeration by default since Java 9 :(
+     */
+    private static def <E> Iterator<E> toIterator(Enumeration<E> enumeration) {
+        return new Iterator<E>() {
+            override boolean hasNext() {
+                return enumeration.hasMoreElements()
+            }
+            override E next() {
+                return enumeration.nextElement()
+            }
+        };
     }
 }

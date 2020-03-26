@@ -3,10 +3,75 @@
  */
 package de.cau.cs.kieler.sccharts.ui.text.contentassist
 
+import com.google.inject.Inject
+import de.cau.cs.kieler.kexpressions.KExpressionsFactory
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.keffects.KEffectsFactory
+import de.cau.cs.kieler.sccharts.Action
+import de.cau.cs.kieler.sccharts.Region
+import de.cau.cs.kieler.sccharts.Transition
+import de.cau.cs.kieler.sccharts.extensions.SCChartsInheritanceExtensions
+import org.eclipse.emf.ecore.EObject
+import org.eclipse.xtext.Assignment
+import org.eclipse.xtext.ui.editor.contentassist.ContentAssistContext
+import org.eclipse.xtext.ui.editor.contentassist.ICompletionProposalAcceptor
 
 /**
  * See https://www.eclipse.org/Xtext/documentation/304_ide_concepts.html#content-assist
  * on how to customize the content assistant.
  */
 class SCTXProposalProvider extends AbstractSCTXProposalProvider {
+    
+    @Inject extension SCChartsInheritanceExtensions
+    extension KExpressionsFactory = KExpressionsFactory.eINSTANCE
+    extension KEffectsFactory = KEffectsFactory.eINSTANCE
+    
+    override completeControlflowRegion_Name(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+        if (model instanceof Region) {
+            if (model.override) {
+                for (region : model.nextSuperStateWithBaseStates.allVisibleInheritedRegions) {
+                    acceptor.accept(createCompletionProposal(region.name, context))
+                }
+            }
+        }
+        super.completeControlflowRegion_Name(model, assignment, context, acceptor)
+    }
+    
+    override completeTransition_TriggerDelay(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+        if (model instanceof Transition) model.proposeVORinTrigger(context, acceptor)
+        super.completeTransition_TriggerDelay(model, assignment, context, acceptor)
+    }
+    
+    override completeTransition_Trigger(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+        if (model instanceof Transition) model.proposeVORinTrigger(context, acceptor)
+        super.completeTransition_Trigger(model, assignment, context, acceptor)
+    }
+    
+    override completeTransition_Effects(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+        if (model instanceof Transition) model.proposeVORinEffect(context, acceptor)
+        super.completeTransition_Effects(model, assignment, context, acceptor)
+    }
+    
+    def proposeVORinTrigger(Action action, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+        val trigger = action.trigger
+        val vor = createValuedObjectReference
+        action.trigger = vor
+        vor.proposeVOR(context, acceptor)
+        action.trigger = trigger
+    }
+    
+    def proposeVORinEffect(Action action, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+        val asm = createAssignment
+        asm.reference = createValuedObjectReference
+        action.effects.add(0, asm)
+        asm.reference.proposeVOR(context, acceptor)
+        action.effects.remove(0)
+    }
+    
+    def proposeVOR(ValuedObjectReference vor, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+        val proposals = super.scopeProvider.getScope(vor, KExpressionsPackage.valuedObjectReference_ValuedObject)
+        for (proposal : proposals.allElements) {
+            acceptor.accept(createCompletionProposal(proposal.name.toString, context))
+        }
+    }
 }

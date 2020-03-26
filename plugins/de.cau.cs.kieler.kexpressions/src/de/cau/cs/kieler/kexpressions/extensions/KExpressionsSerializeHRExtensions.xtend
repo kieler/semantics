@@ -16,6 +16,7 @@ import de.cau.cs.kieler.kexpressions.IgnoreValue
 import de.cau.cs.kieler.kexpressions.RandomCall
 import de.cau.cs.kieler.kexpressions.RandomizeCall
 import de.cau.cs.kieler.annotations.NamedObject
+import de.cau.cs.kieler.kexpressions.ParameterAccessType
 
 /**
  * Serialization of KExpressions in human readable form.
@@ -98,7 +99,7 @@ class KExpressionsSerializeHRExtensions extends KExpressionsSerializeExtensions 
         return "randomize"
     }
         
-    def public CharSequence serializeHRParameters(List<Parameter> parameters) {
+    def CharSequence serializeHRParameters(List<Parameter> parameters) {
         val sb = new StringBuilder
         sb.append("(")
         var cnt = 0
@@ -106,10 +107,10 @@ class KExpressionsSerializeHRExtensions extends KExpressionsSerializeExtensions 
             if (cnt > 0) {
                 sb.append(", ")
             }
-            if (par.pureOutput) {
-                sb.append("!")
+            if (par.accessType === ParameterAccessType.PURE_OUTPUT) {
+                sb.append("!&")
             }
-            if (par.callByReference) {
+            else if (par.accessType === ParameterAccessType.CALL_BY_REFERENCE) {
                 sb.append("&")
             }
             if (par.expression === null) sb.append("NULL!!!") else 
@@ -241,10 +242,18 @@ class KExpressionsSerializeHRExtensions extends KExpressionsSerializeExtensions 
     
     protected def CharSequence serializeHROperatorExpressionPRE(OperatorExpression expression) {
     	"pre(" + expression.subExpressions.head.serializeHR + ")"
-    }   
+    }
 
     protected def CharSequence serializeHROperatorExpressionINIT(OperatorExpression expression) {
         combineOperatorsHR(expression.subExpressions.iterator, " -> ")
+    }
+
+    protected def CharSequence serializeHROperatorExpressionFby(OperatorExpression expression) {
+        combineOperatorsHR(expression.subExpressions.iterator, " fby ")
+    }
+
+    protected def CharSequence serializeHROperatorExpressionSfby(OperatorExpression expression) {
+        combineOperatorsHR(expression.subExpressions.iterator, " sfby ")
     }
     
     protected def CharSequence serializeHROperatorExpressionNot(OperatorExpression expression) {
@@ -348,6 +357,10 @@ class KExpressionsSerializeHRExtensions extends KExpressionsSerializeExtensions 
             return expression.serializeHROperatorExpressionPRE
         } else if (expression.operator == OperatorType::INIT) {
             return expression.serializeHROperatorExpressionINIT
+        } else if (expression.operator == OperatorType::FBY) {
+            return expression.serializeHROperatorExpressionFby
+        } else if (expression.operator == OperatorType::SFBY) {
+            return expression.serializeHROperatorExpressionSfby
         } else if (expression.operator == OperatorType::NE) {
             result = expression.serializeHROperatorExpressionNE
         } else if (expression.operator == OperatorType::LOGICAL_AND) {
