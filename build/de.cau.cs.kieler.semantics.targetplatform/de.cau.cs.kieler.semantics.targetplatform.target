@@ -7,6 +7,7 @@
       <unit id="org.eclipse.cdt.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.emf.compare.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.emf.mwe2.launcher.feature.group" version="0.0.0"/>
+      <unit id="org.eclipse.emf.workspace" version="0.0.0"/>
       <unit id="org.eclipse.epp.mpc.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.equinox.executable.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.xpand.feature.group" version="0.0.0"/>
