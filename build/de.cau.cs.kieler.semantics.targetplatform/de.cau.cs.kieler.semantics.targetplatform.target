@@ -55,10 +55,6 @@
       <unit id="de.cau.cs.kieler.klighd.freehep.feature.feature.group" version="0.0.0"/>
       <unit id="de.cau.cs.kieler.klighd.sdk.feature.feature.group" version="0.0.0"/>
       <unit id="de.cau.cs.kieler.klighd.view.feature.feature.group" version="0.0.0"/>
-      <unit id="edu.umd.cs.piccolo" version="0.0.0"/>
-      <unit id="de.cau.cs.kieler.kgraph.text" version="0.0.0"/>
-      <unit id="de.cau.cs.kieler.kgraph.text.ide" version="0.0.0"/>
-      <unit id="de.cau.cs.kieler.kgraph.text.ui" version="0.0.0"/>
       <repository location="http://services.typefox.io/open-source/jenkins/job/KLighD/job/keith/lastStableBuild/artifact/updatesite/"/>
     </location>
     <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
