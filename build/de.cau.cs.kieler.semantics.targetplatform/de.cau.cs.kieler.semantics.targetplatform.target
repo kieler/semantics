@@ -52,6 +52,7 @@
       <unit id="de.cau.cs.kieler.klighd.lsp" version="0.0.0"/>
       <unit id="de.cau.cs.kieler.klighd.feature.feature.group" version="0.0.0"/>
       <unit id="de.cau.cs.kieler.klighd.freehep.feature.feature.group" version="0.0.0"/>
+      <unit id="de.cau.cs.kieler.klighd.sdk.feature.feature.group" version="0.0.0"/>
       <unit id="de.cau.cs.kieler.klighd.view.feature.feature.group" version="0.0.0"/>
       <unit id="edu.umd.cs.piccolo" version="0.0.0"/>
       <unit id="de.cau.cs.kieler.kgraph.text" version="0.0.0"/>
