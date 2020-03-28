@@ -8,13 +8,85 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gridstack@1.1.1/dist/gridstack.min.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+          integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/gridstack@1.1.1/dist/gridstack.all.js"></script>
+    <style>
+    .nav-item{
+        margin-right: 10px;
+        height: 38px;
+    }
+    .nav-item button{
+        height: 38px;
+    }
+    </style>
     <script type="text/javascript">
-    
+        "use strict";
         var internal_browser = false
         var ticks = []
         var charts = []
         var grid = null;
+        var var_names = [];
+        
+        function addChartMenue(checked, onAdd){
+            var menue = $('<div class="dropdown nav-item">' +
+                            '<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">' + 
+                              '<i class="fas fa-plus-circle"></i>Add' +
+                            '</button>' +
+                            '<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">' +
+                            '</div>' +
+                          '</div>')
+            var_names.forEach(function(v, i){
+                var entry = $('<a class="dropdown-item" href="#"><div class="custom-control custom-checkbox">' +
+                                '<input type="checkbox" class="custom-control-input" id="customCheck_' + i + '" name="example1" ' + (checked.includes(v) ? 'checked' : '') + '>' +
+                                '<label class="custom-control-label" for="customCheck_' + i + '">' + v + '</label>' +
+                              '</div></a>')
+                entry.click(function(event){
+                    event.stopPropagation()
+                })
+                entry.find('input').change(function(){
+                    onAdd(v)
+                })
+                menue.children('.dropdown-menu').append(entry)
+            })
+            return menue
+        }
+        
+        function historyMenue(onSet){
+            var elements = [50, 100, 200, 400, 1000]
+            var menue = $('<div class="dropdown nav-item">' +
+                            '<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">' + 
+                              '<i class="fas fa-history"></i>' + elements[0] +
+                            '</button>' +
+                            '<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">' +
+                            '</div>' +
+                          '</div>')
+            elements.forEach(function(v){
+                var entry = $('<div class="nav-item"><a class="dropdown-item" href="#">' + v + '</a></div>')
+                entry.click(function(){
+                    onSet(v)
+                    menue.find('button').html('<i class="fas fa-history"></i>' + v)
+                })
+                menue.children('.dropdown-menu').append(entry)
+            })
+            return menue
+        }
+        
+        function closeMenue(onClose){
+            var menue = $('<div class="dropdown nav-item"><button type="button" class="btn btn-secondary"><i class="far fa-times-circle">Close</i></button></div>')
+            menue.click(onClose)
+            return menue
+        }
+        
+        function toNumber(x){
+            if (x === true){
+                return 1.0
+            }
+            if (x === false){
+                return 0.0
+            }
+            return parseFloat(x)
+        }
         
         var available_grids = [
             {
@@ -34,7 +106,7 @@
                     });
                     this.table.draw();
                     if (ticks.length > 0 ) this.update()
-                    _this = this
+                    var _this = this
                     google.visualization.events.addListener(this.table, 'select', function() {
                         if (_this.table.getChart().getSelection().length > 0){
                             var row = _this.table.getChart().getSelection()[0].row;
@@ -42,11 +114,14 @@
                         }
                     });
                 },
+                "resized": function(){
+                    this.table.draw();
+                },
                 "update": function(){
-                    _this = this
-                    current_tick = ticks[ticks.length - 1]
+                    var _this = this
+                    var current_tick = ticks[ticks.length - 1]
                     Object.keys(current_tick).forEach(function(k){
-                        found = false
+                        var found = false
                         for (var i = 0; i < _this.data.getNumberOfRows(); i++){
                             if (_this.data.getValue(i, 0) == k){
                                 found = true
@@ -64,59 +139,132 @@
             {
                 "name": "History",
                 "id": "history",
-                "default_width": 5,
-                "default_height": 2,
+                "default_width": 6,
+                "default_height": 4,
                 "create": function(){
                     this.data = new google.visualization.DataTable();
                     this.data.addColumn('number', 'Tick');
                     if (Array.isArray(this.param)) this.culumns = parameter; else this.columns = [this.param]
                     this.columns.forEach(c => this.data.addColumn('number', c))
-                    this.table = new google.visualization.ChartWrapper({
+                    this.chart = new google.visualization.ChartWrapper({
                         chartType: 'Line',
                         dataTable: this.data,
                         options: {width: '100%', height: 'auto'},
                         container: this.container
                     });
-                    _this = this
-                    ticks.forEach(function(tick, i){
+                    this.display_ticks = 50
+                    var _this = this
+                    var first_tick = Math.max(ticks.length - this.display_ticks, 0)
+                    for(var i = first_tick; i < ticks.length; i++){
+                        var tick = ticks[i]
                         _this.data.addRow()
-                        _this.data.setValue(i, 0, i)
+                        _this.data.setValue(i - first_tick, 0, i)
                         Object.keys(tick).forEach(function(k){
-                            pos = _this.columns.findIndex(x => x == k)
+                            var pos = _this.columns.findIndex(x => x == k)
                             if (pos >= 0){
-                                _this.data.setValue(i, pos + 1, parseFloat(tick[k]))
+                                _this.data.setValue(i - first_tick, pos + 1, toNumber(tick[k]))
                             }
                         })
-                    })
-                    this.table.draw();
+                    }
+                    this.chart.draw();
+                    $(this.menue).append(addChartMenue(this.columns, function(name){
+                        if (!_this.columns.includes(name)){
+                            _this.data.addColumn('number', name);
+                            var col = _this.data.getNumberOfColumns() - 1
+                            var start = ticks.length - Math.min(_this.display_ticks, _this.data.getNumberOfRows())
+                            for (var i = 0; i < _this.data.getNumberOfRows(); i++){
+                               var current_tick = ticks[i + start]
+                               if (Object.keys(current_tick).includes(name)){
+                                   _this.data.setValue(i, col, toNumber(current_tick[name]))
+                               }
+                            }
+                            _this.columns.push(name)
+                        }
+                        else{
+                            var index = _this.columns.indexOf(name);
+                            if (index > -1) {
+                              _this.columns.splice(index, 1);
+                              _this.data.removeColumns(index + 1, 1);
+                            }
+                        }
+                        _this.chart.draw();
+                    }))
+                    $(this.menue).append(historyMenue(function(num){
+                        if (num < _this.display_ticks){
+                            var current = Math.min(_this.display_ticks, _this.data.getNumberOfRows())
+                            if (current > num){
+                                _this.data.removeRows(0, current - num)
+                            }
+                        }
+                        if (num > _this.display_ticks){
+                            var begin = ticks.length - _this.data.getNumberOfRows() - num + _this.display_ticks
+                            for (var i = begin; i < ticks.length - _this.data.getNumberOfRows(); i++){
+                                if (i >= 0){
+                                    _this.data.insertRows(i - Math.max(begin, 0), 1)
+                                    _this.data.setValue(i - Math.max(begin, 0), 0, i)
+                                    var current_tick = ticks[i]
+                                    Object.keys(current_tick).forEach(function(k){
+                                        var pos = _this.columns.findIndex(x => x == k)
+                                        if (pos >= 0){
+                                            _this.data.setValue(i - Math.max(begin, 0), pos + 1, toNumber(current_tick[k]))
+                                        }
+                                    })
+                                }
+                            }
+                        }
+                        _this.chart.draw();
+                        _this.display_ticks = num
+                    }))
+                    $(this.menue).append(closeMenue(function(){
+                        hideGrid(_this)
+                    }))
+                },
+                "resized": function(){
+                    this.chart.setOptions('height', ($(this.container).parent().parent().height() - $(this.container).parent().parent().find('.card-header').height() - 10))
+                    this.chart.draw();
                 },
                 "update": function(){
-                    row = ticks.length - 1
-                    current_tick = ticks[row]
+                    var index = ticks.length - 1
+                    if (this.data.getNumberOfRows() == this.display_ticks){
+                        this.data.removeRows(0, 1)
+                    }                    
+                    var current_tick = ticks[index]
                     this.data.addRow()
-                    this.data.setValue(row, 0, row)
-                    _this = this
+                    var row = this.data.getNumberOfRows() - 1
+                    this.data.setValue(row, 0, index)
+                    var _this = this
                     Object.keys(current_tick).forEach(function(k){
-                        pos = _this.columns.findIndex(x => x == k)
+                        var pos = _this.columns.findIndex(x => x == k)
                         if (pos >= 0){
-                            _this.data.setValue(row, pos + 1, parseFloat(current_tick[k]))
+                            _this.data.setValue(row, pos + 1, toNumber(current_tick[k]))
                         }
                     })
-                    this.table.draw();
+                    this.chart.draw();
                 }
             }
         ]
         
+        function hideGrid(chart){
+            var index = charts.indexOf(chart);
+            if (index > -1) {
+              charts.splice(index, 1);
+              $(chart.container).parent().parent().remove()
+            }
+        }
+        
         function showGrid(id, param){
-            data = available_grids.find(x => x.id == id)
-            chart = new Object()
+            var data = available_grids.find(x => x.id == id)
+            var chart = new Object()
             chart.create = data.create
             chart.update = data.update
+            chart.resized = data.resized
             chart.param = param
             charts.push(chart)
-            grid.addWidget('<div><div id="' + id + '" class="grid-stack-item-content grid card box-shadow"><div class="card-header"><h4 class="my-0 font-weight-normal">' + data.name + 
-                '</h4></div><div class="card-body"></div></div></div>', {width: data.default_width, height: data.default_height});
-            chart.container = $('#' + id + ' .card-body')[0]
+            var widget = $('<div><div id="' + id + '" class="grid-stack-item-content grid card box-shadow"><div class="card-header navbar"><div class="my-0 font-weight-normal navbar-header"><a class="navbar-brand" href="#">' + data.name + 
+                '</a></div><nav class="navbar navbar-right"></nav></div><div class="card-body"></div></div></div>');
+            grid.addWidget(widget, {width: data.default_width, height: data.default_height})
+            chart.container = widget.find('.card-body')[0]
+            chart.menue = widget.find('nav')[0]
             chart.create()
         }
         
@@ -156,6 +304,11 @@
         }
       
         function js_function_kivis_visualize(tick_data){
+            Object.keys(tick_data).forEach(function(k){
+                if (!var_names.includes(k)){
+                    var_names.push(k)
+                }
+            })
             ticks.push(tick_data)
             charts.forEach(c => c.update())
         }
@@ -163,6 +316,13 @@
         function initialize(){
             grid = GridStack.init()
             showGrid('current_values', undefined)
+            grid.on('gsresizestop', function(event, element) {
+                charts.forEach(function(chart){
+                    if(chart.container == $(element).find('.card-body')[0]){
+                        chart.resized()
+                    }
+                })
+            });
         }
         
         $( document ).ready(function(){
