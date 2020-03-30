@@ -39,7 +39,7 @@ class StatebasedLeanJavaCodeGenerator extends ExogenousProcessor<SCCharts, CodeC
     @Accessors Map<CodeGeneratorNames, String> naming = <CodeGeneratorNames, String> newHashMap
     
     override getId() {
-        "de.scheidtbachmann.statemachine.codegen.statebased.lean.java"
+        "de.cau.cs.kieler.sccharts.processors.codegen.statebased.lean.java"
     }
 
     override getName() {
