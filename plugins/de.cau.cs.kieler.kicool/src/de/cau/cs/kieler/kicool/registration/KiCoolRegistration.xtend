@@ -12,7 +12,6 @@
  */
 package de.cau.cs.kieler.kicool.registration
 
-import com.google.common.io.ByteStreams
 import com.google.inject.Guice
 import de.cau.cs.kieler.core.services.KielerServiceLoader
 import de.cau.cs.kieler.kicool.KiCoolPackage
@@ -25,18 +24,12 @@ import de.cau.cs.kieler.kicool.System
 import de.cau.cs.kieler.kicool.classes.SourceTargetPair
 import de.cau.cs.kieler.kicool.compilation.Processor
 import de.cau.cs.kieler.kicool.kitt.tracing.internal.TracingIntegration
-import java.io.ByteArrayInputStream
 import java.io.Closeable
 import java.io.IOException
 import java.net.URL
-import java.nio.file.FileSystemNotFoundException
-import java.nio.file.FileSystems
-import java.nio.file.Files
-import java.nio.file.Paths
 import java.util.HashMap
 import java.util.List
 import java.util.Map
-import java.util.jar.JarFile
 import org.eclipse.emf.common.EMFPlugin
 import org.eclipse.emf.common.util.URI
 import org.eclipse.xtext.diagnostics.Severity
@@ -159,27 +152,29 @@ class KiCoolRegistration {
             		// Ensure that the package has been registered im EMF
             		KiCoolPackage.eINSTANCE.eClass
             		val URL url = provider.class.classLoader.getResource(system)
-            	    val stream = if (url.protocol == 'jar') {
-            	    	// Fetch data from inside the jar file
-                    	val file = new JarFile(url.file.substring(0, url.file.indexOf('!')).replaceFirst('^file:', ''))
-                    	// Mark the file for later closing
-        	            closeables += file
-        	            // Create the needed Stream from inside the jar
-        	            new ByteArrayInputStream(ByteStreams.toByteArray(file.getInputStream(file.getEntry(system))))
-                	} else {
-                		// Access the file directly, given the url
-                    	try {
-                    		// Check if we already have some file system as a handler
-	                        FileSystems.getFileSystem(url.toURI);
-                    	} catch ( FileSystemNotFoundException e ) {
-                    		// If no file system ready, create a new one, but mark for closure later
-                        	closeables += FileSystems.newFileSystem(url.toURI, emptyMap)
-	                    } catch ( Throwable t) {
-    	                    // do nothing; chsch: on osx I get an IllegalArgumentException if the path is unequal to '/'
-        	            }
-        	            // Create the stream from the file system
-            	        new ByteArrayInputStream(Files.readAllBytes(Paths.get(url.toURI)))
-					}
+            		val stream = url.openStream
+            		closeables += stream
+//            	    val stream = if (url.protocol == 'jar') {
+//            	    	// Fetch data from inside the jar file
+//                    	val file = new JarFile(url.file.substring(0, url.file.indexOf('!')).replaceFirst('^file:', ''))
+//                    	// Mark the file for later closing
+//        	            closeables += file
+//        	            // Create the needed Stream from inside the jar
+//        	            new ByteArrayInputStream(ByteStreams.toByteArray(file.getInputStream(file.getEntry(system))))
+//                	} else {
+//                		// Access the file directly, given the url
+//                    	try {
+//                    		// Check if we already have some file system as a handler
+//	                        FileSystems.getFileSystem(url.toURI);
+//                    	} catch ( FileSystemNotFoundException e ) {
+//                    		// If no file system ready, create a new one, but mark for closure later
+//                        	closeables += FileSystems.newFileSystem(url.toURI, emptyMap)
+//	                    } catch ( Throwable t) {
+//    	                    // do nothing; chsch: on osx I get an IllegalArgumentException if the path is unequal to '/'
+//        	            }
+//        	            // Create the stream from the file system
+//            	        new ByteArrayInputStream(Files.readAllBytes(Paths.get(url.toURI)))
+//					}
 					val uri = URI.createURI(system)
 					val res = resourceSet.createResource(uri)
 					res.load(stream, emptyMap)

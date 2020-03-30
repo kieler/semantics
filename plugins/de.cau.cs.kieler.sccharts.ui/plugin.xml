@@ -32,6 +32,14 @@
             class="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.actions.ToggleDependencyAction"
             id="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.actions.toggleDependencyAction">
       </action>
+      <action
+            class="de.cau.cs.kieler.sccharts.ui.debug.actions.SetBreakpointAction"
+            id="de.cau.cs.kieler.sccharts.ui.debug.actions.setBreakpointAction">
+      </action>
+      <action
+            class="de.cau.cs.kieler.sccharts.ui.debug.actions.SetCheckBreakpointAction"
+            id="de.cau.cs.kieler.sccharts.ui.debug.actions.setCheckBreakpointAction">
+      </action>
    </extension>
    <extension
          point="de.cau.cs.kieler.klighd.diagramSyntheses">
@@ -97,6 +105,9 @@
       </hook>
       <hook
             class="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.ActionsAsDataflowHook">
+      </hook>
+      <hook
+            class="de.cau.cs.kieler.sccharts.ui.debug.hooks.SetBreakpointActionHook">
       </hook>
    </extension>
     <extension
@@ -652,6 +663,185 @@ controllerID="de.cau.cs.kieler.kicool.ui.klighd.KiCoModelUpdateController"
             </visibleWhen>
          </command>
       </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            description="Toggle Breakpoint in specified Line."
+            id="de.cau.cs.kieler.sccharts.ui.debug.toggleBreakpointCommand"
+            name="Toggle Breakpoint Command">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.editorActions">
+      <editorContribution
+            id="de.cau.cs.kieler.sccharts.debug.doubleClick"
+            targetID="de.cau.cs.kieler.sccharts.text.SCTX">
+         <action
+               actionID="RulerDoubleClick"
+               class="de.cau.cs.kieler.sccharts.ui.debug.TextRulerHandler"
+               icon="icons/brkp_obj.png"
+               id="de.cau.cs.kieler.sccharts.debug.toggleDoubleClick"
+               label="Not Used"
+               style="push">
+         </action>
+      </editorContribution>
+   </extension>
+   <extension
+         point="org.eclipse.debug.core.breakpoints">
+      <breakpoint
+            class="de.cau.cs.kieler.sccharts.ui.debug.breakpoints.SCChartsBreakpoint"
+            id="scchartsBreakpoint"
+            markerType="de.cau.cs.kieler.sccharts.ui.scchartsBreakpointMarker">
+      </breakpoint>
+      <breakpoint
+            class="de.cau.cs.kieler.sccharts.ui.debug.breakpoints.TransitionCheckBreakpoint"
+            id="transitionCheckBreakpoint"
+            markerType="de.cau.cs.kieler.sccharts.ui.transitionCheckMarker">
+      </breakpoint>
+      <breakpoint
+            class="de.cau.cs.kieler.sccharts.ui.debug.breakpoints.StateBreakpoint"
+            id="stateBreakpoint"
+            markerType="de.cau.cs.kieler.sccharts.ui.stateMarker">
+      </breakpoint>
+      <breakpoint
+            class="de.cau.cs.kieler.sccharts.ui.debug.breakpoints.TransitionTakenBreakpoint"
+            id="TransitionTakenBreakpoint"
+            markerType="de.cau.cs.kieler.sccharts.ui.transitionTakenMarker">
+      </breakpoint>
+      <breakpoint
+            class="de.cau.cs.kieler.sccharts.ui.debug.breakpoints.TransitionWatchBreakpoint"
+            id="TransitionWatchBreakpoint"
+            markerType="de.cau.cs.kieler.sccharts.ui.transitionWatchMarker">
+      </breakpoint>
+   </extension>
+   <extension
+         id="scchartsBreakpointMarker"
+         name="SCCharts Breakpoint Marker"
+         point="org.eclipse.core.resources.markers">
+      <super
+            type="org.eclipse.debug.core.lineBreakpointMarker">
+      </super>
+      <persistent
+            value="true">
+      </persistent>
+   </extension>
+   <extension
+         point="org.eclipse.debug.ui.debugModelPresentations">
+      <debugModelPresentation
+            class="de.cau.cs.kieler.sccharts.ui.debug.SCChartsDebugModelPresentation"
+            id="de.cau.cs.kieler.sccharts.ui.debug.scchartsDebugModelPresentation">
+      </debugModelPresentation>
+   </extension>
+   <extension
+         point="org.eclipse.core.runtime.adapters">
+      <factory
+            adaptableType="de.cau.cs.kieler.sccharts.ui.debug.breakpoints.SCChartsBreakpointTargetAdapter"
+            class="de.cau.cs.kieler.sccharts.ui.debug.breakpoints.SCChartsBreakpointTargetAdapterFactory">
+         <adapter
+               type="org.eclipse.xtext.ui.editor.XtextEditor">
+         </adapter>
+      </factory>
+   </extension>
+   <extension
+         point="org.eclipse.jdt.debug.breakpointListeners">
+      <breakpointListener
+            class="de.cau.cs.kieler.sccharts.ui.debug.breakpoints.JavaBreakpointListener"
+            filter="*"
+            id="de.cau.cs.kieler.sccharts.debug.JavaBreakpointListener">
+      </breakpointListener>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="popup:#TextRulerContext">
+         <command
+               commandId="de.cau.cs.kieler.sccharts.text.ui.toggleBreakpointCommand"
+               label="Toggle Breakpoint"
+               style="toggle">
+         </command>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="de.cau.cs.kieler.modelSimulation">
+         <actionSet
+               id=" org.eclipse.jdt.debug.ui.JDTDebugActionSet">
+         </actionSet>
+      </perspectiveExtension>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="de.cau.cs.kieler.sccharts.ui.debug.TextRulerHandler"
+            commandId="de.cau.cs.kieler.sccharts.text.ui.toggleBreakpointCommand">
+         <activeWhen>
+            <reference
+                  definitionId="de.cau.cs.kieler.sccharts.text.SCTX.Editor.opened">
+            </reference>
+         </activeWhen>
+      </handler>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            category="de.cau.cs.kieler"
+            class="de.cau.cs.kieler.sccharts.ui.debug.view.DebugDiagramView"
+            id="de.cau.cs.kieler.sccharts.ui.debug.debugDiagram"
+            name="Debug Diagram"
+            restorable="true">
+      </view>
+   </extension>
+   <extension
+         id="transitionCheckMarker"
+         name="Transition check marker"
+         point="org.eclipse.core.resources.markers">
+      <super
+            type="org.eclipse.debug.core.lineBreakpointMarker">
+      </super>
+      <persistent
+            value="true">
+      </persistent>
+   </extension>
+   <extension
+         id="stateMarker"
+         name="State Marker"
+         point="org.eclipse.core.resources.markers">
+      <super
+            type="org.eclipse.debug.core.lineBreakpointMarker">
+      </super>
+      <persistent
+            value="true">
+      </persistent>
+   </extension>
+   <extension
+         id="transitionTakenMarker"
+         name="Transition taken marker"
+         point="org.eclipse.core.resources.markers">
+      <persistent
+            value="true">
+      </persistent>
+      <super
+            type="org.eclipse.debug.core.lineBreakpointMarker">
+      </super>
+   </extension>
+   <extension
+         id="transitionWatchMarker"
+         name="Transition Watch Marker"
+         point="org.eclipse.core.resources.markers">
+      <super
+            type="org.eclipse.debug.core.lineBreakpointMarker">
+      </super>
+      <persistent
+            value="true">
+      </persistent>
+   </extension>
+   <extension
+         point="org.eclipse.ui.startup">
+      <startup
+            class="de.cau.cs.kieler.sccharts.ui.debug.view.DebugDiagramPartListener">
+      </startup>
    </extension>
    
 </plugin>

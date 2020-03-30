@@ -13,20 +13,18 @@
 package de.cau.cs.kieler.sccharts.test.structure
 
 import de.cau.cs.kieler.sccharts.SCCharts
-import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.text.SCTXStandaloneSetup
 import de.cau.cs.kieler.sccharts.text.services.SCTXGrammarAccess
+import de.cau.cs.kieler.simulation.testing.TestModelData
 import de.cau.cs.kieler.test.common.repository.AbstractXTextModelRepositoryTest
 import de.cau.cs.kieler.test.common.repository.ModelsRepositoryTestRunner
-import de.cau.cs.kieler.test.common.repository.TestModelData
 import org.eclipse.xtext.Keyword
 import org.eclipse.xtext.resource.XtextResource
 import org.junit.Test
 import org.junit.runner.RunWith
 
 import static org.junit.Assert.*
-import de.cau.cs.kieler.annotations.Nameable
-import de.cau.cs.kieler.sccharts.Scope
 
 /**
  * Tests if all reference in SCCharts are correctly linked.

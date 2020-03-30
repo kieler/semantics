@@ -60,7 +60,7 @@ class KiCoDiagramViewContribution implements KiCoModelViewUIContributor, ISimula
         simulateActions.get(muc)?.update(model)
         
         if (SimulationUI.currentSimulation !== null) {
-            val simCC = SimulationUI.currentSimulation.startEnvironment.getProperty(SimulationContext.SOURCE_COMPILATION_CONTEXT)
+            val simCC = SimulationUI.currentSimulation.getSourceCompilationContext
             val input = simCC?.originalModel
             var inputIsShown = false
             if (input !== null) {
@@ -102,7 +102,7 @@ class KiCoDiagramViewContribution implements KiCoModelViewUIContributor, ISimula
         if (e instanceof SimulationControlEvent) {
             switch (e.operation) {
                 case START: {
-                    val simCC = ctx.startEnvironment.getProperty(SimulationContext.SOURCE_COMPILATION_CONTEXT)
+                    val simCC = ctx.getSourceCompilationContext
                     val input = simCC?.originalModel
                     if (input instanceof EObject) {
                         if (input.eResource !== null) {
