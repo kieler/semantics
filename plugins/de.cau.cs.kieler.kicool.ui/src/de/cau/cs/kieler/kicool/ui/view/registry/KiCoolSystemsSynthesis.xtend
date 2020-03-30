@@ -68,6 +68,8 @@ class KiCoolSystemsSynthesis extends AbstractDiagramSynthesis<KiCoolSystemsSumma
     public static val KLIGHD_ACTION_DEFOCUS_NODE = "de.cau.cs.kieler.ui.view.registry.deFocusNode"
     
     public static val KIELER_QUALIFIED_NAME_PREFIX = "de.cau.cs.kieler."
+
+    public static val SynthesisOption SHOW_PUBLIC_ONLY = SynthesisOption::createCheckOption("Show Public Systems Only", true)
     
     public static val SynthesisOption SHOW_META_ONLY = SynthesisOption::createCheckOption("Show Meta Systems Only", false)
     public static val SynthesisOption SHOW_PROCESSOR_DETAILS = SynthesisOption::createCheckOption("Show Processor Details", false)
@@ -85,6 +87,7 @@ class KiCoolSystemsSynthesis extends AbstractDiagramSynthesis<KiCoolSystemsSumma
     
     override getDisplayedSynthesisOptions() {
         <SynthesisOption> newLinkedList => [
+            add(SHOW_PUBLIC_ONLY)
             add(SHOW_PROCESSOR_DETAILS)
             add(FULLY_QUALIFIED_KIELER_PREFIX)
             add(BUNDLE_EDGES)
@@ -143,7 +146,9 @@ class KiCoolSystemsSynthesis extends AbstractDiagramSynthesis<KiCoolSystemsSumma
     def protected Collection<KNode> createSystemNodes(KiCoolSystemsSummary model) {
         val result = <KNode> newLinkedList
         
-        for (s : model.systemList) {
+        val systemsList = if (SHOW_PUBLIC_ONLY.booleanValue) model.systemList.filter[ public ].toList 
+            else model.systemList
+        for (s : systemsList) {
             val node = s.createNode.toIdNodeMap(s.id) 
 //            node.createPort("in") => [ node.ports += it ]
 //            node.createPort("out") => [ node.ports += it ]
@@ -151,7 +156,11 @@ class KiCoolSystemsSynthesis extends AbstractDiagramSynthesis<KiCoolSystemsSumma
             node.setMinimalNodeSize(64, 64); // 2 x corner radius
             val content = node.addRoundedRectangle(4, 4, 1) => [
                 // Mark this figure as container for further content
-                setBackgroundGradient("#fdd".color, "#f88".color, 90);
+                if (s.public) 
+                    setBackgroundGradient("#fff".color, "#f44".color, 90)
+                else 
+                    setBackgroundGradient("#fdd".color, "#f88".color, 90)
+                
                 foreground = "#000".color;
                 it.addAction(Trigger.SINGLECLICK, KLIGHD_ACTION_FOCUS_NODE)
             ]
