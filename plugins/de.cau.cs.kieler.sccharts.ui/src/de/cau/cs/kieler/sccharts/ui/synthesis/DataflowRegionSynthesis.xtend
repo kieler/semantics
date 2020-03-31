@@ -89,7 +89,6 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
         node.setLayoutOption(LayeredOptions::HIGH_DEGREE_NODES_TREATMENT, true)
         node.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 10d)
         node.setLayoutOption(LayeredOptions::SPACING_NODE_NODE_BETWEEN_LAYERS, 10d)
-        node.setLayoutOption(LayeredOptions::CONTENT_ALIGNMENT, ContentAlignment.centerCenter)
         
         if (CIRCUIT.booleanValue) {
             node.addLayoutParam(LayeredOptions::CROSSING_MINIMIZATION_SEMI_INTERACTIVE, true)
