@@ -146,9 +146,9 @@ class KiCoolSystemsSynthesis extends AbstractDiagramSynthesis<KiCoolSystemsSumma
     def protected Collection<KNode> createSystemNodes(KiCoolSystemsSummary model) {
         val result = <KNode> newLinkedList
         
-        val systemsList = if (SHOW_PUBLIC_ONLY.booleanValue) model.systemList.filter[ public ].toList 
+        val systemList = if (SHOW_PUBLIC_ONLY.booleanValue) model.systemList.filter[ public ].toList 
             else model.systemList
-        for (s : systemsList) {
+        for (s : systemList) {
             val node = s.createNode.toIdNodeMap(s.id) 
 //            node.createPort("in") => [ node.ports += it ]
 //            node.createPort("out") => [ node.ports += it ]
@@ -182,7 +182,9 @@ class KiCoolSystemsSynthesis extends AbstractDiagramSynthesis<KiCoolSystemsSumma
     def protected Collection<KNode> connectReferencedSystems(KiCoolSystemsSummary model) {
         val result = <KNode> newLinkedList
         
-        for (s : model.systemList) {
+        val systemList = if (SHOW_PUBLIC_ONLY.booleanValue) model.systemList.filter[ public ].toList 
+            else model.systemList
+        for (s : systemList) {
             if (s.id.endsWith("esterel.scest.scl.simulation.netlist.java")) {
 //                println("HERE")
             }            
@@ -223,8 +225,10 @@ class KiCoolSystemsSynthesis extends AbstractDiagramSynthesis<KiCoolSystemsSumma
     
     def protected createSystemsMetaModels(KiCoolSystemsSummary model) {
         val result = <KNode> newLinkedList
-        
-        for (s : model.systemList) {
+
+        val systemList = if (SHOW_PUBLIC_ONLY.booleanValue) model.systemList.filter[ public ].toList 
+            else model.systemList
+        for (s : systemList) {
             if (s.id.endsWith("esterel.scest.scl.simulation.netlist.java")) {
 //                println("HERE")
             }
@@ -296,7 +300,9 @@ class KiCoolSystemsSynthesis extends AbstractDiagramSynthesis<KiCoolSystemsSumma
         val result = <KNode>newLinkedList
 
         val pGraph = new PGraph
-        for (s : model.systemList) {
+        val systemList = if (SHOW_PUBLIC_ONLY.booleanValue) model.systemList.filter[ public ].toList 
+            else model.systemList
+        for (s : systemList) {
             pGraph.addSystem(s)
         }
         
