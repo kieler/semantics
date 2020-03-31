@@ -1,4 +1,4 @@
-public system de.cau.cs.kieler.esterel.compiler.inria.^simulation
+public simulation system de.cau.cs.kieler.esterel.compiler.inria.^simulation
 	label "Inria Esterel Simulation"
 	
 pre process de.cau.cs.kieler.esterel.compiler.inria.^simulation.preparation
