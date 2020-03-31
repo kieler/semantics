@@ -217,9 +217,9 @@ litigation.
       <import feature="de.cau.cs.kieler.klighd.feature"/>
       <import feature="de.cau.cs.kieler.klighd.freehep.feature"/>
       <import feature="de.cau.cs.kieler.klighd.view.feature"/>
-      <import feature="de.cau.cs.kieler.klighd.ui.contrib3x"/>
-      <import feature="de.cau.cs.kieler.kgraph.text.ui"/>
-      <import feature="de.cau.cs.kieler.graphs.klighd"/>
+      <import plugin="de.cau.cs.kieler.klighd.ui.contrib3x"/>
+      <import plugin="de.cau.cs.kieler.kgraph.text.ui"/>
+      <import plugin="de.cau.cs.kieler.graphs.klighd"/>
       <import feature="org.eclipse.elk.feature"/>
       <import feature="org.eclipse.elk.graphviz.feature"/>
       <import feature="org.eclipse.elk.ui.feature"/>
