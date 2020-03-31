@@ -136,7 +136,6 @@ class DebugDiagramPartListener implements IPartListener2, IStartup {
      * {@inheritDoc}
      */
     override partOpened(IWorkbenchPartReference partRef) {
-        println("part opened")
         if (partRef === null) {
             return
         }
