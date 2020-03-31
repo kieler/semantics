@@ -14,19 +14,13 @@ package de.cau.cs.kieler.sccharts.ui.debug.view
 
 import org.eclipse.ui.IPartListener2
 import org.eclipse.ui.IWorkbenchPartReference
-import org.eclipse.swt.widgets.Composite
-import org.eclipse.swt.events.DisposeListener
-import org.eclipse.swt.events.DisposeEvent
-import org.eclipse.jdt.internal.ui.javaeditor.JavaEditor
 import org.eclipse.jdt.ui.JavaUI
 import org.eclipse.jdt.core.ICompilationUnit
 import org.eclipse.jdt.core.IField
-import de.cau.cs.kieler.sccharts.ui.debug.breakpoints.JavaBreakpointListener
 import org.eclipse.ui.IStartup
 import org.eclipse.ui.IWorkbenchPage
 import org.eclipse.ui.IWorkbenchWindow
 import org.eclipse.ui.PlatformUI
-import de.cau.cs.kieler.klighd.ui.view.model.MessageModel
 import org.eclipse.ui.progress.UIJob
 import org.eclipse.core.runtime.IStatus
 import org.eclipse.core.runtime.IProgressMonitor
@@ -35,6 +29,7 @@ import org.eclipse.core.runtime.jobs.Job
 import org.eclipse.core.runtime.ICoreRunnable
 import org.eclipse.core.runtime.CoreException
 import de.cau.cs.kieler.sccharts.ui.debug.breakpoints.DebugBreakpointManager
+import org.eclipse.jdt.internal.ui.javaeditor.CompilationUnitEditor
 
 /**
  * Listener to couple the active editor with the diagram view.
@@ -87,7 +82,7 @@ class DebugDiagramPartListener implements IPartListener2, IStartup {
         }
         
         val part = partRef.getPart(false)
-        if (part instanceof JavaEditor) {
+        if (part instanceof CompilationUnitEditor) {
             // Extract model path from editor
             val typeRoot = JavaUI.getEditorInputTypeRoot(part.editorInput)
             val compilationUnit = (typeRoot.getAdapter(ICompilationUnit) as ICompilationUnit)
@@ -136,7 +131,6 @@ class DebugDiagramPartListener implements IPartListener2, IStartup {
      * {@inheritDoc}
      */
     override partOpened(IWorkbenchPartReference partRef) {
-        println("part opened")
         if (partRef === null) {
             return
         }
@@ -152,7 +146,7 @@ class DebugDiagramPartListener implements IPartListener2, IStartup {
                     return Status.OK_STATUS;
                 }
             }.schedule(2)
-        } else if (part instanceof JavaEditor) {
+        } else if (part instanceof CompilationUnitEditor) {
             val typeRoot = JavaUI.getEditorInputTypeRoot(part.editorInput)
             val compilationUnit = (typeRoot.getAdapter(ICompilationUnit) as ICompilationUnit)
             val originalVars = <IField>newLinkedList
