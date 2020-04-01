@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: KIELER SCCharts Simulation Tests
 Bundle-SymbolicName: de.cau.cs.kieler.sccharts.test.simulation
-Bundle-Version: 1.1.0.qualifier
+Bundle-Version: 1.2.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.sccharts.test.simulation.SCChartsSimulationTestActivator
 Bundle-Vendor: Kiel University
 Require-Bundle: org.eclipse.ui,
