@@ -184,27 +184,31 @@ LocalAction returns sccharts::LocalAction:
     EntryAction | DuringAction | ExitAction | SuspendAction | PeriodAction;    
 
 EntryAction returns sccharts::EntryAction:
-	{sccharts::EntryAction}
-	preemption = PreemptionActionType?
+    {sccharts::EntryAction}
+    annotations+=RestrictedTypeAnnotation*
+    preemption = PreemptionActionType?
     'entry' ('if' trigger=BoolScheduleExpression ('Pr' triggerProbability=FLOAT)?)? ('do' effects+=Effect (';' effects+=Effect)*)?
     ('label' label=STRING)?;
          
 DuringAction returns sccharts::DuringAction:
 	{sccharts::DuringAction}
+    annotations+=RestrictedTypeAnnotation*
     delay=DelayType?
     'during' ('if' triggerDelay=INT? trigger=BoolScheduleExpression ('Pr=' triggerProbability=FLOAT)?)? ('do' effects+=Effect (';' effects+=Effect)*)?
     ('label' label=STRING)?;
          
 ExitAction returns sccharts::ExitAction:
-	{sccharts::ExitAction}
-	preemption = PreemptionActionType?
-	'exit' ('if' trigger=BoolScheduleExpression ('Pr' triggerProbability=FLOAT)?)? ('do' effects+=Effect (';' effects+=Effect)*)?
-	('label' label=STRING)?;  
+    {sccharts::ExitAction}
+    annotations+=RestrictedTypeAnnotation*
+    preemption = PreemptionActionType?
+    'exit' ('if' trigger=BoolScheduleExpression ('Pr' triggerProbability=FLOAT)?)? ('do' effects+=Effect (';' effects+=Effect)*)?
+    ('label' label=STRING)?;  
        
 SuspendAction returns sccharts::SuspendAction:
-	{sccharts::SuspendAction}
-	delay=DelayType? weak?='weak'? 'suspend' ('if' triggerDelay=INT? trigger=BoolScheduleExpression ('Pr=' triggerProbability=FLOAT)?)?
-	('label' label=STRING)?;
+    {sccharts::SuspendAction}
+    annotations+=RestrictedTypeAnnotation*
+    delay=DelayType? weak?='weak'? 'suspend' ('if' triggerDelay=INT? trigger=BoolScheduleExpression ('Pr=' triggerProbability=FLOAT)?)?
+    ('label' label=STRING)?;
       
 PeriodAction returns sccharts::PeriodAction:
     {sccharts::PeriodAction}
