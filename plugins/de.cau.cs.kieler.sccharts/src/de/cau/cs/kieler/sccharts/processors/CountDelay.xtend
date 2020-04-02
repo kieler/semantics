@@ -121,6 +121,7 @@ class CountDelay extends SCChartsProcessor implements Traceable {
         //Add entry action
         val entryAction = sourceState.createEntryAction
         entryAction.addEffect(counter.createAssignment(0.createIntValue))
+        entryAction.addTagAnnotation(Deferred.DO_NOT_DEFER)
 
         // Pre allows to put the during action in the source state and not in the parent state
         // Add during action
