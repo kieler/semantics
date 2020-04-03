@@ -111,7 +111,7 @@ class PrTransitions extends SCChartsProcessor implements Traceable {
         
         var actState = randomState
         for (prTransition : prTransitions.filter [ immediate ]) {
-            val newTrigger = createValuedObject(prDeclaration, "T" + prTransition.priority)
+            val newTrigger = createValuedObject(prDeclaration, "T" + prTransition.priority).uniqueName
             newTransitionTriggers.put(prTransition, newTrigger)
             
             actState = prTransition.createPrTransitionTree(actState, newTrigger, prRegion, rVar, statePrefix)                
@@ -122,7 +122,7 @@ class PrTransitions extends SCChartsProcessor implements Traceable {
         for (prTransition : prTransitions) {
             val newTrigger = if (newTransitionTriggers.keySet.contains(prTransition))
                 newTransitionTriggers.get(prTransition) 
-                else createValuedObject(prDeclaration, "T" + prTransition.priority)
+                else createValuedObject(prDeclaration, "T" + prTransition.priority).uniqueName
             newTransitionTriggers.put(prTransition, newTrigger)
             
             actState = prTransition.createPrTransitionTree(actState, newTrigger, prRegion, rVar, statePrefix)                
