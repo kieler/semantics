@@ -671,13 +671,21 @@ class Reference extends SCChartsProcessor implements Traceable {
                     // Copy inner behavior
                     for (vo : classDecl.valuedObjects) {
                         var allCardinalities = 1
+                        val maxIndices = newArrayList()
                         val nextIndices = newArrayList()
                         if (vo.array) {
                             for (car : vo.cardinalities) {
                                 if (car instanceof IntValue) {
                                     allCardinalities *= car.value
+                                    maxIndices += car.value
+                                } else if (car instanceof ValuedObjectReference 
+                                    && (car as ValuedObjectReference).valuedObject?.variableDeclaration?.const
+                                    && (car as ValuedObjectReference).valuedObject.initialValue instanceof IntValue) {
+                                        val value = ((car as ValuedObjectReference).valuedObject.initialValue as IntValue).value
+                                        allCardinalities *= value
+                                        maxIndices += value
                                 } else {
-                                    environment.errors.add("Can only handle reference arrays with constant (literal) cardinality", scope, true)
+                                    environment.errors.add("Can only handle reference arrays with constant cardinality", scope, true)
                                 }
                                 nextIndices += 0
                             }
@@ -713,7 +721,7 @@ class Reference extends SCChartsProcessor implements Traceable {
                                 for (i : (vo.cardinalities.size-1)..0) {
                                     if (next) {
                                         nextIndices.set(i, nextIndices.get(i) + 1)
-                                        if (nextIndices.get(i) >= (vo.cardinalities.get(i) as IntValue).value) {
+                                        if (nextIndices.get(i) >= maxIndices.get(i)) {
                                             nextIndices.set(i, 0)
                                         } else {
                                             next = false
