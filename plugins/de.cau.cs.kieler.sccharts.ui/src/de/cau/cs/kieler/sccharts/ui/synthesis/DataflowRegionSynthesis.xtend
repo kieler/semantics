@@ -112,12 +112,12 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
         val sLabel = new StringBuilder
         val userSchedule = region.schedule
         if (userSchedule.size > 0) {
-            val exists = <Pair<ValuedObject, Integer>> newHashSet
+            val exists = <Pair<ValuedObject, String>> newHashSet
             for (s : userSchedule) {
-                val existPair = new Pair<ValuedObject, Integer>(s.valuedObject, s.priority)
+                val existPair = new Pair<ValuedObject, String>(s.valuedObject, s.priority.serializeHR.toString)
                 if (!exists.contains(existPair)) {
                     sLabel.append(", ")
-                    sLabel.append(s.valuedObject.name + " " + s.priority)
+                    sLabel.append(s.valuedObject.name + " " + s.priority.serializeHR.toString)
                     exists.add(existPair)
                 }
             }

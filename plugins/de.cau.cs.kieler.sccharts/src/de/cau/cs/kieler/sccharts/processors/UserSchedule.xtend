@@ -242,7 +242,7 @@ class UserSchedule extends SCChartsProcessor implements Traceable {
             for (i : 0..index-1) {
                 val indexMethods = indices.get(i)
                 sdDecl.priorities += strategies.get(methods.head)
-                indexMethods.forEach[schedule += createScheduleReference(sdVO) => [priority = i]]
+                indexMethods.forEach[schedule += createScheduleReference(sdVO) => [priority = i.createIntValue]]
             }
             
             // Remove

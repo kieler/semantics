@@ -168,7 +168,7 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
                 for(sched : assignment.schedule) {
                     val schedule = sched.valuedObject.declaration as ScheduleDeclaration
                     val scheduleObject = sched.valuedObject        
-                    val priority = sched.priority
+                    val priority = sched.priority.asIntValue.value
                     
                     for (w : artificialWriters) {
                         val writeAccess = new ValuedObjectAccess(assignment, assignment.association, schedule, scheduleObject, priority, forkStack, false)
@@ -227,7 +227,7 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
                 if (sched instanceof ScheduleObjectReference) {
                     schedule = sched.valuedObject.declaration as ScheduleDeclaration
                     scheduleObject = sched.valuedObject 
-                    priority = sched.priority    
+                    priority = sched.priority.asIntValue.value    
                 }
                 
                 val writeAccess = new ValuedObjectAccess(assignment, assignment.association, schedule, scheduleObject, priority, forkStack, writeVOI.isSpecificIdentifier)
@@ -259,7 +259,7 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
                 if (sched instanceof ScheduleObjectReference) {
                     schedule = sched.valuedObject.declaration as ScheduleDeclaration
                     scheduleObject = sched.valuedObject 
-                    priority = sched.priority    
+                    priority = sched.priority.asIntValue.value    
                 }                
                                 
                 for (vor : parameter.expression.allReferences) { 
@@ -294,7 +294,7 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
         for(sched : schedules) {
             val schedule = sched.valuedObject.declaration as ScheduleDeclaration
             val scheduleObject = sched.valuedObject        
-            val priority = sched.priority
+            val priority = sched.priority.asIntValue.value
             
             if (writeVOI !== null) {
 //                println(effect+ "\n  " + effect.association + "\n  " + schedule + "\n  " + scheduleObject + "\n  " +
@@ -325,7 +325,7 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
                 if (sched instanceof ScheduleObjectReference) {
                     schedule = sched.valuedObject.declaration as ScheduleDeclaration
                     scheduleObject = sched.valuedObject
-                    priority = sched.priority    
+                    priority = sched.priority.asIntValue.value    
                 }
                 
                 val readAccess = new ValuedObjectAccess(node, node.association, schedule, scheduleObject, priority, forkStack, readVOI.isSpecificIdentifier)

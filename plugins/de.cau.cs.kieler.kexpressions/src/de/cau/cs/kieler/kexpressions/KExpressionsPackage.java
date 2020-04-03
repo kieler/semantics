@@ -1236,7 +1236,7 @@ public interface KExpressionsPackage extends EPackage {
     int SCHEDULE_OBJECT_REFERENCE__SUB_REFERENCE = VALUED_OBJECT_REFERENCE__SUB_REFERENCE;
 
     /**
-     * The feature id for the '<em><b>Priority</b></em>' attribute.
+     * The feature id for the '<em><b>Priority</b></em>' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -2376,15 +2376,15 @@ public interface KExpressionsPackage extends EPackage {
     EClass getScheduleObjectReference();
 
     /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kexpressions.ScheduleObjectReference#getPriority <em>Priority</em>}'.
+     * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.kexpressions.ScheduleObjectReference#getPriority <em>Priority</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Priority</em>'.
+     * @return the meta object for the containment reference '<em>Priority</em>'.
      * @see de.cau.cs.kieler.kexpressions.ScheduleObjectReference#getPriority()
      * @see #getScheduleObjectReference()
      * @generated
      */
-    EAttribute getScheduleObjectReference_Priority();
+    EReference getScheduleObjectReference_Priority();
 
     /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.kexpressions.Parameter <em>Parameter</em>}'.
@@ -3225,12 +3225,12 @@ public interface KExpressionsPackage extends EPackage {
         EClass SCHEDULE_OBJECT_REFERENCE = eINSTANCE.getScheduleObjectReference();
 
         /**
-         * The meta object literal for the '<em><b>Priority</b></em>' attribute feature.
+         * The meta object literal for the '<em><b>Priority</b></em>' containment reference feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EAttribute SCHEDULE_OBJECT_REFERENCE__PRIORITY = eINSTANCE.getScheduleObjectReference_Priority();
+        EReference SCHEDULE_OBJECT_REFERENCE__PRIORITY = eINSTANCE.getScheduleObjectReference_Priority();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.kexpressions.impl.ParameterImpl <em>Parameter</em>}' class.

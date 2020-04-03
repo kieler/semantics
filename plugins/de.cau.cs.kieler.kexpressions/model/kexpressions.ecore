@@ -341,7 +341,8 @@
     <eLiterals name="CONFLUENT" value="1"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ScheduleObjectReference" eSuperTypes="#//ValuedObjectReference">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="priority" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="priority" eType="#//Expression"
+        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Parameter">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="accessType" eType="#//ParameterAccessType"

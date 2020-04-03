@@ -37,6 +37,7 @@ import static de.cau.cs.kieler.sccharts.ui.synthesis.styles.ColorStore.Color.*
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import de.cau.cs.kieler.sccharts.DeferredType
+import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions
 
 /**
  * Transforms {@link Transition} into {@link KEdge} diagram elements.
@@ -63,6 +64,7 @@ class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
     @Inject extension TransitionStyles
     @Inject extension ColorStore
     @Inject extension AdaptiveZoom
+    @Inject extension SCChartsSerializeHRExtensions
 
     override performTranformation(Transition transition) {
         val edge = transition.createEdge().associateWith(transition);
@@ -100,12 +102,12 @@ class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
             else (transition.effects.map[ schedule ].flatten).toSet
         if (userSchedule.size > 0) {
             val sLabel = new StringBuilder
-            val exists = <Pair<ValuedObject, Integer>> newHashSet
+            val exists = <Pair<ValuedObject, String>> newHashSet
             for (s : userSchedule) {
-                val existPair = new Pair<ValuedObject, Integer>(s.valuedObject, s.priority)
+                val existPair = new Pair<ValuedObject, String>(s.valuedObject, s.priority.serializeHR.toString)
                 if (!exists.contains(existPair)) {
                     if (s !== userSchedule.head) sLabel.append(", ")
-                    sLabel.append(s.valuedObject.name + " " + s.priority)
+                    sLabel.append(s.valuedObject.name + " " + s.priority.serializeHR.toString)
                     exists.add(existPair)
                 }
             }

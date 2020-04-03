@@ -631,7 +631,7 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
     		    if (!effect.schedule.nullOrEmpty) {
         			for (s : effect.schedule) {
         			    assignment.schedule += s.valuedObject.getSCGValuedObject.createScheduleReference => [
-        				    it.priority = s.priority
+        				    it.priority = s.priority.convertToSCGExpression
         			    ]
         			}
     		    }
@@ -646,6 +646,16 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
 
             // TODO  Test if this works correct? Was before:  conditional.setCondition(serializer.serialize(transitionCopy))
             conditional.setCondition(transition.trigger.convertToSCGExpression.trace(transition))
+            
+            // Here, the SD is associated with the expression, however, they are directly linked to assignments. 
+            // Maybe this inconsistency should be resolved.
+            if (!transition.trigger.schedule.nullOrEmpty) {
+                for (s : transition.trigger.schedule) {
+                    conditional.condition.schedule += s.valuedObject.getSCGValuedObject.createScheduleReference => [
+                        it.priority = s.priority.convertToSCGExpression
+                    ]
+                }
+            }            
         } else if (stateTypeCache.get(state).contains(PatternType::FORK)) {
             val fork = sCGraph.addFork
             val join = sCGraph.addJoin
