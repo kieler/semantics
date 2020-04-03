@@ -367,17 +367,24 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
         for (schedule : schedules) {
             for (vo : schedule.valuedObjects) {
                 val scheduledAccesses = accesses.filter[ it.schedule == schedule && it.scheduleObject == vo ].toSet
-                processed += valuedObjectIdentifier.processDependencySet(scheduledAccesses, null, isSpecific)
+                processed += valuedObjectIdentifier.processDependencySet(scheduledAccesses, null, isSpecific, null)
             }
         }
-        valuedObjectIdentifier.processDependencySet(accesses.filter[ schedule === null ].toSet, processed, isSpecific)
+        
+        val excludeCache = <Pair<Linkable, Linkable>> newHashSet 
+        processed.forEach[
+            excludeCache.add(new Pair<Linkable, Linkable>(it.key.node, it.value.node))
+        ] 
+        
+        valuedObjectIdentifier.processDependencySet(accesses.filter[ schedule === null ].toSet, processed, isSpecific, excludeCache)
     }
     
     /** Process the dependency set: Sort the dependencies according to priority and check if a dependency object
      *  must be created. Afterwards, mark the dependency as processed.
      */
     protected def Set<Pair<ValuedObjectAccess, ValuedObjectAccess>> processDependencySet(ValuedObjectIdentifier valuedObjectIdentifier, 
-        Set<ValuedObjectAccess> accesses, Set<Pair<ValuedObjectAccess, ValuedObjectAccess>> exclude, boolean isSpecific
+        Set<ValuedObjectAccess> accesses, Set<Pair<ValuedObjectAccess, ValuedObjectAccess>> exclude, boolean isSpecific,
+        Set<Pair<Linkable, Linkable>> excludeCache 
     ) {
         val processed = <Pair<ValuedObjectAccess, ValuedObjectAccess>> newHashSet
         val accessPair = accesses.sortAccessesAccordingToPriority
@@ -388,7 +395,7 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
                     val compAccesses = accessPair.value.get(compPriority) 
                     for (compAccess : compAccesses) {
                         if (exclude === null || 
-                            !exclude.exists[ key.node == access.node && value.node == compAccess.node ] 
+                            !excludeCache.contains(new Pair<Linkable, Linkable>(access.node, compAccess.node)) 
                         ) {
                             if (!access.isSpecific || !compAccess.isSpecific || isSpecific) {
                                 valuedObjectIdentifier.processDependency(access, compAccess)
