@@ -139,6 +139,7 @@ class SCChartsLSDiagramHighlighter extends LSDiagramHighlighter implements ILSDi
     override initialize(SimulationContext ctx) {
         super.initialize(ctx)
         currentStates = null
+        lastTakenTransitionValues.clear
         update(ctx)
     }
     
@@ -237,7 +238,7 @@ class SCChartsLSDiagramHighlighter extends LSDiagramHighlighter implements ILSDi
 
         // Get the transitions in the SCChart in the same manner as the taken transition signaling
         var State rootState
-        val currentDiagramModel = diagramViewContext.inputModel
+        val currentDiagramModel = diagramModel
         if (currentDiagramModel instanceof SCCharts) {
             if (!currentDiagramModel.rootStates.isEmpty) {
                 rootState = currentDiagramModel.rootStates.get(0)
