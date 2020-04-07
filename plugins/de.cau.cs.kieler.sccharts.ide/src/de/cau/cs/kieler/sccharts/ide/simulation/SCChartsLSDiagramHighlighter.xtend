@@ -12,7 +12,10 @@
  */
 package de.cau.cs.kieler.sccharts.ide.simulation
 
+import com.google.gson.JsonArray
 import com.google.inject.Injector
+import de.cau.cs.kieler.klighd.LightDiagramLayoutConfig
+import de.cau.cs.kieler.klighd.ZoomStyle
 import de.cau.cs.kieler.klighd.kgraph.KEdge
 import de.cau.cs.kieler.klighd.krendering.Colors
 import de.cau.cs.kieler.klighd.krendering.KForeground
@@ -94,6 +97,11 @@ class SCChartsLSDiagramHighlighter extends LSDiagramHighlighter implements ILSDi
      * The size of the taken transitions signaling array.
      */
     private var takenTransitionArraySize = 0
+    
+    /**
+     * The taken transition values from the last tick
+     */
+    var lastTakenTransitionValues = <Integer> newLinkedList
 
 
     new() {}
@@ -153,15 +161,19 @@ class SCChartsLSDiagramHighlighter extends LSDiagramHighlighter implements ILSDi
                 return
             }
             // Find the graph elements in the diagram for the EObjects that should be highlighted
-            val traversedGraphHighlighting = getHighlighting(traversedTransitions + traversedStates, TRAVERSED_ELEMENT_STYLE)
-            val currentGraphHighlighting = if(!currentStates.isNullOrEmpty)
-                                               getHighlighting(#[] + currentStates, CURRENT_ELEMENT_STYLE)
-                                           else
-                                               newArrayList
+            val traversedGraphHighlighting = if (!traversedTransitions.isNullOrEmpty && !traversedStates.isNullOrEmpty)
+                    getHighlighting(traversedTransitions + traversedStates, TRAVERSED_ELEMENT_STYLE)
+                else
+                    newArrayList
+            val currentGraphHighlighting = if (!currentStates.isNullOrEmpty)
+                    getHighlighting(#[] + currentStates, CURRENT_ELEMENT_STYLE)
+                else
+                    newArrayList
                                                
             val currentDataflowHighlighting = if (currentActiveDataflowRegions.nullOrEmpty) newArrayList
                                                 else getHighlighting(#[] + currentActiveDataflowRegions, CURRENT_ELEMENT_STYLE)
             val currentWireHighlighting = <Highlighting> newArrayList
+            
             if (!currentDataflowHighlighting.empty) {
                 for (highlight : currentDataflowHighlighting) {
                     highlight.element.eAllContents.filter(KEdge).forEach[
@@ -175,18 +187,12 @@ class SCChartsLSDiagramHighlighter extends LSDiagramHighlighter implements ILSDi
             val highlighting = traversedGraphHighlighting + currentGraphHighlighting + 
                 currentDataflowHighlighting + currentWireHighlighting
             highlightDiagram(highlighting)
+            
+            val layoutConfig = new LightDiagramLayoutConfig(diagramViewContext)
+            layoutConfig.zoomStyle(ZoomStyle.NONE)
+            layoutConfig.performLayout
         }
     }
-
-//    override loadFormerState(StepState state) {
-//        super.loadFormerState(state)
-//        
-//        // Fetch old current states from highlighting history
-//        val oldHighlighting = highlightingHistory.get(state.actionIndex)
-//        if(oldHighlighting != null) {
-//            currentStates = oldHighlighting.filter[it.foreground == CURRENT_ELEMENT_STYLE && it.eObject instanceof State].map[it.eObject as State].toList
-//        }
-//    }
     
     /**
      * Creates the highlighting style for traversed elements.
@@ -219,69 +225,83 @@ class SCChartsLSDiagramHighlighter extends LSDiagramHighlighter implements ILSDi
         traversedTransitions.clear
         traversedStates.clear
         // Get the traversed transitions array from the data pool
-        if(pool == null) {
+        if (pool === null) {
             return
         }
-        val DataPoolEntry transitionArrayVariable = pool.entries.get(TakenTransitionSignaling.transitionArrayName)
-        if(transitionArrayVariable === null || !transitionArrayVariable.rawValue.isJsonArray) {
-            return
-        }
-        val transitionArray = transitionArrayVariable.rawValue.asJsonArray
-        
+        val transitionArrayVariable = pool.entries.get(TakenTransitionSignaling.transitionArrayName)
+        var JsonArray transitionArray = null
+        if (transitionArrayVariable === null || !transitionArrayVariable.rawValue.isJsonArray) {
+            transitionArray = new JsonArray
+        } else
+            transitionArray = transitionArrayVariable.rawValue.asJsonArray
+
         // Get the transitions in the SCChart in the same manner as the taken transition signaling
         var State rootState
         val currentDiagramModel = diagramViewContext.inputModel
-        if(currentDiagramModel instanceof SCCharts) {
-            if(!currentDiagramModel.rootStates.isEmpty) {
+        if (currentDiagramModel instanceof SCCharts) {
+            if (!currentDiagramModel.rootStates.isEmpty) {
                 rootState = currentDiagramModel.rootStates.get(0)
-            }            
+            }
         }
-        if(rootState == null) {
+        if (rootState === null) {
             return
         }
         val transitions = TakenTransitionSignaling.getTransitions(rootState)
         // For an emitted transition in the transition array,
         // look for the transition in the model with the corresponding index.
+        val newLastTakenTransitionValues = <Integer> newLinkedList
         var index = 0
-        for(transitionArrayElement : transitionArray) {
+        for (transitionArrayElement : transitionArray) {
             // The array contains the number of times that the transition has been taken in this tick
-            if(transitionArrayElement.isJsonPrimitive && transitionArrayElement.asJsonPrimitive.isNumber) {
+            if (transitionArrayElement.isJsonPrimitive && transitionArrayElement.asJsonPrimitive.isNumber) {
                 val value = transitionArrayElement.asInt
-                if(value > 0) {
+                var lastValue = 0
+                if (lastTakenTransitionValues.size > index) {
+                    lastValue = lastTakenTransitionValues.get(index)
+                } 
+                if (value != lastValue) {
                     // The transition has been taken at least once
                     try {
                         val traversedTransition = transitions.get(index)
                         traversedTransitions.add(traversedTransition)
-                    } catch(IndexOutOfBoundsException e) {
-                        throw new Exception("Could not acccess the 'taken transition array'. Please check that the shown diagram is for the simulated model.", e)
+                    } catch (IndexOutOfBoundsException e) {
+                        throw new Exception(
+                            "Could not acccess the 'taken transition array'. Please check that the shown diagram is for the simulated model.",
+                            e)
                     }
                 }
+                newLastTakenTransitionValues.add(value)
             } else {
                 throw new Exception("The 'taken transition array' has a incompatible type for diagram highlighting")
             }
             index++
         }
-        
+        // Should only update new values if TakenTransitionSignaling.USE_VALUE_CHANGE_SIGNALING is true in the 
+        // original compilation contex.
+        if (ctx.sourceCompilationContext.result.getProperty(TakenTransitionSignaling.USE_VALUE_CHANGE_SIGNALING)) {
+            lastTakenTransitionValues = newLastTakenTransitionValues
+        }
+
         // Calculate traversed states
-        for(traversedTransition : traversedTransitions) {
+        for (traversedTransition : traversedTransitions) {
             val source = traversedTransition.sourceState
             traversedStates.add(source)
             val target = traversedTransition.targetState
             traversedStates.add(target)
             // Mark all final states as traversed if this was a termination transition
             val isTerminationTransition = traversedTransition.preemption == PreemptionType.TERMINATION
-            if(isTerminationTransition) {
+            if (isTerminationTransition) {
                 traversedStates.addAll(getFinalStates(source))
             }
         }
-        
+
         // Calculate current states
-        if(currentStates === null) {
+        if (currentStates === null) {
             currentStates = newArrayList()
             val directInitialStates = getInitialStates(rootState)
-            for(state : directInitialStates) {
+            for (state : directInitialStates) {
                 currentStates.enterState(state)
-            } 
+            }
         }
         currentStates = calculateNewCurrentStates(currentStates, traversedTransitions)
         currentActiveDataflowRegions = calculateNewActiveEquations(currentStates, rootState)
@@ -297,51 +317,52 @@ class SCChartsLSDiagramHighlighter extends LSDiagramHighlighter implements ILSDi
      * @return the now current states
      */
     private def List<State> calculateNewCurrentStates(List<State> lastCurrentStates, List<Transition> takenTransitions) {
-        val newCurrentStates = <State> newArrayList
-        
+        val newCurrentStates = <State>newArrayList
+
         // Preprocessing for better performance of lookup
-        val seenStates = <State> newHashSet
-        val outgoingTransitionsForState = <State, List<Transition>> newHashMap
-        for(trans : takenTransitions) {
+        val seenStates = <State>newHashSet
+        val outgoingTransitionsForState = <State, List<Transition>>newHashMap
+        for (trans : takenTransitions) {
             val source = trans.sourceState
             val outgoingTransitionsOfSource = outgoingTransitionsForState.getOrDefault(source, newArrayList)
             outgoingTransitionsOfSource.add(trans)
             outgoingTransitionsForState.put(trans.sourceState, outgoingTransitionsOfSource)
         }
-        
+
         // Follow path of transitions from current states to the ending state, which is the new current state.
         // NOTE: This only works if the used transition for a state is unambiguous, i.e.,
         // there is at most one outgoing transition per state in this tick. 
         val states = lastCurrentStates
-        while(!states.isNullOrEmpty) {
+        while (!states.isNullOrEmpty) {
             val state = states.get(0)
             seenStates.add(state)
             val outgoingTransitions = outgoingTransitionsForState.getOrDefault(state, newArrayList)
-            if(outgoingTransitions.size == 0) {
+            if (outgoingTransitions.size == 0) {
                 // No outgoing transitions, thus the control flow stays here
                 newCurrentStates.add(state)
                 // This state is done
                 states.remove(state)
-            } else if(outgoingTransitions.size == 1) {
+            } else if (outgoingTransitions.size == 1) {
                 // Exactly one outgoing transition, thus the next state is unambiguous
                 val transition = outgoingTransitions.get(0)
                 val next = transition.targetState
 
                 // Leave state
                 states.leaveState(state)
-                
+
                 // Enter next state
                 states.enterState(next)
-                
+
                 // This transition is done
                 outgoingTransitions.remove(transition)
             } else {
                 // More than one outgoing state. It is not clear which path has been taken.
-                System.err.println("The used control flow cannot be clearly determined for this tick. Diagram highlighting of current state will not work.")
+                System.err.println(
+                    "The used control flow cannot be clearly determined for this tick. Diagram highlighting of current state will not work.")
                 return newCurrentStates
             }
         }
-        
+
         return newCurrentStates
     }
     
