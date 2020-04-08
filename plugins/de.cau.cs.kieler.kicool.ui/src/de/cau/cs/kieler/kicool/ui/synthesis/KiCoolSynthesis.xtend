@@ -58,7 +58,7 @@ class KiCoolSynthesis extends AbstractDiagramSynthesis<System> {
     @Inject extension ProcessorSynthesis
     @Inject extension SourceSynthesis
 
-    public static final SynthesisOption FLATTEN_SYSTEM = SynthesisOption.createCheckOption("Flatten System", false)
+    public static final SynthesisOption FLATTEN_SYSTEM = SynthesisOption.createCheckOption("kicool.flattenSystem", "Flatten System", false)
 
     override transform(System model) {
         val rootNode = model.createNode

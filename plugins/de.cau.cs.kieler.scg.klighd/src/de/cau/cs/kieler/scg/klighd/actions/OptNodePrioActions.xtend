@@ -36,7 +36,7 @@ class OptNodePrioActions implements IAction {
     
     private static final String OPT_ID = "de.cau.cs.kieler.scg.klighd.actions.optPrioActions"
 
-    public static final SynthesisOption SHOW_OPT_PRIO_ID = SynthesisOption::createCheckOption("Optimized Priority IDs",
+    public static final SynthesisOption SHOW_OPT_PRIO_ID = SynthesisOption::createCheckOption("optNodePrio.showOptPrioId", "Optimized Priority IDs",
         true).setUpdateAction(OPT_ID);
 
     override execute(ActionContext context) {

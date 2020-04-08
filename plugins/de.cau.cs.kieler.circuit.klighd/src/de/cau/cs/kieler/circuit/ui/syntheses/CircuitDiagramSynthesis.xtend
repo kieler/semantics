@@ -72,17 +72,17 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 //	private static val SynthesisOption SHOW_NOT = SynthesisOption::createCheckOption("Not-Gates", true);
 
 	/** Show Tick */
-	private static val SynthesisOption SHOW_TICK = SynthesisOption::createCheckOption("Tick Wires", false);
+	private static val SynthesisOption SHOW_TICK = SynthesisOption::createCheckOption("circuit.showTick", "Tick Wires", false);
 
 	/** Show Reset */
-	private static val SynthesisOption SHOW_RESET = SynthesisOption::createCheckOption("Reset Wires", false);
+	private static val SynthesisOption SHOW_RESET = SynthesisOption::createCheckOption("circuit.showReset", "Reset Wires", false);
 
 	/** Show Circuit */
-	private static val SynthesisOption SHOW_ALL_REGIONS = SynthesisOption::createCheckOption("Show Entire Circuit",
+	private static val SynthesisOption SHOW_ALL_REGIONS = SynthesisOption::createCheckOption("circuit.showAllRegions", "Show Entire Circuit",
 		false);
 	
 	/** DIAGRAM LAYOUT */
-    private static val SynthesisOption LAYOUT = SynthesisOption::createChoiceOption("Node Placement",
+    private static val SynthesisOption LAYOUT = SynthesisOption::createChoiceOption("circuit.layout", "Node Placement",
         <String>newLinkedList("Brandes Koepf", "Linear Segments", "Network Simplex", "Simple" ), "Top-Down");	
 	
 	/**  

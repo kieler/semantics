@@ -56,7 +56,9 @@ class LayoutHook extends SynthesisActionHook {
     /** Action ID */
     public static final String ID = "de.cau.cs.kieler.sccharts.ui.synthesis.hooks.LayoutHook";
     /** The related synthesis option */
-    public static final SynthesisOption LAYOUT_DIRECTION = SynthesisOption.createChoiceOption("Direction", #["HV", "VH", "Down", "Right"], "HV").
+    public static final SynthesisOption LAYOUT_DIRECTION = SynthesisOption.createChoiceOption(
+        "sccharts.layout.layoutDirection",
+        "Direction", #["HV", "VH", "Down", "Right"], "HV").
         setCategory(GeneralSynthesisOptions::LAYOUT).setUpdateAction(LayoutHook.ID); // Register this action as updater
        
     /** This property is set if any element should override HV or VH layout annotation effects */

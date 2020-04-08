@@ -69,13 +69,13 @@ class KiCoolSystemsSynthesis extends AbstractDiagramSynthesis<KiCoolSystemsSumma
     
     public static val KIELER_QUALIFIED_NAME_PREFIX = "de.cau.cs.kieler."
     
-    public static val SynthesisOption SHOW_META_ONLY = SynthesisOption::createCheckOption("Show Meta Systems Only", false)
-    public static val SynthesisOption SHOW_PROCESSOR_DETAILS = SynthesisOption::createCheckOption("Show Processor Details", false)
+    public static val SynthesisOption SHOW_META_ONLY = SynthesisOption::createCheckOption("kicoolSystem.showMetaOnly", "Show Meta Systems Only", false)
+    public static val SynthesisOption SHOW_PROCESSOR_DETAILS = SynthesisOption::createCheckOption("kicoolSystem.showProcessorDetails", "Show Processor Details", false)
         
-    public static val SynthesisOption FULLY_QUALIFIED_KIELER_PREFIX = SynthesisOption::createCheckOption("Show KIELER Qualified Name Prefix", false)
-    public static val SynthesisOption FULLY_QUALIFIED_PROCESSOR_NAMES = SynthesisOption::createCheckOption("Show Long Processor Names", false)
+    public static val SynthesisOption FULLY_QUALIFIED_KIELER_PREFIX = SynthesisOption::createCheckOption("kicoolSystem.fullyQualifiedKIelerPrefix", "Show KIELER Qualified Name Prefix", false)
+    public static val SynthesisOption FULLY_QUALIFIED_PROCESSOR_NAMES = SynthesisOption::createCheckOption("kicoolSystem.fullyQualifiedProcessorNames", "Show Long Processor Names", false)
     
-    public static val SynthesisOption BUNDLE_EDGES = SynthesisOption::createCheckOption("Bundle Edges", false)
+    public static val SynthesisOption BUNDLE_EDGES = SynthesisOption::createCheckOption("kicoolSystem.bundleEdges", "Bundle Edges", false)
     
     
     val processorConnections = <String, Integer> newHashMap

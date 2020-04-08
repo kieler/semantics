@@ -45,7 +45,7 @@ class ShowAnnotationsHook extends SynthesisHook {
     @Inject extension CommentStyles
     
     /** The related synthesis option */
-    public static final SynthesisOption SHOW_ANNOTATIONS_HOOK = SynthesisOption.createCheckOption("Show Annotations",
+    public static final SynthesisOption SHOW_ANNOTATIONS_HOOK = SynthesisOption.createCheckOption("sccharts.showAnnotations.showAnnotationsHook", "Show Annotations",
             false).setCategory(GeneralSynthesisOptions::DEBUGGING);
 
     override getDisplayedSynthesisOptions() {

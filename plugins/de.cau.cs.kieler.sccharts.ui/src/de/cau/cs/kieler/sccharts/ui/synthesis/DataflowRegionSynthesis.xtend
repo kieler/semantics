@@ -53,7 +53,7 @@ import de.cau.cs.kieler.sccharts.extensions.TextFormat
 @ViewSynthesisShared
 class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
     
-    public static val SynthesisOption CIRCUIT = SynthesisOption.createCheckOption("Circuit layout", false).
+    public static val SynthesisOption CIRCUIT = SynthesisOption.createCheckOption("dataflowregion.curcuit", "Circuit layout", false).
         setCategory(GeneralSynthesisOptions::DATAFLOW)
     
     @Inject extension KNodeExtensionsReplacement

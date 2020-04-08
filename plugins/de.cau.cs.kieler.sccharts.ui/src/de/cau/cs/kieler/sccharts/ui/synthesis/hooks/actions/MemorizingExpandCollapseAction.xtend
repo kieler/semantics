@@ -38,8 +38,9 @@ class MemorizingExpandCollapseAction implements IAction {
     public static val ID = "de.cau.cs.kieler.sccharts.ui.synthesis.hooks.actions.MemorizingExpandCollapseAction"
     
     /** The related synthesis option */
-    public static val SynthesisOption MEMORIZE_EXPANSION_STATES = SynthesisOption.createCheckOption("Remember Collapsed/Expanded Regions", true)
-    .setCategory(GeneralSynthesisOptions::NAVIGATION);      
+    public static val SynthesisOption MEMORIZE_EXPANSION_STATES = SynthesisOption.createCheckOption(
+        "sccharts.memorizingExpandCollapse.memorizeExpansionStates", "Remember Collapsed/Expanded Regions", true)
+    .setCategory(GeneralSynthesisOptions::NAVIGATION);
     
     /** Memory-leak-free cache of region expansion states */
     public static final WeakHashMap<EObject, Boolean> SCOPE_STATES = new WeakHashMap

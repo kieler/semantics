@@ -64,9 +64,9 @@ class JavaASTSynthesis extends AbstractDiagramSynthesis<CompilationUnit> {
     @Inject extension KPolylineExtensions
     @Inject extension KColorExtensions
 
-    public static val SynthesisOption SHOW_FULLY_QUALIFIED_NAMES = SynthesisOption::createCheckOption(
+    public static val SynthesisOption SHOW_FULLY_QUALIFIED_NAMES = SynthesisOption::createCheckOption("javaast.showFullyQualifiedNames",
         "Show Fully Qualified Names", false)
-    public static val SynthesisOption SHOW_HUMAN_READABLE_NAMES = SynthesisOption::createCheckOption(
+    public static val SynthesisOption SHOW_HUMAN_READABLE_NAMES = SynthesisOption::createCheckOption("javaast.showHumanReadableNames",
         "Show Human Readable Names", true)
 
     val processorConnections = <String, Integer>newHashMap

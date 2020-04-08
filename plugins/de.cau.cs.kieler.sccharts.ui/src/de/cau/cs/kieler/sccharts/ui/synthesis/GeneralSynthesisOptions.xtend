@@ -35,48 +35,48 @@ final class GeneralSynthesisOptions {
     /** 
      * The appearance category 
      */
-    public static final SynthesisOption APPEARANCE = SynthesisOption.createCategory("Appearance")
+    public static final SynthesisOption APPEARANCE = SynthesisOption.createCategory("sccharts.general.appearance", "Appearance")
     /** 
      * The navigation category 
      */
-    public static final SynthesisOption NAVIGATION = SynthesisOption.createCategory("Navigation", false)
+    public static final SynthesisOption NAVIGATION = SynthesisOption.createCategory("sccharts.general.navigation", "Navigation", false)
     /** 
      * The debugging category 
      */
-    public static final SynthesisOption DEBUGGING = SynthesisOption.createCategory("Analysis / Debugging", false)
+    public static final SynthesisOption DEBUGGING = SynthesisOption.createCategory("sccharts.general.debugging", "Analysis / Debugging", false)
     /** 
      * The layout category 
      */
-    public static final SynthesisOption LAYOUT = SynthesisOption.createCategory("Layout", false)
+    public static final SynthesisOption LAYOUT = SynthesisOption.createCategory("sccharts.general.layout", "Layout", false)
     /** 
      * Dataflow category 
      */
-    public static final SynthesisOption DATAFLOW = SynthesisOption.createCategory("Dataflow", false).setCategory(APPEARANCE)
+    public static final SynthesisOption DATAFLOW = SynthesisOption.createCategory("sccharts.general.dataflow", "Dataflow", false).setCategory(APPEARANCE)
     /** 
      * References and OO / Inheritance
      */
-    public static final SynthesisOption OO = SynthesisOption.createCategory("Object Orientation / References", false).setCategory(APPEARANCE)
+    public static final SynthesisOption OO = SynthesisOption.createCategory("sccharts.general.oo", "Object Orientation / References", false).setCategory(APPEARANCE)
     
     // -- OPTIONS --
     /** 
      * Option for setting the KLayLayered layout 
      */
-    public static final SynthesisOption USE_KLAY = SynthesisOption.createCheckOption("KLayLayered", true).setCategory(LAYOUT)
-    public static final SynthesisOption SHOW_ALL_SCCHARTS = SynthesisOption.createCheckOption("All SCCharts", false).setCategory(APPEARANCE)
-    public static final SynthesisOption SHOW_COMMENTS = SynthesisOption.createCheckOption("Comment Nodes", true).setCategory(APPEARANCE)
-    public static final SynthesisOption SHOW_USER_LABELS = SynthesisOption.createCheckOption("User Labels", true).setCategory(APPEARANCE)
+    public static final SynthesisOption USE_KLAY = SynthesisOption.createCheckOption("sccharts.general.useKlay", "KLayLayered", true).setCategory(LAYOUT)
+    public static final SynthesisOption SHOW_ALL_SCCHARTS = SynthesisOption.createCheckOption("sccharts.general.showAllSCCharts", "All SCCharts", false).setCategory(APPEARANCE)
+    public static final SynthesisOption SHOW_COMMENTS = SynthesisOption.createCheckOption("sccharts.general.showComments", "Comment Nodes", true).setCategory(APPEARANCE)
+    public static final SynthesisOption SHOW_USER_LABELS = SynthesisOption.createCheckOption("sccharts.general.showUserLabels", "User Labels", true).setCategory(APPEARANCE)
     /** 
      * Scope call parameters synthesis option 
      */
-    public static final SynthesisOption SHOW_BINDINGS = SynthesisOption.createCheckOption("Binding Parameters", true).setCategory(OO)
+    public static final SynthesisOption SHOW_BINDINGS = SynthesisOption.createCheckOption("sccharts.general.showBindings", "Binding Parameters", true).setCategory(OO)
     /** 
      * inherited declarations and regions synthesis option 
      */
-    public static final SynthesisOption SHOW_INHERITANCE = SynthesisOption.createCheckOption("Inheritance Preview", true).setCategory(OO)
-    public static final SynthesisOption SHOW_INHERITANCE_EDGES = SynthesisOption.createCheckOption("Inheritance Hierarchy", false).setCategory(OO)
-    public static final SynthesisOption SHOW_METHOD_BODY = SynthesisOption.createCheckOption("Method Implementation", true).setCategory(OO)
+    public static final SynthesisOption SHOW_INHERITANCE = SynthesisOption.createCheckOption("sccharts.general.showInheritance", "Inheritance Preview", true).setCategory(OO)
+    public static final SynthesisOption SHOW_INHERITANCE_EDGES = SynthesisOption.createCheckOption("sccharts.general.showInheritanceEdges", "Inheritance Hierarchy", false).setCategory(OO)
+    public static final SynthesisOption SHOW_METHOD_BODY = SynthesisOption.createCheckOption("sccharts.general.showMethodBody", "Method Implementation", true).setCategory(OO)
     /** 
      * inherited declarations and regions synthesis option 
      */
-    public static final SynthesisOption SHOW_CAUSAL_DATAFLOW = SynthesisOption.createCheckOption("Causal Dataflow",false).setCategory(DEBUGGING)
+    public static final SynthesisOption SHOW_CAUSAL_DATAFLOW = SynthesisOption.createCheckOption("sccharts.general.showCausalDataflow", "Causal Dataflow",false).setCategory(DEBUGGING)
 }

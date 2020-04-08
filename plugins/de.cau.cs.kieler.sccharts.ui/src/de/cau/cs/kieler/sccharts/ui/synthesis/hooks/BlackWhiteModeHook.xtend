@@ -53,7 +53,7 @@ class BlackWhiteModeHook extends SynthesisHook {
     extension StateSynthesis
 
     /** The related synthesis option */
-    public static final SynthesisOption PAPER_BW = SynthesisOption.createCheckOption("Paper Mode (Black/White)", false).
+    public static final SynthesisOption PAPER_BW = SynthesisOption.createCheckOption("sccharts.blackWhite.paperBW", "Paper Mode (Black/White)", false).
     	setCategory(GeneralSynthesisOptions::APPEARANCE);
 
     override getDisplayedSynthesisOptions() {

@@ -36,7 +36,7 @@ class AdaptiveZoom {
     
     /** Option for enabling adaptive zoom */
     public static final SynthesisOption USE_ADAPTIVEZOOM =
-            SynthesisOption.createCheckOption("Adaptive Zoom", false).setCategory(GeneralSynthesisOptions.NAVIGATION)
+            SynthesisOption.createCheckOption("sccharts.adaptiveZoom.useAdaptiveZoom", "Adaptive Zoom", false).setCategory(GeneralSynthesisOptions.NAVIGATION)
             
     static val TUNNEL_EFFECT = 0.85
     static val DEFAULT_LOWER_SCALE_BOUND = 0.15

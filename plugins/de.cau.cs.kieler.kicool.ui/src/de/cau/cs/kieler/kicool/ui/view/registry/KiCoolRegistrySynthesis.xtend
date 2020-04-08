@@ -70,15 +70,15 @@ class KiCoolRegistrySynthesis extends AbstractDiagramSynthesis<KiCoolRegistrySum
     
     public static val KIELER_QUALIFIED_NAME_PREFIX = "de.cau.cs.kieler."
     
-    public static val SynthesisOption SHOW_BUNDLES = SynthesisOption::createCheckOption("Show Bundles", true)
-    public static val SynthesisOption SHOW_SOURCE_FILES = SynthesisOption::createCheckOption("Show Source Files", true)
-    public static val SynthesisOption SHOW_SYSTEMS = SynthesisOption::createCheckOption("Show Systems", true)
-    public static val SynthesisOption SHOW_PROCESSORS = SynthesisOption::createCheckOption("Show Processors", true)
+    public static val SynthesisOption SHOW_BUNDLES = SynthesisOption::createCheckOption("kicoolRegistry.showBundles", "Show Bundles", true)
+    public static val SynthesisOption SHOW_SOURCE_FILES = SynthesisOption::createCheckOption("kicoolRegistry.showSourceFiles", "Show Source Files", true)
+    public static val SynthesisOption SHOW_SYSTEMS = SynthesisOption::createCheckOption("kicoolRegistry.showSystems", "Show Systems", true)
+    public static val SynthesisOption SHOW_PROCESSORS = SynthesisOption::createCheckOption("kicoolRegistry.showProcessors", "Show Processors", true)
         
-    public static val SynthesisOption FULLY_QUALIFIED_KIELER_PREFIX = SynthesisOption::createCheckOption("Show KIELER Qualified Name Prefix", false)
-    public static val SynthesisOption FULLY_QUALIFIED_PROCESSOR_NAMES = SynthesisOption::createCheckOption("Show Long Processor Names", false)
+    public static val SynthesisOption FULLY_QUALIFIED_KIELER_PREFIX = SynthesisOption::createCheckOption("kicoolRegistry.fullyQualifiedKielerPrefix", "Show KIELER Qualified Name Prefix", false)
+    public static val SynthesisOption FULLY_QUALIFIED_PROCESSOR_NAMES = SynthesisOption::createCheckOption("kicoolRegistry.fullyQualifiedProcessorNames", "Show Long Processor Names", false)
     
-    public static val SynthesisOption USE_LEFT_TO_RIGHT = SynthesisOption::createCheckOption("Use Left-to-Right Layout", false)
+    public static val SynthesisOption USE_LEFT_TO_RIGHT = SynthesisOption::createCheckOption("kicoolRegistry.useLeftToRight", "Use Left-to-Right Layout", false)
     
     
     val processorConnections = <String, Integer> newHashMap

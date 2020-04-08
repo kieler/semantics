@@ -61,7 +61,7 @@ class ActionsAsDataflowHook extends SynthesisHook {
     public static final String ID = "de.cau.cs.kieler.sccharts.ui.synthesis.hooks.ActionAsDataflow"
     /** The related synthesis option */
     
-    public static val SynthesisOption SHOW_ACTIONS_AS_DATAFLOW = SynthesisOption.createCheckOption("Actions as Dataflow", false).
+    public static val SynthesisOption SHOW_ACTIONS_AS_DATAFLOW = SynthesisOption.createCheckOption("sccharts.actionsAsDataflow.showActionsAsDataflow", "Actions as Dataflow", false).
         setCategory(GeneralSynthesisOptions::DATAFLOW)
 
     override getDisplayedSynthesisOptions() {

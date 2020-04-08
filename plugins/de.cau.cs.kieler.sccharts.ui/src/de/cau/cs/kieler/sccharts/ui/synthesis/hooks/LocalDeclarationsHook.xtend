@@ -35,7 +35,7 @@ class LocalDeclarationsHook extends SynthesisHook {
     /** Action ID */
     public static final String ID = "de.cau.cs.kieler.sccharts.ui.synthesis.hooks.DeclarationsHook";
     /** The related synthesis option */
-    public static final SynthesisOption SHOW_LOCAL_DECLARATIONS = SynthesisOption.createCheckOption(
+    public static final SynthesisOption SHOW_LOCAL_DECLARATIONS = SynthesisOption.createCheckOption("sccharts.localDeclarations.showLaocalDeclaration",
         "Local Declarations", true).setCategory(GeneralSynthesisOptions::APPEARANCE)
 
     override getDisplayedSynthesisOptions() {

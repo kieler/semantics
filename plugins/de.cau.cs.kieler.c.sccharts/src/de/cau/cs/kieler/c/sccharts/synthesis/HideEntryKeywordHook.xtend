@@ -44,7 +44,7 @@ class HideEntryKeywordHook extends SynthesisHook {
     public static final String HIDE_ANNOTATION_KEYWORD = "CbasedSCChart";
     
     /** The related synthesis option */
-    public static final SynthesisOption HIDE_ENTRY = SynthesisOption.createCheckOption("Hide Entry Keyword",
+    public static final SynthesisOption HIDE_ENTRY = SynthesisOption.createCheckOption("csccharts.hideEntryKeywork.hideEntry", "Hide Entry Keyword",
         true).setCategory(GeneralSynthesisOptions::APPEARANCE);
 
     override List<SynthesisOption> getDisplayedSynthesisOptions() {

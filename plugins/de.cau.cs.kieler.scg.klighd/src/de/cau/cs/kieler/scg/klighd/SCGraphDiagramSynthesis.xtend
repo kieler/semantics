@@ -157,74 +157,74 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     // -- KlighD Options
     // -------------------------------------------------------------------------
     /** Show caption */
-    private static val SynthesisOption SHOW_CAPTION = SynthesisOption::createCheckOption("Captions", true);
+    private static val SynthesisOption SHOW_CAPTION = SynthesisOption::createCheckOption("scgraph.showCaption", "Captions", true);
 
     /** Show dependencies */
-    private static val SynthesisOption SHOW_DEPENDENCIES = SynthesisOption::createCheckOption("Dependencies", true);
+    private static val SynthesisOption SHOW_DEPENDENCIES = SynthesisOption::createCheckOption("scgraph.showDependencies", "Dependencies", true);
     /** Show selective dependencies */
-    private static val SynthesisOption SELECTIVE_DEPENDENCIES = SynthesisOption::createCheckOption("Show only dependencies of selected elements", false);
+    private static val SynthesisOption SELECTIVE_DEPENDENCIES = SynthesisOption::createCheckOption("scgraph.selectiveDependencies", "Show only dependencies of selected elements", false);
 
     /** Layout dependencies */
-    private static val SynthesisOption LAYOUT_DEPENDENCIES = SynthesisOption::createCheckOption("Dependencies", false);
+    private static val SynthesisOption LAYOUT_DEPENDENCIES = SynthesisOption::createCheckOption("scgraph.layoutDependencies", "Dependencies", false);
 
     /** Layout separate cc */
-    private static val SynthesisOption LAYOUT_SEPARATE_CC = SynthesisOption::createCheckOption("Separate CC", false);
+    private static val SynthesisOption LAYOUT_SEPARATE_CC = SynthesisOption::createCheckOption("scgraph.layoutSeparateCC", "Separate CC", false);
 
     /** Show non concurrent dependencies */
-    private static val SynthesisOption SHOW_NONCONCURRENT = SynthesisOption::createCheckOption(
+    private static val SynthesisOption SHOW_NONCONCURRENT = SynthesisOption::createCheckOption("scgraph.showNonconcurrent", 
         "Non-concurrent dependencies", false);
 
     /** Show confluent dependencies */
-    private static val SynthesisOption SHOW_CONFLUENT = SynthesisOption::createCheckOption("Confluent dependencies",
+    private static val SynthesisOption SHOW_CONFLUENT = SynthesisOption::createCheckOption("scgraph.showConfluent", "Confluent dependencies",
         false);
 
     /** Show basic blocks */
-    private static val SynthesisOption SHOW_BASICBLOCKS = SynthesisOption::createCheckOption("Basic Blocks", false);
+    private static val SynthesisOption SHOW_BASICBLOCKS = SynthesisOption::createCheckOption("scgraph.showBasicBlocks", "Basic Blocks", false);
 
     /** Show scheduling blocks */
-    private static val SynthesisOption SHOW_SCHEDULINGBLOCKS = SynthesisOption::createCheckOption("Scheduling Blocks",
+    private static val SynthesisOption SHOW_SCHEDULINGBLOCKS = SynthesisOption::createCheckOption("scgraph.showSchedulingblocks", "Scheduling Blocks",
         true);
 
     /** Show dead blocks */
-    private static val SynthesisOption SHOW_DEAD_BLOCKS = SynthesisOption::createCheckOption("Dead Blocks",
+    private static val SynthesisOption SHOW_DEAD_BLOCKS = SynthesisOption::createCheckOption("scgraph.showDeadBlocks", "Dead Blocks",
         true);
 
     /** Show scheduling path */
-    private static val SynthesisOption SHOW_SCHEDULINGPATH = SynthesisOption::createCheckOption("Scheduling path", true);
+    private static val SynthesisOption SHOW_SCHEDULINGPATH = SynthesisOption::createCheckOption("scgraph.showSchedulingpath", "Scheduling path", true);
 
     /** Show potential problems */
-    private static val SynthesisOption SHOW_POTENTIALPROBLEMS = SynthesisOption::createCheckOption("Potential problems",
+    private static val SynthesisOption SHOW_POTENTIALPROBLEMS = SynthesisOption::createCheckOption("scgraph.showPotentialproblems", "Potential problems",
         true);
         
-    private static val SynthesisOption USE_ADAPTIVEZOOM = SynthesisOption::createCheckOption("Adaptive Zoom", false);
+    private static val SynthesisOption USE_ADAPTIVEZOOM = SynthesisOption::createCheckOption("scgraph.useAdaptivezoom", "Adaptive Zoom", false);
 
     /** Show shadow */
-    private static val SynthesisOption SHOW_SHADOW = SynthesisOption::createCheckOption("Shadow", true);
+    private static val SynthesisOption SHOW_SHADOW = SynthesisOption::createCheckOption("scgraph.showShadow", "Shadow", true);
 
     /** Align tick start */
-    private static val SynthesisOption ALIGN_TICK_START = SynthesisOption::createCheckOption("Tick start", true);
+    private static val SynthesisOption ALIGN_TICK_START = SynthesisOption::createCheckOption("scgraph.alignTickStart", "Tick start", true);
 
     /** Align entry/exit */
-    private static val SynthesisOption ALIGN_ENTRYEXIT_NODES = SynthesisOption::createCheckOption("Entry & Exit nodes",
+    private static val SynthesisOption ALIGN_ENTRYEXIT_NODES = SynthesisOption::createCheckOption("scgraph.alignEntryExitNodes", "Entry & Exit nodes",
         true);
         
     /** left or right conditionals */
-    private static val SynthesisOption CONDITIONAL_LEFT_OR_RIGTH = SynthesisOption::createCheckOption("True branches always right",
+    private static val SynthesisOption CONDITIONAL_LEFT_OR_RIGTH = SynthesisOption::createCheckOption("scgraph.conditionalLeftOrRight", "True branches always right",
         false);
 
     /** Show hierarchy */
-    private static val SynthesisOption SHOW_HIERARCHY = SynthesisOption::createCheckOption("Hierarchy", true);
+    private static val SynthesisOption SHOW_HIERARCHY = SynthesisOption::createCheckOption("scgraph.showHierarchy", "Hierarchy", true);
 
     /** Hierarchy transparency */
-    private static val SynthesisOption HIERARCHY_TRANSPARENCY = SynthesisOption::createRangeOption("Hierarchy", 0f, 255f,
+    private static val SynthesisOption HIERARCHY_TRANSPARENCY = SynthesisOption::createRangeOption("scgraph.hierarchyTransparency", "Hierarchy", 0f, 255f,
         128f);
 
     /** Control flow thickness */
     public static val SynthesisOption CONTROLFLOW_THICKNESS = SynthesisOption::createRangeOption(
-        "Controlflow thickness", 0.5f, 5f, 0.5f, 2f);
+        "scgraph.controlflowThickness", "Controlflow thickness", 0.5f, 5f, 0.5f, 2f);
 
     /** Graph orientation */
-    private static val SynthesisOption ORIENTATION = SynthesisOption::createChoiceOption("Orientation",
+    private static val SynthesisOption ORIENTATION = SynthesisOption::createChoiceOption("scgraph.orientation", "Orientation",
         <String>newLinkedList("Top-Down", "Left-Right"), "Top-Down");
         
     public static val NODE_PRIO_PROPERTY = new Property<Boolean>("scgPriority.NodePriority", false)
@@ -246,26 +246,26 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     private static val DEPENDENCYFILTERSTRING_RELWRITE_READ = "rel. write - read"
 
     /** Show write-write dependencies */
-    private static val SynthesisOption SHOW_DEPENDENCY_WRITE_WRITE = SynthesisOption::createCheckOption(
+    private static val SynthesisOption SHOW_DEPENDENCY_WRITE_WRITE = SynthesisOption::createCheckOption("scgraph.showDependencyWriteWrite", 
         DEPENDENCYFILTERSTRING_WRITE_WRITE, true);
 
     /** Show sausage folding */
-    private static val SynthesisOption SHOW_SAUSAGE_FOLDING = SynthesisOption::createCheckOption(
+    private static val SynthesisOption SHOW_SAUSAGE_FOLDING = SynthesisOption::createCheckOption("scgraph.showSausageFolding", 
         "Sausage Folding", true);
 
     /** Show absolute write-relative write dependencies */
     private static val SynthesisOption SHOW_DEPENDENCY_ABSWRITE_RELWRITE = SynthesisOption::
-        createCheckOption(DEPENDENCYFILTERSTRING_ABSWRITE_RELWRITE, true);
+        createCheckOption("scgraph.showDependencyAbswriteRelwrite", DEPENDENCYFILTERSTRING_ABSWRITE_RELWRITE, true);
 
     /** Show write-read dependencies */
-    private static val SynthesisOption SHOW_DEPENDENCY_WRITE_READ = SynthesisOption::createCheckOption(
+    private static val SynthesisOption SHOW_DEPENDENCY_WRITE_READ = SynthesisOption::createCheckOption("scgraph.showDependencyWriteRead", 
         DEPENDENCYFILTERSTRING_WRITE_READ, true);
 
     /** Show relative write-read dependencies */
     private static val SynthesisOption SHOW_DEPENDENCY_RELWRITE_READ = SynthesisOption::
-        createCheckOption(DEPENDENCYFILTERSTRING_RELWRITE_READ, true);
+        createCheckOption("scgraph.showDependencyRelWriteRead", DEPENDENCYFILTERSTRING_RELWRITE_READ, true);
         
-    private static val SynthesisOption SHOW_ANNOTATIONS = SynthesisOption::createCheckOption("Show Annotations", false);
+    private static val SynthesisOption SHOW_ANNOTATIONS = SynthesisOption::createCheckOption("scgraph.showAnnotations", "Show Annotations", false);
 
     /**  
      * Returns a list of KlighD visualization options. Called by KlighD.

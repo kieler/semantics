@@ -60,10 +60,13 @@ class KASTSynthesis extends AbstractDiagramSynthesis<KAST> {
     @Inject extension KPolylineExtensions
     @Inject extension KColorExtensions
     
-    public static val SynthesisOption EXPAND_DETAILS = SynthesisOption::createCheckOption("Expand all Details",
+    public static val SynthesisOption EXPAND_DETAILS = SynthesisOption::createCheckOption(
+            "kast.expandDetails","Expand all Details",
         false).setUpdateAction("de.cau.cs.kieler.klighd.ui.view.syntheses.action.EcoreModelExpandDetailsAction")
-    public static val SynthesisOption SHOW_FULLY_QUALIFIED_NAMES = SynthesisOption::createCheckOption("Show Fully Qualified Names", false)
-    public static val SynthesisOption SHOW_HUMAN_READABLE_NAMES = SynthesisOption::createCheckOption("Show Human Readable Names", true)
+    public static val SynthesisOption SHOW_FULLY_QUALIFIED_NAMES = SynthesisOption::createCheckOption(
+            "kast.showFullyQualifiedNames", "Show Fully Qualified Names", false)
+    public static val SynthesisOption SHOW_HUMAN_READABLE_NAMES = SynthesisOption::createCheckOption(
+            "kast.showHumanReadableNames", "Show Human Readable Names", true)
     
     val processorConnections = <String, Integer> newHashMap
     

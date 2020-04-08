@@ -35,7 +35,7 @@ class CodeContainerSynthesis extends AbstractDiagramSynthesis<CodeContainer> {
 
     @Inject extension KNodeExtensions
     
-    public static val SynthesisOption SHOW_LIBS = SynthesisOption::createCheckOption("Library files", true)
+    public static val SynthesisOption SHOW_LIBS = SynthesisOption::createCheckOption("codecontainer.showLibs", "Library files", true)
     
     override getDisplayedSynthesisOptions() {
         #[
