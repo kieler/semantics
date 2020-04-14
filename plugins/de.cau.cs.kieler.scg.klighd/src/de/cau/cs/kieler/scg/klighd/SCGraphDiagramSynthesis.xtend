@@ -121,6 +121,8 @@ import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties
 import de.cau.cs.kieler.klighd.krendering.SimpleUpdateStrategy
 import de.cau.cs.kieler.klighd.LightDiagramServices
 import de.cau.cs.kieler.klighd.krendering.Colors
+import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
+import de.cau.cs.kieler.annotations.Pragmatable
 
 /** 
  * SCCGraph KlighD synthesis class. It contains all method mandatory to handle the visualization of
@@ -141,6 +143,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     @Inject extension KPolylineExtensions
     @Inject extension KColorExtensions
     @Inject extension AnnotationsExtensions
+    @Inject extension PragmaExtensions
     @Inject extension SCGraphShapes
     @Inject extension SCGCoreExtensions
     @Inject extension SCGControlFlowExtensions
@@ -187,6 +190,10 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 
     /** Show dead blocks */
     private static val SynthesisOption SHOW_DEAD_BLOCKS = SynthesisOption::createCheckOption("Dead Blocks",
+        true);
+
+    /** Show reset SCG */
+    private static val SynthesisOption SHOW_RESET_SCG = SynthesisOption::createCheckOption("Reset SCG",
         true);
 
     /** Show scheduling path */
@@ -287,13 +294,13 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             SHOW_SCHEDULINGPATH,
             SHOW_POTENTIALPROBLEMS,
             SHOW_ANNOTATIONS,
+            SHOW_RESET_SCG,
             USE_ADAPTIVEZOOM,
             SHOW_SHADOW,
             HIERARCHY_TRANSPARENCY,
             CONTROLFLOW_THICKNESS,
             SynthesisOption::createSeparator("Dependency Filter"),
             SHOW_DEPENDENCY_WRITE_WRITE,
-            SHOW_SAUSAGE_FOLDING,
             SHOW_DEPENDENCY_ABSWRITE_RELWRITE,
             SHOW_DEPENDENCY_WRITE_READ,
             SHOW_DEPENDENCY_RELWRITE_READ,
@@ -302,6 +309,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             ALIGN_ENTRYEXIT_NODES,
             CONDITIONAL_LEFT_OR_RIGTH,
             SynthesisOption::createSeparator("Layout"),
+            SHOW_SAUSAGE_FOLDING,
             LAYOUT_DEPENDENCIES,
             LAYOUT_SEPARATE_CC,
             ORIENTATION,
@@ -601,6 +609,11 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             if (scg.hasAnnotation(ANNOTATION_SEQUENTIALIZED)) {
                 node.setLayoutOption(LayeredOptions::LAYERING_STRATEGY, LayeringStrategy::LONGEST_PATH)
                 node.setLayoutOption(LayeredOptions::WRAPPING_STRATEGY, WrappingStrategy.SINGLE_EDGE)
+            }
+            val parent = scg.eContainer
+            if (parent instanceof Pragmatable) {
+                if (parent.hasPragma("aspectRatio"))
+                    node.setLayoutOption(CoreOptions::ASPECT_RATIO, Double.parseDouble(parent.getStringPragmas("aspectRatio").head.values.head));
             }
             
             
@@ -1270,7 +1283,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             }
             
             // If there is an reset SCG, add it to the diagram
-            if (entry.resetSCG !== null) {
+            if (entry.resetSCG !== null && SHOW_RESET_SCG.booleanValue) {
                 val properties = new KlighdSynthesisProperties
                 properties.setProperty(KlighdSynthesisProperties.REQUESTED_UPDATE_STRATEGY, SimpleUpdateStrategy.ID)
                 val subDiagramViewContext = LightDiagramServices::translateModel2(entry.resetSCG, usedContext, properties)
