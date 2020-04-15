@@ -178,7 +178,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         if (state.isInitial) {
             node.setInitialStyle
             if (USE_KLAY.booleanValue) {
-                node.setLayoutOption(LayeredOptions::LAYERING_LAYER_CONSTRAINT, LayerConstraint::FIRST);
+               node.setLayoutOption(LayeredOptions::LAYERING_LAYER_CHOICE_CONSTRAINT, 0);
             }
         }
         if (state.isFinal) {
@@ -382,7 +382,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
     
     /** Configures the default layout of children (regions in the state) */
     def static void configureLayout(KNode node) {
-        node.setLayoutOption(CoreOptions::ALGORITHM, "org.eclipse.elk.box");
+        node.setLayoutOption(CoreOptions::ALGORITHM, "org.eclipse.elk.rectpacking");
         node.setLayoutOption(CoreOptions::EXPAND_NODES, true);
         node.setLayoutOption(CoreOptions::PADDING, new ElkPadding(0));
         node.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 1.0)
