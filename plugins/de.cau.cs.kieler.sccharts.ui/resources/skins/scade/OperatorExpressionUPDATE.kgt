@@ -1,0 +1,59 @@
+knode operator {
+    size: width = 20 height = 35
+    
+    properties:
+    org.eclipse.elk.portLabels.placement = INSIDE
+    org.eclipse.elk.portConstraints = FIXED_POS
+
+  kpolygon {
+    points: right, top 25%;
+                    left, top 25%;
+                    left,bottom 0%;  
+                    right,bottom 25%    
+        styles: lineStyle = solid
+              foreground = 190r, 190g, 190b 
+            background = 248r, 249g, 253b, 255a -> 205r, 220g, 243b, 243a (90)
+  }
+
+  kport in1 {
+    pos: x = -2 y = 18
+    size: width = 2 height = 2
+    properties: de.cau.cs.kieler.portSide = WEST
+    
+    klabel "" { 
+        ktext {
+            styles: fontSize = 3pt
+        }
+    }
+  }
+  
+  kport in0 {
+    pos: x = 10 y = 15
+    size: width = 2 height = 2
+    properties: de.cau.cs.kieler.portSide = SOUTH
+                            org.eclipse.elk.port.borderOffset = -5.25
+                            org.eclipse.elk.layered.northOrSouthPort = false
+    
+    klabel "set" {
+        pos: x = 0 y = -2 
+        ktext {
+            styles: fontSize = 5pt
+//          rotation = 270
+
+        }
+    }
+  }
+  
+  kport out {
+        pos: x = 14.5 y = 18
+    size: width = 2 height = 2
+    properties:
+    org.eclipse.elk.port.side = EAST
+    
+    klabel "" { 
+        ktext {
+            styles: fontSize = 4pt
+        }
+    }
+  }     
+}
