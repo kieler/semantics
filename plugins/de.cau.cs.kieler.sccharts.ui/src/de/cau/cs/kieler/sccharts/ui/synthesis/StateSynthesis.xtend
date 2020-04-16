@@ -178,7 +178,8 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         if (state.isInitial) {
             node.setInitialStyle
             if (USE_KLAY.booleanValue) {
-               node.setLayoutOption(LayeredOptions::LAYERING_LAYER_CHOICE_CONSTRAINT, 0);
+//                node.setLayoutOption(LayeredOptions::LAYERING_LAYER_CONSTRAINT, LayerConstraint.FIRST)
+//               node.setLayoutOption(LayeredOptions::LAYERING_LAYER_CHOICE_CONSTRAINT, 0);
             }
         }
         if (state.isFinal) {
