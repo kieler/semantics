@@ -75,6 +75,8 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
         
     @Inject package SynthesisHooks hooks  
     
+    public var SCCharts modelRoot = null
+    
     public static final IProperty<String> SKINPATH = new Property<String>(
         "de.cau.cs.kieler.sccharts.ui.synthesis.skinPath", "");
 
@@ -139,6 +141,8 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
 
     override transform(SCCharts sccharts) {
         val startTime = System.currentTimeMillis
+        
+        modelRoot = sccharts
         
         val scc = 
             if (SHOW_CAUSAL_DATAFLOW.booleanValue) {

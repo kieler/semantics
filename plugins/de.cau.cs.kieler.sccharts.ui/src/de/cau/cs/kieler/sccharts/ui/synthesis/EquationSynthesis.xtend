@@ -231,7 +231,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         "BITWISE_XOR" ->
             #["OperatorExpressionBITWISE_XOR.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"]
     }
-
+    
     override getDisplayedSynthesisOptions() {
         val options = newArrayList(
             SEPARATED_ASSIGNMENTS,

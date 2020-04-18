@@ -44,6 +44,8 @@ import de.cau.cs.kieler.klighd.kgraph.KEdge
 import org.eclipse.elk.core.math.ElkMargin
 import java.util.EnumSet
 import de.cau.cs.kieler.klighd.krendering.KFontSize
+import de.cau.cs.kieler.sccharts.ui.synthesis.SCChartsSynthesis
+import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
 
 /**
  * Styles for {@link Equations}.
@@ -58,24 +60,15 @@ class EquationStyles {
 
     extension KRenderingFactory = KRenderingFactory::eINSTANCE
 
-    @Inject
-    extension KNodeExtensions
-
-    @Inject
-    extension KEdgeExtensions
-    
-    @Inject
-    extension KPolylineExtensions    
-
-    @Inject
-    extension KRenderingExtensions
-
-    @Inject
-    extension KContainerRenderingExtensions
-    
-    @Inject
-    extension ColorStore
-    
+    @Inject extension KNodeExtensions
+    @Inject extension KEdgeExtensions
+    @Inject extension KPolylineExtensions    
+    @Inject extension KRenderingExtensions
+    @Inject extension KContainerRenderingExtensions
+    @Inject extension ColorStore
+    @Inject extension SCChartsSynthesis
+    @Inject extension PragmaExtensions
+        
     /** This property is set a rendering and indicates the content container */
     public static final IProperty<Boolean> IS_CONTENT_CONTAINER = new Property<Boolean>(
         "de.cau.cs.kieler.sccharts.ui.synthesis.style.state.content", false);
@@ -241,8 +234,18 @@ class EquationStyles {
     
 
     def KEdge addWireFigure(KEdge edge) {
-        edge.addRoundedBendsPolyline(4, 1) => [
-            it.addJunctionPointDecorator
+        val bendRadius = if (modelRoot.hasPragma("bendRadius")) 
+            Double.parseDouble(modelRoot.getStringPragmas("bendRadius").head.values.head)
+            else 4
+        val lineWidth = if (modelRoot.hasPragma("lineWidth")) 
+            Double.parseDouble(modelRoot.getStringPragmas("lineWidth").head.values.head)
+            else baseLineWidth
+        val addJuntion = if (modelRoot.hasPragma("junctionPoints")) 
+            Boolean.parseBoolean(modelRoot.getStringPragmas("junctionPoints").head.values.head)
+            else true
+        
+        edge.addRoundedBendsPolyline(bendRadius as float, lineWidth as float) => [
+            if (addJuntion) it.addJunctionPointDecorator
         ]
         return edge
     }
