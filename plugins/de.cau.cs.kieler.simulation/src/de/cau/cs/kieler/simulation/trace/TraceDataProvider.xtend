@@ -279,7 +279,7 @@ class TraceDataProvider {
         if (trace.isJsonPrimitive
             && trace.asJsonPrimitive.isBoolean) {
             return trace.asJsonPrimitive.asBoolean.booleanValue.xor(pool.isTruthy)
-        } else if (signalSemantics // Legacy boolean encoding as numbers in eso
+        } else if ((signalSemantics || poolEntry.combinedProperties.contains("esterel-orig")) // Legacy boolean encoding as numbers in eso
             && pool.isJsonPrimitive
             && pool.asJsonPrimitive.isBoolean
             && trace.isJsonPrimitive

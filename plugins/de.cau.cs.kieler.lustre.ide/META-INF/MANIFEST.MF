@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Lustre IDE
 Bundle-SymbolicName: de.cau.cs.kieler.lustre.ide
-Bundle-Version: 1.1.0.qualifier
+Bundle-Version: 1.2.0.qualifier
 Bundle-Vendor: Kiel University
 Automatic-Module-Name: de.cau.cs.kieler.lustre.ide
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8

@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: SCCharts UI
 Bundle-SymbolicName: de.cau.cs.kieler.sccharts.ui;singleton:=true
-Bundle-Version: 1.1.0.qualifier
+Bundle-Version: 1.2.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Eclipse-UI: True
 Require-Bundle: de.cau.cs.kieler.klighd,
@@ -15,9 +15,7 @@ Require-Bundle: de.cau.cs.kieler.klighd,
  de.cau.cs.kieler.klighd.piccolo,
  de.cau.cs.kieler.klighd.krendering.extensions,
  org.eclipse.elk.alg.layered,
- org.eclipse.elk.alg.graphviz.dot,
  de.cau.cs.kieler.annotations.ui,
- de.cau.cs.kieler.graphs.klighd,
  de.cau.cs.kieler.kexpressions.ui,
  org.eclipse.xtext.ui,
  org.eclipse.xtext.ui.shared,
@@ -29,6 +27,7 @@ Require-Bundle: de.cau.cs.kieler.klighd,
  de.cau.cs.kieler.klighd.ui,
  de.cau.cs.kieler.kicool,
  org.eclipse.elk.alg.force,
+ org.eclipse.elk.alg.rectpacking;bundle-version="0.6.1",
  de.cau.cs.kieler.klighd.kgraph,
  de.cau.cs.kieler.sccharts.ide,
  de.cau.cs.kieler.simulation.ui,

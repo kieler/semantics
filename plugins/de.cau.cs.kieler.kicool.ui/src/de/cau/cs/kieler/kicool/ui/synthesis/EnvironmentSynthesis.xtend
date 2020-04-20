@@ -29,8 +29,6 @@ import de.cau.cs.kieler.core.properties.IProperty
 import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.alg.layered.options.LayeredOptions
 import org.eclipse.elk.alg.layered.options.FixedAlignment
-// XXX: This should not be merged to the master, since it currently depends on the nightly ELK update site.
-// Wait until a 0.5.0 version of ELK is available.
 import org.eclipse.elk.alg.layered.options.EdgeStraighteningStrategy
 import org.eclipse.elk.core.options.EdgeRouting
 import org.eclipse.elk.alg.layered.options.WrappingStrategy
