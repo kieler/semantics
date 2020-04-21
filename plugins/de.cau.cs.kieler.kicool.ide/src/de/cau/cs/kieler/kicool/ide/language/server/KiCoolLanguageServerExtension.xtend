@@ -138,6 +138,12 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
     private KeithLanguageClient client
     
     /**
+     * Holds the last compilation context. This is needed to set it as the preceding compilation context.
+     * For example for snapshot simulation. 
+     */
+    private CompilationContext currentContext
+    
+    /**
      * Called by the client to compile a model
      */
     override compile(String uri, String clientId, String command, boolean inplace, boolean showResultingModel, boolean snapshot) {
@@ -155,9 +161,9 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
             client.compile(null, uri, true, 0, 1000)
             return
         }
-        val context = createContextAndStartCompilationThread(eobject, command, inplace)
+        this.currentContext = createContextAndStartCompilationThread(eobject, command, inplace, this.currentContext)
         // Add listener that sends snapshot descriptions to client and updates the diagram on finish if requested.
-        context.addObserver(new KeithCompilationUpdater(this, context, uri, clientId, command, inplace, showResultingModel))
+        currentContext.addObserver(new KeithCompilationUpdater(this, currentContext, uri, clientId, command, inplace, showResultingModel))
         return
     }
 
@@ -191,9 +197,12 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
      * @param inplace whether inplace compilation should be enabled or disabled
      * @return compilation context that was used to create the newly started compilation thread.
      */
-    private def CompilationContext createContextAndStartCompilationThread(Object eobject, String systemId, boolean inplace) {
+    private def CompilationContext createContextAndStartCompilationThread(Object eobject, String systemId, boolean inplace,
+        CompilationContext oldContext
+    ) {
         val context = Compile.createCompilationContext(systemId, eobject)
         context.startEnvironment.setProperty(Environment.INPLACE, inplace)
+        context.startEnvironment.setProperty(Environment.PRECEEDING_COMPILATION_CONTEXT, oldContext)
         compilationObservers.forEach[observer | context.addObserver(observer)]
         this.compilationThread = new CompilationThread(context)
         this.compilationThread.start()
