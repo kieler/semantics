@@ -3,7 +3,7 @@
  *
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
- * Copyright ${year} by
+ * Copyright 2019-2020 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -127,8 +127,8 @@ class ClassBasedSMExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCh
              cRegion.states += state
          }
          
-         //__________FIND EVENTS_______________
-         val eventEnum = findEventEnum(ast)
+         //__________FIND INPUT EVENTS_______________
+         val eventEnum = findInputEventEnum(ast)
          val enumEvents = eventEnum.getEnumerators
          
          for (eEvent : enumEvents) {

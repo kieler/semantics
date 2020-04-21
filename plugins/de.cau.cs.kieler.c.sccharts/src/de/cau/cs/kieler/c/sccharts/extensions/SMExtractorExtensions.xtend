@@ -3,7 +3,7 @@
  *
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
- * Copyright ${year} by
+ * Copyright 2019-2020 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -12,16 +12,15 @@
  */
 package de.cau.cs.kieler.c.sccharts.extensions
 
-import org.eclipse.cdt.core.dom.ast.IASTEnumerationSpecifier
-import org.eclipse.cdt.core.dom.ast.IASTTranslationUnit
-import org.eclipse.cdt.core.dom.ast.IASTNode
 import org.eclipse.cdt.core.dom.ast.IASTComment
-import org.eclipse.cdt.core.dom.ast.IASTSimpleDeclaration
-import org.eclipse.cdt.core.dom.ast.IASTCompositeTypeSpecifier
-import org.eclipse.cdt.core.dom.ast.IASTFunctionDefinition
-import org.eclipse.cdt.core.dom.ast.IASTFunctionDeclarator
 import org.eclipse.cdt.core.dom.ast.IASTDeclarator
+import org.eclipse.cdt.core.dom.ast.IASTEnumerationSpecifier
+import org.eclipse.cdt.core.dom.ast.IASTFunctionDeclarator
+import org.eclipse.cdt.core.dom.ast.IASTFunctionDefinition
+import org.eclipse.cdt.core.dom.ast.IASTNode
+import org.eclipse.cdt.core.dom.ast.IASTSimpleDeclaration
 import org.eclipse.cdt.core.dom.ast.IASTSwitchStatement
+import org.eclipse.cdt.core.dom.ast.IASTTranslationUnit
 
 /**
  * @author lewe
@@ -31,44 +30,33 @@ class SMExtractorExtensions {
     
     // All used marking comments
     val stateEnumComment = "//_EXTRACTOR_STATE_ENUM"
-    val eventEnumComment = "//_EXTRACTOR_EVENT_ENUM"
+    val inputEventEnumComment = "//_EXTRACTOR_INPUT_ENUM"
+    val outputEventEnumComment = "//_EXTRACTOR_OUTPUT_ENUM"
     val behaviourSwitchComment = "//_EXTRACTOR_BEHAVIOUR_SWITCH"
     val stateChangeFuncComment = "//_EXTRACTOR_STATE_CHANGE_FUNCTION"
     val stateEvalFunc = "//_EXTRACTOR_STATE_CLASS_EVALUATE_FUNC"
     
     // Finds the enum following the state extractor comment
     def IASTEnumerationSpecifier findStateEnum(IASTTranslationUnit ast) {
-         var IASTEnumerationSpecifier res
-         
-         // Get the comment idx 
-         val comments = ast.getComments()
-         val idx = comments.getIdxOfComment(stateEnumComment)
-         
-         // Test if idx was found
-         if (idx >= 0) {
-             val enumComment = comments.get(idx)
-             val commentFollowingNode = ast.getCommentFollowingNode(enumComment)
-             
-             // Test if comment following node has wanted type                               
-             if (commentFollowingNode instanceof IASTSimpleDeclaration && commentFollowingNode.children.head instanceof IASTEnumerationSpecifier) {
-                 res = commentFollowingNode.children.head as IASTEnumerationSpecifier
-             } else {
-                 println("State enum extractor comment does not mark an enum node!")
-             }
-         } else {
-             println("Could not find state enum extractor comment!")
-         }
-         
-         res
+         return findEnum(ast, stateEnumComment)
      }
      
-     // Finds the enum following the event extractor comment
-     def IASTEnumerationSpecifier findEventEnum(IASTTranslationUnit ast) {
+     // Finds the enum following the input event extractor comment
+     def IASTEnumerationSpecifier findInputEventEnum(IASTTranslationUnit ast) {
+         return findEnum(ast, inputEventEnumComment)
+     }
+     
+     /** Finds the enum following the output event extractor comment */
+     def IASTEnumerationSpecifier findOutputEventEnum(IASTTranslationUnit ast) {
+         return findEnum(ast, outputEventEnumComment)
+     }
+     
+     def IASTEnumerationSpecifier findEnum(IASTTranslationUnit ast, String comment) {
          var IASTEnumerationSpecifier res
          
          // Get the comment idx 
          val comments = ast.getComments
-         val idx = comments.getIdxOfComment(eventEnumComment)
+         val idx = comments.getIdxOfComment(comment)
          
          // Test if idx was found
          if (idx >= 0) {
@@ -76,16 +64,19 @@ class SMExtractorExtensions {
              val commentFollowingNode = ast.getCommentFollowingNode(eventEnumComment)
          
              // Test if comment following node has wanted type                               
-             if (commentFollowingNode instanceof IASTSimpleDeclaration && commentFollowingNode.children.head instanceof IASTEnumerationSpecifier) {
-                res = commentFollowingNode.children.head as IASTEnumerationSpecifier
+             if (commentFollowingNode instanceof IASTSimpleDeclaration
+                 && commentFollowingNode.children.head instanceof IASTEnumerationSpecifier) {
+                 res = commentFollowingNode.children.head as IASTEnumerationSpecifier
              } else {
-                 println("Event enum extractor comment does not mark an enum node!")
+                 println("Enum extractor comment does not mark an enum node!")
+                 return null
              }
          } else {
-             println("Could not find event enum extractor comment!")
+             println("Could not find enum extractor comment named" + comment)
+             return null
          }
          
-         res
+         return res
      }
      
      // Finds the switch following the behaviour switch extractor comment

@@ -3,7 +3,7 @@
  *
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
- * Copyright ${year} by
+ * Copyright 2019-2020 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -12,72 +12,80 @@
  */
 package de.cau.cs.kieler.c.sccharts.processors
 
-import de.cau.cs.kieler.kicool.compilation.ExogenousProcessor
-import de.cau.cs.kieler.sccharts.SCCharts
-import org.eclipse.cdt.core.dom.ast.IASTTranslationUnit
-import org.eclipse.emf.ecore.EObject
 import com.google.inject.Inject
-import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
-import org.eclipse.cdt.core.dom.ast.IASTNode
-import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
-import org.eclipse.cdt.core.dom.ast.IASTName
-import org.eclipse.cdt.core.dom.ast.IASTSwitchStatement
-import org.eclipse.cdt.core.dom.ast.IASTCaseStatement
-import org.eclipse.cdt.core.dom.ast.IASTIdExpression
-import org.eclipse.cdt.core.dom.ast.IASTBreakStatement
-import org.eclipse.cdt.core.dom.ast.IASTIfStatement
-import org.eclipse.cdt.core.dom.ast.IASTFunctionCallExpression
-import org.eclipse.cdt.core.dom.ast.IASTFunctionDefinition
-import org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTQualifiedName
-import java.util.ArrayList
-import org.eclipse.cdt.core.dom.ast.IASTBinaryExpression
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
-import de.cau.cs.kieler.kexpressions.ValueType
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import org.eclipse.cdt.core.dom.ast.IASTExpression
-import de.cau.cs.kieler.kexpressions.Expression
-import de.cau.cs.kieler.kexpressions.ValuedObject
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
-import de.cau.cs.kieler.kexpressions.OperatorType
-import de.cau.cs.kieler.sccharts.Transition
-import java.util.HashMap
-import org.eclipse.cdt.core.dom.ast.IASTArraySubscriptExpression
-import org.eclipse.cdt.core.dom.ast.IASTUnaryExpression
 import de.cau.cs.kieler.c.sccharts.extensions.CDTConvertExtensions
 import de.cau.cs.kieler.c.sccharts.extensions.HighlightingExtensions
-import java.time.format.DateTimeFormatter
-import java.time.LocalDateTime
 import de.cau.cs.kieler.c.sccharts.extensions.SMExtractorExtensions
+import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.OperatorType
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kicool.compilation.ExogenousProcessor
+import de.cau.cs.kieler.sccharts.SCCharts
+import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.sccharts.Transition
+import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.util.ArrayList
+import java.util.HashMap
+import java.util.List
+import java.util.Map
+import org.eclipse.cdt.core.dom.ast.IASTArraySubscriptExpression
+import org.eclipse.cdt.core.dom.ast.IASTBinaryExpression
+import org.eclipse.cdt.core.dom.ast.IASTBreakStatement
+import org.eclipse.cdt.core.dom.ast.IASTCaseStatement
+import org.eclipse.cdt.core.dom.ast.IASTExpression
+import org.eclipse.cdt.core.dom.ast.IASTFunctionCallExpression
+import org.eclipse.cdt.core.dom.ast.IASTFunctionDeclarator
+import org.eclipse.cdt.core.dom.ast.IASTFunctionDefinition
+import org.eclipse.cdt.core.dom.ast.IASTIdExpression
+import org.eclipse.cdt.core.dom.ast.IASTIfStatement
+import org.eclipse.cdt.core.dom.ast.IASTInitializerList
+import org.eclipse.cdt.core.dom.ast.IASTName
+import org.eclipse.cdt.core.dom.ast.IASTNode
+import org.eclipse.cdt.core.dom.ast.IASTSwitchStatement
+import org.eclipse.cdt.core.dom.ast.IASTTranslationUnit
+import org.eclipse.cdt.core.dom.ast.IASTUnaryExpression
+import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTQualifiedName
+import org.eclipse.emf.ecore.EObject
 
 /**
- * @author lewe
- *
+ * An extractor to extract state machines following the centralized approach from C++ source code.
+ * 
+ * @author lewe, nre
  */
 class CentralizedSMExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts> {
     
-    @Inject extension SCChartsCoreExtensions
-    @Inject extension SCChartsStateExtensions
-    @Inject extension SCChartsTransitionExtensions
-    @Inject extension SCChartsControlflowRegionExtensions
+    @Inject extension CDTConvertExtensions
+    @Inject extension HighlightingExtensions
     @Inject extension KExpressionsCreateExtensions
     @Inject extension KExpressionsDeclarationExtensions
     @Inject extension KExpressionsValuedObjectExtensions
-    @Inject extension CDTConvertExtensions
-    @Inject extension HighlightingExtensions
+    @Inject extension SCChartsActionExtensions
+    @Inject extension SCChartsControlflowRegionExtensions
+    @Inject extension SCChartsCoreExtensions
+    @Inject extension SCChartsStateExtensions
+    @Inject extension SCChartsTransitionExtensions
     @Inject extension SMExtractorExtensions
              
      var State rootState
-     var states = <String, State> newHashMap
-     var events = <String, ValuedObject> newHashMap
-     var transitionContainingFunctions = <String, ArrayList<State>> newHashMap
+     val Map<String, State> states = newHashMap
+     val Map<String, ValuedObject> inputEvents = newHashMap
+     val Map<String, ValuedObject> outputEvents = newHashMap
+     val Map<String, Map<State, List<String>>> transitionContainingFunctions = newHashMap
      var String stateChangeFuncNamespace
      var String stateChangeFuncName
-     var transitions = <State, HashMap<State,Transition>> newHashMap
+     val Map<State, HashMap<State,Transition>>transitions = newHashMap
      
      var eventHandlingUsed = false
+     var boolean outputHandlingUsed = false
      var combineTransitions = true
      var includeTransitionContainingFunctions = true
      
@@ -131,19 +139,38 @@ class CentralizedSMExtractor extends ExogenousProcessor<IASTTranslationUnit, SCC
              cRegion.states += state
          }
          
-         //_____Find Events_______________ 
-         val eventEnum = findEventEnum(ast)
-         if (eventEnum !== null) {
+         //_____Find Input Events_______________ 
+         val inputEventEnum = findInputEventEnum(ast)
+         if (inputEventEnum !== null) {
              eventHandlingUsed = true
-             val enumEvents = eventEnum.getEnumerators
+             val enumEvents = inputEventEnum.getEnumerators
              
              //_____Create Events_____________
              for (enumEvent : enumEvents) {
                  val eventName = enumEvent.getName.toString
-                 val decl = createVariableDeclaration()
-                 decl.type = ValueType::BOOL
+                 val decl = createSignalDeclaration() => [
+                     input = true
+                 ]
                  val vo = decl.createValuedObject(eventName)
-                 events.put(eventName, vo)
+                 inputEvents.put(eventName, vo)
+                 rootState.declarations += decl
+             }
+         }
+         
+         //_____Find Output Events_______________
+         val outputEventEnum = findOutputEventEnum(ast)
+         if (outputEventEnum !== null) {
+             outputHandlingUsed = true
+             val enumEvents = outputEventEnum.getEnumerators
+             
+             //_____Create Events_____________
+             for (enumEvent : enumEvents) {
+                 val eventName = enumEvent.getName.toString
+                 val decl = createSignalDeclaration() => [
+                     output = true
+                 ]
+                 val vo = decl.createValuedObject(eventName)
+                 outputEvents.put(eventName, vo)
                  rootState.declarations += decl
              }
          }
@@ -159,7 +186,7 @@ class CentralizedSMExtractor extends ExogenousProcessor<IASTTranslationUnit, SCC
          if (switchFuncDef !== null) {
              switchFuncIASTName = switchFuncDef.getDeclarator.getName
              // Check if func name is simple or qualified
-             if (switchFuncIASTName instanceof CPPASTQualifiedName) {
+             if (switchFuncIASTName instanceof ICPPASTQualifiedName) {
                  switchFuncLastname = switchFuncIASTName.getLastName.toString
                  switchFuncNamespace = switchFuncIASTName.getQualifier.head.resolveBinding.toString
              } else {
@@ -172,14 +199,14 @@ class CentralizedSMExtractor extends ExogenousProcessor<IASTTranslationUnit, SCC
          
          //_______Find State Change Function_______
          val stateVarAssignments = findStateVariableAssignments(ast, stateVar)
-         var IASTNode stateChangeFuncNameNode
+         var IASTFunctionDeclarator stateChangeFuncNode
          var IASTBinaryExpression initStateBinExpr
          
          // Check which assignment is inside the state change function and which is the initial state assignment
          if (stateVarAssignments.length == 2) {
-             stateChangeFuncNameNode = findStateChangeFunc(stateVarAssignments.get(0))
-             if (stateChangeFuncNameNode === null) {
-                 stateChangeFuncNameNode = findStateChangeFunc(stateVarAssignments.get(1))
+             stateChangeFuncNode = findStateChangeFunc(stateVarAssignments.get(0))
+             if (stateChangeFuncNode === null) {
+                 stateChangeFuncNode = findStateChangeFunc(stateVarAssignments.get(1))
                  initStateBinExpr = stateVarAssignments.get(0)
              } else {
                  initStateBinExpr = stateVarAssignments.get(1)
@@ -189,12 +216,12 @@ class CentralizedSMExtractor extends ExogenousProcessor<IASTTranslationUnit, SCC
          }
          
          // Extract the state change func name
-         if(stateChangeFuncNameNode instanceof CPPASTQualifiedName) {
-             val qualName = stateChangeFuncNameNode as CPPASTQualifiedName
+         if (stateChangeFuncNode.name instanceof ICPPASTQualifiedName) {
+             val qualName = stateChangeFuncNode.name as ICPPASTQualifiedName
              stateChangeFuncName = qualName.getLastName.toString
              stateChangeFuncNamespace = qualName.getQualifier.head.resolveBinding.toString
          } else {
-             stateChangeFuncName = stateChangeFuncNameNode.toString
+             stateChangeFuncName = stateChangeFuncNode.name.toString
          }
          
          // Analyse the function definitions for transition containing functions (TCG)
@@ -205,22 +232,24 @@ class CentralizedSMExtractor extends ExogenousProcessor<IASTTranslationUnit, SCC
                  val funcDecl = (child as IASTFunctionDefinition).getDeclarator
                  val funcName = funcDecl.getName
                  // Test if function name is qualified or simple
-                 if (funcName instanceof CPPASTQualifiedName) {
-                     val funcLastName = (funcName as CPPASTQualifiedName).getLastName.toString
-                     val funcNamespace = (funcName as CPPASTQualifiedName).getQualifier.head.resolveBinding.toString
-                     if ((!funcLastName.equals(stateChangeFuncName) || !funcNamespace.equals(stateChangeFuncNamespace)) && (!funcLastName.equals(switchFuncLastname) || !funcNamespace.equals(switchFuncNamespace)) && (includeTransitionContainingFunctions)) {
+                 if (funcName instanceof ICPPASTQualifiedName) {
+                     val funcLastName = (funcName as ICPPASTQualifiedName).getLastName.toString
+                     val funcNamespace = (funcName as ICPPASTQualifiedName).getQualifier.head.resolveBinding.toString
+                     if ((!funcLastName.equals(stateChangeFuncName) || !funcNamespace.equals(stateChangeFuncNamespace))
+                         && (!funcLastName.equals(switchFuncLastname) || !funcNamespace.equals(switchFuncNamespace))
+                         && (includeTransitionContainingFunctions)) {
                          // Find potential target states for the function
-                         val targets = findTargetStates(child)
-                         if (targets.length != 0) {
-                            transitionContainingFunctions.put(funcLastName, targets)
+                         val targetsAndOutputs = findTargetStatesAndOutputs(child)
+                         if (targetsAndOutputs.size != 0) {
+                            transitionContainingFunctions.put(funcLastName, targetsAndOutputs)
                          }
                      }
                  } else {
                      if ((!funcName.toString.equals(stateChangeFuncName)) && (!funcName.toString.equals(switchFuncName))) {
                          // Find potential target states for the function
-                         val targets = findTargetStates(child)
-                         if (targets.length != 0) {
-                            transitionContainingFunctions.put(funcName.toString, targets)
+                         val targetsAndOutputs = findTargetStatesAndOutputs(child)
+                         if (targetsAndOutputs.size != 0) {
+                            transitionContainingFunctions.put(funcName.toString, targetsAndOutputs)
                          }
                      }
                  }
@@ -324,32 +353,31 @@ class CentralizedSMExtractor extends ExogenousProcessor<IASTTranslationUnit, SCC
                      }
                      
                  } else {
-                     val targetStates = findTargetStates(stmt)
-                     for (targetState : targetStates) {
+                     val targetStatesAndOutputs = findTargetStatesAndOutputs(stmt)
+                     targetStatesAndOutputs.forEach [ targetState, outputs |
                         for (startState : startStates) {
-                            buildTransition(startState, targetState, null)
+                            buildTransition(startState, targetState, null, outputs)
                         }    
-                     }                 
+                     ]
                  }
              }
          }
      }
      
      // Create transitions following the Event Scheme
-     def transitionFromIf(IASTIfStatement stmt, ArrayList<State> startStates) {
+     def void transitionFromIf(IASTIfStatement stmt, ArrayList<State> startStates) {
          // Extract trigger expression 
          val condExpr = stmt.getConditionExpression
-         var baseTrigger = condExpr.getTrigger
+         val baseTrigger = condExpr.getTrigger
          // Find Target States of then branch
          val thenComp = stmt.getThenClause
-         val thenTargetStates = findTargetStates(thenComp)
+         val thenTargetStatesAndOutputs = findTargetStatesAndOutputs(thenComp)
         
          // Build transitions for then branch                         
          for (startState : startStates) {
-            for (targetState : thenTargetStates) {
-                buildTransition(startState, targetState, baseTrigger);
-                             
-            }
+            thenTargetStatesAndOutputs.forEach[targetState, outputs |
+                buildTransition(startState, targetState, baseTrigger, outputs);
+            ]
          }
          
          // Look for else branch
@@ -360,22 +388,21 @@ class CentralizedSMExtractor extends ExogenousProcessor<IASTTranslationUnit, SCC
                  transitionFromIf(elseComp, startStates)
              // Build transitions for else branch with negated trigger otherwise    
              } else {
-                val elseTargetStates = findTargetStates(elseComp)
-                var notTrigger = createOperatorExpression(OperatorType::NOT)
+                val elseTargetStatesAndOutputs = findTargetStatesAndOutputs(elseComp)
+                val notTrigger = createOperatorExpression(OperatorType::NOT)
                 notTrigger.subExpressions += baseTrigger
                 for (startState : startStates) {
-                    for (targetState : elseTargetStates) {
-                        buildTransition(startState, targetState, notTrigger);
-                                         
-                    }
+                    elseTargetStatesAndOutputs.forEach [ targetState, outputs |
+                        buildTransition(startState, targetState, notTrigger, outputs);
+                    ]
                 }
              }
          
          }
      }
      
-     // Create the transition between the given states with the given trigger
-     def buildTransition(State startState, State targetState, Expression trigger) {
+     /** Create the transition between the given states with the given trigger*/
+     def buildTransition(State startState, State targetState, Expression trigger, List<String> outputs) {
          if (combineTransitions) {
             // Test if an transition with the same start and target state already exists
             if (!transitions.containsKey(startState) || !transitions.get(startState).containsKey(targetState)) {
@@ -391,6 +418,10 @@ class CentralizedSMExtractor extends ExogenousProcessor<IASTTranslationUnit, SCC
                 // Set the trigger
                 if (trigger !== null) {
                     transition.trigger = trigger
+                }
+                // Set the outputs
+                for (output : outputs) {
+                    transition.createEmission(outputEvents.get(output))
                 }
             // If transitions are merged merge the trigger too    
             } else if (trigger !== null) {
@@ -413,6 +444,10 @@ class CentralizedSMExtractor extends ExogenousProcessor<IASTTranslationUnit, SCC
                 transitions.put(startState, stateTargetStateMap)
             }
             if (trigger !== null) transition.trigger = trigger
+            // Set the outputs
+            for (output : outputs) {
+                transition.createEmission(outputEvents.get(output))
+            }
         }
      }
      
@@ -425,8 +460,8 @@ class CentralizedSMExtractor extends ExogenousProcessor<IASTTranslationUnit, SCC
              val subExp = expr.getArgument
              if (subExp instanceof IASTIdExpression) {
                  val eventName = subExp.getName.toString
-                 if (events.containsKey(eventName)) {
-                     trigger = events.get(eventName).reference
+                 if (inputEvents.containsKey(eventName)) {
+                     trigger = inputEvents.get(eventName).reference
                  } else {
                      println("ERROR: Event used that was not declared: " + eventName)
                  }
@@ -444,7 +479,7 @@ class CentralizedSMExtractor extends ExogenousProcessor<IASTTranslationUnit, SCC
                  
                  trigger = unExpr 
              } else {
-                 println("ERROR: Unary Expression used that was not translateable to SCCharts")
+                 println("ERROR: Unary Expression used that was not translatable to SCCharts")
              }
          // Extract Binary Expression for the trigger such as AND    
          } else if (expr instanceof IASTBinaryExpression) {
@@ -459,7 +494,7 @@ class CentralizedSMExtractor extends ExogenousProcessor<IASTTranslationUnit, SCC
                  
                  trigger = unExpr 
              } else {
-                 println("ERROR: Binary Expression used that was not translateable to SCCharts")
+                 println("ERROR: Binary Expression used that was not translatable to SCCharts")
              }
          }  
             
@@ -482,39 +517,54 @@ class CentralizedSMExtractor extends ExogenousProcessor<IASTTranslationUnit, SCC
          res
      }
      
-     // Find all target states reachable by the given statement
-     def ArrayList<State> findTargetStates(IASTNode stmt) {
-         var targetStates = <State> newArrayList
+     // Find all target states reachable by the given statement with their outputs
+     def Map<State, List<String>> findTargetStatesAndOutputs(IASTNode stmt) {
+         var targetStatesAndOutputs = <State, List<String>> newHashMap
          
          // Only function calls can trigger state changes
          if (stmt instanceof IASTFunctionCallExpression) {
             // Retrieve the function Name 
             val funcNameExpression = stmt.getFunctionNameExpression 
-            if(funcNameExpression instanceof IASTIdExpression) {
+            if (funcNameExpression instanceof IASTIdExpression) {
                 val funcName = funcNameExpression.getName
                 // Test if the name is qualified or simple
-                if (funcName instanceof CPPASTQualifiedName) {
+                if (funcName instanceof ICPPASTQualifiedName) {
                     // Test if func call is call of state change function
-                    if(funcName.getLastName.toString.equals(stateChangeFuncName.toString) && funcName.getQualifier.head.resolveBinding.toString.equals(stateChangeFuncNamespace.toString)) {
-                        if(states.containsKey((stmt.getArguments.head as IASTIdExpression).getName.toString)) {
+                    if (funcName.getLastName.toString.equals(stateChangeFuncName.toString)
+                        && funcName.getQualifier.head.resolveBinding.toString.equals(stateChangeFuncNamespace.toString)) {
+                        val stateName = (stmt.getArguments.head as IASTIdExpression).getName.toString
+                        val List<String> outputs = newArrayList
+                        if (outputHandlingUsed) {
+                            outputs += (stmt.getArguments.get(1) as IASTInitializerList).getClauses.map [
+                                (it as IASTIdExpression).getName.toString
+                            ]
+                        }
+                        if (states.containsKey(stateName)) {
                             // Add func call parameter to target States
-                            targetStates.add(states.get((stmt.getArguments.head as IASTIdExpression).getName.toString))
+                            targetStatesAndOutputs.put(states.get(stateName), outputs)
                         }
                     // Test if func call is a TCG    
                     } else if (transitionContainingFunctions.containsKey(funcName.getLastName.toString)) {
-                        targetStates += transitionContainingFunctions.get(funcName.getLastName.toString)
+                        targetStatesAndOutputs += transitionContainingFunctions.get(funcName.getLastName.toString)
                     }
                 } else {
                     // Test if func call is call of state change function
-                    if(funcName.toString.equals(stateChangeFuncName.toString)) {
-                        if(states.containsKey((stmt.getArguments.head as IASTIdExpression).getName.toString)){
+                    if (funcName.toString.equals(stateChangeFuncName.toString)) {
+                        val stateName = (stmt.getArguments.head as IASTIdExpression).getName.toString
+                        val List<String> outputs = newArrayList
+                        if (outputHandlingUsed) {
+                            outputs += (stmt.getArguments.get(1) as IASTInitializerList).getClauses.map [
+                                (it as IASTIdExpression).getName.toString
+                            ]
+                        }
+                        if (states.containsKey(stateName)) {
                             // Add func call parameter to target States
-                            targetStates.add(states.get((stmt.getArguments.head as IASTIdExpression).getName.toString))
+                            targetStatesAndOutputs.put(states.get(stateName), outputs)
                         }
                     } else {
                         // Test if func call is a TCG    
                         if (transitionContainingFunctions.containsKey(funcName.toString)) {
-                            targetStates += transitionContainingFunctions.get(funcName.toString)
+                            targetStatesAndOutputs += transitionContainingFunctions.get(funcName.toString)
                         }
                     }    
                 }
@@ -523,10 +573,10 @@ class CentralizedSMExtractor extends ExogenousProcessor<IASTTranslationUnit, SCC
          
          // If Statement is not a function call test all child nodes
          for (var i = 0; i < stmt.children.length; i++) {
-             targetStates += findTargetStates(stmt.children.get(i))
+             targetStatesAndOutputs += findTargetStatesAndOutputs(stmt.children.get(i))
          }
          
-         targetStates
+         targetStatesAndOutputs
      }
      
      // Find the source expression of an assignment - used for the state variable assignments (expects idexpression)
@@ -545,18 +595,18 @@ class CentralizedSMExtractor extends ExogenousProcessor<IASTTranslationUnit, SCC
      }
      
      // Tests if the given binary expression is the one in the state change function 
-     def IASTName findStateChangeFunc(IASTBinaryExpression binExpr) {
-         var IASTName funcName
+     def IASTFunctionDeclarator findStateChangeFunc(IASTBinaryExpression binExpr) {
+         var IASTFunctionDeclarator declarator
          
          var assignSource = findAssignSource(binExpr)
          
          // Test if the assignment assigns a known state (that would be the initial state) 
          var match = states.containsKey(assignSource.getName.toString)
          if (!match) {
-             funcName = findContainingFuncDef(binExpr).getDeclarator.getName
+             declarator = findContainingFuncDef(binExpr).getDeclarator
          }
          
-         return funcName
+         return declarator
      }
      
      // Find the current state Variable in the given switch statement
