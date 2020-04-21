@@ -147,23 +147,28 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
      * Called by the client to compile a model
      */
     override compile(String uri, String clientId, String command, boolean inplace, boolean showResultingModel, boolean snapshot) {
-        var Object eobject
-        if (snapshot) {
-            if (diagramState === null || diagramState.getKGraphContext(uri) === null) {
+        try {
+            var Object eobject
+            if (snapshot) {
+                if (diagramState === null || diagramState.getKGraphContext(uri) === null) {
+                    client.compile(null, uri, true, 0, 1000)
+                    return
+                }
+                eobject = diagramState.getKGraphContext(uri).inputModel
+            } else {
+                eobject = getEObjectFromUri(uri)
+            }
+            if (eobject === null) {
                 client.compile(null, uri, true, 0, 1000)
                 return
             }
-            eobject = diagramState.getKGraphContext(uri).inputModel
-        } else {
-            eobject = getEObjectFromUri(uri)
+            this.currentContext = createContextAndStartCompilationThread(eobject, command, inplace, this.currentContext)
+            // Add listener that sends snapshot descriptions to client and updates the diagram on finish if requested.
+            currentContext.addObserver(new KeithCompilationUpdater(this, currentContext, uri, clientId, command, inplace, showResultingModel))
+        } catch( Exception e) {
+            e.printStackTrace()
+            sendError(e.toString())
         }
-        if (eobject === null) {
-            client.compile(null, uri, true, 0, 1000)
-            return
-        }
-        this.currentContext = createContextAndStartCompilationThread(eobject, command, inplace, this.currentContext)
-        // Add listener that sends snapshot descriptions to client and updates the diagram on finish if requested.
-        currentContext.addObserver(new KeithCompilationUpdater(this, currentContext, uri, clientId, command, inplace, showResultingModel))
         return
     }
 
@@ -241,9 +246,14 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
      * @return completable future of all compilation system descriptions {@code List<SystemDescription}
      */
     override getSystems(String uri) {
-        val systemDescriptions = getCompilationSystems(uri, -1, false, false)
-        val snapshotSystemDescriptions = getCompilationSystems(uri, -1, false, true)
-        client.sendCompilationSystems(systemDescriptions, snapshotSystemDescriptions)
+        try {
+            val systemDescriptions = getCompilationSystems(uri, -1, false, false)
+            val snapshotSystemDescriptions = getCompilationSystems(uri, -1, false, true)
+            client.sendCompilationSystems(systemDescriptions, snapshotSystemDescriptions)
+        } catch (Exception e) {
+            e.printStackTrace()
+            sendError("Could not retrieve compilation systems" + e)
+        }
     }
     
     /**
@@ -345,13 +355,18 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
      * Sets {@code CANCEL_COMPILATION} property on all processors.
      */
     override cancelCompilation() {
-        if (compilationThread.alive) {
-            this.compilationThread.terminated = true
-            var context = this.compilationThread.context
-            context.startEnvironment.setProperty(Environment.CANCEL_COMPILATION, true)
-            for (iResult : context.processorInstancesSequence) {
-                iResult.cancelCompilation()
+        try {
+            if (compilationThread.alive) {
+                this.compilationThread.terminated = true
+                var context = this.compilationThread.context
+                context.startEnvironment.setProperty(Environment.CANCEL_COMPILATION, true)
+                for (iResult : context.processorInstancesSequence) {
+                    iResult.cancelCompilation()
+                }
             }
+        } catch (Exception e) {
+            e.printStackTrace
+            sendError("An error occurred during compilation cancel. " + e)
         }
         return
     }
@@ -395,31 +410,45 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
     def update(String uri, CompilationContext context, String clientId, String command, boolean inplace,
         boolean finished, boolean showResultingModel, int currentIndex, int maxIndex
     ) {
-        val sameCompilation = command.equals(lastCommand) && uri.equals(lastUri) && inplace === lastInplace
-        var future = new CompletableFuture()
-        future.complete(void)
-        future.thenAccept([
-            client.compile(new CompilationResults(this.snapshotMap.get(uri)), uri, finished, currentIndex, maxIndex)
-        ])
-        if (finished && compilationThread.terminated) {
-            future.thenAccept([
-                client.cancelCompilation(true)
-            ])
-        } else {
-            if (finished) {
-                lastUri = uri
-                lastCommand = command
-                lastInplace = inplace
-                future.thenRun [
-                    if (showResultingModel) {
-                        didCompile(uri, sameCompilation, clientId, CancelIndicator.NullImpl)
-                    }
+        try {
+            val sameCompilation = command.equals(lastCommand) && uri.equals(lastUri) && inplace === lastInplace
+            var future = new CompletableFuture()
+            future.complete(void)
+            future.thenAccept [
+                client.compile(new CompilationResults(this.snapshotMap.get(uri)), uri, finished, currentIndex, maxIndex)
+            ].exceptionally [ throwable |
+                LOG.error('Error while sending compilation results.', throwable)
+                sendError('Error while sending compilation results.' + throwable)
+                return null
+            ]
+            if (finished && compilationThread.terminated) {
+                future.thenAccept [
+                    client.cancelCompilation(true)
                 ].exceptionally [ throwable |
-                    LOG.error('Error while running additional compilation effects.', throwable)
+                    LOG.error('Error while sending compilation cancel.', throwable)
+                    sendError('Error while sending compilation cancel.' + throwable)
                     return null
                 ]
+            } else {
+                if (finished) {
+                    lastUri = uri
+                    lastCommand = command
+                    lastInplace = inplace
+                    future.thenRun [
+                        if (showResultingModel) {
+                            didCompile(uri, sameCompilation, clientId, CancelIndicator.NullImpl)
+                        }
+                    ].exceptionally [ throwable |
+                        LOG.error('Error while running additional compilation effects.', throwable)
+                        sendError('Error while running additional compilation effects.' + throwable)
+                        return null
+                    ]
+                }
             }
+        } catch (Exception e) {
+            sendError('An error occurred on new compilation snapshot.' + e)
         }
+        
     }
     
     /**
