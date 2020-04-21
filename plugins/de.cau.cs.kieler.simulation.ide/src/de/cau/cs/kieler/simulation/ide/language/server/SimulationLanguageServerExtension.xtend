@@ -20,6 +20,7 @@ import de.cau.cs.kieler.kicool.ProcessorGroup
 import de.cau.cs.kieler.kicool.compilation.observer.AbstractContextNotification
 import de.cau.cs.kieler.kicool.compilation.observer.CompilationFinished
 import de.cau.cs.kieler.kicool.ide.language.server.KiCoolLanguageServerExtension
+import de.cau.cs.kieler.klighd.lsp.KGraphLanguageServerExtension
 import de.cau.cs.kieler.language.server.ILanguageClientProvider
 import de.cau.cs.kieler.language.server.KeithLanguageClient
 import de.cau.cs.kieler.simulation.DataPool
@@ -60,12 +61,20 @@ class SimulationLanguageServerExtension implements ILanguageServerExtension, Com
     protected static val LOG = Logger.getLogger(SimulationLanguageServerExtension)
     protected extension ILanguageServerAccess languageServerAccess
 
-    @Inject @Accessors(PUBLIC_GETTER) RequestManager requestManager
+    @Inject
+    @Accessors(PUBLIC_GETTER) RequestManager requestManager
 
     /**
      * Compiler LS extension to access the compilation snapshots, namely the simulation executable.
      */
-    @Inject extension KiCoolLanguageServerExtension
+    @Inject
+    extension KiCoolLanguageServerExtension
+    
+    /**
+     * Main language server extension.
+     */
+    @Inject
+    extension KGraphLanguageServerExtension
 
     /**
      * Data pool that will be send to the client in start of step function.
@@ -162,6 +171,7 @@ class SimulationLanguageServerExtension implements ILanguageServerExtension, Com
                 currentSimulation.start(true)
             } catch (Exception e) {
                 e.printStackTrace()
+                sendError("An error occurred during simulation start. " + e)
                 return e.toString()
             }
             return ""
@@ -184,7 +194,13 @@ class SimulationLanguageServerExtension implements ILanguageServerExtension, Com
         // Set simulation mode, default mode is manual mode
         setSimulationType(simulationType)
         // Execute an asynchronous simulation step
-        new Thread([currentSimulation.step()]).start
+        new Thread([
+            try {
+                currentSimulation.step()
+            } catch (Exception e) {
+                sendError("An error occurred during simulation step. " + e)
+            }
+        ]).start
     }
 
     /**
@@ -192,12 +208,16 @@ class SimulationLanguageServerExtension implements ILanguageServerExtension, Com
      * Answers with true if this was successful.
      */
     override stop() {
-        // Stop the running simulation and remove listeners
-        stopAndRemoveSimulation
-        removeListener(this)
-        SimulationServer.stop()
-        stepNumber = -1
-        currentlySimulatedModel = null
+        try {
+            // Stop the running simulation and remove listeners
+            stopAndRemoveSimulation
+            removeListener(this)
+            SimulationServer.stop()
+            stepNumber = -1
+            currentlySimulatedModel = null
+        } catch (Exception e) {
+            sendError("An error occurred while stopping the simulation. " + e)
+        }
         return this.requestManager.runRead [ cancelIndicator |
             new SimulationStoppedMessage(true, "Stopped simulation")
         ]
@@ -236,41 +256,46 @@ class SimulationLanguageServerExtension implements ILanguageServerExtension, Com
                         )
                     } catch (Exception exp) {
                         exp.printStackTrace
-                        // TODO send notification that LS has to be restarted
+                        sendError("An error occurred during simulation step. You might want to restart your LS. " + e)
                     } 
                 }
                 case START: { // Start the simulation. Send corresponding message to client.
-                    var datapool = this.nextDataPool
-
-                    val finalPool = datapool
-                    // Get properties categories additional to input and output (e.g. guard, ...)
-                    var entries = datapool.entries
-                    val entrySet = entries.entrySet
-                    var properties = entrySet.map[value.combinedProperties].flatten.toSet
-                    val propertyFilter = <String, Boolean>newHashMap
-                    for (property : properties) {
-                        val key = property.toLowerCase
-                        if (!propertyFilter.containsKey(key)) {
-                            propertyFilter.put(property, true)
-                        }
-                    }
-                    // Add all properties with their respective elements
-                    val HashMap<String, ArrayList<String>> propertySet = newHashMap
-                    propertyFilter.forEach [ key, value |
-                        propertySet.put(key, newArrayList)
-                    ]
-                    propertySet.forEach [ key, list |
-                        val infos = finalPool.entries
-                        for (entry : finalPool.entries.entrySet) {
-                            val combinedProperties = infos.get(entry.key)?.combinedProperties
-                            if (combinedProperties !== null && combinedProperties.contains(key)) {
-                                list.add(entry.key)
+                    try {
+                        var datapool = this.nextDataPool
+    
+                        val finalPool = datapool
+                        // Get properties categories additional to input and output (e.g. guard, ...)
+                        var entries = datapool.entries
+                        val entrySet = entries.entrySet
+                        var properties = entrySet.map[value.combinedProperties].flatten.toSet
+                        val propertyFilter = <String, Boolean>newHashMap
+                        for (property : properties) {
+                            val key = property.toLowerCase
+                            if (!propertyFilter.containsKey(key)) {
+                                propertyFilter.put(property, true)
                             }
                         }
-                        propertySet.put(key, list)
-                    ]
-                    // Return the whole data pool, and properties with their respective elements (this includes inputs and outputs)
-                    startedSimulation(new SimulationStartedMessage(true, "", datapool.pool, propertySet))
+                        // Add all properties with their respective elements
+                        val HashMap<String, ArrayList<String>> propertySet = newHashMap
+                        propertyFilter.forEach [ key, value |
+                            propertySet.put(key, newArrayList)
+                        ]
+                        propertySet.forEach [ key, list |
+                            val infos = finalPool.entries
+                            for (entry : finalPool.entries.entrySet) {
+                                val combinedProperties = infos.get(entry.key)?.combinedProperties
+                                if (combinedProperties !== null && combinedProperties.contains(key)) {
+                                    list.add(entry.key)
+                                }
+                            }
+                            propertySet.put(key, list)
+                        ]
+                        // Return the whole data pool, and properties with their respective elements (this includes inputs and outputs)
+                        startedSimulation(new SimulationStartedMessage(true, "", datapool.pool, propertySet))
+                    } catch (Exception exp) {
+                        exp.printStackTrace
+                        sendError("An error occurred during simulation start. " + e)
+                    }
                 }
             }
         } else { // Handle unknown events, log the classes for which this is executed.
@@ -317,7 +342,8 @@ class SimulationLanguageServerExtension implements ILanguageServerExtension, Com
     }
 
     /**
-     * Is overridden by by Observer interface, should be called.
+     * Is overridden by Observer interface.
+     * This method is never called by needed to fulfill the interface.
      */
     override update(SimulationContext ctx, SimulationEvent e) {
         throw new UnsupportedOperationException("TODO: auto-generated method stub")
