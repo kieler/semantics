@@ -13,10 +13,10 @@
 package de.cau.cs.kieler.language.server
 
 import com.google.gson.JsonObject
+import de.cau.cs.kieler.klighd.lsp.KGraphLanguageClient
 import org.eclipse.lsp4j.jsonrpc.services.JsonNotification
 import org.eclipse.lsp4j.jsonrpc.services.JsonSegment
 import org.eclipse.lsp4j.services.LanguageClient
-import java.util.List
 
 /**
  * LanguageClient that implements additional methods necessary for server client communication in KEITH.
@@ -26,7 +26,7 @@ import java.util.List
  *
  */
  @JsonSegment("keith")
-interface KeithLanguageClient extends LanguageClient {
+interface KeithLanguageClient extends KGraphLanguageClient, LanguageClient {
     /**
      * The result object should have the type de.cau.cs.kieler.kicool.ide.language.server.CompilationResults
      */
