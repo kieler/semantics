@@ -57,7 +57,7 @@ import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTQualifiedName
 import org.eclipse.emf.ecore.EObject
 
 /**
- * An extractor to extract state machines following the centralized approach from C++ source code.
+ * An extractor to extract state machines following the centralized approach from a C++ abstract syntax tree.
  * 
  * @author lewe, nre
  */
