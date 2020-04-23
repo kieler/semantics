@@ -34,7 +34,7 @@ class SMExtractorExtensions {
     val outputEventEnumComment = "//_EXTRACTOR_OUTPUT_ENUM"
     val behaviourSwitchComment = "//_EXTRACTOR_BEHAVIOUR_SWITCH"
     val stateChangeFuncComment = "//_EXTRACTOR_STATE_CHANGE_FUNCTION"
-    val stateEvalFunc = "//_EXTRACTOR_STATE_CLASS_EVALUATE_FUNC"
+    val stateEvalFunc = "//_EXTRACTOR_STATE_CLASS_EVALUATE_FUNCTION"
     
     // Finds the enum following the state extractor comment
     def IASTEnumerationSpecifier findStateEnum(IASTTranslationUnit ast) {
