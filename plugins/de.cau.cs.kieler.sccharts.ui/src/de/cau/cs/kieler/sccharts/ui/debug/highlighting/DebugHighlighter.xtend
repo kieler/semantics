@@ -101,11 +101,28 @@ class DebugHighlighter {
         // Breakpoints are handled by ModelBreakpointManager.reloadModel() already
         
         // Active States
+        val brokenHLs = <DebugHighlighting> newHashSet
         for (hl : #[activeStateHighlightings, executingStateHighlightings].flatten) {
-            hl.eObject = manager.getMatchingState(model, hl.eObject as State)
+            val newState = manager.getMatchingState(model, hl.eObject as State)
+            if (newState !== null) {
+                hl.eObject = newState
+            } else {
+                brokenHLs.add(hl)
+            }
         }
         for (hl : activeEdgeHighlights) {
-            hl.eObject = manager.getMatchingTransition(model, hl.eObject as Transition)
+            val newTransition = manager.getMatchingTransition(model, hl.eObject as Transition)
+            if (newTransition !== null) {
+                hl.eObject = newTransition
+            } else {
+                brokenHLs.add(hl)
+            }
+        }
+        for (hl : brokenHLs) {
+            hl.remove
+            activeStateHighlightings.remove(hl)
+            executingStateHighlightings.remove(hl)
+            activeEdgeHighlights.remove(hl)
         }
         reapplyAllHighlights
     }
@@ -241,8 +258,10 @@ class DebugHighlighter {
             return
         }
         val kEdge = DebugDiagramView.instance?.getKEdge(transition)
-        kEdge.KContainerRendering.children.remove(ellipse)
-        transitionToCheckDecorator.remove(transition)
+        if (kEdge !== null) {
+            kEdge.KContainerRendering.children.remove(ellipse)
+            transitionToCheckDecorator.remove(transition)
+        }
     }
     
     /* TAKEN BREAKPOINTS *****************************************************************************/
@@ -280,8 +299,10 @@ class DebugHighlighter {
             return
         }
         val kEdge = DebugDiagramView.instance?.getKEdge(transition)
-        kEdge.KContainerRendering.children.remove(ellipse)
-        transitionToDecorator.remove(transition)
+        if (kEdge !== null) {
+            kEdge.KContainerRendering.children.remove(ellipse)
+            transitionToDecorator.remove(transition)
+        }
     }
     
     /*************************************************************************************************

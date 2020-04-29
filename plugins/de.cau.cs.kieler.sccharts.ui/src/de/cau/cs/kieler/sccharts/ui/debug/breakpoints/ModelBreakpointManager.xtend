@@ -276,24 +276,28 @@ class ModelBreakpointManager {
         val statesWithBreakpointCopy = new HashSet(statesWithBreakpoint)
         for (state : statesWithBreakpointCopy) {
             toggleBreakpoint(state)
-            toggleBreakpoint(getMatchingState(model, state))
+            val newState = getMatchingState(model, state)
+            if (newState !== null) {
+                toggleBreakpoint(newState)
+            }
         }
         // Transition Taken Breakpoints
-        
         val transitionsWithBreakpointCopy = new HashSet(transitionsWithBreakpoint)
         for (transition : transitionsWithBreakpointCopy) {
             toggleBreakpoint(transition)
-//            transitionsWithBreakpoint.remove(transition)
-//            transition.clearBreakpoints
-            toggleBreakpoint(getMatchingTransition(model, transition))
+            val newTransition = getMatchingTransition(model, transition)
+            if (newTransition !== null) {
+                toggleBreakpoint(newTransition)
+            }
         }
         // Transition Check Breakpoints
         val transitionsWithCheckBreakpointCopy = new HashSet(transitionsWithCheckBreakpoint)
         for (transition : transitionsWithCheckBreakpointCopy) {
             toggleCheckBreakpoint(transition)
-//            transitionsWithCheckBreakpoint.remove(transition)
-//            transition.clearCheckBreakpoints
-            toggleCheckBreakpoint(getMatchingTransition(model, transition))
+            val newTransition = getMatchingTransition(model, transition)
+            if (newTransition !== null) {
+                toggleCheckBreakpoint(getMatchingTransition(model, transition))
+            }
         }
     }
     
@@ -496,6 +500,9 @@ class ModelBreakpointManager {
     }
     
     def State getMatchingState(SCCharts model, State state) {
+        if (state === null) {
+            return null
+        }
         val hash = DebugAnnotations.getFullNameHash(state)
         val matchingStates = <State> newLinkedList
         for (rootState : model.rootStates) {
