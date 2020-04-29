@@ -29,6 +29,8 @@ import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.KContainerRendering
 import de.cau.cs.kieler.klighd.krendering.KRectangle
 import de.cau.cs.kieler.klighd.krendering.KForeground
+import de.cau.cs.kieler.sccharts.SCCharts
+import de.cau.cs.kieler.sccharts.ui.debug.breakpoints.ModelBreakpointManager
 
 /**
  * This class is responsible for processing the highlightings for a set model.
@@ -93,6 +95,19 @@ class DebugHighlighter {
         for (hl : #[activeStateHighlightings, executingStateHighlightings, activeEdgeHighlights].flatten) {
             hl.reapply
         }
+    }
+    
+    def void reloadModel(SCCharts model, ModelBreakpointManager manager) {
+        // Breakpoints are handled by ModelBreakpointManager.reloadModel() already
+        
+        // Active States
+        for (hl : #[activeStateHighlightings, executingStateHighlightings].flatten) {
+            hl.eObject = manager.getMatchingState(model, hl.eObject as State)
+        }
+        for (hl : activeEdgeHighlights) {
+            hl.eObject = manager.getMatchingTransition(model, hl.eObject as Transition)
+        }
+        reapplyAllHighlights
     }
     
     /*************************************************************************************************

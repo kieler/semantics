@@ -30,6 +30,7 @@ import org.eclipse.core.runtime.ICoreRunnable
 import org.eclipse.core.runtime.CoreException
 import de.cau.cs.kieler.sccharts.ui.debug.breakpoints.DebugBreakpointManager
 import org.eclipse.jdt.internal.ui.javaeditor.CompilationUnitEditor
+import org.eclipse.ui.IEditorPart
 
 /**
  * Listener to couple the active editor with the diagram view.
@@ -111,6 +112,8 @@ class DebugDiagramPartListener implements IPartListener2, IStartup {
             } else {
                 DebugBreakpointManager.instance.clearModel
             }
+        } else if (part instanceof IEditorPart) {
+            DebugBreakpointManager.instance.clearModel
         }
     }
     
