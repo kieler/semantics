@@ -160,7 +160,7 @@ class Exit extends SCChartsProcessor implements Traceable {
 
         // Optimization: "&& state.outgoingTransitions.filter[trigger != null].size > 0"
         // Do not create superfluous exitOptionStates
-        if (noregions && stateOutgoingTransitions > 0) { // && state.outgoingTransitions.filter[trigger != null].size > 0) {
+        if (noregions && stateOutgoingTransitions > 0 && preemptionType !== PreemptionType.WEAK) { // && state.outgoingTransitions.filter[trigger != null].size > 0) {
 
             // Memorize outgoing transition
             val region = firstState.parentRegion

@@ -470,7 +470,7 @@ public class ScadeEquationsGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//java.lang.RuntimeException: No EObjectDescription could be found in Scope ParserRule.hiddenTokens for Grammar'de.cau.cs.kieler.lustre.scade.ScadeEquations'.rules[5]->TerminalRule'SL_COMMENT'
 	//Semantic Object: Grammar'de.cau.cs.kieler.lustre.Lustre'.rules[0]->ParserRule'LustreProgram'
-	//URI: file:/C:/KIELER/semantics-ssm4/git/semantics/plugins/de.cau.cs.kieler.lustre/bin/de/cau/cs/kieler/lustre/Lustre.xtext
+	//URI: file:/D:/KIELER/semantics-ssm5/git/semantics/plugins/de.cau.cs.kieler.lustre/bin/de/cau/cs/kieler/lustre/Lustre.xtext
 	//EStructuralFeature: xtext::ParserRule.hiddenTokens
 	public LustreGrammarAccess.LustreProgramElements getLustreProgramAccess() {
 		return gaLustre.getLustreProgramAccess();
@@ -2003,7 +2003,7 @@ public class ScadeEquationsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//ScheduleObjectReference:
-	//	valuedObject=[ValuedObject|PrimeID] priority=INT;
+	//	valuedObject=[ValuedObject|PrimeID] priority=(IntValue | ValuedObjectReference);
 	public KExpressionsGrammarAccess.ScheduleObjectReferenceElements getScheduleObjectReferenceAccess() {
 		return gaKExpressions.getScheduleObjectReferenceAccess();
 	}

@@ -66,11 +66,12 @@ class RegionActionsAndDeclarations extends SCChartsProcessor implements Traceabl
     def void transform(State rootState) {
         for (region : rootState.allContainedControlflowRegions.filter[!actions.empty || !declarations.empty].toList) {
             if (region.actions.empty) {
-                val regionId = GENERATED_PREFIX + "region" + region.parentState.regions.indexOf(region) + GENERATED_PREFIX + region.name
+                val regionId = GENERATED_PREFIX + "region" + region.parentState.regions.indexOf(region) 
+                    + if(region.name !== null) GENERATED_PREFIX + region.name else ""
                 
                 for (valuedObject : region.declarations.map[valuedObjects].flatten.filter[ !hasAnnotation("uniqueName") ]) {
-                    valuedObject.setName(regionId + GENERATED_PREFIX +
-                        valuedObject.name)
+                    valuedObject.setName(regionId + GENERATED_PREFIX + valuedObject.name)
+                    valuedObject.uniqueName
                     voStore.update(valuedObject)
                 }
                 

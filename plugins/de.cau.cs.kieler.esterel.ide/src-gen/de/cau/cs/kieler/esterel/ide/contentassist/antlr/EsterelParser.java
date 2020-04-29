@@ -133,6 +133,7 @@ public class EsterelParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getTernaryOperationAccess().getAlternatives(), "rule__TernaryOperation__Alternatives");
 			builder.put(grammarAccess.getValuedObjectTestExpressionAccess().getAlternatives(), "rule__ValuedObjectTestExpression__Alternatives");
 			builder.put(grammarAccess.getValuedObjectTestExpressionAccess().getOperatorAlternatives_0_1_0(), "rule__ValuedObjectTestExpression__OperatorAlternatives_0_1_0");
+			builder.put(grammarAccess.getScheduleObjectReferenceAccess().getPriorityAlternatives_1_0(), "rule__ScheduleObjectReference__PriorityAlternatives_1_0");
 			builder.put(grammarAccess.getReferenceCallAccess().getAlternatives_3(), "rule__ReferenceCall__Alternatives_3");
 			builder.put(grammarAccess.getFunctionCallAccess().getAlternatives_2(), "rule__FunctionCall__Alternatives_2");
 			builder.put(grammarAccess.getPrintCallAccess().getAlternatives_2(), "rule__PrintCall__Alternatives_2");

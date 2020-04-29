@@ -92,7 +92,9 @@ class Dataflow extends SCChartsProcessor {
         val parentState = dataflowRegion.eContainer as State
         
         // Generate root region and main state.
-        val newControlflowRegion = parentState.createControlflowRegion(GENERATED_PREFIX + dataflowRegion.name) => [ r |
+        val newControlflowRegion = parentState.createControlflowRegion(
+            if (dataflowRegion.name !== null) GENERATED_PREFIX + dataflowRegion.name else null
+        ) => [ r |
             for (s : dataflowRegion.schedule) {
                 r.schedule += s.copy
             }

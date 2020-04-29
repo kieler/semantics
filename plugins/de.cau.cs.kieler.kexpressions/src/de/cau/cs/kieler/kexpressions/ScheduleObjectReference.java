@@ -21,29 +21,29 @@ package de.cau.cs.kieler.kexpressions;
  */
 public interface ScheduleObjectReference extends ValuedObjectReference {
     /**
-     * Returns the value of the '<em><b>Priority</b></em>' attribute.
+     * Returns the value of the '<em><b>Priority</b></em>' containment reference.
      * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Priority</em>' attribute isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Priority</em>' attribute.
-     * @see #setPriority(int)
+     * @return the value of the '<em>Priority</em>' containment reference.
+     * @see #setPriority(Expression)
      * @see de.cau.cs.kieler.kexpressions.KExpressionsPackage#getScheduleObjectReference_Priority()
-     * @model
+     * @model containment="true"
      * @generated
      */
-    int getPriority();
+    Expression getPriority();
 
     /**
-     * Sets the value of the '{@link de.cau.cs.kieler.kexpressions.ScheduleObjectReference#getPriority <em>Priority</em>}' attribute.
+     * Sets the value of the '{@link de.cau.cs.kieler.kexpressions.ScheduleObjectReference#getPriority <em>Priority</em>}' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Priority</em>' attribute.
+     * @param value the new value of the '<em>Priority</em>' containment reference.
      * @see #getPriority()
      * @generated
      */
-    void setPriority(int value);
+    void setPriority(Expression value);
 
 } // ScheduleObjectReference

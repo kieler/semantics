@@ -54,6 +54,8 @@ import de.cau.cs.kieler.kicool.ui.view.CompilerViewPartListener
 import org.eclipse.xtext.ui.editor.XtextEditor
 import org.eclipse.xtext.util.concurrent.IUnitOfWork
 import org.eclipse.xtext.resource.XtextResource
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValueExtensions
 
 /**
  * Toggle the dependency direction.
@@ -67,6 +69,8 @@ class ToggleDependencyAction implements IAction {
     
     extension KExpressionsDeclarationExtensions decl = new KExpressionsDeclarationExtensions
     extension KExpressionsValuedObjectExtensions vo = new KExpressionsValuedObjectExtensions
+    extension KExpressionsValueExtensions ve = new KExpressionsValueExtensions
+    extension KExpressionsCreateExtensions cr = new KExpressionsCreateExtensions
     
     public static val IProperty<DataDependency> DATA_DEPENDENCY =
         new Property<DataDependency>("de.cau.cs.kieler.sccharts.ui.synthesis.hools.dataDependency", null)    
@@ -93,8 +97,8 @@ class ToggleDependencyAction implements IAction {
 
                 if (sSchedule !== null && tSchedule !== null) {    
                     if (sSchedule.priority == tSchedule.priority) {
-                        sSchedule.priority = 0
-                        tSchedule.priority = 1
+                        sSchedule.priority = 0.createIntValue
+                        tSchedule.priority = 1.createIntValue
                     } else {         
                         val d = sSchedule.priority
                         sSchedule.priority = tSchedule.priority
@@ -107,17 +111,17 @@ class ToggleDependencyAction implements IAction {
                     val allSOReferences = autoObject.eContainer.eContainer.eAllContents.filter(ScheduleObjectReference).
                         filter[ it.valuedObject == autoObject ].toList
                     for (r : allSOReferences) {
-                        if (r.priority > newPriority) newPriority = r.priority + 1
+                        if (r.priority.asIntValue.value > newPriority) newPriority = r.priority.asIntValue.value + 1
                     }
                     
                     if (sSchedule === null && source.schedule.forall[ valuedObject != autoObject ]) {
                         val newSSchedule = autoObject.createScheduleReference
-                        newSSchedule.priority = newPriority++
+                        newSSchedule.priority = (newPriority++).createIntValue
                         source.schedule += newSSchedule
                     }
                     if (tSchedule === null && target.schedule.forall[ valuedObject != autoObject ]) {
                         val newTSchedule = autoObject.createScheduleReference
-                        newTSchedule.priority = newPriority++
+                        newTSchedule.priority = (newPriority++).createIntValue
                         target.schedule += newTSchedule
                     }
                     

@@ -95,7 +95,7 @@ class Highlighting {
     /**
      * Removes all highlighting styles from the list.
      */
-    private def void removeHighlighting(List<KStyle> styles) {
+    protected def void removeHighlighting(List<KStyle> styles) {
         for(s : styles.clone) {
             if(s.isHighlighting) {
                 styles.remove(s)    

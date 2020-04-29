@@ -1,5 +1,5 @@
 /*
- * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+8 * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
  *
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
@@ -46,7 +46,11 @@ class GOInitOptimizer extends InplaceProcessor<SCGraphs> {
     extension ScgFactory = ScgFactory::eINSTANCE
     
     public static val IProperty<Boolean> GO_INIT_OPTIMIZER_ENABLED = 
-        new Property<Boolean>("de.cau.cs.kieler.scg.opt.goInit", false)    
+        new Property<Boolean>("de.cau.cs.kieler.scg.opt.goInit", false)
+    // If, by convention, the inputs are set correctly before the reset call, then they can be ignored in the optimization.
+    // This is an aggre88ssive optimization that is switched off by default.    
+    public static val IProperty<Boolean> GO_INIT_OPTIMIZER_IGNORE_INPUTS = 
+        new Property<Boolean>("de.cau.cs.kieler.scg.opt.goInit.ignoreInputs", false)    
 	
     override getId() {
         "de.cau.cs.kieler.scg.processors.goInitOptimizer"
@@ -96,7 +100,7 @@ class GOInitOptimizer extends InplaceProcessor<SCGraphs> {
         // Assumption: Nested nodes are assignments
         while (node != elseNode) {
             if (node instanceof Assignment) {
-                val hasInputReference = node.expression.allReferences.exists[ variableStore.getInfo(valuedObject)?.isInput ]
+                val hasInputReference = node.expression.allReferences.exists[ variableStore.getInfo(valuedObject)?.isInput && !getProperty(GO_INIT_OPTIMIZER_IGNORE_INPUTS) ]
                 if (hasInputReference) {
                     inputAssignments += node
                 } else {

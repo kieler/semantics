@@ -31,6 +31,7 @@ import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
 import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.sccharts.ControlflowRegion
+import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 
 /**
  * 
@@ -38,7 +39,7 @@ import de.cau.cs.kieler.sccharts.ControlflowRegion
  * @kieler.design 2017-12-05 proposed
  * @kieler.rating 2017-12-05 proposed yellow  
  */
-class PrTransitions extends SCChartsProcessor {
+class PrTransitions extends SCChartsProcessor implements Traceable {
     
     @Inject extension KExpressionsDeclarationExtensions
     @Inject extension KExpressionsCreateExtensions
@@ -110,7 +111,7 @@ class PrTransitions extends SCChartsProcessor {
         
         var actState = randomState
         for (prTransition : prTransitions.filter [ immediate ]) {
-            val newTrigger = createValuedObject(prDeclaration, "T" + prTransition.priority)
+            val newTrigger = createValuedObject(prDeclaration, "T" + prTransition.priority).uniqueName
             newTransitionTriggers.put(prTransition, newTrigger)
             
             actState = prTransition.createPrTransitionTree(actState, newTrigger, prRegion, rVar, statePrefix)                
@@ -121,7 +122,7 @@ class PrTransitions extends SCChartsProcessor {
         for (prTransition : prTransitions) {
             val newTrigger = if (newTransitionTriggers.keySet.contains(prTransition))
                 newTransitionTriggers.get(prTransition) 
-                else createValuedObject(prDeclaration, "T" + prTransition.priority)
+                else createValuedObject(prDeclaration, "T" + prTransition.priority).uniqueName
             newTransitionTriggers.put(prTransition, newTrigger)
             
             actState = prTransition.createPrTransitionTree(actState, newTrigger, prRegion, rVar, statePrefix)                

@@ -2513,6 +2513,27 @@ finally {
 	restoreStackSize(stackSize);
 }
 
+rule__ScheduleObjectReference__PriorityAlternatives_1_0
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+	(
+		{ before(grammarAccess.getScheduleObjectReferenceAccess().getPriorityIntValueParserRuleCall_1_0_0()); }
+		ruleIntValue
+		{ after(grammarAccess.getScheduleObjectReferenceAccess().getPriorityIntValueParserRuleCall_1_0_0()); }
+	)
+	|
+	(
+		{ before(grammarAccess.getScheduleObjectReferenceAccess().getPriorityValuedObjectReferenceParserRuleCall_1_0_1()); }
+		ruleValuedObjectReference
+		{ after(grammarAccess.getScheduleObjectReferenceAccess().getPriorityValuedObjectReferenceParserRuleCall_1_0_1()); }
+	)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
 rule__ReferenceCall__Alternatives_3
 	@init {
 		int stackSize = keepStackSize();
@@ -12868,9 +12889,9 @@ rule__ScheduleObjectReference__PriorityAssignment_1
 	}
 :
 	(
-		{ before(grammarAccess.getScheduleObjectReferenceAccess().getPriorityINTTerminalRuleCall_1_0()); }
-		RULE_INT
-		{ after(grammarAccess.getScheduleObjectReferenceAccess().getPriorityINTTerminalRuleCall_1_0()); }
+		{ before(grammarAccess.getScheduleObjectReferenceAccess().getPriorityAlternatives_1_0()); }
+		(rule__ScheduleObjectReference__PriorityAlternatives_1_0)
+		{ after(grammarAccess.getScheduleObjectReferenceAccess().getPriorityAlternatives_1_0()); }
 	)
 ;
 finally {

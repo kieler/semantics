@@ -214,17 +214,18 @@ litigation.
    </url>
 
    <requires>
-      <import feature="de.cau.cs.kieler.kgraph.feature"/>
       <import feature="de.cau.cs.kieler.klighd.feature"/>
       <import feature="de.cau.cs.kieler.klighd.freehep.feature"/>
       <import feature="de.cau.cs.kieler.klighd.view.feature"/>
+      <import plugin="de.cau.cs.kieler.klighd.ui.contrib3x"/>
+      <import plugin="de.cau.cs.kieler.kgraph.text.ui"/>
+      <import plugin="de.cau.cs.kieler.graphs.klighd"/>
       <import feature="org.eclipse.elk.feature"/>
       <import feature="org.eclipse.elk.graphviz.feature"/>
       <import feature="org.eclipse.elk.ui.feature"/>
       <import feature="org.eclipse.elk.sdk.feature"/>
-      <import feature="org.eclipse.emf" version="2.6.0" match="greaterOrEqual"/>
-      <import feature="org.eclipse.xtext.runtime" version="2.4.2" match="greaterOrEqual"/>
-      <import feature="org.eclipse.xtext.ui" version="2.4.2" match="greaterOrEqual"/>
+      <import feature="org.eclipse.xtext.runtime" version="2.20.0" match="greaterOrEqual"/>
+      <import feature="org.eclipse.xtext.ui" version="2.20.0" match="greaterOrEqual"/>
    </requires>
 
    <plugin id="de.cau.cs.kieler.core" download-size="0" install-size="0" version="0.0.0" unpack="false"/>

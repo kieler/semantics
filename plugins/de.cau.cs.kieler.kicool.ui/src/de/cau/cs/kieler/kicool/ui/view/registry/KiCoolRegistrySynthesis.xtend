@@ -70,9 +70,10 @@ class KiCoolRegistrySynthesis extends AbstractDiagramSynthesis<KiCoolRegistrySum
     
     public static val KIELER_QUALIFIED_NAME_PREFIX = "de.cau.cs.kieler."
     
-    public static val SynthesisOption SHOW_BUNDLES = SynthesisOption::createCheckOption("Show Bundles", true)
-    public static val SynthesisOption SHOW_SOURCE_FILES = SynthesisOption::createCheckOption("Show Source Files", true)
+    public static val SynthesisOption SHOW_BUNDLES = SynthesisOption::createCheckOption("Show Bundles", false)
+    public static val SynthesisOption SHOW_SOURCE_FILES = SynthesisOption::createCheckOption("Show Source Files", false)
     public static val SynthesisOption SHOW_SYSTEMS = SynthesisOption::createCheckOption("Show Systems", true)
+    public static val SynthesisOption SHOW_PUBLIC_SYSTEMS_ONLY = SynthesisOption::createCheckOption("Show Public Systems Only", false)
     public static val SynthesisOption SHOW_PROCESSORS = SynthesisOption::createCheckOption("Show Processors", true)
         
     public static val SynthesisOption FULLY_QUALIFIED_KIELER_PREFIX = SynthesisOption::createCheckOption("Show KIELER Qualified Name Prefix", false)
@@ -88,6 +89,7 @@ class KiCoolRegistrySynthesis extends AbstractDiagramSynthesis<KiCoolRegistrySum
             add(SHOW_BUNDLES)
             add(SHOW_SOURCE_FILES)
             add(SHOW_SYSTEMS)
+            add(SHOW_PUBLIC_SYSTEMS_ONLY)
             add(SHOW_PROCESSORS)
             add(FULLY_QUALIFIED_KIELER_PREFIX)
             add(FULLY_QUALIFIED_PROCESSOR_NAMES)
@@ -154,7 +156,9 @@ class KiCoolRegistrySynthesis extends AbstractDiagramSynthesis<KiCoolRegistrySum
         val result = <KNode> newLinkedList
         if (!SHOW_SYSTEMS.booleanValue) return result
         
-        for (s : model.systemList) {
+        val systemList = if (SHOW_PUBLIC_SYSTEMS_ONLY.booleanValue) model.systemList.filter[ public ].toList 
+            else model.systemList
+        for (s : systemList) {
             val node = s.createNode.toIdNodeMap(s.id) 
             node.createPort("in") => [ node.ports += it ]
             node.createPort("out") => [ node.ports += it ]
@@ -290,7 +294,9 @@ class KiCoolRegistrySynthesis extends AbstractDiagramSynthesis<KiCoolRegistrySum
         if (!SHOW_PROCESSORS.booleanValue) return result
         if (!SHOW_SYSTEMS.booleanValue) return result
         
-        for (s : model.systemList) {
+        val systemList = if (SHOW_PUBLIC_SYSTEMS_ONLY.booleanValue) model.systemList.filter[ public ].toList 
+            else model.systemList
+        for (s : systemList) {
             val rList = s.eAllContents.filter(ProcessorReference).toList
             for (p : rList) {
                 s.createEdge(p) => [
@@ -316,8 +322,10 @@ class KiCoolRegistrySynthesis extends AbstractDiagramSynthesis<KiCoolRegistrySum
     def protected Collection<KNode> connectReferencedSystems(KiCoolRegistrySummary model) {
         val result = <KNode> newLinkedList
         if (!SHOW_SYSTEMS.booleanValue) return result
-        
-        for (s : model.systemList) {
+
+        val systemList = if (SHOW_PUBLIC_SYSTEMS_ONLY.booleanValue) model.systemList.filter[ public ].toList 
+            else model.systemList
+        for (s : systemList) {
             val rList = s.eAllContents.filter(ProcessorSystem).toList
             for (p : rList) {
                 s.createEdge(p) => [

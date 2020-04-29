@@ -14075,20 +14075,39 @@ ruleScheduleObjectReference returns [EObject current=null]
 		)
 		(
 			(
-				lv_priority_1_0=RULE_INT
-				{
-					newLeafNode(lv_priority_1_0, grammarAccess.getScheduleObjectReferenceAccess().getPriorityINTTerminalRuleCall_1_0());
-				}
-				{
-					if ($current==null) {
-						$current = createModelElement(grammarAccess.getScheduleObjectReferenceRule());
+				(
+					{
+						newCompositeNode(grammarAccess.getScheduleObjectReferenceAccess().getPriorityIntValueParserRuleCall_1_0_0());
 					}
-					setWithLastConsumed(
-						$current,
-						"priority",
-						lv_priority_1_0,
-						"de.cau.cs.kieler.annotations.Annotations.INT");
-				}
+					lv_priority_1_1=ruleIntValue
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getScheduleObjectReferenceRule());
+						}
+						set(
+							$current,
+							"priority",
+							lv_priority_1_1,
+							"de.cau.cs.kieler.kexpressions.KExpressions.IntValue");
+						afterParserOrEnumRuleCall();
+					}
+					    |
+					{
+						newCompositeNode(grammarAccess.getScheduleObjectReferenceAccess().getPriorityValuedObjectReferenceParserRuleCall_1_0_1());
+					}
+					lv_priority_1_2=ruleValuedObjectReference
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getScheduleObjectReferenceRule());
+						}
+						set(
+							$current,
+							"priority",
+							lv_priority_1_2,
+							"de.cau.cs.kieler.kexpressions.KExpressions.ValuedObjectReference");
+						afterParserOrEnumRuleCall();
+					}
+				)
 			)
 		)
 	)

@@ -41,11 +41,9 @@ import de.cau.cs.kieler.kexpressions.Schedulable
  */
 class KExpressionsValuedObjectExtensions {
     
-    @Inject
-    extension KExpressionsDeclarationExtensions
-    
-    @Inject
-    extension EcoreUtilExtensions
+    @Inject extension KExpressionsDeclarationExtensions
+    @Inject extension KExpressionsCreateExtensions
+    @Inject extension EcoreUtilExtensions
     
     def Declaration getDeclaration(ValuedObject valuedObject) {
         if (valuedObject.eContainer instanceof Declaration)
@@ -96,7 +94,7 @@ class KExpressionsValuedObjectExtensions {
     def ScheduleObjectReference createScheduleReference(ValuedObject valuedObject, int priority) {
         KExpressionsFactory::eINSTANCE.createScheduleObjectReference() => [
             setValuedObject(valuedObject)
-            setPriority(priority)
+            setPriority(priority.createIntValue)
         ]
     }
     

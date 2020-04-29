@@ -168,7 +168,7 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
                 for(sched : assignment.schedule) {
                     val schedule = sched.valuedObject.declaration as ScheduleDeclaration
                     val scheduleObject = sched.valuedObject        
-                    val priority = sched.priority
+                    val priority = sched.priority.asIntValue.value
                     
                     for (w : artificialWriters) {
                         val writeAccess = new ValuedObjectAccess(assignment, assignment.association, schedule, scheduleObject, priority, forkStack, false)
@@ -227,7 +227,7 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
                 if (sched instanceof ScheduleObjectReference) {
                     schedule = sched.valuedObject.declaration as ScheduleDeclaration
                     scheduleObject = sched.valuedObject 
-                    priority = sched.priority    
+                    priority = sched.priority.asIntValue.value    
                 }
                 
                 val writeAccess = new ValuedObjectAccess(assignment, assignment.association, schedule, scheduleObject, priority, forkStack, writeVOI.isSpecificIdentifier)
@@ -259,7 +259,7 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
                 if (sched instanceof ScheduleObjectReference) {
                     schedule = sched.valuedObject.declaration as ScheduleDeclaration
                     scheduleObject = sched.valuedObject 
-                    priority = sched.priority    
+                    priority = sched.priority.asIntValue.value    
                 }                
                                 
                 for (vor : parameter.expression.allReferences) { 
@@ -294,7 +294,7 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
         for(sched : schedules) {
             val schedule = sched.valuedObject.declaration as ScheduleDeclaration
             val scheduleObject = sched.valuedObject        
-            val priority = sched.priority
+            val priority = sched.priority.asIntValue.value
             
             if (writeVOI !== null) {
 //                println(effect+ "\n  " + effect.association + "\n  " + schedule + "\n  " + scheduleObject + "\n  " +
@@ -325,7 +325,7 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
                 if (sched instanceof ScheduleObjectReference) {
                     schedule = sched.valuedObject.declaration as ScheduleDeclaration
                     scheduleObject = sched.valuedObject
-                    priority = sched.priority    
+                    priority = sched.priority.asIntValue.value    
                 }
                 
                 val readAccess = new ValuedObjectAccess(node, node.association, schedule, scheduleObject, priority, forkStack, readVOI.isSpecificIdentifier)
@@ -367,17 +367,24 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
         for (schedule : schedules) {
             for (vo : schedule.valuedObjects) {
                 val scheduledAccesses = accesses.filter[ it.schedule == schedule && it.scheduleObject == vo ].toSet
-                processed += valuedObjectIdentifier.processDependencySet(scheduledAccesses, null, isSpecific)
+                processed += valuedObjectIdentifier.processDependencySet(scheduledAccesses, null, isSpecific, null)
             }
         }
-        valuedObjectIdentifier.processDependencySet(accesses.filter[ schedule === null ].toSet, processed, isSpecific)
+        
+        val excludeCache = <Pair<Linkable, Linkable>> newHashSet 
+        processed.forEach[
+            excludeCache.add(new Pair<Linkable, Linkable>(it.key.node, it.value.node))
+        ] 
+        
+        valuedObjectIdentifier.processDependencySet(accesses.filter[ schedule === null ].toSet, processed, isSpecific, excludeCache)
     }
     
     /** Process the dependency set: Sort the dependencies according to priority and check if a dependency object
      *  must be created. Afterwards, mark the dependency as processed.
      */
     protected def Set<Pair<ValuedObjectAccess, ValuedObjectAccess>> processDependencySet(ValuedObjectIdentifier valuedObjectIdentifier, 
-        Set<ValuedObjectAccess> accesses, Set<Pair<ValuedObjectAccess, ValuedObjectAccess>> exclude, boolean isSpecific
+        Set<ValuedObjectAccess> accesses, Set<Pair<ValuedObjectAccess, ValuedObjectAccess>> exclude, boolean isSpecific,
+        Set<Pair<Linkable, Linkable>> excludeCache 
     ) {
         val processed = <Pair<ValuedObjectAccess, ValuedObjectAccess>> newHashSet
         val accessPair = accesses.sortAccessesAccordingToPriority
@@ -388,7 +395,7 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
                     val compAccesses = accessPair.value.get(compPriority) 
                     for (compAccess : compAccesses) {
                         if (exclude === null || 
-                            !exclude.exists[ key.node == access.node && value.node == compAccess.node ] 
+                            !excludeCache.contains(new Pair<Linkable, Linkable>(access.node, compAccess.node)) 
                         ) {
                             if (!access.isSpecific || !compAccess.isSpecific || isSpecific) {
                                 valuedObjectIdentifier.processDependency(access, compAccess)

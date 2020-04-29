@@ -2101,13 +2101,15 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final CrossReference cValuedObjectValuedObjectCrossReference_0_0 = (CrossReference)cValuedObjectAssignment_0.eContents().get(0);
 		private final RuleCall cValuedObjectValuedObjectPrimeIDParserRuleCall_0_0_1 = (RuleCall)cValuedObjectValuedObjectCrossReference_0_0.eContents().get(1);
 		private final Assignment cPriorityAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cPriorityINTTerminalRuleCall_1_0 = (RuleCall)cPriorityAssignment_1.eContents().get(0);
+		private final Alternatives cPriorityAlternatives_1_0 = (Alternatives)cPriorityAssignment_1.eContents().get(0);
+		private final RuleCall cPriorityIntValueParserRuleCall_1_0_0 = (RuleCall)cPriorityAlternatives_1_0.eContents().get(0);
+		private final RuleCall cPriorityValuedObjectReferenceParserRuleCall_1_0_1 = (RuleCall)cPriorityAlternatives_1_0.eContents().get(1);
 		
 		//ScheduleObjectReference:
-		//	valuedObject=[ValuedObject|PrimeID] priority=INT;
+		//	valuedObject=[ValuedObject|PrimeID] priority=(IntValue | ValuedObjectReference);
 		@Override public ParserRule getRule() { return rule; }
 		
-		//valuedObject=[ValuedObject|PrimeID] priority=INT
+		//valuedObject=[ValuedObject|PrimeID] priority=(IntValue | ValuedObjectReference)
 		public Group getGroup() { return cGroup; }
 		
 		//valuedObject=[ValuedObject|PrimeID]
@@ -2119,11 +2121,17 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//PrimeID
 		public RuleCall getValuedObjectValuedObjectPrimeIDParserRuleCall_0_0_1() { return cValuedObjectValuedObjectPrimeIDParserRuleCall_0_0_1; }
 		
-		//priority=INT
+		//priority=(IntValue | ValuedObjectReference)
 		public Assignment getPriorityAssignment_1() { return cPriorityAssignment_1; }
 		
-		//INT
-		public RuleCall getPriorityINTTerminalRuleCall_1_0() { return cPriorityINTTerminalRuleCall_1_0; }
+		//(IntValue | ValuedObjectReference)
+		public Alternatives getPriorityAlternatives_1_0() { return cPriorityAlternatives_1_0; }
+		
+		//IntValue
+		public RuleCall getPriorityIntValueParserRuleCall_1_0_0() { return cPriorityIntValueParserRuleCall_1_0_0; }
+		
+		//ValuedObjectReference
+		public RuleCall getPriorityValuedObjectReferenceParserRuleCall_1_0_1() { return cPriorityValuedObjectReferenceParserRuleCall_1_0_1; }
 	}
 	public class ReferenceCallElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.ReferenceCall");
@@ -4473,7 +4481,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//ScheduleObjectReference:
-	//	valuedObject=[ValuedObject|PrimeID] priority=INT;
+	//	valuedObject=[ValuedObject|PrimeID] priority=(IntValue | ValuedObjectReference);
 	public ScheduleObjectReferenceElements getScheduleObjectReferenceAccess() {
 		return pScheduleObjectReference;
 	}

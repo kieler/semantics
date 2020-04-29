@@ -377,13 +377,13 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
         // User schedules
         val userSchedule = region.schedule
         if (userSchedule.size > 0) {
-            val exists = <Pair<ValuedObject, Integer>> newHashSet
+            val exists = <Pair<ValuedObject, String>> newHashSet
             components.addKeyword("schedule")
             for (s : userSchedule.indexed) {
-                val existPair = new Pair<ValuedObject, Integer>(s.value.valuedObject, s.value.priority)
+                val existPair = new Pair<ValuedObject, String>(s.value.valuedObject, s.value.priority.serializeHR.toString)
                 if (!exists.contains(existPair)) {
                     if (s.key != 0) components.addText(",")
-                    components.addHighlight(s.value.valuedObject.name + " " + s.value.priority)
+                    components.addHighlight(s.value.valuedObject.name + " " + s.value.priority.serializeHR.toString)
                     exists.add(existPair)
                 }
             }
