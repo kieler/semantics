@@ -63,9 +63,15 @@ class KeithCompilationUpdater implements Observer {
     def update(AbstractContextNotification notification) {
         switch notification {
             ProcessorStart: {
+                if (kicoolExt.snapshotMap.isEmpty) {
+                    return
+                }
                 kicoolExt.snapshotMap.get(uri).add(newArrayList)
             }
             ProcessorSnapshot: {
+                if (kicoolExt.snapshotMap.isEmpty) {
+                    return
+                }
                 val currentSnapshotList = kicoolExt.snapshotMap.get(uri).last
                 val processor = notification.processorInstance
                 val environment = processor.environment
@@ -81,6 +87,9 @@ class KeithCompilationUpdater implements Observer {
                 kicoolExt.update(uri, context, clientId, command, inplace, false, showResultingModel, currentIndex, maxIndex)
             }
             ProcessorFinished: {
+                if (kicoolExt.snapshotMap.isEmpty) {
+                    return
+                }
                 val currentSnapshotList = kicoolExt.snapshotMap.get(uri).last
                 val processor = notification.processorInstance
                 val environment = processor.environment
