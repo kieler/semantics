@@ -388,6 +388,13 @@ class KExpressionsValuedObjectExtensions {
         }
     }    
     
+    def boolean isPreOperatorExpression(Expression e) {
+        if (e instanceof OperatorExpression) {
+            return e.operator === OperatorType.PRE
+        }
+        return false
+    }
+    
     def isSameValuedObjectInReference(Expression source, Expression target) {
         source instanceof ValuedObjectReference &&
             target instanceof ValuedObjectReference &&

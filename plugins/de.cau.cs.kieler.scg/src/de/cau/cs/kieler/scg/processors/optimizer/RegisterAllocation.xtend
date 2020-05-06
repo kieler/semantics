@@ -26,6 +26,7 @@ import com.google.common.collect.Multimap
 class RegisterAllocation {
     @Accessors val registerRange = new HashMapStack<Node>
     @Accessors val freedRegister = <String> newLinkedList
+    @Accessors val Multimap<Node, String> recycleAfterNode = HashMultimap.create
     
     @Accessors var Multimap<Node, String> reverseRegisterRange 
     
