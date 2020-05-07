@@ -3,7 +3,7 @@
  *
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
- * Copyright ${year} by
+ * Copyright 2019-2020 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -12,66 +12,65 @@
  */
 package de.cau.cs.kieler.c.sccharts.processors
 
-import de.cau.cs.kieler.kicool.compilation.ExogenousProcessor
-import org.eclipse.cdt.core.dom.ast.IASTTranslationUnit
-import de.cau.cs.kieler.sccharts.SCCharts
-import org.eclipse.emf.ecore.EObject
+import com.google.common.collect.Sets
 import com.google.inject.Inject
-import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsDataflowRegionExtensions
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.c.sccharts.extensions.CDTConvertExtensions
+import de.cau.cs.kieler.c.sccharts.extensions.ExpressionConverterExtensionsStruct
+import de.cau.cs.kieler.c.sccharts.extensions.HighlightingExtensions
+import de.cau.cs.kieler.c.sccharts.extensions.SMExtractorExtensions
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsSerializeExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
-import de.cau.cs.kieler.c.sccharts.extensions.HighlightingExtensions
-import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.c.sccharts.extensions.SMExtractorExtensions
-import org.eclipse.cdt.core.dom.ast.IASTFunctionDefinition
+import de.cau.cs.kieler.kicool.compilation.ExogenousProcessor
 import de.cau.cs.kieler.sccharts.DataflowRegion
-import org.eclipse.cdt.core.dom.ast.IASTFunctionCallExpression
-import java.util.ArrayList
-import de.cau.cs.kieler.kexpressions.ValuedObject
-import org.eclipse.cdt.core.dom.ast.IASTExpressionStatement
-import org.eclipse.cdt.core.dom.ast.IASTIdExpression
-import org.eclipse.cdt.core.dom.ast.IASTNode
-import org.eclipse.cdt.core.dom.ast.IASTFieldReference
-import org.eclipse.cdt.core.dom.ast.IASTBinaryExpression
-import java.util.HashMap
-import org.eclipse.cdt.core.dom.ast.IASTUnaryExpression
-import org.eclipse.cdt.core.dom.ast.IASTArraySubscriptExpression
-import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.sccharts.Region
-import org.eclipse.cdt.internal.core.dom.parser.c.CASTFunctionDeclarator
-import org.eclipse.cdt.core.dom.ast.IASTSimpleDeclSpecifier
-import de.cau.cs.kieler.kexpressions.Expression
-import de.cau.cs.kieler.c.sccharts.extensions.CDTConvertExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
-import org.eclipse.cdt.core.dom.ast.IASTLiteralExpression
-import de.cau.cs.kieler.c.sccharts.extensions.ValueExtensions
-import de.cau.cs.kieler.kexpressions.VariableDeclaration
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsSerializeHRExtensions
-import org.eclipse.cdt.core.dom.ast.IASTConditionalExpression
-import org.eclipse.cdt.core.dom.ast.IASTCastExpression
-import org.eclipse.cdt.core.dom.ast.IASTForStatement
-import org.eclipse.cdt.core.dom.ast.IASTWhileStatement
-import org.eclipse.cdt.core.dom.ast.IASTDoStatement
-import org.eclipse.cdt.core.dom.ast.IASTIfStatement
+import de.cau.cs.kieler.sccharts.SCCharts
+import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsDataflowRegionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
-import java.time.format.DateTimeFormatter
 import java.time.LocalDateTime
-import de.cau.cs.kieler.c.sccharts.extensions.ExpressionConverterExtensions
-import org.eclipse.cdt.core.dom.ast.IASTSwitchStatement
+import java.time.format.DateTimeFormatter
+import java.util.ArrayList
+import java.util.HashMap
 import java.util.HashSet
-import org.eclipse.cdt.core.dom.ast.IASTCompoundStatement
-import org.eclipse.cdt.core.dom.ast.IASTCaseStatement
-import org.eclipse.cdt.core.dom.ast.IASTDefaultStatement
+import org.eclipse.cdt.core.dom.ast.IASTArraySubscriptExpression
+import org.eclipse.cdt.core.dom.ast.IASTBinaryExpression
 import org.eclipse.cdt.core.dom.ast.IASTBreakStatement
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsSerializeExtensions
-import org.eclipse.cdt.core.dom.ast.IASTExpression
+import org.eclipse.cdt.core.dom.ast.IASTCaseStatement
+import org.eclipse.cdt.core.dom.ast.IASTCompoundStatement
+import org.eclipse.cdt.core.dom.ast.IASTDeclarationStatement
+import org.eclipse.cdt.core.dom.ast.IASTDeclarator
+import org.eclipse.cdt.core.dom.ast.IASTDefaultStatement
+import org.eclipse.cdt.core.dom.ast.IASTDoStatement
+import org.eclipse.cdt.core.dom.ast.IASTEqualsInitializer
+import org.eclipse.cdt.core.dom.ast.IASTExpressionStatement
+import org.eclipse.cdt.core.dom.ast.IASTFieldReference
+import org.eclipse.cdt.core.dom.ast.IASTForStatement
+import org.eclipse.cdt.core.dom.ast.IASTFunctionCallExpression
+import org.eclipse.cdt.core.dom.ast.IASTFunctionDefinition
+import org.eclipse.cdt.core.dom.ast.IASTIdExpression
+import org.eclipse.cdt.core.dom.ast.IASTIfStatement
+import org.eclipse.cdt.core.dom.ast.IASTNode
+import org.eclipse.cdt.core.dom.ast.IASTSimpleDeclSpecifier
+import org.eclipse.cdt.core.dom.ast.IASTSimpleDeclaration
+import org.eclipse.cdt.core.dom.ast.IASTStandardFunctionDeclarator
+import org.eclipse.cdt.core.dom.ast.IASTSwitchStatement
+import org.eclipse.cdt.core.dom.ast.IASTTranslationUnit
+import org.eclipse.cdt.core.dom.ast.IASTUnaryExpression
+import org.eclipse.cdt.core.dom.ast.IASTWhileStatement
+import org.eclipse.emf.ecore.EObject
+
+import static extension org.eclipse.cdt.core.dom.ast.IASTFunctionCallExpression.*
 
 /**
- * @author lewe
+ * @author lewe, nre
  *
  */
 class StructflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts> {
@@ -82,23 +81,26 @@ class StructflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCChar
     @Inject extension SCChartsDataflowRegionExtensions
     @Inject extension SCChartsControlflowRegionExtensions
     @Inject extension SCChartsTransitionExtensions
-    @Inject extension KExpressionsCreateExtensions
     @Inject extension KExpressionsDeclarationExtensions
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KExpressionsSerializeExtensions
     @Inject extension KEffectsExtensions
     @Inject extension HighlightingExtensions
-    @Inject extension ExpressionConverterExtensions
+    @Inject extension ExpressionConverterExtensionsStruct
     @Inject extension CDTConvertExtensions
-    @Inject extension ValueExtensions
     @Inject extension SMExtractorExtensions
+    
+    public static val LOCAL_PREFIX = "local:"
     
     var State baseState
     var String structName
+    /** The AST node for all function definitions */
     var functionDefinitions = <String, IASTFunctionDefinition> newHashMap
+    /** The SCCharts state for all functions */
     var functionStates = <String, State> newHashMap
     var functionInputElements = <String, HashSet<String>> newHashMap
     var functionOutputElements = <String, HashSet<String>> newHashMap
+    /** Flag for each function name if it has already been built. */
     val functionBuild = <String, Boolean> newHashMap
     val VOs = <State, HashMap<String, ArrayList<ValuedObject>>> newHashMap
     
@@ -140,51 +142,50 @@ class StructflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCChar
         }
         
         // Create SCCharts root elements
-        val SCChart = createSCChart
+        val scc = createSCChart
         baseState = createState
-        SCChart.rootStates += baseState
+        scc.rootStates += baseState
         
         // Find the marked comment        
         val comments = ast.getComments
         val idx = comments.getIdxOfComment("//_EXTRACTOR_FUNCTION")
-        if(idx >= 0) {
-            val exComment = comments.get(idx)
-            val mFunc = getCommentFollowingNode(ast, exComment) as IASTFunctionDefinition   
-            
-            // Retrieve the name of the marked function
-            val funcName = mFunc.getDeclarator.getName.toString
-            baseState.name = funcName
-            baseState.label = funcName
-            baseState.insertHighlightAnnotations(mFunc)
-            functionStates.put(funcName, baseState)
-            
-            // Retrieve the name of teh central struct
-            val structParam = (mFunc.getDeclarator as CASTFunctionDeclarator).getParameters.get(0) 
-            structName = structParam.getDeclarator.getName.toString
-            
-            // Retrieve all structflow functions
-            findFunctions(ast)
-            
-            // Set the in and outputs of the core function
-            mFunc.findFuncInputs()
-            setStateInputs()
-            mFunc.findFuncOutputs()
-            setStateOutputs()
-            
-            // Add all structflow function to the sccharts
-            for (funcState : functionStates.values) {
-                SCChart.rootStates += funcState
-            }
-            
-            // Translate the function body
-            buildStructFlowForFunction(funcName)
-            
-        } else {
+        if (idx < 0) {
             baseState.name = "No function marked for Extraction!\nPlace the comment \"//_EXTRACTOR_FUNCTION\" above the function to extract"
             baseState.label = baseState.name
+            return scc    
+        }
+        val exComment = comments.get(idx)
+        val mFunc = getCommentFollowingNode(ast, exComment) as IASTFunctionDefinition   
+        
+        // Retrieve the name of the marked function
+        val funcName = mFunc.getDeclarator.getName.toString
+        baseState.name = funcName
+        baseState.label = funcName
+        baseState.insertHighlightAnnotations(mFunc)
+        functionStates.put(funcName, baseState)
+        
+        // Retrieve the name of the central struct
+        val structParam = (mFunc.getDeclarator as IASTStandardFunctionDeclarator).getParameters.get(0) 
+        structName = structParam.getDeclarator.getName.toString
+        
+        // Retrieve all structflow functions
+        findFunctions(ast)
+        
+        // Set the in and outputs of the core function
+        // and the outputs include the return value of the main extracted function as well.
+        mFunc.findFuncInputs(baseState)
+        setStateInputs()
+        mFunc.findFuncOutputs(baseState)
+        setStateOutputs()
+        
+        // Add all structflow function to the sccharts
+        for (funcState : functionStates.values) {
+            scc.rootStates += funcState
         }
         
-        SCChart
+        // Translate the function body
+        buildStructFlowForFunction(funcName)
+        return scc
         
     }
     
@@ -202,7 +203,7 @@ class StructflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCChar
                     val funcState = createState(funcName)
                     funcState.insertHighlightAnnotations(stmt)
                     
-                    // Create the output is the function has a return type
+                    // Create the output if the function has a return type
                     val declSpecifier = stmt.getDeclSpecifier
                     if (!(declSpecifier instanceof IASTSimpleDeclSpecifier) || ((declSpecifier as IASTSimpleDeclSpecifier).type > 1)) {
                         var stateVariables = <String, ArrayList<ValuedObject>> newHashMap
@@ -231,10 +232,9 @@ class StructflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCChar
     // Create the body for the named function
     def DataflowRegion buildStructFlowForFunction(String funcName) {
         var DataflowRegion dRegion
-        // Check if the body was already translated 
+        // Check if the body was already translated
         if (!functionBuild.get(funcName)) {
             // Set the flag
-            functionBuild.remove(funcName)
             functionBuild.put(funcName, true)
             
             val funcDef = functionDefinitions.get(funcName)
@@ -247,118 +247,141 @@ class StructflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCChar
                 }
                 // Translate each statement
                 for (stmt : funcDef.getBody.children) {
-                    buildStructFlow(stmt, funcState, dRegion)    
+                    buildStatement(stmt, funcState, dRegion)
                 }
-                funcState.linkOutputs(dRegion)    
+                funcState.linkOutputs(dRegion)
             }
-        }        
+        }
         dRegion
     }
     
-    def buildStructFlow(IASTNode stmt, State funcState, DataflowRegion dRegion) {
-            
-        // Translate an expression
-        if (stmt instanceof IASTExpressionStatement) {
-            val expr = stmt.getExpression
-            
-            // Reference the function state for a function call for a struct flow function    
-            if (expr instanceof IASTFunctionCallExpression) {
-                val firstArg = expr.getArguments.get(0)
-                // Check if the function is a structflow function
-                if ((firstArg instanceof IASTIdExpression) && ((firstArg as IASTIdExpression).getName.toString.equals(structName))) {
-                    var funcCallName = ""
-                    val funcCallNameExpr = expr.getFunctionNameExpression
-                    if (funcCallNameExpr instanceof IASTIdExpression) {
-                        funcCallName = funcCallNameExpr.getName.toString
-                    } else {
-                        funcCallName = ((funcCallNameExpr as IASTUnaryExpression).getOperand as IASTIdExpression).getName.toString
-                    }
-                    
-                    if (functionStates.containsKey(funcCallName)) {
-                        // Retrieve the function state
-                        val funcCallState = functionStates.get(funcCallName)
-                        val funcCallInputs = functionInputElements.get(funcCallName)
-                        val funcCallOutputs = functionOutputElements.get(funcCallName)
-                        
-                        // Create the reference of the state    
-                        val refDecl = createReferenceDeclaration
-                        refDecl.setReference(funcCallState)
-                        refDecl.annotations += createTagAnnotation("Hide")
-                        dRegion.declarations += refDecl                            
-                        val funcCallVO = refDecl.createValuedObject(funcCallName)
-                        
-                        // Connect the inputs    
-                        for (funcCallInput : funcCallInputs) {
-                            val funcCallInputVO = VOs.get(funcCallState).get(funcCallInput).get(0)
-                            val inputVO = funcState.findValuedObjectByName(funcCallInput, false, dRegion)
+    def void buildStatement(IASTNode stmt, State funcState, DataflowRegion dRegion) {
+        switch stmt {
+            // Create a declaration of a local variable and attach it to the dataflow region.
+            IASTDeclarationStatement: {
+                val declaration = stmt.declaration
+                if (declaration instanceof IASTSimpleDeclaration) {
+                    val decl = addDeclaration(declaration, funcState, dRegion)
+                    dRegion.declarations += decl
+                    decl.annotations += createTagAnnotation("Hide")
+                }
+            }
+            // Translate an expression
+            IASTExpressionStatement: {
+                val expr = stmt.getExpression
+                
+                switch expr {
+                    // Reference the function state for a function call for a struct flow function
+                    IASTFunctionCallExpression: {
+                        val firstArg = expr.getArguments.get(0)
+                        // Check if the function is a structflow function
+                        if ((firstArg instanceof IASTIdExpression) && ((firstArg as IASTIdExpression).getName.toString.equals(structName))) {
+                            var funcCallName = ""
+                            val funcCallNameExpr = expr.getFunctionNameExpression
+                            if (funcCallNameExpr instanceof IASTIdExpression) {
+                                funcCallName = funcCallNameExpr.getName.toString
+                            } else {
+                                funcCallName = ((funcCallNameExpr as IASTUnaryExpression).getOperand as IASTIdExpression).getName.toString
+                            }
+                            
+                            if (functionStates.containsKey(funcCallName)) {
+                                // Retrieve the function state
+                                val funcCallState = functionStates.get(funcCallName)
+                                val funcCallInputs = functionInputElements.get(funcCallName)
+                                val funcCallOutputs = functionOutputElements.get(funcCallName)
                                 
-                            dRegion.equations += createAssignment(funcCallVO, funcCallInputVO, inputVO.reference)
-                        }
-                        
-                        // Connect the outputs    
-                        for (funcCallOutput : funcCallOutputs) {
-                            val funcCallOutputVOList = VOs.get(funcCallState).get(funcCallOutput)
-                            val funcCallOutputVO = findOutputVar(funcCallOutputVOList)
-                            if (funcCallOutputVO !== null) {
-                                val outputVO = funcState.findValuedObjectByName(funcCallOutput, true, dRegion)
-                                   
-                                val sourceReference = funcCallVO.reference => [
-                                    subReference = funcCallOutputVO.reference
-                                ]
-                                dRegion.equations += createAssignment(outputVO, sourceReference)
-                                outputVO.insertHighlightAnnotations(expr)
+                                // Create the reference of the state    
+                                val refDecl = createReferenceDeclaration
+                                refDecl.setReference(funcCallState)
+                                refDecl.annotations += createTagAnnotation("Hide")
+                                dRegion.declarations += refDecl                            
+                                val funcCallVO = refDecl.createValuedObject(funcCallName)
+                                
+                                // Connect the inputs    
+                                for (funcCallInput : funcCallInputs) {
+                                    val funcCallInputVO = VOs.get(funcCallState).get(funcCallInput).get(0)
+                                    val inputVO = funcState.findValuedObjectByName(funcCallInput, false, dRegion)
+                                        
+                                    dRegion.equations += createAssignment(funcCallVO, funcCallInputVO, inputVO.reference)
+                                }
+                                
+                                // Connect the outputs    
+                                for (funcCallOutput : funcCallOutputs) {
+                                    val funcCallOutputVOList = VOs.get(funcCallState).get(funcCallOutput)
+                                    val funcCallOutputVO = findOutputVar(funcCallOutputVOList)
+                                    if (funcCallOutputVO !== null) {
+                                        val outputVO = funcState.findValuedObjectByName(funcCallOutput, true, dRegion)
+                                           
+                                        val sourceReference = funcCallVO.reference => [
+                                            subReference = funcCallOutputVO.reference
+                                        ]
+                                        dRegion.equations += createAssignment(outputVO, sourceReference)
+                                        outputVO.insertHighlightAnnotations(expr)
+                                    }
+                                }
+                                
+                                // Translate the body of the function    
+                                buildStructFlowForFunction(funcCallName)
                             }
                         }
-                        
-                        // Translate the body of the function    
-                        buildStructFlowForFunction(funcCallName)
                     }
-                }
-            
-            // Translate a binary expression        
-            } else if (expr instanceof IASTBinaryExpression) {
-                // Find the in- and output struct elements
-                val exprOutputElements = findOutputElements(expr)
-                val op2OutputElements = findOutputElements(expr.getOperand2)
-                // Check if the expression writes to a struct element
-                if ((exprOutputElements.length > op2OutputElements.length)) {
-                    // Retrieve the element that is written to
-                    val targetNames = findDifference(exprOutputElements, op2OutputElements)
-                    if (targetNames.length == 1) {
-                        // Create the assignment    
-                        val sourceExpr = createStructFlowKExpression(expr.getOperand2, funcState, dRegion) 
-                        val targetVO = funcState.findValuedObjectByName(targetNames.get(0), true, dRegion)
-                        dRegion.equations += createAssignment(targetVO, sourceExpr)
-                        targetVO.insertHighlightAnnotations(expr)
+                    // Translate a binary expression
+                    IASTBinaryExpression: {
+                        // Find the in- and output elements
+                        val exprOutputElements = findOutputElements(expr, funcState)
+                        val op2OutputElements = findOutputElements(expr.getOperand2, funcState)
+                        // Check if the expression writes to a struct element
+                        if ((exprOutputElements.length > op2OutputElements.length)) {
+                            // Retrieve the element that is written to
+                            val targetNames = Sets.difference(exprOutputElements, op2OutputElements)
+                            if (targetNames.length == 1) {
+                                // Create the assignment    
+                                val sourceExpr = createKExpression(expr.getOperand2, funcState, dRegion) 
+                                val targetVO = funcState.findValuedObjectByName(targetNames.get(0), true, dRegion)
+                                dRegion.equations += createAssignment(targetVO, sourceExpr)
+                                targetVO.insertHighlightAnnotations(expr)
+                            }
+                        }
+                    }
+                    IASTUnaryExpression: {
+                        // TODO: Does not work yet. Somehow breaks something in the equation synthesis.
+//                        // Create the expression
+//                        val sourceExpression = createKExpression(expr, funcState, dRegion)
+//                        // Retrieve the respective variable VO                
+//                        val opName = (expr.getOperand as IASTIdExpression).getName.toString
+//                        val opVO = funcState.findValuedObjectByName(opName, true, dRegion)
+//                                
+//                        opVO.insertHighlightAnnotations(expr) 
+//                        // Create the Assignment        
+//                        dRegion.equations += createAssignment(opVO, sourceExpression)
                     }
                 }
             }
-        // Build the controlflow Statements if wanted    
-        } if (buildControlStatements) {
-            if (stmt instanceof IASTForStatement) {
-                
-                buildForStatement(stmt, funcState, dRegion)              
-                 
-            } else if (stmt instanceof IASTWhileStatement) {
-                  
-                buildWhileStatement(stmt, funcState, dRegion) 
-                 
-            } else if (stmt instanceof IASTDoStatement) {
-                
-                buildDoStatement(stmt, funcState, dRegion)                    
-                 
-            } else if (stmt instanceof IASTIfStatement) {
-                
-                buildIfStatement(stmt, funcState, dRegion)
-                
-            } else if (stmt instanceof IASTSwitchStatement) {
-                
-                buildSwitchStatement(stmt, funcState, dRegion)
-                
+        }
+        // Build the controlflow Statements if wanted
+        // TODO: I think this else case is broken if buildCOntrolStatements is false, as it then will also be executed
+        // for all cases of the switch above.
+        if (buildControlStatements) {
+            switch stmt {
+                IASTForStatement: {
+                    buildForStatement(stmt, funcState, dRegion)              
+                }
+                IASTWhileStatement: {
+                    buildWhileStatement(stmt, funcState, dRegion) 
+                }
+                IASTDoStatement: {
+                    buildDoStatement(stmt, funcState, dRegion)   
+                }
+                IASTIfStatement: {
+                    buildIfStatement(stmt, funcState, dRegion)
+                }
+                IASTSwitchStatement: {
+                    buildSwitchStatement(stmt, funcState, dRegion)
+                }
             }
         } else {
             for (child : stmt.children) {
-                buildStructFlow(child, funcState, dRegion)
+                buildStatement(child, funcState, dRegion)
             }
         }
     }
@@ -385,7 +408,7 @@ class StructflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCChar
         forState.regions += forDRegion
         val forBody = stmt.getBody
         for (bStmt : forBody.children) {
-            buildStructFlow(bStmt, forState, forDRegion)
+            buildStatement(bStmt, forState, forDRegion)
         }
         forState.linkOutputs(forDRegion)
     }
@@ -412,7 +435,7 @@ class StructflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCChar
         wState.regions += wDRegion
         val wBody = stmt.getBody
         for (bStmt : wBody.children) {
-            buildStructFlow(bStmt, wState, wDRegion)
+            buildStatement(bStmt, wState, wDRegion)
         }
         wState.linkOutputs(wDRegion)
     }
@@ -439,7 +462,7 @@ class StructflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCChar
         doState.regions += doDRegion
         val doBody = stmt.getBody
         for (bStmt : doBody.children) {
-           buildStructFlow(bStmt, doState, doDRegion)
+           buildStatement(bStmt, doState, doDRegion)
         }
         doState.linkOutputs(doDRegion)
     }
@@ -464,7 +487,7 @@ class StructflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCChar
         val ifCRegion = createControlflowRegion("")
         ifCRegion.insertHighlightAnnotations(stmt)
         ifState.regions += ifCRegion
-        val initState = ifCRegion.createState("Init")
+        val initState = ifCRegion.createState("")
         initState.initial = true
         ifState.insertHighlightAnnotations(stmt)
         
@@ -473,14 +496,14 @@ class StructflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCChar
         val thenDRegion = createDataflowRegion("")
         thenState.regions += thenDRegion
         // Create the then transition
-        val thenTransition = initState.createTransitionTo(thenState)
-        thenTransition.trigger = stmt.getConditionExpression.createStructFlowKExpression(ifState, thenDRegion)
+        val thenTransition = initState.createImmediateTransitionTo(thenState)
+        thenTransition.trigger = stmt.getConditionExpression.createKExpression(ifState, thenDRegion)
         // Translate the then branch            
         val thenBody = stmt.getThenClause
         thenState.insertHighlightAnnotations(thenBody)
         thenDRegion.insertHighlightAnnotations(thenBody)
         for (tStmt : thenBody.children) {
-            buildStructFlow(tStmt, ifState, thenDRegion)
+            buildStatement(tStmt, ifState, thenDRegion)
         }      
         ifState.linkOutputs(thenDRegion)                
                 
@@ -493,11 +516,11 @@ class StructflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCChar
             elseDRegion.insertHighlightAnnotations(elseBody)
             elseState.regions += elseDRegion
             // Create the else transition
-            initState.createTransitionTo(elseState)
+            initState.createImmediateTransitionTo(elseState)
             
             // Translate the else branch           
             for (eStmt : elseBody.children) {
-               buildStructFlow(eStmt, ifState, elseDRegion)
+               buildStatement(eStmt, ifState, elseDRegion)
             }      
             ifState.linkOutputs(elseDRegion)
         }
@@ -524,18 +547,13 @@ class StructflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCChar
         cRegion.insertHighlightAnnotations(stmt.getBody)
         
         // Create the controller expression label
-        val controller = stmt.getControllerExpression.createStructFlowKExpression(swState, dRegion)
+        val controller = stmt.getControllerExpression.createKExpression(swState, dRegion)
         cRegion.label = "switch (" + controller.serialize + ")"       
         
         // Create the initial state
-        val initState = cRegion.createState("Init")
+        val initState = cRegion.createState("")
         initState.insertHighlightAnnotations(stmt.getBody)
         initState.initial = true
-        
-        // Create the final state
-        val finalState = cRegion.createState("final")
-        finalState.insertHighlightAnnotations(stmt.getBody)
-        finalState.final = true
         
         // Translate the switch body
         val swBody = stmt.getBody as IASTCompoundStatement
@@ -562,40 +580,134 @@ class StructflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCChar
                 
                 // Create the transition from teh previous case state to the new if needed
                 if (noBreakCase !== null) {
-                    noBreakCase.createTransitionTo(activeCase)
+                    noBreakCase.createImmediateTransitionTo(activeCase)
                     noBreakCase = null
                 }
                 
                 // Create a triggered transition for a case state 
                 if (child instanceof IASTCaseStatement) {
-                    val caseTransition = initState.createTransitionTo(activeCase)
+                    val caseTransition = initState.createImmediateTransitionTo(activeCase)
                     caseTransition.trigger = child.getExpression.createKExpression(swState, dRegion)                    
                     activeCase.label = controller.serialize + " == " + caseTransition.trigger.serialize
                 // Create a transition without a trigger for a default statement    
                 } else {
-                    initState.createTransitionTo(activeCase)
-                    activeCase.createTransitionTo(finalState)                    
+                    initState.createImmediateTransitionTo(activeCase)                  
                     activeCase.label = "default"
                 }
             // Create a transition to the final state for break statements    
             } else if (child instanceof IASTBreakStatement) {
-                activeCase.createTransitionTo(finalState)
                 linkOutputs(swState, activeDRegion)
                 activeCase = null
             // Translate other statements into the currently active dataflow region    
             } else {
-                buildStructFlow(child, swState, activeDRegion)
+                buildStatement(child, swState, activeDRegion)
             }
             
         }
         linkOutputs(swState, activeDRegion)
     }
     
+    // Create a variable declaration
+    def VariableDeclaration addDeclaration(IASTSimpleDeclaration declaration, State state, DataflowRegion dRegion) {
+        
+        // Create the declaration with the cdt type
+        val res = createVariableDeclaration
+        if (declaration.declSpecifier instanceof IASTSimpleDeclSpecifier) {
+            res.type = (declaration.getDeclSpecifier as IASTSimpleDeclSpecifier).type.CDTTypeConversion
+        } else {
+            println("non-simple variable declaration type. Not setting the SCCharts Variable type.")
+        }
+        res.insertHighlightAnnotations(declaration)
+        
+        // Retrieve the state's variable map
+        var HashMap<String, ArrayList<ValuedObject>> stateVariables = null
+        if(VOs.containsKey(state)) {
+            stateVariables = VOs.get(state)    
+        } else {
+            stateVariables = <String, ArrayList<ValuedObject>> newHashMap
+            VOs.put(state, stateVariables)
+        }
+        
+        // Create a valued object for each declared variable 
+        val declarators = declaration.getDeclarators
+        for(decl : declarators) {
+            // Retrieve the variables name
+            var varName = decl.getName.toString
+            // Create a SSA list for the variable
+            var varList = <ValuedObject> newArrayList
+            
+            // Create the valued object
+            val vo = res.createValuedObject(varName + "_0")
+            vo.insertHighlightAnnotations(decl)
+            
+            // Add the valued object and the ssa list to the respective elements    
+            varList.add(vo)
+            stateVariables.put(varName, varList)
+            
+            // Add the initialization assignment is needed
+            if(decl.getInitializer !== null) {
+                vo.initializeValuedObject(decl, state, dRegion)
+            }
+        }
+        return res
+    }
+    
+    // Add an initialization assignment to the given valued object
+    def initializeValuedObject(ValuedObject vo, IASTDeclarator decl, State state, DataflowRegion dRegion) {
+        val initializer = decl.getInitializer
+        if (initializer instanceof IASTEqualsInitializer) {
+            // If the init expression is not a function call translate the expression
+            if(!(initializer.children.head instanceof IASTFunctionCallExpression)) {                        
+                val initExpr = createKExpression(initializer.children.head, state, dRegion)
+                dRegion.equations += createAssignment(vo, initExpr)
+                
+            } else {
+                // Retrieve the name of the called function
+                val funcInit = initializer.children.head as IASTFunctionCallExpression
+                val funcName = (funcInit.getFunctionNameExpression as IASTIdExpression).getName.toString
+                val funcState = findFunctionState(funcName)
+                if (funcState === null) {
+                    return
+                }
+                
+                // Reference the function state         
+                val refDecl = createReferenceDeclaration
+                state.declarations += refDecl
+                refDecl.setReference(funcState)                        
+                val refObj = refDecl.createValuedObject(funcName)
+                refObj.insertHighlightAnnotations(funcInit)
+                
+                // Connect the function argument expressions        
+                var i = 0
+                for (argument : funcInit.getArguments) {
+                    val funcObjArg = funcState.declarations.filter(VariableDeclaration).map[valuedObjects].flatten.get(i)
+                    val connectExpr = argument.createKExpression(state, dRegion)
+                    var ass = createAssignment(refObj, funcObjArg, connectExpr)
+                    dRegion.equations += ass
+                    i++
+                }
+                
+                // Create the assignment to the given valued object        
+                val outputSource = funcState.findOutputVar("res")
+                val outputExpr = refObj.reference => [
+                    subReference = outputSource.reference
+                ]
+                dRegion.equations += createAssignment(vo, outputExpr)
+                        
+            }
+        }
+    }
+
+    // Find the state for the given function name
+    def State findFunctionState(String funcName) {
+        functionStates.get(funcName)
+    }
+    
     // Link the in and outputs of a control statement state
     def controlStmtSetInOutputs(IASTNode stmt, State csState, ValuedObject csObj, State funcState, DataflowRegion dRegion) {
         // Find the in- and outputs
-        var inputs = findInputElements(stmt)
-        var outputs = findOutputElements(stmt)
+        var inputs = findInputElements(stmt, csState)
+        var outputs = findOutputElements(stmt, csState)
         
         // Create the state variable map
         val stateVariables = <String, ArrayList<ValuedObject>> newHashMap
@@ -705,188 +817,7 @@ class StructflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCChar
         vo
     }
     
-    // Translate an expression
-    def Expression createStructFlowKExpression(IASTNode expr, State funcState, DataflowRegion dRegion) {
-        var Expression res
-        println("createStructFlowKExpression für expr: " + expr)
-        // Create a reference expression for a use of a struct element
-        if (expr instanceof IASTFieldReference) {
-            val structExpr = expr.getFieldOwner
-            println("   expr is fieldReference und filed owner is: " + structExpr)
-            if (structExpr instanceof IASTIdExpression) {
-                println("    field owner is idexpression")
-                if (structExpr.getName.toString.equals(structName)) {
-                    println("filed owner is central struct")
-                    val elemVO = funcState.findValuedObjectByName(expr.getFieldName.toString, false, dRegion)
-                    res = elemVO.reference
-                }
-            } else if (structExpr instanceof IASTFieldReference) {
-                println("field owner is wieder ne field reference")
-                res = structExpr.createStructFlowKExpression(funcState, dRegion)
-            }
-        // Translate the unary expression    
-        } else if (expr instanceof IASTUnaryExpression) {
-            var opType = expr.getOperator.CDTUnaryOpTypeConversion
-            val operand = expr.getOperand
-            if (opType !== null) {
-                val unExpr = opType.createOperatorExpression
-                unExpr.subExpressions += operand.createStructFlowKExpression(funcState, dRegion)
-                
-                res = unExpr
-            } else {
-                res = operand.createStructFlowKExpression(funcState, dRegion)
-            }
-        // Translate the Binary Expression    
-        } else if (expr instanceof IASTBinaryExpression) {
-            val opType = expr.getOperator.CDTBinaryOpTypeConversion
-            val binExpr = opType.createOperatorExpression
-            
-            for (operand : expr.children) {
-                binExpr.subExpressions += operand.createStructFlowKExpression(funcState, dRegion)
-            }
-            
-            res = binExpr
-        // Test if the array is a struct element    
-        } else if (expr instanceof IASTArraySubscriptExpression) {
-            val array = expr.getArrayExpression
-            if (array instanceof IASTFieldReference) {
-                val structExpr = array.getFieldOwner
-                if (structExpr instanceof IASTIdExpression) {
-                    if (structExpr.getName.toString.equals(structName)) {
-                        val elemVO = funcState.findValuedObjectByName(array.getFieldName.toString, false, dRegion)
-                        res = elemVO.reference
-                    }
-                }
-            } else {
-                res = createStringValue(expr.exprToString)
-            }
-        // Translate the IdExpression into a String value    
-        } else if (expr instanceof IASTIdExpression) {
-            res = createStringValue(expr.getName.toString)
-        // Translate the literal    
-        } else if (expr instanceof IASTLiteralExpression) {
-            res = expr.createValue
-        // Extract the expression and translate it    
-        } else if (expr instanceof IASTExpressionStatement) {
-            res = expr.getExpression.createStructFlowKExpression(funcState, dRegion)
-        // Translate a function call expression
-        } else if (expr instanceof IASTFunctionCallExpression) {
-            // Retrieve the function's name
-            var funcCallName = ""
-            val funcCallNameExpr = expr.getFunctionNameExpression
-            if (funcCallNameExpr instanceof IASTIdExpression) {
-                funcCallName = funcCallNameExpr.getName.toString
-            } else {
-                funcCallName = ((funcCallNameExpr as IASTUnaryExpression).getOperand as IASTIdExpression).getName.toString
-            }
-            // Retrieve the function state if it exists
-            val funcCallState = functionStates.get(funcCallName)
-            if (funcCallState !== null) {
-                val funcCallVO = expr.buildFuncCall(funcState, dRegion)
-                res = funcCallVO.reference => [
-                    subReference = funcCallState.declarations.filter(VariableDeclaration).map[ valuedObjects ].flatten.filter [ name == "res_out" ].head.reference
-                ]
-            // Create a state for a not known function an connect it    
-            } else {
-                // Create the state
-                val unFuncCallState = createState(funcCallName)
-                unFuncCallState.insertHighlightAnnotations(expr)
-                // Create an output
-                val outVarDecl = createVariableDeclaration
-                outVarDecl.output= true
-                unFuncCallState.declarations += outVarDecl
-                val outputVO = outVarDecl.createValuedObject("")
-                
-                // Create the Reference
-                var refDecl = createReferenceDeclaration
-                refDecl.setReference(unFuncCallState)
-                refDecl.annotations += createTagAnnotation("hide")
-                dRegion.declarations += refDecl                
-                val funcCallVO = refDecl.createValuedObject(funcCallName)
-                res = funcCallVO.reference => [
-                    subReference = outputVO.reference
-                ]
-                
-                // Connect the argument expressions
-                val arguments = expr.getArguments
-                for (argument : arguments) {
-                    val argDecl = createVariableDeclaration
-                    argDecl.input = true
-                    unFuncCallState.declarations += argDecl
-                    val argVO = argDecl.createValuedObject("")
-                    
-                    dRegion.equations += createAssignment(funcCallVO, argVO, argument.createStructFlowKExpression(funcState, dRegion))
-                }
-            }
-
-        // Translate a conditional expression similar to an if statement    
-        } else if (expr instanceof IASTConditionalExpression) {
-            
-            val condExpr = expr.getLogicalConditionExpression
-            // Create the state
-            val condState = createState(condExpr.exprToString)
-            condState.insertHighlightAnnotations(expr)
-            // Create a Region for the then branch
-            val condDRegion = createDataflowRegion(condState.name)
-            condDRegion.label = condState.name
-            condState.regions += condDRegion
-            // Create the Reference
-            val refDecl = createReferenceDeclaration
-            refDecl.setReference(condState)
-            refDecl.annotations += createTagAnnotation("hide")
-            dRegion.declarations += refDecl
-            val condStateVO = refDecl.createValuedObject("?")
-            val stateVariables = <String, ArrayList<ValuedObject>> newHashMap
-            VOs.put(condState, stateVariables)
-            
-            // Connect the inputs
-            var inputElements = expr.findInputElements
-            for (inputElement : inputElements) {
-                val varDecl = createVariableDeclaration
-                varDecl.input = true
-                condState.declarations += varDecl
-                val inputVO = varDecl.createValuedObject(inputElement)
-                val varList = <ValuedObject> newArrayList
-                varList.add(inputVO)
-                stateVariables.put(inputElement, varList)
-                
-                val outerVO = funcState.findValuedObjectByName(inputElement, false, dRegion)
-                
-                dRegion.equations += createAssignment(condStateVO, inputVO, outerVO.reference)
-            }
-            
-            // Connect the output
-            val outputDecl = createVariableDeclaration
-            outputDecl.output = true
-            condState.declarations += outputDecl
-            val outputVO = outputDecl.createValuedObject("res")
-            
-            // Translate the positive expression
-            condDRegion.equations += createAssignment(outputVO, expr.getPositiveResultExpression.createStructFlowKExpression(condState,condDRegion))
-            outputVO.insertHighlightAnnotations(expr)
-            
-            // Translate the negative expression
-            val condNDRegion = createDataflowRegion("Else")
-            condNDRegion.label = "Else"
-            condState.regions += condNDRegion
-            
-            condNDRegion.equations += createAssignment(outputVO, expr.getNegativeResultExpression.createStructFlowKExpression(condState,condNDRegion))
-            outputVO.insertHighlightAnnotations(expr)
-            
-            
-            res = condStateVO.reference => [
-                subReference = outputVO.reference
-            ]
-            
-        // Translate a Cast Expression    
-        } else if (expr instanceof IASTCastExpression) {
-            res = expr.getOperand.createStructFlowKExpression(funcState, dRegion)
-        }
-        
-        res
-    }
-    
-    def printASTHead(IASTNode node, String prefix) {
+    def void printASTHead(IASTNode node, String prefix) {
         println(prefix + node.toString)
         for (child : node.children) {
             if (!(child instanceof IASTCompoundStatement)) {
@@ -895,74 +826,79 @@ class StructflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCChar
         }
     }
     
-    // Return all elements of set1 that are not contained in set2
-    def ArrayList<String> findDifference(HashSet<String> set1, HashSet<String> set2) {
-        val res = <String> newArrayList
-        
-        for (elem : set1) {
-            if (!set2.contains(elem)) res.add(elem)
-        }
-        
-        res
-    }
-    
-    // Find all used struct elements of the given function definition
-    def HashSet<String> findFuncInputs(IASTFunctionDefinition funcDef) {
+    // Find all used elements of the given function definition
+    def HashSet<String> findFuncInputs(IASTFunctionDefinition funcDef, State parentState) {
         var res = <String> newHashSet
         
         val funcName = funcDef.getDeclarator.getName.toString    
-        res = findInputElements(funcDef.getBody)
+        res = findInputElements(funcDef.getBody, parentState)
         
         functionInputElements.put(funcName, res)
             
         res
     }
     
-    // Find all struct elements read in the given node
-    def HashSet<String> findInputElements(IASTNode stmt) {
-        var res = <String> newHashSet
+    // TODO: maybe rename all struct inputs to structname->member instead of just member
+    /** Find all elements read in the given node */
+    def HashSet<String> findInputElements(IASTNode stmt, State parentState) {
+        var inputs = <String> newHashSet
+        
+        switch stmt {
+            // Add a found non local variable use
+            IASTIdExpression: {
+                val varName = stmt.getName.toString
+                // TODO: seems like only non-local varibales should be used. How to find that out?
+//                if (VOs.get(parentState).containsKey(varName)) {
+                    // TODO: use a local prefix.
+                    inputs += /*LOCAL_PREFIX +*/ varName 
+//                }
+            }
             // Add a found struct element
-            if (stmt instanceof IASTFieldReference) {
+            IASTFieldReference: {
                 val structExpr = stmt.getFieldOwner
                 if (structExpr instanceof IASTIdExpression) {
                     if (structExpr.getName.toString.equals(structName)) {
-                        res += stmt.getFieldName.toString
+                        inputs += stmt.getFieldName.toString
                     }
                 } else if (structExpr instanceof IASTFieldReference) {
-                    res = findInputElements(structExpr)
+                    inputs = findInputElements(structExpr, parentState)
                 }
-            // Test if the array is a struct element    
-            } else if (stmt instanceof IASTArraySubscriptExpression) {
-                
+            }
+            // Test if the array is a struct element
+            IASTArraySubscriptExpression: {
                 val array = stmt.getArrayExpression
                 if (array instanceof IASTFieldReference) {
                     val structExpr = array.getFieldOwner
                     if (structExpr instanceof IASTIdExpression) {
                         if (structExpr.getName.toString.equals(structName)) {
-                            res += array.getFieldName.toString
+                            inputs += array.getFieldName.toString
                         }
                     }
                 }
-            // If the node is a BianryExpression exclude targets of an assignment    
-            } else if (stmt instanceof IASTBinaryExpression) {
-                if (stmt.getOperator == IASTBinaryExpression.op_assign) {
-                    val op1 = stmt.getOperand1
+            }
+            // If the node is a BianryExpression exclude targets of an assignment
+            IASTBinaryExpression: {
+                if (stmt.operator >= IASTBinaryExpression.op_assign
+                    && stmt.operator <= IASTBinaryExpression.op_binaryOrAssign) {
+                    val op1 = stmt.operand1
                     if (op1 instanceof IASTArraySubscriptExpression) {
-                        res += findInputElements(op1.getArgument)
+                        inputs += findInputElements(op1.getArgument, parentState)
                     }                    
-                    res += findInputElements(stmt.getOperand2)
+                    inputs += findInputElements(stmt.getOperand2, parentState)
                 } else {
-                    res = findInputElements(stmt.getOperand1)
-                    res += findInputElements(stmt.getOperand2)
+                    inputs = findInputElements(stmt.getOperand1, parentState)
+                    inputs += findInputElements(stmt.getOperand2, parentState)
                 }
-            // Include all inputs of a found function call    
-            } else if (stmt instanceof IASTFunctionCallExpression) {
+            }
+            // Include all inputs of a found function call
+            IASTFunctionCallExpression: {
                 var String funcName
                 if (stmt.getFunctionNameExpression instanceof IASTIdExpression) {
                     funcName = (stmt.getFunctionNameExpression as IASTIdExpression).getName.toString
                 
                 } else {
-                    println("FUNC CALL!!!")
+                    // nre: Apparently, this case has not been implemented yet. TODO
+                    println("Unimplemented func call type")
                     println("containingFile: " + stmt.getContainingFilename)
                     println("location Offset: " + stmt.getNodeLocations.get(0).getNodeOffset)
                     println("FunctionName: " + stmt.FUNCTION_NAME)
@@ -972,34 +908,44 @@ class StructflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCChar
                         nameExpression = (nameExpression as IASTUnaryExpression).getOperand
                     }
                     funcName = (nameExpression as IASTIdExpression).getName.toString*/
-                    funcName = "Weird Func Call!"
+//                    funcName = "Weird Func Call!"
                 }
                 if (functionInputElements.containsKey(funcName)) {
-                    res = functionInputElements.get(funcName)
+                    inputs = functionInputElements.get(funcName)
                 } else {
                     if (functionDefinitions.containsKey(funcName)) {
-                        res = findFuncInputs(functionDefinitions.get(funcName))
+                        inputs = findFuncInputs(functionDefinitions.get(funcName), parentState)
                     }
                 }
+                // TODO: which of these is needed?
+//                for (argument : stmt.arguments) {
+//                    inputs += findInputElements(argument, parentState)
+//                }
+                
                 for (child : stmt.children) {
-                    res += findInputElements(child)
-                }
-            // Test all children of any other kind of node    
-            } else {
-                for (child : stmt.children) {
-                    res += findInputElements(child)
+                    inputs += findInputElements(child, parentState)
                 }
             }
+            // Test all children of any other kind of node    
+            default: {
+                for (child : stmt.children) {
+                    inputs += findInputElements(child, parentState)
+                }
+            }
+        }
             
-        res
+        return inputs
     }
     
     // Create the inputs of all structflow functions
-    def setStateInputs() {
+    def void setStateInputs() {
         val functionsWithInputs = functionInputElements.keySet
         for (func : functionsWithInputs) {
             // Retrieve the input list of the function
             val inputs = functionInputElements.get(func)
+            if (inputs.empty) {
+                return
+            }
             // Retrieve the corresponding state
             val funcState = functionStates.get(func)
             // Set up the state valued object map
@@ -1027,53 +973,112 @@ class StructflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCChar
         }
     }
     
-    // Find all struct elements written inside the given function
-    def HashSet<String> findFuncOutputs(IASTFunctionDefinition funcDef) {
+    // Connect the Inputs of the given control statement to their respective valued objects of the containing state
+    def void setInputs(IASTNode stmt, State rootState, State newState, DataflowRegion dRegion, ValuedObject refObj) {
+        // Find the needed inputs of teh given control statement
+        var inputs = findInputElements(stmt, rootState)
+        
+        // Retrieve the state's valued object map
+        var HashMap<String, ArrayList<ValuedObject>> stateVariables = null
+        if(VOs.containsKey(newState)) {
+            stateVariables = VOs.get(newState)
+        } else {
+            stateVariables = <String, ArrayList<ValuedObject>> newHashMap
+            VOs.put(newState, stateVariables)
+        }
+        
+        for (input : inputs) {
+            // Retrieve the respective valued object of the containing state 
+            var inputVO = rootState.findValuedObjectByName(input, false, dRegion)
+            if (inputVO === null) {
+                inputVO = baseState.findValuedObjectByName(input, false, dRegion)
+            }
+            val inputRootDecl = inputVO.getVariableDeclaration
+            val inputType = inputRootDecl.getType
+            
+            // Create the input for the control statement state
+            val decl = createVariableDeclaration
+            newState.declarations += decl
+            decl.type = inputType
+            decl.input = true            
+            val innerInputVO = decl.createValuedObject(input + "_in")
+            innerInputVO.insertHighlightAnnotations(stmt)
+            
+            // Add the new create valued object to the ssa list and valued object list
+            if(stateVariables.containsKey(input)) {
+                var varList = stateVariables.get(input)
+                varList.add(innerInputVO)
+            } else {
+                var varList = <ValuedObject> newArrayList    
+                varList.add(innerInputVO)
+                stateVariables.put(input, varList)
+            }
+            
+            // Create the assignment    
+            dRegion.equations += createAssignment(refObj, innerInputVO, inputVO.reference)
+        }
+    }
+    
+    // Find all elements written inside the given function
+    def HashSet<String> findFuncOutputs(IASTFunctionDefinition funcDef, State parentState) {
         var res = <String> newHashSet
         
         val funcName = funcDef.getDeclarator.getName.toString    
-        res = findOutputElements(funcDef.getBody)
+        res = findOutputElements(funcDef.getBody, parentState)
         
         functionOutputElements.put(funcName, res)
             
         res
     }
     
-    // Find all struct elements written inside the given node
-    def HashSet<String> findOutputElements(IASTNode stmt) {
-        var res = <String> newHashSet
-            
+    // Find all elements written inside the given node
+    def HashSet<String> findOutputElements(IASTNode stmt, State parentState) {
+        var outputs = <String> newHashSet
+        
+        switch stmt {
             // Include every target of an assignment
-            if (stmt instanceof IASTBinaryExpression) {
-                if (stmt.getOperator == 17) {
+            IASTBinaryExpression: {
+                if ((stmt.operator >= IASTBinaryExpression.op_assign) && (stmt.operator <= IASTBinaryExpression.op_binaryOrAssign)) {
                     val op1 = stmt.getOperand1
-                    // Include struct elements
-                    if (op1 instanceof IASTFieldReference) {
-                        val structExpr = op1.getFieldOwner
-                        if (structExpr instanceof IASTIdExpression) {
-                            if (structExpr.getName.toString.equals(structName)) {
-                                res += op1.getFieldName.toString
-                            }
-                        } else if (structExpr instanceof IASTFieldReference) {
-                            res = findInputElements(structExpr)
+                    switch op1 {
+                        // non-local variables
+                        IASTIdExpression: {
+                            val varName = op1.getName.toString
+                            // TODO: seems like only non-local varibales should be used. How to find that out?
+//                            if (VOs.get(parentState).containsKey(varName)) {
+                                outputs += varName
+//                            }
                         }
-                    // Test if the array is a struct element     
-                    } else if (op1 instanceof IASTArraySubscriptExpression) {
-                        val array = op1.getArrayExpression
-                            if (array instanceof IASTFieldReference) {
-                            val structExpr = array.getFieldOwner
+                        // Include struct elements
+                        IASTFieldReference: {
+                            val structExpr = op1.getFieldOwner
                             if (structExpr instanceof IASTIdExpression) {
                                 if (structExpr.getName.toString.equals(structName)) {
-                                    res += array.getFieldName.toString
+                                    outputs += op1.getFieldName.toString
                                 }
                             } else if (structExpr instanceof IASTFieldReference) {
-                                res = findInputElements(structExpr)
+                                outputs = findOutputElements(structExpr, parentState)
+                            }
+                        }
+                        // Test if the array is a struct element     
+                        IASTArraySubscriptExpression: {
+                            val array = op1.getArrayExpression
+                                if (array instanceof IASTFieldReference) {
+                                val structExpr = array.getFieldOwner
+                                if (structExpr instanceof IASTIdExpression) {
+                                    if (structExpr.getName.toString.equals(structName)) {
+                                        outputs += array.getFieldName.toString
+                                    }
+                                } else if (structExpr instanceof IASTFieldReference) {
+                                    outputs = findOutputElements(structExpr, parentState)
+                                }
                             }
                         }
                     }
                 }
-            // Include all elements written in the called function    
-            } else if (stmt instanceof IASTFunctionCallExpression) {
+            }
+            // Include all elements written in the called function
+            IASTFunctionCallExpression: {
                 var String funcName
                 if (stmt.getFunctionNameExpression instanceof IASTIdExpression) {
                     funcName = (stmt.getFunctionNameExpression as IASTIdExpression).getName.toString
@@ -1083,28 +1088,33 @@ class StructflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCChar
                     funcName = (nameExpression.getOperand as IASTIdExpression).getName.toString
                 }
                 if (functionOutputElements.containsKey(funcName)) {
-                    res = functionOutputElements.get(funcName)
+                    outputs = functionOutputElements.get(funcName)
                 } else {
                     if (functionDefinitions.containsKey(funcName)) {
-                        res = findFuncOutputs(functionDefinitions.get(funcName))
+                        outputs = findFuncOutputs(functionDefinitions.get(funcName), parentState)
                     }
                 }
-            // Test every child of the given node   
-            } else {
+            }
+            // Test every child of the given node
+            default: {
                 for (child : stmt.children) {
-                    res += findOutputElements(child)
+                    outputs += findOutputElements(child, parentState)
                 }
             }
+        }
             
-        res
+        return outputs
     }
     
     // Create the outputs for every structflow function
-    def setStateOutputs() {
+    def void setStateOutputs() {
         val functionsWithOutputs = functionOutputElements.keySet
         for (func : functionsWithOutputs) {
             // Retrieve the functions outputs
             val outputs = functionOutputElements.get(func)
+            if (outputs.empty) {
+                return
+            }
             val funcState = functionStates.get(func)
             // Retrieve the state's valued object map
             var stateVars = <String, ArrayList<ValuedObject>> newHashMap
@@ -1113,6 +1123,7 @@ class StructflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCChar
             } else {
                 VOs.put(funcState, stateVars)
             }
+            
             // Create an output declaration    
             val decl = createVariableDeclaration
             decl.output = true
@@ -1238,6 +1249,40 @@ class StructflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCChar
         }
         
         res
+    }
+    
+    // Find the output valued object for the given variable name and the given state
+    def ValuedObject findOutputVar(State state, String varName) {
+        var ValuedObject res = null
+        
+        var varList = VOs.get(state).get(varName)
+        res = varList.findOutputVar
+        
+        res
+    }
+    
+    // Create a state representation for a call of a not known function
+    def State createUnknownFuncState(String funcName, IASTFunctionCallExpression funcCall, boolean writing) {
+        // Create the state
+        val state = createState(funcName)
+        state.label = funcName
+        
+        // Create an output if needed
+        if (writing) {
+            val outputDecl = createVariableDeclaration
+            outputDecl.output = true
+            state.declarations += outputDecl
+            val outputVO = outputDecl.createValuedObject("res_out") 
+        }
+        
+        // Create an input for each argument
+        for (argument : funcCall.getArguments) {
+            val inputDecl = createVariableDeclaration
+            inputDecl.input = true
+            state.declarations += inputDecl
+            val inputVO = inputDecl.createValuedObject("")
+        }
+        state
     }
   
 }

@@ -1,41 +1,41 @@
 package de.cau.cs.kieler.c.sccharts.extensions
 
-import java.util.ArrayList
-import de.cau.cs.kieler.kexpressions.keffects.Assignment
-import de.cau.cs.kieler.sccharts.State
 import com.google.inject.Inject
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.c.sccharts.processors.StructflowExtractor
 import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.OperatorExpression
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
-import de.cau.cs.kieler.kexpressions.OperatorExpression
-import org.eclipse.cdt.core.dom.ast.IASTNode
 import de.cau.cs.kieler.sccharts.DataflowRegion
-import org.eclipse.cdt.core.dom.ast.IASTExpressionStatement
-import org.eclipse.cdt.core.dom.ast.IASTBinaryExpression
-import org.eclipse.cdt.core.dom.ast.IASTUnaryExpression
-import org.eclipse.cdt.core.dom.ast.IASTLiteralExpression
-import org.eclipse.cdt.core.dom.ast.IASTIdExpression
-import org.eclipse.cdt.core.dom.ast.IASTFunctionCallExpression
-import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.kexpressions.ValuedObject
-import org.eclipse.cdt.core.dom.ast.IASTArraySubscriptExpression
-import org.eclipse.cdt.core.dom.ast.IASTNode.CopyStyle
-import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
-import org.eclipse.cdt.core.dom.ast.IASTFieldReference
-import org.eclipse.cdt.core.dom.ast.IASTConditionalExpression
-import org.eclipse.cdt.core.dom.ast.IASTCastExpression
+import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsDataflowRegionExtensions
-import de.cau.cs.kieler.c.sccharts.processors.DataflowExtractor
+import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
+import java.util.ArrayList
+import org.eclipse.cdt.core.dom.ast.IASTArraySubscriptExpression
+import org.eclipse.cdt.core.dom.ast.IASTBinaryExpression
+import org.eclipse.cdt.core.dom.ast.IASTCastExpression
+import org.eclipse.cdt.core.dom.ast.IASTConditionalExpression
+import org.eclipse.cdt.core.dom.ast.IASTExpressionStatement
+import org.eclipse.cdt.core.dom.ast.IASTFieldReference
+import org.eclipse.cdt.core.dom.ast.IASTFunctionCallExpression
+import org.eclipse.cdt.core.dom.ast.IASTIdExpression
+import org.eclipse.cdt.core.dom.ast.IASTLiteralExpression
+import org.eclipse.cdt.core.dom.ast.IASTNode
+import org.eclipse.cdt.core.dom.ast.IASTNode.CopyStyle
+import org.eclipse.cdt.core.dom.ast.IASTUnaryExpression
 
-class ExpressionConverterExtensions {
+class ExpressionConverterExtensionsStruct {
     
     @Inject extension SCChartsStateExtensions
     @Inject extension AnnotationsExtensions
-    // XXX: This is dependant of the dataflow extractor and therefore not a valid generic extension class.
-    @Inject extension DataflowExtractor
+    // XXX: This is dependant of the structflow extractor and therefore not a valid generic extension class.
+    @Inject extension StructflowExtractor
     @Inject extension SCChartsDataflowRegionExtensions
     @Inject extension KExpressionsCreateExtensions
     @Inject extension KExpressionsDeclarationExtensions
@@ -226,23 +226,31 @@ class ExpressionConverterExtensions {
         switch expr {
             // For variable uses create a VO reference
             IASTIdExpression: {
-                var opValObj = funcState.findValuedObjectByName((expr as IASTIdExpression).getName.toString, false, dRegion)
+                // TODO: use local prefix
+                val varName = /*StructflowExtractor.LOCAL_PREFIX +*/ expr.getName.toString 
+                var opValObj = funcState.findValuedObjectByName(varName, false, dRegion)
                 kExpression = opValObj.reference
             }
             IASTFieldReference: {
-                var opValObj = funcState.findValuedObjectByName((expr as IASTFieldReference).getFieldName.toString, false, dRegion)
+                var opValObj = funcState.findValuedObjectByName(expr.getFieldName.toString, false, dRegion)
                 kExpression = opValObj.reference
             }
-            // For a function call create a reference an return the functions output VO reference
+            // For a function call create a reference and return the functions output VO reference
             IASTFunctionCallExpression: {
+                // Casts are handled as function calls, figure out casts first.
+                // Casts in dataflow are simply ignored and the expression that is casted is translated.
+                if (expr.functionNameExpression instanceof IASTUnaryExpression
+                    && (expr.functionNameExpression as IASTUnaryExpression).operand instanceof IASTIdExpression) {
+                    return expr.arguments.head.createKExpression(funcState, dRegion)
+                }
+                
                 // Create the Reference
-                val funcCall = expr as IASTFunctionCallExpression
                 var refDecl = createReferenceDeclaration
                 dRegion.declarations += refDecl
-                val funcName = (funcCall.getFunctionNameExpression as IASTIdExpression).getName.toString//children.head.toString
+                val funcName = (expr.getFunctionNameExpression as IASTIdExpression).getName.toString//children.head.toString
                 var refState = funcName.findFunctionState
                 if (refState === null) {
-                    refState = createUnknownFuncState(funcName, funcCall, true)
+                    refState = createUnknownFuncState(funcName, expr, true)
                 }
                 val refStateConst = refState
                 refDecl.setReference(refStateConst)
@@ -255,7 +263,7 @@ class ExpressionConverterExtensions {
                 ]
                 // Connect the Inputs    
                 var i = 0
-                for (argument : funcCall.getArguments) {
+                for (argument : expr.getArguments) {
                     val funcObjArg = refStateConst.declarations.filter(VariableDeclaration).map[ valuedObjects ].flatten.get(i)
                     val connectExpr = argument.createKExpression(funcState, dRegion)
                     dRegion.equations += createAssignment(funcObj, funcObjArg, connectExpr)
@@ -307,10 +315,10 @@ class ExpressionConverterExtensions {
             }
             // Call subsequent translations for unary and binary expressions
             IASTUnaryExpression: {
-                kExpression = (expr as IASTUnaryExpression).createKExpression(funcState, dRegion)
+                kExpression = expr.createKExpression(funcState, dRegion)
             }
             IASTBinaryExpression: {
-                kExpression = (expr as IASTBinaryExpression).createKExpression(funcState, dRegion)
+                kExpression = expr.createKExpression(funcState, dRegion)
             }
             // Create a value expression for a literal
             IASTLiteralExpression: {
@@ -319,6 +327,9 @@ class ExpressionConverterExtensions {
             // Extract the expression of an expression statement and translate it
             IASTExpressionStatement: {
                 kExpression = expr.getExpression.createKExpression(funcState, dRegion)
+            }
+            IASTArraySubscriptExpression: {
+                kExpression = createStringValue(expr.exprToString)
             }
             default: {
                 println("Unsupported ast node to create an expression: " + expr.class)
@@ -334,9 +345,10 @@ class ExpressionConverterExtensions {
         var binKExpr = opType.createOperatorExpression
         // Translate the operands and attach them    
         for (operand : binExpr.children) {
-                
-            binKExpr.subExpressions += operand.createKExpression(funcState, dRegion)
-                
+            val expr = operand.createKExpression(funcState, dRegion)
+            if (expr !== null) {
+                binKExpr.subExpressions += expr 
+            }
         }
         binKExpr
     }

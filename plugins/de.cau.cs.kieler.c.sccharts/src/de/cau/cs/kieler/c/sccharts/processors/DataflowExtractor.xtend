@@ -249,7 +249,7 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
     }
     
     // Create a declaration of a local variable and attach it to the dataflow region
-    def dispatch buildStatement(IASTDeclarationStatement stmt, State rootState, DataflowRegion dRegion) {
+    def dispatch void buildStatement(IASTDeclarationStatement stmt, State rootState, DataflowRegion dRegion) {
         val declaration = stmt.getDeclaration
         if (declaration instanceof IASTSimpleDeclaration) {
             val decl = addDeclaration(declaration, rootState, dRegion)
@@ -259,7 +259,7 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
     }
     
     // Translate an expression
-    def dispatch buildStatement(IASTExpressionStatement stmt, State rootState, DataflowRegion dRegion) {
+    def dispatch void buildStatement(IASTExpressionStatement stmt, State rootState, DataflowRegion dRegion) {
         val expression = stmt.getExpression
                 
         // Translate binary and unary expressions
@@ -283,32 +283,32 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
     }
     
     // Translate If statement
-    def dispatch buildStatement(IASTIfStatement stmt, State rootState, DataflowRegion dRegion) {
+    def dispatch void buildStatement(IASTIfStatement stmt, State rootState, DataflowRegion dRegion) {
         buildIf(stmt, rootState, dRegion)
     }
     
     // Translate Switch statment
-    def dispatch buildStatement(IASTSwitchStatement stmt, State rootState, DataflowRegion dRegion) {
+    def dispatch void buildStatement(IASTSwitchStatement stmt, State rootState, DataflowRegion dRegion) {
         buildSwitch(stmt, rootState, dRegion)
     }
     
     // Translate For statement
-    def dispatch buildStatement(IASTForStatement stmt, State rootState, DataflowRegion dRegion) {
+    def dispatch void buildStatement(IASTForStatement stmt, State rootState, DataflowRegion dRegion) {
         buildFor(stmt, rootState, dRegion)
     }
     
     // Translate While statement
-    def dispatch buildStatement(IASTWhileStatement stmt, State rootState, DataflowRegion dRegion) {
+    def dispatch void buildStatement(IASTWhileStatement stmt, State rootState, DataflowRegion dRegion) {
         buildWhile(stmt, rootState, dRegion)
     }
     
     // Translate Do statement
-    def dispatch buildStatement(IASTDoStatement stmt, State rootState, DataflowRegion dRegion) {
+    def dispatch void buildStatement(IASTDoStatement stmt, State rootState, DataflowRegion dRegion) {
         buildDo(stmt, rootState, dRegion)
     }
     
     // Translate Return statement
-    def dispatch buildStatement(IASTReturnStatement stmt, State rootState, DataflowRegion dRegion) {
+    def dispatch void buildStatement(IASTReturnStatement stmt, State rootState, DataflowRegion dRegion) {
         val retKExpr = createKExpression(stmt.getReturnValue, rootState, dRegion)
                 
         val retVO = rootState.findValuedObjectByName("res", true, dRegion)
@@ -317,14 +317,14 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
     }
     
     // Translate all children of a CompoundStatement
-    def dispatch buildStatement(IASTCompoundStatement stmt, State rootState, DataflowRegion dRegion) {
+    def dispatch void buildStatement(IASTCompoundStatement stmt, State rootState, DataflowRegion dRegion) {
         for (child : stmt.getStatements) {
             buildStatement(child, rootState, dRegion)
         }
     }
     
     // Extract the body of an if Statement
-    def buildIf(IASTIfStatement ifStmt, State rootState, DataflowRegion dRegion) {
+    def void buildIf(IASTIfStatement ifStmt, State rootState, DataflowRegion dRegion) {
         // Creating the state to represent the if statement
         val ifState = createState("If_" + ifCounter)
         
@@ -342,35 +342,35 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
         
         // Create the controlflow region for the if state and the initial state
         val cRegion = ifState.createControlflowRegion("")
-        val initState = cRegion.createState("Init")
+        val initState = cRegion.createState("")
         initState.insertHighlightAnnotations(ifStmt)
         initState.initial = true
         
         // Create the state for the then part
-        val thenState = cRegion.createState("Then")
+        val thenState = cRegion.createState("then")
         val thenCompound = ifStmt.getThenClause as IASTCompoundStatement
         thenState.insertHighlightAnnotations(thenCompound)
         val thenRegion = buildCompound(thenCompound, ifState)
-        thenState.label = "Then"
+        thenState.label = "then"
         thenState.regions += thenRegion
-        val thenTransition = initState.createTransitionTo(thenState)
+        val thenTransition = initState.createImmediateTransitionTo(thenState)
         thenTransition.trigger = (ifStmt.getConditionExpression).createKExpression(ifState, dRegion)
         
         // If an else is given the state is also created
         if (ifStmt.getElseClause !== null) {
-            val elseState = cRegion.createState("Else")
+            val elseState = cRegion.createState("else")
             val elseCompound = ifStmt.getElseClause as IASTCompoundStatement
             elseState.insertHighlightAnnotations(elseCompound)
             val elseRegion = buildCompound(elseCompound, ifState)
-            elseState.label = "Else"
+            elseState.label = "else"
             elseState.regions += elseRegion
-            initState.createTransitionTo(elseState)
+            initState.createImmediateTransitionTo(elseState)
         }
         
     }
     
     // Extract the body of a switch statement
-    def buildSwitch(IASTSwitchStatement swStmt, State rootState, DataflowRegion dRegion) {
+    def void buildSwitch(IASTSwitchStatement swStmt, State rootState, DataflowRegion dRegion) {
         // Create the State representing the switch
         val swState = createState("Switch_" + swCounter)
         
@@ -395,14 +395,9 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
         cRegion.label = "switch (" + controller.serialize + ")"       
         
         // Create the initial state
-        val initState = cRegion.createState("Init")
+        val initState = cRegion.createState("")
         initState.insertHighlightAnnotations(swStmt.getBody)
         initState.initial = true
-        
-        // Create the final state
-        val finalState = cRegion.createState("final")
-        finalState.insertHighlightAnnotations(swStmt.getBody)
-        finalState.final = true
         
         // Translate the switch body
         val swBody = swStmt.getBody as IASTCompoundStatement
@@ -427,26 +422,24 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
                 activeCase.regions += activeDRegion
                 activeDRegion.insertHighlightAnnotations(child)
                 
-                // Create the transition from teh previous case state to the new if needed
+                // Create the transition from the previous case state to the new if needed
                 if (noBreakCase !== null) {
-                    noBreakCase.createTransitionTo(activeCase)
+                    noBreakCase.createImmediateTransitionTo(activeCase)
                     noBreakCase = null
                 }
                 
                 // Create a triggered transition for a case state 
                 if (child instanceof IASTCaseStatement) {
-                    val caseTransition = initState.createTransitionTo(activeCase)
+                    val caseTransition = initState.createImmediateTransitionTo(activeCase)
                     caseTransition.trigger = child.getExpression.createKExpression(swState, dRegion)                    
                     activeCase.label = controller.serialize + " == " + caseTransition.trigger.serialize
                 // Create a transition without a trigger for a default statement    
                 } else {
-                    initState.createTransitionTo(activeCase)
-                    activeCase.createTransitionTo(finalState)                    
+                    initState.createImmediateTransitionTo(activeCase)                 
                     activeCase.label = "default"
                 }
             // Create a transition to the final state for break statements    
             } else if (child instanceof IASTBreakStatement) {
-                activeCase.createTransitionTo(finalState)
                 linkOutputs(swState, activeDRegion)
                 activeCase = null
             // Translate other statements into the currently active dataflow region    
@@ -458,8 +451,8 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
         linkOutputs(swState, activeDRegion)
     }
     
-    // Translate a For State,emt   
-    def buildFor(IASTForStatement forStmt, State rootState, DataflowRegion dRegion) {
+    // Translate a For Statement   
+    def void buildFor(IASTForStatement forStmt, State rootState, DataflowRegion dRegion) {
         // Create the state
         val forState = createState("For_" + forCounter)
         
@@ -488,7 +481,7 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
     }
     
     // Translate a while statement
-    def buildWhile(IASTWhileStatement whileStmt, State rootState, DataflowRegion dRegion) {
+    def void buildWhile(IASTWhileStatement whileStmt, State rootState, DataflowRegion dRegion) {
         // Create the state        
         val whileState = createState("While_" + whileCounter)
         
@@ -516,7 +509,7 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
     }
     
     // Translate a Do statement
-    def buildDo(IASTDoStatement doStmt, State rootState, DataflowRegion dRegion) {
+    def void buildDo(IASTDoStatement doStmt, State rootState, DataflowRegion dRegion) {
         // Create the state        
         val doState = createState("Do_" + doCounter)
         
@@ -585,7 +578,7 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
     }
     
     // Add an initialization assignment to the given valued object
-    def initializeValuedObject(ValuedObject vo, IASTDeclarator decl, State state, DataflowRegion dRegion) {
+    def void initializeValuedObject(ValuedObject vo, IASTDeclarator decl, State state, DataflowRegion dRegion) {
         val initializer = decl.getInitializer
         if (initializer instanceof IASTEqualsInitializer) {
             // If the init expression is not a function call translate the expression
@@ -628,7 +621,7 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
     }
     
     // Connect the outputs of a control statement state to the respective valued objects of the containing state
-    def setOutputs(IASTNode stmt, State rootState, State newState, DataflowRegion dRegion, ValuedObject refObj) {
+    def void setOutputs(IASTNode stmt, State rootState, State newState, DataflowRegion dRegion, ValuedObject refObj) {
         // Retrieve the set of outputs of the control statement
         var outputs = findOutputs(stmt, rootState)
         
@@ -700,7 +693,7 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
     }
     
     // Connect the Inputs of the given control statement to their respective valued objects of the containing state
-    def setInputs(IASTNode stmt, State rootState, State newState, DataflowRegion dRegion, ValuedObject refObj) {
+    def void setInputs(IASTNode stmt, State rootState, State newState, DataflowRegion dRegion, ValuedObject refObj) {
         // Find the needed inputs of teh given control statement
         var inputs = findInputs(stmt, rootState)
         
@@ -859,7 +852,7 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
     }
     
     // Connects the last valued of the ssa list to the output valued object for each variable of the given state
-    def linkOutputs(State state, DataflowRegion dRegion) {
+    def void linkOutputs(State state, DataflowRegion dRegion) {
         var stateVariables = VOs.get(state)
         for (varList : stateVariables.values) {
             // Retrieve the output valued object
