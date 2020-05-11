@@ -12,10 +12,13 @@
  */
 package de.cau.cs.kieler.kicool.ide.language.server
 
+import com.google.common.base.Charsets
+import com.google.common.io.Files
 import com.google.inject.Inject
 import com.google.inject.Injector
 import com.google.inject.Singleton
 import de.cau.cs.kieler.kicool.System
+import de.cau.cs.kieler.kicool.compilation.CodeContainer
 import de.cau.cs.kieler.kicool.compilation.CompilationContext
 import de.cau.cs.kieler.kicool.compilation.Compile
 import de.cau.cs.kieler.kicool.environments.Environment
@@ -25,6 +28,7 @@ import de.cau.cs.kieler.klighd.lsp.KGraphLanguageServerExtension
 import de.cau.cs.kieler.language.server.ILanguageClientProvider
 import de.cau.cs.kieler.language.server.KeithLanguageClient
 import de.cau.cs.kieler.language.server.registration.RegistrationLanguageServerExtension
+import java.io.File
 import java.net.URLDecoder
 import java.util.HashMap
 import java.util.List
@@ -33,7 +37,6 @@ import java.util.Observer
 import java.util.concurrent.CompletableFuture
 import org.apache.log4j.Logger
 import org.eclipse.emf.common.util.URI
-import org.eclipse.emf.ecore.EObject
 import org.eclipse.lsp4j.jsonrpc.validation.NonNull
 import org.eclipse.lsp4j.services.LanguageClient
 import org.eclipse.xtend.lib.annotations.Accessors
@@ -74,7 +77,7 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
     protected Map<String, List<List<SnapshotDescription>>> snapshotMap = new HashMap<String, List<List<SnapshotDescription>>>
 
     /**
-     * Holds eObjects for every snapshot of every uri, which was compiled. Used to generate diagrams if requested 
+     * Holds models for every snapshot of every uri, which was compiled. Used to generate diagrams if requested 
      */
     @Accessors(PUBLIC_GETTER)
     protected Map<String, List<Object>> objectMap = new HashMap<String, List<Object>>
@@ -148,21 +151,21 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
      */
     override compile(String uri, String clientId, String command, boolean inplace, boolean showResultingModel, boolean snapshot) {
         try {
-            var Object eobject
+            var Object model
             if (snapshot) {
                 if (diagramState === null || diagramState.getKGraphContext(uri) === null) {
                     client.compile(null, uri, true, 0, 1000)
                     return
                 }
-                eobject = diagramState.getKGraphContext(uri).inputModel
+                model = diagramState.getKGraphContext(uri).inputModel
             } else {
-                eobject = getEObjectFromUri(uri)
+                model = getModelFromUri(uri)
             }
-            if (eobject === null) {
+            if (model === null) {
                 client.compile(null, uri, true, 0, 1000)
                 return
             }
-            this.currentContext = createContextAndStartCompilationThread(eobject, command, inplace, this.currentContext)
+            this.currentContext = createContextAndStartCompilationThread(model, command, inplace, this.currentContext)
             // Add listener that sends snapshot descriptions to client and updates the diagram on finish if requested.
             currentContext.addObserver(new KeithCompilationUpdater(this, currentContext, uri, clientId, command, inplace, showResultingModel))
         } catch( Exception e) {
@@ -180,7 +183,7 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
         if (sameCompilation) { // if is the same compilation the model can be retrieved via the old index
             var Object model
             if (currentIndex == -1) {
-                model = getEObjectFromUri(uri)
+                model = getModelFromUri(uri)
             } else {
                 model = this.objectMap.get(uri).get(currentIndex)
             }
@@ -195,17 +198,17 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
     }
 
     /**
-     * Starts the compilation thread with the context created by the given EObject, the compilation system id.
+     * Starts the compilation thread with the context created by the given model, the compilation system id.
      * 
-     * @param eobject EObject of model to compile
+     * @param model The model to compile
      * @param systemId id of compilation system
      * @param inplace whether inplace compilation should be enabled or disabled
      * @return compilation context that was used to create the newly started compilation thread.
      */
-    private def CompilationContext createContextAndStartCompilationThread(Object eobject, String systemId, boolean inplace,
+    private def CompilationContext createContextAndStartCompilationThread(Object model, String systemId, boolean inplace,
         CompilationContext oldContext
     ) {
-        val context = Compile.createCompilationContext(systemId, eobject)
+        val context = Compile.createCompilationContext(systemId, model)
         context.startEnvironment.setProperty(Environment.INPLACE, inplace)
         context.startEnvironment.setProperty(Environment.PRECEEDING_COMPILATION_CONTEXT, oldContext)
         compilationObservers.forEach[observer | context.addObserver(observer)]
@@ -228,8 +231,8 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
             // get snapshto model from compiled models
             model = this.objectMap.get(uri).get(index)
         } else {
-            // get eObject of model specified by uri
-            model = getEObjectFromUri(uri)
+            // get model specified by uri
+            model = getModelFromUri(uri)
         }
         val modelToSend = model
         return requestManager.runRead [ cancelIndicator |
@@ -271,8 +274,8 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
         } else if (index != -1) {
             model = this.objectMap.get(uri).get(index)
         } else {
-            // get eObject of model specified by uri   
-            model = getEObjectFromUri(uri)
+            // get model of model specified by uri   
+            model = getModelFromUri(uri)
         }
         return getCompilationSystems(model, filterForSimulation, snapshotModel)
     }
@@ -303,12 +306,12 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
     }
 
     /**
-     * Gets EObject for resource specified by given uri as String
+     * Gets the model for resource specified by given uri as String
      * 
-     * @param uri uri as String for resource to get EObject from
-     * @return EObject of specified resource
+     * @param uri uri as String for resource to get the model from
+     * @return model of specified resource
      */
-    def EObject getEObjectFromUri(String uri) {
+    def Object getModelFromUri(String uri) {
         var fileUri = URLDecoder.decode(uri, "UTF-8");
         if (fileUri.startsWith("file://")) {
             fileUri = fileUri.substring(7)
@@ -316,7 +319,10 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
         val uriObject = URI.createFileURI(fileUri)
         val ext = uriObject.fileExtension()
         if (!RegistrationLanguageServerExtension.registeredLanguageExtensions.contains(ext)) {
-            return null
+            val file = new File(fileUri)
+            return new CodeContainer() => [
+                addProxy(file, Files.asCharSource(file, Charsets.UTF_8).read)
+            ]
         }
         val resource = uriObject.xtextResourceSet.getResource(uriObject, true)
 
