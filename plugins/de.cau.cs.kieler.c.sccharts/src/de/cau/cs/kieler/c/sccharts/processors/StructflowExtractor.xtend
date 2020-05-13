@@ -638,6 +638,7 @@ class StructflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCChar
             
             // Create the valued object
             val vo = res.createValuedObject(varName + "_0")
+            vo.label = varName
             vo.insertHighlightAnnotations(decl)
             
             // Add the valued object and the ssa list to the respective elements    
@@ -719,6 +720,7 @@ class StructflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCChar
             decl.input = true
             csState.declarations += decl
             val inputVO = decl.createValuedObject(input + "_in")
+            inputVO.label = input
             
             // Create the ssa list and attach it to the state var map
             val varList = <ValuedObject> newArrayList
@@ -966,6 +968,7 @@ class StructflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCChar
                 val varList = <ValuedObject> newArrayList
                 
                 val vo = decl.createValuedObject(input + "_in")
+                vo.label = input
                 varList.add(vo)
                 stateVars.put(input, varList)
             }
@@ -1002,6 +1005,7 @@ class StructflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCChar
             decl.type = inputType
             decl.input = true            
             val innerInputVO = decl.createValuedObject(input + "_in")
+            innerInputVO.label = input
             innerInputVO.insertHighlightAnnotations(stmt)
             
             // Add the new create valued object to the ssa list and valued object list
@@ -1138,6 +1142,7 @@ class StructflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCChar
                 }
                 
                 val vo = decl.createValuedObject(output + "_out")
+                vo.label = output
                 varList.add(vo)                
             }
         }
