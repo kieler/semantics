@@ -14,57 +14,59 @@
 package de.cau.cs.kieler.c.sccharts.processors
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.kexpressions.ValuedObject
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.sccharts.State
-import org.eclipse.emf.ecore.EObject
-import java.util.ArrayList
-import de.cau.cs.kieler.sccharts.SCCharts
-import de.cau.cs.kieler.kicool.compilation.ExogenousProcessor
-import org.eclipse.cdt.core.dom.ast.IASTTranslationUnit
-import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
-import de.cau.cs.kieler.c.sccharts.extensions.CDTConvertExtensions
-import de.cau.cs.kieler.sccharts.DataflowRegion
-import de.cau.cs.kieler.sccharts.extensions.SCChartsDataflowRegionExtensions
-import de.cau.cs.kieler.c.sccharts.extensions.HighlightingExtensions
-import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
-import de.cau.cs.kieler.kexpressions.VariableDeclaration
-import org.eclipse.cdt.core.dom.ast.IASTStatement
-import org.eclipse.cdt.core.dom.ast.IASTNode
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsSerializeExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
-import java.util.HashMap
-import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
-import org.eclipse.cdt.core.dom.ast.IASTDeclarator
-import org.eclipse.cdt.core.dom.ast.IASTIdExpression
-import org.eclipse.cdt.core.dom.ast.IASTSwitchStatement
-import org.eclipse.cdt.core.dom.ast.IASTCompoundStatement
-import org.eclipse.cdt.core.dom.ast.IASTFunctionDefinition
-import org.eclipse.cdt.core.dom.ast.IASTSimpleDeclaration
-import org.eclipse.cdt.core.dom.ast.IASTSimpleDeclSpecifier
-import org.eclipse.cdt.core.dom.ast.IASTEqualsInitializer
-import org.eclipse.cdt.core.dom.ast.IASTDeclarationStatement
-import org.eclipse.cdt.core.dom.ast.IASTExpressionStatement
-import org.eclipse.cdt.core.dom.ast.IASTBinaryExpression
-import org.eclipse.cdt.core.dom.ast.IASTIfStatement
-import org.eclipse.cdt.core.dom.ast.IASTForStatement
-import org.eclipse.cdt.core.dom.ast.IASTWhileStatement
-import org.eclipse.cdt.core.dom.ast.IASTDoStatement
-import org.eclipse.cdt.core.dom.ast.IASTReturnStatement
-import org.eclipse.cdt.core.dom.ast.IASTCaseStatement
-import org.eclipse.cdt.core.dom.ast.IASTBreakStatement
-import org.eclipse.cdt.core.dom.ast.IASTDefaultStatement
-import org.eclipse.cdt.core.dom.ast.IASTFunctionCallExpression
-import org.eclipse.cdt.internal.core.dom.parser.c.CASTFunctionDeclarator
-import org.eclipse.cdt.core.dom.ast.IASTUnaryExpression
-import java.util.HashSet
-import java.time.format.DateTimeFormatter
-import java.time.LocalDateTime
+import de.cau.cs.kieler.c.sccharts.extensions.CDTConvertExtensions
 import de.cau.cs.kieler.c.sccharts.extensions.ExpressionConverterExtensions
+import de.cau.cs.kieler.c.sccharts.extensions.HighlightingExtensions
+import de.cau.cs.kieler.kexpressions.ValueType
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsSerializeExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.kicool.compilation.ExogenousProcessor
+import de.cau.cs.kieler.sccharts.DataflowRegion
+import de.cau.cs.kieler.sccharts.Region
+import de.cau.cs.kieler.sccharts.SCCharts
+import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsDataflowRegionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.util.ArrayList
+import java.util.HashMap
+import java.util.HashSet
+import java.util.Map
+import org.eclipse.cdt.core.dom.ast.IASTBinaryExpression
+import org.eclipse.cdt.core.dom.ast.IASTBreakStatement
+import org.eclipse.cdt.core.dom.ast.IASTCaseStatement
+import org.eclipse.cdt.core.dom.ast.IASTCompoundStatement
+import org.eclipse.cdt.core.dom.ast.IASTDeclarationStatement
+import org.eclipse.cdt.core.dom.ast.IASTDeclarator
+import org.eclipse.cdt.core.dom.ast.IASTDefaultStatement
+import org.eclipse.cdt.core.dom.ast.IASTDoStatement
+import org.eclipse.cdt.core.dom.ast.IASTEqualsInitializer
+import org.eclipse.cdt.core.dom.ast.IASTExpressionStatement
+import org.eclipse.cdt.core.dom.ast.IASTForStatement
+import org.eclipse.cdt.core.dom.ast.IASTFunctionCallExpression
+import org.eclipse.cdt.core.dom.ast.IASTFunctionDefinition
+import org.eclipse.cdt.core.dom.ast.IASTIdExpression
+import org.eclipse.cdt.core.dom.ast.IASTIfStatement
+import org.eclipse.cdt.core.dom.ast.IASTNode
+import org.eclipse.cdt.core.dom.ast.IASTReturnStatement
+import org.eclipse.cdt.core.dom.ast.IASTSimpleDeclSpecifier
+import org.eclipse.cdt.core.dom.ast.IASTSimpleDeclaration
+import org.eclipse.cdt.core.dom.ast.IASTStatement
+import org.eclipse.cdt.core.dom.ast.IASTSwitchStatement
+import org.eclipse.cdt.core.dom.ast.IASTTranslationUnit
+import org.eclipse.cdt.core.dom.ast.IASTUnaryExpression
+import org.eclipse.cdt.core.dom.ast.IASTWhileStatement
+import org.eclipse.cdt.internal.core.dom.parser.c.CASTFunctionDeclarator
+import org.eclipse.emf.ecore.EObject
 
 /**
  * @author lan
@@ -175,26 +177,34 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
     
         // Create inputs for the functions parameters
         val parameters = funcDeclarator.getParameters
+        val Map<ValueType, VariableDeclaration> declarations = newHashMap
         for (par : parameters) {
-            // Determine parameter type
-            val decl = createVariableDeclaration
+            
+            
             val declSpecifier = par.getDeclSpecifier
             if (declSpecifier instanceof IASTSimpleDeclSpecifier) {
-                decl.type = declSpecifier.type.CDTTypeConversion
-                decl.input = true
-                state.declarations += decl
+                // Determine parameter type
+                val inputType = declSpecifier.type.CDTTypeConversion
+                if (!declarations.containsKey(inputType)) {
+                    val newDecl = createVariableDeclaration
+                    state.declarations += newDecl
+                    newDecl.type = inputType
+                    newDecl.input = true       
+                    declarations.put(inputType, newDecl)
+                }
+                val decl = declarations.get(inputType)
+                // Determine parameter name
+                val varName = par.getDeclarator.getName.toString
+                var varList = <ValuedObject> newArrayList
+                
+                // Create valued object for the input
+                val VO = decl.createValuedObject(varName + "_in")
+                VO.insertHighlightAnnotations(par)
+                
+                // Attach the valued object to its list and the list to the map
+                varList.add(VO)
+                stateVariables.put(varName, varList) 
             }
-            // Determine parameter name
-            val varName = par.getDeclarator.getName.toString
-            var varList = <ValuedObject> newArrayList
-            
-            // Create valued object for the input
-            val VO = decl.createValuedObject(varName + "_in")
-            VO.insertHighlightAnnotations(par)
-            
-            // Attach the valued object to its list and the list to the map
-            varList.add(VO)
-            stateVariables.put(varName, varList) 
         }
         
         // Determine function output
