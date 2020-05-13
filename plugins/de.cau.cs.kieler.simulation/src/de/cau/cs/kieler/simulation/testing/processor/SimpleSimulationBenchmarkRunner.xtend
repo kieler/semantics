@@ -23,14 +23,14 @@ import static extension java.lang.String.format
 /**
  * @author als
  */
-class BenchmarkRunner extends Processor<TestSuite, CodeContainer> {
+class SimpleSimulationBenchmarkRunner extends Processor<TestSuite, CodeContainer> {
     
     override getId() {
-        "de.cau.cs.kieler.simulation.testing.benchmark.runner"
+        "de.cau.cs.kieler.simulation.testing.benchmark.runner.csv.simple"
     }
     
     override getName() {
-        "Benchmarks Runner"
+        "Benchmarks Runner (CSV)"
     }
     
     override getType() {
@@ -46,14 +46,15 @@ class BenchmarkRunner extends Processor<TestSuite, CodeContainer> {
         for (test : model.cellSet) {
             try {
                 // Run benchmark
+                Thread.sleep(100) // Wait for previous stuff to terminate
                 val result = test.value.compile().model as SimulationResult
                 if (result.results.empty) {
                     results += "%s,%s,NOTRACE,NOTRACE,NOTRACE".format(test.rowKey.modelFile, test.columnKey)
                 } else {
-                    val ticktimes = result.all.map[history.iterator.toIterable].flatten.filterNull
+                    val ticktimes = result.results.map[history.iterator.toIterable].flatten.filterNull
                                           .map[entries.get("#ticktime")].filterNull.map[(typedValue as Number).intValue].toList
                     results += "%s,%s,%d,%d,%d".format(
-                        test.rowKey.modelFile, test.columnKey,
+                        test.rowKey.modelPath, test.columnKey,
                         ticktimes.min, ticktimes.max, (ticktimes.fold(0)[sum, it | sum + it] / (ticktimes.size > 0 ? ticktimes.size : 1)) as int
                     )
                 }

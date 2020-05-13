@@ -12,6 +12,8 @@
  */
 package de.cau.cs.kieler.simulation.testing
 
+import de.cau.cs.kieler.core.properties.IProperty
+import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.simulation.SimulationContext
 import de.cau.cs.kieler.simulation.events.ISimulationListener
 import de.cau.cs.kieler.simulation.events.SimulationEvent
@@ -29,6 +31,9 @@ import static com.google.common.base.Preconditions.*
  * @author als
  */
 class TraceSimulation implements ISimulationListener {
+    
+    public static val IProperty<Integer> RUNS = 
+        new Property<Integer>("de.cau.cs.kieler.simulation.testing.runs", 1)
     
     @Accessors
     val SimulationContext context
@@ -61,6 +66,7 @@ class TraceSimulation implements ISimulationListener {
             context.startEnvironment.setProperty(SimulationContext.MAX_HISTORY_LENGTH, Integer.MAX_VALUE)
         }
         
+        val runs = context.startEnvironment.getProperty(RUNS)?:1
         val results = new SimulationResult(context)
         
         try {
@@ -70,55 +76,58 @@ class TraceSimulation implements ISimulationListener {
             for (traceFile : traceFiles) {
                 // Run each trace in the trace file
                 for (var i = 0; i < traceFile.traces.size; i++) {
-                    val trace = traceFile.traces.get(i)
-                    val result = results.createNewResult(traceFile, trace)
-                    
-                    // Configure trace
-                    context.setTrace(trace, checkOutput, false)
-                    context.mode = ManualMode
-                    
-                    // Start simulation
-                    context.start(false)
-                    
-                    // Run simulation until end of trace
-                    var doStep = true
-                    while(doStep) {
-                        if (context.hasErrors) {
-                            context.stop
-                            context.deleteObserver(this)
-                            
-                            result.history = context.history.clone()
-                            result.errors += context.allErrors.map[ err |
-                                if (err.exception !== null) {
-                                   ((new StringWriter) => [err.exception.printStackTrace(new PrintWriter(it))]).toString()
-                                } else {
-                                   err.message
-                                }
-                            ]
-                            return results
-                        } else if (traceEvent instanceof TraceMismatchEvent) {
-                            result.mismatch = traceEvent
-                            
-                            if (stopOnMismatch) {
+                    // Perform multiple runs of the same trace if requested
+                    for (var run = 0; run < runs; run++) {
+                        val trace = traceFile.traces.get(i)
+                        val result = results.createNewResult(traceFile, trace, run)
+                        
+                        // Configure trace
+                        context.setTrace(trace, checkOutput, false)
+                        context.mode = ManualMode
+                        
+                        // Start simulation
+                        context.start(false)
+                        
+                        // Run simulation until end of trace
+                        var doStep = true
+                        while(doStep) {
+                            if (context.hasErrors) {
                                 context.stop
                                 context.deleteObserver(this)
                                 
                                 result.history = context.history.clone()
+                                result.errors += context.allErrors.map[ err |
+                                    if (err.exception !== null) {
+                                       ((new StringWriter) => [err.exception.printStackTrace(new PrintWriter(it))]).toString()
+                                    } else {
+                                       err.message
+                                    }
+                                ]
                                 return results
+                            } else if (traceEvent instanceof TraceMismatchEvent) {
+                                result.mismatch = traceEvent
+                                
+                                if (stopOnMismatch) {
+                                    context.stop
+                                    context.deleteObserver(this)
+                                    
+                                    result.history = context.history.clone()
+                                    return results
+                                }
+                            } else if (traceEvent instanceof TraceFinishedEvent) {
+                                result.finished = true
+                                result.history = context.history.clone()
+                                
+                                doStep = false // continue with next trace
+                            } else {
+                                context.step
                             }
-                        } else if (traceEvent instanceof TraceFinishedEvent) {
-                            result.finished = true
-                            result.history = context.history.clone()
-                            
-                            doStep = false // continue with next trace
-                        } else {
-                            context.step
                         }
+                        
+                        // Stop and reset the simulation
+                        context.stop
+                        context.reset
                     }
-                    
-                    // Stop and reset the simulation
-                    context.stop
-                    context.reset
                 }
             }
         } finally {
