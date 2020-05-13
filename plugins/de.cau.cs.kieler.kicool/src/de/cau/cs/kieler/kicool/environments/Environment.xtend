@@ -19,8 +19,9 @@ import de.cau.cs.kieler.kicool.compilation.CompilationContext
 import de.cau.cs.kieler.kicool.compilation.Processor
 import de.cau.cs.kieler.kicool.compilation.ProcessorStatus
 import de.cau.cs.kieler.kicool.compilation.internal.EnvironmentPropertyHolder
-import org.eclipse.emf.ecore.resource.Resource
+import java.util.List
 import org.eclipse.emf.ecore.EObject
+import org.eclipse.emf.ecore.resource.Resource
 
 /**
  * Class for a processor environment, which is basically a key value map with some convenient methods.
@@ -95,6 +96,10 @@ class Environment extends EnvironmentPropertyHolder {
         new Property<Long>("de.cau.cs.kieler.kicool.time.compilation", new Long(0))
     public static val IProperty<Long> COMPILATION_TIME_START = 
         new Property<Long>("de.cau.cs.kieler.kicool.time.compilation.start", new Long(0))
+
+    // Keys of properties that are relevant for benchmarks
+    public static val IProperty<List<String>> BENCHMARK_RESULT_KEYS = 
+        new Property<List<String>>("de.cau.cs.kieler.kicool.benchmark.results", null)
 
     public static val IProperty<Snapshots> SNAPSHOTS = 
         new Property<Snapshots>("de.cau.cs.kieler.kicool.snapshots", new Snapshots)
