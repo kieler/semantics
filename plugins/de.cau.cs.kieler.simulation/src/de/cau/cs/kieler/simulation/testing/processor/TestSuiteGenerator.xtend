@@ -27,6 +27,8 @@ import de.cau.cs.kieler.kicool.compilation.Compile
 import de.cau.cs.kieler.kicool.compilation.Processor
 import de.cau.cs.kieler.kicool.compilation.ProcessorType
 import de.cau.cs.kieler.kicool.compilation.internal.ContextPopulation
+import de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure
+import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.simulation.testing.TestModelCollection
 import de.cau.cs.kieler.simulation.testing.TestModelData
 import de.cau.cs.kieler.simulation.testing.TestSuite
@@ -54,7 +56,12 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
  *   }
  *   "<test-id>": {
  *     "<SYSTEM_KEY>": "<system-id>"
- *     <any-property-of-ALL>
+ *     "<SIM_KEY?>": "<boolean (default:true)>"
+ *     "<INPLACE_KEY?>": "<boolean (default:false)>"
+ *     "<ANALYZER_KEY?>": {
+ *        "processor-id": "<INTERMEDIATE_KEY | PRE_KEY<processor-id> | POST_KEY<processor-id>>",...
+ *     }
+ *     <any-property-of-ALL_KEY>
  *   }
  *   "<next-test-id?>": {...
  * }
@@ -69,7 +76,13 @@ class TestSuiteGenerator extends Processor<TestModelCollection, TestSuite> {
     public static val TRACE_KEY = "trace" 
     public static val MODEL_KEY = "model"
     public static val OTHER_KEY = "other"   
-    public static val SYSTEM_KEY = "system"
+    public static val SYSTEM_KEY = "system" 
+    public static val SIM_KEY = "simulate"
+    public static val INPLACE_KEY = "inplace"
+    public static val ANALYZER_KEY = "analyzer"
+    public static val INTERMEDIATE_KEY = "intermediate"
+    public static val PRE_KEY = "pre:"
+    public static val POST_KEY = "post:"
     public static val IProperty<Map<String, Map<String, Object>>> CONFIG = 
         new Property<Map<String, Map<String, Object>>>("de.cau.cs.kieler.simulation.testing.suite.config", null)
         
@@ -109,6 +122,12 @@ class TestSuiteGenerator extends Processor<TestModelCollection, TestSuite> {
                         
                         for (testModel : model.models.filter[filter.accept(it)]) {
                             val ctx = Compile.createCompilationContext(system as String, testModel)
+                            ctx.startEnvironment.setProperty(Environment.INPLACE, "true".equalsIgnoreCase(testConf.get(INPLACE_KEY)?.toString))
+                            ctx.startEnvironment.setProperty(ProjectInfrastructure.MODEL_FILE_PATH, testModel.modelPath.toFile.canonicalPath)
+                            ctx.startEnvironment.setProperty(ProjectInfrastructure.USE_TEMPORARY_PROJECT, ProjectInfrastructure.USE_TEMPORARY_PROJECT.property)
+                            ctx.startEnvironment.setProperty(ProjectInfrastructure.GENERATED_FOLDER_ROOT, ProjectInfrastructure.GENERATED_FOLDER_ROOT.property)
+                            ctx.startEnvironment.setProperty(ProjectInfrastructure.GENERATED_NAME, ProjectInfrastructure.GENERATED_NAME.property)
+                            
                             val systemRoot = ctx.system.processors as ProcessorGroup
                             // Prepend model loader
                             val loader = createProcessorReference => [id = TestModelLoader.ID]
@@ -117,13 +136,46 @@ class TestSuiteGenerator extends Processor<TestModelCollection, TestSuite> {
                             val loaderInst = ctx.processorInstancesSequence.last
                             ctx.processorInstancesSequence.remove(loaderInst)
                             ctx.processorInstancesSequence.add(0, loaderInst)
-                            // Append trace tester
-                            val tester = createProcessorReference => [id = TraceSimulator.ID]
-                            systemRoot.processors.add(tester)
-                            ContextPopulation.populate(tester, ctx)
                             
-                            // TODO add analyzers
-                            // TODO add other processors?
+                            // Append trace tester
+                            if (!"false".equalsIgnoreCase(testConf.get(SIM_KEY)?.toString)) {
+                                val tester = createProcessorReference => [id = TraceSimulator.ID]
+                                systemRoot.processors.add(tester)
+                                ContextPopulation.populate(tester, ctx)
+                            }
+                            
+                            // Add analyzers
+                            val analyzers = testConf.get(ANALYZER_KEY)
+                            if (analyzers instanceof Map) {
+                                for (entry : analyzers.entrySet as Set<Map.Entry<String, Object>>) {
+                                    val position = entry.value
+                                    if (position instanceof String) {
+                                        if (INTERMEDIATE_KEY.equalsIgnoreCase(position)) {
+                                            val analyzer = createIntermediateReference => [id = entry.key]
+                                            ContextPopulation.populate(analyzer, ctx)
+                                            ctx.system.intermediates += analyzer
+                                        } else if (position.startsWith(PRE_KEY) || position.startsWith(POST_KEY)) {
+                                            val parts = position.split(":")
+                                            val matches = ctx.processorMap.keySet.filter[id.equalsIgnoreCase(parts.get(1))].toList
+                                            if (!matches.empty) {
+                                                for (processorRef : matches) {
+                                                    val analyzer = createProcessorReference => [id = entry.key]
+                                                    // no population of co-processors
+                                                    if (PRE_KEY.startsWith(parts.get(0))) {
+                                                        processorRef.preprocesses.add(0, analyzer)
+                                                    } else {
+                                                        processorRef.postprocesses.add(analyzer)
+                                                    }
+                                                }
+                                            } else {
+                                                environment.errors.add("Cannot find processor with id %s to add analyzer %s.".format(parts.get(1), entry.key))
+                                            }
+                                        } else {
+                                            environment.errors.add("Cannot add analyzer %s. Unknown position %s.".format(entry.key, position))
+                                        }
+                                    }
+                                }
+                            }
                             
                             // Configure start environment
                             if (gEnv instanceof Map) {

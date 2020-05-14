@@ -63,15 +63,15 @@ class JsonBenchmarkRunner extends Processor<TestSuite, CodeContainer> implements
         
         if (PRINT_VERBOSE.getProperty) println("== Starting benchmarks ==")
         for (test : model.cellSet) {
-            val model = test.rowKey
-            val key = model.repositoryPath.fileName + ":" + model.modelPath.toString
+            val testModel = test.rowKey
+            val key = testModel.repositoryPath.fileName + ":" + testModel.modelPath.toString
             if (!results.has(key)) {
                 results.add(key, new JsonObject)
             }
             
             if (PRINT_VERBOSE.getProperty) {
                 println("-- Running benchmark %s on model %s".format(test.columnKey, key))
-                test.value.addObserver(this);
+                //test.value.addObserver(this); // Too slow
             }
             
             val modelResults = results.get(key) as JsonObject
