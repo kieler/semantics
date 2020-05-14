@@ -516,8 +516,8 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         }
         node.setProperty(output ? OUTPUT_FLAG : INPUT_FLAG, true)
         if (ALIGN_INPUTS_OUTPUTS.booleanValue) {
-            node.addLayoutParam(LayeredOptions::LAYERING_LAYER_CONSTRAINT,
-                output ? LayerConstraint::LAST : LayerConstraint::FIRST)
+            node.addLayoutParam(LayeredOptions::LAYERING_LAYER_CHOICE_CONSTRAINT,
+                output ? 1000 : 0)
             node.addLayoutParam(CoreOptions::ALIGNMENT, output ? Alignment.RIGHT : Alignment.LEFT)
         }
         nodes += node
@@ -567,7 +567,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         node.setProperty(INPUT_FLAG, true)
 
         if (ALIGN_CONSTANTS.booleanValue) {
-            node.addLayoutParam(LayeredOptions::LAYERING_LAYER_CONSTRAINT, LayerConstraint::FIRST)
+            node.addLayoutParam(LayeredOptions::LAYERING_LAYER_CHOICE_CONSTRAINT, 0)
             node.addLayoutParam(CoreOptions::ALIGNMENT, Alignment.LEFT)
         }
         node.associateWith(e)

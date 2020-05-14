@@ -489,7 +489,7 @@ class InducedDataflowHook extends SynthesisHook {
             EnumSet.of(SizeConstraint.MINIMUM_SIZE, SizeConstraint.NODE_LABELS))
         // Tune the alignment of the input node
         inputNode.addLayoutParam(CoreOptions::ALIGNMENT, Alignment.LEFT)
-        inputNode.addLayoutParam(LayeredOptions::LAYERING_LAYER_CONSTRAINT, LayerConstraint.FIRST)
+        inputNode.addLayoutParam(LayeredOptions::LAYERING_LAYER_CHOICE_CONSTRAINT, 0)
         // Create a single port on the node
         val KPort port = createPort => [node = inputNode]
         port.addLayoutParam(PORT_ABSOLUTE_WRITE, true)
