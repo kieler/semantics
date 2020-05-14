@@ -15,13 +15,14 @@ package de.cau.cs.kieler.kicool.processors.analyzers
 import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
-import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
+import de.cau.cs.kieler.kicool.compilation.Processor
+import de.cau.cs.kieler.kicool.compilation.ProcessorType
 import de.cau.cs.kieler.kicool.environments.Environment
 
 /**
  * @author als
  */
-class LinesOfCodeCounter extends InplaceProcessor<CodeContainer> {
+class LinesOfCodeCounter extends Processor<CodeContainer, CodeContainer> {
     
     public static val IProperty<Integer> LOC = 
         new Property<Integer>("de.cau.cs.kieler.kicool.processors.analyzers.loc", 0)
@@ -38,6 +39,10 @@ class LinesOfCodeCounter extends InplaceProcessor<CodeContainer> {
     
     override getName() {
         "LoC Counter"
+    }
+    
+    override getType() {
+        return ProcessorType.ANALYZER
     }
     
     override process() {
