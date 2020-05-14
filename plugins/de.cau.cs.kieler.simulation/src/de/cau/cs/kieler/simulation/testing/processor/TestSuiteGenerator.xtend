@@ -32,6 +32,7 @@ import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.simulation.testing.TestModelCollection
 import de.cau.cs.kieler.simulation.testing.TestModelData
 import de.cau.cs.kieler.simulation.testing.TestSuite
+import java.io.File
 import java.util.List
 import java.util.Map
 import java.util.Set
@@ -122,11 +123,16 @@ class TestSuiteGenerator extends Processor<TestModelCollection, TestSuite> {
                         
                         for (testModel : model.models.filter[filter.accept(it)]) {
                             val ctx = Compile.createCompilationContext(system as String, testModel)
+                            ctx.stopOnError = true
                             ctx.startEnvironment.setProperty(Environment.INPLACE, "true".equalsIgnoreCase(testConf.get(INPLACE_KEY)?.toString))
-                            ctx.startEnvironment.setProperty(ProjectInfrastructure.MODEL_FILE_PATH, testModel.modelPath.toFile.canonicalPath)
+                            ctx.startEnvironment.setProperty(ProjectInfrastructure.MODEL_FILE_PATH, testModel.repositoryPath.resolve(testModel.modelPath).toFile.canonicalPath)
                             ctx.startEnvironment.setProperty(ProjectInfrastructure.USE_TEMPORARY_PROJECT, ProjectInfrastructure.USE_TEMPORARY_PROJECT.property)
-                            ctx.startEnvironment.setProperty(ProjectInfrastructure.GENERATED_FOLDER_ROOT, ProjectInfrastructure.GENERATED_FOLDER_ROOT.property)
-                            ctx.startEnvironment.setProperty(ProjectInfrastructure.GENERATED_NAME, ProjectInfrastructure.GENERATED_NAME.property)
+                            ctx.startEnvironment.setProperty(ProjectInfrastructure.GENERATED_NAME, "kieler-gen-" + testId.replaceAll(" |\\.|:", "-"))
+                            if (ProjectInfrastructure.GENERATED_FOLDER_ROOT.property !== null) {
+                                var base = new File(ProjectInfrastructure.GENERATED_FOLDER_ROOT.property, testId.replaceAll(" |\\.|:", "-"))
+                                ctx.startEnvironment.setProperty(ProjectInfrastructure.GENERATED_FOLDER_ROOT, base.toString)
+                                ctx.startEnvironment.setProperty(ProjectInfrastructure.GENERATED_NAME, (testModel.repositoryPath.fileName.toString + "-" + testModel.modelPath.toString).replaceAll(" |\\.|:|/|\\\\", "-"))
+                            }
                             
                             val systemRoot = ctx.system.processors as ProcessorGroup
                             // Prepend model loader

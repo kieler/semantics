@@ -54,7 +54,8 @@ class JsonBenchmarkRunner extends Processor<TestSuite, CodeContainer> implements
     
     public static val IProperty<Boolean> PRINT_VERBOSE = 
         new Property<Boolean>("de.cau.cs.kieler.simulation.testing.benchmark.runner.json.verbose", false)
-    
+        
+    static var DEBUG_OUTPUT = false // stuff that is usually too slow
     static val gson = new GsonBuilder().setPrettyPrinting().create()
     
     override process() {
@@ -71,7 +72,7 @@ class JsonBenchmarkRunner extends Processor<TestSuite, CodeContainer> implements
             
             if (PRINT_VERBOSE.getProperty) {
                 println("-- Running benchmark %s on model %s".format(test.columnKey, key))
-                //test.value.addObserver(this); // Too slow
+                test.value.addObserver(this);
             }
             
             val modelResults = results.get(key) as JsonObject
@@ -88,6 +89,9 @@ class JsonBenchmarkRunner extends Processor<TestSuite, CodeContainer> implements
     
     protected def JsonObject run(CompilationContext test, String id, TestModelData model) {
         try {
+            System.gc
+            Thread.sleep(10)
+            
             val result = new JsonObject
             val env = test.compile()
             val resultKeys = env.getProperty(Environment.BENCHMARK_RESULT_KEYS)
@@ -127,10 +131,10 @@ class JsonBenchmarkRunner extends Processor<TestSuite, CodeContainer> implements
     override update(Observable o, Object event) {
         switch (event) {
             CompilationFinished: {
-                if (PRINT_VERBOSE.getProperty) println("benchmark: Compilation finished in %.2fms".format(event.environment.getProperty(Environment.COMPILATION_TIME).doubleValue / 1000_000))
+                if (PRINT_VERBOSE.getProperty && DEBUG_OUTPUT) println("benchmark: Compilation finished in %.2fms".format(event.environment.getProperty(Environment.COMPILATION_TIME).doubleValue / 1000_000))
             }
             ProcessorStart: {
-                if (PRINT_VERBOSE.getProperty) println("benchmark: Executing processor: %s (%s)".format(event.processorInstance.name, event.processorInstance.id))
+                if (PRINT_VERBOSE.getProperty && DEBUG_OUTPUT) println("benchmark: Executing processor: %s (%s)".format(event.processorInstance.name, event.processorInstance.id))
             }
             ProcessorError: {
                 if (PRINT_VERBOSE.getProperty) println("benchmark: Error in compilation:" + event.error)
@@ -139,20 +143,28 @@ class JsonBenchmarkRunner extends Processor<TestSuite, CodeContainer> implements
                 if (PRINT_VERBOSE.getProperty) {
                     val env = event.processorInstance.environment
                     if (env.errors !== null && !env.errors.empty) {
-                        println("benchmark: Error(s) in compilation")
+                        println("benchmark: Error(s) in processor " + event.processorInstance.name)
                         for (error : env.errors.get(Environment.REPORT_ROOT)) {
                             println(error.message)
                             if (error.exception !== null) error.exception.printStackTrace
                         }
                     }
                     if (env.warnings !== null && !env.warnings.empty) {
-                        println("benchmark: Waring(s) in compilation")
+                        println("benchmark: Waring(s) in processor " + event.processorInstance.name)
                         for (warning : env.warnings.get(Environment.REPORT_ROOT)) {
                             println(warning.message)
                             if (warning.exception !== null) warning.exception.printStackTrace
                         }
                     }
-                    println("benchmark: Processing time: %.2fms".format(env.getProperty(Environment.TRANSFORMATION_TIME).doubleValue / 1000_000))
+                    if (DEBUG_OUTPUT || (env.errors !== null && !env.errors.empty)) {
+                        if (!env.logs.files.empty) {
+                            println("benchmark: Logs of processor " + event.processorInstance.name)
+                            for (log : env.logs.files) {
+                                println(log.code)
+                            }
+                        }
+                    }
+                    if (DEBUG_OUTPUT) println("benchmark: Processing time: %.2fms".format(env.getProperty(Environment.TRANSFORMATION_TIME).doubleValue / 1000_000))
                 }
             }
         }

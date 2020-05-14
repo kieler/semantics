@@ -86,7 +86,7 @@ class SimulationResult {
             if (!result.finished) {
                 obj.addProperty("aborted", true)
             }
-            if (result.history.last.entries.containsKey("#ticktime")) {
+            if (result.history?.last?.entries?.containsKey("#ticktime")) {
                 val timeArr = new JsonArray(result.history.size)
                 for (tick : result.history.reverseIterator.toIterable) { // Starting with fist tick
                     val entry = tick.entries.get("#ticktime")
