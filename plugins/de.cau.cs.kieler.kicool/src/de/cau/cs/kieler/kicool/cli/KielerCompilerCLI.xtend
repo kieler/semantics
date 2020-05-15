@@ -435,7 +435,6 @@ class KielerCompilerCLI implements Runnable, Observer {
                         println(error.message)
                         if (error.exception !== null) error.exception.printStackTrace
                     }
-                    if (!tryall) System.exit(-1)
                 }
                 if (warn && env.warnings !== null && !env.warnings.empty) {
                     for (warning : env.warnings.get(Environment.REPORT_ROOT)) {
@@ -472,6 +471,10 @@ class KielerCompilerCLI implements Runnable, Observer {
                 }
                 if (verbose) {
                     println("Processing time: %.2fms".format(env.getProperty(Environment.TRANSFORMATION_TIME).doubleValue / 1000_000))
+                }
+                if (!tryall && env.errors !== null && !env.errors.empty) {
+                    println("Compilation failed.")
+                    System.exit(-1)
                 }
                 if (intermediates) {
                     if (!env.model.saveModel(processorDir, env.getProperty(SOURCE_FILE))) {
