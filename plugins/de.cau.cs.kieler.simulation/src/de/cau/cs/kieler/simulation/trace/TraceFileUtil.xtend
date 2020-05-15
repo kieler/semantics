@@ -34,6 +34,8 @@ import de.cau.cs.kieler.kexpressions.keffects.Assignment
  */
 class TraceFileUtil {
     
+    public static val KEYWORDS = #["reset", "pause", "goto"]
+    
     static extension KTraceFactory = KTraceFactory.eINSTANCE
     static extension KExpressionsFactory = KExpressionsFactory.eINSTANCE
     static extension KEffectsFactory = KEffectsFactory.eINSTANCE
@@ -133,6 +135,13 @@ class TraceFileUtil {
                         if (entry.isInput && entry.isOutput) throw new Exception("InputOutput Variables are not supported")
                     }
                 }
+            }
+        }
+        
+        // escape keywords
+        for (variable : traceFile.aggregatedValuedObjects) {
+            if (KEYWORDS.contains(variable.name)) {
+                variable.name = "^" + variable.name // escape
             }
         }
         

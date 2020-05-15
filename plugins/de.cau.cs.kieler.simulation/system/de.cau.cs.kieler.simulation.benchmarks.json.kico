@@ -1,7 +1,7 @@
-developer system de.cau.cs.kieler.^simulation.benchmarks
-    label "Benchmarks"
+developer system de.cau.cs.kieler.^simulation.benchmarks.^json
+    label "Benchmark Runner (JSON)"
 
 pre process silent de.cau.cs.kieler.kicool.processors.^json.env.reader
 de.cau.cs.kieler.^simulation.testing.models.collector
 de.cau.cs.kieler.^simulation.testing.suite.generator
-de.cau.cs.kieler.^simulation.testing.benchmark.runner
+de.cau.cs.kieler.^simulation.testing.benchmark.runner.^json
