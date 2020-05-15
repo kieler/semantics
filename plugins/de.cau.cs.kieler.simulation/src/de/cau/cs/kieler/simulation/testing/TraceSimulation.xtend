@@ -119,6 +119,7 @@ class TraceSimulation implements ISimulationListener {
                                 result.history = context.history.clone()
                                 
                                 doStep = false // continue with next trace
+                                traceEvent = null
                             } else {
                                 context.step
                             }
