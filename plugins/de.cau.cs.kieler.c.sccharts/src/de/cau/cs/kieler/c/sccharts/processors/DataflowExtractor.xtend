@@ -199,6 +199,7 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
                 
                 // Create valued object for the input
                 val VO = decl.createValuedObject(varName + "_in")
+                VO.label = varName
                 VO.insertHighlightAnnotations(par)
                 
                 // Attach the valued object to its list and the list to the map
@@ -224,6 +225,7 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
                 
                 // Create valued object
                 val resVO = retDecl.createValuedObject(varName + "_out")
+                resVO.label = varName
                 
                 // Attach valued object to the listing
                 varList.add(resVO)
@@ -573,6 +575,7 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
             
             //Create the valued object
             val vo = res.createValuedObject(varName + "_0")
+            vo.label = varName
             vo.insertHighlightAnnotations(decl)
             
             // Add the valued object and the ssa list to the respective elements    
@@ -658,6 +661,7 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
             decl.type = outputType
             decl.output = true            
             val innerOutputVO = decl.createValuedObject(output + "_out")
+            innerOutputVO.label = output
             innerOutputVO.insertHighlightAnnotations(stmt)
             
             // Add the new create valued object to the ssa list and valued object list
@@ -731,6 +735,7 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
             decl.type = inputType
             decl.input = true            
             val innerInputVO = decl.createValuedObject(input + "_in")
+            innerInputVO.label = input
             innerInputVO.insertHighlightAnnotations(stmt)
             
             // Add the new create valued object to the ssa list and valued object list
@@ -921,6 +926,7 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
             outputDecl.output = true
             state.declarations += outputDecl
             val outputVO = outputDecl.createValuedObject("res_out") 
+            outputVO.label = "res"
         }
         
         // Create an input for each argument
