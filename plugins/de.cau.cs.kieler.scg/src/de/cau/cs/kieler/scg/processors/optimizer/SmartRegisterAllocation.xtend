@@ -155,7 +155,9 @@ class SmartRegisterAllocation extends InplaceProcessor<SCGraphs> {
                         val recycledRegister = node.selectRecycledRegister(registerAllocation, preNodes, usedInPreNodes, assignedVariables)
                         val vo = scg.findValuedObjectByName(recycledRegister) 
                         if (vo !== null) {
-                            if (getProperty(SMART_REGISTER_ALLLOCATION_FREE_AFTER_RECYCLE_RANGE)) {
+                            if (getProperty(SMART_REGISTER_ALLLOCATION_FREE_AFTER_RECYCLE_RANGE)
+                                && !usedInPreNodes.contains(node.reference.valuedObject.name)
+                            ) {
                                 registerAllocation.recycleAfterNode.put(
                                     registerAllocation.registerRange.peek(node.reference.valuedObject.name), 
                                     recycledRegister)
@@ -201,7 +203,7 @@ class SmartRegisterAllocation extends InplaceProcessor<SCGraphs> {
             var String reg = null
             while (reg === null && !registerAllocation.freedRegister.empty) {
                 val r = registerAllocation.freedRegister.pop
-                val isPreReceiver = preNodes.exists[ reference.valuedObject.name == r ] 
+                val isPreReceiver = false //preNodes.exists[ reference.valuedObject.name == r ] 
                 if (!isPreReceiver && assignedVariables.exists[ it == r ]) {
                     reg = r
                 } else {

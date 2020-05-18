@@ -98,6 +98,18 @@ class KExpressionsValuedObjectExtensions {
         ]
     }
     
+    def ValuedObject createSchedule(ScheduleDeclaration scheduleDeclaration, String name) {
+        val schedule = createValuedObject(name)
+        scheduleDeclaration.valuedObjects += schedule
+        return schedule
+    }
+    
+    def assignSchedule(ValuedObject schedule, Schedulable from, Schedulable to, int fromPriority, int toPriority) {
+        from.schedule += createScheduleReference(schedule, fromPriority)
+        to.schedule += createScheduleReference(schedule, toPriority)
+        schedule
+    }
+    
     def ValuedObject createScheduleTo(Schedulable from, Schedulable to, int fromPriority, int toPriority, String name) {
         val schedule = createValuedObject(name)
         from.schedule += createScheduleReference(schedule, fromPriority)

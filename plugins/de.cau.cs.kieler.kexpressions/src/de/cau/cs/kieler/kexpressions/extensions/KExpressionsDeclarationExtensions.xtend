@@ -34,6 +34,7 @@ import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
 import de.cau.cs.kieler.kexpressions.kext.KExtFactory
 import de.cau.cs.kieler.kexpressions.MethodDeclaration
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.kexpressions.PriorityProtocol
 
 /**
  * @author ssm
@@ -220,6 +221,16 @@ class KExpressionsDeclarationExtensions {
                 d.priorities.add(it)
             ]            
         ]
+    }
+    
+    def ScheduleDeclaration assignPrioritiesQuickly(ScheduleDeclaration scheduleDeclaration, List<Integer> quickPriorities) {
+        for (qp : quickPriorities) {
+            switch (qp) {
+                case 0: { scheduleDeclaration.priorities += PriorityProtocol.CONFLICT }
+                case 1: { scheduleDeclaration.priorities += PriorityProtocol.CONFLUENT }
+            }
+        }
+        return scheduleDeclaration
     }
         
         
