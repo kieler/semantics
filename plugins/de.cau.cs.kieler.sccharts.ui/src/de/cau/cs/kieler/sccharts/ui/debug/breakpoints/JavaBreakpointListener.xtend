@@ -53,7 +53,9 @@ class JavaBreakpointListener implements IJavaBreakpointListener, IDebugEventSetL
                 DebugBreakpointManager.instance.runEnding
                 println("Ending debug run.")
                 
-            } else if (event.kind == DebugEvent.RESUME) {
+            } else if (event.kind == DebugEvent.RESUME
+                && event.detail != DebugEvent.EVALUATION
+                && event.detail != DebugEvent.EVALUATION_IMPLICIT) {
                 DebugBreakpointManager.instance.resuming
             }
         }
