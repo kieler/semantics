@@ -1,11 +1,15 @@
 package de.cau.cs.kieler.sccharts.processors.statebased.lean.codegen.java
+
 import com.google.inject.Inject
 import com.google.inject.Injector
 import de.cau.cs.kieler.annotations.StringPragma
 import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
 import de.cau.cs.kieler.annotations.registry.PragmaRegistry
+import de.cau.cs.kieler.core.properties.IProperty
+import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
 import de.cau.cs.kieler.kicool.compilation.ExogenousProcessor
+import de.cau.cs.kieler.kicool.compilation.JavaCodeFile
 import de.cau.cs.kieler.kicool.compilation.codegen.CodeGeneratorNames
 import de.cau.cs.kieler.sccharts.SCCharts
 import java.util.Map
@@ -15,7 +19,6 @@ import static de.cau.cs.kieler.kicool.compilation.codegen.AbstractCodeGenerator.
 import static de.cau.cs.kieler.kicool.compilation.codegen.CodeGeneratorNames.*
 
 import static extension de.cau.cs.kieler.sccharts.processors.statebased.lean.codegen.AbstractStatebasedLeanTemplate.hostcodeSafeName
-import de.cau.cs.kieler.kicool.compilation.JavaCodeFile
 
 /**
  * Java Code Generator for the Statebased code generation using templates.
@@ -31,7 +34,7 @@ class StatebasedLeanJavaCodeGenerator extends ExogenousProcessor<SCCharts, CodeC
     protected static val PACKAGE = PragmaRegistry.register("package", StringPragma, "Package name for the generated file(s)")
     protected static val INCLUDE = PragmaRegistry.register("include", StringPragma, "Additional things that should be imported")
     protected static val SUPERCLASS = PragmaRegistry.register("superclass", StringPragma, "Superclass to use for the generated class file.")
-
+    
     public static val JAVA_EXTENSION = ".java"
     public static val IMPORTS = "imports"
     public static val CONTEXT_SUFFIX = "Context"
@@ -90,6 +93,8 @@ class StatebasedLeanJavaCodeGenerator extends ExogenousProcessor<SCCharts, CodeC
           codeContainer.files.add(interface)
           interface.naming.putAll(naming)
         }
+        
+        environment.setProperty(new Property<String>("de.cau.cs.kieler.simulation.java.struct.access"), ".iface.")
     }
 
     protected def CharSequence addHeader() {
