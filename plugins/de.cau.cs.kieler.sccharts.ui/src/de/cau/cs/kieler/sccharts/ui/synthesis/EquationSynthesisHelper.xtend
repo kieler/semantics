@@ -311,7 +311,7 @@ class EquationSynthesisHelper {
                 data += KGraphFactory.eINSTANCE.createKIdentifier => [
                     id = "in0"
                 ]
-                it.setPortSize(2, 2)
+                it.setPortSize(0, 0)
                 it.addLayoutParam(CoreOptions::PORT_SIDE, PortSide::WEST);
                 it.labels += createLabel => [
                     it.text = ""
