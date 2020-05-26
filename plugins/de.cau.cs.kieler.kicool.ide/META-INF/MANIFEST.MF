@@ -21,9 +21,11 @@ Require-Bundle: org.antlr.runtime;bundle-version="[3.2.0,3.2.1)",
  org.apache.log4j;bundle-version="1.2.15",
  de.cau.cs.kieler.klighd,
  de.cau.cs.kieler.klighd.lsp;bundle-version="0.1.0",
- de.cau.cs.kieler.language.server
+ de.cau.cs.kieler.language.server,
+ org.eclipse.sprotty;bundle-version="0.7.0"
 Export-Package: de.cau.cs.kieler.kicool.ide,
  de.cau.cs.kieler.kicool.ide.contentassist.antlr,
  de.cau.cs.kieler.kicool.ide.contentassist.antlr.internal,
+ de.cau.cs.kieler.kicool.ide.klighd.models,
  de.cau.cs.kieler.kicool.ide.language.server,
  de.cau.cs.kieler.kicool.ide.view

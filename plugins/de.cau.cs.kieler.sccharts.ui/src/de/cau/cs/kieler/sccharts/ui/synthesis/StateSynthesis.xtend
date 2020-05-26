@@ -180,9 +180,9 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
                 node.setLayoutOption(LayeredOptions::LAYERING_LAYER_CONSTRAINT, LayerConstraint::FIRST);
             }
         }
-        if (state.isFinal) {
-            node.setFinalStyle
-        }
+//        if (state.isFinal) {
+//            node.setFinalStyle
+//        }
         if (state.isViolation) {
             val isHaltState = state.outgoingTransitions.size == 0 
                 || !state.outgoingTransitions.exists[ targetState != state ]
@@ -382,7 +382,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
     
     /** Configures the default layout of children (regions in the state) */
     def static void configureLayout(KNode node) {
-        node.setLayoutOption(CoreOptions::ALGORITHM, "org.eclipse.elk.box")
+        node.setLayoutOption(CoreOptions::ALGORITHM, "org.eclipse.elk.rectpacking")
 //        node.setLayoutOption(CoreOptions::ALGORITHM, RectPackingOptions.ALGORITHM_ID)
         node.setLayoutOption(CoreOptions::EXPAND_NODES, true)
         node.setLayoutOption(CoreOptions::PADDING, new ElkPadding(0))
