@@ -1,6 +1,6 @@
 /*
  * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
- *
+ * 
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
  * Copyright 2018 by
@@ -21,29 +21,30 @@ import org.eclipse.lsp4j.jsonrpc.services.JsonNotification
  * Interface to the LSP extension commands
  * 
  * @author sdo
- *
+ * 
  */
 @JsonSegment('keith/kicool')
-interface CommandExtension {
-    
+interface KiCoolCommandExtension {
+
     /**
      * Compiles file given by uri with compilationsystem given by command.
      */
     @JsonNotification('compile')
-    def void compile(String uri, String clientId, String command, boolean inplace, boolean showResultingModel, boolean snapshot);
-    
+    def void compile(String uri, String clientId, String command, boolean inplace, boolean showResultingModel,
+        boolean snapshot);
+
     /**
      * Cancels the current compilation by stopping the current compilation thread.
      */
     @JsonNotification('cancel-compilation')
     def void cancelCompilation();
-    
+
     /**
      * Build diagram for snapshot with id index for file given by uri. Only works, if the file was already compiled.
      */
     @JsonRequest('show')
     def CompletableFuture<String> show(String uri, String clientId, int index)
-    
+
     /**
      * Returns all compilation systems which are applicable for the file at given uri.
      * 
@@ -51,11 +52,17 @@ interface CommandExtension {
      * @param filter boolean indicating whether compilation systems should be filtered
      */
     @JsonNotification('get-systems')
-    def void getSystems(String uri)
-    
+    def void getSystems(String uri);
+
     /**
      * Cancels get systems thread by force if it takes too long.
      */
     @JsonRequest('cancel-get-systems')
     def CompletableFuture<Boolean> cancelGetSystems();
+
+    /**
+     * Request the contents of a CodeContainer as string together with its file name
+     */
+    @JsonRequest("get-code-of-model")
+    def CompletableFuture<CodeOfModel> getCodeOfModel(String kgraphElemntId, String clientId);
 }
