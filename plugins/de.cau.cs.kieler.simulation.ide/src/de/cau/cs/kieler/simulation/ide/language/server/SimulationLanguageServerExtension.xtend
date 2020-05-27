@@ -20,9 +20,11 @@ import de.cau.cs.kieler.kicool.ProcessorGroup
 import de.cau.cs.kieler.kicool.compilation.observer.AbstractContextNotification
 import de.cau.cs.kieler.kicool.compilation.observer.CompilationFinished
 import de.cau.cs.kieler.kicool.ide.language.server.KiCoolLanguageServerExtension
+import de.cau.cs.kieler.klighd.lsp.KGraphDiagramState
 import de.cau.cs.kieler.klighd.lsp.KGraphLanguageServerExtension
 import de.cau.cs.kieler.language.server.ILanguageClientProvider
 import de.cau.cs.kieler.language.server.KeithLanguageClient
+import de.cau.cs.kieler.simulation.CoSimulationExeWrapper
 import de.cau.cs.kieler.simulation.DataPool
 import de.cau.cs.kieler.simulation.SimulationContext
 import de.cau.cs.kieler.simulation.events.ISimulationListener
@@ -33,6 +35,7 @@ import de.cau.cs.kieler.simulation.ide.server.SimulationServer
 import de.cau.cs.kieler.simulation.mode.DynamicTickMode
 import de.cau.cs.kieler.simulation.mode.ManualMode
 import de.cau.cs.kieler.simulation.mode.PeriodicMode
+import java.io.File
 import java.util.ArrayList
 import java.util.HashMap
 import java.util.List
@@ -46,6 +49,7 @@ import org.eclipse.xtext.ide.server.concurrent.RequestManager
 
 import static de.cau.cs.kieler.simulation.ide.CentralSimulation.*
 import static de.cau.cs.kieler.simulation.ide.language.server.ClientInputs.*
+import java.net.URLDecoder
 
 /**
  * LS extension to simulate models. Supports starting, stepping, and stopping or simulations.
@@ -56,7 +60,7 @@ import static de.cau.cs.kieler.simulation.ide.language.server.ClientInputs.*
  * 
  */
 @Singleton
-class SimulationLanguageServerExtension implements ILanguageServerExtension, CommandExtension, ISimulationListener, ILanguageClientProvider {
+class SimulationLanguageServerExtension implements ILanguageServerExtension, SimulationCommandExtension, ISimulationListener, ILanguageClientProvider {
 
     protected static val LOG = Logger.getLogger(SimulationLanguageServerExtension)
     protected extension ILanguageServerAccess languageServerAccess
@@ -75,6 +79,11 @@ class SimulationLanguageServerExtension implements ILanguageServerExtension, Com
      */
     @Inject
     extension KGraphLanguageServerExtension
+    
+    /**
+     * The state of the diagram
+     */
+    @Inject KGraphDiagramState diagramState
 
     /**
      * Data pool that will be send to the client in start of step function.
@@ -339,6 +348,24 @@ class SimulationLanguageServerExtension implements ILanguageServerExtension, Com
 
     override getLanguageClient() {
         return this.client
+    }
+    
+    override addCoSimulation(String clientId, String fileUri) {
+        if (this.diagramState.viewer !== null) {
+            val vc = diagramState.viewer.viewContext
+            val simCtx = vc.inputModel
+            if (simCtx instanceof SimulationContext) {
+                if (fileUri !== null && fileUri !== "") {
+                    try {
+                        val File file = new File(URLDecoder.decode(fileUri, "UTF-8"))
+                        val sim = new CoSimulationExeWrapper(file)
+                        simCtx.addModel(sim)
+                    } catch (Exception e) {
+                        e.printStackTrace
+                    }
+                }
+            }
+        }
     }
 
     /**

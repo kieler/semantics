@@ -25,7 +25,7 @@ import org.eclipse.lsp4j.jsonrpc.services.JsonNotification
  *
  */
 @JsonSegment('keith/simulation')
-interface CommandExtension {
+interface SimulationCommandExtension {
     
     /**
      * Simulates a model given by uri. It is assumed that the model was compiled via a simulation CS before.
@@ -45,4 +45,8 @@ interface CommandExtension {
      */
     @JsonRequest('stop')
     def CompletableFuture<SimulationStoppedMessage> stop()
+    
+    
+    @JsonNotification('addCoSimulation')
+    def void addCoSimulation(String clientId, String file);
 }
