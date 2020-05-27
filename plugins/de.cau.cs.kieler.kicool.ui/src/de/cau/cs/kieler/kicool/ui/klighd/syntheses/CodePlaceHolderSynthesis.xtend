@@ -13,8 +13,8 @@
  */
 package de.cau.cs.kieler.kicool.ui.klighd.syntheses
 
+import de.cau.cs.kieler.kicool.ide.klighd.models.CodePlaceHolder
 import de.cau.cs.kieler.kicool.ui.klighd.actions.OpenCodeInEditorAction
-import de.cau.cs.kieler.kicool.ui.klighd.models.CodePlaceHolder
 import de.cau.cs.kieler.klighd.KlighdConstants
 import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.kgraph.KNode

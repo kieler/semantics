@@ -22,9 +22,11 @@ import de.cau.cs.kieler.kicool.compilation.CodeContainer
 import de.cau.cs.kieler.kicool.compilation.CompilationContext
 import de.cau.cs.kieler.kicool.compilation.Compile
 import de.cau.cs.kieler.kicool.environments.Environment
+import de.cau.cs.kieler.kicool.ide.klighd.models.CodePlaceHolder
 import de.cau.cs.kieler.kicool.ide.view.IdeCompilerView
 import de.cau.cs.kieler.klighd.lsp.KGraphDiagramState
 import de.cau.cs.kieler.klighd.lsp.KGraphLanguageServerExtension
+import de.cau.cs.kieler.klighd.lsp.utils.KGraphElementIDGenerator
 import de.cau.cs.kieler.language.server.ILanguageClientProvider
 import de.cau.cs.kieler.language.server.KeithLanguageClient
 import de.cau.cs.kieler.language.server.registration.RegistrationLanguageServerExtension
@@ -54,7 +56,7 @@ import org.eclipse.xtext.util.CancelIndicator
  * 
  */
 @Singleton
-class KiCoolLanguageServerExtension implements ILanguageServerExtension, CommandExtension, ILanguageClientProvider {
+class KiCoolLanguageServerExtension implements ILanguageServerExtension, KiCoolCommandExtension, ILanguageClientProvider {
 
     protected static val LOG = Logger.getLogger(KiCoolLanguageServerExtension)
 
@@ -455,6 +457,36 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
             sendError('An error occurred on new compilation snapshot.' + e)
         }
         
+    }
+    
+    override getCodeOfModel(String kgraphElementId, String clientId) {
+        if (this.diagramState.viewer !== null) {
+            val Object inputModel = diagramState.viewer.viewContext.inputModel
+            // Get uri of original model file
+            val uri = diagramState.getURIString(clientId)
+            // Get KNode that holds the code that should be displayed
+            val kNode = KGraphElementIDGenerator.findElementById(diagramState.getKGraphToSModelElementMap(
+                uri), kgraphElementId);
+            // Get model string
+            val CodePlaceHolder codeModel = if (inputModel instanceof CodePlaceHolder) {
+                inputModel as CodePlaceHolder
+            } else if (kNode !== null) {
+                // if input model is not CodePlaceHolder check if clicked node is associated with it
+                var Object domainElement = diagramState.viewer.viewContext.getSourceElement(kNode)
+                if (domainElement instanceof CodePlaceHolder) {
+                    domainElement as CodePlaceHolder
+                }
+            }
+            // Get name of file
+            val code = new CodeOfModel(codeModel.name, codeModel.code)
+            return requestManager.runRead[ cancelIndicator |
+                code
+            ]
+        } else {
+            return requestManager.runRead[ cancelIndicator |
+                new CodeOfModel("Error", "On error occurred while trying to get the code.")
+            ]
+        }
     }
     
     /**
