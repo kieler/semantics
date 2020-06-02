@@ -1023,7 +1023,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             }
             // Removed as suggested by uru (mail to cmot, 11.11.2016)  
             if (!SCGraph.hasAnnotation(SCGFeatures::SEQUENTIALIZE_ID) && !CONDITIONAL_LEFT_OR_RIGTH.booleanValue)          
-                port.addLayoutParam(LayeredOptions.NORTH_OR_SOUTH_PORT, Boolean.TRUE);
+                port.addLayoutParam(LayeredOptions.ALLOW_NON_FLOW_PORTS_TO_SWITCH_SIDES, Boolean.TRUE);
            
             // Added as suggested by uru (mail to cmot, 11.11.2016)            
             port.addLayoutParam(LayeredOptions::NODE_PLACEMENT_STRATEGY, NodePlacementStrategy.NETWORK_SIMPLEX);
