@@ -1,5 +1,5 @@
-developer system de.cau.cs.kieler.^simulation.netlist.java
-    label "Netlist-based Simulation Java Backend"
+developer system de.cau.cs.kieler.^simulation.java
+    label "Simulation Java Backend"
 
 de.cau.cs.kieler.kicool.deploy.setup config {
     "de.cau.cs.kieler.kicool.deploy.setup.clear": ["lib"],

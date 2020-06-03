@@ -2,4 +2,4 @@ developer system de.cau.cs.kieler.sccharts.^simulation.statebased.lean.java
     label "State-based Lean Simulation (Java, No-TTS)"
 
 system de.cau.cs.kieler.sccharts.statebased.lean.java.template
-system de.cau.cs.kieler.^simulation.statebased.lean.java
+system de.cau.cs.kieler.^simulation.java

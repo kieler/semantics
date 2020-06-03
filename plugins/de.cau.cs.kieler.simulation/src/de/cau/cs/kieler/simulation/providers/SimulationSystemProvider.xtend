@@ -28,13 +28,8 @@ class SimulationSystemProvider implements ISystemProvider {
     override getSystems() {
         #[
             "system/de.cau.cs.kieler.internal.simulation.kico",
-            "system/de.cau.cs.kieler.simulation.netlist.c.kico",
-            "system/de.cau.cs.kieler.simulation.netlist.java.kico",
-            "system/de.cau.cs.kieler.simulation.priority.c.kico",
-            "system/de.cau.cs.kieler.simulation.priority.java.kico",
-            "system/de.cau.cs.kieler.simulation.statebased.c.kico",
-            "system/de.cau.cs.kieler.simulation.statebased.lean.c.kico",
-            "system/de.cau.cs.kieler.simulation.statebased.lean.java.kico",
+            "system/de.cau.cs.kieler.simulation.c.kico",
+            "system/de.cau.cs.kieler.simulation.java.kico",
             "system/de.cau.cs.kieler.simulation.benchmarks.csv.simple.kico",
             "system/de.cau.cs.kieler.simulation.benchmarks.json.kico"
         ]
