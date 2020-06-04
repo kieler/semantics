@@ -32,6 +32,7 @@ import org.eclipse.elk.alg.layered.options.GreedySwitchType
 import org.eclipse.elk.alg.layered.options.LayeredOptions
 import org.eclipse.elk.alg.layered.options.NodePlacementStrategy
 import org.eclipse.elk.core.math.ElkPadding
+import org.eclipse.elk.core.options.ContentAlignment
 import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.core.options.Direction
 import org.eclipse.elk.core.options.EdgeRouting
@@ -80,6 +81,7 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
         val node = region.createNode().associateWith(region)
 
         node.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.layered")
+        node.addLayoutParam(CoreOptions::CONTENT_ALIGNMENT, ContentAlignment.topCenter)
         node.addLayoutParam(CoreOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL)
         node.addLayoutParam(CoreOptions::DIRECTION, Direction::RIGHT)
         node.addLayoutParam(LayeredOptions::THOROUGHNESS, 100)
