@@ -13,6 +13,7 @@
 package de.cau.cs.kieler.simulation.testing.processor
 
 import com.google.gson.GsonBuilder
+import com.google.gson.JsonArray
 import com.google.gson.JsonElement
 import com.google.gson.JsonNull
 import com.google.gson.JsonObject
@@ -27,9 +28,11 @@ import de.cau.cs.kieler.kicool.compilation.observer.ProcessorError
 import de.cau.cs.kieler.kicool.compilation.observer.ProcessorFinished
 import de.cau.cs.kieler.kicool.compilation.observer.ProcessorStart
 import de.cau.cs.kieler.kicool.environments.Environment
+import de.cau.cs.kieler.kicool.environments.MessageObjectLink
 import de.cau.cs.kieler.simulation.testing.SimulationResult
 import de.cau.cs.kieler.simulation.testing.TestModelData
 import de.cau.cs.kieler.simulation.testing.TestSuite
+import java.util.List
 import java.util.Observable
 import java.util.Observer
 
@@ -95,6 +98,14 @@ class JsonBenchmarkRunner extends Processor<TestSuite, CodeContainer> implements
             
             val result = new JsonObject
             val env = test.compile()
+            
+            if (test.hasErrors) {
+                result.add(Environment.ERRORS.id, test.allErrors.convertToJson)
+            }
+            if (test.hasWarings) {
+                result.add(Environment.WARNINGS.id, test.allWarnings.convertToJson)
+            }
+            
             val resultKeys = env.getProperty(Environment.BENCHMARK_RESULT_KEYS)
             if (resultKeys !== null) {
                 for (key : resultKeys) {
@@ -104,9 +115,11 @@ class JsonBenchmarkRunner extends Processor<TestSuite, CodeContainer> implements
                     }
                 }
             }
+            
             if (env.model instanceof SimulationResult) {
                 result.add(TraceSimulator.ID, (env.model as SimulationResult).toJson)
             }
+            
             if (result.size > 0) return result
         } catch (Exception e) {
             environment.warnings.add("Test %s failed for model %s".format(id, model.modelFile), e)
@@ -127,6 +140,18 @@ class JsonBenchmarkRunner extends Processor<TestSuite, CodeContainer> implements
             }
         }
         return JsonNull.INSTANCE
+    }
+    
+    protected def JsonArray convertToJson(List<MessageObjectLink> msgs) {
+        val arr = new JsonArray()
+        for (msg : msgs) {
+            if (msg.exception !== null) {
+                arr.add("%s (%s: %s)".format(msg.message?:msg.exception.message, msg.exception.class.simpleName, msg.exception.message?:""))
+            } else {
+                arr.add(msg.message?:"Unknown message")
+            }
+        }
+        return arr
     }
     
     override update(Observable o, Object event) {
