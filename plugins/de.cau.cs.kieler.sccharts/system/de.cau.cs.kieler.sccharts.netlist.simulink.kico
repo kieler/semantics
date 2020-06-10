@@ -1,0 +1,5 @@
+developer system de.cau.cs.kieler.sccharts.netlist.simulink
+    label "Netlist-based Compilation (Simulink)"
+
+system de.cau.cs.kieler.sccharts.netlist
+de.cau.cs.kieler.scg.processors.codegen.simulink
