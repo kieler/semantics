@@ -1,4 +1,4 @@
-public system de.cau.cs.kieler.sccharts.netlist.promela
+system de.cau.cs.kieler.sccharts.netlist.promela
 	label "SCCharts to Promela (netlist)"
 
 // Get verification properties from model, if none yet

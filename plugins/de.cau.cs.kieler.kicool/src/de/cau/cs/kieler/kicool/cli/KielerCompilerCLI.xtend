@@ -12,6 +12,9 @@
  */
 package de.cau.cs.kieler.kicool.cli
 
+import com.google.gson.Gson
+import com.google.gson.JsonObject
+import com.google.gson.JsonParser
 import de.cau.cs.kieler.core.model.ModelUtil
 import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.core.properties.Property
@@ -34,12 +37,14 @@ import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
 import de.cau.cs.kieler.kicool.registration.ModelInformation
 import de.cau.cs.kieler.kicool.util.KiCoolUtils
 import java.io.File
+import java.net.URL
 import java.nio.file.FileSystems
 import java.nio.file.Files
 import java.util.List
 import java.util.Map
 import java.util.Observable
 import java.util.Observer
+import java.util.regex.Pattern
 import org.apache.log4j.ConsoleAppender
 import org.apache.log4j.Level
 import org.apache.log4j.Logger
@@ -54,8 +59,6 @@ import picocli.CommandLine.Parameters
 
 import static extension de.cau.cs.kieler.core.uri.URIUtils.*
 import static extension java.lang.String.format
-import java.net.URL
-import java.net.URLClassLoader
 
 /**
  * @author als
@@ -72,14 +75,17 @@ class KielerCompilerCLI implements Runnable, Observer {
     @Option(names = #["-t", "--try-all"], description = "prevents the compiler from stopping at the first error when compiling multiple source files.")
     protected boolean tryall;
     
-    @Option(names = #["-c", "--class-path"], paramLabel = "FILE", description = "one or multiple .jar files where the compiler searches for additional processors and compilation systems.")
-    protected List<String> paths
+    @Option(names = #["-e", "--external", "--class-path"], paramLabel = "FILE", description = "one or multiple .jar files where the compiler searches for additional processors and compilation systems.")
+    protected List<String> externalJars
     
     @Option(names = #["-s", "--system"], paramLabel = "SYSTEM-ID/FILE", description = "the ID of the compilation system or local .kico-file. (default: ${DEFAULT-VALUE})")
     protected String systemId = "de.cau.cs.kieler.kicool.identity";
     
     @Option(names = #["-i", "--intermediates"], description = "deactivates inplace compilation and saves all intermediate models. (default: ${DEFAULT-VALUE})")
     protected boolean intermediates = false
+    
+    @Option(names = #["-c", "--config", "--configuration"], paramLabel = "FILE", description = "the JSON configuration file to configure the compiler. All entries will be set as properties in the start environment. All entries with a keys starting with '--' and a string value will be treated as if they were passed as additional arguments to this command line call (override). Additionally it supports '--files' for specifying the input files (absolute or relative to the config file).")
+    protected File config
     
     @Option(names = #["-D", "-P", "--property"], paramLabel = "PROPERTY", description = "the compiler properties to set in the start environment.")
     protected Map<String, String> properties
@@ -125,8 +131,54 @@ class KielerCompilerCLI implements Runnable, Observer {
     }
     
     override run() {
-        if (paths !== null) {
-            for (path : paths) {
+        var JsonObject configJson
+        if (config !== null) {
+            try {
+                val content = new String(Files.readAllBytes(config.toPath))
+                val json = (new JsonParser).parse(content) as JsonObject
+                // Additional command arguments
+                val jsonArgs = <String>newArrayList
+                for (entry : json.entrySet.filter[key.startsWith("--") && value.isJsonPrimitive && value.asJsonPrimitive.isString]) {
+                    if (entry.key.equals("--files")) { // Parse input files from config
+                        val paths = <String>newArrayList()
+                        val m = Pattern.compile("([^\"]\\S*|\".+?\")\\s*").matcher(entry.value.asString);
+                        while (m.find()) {
+                            paths += m.group(1).replace("\"", "")
+                        }
+                        val files = paths.map[trim].filter[!empty].map[new File(it)]
+                        for (file : files) {
+                            if (file.absolute) {
+                                jsonArgs += file.toString
+                            } else {
+                                jsonArgs += new File(config.parentFile, file.toString).toString
+                            }
+                        }
+                    } else { // other cli arguments
+                        jsonArgs += entry.key
+                        jsonArgs += entry.value.asString
+                    }
+                }
+                val additionalCl = new CommandLine(this) // Not sure if it is good to reinitialize arguments of this instance
+                val result = additionalCl.parseArgs(jsonArgs)
+                if (result !== null && !result.errors.empty) {
+                    println("Could not parse additional command line arguments from configuration file.")
+                    for (e : result.errors) {
+                        e.printStackTrace
+                    }
+                } else if (result !== null && verbose) {
+                    for (arg : result.matchedArgs) {
+                        println("Applied command line argument value from configuration file: " + arg.stringValues.join(" "))
+                    }
+                }
+                json.entrySet.removeIf[key.startsWith("--")]
+                configJson = json
+            } catch (Exception e) {
+                println("Could not parse configuration file: " + config.toString)
+                e.printStackTrace
+            }
+        }
+        if (externalJars !== null) {
+            for (path : externalJars) {
                 addURLToClassLoader(new File(path).toURI().toURL())
             }
         }
@@ -175,6 +227,11 @@ class KielerCompilerCLI implements Runnable, Observer {
                 }
             }
             
+            if (modelFiles.empty && config !== null && config.exists) {
+                if (verbose) println("No explicit file to compile. Using config file as compiler input.")
+                modelFiles += config
+            }
+            
             if (modelFiles.empty) {
                 if (verbose || !listSystems || !listAllSystems || !help) println("No files to compile.")
                 if (files === null || files.empty) CommandLine.usage(this, System.out)
@@ -195,6 +252,19 @@ class KielerCompilerCLI implements Runnable, Observer {
             // Prepare properties
             val jsonProps = newArrayList
             val rawProps = newHashMap
+            if (configJson !== null && !configJson.entrySet.empty) {
+                try {
+                    val json = KExtStandaloneParser.parseJsonObject((new Gson).toJson(configJson))
+                    if (json !== null) {
+                        jsonProps += json
+                    } else {
+                        println("Could not convert configuration file into compiler properties.")
+                    }
+                } catch (Exception e) {
+                    println("Could not convert configuration file into compiler properties.")
+                    e.printStackTrace
+                }
+            }
             if (properties !== null && !properties.empty) {
                 for (prop : properties.entrySet) {
                     try {
@@ -365,7 +435,6 @@ class KielerCompilerCLI implements Runnable, Observer {
                         println(error.message)
                         if (error.exception !== null) error.exception.printStackTrace
                     }
-                    if (!tryall) System.exit(-1)
                 }
                 if (warn && env.warnings !== null && !env.warnings.empty) {
                     for (warning : env.warnings.get(Environment.REPORT_ROOT)) {
@@ -402,6 +471,10 @@ class KielerCompilerCLI implements Runnable, Observer {
                 }
                 if (verbose) {
                     println("Processing time: %.2fms".format(env.getProperty(Environment.TRANSFORMATION_TIME).doubleValue / 1000_000))
+                }
+                if (!tryall && env.errors !== null && !env.errors.empty) {
+                    println("Compilation failed.")
+                    System.exit(-1)
                 }
                 if (intermediates) {
                     if (!env.model.saveModel(processorDir, env.getProperty(SOURCE_FILE))) {
@@ -523,13 +596,12 @@ class KielerCompilerCLI implements Runnable, Observer {
         return true
     }
     
-    public static def addURLToClassLoader(URL u) {
+    static def addURLToClassLoader(URL u) {
         val sysloader = ClassLoader.getSystemClassLoader();
         if(sysloader instanceof CLILoader){
             sysloader.addURL(u)
-        }
-        else{
-            println("WARNING: The system class loader was not set to 'de.cau.cs.kieler.kicool.cli.CLILoader'. In this case the option -c or --class-path is not supported and will be ignored.")
+        } else{
+            println("WARNING: The system class loader was not set to 'de.cau.cs.kieler.kicool.cli.CLILoader'. In this case the option --class-path is not supported and will be ignored.")
         }
     }
 }

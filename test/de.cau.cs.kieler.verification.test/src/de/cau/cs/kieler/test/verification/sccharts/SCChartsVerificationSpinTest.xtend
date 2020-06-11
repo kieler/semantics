@@ -14,8 +14,8 @@ package de.cau.cs.kieler.test.verification.sccharts
 
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.text.SCTXStandaloneSetup
+import de.cau.cs.kieler.simulation.testing.TestModelData
 import de.cau.cs.kieler.test.common.repository.ModelsRepositoryTestRunner
-import de.cau.cs.kieler.test.common.repository.TestModelData
 import de.cau.cs.kieler.verification.VerificationContext
 import de.cau.cs.kieler.verification.VerificationPropertyType
 import java.util.List

@@ -48,6 +48,11 @@ class CodePlaceHolder {
      */
     @Accessors
     protected CodeFile codeFile
+    /** 
+     * Adjustable type label.
+     */
+    @Accessors
+    protected String typeLabel = "CODE"
 
     /** 
      * Creates a CodePlaceHolder for given code.

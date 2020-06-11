@@ -688,6 +688,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                             data += KGraphFactory.eINSTANCE.createKIdentifier()
                             setId(INSTANCE_OUT_PORT);
                             setProperty(CoreOptions::PORT_SIDE, PortSide.EAST)
+                            setPortSize(0, 0)
                         ]
                         source.ports.add(sourcePort)
                     }
@@ -697,6 +698,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                             data += KGraphFactory.eINSTANCE.createKIdentifier()
                             setId(INSTANCE_IN_PORT);
                             setProperty(CoreOptions::PORT_SIDE, PortSide.WEST)
+                            setPortSize(0, 0)
                         ]
                         target.ports.add(targetPort)
                     }
@@ -785,6 +787,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                 data += KGraphFactory.eINSTANCE.createKIdentifier()
                 setId(SEQUENTIAL_OUT_PORT);
                 setProperty(CoreOptions::PORT_SIDE, PortSide.EAST)
+                setPortSize(0, 0)
             ]
             before.ports.add(sourcePort)
         }
@@ -794,6 +797,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                 data += KGraphFactory.eINSTANCE.createKIdentifier()
                 setId(SEQUENTIAL_IN_PORT);
                 setProperty(CoreOptions::PORT_SIDE, PortSide.WEST)
+                setPortSize(0, 0)
             ]
             after.ports.add(targetPort)
         }

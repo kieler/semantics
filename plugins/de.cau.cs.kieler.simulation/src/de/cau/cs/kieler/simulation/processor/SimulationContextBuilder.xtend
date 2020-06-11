@@ -42,8 +42,7 @@ class SimulationContextBuilder extends Processor<ExecutableContainer, Simulation
     
     override process() {
         // new context
-        val simCtx = new SimulationContext()
-        simCtx.startEnvironment.setProperty(SimulationContext.SOURCE_COMPILATION_CONTEXT, compilationContext)
+        val simCtx = new SimulationContext(compilationContext, environment)
         val simModel = new SimulationModelWrapper(sourceModel, environment)
         simCtx.addModel(simModel)
         

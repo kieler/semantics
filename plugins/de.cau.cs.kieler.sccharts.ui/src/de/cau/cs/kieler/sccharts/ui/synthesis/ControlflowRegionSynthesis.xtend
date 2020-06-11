@@ -36,6 +36,7 @@ import de.cau.cs.kieler.sccharts.ui.synthesis.styles.ColorStore
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.ControlflowRegionStyles
 import java.util.EnumSet
 import org.eclipse.elk.alg.layered.options.CenterEdgeLabelPlacementStrategy
+import org.eclipse.elk.alg.layered.options.ContentAlignment
 import org.eclipse.elk.alg.layered.options.FixedAlignment
 import org.eclipse.elk.alg.layered.options.LayeredOptions
 import org.eclipse.elk.core.options.CoreOptions
@@ -167,12 +168,12 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
             }
 
         } else if (region.reference !== null) {
-            var label = if(region.label.nullOrEmpty) "" else " " + region.serializeHR.toString
-            label += "@"
-            if (region.reference.scope !== null) {
-                label += (region.reference.scope as Region).serializeHR
-            } else {
-                label += "UnresolvedReference"
+            val newName = if(region.label.nullOrEmpty) "" else region.serializeHR.toString
+            val refRegion = region.reference.scope !== null ? (region.reference.scope as Region).serializeHR : "UnresolvedReference"
+            val refSCC = region.reference.scope !== null ? (region.reference.scope as Region).eContainer.serializeHR : "UnresolvedReference"
+            var label = refSCC + "::" + refRegion
+            if (!newName.equals(refRegion)) {
+                label = newName + "@" + label
             }
             if (SHOW_BINDINGS.booleanValue) {
                 label += region.reference.parameters.serializeHRParameters

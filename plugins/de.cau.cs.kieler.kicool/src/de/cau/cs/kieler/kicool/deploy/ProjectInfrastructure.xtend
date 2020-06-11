@@ -12,6 +12,7 @@
  */
 package de.cau.cs.kieler.kicool.deploy
 
+import com.google.common.io.CharStreams
 import de.cau.cs.kieler.annotations.Nameable
 import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.core.properties.Property
@@ -22,6 +23,7 @@ import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 import java.io.InputStream
+import java.io.InputStreamReader
 import java.io.OutputStream
 import java.io.PrintStream
 import java.net.URL
@@ -42,7 +44,6 @@ import org.eclipse.core.runtime.Platform
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.resource.Resource
-import org.eclipse.emf.workspace.util.WorkspaceSynchronizer
 import org.eclipse.xtend.lib.annotations.AccessorType
 import org.eclipse.xtend.lib.annotations.Accessors
 
@@ -362,7 +363,9 @@ class ProjectInfrastructure {
     }
     
     def findResourceLocation(Resource resource) {
-        return WorkspaceSynchronizer.getFile(resource)?.rawLocation?.toFile
+        val uri = resource?.URI?.toPlatformString(true)
+        val file = uri !== null ? ResourcesPlugin.workspace.root.findMember(uri) : null
+        return file?.rawLocation?.toFile
     }
     
     def String variableLookup(String input) {
@@ -650,6 +653,21 @@ class ProjectInfrastructure {
             e.printStackTrace(logger)
             return false
         }
+    }
+    
+    /**
+     * Read the content of a file denoted by the given URI into a string.
+     */
+    static def readContent(URI uri) {
+        var String content
+        var InputStream in
+        try {
+            in = URIUtils.getURL(uri).openStream
+            content = CharStreams.toString(new InputStreamReader(in))
+        } finally {
+            in?.close
+        }
+        return content
     }
     
     /**

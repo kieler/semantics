@@ -333,6 +333,7 @@ class DataPoolEntry {
                 JsonObject: throw new UnsupportedOperationException("Unexpected DataPoolEntry type")
                 JsonPrimitive: {
                     switch (info.inferType) {
+                        case PURE,
                         case BOOL: {
                             val boo = if (valueElem.isNumber) {
                                 valueElem.asNumber.floatValue != 0

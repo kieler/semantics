@@ -39,8 +39,8 @@ class KExtStandaloneParser {
      * Parses a JsonObjectValue from the given text.
      */
     static def JsonObjectValue parseJsonObject(String text) {
-        val exp = ("json " + text).parseScope(StandardCharsets.UTF_8).entities.head?.expression?.expression
-        if (exp === null) {
+        val exp = ("json " + text).parseScope(StandardCharsets.UTF_8)?.entities?.head?.expression?.expression
+        if (exp instanceof JsonObjectValue) {
             return exp as JsonObjectValue
         }
         return null

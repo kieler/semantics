@@ -13,10 +13,10 @@
 package de.cau.cs.kieler.sccharts.ui.synthesis
 
 import com.google.inject.Inject
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kicool.ui.kitt.tracing.TracingVisualizationProperties
-import de.cau.cs.kieler.klighd.KlighdConstants
 import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
@@ -24,21 +24,22 @@ import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.sccharts.DataflowRegion
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions
+import de.cau.cs.kieler.sccharts.extensions.TextFormat
 import de.cau.cs.kieler.sccharts.ui.synthesis.actions.ReferenceExpandAction
+import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.actions.MemorizingExpandCollapseAction
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.DataflowRegionStyles
-import org.eclipse.elk.alg.layered.options.NodePlacementStrategy
+import org.eclipse.elk.alg.layered.options.ContentAlignment
 import org.eclipse.elk.alg.layered.options.GreedySwitchType
 import org.eclipse.elk.alg.layered.options.LayeredOptions
+import org.eclipse.elk.alg.layered.options.NodePlacementStrategy
 import org.eclipse.elk.core.math.ElkPadding
 import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.core.options.Direction
 import org.eclipse.elk.core.options.EdgeRouting
 
-import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions.*
-import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.actions.MemorizingExpandCollapseAction
-import de.cau.cs.kieler.sccharts.extensions.TextFormat
+
+import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 
 /**
  * @author ssm
@@ -133,6 +134,7 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
             }
             setAsExpandedView
             addDoubleClickAction(MemorizingExpandCollapseAction::ID)
+            if (region.override) addOverrideRegionStyle
             if (region.declarations.empty) {
                 addStatesArea(!label.nullOrEmpty);
             } else {
@@ -160,6 +162,7 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
             setAsCollapsedView
             if (sLabel.length > 0) it.setUserScheduleStyle
             addDoubleClickAction(MemorizingExpandCollapseAction::ID)
+            if (region.override) addOverrideRegionStyle
             if (!CIRCUIT.booleanValue)
                 addExpandButton(label) => [
                     addSingleClickAction(MemorizingExpandCollapseAction.ID)
