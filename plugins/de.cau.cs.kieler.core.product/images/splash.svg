@@ -16,7 +16,7 @@
    version="1.1"
    inkscape:version="0.92.3 (2405546, 2018-03-11)"
    sodipodi:docname="splash.svg"
-   inkscape:export-filename="/home/als/eclipses/kieler-semantics-master-dev/git/semantics/plugins/de.cau.cs.kieler.core.product/images/splash.svg.png"
+   inkscape:export-filename="/home/als/eclipses/kieler-semantics-releases/git/semantics/plugins/de.cau.cs.kieler.core.product/images/splash.svg.png"
    inkscape:export-xdpi="96"
    inkscape:export-ydpi="96">
   <defs
@@ -520,7 +520,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.7"
-     inkscape:cx="11.92067"
+     inkscape:cx="-268.07933"
      inkscape:cy="371.43336"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
@@ -850,7 +850,7 @@
          y="744.77258"
          x="-26.822865"
          sodipodi:role="line"
-         id="tspan4169">Version 1.1.0</tspan></text>
+         id="tspan4169">Version 1.1.1</tspan></text>
     <rect
        transform="translate(-1473.5287,-274.45735)"
        clip-path="url(#clipPath3802)"
