@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-  <description name="KIELER Semantics (Release 1.1.0)" url="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/release-semantics-1.1.0/">Update site for the KIELER Semantics release 1.1.0.</description>
+  <description name="KIELER Semantics (Release 1.1.1)" url="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/release-semantics-1.1.1/">Update site for the KIELER Semantics release 1.1.1.</description>
   <!-- CATEGORY DEFINITIONS -->
   <category-def name="kieler-sem" label="KIELER Semantics">
     <description>
@@ -36,7 +36,7 @@
   <repository-reference location="http://download.eclipse.org/tools/orbit/downloads/drops/R20200224183213/repository/" enabled="true"/>
   <repository-reference location="http://download.eclipse.org/modeling/tmf/xtext/updates/releases/2.21.0/" enabled="true"/>
   <repository-reference location="http://download.eclipse.org/lsp4j/updates/releases/0.9.0/" enabled="true"/>
-  <repository-reference location="https://kieler.github.io/KLighD/v1.1.0/" enabled="true"/>
+  <repository-reference location="https://kieler.github.io/KLighD/v1.1.1/" enabled="true"/>
   <repository-reference location="https://rtsys.informatik.uni-kiel.de/~kieler/updatesite/release_pragmatics_2020-03/" enabled="true"/>
   <repository-reference location="http://download.eclipse.org/elk/updates/releases/0.6.1/" enabled="true"/>
   <repository-reference location="http://download.eclipse.org/egit/updates" enabled="true"/>
