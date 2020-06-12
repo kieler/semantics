@@ -33,7 +33,7 @@
       <unit id="de.cau.cs.kieler.klighd.view.feature.feature.group" version="0.0.0"/>
       <unit id="de.cau.cs.kieler.klighd.ui.contrib3x" version="0.0.0"/>
       <unit id="de.cau.cs.kieler.kgraph.text.ui" version="0.0.0"/>
-      <repository location="https://kieler.github.io/KLighD/v1.1.0/"/>
+      <repository location="https://kieler.github.io/KLighD/v1.1.1/"/>
     </location>
     <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="false" type="InstallableUnit">
       <unit id="de.cau.cs.kieler.graphs.klighd" version="0.0.0"/>
