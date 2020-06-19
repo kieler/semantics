@@ -12,6 +12,14 @@
             id="de.cau.cs.kieler.scg.klighd.diagramSynthesis.scgraphs">
       </diagramSynthesis>
       <diagramSynthesis
+            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.scg.klighd.SCGraphDiagramSynthesisOld"
+            id="de.cau.cs.kieler.scg.klighd.diagramSynthesis.scg.old">
+      </diagramSynthesis>
+      <diagramSynthesis
+            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.scg.klighd.SCGraphsDiagramSynthesisOld"
+            id="de.cau.cs.kieler.scg.klighd.diagramSynthesis.scgraphs.old">
+      </diagramSynthesis>
+      <diagramSynthesis
             class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.scg.klighd.ssa.domtree.DominatorTreeSynthesis"
             id="de.cau.cs.kieler.scg.ssa.domtree">
       </diagramSynthesis>

@@ -29,7 +29,6 @@ import de.cau.cs.kieler.scg.SCGraph
 import org.eclipse.emf.ecore.EObject
 
 import static de.cau.cs.kieler.annotations.registry.AnnotationsRegistry.*
-import java.beans.MethodDescriptor
 
 /** 
  * @author ssm

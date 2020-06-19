@@ -20,7 +20,6 @@ import de.cau.cs.kieler.klighd.krendering.Colors;
 import de.cau.cs.kieler.klighd.krendering.KColor;
 import de.cau.cs.kieler.klighd.krendering.KRenderingFactory;
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared;
-import de.cau.cs.kieler.scg.klighd.ColorStore.Color;
 
 /**
  * The SCCharts colors.
@@ -33,6 +32,7 @@ import de.cau.cs.kieler.scg.klighd.ColorStore.Color;
 public class ColorStore {
 
     public enum Color {
+        SCCHARTSBLUE(205, 220, 243),
         STATE_CONNECTOR(Colors.BLACK),
         STATE_FOREGROND(Colors.GRAY),
         STATE_INITIAL_FOREGROND(Colors.BLACK),
@@ -59,7 +59,7 @@ public class ColorStore {
         REGION_BACKGROUND(Colors.WHITE),
         REGION_BUTTON_BACKGROUND(Colors.GRAY),
         REGION_BUTTON_FOREGROUND(Colors.WHITE),
-        REGION_LABEL(Colors.DIM_GRAY),
+        REGION_LABEL(64, 80, 128),
         
         INPUTNODE_BACKGROUND_GRADIENT_1(248, 249, 253),
         INPUTNODE_BACKGROUND_GRADIENT_2(205, 220, 243),
@@ -67,9 +67,6 @@ public class ColorStore {
         OUTPUTNODE_BACKGROUND_GRADIENT_1(248, 249, 253),
         OUTPUTNODE_BACKGROUND_GRADIENT_2(205, 220, 243),
         OUTPUTNODE_FOREGROUND(Colors.GRAY),
-//        OPERATORNODE_BACKGROUND_GRADIENT_1(254, 254, 240),
-//        OPERATORNODE_BACKGROUND_GRADIENT_2(224, 176, 9),
-//        OPERATORNODE_FOREGROUND(Colors.GRAY),
         OPERATORNODE_BACKGROUND_GRADIENT_1(248, 249, 253),
         OPERATORNODE_BACKGROUND_GRADIENT_2(205, 220, 243),
         OPERATORNODE_FOREGROUND(Colors.GRAY),
@@ -87,8 +84,26 @@ public class ColorStore {
         USER_SCHEDULE_COLOR(0x28, 0x99, 0x7E),
         
         DEPENDENCY_ABSWRITEREAD(0, 192, 0),
+        DEPENDENCY_RELWRITEREAD(0, 192, 192),
         DEPENDENCY_ABSWRITERELWRITE(0, 0, 255),
         DEPENDENCY_ABSWRITEABSWRITE(255, 0, 0),
+        DEPENDENCY_CONTROL(0, 192, 192),
+        DEPENDENCY_EXPRESSION(168, 128, 96),
+        DEPENDENCY_GUARD(240, 128, 128),
+        DEPENDENCY_TICKBOUNDARY(128, 128, 128),
+        
+        SCHIZO_COLOR(245, 96, 33),
+        STRONGLY_CONNECTED_COMPONENT_COLOR(180, 50, 180),
+        NODE_PRIORITY_COLOR(255, 30, 30),
+        OPT_PRIORITY_COLOR(30, 30, 255),
+        PASSIVE_REGION_COLOR(255, 101, 127),
+        STANDARD_CONTROLFLOWEDGE(0, 0, 0),
+        BASICBLOCKBORDER(248, 0, 253),
+        SCHEDULINGBLOCKBORDER(128, 0, 243),
+        SCHEDULEBORDER(0, 0, 128),
+        SCHEDULING_DEADCODE(128, 128, 128),
+        SCHEDULING_SCHEDULINGEDGE(128, 0, 253),
+        PROBLEM_COLOR(255, 0, 0),
         
         KEYWORD(115, 0, 65);
 
