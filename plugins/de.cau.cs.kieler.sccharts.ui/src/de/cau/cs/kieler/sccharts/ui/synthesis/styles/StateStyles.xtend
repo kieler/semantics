@@ -478,7 +478,7 @@ class StateStyles {
                 edge.sourcePort = sourceNode.addHelperPort(reference, "output", name, PortSide::EAST)
                 edge.targetPort = targetNode.addHelperPort(reference, "input", name, PortSide::WEST)
                 sourceNode.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_SIDE);
-                sourceNode.addLayoutParam(CoreOptions.PORT_LABELS_PLACEMENT, PortLabelPlacement.INSIDE) 
+                sourceNode.addLayoutParam(CoreOptions.PORT_LABELS_PLACEMENT, EnumSet.of(PortLabelPlacement.INSIDE)) 
                 sourceNode.addLayoutParam(CoreOptions::NODE_SIZE_CONSTRAINTS, EnumSet.of(SizeConstraint.PORT_LABELS, SizeConstraint.PORTS))
                 sourceNode.addLayoutParam(CoreOptions::PORT_LABELS_NEXT_TO_PORT_IF_POSSIBLE, true)
                 targetNode.addLayoutParam(CoreOptions::PORT_LABELS_NEXT_TO_PORT_IF_POSSIBLE, true)

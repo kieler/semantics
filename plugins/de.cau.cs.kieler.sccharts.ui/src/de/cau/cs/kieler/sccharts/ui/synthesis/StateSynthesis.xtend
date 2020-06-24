@@ -75,7 +75,6 @@ import java.util.List
 import java.util.Map
 import org.eclipse.elk.alg.layered.options.LayerConstraint
 import org.eclipse.elk.alg.layered.options.LayeredOptions
-import org.eclipse.elk.alg.rectpacking.options.RectPackingOptions
 import org.eclipse.elk.core.math.ElkPadding
 import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.core.options.Direction
@@ -85,7 +84,6 @@ import org.eclipse.emf.ecore.EObject
 import static de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions.*
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
 /**
  * Transforms {@link State} into {@link KNode} diagram elements.
@@ -287,7 +285,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         // Transform all outgoing transitions
         // Also set KIdentifier for use with incremental update
         val groupedTransitions = state.outgoingTransitions.groupBy[it.targetState]
-        for (transition : state.outgoingTransitions.reverseView) {
+        for (transition : state.outgoingTransitions) {
             transition.transform => [ edge |
                 val target = transition.targetState;
                 if (!target?.name.nullOrEmpty) {
@@ -382,7 +380,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
     
     /** Configures the default layout of children (regions in the state) */
     def static void configureLayout(KNode node) {
-        node.setLayoutOption(CoreOptions::ALGORITHM, "org.eclipse.elk.box")
+        node.setLayoutOption(CoreOptions::ALGORITHM, "org.eclipse.elk.rectpacking")
         node.setLayoutOption(CoreOptions::EXPAND_NODES, true)
         node.setLayoutOption(CoreOptions::PADDING, new ElkPadding(0))
         node.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 1.0)

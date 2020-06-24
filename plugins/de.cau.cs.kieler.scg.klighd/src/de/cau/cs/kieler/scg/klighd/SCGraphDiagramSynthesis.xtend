@@ -18,21 +18,32 @@ import de.cau.cs.kieler.annotations.IntAnnotation
 import de.cau.cs.kieler.annotations.StringAnnotation
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.ReferenceCall
+import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
+import de.cau.cs.kieler.kexpressions.ValueType
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.kexpressions.keffects.ControlDependency
+import de.cau.cs.kieler.kexpressions.keffects.DataDependency
+import de.cau.cs.kieler.kexpressions.keffects.DataDependencyType
+import de.cau.cs.kieler.kexpressions.keffects.Dependency
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.kicool.ui.klighd.KiCoDiagramViewProperties
 import de.cau.cs.kieler.klighd.IKlighdSelection
 import de.cau.cs.kieler.klighd.KlighdConstants
+import de.cau.cs.kieler.klighd.LightDiagramServices
 import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.internal.macrolayout.KlighdDiagramLayoutConnector
 import de.cau.cs.kieler.klighd.kgraph.KEdge
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.kgraph.KPort
+import de.cau.cs.kieler.klighd.krendering.Colors
 import de.cau.cs.kieler.klighd.krendering.KColor
 import de.cau.cs.kieler.klighd.krendering.KPolygon
 import de.cau.cs.kieler.klighd.krendering.KRenderingFactory
 import de.cau.cs.kieler.klighd.krendering.KRoundedBendsPolyline
 import de.cau.cs.kieler.klighd.krendering.KRoundedRectangle
 import de.cau.cs.kieler.klighd.krendering.LineStyle
+import de.cau.cs.kieler.klighd.krendering.SimpleUpdateStrategy
 import de.cau.cs.kieler.klighd.krendering.extensions.KColorExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
@@ -43,6 +54,7 @@ import de.cau.cs.kieler.klighd.krendering.extensions.KPortExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import de.cau.cs.kieler.klighd.util.KlighdProperties
+import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.BasicBlock
 import de.cau.cs.kieler.scg.Conditional
@@ -59,25 +71,30 @@ import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.ScheduleDependency
 import de.cau.cs.kieler.scg.SchedulingBlock
 import de.cau.cs.kieler.scg.Surface
-import de.cau.cs.kieler.scg.processors.SCGAnnotations
+import de.cau.cs.kieler.scg.TickBoundaryDependency
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
+import de.cau.cs.kieler.scg.extensions.SCGDependencyExtensions
+import de.cau.cs.kieler.scg.extensions.SCGMethodExtensions
 import de.cau.cs.kieler.scg.extensions.SCGSerializeHRExtensions
 import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 import de.cau.cs.kieler.scg.extensions.ThreadPathType
-import de.cau.cs.kieler.scg.processors.SCGFeatures
 import de.cau.cs.kieler.scg.klighd.actions.NodePriorityActions
 import de.cau.cs.kieler.scg.klighd.actions.OptNodePrioActions
 import de.cau.cs.kieler.scg.klighd.actions.PrioStatementsActions
 import de.cau.cs.kieler.scg.klighd.actions.SCCActions
 import de.cau.cs.kieler.scg.klighd.actions.ThreadPriorityActions
+import de.cau.cs.kieler.scg.processors.SCGAnnotations
+import de.cau.cs.kieler.scg.processors.SCGFeatures
 import de.cau.cs.kieler.scg.processors.analyzer.LoopAnalyzerV2
+import de.cau.cs.kieler.scg.processors.analyzer.LoopData
 import de.cau.cs.kieler.scg.processors.priority.PriorityAuxiliaryData
 import de.cau.cs.kieler.scg.processors.priority.PriorityProcessor
 import java.util.ArrayList
 import java.util.HashMap
 import java.util.LinkedList
 import java.util.List
+import java.util.Map
 import java.util.Set
 import javax.inject.Inject
 import org.eclipse.elk.alg.layered.options.LayerConstraint
@@ -88,7 +105,6 @@ import org.eclipse.elk.alg.layered.options.WrappingStrategy
 import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.core.options.Direction
 import org.eclipse.elk.core.options.EdgeRouting
-import org.eclipse.elk.core.options.NodeLabelPlacement
 import org.eclipse.elk.core.options.PortAlignment
 import org.eclipse.elk.core.options.PortConstraints
 import org.eclipse.elk.core.options.PortSide
@@ -98,29 +114,12 @@ import org.eclipse.jface.viewers.ISelectionChangedListener
 import org.eclipse.jface.viewers.SelectionChangedEvent
 import org.eclipse.xtext.serializer.ISerializer
 
-import static de.cau.cs.kieler.scg.processors.SCGAnnotations.*
 import static de.cau.cs.kieler.scg.klighd.ColorStore.Color.*
+import static de.cau.cs.kieler.scg.processors.SCGAnnotations.*
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.kexpressions.keffects.Dependency
-import de.cau.cs.kieler.kexpressions.keffects.DataDependency
-import de.cau.cs.kieler.kexpressions.keffects.DataDependencyType
-import de.cau.cs.kieler.scg.extensions.SCGDependencyExtensions
-import de.cau.cs.kieler.scg.TickBoundaryDependency
-import de.cau.cs.kieler.scg.processors.analyzer.LoopData
-import java.util.Map
-import de.cau.cs.kieler.kexpressions.keffects.ControlDependency
-import de.cau.cs.kieler.kexpressions.ReferenceCall
-import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
-import de.cau.cs.kieler.scg.extensions.SCGMethodExtensions
-import de.cau.cs.kieler.kexpressions.ValueType
-import de.cau.cs.kieler.kexpressions.VariableDeclaration
-import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties
-import de.cau.cs.kieler.klighd.krendering.SimpleUpdateStrategy
-import de.cau.cs.kieler.klighd.LightDiagramServices
-import de.cau.cs.kieler.klighd.krendering.Colors
 
 /** 
  * SCCGraph KlighD synthesis class. It contains all method mandatory to handle the visualization of
@@ -1949,6 +1948,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             kContainer.addLayoutParam(CoreOptions::DIRECTION, Direction::RIGHT)
         kContainer.addLayoutParam(CoreOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL)
         kContainer.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.layered")
+//        kContainer.addLayoutParam(LayeredOptions.PRESERVE_ORDER, OrderingStrategy.PREFER_EDGES)
         kContainer.addLayoutParam(CoreOptions::SEPARATE_CONNECTED_COMPONENTS, LAYOUT_SEPARATE_CC.booleanValue);
         kContainer.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FREE);
         if (USE_ADAPTIVEZOOM.booleanValue) kContainer.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.10);

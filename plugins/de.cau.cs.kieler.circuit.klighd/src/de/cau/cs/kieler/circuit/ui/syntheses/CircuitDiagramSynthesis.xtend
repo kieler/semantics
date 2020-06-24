@@ -30,6 +30,7 @@ import de.cau.cs.kieler.klighd.krendering.extensions.KPolylineExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KPortExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
+import java.util.EnumSet
 import javax.inject.Inject
 import org.eclipse.elk.alg.layered.options.LayeredOptions
 import org.eclipse.elk.alg.layered.options.NodePlacementStrategy
@@ -135,7 +136,7 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 		// rendering for edges and ports of actor
         actorNode.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.layered");
 		actorNode.setLayoutOption(LayeredOptions.PORT_CONSTRAINTS, PortConstraints.FIXED_SIDE);
-		actorNode.setLayoutOption(LayeredOptions.PORT_LABELS_PLACEMENT, PortLabelPlacement.OUTSIDE);
+		actorNode.setLayoutOption(LayeredOptions.PORT_LABELS_PLACEMENT, EnumSet.of(PortLabelPlacement.OUTSIDE));
 		actorNode.setLayoutOption(LayeredOptions.SPACING_PORT_PORT, 20.0)
 		actorNode.addLayoutParam(LayeredOptions.INSIDE_SELF_LOOPS_ACTIVATE, true);
 		actorNode.setLayoutOption(LayeredOptions.DIRECTION, Direction.RIGHT);
