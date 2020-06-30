@@ -36,7 +36,7 @@ import org.eclipse.debug.core.DebugPlugin
 import org.eclipse.jdt.internal.debug.core.breakpoints.JavaLineBreakpoint
 import de.cau.cs.kieler.sccharts.ui.debug.view.DebugDiagramView
 import org.eclipse.swt.widgets.Display
-import de.cau.cs.kieler.klighd.ui.view.model.MessageModel
+import de.cau.cs.kieler.klighd.ide.model.MessageModel
 import org.eclipse.core.resources.ResourcesPlugin
 import org.eclipse.core.runtime.Status
 import org.eclipse.core.runtime.Path

@@ -23,7 +23,7 @@ import de.cau.cs.kieler.klighd.IViewer
 import de.cau.cs.kieler.klighd.ui.view.controller.AbstractViewUpdateController
 import de.cau.cs.kieler.klighd.ui.view.controllers.EditorSaveAdapter
 import de.cau.cs.kieler.klighd.ui.view.controllers.XtextSelectionHighlighter
-import de.cau.cs.kieler.klighd.ui.view.model.MessageModel
+import de.cau.cs.kieler.klighd.ide.model.MessageModel
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties
 import java.io.File
 import java.io.IOException

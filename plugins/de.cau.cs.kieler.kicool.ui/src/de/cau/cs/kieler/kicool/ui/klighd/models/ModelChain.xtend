@@ -18,7 +18,7 @@ import java.util.LinkedList
 import de.cau.cs.kieler.kicool.kitt.tracing.Tracing
 import de.cau.cs.kieler.kicool.kitt.tracing.internal.TracingChain
 import de.cau.cs.kieler.kicool.ui.klighd.syntheses.ModelChainSynthesis
-import de.cau.cs.kieler.klighd.ui.view.model.MessageModel
+import de.cau.cs.kieler.klighd.ide.model.MessageModel
 
 /** 
  * This is a Wrapper model for a list of models. Related to {@link ModelChainSynthesis}.
