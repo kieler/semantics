@@ -40,6 +40,11 @@ import org.eclipse.elk.core.options.Direction
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import de.cau.cs.kieler.klighd.SynthesisOption
 import java.util.List
+import org.eclipse.elk.alg.mrtree.options.MrTreeOptions
+import com.google.common.cache.Weigher
+import org.eclipse.elk.alg.mrtree.options.OrderWeighting
+import org.eclipse.elk.alg.mrtree.options.EdgeRoutingMode
+import org.eclipse.elk.alg.mrtree.options.CompactionMode
 
 class DominatorTreeSynthesis extends AbstractDiagramSynthesis<SCGraphs> {
     
@@ -135,8 +140,11 @@ class DominatorTreeSynthesis extends AbstractDiagramSynthesis<SCGraphs> {
         val dtDiagram = createNode
         dtDiagram.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.mrtree")
         dtDiagram.addLayoutParam(CoreOptions::DIRECTION, Direction.DOWN)
+        dtDiagram.addLayoutParam(MrTreeOptions::EDGE_ROUTING_MODE, EdgeRoutingMode.MiddleToMiddle)
+        dtDiagram.addLayoutParam(MrTreeOptions::WEIGHTING, OrderWeighting.NONE)
+        dtDiagram.addLayoutParam(MrTreeOptions::COMPACTION, CompactionMode.Aggressive)
         dtDiagram.children += nodes.values
-
+ 
         return dtDiagram
     }
 

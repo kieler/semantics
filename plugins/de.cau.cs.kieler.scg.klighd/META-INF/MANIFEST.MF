@@ -19,7 +19,8 @@ Require-Bundle: org.eclipse.elk.core,
  org.eclipse.xtext;bundle-version="2.16.0",
  de.cau.cs.kieler.kicool.ui;bundle-version="0.14.0",
  de.cau.cs.kieler.simulation.ui,
- de.cau.cs.kieler.simulation.ide
+ de.cau.cs.kieler.simulation.ide,
+ org.eclipse.elk.alg.mrtree
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: de.cau.cs.kieler.scg.klighd
 Bundle-ActivationPolicy: lazy
