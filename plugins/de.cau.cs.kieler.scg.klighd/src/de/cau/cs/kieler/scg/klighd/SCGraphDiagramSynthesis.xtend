@@ -23,7 +23,6 @@ import de.cau.cs.kieler.kexpressions.keffects.Dependency
 import de.cau.cs.kieler.kicool.ui.klighd.KiCoDiagramViewProperties
 import de.cau.cs.kieler.klighd.IKlighdSelection
 import de.cau.cs.kieler.klighd.KlighdConstants
-import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.internal.macrolayout.KlighdDiagramLayoutConnector
 import de.cau.cs.kieler.klighd.kgraph.KEdge
 import de.cau.cs.kieler.klighd.kgraph.KNode
@@ -61,11 +60,7 @@ import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.extensions.SCGDependencyExtensions
 import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 import de.cau.cs.kieler.scg.extensions.ThreadPathType
-import de.cau.cs.kieler.scg.klighd.actions.NodePriorityActions
-import de.cau.cs.kieler.scg.klighd.actions.OptNodePrioActions
-import de.cau.cs.kieler.scg.klighd.actions.PrioStatementsActions
 import de.cau.cs.kieler.scg.klighd.actions.SCCActions
-import de.cau.cs.kieler.scg.klighd.actions.ThreadPriorityActions
 import de.cau.cs.kieler.scg.processors.SCGFeatures
 import de.cau.cs.kieler.scg.processors.analyzer.LoopAnalyzerV2
 import de.cau.cs.kieler.scg.processors.priority.PriorityAuxiliaryData
@@ -82,11 +77,12 @@ import org.eclipse.elk.core.options.Direction
 import org.eclipse.elk.core.options.EdgeRouting
 import org.eclipse.elk.core.options.PortConstraints
 import org.eclipse.elk.core.options.PortSide
-import org.eclipse.elk.graph.properties.Property
 import org.eclipse.jface.viewers.ISelectionChangedListener
 import org.eclipse.jface.viewers.SelectionChangedEvent
+import org.eclipse.elk.graph.properties.Property
 
 import static de.cau.cs.kieler.scg.klighd.ColorStore.Color.*
+import static de.cau.cs.kieler.scg.klighd.SCGraphSynthesisOptions.*
 import static de.cau.cs.kieler.scg.processors.SCGAnnotations.*
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
@@ -122,79 +118,19 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 
     extension KRenderingFactory = KRenderingFactory.eINSTANCE
 
+    /**  
+     * Returns a list of KlighD visualization options. Called by KlighD.
+     * 
+     * @return Returns a list of KlighD visualization options.
+     */
+    override getDisplayedSynthesisOptions() {
+        return SCGSynthesisOptions
+    }
+
     // -------------------------------------------------------------------------
-    // -- KlighD Options
+    // -- Constants
     // -------------------------------------------------------------------------
-    /** Show caption */
-    protected static val SynthesisOption SHOW_CAPTION = SynthesisOption::createCheckOption("Captions", true);
-
-    /** Show dependencies */
-    static val SynthesisOption SHOW_DEPENDENCIES = SynthesisOption::createCheckOption("Dependencies", true);
-    /** Show selective dependencies */
-    static val SynthesisOption SELECTIVE_DEPENDENCIES = SynthesisOption::createCheckOption(
-        "Show only dependencies of selected elements", false);
-
-    /** Layout dependencies */
-    static val SynthesisOption LAYOUT_DEPENDENCIES = SynthesisOption::createCheckOption("Dependencies", false);
-
-    /** Layout separate cc */
-    protected static val SynthesisOption LAYOUT_SEPARATE_CC = SynthesisOption::createCheckOption("Separate CC", false);
-
-    /** Show non concurrent dependencies */
-    static val SynthesisOption SHOW_NONCONCURRENT = SynthesisOption::createCheckOption(
-        "Non-concurrent dependencies", false);
-
-    /** Show confluent dependencies */
-    static val SynthesisOption SHOW_CONFLUENT = SynthesisOption::createCheckOption("Confluent dependencies", false);
-
-    /** Show basic blocks */
-    protected static val SynthesisOption SHOW_BASICBLOCKS = SynthesisOption::createCheckOption("Basic Blocks", false);
-
-    /** Show scheduling blocks */
-    protected static val SynthesisOption SHOW_SCHEDULINGBLOCKS = SynthesisOption::createCheckOption("Scheduling Blocks",
-        true);
-
-    /** Show dead blocks */
-    protected static val SynthesisOption SHOW_DEAD_BLOCKS = SynthesisOption::createCheckOption("Dead Blocks", true);
-
-    /** Show scheduling path */
-    protected static val SynthesisOption SHOW_SCHEDULINGPATH = SynthesisOption::createCheckOption("Scheduling path",
-        true);
-
-    /** Show potential problems */
-    protected static val SynthesisOption SHOW_POTENTIALPROBLEMS = SynthesisOption::createCheckOption(
-        "Potential problems", true);
-
-    protected static val SynthesisOption USE_ADAPTIVEZOOM = SynthesisOption::createCheckOption("Adaptive Zoom", false);
-
-    /** Show shadow */
-    protected static val SynthesisOption SHOW_SHADOW = SynthesisOption::createCheckOption("Shadow", true);
-
-    /** Align tick start */
-    protected static val SynthesisOption ALIGN_TICK_START = SynthesisOption::createCheckOption("Tick start", true);
-
-    /** Align entry/exit */
-    protected static val SynthesisOption ALIGN_ENTRYEXIT_NODES = SynthesisOption::createCheckOption(
-        "Entry & Exit nodes", true);
-
-    /** left or right conditionals */
-    protected static val SynthesisOption CONDITIONAL_LEFT_OR_RIGTH = SynthesisOption::createCheckOption(
-        "True branches always right", false);
-
-    /** Show hierarchy */
-    protected static val SynthesisOption SHOW_HIERARCHY = SynthesisOption::createCheckOption("Hierarchy", true);
-
-    /** Hierarchy transparency */
-    protected static val SynthesisOption HIERARCHY_TRANSPARENCY = SynthesisOption::createRangeOption("Hierarchy", 0f,
-        255f, 128f);
-
-    /** Control flow thickness */
-    public static val SynthesisOption CONTROLFLOW_THICKNESS = SynthesisOption::createRangeOption(
-        "Controlflow thickness", 0.5f, 5f, 0.5f, 2f);
-
-    /** Graph orientation */
-    static val SynthesisOption ORIENTATION = SynthesisOption::createChoiceOption("Orientation",
-        <String>newLinkedList("Top-Down", "Left-Right"), "Top-Down");
+    
 
     public static val THREAD_PRIO_PROPERTY = new Property<Boolean>("scgPriority.ThreadPriority", false)
 
@@ -203,97 +139,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     public static val PRIO_STATEMENTS_PROPERTY = new Property<Boolean>("scgPriority.PrioStatements", false)
 
     public static val GRAPH_DEPENDENCY = new Property<Dependency>("graph.dependency", null)
-
-    // Text constants for the dependency types filter
-    static val DEPENDENCYFILTERSTRING_WRITE_WRITE = "write - write"
-    static val DEPENDENCYFILTERSTRING_ABSWRITE_RELWRITE = "abs. write - rel. write"
-    static val DEPENDENCYFILTERSTRING_WRITE_READ = "write - read"
-    static val DEPENDENCYFILTERSTRING_RELWRITE_READ = "rel. write - read"
-
-    /** Show write-write dependencies */
-    static val SynthesisOption SHOW_DEPENDENCY_WRITE_WRITE = SynthesisOption::createCheckOption(
-        DEPENDENCYFILTERSTRING_WRITE_WRITE, true);
-
-    /** Show sausage folding */
-    static val SynthesisOption SHOW_SAUSAGE_FOLDING = SynthesisOption::createCheckOption("Sausage Folding", true);
-
-    /** Show absolute write-relative write dependencies */
-    static val SynthesisOption SHOW_DEPENDENCY_ABSWRITE_RELWRITE = SynthesisOption::createCheckOption(
-        DEPENDENCYFILTERSTRING_ABSWRITE_RELWRITE, true);
-
-    /** Show write-read dependencies */
-    static val SynthesisOption SHOW_DEPENDENCY_WRITE_READ = SynthesisOption::createCheckOption(
-        DEPENDENCYFILTERSTRING_WRITE_READ, true);
-
-    /** Show relative write-read dependencies */
-    static val SynthesisOption SHOW_DEPENDENCY_RELWRITE_READ = SynthesisOption::createCheckOption(
-        DEPENDENCYFILTERSTRING_RELWRITE_READ, true);
-
-    static val SynthesisOption SHOW_ANNOTATIONS = SynthesisOption::createCheckOption("Show Annotations", false);
-
-    /**  
-     * Returns a list of KlighD visualization options. Called by KlighD.
-     * 
-     * @return Returns a list of KlighD visualization options.
-     */
-    override getDisplayedSynthesisOptions() {
-        return newLinkedList(
-            SynthesisOption::createSeparator("Visibility"),
-            SHOW_CAPTION,
-            SHOW_HIERARCHY,
-            SHOW_DEPENDENCIES,
-            SELECTIVE_DEPENDENCIES,
-            SHOW_NONCONCURRENT,
-            SHOW_CONFLUENT,
-            SHOW_BASICBLOCKS,
-            SHOW_SCHEDULINGBLOCKS,
-            SHOW_DEAD_BLOCKS,
-            SHOW_SCHEDULINGPATH,
-            SHOW_POTENTIALPROBLEMS,
-            SHOW_ANNOTATIONS,
-            USE_ADAPTIVEZOOM,
-            SHOW_SHADOW,
-            HIERARCHY_TRANSPARENCY,
-            CONTROLFLOW_THICKNESS,
-            SynthesisOption::createSeparator("Dependency Filter"),
-            SHOW_DEPENDENCY_WRITE_WRITE,
-            SHOW_SAUSAGE_FOLDING,
-            SHOW_DEPENDENCY_ABSWRITE_RELWRITE,
-            SHOW_DEPENDENCY_WRITE_READ,
-            SHOW_DEPENDENCY_RELWRITE_READ,
-            SynthesisOption::createSeparator("Alignment"),
-            ALIGN_TICK_START,
-            ALIGN_ENTRYEXIT_NODES,
-            CONDITIONAL_LEFT_OR_RIGTH,
-            SynthesisOption::createSeparator("Layout"),
-            LAYOUT_DEPENDENCIES,
-            LAYOUT_SEPARATE_CC,
-            ORIENTATION,
-            SynthesisOption::createSeparator("Priority"),
-            OptNodePrioActions.SHOW_OPT_PRIO_ID,
-            NodePriorityActions.SHOW_NODE_PRIORITY,
-            ThreadPriorityActions.SHOW_THREAD_PRIO,
-            SCCActions.SHOW_SCC,
-            PrioStatementsActions.SHOW_PRIO_STATEMENTS
-        );
-    }
-
-    /**
-     * Returns a list of layout options. Called by KlighD.<br>
-     * SCG Synthesis uses the predefined SPACING and NODE_PLACER options. 
-     * 
-     * @return Returns a list of layout options.
-     */
-    override getDisplayedLayoutOptions() {
-        return newLinkedList(
-            specifyLayoutOption(CoreOptions::SPACING_NODE_NODE, newArrayList(0, 255)),
-            specifyLayoutOption(LayeredOptions::NODE_PLACEMENT_STRATEGY, NodePlacementStrategy::values)
-        );
-    }
-
-    // -------------------------------------------------------------------------
-    // -- Constants
-    // -------------------------------------------------------------------------
+    
     protected static val int SCHEDULING_SCHEDULINGEDGE_ALPHA = 96
     static val int PROBLEM_WIDTH = 4
 
@@ -904,7 +750,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     }
 
     private def void synthesizeSchedule(SCGraph scg) {
-        if(!(scg.hasSchedulingData && SHOW_SCHEDULINGPATH.booleanValue)) return;
+        if(!scg.hasSchedulingData) return;
 
         for (node : scg.nodes) {
             if (!node.dependencies.filter(ScheduleDependency).empty) {

@@ -59,6 +59,7 @@ import org.eclipse.xtext.serializer.ISerializer
 
 import static de.cau.cs.kieler.scg.klighd.ColorStore.Color.*
 import static de.cau.cs.kieler.scg.processors.SCGAnnotations.*
+import static de.cau.cs.kieler.scg.klighd.SCGraphSynthesisOptions.*
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
@@ -153,7 +154,7 @@ class SCGraphSynthesisHelper {
     def initialiseFigure(KNode node, Object object) {
         node.setMinimalNodeSize(MINIMALWIDTH, MINIMALHEIGHT)
         val figure = node.data.filter(KContainerRendering).last
-        if(SCGraphDiagramSynthesis.SHOW_SHADOW.booleanValue) figure.shadow = "black".color
+        if(SHOW_SHADOW.booleanValue) figure.shadow = "black".color
         var label = ""
         if (object instanceof Annotatable) {
             if (object.hasAnnotation(ANNOTATION_LABEL)) {
@@ -183,10 +184,10 @@ class SCGraphSynthesisHelper {
             edge.sourcePort = depth.surface?.node.getPort(SCGPORTID_OUTGOING)
             edge.targetPort = depth.node.getPort(SCGPORTID_INCOMING)
             edge.setProperty(CoreOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
-            edge.addRoundedBendsPolyline(8, SCGraphDiagramSynthesis.CONTROLFLOW_THICKNESS.floatValue) => [
+            edge.addRoundedBendsPolyline(8, CONTROLFLOW_THICKNESS.floatValue) => [
                 it.lineStyle = LineStyle::DOT;
             ]
-            if (SCGraphDiagramSynthesis.USE_ADAPTIVEZOOM.booleanValue)
+            if (USE_ADAPTIVEZOOM.booleanValue)
                 edge.setProperty(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.70);
         ]
     }
@@ -204,11 +205,11 @@ class SCGraphSynthesisHelper {
             edge.targetPort = entry.getPort("resettick")
             edge.setProperty(CoreOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
             edge.addLayoutParam(LayeredOptions::PRIORITY, 0);
-            edge.addRoundedBendsPolyline(8, SCGraphDiagramSynthesis.CONTROLFLOW_THICKNESS.floatValue) => [
+            edge.addRoundedBendsPolyline(8, CONTROLFLOW_THICKNESS.floatValue) => [
                 it.lineStyle = LineStyle::DOT;
                 it.foreground = Colors.RED
             ]
-            if (SCGraphDiagramSynthesis.USE_ADAPTIVEZOOM.booleanValue)
+            if (USE_ADAPTIVEZOOM.booleanValue)
                 edge.setProperty(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.70);
         ]
 

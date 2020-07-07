@@ -55,6 +55,7 @@ import org.eclipse.elk.core.options.PortSide
 
 import static de.cau.cs.kieler.scg.klighd.ColorStore.Color.*
 import static de.cau.cs.kieler.scg.processors.SCGAnnotations.*
+import static de.cau.cs.kieler.scg.klighd.SCGraphSynthesisOptions.*
 
 /**
  * @author kolja
@@ -227,7 +228,7 @@ class SCGraphComponentSynthesis {
         }
         // Removed as suggested by uru (mail to cmot, 11.11.2016)  
         if (!SCGraph.hasAnnotation(SCGFeatures::SEQUENTIALIZE_ID) &&
-            !SCGraphDiagramSynthesis.CONDITIONAL_LEFT_OR_RIGTH.booleanValue)
+            !CONDITIONAL_LEFT_OR_RIGTH.booleanValue)
             port.addLayoutParam(LayeredOptions.NORTH_OR_SOUTH_PORT, Boolean.TRUE);
 
         // Added as suggested by uru (mail to cmot, 11.11.2016)            
@@ -260,7 +261,7 @@ class SCGraphComponentSynthesis {
         } else {
             node.addPolygon().createSurfaceLandscapeShape()
         }
-        node.initialiseFigure(if(SCGraphDiagramSynthesis.SHOW_CAPTION.booleanValue) "surface" else "")
+        node.initialiseFigure(if(SHOW_CAPTION.booleanValue) "surface" else "")
         // Add ports for control-flow/tick edge routing.
         node.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS);
         if (topdown) {
@@ -295,14 +296,14 @@ class SCGraphComponentSynthesis {
     def dispatch createComponentNode(Depth depth) {
         val node = depth.createNode().associateWith(depth)
         // If the corresponding option is set to true, depth nodes are placed in the first layer.
-        if (SCGraphDiagramSynthesis.ALIGN_TICK_START.booleanValue)
+        if (ALIGN_TICK_START.booleanValue)
             node.addLayoutParam(LayeredOptions::LAYERING_LAYER_CONSTRAINT, LayerConstraint::FIRST)
         if (topdown) {
             node.addPolygon().createDepthShape()
         } else {
             node.addPolygon().createDepthLandscapeShape()
         }
-        node.initialiseFigure(if(SCGraphDiagramSynthesis.SHOW_CAPTION.booleanValue) "depth" else "")
+        node.initialiseFigure(if(SHOW_CAPTION.booleanValue) "depth" else "")
         // Add ports for control-flow/tick edge routing.
         node.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS);
         if (topdown) {
@@ -338,13 +339,13 @@ class SCGraphComponentSynthesis {
         val node = entry.createNode().associateWith(entry)
         val scg = entry.eContainer as SCGraph
         // If the corresponding option is set to true, exit nodes are placed in the first layer;
-        if (SCGraphDiagramSynthesis.ALIGN_ENTRYEXIT_NODES.booleanValue)
+        if (ALIGN_ENTRYEXIT_NODES.booleanValue)
             node.addLayoutParam(LayeredOptions::LAYERING_LAYER_CONSTRAINT, LayerConstraint::FIRST)
         // Draw an ellipse figure for exit nodes...
         val figure = node.addEllipse().background = "white".color;
         figure.addText("").setAreaPlacementData.from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 0, 0, BOTTOM, 1, 0)
         val text = if(entry.hasAnnotation("label")) entry.getStringAnnotationValue("label") else "entry"
-        node.initialiseFigure(SCGraphDiagramSynthesis.SHOW_CAPTION.booleanValue ? text : "")
+        node.initialiseFigure(SHOW_CAPTION.booleanValue ? text : "")
         if (scg.method) {
             val method = scg.methodDeclaration
             node.addOutsideTopCenteredNodeLabel(
@@ -409,15 +410,15 @@ class SCGraphComponentSynthesis {
      */
     def dispatch createComponentNode(Exit exit) {
         val node = exit.createNode().associateWith(exit)
-        if (SCGraphDiagramSynthesis.USE_ADAPTIVEZOOM.booleanValue)
+        if (USE_ADAPTIVEZOOM.booleanValue)
             node.setProperty(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.50)
         // If the corresponding option is set to true, exit nodes are placed in the last layer.
-        if (SCGraphDiagramSynthesis.ALIGN_ENTRYEXIT_NODES.booleanValue)
+        if (ALIGN_ENTRYEXIT_NODES.booleanValue)
             node.addLayoutParam(LayeredOptions::LAYERING_LAYER_CONSTRAINT, LayerConstraint::LAST)
         // Draw an ellipse for an exit node...
         val figure = node.addEllipse().background = "white".color;
         figure.addText("").setAreaPlacementData.from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 0, 0, BOTTOM, 1, 0)
-        node.initialiseFigure(SCGraphDiagramSynthesis.SHOW_CAPTION.booleanValue ? "exit" : "")
+        node.initialiseFigure(SHOW_CAPTION.booleanValue ? "exit" : "")
 
         if (exit.final) {
             figure.background = PASSIVE_REGION_COLOR.color
@@ -466,7 +467,7 @@ class SCGraphComponentSynthesis {
         } else {
             node.addPolygon().createTriangleLandscapeShape();
         }
-        node.initialiseFigure(SCGraphDiagramSynthesis.SHOW_CAPTION.booleanValue ? "fork" : "")
+        node.initialiseFigure(SHOW_CAPTION.booleanValue ? "fork" : "")
         // Only add one port for incoming control flow edges.
         // Outgoing ports are added by the control flows.
         node.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_SIDE);

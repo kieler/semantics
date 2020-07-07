@@ -60,6 +60,7 @@ import org.eclipse.elk.core.options.PortConstraints
 import org.eclipse.emf.ecore.EObject
 
 import static de.cau.cs.kieler.scg.klighd.ColorStore.Color.*
+import static de.cau.cs.kieler.scg.klighd.SCGraphSynthesisOptions.*
 import static de.cau.cs.kieler.scg.processors.SCGAnnotations.*
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
@@ -109,7 +110,7 @@ class SCGraphHierarchySynthesis {
      * border and connects them via a port. Thus, a kind of pseudo hierarchical edge layout is archived. 
      */
     def void applyHierarchy(SCGraph scg, HashMap<Entry, ThreadPathType> threadTypes) {
-        if (!SCGraphDiagramSynthesis.SHOW_HIERARCHY.booleanValue) {
+        if (!SHOW_HIERARCHY.booleanValue) {
             return
         }
         scg.nodes.filter(typeof(Fork)).forEach [
@@ -143,7 +144,7 @@ class SCGraphHierarchySynthesis {
                             labelTR.KRendering.setProperty(SCGraphDiagramSynthesis.THREAD_PRIO_PROPERTY, true)
                         }
 
-                        if (SCGraphDiagramSynthesis.SHOW_POTENTIALPROBLEMS.booleanValue) {
+                        if (SHOW_POTENTIALPROBLEMS.booleanValue) {
                             // Workaround for fixing the massive whitespace: using centered labels
                             addInsideTopCenteredNodeLabel(text, 10, KlighdConstants::DEFAULT_FONT_NAME) => [
                                 it.KRendering.setForeground(REGION_LABEL.color);
@@ -157,7 +158,7 @@ class SCGraphHierarchySynthesis {
     }
 
     def applyDependencyHierarchy(SCGraph scg) {
-        if (!SCGraphDiagramSynthesis.SHOW_HIERARCHY.booleanValue) {
+        if (!SHOW_HIERARCHY.booleanValue) {
             return
         }
         scg.nodes.filter(Node).filter[dependencies.filter(GuardDependency).size > 0].forEach [
@@ -199,7 +200,7 @@ class SCGraphHierarchySynthesis {
 
         val bbContainerList = new HashMap<BasicBlock, KNode>()
         for (basicBlock : scg.basicBlocks) {
-            if (SCGraphDiagramSynthesis.SHOW_BASICBLOCKS.booleanValue) {
+            if (SHOW_BASICBLOCKS.booleanValue) {
                 val bbNodes = <Node>newLinkedList
                 basicBlock.schedulingBlocks.forEach[bbNodes.addAll(it.nodes)]
                 val bbContainer = bbNodes.createHierarchy(NODEGROUPING_BASICBLOCK, basicBlock).associateWith(basicBlock)
@@ -222,7 +223,7 @@ class SCGraphHierarchySynthesis {
                 bbName.createLabel(bbContainer).configureOutsideTopLeftNodeLabel(bbName, 9,
                     KlighdConstants::DEFAULT_FONT_NAME).KRendering.foreground = BASICBLOCKBORDER.color
             }
-            if (SCGraphDiagramSynthesis.SHOW_SCHEDULINGBLOCKS.booleanValue) {
+            if (SHOW_SCHEDULINGBLOCKS.booleanValue) {
                 for (schedulingBlock : basicBlock.schedulingBlocks) {
                     val sbContainer = schedulingBlock.nodes.createHierarchy(NODEGROUPING_SCHEDULINGBLOCK,
                         schedulingBlock).associateWith(schedulingBlock)
@@ -245,7 +246,7 @@ class SCGraphHierarchySynthesis {
                         sbName = sbName + "\n" + expText
                     }
 
-                    if (!SCGraphDiagramSynthesis.SHOW_BASICBLOCKS.booleanValue ||
+                    if (!SHOW_BASICBLOCKS.booleanValue ||
                         basicBlock.schedulingBlocks.size > 1) {
                         sbName = sbName.replaceAll("_g", "g")
                         sbName.createLabel(sbContainer).associateWith(schedulingBlock).
@@ -261,7 +262,7 @@ class SCGraphHierarchySynthesis {
                         sbContainer.KRendering.background = SCHEDULING_DEADCODE.color
                         sbContainer.KRendering.background.alpha = 128
 
-                        if (!SCGraphDiagramSynthesis.SHOW_DEAD_BLOCKS.booleanValue) {
+                        if (!SHOW_DEAD_BLOCKS.booleanValue) {
                             sbContainer.children.clear
                             sbContainer.remove
                         }
@@ -284,7 +285,7 @@ class SCGraphHierarchySynthesis {
     }
     
     def void synthesizeScheduleGroups(SCGraph scg) {
-        if (!(scg.hasSchedulingData && SCGraphDiagramSynthesis.SHOW_SCHEDULINGPATH.booleanValue)) return;
+        if (!scg.hasSchedulingData) return;
         
         val schedules = <List<Node>> newArrayList
 
@@ -373,19 +374,19 @@ class SCGraphHierarchySynthesis {
         kContainer.addLayoutParam(CoreOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL)
         kContainer.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.layered")
         kContainer.addLayoutParam(CoreOptions::SEPARATE_CONNECTED_COMPONENTS,
-            SCGraphDiagramSynthesis.LAYOUT_SEPARATE_CC.booleanValue);
+            LAYOUT_SEPARATE_CC.booleanValue);
         kContainer.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FREE);
-        if (SCGraphDiagramSynthesis.USE_ADAPTIVEZOOM.booleanValue)
+        if (USE_ADAPTIVEZOOM.booleanValue)
             kContainer.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.10);
 
         if (nodeGrouping == NODEGROUPING_HIERARCHY) {
             kContainer.addRoundedRectangle(5, 5, 0)
             kContainer.KRendering.foreground = SCCHARTSBLUE.color;
             kContainer.KRendering.foreground.alpha = Math.round(
-                SCGraphDiagramSynthesis.HIERARCHY_TRANSPARENCY.objectValue as Float)
+                HIERARCHY_TRANSPARENCY.objectValue as Float)
             kContainer.KRendering.background = SCCHARTSBLUE.color;
             kContainer.KRendering.background.alpha = Math.round(
-                SCGraphDiagramSynthesis.HIERARCHY_TRANSPARENCY.objectValue as Float)
+                HIERARCHY_TRANSPARENCY.objectValue as Float)
         }
         if (nodeGrouping == NODEGROUPING_BASICBLOCK) {
             kContainer.addRoundedRectangle(1, 1, 1) => [
@@ -471,9 +472,9 @@ class SCGraphHierarchySynthesis {
             newEdge.target = kContainer
             newEdge.targetPort = kContainer.getPort(portName)
             newEdge.setLayoutOption(CoreOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL)
-            if (SCGraphDiagramSynthesis.USE_ADAPTIVEZOOM.booleanValue)
+            if (USE_ADAPTIVEZOOM.booleanValue)
                 newEdge.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.50)
-            newEdge.addRoundedBendsPolyline(8, SCGraphDiagramSynthesis.CONTROLFLOW_THICKNESS.floatValue) => [
+            newEdge.addRoundedBendsPolyline(8, CONTROLFLOW_THICKNESS.floatValue) => [
                 it.lineStyle = ne.KRendering.lineStyleValue
                 it.foreground = ne.KRendering.foreground
             ]
