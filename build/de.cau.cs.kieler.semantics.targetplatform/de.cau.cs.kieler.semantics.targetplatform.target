@@ -60,7 +60,7 @@
       <unit id="de.cau.cs.kieler.klighd.freehep.feature.feature.group" version="0.0.0"/>
       <unit id="de.cau.cs.kieler.klighd.sdk.feature.feature.group" version="0.0.0"/>
       <unit id="de.cau.cs.kieler.klighd.view.feature.feature.group" version="0.0.0"/>
-      <repository location="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/semantics-integration/pragmatics/klighd"/>
+      <repository location="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/semantics-integration-new-features/pragmatics/klighd"/>
     </location>
     <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
       <unit id="org.eclipse.sprotty" version="0.0.0"/>
