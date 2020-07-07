@@ -5,23 +5,19 @@
          point="de.cau.cs.kieler.klighd.diagramSyntheses">
       <diagramSynthesis
             class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.scg.klighd.SCGraphDiagramSynthesis"
-            id="de.cau.cs.kieler.scg.klighd.diagramSynthesis.scg">
+            id="de.cau.cs.kieler.scg.klighd.SCGraphSynthesis">
       </diagramSynthesis>
       <diagramSynthesis
             class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.scg.klighd.SCGraphsDiagramSynthesis"
-            id="de.cau.cs.kieler.scg.klighd.diagramSynthesis.scgraphs">
-      </diagramSynthesis>
-      <diagramSynthesis
-            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.scg.klighd.SCGraphDiagramSynthesisOld"
-            id="de.cau.cs.kieler.scg.klighd.diagramSynthesis.scg.old">
+            id="de.cau.cs.kieler.scg.klighd.SCGraphsSynthesis">
       </diagramSynthesis>
       <diagramSynthesis
             class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.scg.klighd.SCGraphsDiagramSynthesisOld"
-            id="de.cau.cs.kieler.scg.klighd.diagramSynthesis.scgraphs.old">
+            id="de.cau.cs.kieler.scg.klighd.DeprecatedSCGraphsSynthesis">
       </diagramSynthesis>
       <diagramSynthesis
             class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.scg.klighd.ssa.domtree.DominatorTreeSynthesis"
-            id="de.cau.cs.kieler.scg.ssa.domtree">
+            id="de.cau.cs.kieler.scg.ssa.DominatorTreeSynthesis">
       </diagramSynthesis>
    </extension>
    <extension
