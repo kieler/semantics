@@ -11,10 +11,12 @@
             class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.scg.klighd.SCGraphsDiagramSynthesis"
             id="de.cau.cs.kieler.scg.klighd.SCGraphsSynthesis">
       </diagramSynthesis>
+      <!--
       <diagramSynthesis
             class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.scg.klighd.SCGraphsDiagramSynthesisOld"
             id="de.cau.cs.kieler.scg.klighd.DeprecatedSCGraphsSynthesis">
       </diagramSynthesis>
+      -->
       <diagramSynthesis
             class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.scg.klighd.ssa.domtree.DominatorTreeSynthesis"
             id="de.cau.cs.kieler.scg.ssa.DominatorTreeSynthesis">
