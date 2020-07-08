@@ -24,7 +24,7 @@ import java.io.File
  * @kieler.rating 2020-01-30 proposed yellow 
  * 
  */
-class CodeContainerProcessor extends ExogenousProcessor<Object, CodeContainer> {
+class CodeContainerLoader extends ExogenousProcessor<Object, CodeContainer> {
     
     public static val CODE_FILE = 
         new Property<String>("de.cau.cs.kieler.kicool.deploy.codeContainer.codeFile", "result.txt")
@@ -39,7 +39,7 @@ class CodeContainerProcessor extends ExogenousProcessor<Object, CodeContainer> {
     
     override process() {
         val infra = ProjectInfrastructure.getProjectInfrastructure(environment)
-        val codeFile = new File(infra.generatedCodeFolder + "\\bin", getProperty(CODE_FILE)?:CODE_FILE.^default)
+        val codeFile = new File(new File(infra.generatedCodeFolder, "bin"), getProperty(CODE_FILE)?:CODE_FILE.^default)
         val codeContainer =  new CodeContainer
         
         codeContainer.addProxy(codeFile)

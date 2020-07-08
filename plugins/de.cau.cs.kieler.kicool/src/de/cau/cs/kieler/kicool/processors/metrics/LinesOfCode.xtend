@@ -16,6 +16,7 @@ import de.cau.cs.kieler.kicool.compilation.EndogenousProcessor
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
 import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.kicool.deploy.Logger
+import de.cau.cs.kieler.kicool.processors.analyzers.LinesOfCodeCounter
 
 /**
  * @author ssm
@@ -23,7 +24,7 @@ import de.cau.cs.kieler.kicool.deploy.Logger
  * @kieler.rating 2020-01-30 proposed yellow 
  * 
  */
-class LinesOfCode extends EndogenousProcessor<CodeContainer> {
+class LinesOfCode extends LinesOfCodeCounter {
     
     override getId() {
         "de.cau.cs.kieler.kicool.meters.linesOfCode"
@@ -34,19 +35,13 @@ class LinesOfCode extends EndogenousProcessor<CodeContainer> {
     }
     
     override process() {
-        val codeContainer = getModel
-        
+        super.process()
         var logger = new Logger
-        
-        val count = codeContainer.files.map[ getCode.countLines ].reduce[ a, b | a + b ]
+        val count = getProperty(RAW_LOC)
         
         logger.println("LoC: " + count)
         setProperty(Environment.CAPTION, "LoC: " + count)
         logger.saveLog(environment, "loc.log")
-    }
-    
-    private def countLines(String s) {
-        s.split("\\n").length
     }
     
 }
