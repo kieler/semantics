@@ -86,7 +86,7 @@ class SCGraphComponentSynthesis {
         // Straightforward rectangle drawing
         val figure = node.addRoundedRectangle(SCGraphSynthesisHelper.CORNERRADIUS, SCGraphSynthesisHelper.CORNERRADIUS,
             SCGraphSynthesisHelper.LINEWIDTH)
-        figure.addText("").setSurroundingSpace(4, 0.1f, 2, 0)
+        figure.addText("").setSurroundingSpace(6, 0, 2, 0)
         var isSCGRef = false
         if (assignment.expression instanceof ReferenceCall) {
             val call = assignment.expression as ReferenceCall
