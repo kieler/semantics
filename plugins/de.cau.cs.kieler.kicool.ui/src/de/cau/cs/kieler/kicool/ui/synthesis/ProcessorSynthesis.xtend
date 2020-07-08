@@ -43,6 +43,21 @@ import de.cau.cs.kieler.kicool.ProcessorEntry
 import de.cau.cs.kieler.klighd.kgraph.KEdge
 import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensions
 import de.cau.cs.kieler.klighd.krendering.KRenderingFactory
+import de.cau.cs.kieler.klighd.kgraph.KGraphFactory
+import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties
+import org.eclipse.elk.core.options.CoreOptions
+import org.eclipse.elk.core.math.ElkPadding
+import org.eclipse.elk.core.options.NodeLabelPlacement
+import java.util.EnumSet
+import org.eclipse.xtend.lib.annotations.Accessors
+import org.eclipse.elk.core.options.EdgeRouting
+import org.eclipse.elk.core.options.Direction
+import org.eclipse.elk.alg.layered.options.LayeredOptions
+import org.eclipse.elk.alg.layered.options.NodePlacementStrategy
+import org.eclipse.elk.core.math.KVector
+import org.eclipse.elk.core.options.PortConstraints
+import de.cau.cs.kieler.klighd.krendering.extensions.KPortExtensions
+import org.eclipse.elk.core.options.PortSide
 
 /**
  * Main diagram synthesis for processors in KiCool.
@@ -55,19 +70,19 @@ import de.cau.cs.kieler.klighd.krendering.KRenderingFactory
 class ProcessorSynthesis {
     
     extension KRenderingFactory = KRenderingFactory::eINSTANCE
-    @Inject extension KNodeExtensions
-    @Inject extension KEdgeExtensions 
-    @Inject extension KRenderingExtensions  
-    @Inject extension KContainerRenderingExtensions    
-    @Inject extension ProcessorStyles 
+    extension KNodeExtensions = new KNodeExtensions
+    extension ProcessorStyles = new ProcessorStyles
+    extension KEdgeExtensions = new KEdgeExtensions
+    extension KPortExtensions = new KPortExtensions 
+    extension KRenderingExtensions = new KRenderingExtensions  
+    extension KContainerRenderingExtensions = new KContainerRenderingExtensions 
     @Inject IResourceServiceProvider.Registry regXtext;
     
     public static val GROUP_NODE = new org.eclipse.elk.graph.properties.Property("de.cau.cs.kieler.kicool.ui.synthesis.groupNode", false)
-    static val PROCESSOR_KGT = "processor.kgt"
-    static val PROCESSOR_GROUP_KGT = "processor_group.kgt"
     static val COMPATIBILITY_ERROR_ICON = "lightning.png"
     static val COLLAPSED_ID = "collapsed"
     static val EXPANDED_ID = "expanded" 
+    @Accessors var boolean onOffButtons = false
     
     private def setId(KNode node, String id) {
         node.getData(KIdentifier).id = id
@@ -75,21 +90,42 @@ class ProcessorSynthesis {
     }
     
     def KNode processorNode() {
-        KiCoolSynthesis.getKGTFromBundle(KiCoolUiModule.BUNDLE_ID, PROCESSOR_KGT)
+        createNode => [
+            width = 60
+            height = 16.5f
+            setProperty(CoreOptions::PADDING, new ElkPadding(4d))
+            data += KGraphFactory.eINSTANCE.createKIdentifier
+            addProcessorFigure(onOffButtons)
+        ]
+    }
+    
+    def KNode groupNode(){
+        createNode => [
+            width = 60
+            height = 16.5f
+            setProperty(CoreOptions::ALGORITHM, "org.eclipse.elk.layered")
+            setProperty(CoreOptions::EDGE_ROUTING, EdgeRouting.ORTHOGONAL)
+            setProperty(CoreOptions::DIRECTION, Direction.RIGHT)
+            setProperty(LayeredOptions::NODE_PLACEMENT_STRATEGY, NodePlacementStrategy.BRANDES_KOEPF)
+            setProperty(CoreOptions::SPACING_NODE_NODE, 10.0)
+            setProperty(CoreOptions::PADDING, new ElkPadding(6.0))
+            setProperty(KlighdProperties::EXPAND, false)
+            data += KGraphFactory.eINSTANCE.createKIdentifier
+            addGroupFigure
+        ]
     }
 
     dispatch def List<KNode> transform(ProcessorReference processorReference) {
         val processorNode = processorNode
         val nodeId = processorReference.uniqueProcessorId
-//        println(nodeId)
         processorNode.setId(nodeId)
         processorReference.populateProcessorData(processorNode)        
-        
+        processorNode.adjustSize
         newArrayList(processorNode)
     }
     
     dispatch def List<KNode> transform(ProcessorGroup processorGroup) {
-        val groupNode = KiCoolSynthesis.getKGTFromBundle(KiCoolUiModule.BUNDLE_ID, PROCESSOR_GROUP_KGT)
+        val groupNode = groupNode()
         groupNode.setProperty(GROUP_NODE, true)
         
         val collapsedRendering = groupNode.eContents.filter(KRoundedRectangle).filter[ COLLAPSED_ID.equals(id) ].head
@@ -112,8 +148,13 @@ class ProcessorSynthesis {
             groupNode.children += processorNodes
             for(node : processorNodes) {
                 for(lastNode : lastNodes) {
+                    val port = createPort()
+                    port.setProperty(CoreOptions::PORT_SIDE, PortSide.EAST)
+                    lastNode.ports.add(port)
+                    lastNode.setProperty(CoreOptions::PORT_CONSTRAINTS, PortConstraints.FIXED_ORDER)
                     val edge = createEdge 
                     edge.source = lastNode
+                    edge.sourcePort = port
                     edge.target = node
                     edge.addRoundedBendsPolyline(2.55f) => [
                         foreground = ACTIVE_ENVIRONMENT.color
@@ -173,7 +214,6 @@ class ProcessorSynthesis {
         if (processorAlternativeGroup.processors.filter(ProcessorGroup).filter[ processors.size == 1].size == 
             processorAlternativeGroup.processors.size
         ) {
-            
             processorAlternativeGroup.processors.filter(ProcessorGroup).forEach[
                 alternativeGroupNodes += it.processors.head.transform
             ]

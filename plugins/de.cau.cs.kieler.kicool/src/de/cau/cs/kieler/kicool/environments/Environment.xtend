@@ -79,6 +79,10 @@ class Environment extends EnvironmentPropertyHolder {
 
     public static val IProperty<Logs> LOGS = 
         new Property<Logs>("de.cau.cs.kieler.kicool.logs", null)
+        
+    public static val IProperty<String> CAPTION = 
+        new Property<String>("de.cau.cs.kieler.kicool.caption", null)
+        
 
     // Duration of the processor execution in nano seconds
     public static val IProperty<Long> PROCESSOR_TIME = 

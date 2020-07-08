@@ -30,7 +30,6 @@ import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.kgraph.util.KGraphUtil
 import org.eclipse.elk.alg.layered.options.LayeringStrategy
 import org.eclipse.elk.alg.layered.options.FixedAlignment
-import de.cau.cs.kieler.kicool.ui.synthesis.styles.SkinSelector
 import de.cau.cs.kieler.kgraph.text.KGraphStandaloneSetup
 import org.eclipse.elk.alg.layered.options.WrappingStrategy
 import org.eclipse.elk.alg.layered.options.GraphCompactionStrategy
@@ -42,6 +41,8 @@ import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.klighd.krendering.Trigger
 import de.cau.cs.kieler.kicool.ui.synthesis.actions.SelectNothing
 import com.google.inject.Injector
+import de.cau.cs.kieler.kicool.ui.synthesis.updates.ProcessorDataManager
+import java.util.List
 
 /**
  * Main diagram synthesis for KiCool.
@@ -59,8 +60,10 @@ class KiCoolSynthesis extends AbstractDiagramSynthesis<System> {
     @Inject extension SourceSynthesis
 
     public static final SynthesisOption FLATTEN_SYSTEM = SynthesisOption.createCheckOption("Flatten System", false)
-
+    public static final SynthesisOption ON_OFF_BUTTONS = SynthesisOption.createCheckOption("On Off Buttons", false)
+    
     override transform(System model) {
+        onOffButtons = ON_OFF_BUTTONS.booleanValue
         val rootNode = model.createNode
 
         rootNode.setLayoutOption(CoreOptions::ALGORITHM, LayeredOptions.ALGORITHM_ID);
@@ -91,7 +94,7 @@ class KiCoolSynthesis extends AbstractDiagramSynthesis<System> {
         ]
 
         val source = sourceNode
-        val processorNodes = model.processors.transform
+        val processorNodes = model.processors.transform()
         val nodes = processorNodes.head.children
         source.sourceConnect(nodes.head)
         nodes += source
@@ -99,7 +102,6 @@ class KiCoolSynthesis extends AbstractDiagramSynthesis<System> {
         rootNode.children += nodes
 
         if(FLATTEN_SYSTEM.booleanValue) rootNode.flattenHierarchy
-
         rootNode
     }
         
@@ -153,10 +155,6 @@ class KiCoolSynthesis extends AbstractDiagramSynthesis<System> {
                 }
             }
         }
-    }
-
-    def static getKGTFromBundle(String bundleId, String resourceLocation) {
-        return getKGTFromBundle(bundleId, resourceLocation, SkinSelector.skinPrefix)
     }
 
 }

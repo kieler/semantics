@@ -247,7 +247,7 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
         for (e : environmentList) {
             val selMetric = selectedEnvironment.getProperty(Metric.METRIC)
             val envMetric = e.getProperty(Metric.METRIC)
-            if (envMetric < selMetric) {
+            if (envMetric !== null && selMetric !== null && envMetric < selMetric) {
                 selectedEnvironment = e
             }
         }
