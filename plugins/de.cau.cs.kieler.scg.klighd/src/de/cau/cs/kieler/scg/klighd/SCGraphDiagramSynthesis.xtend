@@ -26,9 +26,11 @@ import de.cau.cs.kieler.klighd.KlighdConstants
 import de.cau.cs.kieler.klighd.internal.macrolayout.KlighdDiagramLayoutConnector
 import de.cau.cs.kieler.klighd.kgraph.KEdge
 import de.cau.cs.kieler.klighd.kgraph.KNode
+import de.cau.cs.kieler.klighd.krendering.KContainerRendering
 import de.cau.cs.kieler.klighd.krendering.KRenderingFactory
 import de.cau.cs.kieler.klighd.krendering.KRoundedBendsPolyline
 import de.cau.cs.kieler.klighd.krendering.KRoundedRectangle
+import de.cau.cs.kieler.klighd.krendering.KText
 import de.cau.cs.kieler.klighd.krendering.LineStyle
 import de.cau.cs.kieler.klighd.krendering.extensions.KColorExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensions
@@ -330,7 +332,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 
         val threadTypes = <Entry, ThreadPathType>newHashMap
 
-        // Synthesize all children             
+        // Synthesize all children
+        val idIndices = <String, Integer>newHashMap    
         for (n : scg.nodes) {
             if (n instanceof Entry) {
                 if (n.hasAnnotation(ANNOTATION_CONTROLFLOWTHREADPATHTYPE)) {
@@ -357,20 +360,40 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                     }
                 }
             }
+            
+            // IDs based on type and index
+            var baseID = n.class.simpleName
+            if (n instanceof Assignment || n instanceof Conditional) {
+                val rendering = aNode.data.filter(KContainerRendering).last
+                if (rendering !== null) {
+                    val ktext = rendering.children.filter(KText).head
+                    if (ktext !== null && !ktext.text.nullOrEmpty) {
+                        baseID = ktext.text.hashCode.toString
+                    }
+                }
+            }
+            if (!idIndices.containsKey(baseID)) {
+                idIndices.put(baseID, 0)
+            }
+            val idx = idIndices.get(baseID)
+            aNode.ID = (baseID + "#" + idx)
+            idIndices.put(baseID, idx + 1)
         }
         // For each node transform the control flow edges.
         // This must be done after all nodes have been created.
         scg.nodes.forEach [
-            if(it instanceof Surface) it.depth?.synthesizeTickEdge
-            if(it instanceof Assignment) it.next?.synthesizeControlFlow(SCGraphSynthesisHelper.SCGPORTID_OUTGOING)
-            if(it instanceof Entry) it.next?.synthesizeControlFlow(SCGraphSynthesisHelper.SCGPORTID_OUTGOING)
-            if(it instanceof Exit) it.next?.synthesizeControlFlow(SCGraphSynthesisHelper.SCGPORTID_OUTGOING)
-            if(it instanceof Join) it.next?.synthesizeControlFlow(SCGraphSynthesisHelper.SCGPORTID_OUTGOING)
-            if(it instanceof Depth) it.next?.synthesizeControlFlow(SCGraphSynthesisHelper.SCGPORTID_OUTGOING)
-            if(it instanceof Fork) it.getNext().forEach[synthesizeControlFlow("")]
-            if (it instanceof Conditional) {
+            switch(it) {
+              Surface: it.depth?.synthesizeTickEdge
+              Assignment: it.next?.synthesizeControlFlow(SCGraphSynthesisHelper.SCGPORTID_OUTGOING)
+              Entry: it.next?.synthesizeControlFlow(SCGraphSynthesisHelper.SCGPORTID_OUTGOING)
+              Exit: it.next?.synthesizeControlFlow(SCGraphSynthesisHelper.SCGPORTID_OUTGOING)
+              Join: it.next?.synthesizeControlFlow(SCGraphSynthesisHelper.SCGPORTID_OUTGOING)
+              Depth: it.next?.synthesizeControlFlow(SCGraphSynthesisHelper.SCGPORTID_OUTGOING)
+              Fork: it.getNext().forEach[synthesizeControlFlow("")]
+              Conditional: {
                 it.then?.synthesizeControlFlow(SCGraphSynthesisHelper.SCGPORTID_OUTGOING_THEN)
                 it.^else?.synthesizeControlFlow(SCGraphSynthesisHelper.SCGPORTID_OUTGOING_ELSE)
+              }
             }
             it.synthesizeAnnotations
 

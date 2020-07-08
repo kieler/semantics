@@ -21,6 +21,8 @@ import de.cau.cs.kieler.kexpressions.keffects.Dependency
 import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.internal.util.KlighdInternalProperties
 import de.cau.cs.kieler.klighd.kgraph.KEdge
+import de.cau.cs.kieler.klighd.kgraph.KGraphElement
+import de.cau.cs.kieler.klighd.kgraph.KGraphFactory
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.kgraph.KPort
 import de.cau.cs.kieler.klighd.krendering.Colors
@@ -56,11 +58,10 @@ import org.eclipse.elk.core.options.PortSide
 import org.eclipse.elk.graph.properties.Property
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.serializer.ISerializer
-import de.cau.cs.kieler.klighd.kgraph.KGraphElement
 
 import static de.cau.cs.kieler.scg.klighd.ColorStore.Color.*
-import static de.cau.cs.kieler.scg.processors.SCGAnnotations.*
 import static de.cau.cs.kieler.scg.klighd.SCGraphSynthesisOptions.*
+import static de.cau.cs.kieler.scg.processors.SCGAnnotations.*
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
@@ -143,7 +144,7 @@ class SCGraphSynthesisHelper {
         model.eAllContents.filter(KNode).toList.forEach [
             val association = node.origin
             if (association !== null) {
-                it.eAllContents.filter(de.cau.cs.kieler.klighd.krendering.KRendering).forEach [
+                it.eAllContents.filter(KRendering.class).forEach [
                     if (getProperty(KlighdInternalProperties.MODEL_ELEMEMT) === null) {
                         associateWith(association)
                     }
@@ -446,5 +447,12 @@ class SCGraphSynthesisHelper {
     
     def origin(KGraphElement elem) {
         return elem.getProperty(KlighdInternalProperties.MODEL_ELEMEMT)
+    }
+    
+    /**
+     * Sets KGE ID.
+     */
+    def setID(KGraphElement kge, String id) {
+        kge.data.add(KGraphFactory.eINSTANCE.createKIdentifier => [it.setId(id)])
     }
 }
