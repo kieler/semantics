@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-  <description name="KIELER Semantics (Nightly Builds)" url="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/semantics/">Update site for the KIELER Semantics project nightly builds.</description>
+  <description name="KIELER Semantics (Nightly Builds)" url="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/semantics-integration-new-features/">Update site for the KIELER Semantics project nightly builds.</description>
   <!-- CATEGORY DEFINITIONS -->
   <category-def name="kieler-sem" label="KIELER Semantics">
     <description>
@@ -37,8 +37,8 @@
   <repository-reference location="http://download.eclipse.org/modeling/tmf/xtext/updates/releases/2.21.0/" enabled="true"/>
   <repository-reference location="http://download.eclipse.org/lsp4j/updates/releases/0.9.0/" enabled="true"/>
   <repository-reference location="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/semantics-integration-new-features/pragmatics/" enabled="true"/>
-  <repository-reference location="http://http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/semantics-integration-new-features/pragmatics/klighd/" enabled="true"/>
-  <repository-reference location="http://http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/semantics-integration-new-features/pragmatics/klighd/elk" enabled="true"/>
+  <repository-reference location="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/semantics-integration-new-features/pragmatics/klighd/" enabled="true"/>
+  <repository-reference location="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/semantics-integration-new-features/pragmatics/klighd/elk" enabled="true"/>
   <repository-reference location="http://download.eclipse.org/egit/updates" enabled="true"/>
   <repository-reference location="http://download.eclipse.org/jetty/updates/jetty-bundles-9.x/" enabled="true"/>
 </site>
