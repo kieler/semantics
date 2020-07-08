@@ -113,7 +113,7 @@ class KiCoolRegistrySynthesis extends AbstractDiagramSynthesis<KiCoolRegistrySum
         rootNode.setLayoutOption(LayeredOptions::SPACING_EDGE_NODE, 80d)
         rootNode.setLayoutOption(LayeredOptions::SPACING_EDGE_EDGE, 10d)
         
-        rootNode.setLayoutOption(CoreOptions::ALGORITHM, "org.eclipse.elk.layered");
+        rootNode.setLayoutOption(CoreOptions::ALGORITHM, LayeredOptions.ALGORITHM_ID);
         rootNode.setLayoutOption(CoreOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
         if (USE_LEFT_TO_RIGHT.booleanValue) rootNode.setLayoutOption(CoreOptions::DIRECTION, Direction::RIGHT);
         rootNode.setLayoutOption(LayeredOptions::NODE_PLACEMENT_STRATEGY, NodePlacementStrategy::NETWORK_SIMPLEX)

@@ -356,7 +356,7 @@ class InducedDataflowHook extends SynthesisHook {
     private def void configureParentLayout(KNode node) {
         DiagramSyntheses.setLayoutOption(node, CoreOptions::PADDING, new ElkPadding(10));
         node.addLayoutParam(CoreOptions::NODE_SIZE_CONSTRAINTS, SizeConstraint.free)
-        node.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.layered")
+        node.addLayoutParam(CoreOptions::ALGORITHM, LayeredOptions.ALGORITHM_ID)
         node.addLayoutParam(CoreOptions::DIRECTION, Direction.RIGHT)
         node.addLayoutParam(LayeredOptions::FEEDBACK_EDGES, true);
         node.addLayoutParam(CoreOptions::SPACING_NODE_NODE, 20.0);

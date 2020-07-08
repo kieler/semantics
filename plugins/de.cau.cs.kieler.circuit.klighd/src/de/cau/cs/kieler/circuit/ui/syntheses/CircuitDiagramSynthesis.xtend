@@ -133,7 +133,7 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 		val Boolean atomicActor = actor.innerActors.empty
 
 		// rendering for edges and ports of actor
-        actorNode.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.layered");
+        actorNode.addLayoutParam(CoreOptions::ALGORITHM, LayeredOptions.ALGORITHM_ID);
 		actorNode.setLayoutOption(LayeredOptions.PORT_CONSTRAINTS, PortConstraints.FIXED_SIDE);
 		actorNode.setLayoutOption(LayeredOptions.PORT_LABELS_PLACEMENT, PortLabelPlacement.OUTSIDE);
 		actorNode.setLayoutOption(LayeredOptions.SPACING_PORT_PORT, 20.0)

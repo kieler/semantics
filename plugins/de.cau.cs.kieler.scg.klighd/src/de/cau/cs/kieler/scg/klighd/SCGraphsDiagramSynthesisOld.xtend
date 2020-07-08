@@ -614,7 +614,7 @@ class SCGraphsDiagramSynthesisOld extends AbstractDiagramSynthesis<SCGraphs> {
                 node.setLayoutOption(CoreOptions::DIRECTION, Direction::RIGHT)
             node.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 25.0);
             node.setLayoutOption(CoreOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
-            node.setLayoutOption(CoreOptions::ALGORITHM, "org.eclipse.elk.layered");
+            node.setLayoutOption(CoreOptions::ALGORITHM, LayeredOptions.ALGORITHM_ID);
             node.setLayoutOption(LayeredOptions::THOROUGHNESS, 100)
             node.setLayoutOption(CoreOptions::SEPARATE_CONNECTED_COMPONENTS, false);
             if (scg.hasAnnotation(ANNOTATION_SEQUENTIALIZED)) {
@@ -1968,7 +1968,7 @@ class SCGraphsDiagramSynthesisOld extends AbstractDiagramSynthesis<SCGraphs> {
         else
             kContainer.addLayoutParam(CoreOptions::DIRECTION, Direction::RIGHT)
         kContainer.addLayoutParam(CoreOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL)
-        kContainer.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.layered")
+        kContainer.addLayoutParam(CoreOptions::ALGORITHM, LayeredOptions.ALGORITHM_ID)
         kContainer.addLayoutParam(CoreOptions::SEPARATE_CONNECTED_COMPONENTS, LAYOUT_SEPARATE_CC.booleanValue);
         kContainer.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FREE);
         if (USE_ADAPTIVEZOOM.booleanValue) kContainer.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.10);

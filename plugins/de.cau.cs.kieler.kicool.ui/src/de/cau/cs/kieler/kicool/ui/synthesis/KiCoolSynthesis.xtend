@@ -63,7 +63,7 @@ class KiCoolSynthesis extends AbstractDiagramSynthesis<System> {
     override transform(System model) {
         val rootNode = model.createNode
 
-        rootNode.setLayoutOption(CoreOptions::ALGORITHM, "org.eclipse.elk.layered");
+        rootNode.setLayoutOption(CoreOptions::ALGORITHM, LayeredOptions.ALGORITHM_ID);
         rootNode.setLayoutOption(CoreOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
         rootNode.setLayoutOption(CoreOptions::DIRECTION, Direction::RIGHT);
         rootNode.setLayoutOption(LayeredOptions::NODE_PLACEMENT_STRATEGY, NodePlacementStrategy::BRANDES_KOEPF)

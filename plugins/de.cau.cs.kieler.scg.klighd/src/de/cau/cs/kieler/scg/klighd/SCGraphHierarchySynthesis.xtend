@@ -379,7 +379,7 @@ class SCGraphHierarchySynthesis {
         else
             kContainer.addLayoutParam(CoreOptions::DIRECTION, Direction::RIGHT)
         kContainer.addLayoutParam(CoreOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL)
-        kContainer.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.layered")
+        kContainer.addLayoutParam(CoreOptions::ALGORITHM, LayeredOptions.ALGORITHM_ID)
         kContainer.addLayoutParam(CoreOptions::SEPARATE_CONNECTED_COMPONENTS,
             LAYOUT_SEPARATE_CC.booleanValue);
         kContainer.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FREE);

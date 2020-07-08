@@ -42,6 +42,7 @@ import org.eclipse.elk.core.options.Direction
 import org.eclipse.emf.ecore.EObject
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import org.eclipse.elk.alg.layered.options.LayeredOptions
 
 /**
  * Diagram synthesis for a ModelChain.
@@ -75,7 +76,7 @@ class ModelChainSynthesis extends AbstractDiagramSynthesis<ModelChain> {
     override KNode transform(ModelChain chainWrapper) {
         val chain = chainWrapper.getModels;
         val rootNode = createNode();
-        rootNode.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.layered");
+        rootNode.addLayoutParam(CoreOptions::ALGORITHM, LayeredOptions.ALGORITHM_ID);
         rootNode.addLayoutParam(CoreOptions::DIRECTION, Direction.RIGHT);
 
         if (!chain.empty) {

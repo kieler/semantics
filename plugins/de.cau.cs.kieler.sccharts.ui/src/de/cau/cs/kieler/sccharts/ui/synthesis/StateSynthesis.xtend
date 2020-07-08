@@ -86,6 +86,7 @@ import static de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions.*
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import org.eclipse.elk.core.options.BoxLayouterOptions
 
 /**
  * Transforms {@link State} into {@link KNode} diagram elements.
@@ -382,7 +383,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
     
     /** Configures the default layout of children (regions in the state) */
     def static void configureLayout(KNode node) {
-        node.setLayoutOption(CoreOptions::ALGORITHM, "org.eclipse.elk.box")
+        node.setLayoutOption(CoreOptions::ALGORITHM, BoxLayouterOptions.ALGORITHM_ID)
 //        node.setLayoutOption(CoreOptions::ALGORITHM, RectPackingOptions.ALGORITHM_ID)
         node.setLayoutOption(CoreOptions::EXPAND_NODES, true)
         node.setLayoutOption(CoreOptions::PADDING, new ElkPadding(0))
