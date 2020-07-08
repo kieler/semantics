@@ -53,8 +53,12 @@ class SCGAnnotations {
             "Marks a sequential assignment as being responsible for a conditional expression.")
 
     public static val ANNOTATION_SEQUENTIALIZED = 
-        register("sequentialized", AnnotationsType.SYSTEM, StringAnnotation, SCGraph, 
+        register("sequentialized", AnnotationsType.SYSTEM, TagAnnotation, SCGraph, 
             "Marks an SCG as being processed by the sequentializer.")
+             
+    public static val ANNOTATION_GUARDED = 
+        register("guarded", AnnotationsType.SYSTEM, TagAnnotation, SCGraph, 
+            "Marks an SCG as being transformed into an guard SCG.")
              
     public static val ANNOTATION_HOSTCODE = 
         register("hostcode", AnnotationsType.USER, StringAnnotation, SCGraph,

@@ -53,9 +53,11 @@ import java.util.ArrayList
 import java.util.HashMap
 import java.util.List
 import java.util.Map
+import org.eclipse.elk.alg.layered.options.LayeredOptions
 import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.core.options.Direction
 import org.eclipse.elk.core.options.EdgeRouting
+import org.eclipse.elk.core.options.HierarchyHandling
 import org.eclipse.elk.core.options.PortConstraints
 import org.eclipse.emf.ecore.EObject
 
@@ -109,10 +111,15 @@ class SCGraphHierarchySynthesis {
      * in different hierarchies is not supported, the synthesis splits these edges at the hierarchy
      * border and connects them via a port. Thus, a kind of pseudo hierarchical edge layout is archived. 
      */
-    def void applyHierarchy(SCGraph scg, HashMap<Entry, ThreadPathType> threadTypes) {
+    def void applyHierarchy(SCGraph scg, KNode root, HashMap<Entry, ThreadPathType> threadTypes) {
         if (!SHOW_HIERARCHY.booleanValue) {
             return
         }
+        
+        if ((SHOW_BASICBLOCKS.booleanValue || SHOW_SCHEDULINGBLOCKS.booleanValue) && !scg.basicBlocks.nullOrEmpty) {
+            root.setLayoutOption(LayeredOptions::HIERARCHY_HANDLING, HierarchyHandling.INCLUDE_CHILDREN)
+        }
+        
         scg.nodes.filter(typeof(Fork)).forEach [
             allNext.map[target].filter(typeof(Entry)).forEach [ entry |
                 if (entry !== null) {
@@ -161,7 +168,7 @@ class SCGraphHierarchySynthesis {
         if (!SHOW_HIERARCHY.booleanValue) {
             return
         }
-        scg.nodes.filter(Node).filter[dependencies.filter(GuardDependency).size > 0].forEach [
+        scg.nodes.filterNull.filter[dependencies.filter(GuardDependency).size > 0].forEach [
             val allNodes = it.dependencies.filter(GuardDependency).map[targetNode].toList
             val kContainer = allNodes.createHierarchy(NODEGROUPING_GUARDBLOCK, null)
 

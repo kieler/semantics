@@ -108,7 +108,7 @@ class SimpleGuardSequentializer extends Processor<SCGraphs, SCGraphs> implements
          * basic blocks.
          */
          newSCG => [
-        	annotations += createStringAnnotation(SCGFeatures.SEQUENTIALIZE_ID, SCGFeatures.SEQUENTIALIZE_NAME)
+        	addTagAnnotation(SCGAnnotations.ANNOTATION_SEQUENTIALIZED)
         	label = scg.label
         	name = scg.name
             scg.copyAnnotations(it, <String> newHashSet("main", "voLink"))

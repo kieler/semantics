@@ -56,6 +56,7 @@ import org.eclipse.elk.core.options.PortSide
 import org.eclipse.elk.graph.properties.Property
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.serializer.ISerializer
+import de.cau.cs.kieler.klighd.kgraph.KGraphElement
 
 import static de.cau.cs.kieler.scg.klighd.ColorStore.Color.*
 import static de.cau.cs.kieler.scg.processors.SCGAnnotations.*
@@ -140,7 +141,7 @@ class SCGraphSynthesisHelper {
 
     def propagateAssociation(KNode model) {
         model.eAllContents.filter(KNode).toList.forEach [
-            val association = node.getProperty(KlighdInternalProperties.MODEL_ELEMEMT)
+            val association = node.origin
             if (association !== null) {
                 it.eAllContents.filter(de.cau.cs.kieler.klighd.krendering.KRendering).forEach [
                     if (getProperty(KlighdInternalProperties.MODEL_ELEMEMT) === null) {
@@ -441,5 +442,9 @@ class SCGraphSynthesisHelper {
 
     def boolean leftright() {
         orientation == ORIENTATION_LANDSCAPE
+    }
+    
+    def origin(KGraphElement elem) {
+        return elem.getProperty(KlighdInternalProperties.MODEL_ELEMEMT)
     }
 }

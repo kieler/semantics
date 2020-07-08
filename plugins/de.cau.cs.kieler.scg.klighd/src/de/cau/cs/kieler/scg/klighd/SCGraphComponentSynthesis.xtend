@@ -43,7 +43,6 @@ import de.cau.cs.kieler.scg.Surface
 import de.cau.cs.kieler.scg.TickBoundaryDependency
 import de.cau.cs.kieler.scg.extensions.SCGMethodExtensions
 import de.cau.cs.kieler.scg.processors.SCGAnnotations
-import de.cau.cs.kieler.scg.processors.SCGFeatures
 import de.cau.cs.kieler.scg.processors.priority.PriorityAuxiliaryData
 import org.eclipse.elk.alg.layered.options.LayerConstraint
 import org.eclipse.elk.alg.layered.options.LayeredOptions
@@ -54,8 +53,8 @@ import org.eclipse.elk.core.options.PortConstraints
 import org.eclipse.elk.core.options.PortSide
 
 import static de.cau.cs.kieler.scg.klighd.ColorStore.Color.*
-import static de.cau.cs.kieler.scg.processors.SCGAnnotations.*
 import static de.cau.cs.kieler.scg.klighd.SCGraphSynthesisOptions.*
+import static de.cau.cs.kieler.scg.processors.SCGAnnotations.*
 
 /**
  * @author kolja
@@ -227,7 +226,7 @@ class SCGraphComponentSynthesis {
             port.addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, 0.0)
         }
         // Removed as suggested by uru (mail to cmot, 11.11.2016)  
-        if (!SCGraph.hasAnnotation(SCGFeatures::SEQUENTIALIZE_ID) &&
+        if (!SCGraph.hasAnnotation(SCGAnnotations.ANNOTATION_SEQUENTIALIZED) &&
             !CONDITIONAL_LEFT_OR_RIGTH.booleanValue)
             port.addLayoutParam(LayeredOptions.NORTH_OR_SOUTH_PORT, Boolean.TRUE);
 
@@ -376,12 +375,9 @@ class SCGraphComponentSynthesis {
         if (entry.resetSCG !== null) {
             val properties = new KlighdSynthesisProperties
             properties.setProperty(KlighdSynthesisProperties.REQUESTED_UPDATE_STRATEGY, SimpleUpdateStrategy.ID)
-            val subDiagramViewContext = LightDiagramServices::translateModel2(entry.resetSCG, synthesis.usedContext,
-                properties)
-            synthesis.usedContext.addChildViewContext(subDiagramViewContext)
+            val subDiagramViewContext = LightDiagramServices::translateModel2(entry.resetSCG, synthesis.usedContext, properties)
             val subDiagramNode = subDiagramViewContext.viewModel
-//                subDiagramNode.addRectangle => [invisible = true]
-            val subDiagramChildrenNodes = subDiagramNode.children.immutableCopy
+            val subDiagramChildrenNodes = subDiagramNode.children.immutableCopy 
             rootNode.children.addAll(subDiagramChildrenNodes)
             createResetTickEdge(subDiagramChildrenNodes.last, node)
             node.addLayoutParam(LayeredOptions::LAYERING_LAYER_CONSTRAINT, LayerConstraint::NONE)

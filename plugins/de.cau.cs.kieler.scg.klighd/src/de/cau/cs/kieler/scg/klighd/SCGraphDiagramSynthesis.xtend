@@ -61,7 +61,6 @@ import de.cau.cs.kieler.scg.extensions.SCGDependencyExtensions
 import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 import de.cau.cs.kieler.scg.extensions.ThreadPathType
 import de.cau.cs.kieler.scg.klighd.actions.SCCActions
-import de.cau.cs.kieler.scg.processors.SCGFeatures
 import de.cau.cs.kieler.scg.processors.analyzer.LoopAnalyzerV2
 import de.cau.cs.kieler.scg.processors.priority.PriorityAuxiliaryData
 import de.cau.cs.kieler.scg.processors.priority.PriorityProcessor
@@ -77,9 +76,9 @@ import org.eclipse.elk.core.options.Direction
 import org.eclipse.elk.core.options.EdgeRouting
 import org.eclipse.elk.core.options.PortConstraints
 import org.eclipse.elk.core.options.PortSide
+import org.eclipse.elk.graph.properties.Property
 import org.eclipse.jface.viewers.ISelectionChangedListener
 import org.eclipse.jface.viewers.SelectionChangedEvent
-import org.eclipse.elk.graph.properties.Property
 
 import static de.cau.cs.kieler.scg.klighd.ColorStore.Color.*
 import static de.cau.cs.kieler.scg.klighd.SCGraphSynthesisOptions.*
@@ -298,19 +297,21 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         // Set root node and layout options.
         rootNode = node
         isSCPDG = scg.hasAnnotation(ANNOTATION_SCPDGTRANSFORMATION)
-        isGuardSCG = scg.hasAnnotation(SCGFeatures::GUARDS_ID)
+        isGuardSCG = scg.hasAnnotation(ANNOTATION_GUARDED)
         scg.getStringAnnotationValue("main")
-        if (ORIENTATION.objectValue == "Left-Right")
+        if (ORIENTATION.objectValue == "Left-Right") {
             orientation = SCGraphSynthesisHelper.ORIENTATION_LANDSCAPE
-        else
+        } else {
             orientation = SCGraphSynthesisHelper.ORIENTATION_PORTRAIT
-        if (topdown)
+        }
+        if (topdown) {
             node.setLayoutOption(CoreOptions::DIRECTION, Direction::DOWN)
-        else
+        } else {
             node.setLayoutOption(CoreOptions::DIRECTION, Direction::RIGHT)
+        }
         node.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 25.0);
         node.setLayoutOption(CoreOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
-        node.setLayoutOption(CoreOptions::ALGORITHM, "org.eclipse.elk.layered");
+        node.setLayoutOption(CoreOptions::ALGORITHM, LayeredOptions.ALGORITHM_ID);
         node.setLayoutOption(LayeredOptions::THOROUGHNESS, 100)
         node.setLayoutOption(CoreOptions::SEPARATE_CONNECTED_COMPONENTS, false);
         if (scg.hasAnnotation(ANNOTATION_SEQUENTIALIZED)) {
@@ -319,7 +320,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         }
 
         // Sausage folding on/off
-        if ((SHOW_SAUSAGE_FOLDING.booleanValue) && scg.hasAnnotation(SCGFeatures::SEQUENTIALIZE_ID)) {
+        if ((SHOW_SAUSAGE_FOLDING.booleanValue) && scg.hasAnnotation(ANNOTATION_SEQUENTIALIZED)) {
             node.addLayoutParam(LayeredOptions::LAYERING_STRATEGY, LayeringStrategy::LONGEST_PATH)
             node.setLayoutOption(LayeredOptions::WRAPPING_STRATEGY, WrappingStrategy.SINGLE_EDGE)
         }
@@ -380,11 +381,18 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 it.dependencies.forEach[(it as Dependency).synthesizeDependency]
             }
         ]
+        
+        // This will straighten edges on the else path
+        if (scg.hasAnnotation(ANNOTATION_SEQUENTIALIZED) && 
+            (scg.basicBlocks.nullOrEmpty || (!SHOW_BASICBLOCKS.booleanValue && !SHOW_SCHEDULINGBLOCKS.booleanValue))
+        ) {
+            node.improveMainlineStraightness()
+        }
 
         // Apply any hierarchy if the corresponding option is set. Since layout of edges between nodes
         // in different hierarchies is not supported, the synthesis splits these edges at the hierarchy
         // border and connects them via a port. Thus, a kind of pseudo hierarchical edge layout is archived. 
-        scg.applyHierarchy(threadTypes)
+        scg.applyHierarchy(node, threadTypes)
 
         // Draw basic blocks if present.
         if(scg.basicBlocks.size > 0) scg.synthesizeBasicBlocks
@@ -522,10 +530,11 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             if (sourceObj instanceof Fork) {
                 sourceObj.node.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints.FIXED_ORDER)
                 edge.sourcePort = sourceObj.node.createPort("fork" + targetObj.hashCode()) => [
-                    if (topdown())
+                    if (topdown()) {
                         it.addLayoutParam(CoreOptions::PORT_SIDE, PortSide::SOUTH)
-                    else
+                    } else {
                         it.addLayoutParam(CoreOptions::PORT_SIDE, PortSide::EAST)
+                    }
                     it.setPortSize(3, 3)
                     it.addRectangle.invisible = true;
                     it.addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, -3.0)
@@ -547,10 +556,11 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             if (targetObj instanceof Join) {
                 sourceObj.node.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints.FIXED_ORDER)
                 edge.targetPort = targetObj.node.createPort("join" + sourceObj.hashCode()) => [
-                    if (topdown())
+                    if (topdown()) {
                         it.addLayoutParam(CoreOptions::PORT_SIDE, PortSide::NORTH)
-                    else
+                    } else {
                         it.addLayoutParam(CoreOptions::PORT_SIDE, PortSide::WEST)
+                    }
                     it.setPortSize(3, 3)
                     it.addRectangle.invisible = true;
                     it.addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, -1.5)
@@ -824,5 +834,52 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 }
             }
         }
+    }
+    
+    /**
+     * Improves straightness of edges on the main flow of the sequentialized SCG
+     */
+    private def improveMainlineStraightness(KNode root) {
+        val PRIO = 9
+        val nodes = newLinkedHashMap
+        for (node : root.children) { // Does not work with hierarchy
+            nodes.put(node, new Pair(
+                node.incomingEdges.filter[origin instanceof ControlFlow].toList,
+                node.outgoingEdges.filter[origin instanceof ControlFlow].toList
+            ))
+        }
+        
+        var processed = newHashSet
+        do {
+            processed.clear
+            
+            for (entry : nodes.entrySet) {
+                val node = entry.key
+                val incoming = entry.value.key
+                val outgoing = entry.value.value
+                
+                if (incoming.empty) {
+                    // Will not work with pauses
+                    outgoing.forEach[setLayoutOption(LayeredOptions.PRIORITY_STRAIGHTNESS, PRIO)]
+                    processed += node
+                } else if (incoming.exists[getProperty(LayeredOptions.PRIORITY_STRAIGHTNESS)?:0 === PRIO]) {
+                    // Assuming this is mainline if one incoming has PRIO set
+                    if (outgoing.size > 1) {
+                        // Will not work if forks are present
+                        outgoing.findFirst[
+                            val cf = it.origin as ControlFlow
+                            val parent = cf.eContainer
+                            // Only set on else branch
+                            return parent instanceof Conditional && (parent as Conditional).^else === cf
+                        ]?.setLayoutOption(LayeredOptions.PRIORITY_STRAIGHTNESS, PRIO)
+                    } else {
+                        outgoing.forEach[setLayoutOption(LayeredOptions.PRIORITY_STRAIGHTNESS, PRIO)]
+                    }
+                    processed += node
+                }
+            }
+            
+            processed.forEach[nodes.remove(it)]
+        } while (!processed.empty)
     }
 }
