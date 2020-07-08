@@ -13,6 +13,9 @@ Require-Bundle: org.antlr.runtime;bundle-version="[3.2.0,3.2.1)",
  org.eclipse.xtext.xbase.lib,
  org.eclipse.xtend.lib,
  org.eclipse.xtend.lib.macro,
- org.eclipse.emf.compare
+ org.eclipse.emf.compare,
+ org.eclipse.elk.graph;bundle-version="0.6.0"
 Export-Package: de.cau.cs.kieler.kicool.ide.contentassist.antlr,
- de.cau.cs.kieler.kicool.ide.contentassist.antlr.internal
+ de.cau.cs.kieler.kicool.ide.contentassist.antlr.internal,
+ de.cau.cs.kieler.kicool.ide.kitt.tracing.compare,
+ de.cau.cs.kieler.kicool.ide.klighd

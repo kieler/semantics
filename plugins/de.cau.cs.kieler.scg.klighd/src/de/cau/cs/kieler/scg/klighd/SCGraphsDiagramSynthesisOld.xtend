@@ -27,7 +27,7 @@ import de.cau.cs.kieler.kexpressions.keffects.DataDependency
 import de.cau.cs.kieler.kexpressions.keffects.DataDependencyType
 import de.cau.cs.kieler.kexpressions.keffects.Dependency
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
-import de.cau.cs.kieler.kicool.ui.klighd.KiCoDiagramViewProperties
+import de.cau.cs.kieler.kicool.ide.klighd.KiCoDiagramViewProperties
 import de.cau.cs.kieler.klighd.IKlighdSelection
 import de.cau.cs.kieler.klighd.KlighdConstants
 import de.cau.cs.kieler.klighd.LightDiagramServices

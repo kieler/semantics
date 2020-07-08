@@ -28,7 +28,7 @@ import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
 import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.kicool.ui.kitt.tracing.TracingEdgeNode
 import de.cau.cs.kieler.kicool.ui.kitt.tracing.TracingVisualizationProperties
-import de.cau.cs.kieler.kicool.ui.klighd.KiCoDiagramViewProperties
+import de.cau.cs.kieler.kicool.ide.klighd.KiCoDiagramViewProperties
 import de.cau.cs.kieler.klighd.kgraph.KEdge
 import de.cau.cs.kieler.klighd.kgraph.KGraphFactory
 import de.cau.cs.kieler.klighd.kgraph.KNode

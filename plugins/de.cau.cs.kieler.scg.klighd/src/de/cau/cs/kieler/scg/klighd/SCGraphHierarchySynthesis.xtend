@@ -17,7 +17,7 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.IntAnnotation
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
-import de.cau.cs.kieler.kicool.ui.klighd.KiCoDiagramViewProperties
+import de.cau.cs.kieler.kicool.ide.klighd.KiCoDiagramViewProperties
 import de.cau.cs.kieler.klighd.KlighdConstants
 import de.cau.cs.kieler.klighd.kgraph.KEdge
 import de.cau.cs.kieler.klighd.kgraph.KNode

@@ -20,7 +20,7 @@ import de.cau.cs.kieler.kexpressions.keffects.ControlDependency
 import de.cau.cs.kieler.kexpressions.keffects.DataDependency
 import de.cau.cs.kieler.kexpressions.keffects.DataDependencyType
 import de.cau.cs.kieler.kexpressions.keffects.Dependency
-import de.cau.cs.kieler.kicool.ui.klighd.KiCoDiagramViewProperties
+import de.cau.cs.kieler.kicool.ide.klighd.KiCoDiagramViewProperties
 import de.cau.cs.kieler.klighd.IKlighdSelection
 import de.cau.cs.kieler.klighd.KlighdConstants
 import de.cau.cs.kieler.klighd.internal.macrolayout.KlighdDiagramLayoutConnector
@@ -255,10 +255,6 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         hierarchyAttachment.clear
         annotationNodeAttachments.clear
 
-        // Start the synthesis.
-        val timestamp = System.currentTimeMillis
-        System.out.println("Started SCG synthesis...")
-
         val newModel = model.synthesize();
 
         // Activate or deactivate selective dependencies
@@ -273,10 +269,6 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             val contextViewer = usedContext.getViewer()?.getContextViewer()
             contextViewer?.removeSelectionChangedListener(SELECTION_LISTENER)
         }
-
-        // End notifiaction
-        var time = (System.currentTimeMillis - timestamp) as float
-        System.out.println("SCG synthesis finished (time elapsed: " + (time / 1000) + "s).")
 
         if (USE_ADAPTIVEZOOM.booleanValue) {
             newModel.applyAdaptiveZoom

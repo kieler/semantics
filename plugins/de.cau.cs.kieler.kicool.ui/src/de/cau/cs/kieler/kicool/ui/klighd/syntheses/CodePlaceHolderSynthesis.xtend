@@ -13,6 +13,7 @@
  */
 package de.cau.cs.kieler.kicool.ui.klighd.syntheses
 
+import de.cau.cs.kieler.kicool.ide.klighd.KiCoDiagramViewProperties
 import de.cau.cs.kieler.kicool.ui.klighd.actions.OpenCodeInEditorAction
 import de.cau.cs.kieler.kicool.ui.klighd.models.CodePlaceHolder
 import de.cau.cs.kieler.klighd.KlighdConstants
@@ -61,6 +62,7 @@ class CodePlaceHolderSynthesis extends AbstractDiagramSynthesis<CodePlaceHolder>
     // -------------------------------------------------------------------------
     // Synthesis
     override KNode transform(CodePlaceHolder placeholder) {
+        val startTime = System.currentTimeMillis
         val rootNode = createNode();
         rootNode.children += createNode(placeholder) => [
             it.associateWith(placeholder);
@@ -99,7 +101,11 @@ class CodePlaceHolderSynthesis extends AbstractDiagramSynthesis<CodePlaceHolder>
                     it.addDoubleClickAction(OpenCodeInEditorAction.ID);
                 ]
             ]
-        ];
+        ]
+                
+        // Report elapsed time
+        usedContext?.setProperty(KiCoDiagramViewProperties.SYNTHESIS_TIME, System.currentTimeMillis - startTime)
+        
         return rootNode;
     }
     
