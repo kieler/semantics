@@ -79,6 +79,7 @@ class ProcessorSynthesis {
     public static val EXPANDED_ID = "expanded" 
     
     @Accessors var boolean onOffButtons = false
+    @Accessors var double defaultProcessGroupAspectRatio = 2.0
     
     new(){
         if (injector === null) {
@@ -113,7 +114,7 @@ class ProcessorSynthesis {
         createNode => [
             setDefaultProcessorSize()
             KiCoolSynthesis.configureBasicLayout(it)
-            setProperty(LayeredOptions::ASPECT_RATIO, 2.4) // Just a guess
+            setProperty(LayeredOptions::ASPECT_RATIO, defaultProcessGroupAspectRatio)
             setProperty(CoreOptions::PADDING, new ElkPadding(0.0))
             setProperty(KlighdProperties::EXPAND, false)
             data += KGraphFactory.eINSTANCE.createKIdentifier

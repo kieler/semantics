@@ -13,36 +13,33 @@
 package de.cau.cs.kieler.kicool.ui.synthesis
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
-import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
-import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
+import com.google.inject.Injector
+import de.cau.cs.kieler.kgraph.text.KGraphStandaloneSetup
 import de.cau.cs.kieler.kicool.System
-import org.eclipse.elk.core.options.CoreOptions
-import org.eclipse.elk.core.options.EdgeRouting
-import org.eclipse.elk.core.options.Direction
-import org.eclipse.elk.alg.layered.options.NodePlacementStrategy
-import org.eclipse.elk.alg.layered.options.LayeredOptions
-import org.eclipse.emf.common.util.URI
-import org.eclipse.xtext.resource.XtextResourceSet
-import org.eclipse.xtext.resource.XtextResource
-import org.eclipse.elk.core.math.ElkPadding
+import de.cau.cs.kieler.kicool.ui.synthesis.actions.SelectNothing
+import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.kgraph.util.KGraphUtil
-import org.eclipse.elk.alg.layered.options.LayeringStrategy
-import org.eclipse.elk.alg.layered.options.FixedAlignment
-import de.cau.cs.kieler.kgraph.text.KGraphStandaloneSetup
-import org.eclipse.elk.alg.layered.options.WrappingStrategy
-import org.eclipse.elk.alg.layered.options.GraphCompactionStrategy
+import de.cau.cs.kieler.klighd.krendering.Trigger
+import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
+import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
+import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import org.eclipse.elk.alg.layered.options.ConstraintCalculationStrategy
-import de.cau.cs.kieler.klighd.SynthesisOption
+import org.eclipse.elk.alg.layered.options.FixedAlignment
+import org.eclipse.elk.alg.layered.options.GraphCompactionStrategy
+import org.eclipse.elk.alg.layered.options.LayeredOptions
+import org.eclipse.elk.alg.layered.options.LayeringStrategy
+import org.eclipse.elk.alg.layered.options.NodePlacementStrategy
+import org.eclipse.elk.alg.layered.options.WrappingStrategy
+import org.eclipse.elk.core.options.CoreOptions
+import org.eclipse.elk.core.options.Direction
+import org.eclipse.elk.core.options.EdgeRouting
+import org.eclipse.emf.common.util.URI
+import org.eclipse.xtext.resource.XtextResource
+import org.eclipse.xtext.resource.XtextResourceSet
 
 import static extension de.cau.cs.kieler.klighd.kgraph.util.KGraphIterators.*
-import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
-import de.cau.cs.kieler.klighd.krendering.Trigger
-import de.cau.cs.kieler.kicool.ui.synthesis.actions.SelectNothing
-import com.google.inject.Injector
-import de.cau.cs.kieler.kicool.ui.synthesis.updates.ProcessorDataManager
-import java.util.List
 
 /**
  * Main diagram synthesis for KiCool.
@@ -71,6 +68,13 @@ class KiCoolSynthesis extends AbstractDiagramSynthesis<System> {
         rootNode.addRectangle => [
             addAction(Trigger::SINGLECLICK, SelectNothing.ID)
         ]
+        
+        // Workaround to propagate aspectratio
+        val size = usedContext.viewer?.control?.size
+        if (size !== null) {
+            // scale width down in consideration of other nodes in the chain
+            defaultProcessGroupAspectRatio = ((size.x as double) * 0.8) / (size.y)
+        }
 
         val source = sourceNode
         val processorNodes = model.processors.transform()
