@@ -65,12 +65,10 @@ class DelayedSelectionUpdate implements Runnable {
                         ]
                         selectedNodes += selectedData.head.parentNode
                     } else {
-                        if (intermediate.parentNode.getProperty(KNodeProperties.PROCESSOR_INTERMEDIATE_CONTAINER) !==
-                            null) {
-                            intermediate.parentNode.getProperty(KNodeProperties.PROCESSOR_INTERMEDIATE_CONTAINER).
-                                children.filter [
-                                    getProperty(KNodeProperties.INTERMEDIATE_DATA) == intermediate
-                                ].head.selected = true
+                        if (intermediate.parentNode.getProperty(KNodeProperties.PROCESSOR_INTERMEDIATE_CONTAINER) !== null) {
+                            intermediate.parentNode.getProperty(KNodeProperties.PROCESSOR_INTERMEDIATE_CONTAINER).children.filter [
+                                getProperty(KNodeProperties.INTERMEDIATE_DATA) == intermediate
+                            ].head.selected = true
                         }
                     }
                 }

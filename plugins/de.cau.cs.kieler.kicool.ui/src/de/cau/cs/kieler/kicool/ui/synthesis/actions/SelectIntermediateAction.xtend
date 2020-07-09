@@ -49,8 +49,14 @@ class SelectIntermediateAction implements IAction {
             if (context.KNode !== null && intermediateData === null) {
                 val knode = context.KNode
                 if (knode.getProperty(PROCESSOR_INTERMEDIATE_CONTAINER) !== null) {
-                    rendering = knode.getProperty(PROCESSOR_INTERMEDIATE_CONTAINER).children.head
-                    intermediateData = rendering?.getProperty(INTERMEDIATE_DATA)
+                    val intermediateContainer = knode.getProperty(PROCESSOR_INTERMEDIATE_CONTAINER)
+                    if (intermediateContainer !== null) {
+                        rendering = intermediateContainer.children.findFirst[getProperty(FINAL_INTERMEDIATE_RESULT)]
+                        if (rendering === null) {
+                            rendering = intermediateContainer.children.last
+                        }
+                        intermediateData = rendering?.getProperty(INTERMEDIATE_DATA)
+                    }
                 }
                 if (intermediateData === null) {
                     rendering = null

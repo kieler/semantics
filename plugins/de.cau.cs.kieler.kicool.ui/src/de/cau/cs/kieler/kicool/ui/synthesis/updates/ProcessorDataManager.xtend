@@ -295,7 +295,7 @@ class ProcessorDataManager {
             
             if (processorInstance.environment.getProperty(DEBUG_ENVIRONMENT_MODELS)) {
                 val environmentNode = processorStyles.addIntermediateModel(processorNode, intermediateData,
-                    new EnvironmentPair(processorInstance.sourceEnvironment, processorInstance.sourceEnvironment))
+                    new EnvironmentPair(processorInstance.sourceEnvironment, processorInstance.sourceEnvironment), false)
                 environmentNode.setBColor(ENVIRONMENT_MODEL)
             }            
             
@@ -304,21 +304,21 @@ class ProcessorDataManager {
             val snapshots = processorInstance.environment.getProperty(SNAPSHOTS) as Snapshots
             if (snapshots !== null) {
                 for (snapshot : snapshots) {
-                    processorStyles.addIntermediateModel(processorNode, intermediateData, snapshot.object)
                     lastModel = snapshot.object
+                    processorStyles.addIntermediateModel(processorNode, intermediateData, lastModel, lastModel === processorInstance.targetModel)
                 }
             }
 
             // Final result
             if (lastModel !== processorInstance.targetModel) {
-                val finalResultNode = processorStyles.addIntermediateModel(processorNode, intermediateData, processorInstance.targetModel)
+                val finalResultNode = processorStyles.addIntermediateModel(processorNode, intermediateData, processorInstance.targetModel, true)
                 finalResultNode.setBColor(INTERMEDIATE_FINAL_RESULT)
             }        
     
     
             if (processorInstance.environment.getProperty(DEBUG_ENVIRONMENT_MODELS)) {
                 val environmentNode = processorStyles.addIntermediateModel(processorNode, intermediateData,
-                    new EnvironmentPair(processorInstance.sourceEnvironment, processorInstance.environment))
+                    new EnvironmentPair(processorInstance.sourceEnvironment, processorInstance.environment), false)
                 environmentNode.setBColor(ENVIRONMENT_MODEL)
             }            
     
@@ -337,14 +337,14 @@ class ProcessorDataManager {
                 forEach[ key, value |
                     val intermediateNode = processorStyles.addIntermediateModel(processorNode, intermediateData,
                         new MessageObjectListPair(value.fillUndefinedColors(constantColor),
-                            if(key === null) processorInstance.targetModel else key))
+                            if(key === null) processorInstance.targetModel else key), false)
                     intermediateNode.setBColor(constantColor)
                 ]
             ]
             
             val logs = processorInstance.environment.getProperty(LOGS)
             if (logs !== null && logs.files.size > 0) {
-                val logNode = processorStyles.addIntermediateModel(processorNode, intermediateData, logs)
+                val logNode = processorStyles.addIntermediateModel(processorNode, intermediateData, logs, false)
                 logNode.setBColor(LOG)
             }
         }               

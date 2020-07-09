@@ -49,4 +49,6 @@ class KNodeProperties {
     public static final IProperty<Boolean> TEMPORARY_PROCESSOR = new Property<Boolean>(
         "de.cau.cs.kieler.kicool.ui.ProcessorTemporary", false);
         
+    public static final IProperty<Boolean> FINAL_INTERMEDIATE_RESULT = new Property<Boolean>(
+        "de.cau.cs.kieler.kicool.ui.intermediateData.final", false);        
 }

@@ -193,7 +193,6 @@ class ProcessorStyles {
             id = ProcessorSynthesis.COLLAPSED_ID
             setProperty(KlighdProperties::COLLAPSED_RENDERING, true)
             setProperty(KlighdProperties::EXPANDED_RENDERING, false)
-            lineWidth = 1.5f
             foreground = PROCESSORGROUP_FOREGROUND.color
             setBackgroundGradient(PROCESSORGROUP_BACKGROUND.color, 135, PROCESSORGROUP_BACKGROUND_TARGET.color, 123, 90)
             noSelectionStyle
@@ -250,7 +249,7 @@ class ProcessorStyles {
         ]
     }
 
-    def KRendering addIntermediateModel(KNode node, IntermediateData data, Object model) {
+    def KRendering addIntermediateModel(KNode node, IntermediateData data, Object model, boolean finalResult) {
         val container = node.getProperty(KNodeProperties.PROCESSOR_INTERMEDIATE_CONTAINER)
         // Work around for a klighd bug
         //container.setProperty(GridPlacementUtil.ESTIMATED_GRID_DATA, null);
@@ -294,6 +293,7 @@ class ProcessorStyles {
                 container.children.size + 1,
                 data.parentNode
             ))
+            setProperty(KNodeProperties.FINAL_INTERMEDIATE_RESULT, finalResult)
         ]
         node.adjustSize
         container.children.last
