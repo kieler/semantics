@@ -38,7 +38,7 @@ class FlattenSystemViewToggle extends AbstractAction {
             IAction.AS_CHECK_BOX, 
             "flattenSystemViewToggle", 
             "No Hierarchy in Systems", 
-            "Visually removes system hierarchy.", 
+            "Flatten compilation system hierarchy.", 
             ICON)
         action.setChecked(FLATTEN_SYSTEM_VIEW_TOGGLE_ACTION_DEFAULT)
     }

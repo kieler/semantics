@@ -14,50 +14,48 @@ package de.cau.cs.kieler.kicool.ui.synthesis
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.kicool.ProcessorAlternativeGroup
+import de.cau.cs.kieler.kicool.ProcessorEntry
 import de.cau.cs.kieler.kicool.ProcessorGroup
+import de.cau.cs.kieler.kicool.ProcessorReference
 import de.cau.cs.kieler.kicool.ProcessorSystem
 import de.cau.cs.kieler.kicool.System
+import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
+import de.cau.cs.kieler.kicool.ui.KiCoolUiModule
+import de.cau.cs.kieler.klighd.kgraph.KEdge
+import de.cau.cs.kieler.klighd.kgraph.KGraphFactory
+import de.cau.cs.kieler.klighd.kgraph.KNode
+import de.cau.cs.kieler.klighd.krendering.KRenderingFactory
+import de.cau.cs.kieler.klighd.krendering.KRoundedRectangle
+import de.cau.cs.kieler.klighd.krendering.KText
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
+import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KPortExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
+import de.cau.cs.kieler.klighd.util.KlighdProperties
 import java.util.List
+import org.eclipse.elk.alg.layered.options.LayeredOptions
+import org.eclipse.elk.alg.layered.options.NodePlacementStrategy
+import org.eclipse.elk.core.math.ElkPadding
+import org.eclipse.elk.core.options.CoreOptions
+import org.eclipse.elk.core.options.Direction
+import org.eclipse.elk.core.options.EdgeRouting
+import org.eclipse.elk.core.options.PortConstraints
+import org.eclipse.elk.core.options.PortSide
+import org.eclipse.elk.graph.properties.Property
 import org.eclipse.emf.common.util.URI
+import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.xtext.resource.IResourceServiceProvider
 import org.eclipse.xtext.resource.XtextResource
 import org.eclipse.xtext.resource.XtextResourceSet
-import static extension de.cau.cs.kieler.kicool.ui.synthesis.updates.ProcessorDataManager.*
-import de.cau.cs.kieler.kicool.ui.KiCoolUiModule
-import de.cau.cs.kieler.klighd.kgraph.KNode
-import de.cau.cs.kieler.klighd.kgraph.KIdentifier
-import de.cau.cs.kieler.klighd.krendering.KRoundedRectangle
-import de.cau.cs.kieler.klighd.krendering.KText
-import de.cau.cs.kieler.klighd.util.KlighdProperties
-import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
-import static extension de.cau.cs.kieler.kicool.util.KiCoolUtils.uniqueProcessorId
+
 import static de.cau.cs.kieler.kicool.ui.synthesis.styles.ColorStore.Color.*
-import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
+
+import static extension de.cau.cs.kieler.annotations.ide.klighd.CommonSynthesisUtil.*
 import static extension de.cau.cs.kieler.kicool.ui.synthesis.styles.ColorStore.*
-import static extension org.eclipse.xtext.EcoreUtil2.* 
-import de.cau.cs.kieler.kicool.ProcessorReference
-import de.cau.cs.kieler.kicool.ProcessorEntry
-import de.cau.cs.kieler.klighd.kgraph.KEdge
-import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensions
-import de.cau.cs.kieler.klighd.krendering.KRenderingFactory
-import de.cau.cs.kieler.klighd.kgraph.KGraphFactory
-import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties
-import org.eclipse.elk.core.options.CoreOptions
-import org.eclipse.elk.core.math.ElkPadding
-import org.eclipse.elk.core.options.NodeLabelPlacement
-import java.util.EnumSet
-import org.eclipse.xtend.lib.annotations.Accessors
-import org.eclipse.elk.core.options.EdgeRouting
-import org.eclipse.elk.core.options.Direction
-import org.eclipse.elk.alg.layered.options.LayeredOptions
-import org.eclipse.elk.alg.layered.options.NodePlacementStrategy
-import org.eclipse.elk.core.math.KVector
-import org.eclipse.elk.core.options.PortConstraints
-import de.cau.cs.kieler.klighd.krendering.extensions.KPortExtensions
-import org.eclipse.elk.core.options.PortSide
+import static extension de.cau.cs.kieler.kicool.ui.synthesis.updates.ProcessorDataManager.*
+import static extension de.cau.cs.kieler.kicool.util.KiCoolUtils.uniqueProcessorId
 
 /**
  * Main diagram synthesis for processors in KiCool.
@@ -78,16 +76,11 @@ class ProcessorSynthesis {
     extension KContainerRenderingExtensions = new KContainerRenderingExtensions 
     @Inject IResourceServiceProvider.Registry regXtext;
     
-    public static val GROUP_NODE = new org.eclipse.elk.graph.properties.Property("de.cau.cs.kieler.kicool.ui.synthesis.groupNode", false)
+    public static val GROUP_NODE = new Property("de.cau.cs.kieler.kicool.ui.synthesis.groupNode", false)
     static val COMPATIBILITY_ERROR_ICON = "lightning.png"
     static val COLLAPSED_ID = "collapsed"
     static val EXPANDED_ID = "expanded" 
     @Accessors var boolean onOffButtons = false
-    
-    private def setId(KNode node, String id) {
-        node.getData(KIdentifier).id = id
-        node
-    }
     
     def KNode processorNode() {
         createNode => [
@@ -118,7 +111,7 @@ class ProcessorSynthesis {
     dispatch def List<KNode> transform(ProcessorReference processorReference) {
         val processorNode = processorNode
         val nodeId = processorReference.uniqueProcessorId
-        processorNode.setId(nodeId)
+        processorNode.KID = nodeId
         processorReference.populateProcessorData(processorNode)        
         processorNode.adjustSize
         newArrayList(processorNode)
@@ -133,6 +126,7 @@ class ProcessorSynthesis {
         
         var label = processorGroup.label
         if (processorGroup.eContainer instanceof System) label = (processorGroup.eContainer as System).label
+        groupNode.KID = label
         collapsedRendering.eContents.filter(KText).head.text = label
         expandedRendering.eContents.filter(KText).head.text = label        
         

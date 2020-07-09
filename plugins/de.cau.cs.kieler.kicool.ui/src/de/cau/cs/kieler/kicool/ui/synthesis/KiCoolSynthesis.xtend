@@ -77,8 +77,7 @@ class KiCoolSynthesis extends AbstractDiagramSynthesis<System> {
         rootNode.setLayoutOption(LayeredOptions::LAYERING_STRATEGY, LayeringStrategy::LONGEST_PATH)
         rootNode.setLayoutOption(LayeredOptions::WRAPPING_STRATEGY, WrappingStrategy.SINGLE_EDGE)
         rootNode.setLayoutOption(LayeredOptions::COMPACTION_POST_COMPACTION_STRATEGY, GraphCompactionStrategy.LEFT)
-        rootNode.setLayoutOption(LayeredOptions::COMPACTION_POST_COMPACTION_CONSTRAINTS,
-            ConstraintCalculationStrategy.QUADRATIC)
+        rootNode.setLayoutOption(LayeredOptions::COMPACTION_POST_COMPACTION_CONSTRAINTS, ConstraintCalculationStrategy.QUADRATIC)
         rootNode.setLayoutOption(LayeredOptions::SPACING_EDGE_NODE, 5.0)
         rootNode.setLayoutOption(LayeredOptions::SPACING_NODE_NODE, 2.0)
         rootNode.setLayoutOption(LayeredOptions::WRAPPING_ADDITIONAL_EDGE_SPACING, 0.0)
@@ -101,7 +100,9 @@ class KiCoolSynthesis extends AbstractDiagramSynthesis<System> {
 
         rootNode.children += nodes
 
-        if(FLATTEN_SYSTEM.booleanValue) rootNode.flattenHierarchy
+        if(FLATTEN_SYSTEM.booleanValue) {
+            rootNode.flattenHierarchy
+        }
         rootNode
     }
         
@@ -148,7 +149,10 @@ class KiCoolSynthesis extends AbstractDiagramSynthesis<System> {
                 if (parent !== null && head !== null && tail !== null) {
                     // Reconnect
                     node.incomingEdges.immutableCopy.forEach[target = head]
-                    node.outgoingEdges.immutableCopy.forEach[tail.outgoingEdges.add(it)]
+                    node.outgoingEdges.immutableCopy.forEach[
+                        it.source = tail
+                        it.sourcePort = tail.ports.head // Assuming there is only one port used for outputs
+                    ]
                     // Move
                     parent.children.addAll(node.children)
                     parent.children.remove(node)

@@ -136,6 +136,7 @@ class CompilerView extends DiagramViewPart {
         compilationAction = new CompilationAction(this)
         toolBar.add(compilationAction.action)
         toolBar.add(systemSelectionManager.contribution)
+        toolBar.add(new Separator)
 
         forwardResultToggle = new ForwardResultToggle(this)
         autoCompileToggle = new AutoCompileToggle(this)
@@ -151,6 +152,7 @@ class CompilerView extends DiagramViewPart {
         showPrivateSystemsToggle = new ShowPrivateSystemsToggle(this)
         visualLayoutFeedbackToggle = new VisualLayoutFeedbackToggle(this)
 
+        toolBar.add(flattenSystemViewToggle.action)
         toolBar.add(new Separator)
         // The standard klighd view part menu entries will be inserted after this separator.    
         menu.add(forwardResultToggle.action)
@@ -212,7 +214,7 @@ class CompilerView extends DiagramViewPart {
         properties.setProperty(KlighdSynthesisProperties.REQUESTED_ZOOM_CONFIG_BUTTONS_HANDLING,
             ZoomConfigButtonsHandling.HIDE)
         properties.setProperty(KlighdSynthesisProperties.SYNTHESIS_OPTION_CONFIG, #{
-            KiCoolSynthesis.FLATTEN_SYSTEM -> ((developerToggle.checked && flattenSystemViewToggle.checked) as Object),
+            KiCoolSynthesis.FLATTEN_SYSTEM -> ((flattenSystemViewToggle.checked) as Object),
             KiCoolSynthesis.ON_OFF_BUTTONS -> ((onOffButtonsToggle.checked) as Object)
         })
 
