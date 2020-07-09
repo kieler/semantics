@@ -97,21 +97,36 @@ class ProcessorSynthesis {
             setProperty(CoreOptions::PADDING, new ElkPadding(4d))
             data += KGraphFactory.eINSTANCE.createKIdentifier
             addProcessorFigure(onOffButtons)
+            
+            // Attention: in other place the code always assumes fist port is incoming and last is outgoing
+            setProperty(CoreOptions::PORT_CONSTRAINTS, PortConstraints.FIXED_SIDE)
+            val in = createPort()
+            in.setProperty(CoreOptions::PORT_SIDE, PortSide.WEST)
+            ports += in
+            val out = createPort()
+            out.setProperty(CoreOptions::PORT_SIDE, PortSide.EAST)
+            ports += out
         ]
     }
     
     def KNode groupNode(){
         createNode => [
             setDefaultProcessorSize()
-            setProperty(CoreOptions::ALGORITHM, LayeredOptions.ALGORITHM_ID)
-            setProperty(CoreOptions::EDGE_ROUTING, EdgeRouting.ORTHOGONAL)
-            setProperty(CoreOptions::DIRECTION, Direction.RIGHT)
-            setProperty(LayeredOptions::NODE_PLACEMENT_STRATEGY, NodePlacementStrategy.BRANDES_KOEPF)
-            setProperty(CoreOptions::SPACING_NODE_NODE, 10.0)
+            KiCoolSynthesis.configureBasicLayout(it)
+            setProperty(LayeredOptions::ASPECT_RATIO, 2.4) // Just a guess
             setProperty(CoreOptions::PADDING, new ElkPadding(0.0))
             setProperty(KlighdProperties::EXPAND, false)
             data += KGraphFactory.eINSTANCE.createKIdentifier
             addGroupFigure
+            
+            // Attention: in other place the code always assumes fist port is incoming and last is outgoing
+            setProperty(CoreOptions::PORT_CONSTRAINTS, PortConstraints.FIXED_SIDE)
+            val in = createPort()
+            in.setProperty(CoreOptions::PORT_SIDE, PortSide.WEST)
+            ports += in
+            val out = createPort()
+            out.setProperty(CoreOptions::PORT_SIDE, PortSide.EAST)
+            ports += out
         ]
     }
 
@@ -149,14 +164,11 @@ class ProcessorSynthesis {
             groupNode.children += processorNodes
             for(node : processorNodes) {
                 for(lastNode : lastNodes) {
-                    val port = createPort()
-                    port.setProperty(CoreOptions::PORT_SIDE, PortSide.EAST)
-                    lastNode.ports.add(port)
-                    lastNode.setProperty(CoreOptions::PORT_CONSTRAINTS, PortConstraints.FIXED_ORDER)
                     val edge = createEdge 
                     edge.source = lastNode
-                    edge.sourcePort = port
+                    edge.sourcePort = lastNode.ports.last // Assuming the last port is right
                     edge.target = node
+                    edge.targetPort = node.ports.head // Assuming the first port is left
                     edge.addConnectionFigure()
                     edges += edge
                 }

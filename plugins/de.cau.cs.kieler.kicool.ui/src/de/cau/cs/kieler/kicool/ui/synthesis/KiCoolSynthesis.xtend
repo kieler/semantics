@@ -66,26 +66,7 @@ class KiCoolSynthesis extends AbstractDiagramSynthesis<System> {
         onOffButtons = ON_OFF_BUTTONS.booleanValue
         val rootNode = model.createNode
 
-        rootNode.setLayoutOption(CoreOptions::ALGORITHM, LayeredOptions.ALGORITHM_ID);
-        rootNode.setLayoutOption(CoreOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
-        rootNode.setLayoutOption(CoreOptions::DIRECTION, Direction::RIGHT);
-        rootNode.setLayoutOption(LayeredOptions::NODE_PLACEMENT_STRATEGY, NodePlacementStrategy::BRANDES_KOEPF)
-        rootNode.setLayoutOption(LayeredOptions::NODE_PLACEMENT_BK_FIXED_ALIGNMENT, FixedAlignment.BALANCED)
-//        rootNode.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 10d);
-        rootNode.setLayoutOption(LayeredOptions::SPACING_NODE_NODE_BETWEEN_LAYERS, 12d)
-        rootNode.setLayoutOption(LayeredOptions::LAYERING_STRATEGY, LayeringStrategy::LONGEST_PATH)
-        rootNode.setLayoutOption(LayeredOptions::WRAPPING_STRATEGY, WrappingStrategy.SINGLE_EDGE)
-        rootNode.setLayoutOption(LayeredOptions::COMPACTION_POST_COMPACTION_STRATEGY, GraphCompactionStrategy.LEFT)
-        rootNode.setLayoutOption(LayeredOptions::COMPACTION_POST_COMPACTION_CONSTRAINTS, ConstraintCalculationStrategy.QUADRATIC)
-        rootNode.setLayoutOption(LayeredOptions::SPACING_EDGE_NODE, 5.0)
-        rootNode.setLayoutOption(LayeredOptions::SPACING_NODE_NODE, 2.0)
-        rootNode.setLayoutOption(LayeredOptions::WRAPPING_ADDITIONAL_EDGE_SPACING, 0.0)
-
-        // Workaround until we use the next version of ELK        
-        // val size = usedContext.getProperty(KlighdOptions.VIEWER).getControl.getSize
-//      val aspectRatio = size.x as double / size.y * 2
-//        rootNode.setLayoutOption(LayeredOptions::ASPECT_RATIO, 10.0) 
-        rootNode.setLayoutOption(LayeredOptions::WRAPPING_CORRECTION_FACTOR, 1.4)
+        rootNode.configureBasicLayout()
 
         rootNode.addRectangle => [
             addAction(Trigger::SINGLECLICK, SelectNothing.ID)
@@ -103,6 +84,24 @@ class KiCoolSynthesis extends AbstractDiagramSynthesis<System> {
             rootNode.flattenHierarchy
         }
         rootNode
+    }
+    
+    /** Used for Root node and processor groups!!! */
+    def static configureBasicLayout(KNode node) {
+        node.setProperty(CoreOptions::ALGORITHM, LayeredOptions.ALGORITHM_ID);
+        node.setProperty(CoreOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
+        node.setProperty(CoreOptions::DIRECTION, Direction::RIGHT);
+        node.setProperty(LayeredOptions::NODE_PLACEMENT_STRATEGY, NodePlacementStrategy::BRANDES_KOEPF)
+        node.setProperty(LayeredOptions::NODE_PLACEMENT_BK_FIXED_ALIGNMENT, FixedAlignment.BALANCED)
+        node.setProperty(LayeredOptions::LAYERING_STRATEGY, LayeringStrategy::LONGEST_PATH)
+        node.setProperty(LayeredOptions::WRAPPING_STRATEGY, WrappingStrategy.SINGLE_EDGE)
+        node.setProperty(LayeredOptions::WRAPPING_ADDITIONAL_EDGE_SPACING, 0.0)
+        node.setProperty(LayeredOptions::WRAPPING_CORRECTION_FACTOR, 1.4)
+        node.setProperty(LayeredOptions::COMPACTION_POST_COMPACTION_STRATEGY, GraphCompactionStrategy.LEFT)
+        node.setProperty(LayeredOptions::COMPACTION_POST_COMPACTION_CONSTRAINTS, ConstraintCalculationStrategy.QUADRATIC)
+        node.setProperty(LayeredOptions::SPACING_NODE_NODE_BETWEEN_LAYERS, 12d)
+        node.setProperty(LayeredOptions::SPACING_EDGE_NODE, 5.0)
+        node.setProperty(LayeredOptions::SPACING_NODE_NODE, 2.0)
     }
         
     public static val Injector KGTInjector = new KGraphStandaloneSetup().createInjectorAndDoEMFRegistration
@@ -147,10 +146,13 @@ class KiCoolSynthesis extends AbstractDiagramSynthesis<System> {
                 val tail = node.children.findFirst[it.outgoingEdges.empty]
                 if (parent !== null && head !== null && tail !== null) {
                     // Reconnect
-                    node.incomingEdges.immutableCopy.forEach[target = head]
+                    node.incomingEdges.immutableCopy.forEach[
+                        target = head
+                        targetPort = head.ports.head // Assuming the first port is left
+                    ]
                     node.outgoingEdges.immutableCopy.forEach[
-                        it.source = tail
-                        it.sourcePort = tail.ports.head // Assuming there is only one port used for outputs
+                        source = tail
+                        sourcePort = tail.ports.last // Assuming the last port is right
                     ]
                     // Move
                     parent.children.addAll(node.children)

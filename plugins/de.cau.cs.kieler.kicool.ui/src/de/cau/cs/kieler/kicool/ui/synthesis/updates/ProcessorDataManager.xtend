@@ -218,14 +218,10 @@ class ProcessorDataManager {
                 }
                 val edge = kEdgeExtensions.createEdge 
                 edge.source = predecessorNode
+                edge.sourcePort = predecessorNode.ports.last // Assuming the last port is right
                 edge.target = newNode.head
-                
-                renderingFactory.createKPolyline() => [
-                    edge.data += it
-                    kRenderingExtensions.setLineWidth(it, 0.5f)
-                    kRenderingExtensions.setForeground(it, ACTIVE_ENVIRONMENT.color)
-                    internalAddArrowDecorator(it, true)
-                ]
+                edge.targetPort = newNode.head.ports.head // Assuming the first port is left
+                processorStyles.addConnectionFigure(edge)
             }
         }
         

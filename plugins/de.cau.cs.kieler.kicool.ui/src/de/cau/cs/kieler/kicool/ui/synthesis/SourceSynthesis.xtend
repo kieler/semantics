@@ -51,6 +51,7 @@ class SourceSynthesis {
         val edge = createEdge 
         edge.source = source
         edge.target = target
+        edge.targetPort = target.ports.head // Assuming the first port is left
         edge.addConnectionFigure()
         
         edge        
