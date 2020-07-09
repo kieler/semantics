@@ -47,6 +47,7 @@ import static de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions.*
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
+import static extension de.cau.cs.kieler.annotations.ide.klighd.CommonSynthesisUtil.*
 
 /**
  * Transforms {@link ControlflowRegion} into {@link KNode} diagram elements.
@@ -77,7 +78,7 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
 
         // Set KIdentifier for use with incremental update
         if (!region.name.nullOrEmpty) {
-            node.data += KGraphFactory::eINSTANCE.createKIdentifier => [it.id = region.name]
+            node.KID = region.name
         }
         
         if (USE_KLAY.booleanValue) {

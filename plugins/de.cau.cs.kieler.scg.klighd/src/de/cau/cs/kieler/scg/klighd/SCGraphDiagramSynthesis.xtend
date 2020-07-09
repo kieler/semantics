@@ -88,6 +88,7 @@ import static de.cau.cs.kieler.scg.processors.SCGAnnotations.*
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
+import static extension de.cau.cs.kieler.annotations.ide.klighd.CommonSynthesisUtil.*
 
 /** 
  * SCCGraph KlighD synthesis class. It contains all method mandatory to handle the visualization of
@@ -368,7 +369,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 idIndices.put(baseID, 0)
             }
             val idx = idIndices.get(baseID)
-            aNode.ID = (baseID + "#" + idx)
+            aNode.KID = (baseID + "#" + idx)
             idIndices.put(baseID, idx + 1)
         }
         // For each node transform the control flow edges.

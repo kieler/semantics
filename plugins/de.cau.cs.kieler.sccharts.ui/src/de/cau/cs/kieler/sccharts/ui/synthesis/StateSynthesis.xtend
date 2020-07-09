@@ -26,11 +26,10 @@ import de.cau.cs.kieler.kexpressions.keffects.DataDependencyType
 import de.cau.cs.kieler.kexpressions.keffects.Dependency
 import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
 import de.cau.cs.kieler.kicool.environments.Environment
+import de.cau.cs.kieler.kicool.ide.klighd.KiCoDiagramViewProperties
 import de.cau.cs.kieler.kicool.ui.kitt.tracing.TracingEdgeNode
 import de.cau.cs.kieler.kicool.ui.kitt.tracing.TracingVisualizationProperties
-import de.cau.cs.kieler.kicool.ide.klighd.KiCoDiagramViewProperties
 import de.cau.cs.kieler.klighd.kgraph.KEdge
-import de.cau.cs.kieler.klighd.kgraph.KGraphFactory
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.KContainerRendering
 import de.cau.cs.kieler.klighd.krendering.KPolyline
@@ -75,8 +74,8 @@ import java.util.List
 import java.util.Map
 import org.eclipse.elk.alg.layered.options.LayerConstraint
 import org.eclipse.elk.alg.layered.options.LayeredOptions
-import org.eclipse.elk.alg.rectpacking.options.RectPackingOptions
 import org.eclipse.elk.core.math.ElkPadding
+import org.eclipse.elk.core.options.BoxLayouterOptions
 import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.core.options.Direction
 import org.eclipse.elk.core.options.SizeConstraint
@@ -84,9 +83,9 @@ import org.eclipse.emf.ecore.EObject
 
 import static de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions.*
 
+import static extension de.cau.cs.kieler.annotations.ide.klighd.CommonSynthesisUtil.*
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import org.eclipse.elk.core.options.BoxLayouterOptions
 
 /**
  * Transforms {@link State} into {@link KNode} diagram elements.
@@ -142,7 +141,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
 
         // Set KIdentifier for use with incremental update
         if (!state.name.nullOrEmpty) {
-            node.data.add(KGraphFactory::eINSTANCE.createKIdentifier => [it.id = state.name])
+            node.KID = state.name
         }
         
         // configure region dependency layout config if an appropriate result is present.
@@ -293,7 +292,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
                 val target = transition.targetState;
                 if (!target?.name.nullOrEmpty) {
                     val counter = groupedTransitions.get(target).indexOf(transition)
-                    edge.head.data += KGraphFactory::eINSTANCE.createKIdentifier => [it.id = target.name + counter]
+                    edge.head.KID = target.name + counter
                 }
             ];
         }

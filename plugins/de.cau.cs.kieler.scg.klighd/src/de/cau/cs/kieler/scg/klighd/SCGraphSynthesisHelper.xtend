@@ -448,11 +448,4 @@ class SCGraphSynthesisHelper {
     def origin(KGraphElement elem) {
         return elem.getProperty(KlighdInternalProperties.MODEL_ELEMEMT)
     }
-    
-    /**
-     * Sets KGE ID.
-     */
-    def setID(KGraphElement kge, String id) {
-        kge.data.add(KGraphFactory.eINSTANCE.createKIdentifier => [it.setId(id)])
-    }
 }
