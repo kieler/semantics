@@ -12,7 +12,12 @@
  */
 package de.cau.cs.kieler.kicool.ui.synthesis
 
+import com.google.inject.Binder
+import com.google.inject.Guice
 import com.google.inject.Inject
+import com.google.inject.Injector
+import com.google.inject.Module
+import com.google.inject.Scopes
 import de.cau.cs.kieler.kicool.ProcessorAlternativeGroup
 import de.cau.cs.kieler.kicool.ProcessorEntry
 import de.cau.cs.kieler.kicool.ProcessorGroup
@@ -20,7 +25,7 @@ import de.cau.cs.kieler.kicool.ProcessorReference
 import de.cau.cs.kieler.kicool.ProcessorSystem
 import de.cau.cs.kieler.kicool.System
 import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
-import de.cau.cs.kieler.kicool.ui.KiCoolUiModule
+import de.cau.cs.kieler.kicool.ui.synthesis.styles.ProcessorStyles
 import de.cau.cs.kieler.klighd.kgraph.KEdge
 import de.cau.cs.kieler.klighd.kgraph.KGraphFactory
 import de.cau.cs.kieler.klighd.kgraph.KNode
@@ -28,11 +33,9 @@ import de.cau.cs.kieler.klighd.krendering.KRenderingFactory
 import de.cau.cs.kieler.klighd.krendering.KRoundedRectangle
 import de.cau.cs.kieler.klighd.krendering.KText
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
-import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KPortExtensions
-import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import java.util.List
 import org.eclipse.elk.alg.layered.options.LayeredOptions
@@ -50,10 +53,7 @@ import org.eclipse.xtext.resource.IResourceServiceProvider
 import org.eclipse.xtext.resource.XtextResource
 import org.eclipse.xtext.resource.XtextResourceSet
 
-import static de.cau.cs.kieler.kicool.ui.synthesis.styles.ColorStore.Color.*
-
 import static extension de.cau.cs.kieler.annotations.ide.klighd.CommonSynthesisUtil.*
-import static extension de.cau.cs.kieler.kicool.ui.synthesis.styles.ColorStore.*
 import static extension de.cau.cs.kieler.kicool.ui.synthesis.updates.ProcessorDataManager.*
 import static extension de.cau.cs.kieler.kicool.util.KiCoolUtils.uniqueProcessorId
 
@@ -66,26 +66,34 @@ import static extension de.cau.cs.kieler.kicool.util.KiCoolUtils.uniqueProcessor
  */
 @ViewSynthesisShared
 class ProcessorSynthesis {
-    
-    extension KRenderingFactory = KRenderingFactory::eINSTANCE
-    extension KNodeExtensions = new KNodeExtensions
-    extension ProcessorStyles = new ProcessorStyles
-    extension KEdgeExtensions = new KEdgeExtensions
-    extension KPortExtensions = new KPortExtensions 
-    extension KRenderingExtensions = new KRenderingExtensions  
-    extension KContainerRenderingExtensions = new KContainerRenderingExtensions 
+   
+    @Inject Injector injector
+    @Inject extension ProcessorStyles
+    @Inject extension KNodeExtensions
+    @Inject extension KEdgeExtensions
+    @Inject extension KPortExtensions
     @Inject IResourceServiceProvider.Registry regXtext;
     
     public static val GROUP_NODE = new Property("de.cau.cs.kieler.kicool.ui.synthesis.groupNode", false)
-    static val COMPATIBILITY_ERROR_ICON = "lightning.png"
-    static val COLLAPSED_ID = "collapsed"
-    static val EXPANDED_ID = "expanded" 
+    public static val COLLAPSED_ID = "collapsed"
+    public static val EXPANDED_ID = "expanded" 
+    
     @Accessors var boolean onOffButtons = false
+    
+    new(){
+        if (injector === null) {
+            Guice.createInjector(new Module() {
+                // This Module is created to satisfy ViewSynthesisShared scope of used synthesis-extensions
+                override configure(Binder binder) {
+                    binder.bindScope(ViewSynthesisShared, Scopes.SINGLETON);
+                }
+            }).injectMembers(this)
+        }
+    }
     
     def KNode processorNode() {
         createNode => [
-            width = 60
-            height = 16.5f
+            setDefaultProcessorSize()
             setProperty(CoreOptions::PADDING, new ElkPadding(4d))
             data += KGraphFactory.eINSTANCE.createKIdentifier
             addProcessorFigure(onOffButtons)
@@ -94,14 +102,13 @@ class ProcessorSynthesis {
     
     def KNode groupNode(){
         createNode => [
-            width = 60
-            height = 16.5f
-            setProperty(CoreOptions::ALGORITHM, "org.eclipse.elk.layered")
+            setDefaultProcessorSize()
+            setProperty(CoreOptions::ALGORITHM, LayeredOptions.ALGORITHM_ID)
             setProperty(CoreOptions::EDGE_ROUTING, EdgeRouting.ORTHOGONAL)
             setProperty(CoreOptions::DIRECTION, Direction.RIGHT)
             setProperty(LayeredOptions::NODE_PLACEMENT_STRATEGY, NodePlacementStrategy.BRANDES_KOEPF)
             setProperty(CoreOptions::SPACING_NODE_NODE, 10.0)
-            setProperty(CoreOptions::PADDING, new ElkPadding(6.0))
+            setProperty(CoreOptions::PADDING, new ElkPadding(0.0))
             setProperty(KlighdProperties::EXPAND, false)
             data += KGraphFactory.eINSTANCE.createKIdentifier
             addGroupFigure
@@ -150,11 +157,7 @@ class ProcessorSynthesis {
                     edge.source = lastNode
                     edge.sourcePort = port
                     edge.target = node
-                    edge.addRoundedBendsPolyline(2.55f) => [
-                        foreground = ACTIVE_ENVIRONMENT.color
-                        lineWidth = 0.5f
-                        addOwnHeadArrowDecorator
-                    ]
+                    edge.addConnectionFigure()
                     edges += edge
                 }
             }
@@ -171,16 +174,7 @@ class ProcessorSynthesis {
                             node.setCompatibilityError
                         }
                         for (edge : edges) {
-                            edge.getContainer.addImage(KiCoolUiModule.BUNDLE_ID, KiCoolUiModule.ICON_PATH + COMPATIBILITY_ERROR_ICON) => [
-                                placementData = createKDecoratorPlacementData => [
-                                    rotateWithLine = false
-                                    relative = 0.5f
-                                    width = 6
-                                    height = 10
-                                    setXOffset = -2
-                                    setYOffset = -5
-                                ]              
-                            ]                            
+                            edge.getContainer.addIncompatibilityEdgeDecorator                         
                         }
                     }
                 }

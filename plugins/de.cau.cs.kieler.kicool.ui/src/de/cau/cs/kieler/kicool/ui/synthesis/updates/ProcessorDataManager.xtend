@@ -28,7 +28,6 @@ import de.cau.cs.kieler.kicool.environments.MessageObjectReferences
 import de.cau.cs.kieler.kicool.environments.Snapshots
 import de.cau.cs.kieler.kicool.environments.Warnings
 import de.cau.cs.kieler.kicool.ui.synthesis.MessageObjectListPair
-import de.cau.cs.kieler.kicool.ui.synthesis.ProcessorStyles
 import de.cau.cs.kieler.kicool.ui.synthesis.ProcessorSynthesis
 import de.cau.cs.kieler.kicool.ui.synthesis.actions.IntermediateData
 import de.cau.cs.kieler.kicool.ui.synthesis.actions.IntermediateSelection
@@ -38,6 +37,7 @@ import de.cau.cs.kieler.kicool.ui.synthesis.actions.SelectIntermediateAction
 import de.cau.cs.kieler.kicool.ui.synthesis.actions.ToggleProcessorOnOffAction
 import de.cau.cs.kieler.kicool.ui.synthesis.feedback.PostUpdateDoubleCollector
 import de.cau.cs.kieler.kicool.ui.synthesis.styles.ColorSystem
+import de.cau.cs.kieler.kicool.ui.synthesis.styles.ProcessorStyles
 import de.cau.cs.kieler.kicool.ui.view.CompilerView
 import de.cau.cs.kieler.klighd.LightDiagramLayoutConfig
 import de.cau.cs.kieler.klighd.LightDiagramServices
@@ -90,8 +90,8 @@ class ProcessorDataManager {
     static val KRenderingFactory renderingFactory = KRenderingFactory::eINSTANCE
     static KRenderingExtensions kRenderingExtensions = new KRenderingExtensions
     static KEdgeExtensions kEdgeExtensions = new KEdgeExtensions
-    static ProcessorSynthesis processorSynthesis = new ProcessorSynthesis
-    static ProcessorStyles processorStyles = new ProcessorStyles
+    static ProcessorSynthesis processorSynthesis = new ProcessorSynthesis()
+    static ProcessorStyles processorStyles = new ProcessorStyles()
     
     
     static def void populateProcessorData(ProcessorReference processorReference, KNode node) {

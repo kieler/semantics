@@ -13,20 +13,20 @@
 package de.cau.cs.kieler.kicool.ui.synthesis.updates
 
 import de.cau.cs.kieler.kicool.ui.klighd.KiCoModelViewNotifier
+import de.cau.cs.kieler.kicool.ui.synthesis.KNodeProperties
+import de.cau.cs.kieler.kicool.ui.synthesis.actions.IntermediateData
+import de.cau.cs.kieler.kicool.ui.synthesis.styles.ProcessorStyles
+import de.cau.cs.kieler.kicool.ui.view.CompilerView
+import de.cau.cs.kieler.klighd.internal.util.KlighdInternalProperties
+import de.cau.cs.kieler.klighd.kgraph.KNode
 import java.util.List
 import org.eclipse.core.runtime.IProgressMonitor
 import org.eclipse.core.runtime.IStatus
 import org.eclipse.core.runtime.Status
 import org.eclipse.ui.IEditorPart
 import org.eclipse.ui.progress.UIJob
-import de.cau.cs.kieler.kicool.ui.synthesis.actions.IntermediateData
-import de.cau.cs.kieler.klighd.kgraph.KNode
-import de.cau.cs.kieler.kicool.ui.synthesis.KNodeProperties
-import de.cau.cs.kieler.klighd.internal.util.KlighdInternalProperties
 
 import static extension de.cau.cs.kieler.kicool.ui.synthesis.updates.ProcessorDataManager.*
-import de.cau.cs.kieler.kicool.ui.synthesis.ProcessorStyles
-import de.cau.cs.kieler.kicool.ui.view.CompilerView
 
 /**
  * Class that runs a selection setting in the UI thread after a short delay. 
@@ -40,7 +40,7 @@ import de.cau.cs.kieler.kicool.ui.view.CompilerView
  */
 class DelayedSelectionUpdate implements Runnable {
 
-    extension ProcessorStyles = new ProcessorStyles
+    extension ProcessorStyles = new ProcessorStyles()
     static val UPDATE_DELAY = 100
 
     List<IntermediateData> selectedData

@@ -13,7 +13,7 @@
 package de.cau.cs.kieler.kicool.ui.synthesis.actions
 
 import de.cau.cs.kieler.kicool.ui.klighd.KiCoModelViewNotifier
-import de.cau.cs.kieler.kicool.ui.synthesis.ProcessorStyles
+import de.cau.cs.kieler.kicool.ui.synthesis.styles.ProcessorStyles
 import de.cau.cs.kieler.klighd.IAction
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.KRendering
@@ -33,7 +33,7 @@ import static extension de.cau.cs.kieler.kicool.ui.view.EditPartSystemManager.*
  */
 class SelectIntermediateAction implements IAction {
 
-    extension ProcessorStyles = new ProcessorStyles
+    extension ProcessorStyles = new ProcessorStyles()
 
     public static val ID = "de.cau.cs.kieler.kicool.ui.synthesis.actions.selectIntermediateAction"
     @Accessors static val SelectedModels = <KRendering>newArrayList

@@ -12,14 +12,14 @@
  */
 package de.cau.cs.kieler.kicool.ui.synthesis.actions
 
-import de.cau.cs.kieler.kicool.ui.synthesis.ProcessorStyles
+import de.cau.cs.kieler.kicool.ui.synthesis.styles.ProcessorStyles
 import de.cau.cs.kieler.klighd.IAction
 import de.cau.cs.kieler.klighd.krendering.KRendering
 
 import static de.cau.cs.kieler.kicool.ui.synthesis.KNodeProperties.*
-import static extension de.cau.cs.kieler.kicool.ui.view.EditPartSystemManager.*
+
 import static extension de.cau.cs.kieler.kicool.ui.synthesis.updates.ProcessorDataManager.*
-import de.cau.cs.kieler.kicool.ui.klighd.KiCoModelViewNotifier
+import static extension de.cau.cs.kieler.kicool.ui.view.EditPartSystemManager.*
 
 /**
  * Class that handles the intermediate model requests.
@@ -31,7 +31,7 @@ import de.cau.cs.kieler.kicool.ui.klighd.KiCoModelViewNotifier
  */
 class SelectAdditionalIntermediateAction implements IAction {
 
-    extension ProcessorStyles = new ProcessorStyles
+    extension ProcessorStyles = new ProcessorStyles()
 
     public static var ActionContext lastContext = null
 
