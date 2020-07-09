@@ -33,10 +33,10 @@ class OnOffButtonsToggle extends AbstractAction {
     
     new(CompilerView view) {
         super(view, 
-            "Disable some processors", 
+            "Show Processors Disabling Buttons", 
             IAction.AS_CHECK_BOX, 
             "onOffButtonsToggle", 
-            "Disable some processors", 
+            "Show Processors Disabling Buttons", 
             "Shows buttons to disable individual processors or to terminate compilation at a certain processor.", 
             null)
         action.setChecked(ON_OFF_BUTTONS_TOGGLE_ACTION_DEFAULT)

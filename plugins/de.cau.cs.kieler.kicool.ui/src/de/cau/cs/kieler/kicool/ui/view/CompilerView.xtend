@@ -155,19 +155,17 @@ class CompilerView extends DiagramViewPart {
         toolBar.add(flattenSystemViewToggle.action)
         toolBar.add(new Separator)
         // The standard klighd view part menu entries will be inserted after this separator.    
-        menu.add(forwardResultToggle.action)
         menu.add(autoCompileToggle.action)
         menu.add(compileInplaceToggle.action)
         menu.add(compileTracingToggle.action)
         menu.add(new Separator)
         menu.add(visualLayoutFeedbackToggle.action)
-
+        menu.add(forwardResultToggle.action)
         menu.add(new Separator)
-
         menu.add(developerToggle.action)
+        menu.add(showPrivateSystemsToggle.action)
         menu.add(onOffButtonsToggle.action)
         menu.add(debugEnvironmentModelsToggle.action)
-        menu.add(showPrivateSystemsToggle.action)
 
         if (memento !== null) {
             memento.loadCheckedValue(forwardResultToggle)
