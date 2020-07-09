@@ -12,23 +12,17 @@
  */
 package de.cau.cs.kieler.kivis.ide.server
 
-import de.cau.cs.kieler.kivis.KiVisConstants
-import de.cau.cs.kieler.simulation.ide.CentralSimulation
 import de.cau.cs.kieler.simulation.ide.server.ISimulationServerContribution
-import java.io.File
+import java.io.ByteArrayOutputStream
 import java.io.IOException
 import java.net.URL
 import java.nio.charset.StandardCharsets
-import java.nio.file.Files
 import javax.servlet.ServletException
 import javax.servlet.http.HttpServlet
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
-import org.eclipse.jetty.servlet.ServletHolder
 import org.eclipse.emf.common.util.URI
-import org.eclipse.core.resources.IWorkspaceRoot
-import org.eclipse.core.runtime.Path
-import java.io.ByteArrayOutputStream
+import org.eclipse.jetty.servlet.ServletHolder
 
 /**
  * @author als
