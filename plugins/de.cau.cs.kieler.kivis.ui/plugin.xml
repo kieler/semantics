@@ -346,6 +346,16 @@
              restorable="true">
        </view>
     </extension>
+    <extension point="org.eclipse.ui.views">
+       <view
+             category="de.cau.cs.kieler"
+             class="de.cau.cs.kieler.kivis.ui.views.KiVisDataView"
+             icon="icons/viewIcon.png"
+             id="de.cau.cs.kieler.kivis.ui.kivisDataView"
+             name="Simulation Data Visualization"
+             restorable="true">
+       </view>
+    </extension>
     <extension
           point="de.cau.cs.kieler.klighd.ui.view.editor">
        <editor
