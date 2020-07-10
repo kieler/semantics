@@ -17,9 +17,10 @@ import de.cau.cs.kieler.kicool.System
 import de.cau.cs.kieler.kicool.ide.DefaultSystemAssociation
 import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
 import de.cau.cs.kieler.kicool.ui.klighd.ModelReaderUtil
+import java.nio.file.Files
+import java.nio.file.Paths
 import java.util.ArrayList
 import java.util.Comparator
-import java.util.Date
 import java.util.Map
 import org.eclipse.core.resources.IContainer
 import org.eclipse.core.resources.IProject
@@ -114,7 +115,7 @@ class SystemSelectionManager implements SelectionListener {
         return comboContrib
     }
 
-    def updateSystemList() {
+    def void updateSystemList() {
         updateSystemList(true, false)
     }
     
@@ -141,11 +142,10 @@ class SystemSelectionManager implements SelectionListener {
                     if (newSystem instanceof System) {
                         val system = newSystem as System
                         if (system.hasInput(modelClassFilter)) {
-                            system.id = system.id + "." + new Date().time
+                            system.id = system.id + "." + new String(Files.readAllBytes(Paths.get(file.location.toOSString))).hashCode
                             Display.getDefault().asyncExec(new Runnable() {
                                 override run() {
                                     synchronized (SystemSelectionManager.this) {
-                                        KiCoolRegistration.registerTemporarySystem(system)
                                         system.addToPresortedList(file.rawLocation.makeAbsolute.toString)
                                         system.id.systemEntryById.makeVisible
                                     }
@@ -337,8 +337,14 @@ class SystemSelectionManager implements SelectionListener {
         if (path !== null) {
             val old = path.systemEntryByFile
             if (old !== null) {
+                if(old.id == s.id){
+                    return
+                }
                 visible = old.visible
                 select = visible && old.selected
+                if (select) {
+                    view.editPartSystemManager.activeSystem = index.get(index.indexOf(old) != 0 ? 0 : 1)?.id
+                }
                 if (visible) {
                     val oldPos = index.indexOf(old)
                     combo.remove(oldPos)
@@ -347,6 +353,7 @@ class SystemSelectionManager implements SelectionListener {
                 KiCoolRegistration.removeTemporarySystem(old.id)
                 presortedSystems.remove(presortedSystems.indexOf(old))
             }
+            KiCoolRegistration.registerTemporarySystem(s)
         }
         if (s.id.systemEntryById === null) {
             val entry = new SystemSelectionEntry(s, path)
@@ -359,6 +366,7 @@ class SystemSelectionManager implements SelectionListener {
                         if (select) {
                             view.editPartSystemManager.activeSystem = entry.id
                             combo.select(index.indexOf(entry))
+                            view.updateView
                         }
                     }
                     return
@@ -371,9 +379,11 @@ class SystemSelectionManager implements SelectionListener {
                 if (select) {
                     view.editPartSystemManager.activeSystem = entry.id
                     combo.select(index.indexOf(entry))
+                    view.updateView
                 }
             }
         }
+        return
     }
 
     def visible(SystemSelectionEntry entry) {

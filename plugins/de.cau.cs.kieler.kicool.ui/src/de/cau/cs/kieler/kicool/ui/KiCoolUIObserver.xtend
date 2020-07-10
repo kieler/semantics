@@ -19,6 +19,7 @@ import org.eclipse.core.runtime.IProgressMonitor
 import org.eclipse.core.runtime.IStatus
 import org.eclipse.core.runtime.Status
 import org.eclipse.ui.progress.UIJob
+import java.util.concurrent.LinkedBlockingQueue
 
 /**
  * UI observer that is able to run inside the UI thread (even if the context is not).
@@ -33,19 +34,38 @@ abstract class KiCoolUIObserver implements Observer {
     
     abstract def void update(AbstractContextNotification notification)
     
+    val queue = new LinkedBlockingQueue<AbstractContextNotification>;
+    var UIJob job = null
+    
     override update(Observable o, Object arg) {
         if (arg instanceof AbstractContextNotification) {
             if (runInUIThread) {
-                new UIJob("Updating...") {
-                    override IStatus runInUIThread(IProgressMonitor monitor) {
-                        arg.update
-                        return Status.OK_STATUS;
+                synchronized (queue) {
+                    queue.add(arg)
+                    if (job === null) {
+                        job = new UIJob("Updating...") {
+                            override IStatus runInUIThread(IProgressMonitor monitor) {
+                                while (true) {
+                                    queue.poll.update
+                                    synchronized (queue) {
+                                        if (queue.empty) {
+                                            job = null
+                                            return Status.OK_STATUS;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        job.schedule
                     }
-                }.schedule
+                }
             } else {
+                while (!queue.empty) {
+                    job.wait
+                }
                 arg.update
             }
         }
     }
-    
+
 }

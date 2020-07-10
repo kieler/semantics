@@ -2,4 +2,4 @@ developer system de.cau.cs.kieler.sccharts.^simulation.netlist.c
     label "Netlist-based Simulation (C, No-TTS)"
 
 system de.cau.cs.kieler.sccharts.netlist
-system de.cau.cs.kieler.^simulation.netlist.c
+system de.cau.cs.kieler.^simulation.c

@@ -16,7 +16,7 @@ knode operator {
 
   kport in1 {
     pos: x = -2 y = 7
-    size: width = 2 height = 2
+    size: width = 0 height = 0
     properties: de.cau.cs.kieler.portSide = WEST
     
     klabel "T" { 
@@ -28,7 +28,7 @@ knode operator {
   
   kport in2 {
     pos: x = -2 y = 16
-    size: width = 2 height = 2
+    size: width = 0 height = 0
     properties: de.cau.cs.kieler.portSide = WEST
         
     klabel "F" { 

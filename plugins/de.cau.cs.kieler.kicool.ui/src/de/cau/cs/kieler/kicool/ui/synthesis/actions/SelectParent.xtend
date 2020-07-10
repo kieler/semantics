@@ -33,25 +33,22 @@ class SelectParent implements IAction {
     public static val ID = "de.cau.cs.kieler.kicool.ui.synthesis.actions.selectParent"
     
     override execute(ActionContext context) {
-        var EObject node = context.KNode
+        var EObject node = context.KGraphElement
         while (node !== null) {
             node = node.eContainer            
             
             if (node instanceof KNode) {
-                 val id = node.getData(KIdentifier)
-                 if (id !== null && id.id == ProcessorDataManager.NODE_PROCESSOR_BODY) {
-                    context.getActiveViewer.resetSelectionTo(node)
-                    
-                    val delegateContext = new ActionContext(
-                        context.activeViewer,
-                        context.trigger,
-                        node, 
-                        node.data.filter(KContainerRendering).head    
-                    )
-                    (new SelectIntermediateAction).execute(delegateContext)
-                    
-                    return ActionResult.createResult(false).dontAnimateLayout()
-                 }    
+                context.getActiveViewer.resetSelectionTo(node)
+                
+                val delegateContext = new ActionContext(
+                    context.activeViewer,
+                    context.trigger,
+                    node, 
+                    node.data.filter(KContainerRendering).head    
+                )
+                (new SelectIntermediateAction).execute(delegateContext)
+                
+                return ActionResult.createResult(false).dontAnimateLayout()
             }
         }
                 

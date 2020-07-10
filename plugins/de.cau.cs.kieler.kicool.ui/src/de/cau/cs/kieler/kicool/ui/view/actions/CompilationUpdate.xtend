@@ -25,10 +25,9 @@ import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.kicool.ide.klighd.models.CodePlaceHolder
 import de.cau.cs.kieler.kicool.ui.KiCoolUIObserver
 import de.cau.cs.kieler.kicool.ui.klighd.KiCoModelViewNotifier
+import de.cau.cs.kieler.kicool.ui.synthesis.updates.ProcessorDataManager
 import de.cau.cs.kieler.kicool.ui.view.CompilerView
 import org.eclipse.xtend.lib.annotations.Accessors
-
-import static de.cau.cs.kieler.kicool.ui.synthesis.updates.ProcessorDataManager.*
 
 import static extension de.cau.cs.kieler.kicool.ui.synthesis.updates.ProcessorDataManager.addNewProcessor
 import static extension de.cau.cs.kieler.kicool.ui.synthesis.updates.ProcessorDataManager.postUpdateProcessors
@@ -55,55 +54,51 @@ class CompilationUpdate extends KiCoolUIObserver {
     }
     
     override void update(AbstractContextNotification notification) {
-        
         switch notification {
-            ProcessorProgress: notification.updateProcessor(view.viewContext.viewModel, view)
-            ProcessorStart: notification.resetProcessor(view.viewContext.viewModel)
-            ProcessorFinished: {
-                    notification.updateProcessor(view.viewContext.viewModel, view)
-                } 
-            CompilationStart: notification.resetSystem(view.viewContext.viewModel, view)
+            ProcessorProgress:
+                notification.updateProcessor(view.viewContext.viewModel, view)
+            ProcessorStart:
+                notification.resetProcessor(view.viewContext.viewModel)
+            ProcessorFinished:
+                notification.updateProcessor(view.viewContext.viewModel, view)
+            CompilationStart:
+                notification.resetSystem(view.viewContext.viewModel, view)
             CompilationFinished: {
-                    CompilationActionSimSalabim.simSalabim(notification)
-                    
-                    if (view.forwardResultToggle.checked) {
-                        val editor = notification.compilationContext.inputEditor
-                        var model = notification.environment.getProperty(Environment.MODEL)
-                        view.editPartSystemManager.attachCompilationContextToEditorPart(editor, notification.compilationContext)
-                        
-                        if (model instanceof String) {
-                            model = new CodePlaceHolder(editor.title + ".c", model)
-                        } else if (model instanceof CodeContainer) {
+                CompilationActionSimSalabim.simSalabim(notification)
+
+                if (view.forwardResultToggle.checked) {
+                    val editor = notification.compilationContext.inputEditor
+                    var model = notification.environment.getProperty(Environment.MODEL)
+                    view.editPartSystemManager.attachCompilationContextToEditorPart(editor,
+                        notification.compilationContext)
+
+                    if (model instanceof String) {
+                        model = new CodePlaceHolder(editor.title + ".c", model)
+                    } else if (model instanceof CodeContainer) {
 //                            model = new CodePlaceHolder(editor.title + ".c", model.head)
-                        }
-                        
-                        if (view.editPartSystemManager.intermediateSelection !== null) {
-                            val modelList = retrieveIntermediateModel(view.viewContext.viewModel, view, model, view.editPartSystemManager.intermediateSelection, editor)
-                            if (modelList.nullOrEmpty) {
-                                println("Selection model list returned nothing. Falling back to default.")
-                                KiCoModelViewNotifier.notifyCompilationChanged(editor, model)
-                            } else if (modelList.size == 1) {
-//                                KiCoModelViewNotifier.notifyCompilationChanged(editor, model)
-                            } else {
-//                                KiCoModelViewNotifier.notifyCompilationChangedList(editor, modelList)
-                            }
-                        } else {
-                            KiCoModelViewNotifier.notifyCompilationChanged(editor, model)
-                        }
                     }
-                    
-                    if (view.visualLayoutFeedbackToggle.checked) {
-                        notification.postUpdateProcessors(view.viewContext.viewModel, view)    
+
+                    if (view.editPartSystemManager.intermediateSelection !== null) {
+                        ProcessorDataManager.updateSelectedIntermediateModels(view.viewContext.viewModel, view,
+                            view.editPartSystemManager.intermediateSelection, editor)
+                    } else {
+                        KiCoModelViewNotifier.notifyCompilationChanged(editor, model)
                     }
-                    
-                    notification.applyNotifications
                 }
+
+                if (view.visualLayoutFeedbackToggle.checked) {
+                    notification.postUpdateProcessors(view.viewContext.viewModel, view)
+                }
+
+                notification.applyNotifications
+                view.doLayout(false)
+            }
             CompilationChanged: {
                 notification.addNewProcessor(view.viewContext.viewModel, view)
-                view.doLayout(true)             
-            } 
+                view.doLayout(true)
+                return
+            }
         }
-        
     }
     
     private def void reinitializeSynthesis(CompilationChanged compilationChanged) {

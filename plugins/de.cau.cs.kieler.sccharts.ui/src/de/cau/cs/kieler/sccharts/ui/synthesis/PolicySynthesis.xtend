@@ -49,6 +49,7 @@ import org.eclipse.elk.core.options.EdgeRouting
 
 import static de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions.*
 
+import static extension de.cau.cs.kieler.annotations.ide.klighd.CommonSynthesisUtil.*
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
 
@@ -92,11 +93,11 @@ class PolicySynthesis extends SubSynthesis<PolicyRegion, KNode> {
 
         // Set KIdentifier for use with incremental update
         if (!region.name.nullOrEmpty) {
-            node.data += KGraphFactory::eINSTANCE.createKIdentifier => [it.id = region.name]
+            node.KID = region.name
         }
         
         if (USE_KLAY.booleanValue) {
-            node.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.layered");
+            node.addLayoutParam(CoreOptions::ALGORITHM, LayeredOptions.ALGORITHM_ID);
             node.setLayoutOption(LayeredOptions::NODE_PLACEMENT_BK_FIXED_ALIGNMENT, FixedAlignment::BALANCED);
             node.setLayoutOption(LayeredOptions::EDGE_LABELS_CENTER_LABEL_PLACEMENT_STRATEGY,
                 CenterEdgeLabelPlacementStrategy::TAIL_LAYER);
@@ -243,7 +244,7 @@ class PolicySynthesis extends SubSynthesis<PolicyRegion, KNode> {
                 val target = transition.targetState;
                 if (!target.name.nullOrEmpty) {
                     val counter = groupedTransitions.get(target).indexOf(transition)
-                    edge.head.data += KGraphFactory::eINSTANCE.createKIdentifier => [it.id = target.name + counter]
+                    edge.head.KID = target.name + counter
                 }
             ];
         }

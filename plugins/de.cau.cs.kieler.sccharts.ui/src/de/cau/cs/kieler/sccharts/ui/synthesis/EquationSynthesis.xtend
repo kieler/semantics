@@ -15,7 +15,9 @@ package de.cau.cs.kieler.sccharts.ui.synthesis
 import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.Annotatable
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.kexpressions.FunctionCall
 import de.cau.cs.kieler.kexpressions.IgnoreValue
+import de.cau.cs.kieler.kexpressions.IntValue
 import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.OperatorType
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
@@ -23,13 +25,14 @@ import de.cau.cs.kieler.kexpressions.Value
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.VectorValue
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kexpressions.kext.DeclarationScope
 import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
 import de.cau.cs.kieler.kicool.ui.synthesis.KiCoolSynthesis
 import de.cau.cs.kieler.klighd.SynthesisOption
-import de.cau.cs.kieler.klighd.kgraph.KGraphFactory
 import de.cau.cs.kieler.klighd.kgraph.KIdentifier
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.kgraph.KPort
@@ -52,6 +55,7 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsReferenceExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions
 import de.cau.cs.kieler.sccharts.ui.synthesis.actions.ReferenceExpandAction
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.EquationStyles
+import de.cau.cs.kieler.sccharts.ui.synthesis.styles.TransitionStyles
 import java.util.EnumSet
 import java.util.HashMap
 import java.util.List
@@ -76,11 +80,7 @@ import org.eclipse.xtext.resource.XtextResourceSet
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
-import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
-import de.cau.cs.kieler.kexpressions.IntValue
-import de.cau.cs.kieler.kexpressions.FunctionCall
-import de.cau.cs.kieler.sccharts.ui.synthesis.styles.TransitionStyles
+import static extension de.cau.cs.kieler.annotations.ide.klighd.CommonSynthesisUtil.*
 
 /**
  * @author ssm
@@ -685,18 +685,18 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                     var sourcePort = source.findPortById(INSTANCE_OUT_PORT)
                     if (sourcePort === null) {
                         sourcePort = createPort => [
-                            data += KGraphFactory.eINSTANCE.createKIdentifier()
-                            setId(INSTANCE_OUT_PORT);
+                            KID = INSTANCE_OUT_PORT
                             setProperty(CoreOptions::PORT_SIDE, PortSide.EAST)
+                            setPortSize(0, 0)
                         ]
                         source.ports.add(sourcePort)
                     }
                     var targetPort = target.findPortById(INSTANCE_IN_PORT)
                     if (targetPort === null) {
                         targetPort = createPort => [
-                            data += KGraphFactory.eINSTANCE.createKIdentifier()
-                            setId(INSTANCE_IN_PORT);
+                            KID = INSTANCE_IN_PORT
                             setProperty(CoreOptions::PORT_SIDE, PortSide.WEST)
+                            setPortSize(0, 0)
                         ]
                         target.ports.add(targetPort)
                     }
@@ -782,18 +782,18 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         var sourcePort = before.findPortById(SEQUENTIAL_OUT_PORT)
         if (sourcePort === null) {
             sourcePort = createPort => [
-                data += KGraphFactory.eINSTANCE.createKIdentifier()
-                setId(SEQUENTIAL_OUT_PORT);
+                KID = SEQUENTIAL_OUT_PORT
                 setProperty(CoreOptions::PORT_SIDE, PortSide.EAST)
+                setPortSize(0, 0)
             ]
             before.ports.add(sourcePort)
         }
         var targetPort = after.findPortById(SEQUENTIAL_IN_PORT)
         if (targetPort === null) {
             targetPort = createPort => [
-                data += KGraphFactory.eINSTANCE.createKIdentifier()
-                setId(SEQUENTIAL_IN_PORT);
+                KID = SEQUENTIAL_IN_PORT
                 setProperty(CoreOptions::PORT_SIDE, PortSide.WEST)
+                setPortSize(0, 0)
             ]
             after.ports.add(targetPort)
         }

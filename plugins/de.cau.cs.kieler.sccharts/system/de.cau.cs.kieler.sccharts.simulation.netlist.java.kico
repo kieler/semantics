@@ -2,4 +2,4 @@ developer system de.cau.cs.kieler.sccharts.^simulation.netlist.java
     label "Netlist-based Simulation (Java, No-TTS)"
 
 system de.cau.cs.kieler.sccharts.netlist.java
-system de.cau.cs.kieler.^simulation.netlist.java
+system de.cau.cs.kieler.^simulation.java

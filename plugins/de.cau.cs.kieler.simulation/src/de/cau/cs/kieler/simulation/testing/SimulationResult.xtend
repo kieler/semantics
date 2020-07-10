@@ -12,14 +12,14 @@
  */
 package de.cau.cs.kieler.simulation.testing
 
-import com.google.common.collect.HashBasedTable
-import com.google.common.collect.Table
+import com.google.gson.JsonArray
+import com.google.gson.JsonNull
+import com.google.gson.JsonObject
 import de.cau.cs.kieler.simulation.SimulationContext
 import de.cau.cs.kieler.simulation.SimulationHistory
 import de.cau.cs.kieler.simulation.events.TraceMismatchEvent
 import de.cau.cs.kieler.simulation.trace.ktrace.Trace
 import de.cau.cs.kieler.simulation.trace.ktrace.TraceFile
-import java.util.Collection
 import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor
@@ -34,40 +34,74 @@ class SimulationResult {
     val SimulationContext context
 
     @Accessors
-    val Table<TraceFile, Trace, TraceResult> results = HashBasedTable.<TraceFile, Trace, TraceResult>create
+    val List<TraceResult> results = newArrayList
     
-    def TraceResult createNewResult(TraceFile file, Trace trace) {
-        val result = new TraceResult(file, trace)
-        results.put(file, trace, result)
+    def TraceResult createNewResult(TraceFile file, Trace trace, int run) {
+        val result = new TraceResult(file, trace, run)
+        results += result
         return result
     }
     
-    def TraceResult get(TraceFile file, Trace trace) {
-        results.get(file, trace)
-    }
-    
-    def TraceResult get(TraceFile file, int traceNum) {
-        results.get(file, file.traces.get(traceNum))
-    }
-    
-    def Collection<TraceResult> getAll() {
-        return results.values
-    }
-    
     def boolean hasErrors() {
-        results.values.exists[!errors.empty]
+        results.exists[!errors.empty]
     }
     
     def Iterable<String> getErrors() {
-        results.values.filter[!errors.empty].map[errors].flatten
+        results.filter[!errors.empty].map[errors].flatten
     }
     
     def boolean hasMismatches() {
-        results.values.exists[mismatch !== null]
+        results.exists[mismatch !== null]
     }
     
     def Iterable<TraceMismatchEvent> getMismatches() {
-        results.values.map[mismatch].filterNull
+        results.map[mismatch].filterNull
+    }
+    
+    def JsonArray toJson() {
+        val arr = new JsonArray(results.size)
+        for (result : results) {
+            val obj = new JsonObject
+            
+            if (result.traceFile.eResource?.URI !== null) {
+                val name = result.traceFile.eResource.URI.segments.last
+                if (!name.nullOrEmpty) {
+                    obj.addProperty("traceFile", name)
+                }
+            }
+            obj.addProperty("traceNum", result.traceFile.traces.indexOf(result.trace))
+            if (context.startEnvironment.getProperty(TraceSimulation.RUNS) > 1) {
+                obj.addProperty("run", result.run)
+            }
+            if (result.errors.size > 0) {
+                val errArr = new JsonArray(result.errors.size)
+                for (err : result.errors) {
+                    errArr.add(err)
+                }
+                obj.add("errors", errArr)
+            }
+            if (result.mismatch !== null) {
+                obj.addProperty("mismatch", result.mismatch.toString)
+            }
+            if (!result.finished) {
+                obj.addProperty("aborted", true)
+            }
+            if (result.history?.last?.entries?.containsKey("#ticktime")) {
+                val timeArr = new JsonArray(result.history.size)
+                for (tick : result.history.reverseIterator.toIterable) { // Starting with fist tick
+                    val entry = tick.entries.get("#ticktime")
+                    if (entry !== null) {
+                        timeArr.add(entry.rawValue)
+                    } else {
+                        timeArr.add(JsonNull.INSTANCE)
+                    }
+                }
+                obj.add("ticktimes", timeArr)
+            }
+            
+            arr.add(obj)
+        }
+        return arr
     }
     
 }
@@ -80,6 +114,9 @@ class TraceResult {
     
     @Accessors
     val Trace trace
+    
+    @Accessors
+    val int run    
     
     @Accessors
     val List<String> errors = newArrayList

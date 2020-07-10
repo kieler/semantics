@@ -203,7 +203,6 @@ class DominatorTreeSynthesis extends AbstractDiagramSynthesis<SCGraphs> {
                         }
                         node.children += nNode
                     }
-//                    node.addLayoutParam(CoreOptions::ALGORITHM, "org.elk.klay.layered")
                     node.addLayoutParam(CoreOptions::DIRECTION, Direction.DOWN)
                 }
             }

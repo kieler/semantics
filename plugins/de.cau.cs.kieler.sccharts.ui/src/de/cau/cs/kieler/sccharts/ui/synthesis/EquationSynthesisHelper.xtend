@@ -14,39 +14,39 @@ package de.cau.cs.kieler.sccharts.ui.synthesis
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.OperatorExpression
+import de.cau.cs.kieler.kexpressions.OperatorType
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.eval.PartialExpressionEvaluator
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCompareExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.klighd.KlighdConstants
 import de.cau.cs.kieler.klighd.internal.util.KlighdInternalProperties
 import de.cau.cs.kieler.klighd.kgraph.KEdge
 import de.cau.cs.kieler.klighd.kgraph.KGraphElement
+import de.cau.cs.kieler.klighd.kgraph.KGraphFactory
 import de.cau.cs.kieler.klighd.kgraph.KIdentifier
 import de.cau.cs.kieler.klighd.kgraph.KLabel
 import de.cau.cs.kieler.klighd.kgraph.KLabeledGraphElement
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.kgraph.KPort
+import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
+import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KLabelExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KPortExtensions
+import de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses
+import de.cau.cs.kieler.sccharts.DataflowRegion
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions
+import de.cau.cs.kieler.sccharts.ui.synthesis.styles.EquationStyles
+import de.cau.cs.kieler.sccharts.ui.synthesis.styles.TransitionStyles
+import java.util.Comparator
 import java.util.List
+import org.eclipse.elk.alg.layered.options.LayeredOptions
 import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.core.options.PortSide
 
+import static extension de.cau.cs.kieler.annotations.ide.klighd.CommonSynthesisUtil.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.kexpressions.OperatorExpression
-import de.cau.cs.kieler.kexpressions.OperatorType
-import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
-import org.eclipse.elk.alg.layered.options.LayeredOptions
-import de.cau.cs.kieler.klighd.KlighdConstants
-import de.cau.cs.kieler.sccharts.ui.synthesis.styles.EquationStyles
-import de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses
-import de.cau.cs.kieler.klighd.krendering.extensions.KLabelExtensions
-import de.cau.cs.kieler.sccharts.DataflowRegion
-import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
-import java.util.Comparator
-import de.cau.cs.kieler.kexpressions.eval.PartialExpressionEvaluator
-import de.cau.cs.kieler.kexpressions.Value
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.sccharts.ui.synthesis.styles.TransitionStyles
-import de.cau.cs.kieler.klighd.krendering.extensions.KPortExtensions
-import de.cau.cs.kieler.klighd.kgraph.KGraphFactory
 
 /**
  * @author kolja
@@ -118,11 +118,6 @@ class EquationSynthesisHelper {
 
     protected def getId(KLabeledGraphElement node) {
         node.eContents?.filter(KIdentifier)?.head?.id
-    }
-
-    protected def setId(KLabeledGraphElement node, String id) {
-        node.getData(KIdentifier).id = id
-        node
     }
 
     protected def KLabel getLabel(KNode node) {
@@ -308,10 +303,8 @@ class EquationSynthesisHelper {
 
         if (maxPort === null && create) {
             val port = createPort => [
-                data += KGraphFactory.eINSTANCE.createKIdentifier => [
-                    id = "in0"
-                ]
-                it.setPortSize(2, 2)
+                it.KID = "in0"
+                it.setPortSize(0, 0)
                 it.addLayoutParam(CoreOptions::PORT_SIDE, PortSide::WEST);
                 it.labels += createLabel => [
                     it.text = ""
@@ -326,7 +319,7 @@ class EquationSynthesisHelper {
         var KPort result = null
         for (pi : (maxIndex + 1) .. number) {
             result = maxPort.copy
-            result.id = (EquationSynthesis.PORT_IN_PREFIX + pi)
+            result.KID = (EquationSynthesis.PORT_IN_PREFIX + pi)
             node.ports.add(0, result)
         }
         return result

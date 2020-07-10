@@ -130,7 +130,7 @@ class TestModelCollection {
         
         private def getParentPropertiesPattern(Path file, Path root) {
             var parent = file.parent
-            while (parent.nameCount >= root.nameCount) {
+            while (parent !== null && parent.nameCount >= root.nameCount) {
                 if (directoryTestModelPropertiesPatterns.containsKey(parent)) {
                     return directoryTestModelPropertiesPatterns.get(parent)
                 } else {

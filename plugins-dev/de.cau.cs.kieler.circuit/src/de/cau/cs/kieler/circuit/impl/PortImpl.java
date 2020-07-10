@@ -16,6 +16,7 @@
 package de.cau.cs.kieler.circuit.impl;
 
 import de.cau.cs.kieler.annotations.AnnotationsPackage;
+import de.cau.cs.kieler.annotations.Nameable;
 import de.cau.cs.kieler.annotations.NamedObject;
 import de.cau.cs.kieler.circuit.CircuitPackage;
 import de.cau.cs.kieler.circuit.Port;
@@ -102,7 +103,8 @@ public class PortImpl extends LinkableImpl implements Port {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public String getName() {
+	@Override
+    public String getName() {
         return name;
     }
 
@@ -111,7 +113,8 @@ public class PortImpl extends LinkableImpl implements Port {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public void setName(String newName) {
+	@Override
+    public void setName(String newName) {
         String oldName = name;
         name = newName;
         if (eNotificationRequired())
@@ -123,7 +126,8 @@ public class PortImpl extends LinkableImpl implements Port {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public String getType() {
+	@Override
+    public String getType() {
         return type;
     }
 
@@ -132,7 +136,8 @@ public class PortImpl extends LinkableImpl implements Port {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public void setType(String newType) {
+	@Override
+    public void setType(String newType) {
         String oldType = type;
         type = newType;
         if (eNotificationRequired())
@@ -215,6 +220,11 @@ public class PortImpl extends LinkableImpl implements Port {
      */
 	@Override
 	public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
+        if (baseClass == Nameable.class) {
+            switch (derivedFeatureID) {
+                default: return -1;
+            }
+        }
         if (baseClass == NamedObject.class) {
             switch (derivedFeatureID) {
                 case CircuitPackage.PORT__NAME: return AnnotationsPackage.NAMED_OBJECT__NAME;
@@ -231,6 +241,11 @@ public class PortImpl extends LinkableImpl implements Port {
      */
 	@Override
 	public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
+        if (baseClass == Nameable.class) {
+            switch (baseFeatureID) {
+                default: return -1;
+            }
+        }
         if (baseClass == NamedObject.class) {
             switch (baseFeatureID) {
                 case AnnotationsPackage.NAMED_OBJECT__NAME: return CircuitPackage.PORT__NAME;
@@ -249,7 +264,7 @@ public class PortImpl extends LinkableImpl implements Port {
 	public String toString() {
         if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
+        StringBuilder result = new StringBuilder(super.toString());
         result.append(" (name: ");
         result.append(name);
         result.append(", type: ");

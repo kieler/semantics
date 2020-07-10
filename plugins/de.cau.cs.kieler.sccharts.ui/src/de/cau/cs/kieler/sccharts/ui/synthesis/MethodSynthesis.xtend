@@ -14,12 +14,10 @@
 package de.cau.cs.kieler.sccharts.ui.synthesis
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kicool.ui.kitt.tracing.TracingVisualizationProperties
 import de.cau.cs.kieler.klighd.LightDiagramServices
 import de.cau.cs.kieler.klighd.actions.CollapseExpandAction
-import de.cau.cs.kieler.klighd.kgraph.KGraphFactory
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.KRendering
 import de.cau.cs.kieler.klighd.krendering.KText
@@ -29,20 +27,16 @@ import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.ControlflowRegionStyles
 import de.cau.cs.kieler.scl.MethodImplementationDeclaration
-import de.cau.cs.kieler.scl.Return
 import de.cau.cs.kieler.scl.SCLFactory
-import de.cau.cs.kieler.scl.Scope
+import de.cau.cs.kieler.scl.processors.transformators.SCLToSCGTransformation
 import java.lang.reflect.Method
 import java.util.List
-import org.eclipse.elk.core.math.ElkPadding
-import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.graph.properties.MapPropertyHolder
-import org.eclipse.emf.ecore.util.EcoreUtil.Copier
 
+import static extension de.cau.cs.kieler.annotations.ide.klighd.CommonSynthesisUtil.*
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.scl.processors.transformators.SCLToSCGTransformation
 
 /**
  * Transforms {@link Method} into {@link KNode} diagram elements.
@@ -68,7 +62,7 @@ class MethodSynthesis extends SubSynthesis<MethodImplementationDeclaration, KNod
 
         // Set KIdentifier for use with incremental update
         if (!method.valuedObjects.head.name.nullOrEmpty) {
-            node.data += KGraphFactory::eINSTANCE.createKIdentifier => [it.id = method.valuedObjects.head.name]
+            node.KID = method.valuedObjects.head.name
         }
         
         node.initiallyCollapse

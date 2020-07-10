@@ -29,6 +29,7 @@ import org.eclipse.elk.core.options.Alignment
 import org.eclipse.elk.core.options.CoreOptions
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import static extension de.cau.cs.kieler.annotations.ide.klighd.CommonSynthesisUtil.*
 
 /**
  * @author kolja
@@ -498,7 +499,7 @@ class EquationSimplification {
                     targetPort = target.findPort(e.targetPort)
                     if (targetPort === null) {
                         targetPort = e.targetPort.copy
-                        targetPort.setId(EquationSynthesis.IN_PORT + "_" + target.ports.size)
+                        targetPort.KID = EquationSynthesis.IN_PORT + "_" + target.ports.size
                         target.ports.add(targetPort)
                     }
                 }
@@ -526,7 +527,7 @@ class EquationSimplification {
                     sourcePort = source.findPort(e.sourcePort)
                     if (sourcePort === null) {
                         sourcePort = e.sourcePort.copy
-                        sourcePort.setId(EquationSynthesis.OUT_PORT + "_" + source.ports.size)
+                        sourcePort.KID = (EquationSynthesis.OUT_PORT + "_" + source.ports.size)
                         source.ports.add(sourcePort)
                     }
                 }

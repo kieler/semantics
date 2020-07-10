@@ -82,7 +82,8 @@ public class CircuitFactoryImpl extends EFactoryImpl implements CircuitFactory {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public Actor createActor() {
+	@Override
+    public Actor createActor() {
         ActorImpl actor = new ActorImpl();
         return actor;
     }
@@ -92,7 +93,8 @@ public class CircuitFactoryImpl extends EFactoryImpl implements CircuitFactory {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public Link createLink() {
+	@Override
+    public Link createLink() {
         LinkImpl link = new LinkImpl();
         return link;
     }
@@ -102,7 +104,8 @@ public class CircuitFactoryImpl extends EFactoryImpl implements CircuitFactory {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public Port createPort() {
+	@Override
+    public Port createPort() {
         PortImpl port = new PortImpl();
         return port;
     }
@@ -112,7 +115,8 @@ public class CircuitFactoryImpl extends EFactoryImpl implements CircuitFactory {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public CircuitPackage getCircuitPackage() {
+	@Override
+    public CircuitPackage getCircuitPackage() {
         return (CircuitPackage)getEPackage();
     }
 

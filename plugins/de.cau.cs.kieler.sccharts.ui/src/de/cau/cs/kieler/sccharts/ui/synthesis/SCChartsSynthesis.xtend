@@ -17,7 +17,7 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kicool.compilation.Compile
-import de.cau.cs.kieler.kicool.ui.klighd.KiCoDiagramViewProperties
+import de.cau.cs.kieler.kicool.ide.klighd.KiCoDiagramViewProperties
 import de.cau.cs.kieler.klighd.LightDiagramServices
 import de.cau.cs.kieler.klighd.ViewContext
 import de.cau.cs.kieler.klighd.internal.util.SourceModelTrackingAdapter
@@ -252,10 +252,8 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
             rootNode.eAllContents.filter(KText).forEach[ fontName = pragmaFont.values.head ]
         }
         
-        // Log elapsed time
-//        println(
-//            "SCCharts synthesis transformed model " + (scc.rootStates.head.label ?: scc.hash) + " in " +
-//                ((System.currentTimeMillis - startTime) as float / 1000) + "s.")
+        // Report elapsed time
+        usedContext?.setProperty(KiCoDiagramViewProperties.SYNTHESIS_TIME, System.currentTimeMillis - startTime)
 		
         return rootNode
     }
