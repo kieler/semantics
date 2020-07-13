@@ -175,7 +175,6 @@ class SimulationLanguageServerExtension implements ILanguageServerExtension, Sim
             root.processors.add(0, KiCoolFactory.eINSTANCE.createProcessorReference => [
                 id = LSUserValues.ID
             ])
-            canRestartSimulation = true
             // Set simulation mode, default mode is manual mode
             setSimulationType(simulationType)
             // Start a new start which starts the simulation to be able to wait for the updates

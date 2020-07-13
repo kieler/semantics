@@ -1,8 +1,11 @@
 package de.cau.cs.kieler.simulation.ui.view
 
 import de.cau.cs.kieler.simulation.SimulationContext
+import de.cau.cs.kieler.simulation.events.ISimulationListener
 import de.cau.cs.kieler.simulation.events.SimulationControlEvent
 import de.cau.cs.kieler.simulation.events.SimulationEvent
+import de.cau.cs.kieler.simulation.ide.CentralSimulation
+import de.cau.cs.kieler.simulation.ui.SimulationUI
 import de.cau.cs.kieler.simulation.ui.SimulationUIPlugin
 import java.util.Set
 import org.eclipse.core.runtime.IProgressMonitor
@@ -19,10 +22,7 @@ import org.eclipse.ui.menus.WorkbenchWindowControlContribution
 import org.eclipse.ui.progress.UIJob
 import org.eclipse.ui.statushandlers.StatusManager
 
-import static de.cau.cs.kieler.simulation.ide.CentralSimulation.*
-import static de.cau.cs.kieler.simulation.ui.SimulationUI.updateUI
-import de.cau.cs.kieler.simulation.ide.CentralSimulation
-import de.cau.cs.kieler.simulation.events.ISimulationListener
+import static de.cau.cs.kieler.simulation.ui.SimulationUI.*
 
 class SimulationControlButtons extends WorkbenchWindowControlContribution implements ISimulationListener {
     
@@ -58,7 +58,7 @@ class SimulationControlButtons extends WorkbenchWindowControlContribution implem
                         } else {
                             currentSimulation.play()
                         }
-                    } else if (canRestartSimulation) {
+                    } else if (SimulationUI.canRestartSimulation) {
                         currentSimulation.start(currentSimulation.isAsynchronous)
                     }
                 }
@@ -124,14 +124,14 @@ class SimulationControlButtons extends WorkbenchWindowControlContribution implem
                         stop.enabled = true
                     }
                     case STOP: {
-                        playpause.enabled = canRestartSimulation
+                        playpause.enabled = SimulationUI.canRestartSimulation
                         step.enabled = false
                         stop.enabled = false
                     }
                 }
             }
             if (!sim.running) {
-                playpause.enabled = canRestartSimulation
+                playpause.enabled = SimulationUI.canRestartSimulation
                 playpause.imageDescriptor = RESTART_ICON
                 playpause.toolTipText = "Restart Simulation"
             } else if (sim.playing && sim.mode.supportsPausing) {

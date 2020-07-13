@@ -30,10 +30,6 @@ import de.cau.cs.kieler.simulation.events.ISimulationListener
  */
 class CentralSimulation {
 
-    @Accessors
-    static var boolean canRestartSimulation = false
-
-
     @Accessors(PUBLIC_GETTER)
     static var SimulationContext currentSimulation
     static val PROVIDERS = KielerServiceLoader.load(de.cau.cs.kieler.simulation.ide.ISimulationListenerProvider)
