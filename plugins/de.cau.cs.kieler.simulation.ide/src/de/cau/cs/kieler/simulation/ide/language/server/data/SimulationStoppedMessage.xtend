@@ -10,18 +10,17 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.simulation.ide.language.server
+package de.cau.cs.kieler.simulation.ide.language.server.data
 
 import org.eclipse.xtend.lib.annotations.Data
 
 /**
  * Send to the client as answer on request to stop a simulation.
+ * 
  * @author sdo
- *
  */
 @Data class SimulationStoppedMessage {
     
     boolean successful
     String message
-    
 }

@@ -12,6 +12,7 @@
  */
 package de.cau.cs.kieler.simulation.ide.language.server
 
+import de.cau.cs.kieler.simulation.ide.language.server.data.ClientInputs
 import de.cau.cs.kieler.simulation.internal.processor.SimulationProcessor
 
 /**

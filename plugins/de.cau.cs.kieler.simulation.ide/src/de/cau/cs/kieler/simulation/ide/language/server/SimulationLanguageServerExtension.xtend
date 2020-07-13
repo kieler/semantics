@@ -31,11 +31,16 @@ import de.cau.cs.kieler.simulation.events.ISimulationListener
 import de.cau.cs.kieler.simulation.events.SimulationControlEvent
 import de.cau.cs.kieler.simulation.events.SimulationEvent
 import de.cau.cs.kieler.simulation.ide.CentralSimulation
+import de.cau.cs.kieler.simulation.ide.language.server.data.ClientInputs
+import de.cau.cs.kieler.simulation.ide.language.server.data.SimulationStartedMessage
+import de.cau.cs.kieler.simulation.ide.language.server.data.SimulationStepMessage
+import de.cau.cs.kieler.simulation.ide.language.server.data.SimulationStoppedMessage
 import de.cau.cs.kieler.simulation.ide.server.SimulationServer
 import de.cau.cs.kieler.simulation.mode.DynamicTickMode
 import de.cau.cs.kieler.simulation.mode.ManualMode
 import de.cau.cs.kieler.simulation.mode.PeriodicMode
 import java.io.File
+import java.net.URLDecoder
 import java.util.ArrayList
 import java.util.HashMap
 import java.util.List
@@ -48,8 +53,6 @@ import org.eclipse.xtext.ide.server.ILanguageServerExtension
 import org.eclipse.xtext.ide.server.concurrent.RequestManager
 
 import static de.cau.cs.kieler.simulation.ide.CentralSimulation.*
-import static de.cau.cs.kieler.simulation.ide.language.server.ClientInputs.*
-import java.net.URLDecoder
 
 /**
  * LS extension to simulate models. Supports starting, stepping, and stopping or simulations.

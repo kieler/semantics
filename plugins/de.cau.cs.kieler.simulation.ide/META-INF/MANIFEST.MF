@@ -39,6 +39,7 @@ Require-Bundle: org.eclipse.core.runtime,
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: de.cau.cs.kieler.simulation.ide,
  de.cau.cs.kieler.simulation.ide.language.server,
+ de.cau.cs.kieler.simulation.ide.language.server.data,
  de.cau.cs.kieler.simulation.ide.preferences,
  de.cau.cs.kieler.simulation.ide.processor,
  de.cau.cs.kieler.simulation.ide.providers,

@@ -13,10 +13,11 @@
 package de.cau.cs.kieler.simulation.ide.language.server
 
 import com.google.gson.JsonObject
+import de.cau.cs.kieler.simulation.ide.language.server.data.SimulationStoppedMessage
 import java.util.concurrent.CompletableFuture
+import org.eclipse.lsp4j.jsonrpc.services.JsonNotification
 import org.eclipse.lsp4j.jsonrpc.services.JsonRequest
 import org.eclipse.lsp4j.jsonrpc.services.JsonSegment
-import org.eclipse.lsp4j.jsonrpc.services.JsonNotification
 
 /**
  * Interface to the LSP extension commands

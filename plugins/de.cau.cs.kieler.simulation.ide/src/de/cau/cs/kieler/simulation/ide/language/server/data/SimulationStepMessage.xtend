@@ -10,16 +10,20 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.simulation.ide.language.server
+package de.cau.cs.kieler.simulation.ide.language.server.data
 
 import com.google.gson.JsonObject
+import org.eclipse.xtend.lib.annotations.Data
 
 /**
- * Class to statically some new values for simulation in UserValue processor.
+ * Message to be send to the client after a step.
+ * Includes new values and error string as well as success boolean.
  * 
  * @author sdo
- *
  */
-class ClientInputs {
-    package static JsonObject values
+@Data class SimulationStepMessage {
+    
+    boolean successful
+    String error
+    JsonObject values
 }

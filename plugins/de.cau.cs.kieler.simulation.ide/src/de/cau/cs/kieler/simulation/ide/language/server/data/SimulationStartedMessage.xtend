@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.simulation.ide.language.server
+package de.cau.cs.kieler.simulation.ide.language.server.data
 
 import com.google.gson.JsonObject
 import java.util.ArrayList
@@ -23,7 +23,6 @@ import org.eclipse.xtend.lib.annotations.Data
  * the propertySet which also includes what inputs, outputs, and e.g. internal variables are.
  * 
  * @author sdo
- *
  */
 @Data class SimulationStartedMessage {
     
