@@ -12,7 +12,7 @@
  */
 package de.cau.cs.kieler.kicool.ide.language.server
 
-import java.lang.Thread
+import de.cau.cs.kieler.kicool.ide.language.server.data.SystemDescription
 import java.util.List
 
 /**

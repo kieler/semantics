@@ -21,6 +21,7 @@ import de.cau.cs.kieler.kicool.compilation.observer.ProcessorSnapshot
 import de.cau.cs.kieler.kicool.compilation.observer.ProcessorStart
 import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.kicool.environments.Snapshots
+import de.cau.cs.kieler.kicool.ide.language.server.data.SnapshotDescription
 import java.util.Observable
 import java.util.Observer
 

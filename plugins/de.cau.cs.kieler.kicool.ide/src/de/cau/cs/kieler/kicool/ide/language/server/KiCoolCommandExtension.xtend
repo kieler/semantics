@@ -12,10 +12,11 @@
  */
 package de.cau.cs.kieler.kicool.ide.language.server
 
+import de.cau.cs.kieler.kicool.ide.language.server.data.CodeOfModel
 import java.util.concurrent.CompletableFuture
+import org.eclipse.lsp4j.jsonrpc.services.JsonNotification
 import org.eclipse.lsp4j.jsonrpc.services.JsonRequest
 import org.eclipse.lsp4j.jsonrpc.services.JsonSegment
-import org.eclipse.lsp4j.jsonrpc.services.JsonNotification
 
 /**
  * Interface to the LSP extension commands

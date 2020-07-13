@@ -23,6 +23,10 @@ import de.cau.cs.kieler.kicool.compilation.CompilationContext
 import de.cau.cs.kieler.kicool.compilation.Compile
 import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.kicool.ide.klighd.models.CodePlaceHolder
+import de.cau.cs.kieler.kicool.ide.language.server.data.CodeOfModel
+import de.cau.cs.kieler.kicool.ide.language.server.data.CompilationResults
+import de.cau.cs.kieler.kicool.ide.language.server.data.SnapshotDescription
+import de.cau.cs.kieler.kicool.ide.language.server.data.SystemDescription
 import de.cau.cs.kieler.kicool.ide.view.IdeCompilerView
 import de.cau.cs.kieler.klighd.lsp.KGraphDiagramState
 import de.cau.cs.kieler.klighd.lsp.KGraphLanguageServerExtension

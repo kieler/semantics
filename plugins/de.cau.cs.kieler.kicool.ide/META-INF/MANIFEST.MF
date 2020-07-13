@@ -30,4 +30,5 @@ Export-Package: de.cau.cs.kieler.kicool.ide,
  de.cau.cs.kieler.kicool.ide.klighd,
  de.cau.cs.kieler.kicool.ide.klighd.models,
  de.cau.cs.kieler.kicool.ide.language.server,
+ de.cau.cs.kieler.kicool.ide.language.server.data,
  de.cau.cs.kieler.kicool.ide.view
