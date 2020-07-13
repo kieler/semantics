@@ -54,7 +54,7 @@ import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 @ViewSynthesisShared
 class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
     
-    public static val SynthesisOption CIRCUIT = SynthesisOption.createCheckOption("dataflowregion.curcuit", "Circuit layout", false).
+    public static val SynthesisOption CIRCUIT = SynthesisOption.createCheckOption(DataflowRegionSynthesis, "Circuit layout", false).
         setCategory(GeneralSynthesisOptions::DATAFLOW)
     
     @Inject extension KNodeExtensionsReplacement

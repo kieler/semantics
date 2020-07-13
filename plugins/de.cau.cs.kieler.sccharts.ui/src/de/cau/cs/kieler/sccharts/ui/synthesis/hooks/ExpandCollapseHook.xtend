@@ -58,10 +58,10 @@ class ExpandCollapseHook extends SynthesisHook {
 
     /** The related synthesis option */
     public static val SynthesisOption INITIALLY_COLLAPSE_ALL = SynthesisOption.createCheckOption(
-        "sccharts.expandCollapse.initiallyCollapseAll", "Initially Collapse Regions", false)
+        ExpandCollapseHook, "Initially Collapse Regions", false)
         .setCategory(GeneralSynthesisOptions::NAVIGATION)
     public static val SynthesisOption SMART_COLLAPSE = SynthesisOption.createCheckOption(
-        "sccharts.expandCollapse.smartCollapse", "Editor Context Collapse (Experimental)", false)
+        ExpandCollapseHook, "Editor Context Collapse (Experimental)", false)
         .setCategory(GeneralSynthesisOptions::NAVIGATION)
         
     /** Annotation keywords */

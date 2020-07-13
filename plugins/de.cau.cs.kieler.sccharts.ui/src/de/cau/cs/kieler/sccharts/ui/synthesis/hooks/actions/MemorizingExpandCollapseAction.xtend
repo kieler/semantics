@@ -39,7 +39,7 @@ class MemorizingExpandCollapseAction implements IAction {
     
     /** The related synthesis option */
     public static val SynthesisOption MEMORIZE_EXPANSION_STATES = SynthesisOption.createCheckOption(
-        "sccharts.memorizingExpandCollapse.memorizeExpansionStates", "Remember Collapsed/Expanded Regions", true)
+        MemorizingExpandCollapseAction, "Remember Collapsed/Expanded Regions", true)
     .setCategory(GeneralSynthesisOptions::NAVIGATION);
     
     /** Memory-leak-free cache of region expansion states */

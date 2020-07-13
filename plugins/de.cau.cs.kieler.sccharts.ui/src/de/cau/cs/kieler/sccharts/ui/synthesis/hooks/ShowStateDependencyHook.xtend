@@ -94,7 +94,7 @@ class ShowStateDependencyHook extends SynthesisHook {
     
     /** The related synthesis option */
     public static final SynthesisOption SHOW_STATE_DEPENDENCIES_HOOK = SynthesisOption.createCheckOption(
-        "sccharts.showStateDependency.showStateDependency", "Show State Dependencies",
+        ShowStateDependencyHook, "Show State Dependencies",
         false).setCategory(GeneralSynthesisOptions::DEBUGGING);
 
     override getDisplayedSynthesisOptions() {

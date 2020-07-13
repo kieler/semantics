@@ -39,7 +39,7 @@ class PrioStatementsActions implements IAction {
 //    @Inject
 //    extension KPortExtensions
 
-    public static final SynthesisOption SHOW_PRIO_STATEMENTS = SynthesisOption::createCheckOption("priostatements.showPrioStatements", "Priority Statements", 
+    public static final SynthesisOption SHOW_PRIO_STATEMENTS = SynthesisOption::createCheckOption(PrioStatementsActions, "Priority Statements", 
         true).setUpdateAction(PRIO_STATEMENTS_ID).setCategory(PRIO);
     
     

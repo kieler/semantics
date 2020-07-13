@@ -53,8 +53,8 @@ class CodePlaceHolderSynthesis extends AbstractDiagramSynthesis<CodePlaceHolder>
     // -------------------------------------------------------------------------
     // Constants
     
-    public static val SynthesisOption MAX_PREVIEW_LINES = SynthesisOption::createRangeOption("codePlaceHolder.maxPreviewLines", "Preview Lines", 0, 500, 5, 50)
-    public static val SynthesisOption WRAP_LINES = SynthesisOption::createRangeOption("codePlaceHolder.wrapLines", "Wrap Lines", 25, 300, 5, 100)
+    public static val SynthesisOption MAX_PREVIEW_LINES = SynthesisOption::createRangeOption(CodePlaceHolderSynthesis, "Preview Lines", 0, 500, 5, 50)
+    public static val SynthesisOption WRAP_LINES = SynthesisOption::createRangeOption(CodePlaceHolderSynthesis, "Wrap Lines", 25, 300, 5, 100)
     
     public static val String ID = "de.cau.cs.kieler.kicool.ui.klighd.syntheses.CodePlaceHolderSynthesis";
     static val tabSpaces = "  ";

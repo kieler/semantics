@@ -53,8 +53,8 @@ class CASTSynthesis extends AbstractDiagramSynthesis<IASTTranslationUnit> {
     @Inject extension KPolylineExtensions
     @Inject extension KColorExtensions
     
-    public static val SynthesisOption SHOW_FULLY_QUALIFIED_NAMES = SynthesisOption::createCheckOption("cast.showFullyQualifiedNames", "Show Fully Qualified Names", false)
-    public static val SynthesisOption SHOW_HUMAN_READABLE_NAMES = SynthesisOption::createCheckOption("cast.showHumanReadableNames", "Show Human Readable Names", true)
+    public static val SynthesisOption SHOW_FULLY_QUALIFIED_NAMES = SynthesisOption::createCheckOption(CASTSynthesis, "Show Fully Qualified Names", false)
+    public static val SynthesisOption SHOW_HUMAN_READABLE_NAMES = SynthesisOption::createCheckOption(CASTSynthesis, "Show Human Readable Names", true)
     
     val processorConnections = <String, Integer> newHashMap
     

@@ -56,8 +56,8 @@ class KiCoolSynthesis extends AbstractDiagramSynthesis<System> {
     @Inject extension ProcessorSynthesis
     @Inject extension SourceSynthesis
 
-    public static final SynthesisOption FLATTEN_SYSTEM = SynthesisOption.createCheckOption("kicool.flattenSystem", "Flatten System", false)
-    public static final SynthesisOption ON_OFF_BUTTONS = SynthesisOption.createCheckOption("On Off Buttons", false)
+    public static final SynthesisOption FLATTEN_SYSTEM = SynthesisOption.createCheckOption(KiCoolSynthesis, "Flatten System", false)
+    public static final SynthesisOption ON_OFF_BUTTONS = SynthesisOption.createCheckOption(KiCoolSynthesis, "On Off Buttons", false)
     
     override transform(System model) {
         onOffButtons = ON_OFF_BUTTONS.booleanValue

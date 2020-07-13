@@ -80,7 +80,7 @@ class PolicySynthesis extends SubSynthesis<PolicyRegion, KNode> {
     @Inject extension TransitionStyles
     
     public static final SynthesisOption SHOW_POLICIES =
-            SynthesisOption.createCheckOption("sccharts.policy.showPolicies", "Policies", true).setCategory(OO)
+            SynthesisOption.createCheckOption(PolicySynthesis, "Policies", true).setCategory(OO)
             
     override getDisplayedSynthesisOptions() {
         return newArrayList(SHOW_POLICIES)

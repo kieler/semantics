@@ -38,10 +38,10 @@ class PrioritybasedCompilationHook extends SynthesisHook {
 //    @Inject extension DependencyTransformation
 
     // Options
-    public static final SynthesisOption SHOW_DEPENDENCIES = SynthesisOption.createCheckOption("sccharts.prioritybasedCompilation.showDependencies",
+    public static final SynthesisOption SHOW_DEPENDENCIES = SynthesisOption.createCheckOption(PrioritybasedCompilationHook,
         "Dependencies && optimized priorities", false);
 
-    public static final SynthesisOption SHOW_ORDER = SynthesisOption.createCheckOption("sccharts.prioritybasedCompilation.showOrder",
+    public static final SynthesisOption SHOW_ORDER = SynthesisOption.createCheckOption(PrioritybasedCompilationHook,
         "Dependencies && priorities", false);
         
     override getDisplayedSynthesisOptions() {

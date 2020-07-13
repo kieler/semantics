@@ -104,20 +104,20 @@ class SCGDependencyHook extends SynthesisHook {
 	public static final String JOB_NAME = "Calculating SCG Dependencies";
 	/** The related synthesis option */
 	public static final SynthesisOption SHOW_SCG_DEPENDENCIES = SynthesisOption.createCheckOption(
-	    "scgDependency.showSCGDependencies",
+	    SCGDependencyHook,
 		"SCG Dependencies", false)
 		.setCategory(GeneralSynthesisOptions::DEBUGGING)
 		.setUpdateStrategy(SimpleUpdateStrategy.ID)
 	/** The related synthesis option for regions */
     public static final SynthesisOption SCG_DEPENDENCY_TYPES = SynthesisOption.createChoiceOption(
-        "scgDependency.SCGDependencyTypes",
+        SCGDependencyHook,
         "Dependency Types",
         newArrayList(DepType.Elements, DepType.Regions),
         DepType.Elements).setCategory(GeneralSynthesisOptions::DEBUGGING)
         .setUpdateStrategy(SimpleUpdateStrategy.ID)
     /** Option to show only dependencies of selected elements */
 	public static final SynthesisOption SHOW_SELECTED_DEPENDENCIES = SynthesisOption.createCheckOption(
-        "scgDependency.showSelectedDependency",
+        SCGDependencyHook,
 		"Show only Dependencies of selected Elements", false)
 		.setCategory(GeneralSynthesisOptions::DEBUGGING)
 		.setUpdateStrategy(SimpleUpdateStrategy.ID)

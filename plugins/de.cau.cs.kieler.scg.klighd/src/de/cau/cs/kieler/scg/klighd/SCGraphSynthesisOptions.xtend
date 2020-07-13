@@ -38,44 +38,44 @@ class SCGraphSynthesisOptions {
     /** 
      * The topology category 
      */
-    public static val TOPOLOGY = createCategory("Topology")
+    public static val TOPOLOGY = createCategory(SCGraphSynthesisOptions, "Topology")
     /** 
      * The topology category 
      */
-    public static val DEPENDENCIES = createCategory("Dependencies")
+    public static val DEPENDENCIES = createCategory(SCGraphSynthesisOptions, "Dependencies")
     /** 
      * The topology category 
      */
-    public static val DEPENDENCIES_FILTER = createCategory("Filter", false).setCategory(DEPENDENCIES)
+    public static val DEPENDENCIES_FILTER = createCategory(SCGraphSynthesisOptions, "Filter", false).setCategory(DEPENDENCIES)
     /** 
      * The prio category 
      */
-    public static val PRIO = createCategory("Priorities", false)
+    public static val PRIO = createCategory(SCGraphSynthesisOptions, "Priorities", false)
     /** 
      * The appearance category 
      */
-    public static val APPEARANCE = createCategory("Appearance")
+    public static val APPEARANCE = createCategory(SCGraphSynthesisOptions, "Appearance")
     /** 
      * The layout category 
      */
-    public static val LAYOUT = createCategory("Layout", false)
+    public static val LAYOUT = createCategory(SCGraphSynthesisOptions, "Layout", false)
     
 
     // -- OPTIONS --
 
     /** Show hierarchy */
-    public static val SHOW_HIERARCHY = createCheckOption("Hierarchy", true).setCategory(TOPOLOGY)
+    public static val SHOW_HIERARCHY = createCheckOption(SCGraphSynthesisOptions, "Hierarchy", true).setCategory(TOPOLOGY)
     /** Show basic blocks */
-    public static val SHOW_BASICBLOCKS = createCheckOption("Basic Blocks", false).setCategory(TOPOLOGY)
+    public static val SHOW_BASICBLOCKS = createCheckOption(SCGraphSynthesisOptions, "Basic Blocks", false).setCategory(TOPOLOGY)
     /** Show scheduling blocks */
-    public static val SHOW_SCHEDULINGBLOCKS = createCheckOption("Scheduling Blocks", true).setCategory(TOPOLOGY)
+    public static val SHOW_SCHEDULINGBLOCKS = createCheckOption(SCGraphSynthesisOptions, "Scheduling Blocks", true).setCategory(TOPOLOGY)
     /** Show dead blocks */
-    public static val SHOW_DEAD_BLOCKS = createCheckOption("Dead Blocks", true).setCategory(TOPOLOGY)
+    public static val SHOW_DEAD_BLOCKS = createCheckOption(SCGraphSynthesisOptions, "Dead Blocks", true).setCategory(TOPOLOGY)
 
     /** Show dependencies */
-    public static val SHOW_DEPENDENCIES = createCheckOption("Dependencies", true).setCategory(DEPENDENCIES)
+    public static val SHOW_DEPENDENCIES = createCheckOption(SCGraphSynthesisOptions, "Dependencies", true).setCategory(DEPENDENCIES)
     /** Show selective dependencies */
-    public static val SELECTIVE_DEPENDENCIES = createCheckOption("Only Dependencies of Selected Elements", false).setCategory(DEPENDENCIES)
+    public static val SELECTIVE_DEPENDENCIES = createCheckOption(SCGraphSynthesisOptions, "Only Dependencies of Selected Elements", false).setCategory(DEPENDENCIES)
 
 
     // Text constants for the dependency types filter
@@ -84,51 +84,51 @@ class SCGraphSynthesisOptions {
     public static val DEPENDENCYFILTERSTRING_WRITE_READ = "Write - Read"
     public static val DEPENDENCYFILTERSTRING_RELWRITE_READ = "Rel. Write - Read"
     /** Show write-write dependencies */
-    public static val SHOW_DEPENDENCY_WRITE_WRITE = createCheckOption(DEPENDENCYFILTERSTRING_WRITE_WRITE, true).setCategory(DEPENDENCIES_FILTER)
+    public static val SHOW_DEPENDENCY_WRITE_WRITE = createCheckOption(SCGraphSynthesisOptions, DEPENDENCYFILTERSTRING_WRITE_WRITE, true).setCategory(DEPENDENCIES_FILTER)
     /** Show absolute write-relative write dependencies */
-    public static val SHOW_DEPENDENCY_ABSWRITE_RELWRITE = createCheckOption(DEPENDENCYFILTERSTRING_ABSWRITE_RELWRITE, true).setCategory(DEPENDENCIES_FILTER)
+    public static val SHOW_DEPENDENCY_ABSWRITE_RELWRITE = createCheckOption(SCGraphSynthesisOptions, DEPENDENCYFILTERSTRING_ABSWRITE_RELWRITE, true).setCategory(DEPENDENCIES_FILTER)
     /** Show write-read dependencies */
-    public static val SHOW_DEPENDENCY_WRITE_READ = createCheckOption(DEPENDENCYFILTERSTRING_WRITE_READ, true).setCategory(DEPENDENCIES_FILTER)
+    public static val SHOW_DEPENDENCY_WRITE_READ = createCheckOption(SCGraphSynthesisOptions, DEPENDENCYFILTERSTRING_WRITE_READ, true).setCategory(DEPENDENCIES_FILTER)
     /** Show relative write-read dependencies */
-    public static val SHOW_DEPENDENCY_RELWRITE_READ = createCheckOption(DEPENDENCYFILTERSTRING_RELWRITE_READ, true).setCategory(DEPENDENCIES_FILTER)
+    public static val SHOW_DEPENDENCY_RELWRITE_READ = createCheckOption(SCGraphSynthesisOptions, DEPENDENCYFILTERSTRING_RELWRITE_READ, true).setCategory(DEPENDENCIES_FILTER)
     /** Show non concurrent dependencies */
-    public static val SHOW_NONCONCURRENT = createCheckOption("Non-Concurrent", false).setCategory(DEPENDENCIES_FILTER)
+    public static val SHOW_NONCONCURRENT = createCheckOption(SCGraphSynthesisOptions, "Non-Concurrent", false).setCategory(DEPENDENCIES_FILTER)
     /** Show confluent dependencies */
-    public static val SHOW_CONFLUENT = createCheckOption("Confluent", false).setCategory(DEPENDENCIES_FILTER)
+    public static val SHOW_CONFLUENT = createCheckOption(SCGraphSynthesisOptions, "Confluent", false).setCategory(DEPENDENCIES_FILTER)
     
     
     /** Show caption */
-    public static val SHOW_CAPTION = createCheckOption("Captions", true).setCategory(APPEARANCE)
+    public static val SHOW_CAPTION = createCheckOption(SCGraphSynthesisOptions, "Captions", true).setCategory(APPEARANCE)
     /** Show Annotations */
-    public static val SHOW_ANNOTATIONS = createCheckOption("Annotations", false).setCategory(APPEARANCE)
+    public static val SHOW_ANNOTATIONS = createCheckOption(SCGraphSynthesisOptions, "Annotations", false).setCategory(APPEARANCE)
     /** Show shadow */
-    public static val SHOW_SHADOW = createCheckOption("Shadows", true).setCategory(APPEARANCE)
+    public static val SHOW_SHADOW = createCheckOption(SCGraphSynthesisOptions, "Shadows", true).setCategory(APPEARANCE)
     /** Hierarchy transparency */
-    public static val HIERARCHY_TRANSPARENCY = createRangeOption("Hierarchy Opacity", 0f, 255f, 128f).setCategory(APPEARANCE)
+    public static val HIERARCHY_TRANSPARENCY = createRangeOption(SCGraphSynthesisOptions, "Hierarchy Opacity", 0f, 255f, 128f).setCategory(APPEARANCE)
     /** Control flow thickness */
-    public static val CONTROLFLOW_THICKNESS = createRangeOption("Controlflow Thickness", 0.5f, 5f, 0.5f, 2f).setCategory(APPEARANCE)
+    public static val CONTROLFLOW_THICKNESS = createRangeOption(SCGraphSynthesisOptions, "Controlflow Thickness", 0.5f, 5f, 0.5f, 2f).setCategory(APPEARANCE)
     
     
     /** Align tick start */
-    public static val ALIGN_TICK_START = createCheckOption("Surface/Depth Nodes Fixed", true).setCategory(LAYOUT)
+    public static val ALIGN_TICK_START = createCheckOption(SCGraphSynthesisOptions, "Surface/Depth Nodes Fixed", true).setCategory(LAYOUT)
     /** Align entry/exit */
-    public static val ALIGN_ENTRYEXIT_NODES = createCheckOption("Entry/Exit Nodes Fixed", true).setCategory(LAYOUT)
+    public static val ALIGN_ENTRYEXIT_NODES = createCheckOption(SCGraphSynthesisOptions, "Entry/Exit Nodes Fixed", true).setCategory(LAYOUT)
     /** left or right conditionals */
-    public static val CONDITIONAL_LEFT_OR_RIGTH = createCheckOption("True Branches always Right", false).setCategory(LAYOUT)
+    public static val CONDITIONAL_LEFT_OR_RIGTH = createCheckOption(SCGraphSynthesisOptions, "True Branches always Right", false).setCategory(LAYOUT)
     /** Show sausage folding */
-    public static val SHOW_SAUSAGE_FOLDING = createCheckOption("Sausage Folding", true).setCategory(LAYOUT)
+    public static val SHOW_SAUSAGE_FOLDING = createCheckOption(SCGraphSynthesisOptions, "Sausage Folding", true).setCategory(LAYOUT)
     /** Layout dependencies */
-    public static val LAYOUT_DEPENDENCIES = createCheckOption("Dependency Routing", false).setCategory(LAYOUT)
+    public static val LAYOUT_DEPENDENCIES = createCheckOption(SCGraphSynthesisOptions, "Dependency Routing", false).setCategory(LAYOUT)
     /** Layout separate cc */
-    public static val LAYOUT_SEPARATE_CC = createCheckOption("Separate Connected Components", false).setCategory(LAYOUT)
+    public static val LAYOUT_SEPARATE_CC = createCheckOption(SCGraphSynthesisOptions, "Separate Connected Components", false).setCategory(LAYOUT)
     /** Graph orientation */
-    public static val ORIENTATION = createChoiceOption("Orientation",<String>newLinkedList("Top-Down", "Left-Right"), "Top-Down").setCategory(LAYOUT)
+    public static val ORIENTATION = createChoiceOption(SCGraphSynthesisOptions, "Orientation",<String>newLinkedList("Top-Down", "Left-Right"), "Top-Down").setCategory(LAYOUT)
     
 
     /** Show potential problems */
-    public static val SHOW_POTENTIALPROBLEMS = createCheckOption("Potential problems", true)
+    public static val SHOW_POTENTIALPROBLEMS = createCheckOption(SCGraphSynthesisOptions, "Potential problems", true)
     /** Adaptive Zoom */
-    public static val USE_ADAPTIVEZOOM = createCheckOption("Adaptive Zoom", false)
+    public static val USE_ADAPTIVEZOOM = createCheckOption(SCGraphSynthesisOptions, "Adaptive Zoom", false)
 
     /**  
      * Returns a list of KlighD visualization options. Called by KlighD.
