@@ -84,8 +84,6 @@ class CompilerView extends DiagramViewPart {
     @Accessors private var ShowPrivateSystemsToggle showPrivateSystemsToggle = null
 
     @Accessors private var CompilationAction compilationAction = null
-    
-    public extension IdeCompilerView compilerView = new IdeCompilerView
 
     new() {
         InstallSystemsHandler.view = this
