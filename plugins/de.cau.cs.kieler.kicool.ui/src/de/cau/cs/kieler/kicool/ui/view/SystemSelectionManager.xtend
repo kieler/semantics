@@ -14,8 +14,8 @@ package de.cau.cs.kieler.kicool.ui.view
 
 import de.cau.cs.kieler.kicool.KiCoolStandaloneSetup
 import de.cau.cs.kieler.kicool.System
-import de.cau.cs.kieler.kicool.ide.DefaultSystemAssociation
 import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
+import de.cau.cs.kieler.kicool.ui.DefaultSystemAssociation
 import de.cau.cs.kieler.kicool.ui.klighd.ModelReaderUtil
 import java.nio.file.Files
 import java.nio.file.Paths

@@ -13,7 +13,6 @@
 package de.cau.cs.kieler.kicool.ide.view
 
 import de.cau.cs.kieler.kicool.System
-import de.cau.cs.kieler.kicool.ide.DefaultSystemAssociation
 import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
 import de.cau.cs.kieler.kicool.util.KiCoolUtils
 import java.util.List
@@ -23,10 +22,6 @@ import java.util.List
  * 
  */
 class IdeCompilerView {
-
-    def String getDefaultSystem(String editorId) {
-        return DefaultSystemAssociation.getDefaultSystem(editorId)
-    }
 
     def List<System> getSystemModels(boolean filter, Class<?> modelClassFilter) {
         val systems = newLinkedList
