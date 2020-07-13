@@ -15,10 +15,11 @@ package de.cau.cs.kieler.simulation.ide.language.server
 import de.cau.cs.kieler.simulation.internal.processor.SimulationProcessor
 
 /**
- * User values processor. Allows to set user values by the client.
+ * User values processor to be used in a LS setup. Allows to set user values by the client.
+ * 
  * @author sdo
  */
-class UserValues extends SimulationProcessor {
+class LSUserValues extends SimulationProcessor {
     
     public static val ID = "de.cau.cs.kieler.simulation.ide.language.server.uservalues"
     

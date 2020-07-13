@@ -170,7 +170,7 @@ class SimulationLanguageServerExtension implements ILanguageServerExtension, Sim
             // Add user value processor
             val root = currentSimulation.system.processors as ProcessorGroup
             root.processors.add(0, KiCoolFactory.eINSTANCE.createProcessorReference => [
-                id = UserValues.ID
+                id = LSUserValues.ID
             ])
             canRestartSimulation = true
             // Set simulation mode, default mode is manual mode
