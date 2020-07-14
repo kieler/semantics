@@ -142,7 +142,7 @@ class DominatorTreeSynthesis extends AbstractDiagramSynthesis<SCGraphs> {
         dtDiagram.addLayoutParam(CoreOptions::DIRECTION, Direction.DOWN)
         dtDiagram.addLayoutParam(MrTreeOptions::EDGE_ROUTING_MODE, EdgeRoutingMode.MiddleToMiddle)
         dtDiagram.addLayoutParam(MrTreeOptions::WEIGHTING, OrderWeighting.NONE)
-        dtDiagram.addLayoutParam(MrTreeOptions::COMPACTION, CompactionMode.Aggressive)
+        dtDiagram.addLayoutParam(MrTreeOptions::COMPACTION, true)
         dtDiagram.children += nodes.values
  
         return dtDiagram
