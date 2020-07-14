@@ -98,8 +98,8 @@ class DataPool implements IKiCoolCloneable {
         val input = new JsonObject
         val infos = entries
         for (entry : pool.entrySet) {
-            val properties = infos.get(entry.key)?.getCombinedProperties
-            if (properties !== null && properties.contains(VariableStore.INPUT)) {
+            val dataPoolEntry = infos.get(entry.key)
+            if (dataPoolEntry !== null && dataPoolEntry.input) {
                 input.add(entry.key, entry.value)
             }
         }
@@ -122,8 +122,8 @@ class DataPool implements IKiCoolCloneable {
         val output = new JsonObject
         val infos = entries
         for (entry : pool.entrySet) {
-            val properties = infos.get(entry.key)?.combinedProperties
-            if (properties !== null && properties.contains(VariableStore.OUTPUT)) {
+            val dataPoolEntry = infos.get(entry.key)
+            if (dataPoolEntry !== null && dataPoolEntry.output) {
                 output.add(entry.key, entry.value)
             }
         }
