@@ -17,9 +17,9 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.kicool.ide.klighd.models.CodePlaceHolder
 import de.cau.cs.kieler.kicool.registration.ModelInformation
 import de.cau.cs.kieler.klighd.LightDiagramServices
+import de.cau.cs.kieler.klighd.ide.model.MessageModel
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
-import de.cau.cs.kieler.klighd.ide.model.MessageModel
 import java.io.ByteArrayOutputStream
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.EObject

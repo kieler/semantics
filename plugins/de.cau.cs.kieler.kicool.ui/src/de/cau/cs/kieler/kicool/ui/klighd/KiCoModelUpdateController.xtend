@@ -21,10 +21,10 @@ import de.cau.cs.kieler.kicool.ui.kitt.update.TracingVisualizationUpdateStrategy
 import de.cau.cs.kieler.kicool.ui.klighd.models.ModelChain
 import de.cau.cs.kieler.kicool.ui.view.CompilerView
 import de.cau.cs.kieler.klighd.IViewer
+import de.cau.cs.kieler.klighd.ide.model.MessageModel
 import de.cau.cs.kieler.klighd.ui.view.controller.AbstractViewUpdateController
 import de.cau.cs.kieler.klighd.ui.view.controllers.EditorSaveAdapter
 import de.cau.cs.kieler.klighd.ui.view.controllers.XtextSelectionHighlighter
-import de.cau.cs.kieler.klighd.ide.model.MessageModel
 import de.cau.cs.kieler.klighd.ui.viewers.PiccoloViewerUI
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties
 import java.io.File
