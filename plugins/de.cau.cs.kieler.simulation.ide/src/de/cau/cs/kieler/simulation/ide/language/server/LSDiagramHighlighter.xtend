@@ -32,7 +32,6 @@ import static de.cau.cs.kieler.simulation.ide.language.server.SimulationLanguage
  * 
  * @author sdo
  * @see de.cau.cs.kieler.simulation.ui.visualization.DiagramHighlighter
- *
  */
 abstract class LSDiagramHighlighter extends IdeDiagramHighlighter {
 
@@ -79,7 +78,6 @@ abstract class LSDiagramHighlighter extends IdeDiagramHighlighter {
             // TODO Get model of snapshots model (currently saved in different fields
             return diagramState.getKGraphContext(URLDecoder.decode(simulationExt.currentlySimulatedModel, "UTF-8"))
         }
-
     }
 
     override protected startDiagramBatchUpdate() {

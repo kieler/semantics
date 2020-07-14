@@ -60,7 +60,6 @@ import static de.cau.cs.kieler.simulation.ide.CentralSimulation.*
  * Play and pause is realized on the client side via stepping.
  * 
  * @author sdo
- * 
  */
 @Singleton
 class SimulationLanguageServerExtension implements ILanguageServerExtension, SimulationCommandExtension, ISimulationListener, ILanguageClientProvider {
@@ -107,6 +106,7 @@ class SimulationLanguageServerExtension implements ILanguageServerExtension, Sim
      * Uri of compiled model which should be directly simulated afterwards.
      */
     var currentUri = ""
+    
     /**
      * Simulation type with which the new simulation of an compiled model should be started.
      */
@@ -117,13 +117,14 @@ class SimulationLanguageServerExtension implements ILanguageServerExtension, Sim
     }
 
     /**
-     * Uri of model which is currently being simulated.
+     * Uri of the model that is currently being simulated.
      */
     @Accessors(PUBLIC_GETTER)
     var String currentlySimulatedModel
 
     /**
      * Called on client notification and starts a simulation for specified uri and simulation type.
+     * 
      * @param uri uri of model
      * @param simulationType should be one of Manual, Periodic, and Dynamic
      */
@@ -149,6 +150,7 @@ class SimulationLanguageServerExtension implements ILanguageServerExtension, Sim
 
     /**
      * Starts the simulation thread. This will terminate all previous simulations.
+     * 
      * @param uri uri of model
      * @param simulationType should be one of Manual, Periodic, and Dynamic
      * @return empty string if successful, error message otherwise.
@@ -156,18 +158,10 @@ class SimulationLanguageServerExtension implements ILanguageServerExtension, Sim
     def String startSimulation(String uri, String simulationType) {
         stepNumber = 0
         currentlySimulatedModel = uri
-        // hacky way to find out if a simulation exists (TODO fix this)
-        if (lastCommand === null || !lastCommand.contains("simulation")) {
-            return "Last compilation command was no simulation command"
-        }
         // Get simulation context and dataPool
         val List<Object> resultArray = objectMap.get(lastUri)
         val sim = resultArray.last()
-        var DataPool datapool
         if (sim instanceof SimulationContext) {
-            // This simulation might have already registered this as a listener
-            // All listeners have to be deleted
-            sim.deleteObservers()
             prepareSimulation(sim as SimulationContext)
             SimulationServer.start
             // Add user value processor
@@ -187,7 +181,7 @@ class SimulationLanguageServerExtension implements ILanguageServerExtension, Sim
             }
             return ""
         } else {
-            return "No simulation context could be found for this uri"
+            return "Could not find a SimulationContext. Try to compile with a simulation command first."
         }
     }
 
@@ -236,6 +230,7 @@ class SimulationLanguageServerExtension implements ILanguageServerExtension, Sim
 
     /**
      * Handle compilation events.
+     * 
      * @param o observable compilation of simulation context
      * @param e AbstractContextNotification for compilation listener or SimulationControlEvent for simulation listener
      */
