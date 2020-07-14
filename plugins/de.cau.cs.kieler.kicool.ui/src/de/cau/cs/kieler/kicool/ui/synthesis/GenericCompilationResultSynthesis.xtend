@@ -19,8 +19,8 @@ import de.cau.cs.kieler.klighd.krendering.KImage
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
-import de.cau.cs.kieler.klighd.ui.view.model.MessageModel
-import de.cau.cs.kieler.klighd.ui.view.syntheses.MessageModelSynthesis
+import de.cau.cs.kieler.klighd.ide.model.MessageModel
+import de.cau.cs.kieler.klighd.ide.syntheses.MessageModelSynthesis
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import de.cau.cs.kieler.kicool.classes.GenericCompilationResult
