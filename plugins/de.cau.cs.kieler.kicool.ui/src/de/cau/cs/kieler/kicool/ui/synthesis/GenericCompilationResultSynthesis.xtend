@@ -13,17 +13,14 @@
 package de.cau.cs.kieler.kicool.ui.synthesis
 
 import com.google.inject.Inject
+import de.cau.cs.kieler.kicool.classes.GenericCompilationResult
 import de.cau.cs.kieler.kicool.ui.KiCoolUiModule
+import de.cau.cs.kieler.klighd.ide.model.MessageModel
+import de.cau.cs.kieler.klighd.ide.syntheses.MessageModelSynthesis
 import de.cau.cs.kieler.klighd.kgraph.KNode
-import de.cau.cs.kieler.klighd.krendering.KImage
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
-import de.cau.cs.kieler.klighd.ide.model.MessageModel
-import de.cau.cs.kieler.klighd.ide.syntheses.MessageModelSynthesis
-
-import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
-import de.cau.cs.kieler.kicool.classes.GenericCompilationResult
 
 /**
  * Generic synthesis for generic compilation results.
