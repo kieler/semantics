@@ -28,9 +28,8 @@ class SCTXStandaloneSetup extends SCTXStandaloneSetupGenerated implements Kieler
     /**
      * Used by LS to override previously created injector, if the current injector does not contain an SCTXIdeSetup
      */
-    public static var boolean force
     def static doSetup() {
-        if (injector === null || force) {
+        if (injector === null) {
             injector = new SCTXStandaloneSetup().createInjectorAndDoEMFRegistration()
         }
         return injector
