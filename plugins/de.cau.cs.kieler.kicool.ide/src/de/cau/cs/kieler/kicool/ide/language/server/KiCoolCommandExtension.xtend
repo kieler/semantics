@@ -56,12 +56,6 @@ interface KiCoolCommandExtension {
     def void getSystems(String uri);
 
     /**
-     * Cancels get systems thread by force if it takes too long.
-     */
-    @JsonRequest('cancel-get-systems')
-    def CompletableFuture<Boolean> cancelGetSystems();
-
-    /**
      * Request the contents of a CodeContainer as string together with its file name
      */
     @JsonRequest("get-code-of-model")

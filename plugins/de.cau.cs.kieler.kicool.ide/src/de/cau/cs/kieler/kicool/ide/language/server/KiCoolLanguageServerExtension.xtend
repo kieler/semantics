@@ -53,11 +53,10 @@ import org.eclipse.xtext.resource.XtextResourceSet
 import org.eclipse.xtext.util.CancelIndicator
 
 /**
- * Implements methods to extend the LSP to allow compilation. Moreoever, getting compilation systems and showing
+ * Implements methods to extend the LSP to allow compilation. Moreover, getting compilation systems and showing
  * compiled snapshot models is supported.
  * 
  * @author sdo
- * 
  */
 @Singleton
 class KiCoolLanguageServerExtension implements ILanguageServerExtension, KiCoolCommandExtension, ILanguageClientProvider {
@@ -130,7 +129,6 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, KiCoolC
     /**
      * Used to retrieve the compilation systems for a model.
      * This is done in an own thread to be able to cancel this.
-     * TODO get cancelling to work.
      */
     protected GetSystemsThread getSystemsThread
     
@@ -154,11 +152,20 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, KiCoolC
     
     /**
      * Called by the client to compile a model
+     * 
+     * @param uri The uri string of the model to compile (for snapshot compilation this is the uri of the original model.
+     * @param clientId The id of the diagram client.
+     * @param command The compilation system used to compile.
+     * @param inplace Whether in-place compilation should be used.
+     * @param showResultingModel Whether the final model should be shown in the diagram specified by clientId.
+     * @param snapshot Whether the model to compile is a snapshot model.
      */
     override compile(String uri, String clientId, String command, boolean inplace, boolean showResultingModel, boolean snapshot) {
         try {
             var Object model
+            // Get input model for compilation.
             if (snapshot) {
+                // Abort if no diagram can be found.
                 if (diagramState === null || diagramState.getKGraphContext(uri) === null) {
                     client.compile(null, uri, true, 0, 1000)
                     return
@@ -167,13 +174,14 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, KiCoolC
             } else {
                 model = getModelFromUri(uri)
             }
+            // Abort if no model to compile could be found.
             if (model === null) {
                 client.compile(null, uri, true, 0, 1000)
                 return
             }
-            this.currentContext = createContextAndStartCompilationThread(model, command, inplace, this.currentContext)
-            // Add listener that sends snapshot descriptions to client and updates the diagram on finish if requested.
-            currentContext.addObserver(new KeithCompilationUpdater(this, currentContext, uri, clientId, command, inplace, showResultingModel))
+            
+            this.currentContext = createContextAndStartCompilationThread(model, command, inplace, this.currentContext,
+                uri, clientId, showResultingModel)
         } catch( Exception e) {
             e.printStackTrace()
             sendError(e.toString())
@@ -184,9 +192,15 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, KiCoolC
     /**
      * Called after the compilation function is done. Handles what needs to be updated when the compilation is done,
      * such as requesting a new diagram for the previously shown snapshot.
+     * 
+     * @param uri The uri of the model
+     * @param sameCompilation Whether the same compilation is executed again. If this is the case one can try to show
+     *      the same snapshot again.
+     * @param clientId The id of the associated diagram
+     * @param cancelIndicator The cancel indicator
      */
     protected def didCompile(String uri, boolean sameCompilation, String clientId, CancelIndicator cancelIndicator) {
-        if (sameCompilation) { // if is the same compilation the model can be retrieved via the old index
+        if (sameCompilation) { // if it is the same compilation the model can be retrieved via the old index
             var Object model
             if (currentIndex == -1) {
                 model = getModelFromUri(uri)
@@ -199,6 +213,8 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, KiCoolC
             showSnapshot(uri, clientId, this.objectMap.get(uri).get(newIndex), cancelIndicator, false)
             currentIndex = newIndex
         }
+        
+        // Update compilation and simulation systems for the diagram snapshot.
         getSystems(uri)
         return
     }
@@ -209,15 +225,22 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, KiCoolC
      * @param model The model to compile
      * @param systemId id of compilation system
      * @param inplace whether inplace compilation should be enabled or disabled
+     * @param precedingContext The preceding compilation context
+     * @param uri The uri of the original model
+     * @param clientId The id of the associated diagram
+     * @param showResultingModel Whether the final snapshot should be displayed in the diagram
      * @return compilation context that was used to create the newly started compilation thread.
      */
-    private def CompilationContext createContextAndStartCompilationThread(Object model, String systemId, boolean inplace,
-        CompilationContext oldContext
+    private def CompilationContext createContextAndStartCompilationThread(Object model, String systemId,
+        boolean inplace, CompilationContext precedingContext, String uri, String clientId,
+        boolean showResultingModel
     ) {
         val context = Compile.createCompilationContext(systemId, model)
         context.startEnvironment.setProperty(Environment.INPLACE, inplace)
-        context.startEnvironment.setProperty(Environment.PRECEEDING_COMPILATION_CONTEXT, oldContext)
+        context.startEnvironment.setProperty(Environment.PRECEEDING_COMPILATION_CONTEXT, precedingContext)
         compilationObservers.forEach[observer | context.addObserver(observer)]
+        context.addObserver(new KeithCompilationUpdater(this, context, uri, clientId, systemId, inplace,
+            showResultingModel))
         this.compilationThread = new CompilationThread(context)
         this.compilationThread.start()
         return context
@@ -233,13 +256,15 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, KiCoolC
      */
     override show(String uri, String clientId, int index) {
         var Object model
-        if (index != -1) {
-            // get snapshto model from compiled models
-            model = this.objectMap.get(uri).get(index)
-        } else {
-            // get model specified by uri
+        if (index == -1) {
+            // Get model specified by uri
             model = getModelFromUri(uri)
+        } else {
+            // Get snapshot model from the compilation snapshots
+            model = this.objectMap.get(uri).get(index)
         }
+        
+        // Send model to client.
         val modelToSend = model
         return requestManager.runRead [ cancelIndicator |
             currentIndex = index
@@ -251,8 +276,7 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, KiCoolC
      * Returns compilation systems on request
      * 
      * @param uri uri of model
-     * @param filter Currently unused, CS are filtered on the client.
-     * @return completable future of all compilation system descriptions {@code List<SystemDescription}
+     * @return completable future of all compilation system descriptions {@code List<SystemDescription>}
      */
     override getSystems(String uri) {
         try {
@@ -312,17 +336,14 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, KiCoolC
     }
 
     /**
-     * Gets the model for resource specified by given uri as String
+     * Gets the model for resource specified by given an uri String
      * 
-     * @param uri uri as String for resource to get the model from
+     * @param uri uri String of model resource
      * @return model of specified resource
      */
     def Object getModelFromUri(String uri) {
         var fileUri = URLDecoder.decode(uri, "UTF-8");
-        if (fileUri.startsWith("file://")) {
-            fileUri = fileUri.substring(7)
-        }
-        val uriObject = URI.createFileURI(fileUri)
+        val uriObject = URI.createURI(fileUri)
         val ext = uriObject.fileExtension()
         if (!RegistrationLanguageServerExtension.registeredLanguageExtensions.contains(ext)) {
             val file = new File(fileUri)
@@ -348,6 +369,7 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, KiCoolC
      * needs to display the available compilation systems
      * 
      * @param systems list of compilation systems
+     * @param snapshotModel Whether the system descriptions are for a snapshot model
      * @return list of system description usable by Theia client
      */
     def List<SystemDescription> getSystemDescription(List<System> systems, boolean snapshotModel) {
@@ -383,21 +405,6 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, KiCoolC
         return
     }
     
-    /**
-     * Called on request to cancel the get systems process.
-     * TODO currently does not work correctly.
-     */
-    override cancelGetSystems() {
-        println("Interrupt thread")
-        if (getSystemsThread.alive) {
-            this.getSystemsThread.interrupt()
-            println(compilationThread.alive)
-        }
-        return requestManager.runRead[ cancelIndicator |
-            true
-        ]
-    }
-    
     override setLanguageClient(LanguageClient client) {
         this.client = client as KeithLanguageClient
     }
@@ -410,14 +417,14 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, KiCoolC
      * Send list of current snapshots in snapshot map to the client.
      * @param uri uri of model file
      * @param context CompilationContext of current compilation
-     * @param clientId identifier used by the client to identify the diagram widget that should be updated. Only relevant if showSnapshot is true.
+     * @param clientId identifier used by the client to identify the diagram widget that should be updated.
+     *      Only relevant if showSnapshot is true.
      * @param command Compilation system. Only relevant of showSnapshot is true.
      * @param inplace Whether the command was invoked with inplace compilation. Only relevant if showSnapshot is true.
      * @param finished whether the compilation finished after this snapshot (can also happen because it was stopped).
      * @param showResultingModel whether the last model should be shown.
      * @param currentIndex processor index of current snapshot
      * @param maxIndex maximum number of processors
-     * 
      */
     def update(String uri, CompilationContext context, String clientId, String command, boolean inplace,
         boolean finished, boolean showResultingModel, int currentIndex, int maxIndex
@@ -441,21 +448,19 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, KiCoolC
                     sendError('Error while sending compilation cancel.' + throwable)
                     return null
                 ]
-            } else {
-                if (finished) {
-                    lastUri = uri
-                    lastCommand = command
-                    lastInplace = inplace
-                    future.thenRun [
-                        if (showResultingModel) {
-                            didCompile(uri, sameCompilation, clientId, CancelIndicator.NullImpl)
-                        }
-                    ].exceptionally [ throwable |
-                        LOG.error('Error while running additional compilation effects.', throwable)
-                        sendError('Error while running additional compilation effects.' + throwable)
-                        return null
-                    ]
-                }
+            } else if (finished) {
+                lastUri = uri
+                lastCommand = command
+                lastInplace = inplace
+                future.thenRun [
+                    if (showResultingModel) {
+                        didCompile(uri, sameCompilation, clientId, CancelIndicator.NullImpl)
+                    }
+                ].exceptionally [ throwable |
+                    LOG.error('Error while running additional compilation effects.', throwable)
+                    sendError('Error while running additional compilation effects.' + throwable)
+                    return null
+                ]
             }
         } catch (Exception e) {
             sendError('An error occurred on new compilation snapshot.' + e)
@@ -514,5 +519,4 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, KiCoolC
             this.compilationThread.context.deleteObserver(o)
         }
     }
-    
 }
