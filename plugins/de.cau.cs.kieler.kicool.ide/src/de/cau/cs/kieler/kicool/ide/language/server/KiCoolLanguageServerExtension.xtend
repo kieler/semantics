@@ -141,23 +141,24 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
      * Called by the client to compile a model
      */
     override compile(String uri, String clientId, String command, boolean inplace, boolean showResultingModel, boolean snapshot) {
+        val nuri = URLDecoder.decode(uri, "UTF-8")
         var Object eobject
         if (snapshot) {
-            if (diagramState === null || diagramState.getKGraphContext(uri) === null) {
-                client.compile(null, uri, true, 0, 1000)
+            if (diagramState === null || diagramState.getKGraphContext(nuri) === null) {
+                client.compile(null, nuri, true, 0, 1000)
                 return
             }
-            eobject = diagramState.getKGraphContext(uri).inputModel
+            eobject = diagramState.getKGraphContext(nuri).inputModel
         } else {
-            eobject = getEObjectFromUri(uri)
+            eobject = getEObjectFromUri(nuri)
         }
         if (eobject === null) {
-            client.compile(null, uri, true, 0, 1000)
+            client.compile(null, nuri, true, 0, 1000)
             return
         }
         val context = createContextAndStartCompilationThread(eobject, command, inplace)
         // Add listener that sends snapshot descriptions to client and updates the diagram on finish if requested.
-        context.addObserver(new KeithCompilationUpdater(this, context, uri, clientId, command, inplace, showResultingModel))
+        context.addObserver(new KeithCompilationUpdater(this, context, nuri, clientId, command, inplace, showResultingModel))
         return
     }
 
@@ -166,20 +167,21 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
      * such as requesting a new diagram for the previously shown snapshot.
      */
     protected def didCompile(String uri, boolean sameCompilation, String clientId, CancelIndicator cancelIndicator) {
+        val nuri = URLDecoder.decode(uri, "UTF-8")
         if (sameCompilation) { // if is the same compilation the model can be retrieved via the old index
             var Object model
             if (currentIndex == -1) {
-                model = getEObjectFromUri(uri)
+                model = getEObjectFromUri(nuri)
             } else {
-                model = this.objectMap.get(uri).get(currentIndex)
+                model = this.objectMap.get(nuri).get(currentIndex)
             }
-            showSnapshot(uri, clientId, model, cancelIndicator, true)
+            showSnapshot(nuri, clientId, model, cancelIndicator, true)
         } else {
-            val newIndex = this.objectMap.get(uri).size - 1
-            showSnapshot(uri, clientId, this.objectMap.get(uri).get(newIndex), cancelIndicator, false)
+            val newIndex = this.objectMap.get(nuri).size - 1
+            showSnapshot(nuri, clientId, this.objectMap.get(nuri).get(newIndex), cancelIndicator, false)
             currentIndex = newIndex
         }
-        getSystems(uri)
+        getSystems(nuri)
         return
     }
 
@@ -209,18 +211,19 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
      * @return completable future with index and id of showed model
      */
     override show(String uri, String clientId, int index) {
+        val nuri = URLDecoder.decode(uri, "UTF-8")
         var Object model
         if (index != -1) {
             // get snapshto model from compiled models
-            model = this.objectMap.get(uri).get(index)
+            model = this.objectMap.get(nuri).get(index)
         } else {
             // get eObject of model specified by uri
-            model = getEObjectFromUri(uri)
+            model = getEObjectFromUri(nuri)
         }
         val modelToSend = model
         return requestManager.runRead [ cancelIndicator |
             currentIndex = index
-            showSnapshot(uri, clientId, modelToSend, cancelIndicator, false)
+            showSnapshot(nuri, clientId, modelToSend, cancelIndicator, false)
         ]
     }
 
@@ -232,8 +235,9 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
      * @return completable future of all compilation system descriptions {@code List<SystemDescription}
      */
     override getSystems(String uri) {
-        val systemDescriptions = getCompilationSystems(uri, -1, false, false)
-        val snapshotSystemDescriptions = getCompilationSystems(uri, -1, false, true)
+        val nuri = URLDecoder.decode(uri, "UTF-8")
+        val systemDescriptions = getCompilationSystems(nuri, -1, false, false)
+        val snapshotSystemDescriptions = getCompilationSystems(nuri, -1, false, true)
         client.sendCompilationSystems(systemDescriptions, snapshotSystemDescriptions)
     }
     
@@ -334,7 +338,7 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
     /**
      * Called on notification to cancel the compilation.
      * Sets {@code CANCEL_COMPILATION} property on all processors.
-     */
+     */ 
     override cancelCompilation() {
         if (compilationThread.alive) {
             this.compilationThread.terminated = true
