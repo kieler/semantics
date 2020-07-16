@@ -1,0 +1,9 @@
+de.cau.cs.kieler.sccharts.ui.synthesis.actions.ReferenceExpandAction
+de.cau.cs.kieler.sccharts.ui.synthesis.hooks.LabelShorteningHook
+de.cau.cs.kieler.sccharts.ui.synthesis.hooks.LayoutHook
+de.cau.cs.kieler.sccharts.ui.synthesis.hooks.actions.MemorizingExpandCollapseAction
+de.cau.cs.kieler.sccharts.ui.synthesis.hooks.actions.CollapseAllRegionsAction
+de.cau.cs.kieler.sccharts.ui.synthesis.hooks.actions.ExpandAllRegionsAction
+de.cau.cs.kieler.sccharts.ui.synthesis.hooks.actions.ToggleDependencyAction
+de.cau.cs.kieler.sccharts.ui.debug.actions.SetBreakpointAction
+de.cau.cs.kieler.sccharts.ui.debug.actions.SetCheckBreakpointAction
