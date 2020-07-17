@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-  <description name="KIELER Semantics (Nightly Builds)" url="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/semantics/">Update site for the KIELER Semantics project nightly builds.</description>
+  <description name="KIELER Semantics (Nightly Builds)" url="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/semantics-integration-new-features/">Update site for the KIELER Semantics project nightly builds.</description>
   <!-- CATEGORY DEFINITIONS -->
   <category-def name="kieler-sem" label="KIELER Semantics">
     <description>
@@ -32,12 +32,13 @@
     <category name="kieler-sources"/>
   </feature>
   <!-- Repository references to associated sites -->
-  <repository-reference location="http://download.eclipse.org/releases/2019-12" enabled="true"/>
-  <repository-reference location="http://download.eclipse.org/tools/orbit/downloads/drops/R20191126223242/repository/" enabled="true"/>
-  <repository-reference location="http://download.eclipse.org/modeling/tmf/xtext/updates/releases/2.20.0/" enabled="true"/>
-  <repository-reference location="http://download.eclipse.org/lsp4j/updates/releases/0.8.1/" enabled="true"/>
-  <repository-reference location="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/release_pragmatics_2018-06.U2/" enabled="true"/>
-  <repository-reference location="http://download.eclipse.org/elk/updates/releases/0.4.0/" enabled="true"/>
+  <repository-reference location="http://download.eclipse.org/releases/2020-03" enabled="true"/>
+  <repository-reference location="http://download.eclipse.org/tools/orbit/downloads/drops/R20200224183213/repository/" enabled="true"/>
+  <repository-reference location="http://download.eclipse.org/modeling/tmf/xtext/updates/releases/2.21.0/" enabled="true"/>
+  <repository-reference location="http://download.eclipse.org/lsp4j/updates/releases/0.9.0/" enabled="true"/>
+  <repository-reference location="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/semantics-integration-new-features/pragmatics/" enabled="true"/>
+  <repository-reference location="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/semantics-integration-new-features/pragmatics/klighd/" enabled="true"/>
+  <repository-reference location="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/semantics-integration-new-features/pragmatics/klighd/elk" enabled="true"/>
   <repository-reference location="http://download.eclipse.org/egit/updates" enabled="true"/>
   <repository-reference location="http://download.eclipse.org/jetty/updates/jetty-bundles-9.x/" enabled="true"/>
 </site>

@@ -9,8 +9,8 @@
 
   <!-- Define a few properties used throughout all build profiles. -->
   <properties>
-    <tycho-version>1.4.0</tycho-version>
-    <xtend-version>2.19.0</xtend-version>
+    <tycho-version>1.6.0</tycho-version>
+    <xtend-version>2.21.0</xtend-version>
     <targetJdk>1.8</targetJdk>
   
     <!-- Non-breakable space, as normal spaces are trimmed. -->
@@ -22,7 +22,7 @@
     <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
     
     <!-- Updatesite for product build -->
-    <kieler.semantics.updatesite>http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/semantics-integration/</kieler.semantics.updatesite>
+    <kieler.semantics.updatesite>http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/semantics-integration-new-features/</kieler.semantics.updatesite>
   </properties>
 
 
