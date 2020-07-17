@@ -140,9 +140,9 @@ class DominatorTreeSynthesis extends AbstractDiagramSynthesis<SCGraphs> {
         val dtDiagram = createNode
         dtDiagram.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.mrtree")
         dtDiagram.addLayoutParam(CoreOptions::DIRECTION, Direction.DOWN)
-        dtDiagram.addLayoutParam(MrTreeOptions::EDGE_ROUTING_MODE, EdgeRoutingMode.MiddleToMiddle)
+        dtDiagram.addLayoutParam(MrTreeOptions::EDGE_ROUTING_MODE, EdgeRoutingMode.AvoidOverlap)
         dtDiagram.addLayoutParam(MrTreeOptions::WEIGHTING, OrderWeighting.NONE)
-        dtDiagram.addLayoutParam(MrTreeOptions::COMPACTION, true)
+        dtDiagram.addLayoutParam(MrTreeOptions::COMPACTION, CompactionMode.LevelPreserving)
         dtDiagram.children += nodes.values
  
         return dtDiagram
