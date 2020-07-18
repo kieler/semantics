@@ -118,6 +118,8 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
     private var SCLToSCGTransformation methodProcessor;
 
     public static val PREFIX_REFERENCE_VALUED_OBJECT_NAME = "_r"
+    public static val PREFIX_REFERENCE_RESET_VALUED_OBJECT_NAME = "_rst"
+    public static val PREFIX_REFERENCE_TERM_VALUED_OBJECT_NAME = "_term"
     
     protected static val ANNOTATION_IGNORETHREAD = "ignore"
     
@@ -575,15 +577,28 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
                     reference = SCC2SCGMap.get(state.reference.scope)
                     sCGraph.declarations += it    
                 ]
+                // todo: add state label to reference call for different instances
                 val referenceCall = createReferenceCall.trace(state) => [ rc |
-                    val VOR = createValuedObject(PREFIX_REFERENCE_VALUED_OBJECT_NAME + state.reference.scope.name) => [
+                    val VOR = createValuedObject(PREFIX_REFERENCE_VALUED_OBJECT_NAME + state.reference.scope.name + state.name.toFirstUpper) => [
                         referenceDeclaration.valuedObjects += it
                     ]
                     rc.valuedObject = VOR
                     state.reference.parameters.forEach[ rc.parameters += it.convertToSCGParameter ]
-                ]    
+                ]
                 
-                assignment.expression = referenceCall
+                val referenceResetCall = createReferenceCall.trace(state) => [ rc |
+                    val VOR = createValuedObject(PREFIX_REFERENCE_RESET_VALUED_OBJECT_NAME + state.reference.scope.name + state.name.toFirstUpper) => [
+                        referenceDeclaration.valuedObjects += it
+                    ]
+                    rc.valuedObject = VOR
+                    state.reference.parameters.forEach[ rc.parameters += it.convertToSCGParameter ]
+                ]
+                
+                val callAssignment = sCGraph.addAssignment => [ expression = referenceCall ]
+                val controlFlow = callAssignment.createControlFlow.trace(state)
+                assignment.next = controlFlow
+                
+                assignment.expression = referenceResetCall
             } else {
     		    // Assertion: A SCG normalized SCChart should have just ONE assignment per transition
     		    val effect = transition.effects.get(0) as Effect
@@ -718,12 +733,31 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
             // of the single immediate assignment transition outgoing  from
             // the current state
             val assignment = state.mappedAssignment
+            var aNext = assignment
+
+            if (assignment.isReferencing) {
+                aNext = assignment.next.target as Assignment            
+            }
+            
             val transition = state.outgoingTransitions.get(0)
             val targetState = transition.targetState
             val otherNode = targetState.mappedNode
             if (otherNode !== null) {
                 val controlFlow = otherNode.createControlFlow.trace(transition)
-                assignment.setNext(controlFlow)
+                aNext.setNext(controlFlow)
+            }
+            
+            if (assignment.isReferencing) {
+                val termConditional = sCGraph.addConditional
+                termConditional.setCondition((aNext.expression as ReferenceCall).valuedObject.reference)
+                termConditional.then = aNext.next
+                aNext.next = termConditional.createControlFlow
+                
+                val surface = sCGraph.addSurface.trace(state)
+                val depth = sCGraph.addDepth.trace(state)
+                surface.setDepth(depth)
+                termConditional.^else = surface.createControlFlow
+                depth.next = aNext.createControlFlow                
             }
         } else if (stateTypeCache.get(state).contains(PatternType::CONDITIONAL)) {
 
@@ -941,6 +975,10 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
             dest.subReference = ref
             dest.subReference.handleSubReferences(src.subReference)
         }
+    }
+    
+    private def boolean isReferencing(Assignment assignment) {
+        return assignment.expression instanceof ReferenceCall
     }
     
 // -------------------------------------------------------------------------   

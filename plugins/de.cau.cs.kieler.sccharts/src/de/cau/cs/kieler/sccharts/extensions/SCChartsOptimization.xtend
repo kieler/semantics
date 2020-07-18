@@ -61,8 +61,10 @@ class SCChartsOptimization {
                     for (incomingTransition : state.incomingTransitions.immutableCopy) {
                         incomingTransition.setTargetState(targetState)
                     }
-                    targetState.setName(state.name)
-                    targetState.setLabel(state.label)
+                    if (!state.name.startsWith("_") || targetState.name.startsWith("_")) { 
+                        targetState.setName(state.name)
+                        targetState.setLabel(state.label)
+                    }
                     targetState.trace(state) //KITT: Redirect tracing relations before removing
                     if (targetState !== state)
                         targetState.parentRegion.states.remove(state)
