@@ -201,15 +201,18 @@ class CSVToSCTX extends ExogenousProcessor<CodeContainer, SCCharts> {
                 val connector = createState(sourceState.parentRegion, "c" + Math.abs(condPair.hashCode).toString) => [
                     connector = true
                 ]
-                condConnectors.put(condPair, connector)    
+                condConnectors.put(condPair, connector)
+                    
                 val connTransition = sourceState.createTransitionTo(connector)
                 connTransition.createTrigger(condition, objects)
+                
+                connector.createTransitionTo(sourceState)
             } 
             
             val targetState = stateMap.get(tname)
             val connState = condConnectors.get(condPair)
             
-            val transition = connState.createTransitionTo(targetState)
+            val transition = connState.createTransitionTo(targetState).setHighestPriority
             transition.createTrigger(condition2, objects)
             transition.createActions(action, objects) 
             transition.addCommentAnnotation(null, comment)
