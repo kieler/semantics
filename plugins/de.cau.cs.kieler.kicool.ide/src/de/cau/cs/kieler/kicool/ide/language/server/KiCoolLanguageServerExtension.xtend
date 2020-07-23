@@ -30,7 +30,7 @@ import de.cau.cs.kieler.kicool.ide.language.server.data.SystemDescription
 import de.cau.cs.kieler.kicool.ide.view.IdeCompilerView
 import de.cau.cs.kieler.klighd.lsp.KGraphDiagramState
 import de.cau.cs.kieler.klighd.lsp.KGraphLanguageServerExtension
-import de.cau.cs.kieler.klighd.lsp.utils.KGraphElementIDGenerator
+import de.cau.cs.kieler.klighd.lsp.utils.KGraphElementIdGenerator
 import de.cau.cs.kieler.language.server.ILanguageClientProvider
 import de.cau.cs.kieler.language.server.KeithLanguageClient
 import de.cau.cs.kieler.language.server.registration.RegistrationLanguageServerExtension
@@ -474,7 +474,7 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, KiCoolC
             // Get uri of original model file
             val uri = diagramState.getURIString(clientId)
             // Get KNode that holds the code that should be displayed
-            val kNode = KGraphElementIDGenerator.findElementById(diagramState.getKGraphToSModelElementMap(
+            val kNode = KGraphElementIdGenerator.findElementById(diagramState.getKGraphToSModelElementMap(
                 uri), kgraphElementId);
             // Get model string
             val CodePlaceHolder codeModel = if (inputModel instanceof CodePlaceHolder) {
