@@ -81,6 +81,7 @@ import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
 import de.cau.cs.kieler.kexpressions.IntValue
 import de.cau.cs.kieler.kexpressions.FunctionCall
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.TransitionStyles
+import de.cau.cs.kieler.klighd.kgraph.KLabel
 
 /**
  * @author ssm
@@ -203,7 +204,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
             #["OperatorExpressionArithmeticalSUB.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
         "VAL" -> #["OperatorExpressionVAL.kgt", "OperatorExpressionUnary.kgt", "OperatorExpression.kgt"],
         "NE" -> #["OperatorExpressionNE.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
-        "CONDITIONAL_UPDATE" -> #["OperatorExpressionUPDATE.kgt", "OperatorExpression.kgt"],
+        "CONDITIONAL_UPDATE" -> #["OperatorExpressionUPDATE2.kgt", "OperatorExpression.kgt"],
         "CONDITIONAL" -> #["OperatorExpressionCONDITIONAL.kgt", "OperatorExpression.kgt"],
         "INIT" -> #["OperatorExpressionINIT.kgt", "OperatorExpression.kgt"],
         "FBY" -> #["OperatorExpressionFBY.kgt", "OperatorExpression.kgt"],
@@ -606,8 +607,18 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
             val targetPort = node.getInputPortWithNumber(operatorExpr.subExpressions.indexOf(subExpr))
             sourcePort.connectWith(targetPort, subExpr.serializeHR.toString)
         }
+        if (figureId == "CONDITIONAL_UPDATE") {
+            val texts = node.eAllContents.filter(KLabel).filter[ getText() == "var" ].toList
+            var targetText = ""
+            if (operatorExpr.eContainer instanceof Assignment) {
+                targetText = (operatorExpr.eContainer as Assignment).reference.valuedObject.name
+            }
+            for (t : texts) {
+                t.text = targetText
+            }
+        }
         // show or hide port labels
-        if (SHOW_EXPRESSION_PORT_LABELS.booleanValue) {
+        if (SHOW_EXPRESSION_PORT_LABELS.booleanValue || operatorExpr.operator == OperatorType.CONDITIONAL) {
             for (p : node.ports) {
                 val label = p.labels.head
                 if (label !== null) {

@@ -127,11 +127,17 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
         if (region.hasAnnotation("style")) {
             label.set(0, new Pair(label.head.key, TextFormat.KEYWORD))
         }
-
+        if (region.once) {
+            label.add(new Pair("once", TextFormat.KEYWORD))
+        }
+        
         // Expanded
         node.addRegionFigure => [
             if (region.hasAnnotation("style")) {
                 it.addRegionStyle(region.getStringAnnotationValue("style"))
+            }
+            if (region.once) {
+                it.addRegionStyle("entry")
             }
             setAsExpandedView
             addDoubleClickAction(MemorizingExpandCollapseAction::ID)
