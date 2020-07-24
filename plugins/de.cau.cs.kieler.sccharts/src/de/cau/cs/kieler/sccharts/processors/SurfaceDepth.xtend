@@ -151,7 +151,7 @@ class SurfaceDepth extends SCChartsProcessor implements Traceable {
         if (state.isRootState || (numTransition == 0 && state.final)) {
             return
         }
-        if (numTransition == 0 && state.isHierarchical) {
+        if (numTransition == 0 && (state.isHierarchical || state.isReferencing)) {
             // Do not transform  halt-superstates
             // Rationale: It would be necessary to add a termination transition with a delayed pause
             // self-loop (over an additional auxiliary state)
