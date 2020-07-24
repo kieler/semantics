@@ -858,7 +858,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 val call = assignment.expression as ReferenceCall
                 val decl = call.valuedObject?.eContainer
                 if (decl instanceof ReferenceDeclaration) {
-                    isSCGRef = decl.reference instanceof SCGraph
+                    isSCGRef = true // decl.reference instanceof SCGraph
                 }
             }
             if (isSCGRef) {

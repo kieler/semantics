@@ -591,7 +591,7 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
                         referenceDeclaration.valuedObjects += it
                     ]
                     rc.valuedObject = VOR
-                    state.reference.parameters.forEach[ rc.parameters += it.convertToSCGParameter ]
+//                    state.reference.parameters.forEach[ rc.parameters += it.convertToSCGParameter ]
                 ]
                 
                 val callAssignment = sCGraph.addAssignment => [ expression = referenceCall ]
