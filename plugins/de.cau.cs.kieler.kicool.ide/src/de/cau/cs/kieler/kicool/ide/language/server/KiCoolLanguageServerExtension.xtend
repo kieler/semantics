@@ -474,8 +474,7 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, KiCoolC
             // Get uri of original model file
             val uri = diagramState.getURIString(clientId)
             // Get KNode that holds the code that should be displayed
-            val kNode = KGraphElementIdGenerator.findElementById(diagramState.getKGraphToSModelElementMap(
-                uri), kgraphElementId);
+            val kNode = diagramState.getIdToKGraphMap(uri).get(kgraphElementId);
             // Get model string
             val CodePlaceHolder codeModel = if (inputModel instanceof CodePlaceHolder) {
                 inputModel as CodePlaceHolder
