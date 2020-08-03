@@ -31,6 +31,7 @@ import de.cau.cs.kieler.sccharts.ui.synthesis.styles.DataflowRegionStyles
 import org.eclipse.elk.alg.layered.options.GreedySwitchType
 import org.eclipse.elk.alg.layered.options.LayeredOptions
 import org.eclipse.elk.alg.layered.options.NodePlacementStrategy
+import org.eclipse.elk.alg.layered.options.OrderingStrategy
 import org.eclipse.elk.core.math.ElkPadding
 import org.eclipse.elk.core.options.ContentAlignment
 import org.eclipse.elk.core.options.CoreOptions
@@ -81,6 +82,7 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
         val node = region.createNode().associateWith(region)
 
         node.addLayoutParam(CoreOptions::ALGORITHM, LayeredOptions.ALGORITHM_ID)
+        node.setLayoutOption(LayeredOptions.CONSIDER_MODEL_ORDER, OrderingStrategy.PREFER_EDGES)
         node.addLayoutParam(CoreOptions::CONTENT_ALIGNMENT, ContentAlignment.topCenter)
         node.addLayoutParam(CoreOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL)
         node.addLayoutParam(CoreOptions::DIRECTION, Direction::RIGHT)

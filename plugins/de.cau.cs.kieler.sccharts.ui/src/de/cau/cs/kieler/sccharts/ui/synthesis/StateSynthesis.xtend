@@ -74,6 +74,7 @@ import java.util.List
 import java.util.Map
 import org.eclipse.elk.alg.layered.options.LayerConstraint
 import org.eclipse.elk.alg.layered.options.LayeredOptions
+import org.eclipse.elk.alg.layered.options.OrderingStrategy
 import org.eclipse.elk.alg.rectpacking.options.RectPackingOptions
 import org.eclipse.elk.core.math.ElkPadding
 import org.eclipse.elk.core.options.CoreOptions
@@ -391,6 +392,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         node.setLayoutOption(CoreOptions::PADDING, new ElkPadding(5))
 //        node.setLayoutOption(CoreOptions::NODE_SIZE_CONSTRAINTS, SizeConstraint.free)
         node.setLayoutOption(CoreOptions::ALGORITHM, LayeredOptions.ALGORITHM_ID)
+        node.setLayoutOption(LayeredOptions.CONSIDER_MODEL_ORDER, OrderingStrategy.PREFER_EDGES)
         node.setLayoutOption(CoreOptions::DIRECTION, Direction.RIGHT)
         node.setLayoutOption(LayeredOptions::FEEDBACK_EDGES, true)
         node.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 10.0)
