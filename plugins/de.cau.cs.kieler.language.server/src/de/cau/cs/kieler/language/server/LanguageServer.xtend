@@ -3,7 +3,7 @@
  *
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
- * Copyright 2018 by
+ * Copyright 2018,2020 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -12,15 +12,8 @@
  */
 package de.cau.cs.kieler.language.server
 
-import com.google.inject.Guice
-import java.net.InetSocketAddress
-import java.nio.channels.AsynchronousServerSocketChannel
-import java.nio.channels.Channels
-import java.util.concurrent.Executors
-import org.apache.log4j.Logger
-import org.eclipse.equinox.app.IApplication
-import org.eclipse.equinox.app.IApplicationContext
-import org.eclipse.xtext.ide.server.LanguageServerImpl
+import de.cau.cs.kieler.klighd.lsp.launch.AbstractLanguageServer
+import de.cau.cs.kieler.klighd.lsp.launch.LanguageServerLauncher
 
 /**
  * Entry point for the language server application for KIELER Theia.<br>
@@ -36,62 +29,15 @@ import org.eclipse.xtext.ide.server.LanguageServerImpl
  * 
  * @see LanguageServerLauncher
  * 
- * @author als, sdo
+ * @author als, sdo, nre
  * @kieler.design proposed
  * @kieler.rating proposed yellow
  */
-class LanguageServer implements Runnable {
-    
-    static val defaultHost = "localhost"
-    
-    static val LOG = Logger.getLogger(LanguageServer)
-    
-    extension LanguageRegistration languageRegistration = new LanguageRegistration
-    
-    extension LSCreator creator = new LSCreator
+class LanguageServer extends AbstractLanguageServer {
     
     def static main(String[] args) {
-        val runnable = new LanguageServer
-        runnable.run
-    }
-    
-    /**
-     * Starts the language server.
-     */
-    override run() {
-        var host = System.getProperty("host")
-        var portArg = System.getProperty("port")
-        if (portArg !== null) {
-            // debug case, communicate via socket
-            if (host === null) {
-                host = defaultHost
-            }
-            var port = 0
-            try {
-                port = Integer.parseInt(portArg)
-            } catch (NumberFormatException e) {
-                println(e.stackTrace)
-                return
-            }
-            println("Connection to: " + host + ":" + port)
-            // Register all languages
-            println("Starting language server socket")
-            bindAndRegisterLanguages()
-            
-            val serverSocket = AsynchronousServerSocketChannel.open.bind(new InetSocketAddress(host, port))
-            val threadPool = Executors.newCachedThreadPool()
-            while (true) {
-                val socketChannel = serverSocket.accept.get            
-                val in = Channels.newInputStream(socketChannel)
-                val out = Channels.newOutputStream(socketChannel)
-                val injector = Guice.createInjector(createLSModules(true))
-                val ls = injector.getInstance(LanguageServerImpl)
-                buildAndStartLS(injector, ls, in, out, threadPool, [it], true)
-                LOG.info("Started language server for client " + socketChannel.remoteAddress)
-            }
-        } else {
-            LanguageServerLauncher.main(#[])
-        }
+        val server = new LanguageServer
+        server.configureAndRun(new LanguageRegistration, new LSCreator)
     }
     
 }

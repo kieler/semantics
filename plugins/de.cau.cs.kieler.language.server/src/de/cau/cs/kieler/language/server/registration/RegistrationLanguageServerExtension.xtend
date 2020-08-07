@@ -3,7 +3,7 @@
  * 
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
- * Copyright 2018 by
+ * Copyright 2018,2020 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -12,79 +12,36 @@
  */
 package de.cau.cs.kieler.language.server.registration
 
-import com.google.inject.Inject
 import com.google.inject.Singleton
 import de.cau.cs.kieler.core.services.KielerServiceLoader
+import de.cau.cs.kieler.klighd.lsp.launch.AbstractRegistrationLanguageServerExtension
+import de.cau.cs.kieler.klighd.lsp.launch.Language
 import de.cau.cs.kieler.language.server.IHighlightingContribution
-import java.util.List
-import org.apache.log4j.Logger
-import org.eclipse.xtend.lib.annotations.Accessors
-import org.eclipse.xtend.lib.annotations.Data
-import org.eclipse.xtext.ide.server.ILanguageServerAccess
-import org.eclipse.xtext.ide.server.ILanguageServerExtension
-import org.eclipse.xtext.ide.server.concurrent.RequestManager
+import de.cau.cs.kieler.pragmatics.language.server.PragmaticsRegistrationLanguageServerExtension
 
 /**
- * Implements methods to extend the LSP to allow compilation
+ * Extends the language server with support for the KGraph and Elk Graph languages and all available classes
+ * implementing the {@code IHighlightingContribution}.
  * 
- * @author sdo
- * 
+ * @author sdo, nre
  */
  @Singleton
-class RegistrationLanguageServerExtension implements ILanguageServerExtension, CommandExtension {
+class RegistrationLanguageServerExtension extends PragmaticsRegistrationLanguageServerExtension {
     
-    /**
-     * Will be written to after the Language Server connects
-     */
-     
-    public static List<String> registeredLanguageExtensions = newArrayList
-
-    protected static val LOG = Logger.getLogger(RegistrationLanguageServerExtension)
-    
-    @Inject @Accessors(PUBLIC_GETTER) RequestManager requestManager
-
-    protected extension ILanguageServerAccess languageServerAccess
-    
-    override initialize(ILanguageServerAccess access) {
-        this.languageServerAccess = access
-    }
-    def ILanguageServerAccess getLanguageServerAccess() {
-        return languageServerAccess
-    }
-    
-    override getLanguages() {
-        val kgtKeywords = #['absolutePos','actions','anchor','areaData','background','bevel','bold','bottom',
-        'bottomRightAnchor','center','chord','clipShape','columns','custom','dash','dashOffset','dashPattern',
-        'decoratorData','dot','double','doubleClick','error','flat','flexibleHeight','flexibleWidth','fontName',
-        'fontSize','foreground','grid','gridData','hAlign','height','horizontalAlignment','horizontalMargin','insets',
-        'invisible','italic','junction','karc','kchildArea','kcustomRendering','kedge','kellipse','kgraph','kimage',
-        'klabel','knode','kpolygon','kpolyline','kport','krectangle','krendering','krenderingLibrary','kroundedPolyline',
-        'kroundedRectangle','kspline','kstylesTemplate','ktext','left','lineCap','lineJoin','lineStyle','lineWidth',
-        'link','middleDoubleClick','middleSingleClick','middleSingleOrMultiClick','minCellHeight','minCellWidth',
-        'minimalHeight','minimalWidth','miter','modifier','none','null','open','pie','pointData','points','pos','propagate',
-        'properties','reference','referencePoint','relativePos','right','rotateWithLine','rotation','round','scale',
-        'selection','shadow','single','singleClick','singleOrMultiClick','size','solid','square','squiggle','styles',
-        'top','topLeftAnchor','underline','vAlign','verticalAlignment','verticalMargin','width','x','xoffset','y',
-        'yoffset']
-        val elkKeywords = #["bends","edge","end","false","graph","incoming","label","layout","node","null","outgoing",
-        "port","position","section","size","start","true"]
-        val languages = newArrayList(new Language("kgt", "KGraph", kgtKeywords), new Language("elkt", "Elk Graph", elkKeywords))
+    override getLanguageExtensions() {
+        val languages = super.getLanguageExtensions
         for (contribution : KielerServiceLoader.load(IHighlightingContribution)) {
             val highlighting = contribution.highlighting
         	languages.add(new Language(highlighting.getId, highlighting.name, highlighting.keywords))
         }
-        for (language : languages) {
-            registeredLanguageExtensions.add(language.id)
-        }
-        return requestManager.runRead[ cancelIndicator |
-            languages
-        ]
+        return languages
     }
-}
-
-@Data
-class Language {
-    String id
-    String name
-    List<String> keywords
+    
+    /**
+     * Static access to the registered language extensions.
+     */
+    def static getRegisteredLanguageExtensions() {
+        return AbstractRegistrationLanguageServerExtension.registeredLanguageExtensions
+    }
+    
 }
