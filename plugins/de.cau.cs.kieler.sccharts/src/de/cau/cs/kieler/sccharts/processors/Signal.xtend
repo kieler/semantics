@@ -191,16 +191,20 @@ class Signal extends SCChartsProcessor implements Traceable {
                 
                 // Add an immediate during action that resets the current value
                 // in each tick to the neutral element of the type w.r.t. combination function
-                val resetDuringAction = state.createImmediateDuringAction
-                resetDuringAction.setImmediate(true)
-                if(arrayIndexIterator === null) {
-                    resetDuringAction.createAssignment(currentValueVariable, signal.neutralElement)
-                } else {
-                    for(arrayIndex : arrayIndexIterator) {
-                        val assignment = resetDuringAction.createAssignment(currentValueVariable, signal.neutralElement)
-                        assignment.indices.addAll(arrayIndex.convert)
+                // but only if there is an combine function to prevent ww conflits if only non-concurrent emission exists
+                // and to prevent a requirement for a combine function in general (KISEMA-1071)
+                if (signal.combineOperator !== null && signal.combineOperator !== CombineOperator.NONE) {
+                    val resetDuringAction = state.createImmediateDuringAction
+                    resetDuringAction.setImmediate(true)
+                    if(arrayIndexIterator === null) {
+                        resetDuringAction.createAssignment(currentValueVariable, signal.neutralElement)
+                    } else {
+                        for(arrayIndex : arrayIndexIterator) {
+                            val assignment = resetDuringAction.createAssignment(currentValueVariable, signal.neutralElement)
+                            assignment.indices.addAll(arrayIndex.convert)
+                        }
                     }
-                } 
+                }
 
                 val allActions = state.eAllContents.filter(typeof(Action)).toList
                 for (Action action : allActions) {

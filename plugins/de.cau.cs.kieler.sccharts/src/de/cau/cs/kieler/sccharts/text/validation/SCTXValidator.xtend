@@ -95,8 +95,6 @@ class SCTXValidator extends AbstractSCTXValidator {
     static val String NON_SIGNAL_EMISSION = "Non-signals should not be used in an emission.";
     static val String NON_VARIABLE_ASSIGNMENT = "Non-variables cannot be used in an assignment.";
     static val String STATIC_VARIABLE_WITHOUT_INITIALIZATION = "Static variables should be initialized.";
-    //TODO (KISEMA-1071) Remove this message when there is a transformation that handles valued signals without combine operator.
-    static val String VALUED_SIGNAL_NEED_COMBINE = "Valued signals must have a combine function.";
     static val String MINMAX_COMBINE = "Min or max combine operators are currently not supported.";
     static val String NOCOMBINE = "A valued signal should have a combine function, otherwise any emits cannot be scheduled.";
     
@@ -743,23 +741,6 @@ class SCTXValidator extends AbstractSCTXValidator {
                     && transition.trigger === null) {
                     warning(ABORT_WITHOUT_TRIGGER, transition, null, -1);
                 }
-            }
-        }
-    } 
-    
-    /**
-     * Checks if the given valued signal has a combination function.
-     * This check can be removed if there is a transformation
-     * that handles valued signals without combination dfunction (see KISEMA-1071).   
-     */
-    // TODO: (KISEMA-1071) Remove this check when there is a transformation that handles valued signals without combination function.
-    @Check
-    public def void checkValuedSignalHasCombinationFunction(ValuedObject valuedObject) {
-        // Check if actually a valued signal
-        if(valuedObject.isSignal && !valuedObject.isPureSignal) {
-            // Check if there is a combine operator
-            if(valuedObject.combineOperator === null || valuedObject.combineOperator.equals(CombineOperator.NONE)) {
-                warning(VALUED_SIGNAL_NEED_COMBINE, valuedObject, null)
             }
         }
     } 
