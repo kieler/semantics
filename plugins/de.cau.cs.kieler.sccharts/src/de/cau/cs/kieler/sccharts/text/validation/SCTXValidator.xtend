@@ -96,7 +96,6 @@ class SCTXValidator extends AbstractSCTXValidator {
     static val String NON_VARIABLE_ASSIGNMENT = "Non-variables cannot be used in an assignment.";
     static val String STATIC_VARIABLE_WITHOUT_INITIALIZATION = "Static variables should be initialized.";
     static val String MINMAX_COMBINE = "Min or max combine operators are currently not supported.";
-    static val String NOCOMBINE = "A valued signal should have a combine function, otherwise any emits cannot be scheduled.";
     
     static val String STRONG_ABORT_WITH_LOW_PRIORITY = "Causality problem!\nStrong abort transitions must have a higher priority than weak abort or termination transitions.";
     static val String ABORT_WITHOUT_TRIGGER = "Abort transitions should have a trigger.";
@@ -575,23 +574,6 @@ class SCTXValidator extends AbstractSCTXValidator {
             }
         }
     }
-
-    /**
-     * Check if valued signal has a combine functions
-     *
-     * @param valuedObject the valuedObject
-     */
-    @Check
-    public def void checkCombineFunction(ValuedObject valuedObject) {
-        // Check if actually a valued signal
-        if(valuedObject.isSignal && !valuedObject.isPureSignal) {
-            // Check if there is a combine operator
-            if(valuedObject.combineOperator === null) {
-                warning(NOCOMBINE, valuedObject, null)
-            }
-        }
-    } 
-
 
     /**
      * Check if max or min is used which is currently not supported
