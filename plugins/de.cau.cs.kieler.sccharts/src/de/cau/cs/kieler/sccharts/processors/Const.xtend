@@ -66,7 +66,6 @@ class Const extends SCChartsProcessor implements Traceable {
 
     extension PartialExpressionEvaluator par = new PartialExpressionEvaluator() => [ 
         compute = true
-        inplace = true
     ]
 
     // -------------------------------------------------------------------------
@@ -169,7 +168,7 @@ class Const extends SCChartsProcessor implements Traceable {
         val constObjects = scope.valuedObjects.filter[isConst && initialValue !== null].toList
         
         for (vo : constObjects) {
-            vo.initialValue.replace(vo.initialValue.evaluate)
+            vo.initialValue.evaluateAndReplace
             if (vo.initialValue instanceof Value) {
                 par.values.put(vo, vo.initialValue as Value)
             } 
