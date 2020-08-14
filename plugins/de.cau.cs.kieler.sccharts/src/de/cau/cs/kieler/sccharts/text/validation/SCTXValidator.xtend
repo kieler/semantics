@@ -92,6 +92,7 @@ class SCTXValidator extends AbstractSCTXValidator {
     static val String DUPLICATE_REGION = "There are multiple regions with the same name.";
     static val String DUPLICATE_ROOTSTATE = "There are multiple root states with the same name.";
     
+    static val String SIGNAL_EMISSION_IN_TRIGGER = "Valued emission cannot be used in triggers. Use val() to check the value of a valued signal.";
     static val String NON_SIGNAL_EMISSION = "Non-signals should not be used in an emission.";
     static val String NON_VARIABLE_ASSIGNMENT = "Non-variables cannot be used in an assignment.";
     static val String STATIC_VARIABLE_WITHOUT_INITIALIZATION = "Static variables should be initialized.";
@@ -420,6 +421,30 @@ class SCTXValidator extends AbstractSCTXValidator {
                 warning(NON_SIGNAL_EMISSION, emission, null, -1);
             }
         } 
+    }
+    
+    /**
+     * ReferenceCalls in triggers allow some kind of emission in trigger that must be discouraged. 
+     */
+    @Check
+    def void checkNoBooleanEmissions(ReferenceCall call) {
+        if (call.valuedObject !== null && call.valuedObject.isSignal) {
+            var EObject obj = call
+            var container = call.eContainer
+            while (container !== null && !(container instanceof Transition)) {
+                if (container instanceof Scope) {
+                    container = null
+                } else {
+                    obj = container
+                    container = obj.eContainer
+                }
+            }
+            if (container instanceof Transition) {
+                if (container.trigger === obj) {
+                    error(SIGNAL_EMISSION_IN_TRIGGER, call, null, -1);
+                }
+            }         
+        }
     }
     
     /**
