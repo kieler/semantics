@@ -57,6 +57,7 @@ import org.eclipse.xtext.validation.CheckType
 import static extension java.lang.String.*
 import org.eclipse.elk.core.data.LayoutMetaDataService
 import de.cau.cs.kieler.kexpressions.OperatorType
+import de.cau.cs.kieler.kexpressions.ValueType
 
 //import org.eclipse.xtext.validation.Check
 
@@ -94,6 +95,7 @@ class SCTXValidator extends AbstractSCTXValidator {
     
     static val String SIGNAL_EMISSION_IN_TRIGGER = "Valued emission cannot be used in triggers. Use val() to check the value of a valued signal.";
     static val String NON_SIGNAL_EMISSION = "Non-signals should not be used in an emission.";
+    static val String NO_VALUED_INPUT_SIGNAL_EMISSION = "Valued input signals currently do not support emission (overwriting).";
     static val String NON_VARIABLE_ASSIGNMENT = "Non-variables cannot be used in an assignment.";
     static val String STATIC_VARIABLE_WITHOUT_INITIALIZATION = "Static variables should be initialized.";
     static val String MINMAX_COMBINE = "Min or max combine operators are currently not supported.";
@@ -421,6 +423,19 @@ class SCTXValidator extends AbstractSCTXValidator {
                 warning(NON_SIGNAL_EMISSION, emission, null, -1);
             }
         } 
+    }
+    
+    /**
+     * Discourage emissions of valued input signals
+     */
+    @Check
+    def void checkValuedInputSignalEmissions(Emission emission) {
+        if (emission.valuedObject !== null && emission.valuedObject.variableDeclaration !== null) {
+            val decl = emission.valuedObject.variableDeclaration
+            if (decl.signal && decl.input && decl.type !== ValueType.PURE) {
+                warning(NO_VALUED_INPUT_SIGNAL_EMISSION, null, -1);
+            }
+        }
     }
     
     /**
