@@ -218,13 +218,22 @@ public interface SCChartsPackage extends EPackage {
     int SCOPE__REFERENCE = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 7;
 
     /**
+     * The feature id for the '<em><b>Generics</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SCOPE__GENERICS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 8;
+
+    /**
      * The number of structural features of the '<em>Scope</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int SCOPE_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 8;
+    int SCOPE_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 9;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.ScopeCallImpl <em>Scope Call</em>}' class.
@@ -280,6 +289,46 @@ public interface SCChartsPackage extends EPackage {
      * @ordered
      */
     int SCOPE_CALL_FEATURE_COUNT = KExpressionsPackage.CALL_FEATURE_COUNT + 2;
+
+    /**
+     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.GenericTypeParameterDeclarationImpl <em>Generic Type Parameter Declaration</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.sccharts.impl.GenericTypeParameterDeclarationImpl
+     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getGenericTypeParameterDeclaration()
+     * @generated
+     */
+    int GENERIC_TYPE_PARAMETER_DECLARATION = 20;
+
+    /**
+     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.GenericTypeParameterImpl <em>Generic Type Parameter</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.sccharts.impl.GenericTypeParameterImpl
+     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getGenericTypeParameter()
+     * @generated
+     */
+    int GENERIC_TYPE_PARAMETER = 21;
+
+    /**
+     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.ParameterizedReferenceDeclarationImpl <em>Parameterized Reference Declaration</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.sccharts.impl.ParameterizedReferenceDeclarationImpl
+     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getParameterizedReferenceDeclaration()
+     * @generated
+     */
+    int PARAMETERIZED_REFERENCE_DECLARATION = 22;
+
+    /**
+     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.GenericTypeParameterReferenceImpl <em>Generic Type Parameter Reference</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.sccharts.impl.GenericTypeParameterReferenceImpl
+     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getGenericTypeParameterReference()
+     * @generated
+     */
+    int GENERIC_TYPE_PARAMETER_REFERENCE = 23;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.ActionImpl <em>Action</em>}' class.
@@ -591,6 +640,15 @@ public interface SCChartsPackage extends EPackage {
     int STATE__REFERENCE = SCOPE__REFERENCE;
 
     /**
+     * The feature id for the '<em><b>Generics</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int STATE__GENERICS = SCOPE__GENERICS;
+
+    /**
      * The feature id for the '<em><b>Parent Region</b></em>' container reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -772,6 +830,15 @@ public interface SCChartsPackage extends EPackage {
     int REGION__REFERENCE = SCOPE__REFERENCE;
 
     /**
+     * The feature id for the '<em><b>Generics</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int REGION__GENERICS = SCOPE__GENERICS;
+
+    /**
      * The feature id for the '<em><b>Parent State</b></em>' container reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -915,6 +982,15 @@ public interface SCChartsPackage extends EPackage {
      * @ordered
      */
     int CONTROLFLOW_REGION__REFERENCE = REGION__REFERENCE;
+
+    /**
+     * The feature id for the '<em><b>Generics</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CONTROLFLOW_REGION__GENERICS = REGION__GENERICS;
 
     /**
      * The feature id for the '<em><b>Parent State</b></em>' container reference.
@@ -1078,6 +1154,15 @@ public interface SCChartsPackage extends EPackage {
      * @ordered
      */
     int DATAFLOW_REGION__REFERENCE = REGION__REFERENCE;
+
+    /**
+     * The feature id for the '<em><b>Generics</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATAFLOW_REGION__GENERICS = REGION__GENERICS;
 
     /**
      * The feature id for the '<em><b>Parent State</b></em>' container reference.
@@ -2150,6 +2235,15 @@ public interface SCChartsPackage extends EPackage {
     int POLICY_REGION__REFERENCE = CONTROLFLOW_REGION__REFERENCE;
 
     /**
+     * The feature id for the '<em><b>Generics</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int POLICY_REGION__GENERICS = CONTROLFLOW_REGION__GENERICS;
+
+    /**
      * The feature id for the '<em><b>Parent State</b></em>' container reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2386,6 +2480,214 @@ public interface SCChartsPackage extends EPackage {
     int DATAFLOW_ASSIGNMENT_FEATURE_COUNT = KEffectsPackage.ASSIGNMENT_FEATURE_COUNT + 1;
 
     /**
+     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.GenericTypeScopeCallImpl <em>Generic Type Scope Call</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.sccharts.impl.GenericTypeScopeCallImpl
+     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getGenericTypeScopeCall()
+     * @generated
+     */
+    int GENERIC_TYPE_SCOPE_CALL = 19;
+
+    /**
+     * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int GENERIC_TYPE_SCOPE_CALL__SCHEDULE = KExpressionsPackage.CALL__SCHEDULE;
+
+    /**
+     * The feature id for the '<em><b>Parameters</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int GENERIC_TYPE_SCOPE_CALL__PARAMETERS = KExpressionsPackage.CALL__PARAMETERS;
+
+    /**
+     * The feature id for the '<em><b>Target</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int GENERIC_TYPE_SCOPE_CALL__TARGET = KExpressionsPackage.CALL_FEATURE_COUNT + 0;
+
+    /**
+     * The feature id for the '<em><b>Type Parameters</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int GENERIC_TYPE_SCOPE_CALL__TYPE_PARAMETERS = KExpressionsPackage.CALL_FEATURE_COUNT + 1;
+
+    /**
+     * The number of structural features of the '<em>Generic Type Scope Call</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int GENERIC_TYPE_SCOPE_CALL_FEATURE_COUNT = KExpressionsPackage.CALL_FEATURE_COUNT + 2;
+
+    /**
+     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int GENERIC_TYPE_PARAMETER_DECLARATION__ANNOTATIONS = AnnotationsPackage.ANNOTATABLE__ANNOTATIONS;
+
+    /**
+     * The feature id for the '<em><b>Name</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int GENERIC_TYPE_PARAMETER_DECLARATION__NAME = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 0;
+
+    /**
+     * The feature id for the '<em><b>Type</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int GENERIC_TYPE_PARAMETER_DECLARATION__TYPE = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 1;
+
+    /**
+     * The number of structural features of the '<em>Generic Type Parameter Declaration</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int GENERIC_TYPE_PARAMETER_DECLARATION_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 2;
+
+    /**
+     * The feature id for the '<em><b>Name</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int GENERIC_TYPE_PARAMETER__NAME = AnnotationsPackage.NAMED_OBJECT__NAME;
+
+    /**
+     * The number of structural features of the '<em>Generic Type Parameter</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int GENERIC_TYPE_PARAMETER_FEATURE_COUNT = AnnotationsPackage.NAMED_OBJECT_FEATURE_COUNT + 0;
+
+    /**
+     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int PARAMETERIZED_REFERENCE_DECLARATION__ANNOTATIONS = KExpressionsPackage.REFERENCE_DECLARATION__ANNOTATIONS;
+
+    /**
+     * The feature id for the '<em><b>Valued Objects</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int PARAMETERIZED_REFERENCE_DECLARATION__VALUED_OBJECTS = KExpressionsPackage.REFERENCE_DECLARATION__VALUED_OBJECTS;
+
+    /**
+     * The feature id for the '<em><b>Access</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int PARAMETERIZED_REFERENCE_DECLARATION__ACCESS = KExpressionsPackage.REFERENCE_DECLARATION__ACCESS;
+
+    /**
+     * The feature id for the '<em><b>Reference</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int PARAMETERIZED_REFERENCE_DECLARATION__REFERENCE = KExpressionsPackage.REFERENCE_DECLARATION__REFERENCE;
+
+    /**
+     * The feature id for the '<em><b>Parameters</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int PARAMETERIZED_REFERENCE_DECLARATION__PARAMETERS = KExpressionsPackage.REFERENCE_DECLARATION__PARAMETERS;
+
+    /**
+     * The feature id for the '<em><b>Extern</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int PARAMETERIZED_REFERENCE_DECLARATION__EXTERN = KExpressionsPackage.REFERENCE_DECLARATION__EXTERN;
+
+    /**
+     * The feature id for the '<em><b>Type Parameters</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int PARAMETERIZED_REFERENCE_DECLARATION__TYPE_PARAMETERS = KExpressionsPackage.REFERENCE_DECLARATION_FEATURE_COUNT + 0;
+
+    /**
+     * The number of structural features of the '<em>Parameterized Reference Declaration</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int PARAMETERIZED_REFERENCE_DECLARATION_FEATURE_COUNT = KExpressionsPackage.REFERENCE_DECLARATION_FEATURE_COUNT + 1;
+
+    /**
+     * The feature id for the '<em><b>Target</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int GENERIC_TYPE_PARAMETER_REFERENCE__TARGET = 0;
+
+    /**
+     * The feature id for the '<em><b>Type Parameters</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int GENERIC_TYPE_PARAMETER_REFERENCE__TYPE_PARAMETERS = 1;
+
+    /**
+     * The number of structural features of the '<em>Generic Type Parameter Reference</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int GENERIC_TYPE_PARAMETER_REFERENCE_FEATURE_COUNT = 2;
+
+    /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.PreemptionType <em>Preemption Type</em>}' enum.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2393,7 +2695,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getPreemptionType()
      * @generated
      */
-    int PREEMPTION_TYPE = 19;
+    int PREEMPTION_TYPE = 24;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.HistoryType <em>History Type</em>}' enum.
@@ -2403,7 +2705,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getHistoryType()
      * @generated
      */
-    int HISTORY_TYPE = 20;
+    int HISTORY_TYPE = 25;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.DelayType <em>Delay Type</em>}' enum.
@@ -2413,7 +2715,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getDelayType()
      * @generated
      */
-    int DELAY_TYPE = 21;
+    int DELAY_TYPE = 26;
 
 
     /**
@@ -2424,7 +2726,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getDeferredType()
      * @generated
      */
-    int DEFERRED_TYPE = 22;
+    int DEFERRED_TYPE = 27;
 
 
     /**
@@ -2503,6 +2805,17 @@ public interface SCChartsPackage extends EPackage {
     EReference getScope_Reference();
 
     /**
+     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.sccharts.Scope#getGenerics <em>Generics</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Generics</em>'.
+     * @see de.cau.cs.kieler.sccharts.Scope#getGenerics()
+     * @see #getScope()
+     * @generated
+     */
+    EReference getScope_Generics();
+
+    /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.ScopeCall <em>Scope Call</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2533,6 +2846,90 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      */
     EAttribute getScopeCall_Super();
+
+    /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.GenericTypeParameterDeclaration <em>Generic Type Parameter Declaration</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Generic Type Parameter Declaration</em>'.
+     * @see de.cau.cs.kieler.sccharts.GenericTypeParameterDeclaration
+     * @generated
+     */
+    EClass getGenericTypeParameterDeclaration();
+
+    /**
+     * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.sccharts.GenericTypeParameterDeclaration#getType <em>Type</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference '<em>Type</em>'.
+     * @see de.cau.cs.kieler.sccharts.GenericTypeParameterDeclaration#getType()
+     * @see #getGenericTypeParameterDeclaration()
+     * @generated
+     */
+    EReference getGenericTypeParameterDeclaration_Type();
+
+    /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.GenericTypeParameter <em>Generic Type Parameter</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Generic Type Parameter</em>'.
+     * @see de.cau.cs.kieler.sccharts.GenericTypeParameter
+     * @generated
+     */
+    EClass getGenericTypeParameter();
+
+    /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.ParameterizedReferenceDeclaration <em>Parameterized Reference Declaration</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Parameterized Reference Declaration</em>'.
+     * @see de.cau.cs.kieler.sccharts.ParameterizedReferenceDeclaration
+     * @generated
+     */
+    EClass getParameterizedReferenceDeclaration();
+
+    /**
+     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.sccharts.ParameterizedReferenceDeclaration#getTypeParameters <em>Type Parameters</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Type Parameters</em>'.
+     * @see de.cau.cs.kieler.sccharts.ParameterizedReferenceDeclaration#getTypeParameters()
+     * @see #getParameterizedReferenceDeclaration()
+     * @generated
+     */
+    EReference getParameterizedReferenceDeclaration_TypeParameters();
+
+    /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.GenericTypeParameterReference <em>Generic Type Parameter Reference</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Generic Type Parameter Reference</em>'.
+     * @see de.cau.cs.kieler.sccharts.GenericTypeParameterReference
+     * @generated
+     */
+    EClass getGenericTypeParameterReference();
+
+    /**
+     * Returns the meta object for the reference '{@link de.cau.cs.kieler.sccharts.GenericTypeParameterReference#getTarget <em>Target</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference '<em>Target</em>'.
+     * @see de.cau.cs.kieler.sccharts.GenericTypeParameterReference#getTarget()
+     * @see #getGenericTypeParameterReference()
+     * @generated
+     */
+    EReference getGenericTypeParameterReference_Target();
+
+    /**
+     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.sccharts.GenericTypeParameterReference#getTypeParameters <em>Type Parameters</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Type Parameters</em>'.
+     * @see de.cau.cs.kieler.sccharts.GenericTypeParameterReference#getTypeParameters()
+     * @see #getGenericTypeParameterReference()
+     * @generated
+     */
+    EReference getGenericTypeParameterReference_TypeParameters();
 
     /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.Action <em>Action</em>}'.
@@ -3091,6 +3488,16 @@ public interface SCChartsPackage extends EPackage {
     EAttribute getDataflowAssignment_Sequential();
 
     /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.GenericTypeScopeCall <em>Generic Type Scope Call</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Generic Type Scope Call</em>'.
+     * @see de.cau.cs.kieler.sccharts.GenericTypeScopeCall
+     * @generated
+     */
+    EClass getGenericTypeScopeCall();
+
+    /**
      * Returns the meta object for enum '{@link de.cau.cs.kieler.sccharts.PreemptionType <em>Preemption Type</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -3213,6 +3620,14 @@ public interface SCChartsPackage extends EPackage {
         EReference SCOPE__REFERENCE = eINSTANCE.getScope_Reference();
 
         /**
+         * The meta object literal for the '<em><b>Generics</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference SCOPE__GENERICS = eINSTANCE.getScope_Generics();
+
+        /**
          * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.ScopeCallImpl <em>Scope Call</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -3237,6 +3652,78 @@ public interface SCChartsPackage extends EPackage {
          * @generated
          */
         EAttribute SCOPE_CALL__SUPER = eINSTANCE.getScopeCall_Super();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.GenericTypeParameterDeclarationImpl <em>Generic Type Parameter Declaration</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.sccharts.impl.GenericTypeParameterDeclarationImpl
+         * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getGenericTypeParameterDeclaration()
+         * @generated
+         */
+        EClass GENERIC_TYPE_PARAMETER_DECLARATION = eINSTANCE.getGenericTypeParameterDeclaration();
+
+        /**
+         * The meta object literal for the '<em><b>Type</b></em>' containment reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference GENERIC_TYPE_PARAMETER_DECLARATION__TYPE = eINSTANCE.getGenericTypeParameterDeclaration_Type();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.GenericTypeParameterImpl <em>Generic Type Parameter</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.sccharts.impl.GenericTypeParameterImpl
+         * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getGenericTypeParameter()
+         * @generated
+         */
+        EClass GENERIC_TYPE_PARAMETER = eINSTANCE.getGenericTypeParameter();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.ParameterizedReferenceDeclarationImpl <em>Parameterized Reference Declaration</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.sccharts.impl.ParameterizedReferenceDeclarationImpl
+         * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getParameterizedReferenceDeclaration()
+         * @generated
+         */
+        EClass PARAMETERIZED_REFERENCE_DECLARATION = eINSTANCE.getParameterizedReferenceDeclaration();
+
+        /**
+         * The meta object literal for the '<em><b>Type Parameters</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference PARAMETERIZED_REFERENCE_DECLARATION__TYPE_PARAMETERS = eINSTANCE.getParameterizedReferenceDeclaration_TypeParameters();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.GenericTypeParameterReferenceImpl <em>Generic Type Parameter Reference</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.sccharts.impl.GenericTypeParameterReferenceImpl
+         * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getGenericTypeParameterReference()
+         * @generated
+         */
+        EClass GENERIC_TYPE_PARAMETER_REFERENCE = eINSTANCE.getGenericTypeParameterReference();
+
+        /**
+         * The meta object literal for the '<em><b>Target</b></em>' reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference GENERIC_TYPE_PARAMETER_REFERENCE__TARGET = eINSTANCE.getGenericTypeParameterReference_Target();
+
+        /**
+         * The meta object literal for the '<em><b>Type Parameters</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference GENERIC_TYPE_PARAMETER_REFERENCE__TYPE_PARAMETERS = eINSTANCE.getGenericTypeParameterReference_TypeParameters();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.ActionImpl <em>Action</em>}' class.
@@ -3685,6 +4172,16 @@ public interface SCChartsPackage extends EPackage {
          * @generated
          */
         EAttribute DATAFLOW_ASSIGNMENT__SEQUENTIAL = eINSTANCE.getDataflowAssignment_Sequential();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.GenericTypeScopeCallImpl <em>Generic Type Scope Call</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.sccharts.impl.GenericTypeScopeCallImpl
+         * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getGenericTypeScopeCall()
+         * @generated
+         */
+        EClass GENERIC_TYPE_SCOPE_CALL = eINSTANCE.getGenericTypeScopeCall();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.PreemptionType <em>Preemption Type</em>}' enum.

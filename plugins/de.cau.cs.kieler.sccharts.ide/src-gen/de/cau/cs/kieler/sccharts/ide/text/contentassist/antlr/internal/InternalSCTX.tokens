@@ -15,7 +15,7 @@
 '+'=23
 '++'=80
 '+='=67
-','=101
+','=100
 '-'=24
 '--'=81
 '-='=68
@@ -63,19 +63,19 @@
 'delayed'=50
 'do'=112
 'during'=120
-'else'=129
+'else'=131
 'entry'=118
 'exit'=121
-'expression'=132
-'extends'=100
-'extern'=135
+'expression'=134
+'extends'=101
+'extern'=127
 'fby'=36
 'final'=147
 'float'=61
 'for'=115
 'global'=136
 'go to'=44
-'goto'=127
+'goto'=129
 'history'=55
 'host'=38
 'if'=110
@@ -86,14 +86,14 @@
 'int'=60
 'is'=103
 'join to'=46
-'json'=133
+'json'=135
 'label'=113
 'max'=89
 'max='=79
 'method'=125
 'min'=90
 'min='=78
-'module'=126
+'module'=128
 'nondeterministic'=151
 'none'=88
 'null'=143
@@ -110,13 +110,13 @@
 'pure'=58
 'random'=141
 'randomize'=139
-'ref'=134
+'ref'=126
 'region'=114
 'reset'=53
-'return'=128
+'return'=130
 'scchart'=97
 'schedule'=104
-'scope'=131
+'scope'=133
 'seq'=153
 'sfby'=37
 'shallow history'=54
@@ -134,7 +134,7 @@
 'violation'=148
 'void'=94
 'weak'=47
-'while'=130
+'while'=132
 '{'=98
 '|'=20
 '|='=73

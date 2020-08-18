@@ -17,6 +17,7 @@ import de.cau.cs.kieler.annotations.AnnotationsPackage;
 import de.cau.cs.kieler.annotations.Nameable;
 import de.cau.cs.kieler.annotations.NamedObject;
 import de.cau.cs.kieler.annotations.impl.AnnotatableImpl;
+import de.cau.cs.kieler.kexpressions.Call;
 import de.cau.cs.kieler.kexpressions.Declaration;
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.kexpressions.Schedulable;
@@ -26,11 +27,11 @@ import de.cau.cs.kieler.kexpressions.keffects.Link;
 import de.cau.cs.kieler.kexpressions.keffects.Linkable;
 import de.cau.cs.kieler.kexpressions.kext.DeclarationScope;
 import de.cau.cs.kieler.kexpressions.kext.KExtPackage;
+import de.cau.cs.kieler.sccharts.GenericTypeParameter;
+import de.cau.cs.kieler.sccharts.GenericTypeParameterDeclaration;
 import de.cau.cs.kieler.sccharts.LocalAction;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
 import de.cau.cs.kieler.sccharts.Scope;
-
-import de.cau.cs.kieler.sccharts.ScopeCall;
 import java.util.Collection;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -62,6 +63,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getLabel <em>Label</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getActions <em>Actions</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getReference <em>Reference</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getGenerics <em>Generics</em>}</li>
  * </ul>
  *
  * @generated
@@ -172,7 +174,17 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
      * @generated
      * @ordered
      */
-    protected ScopeCall reference;
+    protected Call reference;
+
+    /**
+     * The cached value of the '{@link #getGenerics() <em>Generics</em>}' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getGenerics()
+     * @generated
+     * @ordered
+     */
+    protected EList<GenericTypeParameterDeclaration> generics;
 
     /**
      * <!-- begin-user-doc -->
@@ -238,7 +250,7 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
      * @generated
      */
     @Override
-    public ScopeCall getReference() {
+    public Call getReference() {
         return reference;
     }
 
@@ -247,8 +259,8 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
      * <!-- end-user-doc -->
      * @generated
      */
-    public NotificationChain basicSetReference(ScopeCall newReference, NotificationChain msgs) {
-        ScopeCall oldReference = reference;
+    public NotificationChain basicSetReference(Call newReference, NotificationChain msgs) {
+        Call oldReference = reference;
         reference = newReference;
         if (eNotificationRequired()) {
             ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SCChartsPackage.SCOPE__REFERENCE, oldReference, newReference);
@@ -263,7 +275,7 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
      * @generated
      */
     @Override
-    public void setReference(ScopeCall newReference) {
+    public void setReference(Call newReference) {
         if (newReference != reference) {
             NotificationChain msgs = null;
             if (reference != null)
@@ -275,6 +287,19 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
         }
         else if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.SCOPE__REFERENCE, newReference, newReference));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EList<GenericTypeParameterDeclaration> getGenerics() {
+        if (generics == null) {
+            generics = new EObjectContainmentEList<GenericTypeParameterDeclaration>(GenericTypeParameterDeclaration.class, this, SCChartsPackage.SCOPE__GENERICS);
+        }
+        return generics;
     }
 
     /**
@@ -387,6 +412,8 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
                 return ((InternalEList<?>)getActions()).basicRemove(otherEnd, msgs);
             case SCChartsPackage.SCOPE__REFERENCE:
                 return basicSetReference(null, msgs);
+            case SCChartsPackage.SCOPE__GENERICS:
+                return ((InternalEList<?>)getGenerics()).basicRemove(otherEnd, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
@@ -415,6 +442,8 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
                 return getActions();
             case SCChartsPackage.SCOPE__REFERENCE:
                 return getReference();
+            case SCChartsPackage.SCOPE__GENERICS:
+                return getGenerics();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -455,7 +484,11 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
                 getActions().addAll((Collection<? extends LocalAction>)newValue);
                 return;
             case SCChartsPackage.SCOPE__REFERENCE:
-                setReference((ScopeCall)newValue);
+                setReference((Call)newValue);
+                return;
+            case SCChartsPackage.SCOPE__GENERICS:
+                getGenerics().clear();
+                getGenerics().addAll((Collection<? extends GenericTypeParameterDeclaration>)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -491,7 +524,10 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
                 getActions().clear();
                 return;
             case SCChartsPackage.SCOPE__REFERENCE:
-                setReference((ScopeCall)null);
+                setReference((Call)null);
+                return;
+            case SCChartsPackage.SCOPE__GENERICS:
+                getGenerics().clear();
                 return;
         }
         super.eUnset(featureID);
@@ -521,6 +557,8 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
                 return actions != null && !actions.isEmpty();
             case SCChartsPackage.SCOPE__REFERENCE:
                 return reference != null;
+            case SCChartsPackage.SCOPE__GENERICS:
+                return generics != null && !generics.isEmpty();
         }
         return super.eIsSet(featureID);
     }
@@ -562,6 +600,11 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
                 default: return -1;
             }
         }
+        if (baseClass == GenericTypeParameter.class) {
+            switch (derivedFeatureID) {
+                default: return -1;
+            }
+        }
         return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
     }
 
@@ -599,6 +642,11 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
             switch (baseFeatureID) {
                 case KEffectsPackage.LINKABLE__OUTGOING_LINKS: return SCChartsPackage.SCOPE__OUTGOING_LINKS;
                 case KEffectsPackage.LINKABLE__INCOMING_LINKS: return SCChartsPackage.SCOPE__INCOMING_LINKS;
+                default: return -1;
+            }
+        }
+        if (baseClass == GenericTypeParameter.class) {
+            switch (baseFeatureID) {
                 default: return -1;
             }
         }

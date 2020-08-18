@@ -5,14 +5,19 @@ package de.cau.cs.kieler.sccharts.text.scoping
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.kexpressions.AccessModifier
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage
+import de.cau.cs.kieler.kexpressions.MethodDeclaration
 import de.cau.cs.kieler.kexpressions.Parameter
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.kext.scoping.KExtScopeProvider
 import de.cau.cs.kieler.sccharts.ControlflowRegion
+import de.cau.cs.kieler.sccharts.DataflowRegion
+import de.cau.cs.kieler.sccharts.GenericTypeParameterDeclaration
 import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.SCChartsPackage
@@ -22,18 +27,14 @@ import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsInheritanceExtensions
+import de.cau.cs.kieler.scl.Loop
+import de.cau.cs.kieler.scl.MethodImplementationDeclaration
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EReference
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.scoping.IScope
 import org.eclipse.xtext.scoping.Scopes
 import org.eclipse.xtext.xbase.lib.Functions.Function1
-import de.cau.cs.kieler.kexpressions.MethodDeclaration
-import de.cau.cs.kieler.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.sccharts.DataflowRegion
-import de.cau.cs.kieler.kexpressions.AccessModifier
-import de.cau.cs.kieler.scl.Loop
-import de.cau.cs.kieler.scl.MethodImplementationDeclaration
 
 /**
  * This class contains custom scoping description.
@@ -85,7 +86,7 @@ class SCTXScopeProvider extends KExtScopeProvider {
     }
     
     protected def IScope getScopeForRegion(Region region, EReference reference) {
-        if (reference.name.equals("scope")) {
+        if (reference == SCChartsPackage.Literals.SCOPE_CALL__TARGET) {
             return SCTXScopes.scopeFor(region.nextSuperStateWithBaseStates.allVisibleInheritedRegions)
         }
         
@@ -93,8 +94,15 @@ class SCTXScopeProvider extends KExtScopeProvider {
     }
     
     protected def IScope getScopeForScopeCall(ScopeCall scopeCall, EReference reference) {
-        if (reference.name.equals("scope")) {
+        if (reference == SCChartsPackage.Literals.SCOPE_CALL__TARGET) {
             if (scopeCall.eContainer instanceof State) {
+                var rootState = scopeCall as EObject
+                while (rootState !== null && !(rootState instanceof State && rootState.eContainer instanceof SCCharts)) {
+                    rootState = rootState.eContainer
+                }
+                if (rootState instanceof State && !(rootState as State).generics.nullOrEmpty) {
+                    return SCTXScopes.scopeFor((rootState as State).generics, scopeCall.eResource.allAvailableRootStates)
+                }
                 return scopeCall.eResource.allAvailableRootStates
             } else if (scopeCall.eContainer instanceof Region) {
                 return SCTXScopes.scopeFor((scopeCall.eContainer as Scope).nextSuperStateWithBaseStates.getAllVisibleInheritedRegions(!scopeCall.super))
@@ -107,18 +115,23 @@ class SCTXScopeProvider extends KExtScopeProvider {
     }
         
     override IScope getScopeForParameter(Parameter parameter, EReference reference) {        
-        if (reference.name.equals("explicitBinding")) {
+        if (reference == KExpressionsPackage.Literals.PARAMETER__EXPLICIT_BINDING) {
             val voCandidates = <ValuedObject> newArrayList
             
             val scopeCall = parameter.eContainer as ScopeCall
-            if (scopeCall !== null && scopeCall.scope !== null) {
-                val scope = scopeCall.scope
-                for (declaration : scope.variableDeclarations.filter[ input || output ]) {
-                    voCandidates += declaration.valuedObjects
+            if (scopeCall !== null && scopeCall.target !== null) {
+                var target = scopeCall.target
+                while (target instanceof GenericTypeParameterDeclaration) {
+                    target = target.type
+                }
+                if (target instanceof Scope) {
+                    for (declaration : target.variableDeclarations.filter[ input || output ]) {
+                        voCandidates += declaration.valuedObjects
+                    }
                 }
                 // Inherited Decls
-                if (scope instanceof State) {
-                    for (declaration : scope.allVisibleInheritedDeclarations.filter(VariableDeclaration).filter[ input || output ]) {
+                if (target instanceof State) {
+                    for (declaration : target.allVisibleInheritedDeclarations.filter(VariableDeclaration).filter[ input || output ]) {
                         voCandidates += declaration.valuedObjects
                     }
                 }

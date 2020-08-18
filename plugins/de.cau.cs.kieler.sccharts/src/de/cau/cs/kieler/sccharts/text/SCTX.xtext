@@ -29,13 +29,13 @@ SCCharts returns sccharts::SCCharts:
 RootState returns sccharts::State:
 	annotations+=Annotation*
 	'scchart' name=ExtendedID label=STRING?
+	('<' generics += GenericTypeParameterDeclaration (',' generics += GenericTypeParameterDeclaration)* '>')?
 	('extends' baseStates += [sccharts::State|ID] (',' baseStates += [sccharts::State|ID])*)?
 	'{'
 		declarations+=DeclarationOrMethodWithKeywordWOSemicolon*
 		actions+=LocalAction*
 		(regions+=ImplicitControlflowRegion | regions+=Region*)
 	'}';
-    
 
 State returns sccharts::State:
 	annotations+=Annotation*
@@ -45,7 +45,7 @@ State returns sccharts::State:
 	connector?='connector'?
 	=>'state' name=ID label=STRING?
 	((
-	    'is' reference = ScopeCall
+	    'is' reference = (ScopeCall | GenericTypeScopeCall)
 	    ('schedule' schedule+=ScheduleObjectReference+)?
 	)|(
 	    ('extends' baseStates += [sccharts::State|ID] (',' baseStates += [sccharts::State|ID])*)?
@@ -316,6 +316,43 @@ KeywordMethodDeclarationWOSemicolon returns kexpressions::MethodDeclaration:
         declarations+=Declaration*
         statements+=Statement*
     '}')?
+;
+
+
+// ---------------- //
+//  Generics Rules  // 
+// ---------------- //
+
+GenericTypeParameterDeclaration returns sccharts::GenericTypeParameterDeclaration:
+    name=PrimeID
+    'is'
+    type=GenericTypeParameterReference
+;
+
+GenericTypeParameterReference returns sccharts::GenericTypeParameterReference:
+    target = [sccharts::GenericTypeParameter]
+    ('<' typeParameters += GenericTypeParameterReference (',' typeParameters += GenericTypeParameterReference)* '>')?
+;
+
+GenericTypeScopeCall returns sccharts::GenericTypeScopeCall:
+    target = [sccharts::GenericTypeParameter]
+    ('<' typeParameters += GenericTypeParameterReference (',' typeParameters += GenericTypeParameterReference)* '>')?
+    (('(' parameters += ScopeParameter (',' parameters += ScopeParameter)* ')') | '(' ')')?
+;
+
+@Override
+ReferenceDeclarationWOSemicolon returns kexpressions::ReferenceDeclaration:
+    {sccharts::ParameterizedReferenceDeclaration}
+    annotations+=Annotation*
+    access=AccessModifier?
+    ((
+        'ref' reference = [annotations::NamedObject|NamespaceID]
+        ('<' typeParameters += GenericTypeParameterReference (',' typeParameters += GenericTypeParameterReference)* '>')?
+    ) | (
+        'extern' extern += ExternString (',' extern += ExternString)*
+    ))
+    valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
+    annotations+=CommentAnnotatonSL?
 ;
 
 // ------------ //

@@ -30,6 +30,7 @@ public abstract class AbstractSCTXSyntacticSequencer extends AbstractSyntacticSe
 	protected AbstractElementAlias match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_1_0__a;
 	protected AbstractElementAlias match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_1_0__p;
 	protected AbstractElementAlias match_DataflowRegion_ColonKeyword_9_1_0_or___LeftCurlyBracketKeyword_9_0_0_RightCurlyBracketKeyword_9_0_3__;
+	protected AbstractElementAlias match_GenericTypeScopeCall___LeftParenthesisKeyword_2_1_0_RightParenthesisKeyword_2_1_1__q;
 	protected AbstractElementAlias match_KeywordMethodDeclarationWOSemicolon___LeftCurlyBracketKeyword_8_0_RightCurlyBracketKeyword_8_4__q;
 	protected AbstractElementAlias match_MethodDeclarationWOSemicolon___LeftCurlyBracketKeyword_7_0_RightCurlyBracketKeyword_7_4__q;
 	protected AbstractElementAlias match_MethodDeclaration_SemicolonKeyword_7_0_or___LeftCurlyBracketKeyword_7_1_0_RightCurlyBracketKeyword_7_1_4__;
@@ -52,6 +53,7 @@ public abstract class AbstractSCTXSyntacticSequencer extends AbstractSyntacticSe
 		match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_1_0__a = new GroupAlias(true, true, new TokenAlias(true, true, grammarAccess.getAtomicValuedExpressionAccess().getLeftParenthesisKeyword_4_0()), new TokenAlias(false, false, grammarAccess.getAtomicExpressionAccess().getLeftParenthesisKeyword_1_0()));
 		match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_1_0__p = new GroupAlias(true, false, new TokenAlias(true, true, grammarAccess.getAtomicValuedExpressionAccess().getLeftParenthesisKeyword_4_0()), new TokenAlias(false, false, grammarAccess.getAtomicExpressionAccess().getLeftParenthesisKeyword_1_0()));
 		match_DataflowRegion_ColonKeyword_9_1_0_or___LeftCurlyBracketKeyword_9_0_0_RightCurlyBracketKeyword_9_0_3__ = new AlternativeAlias(false, false, new GroupAlias(false, false, new TokenAlias(false, false, grammarAccess.getDataflowRegionAccess().getLeftCurlyBracketKeyword_9_0_0()), new TokenAlias(false, false, grammarAccess.getDataflowRegionAccess().getRightCurlyBracketKeyword_9_0_3())), new TokenAlias(false, false, grammarAccess.getDataflowRegionAccess().getColonKeyword_9_1_0()));
+		match_GenericTypeScopeCall___LeftParenthesisKeyword_2_1_0_RightParenthesisKeyword_2_1_1__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getGenericTypeScopeCallAccess().getLeftParenthesisKeyword_2_1_0()), new TokenAlias(false, false, grammarAccess.getGenericTypeScopeCallAccess().getRightParenthesisKeyword_2_1_1()));
 		match_KeywordMethodDeclarationWOSemicolon___LeftCurlyBracketKeyword_8_0_RightCurlyBracketKeyword_8_4__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getKeywordMethodDeclarationWOSemicolonAccess().getLeftCurlyBracketKeyword_8_0()), new TokenAlias(false, false, grammarAccess.getKeywordMethodDeclarationWOSemicolonAccess().getRightCurlyBracketKeyword_8_4()));
 		match_MethodDeclarationWOSemicolon___LeftCurlyBracketKeyword_7_0_RightCurlyBracketKeyword_7_4__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getMethodDeclarationWOSemicolonAccess().getLeftCurlyBracketKeyword_7_0()), new TokenAlias(false, false, grammarAccess.getMethodDeclarationWOSemicolonAccess().getRightCurlyBracketKeyword_7_4()));
 		match_MethodDeclaration_SemicolonKeyword_7_0_or___LeftCurlyBracketKeyword_7_1_0_RightCurlyBracketKeyword_7_1_4__ = new AlternativeAlias(false, false, new GroupAlias(false, false, new TokenAlias(false, false, grammarAccess.getMethodDeclarationAccess().getLeftCurlyBracketKeyword_7_1_0()), new TokenAlias(false, false, grammarAccess.getMethodDeclarationAccess().getRightCurlyBracketKeyword_7_1_4())), new TokenAlias(false, false, grammarAccess.getMethodDeclarationAccess().getSemicolonKeyword_7_0()));
@@ -92,6 +94,8 @@ public abstract class AbstractSCTXSyntacticSequencer extends AbstractSyntacticSe
 				emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_1_0__p(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_DataflowRegion_ColonKeyword_9_1_0_or___LeftCurlyBracketKeyword_9_0_0_RightCurlyBracketKeyword_9_0_3__.equals(syntax))
 				emit_DataflowRegion_ColonKeyword_9_1_0_or___LeftCurlyBracketKeyword_9_0_0_RightCurlyBracketKeyword_9_0_3__(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_GenericTypeScopeCall___LeftParenthesisKeyword_2_1_0_RightParenthesisKeyword_2_1_1__q.equals(syntax))
+				emit_GenericTypeScopeCall___LeftParenthesisKeyword_2_1_0_RightParenthesisKeyword_2_1_1__q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_KeywordMethodDeclarationWOSemicolon___LeftCurlyBracketKeyword_8_0_RightCurlyBracketKeyword_8_4__q.equals(syntax))
 				emit_KeywordMethodDeclarationWOSemicolon___LeftCurlyBracketKeyword_8_0_RightCurlyBracketKeyword_8_4__q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_MethodDeclarationWOSemicolon___LeftCurlyBracketKeyword_7_0_RightCurlyBracketKeyword_7_4__q.equals(syntax))
@@ -250,6 +254,18 @@ public abstract class AbstractSCTXSyntacticSequencer extends AbstractSyntacticSe
 	 *     schedule+=ScheduleObjectReference (ambiguity) (rule end)
 	 */
 	protected void emit_DataflowRegion_ColonKeyword_9_1_0_or___LeftCurlyBracketKeyword_9_0_0_RightCurlyBracketKeyword_9_0_3__(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     ('(' ')')?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     target=[GenericTypeParameter|ID] (ambiguity) (rule end)
+	 *     typeParameters+=GenericTypeParameterReference '>' (ambiguity) (rule end)
+	 */
+	protected void emit_GenericTypeScopeCall___LeftParenthesisKeyword_2_1_0_RightParenthesisKeyword_2_1_1__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	

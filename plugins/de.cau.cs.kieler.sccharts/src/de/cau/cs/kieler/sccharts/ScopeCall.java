@@ -43,10 +43,6 @@ public interface ScopeCall extends Call {
     /**
      * Returns the value of the '<em><b>Scope</b></em>' reference.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Scope</em>' reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Scope</em>' reference.
      * @see #setScope(Scope)

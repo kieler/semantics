@@ -19,7 +19,6 @@ import de.cau.cs.kieler.kexpressions.ScheduleObjectReference;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
 import de.cau.cs.kieler.sccharts.Scope;
 import de.cau.cs.kieler.sccharts.ScopeCall;
-
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;

@@ -90,6 +90,11 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
             case SCChartsPackage.POLICY_REGION: return createPolicyRegion();
             case SCChartsPackage.CODE_EFFECT: return createCodeEffect();
             case SCChartsPackage.DATAFLOW_ASSIGNMENT: return createDataflowAssignment();
+            case SCChartsPackage.GENERIC_TYPE_SCOPE_CALL: return createGenericTypeScopeCall();
+            case SCChartsPackage.GENERIC_TYPE_PARAMETER_DECLARATION: return createGenericTypeParameterDeclaration();
+            case SCChartsPackage.GENERIC_TYPE_PARAMETER: return createGenericTypeParameter();
+            case SCChartsPackage.PARAMETERIZED_REFERENCE_DECLARATION: return createParameterizedReferenceDeclaration();
+            case SCChartsPackage.GENERIC_TYPE_PARAMETER_REFERENCE: return createGenericTypeParameterReference();
             default:
                 throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
         }
@@ -285,6 +290,17 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
+    public GenericTypeScopeCall createGenericTypeScopeCall() {
+        GenericTypeScopeCallImpl genericTypeScopeCall = new GenericTypeScopeCallImpl();
+        return genericTypeScopeCall;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public PreemptionType createPreemptionTypeFromString(EDataType eDataType, String initialValue) {
         PreemptionType result = PreemptionType.get(initialValue);
         if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
@@ -320,6 +336,50 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
     public ScopeCall createScopeCall() {
         ScopeCallImpl scopeCall = new ScopeCallImpl();
         return scopeCall;
+    }
+
+                /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public GenericTypeParameterDeclaration createGenericTypeParameterDeclaration() {
+        GenericTypeParameterDeclarationImpl genericTypeParameterDeclaration = new GenericTypeParameterDeclarationImpl();
+        return genericTypeParameterDeclaration;
+    }
+
+                /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public GenericTypeParameter createGenericTypeParameter() {
+        GenericTypeParameterImpl genericTypeParameter = new GenericTypeParameterImpl();
+        return genericTypeParameter;
+    }
+
+                /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public ParameterizedReferenceDeclaration createParameterizedReferenceDeclaration() {
+        ParameterizedReferenceDeclarationImpl parameterizedReferenceDeclaration = new ParameterizedReferenceDeclarationImpl();
+        return parameterizedReferenceDeclaration;
+    }
+
+                /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public GenericTypeParameterReference createGenericTypeParameterReference() {
+        GenericTypeParameterReferenceImpl genericTypeParameterReference = new GenericTypeParameterReferenceImpl();
+        return genericTypeParameterReference;
     }
 
                 /**

@@ -16,6 +16,7 @@ package de.cau.cs.kieler.sccharts;
 import de.cau.cs.kieler.annotations.Annotatable;
 
 import de.cau.cs.kieler.annotations.NamedObject;
+import de.cau.cs.kieler.kexpressions.Call;
 import de.cau.cs.kieler.kexpressions.Schedulable;
 import de.cau.cs.kieler.kexpressions.keffects.Linkable;
 import de.cau.cs.kieler.kexpressions.kext.DeclarationScope;
@@ -52,13 +53,14 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link de.cau.cs.kieler.sccharts.Scope#getLabel <em>Label</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.Scope#getActions <em>Actions</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.Scope#getReference <em>Reference</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.Scope#getGenerics <em>Generics</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getScope()
  * @model abstract="true"
  * @generated
  */
-public interface Scope extends Annotatable, DeclarationScope, NamedObject, Schedulable, Linkable {
+public interface Scope extends Annotatable, DeclarationScope, NamedObject, Schedulable, Linkable, GenericTypeParameter {
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -117,12 +119,12 @@ public interface Scope extends Annotatable, DeclarationScope, NamedObject, Sched
      * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Reference</em>' containment reference.
-     * @see #setReference(ScopeCall)
+     * @see #setReference(Call)
      * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getScope_Reference()
      * @model containment="true"
      * @generated
      */
-    ScopeCall getReference();
+    Call getReference();
 
     /**
      * Sets the value of the '{@link de.cau.cs.kieler.sccharts.Scope#getReference <em>Reference</em>}' containment reference.
@@ -132,6 +134,18 @@ public interface Scope extends Annotatable, DeclarationScope, NamedObject, Sched
      * @see #getReference()
      * @generated
      */
-    void setReference(ScopeCall value);
+    void setReference(Call value);
+
+    /**
+     * Returns the value of the '<em><b>Generics</b></em>' containment reference list.
+     * The list contents are of type {@link de.cau.cs.kieler.sccharts.GenericTypeParameterDeclaration}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Generics</em>' containment reference list.
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getScope_Generics()
+     * @model containment="true"
+     * @generated
+     */
+    EList<GenericTypeParameterDeclaration> getGenerics();
 
 } // Scope

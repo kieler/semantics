@@ -20,6 +20,7 @@ import de.cau.cs.kieler.annotations.Pragmatable;
 import de.cau.cs.kieler.kexpressions.Call;
 import de.cau.cs.kieler.kexpressions.Declaration;
 import de.cau.cs.kieler.kexpressions.Expression;
+import de.cau.cs.kieler.kexpressions.ReferenceDeclaration;
 import de.cau.cs.kieler.kexpressions.Schedulable;
 import de.cau.cs.kieler.kexpressions.VariableDeclaration;
 import de.cau.cs.kieler.kexpressions.keffects.Assignment;
@@ -175,6 +176,26 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
                 return createDataflowAssignmentAdapter();
             }
             @Override
+            public Adapter caseGenericTypeScopeCall(GenericTypeScopeCall object) {
+                return createGenericTypeScopeCallAdapter();
+            }
+            @Override
+            public Adapter caseGenericTypeParameterDeclaration(GenericTypeParameterDeclaration object) {
+                return createGenericTypeParameterDeclarationAdapter();
+            }
+            @Override
+            public Adapter caseGenericTypeParameter(GenericTypeParameter object) {
+                return createGenericTypeParameterAdapter();
+            }
+            @Override
+            public Adapter caseParameterizedReferenceDeclaration(ParameterizedReferenceDeclaration object) {
+                return createParameterizedReferenceDeclarationAdapter();
+            }
+            @Override
+            public Adapter caseGenericTypeParameterReference(GenericTypeParameterReference object) {
+                return createGenericTypeParameterReferenceAdapter();
+            }
+            @Override
             public Adapter casePragmatable(Pragmatable object) {
                 return createPragmatableAdapter();
             }
@@ -237,6 +258,10 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
             @Override
             public Adapter caseAssignment(Assignment object) {
                 return createAssignmentAdapter();
+            }
+            @Override
+            public Adapter caseReferenceDeclaration(ReferenceDeclaration object) {
+                return createReferenceDeclarationAdapter();
             }
             @Override
             public Adapter defaultCase(EObject object) {
@@ -367,6 +392,62 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createScopeCallAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.GenericTypeParameterDeclaration <em>Generic Type Parameter Declaration</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.sccharts.GenericTypeParameterDeclaration
+     * @generated
+     */
+    public Adapter createGenericTypeParameterDeclarationAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.GenericTypeParameter <em>Generic Type Parameter</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.sccharts.GenericTypeParameter
+     * @generated
+     */
+    public Adapter createGenericTypeParameterAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.ParameterizedReferenceDeclaration <em>Parameterized Reference Declaration</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.sccharts.ParameterizedReferenceDeclaration
+     * @generated
+     */
+    public Adapter createParameterizedReferenceDeclarationAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.GenericTypeParameterReference <em>Generic Type Parameter Reference</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.sccharts.GenericTypeParameterReference
+     * @generated
+     */
+    public Adapter createGenericTypeParameterReferenceAdapter() {
         return null;
     }
 
@@ -581,6 +662,20 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.GenericTypeScopeCall <em>Generic Type Scope Call</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.sccharts.GenericTypeScopeCall
+     * @generated
+     */
+    public Adapter createGenericTypeScopeCallAdapter() {
+        return null;
+    }
+
+    /**
      * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.annotations.Pragmatable <em>Pragmatable</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
@@ -717,6 +812,20 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createDeclarationAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.ReferenceDeclaration <em>Reference Declaration</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.kexpressions.ReferenceDeclaration
+     * @generated
+     */
+    public Adapter createReferenceDeclarationAdapter() {
         return null;
     }
 

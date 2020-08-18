@@ -59,6 +59,10 @@ import de.cau.cs.kieler.sccharts.DataflowRegion;
 import de.cau.cs.kieler.sccharts.DuringAction;
 import de.cau.cs.kieler.sccharts.EntryAction;
 import de.cau.cs.kieler.sccharts.ExitAction;
+import de.cau.cs.kieler.sccharts.GenericTypeParameterDeclaration;
+import de.cau.cs.kieler.sccharts.GenericTypeParameterReference;
+import de.cau.cs.kieler.sccharts.GenericTypeScopeCall;
+import de.cau.cs.kieler.sccharts.ParameterizedReferenceDeclaration;
 import de.cau.cs.kieler.sccharts.PeriodAction;
 import de.cau.cs.kieler.sccharts.PolicyClassDeclaration;
 import de.cau.cs.kieler.sccharts.PolicyRegion;
@@ -843,24 +847,8 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 				}
 				else break;
 			case KExpressionsPackage.REFERENCE_DECLARATION:
-				if (rule == grammarAccess.getDeclarationOrMethodWithKeywordWOSemicolonRule()
-						|| rule == grammarAccess.getDeclarationWOSemicolonRule()
-						|| rule == grammarAccess.getDeclarationOrMethodWOSemicolonRule()
-						|| rule == grammarAccess.getReferenceDeclarationWOSemicolonRule()) {
-					sequence_ReferenceDeclarationWOSemicolon(context, (ReferenceDeclaration) semanticObject); 
-					return; 
-				}
-				else if (rule == grammarAccess.getKExtDeclarationRule()
-						|| rule == grammarAccess.getReferenceDeclarationRule()) {
-					sequence_ReferenceDeclaration(context, (ReferenceDeclaration) semanticObject); 
-					return; 
-				}
-				else if (rule == grammarAccess.getDeclarationRule()
-						|| rule == grammarAccess.getDeclarationOrMethodRule()) {
-					sequence_ReferenceDeclaration_ReferenceDeclarationWOSemicolon(context, (ReferenceDeclaration) semanticObject); 
-					return; 
-				}
-				else break;
+				sequence_ReferenceDeclaration(context, (ReferenceDeclaration) semanticObject); 
+				return; 
 			case KExpressionsPackage.SCHEDULE_DECLARATION:
 				if (rule == grammarAccess.getDeclarationOrMethodWithKeywordWOSemicolonRule()
 						|| rule == grammarAccess.getDeclarationWOSemicolonRule()
@@ -1256,6 +1244,18 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 			case SCChartsPackage.EXIT_ACTION:
 				sequence_ExitAction(context, (ExitAction) semanticObject); 
 				return; 
+			case SCChartsPackage.GENERIC_TYPE_PARAMETER_DECLARATION:
+				sequence_GenericTypeParameterDeclaration(context, (GenericTypeParameterDeclaration) semanticObject); 
+				return; 
+			case SCChartsPackage.GENERIC_TYPE_PARAMETER_REFERENCE:
+				sequence_GenericTypeParameterReference(context, (GenericTypeParameterReference) semanticObject); 
+				return; 
+			case SCChartsPackage.GENERIC_TYPE_SCOPE_CALL:
+				sequence_GenericTypeScopeCall(context, (GenericTypeScopeCall) semanticObject); 
+				return; 
+			case SCChartsPackage.PARAMETERIZED_REFERENCE_DECLARATION:
+				sequence_ReferenceDeclarationWOSemicolon(context, (ParameterizedReferenceDeclaration) semanticObject); 
+				return; 
 			case SCChartsPackage.PERIOD_ACTION:
 				sequence_PeriodAction(context, (PeriodAction) semanticObject); 
 				return; 
@@ -1593,6 +1593,55 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	
 	/**
 	 * Contexts:
+	 *     GenericTypeParameterDeclaration returns GenericTypeParameterDeclaration
+	 *
+	 * Constraint:
+	 *     (name=PrimeID type=GenericTypeParameterReference)
+	 */
+	protected void sequence_GenericTypeParameterDeclaration(ISerializationContext context, GenericTypeParameterDeclaration semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, AnnotationsPackage.Literals.NAMED_OBJECT__NAME) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AnnotationsPackage.Literals.NAMED_OBJECT__NAME));
+			if (transientValues.isValueTransient(semanticObject, SCChartsPackage.Literals.GENERIC_TYPE_PARAMETER_DECLARATION__TYPE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SCChartsPackage.Literals.GENERIC_TYPE_PARAMETER_DECLARATION__TYPE));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getGenericTypeParameterDeclarationAccess().getNamePrimeIDParserRuleCall_0_0(), semanticObject.getName());
+		feeder.accept(grammarAccess.getGenericTypeParameterDeclarationAccess().getTypeGenericTypeParameterReferenceParserRuleCall_2_0(), semanticObject.getType());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     GenericTypeParameterReference returns GenericTypeParameterReference
+	 *
+	 * Constraint:
+	 *     (target=[GenericTypeParameter|ID] (typeParameters+=GenericTypeParameterReference typeParameters+=GenericTypeParameterReference*)?)
+	 */
+	protected void sequence_GenericTypeParameterReference(ISerializationContext context, GenericTypeParameterReference semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     GenericTypeScopeCall returns GenericTypeScopeCall
+	 *
+	 * Constraint:
+	 *     (
+	 *         target=[GenericTypeParameter|ID] 
+	 *         (typeParameters+=GenericTypeParameterReference typeParameters+=GenericTypeParameterReference*)? 
+	 *         (parameters+=ScopeParameter parameters+=ScopeParameter*)?
+	 *     )
+	 */
+	protected void sequence_GenericTypeScopeCall(ISerializationContext context, GenericTypeScopeCall semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     ImplicitControlflowRegion returns ControlflowRegion
 	 *
 	 * Constraint:
@@ -1694,30 +1743,27 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	
 	/**
 	 * Contexts:
-	 *     Declaration returns ReferenceDeclaration
-	 *     DeclarationOrMethod returns ReferenceDeclaration
+	 *     Declaration returns ParameterizedReferenceDeclaration
+	 *     DeclarationOrMethodWithKeywordWOSemicolon returns ParameterizedReferenceDeclaration
+	 *     ReferenceDeclarationWOSemicolon returns ParameterizedReferenceDeclaration
+	 *     DeclarationWOSemicolon returns ParameterizedReferenceDeclaration
+	 *     DeclarationOrMethod returns ParameterizedReferenceDeclaration
+	 *     DeclarationOrMethodWOSemicolon returns ParameterizedReferenceDeclaration
 	 *
 	 * Constraint:
 	 *     (
+	 *         annotations+=Annotation* 
+	 *         access=AccessModifier? 
 	 *         (
-	 *             annotations+=Annotation* 
-	 *             access=AccessModifier? 
-	 *             (reference=[NamedObject|NamespaceID] | (extern+=ExternString extern+=ExternString*)) 
-	 *             valuedObjects+=ValuedObject 
-	 *             valuedObjects+=ValuedObject* 
-	 *             annotations+=CommentAnnotatonSL?
-	 *         ) | 
-	 *         (
-	 *             annotations+=Annotation* 
-	 *             access=AccessModifier? 
-	 *             (reference=[NamedObject|NamespaceID] | (extern+=ExternString extern+=ExternString*)) 
-	 *             valuedObjects+=ValuedObject 
-	 *             valuedObjects+=ValuedObject* 
-	 *             annotations+=CommentAnnotatonSL?
-	 *         )
+	 *             (reference=[NamedObject|NamespaceID] (typeParameters+=GenericTypeParameterReference typeParameters+=GenericTypeParameterReference*)?) | 
+	 *             (extern+=ExternString extern+=ExternString*)
+	 *         ) 
+	 *         valuedObjects+=ValuedObject 
+	 *         valuedObjects+=ValuedObject* 
+	 *         annotations+=CommentAnnotatonSL?
 	 *     )
 	 */
-	protected void sequence_ReferenceDeclaration_ReferenceDeclarationWOSemicolon(ISerializationContext context, ReferenceDeclaration semanticObject) {
+	protected void sequence_ReferenceDeclarationWOSemicolon(ISerializationContext context, ParameterizedReferenceDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -1731,6 +1777,7 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	 *         annotations+=Annotation* 
 	 *         name=ExtendedID 
 	 *         label=STRING? 
+	 *         (generics+=GenericTypeParameterDeclaration generics+=GenericTypeParameterDeclaration*)? 
 	 *         (baseStates+=[State|ID] baseStates+=[State|ID]*)? 
 	 *         declarations+=DeclarationOrMethodWithKeywordWOSemicolon* 
 	 *         actions+=LocalAction* 
@@ -1829,7 +1876,7 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	 *         name=ID 
 	 *         label=STRING? 
 	 *         (
-	 *             (reference=ScopeCall schedule+=ScheduleObjectReference*) | 
+	 *             ((reference=ScopeCall | reference=GenericTypeScopeCall) schedule+=ScheduleObjectReference*) | 
 	 *             (
 	 *                 (baseStates+=[State|ID] baseStates+=[State|ID]*)? 
 	 *                 schedule+=ScheduleObjectReference* 
