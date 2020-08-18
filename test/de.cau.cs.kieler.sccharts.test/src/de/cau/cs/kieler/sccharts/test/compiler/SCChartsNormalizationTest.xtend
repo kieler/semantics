@@ -16,10 +16,10 @@ import de.cau.cs.kieler.kicool.compilation.Compile
 import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.text.SCTXStandaloneSetup
+import de.cau.cs.kieler.simulation.testing.TestModelData
 import de.cau.cs.kieler.test.common.repository.AbstractXTextModelRepositoryTest
 import de.cau.cs.kieler.test.common.repository.ModelsRepositoryTestRunner
 import de.cau.cs.kieler.test.common.repository.ModelsRepositoryTestRunner.StopOnFailure
-import de.cau.cs.kieler.test.common.repository.TestModelData
 import java.io.ByteArrayOutputStream
 import java.io.PrintWriter
 import java.io.StringWriter

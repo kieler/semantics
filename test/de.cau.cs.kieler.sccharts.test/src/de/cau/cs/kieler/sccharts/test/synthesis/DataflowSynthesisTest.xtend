@@ -12,20 +12,19 @@
  */
 package de.cau.cs.kieler.sccharts.test.synthesis
 
-import de.cau.cs.kieler.sccharts.SCCharts
-import de.cau.cs.kieler.sccharts.text.SCTXStandaloneSetup
-import de.cau.cs.kieler.test.common.repository.AbstractXTextModelRepositoryTest
-import de.cau.cs.kieler.test.common.repository.ModelsRepositoryTestRunner
-import de.cau.cs.kieler.test.common.repository.TestModelData
-import org.junit.Test
-import org.junit.runner.RunWith
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.klighd.LightDiagramServices
 import de.cau.cs.kieler.klighd.ViewContext
 import de.cau.cs.kieler.klighd.kgraph.KNode
+import de.cau.cs.kieler.sccharts.SCCharts
+import de.cau.cs.kieler.sccharts.text.SCTXStandaloneSetup
+import de.cau.cs.kieler.simulation.testing.TestModelData
+import de.cau.cs.kieler.test.common.repository.AbstractXTextModelRepositoryTest
+import de.cau.cs.kieler.test.common.repository.ModelsRepositoryTestRunner
+import org.junit.Test
+import org.junit.runner.RunWith
 
 import static org.junit.Assert.*
-import static org.junit.Assume.*
 
 /**
  * Tests if the new dependency analysis is as good as the old one.

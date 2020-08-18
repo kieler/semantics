@@ -14,11 +14,10 @@ package de.cau.cs.kieler.sccharts.test.simulation
 
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.text.SCTXStandaloneSetup
+import de.cau.cs.kieler.simulation.testing.TestModelData
 import de.cau.cs.kieler.test.common.repository.ModelsRepositoryTestRunner
-import de.cau.cs.kieler.test.common.repository.TestModelData
 import de.cau.cs.kieler.test.common.simulation.AbstractSimulationTest
 import java.util.List
-import org.junit.BeforeClass
 import org.junit.Test
 import org.junit.runner.RunWith
 

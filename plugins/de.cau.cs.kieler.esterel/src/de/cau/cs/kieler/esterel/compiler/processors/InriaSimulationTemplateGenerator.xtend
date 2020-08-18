@@ -59,7 +59,7 @@ class InriaSimulationTemplateGenerator extends AbstractTemplateGeneratorProcesso
         environment.setProperty(TemplateEngine.GENRAL_ENVIRONMENT, generalTemplateEnvironment)
         
         if (infra.sourceCode !== null) {
-            val structFiles = infra.sourceCode.files.filter(CCodeFile).filter[!naming.empty].toList
+            val structFiles = infra.sourceCode.files.filter(CCodeFile).filter[!library && !naming.empty].toList
             var structFile = structFiles.findFirst[header]
             if (structFile === null) {
                 structFile = structFiles.head

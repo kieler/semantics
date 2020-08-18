@@ -142,11 +142,13 @@ class SystemSelectionManager implements SelectionListener {
                         val system = newSystem as System
                         if (system.hasInput(modelClassFilter)) {
                             system.id = system.id + "." + new Date().time
-                            KiCoolRegistration.registerTemporarySystem(system)
                             Display.getDefault().asyncExec(new Runnable() {
                                 override run() {
-                                    system.addToPresortedList(file.rawLocation.makeAbsolute.toString)
-                                    system.id.systemEntryById.makeVisible
+                                    synchronized (SystemSelectionManager.this) {
+                                        KiCoolRegistration.registerTemporarySystem(system)
+                                        system.addToPresortedList(file.rawLocation.makeAbsolute.toString)
+                                        system.id.systemEntryById.makeVisible
+                                    }
                                 }
                             })
                         }
@@ -193,6 +195,13 @@ class SystemSelectionManager implements SelectionListener {
             system.addToPresortedList(null)
             visibleSystems.add(system.id)
         }
+        
+        for (entry : presortedSystems) {
+            if (visibleSystems.contains(entry.id)) {
+                combo.add(entry.showName)
+                index.add(entry)
+            }
+        }
 
         val editor = CompilerViewPartListener.getActiveEditor();
         if (editor !== null) {
@@ -208,15 +217,8 @@ class SystemSelectionManager implements SelectionListener {
             if(project !== null) {
                 currentProject = project
                 if (projectSystemFinder.state !== Job.RUNNING) {
-                    projectSystemFinder.schedule(10)
+                    projectSystemFinder.schedule(0)
                 }
-            }
-        }
-        
-        for (entry : presortedSystems) {
-            if (visibleSystems.contains(entry.id)) {
-                combo.add(entry.showName)
-                index.add(entry)
             }
         }
 
@@ -378,7 +380,7 @@ class SystemSelectionManager implements SelectionListener {
         return index.contains(entry)
     }
     
-    def makeVisible(SystemSelectionEntry entry) {
+    def synchronized makeVisible(SystemSelectionEntry entry) {
         if (index.contains(entry)) {
             return
         }

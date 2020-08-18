@@ -12,27 +12,26 @@
  */
 package de.cau.cs.kieler.sccharts.test.compiler
 
+import de.cau.cs.kieler.annotations.StringAnnotation
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.annotations.registry.AnnotationsRegistry
+import de.cau.cs.kieler.annotations.registry.AnnotationsType
+import de.cau.cs.kieler.kexpressions.keffects.DataDependency
+import de.cau.cs.kieler.kicool.compilation.CompilationSystem
 import de.cau.cs.kieler.kicool.compilation.Compile
 import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.text.SCTXStandaloneSetup
+import de.cau.cs.kieler.scg.SCGraphs
+import de.cau.cs.kieler.simulation.testing.TestModelData
 import de.cau.cs.kieler.test.common.repository.AbstractXTextModelRepositoryTest
 import de.cau.cs.kieler.test.common.repository.ModelsRepositoryTestRunner
-import de.cau.cs.kieler.test.common.repository.TestModelData
 import org.junit.Test
 import org.junit.runner.RunWith
-import de.cau.cs.kieler.kicool.compilation.CompilationSystem
-import de.cau.cs.kieler.scg.SCGraphs
-
-import de.cau.cs.kieler.kexpressions.keffects.DataDependency
-import de.cau.cs.kieler.annotations.registry.AnnotationsRegistry
-import de.cau.cs.kieler.annotations.registry.AnnotationsType
-import de.cau.cs.kieler.annotations.StringAnnotation
 
 import static de.cau.cs.kieler.kexpressions.keffects.DataDependencyType.*
 import static org.junit.Assert.*
 import static org.junit.Assume.*
-import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 
 /**
  * Tests if the new dependency analysis is as good as the old one.

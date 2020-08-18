@@ -3,4 +3,4 @@ public system de.cau.cs.kieler.scl.priority.c
 
 de.cau.cs.kieler.scl.processors.transformators.scl2scg
 system de.cau.cs.kieler.scg.priority
-de.cau.cs.kieler.scg.processors.sclp
+de.cau.cs.kieler.scg.processors.codegen.prio.c
