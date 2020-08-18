@@ -152,7 +152,6 @@ public class SCTXParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getScopeCallAccess().getGroup_2_0(), "rule__ScopeCall__Group_2_0__0");
 			builder.put(grammarAccess.getScopeCallAccess().getGroup_2_0_2(), "rule__ScopeCall__Group_2_0_2__0");
 			builder.put(grammarAccess.getScopeCallAccess().getGroup_2_1(), "rule__ScopeCall__Group_2_1__0");
-			builder.put(grammarAccess.getGenericTypeParameterDeclarationAccess().getGroup(), "rule__GenericTypeParameterDeclaration__Group__0");
 			builder.put(grammarAccess.getScopeParameterAccess().getGroup(), "rule__ScopeParameter__Group__0");
 			builder.put(grammarAccess.getScopeParameterAccess().getGroup_0_0(), "rule__ScopeParameter__Group_0_0__0");
 			builder.put(grammarAccess.getScopeParameterAccess().getGroup_1(), "rule__ScopeParameter__Group_1__0");
@@ -225,6 +224,7 @@ public class SCTXParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getKeywordMethodDeclarationWOSemicolonAccess().getGroup_6_0_2(), "rule__KeywordMethodDeclarationWOSemicolon__Group_6_0_2__0");
 			builder.put(grammarAccess.getKeywordMethodDeclarationWOSemicolonAccess().getGroup_7(), "rule__KeywordMethodDeclarationWOSemicolon__Group_7__0");
 			builder.put(grammarAccess.getKeywordMethodDeclarationWOSemicolonAccess().getGroup_8(), "rule__KeywordMethodDeclarationWOSemicolon__Group_8__0");
+			builder.put(grammarAccess.getGenericTypeParameterDeclarationAccess().getGroup(), "rule__GenericTypeParameterDeclaration__Group__0");
 			builder.put(grammarAccess.getGenericTypeParameterReferenceAccess().getGroup(), "rule__GenericTypeParameterReference__Group__0");
 			builder.put(grammarAccess.getGenericTypeParameterReferenceAccess().getGroup_1(), "rule__GenericTypeParameterReference__Group_1__0");
 			builder.put(grammarAccess.getGenericTypeParameterReferenceAccess().getGroup_1_2(), "rule__GenericTypeParameterReference__Group_1_2__0");
@@ -540,8 +540,6 @@ public class SCTXParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getScopeCallAccess().getScopeAssignment_1(), "rule__ScopeCall__ScopeAssignment_1");
 			builder.put(grammarAccess.getScopeCallAccess().getParametersAssignment_2_0_1(), "rule__ScopeCall__ParametersAssignment_2_0_1");
 			builder.put(grammarAccess.getScopeCallAccess().getParametersAssignment_2_0_2_1(), "rule__ScopeCall__ParametersAssignment_2_0_2_1");
-			builder.put(grammarAccess.getGenericTypeParameterDeclarationAccess().getNameAssignment_0(), "rule__GenericTypeParameterDeclaration__NameAssignment_0");
-			builder.put(grammarAccess.getGenericTypeParameterDeclarationAccess().getTypeAssignment_2(), "rule__GenericTypeParameterDeclaration__TypeAssignment_2");
 			builder.put(grammarAccess.getScopeParameterAccess().getAccessTypeAssignment_0_0_0(), "rule__ScopeParameter__AccessTypeAssignment_0_0_0");
 			builder.put(grammarAccess.getScopeParameterAccess().getExpressionAssignment_0_0_1(), "rule__ScopeParameter__ExpressionAssignment_0_0_1");
 			builder.put(grammarAccess.getScopeParameterAccess().getExpressionAssignment_0_1(), "rule__ScopeParameter__ExpressionAssignment_0_1");
@@ -683,6 +681,8 @@ public class SCTXParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getKeywordMethodDeclarationWOSemicolonAccess().getAnnotationsAssignment_8_1(), "rule__KeywordMethodDeclarationWOSemicolon__AnnotationsAssignment_8_1");
 			builder.put(grammarAccess.getKeywordMethodDeclarationWOSemicolonAccess().getDeclarationsAssignment_8_2(), "rule__KeywordMethodDeclarationWOSemicolon__DeclarationsAssignment_8_2");
 			builder.put(grammarAccess.getKeywordMethodDeclarationWOSemicolonAccess().getStatementsAssignment_8_3(), "rule__KeywordMethodDeclarationWOSemicolon__StatementsAssignment_8_3");
+			builder.put(grammarAccess.getGenericTypeParameterDeclarationAccess().getNameAssignment_0(), "rule__GenericTypeParameterDeclaration__NameAssignment_0");
+			builder.put(grammarAccess.getGenericTypeParameterDeclarationAccess().getTypeAssignment_2(), "rule__GenericTypeParameterDeclaration__TypeAssignment_2");
 			builder.put(grammarAccess.getGenericTypeParameterReferenceAccess().getTargetAssignment_0(), "rule__GenericTypeParameterReference__TargetAssignment_0");
 			builder.put(grammarAccess.getGenericTypeParameterReferenceAccess().getTypeParametersAssignment_1_1(), "rule__GenericTypeParameterReference__TypeParametersAssignment_1_1");
 			builder.put(grammarAccess.getGenericTypeParameterReferenceAccess().getTypeParametersAssignment_1_2_1(), "rule__GenericTypeParameterReference__TypeParametersAssignment_1_2_1");

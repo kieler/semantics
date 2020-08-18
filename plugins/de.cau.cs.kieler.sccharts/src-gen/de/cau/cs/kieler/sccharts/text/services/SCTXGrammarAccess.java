@@ -25,12 +25,11 @@ import org.eclipse.xtext.ParserRule;
 import org.eclipse.xtext.RuleCall;
 import org.eclipse.xtext.TerminalRule;
 import org.eclipse.xtext.common.services.TerminalsGrammarAccess;
-import org.eclipse.xtext.service.AbstractElementFinder.AbstractEnumRuleElementFinder;
-import org.eclipse.xtext.service.AbstractElementFinder.AbstractGrammarElementFinder;
+import org.eclipse.xtext.service.AbstractElementFinder;
 import org.eclipse.xtext.service.GrammarProvider;
 
 @Singleton
-public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
+public class SCTXGrammarAccess extends AbstractElementFinder.AbstractGrammarElementFinder {
 	
 	public class SCChartsElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.sccharts.text.SCTX.SCCharts");
@@ -614,39 +613,6 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//')'
 		public Keyword getRightParenthesisKeyword_2_1_1() { return cRightParenthesisKeyword_2_1_1; }
-	}
-	public class GenericTypeParameterDeclarationElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.sccharts.text.SCTX.GenericTypeParameterDeclaration");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Assignment cNameAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final RuleCall cNamePrimeIDParserRuleCall_0_0 = (RuleCall)cNameAssignment_0.eContents().get(0);
-		private final Keyword cIsKeyword_1 = (Keyword)cGroup.eContents().get(1);
-		private final Assignment cTypeAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cTypeGenericTypeParameterReferenceParserRuleCall_2_0 = (RuleCall)cTypeAssignment_2.eContents().get(0);
-		
-		//GenericTypeParameterDeclaration sccharts::GenericTypeParameterDeclaration:
-		//	name=PrimeID
-		//	'is'
-		//	type=GenericTypeParameterReference;
-		@Override public ParserRule getRule() { return rule; }
-		
-		//name=PrimeID 'is' type=GenericTypeParameterReference
-		public Group getGroup() { return cGroup; }
-		
-		//name=PrimeID
-		public Assignment getNameAssignment_0() { return cNameAssignment_0; }
-		
-		//PrimeID
-		public RuleCall getNamePrimeIDParserRuleCall_0_0() { return cNamePrimeIDParserRuleCall_0_0; }
-		
-		//'is'
-		public Keyword getIsKeyword_1() { return cIsKeyword_1; }
-		
-		//type=GenericTypeParameterReference
-		public Assignment getTypeAssignment_2() { return cTypeAssignment_2; }
-		
-		//GenericTypeParameterReference
-		public RuleCall getTypeGenericTypeParameterReferenceParserRuleCall_2_0() { return cTypeGenericTypeParameterReferenceParserRuleCall_2_0; }
 	}
 	public class ScopeParameterElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.sccharts.text.SCTX.ScopeParameter");
@@ -2970,6 +2936,42 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		//'}'
 		public Keyword getRightCurlyBracketKeyword_8_4() { return cRightCurlyBracketKeyword_8_4; }
 	}
+	public class GenericTypeParameterDeclarationElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.sccharts.text.SCTX.GenericTypeParameterDeclaration");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cNameAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cNamePrimeIDParserRuleCall_0_0 = (RuleCall)cNameAssignment_0.eContents().get(0);
+		private final Keyword cIsKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cTypeAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cTypeGenericTypeParameterReferenceParserRuleCall_2_0 = (RuleCall)cTypeAssignment_2.eContents().get(0);
+		
+		//// ---------------- //
+		////  Generics Rules  // 
+		//// ---------------- //
+		//GenericTypeParameterDeclaration sccharts::GenericTypeParameterDeclaration:
+		//	name=PrimeID
+		//	'is'
+		//	type=GenericTypeParameterReference;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//name=PrimeID 'is' type=GenericTypeParameterReference
+		public Group getGroup() { return cGroup; }
+		
+		//name=PrimeID
+		public Assignment getNameAssignment_0() { return cNameAssignment_0; }
+		
+		//PrimeID
+		public RuleCall getNamePrimeIDParserRuleCall_0_0() { return cNamePrimeIDParserRuleCall_0_0; }
+		
+		//'is'
+		public Keyword getIsKeyword_1() { return cIsKeyword_1; }
+		
+		//type=GenericTypeParameterReference
+		public Assignment getTypeAssignment_2() { return cTypeAssignment_2; }
+		
+		//GenericTypeParameterReference
+		public RuleCall getTypeGenericTypeParameterReferenceParserRuleCall_2_0() { return cTypeGenericTypeParameterReferenceParserRuleCall_2_0; }
+	}
 	public class GenericTypeParameterReferenceElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.sccharts.text.SCTX.GenericTypeParameterReference");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -2986,9 +2988,6 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cTypeParametersGenericTypeParameterReferenceParserRuleCall_1_2_1_0 = (RuleCall)cTypeParametersAssignment_1_2_1.eContents().get(0);
 		private final Keyword cGreaterThanSignKeyword_1_3 = (Keyword)cGroup_1.eContents().get(3);
 		
-		//// ---------------- //
-		////  Generics Rules  // 
-		//// ---------------- //
 		//GenericTypeParameterReference sccharts::GenericTypeParameterReference:
 		//	target=[sccharts::GenericTypeParameter] ('<' typeParameters+=GenericTypeParameterReference (','
 		//	typeParameters+=GenericTypeParameterReference)* '>')?;
@@ -3349,7 +3348,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		public Keyword getShallowKeyword_3() { return cShallowKeyword_3; }
 	}
 	
-	public class PreemptionTypeElements extends AbstractEnumRuleElementFinder {
+	public class PreemptionTypeElements extends AbstractElementFinder.AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.sccharts.text.SCTX.PreemptionType");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final EnumLiteralDeclaration cWEAKEnumLiteralDeclaration_0 = (EnumLiteralDeclaration)cAlternatives.eContents().get(0);
@@ -3384,7 +3383,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		//'join to'
 		public Keyword getTERMINATIONJoinToKeyword_2_0() { return cTERMINATIONJoinToKeyword_2_0; }
 	}
-	public class PreemptionActionTypeElements extends AbstractEnumRuleElementFinder {
+	public class PreemptionActionTypeElements extends AbstractElementFinder.AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.sccharts.text.SCTX.PreemptionActionType");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final EnumLiteralDeclaration cWEAKEnumLiteralDeclaration_0 = (EnumLiteralDeclaration)cAlternatives.eContents().get(0);
@@ -3411,7 +3410,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		//'strong'
 		public Keyword getSTRONGStrongKeyword_1_0() { return cSTRONGStrongKeyword_1_0; }
 	}
-	public class DelayTypeElements extends AbstractEnumRuleElementFinder {
+	public class DelayTypeElements extends AbstractElementFinder.AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.sccharts.text.SCTX.DelayType");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final EnumLiteralDeclaration cUNDEFINEDEnumLiteralDeclaration_0 = (EnumLiteralDeclaration)cAlternatives.eContents().get(0);
@@ -3454,7 +3453,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		//'auto'
 		public Keyword getAUTOMATICAutoKeyword_3_0() { return cAUTOMATICAutoKeyword_3_0; }
 	}
-	public class HistoryTypeElements extends AbstractEnumRuleElementFinder {
+	public class HistoryTypeElements extends AbstractElementFinder.AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.sccharts.text.SCTX.HistoryType");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final EnumLiteralDeclaration cRESETEnumLiteralDeclaration_0 = (EnumLiteralDeclaration)cAlternatives.eContents().get(0);
@@ -3489,7 +3488,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		//'history'
 		public Keyword getDEEPHistoryKeyword_2_0() { return cDEEPHistoryKeyword_2_0; }
 	}
-	public class DeferredTypeElements extends AbstractEnumRuleElementFinder {
+	public class DeferredTypeElements extends AbstractElementFinder.AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.sccharts.text.SCTX.DeferredType");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final EnumLiteralDeclaration cSHALLOWEnumLiteralDeclaration_0 = (EnumLiteralDeclaration)cAlternatives.eContents().get(0);
@@ -3516,7 +3515,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		//'deep deferred'
 		public Keyword getDEEPDeepDeferredKeyword_1_0() { return cDEEPDeepDeferredKeyword_1_0; }
 	}
-	public class ValueTypeElements extends AbstractEnumRuleElementFinder {
+	public class ValueTypeElements extends AbstractElementFinder.AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.sccharts.text.SCTX.ValueType");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final EnumLiteralDeclaration cPUREEnumLiteralDeclaration_0 = (EnumLiteralDeclaration)cAlternatives.eContents().get(0);
@@ -3585,7 +3584,6 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	private final StateElements pState;
 	private final ImplicitStateElements pImplicitState;
 	private final ScopeCallElements pScopeCall;
-	private final GenericTypeParameterDeclarationElements pGenericTypeParameterDeclaration;
 	private final ScopeParameterElements pScopeParameter;
 	private final TransitionElements pTransition;
 	private final RegionElements pRegion;
@@ -3611,6 +3609,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	private final PolicyTransitionElements pPolicyTransition;
 	private final DeclarationOrMethodWithKeywordWOSemicolonElements pDeclarationOrMethodWithKeywordWOSemicolon;
 	private final KeywordMethodDeclarationWOSemicolonElements pKeywordMethodDeclarationWOSemicolon;
+	private final GenericTypeParameterDeclarationElements pGenericTypeParameterDeclaration;
 	private final GenericTypeParameterReferenceElements pGenericTypeParameterReference;
 	private final GenericTypeScopeCallElements pGenericTypeScopeCall;
 	private final ReferenceDeclarationWOSemicolonElements pReferenceDeclarationWOSemicolon;
@@ -3656,7 +3655,6 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		this.pState = new StateElements();
 		this.pImplicitState = new ImplicitStateElements();
 		this.pScopeCall = new ScopeCallElements();
-		this.pGenericTypeParameterDeclaration = new GenericTypeParameterDeclarationElements();
 		this.pScopeParameter = new ScopeParameterElements();
 		this.pTransition = new TransitionElements();
 		this.pRegion = new RegionElements();
@@ -3682,6 +3680,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		this.pPolicyTransition = new PolicyTransitionElements();
 		this.pDeclarationOrMethodWithKeywordWOSemicolon = new DeclarationOrMethodWithKeywordWOSemicolonElements();
 		this.pKeywordMethodDeclarationWOSemicolon = new KeywordMethodDeclarationWOSemicolonElements();
+		this.pGenericTypeParameterDeclaration = new GenericTypeParameterDeclarationElements();
 		this.pGenericTypeParameterReference = new GenericTypeParameterReferenceElements();
 		this.pGenericTypeScopeCall = new GenericTypeScopeCallElements();
 		this.pReferenceDeclarationWOSemicolon = new ReferenceDeclarationWOSemicolonElements();
@@ -3820,18 +3819,6 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getScopeCallRule() {
 		return getScopeCallAccess().getRule();
-	}
-	
-	//GenericTypeParameterDeclaration sccharts::GenericTypeParameterDeclaration:
-	//	name=PrimeID
-	//	'is'
-	//	type=GenericTypeParameterReference;
-	public GenericTypeParameterDeclarationElements getGenericTypeParameterDeclarationAccess() {
-		return pGenericTypeParameterDeclaration;
-	}
-	
-	public ParserRule getGenericTypeParameterDeclarationRule() {
-		return getGenericTypeParameterDeclarationAccess().getRule();
 	}
 	
 	//ScopeParameter kexpressions::Parameter:
@@ -4198,6 +4185,18 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//// ---------------- //
 	////  Generics Rules  // 
 	//// ---------------- //
+	//GenericTypeParameterDeclaration sccharts::GenericTypeParameterDeclaration:
+	//	name=PrimeID
+	//	'is'
+	//	type=GenericTypeParameterReference;
+	public GenericTypeParameterDeclarationElements getGenericTypeParameterDeclarationAccess() {
+		return pGenericTypeParameterDeclaration;
+	}
+	
+	public ParserRule getGenericTypeParameterDeclarationRule() {
+		return getGenericTypeParameterDeclarationAccess().getRule();
+	}
+	
 	//GenericTypeParameterReference sccharts::GenericTypeParameterReference:
 	//	target=[sccharts::GenericTypeParameter] ('<' typeParameters+=GenericTypeParameterReference (','
 	//	typeParameters+=GenericTypeParameterReference)* '>')?;

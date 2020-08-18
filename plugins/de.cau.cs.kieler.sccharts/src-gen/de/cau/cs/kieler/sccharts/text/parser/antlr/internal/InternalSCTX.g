@@ -461,7 +461,7 @@ ruleState returns [EObject current=null]
 					if ($current==null) {
 						$current = createModelElement(grammarAccess.getStateRule());
 					}
-					setWithLastConsumed($current, "initial", true, "initial");
+					setWithLastConsumed($current, "initial", lv_initial_1_0 != null, "initial");
 				}
 			)
 		)?
@@ -475,7 +475,7 @@ ruleState returns [EObject current=null]
 					if ($current==null) {
 						$current = createModelElement(grammarAccess.getStateRule());
 					}
-					setWithLastConsumed($current, "final", true, "final");
+					setWithLastConsumed($current, "final", lv_final_2_0 != null, "final");
 				}
 			)
 		)?
@@ -489,7 +489,7 @@ ruleState returns [EObject current=null]
 					if ($current==null) {
 						$current = createModelElement(grammarAccess.getStateRule());
 					}
-					setWithLastConsumed($current, "violation", true, "violation");
+					setWithLastConsumed($current, "violation", lv_violation_3_0 != null, "violation");
 				}
 			)
 		)?
@@ -503,7 +503,7 @@ ruleState returns [EObject current=null]
 					if ($current==null) {
 						$current = createModelElement(grammarAccess.getStateRule());
 					}
-					setWithLastConsumed($current, "connector", true, "connector");
+					setWithLastConsumed($current, "connector", lv_connector_4_0 != null, "connector");
 				}
 			)
 		)?
@@ -875,7 +875,7 @@ ruleScopeCall returns [EObject current=null]
 					if ($current==null) {
 						$current = createModelElement(grammarAccess.getScopeCallRule());
 					}
-					setWithLastConsumed($current, "super", true, "super.");
+					setWithLastConsumed($current, "super", lv_super_0_0 != null, "super.");
 				}
 			)
 		)?
@@ -962,67 +962,6 @@ ruleScopeCall returns [EObject current=null]
 				}
 			)
 		)?
-	)
-;
-
-// Entry rule entryRuleGenericTypeParameterDeclaration
-entryRuleGenericTypeParameterDeclaration returns [EObject current=null]:
-	{ newCompositeNode(grammarAccess.getGenericTypeParameterDeclarationRule()); }
-	iv_ruleGenericTypeParameterDeclaration=ruleGenericTypeParameterDeclaration
-	{ $current=$iv_ruleGenericTypeParameterDeclaration.current; }
-	EOF;
-
-// Rule GenericTypeParameterDeclaration
-ruleGenericTypeParameterDeclaration returns [EObject current=null]
-@init {
-	enterRule();
-}
-@after {
-	leaveRule();
-}:
-	(
-		(
-			(
-				{
-					newCompositeNode(grammarAccess.getGenericTypeParameterDeclarationAccess().getNamePrimeIDParserRuleCall_0_0());
-				}
-				lv_name_0_0=rulePrimeID
-				{
-					if ($current==null) {
-						$current = createModelElementForParent(grammarAccess.getGenericTypeParameterDeclarationRule());
-					}
-					set(
-						$current,
-						"name",
-						lv_name_0_0,
-						"de.cau.cs.kieler.kexpressions.KExpressions.PrimeID");
-					afterParserOrEnumRuleCall();
-				}
-			)
-		)
-		otherlv_1='is'
-		{
-			newLeafNode(otherlv_1, grammarAccess.getGenericTypeParameterDeclarationAccess().getIsKeyword_1());
-		}
-		(
-			(
-				{
-					newCompositeNode(grammarAccess.getGenericTypeParameterDeclarationAccess().getTypeGenericTypeParameterReferenceParserRuleCall_2_0());
-				}
-				lv_type_2_0=ruleGenericTypeParameterReference
-				{
-					if ($current==null) {
-						$current = createModelElementForParent(grammarAccess.getGenericTypeParameterDeclarationRule());
-					}
-					set(
-						$current,
-						"type",
-						lv_type_2_0,
-						"de.cau.cs.kieler.sccharts.text.SCTX.GenericTypeParameterReference");
-					afterParserOrEnumRuleCall();
-				}
-			)
-		)
 	)
 ;
 
@@ -1320,7 +1259,7 @@ ruleTransition returns [EObject current=null]
 						if ($current==null) {
 							$current = createModelElement(grammarAccess.getTransitionRule());
 						}
-						setWithLastConsumed($current, "nondeterministic", true, "nondeterministic");
+						setWithLastConsumed($current, "nondeterministic", lv_nondeterministic_9_0 != null, "nondeterministic");
 					}
 				)
 			)?
@@ -1620,7 +1559,7 @@ ruleControlflowRegion returns [EObject current=null]
 					if ($current==null) {
 						$current = createModelElement(grammarAccess.getControlflowRegionRule());
 					}
-					setWithLastConsumed($current, "override", true, "override");
+					setWithLastConsumed($current, "override", lv_override_2_0 != null, "override");
 				}
 			)
 		)?
@@ -1634,7 +1573,7 @@ ruleControlflowRegion returns [EObject current=null]
 					if ($current==null) {
 						$current = createModelElement(grammarAccess.getControlflowRegionRule());
 					}
-					setWithLastConsumed($current, "final", true, "final");
+					setWithLastConsumed($current, "final", lv_final_3_0 != null, "final");
 				}
 			)
 		)?
@@ -2190,7 +2129,7 @@ ruleDataflowAssignment returns [EObject current=null]
 					if ($current==null) {
 						$current = createModelElement(grammarAccess.getDataflowAssignmentRule());
 					}
-					setWithLastConsumed($current, "sequential", true, "seq");
+					setWithLastConsumed($current, "sequential", lv_sequential_6_0 != null, "seq");
 				}
 			)
 		)?
@@ -2252,7 +2191,7 @@ ruleDataflowRegion returns [EObject current=null]
 					if ($current==null) {
 						$current = createModelElement(grammarAccess.getDataflowRegionRule());
 					}
-					setWithLastConsumed($current, "override", true, "override");
+					setWithLastConsumed($current, "override", lv_override_2_0 != null, "override");
 				}
 			)
 		)?
@@ -2405,7 +2344,7 @@ ruleDataflowRegion returns [EObject current=null]
 					if ($current==null) {
 						$current = createModelElement(grammarAccess.getDataflowRegionRule());
 					}
-					setWithLastConsumed($current, "once", true, "once");
+					setWithLastConsumed($current, "once", lv_once_14_0 != null, "once");
 				}
 			)
 		)?
@@ -3373,7 +3312,7 @@ ruleSuspendAction returns [EObject current=null]
 					if ($current==null) {
 						$current = createModelElement(grammarAccess.getSuspendActionRule());
 					}
-					setWithLastConsumed($current, "weak", true, "weak");
+					setWithLastConsumed($current, "weak", lv_weak_3_0 != null, "weak");
 				}
 			)
 		)?
@@ -3979,7 +3918,7 @@ ruleClassDeclarationWOSemicolon returns [EObject current=null]
 					if ($current==null) {
 						$current = createModelElement(grammarAccess.getClassDeclarationWOSemicolonRule());
 					}
-					setWithLastConsumed($current, "const", true, "const");
+					setWithLastConsumed($current, "const", lv_const_3_0 != null, "const");
 				}
 			)
 		)?
@@ -3993,7 +3932,7 @@ ruleClassDeclarationWOSemicolon returns [EObject current=null]
 					if ($current==null) {
 						$current = createModelElement(grammarAccess.getClassDeclarationWOSemicolonRule());
 					}
-					setWithLastConsumed($current, "input", true, "input");
+					setWithLastConsumed($current, "input", lv_input_4_0 != null, "input");
 				}
 			)
 		)?
@@ -4007,7 +3946,7 @@ ruleClassDeclarationWOSemicolon returns [EObject current=null]
 					if ($current==null) {
 						$current = createModelElement(grammarAccess.getClassDeclarationWOSemicolonRule());
 					}
-					setWithLastConsumed($current, "output", true, "output");
+					setWithLastConsumed($current, "output", lv_output_5_0 != null, "output");
 				}
 			)
 		)?
@@ -4021,7 +3960,7 @@ ruleClassDeclarationWOSemicolon returns [EObject current=null]
 					if ($current==null) {
 						$current = createModelElement(grammarAccess.getClassDeclarationWOSemicolonRule());
 					}
-					setWithLastConsumed($current, "global", true, "global");
+					setWithLastConsumed($current, "global", lv_global_6_0 != null, "global");
 				}
 			)
 		)?
@@ -4035,7 +3974,7 @@ ruleClassDeclarationWOSemicolon returns [EObject current=null]
 					if ($current==null) {
 						$current = createModelElement(grammarAccess.getClassDeclarationWOSemicolonRule());
 					}
-					setWithLastConsumed($current, "static", true, "static");
+					setWithLastConsumed($current, "static", lv_static_7_0 != null, "static");
 				}
 			)
 		)?
@@ -4049,7 +3988,7 @@ ruleClassDeclarationWOSemicolon returns [EObject current=null]
 					if ($current==null) {
 						$current = createModelElement(grammarAccess.getClassDeclarationWOSemicolonRule());
 					}
-					setWithLastConsumed($current, "host", true, "host");
+					setWithLastConsumed($current, "host", lv_host_8_0 != null, "host");
 				}
 			)
 		)?
@@ -4427,7 +4366,7 @@ rulePolicyState returns [EObject current=null]
 					if ($current==null) {
 						$current = createModelElement(grammarAccess.getPolicyStateRule());
 					}
-					setWithLastConsumed($current, "initial", true, "initial");
+					setWithLastConsumed($current, "initial", lv_initial_1_0 != null, "initial");
 				}
 			)
 		)?
@@ -4983,6 +4922,67 @@ ruleKeywordMethodDeclarationWOSemicolon returns [EObject current=null]
 				newLeafNode(otherlv_18, grammarAccess.getKeywordMethodDeclarationWOSemicolonAccess().getRightCurlyBracketKeyword_8_4());
 			}
 		)?
+	)
+;
+
+// Entry rule entryRuleGenericTypeParameterDeclaration
+entryRuleGenericTypeParameterDeclaration returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getGenericTypeParameterDeclarationRule()); }
+	iv_ruleGenericTypeParameterDeclaration=ruleGenericTypeParameterDeclaration
+	{ $current=$iv_ruleGenericTypeParameterDeclaration.current; }
+	EOF;
+
+// Rule GenericTypeParameterDeclaration
+ruleGenericTypeParameterDeclaration returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getGenericTypeParameterDeclarationAccess().getNamePrimeIDParserRuleCall_0_0());
+				}
+				lv_name_0_0=rulePrimeID
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getGenericTypeParameterDeclarationRule());
+					}
+					set(
+						$current,
+						"name",
+						lv_name_0_0,
+						"de.cau.cs.kieler.kexpressions.KExpressions.PrimeID");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)
+		otherlv_1='is'
+		{
+			newLeafNode(otherlv_1, grammarAccess.getGenericTypeParameterDeclarationAccess().getIsKeyword_1());
+		}
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getGenericTypeParameterDeclarationAccess().getTypeGenericTypeParameterReferenceParserRuleCall_2_0());
+				}
+				lv_type_2_0=ruleGenericTypeParameterReference
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getGenericTypeParameterDeclarationRule());
+					}
+					set(
+						$current,
+						"type",
+						lv_type_2_0,
+						"de.cau.cs.kieler.sccharts.text.SCTX.GenericTypeParameterReference");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)
 	)
 ;
 
@@ -5722,7 +5722,7 @@ ruleGoto returns [EObject current=null]
 					if ($current==null) {
 						$current = createModelElement(grammarAccess.getGotoRule());
 					}
-					setWithLastConsumed($current, "semicolon", true, ";");
+					setWithLastConsumed($current, "semicolon", lv_semicolon_3_0 != null, ";");
 				}
 			)
 		)?
@@ -5856,7 +5856,7 @@ ruleSclAssignment returns [EObject current=null]
 					if ($current==null) {
 						$current = createModelElement(grammarAccess.getSclAssignmentRule());
 					}
-					setWithLastConsumed($current, "semicolon", true, ";");
+					setWithLastConsumed($current, "semicolon", lv_semicolon_6_0 != null, ";");
 				}
 			)
 		)?
@@ -5971,7 +5971,7 @@ ruleSclPostfixAssignment returns [EObject current=null]
 					if ($current==null) {
 						$current = createModelElement(grammarAccess.getSclPostfixAssignmentRule());
 					}
-					setWithLastConsumed($current, "semicolon", true, ";");
+					setWithLastConsumed($current, "semicolon", lv_semicolon_5_0 != null, ";");
 				}
 			)
 		)?
@@ -6133,7 +6133,7 @@ ruleSclEffectAssignment returns [EObject current=null]
 					if ($current==null) {
 						$current = createModelElement(grammarAccess.getSclEffectAssignmentRule());
 					}
-					setWithLastConsumed($current, "semicolon", true, ";");
+					setWithLastConsumed($current, "semicolon", lv_semicolon_4_0 != null, ";");
 				}
 			)
 		)?
@@ -6354,7 +6354,7 @@ ruleConditional returns [EObject current=null]
 						if ($current==null) {
 							$current = createModelElement(grammarAccess.getConditionalRule());
 						}
-						setWithLastConsumed($current, "semicolon", true, ";");
+						setWithLastConsumed($current, "semicolon", lv_semicolon_8_0 != null, ";");
 					}
 				)
 			)
@@ -6467,7 +6467,7 @@ ruleElseScope returns [EObject current=null]
 					if ($current==null) {
 						$current = createModelElement(grammarAccess.getElseScopeRule());
 					}
-					setWithLastConsumed($current, "semicolon", true, ";");
+					setWithLastConsumed($current, "semicolon", lv_semicolon_7_0 != null, ";");
 				}
 			)
 		)?
@@ -6928,7 +6928,7 @@ ruleForLoop returns [EObject current=null]
 					if ($current==null) {
 						$current = createModelElement(grammarAccess.getForLoopRule());
 					}
-					setWithLastConsumed($current, "semicolon", true, ";");
+					setWithLastConsumed($current, "semicolon", lv_semicolon_13_0 != null, ";");
 				}
 			)
 		)?
@@ -7316,7 +7316,7 @@ ruleWhileLoop returns [EObject current=null]
 					if ($current==null) {
 						$current = createModelElement(grammarAccess.getWhileLoopRule());
 					}
-					setWithLastConsumed($current, "semicolon", true, ";");
+					setWithLastConsumed($current, "semicolon", lv_semicolon_8_0 != null, ";");
 				}
 			)
 		)?
@@ -8601,7 +8601,7 @@ ruleVariableDeclaration returns [EObject current=null]
 					if ($current==null) {
 						$current = createModelElement(grammarAccess.getVariableDeclarationRule());
 					}
-					setWithLastConsumed($current, "const", true, "const");
+					setWithLastConsumed($current, "const", lv_const_2_0 != null, "const");
 				}
 			)
 		)?
@@ -8615,7 +8615,7 @@ ruleVariableDeclaration returns [EObject current=null]
 					if ($current==null) {
 						$current = createModelElement(grammarAccess.getVariableDeclarationRule());
 					}
-					setWithLastConsumed($current, "input", true, "input");
+					setWithLastConsumed($current, "input", lv_input_3_0 != null, "input");
 				}
 			)
 		)?
@@ -8629,7 +8629,7 @@ ruleVariableDeclaration returns [EObject current=null]
 					if ($current==null) {
 						$current = createModelElement(grammarAccess.getVariableDeclarationRule());
 					}
-					setWithLastConsumed($current, "output", true, "output");
+					setWithLastConsumed($current, "output", lv_output_4_0 != null, "output");
 				}
 			)
 		)?
@@ -8643,7 +8643,7 @@ ruleVariableDeclaration returns [EObject current=null]
 					if ($current==null) {
 						$current = createModelElement(grammarAccess.getVariableDeclarationRule());
 					}
-					setWithLastConsumed($current, "global", true, "global");
+					setWithLastConsumed($current, "global", lv_global_5_0 != null, "global");
 				}
 			)
 		)?
@@ -8657,7 +8657,7 @@ ruleVariableDeclaration returns [EObject current=null]
 					if ($current==null) {
 						$current = createModelElement(grammarAccess.getVariableDeclarationRule());
 					}
-					setWithLastConsumed($current, "static", true, "static");
+					setWithLastConsumed($current, "static", lv_static_6_0 != null, "static");
 				}
 			)
 		)?
@@ -8673,7 +8673,7 @@ ruleVariableDeclaration returns [EObject current=null]
 							if ($current==null) {
 								$current = createModelElement(grammarAccess.getVariableDeclarationRule());
 							}
-							setWithLastConsumed($current, "signal", true, "signal");
+							setWithLastConsumed($current, "signal", lv_signal_7_0 != null, "signal");
 						}
 					)
 				)?
@@ -8708,7 +8708,7 @@ ruleVariableDeclaration returns [EObject current=null]
 						if ($current==null) {
 							$current = createModelElement(grammarAccess.getVariableDeclarationRule());
 						}
-						setWithLastConsumed($current, "signal", true, "signal");
+						setWithLastConsumed($current, "signal", lv_signal_9_0 != null, "signal");
 					}
 				)
 			)
@@ -8887,7 +8887,7 @@ ruleVariableDeclarationWOSemicolon returns [EObject current=null]
 					if ($current==null) {
 						$current = createModelElement(grammarAccess.getVariableDeclarationWOSemicolonRule());
 					}
-					setWithLastConsumed($current, "const", true, "const");
+					setWithLastConsumed($current, "const", lv_const_2_0 != null, "const");
 				}
 			)
 		)?
@@ -8901,7 +8901,7 @@ ruleVariableDeclarationWOSemicolon returns [EObject current=null]
 					if ($current==null) {
 						$current = createModelElement(grammarAccess.getVariableDeclarationWOSemicolonRule());
 					}
-					setWithLastConsumed($current, "input", true, "input");
+					setWithLastConsumed($current, "input", lv_input_3_0 != null, "input");
 				}
 			)
 		)?
@@ -8915,7 +8915,7 @@ ruleVariableDeclarationWOSemicolon returns [EObject current=null]
 					if ($current==null) {
 						$current = createModelElement(grammarAccess.getVariableDeclarationWOSemicolonRule());
 					}
-					setWithLastConsumed($current, "output", true, "output");
+					setWithLastConsumed($current, "output", lv_output_4_0 != null, "output");
 				}
 			)
 		)?
@@ -8929,7 +8929,7 @@ ruleVariableDeclarationWOSemicolon returns [EObject current=null]
 					if ($current==null) {
 						$current = createModelElement(grammarAccess.getVariableDeclarationWOSemicolonRule());
 					}
-					setWithLastConsumed($current, "global", true, "global");
+					setWithLastConsumed($current, "global", lv_global_5_0 != null, "global");
 				}
 			)
 		)?
@@ -8943,7 +8943,7 @@ ruleVariableDeclarationWOSemicolon returns [EObject current=null]
 					if ($current==null) {
 						$current = createModelElement(grammarAccess.getVariableDeclarationWOSemicolonRule());
 					}
-					setWithLastConsumed($current, "static", true, "static");
+					setWithLastConsumed($current, "static", lv_static_6_0 != null, "static");
 				}
 			)
 		)?
@@ -8959,7 +8959,7 @@ ruleVariableDeclarationWOSemicolon returns [EObject current=null]
 							if ($current==null) {
 								$current = createModelElement(grammarAccess.getVariableDeclarationWOSemicolonRule());
 							}
-							setWithLastConsumed($current, "signal", true, "signal");
+							setWithLastConsumed($current, "signal", lv_signal_7_0 != null, "signal");
 						}
 					)
 				)?
@@ -8994,7 +8994,7 @@ ruleVariableDeclarationWOSemicolon returns [EObject current=null]
 						if ($current==null) {
 							$current = createModelElement(grammarAccess.getVariableDeclarationWOSemicolonRule());
 						}
-						setWithLastConsumed($current, "signal", true, "signal");
+						setWithLastConsumed($current, "signal", lv_signal_9_0 != null, "signal");
 					}
 				)
 			)
@@ -9179,7 +9179,7 @@ ruleClassDeclaration returns [EObject current=null]
 					if ($current==null) {
 						$current = createModelElement(grammarAccess.getClassDeclarationRule());
 					}
-					setWithLastConsumed($current, "const", true, "const");
+					setWithLastConsumed($current, "const", lv_const_3_0 != null, "const");
 				}
 			)
 		)?
@@ -9193,7 +9193,7 @@ ruleClassDeclaration returns [EObject current=null]
 					if ($current==null) {
 						$current = createModelElement(grammarAccess.getClassDeclarationRule());
 					}
-					setWithLastConsumed($current, "input", true, "input");
+					setWithLastConsumed($current, "input", lv_input_4_0 != null, "input");
 				}
 			)
 		)?
@@ -9207,7 +9207,7 @@ ruleClassDeclaration returns [EObject current=null]
 					if ($current==null) {
 						$current = createModelElement(grammarAccess.getClassDeclarationRule());
 					}
-					setWithLastConsumed($current, "output", true, "output");
+					setWithLastConsumed($current, "output", lv_output_5_0 != null, "output");
 				}
 			)
 		)?
@@ -9221,7 +9221,7 @@ ruleClassDeclaration returns [EObject current=null]
 					if ($current==null) {
 						$current = createModelElement(grammarAccess.getClassDeclarationRule());
 					}
-					setWithLastConsumed($current, "global", true, "global");
+					setWithLastConsumed($current, "global", lv_global_6_0 != null, "global");
 				}
 			)
 		)?
@@ -9235,7 +9235,7 @@ ruleClassDeclaration returns [EObject current=null]
 					if ($current==null) {
 						$current = createModelElement(grammarAccess.getClassDeclarationRule());
 					}
-					setWithLastConsumed($current, "static", true, "static");
+					setWithLastConsumed($current, "static", lv_static_7_0 != null, "static");
 				}
 			)
 		)?
@@ -9249,7 +9249,7 @@ ruleClassDeclaration returns [EObject current=null]
 					if ($current==null) {
 						$current = createModelElement(grammarAccess.getClassDeclarationRule());
 					}
-					setWithLastConsumed($current, "host", true, "host");
+					setWithLastConsumed($current, "host", lv_host_8_0 != null, "host");
 				}
 			)
 		)?
