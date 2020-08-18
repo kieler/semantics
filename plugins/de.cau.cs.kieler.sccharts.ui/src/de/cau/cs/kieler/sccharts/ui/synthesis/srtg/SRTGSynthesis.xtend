@@ -89,7 +89,7 @@ class SRTGSynthesis extends AbstractDiagramSynthesis<Scope> {
         val rootNode = createNode();
         myRootNode = rootNode
         
-        rootNode.setLayoutOption(CoreOptions.ALGORITHM, "org.eclipse.elk.layered")
+        rootNode.setLayoutOption(CoreOptions.ALGORITHM, LayeredOptions.ALGORITHM_ID)
 //        rootNode.setLayoutOption(LayeredOptions.NODE_PLACEMENT_STRATEGY, NodePlacementStrategy.NETWORK_SIMPLEX)
         rootNode.setLayoutOption(CoreOptions.DIRECTION, Direction.DOWN)
         rootNode.setLayoutOption(CoreOptions::EDGE_ROUTING, EdgeRouting::SPLINES);

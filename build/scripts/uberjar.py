@@ -155,9 +155,9 @@ def main(args):
                 write_script(file, 'java -Djava.system.class.loader=de.cau.cs.kieler.kicool.cli.CLILoader -Xmx512m -jar %0 %* \r\n exit /b %%errorlevel%%\r\n', code)
             # osx
             with open(join(traget_dir, args.name + '-osx'), 'wb') as file:
-                write_script(file, '#!/usr/bin/env bash\nexec java -Djava.system.class.loader=de.cau.cs.kieler.kicool.cli.CLILoader -XstartOnFirstThread -Xmx512m %s -jar $0 "$@"' % java9_options, code)
+                write_script(file, '#!/usr/bin/env bash\nexec java -Djava.system.class.loader=de.cau.cs.kieler.kicool.cli.CLILoader -XstartOnFirstThread -Xmx512m %s -jar $0 "$@" \n' % java9_options, code)
             with open(join(traget_dir, args.name + '-osxJava8'), 'wb') as file:
-                write_script(file, '#!/usr/bin/env bash\nexec java -Djava.system.class.loader=de.cau.cs.kieler.kicool.cli.CLILoader -XstartOnFirstThread -Xmx512m -jar $0 "$@"', code)
+                write_script(file, '#!/usr/bin/env bash\nexec java -Djava.system.class.loader=de.cau.cs.kieler.kicool.cli.CLILoader -XstartOnFirstThread -Xmx512m -jar $0 "$@" \n', code)
 
 def write_script(file, command, code):
     print('Creating script', basename(file.name))

@@ -2,4 +2,4 @@ developer system de.cau.cs.kieler.sccharts.^simulation.statebased.c
     label "State-based Simulation (C, No-TTS)"
 
 system de.cau.cs.kieler.sccharts.statebased
-system de.cau.cs.kieler.^simulation.statebased.c
+system de.cau.cs.kieler.^simulation.c

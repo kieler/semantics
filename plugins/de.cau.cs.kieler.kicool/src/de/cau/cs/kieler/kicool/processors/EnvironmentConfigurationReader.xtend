@@ -12,6 +12,7 @@
  */
 package de.cau.cs.kieler.kicool.processors
 
+import de.cau.cs.kieler.kexpressions.JsonObjectValue
 import de.cau.cs.kieler.kexpressions.kext.KExtStandaloneParser
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
 import de.cau.cs.kieler.kicool.compilation.Processor
@@ -40,7 +41,12 @@ class EnvironmentConfigurationReader extends Processor<CodeContainer, CodeContai
     override process() {
         val configs = model.files.filter[fileName.endsWith("json")]
         for (config : configs) {
-            val json = KExtStandaloneParser.parseJsonObject(config.code)
+            var JsonObjectValue json
+            try {
+                json = KExtStandaloneParser.parseJsonObject(config.code)
+            } catch (Exception e) {
+                e.printStackTrace
+            }
             if (json !== null) {
                 EnvironmentPropertyHolder.processEnvironmentConfig(environment, json)
             } else {

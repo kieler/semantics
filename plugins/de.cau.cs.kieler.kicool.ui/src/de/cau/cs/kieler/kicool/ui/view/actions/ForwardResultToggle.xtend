@@ -33,11 +33,11 @@ class ForwardResultToggle extends AbstractAction {
     
     new(CompilerView view) {
         super(view, 
-            "Forward Results Automatically", 
+            "Forward Result to Diagram View", 
             IAction.AS_CHECK_BOX, 
             "forwardResultToggle", 
-            "Forward Results Automatically", 
-            "Automatically forwards the final results to linked views.", 
+            "Forward Result to Diagram View", 
+            "Automatically forwards the final results to linked diagram views.", 
             null)
         action.setChecked(FORWARD_RESULT_TOGGLE_ACTION_DEFAULT)
         invoke

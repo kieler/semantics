@@ -13,9 +13,9 @@
  */
 package de.cau.cs.kieler.kicool.ui.klighd.syntheses
 
+import de.cau.cs.kieler.kicool.ide.klighd.KiCoDiagramViewProperties
 import de.cau.cs.kieler.kicool.ui.kitt.tracing.TracingSynthesisOptions
 import de.cau.cs.kieler.kicool.ui.kitt.tracing.TracingVisualizationProperties
-import de.cau.cs.kieler.kicool.ui.klighd.actions.RemoveChainElementAction
 import de.cau.cs.kieler.kicool.ui.klighd.models.ModelChain
 import de.cau.cs.kieler.klighd.KlighdConstants
 import de.cau.cs.kieler.klighd.LightDiagramServices
@@ -36,6 +36,7 @@ import de.cau.cs.kieler.klighd.ui.view.model.MessageModel
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties
 import javax.inject.Inject
+import org.eclipse.elk.alg.layered.options.LayeredOptions
 import org.eclipse.elk.core.math.ElkPadding
 import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.core.options.Direction
@@ -73,9 +74,10 @@ class ModelChainSynthesis extends AbstractDiagramSynthesis<ModelChain> {
     // -------------------------------------------------------------------------
     // Synthesis
     override KNode transform(ModelChain chainWrapper) {
+        val startTime = System.currentTimeMillis
         val chain = chainWrapper.getModels;
         val rootNode = createNode();
-        rootNode.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.layered");
+        rootNode.addLayoutParam(CoreOptions::ALGORITHM, LayeredOptions.ALGORITHM_ID);
         rootNode.addLayoutParam(CoreOptions::DIRECTION, Direction.RIGHT);
 
         if (!chain.empty) {
@@ -106,6 +108,10 @@ class ModelChainSynthesis extends AbstractDiagramSynthesis<ModelChain> {
                 first = second;
             }
         }
+                
+        // Report elapsed time
+        usedContext?.setProperty(KiCoDiagramViewProperties.SYNTHESIS_TIME, System.currentTimeMillis - startTime)
+        
         return rootNode;
     }
 

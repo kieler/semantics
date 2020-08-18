@@ -37,6 +37,7 @@ import org.eclipse.elk.core.options.CoreOptions
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import org.eclipse.elk.core.options.BoxLayouterOptions
 
 /**
  * Shows actions as dataflow regions.
@@ -90,7 +91,7 @@ class ActionsAsDataflowHook extends SynthesisHook {
         container.addRectangle() => [
                 invisible = true;
         ]
-        container.setLayoutOption(CoreOptions::ALGORITHM, "org.eclipse.elk.box");
+        container.setLayoutOption(CoreOptions::ALGORITHM, BoxLayouterOptions.ALGORITHM_ID);
         container.setLayoutOption(CoreOptions::EXPAND_NODES, true);
         container.setLayoutOption(CoreOptions::PADDING, new ElkPadding(0));
         container.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 1.0)

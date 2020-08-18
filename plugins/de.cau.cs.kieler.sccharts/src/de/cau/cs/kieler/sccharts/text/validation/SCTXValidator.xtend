@@ -57,6 +57,7 @@ import org.eclipse.xtext.validation.CheckType
 import static extension java.lang.String.*
 import org.eclipse.elk.core.data.LayoutMetaDataService
 import de.cau.cs.kieler.kexpressions.OperatorType
+import de.cau.cs.kieler.kexpressions.ValueType
 
 //import org.eclipse.xtext.validation.Check
 
@@ -92,13 +93,12 @@ class SCTXValidator extends AbstractSCTXValidator {
     static val String DUPLICATE_REGION = "There are multiple regions with the same name.";
     static val String DUPLICATE_ROOTSTATE = "There are multiple root states with the same name.";
     
+    static val String SIGNAL_EMISSION_IN_TRIGGER = "Valued emission cannot be used in triggers. Use val() to check the value of a valued signal.";
     static val String NON_SIGNAL_EMISSION = "Non-signals should not be used in an emission.";
+    static val String NO_VALUED_INPUT_SIGNAL_EMISSION = "Valued input signals currently do not support emission (overwriting).";
     static val String NON_VARIABLE_ASSIGNMENT = "Non-variables cannot be used in an assignment.";
     static val String STATIC_VARIABLE_WITHOUT_INITIALIZATION = "Static variables should be initialized.";
-    //TODO (KISEMA-1071) Remove this message when there is a transformation that handles valued signals without combine operator.
-    static val String VALUED_SIGNAL_NEED_COMBINE = "Valued signals must have a combine function.";
     static val String MINMAX_COMBINE = "Min or max combine operators are currently not supported.";
-    static val String NOCOMBINE = "A valued signal should have a combine function, otherwise any emits cannot be scheduled.";
     
     static val String STRONG_ABORT_WITH_LOW_PRIORITY = "Causality problem!\nStrong abort transitions must have a higher priority than weak abort or termination transitions.";
     static val String ABORT_WITHOUT_TRIGGER = "Abort transitions should have a trigger.";
@@ -426,6 +426,43 @@ class SCTXValidator extends AbstractSCTXValidator {
     }
     
     /**
+     * Discourage emissions of valued input signals
+     */
+    @Check
+    def void checkValuedInputSignalEmissions(Emission emission) {
+        if (emission.valuedObject !== null && emission.valuedObject.variableDeclaration !== null) {
+            val decl = emission.valuedObject.variableDeclaration
+            if (decl.signal && decl.input && decl.type !== ValueType.PURE) {
+                warning(NO_VALUED_INPUT_SIGNAL_EMISSION, null, -1);
+            }
+        }
+    }
+    
+    /**
+     * ReferenceCalls in triggers allow some kind of emission in trigger that must be discouraged. 
+     */
+    @Check
+    def void checkNoBooleanEmissions(ReferenceCall call) {
+        if (call.valuedObject !== null && call.valuedObject.isSignal) {
+            var EObject obj = call
+            var container = call.eContainer
+            while (container !== null && !(container instanceof Transition)) {
+                if (container instanceof Scope) {
+                    container = null
+                } else {
+                    obj = container
+                    container = obj.eContainer
+                }
+            }
+            if (container instanceof Transition) {
+                if (container.trigger === obj) {
+                    error(SIGNAL_EMISSION_IN_TRIGGER, call, null, -1);
+                }
+            }         
+        }
+    }
+    
+    /**
      * Region names must be unique
      *
      * @param state the State
@@ -579,23 +616,6 @@ class SCTXValidator extends AbstractSCTXValidator {
     }
 
     /**
-     * Check if valued signal has a combine functions
-     *
-     * @param valuedObject the valuedObject
-     */
-    @Check
-    public def void checkCombineFunction(ValuedObject valuedObject) {
-        // Check if actually a valued signal
-        if(valuedObject.isSignal && !valuedObject.isPureSignal) {
-            // Check if there is a combine operator
-            if(valuedObject.combineOperator === null) {
-                warning(NOCOMBINE, valuedObject, null)
-            }
-        }
-    } 
-
-
-    /**
      * Check if max or min is used which is currently not supported
      *
      * @param valuedObject the valuedObject
@@ -743,23 +763,6 @@ class SCTXValidator extends AbstractSCTXValidator {
                     && transition.trigger === null) {
                     warning(ABORT_WITHOUT_TRIGGER, transition, null, -1);
                 }
-            }
-        }
-    } 
-    
-    /**
-     * Checks if the given valued signal has a combination function.
-     * This check can be removed if there is a transformation
-     * that handles valued signals without combination dfunction (see KISEMA-1071).   
-     */
-    // TODO: (KISEMA-1071) Remove this check when there is a transformation that handles valued signals without combination function.
-    @Check
-    public def void checkValuedSignalHasCombinationFunction(ValuedObject valuedObject) {
-        // Check if actually a valued signal
-        if(valuedObject.isSignal && !valuedObject.isPureSignal) {
-            // Check if there is a combine operator
-            if(valuedObject.combineOperator === null || valuedObject.combineOperator.equals(CombineOperator.NONE)) {
-                warning(VALUED_SIGNAL_NEED_COMBINE, valuedObject, null)
             }
         }
     } 

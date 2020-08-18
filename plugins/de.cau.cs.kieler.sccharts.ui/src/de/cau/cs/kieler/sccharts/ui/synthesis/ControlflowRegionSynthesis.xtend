@@ -36,6 +36,7 @@ import de.cau.cs.kieler.sccharts.ui.synthesis.styles.ColorStore
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.ControlflowRegionStyles
 import java.util.EnumSet
 import org.eclipse.elk.alg.layered.options.CenterEdgeLabelPlacementStrategy
+import org.eclipse.elk.alg.layered.options.ContentAlignment
 import org.eclipse.elk.alg.layered.options.FixedAlignment
 import org.eclipse.elk.alg.layered.options.LayeredOptions
 import org.eclipse.elk.core.options.CoreOptions
@@ -46,6 +47,7 @@ import static de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions.*
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
+import static extension de.cau.cs.kieler.annotations.ide.klighd.CommonSynthesisUtil.*
 
 /**
  * Transforms {@link ControlflowRegion} into {@link KNode} diagram elements.
@@ -76,14 +78,15 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
 
         // Set KIdentifier for use with incremental update
         if (!region.name.nullOrEmpty) {
-            node.data += KGraphFactory::eINSTANCE.createKIdentifier => [it.id = region.name]
+            node.KID = region.name
         }
         
         if (USE_KLAY.booleanValue) {
-            node.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.layered")
+            node.addLayoutParam(CoreOptions::ALGORITHM, LayeredOptions.ALGORITHM_ID)
             node.setLayoutOption(LayeredOptions::NODE_PLACEMENT_BK_FIXED_ALIGNMENT, FixedAlignment::BALANCED)
             node.setLayoutOption(LayeredOptions::EDGE_LABELS_CENTER_LABEL_PLACEMENT_STRATEGY, CenterEdgeLabelPlacementStrategy::TAIL_LAYER)
             node.setLayoutOption(CoreOptions::NODE_SIZE_CONSTRAINTS, EnumSet.of(SizeConstraint.MINIMUM_SIZE))
+            node.setLayoutOption(CoreOptions::SPACING_NODE_SELF_LOOP, 18.0)
         } else {
             node.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.graphviz.dot")
             node.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 40.0)
@@ -211,7 +214,7 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
     def KNode createReferenceRegion(State state) {
         val node = createNode().associateWith(state); // This association is important for the ReferenceExpandAction
         if (USE_KLAY.booleanValue) {
-            node.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.layered");
+            node.addLayoutParam(CoreOptions::ALGORITHM, LayeredOptions.ALGORITHM_ID);
         } else {
             node.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.graphviz.dot");
             node.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 40.0);

@@ -1,4 +1,4 @@
-simulation system de.cau.cs.kieler.sccharts.^simulation.tts.priority.c.legacy
+system de.cau.cs.kieler.sccharts.^simulation.tts.priority.c.legacy
     label "Priority-based Simulation (C, Legacy)"
 
 de.cau.cs.kieler.sccharts.processors.takenTransitionSignaling

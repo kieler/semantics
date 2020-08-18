@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: KiCool IDE
 Bundle-SymbolicName: de.cau.cs.kieler.kicool.ide
-Bundle-Version: 1.1.0.qualifier
+Bundle-Version: 1.2.0.qualifier
 Bundle-Vendor: Kiel University
 Automatic-Module-Name: de.cau.cs.kieler.kicool.ide
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
@@ -13,6 +13,10 @@ Require-Bundle: org.antlr.runtime;bundle-version="[3.2.0,3.2.1)",
  org.eclipse.xtext.xbase.lib,
  org.eclipse.xtend.lib,
  org.eclipse.xtend.lib.macro,
- org.eclipse.emf.compare
-Export-Package: de.cau.cs.kieler.kicool.ide.contentassist.antlr,
- de.cau.cs.kieler.kicool.ide.contentassist.antlr.internal
+ org.eclipse.emf.compare,
+ org.eclipse.elk.graph;bundle-version="0.6.0"
+Export-Package: de.cau.cs.kieler.kicool.ide,
+ de.cau.cs.kieler.kicool.ide.contentassist.antlr,
+ de.cau.cs.kieler.kicool.ide.contentassist.antlr.internal,
+ de.cau.cs.kieler.kicool.ide.kitt.tracing.compare,
+ de.cau.cs.kieler.kicool.ide.klighd

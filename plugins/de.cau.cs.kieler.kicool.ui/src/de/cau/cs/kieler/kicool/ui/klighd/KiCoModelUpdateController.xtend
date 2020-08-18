@@ -13,6 +13,7 @@
 package de.cau.cs.kieler.kicool.ui.klighd
 
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
+import de.cau.cs.kieler.kicool.ide.klighd.KiCoDiagramViewProperties
 import de.cau.cs.kieler.kicool.kitt.tracing.Tracing
 import de.cau.cs.kieler.kicool.registration.ModelInformation
 import de.cau.cs.kieler.kicool.ui.KiCoolUiModule
@@ -158,6 +159,9 @@ class KiCoModelUpdateController extends AbstractViewUpdateController implements 
     private var Action simpleUpdateToggleAction
     private static final boolean SIMPLE_UPDATE_TOGGLE_ACTION_DEFAULT_STATE = false
     
+    /** Action just used to display a text */
+    private var Action timeLabelAction
+    
     /** External contributions */
     private val List<KiCoModelViewUIContributor> externalUIContributors = newArrayList
         
@@ -286,6 +290,15 @@ class KiCoModelUpdateController extends AbstractViewUpdateController implements 
                 "Forces this view to always use the simple update strategy (no incremental update)")
         simpleUpdateToggleAction.setChecked(SIMPLE_UPDATE_TOGGLE_ACTION_DEFAULT_STATE)
         
+        // time label item
+        timeLabelAction = new Action("", IAction.AS_UNSPECIFIED) {
+            override void run() {
+                // no effect
+            }
+        }
+        simpleUpdateToggleAction.setId("timeLabelAction")
+        setTimeLabel(-1, -1)
+        
         
         externalUIContributors += KiCoModelViewUIContributorRegistry.contributors
     }
@@ -363,7 +376,11 @@ class KiCoModelUpdateController extends AbstractViewUpdateController implements 
         if (!compilerToggleAction.isChecked() || compiledModel.empty) {
             update(ChangeEvent.EDITOR)
         } else {
-            diagramView.updateDiagram
+            // Reset time measurement
+            properties.setProperty(KiCoDiagramViewProperties.SYNTHESIS_TIME, 0L)
+            properties.setProperty(KiCoDiagramViewProperties.UPDATE_START, System.currentTimeMillis)
+            
+            diagramView.updateDiagram()
         }
     }
     
@@ -387,6 +404,9 @@ class KiCoModelUpdateController extends AbstractViewUpdateController implements 
         menu.add(simpleUpdateToggleAction)
         
         externalUIContributors.forEach[contributeControls(this, toolBar, menu)]
+        
+        menu.add(new Separator())
+        menu.add(timeLabelAction)
     }
 
     /**
@@ -426,6 +446,14 @@ class KiCoModelUpdateController extends AbstractViewUpdateController implements 
             warnings.setLength(warnings.length() - 1)           
             addWarningComposite(getDiagramView().getViewer(), warnings.toString())
         }
+        
+        // Update timing information
+        var long updateTime = -1
+        if (properties.getProperty(KiCoDiagramViewProperties.UPDATE_START) !== null) {
+            updateTime = System.currentTimeMillis - properties.getProperty(KiCoDiagramViewProperties.UPDATE_START)
+        }
+        var long synthesisTime = diagramView?.viewContext?.getProperty(KiCoDiagramViewProperties.SYNTHESIS_TIME)?: -1L
+        setTimeLabel(updateTime, synthesisTime)
     }
     
     // -- Controller state
@@ -772,6 +800,9 @@ class KiCoModelUpdateController extends AbstractViewUpdateController implements 
             // Give model synthesis access to the compilation result
             val cc = currentCompilationContext
             properties.setProperty(KiCoDiagramViewProperties.COMPILATION_CONTEXT, cc)
+            // Reset time measurement
+            properties.setProperty(KiCoDiagramViewProperties.SYNTHESIS_TIME, 0L)
+            properties.setProperty(KiCoDiagramViewProperties.UPDATE_START, System.currentTimeMillis)
 
             // Create model to passed to update
             var Object model = null
@@ -857,5 +888,20 @@ class KiCoModelUpdateController extends AbstractViewUpdateController implements 
                 closeImage.dispose()
             }
         })
+    }
+    
+    /**
+     * Sets the label with timing infomation.
+     */
+    private def void setTimeLabel(long update, long synthesis) {
+        if (timeLabelAction !== null) {
+            if (update > 0 && synthesis > 0) {
+                timeLabelAction.setText(String.format("Update time: %.2fs (Synthesis: %.2fs)", update / 1000.0, synthesis / 1000.0))
+            } else if (update > 0) {
+                timeLabelAction.setText(String.format("Update time: %.2fs", update / 1000.0))
+            } else {
+                timeLabelAction.setText("Update time: unknown")
+            }
+        }
     }
 }

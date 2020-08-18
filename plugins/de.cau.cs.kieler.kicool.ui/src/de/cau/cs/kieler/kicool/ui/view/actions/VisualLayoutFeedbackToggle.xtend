@@ -33,10 +33,10 @@ class VisualLayoutFeedbackToggle extends AbstractAction {
     
     new(CompilerView view) {
         super(view, 
-            "Visual Layout Feedback", 
+            "Visual Feedback for Meters", 
             IAction.AS_CHECK_BOX, 
             "visualLayoutFeedbackToggle", 
-            "Visual Layout Feedback", 
+            "Visual Feedback for Meters", 
             "Gives visual feedback about the compilation process and processor metrics.", 
             null)
         action.setChecked(VISUAL_LAYOUT_FEEDBACK_TOGGLE_ACTION_DEFAULT)

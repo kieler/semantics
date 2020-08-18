@@ -72,7 +72,7 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
         }
         
         if (USE_KLAY.booleanValue) {
-            node.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.layered");
+            node.addLayoutParam(CoreOptions::ALGORITHM, LayeredOptions.ALGORITHM_ID);
             node.setLayoutOption(LayeredOptions::NODE_PLACEMENT_BK_FIXED_ALIGNMENT, FixedAlignment::BALANCED);
             node.setLayoutOption(LayeredOptions::EDGE_LABELS_SIDE_SELECTION, EdgeLabelSideSelection.ALWAYS_UP)
         } else {
@@ -137,7 +137,7 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
     def KNode createReferenceRegion(State state) {
         val node = createNode().associateWith(state); // This association is important for the ReferenceExpandAction
         if (USE_KLAY.booleanValue) {
-            node.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.layered");
+            node.addLayoutParam(CoreOptions::ALGORITHM, LayeredOptions.ALGORITHM_ID);
 //            node.setLayoutOption(CoreOptions::SPACING_NODE, 3);
 //            node.setLayoutOption(CoreOptions::SPACING_BORDER, 8);
         } else {

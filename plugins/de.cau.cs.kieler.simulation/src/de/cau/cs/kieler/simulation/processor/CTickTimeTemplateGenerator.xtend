@@ -14,17 +14,14 @@ package de.cau.cs.kieler.simulation.processor
 
 import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.core.properties.Property
-import de.cau.cs.kieler.kicool.compilation.CCodeFile
+import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
 import de.cau.cs.kieler.kicool.compilation.VariableStore
-import de.cau.cs.kieler.kicool.deploy.CommonTemplateVariables
-import de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure
 import de.cau.cs.kieler.kicool.deploy.processor.AbstractTemplateGeneratorProcessor
-import de.cau.cs.kieler.kicool.deploy.processor.TemplateEngine
+
+import static de.cau.cs.kieler.kicool.deploy.TemplatePosition.*
 
 import static extension de.cau.cs.kieler.kicool.deploy.TemplateInjection.*
-import static extension de.cau.cs.kieler.kicool.deploy.TemplatePosition.*
-import de.cau.cs.kieler.kexpressions.ValueType
 
 /**
  * @author als
@@ -34,7 +31,11 @@ import de.cau.cs.kieler.kexpressions.ValueType
 class CTickTimeTemplateGenerator extends AbstractTemplateGeneratorProcessor<Object> {
     
     public static val IProperty<Boolean> PRINT_TIME = 
-        new Property<Boolean>("de.cau.cs.kieler.simulation.ticktime.print", false)  
+        new Property<Boolean>("de.cau.cs.kieler.simulation.ticktime.print", false)      
+    public static val IProperty<Boolean> BARRIER = 
+        new Property<Boolean>("de.cau.cs.kieler.simulation.ticktime.barrier", false)    
+    public static val IProperty<Boolean> WARM_UP = // Only works with standard tick interfaces
+        new Property<Boolean>("de.cau.cs.kieler.simulation.ticktime.warmup", false)
 
     public static val FILE_NAME = "c-ticktime.ftl" 
 
@@ -69,16 +70,42 @@ class CTickTimeTemplateGenerator extends AbstractTemplateGeneratorProcessor<Obje
             </#macro>
             
             <#macro ticktime_reset position>
+            «IF BARRIER.property»
+                __asm__ __volatile__("" ::: "memory"); // Compiler barrier
+                __sync_synchronize(); // HW barrier
+            «ENDIF»
             resetticktime();
+            «IF BARRIER.property»
+                __sync_synchronize();
+                __asm__ __volatile__("" ::: "memory");
+            «ENDIF»
             </#macro>
             
             <#macro ticktime_store position>
+            «IF BARRIER.property»
+                __asm__ __volatile__("" ::: "memory"); // Compiler barrier
+                __sync_synchronize(); // HW barrier
+            «ENDIF»
             _ticktime = getticktime();
+            «IF BARRIER.property»
+                __sync_synchronize();
+                __asm__ __volatile__("" ::: "memory");
+            «ENDIF»
             </#macro>
             
-            <#macro ticktime_print position>
-            printf("Tick: %d ns\n", _ticktime);
-            </#macro>
+            «IF PRINT_TIME.property»
+                <#macro ticktime_print position>
+                printf("Tick: %d ns\n", _ticktime);
+                </#macro>
+            «ENDIF»
+            
+            «IF WARM_UP.property»
+                <#macro ticktime_warmup position>
+                // Warm up
+                ${tick_name}(&${tickdata_name});
+                ${reset_name}(&${tickdata_name});
+                </#macro>
+            «ENDIF»
             '''
         
         cc.add(FILE_NAME, code)
@@ -90,6 +117,9 @@ class CTickTimeTemplateGenerator extends AbstractTemplateGeneratorProcessor<Obje
         environment.addMacroInjection(POST_TICK, "ticktime_store")
         if (environment.getProperty(PRINT_TIME)) {
             environment.addMacroInjection(OUTPUT, "ticktime_print")
+        }
+        if (environment.getProperty(WARM_UP)) {
+            environment.addMacroInjection(INIT, "ticktime_warmup")
         }
         
         return cc

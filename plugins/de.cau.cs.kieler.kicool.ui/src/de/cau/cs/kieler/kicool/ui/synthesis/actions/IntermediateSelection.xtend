@@ -14,6 +14,7 @@ package de.cau.cs.kieler.kicool.ui.synthesis.actions
 
 import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
+import de.cau.cs.kieler.kicool.compilation.Processor
 
 /**
  * Class for holding the intermediate selection data.
@@ -25,20 +26,33 @@ import org.eclipse.xtend.lib.annotations.Accessors
 class IntermediateSelection {
     @Accessors List<IntermediateSelectionEntry> entries
     
-    new(de.cau.cs.kieler.kicool.compilation.Processor<?,?> processor, int intermediateIndex) {
+    new(Processor<?,?> processor, int intermediateIndex) {
         entries = <IntermediateSelectionEntry> newArrayList
-        new IntermediateSelectionEntry(processor, intermediateIndex) => [
-            entries += it
-        ]
+        entries += new IntermediateSelectionEntry(processor, intermediateIndex)
     }
     
-    new(List<Pair<de.cau.cs.kieler.kicool.compilation.Processor<?,?>, Integer>> processorIndexPairs) {
+    new(List<Pair<Processor<?,?>, Integer>> processorIndexPairs) {
         entries = <IntermediateSelectionEntry> newArrayList
         for (pair : processorIndexPairs) {
-            new IntermediateSelectionEntry(pair.key, pair.value) => [
-                entries += it
-            ]
+            entries += new IntermediateSelectionEntry(pair.key, pair.value)
         }
+    }
+    
+    def toggleSelection(Processor<?, ?> processor, Integer index) {
+        val entry = new IntermediateSelectionEntry(processor, index)
+        if (entries.contains(entry)) {
+            entries.remove(entry)
+        } else {
+            entries.add(entry)
+        }
+    }
+    
+    def clearSelection(){
+        entries.clear
+    }
+    
+    def isSelected(Processor<?, ?> processor, Integer index){
+        return entries.contains(new IntermediateSelectionEntry(processor, index))
     }
 }
 

@@ -35,6 +35,7 @@ import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
 import de.cau.cs.kieler.scg.extensions.SCGDependencyExtensions
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
 import de.cau.cs.kieler.kicool.compilation.VariableStore
@@ -81,7 +82,6 @@ class SimpleGuardSequentializer extends Processor<SCGraphs, SCGraphs> implements
         ]
         creationalTransformation(model, SCGGraphs)
         
-        
         val SCGMap = <SCGraph, SCGraph> newHashMap
         for (scg : model.scgs) {
             SCGMap.put(scg, ScgFactory::eINSTANCE.createSCGraph)
@@ -108,7 +108,7 @@ class SimpleGuardSequentializer extends Processor<SCGraphs, SCGraphs> implements
          * basic blocks.
          */
          newSCG => [
-        	annotations += createStringAnnotation(SCGFeatures.SEQUENTIALIZE_ID, SCGFeatures.SEQUENTIALIZE_NAME)
+        	addTagAnnotation(SCGAnnotations.ANNOTATION_SEQUENTIALIZED)
         	label = scg.label
         	name = scg.name
             scg.copyAnnotations(it, <String> newHashSet("main", "voLink"))
@@ -229,6 +229,10 @@ class SimpleGuardSequentializer extends Processor<SCGraphs, SCGraphs> implements
                    	}
                	} 
             }
+            
+            if (scheduleDependencies !== null && !scheduleDependencies.empty) {
+                scheduleDependencies.last.remove
+            }             
             
             entryNode.exit = exitNode as Exit
         }

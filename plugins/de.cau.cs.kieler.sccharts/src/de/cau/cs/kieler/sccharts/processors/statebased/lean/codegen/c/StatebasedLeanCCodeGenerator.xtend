@@ -46,9 +46,6 @@ class StatebasedLeanCCodeGenerator extends ExogenousProcessor<SCCharts, CodeCont
     @Inject StatebasedCCodeSerializeHRExtensions serializer
     @Inject protected Injector injector
     
-    public static val IProperty<String> SIMULTATION_C_STRUCT_ACCESS = 
-       new Property<String>("de.cau.cs.kieler.simulation.c.struct.access", ".iface.")
-              
     public static val IProperty<Boolean> PRINT_DEBUG = 
        new Property<Boolean>("de.cau.cs.kieler.kicool.codegen.statebased.lean.c.printDebug", false)      
     
@@ -108,9 +105,8 @@ class StatebasedLeanCCodeGenerator extends ExogenousProcessor<SCCharts, CodeCont
         codeContainer.addCCode(cFilename, cFile.toString).naming.putAll(naming)       
         codeContainer.addCHeader(hFilename, hFile.toString).naming.putAll(naming)
         
-        environment.setProperty(SIMULTATION_C_STRUCT_ACCESS, 
-            ".iface.")
-    }      
+        environment.setProperty(new Property<String>("de.cau.cs.kieler.simulation.c.struct.access"), ".iface.")
+    }
     
     protected def addHeader() {
         return 

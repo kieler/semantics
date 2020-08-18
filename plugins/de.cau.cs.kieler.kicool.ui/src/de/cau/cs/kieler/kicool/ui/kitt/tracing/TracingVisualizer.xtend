@@ -15,8 +15,7 @@ package de.cau.cs.kieler.kicool.ui.kitt.tracing
 
 import com.google.common.base.Predicates
 import com.google.inject.Inject
-import de.cau.cs.kieler.kicool.ui.kitt.tracing.TracingSynthesisOptions
-import de.cau.cs.kieler.kicool.ui.kitt.tracing.TracingVisualizationProperties
+import de.cau.cs.kieler.kicool.ide.klighd.KiCoDiagramViewProperties
 import de.cau.cs.kieler.kicool.kitt.tracing.Tracing
 import de.cau.cs.kieler.kicool.kitt.tracing.TracingTreeExtensions
 import de.cau.cs.kieler.kicool.kitt.tracing.internal.TracingMapping
@@ -47,7 +46,6 @@ import org.eclipse.elk.core.util.Pair
 import org.eclipse.emf.ecore.EObject
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
-import de.cau.cs.kieler.kicool.ui.klighd.KiCoDiagramViewProperties
 
 /**
  * Adds tracing edges from mappings to a diagram.

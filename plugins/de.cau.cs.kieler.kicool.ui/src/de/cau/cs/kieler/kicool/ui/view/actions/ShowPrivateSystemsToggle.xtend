@@ -29,11 +29,11 @@ class ShowPrivateSystemsToggle extends AbstractAction {
 
     new(CompilerView view) {
         super(view, 
-            "Show Private Systems", 
+            "Show Internal Compilation Systems", 
             IAction.AS_CHECK_BOX, 
             "showPrivateSystemsToggle", 
-            "Show Private Systems", 
-            "Also show all private systems in the systems selection.", 
+            "Show Internal Compilation Systems", 
+            "Also show all private (internal) systems in the systems selection.", 
             null)
         action.setChecked(SHOW_PRIVATE_SYSTEMS_TOGGLE_ACTION_DEFAULT)
     }

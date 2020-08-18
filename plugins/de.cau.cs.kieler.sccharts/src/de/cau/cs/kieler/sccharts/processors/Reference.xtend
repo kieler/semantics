@@ -27,6 +27,7 @@ import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.VectorValue
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
@@ -57,6 +58,7 @@ import de.cau.cs.kieler.scl.Return
 import java.util.Set
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
+import de.cau.cs.kieler.kexpressions.IntValue
 
 /**
  * Give me a state, Vasili. One state only please.
@@ -76,6 +78,7 @@ class Reference extends SCChartsProcessor implements Traceable {
     @Inject extension SCChartsReferenceExtensions
     @Inject extension SCChartsActionExtensions
     @Inject extension SCChartsCoreExtensions
+    @Inject extension KExpressionsCreateExtensions
     extension SCChartsFactory = SCChartsFactory.eINSTANCE
     
     public static val IProperty<Boolean> EXPAND_REFERENCED_STATES = 
@@ -667,24 +670,65 @@ class Reference extends SCChartsProcessor implements Traceable {
                     
                     // Copy inner behavior
                     for (vo : classDecl.valuedObjects) {
-                        for (region : newState.regions) {
-                            val newRegion = region.copy
-                            newRegion.name = vo.name + region.name
-                            for (vor : newRegion.eAllContents.filter(ValuedObjectReference).toList) {
-                                if (!(vor.eContainer instanceof ValuedObjectReference)) {// Not a sub reference
-                                    vor.prependReferenceToVO(vo)
+                        var allCardinalities = 1
+                        val maxIndices = newArrayList()
+                        val nextIndices = newArrayList()
+                        if (vo.array) {
+                            for (car : vo.cardinalities) {
+                                if (car instanceof IntValue) {
+                                    allCardinalities *= car.value
+                                    maxIndices += car.value
+                                } else if (car instanceof ValuedObjectReference 
+                                    && (car as ValuedObjectReference).valuedObject?.variableDeclaration?.const
+                                    && (car as ValuedObjectReference).valuedObject.initialValue instanceof IntValue) {
+                                        val value = ((car as ValuedObjectReference).valuedObject.initialValue as IntValue).value
+                                        allCardinalities *= value
+                                        maxIndices += value
+                                } else {
+                                    environment.errors.add("Can only handle reference arrays with constant cardinality", scope, true)
                                 }
+                                nextIndices += 0
                             }
-                            state.regions += newRegion
                         }
-                        for (action : newState.actions) {
-                            val newAction = action.copy
-                            for (vor : newAction.eAllContents.filter(ValuedObjectReference).toList) {
-                                if (!(vor.eContainer instanceof ValuedObjectReference)) {// Not a sub reference
-                                    vor.prependReferenceToVO(vo)
+                        for (x : 0..allCardinalities-1) {
+                            for (region : newState.regions) {
+                                val newRegion = region.copy
+                                newRegion.name = vo.name + (region.name?:"default")
+                                for (vor : newRegion.eAllContents.filter(ValuedObjectReference).toList) {
+                                    if (!(vor.eContainer instanceof ValuedObjectReference)) {// Not a sub reference
+                                        vor.prependReferenceToVO(vo)
+                                        if (vo.array) {
+                                            vor.indices += nextIndices.map[createIntValue(it)]
+                                        }
+                                    }
+                                }
+                                state.regions += newRegion
+                            }
+                            for (action : newState.actions) {
+                                val newAction = action.copy
+                                for (vor : newAction.eAllContents.filter(ValuedObjectReference).toList) {
+                                    if (!(vor.eContainer instanceof ValuedObjectReference)) {// Not a sub reference
+                                        vor.prependReferenceToVO(vo)
+                                        if (vo.array) {
+                                            vor.indices += nextIndices.map[createIntValue(it)]
+                                        }
+                                    }
+                                }
+                                state.actions += newAction
+                            }
+                            if (vo.array) {
+                                var next = true
+                                for (i : (vo.cardinalities.size-1)..0) {
+                                    if (next) {
+                                        nextIndices.set(i, nextIndices.get(i) + 1)
+                                        if (nextIndices.get(i) >= maxIndices.get(i)) {
+                                            nextIndices.set(i, 0)
+                                        } else {
+                                            next = false
+                                        }
+                                    }
                                 }
                             }
-                            state.actions += newAction
                         }
                     }
                     

@@ -8,7 +8,7 @@ knode class {
         points: right 50%,top;right 50%,bottom  
     }
   kport in0 {
-    size: width = 4 height = 2
+    size: width = 0 height = 0
     properties: de.cau.cs.kieler.portSide = WEST
                 org.eclipse.elk.port.borderOffset = -5
     klabel "" { 
@@ -19,7 +19,7 @@ knode class {
   }
  
   kport out {
-    size: width = 4 height = 2
+    size: width = 0 height = 0
     pos:  x = 7
     properties: de.cau.cs.kieler.portSide = EAST
                 org.eclipse.elk.port.borderOffset = -5

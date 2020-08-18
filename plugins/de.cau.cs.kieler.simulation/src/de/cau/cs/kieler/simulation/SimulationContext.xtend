@@ -47,6 +47,8 @@ class SimulationContext extends CompilationContext implements SimulationControls
         new Property<Integer>("de.cau.cs.kieler.simulation.timeout", 2)
     public static val IProperty<Integer> MAX_HISTORY_LENGTH = 
         new Property<Integer>("de.cau.cs.kieler.simulation.history.length", 100)
+    public static val IProperty<Boolean> ONLY_INPUTS = // Send only iputs to the simulateble
+        new Property<Boolean>("de.cau.cs.kieler.simulation.only.inputs", true)
         
     public static val DEFAULT_SIMULATION_SYSTEM = "de.cau.cs.kieler.internal.simulation"
             
@@ -75,8 +77,8 @@ class SimulationContext extends CompilationContext implements SimulationControls
     }
     new(CompilationContext parentContext, Environment parentEnvironment) {
         this()
-        startEnvironment.setProperty(Environment.PRECEEDING_COMPILATION_CONTEXT, parentContext)
         startEnvironment.copyProperties(parentEnvironment)
+        startEnvironment.setProperty(Environment.PRECEEDING_COMPILATION_CONTEXT, parentContext)
         setUpSystem()
     }
     

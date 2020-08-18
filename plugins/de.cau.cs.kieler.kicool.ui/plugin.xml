@@ -487,6 +487,10 @@
                 id="de.cau.cs.kieler.kicool.ui.synthesis.actions.selectIntermediateAction">
           </action>
           <action
+                class="de.cau.cs.kieler.kicool.ui.synthesis.actions.SelectAdditionalIntermediateAction"
+                id="de.cau.cs.kieler.kicool.ui.synthesis.actions.selectAdditionalIntermediateAction">
+          </action>
+          <action
                 class="de.cau.cs.kieler.kicool.ui.synthesis.actions.ToggleProcessorOnOffAction"
                 id="de.cau.cs.kieler.kicool.ui.synthesis.actions.toggleProcessorOnOffAction">
           </action>

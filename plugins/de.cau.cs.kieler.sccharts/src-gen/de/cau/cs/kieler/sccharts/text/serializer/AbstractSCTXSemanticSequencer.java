@@ -1554,6 +1554,7 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	 *
 	 * Constraint:
 	 *     (
+	 *         annotations+=RestrictedTypeAnnotation* 
 	 *         delay=DelayType? 
 	 *         (triggerDelay=INT? trigger=BoolScheduleExpression triggerProbability=FLOAT?)? 
 	 *         (effects+=Effect effects+=Effect*)? 
@@ -1571,7 +1572,13 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	 *     EntryAction returns EntryAction
 	 *
 	 * Constraint:
-	 *     (preemption=PreemptionActionType? (trigger=BoolScheduleExpression triggerProbability=FLOAT?)? (effects+=Effect effects+=Effect*)? label=STRING?)
+	 *     (
+	 *         annotations+=RestrictedTypeAnnotation* 
+	 *         preemption=PreemptionActionType? 
+	 *         (trigger=BoolScheduleExpression triggerProbability=FLOAT?)? 
+	 *         (effects+=Effect effects+=Effect*)? 
+	 *         label=STRING?
+	 *     )
 	 */
 	protected void sequence_EntryAction(ISerializationContext context, EntryAction semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1584,7 +1591,13 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	 *     ExitAction returns ExitAction
 	 *
 	 * Constraint:
-	 *     (preemption=PreemptionActionType? (trigger=BoolScheduleExpression triggerProbability=FLOAT?)? (effects+=Effect effects+=Effect*)? label=STRING?)
+	 *     (
+	 *         annotations+=RestrictedTypeAnnotation* 
+	 *         preemption=PreemptionActionType? 
+	 *         (trigger=BoolScheduleExpression triggerProbability=FLOAT?)? 
+	 *         (effects+=Effect effects+=Effect*)? 
+	 *         label=STRING?
+	 *     )
 	 */
 	protected void sequence_ExitAction(ISerializationContext context, ExitAction semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1899,7 +1912,13 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	 *     SuspendAction returns SuspendAction
 	 *
 	 * Constraint:
-	 *     (delay=DelayType? weak?='weak'? (triggerDelay=INT? trigger=BoolScheduleExpression triggerProbability=FLOAT?)? label=STRING?)
+	 *     (
+	 *         annotations+=RestrictedTypeAnnotation* 
+	 *         delay=DelayType? 
+	 *         weak?='weak'? 
+	 *         (triggerDelay=INT? trigger=BoolScheduleExpression triggerProbability=FLOAT?)? 
+	 *         label=STRING?
+	 *     )
 	 */
 	protected void sequence_SuspendAction(ISerializationContext context, SuspendAction semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

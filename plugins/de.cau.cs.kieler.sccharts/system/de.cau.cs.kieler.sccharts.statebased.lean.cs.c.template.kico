@@ -1,4 +1,4 @@
-public system de.cau.cs.kieler.sccharts.statebased.lean.cs.c.template
+system de.cau.cs.kieler.sccharts.statebased.lean.cs.c.template
 	label "State-based Compilation (C) lean-mode CS (Template)"
 	start config {
        "de.cau.cs.kieler.sccharts.complexFinalState.createFinalRegions":false,

@@ -69,6 +69,8 @@ import de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import org.eclipse.elk.core.options.PortSide
 
+import static extension de.cau.cs.kieler.annotations.ide.klighd.CommonSynthesisUtil.*
+
 /**
  * Visualizes the dataflow between SCChart regions.
  * 
@@ -356,7 +358,7 @@ class InducedDataflowHook extends SynthesisHook {
     private def void configureParentLayout(KNode node) {
         DiagramSyntheses.setLayoutOption(node, CoreOptions::PADDING, new ElkPadding(10));
         node.addLayoutParam(CoreOptions::NODE_SIZE_CONSTRAINTS, SizeConstraint.free)
-        node.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.layered")
+        node.addLayoutParam(CoreOptions::ALGORITHM, LayeredOptions.ALGORITHM_ID)
         node.addLayoutParam(CoreOptions::DIRECTION, Direction.RIGHT)
         node.addLayoutParam(LayeredOptions::FEEDBACK_EDGES, true);
         node.addLayoutParam(CoreOptions::SPACING_NODE_NODE, 20.0);
@@ -417,7 +419,7 @@ class InducedDataflowHook extends SynthesisHook {
         ]
 
         // Add an identifier to the edge to help incremental update
-        edge.data += KGraphFactory::eINSTANCE.createKIdentifier => [it.id = vo.name + sourcePort.edges.size]
+        edge.KID = vo.name + sourcePort.edges.size
         // Add tooltip to edge
         edge.setProperty(KlighdProperties.TOOLTIP, vo.name)
 

@@ -15,6 +15,7 @@
  */
 package de.cau.cs.kieler.circuit.util;
 
+import de.cau.cs.kieler.annotations.Nameable;
 import de.cau.cs.kieler.annotations.NamedObject;
 import de.cau.cs.kieler.circuit.*;
 
@@ -85,6 +86,7 @@ public class CircuitSwitch<T> extends Switch<T> {
                 T result = caseActor(actor);
                 if (result == null) result = caseLinkable(actor);
                 if (result == null) result = caseNamedObject(actor);
+                if (result == null) result = caseNameable(actor);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -93,6 +95,7 @@ public class CircuitSwitch<T> extends Switch<T> {
                 T result = casePort(port);
                 if (result == null) result = caseLinkable(port);
                 if (result == null) result = caseNamedObject(port);
+                if (result == null) result = caseNameable(port);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -100,6 +103,7 @@ public class CircuitSwitch<T> extends Switch<T> {
                 Link link = (Link)theEObject;
                 T result = caseLink(link);
                 if (result == null) result = caseNamedObject(link);
+                if (result == null) result = caseNameable(link);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -174,6 +178,21 @@ public class CircuitSwitch<T> extends Switch<T> {
     }
 
 	/**
+     * Returns the result of interpreting the object as an instance of '<em>Nameable</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Nameable</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseNameable(Nameable object) {
+        return null;
+    }
+
+    /**
      * Returns the result of interpreting the object as an instance of '<em>Named Object</em>'.
      * <!-- begin-user-doc -->
 	 * This implementation returns null;
