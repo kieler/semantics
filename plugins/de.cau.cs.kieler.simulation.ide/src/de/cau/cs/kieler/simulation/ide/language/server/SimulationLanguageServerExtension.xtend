@@ -129,11 +129,12 @@ class SimulationLanguageServerExtension implements ILanguageServerExtension, Sim
      * @param simulationType should be one of Manual, Periodic, and Dynamic
      */
     override start(String uri, String simulationType) {
+        val decodedUri = URLDecoder.decode(uri, "UTF-8")
         while (listeners.contains(this)) {
             removeListener(this)
         }
         addListener(this)
-        val message = startSimulation(uri, simulationType)
+        val message = startSimulation(decodedUri, simulationType)
         // If message is not empty an error occurred. Answer the via the corresponding notification.
         // Otherwise the corresponding simulation event is caught and the client is notified about the correct start.
         if (message !== "") { 

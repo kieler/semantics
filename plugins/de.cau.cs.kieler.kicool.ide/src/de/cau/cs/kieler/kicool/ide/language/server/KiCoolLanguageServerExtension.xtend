@@ -161,27 +161,28 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, KiCoolC
      * @param snapshot Whether the model to compile is a snapshot model.
      */
     override compile(String uri, String clientId, String command, boolean inplace, boolean showResultingModel, boolean snapshot) {
+        val decodedUri = URLDecoder.decode(uri, "UTF-8")
         try {
             var Object model
             // Get input model for compilation.
             if (snapshot) {
                 // Abort if no diagram can be found.
-                if (diagramState === null || diagramState.getKGraphContext(uri) === null) {
-                    client.compile(null, uri, true, 0, 1000)
+                if (diagramState === null || diagramState.getKGraphContext(decodedUri) === null) {
+                    client.compile(null, decodedUri, true, 0, 1000)
                     return
                 }
-                model = diagramState.getKGraphContext(uri).inputModel
+                model = diagramState.getKGraphContext(decodedUri).inputModel
             } else {
-                model = getModelFromUri(uri)
+                model = getModelFromUri(decodedUri)
             }
             // Abort if no model to compile could be found.
             if (model === null) {
-                client.compile(null, uri, true, 0, 1000)
+                client.compile(null, decodedUri, true, 0, 1000)
                 return
             }
             
             this.currentContext = createContextAndStartCompilationThread(model, command, inplace, this.currentContext,
-                uri, clientId, showResultingModel)
+                decodedUri, clientId, showResultingModel)
         } catch( Exception e) {
             e.printStackTrace()
             sendError(e.toString())
@@ -255,20 +256,21 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, KiCoolC
      * @return completable future with index and id of showed model
      */
     override show(String uri, String clientId, int index) {
+        val decodedUri = URLDecoder.decode(uri, "UTF-8")
         var Object model
         if (index == -1) {
             // Get model specified by uri
-            model = getModelFromUri(uri)
+            model = getModelFromUri(decodedUri)
         } else {
             // Get snapshot model from the compilation snapshots
-            model = this.objectMap.get(uri).get(index)
+            model = this.objectMap.get(decodedUri).get(index)
         }
         
         // Send model to client.
         val modelToSend = model
         return requestManager.runRead [ cancelIndicator |
             currentIndex = index
-            showSnapshot(uri, clientId, modelToSend, cancelIndicator, false)
+            showSnapshot(decodedUri, clientId, modelToSend, cancelIndicator, false)
         ]
     }
 
@@ -279,9 +281,10 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, KiCoolC
      * @return completable future of all compilation system descriptions {@code List<SystemDescription>}
      */
     override getSystems(String uri) {
+        val decodedUri = URLDecoder.decode(uri, "UTF-8")
         try {
-            val systemDescriptions = getCompilationSystems(uri, -1, false, false)
-            val snapshotSystemDescriptions = getCompilationSystems(uri, -1, false, true)
+            val systemDescriptions = getCompilationSystems(decodedUri, -1, false, false)
+            val snapshotSystemDescriptions = getCompilationSystems(decodedUri, -1, false, true)
             client.sendCompilationSystems(systemDescriptions, snapshotSystemDescriptions)
         } catch (Exception e) {
             e.printStackTrace()
