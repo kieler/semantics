@@ -171,7 +171,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         }
 
         // Styles from modifiers
-        if (state.isReferencedState) {
+        if (state.isReferencing) {
             node.setReferencedStyle
         }
         if (state.isInitial) {
@@ -203,10 +203,12 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
                 (if (state.isMacroState) {
                     val label = <Pair<? extends CharSequence, TextFormat>>newArrayList
                     label += new Pair(state.serializeHR, TextFormat.TEXT)
-                    if (state.isReferencedState) {
+                    if (state.isReferencing) {
                         label += new Pair("@", TextFormat.KEYWORD)
-                        if (state.reference.scope !== null) {
+                        if (state.isReferencingScope) {
                             label += new Pair((state.reference.scope as State).serializeHR, TextFormat.TEXT)
+                        } else if (state.isReferencingGeneric) {
+                            label += new Pair(state.reference.asGenericTypeCall.target.name, TextFormat.TEXT)
                         } else {
                             label += new Pair("UnresolvedReference", TextFormat.HIGHLIGHT)
                         }
@@ -275,7 +277,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
             // Add child area for regions
             if (state.controlflowRegionsContainStates
                 || state.containsDataflowRegions
-                || state.isReferencedState
+                || state.isReferencing
                 || (SHOW_INHERITANCE.booleanValue && !state.allVisibleInheritedRegions.empty)
                 || !state.declarations.filter(MethodImplementationDeclaration).empty
             ) {
@@ -328,7 +330,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         }
 
         // Add reference region
-        if (state.isReferencedState) {
+        if (state.isReferencing) {
             node.children += state.createReferenceRegion
         }
         
@@ -402,7 +404,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
     /** Checks if given state should be visualized as macro state */
     def boolean isMacroState(State state) {
         return state.controlflowRegionsContainStates || state.containsDataflowRegions || !state.actions.empty ||
-            !state.declarations.empty || state.isReferencedState || state.hasBaseStates;
+            !state.declarations.empty || state.isReferencing || state.hasBaseStates;
     }
     
     private val dependencyEdges = <Pair<EObject, EObject>, KEdge> newHashMap

@@ -35,6 +35,7 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsDataflowRegionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsInheritanceExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
 import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
@@ -61,6 +62,7 @@ class Dataflow extends SCChartsProcessor {
     @Inject extension KExpressionsDeclarationExtensions
     @Inject extension KExpressionsCreateExtensions
     @Inject extension SCChartsInheritanceExtensions
+    @Inject extension SCChartsScopeExtensions
     
     
     extension SCChartsFactory sccFactory = SCChartsFactory.eINSTANCE

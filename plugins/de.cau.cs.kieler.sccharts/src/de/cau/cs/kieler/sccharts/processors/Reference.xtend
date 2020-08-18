@@ -140,8 +140,8 @@ class Reference extends SCChartsProcessor implements Traceable {
         inheritanceProcessor?.inheritBaseStates(rootState)
         
         if (environment.getProperty(EXPAND_REFERENCED_STATES)) {
-            val statesWithReferences = rootState.allContainedStates.filter[ reference !== null && reference.scope !== null ].toList
-            val regionsWithReferences = rootState.allContainedRegions.filter[ reference !== null && reference.scope !== null ].toList
+            val statesWithReferences = rootState.allContainedStates.filter[isReferencing].toList
+            val regionsWithReferences = rootState.allContainedRegions.filter[isReferencing].toList
         
             for (state : statesWithReferences) {
                 state.expandReferencedScope(new Replacements)
@@ -159,8 +159,8 @@ class Reference extends SCChartsProcessor implements Traceable {
             rootState.handleSCChartsDatatype
             
             if (environment.getProperty(EXPAND_REFERENCED_STATES)) {
-                val statesWithReferences2 = rootState.getAllContainedStates.filter[ reference !== null && reference.scope !== null ].toList
-                val regionsWithReferences2 = rootState.allContainedRegions.filter[ reference !== null && reference.scope !== null ].toList
+                val statesWithReferences2 = rootState.getAllContainedStates.filter[isReferencing].toList
+                val regionsWithReferences2 = rootState.allContainedRegions.filter[isReferencing].toList
                 for (state : statesWithReferences2) {
                     state.expandReferencedScope(new Replacements)
                 }
@@ -259,7 +259,7 @@ class Reference extends SCChartsProcessor implements Traceable {
             val processState = if (newScope instanceof Region) newScope.eContainer as State else newScope as State
             // Optimize this.
             dataflowProcessor.processState(processState)
-            val statesWithReferences = processState.getAllContainedStates.filter[ reference !== null && reference.scope !== null ].toList
+            val statesWithReferences = processState.getAllContainedStates.filter[isReferencing].toList
             for (state : statesWithReferences) {
                 state.expandReferencedScope(new Replacements)
             }

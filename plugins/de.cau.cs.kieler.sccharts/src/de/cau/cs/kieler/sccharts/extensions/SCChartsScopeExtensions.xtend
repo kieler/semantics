@@ -41,6 +41,11 @@ import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
 import java.util.Map
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import org.eclipse.emf.ecore.EObject
+import de.cau.cs.kieler.kexpressions.Call
+import de.cau.cs.kieler.sccharts.ScopeCall
+import de.cau.cs.kieler.sccharts.GenericTypeScopeCall
+import de.cau.cs.kieler.sccharts.GenericTypeParameterDeclaration
+import de.cau.cs.kieler.sccharts.GenericTypeParameterReference
 
 /**
  * @author ssm
@@ -201,7 +206,58 @@ class SCChartsScopeExtensions {
     }
 
     def isReferencing(Scope scope) {
-        scope.reference !== null && scope.reference.scope !== null
+        return scope.reference !== null && (scope.isReferencingScope || scope.isReferencingGeneric)
+    }
+
+    def isReferencingScope(Scope scope) {
+        return scope.reference !== null && scope.reference.isScopeCall && scope.reference.scope !== null
     }
     
+    def boolean isScopeCall(Call call) {
+        return call instanceof ScopeCall
+    }
+    
+    def Scope getScope(Call call) {
+        if (call.isScopeCall) {
+            return call.scope
+        }
+    }
+    def Scope setScope(Call call, Scope newScope) {
+        if (call.isScopeCall) {
+            call.scope = newScope
+        } else {
+            throw new IllegalArgumentException("Cannot set scope on a Call that is not a ScopeCall!")
+        }
+    }
+
+    def isReferencingGeneric(Scope scope) {
+        return scope.reference !== null && scope.reference.isGenericTypeCall && scope.reference.asGenericTypeCall.target !== null
+    }
+
+    def boolean isGenericTypeCall(Call call) {
+        return call instanceof GenericTypeScopeCall
+    }
+    
+    def asGenericTypeCall(Call call) {
+        return call as GenericTypeScopeCall
+    }
+    
+    def Scope resolveReferencedScope(Call call) {
+        if (call instanceof ScopeCall) {
+            return call.scope
+        } else if (call instanceof GenericTypeParameterReference) {
+            return (call as GenericTypeParameterReference).resolveReferencedScope
+        }
+        return null
+    }
+    
+    def Scope resolveReferencedScope(GenericTypeParameterReference ref) {
+        val target = ref.target
+        if (target instanceof Scope) {
+            return target
+        } else if (target instanceof GenericTypeParameterDeclaration) {
+            target.type.resolveReferencedScope
+        }
+        return null        
+    }
 }

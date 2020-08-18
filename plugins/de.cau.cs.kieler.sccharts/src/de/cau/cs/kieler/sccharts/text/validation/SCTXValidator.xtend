@@ -15,8 +15,10 @@ import de.cau.cs.kieler.kexpressions.AccessModifier
 import de.cau.cs.kieler.kexpressions.CombineOperator
 import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.OperatorExpression
+import de.cau.cs.kieler.kexpressions.OperatorType
 import de.cau.cs.kieler.kexpressions.ReferenceCall
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
+import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
@@ -43,23 +45,20 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsFixExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsInheritanceExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsReferenceExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
 import de.cau.cs.kieler.sccharts.processors.For
 import de.cau.cs.kieler.sccharts.text.SCTXResource
 import java.util.Map
 import java.util.Set
+import org.eclipse.elk.core.data.LayoutMetaDataService
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.validation.AbstractDeclarativeValidator
 import org.eclipse.xtext.validation.Check
 import org.eclipse.xtext.validation.CheckType
 
 import static extension java.lang.String.*
-import org.eclipse.elk.core.data.LayoutMetaDataService
-import de.cau.cs.kieler.kexpressions.OperatorType
-import de.cau.cs.kieler.kexpressions.ValueType
-
-//import org.eclipse.xtext.validation.Check
 
 /**
  * This class contains custom validation rules. 
@@ -76,6 +75,7 @@ class SCTXValidator extends AbstractSCTXValidator {
     @Inject extension SCChartsTransitionExtensions
     @Inject extension SCChartsStateExtensions
     @Inject extension SCChartsInheritanceExtensions
+    @Inject extension SCChartsScopeExtensions
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KEffectsExtensions
     
@@ -848,11 +848,12 @@ class SCTXValidator extends AbstractSCTXValidator {
     
     @Check
     def void checkReferencingStateFinalState(de.cau.cs.kieler.sccharts.State state) {
-        if (state.reference === null) return;
-        if (state.reference.scope === null) return;
+        if (!state.isReferencing) return;
         if (state.terminationTransitions.empty) return;
+        
+        val scope = state.reference.resolveReferencedScope
             
-        if (!state.reference.scope.asState.mayTerminate) {
+        if (scope !== null && !scope.asState.mayTerminate) {
             warning("The referenced SCChart does not terminate, but you are using a termination to proceed.",
                 state.reference,
                 SCChartsPackage.eINSTANCE.scopeCall_Scope);

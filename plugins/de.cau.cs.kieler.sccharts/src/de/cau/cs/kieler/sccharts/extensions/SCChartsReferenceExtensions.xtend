@@ -55,9 +55,9 @@ class SCChartsReferenceExtensions extends KExtReferenceExtensions {
         val bound = <ValuedObject> newHashSet
         
         // Return an empty binding list if there is no reference.
-        if (scope.reference === null) return bindings
+        if (!scope.isReferencing) return bindings
         
-        val targetState = scope.reference.scope
+        val targetState = scope.reference.resolveReferencedScope
         val parameters = scope.reference.parameters
         
         // Return an empty binding list if there is no target in the reference.
