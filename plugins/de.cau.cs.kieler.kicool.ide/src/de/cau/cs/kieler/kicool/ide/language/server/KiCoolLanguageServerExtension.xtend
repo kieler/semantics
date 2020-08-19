@@ -30,7 +30,6 @@ import de.cau.cs.kieler.kicool.ide.language.server.data.SystemDescription
 import de.cau.cs.kieler.kicool.ide.view.IdeCompilerView
 import de.cau.cs.kieler.klighd.lsp.KGraphDiagramState
 import de.cau.cs.kieler.klighd.lsp.KGraphLanguageServerExtension
-import de.cau.cs.kieler.klighd.lsp.utils.KGraphElementIdGenerator
 import de.cau.cs.kieler.language.server.ILanguageClientProvider
 import de.cau.cs.kieler.language.server.KeithLanguageClient
 import de.cau.cs.kieler.language.server.registration.RegistrationLanguageServerExtension
