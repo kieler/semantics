@@ -347,13 +347,12 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, KiCoolC
      * @return model of specified resource
      */
     def Object getModelFromUri(String uri) {
-        var fileUri = URLDecoder.decode(uri, "UTF-8");
-        val uriObject = URI.createURI(fileUri)
+        val uriObject = URI.createURI(uri)
         val ext = uriObject.fileExtension()
         if (!RegistrationLanguageServerExtension.registeredLanguageExtensions.contains(ext)) {
-            val file = new File(fileUri)
+            val file = new File(uriObject.path)
             return new CodeContainer() => [
-                addProxy(file, Files.asCharSource(file, Charsets.UTF_8).read)
+                addProxy(file,  new String(java.nio.file.Files.readAllBytes(file.toPath)))
             ]
         }
         val resource = uriObject.xtextResourceSet.getResource(uriObject, true)
