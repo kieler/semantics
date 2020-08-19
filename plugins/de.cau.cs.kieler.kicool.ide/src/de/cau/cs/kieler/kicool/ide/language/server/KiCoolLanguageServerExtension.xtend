@@ -51,6 +51,7 @@ import org.eclipse.xtext.ide.server.ILanguageServerExtension
 import org.eclipse.xtext.ide.server.concurrent.RequestManager
 import org.eclipse.xtext.resource.XtextResourceSet
 import org.eclipse.xtext.util.CancelIndicator
+import de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure
 
 /**
  * Implements methods to extend the LSP to allow compilation. Moreover, getting compilation systems and showing
@@ -239,6 +240,7 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, KiCoolC
         val context = Compile.createCompilationContext(systemId, model)
         context.startEnvironment.setProperty(Environment.INPLACE, inplace)
         context.startEnvironment.setProperty(Environment.PRECEEDING_COMPILATION_CONTEXT, precedingContext)
+        context.startEnvironment.setProperty(ProjectInfrastructure.USE_TEMPORARY_PROJECT, false)
         compilationObservers.forEach[observer | context.addObserver(observer)]
         context.addObserver(new KeithCompilationUpdater(this, context, uri, clientId, systemId, inplace,
             showResultingModel))
