@@ -14,8 +14,8 @@ package de.cau.cs.kieler.language.server
 
 import de.cau.cs.kieler.core.services.KielerServiceLoader
 import de.cau.cs.kieler.klighd.lsp.KGraphLanguageClient
-import de.cau.cs.kieler.klighd.lsp.interactive.layered.ConstraintsLanguageServerExtension
-import de.cau.cs.kieler.klighd.lsp.interactive.rectpack.RectPackInterativeLanguageServerExtension
+import de.cau.cs.kieler.klighd.lsp.interactive.layered.LayeredInteractiveLanguageServerExtension
+import de.cau.cs.kieler.klighd.lsp.interactive.rectpacking.RectpackingInteractiveLanguageServerExtension
 import de.cau.cs.kieler.klighd.lsp.launch.AbstractLsCreator
 import java.util.List
 import org.eclipse.xtext.ide.server.ILanguageServerExtension
@@ -28,17 +28,17 @@ import org.eclipse.xtext.ide.server.ILanguageServerExtension
  */
 class LSCreator extends AbstractLsCreator {
     
-    ConstraintsLanguageServerExtension constraints
+    LayeredInteractiveLanguageServerExtension constraints
     
-    RectPackInterativeLanguageServerExtension rectPack
+    RectpackingInteractiveLanguageServerExtension rectPack
     
     List<ILSDiagramHighlighter> diagramHighlighters
     
     List<ILanguageServerExtension> iLanguageServerExtensions
     
     override getLanguageServerExtensions() {
-        constraints = injector.getInstance(ConstraintsLanguageServerExtension)
-        rectPack = injector.getInstance(RectPackInterativeLanguageServerExtension)
+        constraints = injector.getInstance(LayeredInteractiveLanguageServerExtension)
+        rectPack = injector.getInstance(RectpackingInteractiveLanguageServerExtension)
         iLanguageServerExtensions = newArrayList(constraints, rectPack)
         for (lse : KielerServiceLoader.load(ILanguageServerContribution)) {
             iLanguageServerExtensions.add(lse.getLanguageServerExtension(injector))
