@@ -439,10 +439,9 @@
           </page>
        </extension>
        <extension
-             point="de.cau.cs.kieler.klighd.klighdStartupHook">
+             point="de.cau.cs.kieler.klighd.extensions">
           <startupHook
-                class="de.cau.cs.kieler.kicool.ui.klighd.KicoolKlighdSetup"
-                id="de.cau.cs.kieler.kicool.ui.klighd.KicoolKlighdSetup">
+                class="de.cau.cs.kieler.kicool.ui.klighd.KicoolKlighdSetup">
           </startupHook>
        </extension>
 </plugin>
