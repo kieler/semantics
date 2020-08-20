@@ -23,7 +23,6 @@ import de.cau.cs.kieler.simulation.events.SimulationControlEvent
 import de.cau.cs.kieler.simulation.events.SimulationControlEvent.SimulationOperation
 import de.cau.cs.kieler.simulation.events.SimulationEvent
 import de.cau.cs.kieler.simulation.ide.visualization.IdeDiagramHighlighter
-import java.net.URLDecoder
 import static de.cau.cs.kieler.simulation.ide.language.server.SimulationLanguageServerExtension.*
 
 /**
@@ -76,7 +75,7 @@ abstract class LSDiagramHighlighter extends IdeDiagramHighlighter {
                 return null
             }
             // TODO Get model of snapshots model (currently saved in different fields
-            return diagramState.getKGraphContext(URLDecoder.decode(simulationExt.currentlySimulatedModel, "UTF-8"))
+            return diagramState.getKGraphContext(simulationExt.currentlySimulatedModel)
         }
     }
 

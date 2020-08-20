@@ -3,7 +3,7 @@
  * 
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
- * Copyright 2019 by
+ * Copyright 2019,2020 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -12,143 +12,63 @@
  */
 package de.cau.cs.kieler.language.server
 
-import com.google.gson.GsonBuilder
-import com.google.inject.Injector
 import de.cau.cs.kieler.core.services.KielerServiceLoader
-import de.cau.cs.kieler.klighd.IViewerProvider
-import de.cau.cs.kieler.klighd.KlighdDataManager
-import de.cau.cs.kieler.klighd.lsp.KGraphDiagramModule
-import de.cau.cs.kieler.klighd.lsp.KGraphDiagramServerModule
-import de.cau.cs.kieler.klighd.lsp.SprottyViewer
-import de.cau.cs.kieler.klighd.lsp.gson_utils.KGraphTypeAdapterUtil
+import de.cau.cs.kieler.klighd.lsp.KGraphLanguageClient
 import de.cau.cs.kieler.klighd.lsp.interactive.layered.ConstraintsLanguageServerExtension
 import de.cau.cs.kieler.klighd.lsp.interactive.rectpack.RectPackInterativeLanguageServerExtension
-import java.io.InputStream
-import java.io.OutputStream
+import de.cau.cs.kieler.klighd.lsp.launch.AbstractLsCreator
 import java.util.List
-import java.util.Map
-import java.util.concurrent.ExecutorService
-import java.util.function.Consumer
-import java.util.function.Function
-import org.apache.log4j.AsyncAppender
-import org.apache.log4j.Logger
-import org.eclipse.lsp4j.jsonrpc.Launcher.Builder
-import org.eclipse.lsp4j.jsonrpc.MessageConsumer
-import org.eclipse.lsp4j.services.LanguageClient
-import org.eclipse.sprotty.xtext.launch.DiagramServerLauncher.LanguageClientAppender
-import org.eclipse.xtext.ide.server.IWorkspaceConfigFactory
-import org.eclipse.xtext.ide.server.LanguageServerImpl
-import org.eclipse.xtext.ide.server.ServerLauncher
-import org.eclipse.xtext.resource.IResourceServiceProvider
-import org.eclipse.xtext.util.Modules2
-import de.cau.cs.kieler.klighd.lsp.KGraphLanguageClient
+import org.eclipse.xtext.ide.server.ILanguageServerExtension
 
 /** 
  * Provides methods to create a LS.
  * This involves binding of modules and creating, starting, and configure logging for an LS.
  * 
- * @author sdo
+ * @author sdo, nre
  */
-class LSCreator {
+class LSCreator extends AbstractLsCreator {
     
+    ConstraintsLanguageServerExtension constraints
     
-    /**
-     * Binds all necessary classes to start the LS.
-     * @param socket boolean whether modules for socket or stdio case are generated.
-     */
-    def createLSModules(boolean socket) {
-        return Modules2.mixin(
-            new KeithServerModule,
-            [
-                if (socket) {
-                    // nothing special to bind
-                } else {
-                    bind(ServerLauncher).to(LanguageServerLauncher)
-                }
-                bind(IResourceServiceProvider.Registry).toProvider(IResourceServiceProvider.Registry.RegistryProvider)
+    RectPackInterativeLanguageServerExtension rectPack
     
-                // the WorkspaceConfigFactory is overridden to disable the creation of a folder with xtext nature.
-                bind(IWorkspaceConfigFactory).to(KeithProjectWorkspaceConfigFactory)
-            ],
-            // Diagram related bindings
-            new KGraphDiagramModule(),
-            new KGraphDiagramServerModule()
-        )
-    }
+    List<ILSDiagramHighlighter> diagramHighlighters
     
-    /**
-     * Build and starts a LS and handles logging configuration if necessary.
-     * Registers all ILanguageServerExtensions registered via ServiceLoader as extensions to the existing ls given as
-     * parameter.
-     * @param injector injector used to get all LSExtensions. KGraphLSExtension must be registered.
-     * @param ls the LangaugeServerImpl that is started. Usually the KGraphLSExtension, which is a DiagramLanguageServer
-     * @param in InputStream for communication
-     * @param out OutputStream for communication
-     * @param threadPool ExecutorService
-     * @param wrapper 
-     * @param socket whether the LS is created for the socket or stdio case
-     */
-    def buildAndStartLS(Injector injector, LanguageServerImpl ls, InputStream in, OutputStream out,
-        ExecutorService threadPool, Function<MessageConsumer, MessageConsumer> wrapper, boolean socket
-    ) {
-        // Hack the SprottyViewer into the KlighdDataManager.
-        // FIXME: Once De-Eclipsification of KLighD is done, this should be done by public API.
-        val viewerProviderField = KlighdDataManager.getDeclaredField("idViewerProviderMapping")
-        viewerProviderField.accessible = true
-        val viewerProvider = viewerProviderField.get(KlighdDataManager.getInstance) as Map<String, IViewerProvider>
-        viewerProvider.clear
-        viewerProvider.put("de.cau.cs.kieler.klighd.lsp.SprottyViewer", new SprottyViewer.Provider)
-        
-        // TypeAdapter is needed to be able to send recursive data in json
-        val Consumer<GsonBuilder> configureGson = [ gsonBuilder |
-            KGraphTypeAdapterUtil.configureGson(gsonBuilder)
-        ]
-        // Get all LSExtensions to use them as local services
-        var constraintsLSExt = injector.getInstance(ConstraintsLanguageServerExtension)
-        var rectPackLSExt = injector.getInstance(RectPackInterativeLanguageServerExtension)
-        var iLanguageServerExtensions = <Object>newArrayList(ls, constraintsLSExt, rectPackLSExt)
+    List<ILanguageServerExtension> iLanguageServerExtensions
+    
+    override getLanguageServerExtensions() {
+        constraints = injector.getInstance(ConstraintsLanguageServerExtension)
+        rectPack = injector.getInstance(RectPackInterativeLanguageServerExtension)
+        iLanguageServerExtensions = newArrayList(constraints, rectPack)
         for (lse : KielerServiceLoader.load(ILanguageServerContribution)) {
             iLanguageServerExtensions.add(lse.getLanguageServerExtension(injector))
         }
-        val launcher = new Builder<LanguageClient>()
-                .setLocalServices(iLanguageServerExtensions)
-                .setRemoteInterface(KeithLanguageClient)
-                .setInput(in)
-                .setOutput(out)
-                .setExecutorService(threadPool)
-                .wrapMessages(wrapper)
-                .configureGson(configureGson)
-                .setClassLoader(LanguageServer.classLoader)
-                .create();
-        val client = launcher.remoteProxy
-        ls.connect(client)
+        return iLanguageServerExtensions
+    }
+    
+    
+    override getRemoteInterface() {
+        KeithLanguageClient
+    }
+    
+    override onConnect() {
         for (Object ext : iLanguageServerExtensions) {
             if (ext instanceof ILanguageClientProvider) {
-                ext.languageClient = client
+                ext.languageClient = languageClient
             }
         }
-        constraintsLSExt.client = client as KGraphLanguageClient
-        rectPackLSExt.client = client as KGraphLanguageClient
-        var List<ILSDiagramHighlighter> diagramHighlighters = newArrayList
+        constraints.client = languageClient as KGraphLanguageClient
+        rectPack.client = languageClient as KGraphLanguageClient
+        diagramHighlighters = newArrayList
         for (iLSdhc : KielerServiceLoader.load(ILSDiagramHighlighterContribution)) {
             diagramHighlighters.add(iLSdhc.getHighlighter(injector))
         }
-        val future = launcher.startListening
-        if (socket) {
-        } else { // case stdio
-            // Redirect Log4J output to a file
-            Logger.rootLogger => [
-                removeAllAppenders()
-                addAppender(new AsyncAppender() => [
-                    addAppender(new LanguageClientAppender(client))
-                ])
-            ]
-        }
-        while (!future.done) {
-            Thread.sleep(10_000l)
-        }
-        // On reload remove all diagram highlighters
+    }
+    
+    override onReload() {
+        // On reload remove all diagram highlighters.
         // The diagram highlighters are as everything else created again on reload.
         diagramHighlighters.forEach[it.unregisterObserver()]
     }
+    
 }

@@ -3,7 +3,7 @@
  *
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
- * Copyright 2019 by
+ * Copyright 2019,2020 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -12,30 +12,19 @@
  */
 package de.cau.cs.kieler.language.server
 
-import com.google.inject.Guice
 import de.cau.cs.kieler.core.services.KielerServiceLoader
-import de.cau.cs.kieler.kgraph.text.ide.KGraphLSSetup
-import org.eclipse.elk.graph.text.ElkGraphRuntimeModule
-import org.eclipse.elk.graph.text.ElkGraphStandaloneSetup
-import org.eclipse.elk.graph.text.ide.ElkGraphIdeModule
-import org.eclipse.xtext.util.Modules2
+import de.cau.cs.kieler.pragmatics.language.server.PragmaticsLanguageRegistration
 
 /**
- * @author sdo
- *
+ * Binds and registers all {@link ILSSetupContribution}s.
+ * 
+ * @author sdo, nre
  */
-class LanguageRegistration {
+class LanguageRegistration extends PragmaticsLanguageRegistration {
     
-    def bindAndRegisterLanguages() {        
+    override bindAndRegisterLanguages() {        
         // Bind and register all needed languages.
-        KGraphLSSetup.doLSSetup
-        new ElkGraphStandaloneSetup {
-            
-            override createInjector() {
-                Guice.createInjector(Modules2.mixin(new ElkGraphRuntimeModule, new ElkGraphIdeModule))
-            }
-            
-        }.createInjectorAndDoEMFRegistration
+        super.bindAndRegisterLanguages
         for (contribution: KielerServiceLoader.load(ILSSetupContribution)) {
             contribution.LSSetup.doLSSetup()
         }

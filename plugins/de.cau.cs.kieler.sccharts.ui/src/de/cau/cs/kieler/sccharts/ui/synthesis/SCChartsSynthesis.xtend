@@ -95,7 +95,7 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
     
     static val PRAGMA_HIDE_IMPORTED_SCCHARTS = "HideImportedSCCharts"
           
-    val ID = "de.cau.cs.kieler.sccharts.ui.synthesis.SCChartsSynthesis"
+    public static val ID = "de.cau.cs.kieler.sccharts.ui.synthesis.SCChartsSynthesis"
     
     override getDisplayedActions() {
         return newLinkedList => [ list |

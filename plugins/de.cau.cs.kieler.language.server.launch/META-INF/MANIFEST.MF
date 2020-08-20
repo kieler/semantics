@@ -1,0 +1,27 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: KIELER Language Server
+Bundle-SymbolicName: de.cau.cs.kieler.language.server.launch;singleton:=true
+Bundle-Version: 1.2.0.qualifier
+Bundle-Vendor: Kiel University
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Automatic-Module-Name: de.cau.cs.kieler.language.server.launch
+Bundle-ActivationPolicy: lazy
+Require-Bundle: de.cau.cs.kieler.esterel.ide,
+ de.cau.cs.kieler.graphs.klighd,
+ de.cau.cs.kieler.kicool,
+ de.cau.cs.kieler.kicool.ide,
+ de.cau.cs.kieler.kicool.ui,
+ de.cau.cs.kieler.kivis.ide,
+ de.cau.cs.kieler.klighd.ide,
+ de.cau.cs.kieler.klighd.incremental,
+ de.cau.cs.kieler.klighd.lsp,
+ de.cau.cs.kieler.language.server,
+ de.cau.cs.kieler.lustre.ide,
+ de.cau.cs.kieler.sccharts,
+ de.cau.cs.kieler.sccharts.ide,
+ de.cau.cs.kieler.sccharts.ui,
+ de.cau.cs.kieler.scg,
+ de.cau.cs.kieler.scg.klighd,
+ de.cau.cs.kieler.simulation.ui
+
