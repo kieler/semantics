@@ -30,7 +30,6 @@
               <overWriteSnapshots>false</overWriteSnapshots>
               <overWriteIfNewer>true</overWriteIfNewer>
               <excludeTransitive>false</excludeTransitive>
-              <excludeArtifactIds>de.cau.cs.kieler.simulation.ui</excludeArtifactIds>
             </configuration>
           </execution>
         </executions>
