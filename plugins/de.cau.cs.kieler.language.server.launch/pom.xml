@@ -30,6 +30,7 @@
               <overWriteSnapshots>false</overWriteSnapshots>
               <overWriteIfNewer>true</overWriteIfNewer>
               <excludeTransitive>false</excludeTransitive>
+              <excludeArtifactIds>de.cau.cs.kieler.simulation.ui</excludeArtifactIds>
             </configuration>
           </execution>
         </executions>
@@ -98,7 +99,6 @@
                     <exclude>**/*.g</exclude>
                     <exclude>**/*.mwe2</exclude>
                     <exclude>**/*.xtext</exclude>
-                    <exclude>**/*simulation.ui*/**</exclude>
                   </excludes>
                 </filter>
               </filters>
