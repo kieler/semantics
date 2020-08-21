@@ -98,6 +98,7 @@
                     <exclude>**/*.g</exclude>
                     <exclude>**/*.mwe2</exclude>
                     <exclude>**/*.xtext</exclude>
+                    <exclude>**/*simulation.ui*/**</exclude>
                   </excludes>
                 </filter>
               </filters>
