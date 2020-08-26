@@ -79,6 +79,16 @@
         <module>de.cau.cs.kieler.semantics.product.repository</module>
         <module>de.cau.cs.kieler.kicool.cli</module>
         <module>de.cau.cs.kieler.sccharts.cli</module>
+        <module>de.cau.cs.kieler.language.server.cli</module>
+      </modules>
+    </profile>
+
+    <profile>
+      <id>semantics.ls</id>
+      <modules>
+        <module>../plugins</module>
+        <module>de.cau.cs.kieler.semantics.targetplatform</module>
+        <module>de.cau.cs.kieler.language.server.cli</module>
       </modules>
     </profile>  
   
@@ -204,8 +214,7 @@
               <ws>win32</ws>
               <arch>x86</arch>
             </environment> -->
-            <!-- For a locally working language server build, disable the other environments. -->
-            <!-- <environment>
+            <environment>
               <os>win32</os>
               <ws>win32</ws>
               <arch>x86_64</arch>
@@ -214,7 +223,7 @@
               <os>macosx</os>
               <ws>cocoa</ws>
               <arch>x86_64</arch>
-            </environment> -->
+            </environment>
           </environments>
         </configuration>
       </plugin>

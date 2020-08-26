@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <description name="KIELER Language Server CLI">
+      Artificial Update site for the KIELER Language Server CLI.
+   </description>
+   <bundle id="de.cau.cs.kieler.esterel.ide"/>
+   <bundle id="de.cau.cs.kieler.graphs.klighd"/>
+   <bundle id="de.cau.cs.kieler.kicool"/>
+   <bundle id="de.cau.cs.kieler.kicool.ide"/>
+   <bundle id="de.cau.cs.kieler.kicool.ui"/>
+   <bundle id="de.cau.cs.kieler.kivis.ide"/>
+   <bundle id="de.cau.cs.kieler.klighd.ide"/>
+   <bundle id="de.cau.cs.kieler.klighd.incremental"/>
+   <bundle id="de.cau.cs.kieler.klighd.lsp"/>
+   <bundle id="de.cau.cs.kieler.language.server"/>
+   <bundle id="de.cau.cs.kieler.lustre.ide"/>
+   <bundle id="de.cau.cs.kieler.sccharts"/>
+   <bundle id="de.cau.cs.kieler.sccharts.ide"/>
+   <bundle id="de.cau.cs.kieler.sccharts.ui"/>
+   <bundle id="de.cau.cs.kieler.scg"/>
+   <bundle id="de.cau.cs.kieler.scg.klighd"/>
+   <bundle id="de.cau.cs.kieler.simulation.ide"/>
+</site>
+
+
