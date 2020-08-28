@@ -99,7 +99,8 @@ IGNORE_MERGE = [
 KLIGHD_JARS_BLACKLIST = [
     'org.eclipse.ui*',
     'org.eclipse.e4*',
-    'org.eclipse.*.ui*'
+    'org.eclipse.*.ui*',
+    'de.cau.cs.kieler.simulation.ui*'
 ]
 KLIGHD_JARS_WHITELIST = [
     'org.eclipse.ui.workbench*'
@@ -107,6 +108,8 @@ KLIGHD_JARS_WHITELIST = [
 KLIGHD_IGNORED_FILES = [
     'org/eclipse/ui/[!I]*', # Keep Interfaces for Klighd
     'org/eclipse/ui/*/*',
+    'de.cau.cs.kieler.simulation.ui/*/*'
+    'de.cau.cs.kieler.simulation.ui/[!icons]/*'
     'fragment.properties'
 ]
 klighd_swt = {}
