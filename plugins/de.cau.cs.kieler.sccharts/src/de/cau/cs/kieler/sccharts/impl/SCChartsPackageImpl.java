@@ -14,9 +14,13 @@
 package de.cau.cs.kieler.sccharts.impl;
 
 import de.cau.cs.kieler.annotations.AnnotationsPackage;
+
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
+
 import de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage;
+
 import de.cau.cs.kieler.kexpressions.kext.KExtPackage;
+
 import de.cau.cs.kieler.sccharts.Action;
 import de.cau.cs.kieler.sccharts.CodeEffect;
 import de.cau.cs.kieler.sccharts.ControlflowRegion;
@@ -27,13 +31,8 @@ import de.cau.cs.kieler.sccharts.DelayType;
 import de.cau.cs.kieler.sccharts.DuringAction;
 import de.cau.cs.kieler.sccharts.EntryAction;
 import de.cau.cs.kieler.sccharts.ExitAction;
-import de.cau.cs.kieler.sccharts.GenericTypeParameter;
-import de.cau.cs.kieler.sccharts.GenericTypeParameterDeclaration;
-import de.cau.cs.kieler.sccharts.GenericTypeParameterReference;
-import de.cau.cs.kieler.sccharts.GenericTypeScopeCall;
 import de.cau.cs.kieler.sccharts.HistoryType;
 import de.cau.cs.kieler.sccharts.LocalAction;
-import de.cau.cs.kieler.sccharts.ParameterizedReferenceDeclaration;
 import de.cau.cs.kieler.sccharts.PeriodAction;
 import de.cau.cs.kieler.sccharts.PolicyClassDeclaration;
 import de.cau.cs.kieler.sccharts.PolicyRegion;
@@ -47,7 +46,9 @@ import de.cau.cs.kieler.sccharts.ScopeCall;
 import de.cau.cs.kieler.sccharts.State;
 import de.cau.cs.kieler.sccharts.SuspendAction;
 import de.cau.cs.kieler.sccharts.Transition;
+
 import de.cau.cs.kieler.scl.SCLPackage;
+
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EEnum;
@@ -65,17 +66,45 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
 public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage {
     /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	public static final String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\r\n\r\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\r\n\r\nCopyright 2013 by\r\n+ Kiel University\r\n  + Department of Computer Science\r\n    + Real-Time and Embedded Systems Group\r\n\r\nThis code is provided under the terms of the Eclipse Public License (EPL).\r\nSee the file epl-v10.html for the license text.";
+    public static final String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\r\n\r\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\r\n\r\nCopyright 2013 by\r\n+ Kiel University\r\n  + Department of Computer Science\r\n    + Real-Time and Embedded Systems Group\r\n\r\nThis code is provided under the terms of the Eclipse Public License (EPL).\r\nSee the file epl-v10.html for the license text.";
 
-				/**
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass scChartsEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass scopeEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass scopeCallEClass = null;
+
+    /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
     private EClass actionEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass localActionEClass = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -111,55 +140,6 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * @generated
      */
     private EClass transitionEClass = null;
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    private EClass scopeEClass = null;
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    private EClass scopeCallEClass = null;
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    private EClass genericTypeParameterDeclarationEClass = null;
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    private EClass genericTypeParameterEClass = null;
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    private EClass parameterizedReferenceDeclarationEClass = null;
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    private EClass genericTypeParameterReferenceEClass = null;
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    private EClass localActionEClass = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -229,23 +209,9 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    private EClass genericTypeScopeCallEClass = null;
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     private EEnum preemptionTypeEEnum = null;
 
     /**
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     */
-	private EClass scChartsEClass = null;
-
-				/**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -340,6 +306,126 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * @generated
      */
     @Override
+    public EClass getSCCharts() {
+        return scChartsEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getSCCharts_RootStates() {
+        return (EReference)scChartsEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EAttribute getSCCharts_Imports() {
+        return (EAttribute)scChartsEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EClass getScope() {
+        return scopeEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EAttribute getScope_Label() {
+        return (EAttribute)scopeEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getScope_Actions() {
+        return (EReference)scopeEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getScope_Reference() {
+        return (EReference)scopeEClass.getEStructuralFeatures().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getScope_GenericParameterDeclarations() {
+        return (EReference)scopeEClass.getEStructuralFeatures().get(3);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EClass getScopeCall() {
+        return scopeCallEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getScopeCall_Target() {
+        return (EReference)scopeCallEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EAttribute getScopeCall_Super() {
+        return (EAttribute)scopeCallEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getScopeCall_GenericParameters() {
+        return (EReference)scopeCallEClass.getEStructuralFeatures().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public EClass getAction() {
         return actionEClass;
     }
@@ -390,6 +476,16 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * @generated
      */
     @Override
+    public EAttribute getAction_Label() {
+        return (EAttribute)actionEClass.getEStructuralFeatures().get(4);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public EAttribute getAction_Delay() {
         return (EAttribute)actionEClass.getEStructuralFeatures().get(5);
     }
@@ -410,8 +506,8 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * @generated
      */
     @Override
-    public EAttribute getAction_Label() {
-        return (EAttribute)actionEClass.getEStructuralFeatures().get(4);
+    public EClass getLocalAction() {
+        return localActionEClass;
     }
 
     /**
@@ -430,8 +526,8 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * @generated
      */
     @Override
-    public EReference getState_Regions() {
-        return (EReference)stateEClass.getEStructuralFeatures().get(1);
+    public EReference getState_ParentRegion() {
+        return (EReference)stateEClass.getEStructuralFeatures().get(0);
     }
 
     /**
@@ -440,8 +536,8 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * @generated
      */
     @Override
-    public EReference getState_ParentRegion() {
-        return (EReference)stateEClass.getEStructuralFeatures().get(0);
+    public EReference getState_Regions() {
+        return (EReference)stateEClass.getEStructuralFeatures().get(1);
     }
 
     /**
@@ -476,15 +572,15 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
 
     /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	@Override
+    @Override
     public EAttribute getState_Connector() {
         return (EAttribute)stateEClass.getEStructuralFeatures().get(5);
     }
 
-				/**
+    /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -660,8 +756,8 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * @generated
      */
     @Override
-    public EAttribute getTransition_Deferred() {
-        return (EAttribute)transitionEClass.getEStructuralFeatures().get(2);
+    public EAttribute getTransition_History() {
+        return (EAttribute)transitionEClass.getEStructuralFeatures().get(1);
     }
 
     /**
@@ -670,8 +766,8 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * @generated
      */
     @Override
-    public EAttribute getTransition_History() {
-        return (EAttribute)transitionEClass.getEStructuralFeatures().get(1);
+    public EAttribute getTransition_Deferred() {
+        return (EAttribute)transitionEClass.getEStructuralFeatures().get(2);
     }
 
     /**
@@ -692,176 +788,6 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
     @Override
     public EReference getTransition_SourceState() {
         return (EReference)transitionEClass.getEStructuralFeatures().get(4);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public EClass getScope() {
-        return scopeEClass;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public EAttribute getScope_Label() {
-        return (EAttribute)scopeEClass.getEStructuralFeatures().get(0);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public EReference getScope_Actions() {
-        return (EReference)scopeEClass.getEStructuralFeatures().get(1);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public EReference getScope_Reference() {
-        return (EReference)scopeEClass.getEStructuralFeatures().get(2);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public EReference getScope_Generics() {
-        return (EReference)scopeEClass.getEStructuralFeatures().get(3);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public EClass getScopeCall() {
-        return scopeCallEClass;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public EReference getScopeCall_Scope() {
-        return (EReference)scopeCallEClass.getEStructuralFeatures().get(0);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public EAttribute getScopeCall_Super() {
-        return (EAttribute)scopeCallEClass.getEStructuralFeatures().get(1);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public EClass getGenericTypeParameterDeclaration() {
-        return genericTypeParameterDeclarationEClass;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public EReference getGenericTypeParameterDeclaration_Type() {
-        return (EReference)genericTypeParameterDeclarationEClass.getEStructuralFeatures().get(0);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public EClass getGenericTypeParameter() {
-        return genericTypeParameterEClass;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public EClass getParameterizedReferenceDeclaration() {
-        return parameterizedReferenceDeclarationEClass;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public EReference getParameterizedReferenceDeclaration_TypeParameters() {
-        return (EReference)parameterizedReferenceDeclarationEClass.getEStructuralFeatures().get(0);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public EClass getGenericTypeParameterReference() {
-        return genericTypeParameterReferenceEClass;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public EReference getGenericTypeParameterReference_Target() {
-        return (EReference)genericTypeParameterReferenceEClass.getEStructuralFeatures().get(0);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public EReference getGenericTypeParameterReference_TypeParameters() {
-        return (EReference)genericTypeParameterReferenceEClass.getEStructuralFeatures().get(1);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public EClass getLocalAction() {
-        return localActionEClass;
     }
 
     /**
@@ -1020,51 +946,11 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * @generated
      */
     @Override
-    public EClass getGenericTypeScopeCall() {
-        return genericTypeScopeCallEClass;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
     public EEnum getPreemptionType() {
         return preemptionTypeEEnum;
     }
 
     /**
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     */
-	@Override
-    public EClass getSCCharts() {
-        return scChartsEClass;
-    }
-
-				/**
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     */
-	@Override
-    public EReference getSCCharts_RootStates() {
-        return (EReference)scChartsEClass.getEStructuralFeatures().get(0);
-    }
-
-				/**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public EAttribute getSCCharts_Imports() {
-        return (EAttribute)scChartsEClass.getEStructuralFeatures().get(1);
-    }
-
-                /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -1131,11 +1017,12 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         createEAttribute(scopeEClass, SCOPE__LABEL);
         createEReference(scopeEClass, SCOPE__ACTIONS);
         createEReference(scopeEClass, SCOPE__REFERENCE);
-        createEReference(scopeEClass, SCOPE__GENERICS);
+        createEReference(scopeEClass, SCOPE__GENERIC_PARAMETER_DECLARATIONS);
 
         scopeCallEClass = createEClass(SCOPE_CALL);
-        createEReference(scopeCallEClass, SCOPE_CALL__SCOPE);
+        createEReference(scopeCallEClass, SCOPE_CALL__TARGET);
         createEAttribute(scopeCallEClass, SCOPE_CALL__SUPER);
+        createEReference(scopeCallEClass, SCOPE_CALL__GENERIC_PARAMETERS);
 
         actionEClass = createEClass(ACTION);
         createEReference(actionEClass, ACTION__EFFECTS);
@@ -1205,20 +1092,6 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         dataflowAssignmentEClass = createEClass(DATAFLOW_ASSIGNMENT);
         createEAttribute(dataflowAssignmentEClass, DATAFLOW_ASSIGNMENT__SEQUENTIAL);
 
-        genericTypeScopeCallEClass = createEClass(GENERIC_TYPE_SCOPE_CALL);
-
-        genericTypeParameterDeclarationEClass = createEClass(GENERIC_TYPE_PARAMETER_DECLARATION);
-        createEReference(genericTypeParameterDeclarationEClass, GENERIC_TYPE_PARAMETER_DECLARATION__TYPE);
-
-        genericTypeParameterEClass = createEClass(GENERIC_TYPE_PARAMETER);
-
-        parameterizedReferenceDeclarationEClass = createEClass(PARAMETERIZED_REFERENCE_DECLARATION);
-        createEReference(parameterizedReferenceDeclarationEClass, PARAMETERIZED_REFERENCE_DECLARATION__TYPE_PARAMETERS);
-
-        genericTypeParameterReferenceEClass = createEClass(GENERIC_TYPE_PARAMETER_REFERENCE);
-        createEReference(genericTypeParameterReferenceEClass, GENERIC_TYPE_PARAMETER_REFERENCE__TARGET);
-        createEReference(genericTypeParameterReferenceEClass, GENERIC_TYPE_PARAMETER_REFERENCE__TYPE_PARAMETERS);
-
         // Create enums
         preemptionTypeEEnum = createEEnum(PREEMPTION_TYPE);
         historyTypeEEnum = createEEnum(HISTORY_TYPE);
@@ -1268,7 +1141,6 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         scopeEClass.getESuperTypes().add(theAnnotationsPackage.getNamedObject());
         scopeEClass.getESuperTypes().add(theKExpressionsPackage.getSchedulable());
         scopeEClass.getESuperTypes().add(theKEffectsPackage.getLinkable());
-        scopeEClass.getESuperTypes().add(this.getGenericTypeParameter());
         scopeCallEClass.getESuperTypes().add(theKExpressionsPackage.getCall());
         actionEClass.getESuperTypes().add(theAnnotationsPackage.getAnnotatable());
         actionEClass.getESuperTypes().add(theKEffectsPackage.getLinkable());
@@ -1288,12 +1160,6 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         codeEffectEClass.getESuperTypes().add(theKEffectsPackage.getEffect());
         codeEffectEClass.getESuperTypes().add(theSCLPackage.getScope());
         dataflowAssignmentEClass.getESuperTypes().add(theKEffectsPackage.getAssignment());
-        genericTypeScopeCallEClass.getESuperTypes().add(theKExpressionsPackage.getCall());
-        genericTypeScopeCallEClass.getESuperTypes().add(this.getGenericTypeParameterReference());
-        genericTypeParameterDeclarationEClass.getESuperTypes().add(theAnnotationsPackage.getAnnotatable());
-        genericTypeParameterDeclarationEClass.getESuperTypes().add(this.getGenericTypeParameter());
-        genericTypeParameterEClass.getESuperTypes().add(theAnnotationsPackage.getNamedObject());
-        parameterizedReferenceDeclarationEClass.getESuperTypes().add(theKExpressionsPackage.getReferenceDeclaration());
 
         // Initialize classes and features; add operations and parameters
         initEClass(scChartsEClass, SCCharts.class, "SCCharts", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -1303,12 +1169,13 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         initEClass(scopeEClass, Scope.class, "Scope", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getScope_Label(), ecorePackage.getEString(), "label", null, 0, 1, Scope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getScope_Actions(), this.getLocalAction(), null, "actions", null, 0, -1, Scope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getScope_Reference(), theKExpressionsPackage.getCall(), null, "reference", null, 0, 1, Scope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getScope_Generics(), this.getGenericTypeParameterDeclaration(), null, "generics", null, 0, -1, Scope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getScope_Reference(), this.getScopeCall(), null, "reference", null, 0, 1, Scope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getScope_GenericParameterDeclarations(), theKExpressionsPackage.getGenericParameterDeclaration(), null, "genericParameterDeclarations", null, 0, -1, Scope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(scopeCallEClass, ScopeCall.class, "ScopeCall", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getScopeCall_Scope(), this.getScope(), null, "scope", null, 0, 1, ScopeCall.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getScopeCall_Target(), theAnnotationsPackage.getNamedObject(), null, "target", null, 0, 1, ScopeCall.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getScopeCall_Super(), ecorePackage.getEBoolean(), "super", null, 0, 1, ScopeCall.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getScopeCall_GenericParameters(), theKExpressionsPackage.getParameter(), null, "genericParameters", null, 0, -1, ScopeCall.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(actionEClass, Action.class, "Action", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getAction_Effects(), theKEffectsPackage.getEffect(), null, "effects", null, 0, -1, Action.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1377,20 +1244,6 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
 
         initEClass(dataflowAssignmentEClass, DataflowAssignment.class, "DataflowAssignment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getDataflowAssignment_Sequential(), ecorePackage.getEBoolean(), "sequential", "false", 0, 1, DataflowAssignment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-        initEClass(genericTypeScopeCallEClass, GenericTypeScopeCall.class, "GenericTypeScopeCall", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
-        initEClass(genericTypeParameterDeclarationEClass, GenericTypeParameterDeclaration.class, "GenericTypeParameterDeclaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getGenericTypeParameterDeclaration_Type(), this.getGenericTypeParameterReference(), null, "type", null, 0, 1, GenericTypeParameterDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-        initEClass(genericTypeParameterEClass, GenericTypeParameter.class, "GenericTypeParameter", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
-        initEClass(parameterizedReferenceDeclarationEClass, ParameterizedReferenceDeclaration.class, "ParameterizedReferenceDeclaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getParameterizedReferenceDeclaration_TypeParameters(), this.getGenericTypeParameterReference(), null, "typeParameters", null, 0, -1, ParameterizedReferenceDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-        initEClass(genericTypeParameterReferenceEClass, GenericTypeParameterReference.class, "GenericTypeParameterReference", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getGenericTypeParameterReference_Target(), this.getGenericTypeParameter(), null, "target", null, 0, 1, GenericTypeParameterReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getGenericTypeParameterReference_TypeParameters(), this.getGenericTypeParameterReference(), null, "typeParameters", null, 0, -1, GenericTypeParameterReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         // Initialize enums and add enum literals
         initEEnum(preemptionTypeEEnum, PreemptionType.class, "PreemptionType");

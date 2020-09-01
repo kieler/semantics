@@ -56,10 +56,6 @@ public interface ControlflowRegion extends Region {
      * The list contents are of type {@link de.cau.cs.kieler.sccharts.State}.
      * It is bidirectional and its opposite is '{@link de.cau.cs.kieler.sccharts.State#getParentRegion <em>Parent Region</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>States</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>States</em>' containment reference list.
      * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getControlflowRegion_States()
@@ -72,10 +68,6 @@ public interface ControlflowRegion extends Region {
     /**
      * Returns the value of the '<em><b>Final</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Final</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Final</em>' attribute.
      * @see #setFinal(boolean)

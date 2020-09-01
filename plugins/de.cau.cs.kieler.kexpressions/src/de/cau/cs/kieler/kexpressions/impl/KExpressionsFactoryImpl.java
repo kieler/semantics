@@ -75,8 +75,11 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
             case KExpressionsPackage.TEXT_EXPRESSION: return createTextExpression();
             case KExpressionsPackage.VARIABLE_DECLARATION: return createVariableDeclaration();
             case KExpressionsPackage.REFERENCE_DECLARATION: return createReferenceDeclaration();
-            case KExpressionsPackage.SCHEDULE_DECLARATION: return createScheduleDeclaration();
+            case KExpressionsPackage.GENERIC_PARAMETER_DECLARATION: return createGenericParameterDeclaration();
+            case KExpressionsPackage.GENERIC_TYPE_REFERENCE: return createGenericTypeReference();
+            case KExpressionsPackage.VALUE_TYPE_REFERENCE: return createValueTypeReference();
             case KExpressionsPackage.METHOD_DECLARATION: return createMethodDeclaration();
+            case KExpressionsPackage.SCHEDULE_DECLARATION: return createScheduleDeclaration();
             case KExpressionsPackage.SCHEDULE_OBJECT_REFERENCE: return createScheduleObjectReference();
             case KExpressionsPackage.PARAMETER: return createParameter();
             case KExpressionsPackage.REFERENCE_CALL: return createReferenceCall();
@@ -336,6 +339,39 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
     public ReferenceDeclaration createReferenceDeclaration() {
         ReferenceDeclarationImpl referenceDeclaration = new ReferenceDeclarationImpl();
         return referenceDeclaration;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public GenericParameterDeclaration createGenericParameterDeclaration() {
+        GenericParameterDeclarationImpl genericParameterDeclaration = new GenericParameterDeclarationImpl();
+        return genericParameterDeclaration;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public GenericTypeReference createGenericTypeReference() {
+        GenericTypeReferenceImpl genericTypeReference = new GenericTypeReferenceImpl();
+        return genericTypeReference;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public ValueTypeReference createValueTypeReference() {
+        ValueTypeReferenceImpl valueTypeReference = new ValueTypeReferenceImpl();
+        return valueTypeReference;
     }
 
     /**

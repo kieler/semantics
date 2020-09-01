@@ -13,12 +13,13 @@
  */
 package de.cau.cs.kieler.sccharts.impl;
 
+import de.cau.cs.kieler.annotations.NamedObject;
 import de.cau.cs.kieler.kexpressions.Parameter;
-
 import de.cau.cs.kieler.kexpressions.ScheduleObjectReference;
+
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
-import de.cau.cs.kieler.sccharts.Scope;
 import de.cau.cs.kieler.sccharts.ScopeCall;
+
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -45,8 +46,9 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeCallImpl#getSchedule <em>Schedule</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeCallImpl#getParameters <em>Parameters</em>}</li>
- *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeCallImpl#getScope <em>Scope</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeCallImpl#getTarget <em>Target</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeCallImpl#isSuper <em>Super</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeCallImpl#getGenericParameters <em>Generic Parameters</em>}</li>
  * </ul>
  *
  * @generated
@@ -80,14 +82,14 @@ public class ScopeCallImpl extends MinimalEObjectImpl.Container implements Scope
     protected EList<Parameter> parameters;
 
     /**
-     * The cached value of the '{@link #getScope() <em>Scope</em>}' reference.
+     * The cached value of the '{@link #getTarget() <em>Target</em>}' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getScope()
+     * @see #getTarget()
      * @generated
      * @ordered
      */
-    protected Scope scope;
+    protected NamedObject target;
 
     /**
      * The default value of the '{@link #isSuper() <em>Super</em>}' attribute.
@@ -108,6 +110,16 @@ public class ScopeCallImpl extends MinimalEObjectImpl.Container implements Scope
      * @ordered
      */
     protected boolean super_ = SUPER_EDEFAULT;
+
+    /**
+     * The cached value of the '{@link #getGenericParameters() <em>Generic Parameters</em>}' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getGenericParameters()
+     * @generated
+     * @ordered
+     */
+    protected EList<Parameter> genericParameters;
 
     /**
      * <!-- begin-user-doc -->
@@ -160,16 +172,16 @@ public class ScopeCallImpl extends MinimalEObjectImpl.Container implements Scope
      * @generated
      */
     @Override
-    public Scope getScope() {
-        if (scope != null && scope.eIsProxy()) {
-            InternalEObject oldScope = (InternalEObject)scope;
-            scope = (Scope)eResolveProxy(oldScope);
-            if (scope != oldScope) {
+    public NamedObject getTarget() {
+        if (target != null && target.eIsProxy()) {
+            InternalEObject oldTarget = (InternalEObject)target;
+            target = (NamedObject)eResolveProxy(oldTarget);
+            if (target != oldTarget) {
                 if (eNotificationRequired())
-                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, SCChartsPackage.SCOPE_CALL__SCOPE, oldScope, scope));
+                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, SCChartsPackage.SCOPE_CALL__TARGET, oldTarget, target));
             }
         }
-        return scope;
+        return target;
     }
 
     /**
@@ -177,8 +189,8 @@ public class ScopeCallImpl extends MinimalEObjectImpl.Container implements Scope
      * <!-- end-user-doc -->
      * @generated
      */
-    public Scope basicGetScope() {
-        return scope;
+    public NamedObject basicGetTarget() {
+        return target;
     }
 
     /**
@@ -187,11 +199,11 @@ public class ScopeCallImpl extends MinimalEObjectImpl.Container implements Scope
      * @generated
      */
     @Override
-    public void setScope(Scope newScope) {
-        Scope oldScope = scope;
-        scope = newScope;
+    public void setTarget(NamedObject newTarget) {
+        NamedObject oldTarget = target;
+        target = newTarget;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.SCOPE_CALL__SCOPE, oldScope, scope));
+            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.SCOPE_CALL__TARGET, oldTarget, target));
     }
 
     /**
@@ -223,12 +235,27 @@ public class ScopeCallImpl extends MinimalEObjectImpl.Container implements Scope
      * @generated
      */
     @Override
+    public EList<Parameter> getGenericParameters() {
+        if (genericParameters == null) {
+            genericParameters = new EObjectContainmentEList<Parameter>(Parameter.class, this, SCChartsPackage.SCOPE_CALL__GENERIC_PARAMETERS);
+        }
+        return genericParameters;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
             case SCChartsPackage.SCOPE_CALL__SCHEDULE:
                 return ((InternalEList<?>)getSchedule()).basicRemove(otherEnd, msgs);
             case SCChartsPackage.SCOPE_CALL__PARAMETERS:
                 return ((InternalEList<?>)getParameters()).basicRemove(otherEnd, msgs);
+            case SCChartsPackage.SCOPE_CALL__GENERIC_PARAMETERS:
+                return ((InternalEList<?>)getGenericParameters()).basicRemove(otherEnd, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
@@ -245,11 +272,13 @@ public class ScopeCallImpl extends MinimalEObjectImpl.Container implements Scope
                 return getSchedule();
             case SCChartsPackage.SCOPE_CALL__PARAMETERS:
                 return getParameters();
-            case SCChartsPackage.SCOPE_CALL__SCOPE:
-                if (resolve) return getScope();
-                return basicGetScope();
+            case SCChartsPackage.SCOPE_CALL__TARGET:
+                if (resolve) return getTarget();
+                return basicGetTarget();
             case SCChartsPackage.SCOPE_CALL__SUPER:
                 return isSuper();
+            case SCChartsPackage.SCOPE_CALL__GENERIC_PARAMETERS:
+                return getGenericParameters();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -271,11 +300,15 @@ public class ScopeCallImpl extends MinimalEObjectImpl.Container implements Scope
                 getParameters().clear();
                 getParameters().addAll((Collection<? extends Parameter>)newValue);
                 return;
-            case SCChartsPackage.SCOPE_CALL__SCOPE:
-                setScope((Scope)newValue);
+            case SCChartsPackage.SCOPE_CALL__TARGET:
+                setTarget((NamedObject)newValue);
                 return;
             case SCChartsPackage.SCOPE_CALL__SUPER:
                 setSuper((Boolean)newValue);
+                return;
+            case SCChartsPackage.SCOPE_CALL__GENERIC_PARAMETERS:
+                getGenericParameters().clear();
+                getGenericParameters().addAll((Collection<? extends Parameter>)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -295,11 +328,14 @@ public class ScopeCallImpl extends MinimalEObjectImpl.Container implements Scope
             case SCChartsPackage.SCOPE_CALL__PARAMETERS:
                 getParameters().clear();
                 return;
-            case SCChartsPackage.SCOPE_CALL__SCOPE:
-                setScope((Scope)null);
+            case SCChartsPackage.SCOPE_CALL__TARGET:
+                setTarget((NamedObject)null);
                 return;
             case SCChartsPackage.SCOPE_CALL__SUPER:
                 setSuper(SUPER_EDEFAULT);
+                return;
+            case SCChartsPackage.SCOPE_CALL__GENERIC_PARAMETERS:
+                getGenericParameters().clear();
                 return;
         }
         super.eUnset(featureID);
@@ -317,10 +353,12 @@ public class ScopeCallImpl extends MinimalEObjectImpl.Container implements Scope
                 return schedule != null && !schedule.isEmpty();
             case SCChartsPackage.SCOPE_CALL__PARAMETERS:
                 return parameters != null && !parameters.isEmpty();
-            case SCChartsPackage.SCOPE_CALL__SCOPE:
-                return scope != null;
+            case SCChartsPackage.SCOPE_CALL__TARGET:
+                return target != null;
             case SCChartsPackage.SCOPE_CALL__SUPER:
                 return super_ != SUPER_EDEFAULT;
+            case SCChartsPackage.SCOPE_CALL__GENERIC_PARAMETERS:
+                return genericParameters != null && !genericParameters.isEmpty();
         }
         return super.eIsSet(featureID);
     }

@@ -102,10 +102,11 @@ class SCTXLinker extends Linker {
         } else {
             // Default linking
             super.ensureIsLinked(obj, node, ref, handledReferences, producer)
+            
             // Pre link Scope calls for correct binding of inherited variables
             if (obj instanceof ScopeCall) {
-                if (obj.scope !== null) {
-                    ensureLinked(obj.scope, producer)
+                if (obj.target !== null) {
+                    ensureLinked(obj.target, producer)
                 }
             }
         }

@@ -58,42 +58,6 @@ public interface SCChartsFactory extends EFactory {
     ScopeCall createScopeCall();
 
     /**
-     * Returns a new object of class '<em>Generic Type Parameter Declaration</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Generic Type Parameter Declaration</em>'.
-     * @generated
-     */
-    GenericTypeParameterDeclaration createGenericTypeParameterDeclaration();
-
-    /**
-     * Returns a new object of class '<em>Generic Type Parameter</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Generic Type Parameter</em>'.
-     * @generated
-     */
-    GenericTypeParameter createGenericTypeParameter();
-
-    /**
-     * Returns a new object of class '<em>Parameterized Reference Declaration</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Parameterized Reference Declaration</em>'.
-     * @generated
-     */
-    ParameterizedReferenceDeclaration createParameterizedReferenceDeclaration();
-
-    /**
-     * Returns a new object of class '<em>Generic Type Parameter Reference</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Generic Type Parameter Reference</em>'.
-     * @generated
-     */
-    GenericTypeParameterReference createGenericTypeParameterReference();
-
-    /**
      * Returns a new object of class '<em>State</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -209,15 +173,6 @@ public interface SCChartsFactory extends EFactory {
      * @generated
      */
     DataflowAssignment createDataflowAssignment();
-
-    /**
-     * Returns a new object of class '<em>Generic Type Scope Call</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Generic Type Scope Call</em>'.
-     * @generated
-     */
-    GenericTypeScopeCall createGenericTypeScopeCall();
 
     /**
      * Returns the package supported by this factory.

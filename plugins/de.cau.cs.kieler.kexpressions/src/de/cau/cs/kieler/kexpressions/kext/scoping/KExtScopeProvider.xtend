@@ -13,25 +13,28 @@
  */
 package de.cau.cs.kieler.kexpressions.kext.scoping
 
+import com.google.inject.Inject
+import de.cau.cs.kieler.kexpressions.Declaration
+import de.cau.cs.kieler.kexpressions.GenericParameterDeclaration
+import de.cau.cs.kieler.kexpressions.KExpressionsPackage
+import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
+import de.cau.cs.kieler.kexpressions.Referenceable
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsGenericParameterExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage
 import de.cau.cs.kieler.kexpressions.keffects.scoping.KEffectsScopeProvider
+import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
 import de.cau.cs.kieler.kexpressions.kext.DeclarationScope
+import java.util.Set
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EReference
 import org.eclipse.xtext.scoping.IScope
 import org.eclipse.xtext.scoping.Scopes
-import de.cau.cs.kieler.kexpressions.Declaration
-import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
-import de.cau.cs.kieler.kexpressions.KExpressionsPackage
-import java.util.Set
-import de.cau.cs.kieler.kexpressions.Referenceable
-import de.cau.cs.kieler.kexpressions.VariableDeclaration
-import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import org.eclipse.xtext.xbase.lib.Functions.Function1
-import de.cau.cs.kieler.kexpressions.keffects.Emission
-import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
 
 /**
  * @author ssm
@@ -40,6 +43,9 @@ import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
  */
  class KExtScopeProvider extends KEffectsScopeProvider {
 
+    @Inject extension KExpressionsGenericParameterExtensions
+    @Inject extension KExpressionsValuedObjectExtensions
+    
 	override getScope(EObject context, EReference reference) {
 		// This scope should trigger on every instance of a valued object reference!
 		
@@ -68,55 +74,27 @@ import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
 		} else if (contextContainer instanceof ValuedObjectReference && (contextContainer as ValuedObjectReference).subReference === context) {
 		    // The context is a subreference!
 		    return contextContainer.getScopeForReferencedDeclarationFromSubReference(reference)
-		} 
-//		else if (context instanceof ValuedObjectReference) {
-//		    if (contextContainer instanceof Assignment) {
-//		        // The context is a subreference inside of an assignment!
-//		        if (context.subReference !== null && context.subReference.valuedObject === null) {
-//                    return context.getScopeForReferencedDeclarationFromSubReference(reference)
-//		        }
-//            } else if (contextContainer instanceof Emission) {
-//                if (context === contextContainer.reference) {
-//                    // The context is the reference of a standard emission.
-//                    return context.getScopeHierarchical(reference)    
-//                }
-//	       	} else if (context.subReference !== null && context.subReference.valuedObject === null) {
-//		        var parentVO = context as ValuedObjectReference
-//		        return parentVO.getScopeForReferencedDeclarationFromSubReference(reference)
-//            }
-//        }
+		}
 		return context.getScopeHierarchical(reference)
 	}
-	
-	 protected def IScope getScopeForReferencedDeclarationFromAssignment(EObject context, EReference reference) {
-        if (context instanceof Assignment) {
-            if (context.reference.valuedObject !== null) {
-                if (context.reference.valuedObject.eContainer !== null) {
-                    if (context.reference.valuedObject.eContainer instanceof ReferenceDeclaration) {
-                        return (context.reference.valuedObject.eContainer as ReferenceDeclaration).
-                            getScopeForReferencedDeclarationObject(context.reference)[ input ]
-                    }
-                }
-            }
-        }
-        return context.getScopeHierarchical(reference)      
-    }
 	
 	protected def IScope getScopeForReferencedDeclarationFromSubReference(EObject context, EReference reference) {
 	    if (context instanceof ValuedObjectReference) {
 	        if (context.valuedObject !== null) {
     	        if (context.eContainer !== null) {
-    	            val parentVO = context as ValuedObjectReference
-                    var topLevelVO = parentVO
-                    while(topLevelVO.eContainer instanceof ValuedObjectReference && (topLevelVO.eContainer as ValuedObjectReference).subReference === topLevelVO) {
-                        topLevelVO = topLevelVO.eContainer as ValuedObjectReference
+    	            val parentVODecl = (context as ValuedObjectReference).valuedObject?.declaration
+//                    var topLevelVO = parentVO
+//                    while(topLevelVO.eContainer instanceof ValuedObjectReference && (topLevelVO.eContainer as ValuedObjectReference).subReference === topLevelVO) {
+//                        topLevelVO = topLevelVO.eContainer as ValuedObjectReference
+//                    }
+                    if (parentVODecl instanceof ReferenceDeclaration) {
+                        return parentVODecl.reference.getScopeForReferencedType(context)[ output || input ]
                     }
-                    if (topLevelVO.valuedObject?.eContainer instanceof ReferenceDeclaration) {
-                        return (topLevelVO.valuedObject.eContainer as ReferenceDeclaration).
-                            getScopeForReferencedDeclarationObject(context)[ output || input ]
+                    if (parentVODecl instanceof GenericParameterDeclaration) {
+                        return parentVODecl.type.getScopeForReferencedType(context)[ output || input ]
                     }
-                    if (parentVO.valuedObject.eContainer instanceof ClassDeclaration) {
-                        return (parentVO.valuedObject.eContainer as ClassDeclaration).getScopeForStruct
+                    if (parentVODecl instanceof ClassDeclaration) {
+                        return parentVODecl.getScopeForStruct
                     }
                 }
             }
@@ -129,22 +107,26 @@ import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
 	    return Scopes.scopeFor(struct.declarations.map[valuedObjects].flatten)
 	}
 	
-	protected def IScope getScopeForReferencedDeclarationObject(ReferenceDeclaration declaration, ValuedObjectReference context,
+	protected def IScope getScopeForReferencedType(EObject reference, ValuedObjectReference context,
 	    Function1<? super VariableDeclaration, Boolean> predicate) {
-	    if (declaration.reference === null) {
+	    if (reference === null) {
 	        // IMPORTANT: This can happen if the resource that should be imported does not exist. 
 	        // In this case, the scope given to the linker was null previously. This causes a NPE. 
 	        // Return a NullScope instead.
 	        return IScope.NULLSCOPE
 	    }
 	    
-        if (declaration.reference instanceof DeclarationScope) {
-            val declarations = (declaration.reference as DeclarationScope).declarations
+        if (reference instanceof DeclarationScope) {
+            val declarations = (reference as DeclarationScope).declarations
             val relevantDeclarations = declarations.filter(VariableDeclaration).filter(predicate).toList
             val candidates = <ValuedObject> newArrayList
             relevantDeclarations.forEach [ candidates += it.valuedObjects ]
             return Scopes.scopeFor(candidates)
-       }
+        } else if (reference instanceof ValuedObject) {
+            if (reference.isGenericParamter) {
+                return reference.genericParameterDeclaration.type.getScopeForReferencedType(context, predicate)
+            }
+        }
 	}
 	
 	protected def IScope getScopeForReferenceDeclaration(EObject context, EReference reference) {

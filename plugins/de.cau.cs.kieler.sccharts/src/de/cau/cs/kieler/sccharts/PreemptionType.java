@@ -41,7 +41,9 @@ public enum PreemptionType implements Enumerator {
      * @generated
      * @ordered
      */
-    UNDEFINED(0, "UNDEFINED", "UNDEFINED"), /**
+    UNDEFINED(0, "UNDEFINED", "UNDEFINED"),
+
+    /**
      * The '<em><b>WEAK</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -53,7 +55,9 @@ public enum PreemptionType implements Enumerator {
      * @generated
      * @ordered
      */
-    WEAK(1, "WEAK", "WEAK"), /**
+    WEAK(1, "WEAK", "WEAK"),
+
+    /**
      * The '<em><b>STRONG</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -66,7 +70,9 @@ public enum PreemptionType implements Enumerator {
      * @generated
      * @ordered
      */
-    STRONG(2, "STRONG", "STRONG"), /**
+    STRONG(2, "STRONG", "STRONG"),
+
+    /**
      * The '<em><b>TERMINATION</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

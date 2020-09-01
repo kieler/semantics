@@ -15,6 +15,8 @@ import de.cau.cs.kieler.kexpressions.BoolValue;
 import de.cau.cs.kieler.kexpressions.ExternString;
 import de.cau.cs.kieler.kexpressions.FloatValue;
 import de.cau.cs.kieler.kexpressions.FunctionCall;
+import de.cau.cs.kieler.kexpressions.GenericParameterDeclaration;
+import de.cau.cs.kieler.kexpressions.GenericTypeReference;
 import de.cau.cs.kieler.kexpressions.IgnoreValue;
 import de.cau.cs.kieler.kexpressions.IntValue;
 import de.cau.cs.kieler.kexpressions.JsonAnnotation;
@@ -34,6 +36,7 @@ import de.cau.cs.kieler.kexpressions.ScheduleDeclaration;
 import de.cau.cs.kieler.kexpressions.ScheduleObjectReference;
 import de.cau.cs.kieler.kexpressions.StringValue;
 import de.cau.cs.kieler.kexpressions.TextExpression;
+import de.cau.cs.kieler.kexpressions.ValueTypeReference;
 import de.cau.cs.kieler.kexpressions.ValuedObject;
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference;
 import de.cau.cs.kieler.kexpressions.VariableDeclaration;
@@ -59,10 +62,6 @@ import de.cau.cs.kieler.sccharts.DataflowRegion;
 import de.cau.cs.kieler.sccharts.DuringAction;
 import de.cau.cs.kieler.sccharts.EntryAction;
 import de.cau.cs.kieler.sccharts.ExitAction;
-import de.cau.cs.kieler.sccharts.GenericTypeParameterDeclaration;
-import de.cau.cs.kieler.sccharts.GenericTypeParameterReference;
-import de.cau.cs.kieler.sccharts.GenericTypeScopeCall;
-import de.cau.cs.kieler.sccharts.ParameterizedReferenceDeclaration;
 import de.cau.cs.kieler.sccharts.PeriodAction;
 import de.cau.cs.kieler.sccharts.PolicyClassDeclaration;
 import de.cau.cs.kieler.sccharts.PolicyRegion;
@@ -443,6 +442,19 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 					return; 
 				}
 				else break;
+			case KExpressionsPackage.GENERIC_PARAMETER_DECLARATION:
+				sequence_GenericParameterDeclaration(context, (GenericParameterDeclaration) semanticObject); 
+				return; 
+			case KExpressionsPackage.GENERIC_TYPE_REFERENCE:
+				if (rule == grammarAccess.getGenericParameter_GenericTypeReference_ParameterizedRule()) {
+					sequence_GenericParameter_GenericTypeReference_Parameterized(context, (GenericTypeReference) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getGenericTypeReferenceRule()) {
+					sequence_GenericTypeReference(context, (GenericTypeReference) semanticObject); 
+					return; 
+				}
+				else break;
 			case KExpressionsPackage.IGNORE_VALUE:
 				sequence_IgnoreValue(context, (IgnoreValue) semanticObject); 
 				return; 
@@ -629,7 +641,11 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 				}
 				else break;
 			case KExpressionsPackage.PARAMETER:
-				if (rule == grammarAccess.getModuleCallParameterRule()) {
+				if (rule == grammarAccess.getGenericParameterRule()) {
+					sequence_GenericParameter(context, (de.cau.cs.kieler.kexpressions.Parameter) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getModuleCallParameterRule()) {
 					sequence_ModuleCallParameter(context, (de.cau.cs.kieler.kexpressions.Parameter) semanticObject); 
 					return; 
 				}
@@ -847,8 +863,24 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 				}
 				else break;
 			case KExpressionsPackage.REFERENCE_DECLARATION:
-				sequence_ReferenceDeclaration(context, (ReferenceDeclaration) semanticObject); 
-				return; 
+				if (rule == grammarAccess.getDeclarationOrMethodWithKeywordWOSemicolonRule()
+						|| rule == grammarAccess.getDeclarationWOSemicolonRule()
+						|| rule == grammarAccess.getDeclarationOrMethodWOSemicolonRule()
+						|| rule == grammarAccess.getReferenceDeclarationWOSemicolonRule()) {
+					sequence_ReferenceDeclarationWOSemicolon(context, (ReferenceDeclaration) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getKExtDeclarationRule()
+						|| rule == grammarAccess.getReferenceDeclarationRule()) {
+					sequence_ReferenceDeclaration(context, (ReferenceDeclaration) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getDeclarationRule()
+						|| rule == grammarAccess.getDeclarationOrMethodRule()) {
+					sequence_ReferenceDeclaration_ReferenceDeclarationWOSemicolon(context, (ReferenceDeclaration) semanticObject); 
+					return; 
+				}
+				else break;
 			case KExpressionsPackage.SCHEDULE_DECLARATION:
 				if (rule == grammarAccess.getDeclarationOrMethodWithKeywordWOSemicolonRule()
 						|| rule == grammarAccess.getDeclarationWOSemicolonRule()
@@ -1007,6 +1039,9 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 					return; 
 				}
 				else break;
+			case KExpressionsPackage.VALUE_TYPE_REFERENCE:
+				sequence_ValueTypeReference(context, (ValueTypeReference) semanticObject); 
+				return; 
 			case KExpressionsPackage.VALUED_OBJECT:
 				if (rule == grammarAccess.getCounterVariableRule()) {
 					sequence_CounterVariable(context, (ValuedObject) semanticObject); 
@@ -1024,6 +1059,14 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 			case KExpressionsPackage.VALUED_OBJECT_REFERENCE:
 				if (rule == grammarAccess.getBoolScheduleExpressionRule()) {
 					sequence_BoolScheduleExpression_ValuedObjectReference(context, (ValuedObjectReference) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getGenericParameter_ValuedObjectReference_ArrayRule()) {
+					sequence_GenericParameter_ValuedObjectReference_Array(context, (ValuedObjectReference) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getGenericParameter_ValuedObjectReference_SubRule()) {
+					sequence_GenericParameter_ValuedObjectReference_Sub(context, (ValuedObjectReference) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getIntOrReferenceRule()
@@ -1243,18 +1286,6 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 				return; 
 			case SCChartsPackage.EXIT_ACTION:
 				sequence_ExitAction(context, (ExitAction) semanticObject); 
-				return; 
-			case SCChartsPackage.GENERIC_TYPE_PARAMETER_DECLARATION:
-				sequence_GenericTypeParameterDeclaration(context, (GenericTypeParameterDeclaration) semanticObject); 
-				return; 
-			case SCChartsPackage.GENERIC_TYPE_PARAMETER_REFERENCE:
-				sequence_GenericTypeParameterReference(context, (GenericTypeParameterReference) semanticObject); 
-				return; 
-			case SCChartsPackage.GENERIC_TYPE_SCOPE_CALL:
-				sequence_GenericTypeScopeCall(context, (GenericTypeScopeCall) semanticObject); 
-				return; 
-			case SCChartsPackage.PARAMETERIZED_REFERENCE_DECLARATION:
-				sequence_ReferenceDeclarationWOSemicolon(context, (ParameterizedReferenceDeclaration) semanticObject); 
 				return; 
 			case SCChartsPackage.PERIOD_ACTION:
 				sequence_PeriodAction(context, (PeriodAction) semanticObject); 
@@ -1606,55 +1637,6 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	
 	/**
 	 * Contexts:
-	 *     GenericTypeParameterDeclaration returns GenericTypeParameterDeclaration
-	 *
-	 * Constraint:
-	 *     (name=PrimeID type=GenericTypeParameterReference)
-	 */
-	protected void sequence_GenericTypeParameterDeclaration(ISerializationContext context, GenericTypeParameterDeclaration semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, AnnotationsPackage.Literals.NAMED_OBJECT__NAME) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AnnotationsPackage.Literals.NAMED_OBJECT__NAME));
-			if (transientValues.isValueTransient(semanticObject, SCChartsPackage.Literals.GENERIC_TYPE_PARAMETER_DECLARATION__TYPE) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SCChartsPackage.Literals.GENERIC_TYPE_PARAMETER_DECLARATION__TYPE));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getGenericTypeParameterDeclarationAccess().getNamePrimeIDParserRuleCall_0_0(), semanticObject.getName());
-		feeder.accept(grammarAccess.getGenericTypeParameterDeclarationAccess().getTypeGenericTypeParameterReferenceParserRuleCall_2_0(), semanticObject.getType());
-		feeder.finish();
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     GenericTypeParameterReference returns GenericTypeParameterReference
-	 *
-	 * Constraint:
-	 *     (target=[GenericTypeParameter|ID] (typeParameters+=GenericTypeParameterReference typeParameters+=GenericTypeParameterReference*)?)
-	 */
-	protected void sequence_GenericTypeParameterReference(ISerializationContext context, GenericTypeParameterReference semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     GenericTypeScopeCall returns GenericTypeScopeCall
-	 *
-	 * Constraint:
-	 *     (
-	 *         target=[GenericTypeParameter|ID] 
-	 *         (typeParameters+=GenericTypeParameterReference typeParameters+=GenericTypeParameterReference*)? 
-	 *         (parameters+=ScopeParameter parameters+=ScopeParameter*)?
-	 *     )
-	 */
-	protected void sequence_GenericTypeScopeCall(ISerializationContext context, GenericTypeScopeCall semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
 	 *     ImplicitControlflowRegion returns ControlflowRegion
 	 *
 	 * Constraint:
@@ -1756,27 +1738,36 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	
 	/**
 	 * Contexts:
-	 *     Declaration returns ParameterizedReferenceDeclaration
-	 *     DeclarationOrMethodWithKeywordWOSemicolon returns ParameterizedReferenceDeclaration
-	 *     ReferenceDeclarationWOSemicolon returns ParameterizedReferenceDeclaration
-	 *     DeclarationWOSemicolon returns ParameterizedReferenceDeclaration
-	 *     DeclarationOrMethod returns ParameterizedReferenceDeclaration
-	 *     DeclarationOrMethodWOSemicolon returns ParameterizedReferenceDeclaration
+	 *     Declaration returns ReferenceDeclaration
+	 *     DeclarationOrMethod returns ReferenceDeclaration
 	 *
 	 * Constraint:
 	 *     (
-	 *         annotations+=Annotation* 
-	 *         access=AccessModifier? 
 	 *         (
-	 *             (reference=[NamedObject|NamespaceID] (typeParameters+=GenericTypeParameterReference typeParameters+=GenericTypeParameterReference*)?) | 
-	 *             (extern+=ExternString extern+=ExternString*)
-	 *         ) 
-	 *         valuedObjects+=ValuedObject 
-	 *         valuedObjects+=ValuedObject* 
-	 *         annotations+=CommentAnnotatonSL?
+	 *             annotations+=Annotation* 
+	 *             access=AccessModifier? 
+	 *             (
+	 *                 (reference=[NamedObject|NamespaceID] (genericParameters+=GenericParameter genericParameters+=GenericParameter*)?) | 
+	 *                 (extern+=ExternString extern+=ExternString*)
+	 *             ) 
+	 *             valuedObjects+=ValuedObject 
+	 *             valuedObjects+=ValuedObject* 
+	 *             annotations+=CommentAnnotatonSL?
+	 *         ) | 
+	 *         (
+	 *             annotations+=Annotation* 
+	 *             access=AccessModifier? 
+	 *             (
+	 *                 (reference=[NamedObject|NamespaceID] (genericParameters+=GenericParameter genericParameters+=GenericParameter*)?) | 
+	 *                 (extern+=ExternString extern+=ExternString*)
+	 *             ) 
+	 *             valuedObjects+=ValuedObject 
+	 *             valuedObjects+=ValuedObject* 
+	 *             annotations+=CommentAnnotatonSL?
+	 *         )
 	 *     )
 	 */
-	protected void sequence_ReferenceDeclarationWOSemicolon(ISerializationContext context, ParameterizedReferenceDeclaration semanticObject) {
+	protected void sequence_ReferenceDeclaration_ReferenceDeclarationWOSemicolon(ISerializationContext context, ReferenceDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -1790,7 +1781,7 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	 *         annotations+=Annotation* 
 	 *         name=ExtendedID 
 	 *         label=STRING? 
-	 *         (generics+=GenericTypeParameterDeclaration generics+=GenericTypeParameterDeclaration*)? 
+	 *         (genericParameterDeclarations+=GenericParameterDeclaration genericParameterDeclarations+=GenericParameterDeclaration*)? 
 	 *         (baseStates+=[State|ID] baseStates+=[State|ID]*)? 
 	 *         declarations+=DeclarationOrMethodWithKeywordWOSemicolon* 
 	 *         actions+=LocalAction* 
@@ -1853,7 +1844,12 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	 *     ScopeCall returns ScopeCall
 	 *
 	 * Constraint:
-	 *     (super?='super.'? scope=[Scope|ID] (parameters+=ScopeParameter parameters+=ScopeParameter*)?)
+	 *     (
+	 *         super?='super.'? 
+	 *         target=[NamedObject|ID] 
+	 *         (genericParameters+=GenericParameter genericParameters+=GenericParameter*)? 
+	 *         (parameters+=ScopeParameter parameters+=ScopeParameter*)?
+	 *     )
 	 */
 	protected void sequence_ScopeCall(ISerializationContext context, ScopeCall semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1889,7 +1885,7 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	 *         name=ID 
 	 *         label=STRING? 
 	 *         (
-	 *             ((reference=ScopeCall | reference=GenericTypeScopeCall) schedule+=ScheduleObjectReference*) | 
+	 *             (reference=ScopeCall schedule+=ScheduleObjectReference*) | 
 	 *             (
 	 *                 (baseStates+=[State|ID] baseStates+=[State|ID]*)? 
 	 *                 schedule+=ScheduleObjectReference* 

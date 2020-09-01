@@ -4,8 +4,11 @@
 package de.cau.cs.kieler.sccharts.text.scoping
 
 import com.google.inject.Inject
+import de.cau.cs.kieler.annotations.NamedObject
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kexpressions.AccessModifier
+import de.cau.cs.kieler.kexpressions.GenericParameterDeclaration
+import de.cau.cs.kieler.kexpressions.GenericTypeReference
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage
 import de.cau.cs.kieler.kexpressions.MethodDeclaration
 import de.cau.cs.kieler.kexpressions.Parameter
@@ -14,10 +17,10 @@ import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsGenericParameterExtensions
 import de.cau.cs.kieler.kexpressions.kext.scoping.KExtScopeProvider
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.DataflowRegion
-import de.cau.cs.kieler.sccharts.GenericTypeParameterDeclaration
 import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.SCChartsPackage
@@ -27,6 +30,7 @@ import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsInheritanceExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import de.cau.cs.kieler.scl.Loop
 import de.cau.cs.kieler.scl.MethodImplementationDeclaration
 import org.eclipse.emf.ecore.EObject
@@ -46,20 +50,22 @@ import org.eclipse.xtext.xbase.lib.Functions.Function1
 class SCTXScopeProvider extends KExtScopeProvider {
     
     @Inject extension SCChartsCoreExtensions
+    @Inject extension SCChartsScopeExtensions
     @Inject extension SCChartsInheritanceExtensions
     @Inject extension AnnotationsExtensions
     @Inject extension KExpressionsDeclarationExtensions
+    @Inject extension KExpressionsGenericParameterExtensions
     
     @Inject SCTXQualifiedNameProvider nameProvider
 
     override getScope(EObject context, EReference reference) {
-//        println(context + "\n  " + reference)
-        
         switch(context) {
             Transition: return getScopeForTransition(context, reference)
             State: return getScopeForState(context, reference)
             Region: return getScopeForRegion(context, reference)
-            ScopeCall: return getScopeForScopeCall(context, reference)  
+            ScopeCall: return getScopeForScopeCall(context, reference)
+            GenericTypeReference: return getScopeForGenericTypeReference(context, reference)
+            GenericParameterDeclaration: return getScopeForGenericParameterDeclaration(context, reference)
         }
         
         return super.getScope(context, reference);
@@ -78,8 +84,8 @@ class SCTXScopeProvider extends KExtScopeProvider {
     }
     
     protected def IScope getScopeForState(State state, EReference reference) {
-        if (reference.name.equals("scope") || reference == SCChartsPackage.Literals.STATE__BASE_STATES) {
-            return state.eResource.allAvailableRootStates
+        if (reference == SCChartsPackage.Literals.STATE__BASE_STATES) {
+            return SCTXScopes.scopeFor(state.eResource.allAvailableRootStates)
         }
         
         return super.getScope(state, reference)
@@ -96,14 +102,13 @@ class SCTXScopeProvider extends KExtScopeProvider {
     protected def IScope getScopeForScopeCall(ScopeCall scopeCall, EReference reference) {
         if (reference == SCChartsPackage.Literals.SCOPE_CALL__TARGET) {
             if (scopeCall.eContainer instanceof State) {
-                var rootState = scopeCall as EObject
-                while (rootState !== null && !(rootState instanceof State && rootState.eContainer instanceof SCCharts)) {
-                    rootState = rootState.eContainer
+                val candidates = <NamedObject>newLinkedList
+                var rootState = scopeCall.eContainer?.asScope.rootState
+                if (rootState instanceof State && !(rootState as State).genericParameterDeclarations.nullOrEmpty) {
+                    candidates += (rootState as State).genericTypeParameters
                 }
-                if (rootState instanceof State && !(rootState as State).generics.nullOrEmpty) {
-                    return SCTXScopes.scopeFor((rootState as State).generics, scopeCall.eResource.allAvailableRootStates)
-                }
-                return scopeCall.eResource.allAvailableRootStates
+                candidates += scopeCall.eResource.allAvailableRootStates
+                return SCTXScopes.scopeFor(candidates)
             } else if (scopeCall.eContainer instanceof Region) {
                 return SCTXScopes.scopeFor((scopeCall.eContainer as Scope).nextSuperStateWithBaseStates.getAllVisibleInheritedRegions(!scopeCall.super))
             }
@@ -121,12 +126,18 @@ class SCTXScopeProvider extends KExtScopeProvider {
             val scopeCall = parameter.eContainer as ScopeCall
             if (scopeCall !== null && scopeCall.target !== null) {
                 var target = scopeCall.target
-                while (target instanceof GenericTypeParameterDeclaration) {
-                    target = target.type
-                }
                 if (target instanceof Scope) {
                     for (declaration : target.variableDeclarations.filter[ input || output ]) {
                         voCandidates += declaration.valuedObjects
+                    }
+                } else if (target instanceof ValuedObject) {
+                    if (target.isGenericParamter) {
+                        val type = target.genericParameterDeclaration?.type
+                        if (type instanceof Scope) {
+                            for (declaration : type.variableDeclarations.filter[ input || output ]) {
+                                voCandidates += declaration.valuedObjects
+                            }
+                        }
                     }
                 }
                 // Inherited Decls
@@ -143,16 +154,55 @@ class SCTXScopeProvider extends KExtScopeProvider {
         return super.getScopeForParameter(parameter, reference)
     }
     
-    override def IScope getScopeForReferenceDeclaration(EObject context, EReference reference) {
+    override IScope getScopeForReferenceDeclaration(EObject context, EReference reference) {
         if (reference == KExpressionsPackage.Literals.REFERENCE_DECLARATION__REFERENCE) {
-            
             val declaration = context
             if (declaration instanceof ReferenceDeclaration) {
-                return declaration.eResource.allAvailableRootStates
+                val candidates = <NamedObject>newLinkedList
+                var rootState = declaration.nextScope?.rootState
+                if (rootState !== null && !rootState.genericParameterDeclarations.nullOrEmpty) {
+                    candidates += (rootState as State).genericTypeParameters
+                }
+                candidates += declaration.eResource.allAvailableRootStates
+                return SCTXScopes.scopeFor(candidates)
             }
         } 
         return context.getScopeHierarchical(reference)
-    }       
+    }
+    
+    def IScope getScopeForGenericTypeReference(GenericTypeReference context, EReference reference) {
+        val declaration = context.getGenericParameterDeclaration
+        val candidates = <NamedObject>newLinkedList
+        
+        // States
+        var states = context.eResource.allAvailableRootStates.toList
+        if (declaration !== null && !states.empty) {
+            val type = declaration.type
+            if (type instanceof Scope) {
+                states = states.filter[
+                    it === type || it.baseStates.contains(type)
+                ].toList
+            }
+        }
+        candidates += states
+        
+        // Special case for parser ambiguity => also match ValuedObjects for later transformation into VOReference
+        if (context.genericParameters.nullOrEmpty) {
+            var rootState = context.nextScope?.rootState
+            if (rootState !== null && !rootState.genericParameterDeclarations.nullOrEmpty) {
+                candidates += (rootState as State).genericTypeParameters
+            }
+            return SCTXScopes.scopeFor(candidates, context.getScopeForValuedObjectReference(reference))
+        }
+        return SCTXScopes.scopeFor(candidates)
+    }
+    
+    def IScope getScopeForGenericParameterDeclaration(GenericParameterDeclaration context, EReference reference) {
+        if (reference == KExpressionsPackage.Literals.GENERIC_PARAMETER_DECLARATION__TYPE) {
+            return SCTXScopes.scopeFor(context.eResource.allAvailableRootStates)
+        }
+        return IScope.NULLSCOPE
+    }
 
     override IScope getScopeHierarchical(EObject context, EReference reference) {
         val candidates = <ValuedObject> newArrayList
@@ -162,7 +212,7 @@ class SCTXScopeProvider extends KExtScopeProvider {
                 for(VO : declaration.valuedObjects) {
                     candidates += VO
                 }
-            }   
+            }
             
             // Add for regions counter variable            
             if (declarationScope instanceof Region) {
@@ -183,8 +233,8 @@ class SCTXScopeProvider extends KExtScopeProvider {
                 candidates += declarationScope.parameterDeclarations.map[valuedObjects].flatten
             }
             
-            // Inherited VOs
             if (declarationScope instanceof State) {
+                // Inherited VOs
                 if (!declarationScope.baseStates.nullOrEmpty) {
                     for (decl : declarationScope.allVisibleInheritedDeclarations) {
                         for(VO : decl.valuedObjects) {
@@ -192,6 +242,8 @@ class SCTXScopeProvider extends KExtScopeProvider {
                         }
                     }
                 }
+                // Generic Parameters
+                candidates += declarationScope.genericValuedObjectParameters
             }
             
             declarationScope = declarationScope.nextDeclarationScope
@@ -208,32 +260,33 @@ class SCTXScopeProvider extends KExtScopeProvider {
                     scchartsInScope += it
                 ]
             }
-            return SCTXScopes.scopeFor(scchartsInScope.map[rootStates].flatten)
+            return scchartsInScope.map[rootStates].flatten
         }
-        return IScope.NULLSCOPE
+        return emptyList
     }
     
-    override IScope getScopeForReferencedDeclarationObject(ReferenceDeclaration declaration, ValuedObjectReference context,
+    override IScope getScopeForReferencedType(EObject reference, ValuedObjectReference context,
         Function1<? super VariableDeclaration, Boolean> predicate) {
         var EObject region = context
         while (region !== null && !(region instanceof Region)) {
             region = region.eContainer
         }
+        
         val adjustedPredicate = if (region instanceof DataflowRegion) predicate else [VariableDeclaration vd | vd.access == AccessModifier.PUBLIC]
-        if (declaration.reference instanceof State) {
-            val state = declaration.reference as State
+        
+        if (reference instanceof State) {
             val additionalCandidates = newArrayList
-            additionalCandidates += state.declarations.filter(MethodDeclaration).map[valuedObjects.head]
-            if (!state.baseStates.nullOrEmpty) {
-                for (decl : state.allVisibleInheritedDeclarations) {
+            additionalCandidates += reference.declarations.filter(MethodDeclaration).map[valuedObjects.head]
+            if (!reference.baseStates.nullOrEmpty) {
+                for (decl : reference.allVisibleInheritedDeclarations) {
                     for(VO : decl.valuedObjects) {
                         additionalCandidates += VO
                     }
                 }
             }
-            return Scopes.scopeFor(additionalCandidates, super.getScopeForReferencedDeclarationObject(declaration, context, adjustedPredicate))
+            return Scopes.scopeFor(additionalCandidates, super.getScopeForReferencedType(reference, context, adjustedPredicate))
         } else {
-            return super.getScopeForReferencedDeclarationObject(declaration, context, adjustedPredicate)
+            return super.getScopeForReferencedType(reference, context, adjustedPredicate)
         }
     }
 

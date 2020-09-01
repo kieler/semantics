@@ -69,10 +69,6 @@ public interface Transition extends Action {
      * The default value is <code>"WEAK"</code>.
      * The literals are from the enumeration {@link de.cau.cs.kieler.sccharts.PreemptionType}.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Preemption</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Preemption</em>' attribute.
      * @see de.cau.cs.kieler.sccharts.PreemptionType
@@ -99,10 +95,6 @@ public interface Transition extends Action {
      * The default value is <code>"RESET"</code>.
      * The literals are from the enumeration {@link de.cau.cs.kieler.sccharts.HistoryType}.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>History</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>History</em>' attribute.
      * @see de.cau.cs.kieler.sccharts.HistoryType
@@ -153,10 +145,6 @@ public interface Transition extends Action {
      * Returns the value of the '<em><b>Target State</b></em>' reference.
      * It is bidirectional and its opposite is '{@link de.cau.cs.kieler.sccharts.State#getIncomingTransitions <em>Incoming Transitions</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Target State</em>' reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Target State</em>' reference.
      * @see #setTargetState(State)
@@ -181,10 +169,6 @@ public interface Transition extends Action {
      * Returns the value of the '<em><b>Source State</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.cau.cs.kieler.sccharts.State#getOutgoingTransitions <em>Outgoing Transitions</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Source State</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Source State</em>' container reference.
      * @see #setSourceState(State)

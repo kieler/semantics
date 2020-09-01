@@ -16,23 +16,29 @@ package de.cau.cs.kieler.sccharts.impl;
 import de.cau.cs.kieler.annotations.AnnotationsPackage;
 import de.cau.cs.kieler.annotations.Nameable;
 import de.cau.cs.kieler.annotations.NamedObject;
+
 import de.cau.cs.kieler.annotations.impl.AnnotatableImpl;
-import de.cau.cs.kieler.kexpressions.Call;
+
 import de.cau.cs.kieler.kexpressions.Declaration;
+import de.cau.cs.kieler.kexpressions.GenericParameterDeclaration;
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.kexpressions.Schedulable;
 import de.cau.cs.kieler.kexpressions.ScheduleObjectReference;
+
 import de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage;
 import de.cau.cs.kieler.kexpressions.keffects.Link;
 import de.cau.cs.kieler.kexpressions.keffects.Linkable;
+
 import de.cau.cs.kieler.kexpressions.kext.DeclarationScope;
 import de.cau.cs.kieler.kexpressions.kext.KExtPackage;
-import de.cau.cs.kieler.sccharts.GenericTypeParameter;
-import de.cau.cs.kieler.sccharts.GenericTypeParameterDeclaration;
+
 import de.cau.cs.kieler.sccharts.LocalAction;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
 import de.cau.cs.kieler.sccharts.Scope;
+import de.cau.cs.kieler.sccharts.ScopeCall;
+
 import java.util.Collection;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
@@ -63,7 +69,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getLabel <em>Label</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getActions <em>Actions</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getReference <em>Reference</em>}</li>
- *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getGenerics <em>Generics</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getGenericParameterDeclarations <em>Generic Parameter Declarations</em>}</li>
  * </ul>
  *
  * @generated
@@ -71,12 +77,12 @@ import org.eclipse.emf.ecore.util.InternalEList;
 public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
     /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	public static final String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\r\n\r\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\r\n\r\nCopyright 2013 by\r\n+ Kiel University\r\n  + Department of Computer Science\r\n    + Real-Time and Embedded Systems Group\r\n\r\nThis code is provided under the terms of the Eclipse Public License (EPL).\r\nSee the file epl-v10.html for the license text.";
+    public static final String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\r\n\r\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\r\n\r\nCopyright 2013 by\r\n+ Kiel University\r\n  + Department of Computer Science\r\n    + Real-Time and Embedded Systems Group\r\n\r\nThis code is provided under the terms of the Eclipse Public License (EPL).\r\nSee the file epl-v10.html for the license text.";
 
-				/**
+    /**
      * The cached value of the '{@link #getDeclarations() <em>Declarations</em>}' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -96,7 +102,7 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
      */
     protected static final String NAME_EDEFAULT = null;
 
-                /**
+    /**
      * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -174,17 +180,17 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
      * @generated
      * @ordered
      */
-    protected Call reference;
+    protected ScopeCall reference;
 
     /**
-     * The cached value of the '{@link #getGenerics() <em>Generics</em>}' containment reference list.
+     * The cached value of the '{@link #getGenericParameterDeclarations() <em>Generic Parameter Declarations</em>}' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getGenerics()
+     * @see #getGenericParameterDeclarations()
      * @generated
      * @ordered
      */
-    protected EList<GenericTypeParameterDeclaration> generics;
+    protected EList<GenericParameterDeclaration> genericParameterDeclarations;
 
     /**
      * <!-- begin-user-doc -->
@@ -203,118 +209,6 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
     @Override
     protected EClass eStaticClass() {
         return SCChartsPackage.Literals.SCOPE;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * edited by ssm to provide label/id service
-     */
-    public String getLabel() {
-        if (label != null) {
-            return label;
-        } else {
-            return name;
-        }
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public void setLabel(String newLabel) {
-        String oldLabel = label;
-        label = newLabel;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.SCOPE__LABEL, oldLabel, label));
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public EList<LocalAction> getActions() {
-        if (actions == null) {
-            actions = new EObjectContainmentEList<LocalAction>(LocalAction.class, this, SCChartsPackage.SCOPE__ACTIONS);
-        }
-        return actions;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public Call getReference() {
-        return reference;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public NotificationChain basicSetReference(Call newReference, NotificationChain msgs) {
-        Call oldReference = reference;
-        reference = newReference;
-        if (eNotificationRequired()) {
-            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SCChartsPackage.SCOPE__REFERENCE, oldReference, newReference);
-            if (msgs == null) msgs = notification; else msgs.add(notification);
-        }
-        return msgs;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public void setReference(Call newReference) {
-        if (newReference != reference) {
-            NotificationChain msgs = null;
-            if (reference != null)
-                msgs = ((InternalEObject)reference).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - SCChartsPackage.SCOPE__REFERENCE, null, msgs);
-            if (newReference != null)
-                msgs = ((InternalEObject)newReference).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - SCChartsPackage.SCOPE__REFERENCE, null, msgs);
-            msgs = basicSetReference(newReference, msgs);
-            if (msgs != null) msgs.dispatch();
-        }
-        else if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.SCOPE__REFERENCE, newReference, newReference));
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public EList<GenericTypeParameterDeclaration> getGenerics() {
-        if (generics == null) {
-            generics = new EObjectContainmentEList<GenericTypeParameterDeclaration>(GenericTypeParameterDeclaration.class, this, SCChartsPackage.SCOPE__GENERICS);
-        }
-        return generics;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @SuppressWarnings("unchecked")
-    @Override
-    public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-        switch (featureID) {
-            case SCChartsPackage.SCOPE__INCOMING_LINKS:
-                return ((InternalEList<InternalEObject>)(InternalEList<?>)getIncomingLinks()).basicAdd(otherEnd, msgs);
-        }
-        return super.eInverseAdd(otherEnd, featureID, msgs);
     }
 
     /**
@@ -398,6 +292,115 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
      * @generated
      */
     @Override
+    public String getLabel() {
+        return label;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public void setLabel(String newLabel) {
+        String oldLabel = label;
+        label = newLabel;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.SCOPE__LABEL, oldLabel, label));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EList<LocalAction> getActions() {
+        if (actions == null) {
+            actions = new EObjectContainmentEList<LocalAction>(LocalAction.class, this, SCChartsPackage.SCOPE__ACTIONS);
+        }
+        return actions;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public ScopeCall getReference() {
+        return reference;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public NotificationChain basicSetReference(ScopeCall newReference, NotificationChain msgs) {
+        ScopeCall oldReference = reference;
+        reference = newReference;
+        if (eNotificationRequired()) {
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SCChartsPackage.SCOPE__REFERENCE, oldReference, newReference);
+            if (msgs == null) msgs = notification; else msgs.add(notification);
+        }
+        return msgs;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public void setReference(ScopeCall newReference) {
+        if (newReference != reference) {
+            NotificationChain msgs = null;
+            if (reference != null)
+                msgs = ((InternalEObject)reference).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - SCChartsPackage.SCOPE__REFERENCE, null, msgs);
+            if (newReference != null)
+                msgs = ((InternalEObject)newReference).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - SCChartsPackage.SCOPE__REFERENCE, null, msgs);
+            msgs = basicSetReference(newReference, msgs);
+            if (msgs != null) msgs.dispatch();
+        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.SCOPE__REFERENCE, newReference, newReference));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EList<GenericParameterDeclaration> getGenericParameterDeclarations() {
+        if (genericParameterDeclarations == null) {
+            genericParameterDeclarations = new EObjectContainmentEList<GenericParameterDeclaration>(GenericParameterDeclaration.class, this, SCChartsPackage.SCOPE__GENERIC_PARAMETER_DECLARATIONS);
+        }
+        return genericParameterDeclarations;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @SuppressWarnings("unchecked")
+    @Override
+    public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+        switch (featureID) {
+            case SCChartsPackage.SCOPE__INCOMING_LINKS:
+                return ((InternalEList<InternalEObject>)(InternalEList<?>)getIncomingLinks()).basicAdd(otherEnd, msgs);
+        }
+        return super.eInverseAdd(otherEnd, featureID, msgs);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
             case SCChartsPackage.SCOPE__DECLARATIONS:
@@ -412,8 +415,8 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
                 return ((InternalEList<?>)getActions()).basicRemove(otherEnd, msgs);
             case SCChartsPackage.SCOPE__REFERENCE:
                 return basicSetReference(null, msgs);
-            case SCChartsPackage.SCOPE__GENERICS:
-                return ((InternalEList<?>)getGenerics()).basicRemove(otherEnd, msgs);
+            case SCChartsPackage.SCOPE__GENERIC_PARAMETER_DECLARATIONS:
+                return ((InternalEList<?>)getGenericParameterDeclarations()).basicRemove(otherEnd, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
@@ -442,8 +445,8 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
                 return getActions();
             case SCChartsPackage.SCOPE__REFERENCE:
                 return getReference();
-            case SCChartsPackage.SCOPE__GENERICS:
-                return getGenerics();
+            case SCChartsPackage.SCOPE__GENERIC_PARAMETER_DECLARATIONS:
+                return getGenericParameterDeclarations();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -484,11 +487,11 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
                 getActions().addAll((Collection<? extends LocalAction>)newValue);
                 return;
             case SCChartsPackage.SCOPE__REFERENCE:
-                setReference((Call)newValue);
+                setReference((ScopeCall)newValue);
                 return;
-            case SCChartsPackage.SCOPE__GENERICS:
-                getGenerics().clear();
-                getGenerics().addAll((Collection<? extends GenericTypeParameterDeclaration>)newValue);
+            case SCChartsPackage.SCOPE__GENERIC_PARAMETER_DECLARATIONS:
+                getGenericParameterDeclarations().clear();
+                getGenericParameterDeclarations().addAll((Collection<? extends GenericParameterDeclaration>)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -524,10 +527,10 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
                 getActions().clear();
                 return;
             case SCChartsPackage.SCOPE__REFERENCE:
-                setReference((Call)null);
+                setReference((ScopeCall)null);
                 return;
-            case SCChartsPackage.SCOPE__GENERICS:
-                getGenerics().clear();
+            case SCChartsPackage.SCOPE__GENERIC_PARAMETER_DECLARATIONS:
+                getGenericParameterDeclarations().clear();
                 return;
         }
         super.eUnset(featureID);
@@ -557,8 +560,8 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
                 return actions != null && !actions.isEmpty();
             case SCChartsPackage.SCOPE__REFERENCE:
                 return reference != null;
-            case SCChartsPackage.SCOPE__GENERICS:
-                return generics != null && !generics.isEmpty();
+            case SCChartsPackage.SCOPE__GENERIC_PARAMETER_DECLARATIONS:
+                return genericParameterDeclarations != null && !genericParameterDeclarations.isEmpty();
         }
         return super.eIsSet(featureID);
     }
@@ -600,11 +603,6 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
                 default: return -1;
             }
         }
-        if (baseClass == GenericTypeParameter.class) {
-            switch (derivedFeatureID) {
-                default: return -1;
-            }
-        }
         return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
     }
 
@@ -642,11 +640,6 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
             switch (baseFeatureID) {
                 case KEffectsPackage.LINKABLE__OUTGOING_LINKS: return SCChartsPackage.SCOPE__OUTGOING_LINKS;
                 case KEffectsPackage.LINKABLE__INCOMING_LINKS: return SCChartsPackage.SCOPE__INCOMING_LINKS;
-                default: return -1;
-            }
-        }
-        if (baseClass == GenericTypeParameter.class) {
-            switch (baseFeatureID) {
                 default: return -1;
             }
         }

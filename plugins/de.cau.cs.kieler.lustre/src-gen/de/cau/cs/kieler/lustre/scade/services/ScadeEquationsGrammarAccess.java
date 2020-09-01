@@ -23,11 +23,11 @@ import org.eclipse.xtext.ParserRule;
 import org.eclipse.xtext.RuleCall;
 import org.eclipse.xtext.TerminalRule;
 import org.eclipse.xtext.common.services.TerminalsGrammarAccess;
-import org.eclipse.xtext.service.AbstractElementFinder.AbstractGrammarElementFinder;
+import org.eclipse.xtext.service.AbstractElementFinder;
 import org.eclipse.xtext.service.GrammarProvider;
 
 @Singleton
-public class ScadeEquationsGrammarAccess extends AbstractGrammarElementFinder {
+public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractGrammarElementFinder {
 	
 	public class ScadeProgramElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.lustre.scade.ScadeEquations.ScadeProgram");
@@ -470,7 +470,7 @@ public class ScadeEquationsGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//java.lang.RuntimeException: No EObjectDescription could be found in Scope ParserRule.hiddenTokens for Grammar'de.cau.cs.kieler.lustre.scade.ScadeEquations'.rules[5]->TerminalRule'SL_COMMENT'
 	//Semantic Object: Grammar'de.cau.cs.kieler.lustre.Lustre'.rules[0]->ParserRule'LustreProgram'
-	//URI: file:/C:/KIELER/semantics-ssm4/git/semantics/plugins/de.cau.cs.kieler.lustre/bin/de/cau/cs/kieler/lustre/Lustre.xtext
+	//URI: file:/home/als/eclipses/kieler-semantics-oo/git/semantics/plugins/de.cau.cs.kieler.lustre/bin/de/cau/cs/kieler/lustre/Lustre.xtext
 	//EStructuralFeature: xtext::ParserRule.hiddenTokens
 	public LustreGrammarAccess.LustreProgramElements getLustreProgramAccess() {
 		return gaLustre.getLustreProgramAccess();
@@ -523,9 +523,8 @@ public class ScadeEquationsGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//// External Node Declaration
 	//ExternalNodeDeclaration kexpressions::Declaration:
-	//	{ExternalNodeDeclaration} isUnsafe?='unsafe'? 'extern' ('function' | hasState?='node')
-	//	valuedObjects+=NodeValuedObject ('(' inputs+=VariableDeclarationNoInit (';' inputs+=VariableDeclarationNoInit)* ')' |
-	//	'()')
+	//	{ExternalNodeDeclaration} isUnsafe?='unsafe'? 'extern' ('function' | hasState?='node') valuedObjects+=NodeValuedObject
+	//	('(' inputs+=VariableDeclarationNoInit (';' inputs+=VariableDeclarationNoInit)* ')' | '()')
 	//	'returns' ('(' outputs+=VariableDeclarationNoInit (';' outputs+=VariableDeclarationNoInit)* ')' | '()') ';'?;
 	public LustreGrammarAccess.ExternalNodeDeclarationElements getExternalNodeDeclarationAccess() {
 		return gaLustre.getExternalNodeDeclarationAccess();
@@ -610,8 +609,8 @@ public class ScadeEquationsGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//Equation keffects::Assignment:
 	//	{Equation} ('(' references+=ValuedObjectReference ',' references+=ValuedObjectReference (','
-	//	references+=ValuedObjectReference)* ')' | references+=ValuedObjectReference ',' references+=ValuedObjectReference
-	//	(',' references+=ValuedObjectReference)* | reference=ValuedObjectReference) operator=AssignOperator
+	//	references+=ValuedObjectReference)* ')' | references+=ValuedObjectReference ',' references+=ValuedObjectReference (','
+	//	references+=ValuedObjectReference)* | reference=ValuedObjectReference) operator=AssignOperator
 	//	expression=Expression
 	//	';';
 	public LustreGrammarAccess.EquationElements getEquationAccess() {
@@ -1360,19 +1359,11 @@ public class ScadeEquationsGrammarAccess extends AbstractGrammarElementFinder {
 		return getMethodDeclarationWOSemicolonAccess().getRule();
 	}
 	
-	//NamespaceID:
-	//	ExtendedID (':' PrimeID)*;
-	public KExtGrammarAccess.NamespaceIDElements getNamespaceIDAccess() {
-		return gaKExt.getNamespaceIDAccess();
-	}
-	
-	public ParserRule getNamespaceIDRule() {
-		return getNamespaceIDAccess().getRule();
-	}
-	
 	//ReferenceDeclaration kexpressions::ReferenceDeclaration:
 	//	annotations+=Annotation*
-	//	access=AccessModifier? ('ref' reference=[annotations::NamedObject|NamespaceID] |
+	//	access=AccessModifier? ('ref' reference=[annotations::NamedObject|NamespaceID] ('<'
+	//	genericParameters+=GenericParameter (',' genericParameters+=GenericParameter)* '>')?
+	//	|
 	//	'extern' extern+=ExternString (',' extern+=ExternString)*) valuedObjects+=ValuedObject (','
 	//	valuedObjects+=ValuedObject)* ';'
 	//	annotations+=CommentAnnotatonSL?;
@@ -1386,7 +1377,9 @@ public class ScadeEquationsGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//ReferenceDeclarationWOSemicolon kexpressions::ReferenceDeclaration:
 	//	annotations+=Annotation*
-	//	access=AccessModifier? ('ref' reference=[annotations::NamedObject|NamespaceID] |
+	//	access=AccessModifier? ('ref' reference=[annotations::NamedObject|NamespaceID] ('<'
+	//	genericParameters+=GenericParameter (',' genericParameters+=GenericParameter)* '>')?
+	//	|
 	//	'extern' extern+=ExternString (',' extern+=ExternString)*) valuedObjects+=ValuedObject (','
 	//	valuedObjects+=ValuedObject)*
 	//	annotations+=CommentAnnotatonSL?;
@@ -1409,6 +1402,96 @@ public class ScadeEquationsGrammarAccess extends AbstractGrammarElementFinder {
 		return getExternStringAccess().getRule();
 	}
 	
+	//// ---
+	////  Generics
+	//// ---
+	//GenericParameterDeclaration kexpressions::GenericParameterDeclaration:
+	//	annotations+=QuotedStringAnnotation*
+	//	valuedObjects+=SimpleValuedObject ('is' valueType=super::ValueType | 'is' reference?='ref'?
+	//	type=[annotations::NamedObject|PrimeID])?;
+	public KExtGrammarAccess.GenericParameterDeclarationElements getGenericParameterDeclarationAccess() {
+		return gaKExt.getGenericParameterDeclarationAccess();
+	}
+	
+	public ParserRule getGenericParameterDeclarationRule() {
+		return getGenericParameterDeclarationAccess().getRule();
+	}
+	
+	//GenericParameter kexpressions::Parameter:
+	//	expression=(ValueTypeReference
+	//	| AnyValue
+	//	| GenericParameter_GenericTypeReference_Parameterized
+	//	| GenericParameter_ValuedObjectReference_Array
+	//	| GenericParameter_ValuedObjectReference_Sub
+	//	| GenericTypeReference
+	//	| ValuedObjectReference);
+	public KExtGrammarAccess.GenericParameterElements getGenericParameterAccess() {
+		return gaKExt.getGenericParameterAccess();
+	}
+	
+	public ParserRule getGenericParameterRule() {
+		return getGenericParameterAccess().getRule();
+	}
+	
+	//ValueTypeReference kexpressions::ValueTypeReference:
+	//	valueType=super::ValueType;
+	public KExtGrammarAccess.ValueTypeReferenceElements getValueTypeReferenceAccess() {
+		return gaKExt.getValueTypeReferenceAccess();
+	}
+	
+	public ParserRule getValueTypeReferenceRule() {
+		return getValueTypeReferenceAccess().getRule();
+	}
+	
+	//GenericTypeReference kexpressions::GenericTypeReference:
+	//	type=[annotations::NamedObject|PrimeID] ('<' genericParameters+=GenericParameter (','
+	//	genericParameters+=GenericParameter)* '>')?;
+	public KExtGrammarAccess.GenericTypeReferenceElements getGenericTypeReferenceAccess() {
+		return gaKExt.getGenericTypeReferenceAccess();
+	}
+	
+	public ParserRule getGenericTypeReferenceRule() {
+		return getGenericTypeReferenceAccess().getRule();
+	}
+	
+	//// Special rules for GenericParameter parsing
+	//GenericParameter_GenericTypeReference_Parameterized kexpressions::GenericTypeReference:
+	//	type=[annotations::NamedObject|PrimeID]
+	//	'<' genericParameters+=GenericParameter (',' genericParameters+=GenericParameter)* '>' // mandatory
+	//;
+	public KExtGrammarAccess.GenericParameter_GenericTypeReference_ParameterizedElements getGenericParameter_GenericTypeReference_ParameterizedAccess() {
+		return gaKExt.getGenericParameter_GenericTypeReference_ParameterizedAccess();
+	}
+	
+	public ParserRule getGenericParameter_GenericTypeReference_ParameterizedRule() {
+		return getGenericParameter_GenericTypeReference_ParameterizedAccess().getRule();
+	}
+	
+	//GenericParameter_ValuedObjectReference_Array kexpressions::ValuedObjectReference:
+	//	valuedObject=[kexpressions::ValuedObject|PrimeID] ('[' indices+=Expression ']')+ ('.'
+	//	subReference=ValuedObjectReference)?;
+	public KExtGrammarAccess.GenericParameter_ValuedObjectReference_ArrayElements getGenericParameter_ValuedObjectReference_ArrayAccess() {
+		return gaKExt.getGenericParameter_ValuedObjectReference_ArrayAccess();
+	}
+	
+	public ParserRule getGenericParameter_ValuedObjectReference_ArrayRule() {
+		return getGenericParameter_ValuedObjectReference_ArrayAccess().getRule();
+	}
+	
+	//GenericParameter_ValuedObjectReference_Sub kexpressions::ValuedObjectReference:
+	//	valuedObject=[kexpressions::ValuedObject|PrimeID] ('[' indices+=Expression ']')* ('.'
+	//	subReference=ValuedObjectReference);
+	public KExtGrammarAccess.GenericParameter_ValuedObjectReference_SubElements getGenericParameter_ValuedObjectReference_SubAccess() {
+		return gaKExt.getGenericParameter_ValuedObjectReference_SubAccess();
+	}
+	
+	public ParserRule getGenericParameter_ValuedObjectReference_SubRule() {
+		return getGenericParameter_ValuedObjectReference_SubAccess().getRule();
+	}
+	
+	//// ---
+	////  Scheduling Directives 
+	//// ---
 	//ScheduleDeclaration kexpressions::ScheduleDeclaration:
 	//	annotations+=Annotation*
 	//	access=AccessModifier?
@@ -1455,7 +1538,8 @@ public class ScadeEquationsGrammarAccess extends AbstractGrammarElementFinder {
 	//// Examples: array[10], initial = false, z = 0 combine max
 	//ValuedObject kexpressions::ValuedObject:
 	//	annotations+=QuotedStringAnnotation*
-	//	name=PrimeID ('[' cardinalities+=Expression ']')* ('=' initialValue=Expression)? ('combine'
+	//	name=PrimeID ('<' genericParameters+=GenericParameter (',' genericParameters+=GenericParameter)* '>')? ('['
+	//	cardinalities+=Expression ']')* ('=' initialValue=Expression)? ('combine'
 	//	combineOperator=CombineOperator)? ('label' label=STRING)?;
 	public KExtGrammarAccess.ValuedObjectElements getValuedObjectAccess() {
 		return gaKExt.getValuedObjectAccess();
@@ -1474,6 +1558,16 @@ public class ScadeEquationsGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getSimpleValuedObjectRule() {
 		return getSimpleValuedObjectAccess().getRule();
+	}
+	
+	//NamespaceID:
+	//	ExtendedID (':' PrimeID)*;
+	public KExtGrammarAccess.NamespaceIDElements getNamespaceIDAccess() {
+		return gaKExt.getNamespaceIDAccess();
+	}
+	
+	public ParserRule getNamespaceIDRule() {
+		return getNamespaceIDAccess().getRule();
 	}
 	
 	///**
@@ -1631,8 +1725,7 @@ public class ScadeEquationsGrammarAccess extends AbstractGrammarElementFinder {
 	//// A print functions that enables target-independent prints in the model.    
 	//PrintCallEffect keffects::PrintCallEffect:
 	//	annotations+=Annotation*
-	//	'print' ('(' parameters+=Parameter (',' parameters+=Parameter)* ')') ('schedule'
-	//	schedule+=ScheduleObjectReference+)?;
+	//	'print' ('(' parameters+=Parameter (',' parameters+=Parameter)* ')') ('schedule' schedule+=ScheduleObjectReference+)?;
 	public KEffectsGrammarAccess.PrintCallEffectElements getPrintCallEffectAccess() {
 		return gaKEffects.getPrintCallEffectAccess();
 	}

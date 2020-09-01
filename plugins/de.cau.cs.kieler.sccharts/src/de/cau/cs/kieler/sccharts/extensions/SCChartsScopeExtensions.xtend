@@ -14,38 +14,38 @@ package de.cau.cs.kieler.sccharts.extensions
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.GenericParameterDeclaration
+import de.cau.cs.kieler.kexpressions.GenericTypeReference
+import de.cau.cs.kieler.kexpressions.Parameter
+import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsGenericParameterExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kexpressions.keffects.Emission
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
+import de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil
 import de.cau.cs.kieler.sccharts.Action
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.LocalAction
 import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.Scope
+import de.cau.cs.kieler.sccharts.ScopeCall
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
 import java.util.Iterator
 import java.util.List
+import java.util.Map
+import org.eclipse.emf.ecore.EObject
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
-import static extension de.cau.cs.kieler.sccharts.iterators.ScopeIterator.*
-import static extension de.cau.cs.kieler.sccharts.iterators.StateIterator.*
 import static extension de.cau.cs.kieler.sccharts.iterators.ControlflowRegionIterator.*
 import static extension de.cau.cs.kieler.sccharts.iterators.DataflowRegionIterator.*
+import static extension de.cau.cs.kieler.sccharts.iterators.ScopeIterator.*
+import static extension de.cau.cs.kieler.sccharts.iterators.StateIterator.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil
-import de.cau.cs.kieler.kexpressions.Parameter
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
-import java.util.Map
-import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
-import org.eclipse.emf.ecore.EObject
-import de.cau.cs.kieler.kexpressions.Call
-import de.cau.cs.kieler.sccharts.ScopeCall
-import de.cau.cs.kieler.sccharts.GenericTypeScopeCall
-import de.cau.cs.kieler.sccharts.GenericTypeParameterDeclaration
-import de.cau.cs.kieler.sccharts.GenericTypeParameterReference
 
 /**
  * @author ssm
@@ -60,6 +60,7 @@ class SCChartsScopeExtensions {
     @Inject extension SCChartsStateExtensions
     @Inject extension SCChartsInheritanceExtensions
     @Inject extension KEffectsExtensions
+    @Inject extension KExpressionsGenericParameterExtensions
     
     def Iterator<State> getAllContainedStates(Scope scope) {
         scope.sccAllContainedStates 
@@ -206,58 +207,97 @@ class SCChartsScopeExtensions {
     }
 
     def isReferencing(Scope scope) {
-        return scope.reference !== null && (scope.isReferencingScope || scope.isReferencingGeneric)
+        return scope.reference !== null && scope.reference.target !== null
     }
 
     def isReferencingScope(Scope scope) {
-        return scope.reference !== null && scope.reference.isScopeCall && scope.reference.scope !== null
+        return scope.reference !== null && scope.reference.target instanceof Scope
     }
     
-    def boolean isScopeCall(Call call) {
-        return call instanceof ScopeCall
-    }
-    
-    def Scope getScope(Call call) {
-        if (call.isScopeCall) {
-            return call.scope
+    def Scope getScope(ScopeCall call) {
+        if (call.target instanceof Scope) {
+            return call.target as Scope
         }
     }
-    def Scope setScope(Call call, Scope newScope) {
-        if (call.isScopeCall) {
-            call.scope = newScope
-        } else {
-            throw new IllegalArgumentException("Cannot set scope on a Call that is not a ScopeCall!")
-        }
+    def Scope setScope(ScopeCall call, Scope newScope) {
+        call?.setTarget(newScope)
+        return newScope
     }
 
     def isReferencingGeneric(Scope scope) {
-        return scope.reference !== null && scope.reference.isGenericTypeCall && scope.reference.asGenericTypeCall.target !== null
+        return scope.reference !== null && scope.reference.target instanceof ValuedObject
     }
 
-    def boolean isGenericTypeCall(Call call) {
-        return call instanceof GenericTypeScopeCall
+    def getReferencedGenericParameter(ScopeCall call) {
+        if (call.target instanceof ValuedObject) {
+            return call.target as ValuedObject
+        }
     }
-    
-    def asGenericTypeCall(Call call) {
-        return call as GenericTypeScopeCall
-    }
-    
-    def Scope resolveReferencedScope(Call call) {
-        if (call instanceof ScopeCall) {
-            return call.scope
-        } else if (call instanceof GenericTypeParameterReference) {
-            return (call as GenericTypeParameterReference).resolveReferencedScope
+        
+    def Scope resolveReferencedScope(ScopeCall call) {
+        var target = call.target
+        if (target instanceof Scope) {
+            return target
+        } else if (target instanceof ValuedObject) {
+            return target.referencedScope
         }
         return null
     }
-    
-    def Scope resolveReferencedScope(GenericTypeParameterReference ref) {
-        val target = ref.target
-        if (target instanceof Scope) {
-            return target
-        } else if (target instanceof GenericTypeParameterDeclaration) {
-            target.type.resolveReferencedScope
+    def Scope getReferencedScope(ValuedObject vo) {
+        if (vo.isGenericParamter) {
+            val target = vo.genericParameterDeclaration.type
+            if (target instanceof Scope) {
+                return target
+            }
         }
-        return null        
+        return null
+    }
+     
+    def List<ValuedObject> genericTypeParameters(Scope scope) {
+        scope.genericParameterDeclarations.filter[isTypeDeclaration].map[valuedObjects.head].toList
+    }
+    
+    def List<ValuedObject> genericValuedObjectParameters(Scope scope) {
+        scope.genericParameterDeclarations.filter[isValueDeclaration || isReferenceDeclaration].map[valuedObjects.head].toList
+    }
+    
+    def getGenericParameterDeclaration(GenericTypeReference ref) {
+        // Find container referencing object containing the parameter declarations
+        var EObject target = null        
+        var container = ref.eContainer
+        while(container !== null) {
+            if (container instanceof GenericTypeReference) {
+                target = container.type
+                container = null
+            } else if (container instanceof ReferenceDeclaration) {
+                target = container.reference
+                container = null
+            } else if (container instanceof ScopeCall) {
+                target = container.target
+                container = null
+            } else {
+                container = container.eContainer
+            }
+        }
+        
+        // Find generic declarations in target
+        var List<GenericParameterDeclaration> targetParamDeclarations = null
+        if (target instanceof Scope) {
+            targetParamDeclarations = target.genericParameterDeclarations
+        } else if (target instanceof ValuedObject) {
+            targetParamDeclarations = target.referencedScope?.genericParameterDeclarations
+        }
+
+        // Find by matching index
+        if (ref.eContainer !== null && targetParamDeclarations !== null) {
+            val containment = ref.eContainer.eGet(ref.eContainingFeature)
+            if (containment instanceof List<?>) {
+                val idx = containment.indexOf(ref)
+                if (idx >= 0 && idx < targetParamDeclarations.size) {
+                    return targetParamDeclarations.get(idx)
+                }
+            }
+        }
+        return null
     }
 }

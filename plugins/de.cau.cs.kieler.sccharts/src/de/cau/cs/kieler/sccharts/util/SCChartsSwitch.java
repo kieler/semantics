@@ -20,7 +20,6 @@ import de.cau.cs.kieler.annotations.Pragmatable;
 import de.cau.cs.kieler.kexpressions.Call;
 import de.cau.cs.kieler.kexpressions.Declaration;
 import de.cau.cs.kieler.kexpressions.Expression;
-import de.cau.cs.kieler.kexpressions.ReferenceDeclaration;
 import de.cau.cs.kieler.kexpressions.Schedulable;
 import de.cau.cs.kieler.kexpressions.VariableDeclaration;
 import de.cau.cs.kieler.kexpressions.keffects.Assignment;
@@ -111,10 +110,9 @@ public class SCChartsSwitch<T> extends Switch<T> {
                 T result = caseScope(scope);
                 if (result == null) result = caseAnnotatable(scope);
                 if (result == null) result = caseDeclarationScope(scope);
+                if (result == null) result = caseNamedObject(scope);
                 if (result == null) result = caseSchedulable(scope);
                 if (result == null) result = caseLinkable(scope);
-                if (result == null) result = caseGenericTypeParameter(scope);
-                if (result == null) result = caseNamedObject(scope);
                 if (result == null) result = caseNameable(scope);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
@@ -151,10 +149,9 @@ public class SCChartsSwitch<T> extends Switch<T> {
                 if (result == null) result = caseScope(state);
                 if (result == null) result = caseAnnotatable(state);
                 if (result == null) result = caseDeclarationScope(state);
+                if (result == null) result = caseNamedObject(state);
                 if (result == null) result = caseSchedulable(state);
                 if (result == null) result = caseLinkable(state);
-                if (result == null) result = caseGenericTypeParameter(state);
-                if (result == null) result = caseNamedObject(state);
                 if (result == null) result = caseNameable(state);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
@@ -165,10 +162,9 @@ public class SCChartsSwitch<T> extends Switch<T> {
                 if (result == null) result = caseScope(region);
                 if (result == null) result = caseAnnotatable(region);
                 if (result == null) result = caseDeclarationScope(region);
+                if (result == null) result = caseNamedObject(region);
                 if (result == null) result = caseSchedulable(region);
                 if (result == null) result = caseLinkable(region);
-                if (result == null) result = caseGenericTypeParameter(region);
-                if (result == null) result = caseNamedObject(region);
                 if (result == null) result = caseNameable(region);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
@@ -180,10 +176,9 @@ public class SCChartsSwitch<T> extends Switch<T> {
                 if (result == null) result = caseScope(controlflowRegion);
                 if (result == null) result = caseAnnotatable(controlflowRegion);
                 if (result == null) result = caseDeclarationScope(controlflowRegion);
+                if (result == null) result = caseNamedObject(controlflowRegion);
                 if (result == null) result = caseSchedulable(controlflowRegion);
                 if (result == null) result = caseLinkable(controlflowRegion);
-                if (result == null) result = caseGenericTypeParameter(controlflowRegion);
-                if (result == null) result = caseNamedObject(controlflowRegion);
                 if (result == null) result = caseNameable(controlflowRegion);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
@@ -195,10 +190,9 @@ public class SCChartsSwitch<T> extends Switch<T> {
                 if (result == null) result = caseScope(dataflowRegion);
                 if (result == null) result = caseAnnotatable(dataflowRegion);
                 if (result == null) result = caseDeclarationScope(dataflowRegion);
+                if (result == null) result = caseNamedObject(dataflowRegion);
                 if (result == null) result = caseSchedulable(dataflowRegion);
                 if (result == null) result = caseLinkable(dataflowRegion);
-                if (result == null) result = caseGenericTypeParameter(dataflowRegion);
-                if (result == null) result = caseNamedObject(dataflowRegion);
                 if (result == null) result = caseNameable(dataflowRegion);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
@@ -283,10 +277,9 @@ public class SCChartsSwitch<T> extends Switch<T> {
                 if (result == null) result = caseScope(policyRegion);
                 if (result == null) result = caseAnnotatable(policyRegion);
                 if (result == null) result = caseDeclarationScope(policyRegion);
+                if (result == null) result = caseNamedObject(policyRegion);
                 if (result == null) result = caseSchedulable(policyRegion);
                 if (result == null) result = caseLinkable(policyRegion);
-                if (result == null) result = caseGenericTypeParameter(policyRegion);
-                if (result == null) result = caseNamedObject(policyRegion);
                 if (result == null) result = caseNameable(policyRegion);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
@@ -312,49 +305,6 @@ public class SCChartsSwitch<T> extends Switch<T> {
                 if (result == null) result = caseAnnotatable(dataflowAssignment);
                 if (result == null) result = caseSchedulable(dataflowAssignment);
                 if (result == null) result = caseLinkable(dataflowAssignment);
-                if (result == null) result = defaultCase(theEObject);
-                return result;
-            }
-            case SCChartsPackage.GENERIC_TYPE_SCOPE_CALL: {
-                GenericTypeScopeCall genericTypeScopeCall = (GenericTypeScopeCall)theEObject;
-                T result = caseGenericTypeScopeCall(genericTypeScopeCall);
-                if (result == null) result = caseCall(genericTypeScopeCall);
-                if (result == null) result = caseGenericTypeParameterReference(genericTypeScopeCall);
-                if (result == null) result = caseExpression(genericTypeScopeCall);
-                if (result == null) result = caseSchedulable(genericTypeScopeCall);
-                if (result == null) result = defaultCase(theEObject);
-                return result;
-            }
-            case SCChartsPackage.GENERIC_TYPE_PARAMETER_DECLARATION: {
-                GenericTypeParameterDeclaration genericTypeParameterDeclaration = (GenericTypeParameterDeclaration)theEObject;
-                T result = caseGenericTypeParameterDeclaration(genericTypeParameterDeclaration);
-                if (result == null) result = caseAnnotatable(genericTypeParameterDeclaration);
-                if (result == null) result = caseGenericTypeParameter(genericTypeParameterDeclaration);
-                if (result == null) result = caseNamedObject(genericTypeParameterDeclaration);
-                if (result == null) result = caseNameable(genericTypeParameterDeclaration);
-                if (result == null) result = defaultCase(theEObject);
-                return result;
-            }
-            case SCChartsPackage.GENERIC_TYPE_PARAMETER: {
-                GenericTypeParameter genericTypeParameter = (GenericTypeParameter)theEObject;
-                T result = caseGenericTypeParameter(genericTypeParameter);
-                if (result == null) result = caseNamedObject(genericTypeParameter);
-                if (result == null) result = caseNameable(genericTypeParameter);
-                if (result == null) result = defaultCase(theEObject);
-                return result;
-            }
-            case SCChartsPackage.PARAMETERIZED_REFERENCE_DECLARATION: {
-                ParameterizedReferenceDeclaration parameterizedReferenceDeclaration = (ParameterizedReferenceDeclaration)theEObject;
-                T result = caseParameterizedReferenceDeclaration(parameterizedReferenceDeclaration);
-                if (result == null) result = caseReferenceDeclaration(parameterizedReferenceDeclaration);
-                if (result == null) result = caseDeclaration(parameterizedReferenceDeclaration);
-                if (result == null) result = caseAnnotatable(parameterizedReferenceDeclaration);
-                if (result == null) result = defaultCase(theEObject);
-                return result;
-            }
-            case SCChartsPackage.GENERIC_TYPE_PARAMETER_REFERENCE: {
-                GenericTypeParameterReference genericTypeParameterReference = (GenericTypeParameterReference)theEObject;
-                T result = caseGenericTypeParameterReference(genericTypeParameterReference);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -479,66 +429,6 @@ public class SCChartsSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseScopeCall(ScopeCall object) {
-        return null;
-    }
-
-    /**
-     * Returns the result of interpreting the object as an instance of '<em>Generic Type Parameter Declaration</em>'.
-     * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
-     * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Generic Type Parameter Declaration</em>'.
-     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-     * @generated
-     */
-    public T caseGenericTypeParameterDeclaration(GenericTypeParameterDeclaration object) {
-        return null;
-    }
-
-    /**
-     * Returns the result of interpreting the object as an instance of '<em>Generic Type Parameter</em>'.
-     * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
-     * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Generic Type Parameter</em>'.
-     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-     * @generated
-     */
-    public T caseGenericTypeParameter(GenericTypeParameter object) {
-        return null;
-    }
-
-    /**
-     * Returns the result of interpreting the object as an instance of '<em>Parameterized Reference Declaration</em>'.
-     * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
-     * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Parameterized Reference Declaration</em>'.
-     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-     * @generated
-     */
-    public T caseParameterizedReferenceDeclaration(ParameterizedReferenceDeclaration object) {
-        return null;
-    }
-
-    /**
-     * Returns the result of interpreting the object as an instance of '<em>Generic Type Parameter Reference</em>'.
-     * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
-     * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Generic Type Parameter Reference</em>'.
-     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-     * @generated
-     */
-    public T caseGenericTypeParameterReference(GenericTypeParameterReference object) {
         return null;
     }
 
@@ -768,21 +658,6 @@ public class SCChartsSwitch<T> extends Switch<T> {
     }
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>Generic Type Scope Call</em>'.
-     * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
-     * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Generic Type Scope Call</em>'.
-     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-     * @generated
-     */
-    public T caseGenericTypeScopeCall(GenericTypeScopeCall object) {
-        return null;
-    }
-
-    /**
      * Returns the result of interpreting the object as an instance of '<em>Pragmatable</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
@@ -944,21 +819,6 @@ public class SCChartsSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseDeclaration(Declaration object) {
-        return null;
-    }
-
-                /**
-     * Returns the result of interpreting the object as an instance of '<em>Reference Declaration</em>'.
-     * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
-     * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Reference Declaration</em>'.
-     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-     * @generated
-     */
-    public T caseReferenceDeclaration(ReferenceDeclaration object) {
         return null;
     }
 

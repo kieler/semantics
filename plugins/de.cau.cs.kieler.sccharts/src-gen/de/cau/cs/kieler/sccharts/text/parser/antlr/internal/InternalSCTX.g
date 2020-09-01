@@ -236,18 +236,18 @@ ruleRootState returns [EObject current=null]
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getRootStateAccess().getGenericsGenericTypeParameterDeclarationParserRuleCall_4_1_0());
+						newCompositeNode(grammarAccess.getRootStateAccess().getGenericParameterDeclarationsGenericParameterDeclarationParserRuleCall_4_1_0());
 					}
-					lv_generics_5_0=ruleGenericTypeParameterDeclaration
+					lv_genericParameterDeclarations_5_0=ruleGenericParameterDeclaration
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getRootStateRule());
 						}
 						add(
 							$current,
-							"generics",
-							lv_generics_5_0,
-							"de.cau.cs.kieler.sccharts.text.SCTX.GenericTypeParameterDeclaration");
+							"genericParameterDeclarations",
+							lv_genericParameterDeclarations_5_0,
+							"de.cau.cs.kieler.kexpressions.kext.KExt.GenericParameterDeclaration");
 						afterParserOrEnumRuleCall();
 					}
 				)
@@ -260,18 +260,18 @@ ruleRootState returns [EObject current=null]
 				(
 					(
 						{
-							newCompositeNode(grammarAccess.getRootStateAccess().getGenericsGenericTypeParameterDeclarationParserRuleCall_4_2_1_0());
+							newCompositeNode(grammarAccess.getRootStateAccess().getGenericParameterDeclarationsGenericParameterDeclarationParserRuleCall_4_2_1_0());
 						}
-						lv_generics_7_0=ruleGenericTypeParameterDeclaration
+						lv_genericParameterDeclarations_7_0=ruleGenericParameterDeclaration
 						{
 							if ($current==null) {
 								$current = createModelElementForParent(grammarAccess.getRootStateRule());
 							}
 							add(
 								$current,
-								"generics",
-								lv_generics_7_0,
-								"de.cau.cs.kieler.sccharts.text.SCTX.GenericTypeParameterDeclaration");
+								"genericParameterDeclarations",
+								lv_genericParameterDeclarations_7_0,
+								"de.cau.cs.kieler.kexpressions.kext.KExt.GenericParameterDeclaration");
 							afterParserOrEnumRuleCall();
 						}
 					)
@@ -558,39 +558,21 @@ ruleState returns [EObject current=null]
 				}
 				(
 					(
-						(
-							{
-								newCompositeNode(grammarAccess.getStateAccess().getReferenceScopeCallParserRuleCall_8_0_1_0_0());
+						{
+							newCompositeNode(grammarAccess.getStateAccess().getReferenceScopeCallParserRuleCall_8_0_1_0());
+						}
+						lv_reference_9_0=ruleScopeCall
+						{
+							if ($current==null) {
+								$current = createModelElementForParent(grammarAccess.getStateRule());
 							}
-							lv_reference_9_1=ruleScopeCall
-							{
-								if ($current==null) {
-									$current = createModelElementForParent(grammarAccess.getStateRule());
-								}
-								set(
-									$current,
-									"reference",
-									lv_reference_9_1,
-									"de.cau.cs.kieler.sccharts.text.SCTX.ScopeCall");
-								afterParserOrEnumRuleCall();
-							}
-							    |
-							{
-								newCompositeNode(grammarAccess.getStateAccess().getReferenceGenericTypeScopeCallParserRuleCall_8_0_1_0_1());
-							}
-							lv_reference_9_2=ruleGenericTypeScopeCall
-							{
-								if ($current==null) {
-									$current = createModelElementForParent(grammarAccess.getStateRule());
-								}
-								set(
-									$current,
-									"reference",
-									lv_reference_9_2,
-									"de.cau.cs.kieler.sccharts.text.SCTX.GenericTypeScopeCall");
-								afterParserOrEnumRuleCall();
-							}
-						)
+							set(
+								$current,
+								"reference",
+								lv_reference_9_0,
+								"de.cau.cs.kieler.sccharts.text.SCTX.ScopeCall");
+							afterParserOrEnumRuleCall();
+						}
 					)
 				)
 				(
@@ -891,22 +873,76 @@ ruleScopeCall returns [EObject current=null]
 				}
 				otherlv_1=RULE_ID
 				{
-					newLeafNode(otherlv_1, grammarAccess.getScopeCallAccess().getScopeScopeCrossReference_1_0());
+					newLeafNode(otherlv_1, grammarAccess.getScopeCallAccess().getTargetNamedObjectCrossReference_1_0());
 				}
 			)
 		)
 		(
+			otherlv_2='<'
+			{
+				newLeafNode(otherlv_2, grammarAccess.getScopeCallAccess().getLessThanSignKeyword_2_0());
+			}
 			(
-				otherlv_2='('
+				(
+					{
+						newCompositeNode(grammarAccess.getScopeCallAccess().getGenericParametersGenericParameterParserRuleCall_2_1_0());
+					}
+					lv_genericParameters_3_0=ruleGenericParameter
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getScopeCallRule());
+						}
+						add(
+							$current,
+							"genericParameters",
+							lv_genericParameters_3_0,
+							"de.cau.cs.kieler.kexpressions.kext.KExt.GenericParameter");
+						afterParserOrEnumRuleCall();
+					}
+				)
+			)
+			(
+				otherlv_4=','
 				{
-					newLeafNode(otherlv_2, grammarAccess.getScopeCallAccess().getLeftParenthesisKeyword_2_0_0());
+					newLeafNode(otherlv_4, grammarAccess.getScopeCallAccess().getCommaKeyword_2_2_0());
 				}
 				(
 					(
 						{
-							newCompositeNode(grammarAccess.getScopeCallAccess().getParametersScopeParameterParserRuleCall_2_0_1_0());
+							newCompositeNode(grammarAccess.getScopeCallAccess().getGenericParametersGenericParameterParserRuleCall_2_2_1_0());
 						}
-						lv_parameters_3_0=ruleScopeParameter
+						lv_genericParameters_5_0=ruleGenericParameter
+						{
+							if ($current==null) {
+								$current = createModelElementForParent(grammarAccess.getScopeCallRule());
+							}
+							add(
+								$current,
+								"genericParameters",
+								lv_genericParameters_5_0,
+								"de.cau.cs.kieler.kexpressions.kext.KExt.GenericParameter");
+							afterParserOrEnumRuleCall();
+						}
+					)
+				)
+			)*
+			otherlv_6='>'
+			{
+				newLeafNode(otherlv_6, grammarAccess.getScopeCallAccess().getGreaterThanSignKeyword_2_3());
+			}
+		)?
+		(
+			(
+				otherlv_7='('
+				{
+					newLeafNode(otherlv_7, grammarAccess.getScopeCallAccess().getLeftParenthesisKeyword_3_0_0());
+				}
+				(
+					(
+						{
+							newCompositeNode(grammarAccess.getScopeCallAccess().getParametersScopeParameterParserRuleCall_3_0_1_0());
+						}
+						lv_parameters_8_0=ruleScopeParameter
 						{
 							if ($current==null) {
 								$current = createModelElementForParent(grammarAccess.getScopeCallRule());
@@ -914,23 +950,23 @@ ruleScopeCall returns [EObject current=null]
 							add(
 								$current,
 								"parameters",
-								lv_parameters_3_0,
+								lv_parameters_8_0,
 								"de.cau.cs.kieler.sccharts.text.SCTX.ScopeParameter");
 							afterParserOrEnumRuleCall();
 						}
 					)
 				)
 				(
-					otherlv_4=','
+					otherlv_9=','
 					{
-						newLeafNode(otherlv_4, grammarAccess.getScopeCallAccess().getCommaKeyword_2_0_2_0());
+						newLeafNode(otherlv_9, grammarAccess.getScopeCallAccess().getCommaKeyword_3_0_2_0());
 					}
 					(
 						(
 							{
-								newCompositeNode(grammarAccess.getScopeCallAccess().getParametersScopeParameterParserRuleCall_2_0_2_1_0());
+								newCompositeNode(grammarAccess.getScopeCallAccess().getParametersScopeParameterParserRuleCall_3_0_2_1_0());
 							}
-							lv_parameters_5_0=ruleScopeParameter
+							lv_parameters_10_0=ruleScopeParameter
 							{
 								if ($current==null) {
 									$current = createModelElementForParent(grammarAccess.getScopeCallRule());
@@ -938,29 +974,23 @@ ruleScopeCall returns [EObject current=null]
 								add(
 									$current,
 									"parameters",
-									lv_parameters_5_0,
+									lv_parameters_10_0,
 									"de.cau.cs.kieler.sccharts.text.SCTX.ScopeParameter");
 								afterParserOrEnumRuleCall();
 							}
 						)
 					)
 				)*
-				otherlv_6=')'
+				otherlv_11=')'
 				{
-					newLeafNode(otherlv_6, grammarAccess.getScopeCallAccess().getRightParenthesisKeyword_2_0_3());
+					newLeafNode(otherlv_11, grammarAccess.getScopeCallAccess().getRightParenthesisKeyword_3_0_3());
 				}
 			)
 			    |
-			(
-				otherlv_7='('
-				{
-					newLeafNode(otherlv_7, grammarAccess.getScopeCallAccess().getLeftParenthesisKeyword_2_1_0());
-				}
-				otherlv_8=')'
-				{
-					newLeafNode(otherlv_8, grammarAccess.getScopeCallAccess().getRightParenthesisKeyword_2_1_1());
-				}
-			)
+			otherlv_12='()'
+			{
+				newLeafNode(otherlv_12, grammarAccess.getScopeCallAccess().getLeftParenthesisRightParenthesisKeyword_3_1());
+			}
 		)?
 	)
 ;
@@ -4921,574 +4951,6 @@ ruleKeywordMethodDeclarationWOSemicolon returns [EObject current=null]
 			{
 				newLeafNode(otherlv_18, grammarAccess.getKeywordMethodDeclarationWOSemicolonAccess().getRightCurlyBracketKeyword_8_4());
 			}
-		)?
-	)
-;
-
-// Entry rule entryRuleGenericTypeParameterDeclaration
-entryRuleGenericTypeParameterDeclaration returns [EObject current=null]:
-	{ newCompositeNode(grammarAccess.getGenericTypeParameterDeclarationRule()); }
-	iv_ruleGenericTypeParameterDeclaration=ruleGenericTypeParameterDeclaration
-	{ $current=$iv_ruleGenericTypeParameterDeclaration.current; }
-	EOF;
-
-// Rule GenericTypeParameterDeclaration
-ruleGenericTypeParameterDeclaration returns [EObject current=null]
-@init {
-	enterRule();
-}
-@after {
-	leaveRule();
-}:
-	(
-		(
-			(
-				{
-					newCompositeNode(grammarAccess.getGenericTypeParameterDeclarationAccess().getNamePrimeIDParserRuleCall_0_0());
-				}
-				lv_name_0_0=rulePrimeID
-				{
-					if ($current==null) {
-						$current = createModelElementForParent(grammarAccess.getGenericTypeParameterDeclarationRule());
-					}
-					set(
-						$current,
-						"name",
-						lv_name_0_0,
-						"de.cau.cs.kieler.kexpressions.KExpressions.PrimeID");
-					afterParserOrEnumRuleCall();
-				}
-			)
-		)
-		otherlv_1='is'
-		{
-			newLeafNode(otherlv_1, grammarAccess.getGenericTypeParameterDeclarationAccess().getIsKeyword_1());
-		}
-		(
-			(
-				{
-					newCompositeNode(grammarAccess.getGenericTypeParameterDeclarationAccess().getTypeGenericTypeParameterReferenceParserRuleCall_2_0());
-				}
-				lv_type_2_0=ruleGenericTypeParameterReference
-				{
-					if ($current==null) {
-						$current = createModelElementForParent(grammarAccess.getGenericTypeParameterDeclarationRule());
-					}
-					set(
-						$current,
-						"type",
-						lv_type_2_0,
-						"de.cau.cs.kieler.sccharts.text.SCTX.GenericTypeParameterReference");
-					afterParserOrEnumRuleCall();
-				}
-			)
-		)
-	)
-;
-
-// Entry rule entryRuleGenericTypeParameterReference
-entryRuleGenericTypeParameterReference returns [EObject current=null]:
-	{ newCompositeNode(grammarAccess.getGenericTypeParameterReferenceRule()); }
-	iv_ruleGenericTypeParameterReference=ruleGenericTypeParameterReference
-	{ $current=$iv_ruleGenericTypeParameterReference.current; }
-	EOF;
-
-// Rule GenericTypeParameterReference
-ruleGenericTypeParameterReference returns [EObject current=null]
-@init {
-	enterRule();
-}
-@after {
-	leaveRule();
-}:
-	(
-		(
-			(
-				{
-					/* */
-				}
-				{
-					if ($current==null) {
-						$current = createModelElement(grammarAccess.getGenericTypeParameterReferenceRule());
-					}
-				}
-				otherlv_0=RULE_ID
-				{
-					newLeafNode(otherlv_0, grammarAccess.getGenericTypeParameterReferenceAccess().getTargetGenericTypeParameterCrossReference_0_0());
-				}
-			)
-		)
-		(
-			otherlv_1='<'
-			{
-				newLeafNode(otherlv_1, grammarAccess.getGenericTypeParameterReferenceAccess().getLessThanSignKeyword_1_0());
-			}
-			(
-				(
-					{
-						newCompositeNode(grammarAccess.getGenericTypeParameterReferenceAccess().getTypeParametersGenericTypeParameterReferenceParserRuleCall_1_1_0());
-					}
-					lv_typeParameters_2_0=ruleGenericTypeParameterReference
-					{
-						if ($current==null) {
-							$current = createModelElementForParent(grammarAccess.getGenericTypeParameterReferenceRule());
-						}
-						add(
-							$current,
-							"typeParameters",
-							lv_typeParameters_2_0,
-							"de.cau.cs.kieler.sccharts.text.SCTX.GenericTypeParameterReference");
-						afterParserOrEnumRuleCall();
-					}
-				)
-			)
-			(
-				otherlv_3=','
-				{
-					newLeafNode(otherlv_3, grammarAccess.getGenericTypeParameterReferenceAccess().getCommaKeyword_1_2_0());
-				}
-				(
-					(
-						{
-							newCompositeNode(grammarAccess.getGenericTypeParameterReferenceAccess().getTypeParametersGenericTypeParameterReferenceParserRuleCall_1_2_1_0());
-						}
-						lv_typeParameters_4_0=ruleGenericTypeParameterReference
-						{
-							if ($current==null) {
-								$current = createModelElementForParent(grammarAccess.getGenericTypeParameterReferenceRule());
-							}
-							add(
-								$current,
-								"typeParameters",
-								lv_typeParameters_4_0,
-								"de.cau.cs.kieler.sccharts.text.SCTX.GenericTypeParameterReference");
-							afterParserOrEnumRuleCall();
-						}
-					)
-				)
-			)*
-			otherlv_5='>'
-			{
-				newLeafNode(otherlv_5, grammarAccess.getGenericTypeParameterReferenceAccess().getGreaterThanSignKeyword_1_3());
-			}
-		)?
-	)
-;
-
-// Entry rule entryRuleGenericTypeScopeCall
-entryRuleGenericTypeScopeCall returns [EObject current=null]:
-	{ newCompositeNode(grammarAccess.getGenericTypeScopeCallRule()); }
-	iv_ruleGenericTypeScopeCall=ruleGenericTypeScopeCall
-	{ $current=$iv_ruleGenericTypeScopeCall.current; }
-	EOF;
-
-// Rule GenericTypeScopeCall
-ruleGenericTypeScopeCall returns [EObject current=null]
-@init {
-	enterRule();
-}
-@after {
-	leaveRule();
-}:
-	(
-		(
-			(
-				{
-					/* */
-				}
-				{
-					if ($current==null) {
-						$current = createModelElement(grammarAccess.getGenericTypeScopeCallRule());
-					}
-				}
-				otherlv_0=RULE_ID
-				{
-					newLeafNode(otherlv_0, grammarAccess.getGenericTypeScopeCallAccess().getTargetGenericTypeParameterCrossReference_0_0());
-				}
-			)
-		)
-		(
-			otherlv_1='<'
-			{
-				newLeafNode(otherlv_1, grammarAccess.getGenericTypeScopeCallAccess().getLessThanSignKeyword_1_0());
-			}
-			(
-				(
-					{
-						newCompositeNode(grammarAccess.getGenericTypeScopeCallAccess().getTypeParametersGenericTypeParameterReferenceParserRuleCall_1_1_0());
-					}
-					lv_typeParameters_2_0=ruleGenericTypeParameterReference
-					{
-						if ($current==null) {
-							$current = createModelElementForParent(grammarAccess.getGenericTypeScopeCallRule());
-						}
-						add(
-							$current,
-							"typeParameters",
-							lv_typeParameters_2_0,
-							"de.cau.cs.kieler.sccharts.text.SCTX.GenericTypeParameterReference");
-						afterParserOrEnumRuleCall();
-					}
-				)
-			)
-			(
-				otherlv_3=','
-				{
-					newLeafNode(otherlv_3, grammarAccess.getGenericTypeScopeCallAccess().getCommaKeyword_1_2_0());
-				}
-				(
-					(
-						{
-							newCompositeNode(grammarAccess.getGenericTypeScopeCallAccess().getTypeParametersGenericTypeParameterReferenceParserRuleCall_1_2_1_0());
-						}
-						lv_typeParameters_4_0=ruleGenericTypeParameterReference
-						{
-							if ($current==null) {
-								$current = createModelElementForParent(grammarAccess.getGenericTypeScopeCallRule());
-							}
-							add(
-								$current,
-								"typeParameters",
-								lv_typeParameters_4_0,
-								"de.cau.cs.kieler.sccharts.text.SCTX.GenericTypeParameterReference");
-							afterParserOrEnumRuleCall();
-						}
-					)
-				)
-			)*
-			otherlv_5='>'
-			{
-				newLeafNode(otherlv_5, grammarAccess.getGenericTypeScopeCallAccess().getGreaterThanSignKeyword_1_3());
-			}
-		)?
-		(
-			(
-				otherlv_6='('
-				{
-					newLeafNode(otherlv_6, grammarAccess.getGenericTypeScopeCallAccess().getLeftParenthesisKeyword_2_0_0());
-				}
-				(
-					(
-						{
-							newCompositeNode(grammarAccess.getGenericTypeScopeCallAccess().getParametersScopeParameterParserRuleCall_2_0_1_0());
-						}
-						lv_parameters_7_0=ruleScopeParameter
-						{
-							if ($current==null) {
-								$current = createModelElementForParent(grammarAccess.getGenericTypeScopeCallRule());
-							}
-							add(
-								$current,
-								"parameters",
-								lv_parameters_7_0,
-								"de.cau.cs.kieler.sccharts.text.SCTX.ScopeParameter");
-							afterParserOrEnumRuleCall();
-						}
-					)
-				)
-				(
-					otherlv_8=','
-					{
-						newLeafNode(otherlv_8, grammarAccess.getGenericTypeScopeCallAccess().getCommaKeyword_2_0_2_0());
-					}
-					(
-						(
-							{
-								newCompositeNode(grammarAccess.getGenericTypeScopeCallAccess().getParametersScopeParameterParserRuleCall_2_0_2_1_0());
-							}
-							lv_parameters_9_0=ruleScopeParameter
-							{
-								if ($current==null) {
-									$current = createModelElementForParent(grammarAccess.getGenericTypeScopeCallRule());
-								}
-								add(
-									$current,
-									"parameters",
-									lv_parameters_9_0,
-									"de.cau.cs.kieler.sccharts.text.SCTX.ScopeParameter");
-								afterParserOrEnumRuleCall();
-							}
-						)
-					)
-				)*
-				otherlv_10=')'
-				{
-					newLeafNode(otherlv_10, grammarAccess.getGenericTypeScopeCallAccess().getRightParenthesisKeyword_2_0_3());
-				}
-			)
-			    |
-			(
-				otherlv_11='('
-				{
-					newLeafNode(otherlv_11, grammarAccess.getGenericTypeScopeCallAccess().getLeftParenthesisKeyword_2_1_0());
-				}
-				otherlv_12=')'
-				{
-					newLeafNode(otherlv_12, grammarAccess.getGenericTypeScopeCallAccess().getRightParenthesisKeyword_2_1_1());
-				}
-			)
-		)?
-	)
-;
-
-// Entry rule entryRuleReferenceDeclarationWOSemicolon
-entryRuleReferenceDeclarationWOSemicolon returns [EObject current=null]:
-	{ newCompositeNode(grammarAccess.getReferenceDeclarationWOSemicolonRule()); }
-	iv_ruleReferenceDeclarationWOSemicolon=ruleReferenceDeclarationWOSemicolon
-	{ $current=$iv_ruleReferenceDeclarationWOSemicolon.current; }
-	EOF;
-
-// Rule ReferenceDeclarationWOSemicolon
-ruleReferenceDeclarationWOSemicolon returns [EObject current=null]
-@init {
-	enterRule();
-}
-@after {
-	leaveRule();
-}:
-	(
-		(
-			{
-				/* */
-			}
-			{
-				$current = forceCreateModelElement(
-					grammarAccess.getReferenceDeclarationWOSemicolonAccess().getParameterizedReferenceDeclarationAction_0(),
-					$current);
-			}
-		)
-		(
-			(
-				{
-					newCompositeNode(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getAnnotationsAnnotationParserRuleCall_1_0());
-				}
-				lv_annotations_1_0=ruleAnnotation
-				{
-					if ($current==null) {
-						$current = createModelElementForParent(grammarAccess.getReferenceDeclarationWOSemicolonRule());
-					}
-					add(
-						$current,
-						"annotations",
-						lv_annotations_1_0,
-						"de.cau.cs.kieler.kexpressions.KExpressions.Annotation");
-					afterParserOrEnumRuleCall();
-				}
-			)
-		)*
-		(
-			(
-				{
-					newCompositeNode(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getAccessAccessModifierEnumRuleCall_2_0());
-				}
-				lv_access_2_0=ruleAccessModifier
-				{
-					if ($current==null) {
-						$current = createModelElementForParent(grammarAccess.getReferenceDeclarationWOSemicolonRule());
-					}
-					set(
-						$current,
-						"access",
-						lv_access_2_0,
-						"de.cau.cs.kieler.kexpressions.KExpressions.AccessModifier");
-					afterParserOrEnumRuleCall();
-				}
-			)
-		)?
-		(
-			(
-				otherlv_3='ref'
-				{
-					newLeafNode(otherlv_3, grammarAccess.getReferenceDeclarationWOSemicolonAccess().getRefKeyword_3_0_0());
-				}
-				(
-					(
-						{
-							/* */
-						}
-						{
-							if ($current==null) {
-								$current = createModelElement(grammarAccess.getReferenceDeclarationWOSemicolonRule());
-							}
-						}
-						{
-							newCompositeNode(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getReferenceNamedObjectCrossReference_3_0_1_0());
-						}
-						ruleNamespaceID
-						{
-							afterParserOrEnumRuleCall();
-						}
-					)
-				)
-				(
-					otherlv_5='<'
-					{
-						newLeafNode(otherlv_5, grammarAccess.getReferenceDeclarationWOSemicolonAccess().getLessThanSignKeyword_3_0_2_0());
-					}
-					(
-						(
-							{
-								newCompositeNode(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getTypeParametersGenericTypeParameterReferenceParserRuleCall_3_0_2_1_0());
-							}
-							lv_typeParameters_6_0=ruleGenericTypeParameterReference
-							{
-								if ($current==null) {
-									$current = createModelElementForParent(grammarAccess.getReferenceDeclarationWOSemicolonRule());
-								}
-								add(
-									$current,
-									"typeParameters",
-									lv_typeParameters_6_0,
-									"de.cau.cs.kieler.sccharts.text.SCTX.GenericTypeParameterReference");
-								afterParserOrEnumRuleCall();
-							}
-						)
-					)
-					(
-						otherlv_7=','
-						{
-							newLeafNode(otherlv_7, grammarAccess.getReferenceDeclarationWOSemicolonAccess().getCommaKeyword_3_0_2_2_0());
-						}
-						(
-							(
-								{
-									newCompositeNode(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getTypeParametersGenericTypeParameterReferenceParserRuleCall_3_0_2_2_1_0());
-								}
-								lv_typeParameters_8_0=ruleGenericTypeParameterReference
-								{
-									if ($current==null) {
-										$current = createModelElementForParent(grammarAccess.getReferenceDeclarationWOSemicolonRule());
-									}
-									add(
-										$current,
-										"typeParameters",
-										lv_typeParameters_8_0,
-										"de.cau.cs.kieler.sccharts.text.SCTX.GenericTypeParameterReference");
-									afterParserOrEnumRuleCall();
-								}
-							)
-						)
-					)*
-					otherlv_9='>'
-					{
-						newLeafNode(otherlv_9, grammarAccess.getReferenceDeclarationWOSemicolonAccess().getGreaterThanSignKeyword_3_0_2_3());
-					}
-				)?
-			)
-			    |
-			(
-				otherlv_10='extern'
-				{
-					newLeafNode(otherlv_10, grammarAccess.getReferenceDeclarationWOSemicolonAccess().getExternKeyword_3_1_0());
-				}
-				(
-					(
-						{
-							newCompositeNode(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getExternExternStringParserRuleCall_3_1_1_0());
-						}
-						lv_extern_11_0=ruleExternString
-						{
-							if ($current==null) {
-								$current = createModelElementForParent(grammarAccess.getReferenceDeclarationWOSemicolonRule());
-							}
-							add(
-								$current,
-								"extern",
-								lv_extern_11_0,
-								"de.cau.cs.kieler.kexpressions.kext.KExt.ExternString");
-							afterParserOrEnumRuleCall();
-						}
-					)
-				)
-				(
-					otherlv_12=','
-					{
-						newLeafNode(otherlv_12, grammarAccess.getReferenceDeclarationWOSemicolonAccess().getCommaKeyword_3_1_2_0());
-					}
-					(
-						(
-							{
-								newCompositeNode(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getExternExternStringParserRuleCall_3_1_2_1_0());
-							}
-							lv_extern_13_0=ruleExternString
-							{
-								if ($current==null) {
-									$current = createModelElementForParent(grammarAccess.getReferenceDeclarationWOSemicolonRule());
-								}
-								add(
-									$current,
-									"extern",
-									lv_extern_13_0,
-									"de.cau.cs.kieler.kexpressions.kext.KExt.ExternString");
-								afterParserOrEnumRuleCall();
-							}
-						)
-					)
-				)*
-			)
-		)
-		(
-			(
-				{
-					newCompositeNode(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getValuedObjectsValuedObjectParserRuleCall_4_0());
-				}
-				lv_valuedObjects_14_0=ruleValuedObject
-				{
-					if ($current==null) {
-						$current = createModelElementForParent(grammarAccess.getReferenceDeclarationWOSemicolonRule());
-					}
-					add(
-						$current,
-						"valuedObjects",
-						lv_valuedObjects_14_0,
-						"de.cau.cs.kieler.kexpressions.kext.KExt.ValuedObject");
-					afterParserOrEnumRuleCall();
-				}
-			)
-		)
-		(
-			otherlv_15=','
-			{
-				newLeafNode(otherlv_15, grammarAccess.getReferenceDeclarationWOSemicolonAccess().getCommaKeyword_5_0());
-			}
-			(
-				(
-					{
-						newCompositeNode(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getValuedObjectsValuedObjectParserRuleCall_5_1_0());
-					}
-					lv_valuedObjects_16_0=ruleValuedObject
-					{
-						if ($current==null) {
-							$current = createModelElementForParent(grammarAccess.getReferenceDeclarationWOSemicolonRule());
-						}
-						add(
-							$current,
-							"valuedObjects",
-							lv_valuedObjects_16_0,
-							"de.cau.cs.kieler.kexpressions.kext.KExt.ValuedObject");
-						afterParserOrEnumRuleCall();
-					}
-				)
-			)
-		)*
-		(
-			(
-				{
-					newCompositeNode(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getAnnotationsCommentAnnotatonSLParserRuleCall_6_0());
-				}
-				lv_annotations_17_0=ruleCommentAnnotatonSL
-				{
-					if ($current==null) {
-						$current = createModelElementForParent(grammarAccess.getReferenceDeclarationWOSemicolonRule());
-					}
-					add(
-						$current,
-						"annotations",
-						lv_annotations_17_0,
-						"de.cau.cs.kieler.annotations.Annotations.CommentAnnotatonSL");
-					afterParserOrEnumRuleCall();
-				}
-			)
 		)?
 	)
 ;
@@ -9546,52 +9008,6 @@ ruleDeclarationOrMethodWOSemicolon returns [EObject current=null]
 	)
 ;
 
-// Entry rule entryRuleNamespaceID
-entryRuleNamespaceID returns [String current=null]:
-	{ newCompositeNode(grammarAccess.getNamespaceIDRule()); }
-	iv_ruleNamespaceID=ruleNamespaceID
-	{ $current=$iv_ruleNamespaceID.current.getText(); }
-	EOF;
-
-// Rule NamespaceID
-ruleNamespaceID returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()]
-@init {
-	enterRule();
-}
-@after {
-	leaveRule();
-}:
-	(
-		{
-			newCompositeNode(grammarAccess.getNamespaceIDAccess().getExtendedIDParserRuleCall_0());
-		}
-		this_ExtendedID_0=ruleExtendedID
-		{
-			$current.merge(this_ExtendedID_0);
-		}
-		{
-			afterParserOrEnumRuleCall();
-		}
-		(
-			kw=':'
-			{
-				$current.merge(kw);
-				newLeafNode(kw, grammarAccess.getNamespaceIDAccess().getColonKeyword_1_0());
-			}
-			{
-				newCompositeNode(grammarAccess.getNamespaceIDAccess().getPrimeIDParserRuleCall_1_1());
-			}
-			this_PrimeID_2=rulePrimeID
-			{
-				$current.merge(this_PrimeID_2);
-			}
-			{
-				afterParserOrEnumRuleCall();
-			}
-		)*
-	)
-;
-
 // Entry rule entryRuleReferenceDeclaration
 entryRuleReferenceDeclaration returns [EObject current=null]:
 	{ newCompositeNode(grammarAccess.getReferenceDeclarationRule()); }
@@ -9671,19 +9087,73 @@ ruleReferenceDeclaration returns [EObject current=null]
 						}
 					)
 				)
+				(
+					otherlv_4='<'
+					{
+						newLeafNode(otherlv_4, grammarAccess.getReferenceDeclarationAccess().getLessThanSignKeyword_2_0_2_0());
+					}
+					(
+						(
+							{
+								newCompositeNode(grammarAccess.getReferenceDeclarationAccess().getGenericParametersGenericParameterParserRuleCall_2_0_2_1_0());
+							}
+							lv_genericParameters_5_0=ruleGenericParameter
+							{
+								if ($current==null) {
+									$current = createModelElementForParent(grammarAccess.getReferenceDeclarationRule());
+								}
+								add(
+									$current,
+									"genericParameters",
+									lv_genericParameters_5_0,
+									"de.cau.cs.kieler.kexpressions.kext.KExt.GenericParameter");
+								afterParserOrEnumRuleCall();
+							}
+						)
+					)
+					(
+						otherlv_6=','
+						{
+							newLeafNode(otherlv_6, grammarAccess.getReferenceDeclarationAccess().getCommaKeyword_2_0_2_2_0());
+						}
+						(
+							(
+								{
+									newCompositeNode(grammarAccess.getReferenceDeclarationAccess().getGenericParametersGenericParameterParserRuleCall_2_0_2_2_1_0());
+								}
+								lv_genericParameters_7_0=ruleGenericParameter
+								{
+									if ($current==null) {
+										$current = createModelElementForParent(grammarAccess.getReferenceDeclarationRule());
+									}
+									add(
+										$current,
+										"genericParameters",
+										lv_genericParameters_7_0,
+										"de.cau.cs.kieler.kexpressions.kext.KExt.GenericParameter");
+									afterParserOrEnumRuleCall();
+								}
+							)
+						)
+					)*
+					otherlv_8='>'
+					{
+						newLeafNode(otherlv_8, grammarAccess.getReferenceDeclarationAccess().getGreaterThanSignKeyword_2_0_2_3());
+					}
+				)?
 			)
 			    |
 			(
-				otherlv_4='extern'
+				otherlv_9='extern'
 				{
-					newLeafNode(otherlv_4, grammarAccess.getReferenceDeclarationAccess().getExternKeyword_2_1_0());
+					newLeafNode(otherlv_9, grammarAccess.getReferenceDeclarationAccess().getExternKeyword_2_1_0());
 				}
 				(
 					(
 						{
 							newCompositeNode(grammarAccess.getReferenceDeclarationAccess().getExternExternStringParserRuleCall_2_1_1_0());
 						}
-						lv_extern_5_0=ruleExternString
+						lv_extern_10_0=ruleExternString
 						{
 							if ($current==null) {
 								$current = createModelElementForParent(grammarAccess.getReferenceDeclarationRule());
@@ -9691,23 +9161,23 @@ ruleReferenceDeclaration returns [EObject current=null]
 							add(
 								$current,
 								"extern",
-								lv_extern_5_0,
+								lv_extern_10_0,
 								"de.cau.cs.kieler.kexpressions.kext.KExt.ExternString");
 							afterParserOrEnumRuleCall();
 						}
 					)
 				)
 				(
-					otherlv_6=','
+					otherlv_11=','
 					{
-						newLeafNode(otherlv_6, grammarAccess.getReferenceDeclarationAccess().getCommaKeyword_2_1_2_0());
+						newLeafNode(otherlv_11, grammarAccess.getReferenceDeclarationAccess().getCommaKeyword_2_1_2_0());
 					}
 					(
 						(
 							{
 								newCompositeNode(grammarAccess.getReferenceDeclarationAccess().getExternExternStringParserRuleCall_2_1_2_1_0());
 							}
-							lv_extern_7_0=ruleExternString
+							lv_extern_12_0=ruleExternString
 							{
 								if ($current==null) {
 									$current = createModelElementForParent(grammarAccess.getReferenceDeclarationRule());
@@ -9715,7 +9185,7 @@ ruleReferenceDeclaration returns [EObject current=null]
 								add(
 									$current,
 									"extern",
-									lv_extern_7_0,
+									lv_extern_12_0,
 									"de.cau.cs.kieler.kexpressions.kext.KExt.ExternString");
 								afterParserOrEnumRuleCall();
 							}
@@ -9729,7 +9199,7 @@ ruleReferenceDeclaration returns [EObject current=null]
 				{
 					newCompositeNode(grammarAccess.getReferenceDeclarationAccess().getValuedObjectsValuedObjectParserRuleCall_3_0());
 				}
-				lv_valuedObjects_8_0=ruleValuedObject
+				lv_valuedObjects_13_0=ruleValuedObject
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getReferenceDeclarationRule());
@@ -9737,23 +9207,23 @@ ruleReferenceDeclaration returns [EObject current=null]
 					add(
 						$current,
 						"valuedObjects",
-						lv_valuedObjects_8_0,
+						lv_valuedObjects_13_0,
 						"de.cau.cs.kieler.kexpressions.kext.KExt.ValuedObject");
 					afterParserOrEnumRuleCall();
 				}
 			)
 		)
 		(
-			otherlv_9=','
+			otherlv_14=','
 			{
-				newLeafNode(otherlv_9, grammarAccess.getReferenceDeclarationAccess().getCommaKeyword_4_0());
+				newLeafNode(otherlv_14, grammarAccess.getReferenceDeclarationAccess().getCommaKeyword_4_0());
 			}
 			(
 				(
 					{
 						newCompositeNode(grammarAccess.getReferenceDeclarationAccess().getValuedObjectsValuedObjectParserRuleCall_4_1_0());
 					}
-					lv_valuedObjects_10_0=ruleValuedObject
+					lv_valuedObjects_15_0=ruleValuedObject
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getReferenceDeclarationRule());
@@ -9761,23 +9231,23 @@ ruleReferenceDeclaration returns [EObject current=null]
 						add(
 							$current,
 							"valuedObjects",
-							lv_valuedObjects_10_0,
+							lv_valuedObjects_15_0,
 							"de.cau.cs.kieler.kexpressions.kext.KExt.ValuedObject");
 						afterParserOrEnumRuleCall();
 					}
 				)
 			)
 		)*
-		otherlv_11=';'
+		otherlv_16=';'
 		{
-			newLeafNode(otherlv_11, grammarAccess.getReferenceDeclarationAccess().getSemicolonKeyword_5());
+			newLeafNode(otherlv_16, grammarAccess.getReferenceDeclarationAccess().getSemicolonKeyword_5());
 		}
 		(
 			(
 				{
 					newCompositeNode(grammarAccess.getReferenceDeclarationAccess().getAnnotationsCommentAnnotatonSLParserRuleCall_6_0());
 				}
-				lv_annotations_12_0=ruleCommentAnnotatonSL
+				lv_annotations_17_0=ruleCommentAnnotatonSL
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getReferenceDeclarationRule());
@@ -9785,7 +9255,259 @@ ruleReferenceDeclaration returns [EObject current=null]
 					add(
 						$current,
 						"annotations",
-						lv_annotations_12_0,
+						lv_annotations_17_0,
+						"de.cau.cs.kieler.annotations.Annotations.CommentAnnotatonSL");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)?
+	)
+;
+
+// Entry rule entryRuleReferenceDeclarationWOSemicolon
+entryRuleReferenceDeclarationWOSemicolon returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getReferenceDeclarationWOSemicolonRule()); }
+	iv_ruleReferenceDeclarationWOSemicolon=ruleReferenceDeclarationWOSemicolon
+	{ $current=$iv_ruleReferenceDeclarationWOSemicolon.current; }
+	EOF;
+
+// Rule ReferenceDeclarationWOSemicolon
+ruleReferenceDeclarationWOSemicolon returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getAnnotationsAnnotationParserRuleCall_0_0());
+				}
+				lv_annotations_0_0=ruleAnnotation
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getReferenceDeclarationWOSemicolonRule());
+					}
+					add(
+						$current,
+						"annotations",
+						lv_annotations_0_0,
+						"de.cau.cs.kieler.kexpressions.KExpressions.Annotation");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)*
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getAccessAccessModifierEnumRuleCall_1_0());
+				}
+				lv_access_1_0=ruleAccessModifier
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getReferenceDeclarationWOSemicolonRule());
+					}
+					set(
+						$current,
+						"access",
+						lv_access_1_0,
+						"de.cau.cs.kieler.kexpressions.KExpressions.AccessModifier");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)?
+		(
+			(
+				otherlv_2='ref'
+				{
+					newLeafNode(otherlv_2, grammarAccess.getReferenceDeclarationWOSemicolonAccess().getRefKeyword_2_0_0());
+				}
+				(
+					(
+						{
+							/* */
+						}
+						{
+							if ($current==null) {
+								$current = createModelElement(grammarAccess.getReferenceDeclarationWOSemicolonRule());
+							}
+						}
+						{
+							newCompositeNode(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getReferenceNamedObjectCrossReference_2_0_1_0());
+						}
+						ruleNamespaceID
+						{
+							afterParserOrEnumRuleCall();
+						}
+					)
+				)
+				(
+					otherlv_4='<'
+					{
+						newLeafNode(otherlv_4, grammarAccess.getReferenceDeclarationWOSemicolonAccess().getLessThanSignKeyword_2_0_2_0());
+					}
+					(
+						(
+							{
+								newCompositeNode(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getGenericParametersGenericParameterParserRuleCall_2_0_2_1_0());
+							}
+							lv_genericParameters_5_0=ruleGenericParameter
+							{
+								if ($current==null) {
+									$current = createModelElementForParent(grammarAccess.getReferenceDeclarationWOSemicolonRule());
+								}
+								add(
+									$current,
+									"genericParameters",
+									lv_genericParameters_5_0,
+									"de.cau.cs.kieler.kexpressions.kext.KExt.GenericParameter");
+								afterParserOrEnumRuleCall();
+							}
+						)
+					)
+					(
+						otherlv_6=','
+						{
+							newLeafNode(otherlv_6, grammarAccess.getReferenceDeclarationWOSemicolonAccess().getCommaKeyword_2_0_2_2_0());
+						}
+						(
+							(
+								{
+									newCompositeNode(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getGenericParametersGenericParameterParserRuleCall_2_0_2_2_1_0());
+								}
+								lv_genericParameters_7_0=ruleGenericParameter
+								{
+									if ($current==null) {
+										$current = createModelElementForParent(grammarAccess.getReferenceDeclarationWOSemicolonRule());
+									}
+									add(
+										$current,
+										"genericParameters",
+										lv_genericParameters_7_0,
+										"de.cau.cs.kieler.kexpressions.kext.KExt.GenericParameter");
+									afterParserOrEnumRuleCall();
+								}
+							)
+						)
+					)*
+					otherlv_8='>'
+					{
+						newLeafNode(otherlv_8, grammarAccess.getReferenceDeclarationWOSemicolonAccess().getGreaterThanSignKeyword_2_0_2_3());
+					}
+				)?
+			)
+			    |
+			(
+				otherlv_9='extern'
+				{
+					newLeafNode(otherlv_9, grammarAccess.getReferenceDeclarationWOSemicolonAccess().getExternKeyword_2_1_0());
+				}
+				(
+					(
+						{
+							newCompositeNode(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getExternExternStringParserRuleCall_2_1_1_0());
+						}
+						lv_extern_10_0=ruleExternString
+						{
+							if ($current==null) {
+								$current = createModelElementForParent(grammarAccess.getReferenceDeclarationWOSemicolonRule());
+							}
+							add(
+								$current,
+								"extern",
+								lv_extern_10_0,
+								"de.cau.cs.kieler.kexpressions.kext.KExt.ExternString");
+							afterParserOrEnumRuleCall();
+						}
+					)
+				)
+				(
+					otherlv_11=','
+					{
+						newLeafNode(otherlv_11, grammarAccess.getReferenceDeclarationWOSemicolonAccess().getCommaKeyword_2_1_2_0());
+					}
+					(
+						(
+							{
+								newCompositeNode(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getExternExternStringParserRuleCall_2_1_2_1_0());
+							}
+							lv_extern_12_0=ruleExternString
+							{
+								if ($current==null) {
+									$current = createModelElementForParent(grammarAccess.getReferenceDeclarationWOSemicolonRule());
+								}
+								add(
+									$current,
+									"extern",
+									lv_extern_12_0,
+									"de.cau.cs.kieler.kexpressions.kext.KExt.ExternString");
+								afterParserOrEnumRuleCall();
+							}
+						)
+					)
+				)*
+			)
+		)
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getValuedObjectsValuedObjectParserRuleCall_3_0());
+				}
+				lv_valuedObjects_13_0=ruleValuedObject
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getReferenceDeclarationWOSemicolonRule());
+					}
+					add(
+						$current,
+						"valuedObjects",
+						lv_valuedObjects_13_0,
+						"de.cau.cs.kieler.kexpressions.kext.KExt.ValuedObject");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)
+		(
+			otherlv_14=','
+			{
+				newLeafNode(otherlv_14, grammarAccess.getReferenceDeclarationWOSemicolonAccess().getCommaKeyword_4_0());
+			}
+			(
+				(
+					{
+						newCompositeNode(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getValuedObjectsValuedObjectParserRuleCall_4_1_0());
+					}
+					lv_valuedObjects_15_0=ruleValuedObject
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getReferenceDeclarationWOSemicolonRule());
+						}
+						add(
+							$current,
+							"valuedObjects",
+							lv_valuedObjects_15_0,
+							"de.cau.cs.kieler.kexpressions.kext.KExt.ValuedObject");
+						afterParserOrEnumRuleCall();
+					}
+				)
+			)
+		)*
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getAnnotationsCommentAnnotatonSLParserRuleCall_5_0());
+				}
+				lv_annotations_16_0=ruleCommentAnnotatonSL
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getReferenceDeclarationWOSemicolonRule());
+					}
+					add(
+						$current,
+						"annotations",
+						lv_annotations_16_0,
 						"de.cau.cs.kieler.annotations.Annotations.CommentAnnotatonSL");
 					afterParserOrEnumRuleCall();
 				}
@@ -9845,6 +9567,666 @@ ruleExternString returns [EObject current=null]
 						lv_code_1_0,
 						"de.cau.cs.kieler.annotations.Annotations.STRING");
 				}
+			)
+		)
+	)
+;
+
+// Entry rule entryRuleGenericParameterDeclaration
+entryRuleGenericParameterDeclaration returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getGenericParameterDeclarationRule()); }
+	iv_ruleGenericParameterDeclaration=ruleGenericParameterDeclaration
+	{ $current=$iv_ruleGenericParameterDeclaration.current; }
+	EOF;
+
+// Rule GenericParameterDeclaration
+ruleGenericParameterDeclaration returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getGenericParameterDeclarationAccess().getAnnotationsQuotedStringAnnotationParserRuleCall_0_0());
+				}
+				lv_annotations_0_0=ruleQuotedStringAnnotation
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getGenericParameterDeclarationRule());
+					}
+					add(
+						$current,
+						"annotations",
+						lv_annotations_0_0,
+						"de.cau.cs.kieler.kexpressions.KExpressions.QuotedStringAnnotation");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)*
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getGenericParameterDeclarationAccess().getValuedObjectsSimpleValuedObjectParserRuleCall_1_0());
+				}
+				lv_valuedObjects_1_0=ruleSimpleValuedObject
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getGenericParameterDeclarationRule());
+					}
+					add(
+						$current,
+						"valuedObjects",
+						lv_valuedObjects_1_0,
+						"de.cau.cs.kieler.kexpressions.kext.KExt.SimpleValuedObject");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)
+		(
+			(
+				otherlv_2='is'
+				{
+					newLeafNode(otherlv_2, grammarAccess.getGenericParameterDeclarationAccess().getIsKeyword_2_0_0());
+				}
+				(
+					(
+						{
+							newCompositeNode(grammarAccess.getGenericParameterDeclarationAccess().getValueTypeValueTypeEnumRuleCall_2_0_1_0());
+						}
+						lv_valueType_3_0=ruleValueType
+						{
+							if ($current==null) {
+								$current = createModelElementForParent(grammarAccess.getGenericParameterDeclarationRule());
+							}
+							set(
+								$current,
+								"valueType",
+								lv_valueType_3_0,
+								"de.cau.cs.kieler.sccharts.text.SCTX.ValueType");
+							afterParserOrEnumRuleCall();
+						}
+					)
+				)
+			)
+			    |
+			(
+				otherlv_4='is'
+				{
+					newLeafNode(otherlv_4, grammarAccess.getGenericParameterDeclarationAccess().getIsKeyword_2_1_0());
+				}
+				(
+					(
+						lv_reference_5_0='ref'
+						{
+							newLeafNode(lv_reference_5_0, grammarAccess.getGenericParameterDeclarationAccess().getReferenceRefKeyword_2_1_1_0());
+						}
+						{
+							if ($current==null) {
+								$current = createModelElement(grammarAccess.getGenericParameterDeclarationRule());
+							}
+							setWithLastConsumed($current, "reference", lv_reference_5_0 != null, "ref");
+						}
+					)
+				)?
+				(
+					(
+						{
+							/* */
+						}
+						{
+							if ($current==null) {
+								$current = createModelElement(grammarAccess.getGenericParameterDeclarationRule());
+							}
+						}
+						{
+							newCompositeNode(grammarAccess.getGenericParameterDeclarationAccess().getTypeNamedObjectCrossReference_2_1_2_0());
+						}
+						rulePrimeID
+						{
+							afterParserOrEnumRuleCall();
+						}
+					)
+				)
+			)
+		)?
+	)
+;
+
+// Entry rule entryRuleGenericParameter
+entryRuleGenericParameter returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getGenericParameterRule()); }
+	iv_ruleGenericParameter=ruleGenericParameter
+	{ $current=$iv_ruleGenericParameter.current; }
+	EOF;
+
+// Rule GenericParameter
+ruleGenericParameter returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getGenericParameterAccess().getExpressionValueTypeReferenceParserRuleCall_0_0());
+				}
+				lv_expression_0_1=ruleValueTypeReference
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getGenericParameterRule());
+					}
+					set(
+						$current,
+						"expression",
+						lv_expression_0_1,
+						"de.cau.cs.kieler.kexpressions.kext.KExt.ValueTypeReference");
+					afterParserOrEnumRuleCall();
+				}
+				    |
+				{
+					newCompositeNode(grammarAccess.getGenericParameterAccess().getExpressionAnyValueParserRuleCall_0_1());
+				}
+				lv_expression_0_2=ruleAnyValue
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getGenericParameterRule());
+					}
+					set(
+						$current,
+						"expression",
+						lv_expression_0_2,
+						"de.cau.cs.kieler.kexpressions.KExpressions.AnyValue");
+					afterParserOrEnumRuleCall();
+				}
+				    |
+				{
+					newCompositeNode(grammarAccess.getGenericParameterAccess().getExpressionGenericParameter_GenericTypeReference_ParameterizedParserRuleCall_0_2());
+				}
+				lv_expression_0_3=ruleGenericParameter_GenericTypeReference_Parameterized
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getGenericParameterRule());
+					}
+					set(
+						$current,
+						"expression",
+						lv_expression_0_3,
+						"de.cau.cs.kieler.kexpressions.kext.KExt.GenericParameter_GenericTypeReference_Parameterized");
+					afterParserOrEnumRuleCall();
+				}
+				    |
+				{
+					newCompositeNode(grammarAccess.getGenericParameterAccess().getExpressionGenericParameter_ValuedObjectReference_ArrayParserRuleCall_0_3());
+				}
+				lv_expression_0_4=ruleGenericParameter_ValuedObjectReference_Array
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getGenericParameterRule());
+					}
+					set(
+						$current,
+						"expression",
+						lv_expression_0_4,
+						"de.cau.cs.kieler.kexpressions.kext.KExt.GenericParameter_ValuedObjectReference_Array");
+					afterParserOrEnumRuleCall();
+				}
+				    |
+				{
+					newCompositeNode(grammarAccess.getGenericParameterAccess().getExpressionGenericParameter_ValuedObjectReference_SubParserRuleCall_0_4());
+				}
+				lv_expression_0_5=ruleGenericParameter_ValuedObjectReference_Sub
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getGenericParameterRule());
+					}
+					set(
+						$current,
+						"expression",
+						lv_expression_0_5,
+						"de.cau.cs.kieler.kexpressions.kext.KExt.GenericParameter_ValuedObjectReference_Sub");
+					afterParserOrEnumRuleCall();
+				}
+				    |
+				{
+					newCompositeNode(grammarAccess.getGenericParameterAccess().getExpressionGenericTypeReferenceParserRuleCall_0_5());
+				}
+				lv_expression_0_6=ruleGenericTypeReference
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getGenericParameterRule());
+					}
+					set(
+						$current,
+						"expression",
+						lv_expression_0_6,
+						"de.cau.cs.kieler.kexpressions.kext.KExt.GenericTypeReference");
+					afterParserOrEnumRuleCall();
+				}
+				    |
+				{
+					newCompositeNode(grammarAccess.getGenericParameterAccess().getExpressionValuedObjectReferenceParserRuleCall_0_6());
+				}
+				lv_expression_0_7=ruleValuedObjectReference
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getGenericParameterRule());
+					}
+					set(
+						$current,
+						"expression",
+						lv_expression_0_7,
+						"de.cau.cs.kieler.kexpressions.KExpressions.ValuedObjectReference");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)
+	)
+;
+
+// Entry rule entryRuleValueTypeReference
+entryRuleValueTypeReference returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getValueTypeReferenceRule()); }
+	iv_ruleValueTypeReference=ruleValueTypeReference
+	{ $current=$iv_ruleValueTypeReference.current; }
+	EOF;
+
+// Rule ValueTypeReference
+ruleValueTypeReference returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		(
+			{
+				newCompositeNode(grammarAccess.getValueTypeReferenceAccess().getValueTypeValueTypeEnumRuleCall_0());
+			}
+			lv_valueType_0_0=ruleValueType
+			{
+				if ($current==null) {
+					$current = createModelElementForParent(grammarAccess.getValueTypeReferenceRule());
+				}
+				set(
+					$current,
+					"valueType",
+					lv_valueType_0_0,
+					"de.cau.cs.kieler.sccharts.text.SCTX.ValueType");
+				afterParserOrEnumRuleCall();
+			}
+		)
+	)
+;
+
+// Entry rule entryRuleGenericTypeReference
+entryRuleGenericTypeReference returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getGenericTypeReferenceRule()); }
+	iv_ruleGenericTypeReference=ruleGenericTypeReference
+	{ $current=$iv_ruleGenericTypeReference.current; }
+	EOF;
+
+// Rule GenericTypeReference
+ruleGenericTypeReference returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		(
+			(
+				{
+					/* */
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getGenericTypeReferenceRule());
+					}
+				}
+				{
+					newCompositeNode(grammarAccess.getGenericTypeReferenceAccess().getTypeNamedObjectCrossReference_0_0());
+				}
+				rulePrimeID
+				{
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)
+		(
+			otherlv_1='<'
+			{
+				newLeafNode(otherlv_1, grammarAccess.getGenericTypeReferenceAccess().getLessThanSignKeyword_1_0());
+			}
+			(
+				(
+					{
+						newCompositeNode(grammarAccess.getGenericTypeReferenceAccess().getGenericParametersGenericParameterParserRuleCall_1_1_0());
+					}
+					lv_genericParameters_2_0=ruleGenericParameter
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getGenericTypeReferenceRule());
+						}
+						add(
+							$current,
+							"genericParameters",
+							lv_genericParameters_2_0,
+							"de.cau.cs.kieler.kexpressions.kext.KExt.GenericParameter");
+						afterParserOrEnumRuleCall();
+					}
+				)
+			)
+			(
+				otherlv_3=','
+				{
+					newLeafNode(otherlv_3, grammarAccess.getGenericTypeReferenceAccess().getCommaKeyword_1_2_0());
+				}
+				(
+					(
+						{
+							newCompositeNode(grammarAccess.getGenericTypeReferenceAccess().getGenericParametersGenericParameterParserRuleCall_1_2_1_0());
+						}
+						lv_genericParameters_4_0=ruleGenericParameter
+						{
+							if ($current==null) {
+								$current = createModelElementForParent(grammarAccess.getGenericTypeReferenceRule());
+							}
+							add(
+								$current,
+								"genericParameters",
+								lv_genericParameters_4_0,
+								"de.cau.cs.kieler.kexpressions.kext.KExt.GenericParameter");
+							afterParserOrEnumRuleCall();
+						}
+					)
+				)
+			)*
+			otherlv_5='>'
+			{
+				newLeafNode(otherlv_5, grammarAccess.getGenericTypeReferenceAccess().getGreaterThanSignKeyword_1_3());
+			}
+		)?
+	)
+;
+
+// Entry rule entryRuleGenericParameter_GenericTypeReference_Parameterized
+entryRuleGenericParameter_GenericTypeReference_Parameterized returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getGenericParameter_GenericTypeReference_ParameterizedRule()); }
+	iv_ruleGenericParameter_GenericTypeReference_Parameterized=ruleGenericParameter_GenericTypeReference_Parameterized
+	{ $current=$iv_ruleGenericParameter_GenericTypeReference_Parameterized.current; }
+	EOF;
+
+// Rule GenericParameter_GenericTypeReference_Parameterized
+ruleGenericParameter_GenericTypeReference_Parameterized returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		(
+			(
+				{
+					/* */
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getGenericParameter_GenericTypeReference_ParameterizedRule());
+					}
+				}
+				{
+					newCompositeNode(grammarAccess.getGenericParameter_GenericTypeReference_ParameterizedAccess().getTypeNamedObjectCrossReference_0_0());
+				}
+				rulePrimeID
+				{
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)
+		otherlv_1='<'
+		{
+			newLeafNode(otherlv_1, grammarAccess.getGenericParameter_GenericTypeReference_ParameterizedAccess().getLessThanSignKeyword_1());
+		}
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getGenericParameter_GenericTypeReference_ParameterizedAccess().getGenericParametersGenericParameterParserRuleCall_2_0());
+				}
+				lv_genericParameters_2_0=ruleGenericParameter
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getGenericParameter_GenericTypeReference_ParameterizedRule());
+					}
+					add(
+						$current,
+						"genericParameters",
+						lv_genericParameters_2_0,
+						"de.cau.cs.kieler.kexpressions.kext.KExt.GenericParameter");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)
+		(
+			otherlv_3=','
+			{
+				newLeafNode(otherlv_3, grammarAccess.getGenericParameter_GenericTypeReference_ParameterizedAccess().getCommaKeyword_3_0());
+			}
+			(
+				(
+					{
+						newCompositeNode(grammarAccess.getGenericParameter_GenericTypeReference_ParameterizedAccess().getGenericParametersGenericParameterParserRuleCall_3_1_0());
+					}
+					lv_genericParameters_4_0=ruleGenericParameter
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getGenericParameter_GenericTypeReference_ParameterizedRule());
+						}
+						add(
+							$current,
+							"genericParameters",
+							lv_genericParameters_4_0,
+							"de.cau.cs.kieler.kexpressions.kext.KExt.GenericParameter");
+						afterParserOrEnumRuleCall();
+					}
+				)
+			)
+		)*
+		otherlv_5='>'
+		{
+			newLeafNode(otherlv_5, grammarAccess.getGenericParameter_GenericTypeReference_ParameterizedAccess().getGreaterThanSignKeyword_4());
+		}
+	)
+;
+
+// Entry rule entryRuleGenericParameter_ValuedObjectReference_Array
+entryRuleGenericParameter_ValuedObjectReference_Array returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getGenericParameter_ValuedObjectReference_ArrayRule()); }
+	iv_ruleGenericParameter_ValuedObjectReference_Array=ruleGenericParameter_ValuedObjectReference_Array
+	{ $current=$iv_ruleGenericParameter_ValuedObjectReference_Array.current; }
+	EOF;
+
+// Rule GenericParameter_ValuedObjectReference_Array
+ruleGenericParameter_ValuedObjectReference_Array returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		(
+			(
+				{
+					/* */
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getGenericParameter_ValuedObjectReference_ArrayRule());
+					}
+				}
+				{
+					newCompositeNode(grammarAccess.getGenericParameter_ValuedObjectReference_ArrayAccess().getValuedObjectValuedObjectCrossReference_0_0());
+				}
+				rulePrimeID
+				{
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)
+		(
+			otherlv_1='['
+			{
+				newLeafNode(otherlv_1, grammarAccess.getGenericParameter_ValuedObjectReference_ArrayAccess().getLeftSquareBracketKeyword_1_0());
+			}
+			(
+				(
+					{
+						newCompositeNode(grammarAccess.getGenericParameter_ValuedObjectReference_ArrayAccess().getIndicesExpressionParserRuleCall_1_1_0());
+					}
+					lv_indices_2_0=ruleExpression
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getGenericParameter_ValuedObjectReference_ArrayRule());
+						}
+						add(
+							$current,
+							"indices",
+							lv_indices_2_0,
+							"de.cau.cs.kieler.kexpressions.KExpressions.Expression");
+						afterParserOrEnumRuleCall();
+					}
+				)
+			)
+			otherlv_3=']'
+			{
+				newLeafNode(otherlv_3, grammarAccess.getGenericParameter_ValuedObjectReference_ArrayAccess().getRightSquareBracketKeyword_1_2());
+			}
+		)+
+		(
+			otherlv_4='.'
+			{
+				newLeafNode(otherlv_4, grammarAccess.getGenericParameter_ValuedObjectReference_ArrayAccess().getFullStopKeyword_2_0());
+			}
+			(
+				(
+					{
+						newCompositeNode(grammarAccess.getGenericParameter_ValuedObjectReference_ArrayAccess().getSubReferenceValuedObjectReferenceParserRuleCall_2_1_0());
+					}
+					lv_subReference_5_0=ruleValuedObjectReference
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getGenericParameter_ValuedObjectReference_ArrayRule());
+						}
+						set(
+							$current,
+							"subReference",
+							lv_subReference_5_0,
+							"de.cau.cs.kieler.kexpressions.KExpressions.ValuedObjectReference");
+						afterParserOrEnumRuleCall();
+					}
+				)
+			)
+		)?
+	)
+;
+
+// Entry rule entryRuleGenericParameter_ValuedObjectReference_Sub
+entryRuleGenericParameter_ValuedObjectReference_Sub returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getGenericParameter_ValuedObjectReference_SubRule()); }
+	iv_ruleGenericParameter_ValuedObjectReference_Sub=ruleGenericParameter_ValuedObjectReference_Sub
+	{ $current=$iv_ruleGenericParameter_ValuedObjectReference_Sub.current; }
+	EOF;
+
+// Rule GenericParameter_ValuedObjectReference_Sub
+ruleGenericParameter_ValuedObjectReference_Sub returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		(
+			(
+				{
+					/* */
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getGenericParameter_ValuedObjectReference_SubRule());
+					}
+				}
+				{
+					newCompositeNode(grammarAccess.getGenericParameter_ValuedObjectReference_SubAccess().getValuedObjectValuedObjectCrossReference_0_0());
+				}
+				rulePrimeID
+				{
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)
+		(
+			otherlv_1='['
+			{
+				newLeafNode(otherlv_1, grammarAccess.getGenericParameter_ValuedObjectReference_SubAccess().getLeftSquareBracketKeyword_1_0());
+			}
+			(
+				(
+					{
+						newCompositeNode(grammarAccess.getGenericParameter_ValuedObjectReference_SubAccess().getIndicesExpressionParserRuleCall_1_1_0());
+					}
+					lv_indices_2_0=ruleExpression
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getGenericParameter_ValuedObjectReference_SubRule());
+						}
+						add(
+							$current,
+							"indices",
+							lv_indices_2_0,
+							"de.cau.cs.kieler.kexpressions.KExpressions.Expression");
+						afterParserOrEnumRuleCall();
+					}
+				)
+			)
+			otherlv_3=']'
+			{
+				newLeafNode(otherlv_3, grammarAccess.getGenericParameter_ValuedObjectReference_SubAccess().getRightSquareBracketKeyword_1_2());
+			}
+		)*
+		(
+			otherlv_4='.'
+			{
+				newLeafNode(otherlv_4, grammarAccess.getGenericParameter_ValuedObjectReference_SubAccess().getFullStopKeyword_2_0());
+			}
+			(
+				(
+					{
+						newCompositeNode(grammarAccess.getGenericParameter_ValuedObjectReference_SubAccess().getSubReferenceValuedObjectReferenceParserRuleCall_2_1_0());
+					}
+					lv_subReference_5_0=ruleValuedObjectReference
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getGenericParameter_ValuedObjectReference_SubRule());
+						}
+						set(
+							$current,
+							"subReference",
+							lv_subReference_5_0,
+							"de.cau.cs.kieler.kexpressions.KExpressions.ValuedObjectReference");
+						afterParserOrEnumRuleCall();
+					}
+				)
 			)
 		)
 	)
@@ -10351,16 +10733,70 @@ ruleValuedObject returns [EObject current=null]
 			)
 		)
 		(
-			otherlv_2='['
+			otherlv_2='<'
 			{
-				newLeafNode(otherlv_2, grammarAccess.getValuedObjectAccess().getLeftSquareBracketKeyword_2_0());
+				newLeafNode(otherlv_2, grammarAccess.getValuedObjectAccess().getLessThanSignKeyword_2_0());
 			}
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getValuedObjectAccess().getCardinalitiesExpressionParserRuleCall_2_1_0());
+						newCompositeNode(grammarAccess.getValuedObjectAccess().getGenericParametersGenericParameterParserRuleCall_2_1_0());
 					}
-					lv_cardinalities_3_0=ruleExpression
+					lv_genericParameters_3_0=ruleGenericParameter
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getValuedObjectRule());
+						}
+						add(
+							$current,
+							"genericParameters",
+							lv_genericParameters_3_0,
+							"de.cau.cs.kieler.kexpressions.kext.KExt.GenericParameter");
+						afterParserOrEnumRuleCall();
+					}
+				)
+			)
+			(
+				otherlv_4=','
+				{
+					newLeafNode(otherlv_4, grammarAccess.getValuedObjectAccess().getCommaKeyword_2_2_0());
+				}
+				(
+					(
+						{
+							newCompositeNode(grammarAccess.getValuedObjectAccess().getGenericParametersGenericParameterParserRuleCall_2_2_1_0());
+						}
+						lv_genericParameters_5_0=ruleGenericParameter
+						{
+							if ($current==null) {
+								$current = createModelElementForParent(grammarAccess.getValuedObjectRule());
+							}
+							add(
+								$current,
+								"genericParameters",
+								lv_genericParameters_5_0,
+								"de.cau.cs.kieler.kexpressions.kext.KExt.GenericParameter");
+							afterParserOrEnumRuleCall();
+						}
+					)
+				)
+			)*
+			otherlv_6='>'
+			{
+				newLeafNode(otherlv_6, grammarAccess.getValuedObjectAccess().getGreaterThanSignKeyword_2_3());
+			}
+		)?
+		(
+			otherlv_7='['
+			{
+				newLeafNode(otherlv_7, grammarAccess.getValuedObjectAccess().getLeftSquareBracketKeyword_3_0());
+			}
+			(
+				(
+					{
+						newCompositeNode(grammarAccess.getValuedObjectAccess().getCardinalitiesExpressionParserRuleCall_3_1_0());
+					}
+					lv_cardinalities_8_0=ruleExpression
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getValuedObjectRule());
@@ -10368,28 +10804,28 @@ ruleValuedObject returns [EObject current=null]
 						add(
 							$current,
 							"cardinalities",
-							lv_cardinalities_3_0,
+							lv_cardinalities_8_0,
 							"de.cau.cs.kieler.kexpressions.KExpressions.Expression");
 						afterParserOrEnumRuleCall();
 					}
 				)
 			)
-			otherlv_4=']'
+			otherlv_9=']'
 			{
-				newLeafNode(otherlv_4, grammarAccess.getValuedObjectAccess().getRightSquareBracketKeyword_2_2());
+				newLeafNode(otherlv_9, grammarAccess.getValuedObjectAccess().getRightSquareBracketKeyword_3_2());
 			}
 		)*
 		(
-			otherlv_5='='
+			otherlv_10='='
 			{
-				newLeafNode(otherlv_5, grammarAccess.getValuedObjectAccess().getEqualsSignKeyword_3_0());
+				newLeafNode(otherlv_10, grammarAccess.getValuedObjectAccess().getEqualsSignKeyword_4_0());
 			}
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getValuedObjectAccess().getInitialValueExpressionParserRuleCall_3_1_0());
+						newCompositeNode(grammarAccess.getValuedObjectAccess().getInitialValueExpressionParserRuleCall_4_1_0());
 					}
-					lv_initialValue_6_0=ruleExpression
+					lv_initialValue_11_0=ruleExpression
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getValuedObjectRule());
@@ -10397,7 +10833,7 @@ ruleValuedObject returns [EObject current=null]
 						set(
 							$current,
 							"initialValue",
-							lv_initialValue_6_0,
+							lv_initialValue_11_0,
 							"de.cau.cs.kieler.kexpressions.KExpressions.Expression");
 						afterParserOrEnumRuleCall();
 					}
@@ -10405,16 +10841,16 @@ ruleValuedObject returns [EObject current=null]
 			)
 		)?
 		(
-			otherlv_7='combine'
+			otherlv_12='combine'
 			{
-				newLeafNode(otherlv_7, grammarAccess.getValuedObjectAccess().getCombineKeyword_4_0());
+				newLeafNode(otherlv_12, grammarAccess.getValuedObjectAccess().getCombineKeyword_5_0());
 			}
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getValuedObjectAccess().getCombineOperatorCombineOperatorEnumRuleCall_4_1_0());
+						newCompositeNode(grammarAccess.getValuedObjectAccess().getCombineOperatorCombineOperatorEnumRuleCall_5_1_0());
 					}
-					lv_combineOperator_8_0=ruleCombineOperator
+					lv_combineOperator_13_0=ruleCombineOperator
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getValuedObjectRule());
@@ -10422,7 +10858,7 @@ ruleValuedObject returns [EObject current=null]
 						set(
 							$current,
 							"combineOperator",
-							lv_combineOperator_8_0,
+							lv_combineOperator_13_0,
 							"de.cau.cs.kieler.kexpressions.KExpressions.CombineOperator");
 						afterParserOrEnumRuleCall();
 					}
@@ -10430,15 +10866,15 @@ ruleValuedObject returns [EObject current=null]
 			)
 		)?
 		(
-			otherlv_9='label'
+			otherlv_14='label'
 			{
-				newLeafNode(otherlv_9, grammarAccess.getValuedObjectAccess().getLabelKeyword_5_0());
+				newLeafNode(otherlv_14, grammarAccess.getValuedObjectAccess().getLabelKeyword_6_0());
 			}
 			(
 				(
-					lv_label_10_0=RULE_STRING
+					lv_label_15_0=RULE_STRING
 					{
-						newLeafNode(lv_label_10_0, grammarAccess.getValuedObjectAccess().getLabelSTRINGTerminalRuleCall_5_1_0());
+						newLeafNode(lv_label_15_0, grammarAccess.getValuedObjectAccess().getLabelSTRINGTerminalRuleCall_6_1_0());
 					}
 					{
 						if ($current==null) {
@@ -10447,7 +10883,7 @@ ruleValuedObject returns [EObject current=null]
 						setWithLastConsumed(
 							$current,
 							"label",
-							lv_label_10_0,
+							lv_label_15_0,
 							"de.cau.cs.kieler.annotations.Annotations.STRING");
 					}
 				)
@@ -10510,6 +10946,52 @@ ruleSimpleValuedObject returns [EObject current=null]
 				}
 			)
 		)
+	)
+;
+
+// Entry rule entryRuleNamespaceID
+entryRuleNamespaceID returns [String current=null]:
+	{ newCompositeNode(grammarAccess.getNamespaceIDRule()); }
+	iv_ruleNamespaceID=ruleNamespaceID
+	{ $current=$iv_ruleNamespaceID.current.getText(); }
+	EOF;
+
+// Rule NamespaceID
+ruleNamespaceID returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		{
+			newCompositeNode(grammarAccess.getNamespaceIDAccess().getExtendedIDParserRuleCall_0());
+		}
+		this_ExtendedID_0=ruleExtendedID
+		{
+			$current.merge(this_ExtendedID_0);
+		}
+		{
+			afterParserOrEnumRuleCall();
+		}
+		(
+			kw=':'
+			{
+				$current.merge(kw);
+				newLeafNode(kw, grammarAccess.getNamespaceIDAccess().getColonKeyword_1_0());
+			}
+			{
+				newCompositeNode(grammarAccess.getNamespaceIDAccess().getPrimeIDParserRuleCall_1_1());
+			}
+			this_PrimeID_2=rulePrimeID
+			{
+				$current.merge(this_PrimeID_2);
+			}
+			{
+				afterParserOrEnumRuleCall();
+			}
+		)*
 	)
 ;
 

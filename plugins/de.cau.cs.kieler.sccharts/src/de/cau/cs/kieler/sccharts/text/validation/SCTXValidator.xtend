@@ -835,12 +835,12 @@ class SCTXValidator extends AbstractSCTXValidator {
             if (errorMessage != "") {
                 error("The referencing binding is erroneous!\n" + errorMessage,
                     scopeCall, 
-                    SCChartsPackage.eINSTANCE.scopeCall_Scope, 
+                    SCChartsPackage.eINSTANCE.scopeCall_Target, 
                     "The referencing binding is erroneous!\n" + errorMessage);
             } else if (implicitMessage != "" && scopeCall.eContainer instanceof de.cau.cs.kieler.sccharts.State) {
                 warning("Valued Objects are bound implicitly!\n" + implicitMessage,
                     scopeCall, 
-                    SCChartsPackage.eINSTANCE.scopeCall_Scope, 
+                    SCChartsPackage.eINSTANCE.scopeCall_Target, 
                     "Valued Objects are bound implicitly!\n" + implicitMessage);
             }
         }
@@ -856,7 +856,7 @@ class SCTXValidator extends AbstractSCTXValidator {
         if (scope !== null && !scope.asState.mayTerminate) {
             warning("The referenced SCChart does not terminate, but you are using a termination to proceed.",
                 state.reference,
-                SCChartsPackage.eINSTANCE.scopeCall_Scope);
+                SCChartsPackage.eINSTANCE.scopeCall_Target);
         }            
     }
     

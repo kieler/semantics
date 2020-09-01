@@ -184,6 +184,33 @@ public interface KExpressionsFactory extends EFactory {
     ReferenceDeclaration createReferenceDeclaration();
 
     /**
+     * Returns a new object of class '<em>Generic Parameter Declaration</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Generic Parameter Declaration</em>'.
+     * @generated
+     */
+    GenericParameterDeclaration createGenericParameterDeclaration();
+
+    /**
+     * Returns a new object of class '<em>Generic Type Reference</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Generic Type Reference</em>'.
+     * @generated
+     */
+    GenericTypeReference createGenericTypeReference();
+
+    /**
+     * Returns a new object of class '<em>Value Type Reference</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Value Type Reference</em>'.
+     * @generated
+     */
+    ValueTypeReference createValueTypeReference();
+
+    /**
      * Returns a new object of class '<em>Schedule Declaration</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

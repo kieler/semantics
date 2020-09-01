@@ -13,17 +13,12 @@
  */
 package de.cau.cs.kieler.sccharts.impl;
 
-import de.cau.cs.kieler.kexpressions.Expression;
-import de.cau.cs.kieler.kexpressions.keffects.Effect;
 import de.cau.cs.kieler.sccharts.DeferredType;
 import de.cau.cs.kieler.sccharts.HistoryType;
 import de.cau.cs.kieler.sccharts.PreemptionType;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
 import de.cau.cs.kieler.sccharts.State;
 import de.cau.cs.kieler.sccharts.Transition;
-import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions;
-
-import java.util.List;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -32,6 +27,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
 /**
@@ -54,12 +50,12 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 public class TransitionImpl extends ActionImpl implements Transition {
     /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	public static final String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\r\n\r\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\r\n\r\nCopyright 2013 by\r\n+ Kiel University\r\n  + Department of Computer Science\r\n    + Real-Time and Embedded Systems Group\r\n\r\nThis code is provided under the terms of the Eclipse Public License (EPL).\r\nSee the file epl-v10.html for the license text.";
+    public static final String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\r\n\r\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\r\n\r\nCopyright 2013 by\r\n+ Kiel University\r\n  + Department of Computer Science\r\n    + Real-Time and Embedded Systems Group\r\n\r\nThis code is provided under the terms of the Eclipse Public License (EPL).\r\nSee the file epl-v10.html for the license text.";
 
-				/**
+    /**
      * The default value of the '{@link #getPreemption() <em>Preemption</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -79,7 +75,7 @@ public class TransitionImpl extends ActionImpl implements Transition {
      */
     protected PreemptionType preemption = PREEMPTION_EDEFAULT;
 
-                /**
+    /**
      * The default value of the '{@link #getHistory() <em>History</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -473,52 +469,22 @@ public class TransitionImpl extends ActionImpl implements Transition {
 
     /**
      * <!-- begin-user-doc -->
-     * User-defined toString method to ease debugging.
      * <!-- end-user-doc -->
+     * @generated
      */
     @Override
     public String toString() {
         if (eIsProxy()) return super.toString();
 
-        StringBuilder result = new StringBuilder("TransitionImpl");
-        result.append('@');
-        result.append(Integer.toHexString(hashCode()));
-        
-        State sourceState = getSourceState();
-        State targetState = getTargetState();
-        Expression trigger = getTrigger();
-        List<Effect> effects = getEffects();
-        
-        result.append(" ");
-        if (sourceState != null) {
-            result.append(sourceState.getName());
-        } else {
-            result.append("<null>");
-        }
-        
-        result.append(" -> ");
-        if (targetState != null) {
-            result.append(targetState.getName());
-        } else {
-            result.append("<null>");
-        }
-        
-        if (trigger != null) {
-            result.append(" Trigger: ");
-            result.append(serializer.serialize(trigger).toString());
-        }
-        
-        if (effects != null && !effects.isEmpty()) {
-            result.append(" Effects: ");
-            for (Effect effect : effects) {
-                result.append(serializer.serialize(effect).toString());
-                result.append(" ");
-            }
-        }
-        
+        StringBuilder result = new StringBuilder(super.toString());
+        result.append(" (preemption: ");
+        result.append(preemption);
+        result.append(", history: ");
+        result.append(history);
+        result.append(", deferred: ");
+        result.append(deferred);
+        result.append(')');
         return result.toString();
     }
 
-    private static SCChartsSerializeHRExtensions serializer = new SCChartsSerializeHRExtensions();
-    
 } //TransitionImpl

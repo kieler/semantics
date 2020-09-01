@@ -8,8 +8,6 @@ import "http://kieler.cs.cau.de/kext/0.1.0" as kext
 import "http://kieler.cs.cau.de/scl/0.2.0" as scl
 import "http://kieler.cs.cau.de/sccharts/0.3.0" as sccharts
 
-//generate sct3 "http://kieler.cs.cau.de/sccharts/textual3/0.1.0"
-
 // ---------------- //
 //  SCCharts Rules  // 
 // ---------------- //
@@ -29,8 +27,8 @@ SCCharts returns sccharts::SCCharts:
 RootState returns sccharts::State:
 	annotations+=Annotation*
 	'scchart' name=ExtendedID label=STRING?
-	('<' generics += GenericTypeParameterDeclaration (',' generics += GenericTypeParameterDeclaration)* '>')?
-	('extends' baseStates += [sccharts::State|ID] (',' baseStates += [sccharts::State|ID])*)?
+	('<' genericParameterDeclarations += GenericParameterDeclaration (',' genericParameterDeclarations += GenericParameterDeclaration)* '>')?
+	('extends' baseStates += [sccharts::State|ID] (',' baseStates += [sccharts::State|ID])*)? // TODO support passing generics
 	'{'
 		declarations+=DeclarationOrMethodWithKeywordWOSemicolon*
 		actions+=LocalAction*
@@ -45,7 +43,7 @@ State returns sccharts::State:
 	connector?='connector'?
 	=>'state' name=ID label=STRING?
 	((
-	    'is' reference = (ScopeCall | GenericTypeScopeCall)
+	    'is' reference = ScopeCall
 	    ('schedule' schedule+=ScheduleObjectReference+)?
 	)|(
 	    ('extends' baseStates += [sccharts::State|ID] (',' baseStates += [sccharts::State|ID])*)?
@@ -66,8 +64,9 @@ ImplicitState returns sccharts::State:
 	
 ScopeCall returns sccharts::ScopeCall:
     super?='super.'?
-    scope = [sccharts::Scope|ID]
-    (('(' parameters += ScopeParameter (',' parameters += ScopeParameter)* ')') | '(' ')')?;
+    target = [annotations::NamedObject|ID]
+    ('<' genericParameters += GenericParameter (',' genericParameters += GenericParameter)* '>')?
+    (('(' parameters += ScopeParameter (',' parameters += ScopeParameter)* ')') | '()')?;
     
 ScopeParameter returns kexpressions::Parameter:
     ((accessType = ParameterAccessType
@@ -320,43 +319,6 @@ KeywordMethodDeclarationWOSemicolon returns kexpressions::MethodDeclaration:
         declarations+=Declaration*
         statements+=Statement*
     '}')?
-;
-
-
-// ---------------- //
-//  Generics Rules  // 
-// ---------------- //
-
-GenericTypeParameterDeclaration returns sccharts::GenericTypeParameterDeclaration:
-    name=PrimeID
-    'is'
-    type=GenericTypeParameterReference
-;
-
-GenericTypeParameterReference returns sccharts::GenericTypeParameterReference:
-    target = [sccharts::GenericTypeParameter]
-    ('<' typeParameters += GenericTypeParameterReference (',' typeParameters += GenericTypeParameterReference)* '>')?
-;
-
-GenericTypeScopeCall returns sccharts::GenericTypeScopeCall:
-    target = [sccharts::GenericTypeParameter]
-    ('<' typeParameters += GenericTypeParameterReference (',' typeParameters += GenericTypeParameterReference)* '>')?
-    (('(' parameters += ScopeParameter (',' parameters += ScopeParameter)* ')') | '(' ')')?
-;
-
-@Override
-ReferenceDeclarationWOSemicolon returns kexpressions::ReferenceDeclaration:
-    {sccharts::ParameterizedReferenceDeclaration}
-    annotations+=Annotation*
-    access=AccessModifier?
-    ((
-        'ref' reference = [annotations::NamedObject|NamespaceID]
-        ('<' typeParameters += GenericTypeParameterReference (',' typeParameters += GenericTypeParameterReference)* '>')?
-    ) | (
-        'extern' extern += ExternString (',' extern += ExternString)*
-    ))
-    valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
-    annotations+=CommentAnnotatonSL?
 ;
 
 // ------------ //

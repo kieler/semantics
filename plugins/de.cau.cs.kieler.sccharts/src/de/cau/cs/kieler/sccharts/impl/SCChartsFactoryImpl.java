@@ -33,12 +33,12 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
 public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory {
     /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	public static final String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\r\n\r\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\r\n\r\nCopyright 2013 by\r\n+ Kiel University\r\n  + Department of Computer Science\r\n    + Real-Time and Embedded Systems Group\r\n\r\nThis code is provided under the terms of the Eclipse Public License (EPL).\r\nSee the file epl-v10.html for the license text.";
+    public static final String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\r\n\r\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\r\n\r\nCopyright 2013 by\r\n+ Kiel University\r\n  + Department of Computer Science\r\n    + Real-Time and Embedded Systems Group\r\n\r\nThis code is provided under the terms of the Eclipse Public License (EPL).\r\nSee the file epl-v10.html for the license text.";
 
-				/**
+    /**
      * Creates the default factory implementation.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -90,11 +90,6 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
             case SCChartsPackage.POLICY_REGION: return createPolicyRegion();
             case SCChartsPackage.CODE_EFFECT: return createCodeEffect();
             case SCChartsPackage.DATAFLOW_ASSIGNMENT: return createDataflowAssignment();
-            case SCChartsPackage.GENERIC_TYPE_SCOPE_CALL: return createGenericTypeScopeCall();
-            case SCChartsPackage.GENERIC_TYPE_PARAMETER_DECLARATION: return createGenericTypeParameterDeclaration();
-            case SCChartsPackage.GENERIC_TYPE_PARAMETER: return createGenericTypeParameter();
-            case SCChartsPackage.PARAMETERIZED_REFERENCE_DECLARATION: return createParameterizedReferenceDeclaration();
-            case SCChartsPackage.GENERIC_TYPE_PARAMETER_REFERENCE: return createGenericTypeParameterReference();
             default:
                 throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
         }
@@ -140,6 +135,28 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
             default:
                 throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
         }
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public SCCharts createSCCharts() {
+        SCChartsImpl scCharts = new SCChartsImpl();
+        return scCharts;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public ScopeCall createScopeCall() {
+        ScopeCallImpl scopeCall = new ScopeCallImpl();
+        return scopeCall;
     }
 
     /**
@@ -290,17 +307,6 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
-    public GenericTypeScopeCall createGenericTypeScopeCall() {
-        GenericTypeScopeCallImpl genericTypeScopeCall = new GenericTypeScopeCallImpl();
-        return genericTypeScopeCall;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     public PreemptionType createPreemptionTypeFromString(EDataType eDataType, String initialValue) {
         PreemptionType result = PreemptionType.get(initialValue);
         if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
@@ -317,72 +323,6 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
     }
 
     /**
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     */
-	@Override
-    public SCCharts createSCCharts() {
-        SCChartsImpl scCharts = new SCChartsImpl();
-        return scCharts;
-    }
-
-				/**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public ScopeCall createScopeCall() {
-        ScopeCallImpl scopeCall = new ScopeCallImpl();
-        return scopeCall;
-    }
-
-                /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public GenericTypeParameterDeclaration createGenericTypeParameterDeclaration() {
-        GenericTypeParameterDeclarationImpl genericTypeParameterDeclaration = new GenericTypeParameterDeclarationImpl();
-        return genericTypeParameterDeclaration;
-    }
-
-                /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public GenericTypeParameter createGenericTypeParameter() {
-        GenericTypeParameterImpl genericTypeParameter = new GenericTypeParameterImpl();
-        return genericTypeParameter;
-    }
-
-                /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public ParameterizedReferenceDeclaration createParameterizedReferenceDeclaration() {
-        ParameterizedReferenceDeclarationImpl parameterizedReferenceDeclaration = new ParameterizedReferenceDeclarationImpl();
-        return parameterizedReferenceDeclaration;
-    }
-
-                /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public GenericTypeParameterReference createGenericTypeParameterReference() {
-        GenericTypeParameterReferenceImpl genericTypeParameterReference = new GenericTypeParameterReferenceImpl();
-        return genericTypeParameterReference;
-    }
-
-                /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated

@@ -205,10 +205,8 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
                     label += new Pair(state.serializeHR, TextFormat.TEXT)
                     if (state.isReferencing) {
                         label += new Pair("@", TextFormat.KEYWORD)
-                        if (state.isReferencingScope) {
-                            label += new Pair((state.reference.scope as State).serializeHR, TextFormat.TEXT)
-                        } else if (state.isReferencingGeneric) {
-                            label += new Pair(state.reference.asGenericTypeCall.target.name, TextFormat.TEXT)
+                        if (state.isReferencing) {
+                            label += new Pair(state.reference.target.name, TextFormat.TEXT)
                         } else {
                             label += new Pair("UnresolvedReference", TextFormat.HIGHLIGHT)
                         }

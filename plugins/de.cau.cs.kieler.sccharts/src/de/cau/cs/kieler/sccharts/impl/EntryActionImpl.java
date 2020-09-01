@@ -18,7 +18,9 @@ import de.cau.cs.kieler.sccharts.PreemptionType;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
 
 import org.eclipse.emf.common.notify.Notification;
+
 import org.eclipse.emf.ecore.EClass;
+
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 /**
@@ -37,12 +39,12 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 public class EntryActionImpl extends LocalActionImpl implements EntryAction {
     /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	public static final String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\r\n\r\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\r\n\r\nCopyright 2013 by\r\n+ Kiel University\r\n  + Department of Computer Science\r\n    + Real-Time and Embedded Systems Group\r\n\r\nThis code is provided under the terms of the Eclipse Public License (EPL).\r\nSee the file epl-v10.html for the license text.";
+    public static final String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\r\n\r\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\r\n\r\nCopyright 2013 by\r\n+ Kiel University\r\n  + Department of Computer Science\r\n    + Real-Time and Embedded Systems Group\r\n\r\nThis code is provided under the terms of the Eclipse Public License (EPL).\r\nSee the file epl-v10.html for the license text.";
 
-				/**
+    /**
      * The default value of the '{@link #getPreemption() <em>Preemption</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -51,6 +53,7 @@ public class EntryActionImpl extends LocalActionImpl implements EntryAction {
      * @ordered
      */
     protected static final PreemptionType PREEMPTION_EDEFAULT = PreemptionType.STRONG;
+
     /**
      * The cached value of the '{@link #getPreemption() <em>Preemption</em>}' attribute.
      * <!-- begin-user-doc -->
@@ -61,7 +64,7 @@ public class EntryActionImpl extends LocalActionImpl implements EntryAction {
      */
     protected PreemptionType preemption = PREEMPTION_EDEFAULT;
 
-                /**
+    /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated

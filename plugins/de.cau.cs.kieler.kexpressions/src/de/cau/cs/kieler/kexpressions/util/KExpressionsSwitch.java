@@ -255,11 +255,27 @@ public class KExpressionsSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case KExpressionsPackage.SCHEDULE_DECLARATION: {
-                ScheduleDeclaration scheduleDeclaration = (ScheduleDeclaration)theEObject;
-                T result = caseScheduleDeclaration(scheduleDeclaration);
-                if (result == null) result = caseDeclaration(scheduleDeclaration);
-                if (result == null) result = caseAnnotatable(scheduleDeclaration);
+            case KExpressionsPackage.GENERIC_PARAMETER_DECLARATION: {
+                GenericParameterDeclaration genericParameterDeclaration = (GenericParameterDeclaration)theEObject;
+                T result = caseGenericParameterDeclaration(genericParameterDeclaration);
+                if (result == null) result = caseDeclaration(genericParameterDeclaration);
+                if (result == null) result = caseAnnotatable(genericParameterDeclaration);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case KExpressionsPackage.GENERIC_TYPE_REFERENCE: {
+                GenericTypeReference genericTypeReference = (GenericTypeReference)theEObject;
+                T result = caseGenericTypeReference(genericTypeReference);
+                if (result == null) result = caseExpression(genericTypeReference);
+                if (result == null) result = caseSchedulable(genericTypeReference);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case KExpressionsPackage.VALUE_TYPE_REFERENCE: {
+                ValueTypeReference valueTypeReference = (ValueTypeReference)theEObject;
+                T result = caseValueTypeReference(valueTypeReference);
+                if (result == null) result = caseExpression(valueTypeReference);
+                if (result == null) result = caseSchedulable(valueTypeReference);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -269,6 +285,14 @@ public class KExpressionsSwitch<T> extends Switch<T> {
                 if (result == null) result = caseDeclaration(methodDeclaration);
                 if (result == null) result = caseSchedulable(methodDeclaration);
                 if (result == null) result = caseAnnotatable(methodDeclaration);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case KExpressionsPackage.SCHEDULE_DECLARATION: {
+                ScheduleDeclaration scheduleDeclaration = (ScheduleDeclaration)theEObject;
+                T result = caseScheduleDeclaration(scheduleDeclaration);
+                if (result == null) result = caseDeclaration(scheduleDeclaration);
+                if (result == null) result = caseAnnotatable(scheduleDeclaration);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -541,6 +565,51 @@ public class KExpressionsSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseReferenceDeclaration(ReferenceDeclaration object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Generic Parameter Declaration</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Generic Parameter Declaration</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseGenericParameterDeclaration(GenericParameterDeclaration object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Generic Type Reference</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Generic Type Reference</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseGenericTypeReference(GenericTypeReference object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Value Type Reference</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Value Type Reference</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseValueTypeReference(ValueTypeReference object) {
         return null;
     }
 
