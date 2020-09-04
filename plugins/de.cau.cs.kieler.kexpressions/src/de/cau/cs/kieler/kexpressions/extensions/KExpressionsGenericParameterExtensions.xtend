@@ -14,10 +14,10 @@
 package de.cau.cs.kieler.kexpressions.extensions
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.annotations.NamedObject
-import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.GenericParameterDeclaration
 import de.cau.cs.kieler.kexpressions.ValueType
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import org.eclipse.emf.ecore.EObject
 
 /**
  * @authors als
@@ -28,7 +28,7 @@ class KExpressionsGenericParameterExtensions {
     @Inject
     extension KExpressionsValuedObjectExtensions
     
-	def boolean isGenericParamter(NamedObject obj) {
+	def boolean isGenericParamter(EObject obj) {
 		if (obj instanceof ValuedObject) {
 		    if (obj.declaration instanceof GenericParameterDeclaration) {
 		        return true

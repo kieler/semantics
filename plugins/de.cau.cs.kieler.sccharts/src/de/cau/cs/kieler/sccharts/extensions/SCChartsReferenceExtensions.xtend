@@ -12,13 +12,22 @@
  */
 package de.cau.cs.kieler.sccharts.extensions
 
+import com.google.common.collect.Iterables
+import com.google.common.collect.Sets
 import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.AccessModifier
+import de.cau.cs.kieler.kexpressions.GenericParameterDeclaration
+import de.cau.cs.kieler.kexpressions.GenericTypeReference
+import de.cau.cs.kieler.kexpressions.Parameter
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
+import de.cau.cs.kieler.kexpressions.Value
+import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsGenericParameterExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsTypeExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.kext.extensions.Binding
 import de.cau.cs.kieler.kexpressions.kext.extensions.BindingType
@@ -27,6 +36,10 @@ import de.cau.cs.kieler.kexpressions.kext.extensions.Replacements
 import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
 import java.util.List
+import java.util.Set
+import org.eclipse.emf.ecore.EObject
+
+import static extension java.lang.String.format
 
 /**
  * @author ssm
@@ -38,6 +51,8 @@ class SCChartsReferenceExtensions extends KExtReferenceExtensions {
     
     @Inject extension KExpressionsDeclarationExtensions
     @Inject extension KExpressionsValuedObjectExtensions
+    @Inject extension KExpressionsGenericParameterExtensions
+    @Inject extension KExpressionsTypeExtensions
     @Inject extension SCChartsScopeExtensions
     @Inject extension SCChartsSerializeHRExtensions
     @Inject extension SCChartsInheritanceExtensions
@@ -170,9 +185,146 @@ class SCChartsReferenceExtensions extends KExtReferenceExtensions {
             }        
         }
         
+        // Create binding for generic parameters
+        bindings += scope.createGenericParameterBindings
+        
         bindings
     }
     
+    def List<Binding> createGenericParameterBindings(Scope scope) {
+        if (scope.isReferencing) {
+            var decls = emptyList
+            val target = scope.reference.resolveReferencedScope
+            if (target instanceof Scope) {
+                decls = target.genericParameterDeclarations?:emptyList
+            }
+            return decls.createGenericParameterBindings(scope.reference.genericParameters?:emptyList)
+        }
+        return emptyList
+    }
+    def List<Binding> createGenericParameterBindings(ValuedObject vo) {
+        if (vo.declaration instanceof ReferenceDeclaration) {
+            val decl = vo.referenceDeclaration
+            if (decl.reference !== null) {
+                var decls = emptyList
+                val target = decl.resolveReferencedScope
+                if (target instanceof Scope) {
+                    decls = target.genericParameterDeclarations?:emptyList
+                }
+                return decls.createGenericParameterBindings(vo.getGenericParameters.nullOrEmpty ? decl.genericParameters?:emptyList : vo.getGenericParameters?:emptyList)
+            }
+        }
+        return emptyList
+    }
+    
+    protected def List<Binding> createGenericParameterBindings(List<GenericParameterDeclaration> decls, List<Parameter> params) {
+        val bindings = newArrayList
+        
+        for (i : 0 ..< Math.max(decls.size, params.size)) {
+            val decl = i < decls.size ? decls.get(i) : null
+            val param = i < params.size ? params.get(i) : null
+            
+            val binding = new Binding => [
+                type = decl === null || decl.isTypeDeclaration ? BindingType.GENERIC_TYPE : BindingType.GENERIC
+                targetValuedObject = decl?.valuedObjects?.head
+                sourceExpression = param?.expression
+            ]
+            bindings += binding
+            
+            if (param === null) {
+                binding.errorMessages += "There is no parameter given for generic parameter declaration of %s.".format(binding.targetValuedObject?.name)
+            } else if (decl === null) {
+                binding.errorMessages += "There is no declaration for the given generic parameter (index: %d).".format(i)
+            } else {
+                val paramExpr = param.expression
+                if (decl.isTypeDeclaration) {
+                    val type = decl.type
+                    if (type instanceof State) {
+                        var EObject paramType = null
+                        if (paramExpr instanceof GenericTypeReference) {
+                            paramType = paramExpr.type
+                        } else if (paramExpr instanceof ValuedObjectReference) {
+                            if (paramExpr.isGenericParamter) {
+                                paramType = paramExpr.valuedObject.getReferencedScope
+                            } else {
+                                binding.errorMessages += "Type mismatch! Generic parameter %s cannot take a reference that is not a type.".format(binding.targetValuedObject)
+                            }
+                        } else {
+                            binding.errorMessages += "Type mismatch! Generic parameter %s can only take a state type as parameter.".format(binding.targetValuedObject)
+                        }
+                        
+                        if (paramType instanceof State) {
+                            if (type === param || paramType.allInheritedStates.contains(type)) {
+                                val interfaceMismatches = paramType.interfaceMismatches(type)
+                                if (!interfaceMismatches.empty) {
+                                    binding.errorMessages += "State %s in generic parameter for %s in not a valid subtype of %s. There are interface incompatibilities due to the following variables: ".format(paramType.name, binding.targetValuedObject, type.name, interfaceMismatches.map[name].join(", "))
+                                }
+                            } else {
+                                binding.errorMessages += "State %s in generic parameter for %s in not a subtype of %s.".format(paramType.name, binding.targetValuedObject, type.name)
+                            }
+                        } else {
+                            binding.errorMessages += "Cannot infer state type from given parameter for %s.".format(binding.targetValuedObject)
+                        }
+                    }
+                } else if (decl.isReferenceDeclaration) {
+                    val type = decl.type
+                    if (type instanceof State) {
+                        var EObject paramType = null
+                        if (paramExpr instanceof ValuedObjectReference) {
+                            if (paramExpr.isGenericParamter) {
+                                paramType = paramExpr.valuedObject.getReferencedScope
+                            } else if (paramExpr.valuedObject.getReferenceDeclaration !== null) {
+                                paramType = paramExpr.valuedObject.getReferenceDeclaration.resolveReferencedScope
+                            } else {
+                                binding.errorMessages += "Type mismatch! Generic parameter %s can only take a variable of a reference declaration as parameter.".format(binding.targetValuedObject)
+                            }
+                        } else {
+                            binding.errorMessages += "Type mismatch! Generic parameter %s can only take a variable of a reference declaration as parameter.".format(binding.targetValuedObject)
+                        }
+                        
+                        if (paramType instanceof State) {
+                            if (type === param || paramType.allInheritedStates.contains(type)) {
+                                val interfaceMismatches = paramType.interfaceMismatches(type)
+                                if (!interfaceMismatches.empty) {
+                                    binding.errorMessages += "State %s in the given reference declaration in generic parameter for %s in not a valid subtype of %s. There are interface incompatibilities due to the following variables: ".format(paramType.name, binding.targetValuedObject, type.name, interfaceMismatches.map[name].join(", "))
+                                }
+                            } else {
+                                binding.errorMessages += "State %s in the given reference declaration in generic parameter for %s in not a subtype of %s.".format(paramType.name, binding.targetValuedObject, type.name)
+                            }
+                        } else {
+                            binding.errorMessages += "Cannot infer state type from given parameter for %s.".format(binding.targetValuedObject)
+                        }
+                    } else {
+                        binding.errorMessages += "Invalid generic type declaration of %s! Base type %s is not a state.".format(binding.targetValuedObject, type.name)
+                    }
+                } else {
+                    val type = decl.valueType
+                    if (type === ValueType.UNKNOWN) {
+                        binding.errorMessages += "Value type of generic parameter %s is not properly declared (%s).".format(binding.targetValuedObject, type)
+                    } else if (paramExpr instanceof Value) {
+                        val paramType = paramExpr.valueType
+                        if (paramType !== type) {
+                            binding.errorMessages += "Type mismatch! Generic parameter %s of type %s cannot take literal of type %s.".format(binding.targetValuedObject, type, paramType)
+                        }
+                    } else if (paramExpr instanceof ValuedObjectReference) {
+                        val paramType = if (paramExpr.isVariableReference) {
+                            paramExpr.valuedObject.variableDeclaration.type
+                        } else if (paramExpr.valuedObject.isGenericParamter) {
+                            paramExpr.valuedObject.genericParameterDeclaration.valueType
+                        }
+                        if (paramType !== type) {
+                            binding.errorMessages += "Type mismatch! Generic parameter %s of type %s cannot take valued object declared with type %s.".format(binding.targetValuedObject, type, paramType)
+                        }
+                    } else {
+                        binding.errorMessages += "Expressions as generic parameters are currently not allowed (%s).".format(paramExpr.class.simpleName)
+                    }
+                }
+            }
+        }
+        
+        return bindings
+    }
+        
     // finds a list of valued objects witch are inputs of the referenced SCChart
     def getInputs(ReferenceDeclaration ref){
         val List<ValuedObject> inputs = newArrayList;
@@ -189,5 +341,28 @@ class SCChartsReferenceExtensions extends KExtReferenceExtensions {
             valuedObjects.forEach[outputs.add(it)]
         ]
         return outputs
+    }
+    
+    def separateGenericTypeDependentReferenceDeclarations(List<ReferenceDeclaration> decls) {
+        val separated = newArrayList
+        
+        for (decl : decls) {
+            if (decl.valuedObjects.size > 1 && decl.valuedObjects.exists[!genericParameters.nullOrEmpty]) {
+                for (voPair : decl.valuedObjects.indexed.drop(1)) {
+                    val sDecl = createReferenceDeclaration(decl)
+                    sDecl.valuedObjects += voPair.value
+                    separated += sDecl
+                }
+            }
+        }
+        
+        decls += separated
+    }
+    
+    def Set<ValuedObject> interfaceMismatches(State subtype, State base) {
+        return Sets.difference(
+            Iterables.concat(subtype.declarations, subtype.allInheritedDeclarations).filter(VariableDeclaration).filter[input || output].map[valuedObjects].flatten.toSet,
+            Iterables.concat(base.declarations, base.allInheritedDeclarations).filter(VariableDeclaration).filter[input || output].map[valuedObjects].flatten.toSet
+        )
     }
 }

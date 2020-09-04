@@ -243,6 +243,15 @@ class SCChartsScopeExtensions {
         }
         return null
     }
+    def Scope resolveReferencedScope(ReferenceDeclaration refDecl) {
+        var target = refDecl.reference
+        if (target instanceof Scope) {
+            return target
+        } else if (target instanceof ValuedObject) {
+            return target.referencedScope
+        }
+        return null
+    }
     def Scope getReferencedScope(ValuedObject vo) {
         if (vo.isGenericParamter) {
             val target = vo.genericParameterDeclaration.type
