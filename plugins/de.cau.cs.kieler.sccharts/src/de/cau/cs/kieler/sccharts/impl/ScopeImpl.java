@@ -289,11 +289,15 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
+     * edited by ssm to provide label/id service
      */
     @Override
     public String getLabel() {
-        return label;
+        if (label != null) {
+            return label;
+        } else {
+            return name;
+        }
     }
 
     /**
