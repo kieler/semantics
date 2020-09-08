@@ -14,6 +14,7 @@ import de.cau.cs.kieler.annotations.registry.PragmaRegistry
 import de.cau.cs.kieler.kexpressions.AccessModifier
 import de.cau.cs.kieler.kexpressions.CombineOperator
 import de.cau.cs.kieler.kexpressions.Declaration
+import de.cau.cs.kieler.kexpressions.KExpressionsPackage
 import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.OperatorType
 import de.cau.cs.kieler.kexpressions.ReferenceCall
@@ -820,11 +821,11 @@ class SCTXValidator extends AbstractSCTXValidator {
     def void checkScopeCall(ScopeCall scopeCall) {
         if (scopeCall.eContainer instanceof Scope) {
             val bindings = scopeCall.eContainer.asScope.createBindings
-            var errorMessage = ""
+            var errorMessages = newArrayList
             var implicitMessage = ""
             for (binding : bindings) {
                 if (binding.errors > 0) {
-                    errorMessage = binding.errorMessages.join("\n")
+                    errorMessages += binding.errorMessages
                 }
                 if (binding.type == BindingType.IMPLICIT) {
                     implicitMessage += binding.targetValuedObject.name + ", "
@@ -832,11 +833,11 @@ class SCTXValidator extends AbstractSCTXValidator {
                 }
             }
             
-            if (errorMessage != "") {
-                error("The referencing binding is erroneous!\n" + errorMessage,
+            if (!errorMessages.empty) {
+                error("The referencing binding is erroneous!\n" + errorMessages.join("\n"),
                     scopeCall, 
                     SCChartsPackage.eINSTANCE.scopeCall_Target, 
-                    "The referencing binding is erroneous!\n" + errorMessage);
+                    "The referencing binding is erroneous!\n" + errorMessages.join("\n"));
             } else if (implicitMessage != "" && scopeCall.eContainer instanceof de.cau.cs.kieler.sccharts.State) {
                 warning("Valued Objects are bound implicitly!\n" + implicitMessage,
                     scopeCall, 
@@ -858,6 +859,25 @@ class SCTXValidator extends AbstractSCTXValidator {
                 state.reference,
                 SCChartsPackage.eINSTANCE.scopeCall_Target);
         }            
+    }
+    
+    
+    @Check
+    def void checkReferenceDeclarationGenerics(ReferenceDeclaration decl) {
+        val bindings = decl.valuedObjects?.head?.createGenericParameterBindings
+        var errorMessages = newArrayList
+        for (binding : bindings) {
+            if (binding.errors > 0) {
+                errorMessages += binding.errorMessages
+            }
+        }
+        
+        if (!errorMessages.empty) {
+            error("The referencing binding is erroneous!\n" + errorMessages.join("\n"),
+                decl, 
+                KExpressionsPackage.eINSTANCE.referenceDeclaration_Reference, 
+                "The referencing binding is erroneous!\n" + errorMessages.join("\n"));
+        }
     }
     
     @Check

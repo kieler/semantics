@@ -234,7 +234,7 @@ class SCChartsReferenceExtensions extends KExtReferenceExtensions {
             if (param === null) {
                 binding.errorMessages += "There is no parameter given for generic parameter declaration of %s.".format(binding.targetValuedObject?.name)
             } else if (decl === null) {
-                binding.errorMessages += "There is no declaration for the given generic parameter (index: %d).".format(i)
+                binding.errorMessages += "There is no declaration for the given generic parameter (position: %d).".format(i)
             } else {
                 val paramExpr = param.expression
                 if (decl.isTypeDeclaration) {
@@ -247,23 +247,23 @@ class SCChartsReferenceExtensions extends KExtReferenceExtensions {
                             if (paramExpr.isGenericParamter) {
                                 paramType = paramExpr.valuedObject.getReferencedScope
                             } else {
-                                binding.errorMessages += "Type mismatch! Generic parameter %s cannot take a reference that is not a type.".format(binding.targetValuedObject)
+                                binding.errorMessages += "Type mismatch! Generic parameter %s cannot take a reference that is not a type.".format(binding.targetValuedObject?.name)
                             }
                         } else {
-                            binding.errorMessages += "Type mismatch! Generic parameter %s can only take a state type as parameter.".format(binding.targetValuedObject)
+                            binding.errorMessages += "Type mismatch! Generic parameter %s can only take a state type as parameter.".format(binding.targetValuedObject?.name)
                         }
                         
                         if (paramType instanceof State) {
                             if (type === param || paramType.allInheritedStates.contains(type)) {
                                 val interfaceMismatches = paramType.interfaceMismatches(type)
                                 if (!interfaceMismatches.empty) {
-                                    binding.errorMessages += "State %s in generic parameter for %s in not a valid subtype of %s. There are interface incompatibilities due to the following variables: ".format(paramType.name, binding.targetValuedObject, type.name, interfaceMismatches.map[name].join(", "))
+                                    binding.errorMessages += "State %s in generic parameter for %s in not a valid subtype of %s. There are interface incompatibilities due to the following variables: ".format(paramType.name, binding.targetValuedObject?.name, type.name, interfaceMismatches.map[name].join(", "))
                                 }
                             } else {
-                                binding.errorMessages += "State %s in generic parameter for %s in not a subtype of %s.".format(paramType.name, binding.targetValuedObject, type.name)
+                                binding.errorMessages += "State %s in generic parameter for %s in not a subtype of %s.".format(paramType.name, binding.targetValuedObject?.name, type.name)
                             }
                         } else {
-                            binding.errorMessages += "Cannot infer state type from given parameter for %s.".format(binding.targetValuedObject)
+                            binding.errorMessages += "Cannot infer state type from given parameter for %s.".format(binding.targetValuedObject?.name)
                         }
                     }
                 } else if (decl.isReferenceDeclaration) {
@@ -276,35 +276,35 @@ class SCChartsReferenceExtensions extends KExtReferenceExtensions {
                             } else if (paramExpr.valuedObject.getReferenceDeclaration !== null) {
                                 paramType = paramExpr.valuedObject.getReferenceDeclaration.resolveReferencedScope
                             } else {
-                                binding.errorMessages += "Type mismatch! Generic parameter %s can only take a variable of a reference declaration as parameter.".format(binding.targetValuedObject)
+                                binding.errorMessages += "Type mismatch! Generic parameter %s can only take a variable of a reference declaration as parameter.".format(binding.targetValuedObject?.name)
                             }
                         } else {
-                            binding.errorMessages += "Type mismatch! Generic parameter %s can only take a variable of a reference declaration as parameter.".format(binding.targetValuedObject)
+                            binding.errorMessages += "Type mismatch! Generic parameter %s can only take a variable of a reference declaration as parameter.".format(binding.targetValuedObject?.name)
                         }
                         
                         if (paramType instanceof State) {
                             if (type === param || paramType.allInheritedStates.contains(type)) {
                                 val interfaceMismatches = paramType.interfaceMismatches(type)
                                 if (!interfaceMismatches.empty) {
-                                    binding.errorMessages += "State %s in the given reference declaration in generic parameter for %s in not a valid subtype of %s. There are interface incompatibilities due to the following variables: ".format(paramType.name, binding.targetValuedObject, type.name, interfaceMismatches.map[name].join(", "))
+                                    binding.errorMessages += "State %s in the given reference declaration in generic parameter for %s in not a valid subtype of %s. There are interface incompatibilities due to the following variables: ".format(paramType.name, binding.targetValuedObject?.name, type.name, interfaceMismatches.map[name].join(", "))
                                 }
                             } else {
-                                binding.errorMessages += "State %s in the given reference declaration in generic parameter for %s in not a subtype of %s.".format(paramType.name, binding.targetValuedObject, type.name)
+                                binding.errorMessages += "State %s in the given reference declaration in generic parameter for %s in not a subtype of %s.".format(paramType.name, binding.targetValuedObject?.name, type?.name)
                             }
                         } else {
-                            binding.errorMessages += "Cannot infer state type from given parameter for %s.".format(binding.targetValuedObject)
+                            binding.errorMessages += "Cannot infer state type from given parameter for %s.".format(binding.targetValuedObject?.name)
                         }
                     } else {
-                        binding.errorMessages += "Invalid generic type declaration of %s! Base type %s is not a state.".format(binding.targetValuedObject, type.name)
+                        binding.errorMessages += "Invalid generic type declaration of %s! Base type %s is not a state.".format(binding.targetValuedObject?.name, type?.name)
                     }
                 } else {
                     val type = decl.valueType
                     if (type === ValueType.UNKNOWN) {
-                        binding.errorMessages += "Value type of generic parameter %s is not properly declared (%s).".format(binding.targetValuedObject, type)
+                        binding.errorMessages += "Value type of generic parameter %s is not properly declared (%s).".format(binding.targetValuedObject?.name, type?.literal)
                     } else if (paramExpr instanceof Value) {
                         val paramType = paramExpr.valueType
                         if (paramType !== type) {
-                            binding.errorMessages += "Type mismatch! Generic parameter %s of type %s cannot take literal of type %s.".format(binding.targetValuedObject, type, paramType)
+                            binding.errorMessages += "Type mismatch! Generic parameter %s of type %s cannot take literal of type %s.".format(binding.targetValuedObject?.name, type?.literal, paramType?.literal)
                         }
                     } else if (paramExpr instanceof ValuedObjectReference) {
                         val paramType = if (paramExpr.isVariableReference) {
@@ -313,7 +313,7 @@ class SCChartsReferenceExtensions extends KExtReferenceExtensions {
                             paramExpr.valuedObject.genericParameterDeclaration.valueType
                         }
                         if (paramType !== type) {
-                            binding.errorMessages += "Type mismatch! Generic parameter %s of type %s cannot take valued object declared with type %s.".format(binding.targetValuedObject, type, paramType)
+                            binding.errorMessages += "Type mismatch! Generic parameter %s of type %s cannot take valued object declared with type %s.".format(binding.targetValuedObject?.name, type?.literal, paramType?.literal)
                         }
                     } else {
                         binding.errorMessages += "Expressions as generic parameters are currently not allowed (%s).".format(paramExpr.class.simpleName)
