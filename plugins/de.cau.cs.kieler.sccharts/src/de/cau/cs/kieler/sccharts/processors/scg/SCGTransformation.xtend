@@ -571,19 +571,23 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
             assignment.name = state.name
 
             if (state.isReferencing) {
-                val referenceDeclaration = createReferenceDeclaration => [
-                    reference = SCC2SCGMap.get(state.reference.scope)
-                    sCGraph.declarations += it    
-                ]
-                val referenceCall = createReferenceCall.trace(state) => [ rc |
-                    val VOR = createValuedObject(PREFIX_REFERENCE_VALUED_OBJECT_NAME + state.reference.scope.name) => [
-                        referenceDeclaration.valuedObjects += it
+                if (state.isReferencingScope) {
+                    val referenceDeclaration = createReferenceDeclaration => [
+                        reference = SCC2SCGMap.get(state.reference.scope)
+                        sCGraph.declarations += it    
                     ]
-                    rc.valuedObject = VOR
-                    state.reference.parameters.forEach[ rc.parameters += it.convertToSCGParameter ]
-                ]    
-                
-                assignment.expression = referenceCall
+                    val referenceCall = createReferenceCall.trace(state) => [ rc |
+                        val VOR = createValuedObject(PREFIX_REFERENCE_VALUED_OBJECT_NAME + state.reference.scope.name) => [
+                            referenceDeclaration.valuedObjects += it
+                        ]
+                        rc.valuedObject = VOR
+                        state.reference.parameters.forEach[ rc.parameters += it.convertToSCGParameter ]
+                    ]    
+                    
+                    assignment.expression = referenceCall
+                } else {
+                    throw new IllegalArgumentException("SCG transformation does not support references to generic types.")
+                }
             } else {
     		    // Assertion: A SCG normalized SCChart should have just ONE assignment per transition
     		    val effect = transition.effects.get(0) as Effect

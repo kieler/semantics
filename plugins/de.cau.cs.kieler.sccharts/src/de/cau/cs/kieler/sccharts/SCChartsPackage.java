@@ -18,7 +18,9 @@ import de.cau.cs.kieler.annotations.AnnotationsPackage;
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
 
 import de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage;
+
 import de.cau.cs.kieler.kexpressions.kext.KExtPackage;
+
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EEnum;
@@ -218,13 +220,22 @@ public interface SCChartsPackage extends EPackage {
     int SCOPE__REFERENCE = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 7;
 
     /**
+     * The feature id for the '<em><b>Generic Parameter Declarations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SCOPE__GENERIC_PARAMETER_DECLARATIONS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 8;
+
+    /**
      * The number of structural features of the '<em>Scope</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int SCOPE_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 8;
+    int SCOPE_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 9;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.ScopeCallImpl <em>Scope Call</em>}' class.
@@ -255,13 +266,13 @@ public interface SCChartsPackage extends EPackage {
     int SCOPE_CALL__PARAMETERS = KExpressionsPackage.CALL__PARAMETERS;
 
     /**
-     * The feature id for the '<em><b>Scope</b></em>' reference.
+     * The feature id for the '<em><b>Target</b></em>' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int SCOPE_CALL__SCOPE = KExpressionsPackage.CALL_FEATURE_COUNT + 0;
+    int SCOPE_CALL__TARGET = KExpressionsPackage.CALL_FEATURE_COUNT + 0;
 
     /**
      * The feature id for the '<em><b>Super</b></em>' attribute.
@@ -273,13 +284,22 @@ public interface SCChartsPackage extends EPackage {
     int SCOPE_CALL__SUPER = KExpressionsPackage.CALL_FEATURE_COUNT + 1;
 
     /**
+     * The feature id for the '<em><b>Generic Parameters</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SCOPE_CALL__GENERIC_PARAMETERS = KExpressionsPackage.CALL_FEATURE_COUNT + 2;
+
+    /**
      * The number of structural features of the '<em>Scope Call</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int SCOPE_CALL_FEATURE_COUNT = KExpressionsPackage.CALL_FEATURE_COUNT + 2;
+    int SCOPE_CALL_FEATURE_COUNT = KExpressionsPackage.CALL_FEATURE_COUNT + 3;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.ActionImpl <em>Action</em>}' class.
@@ -591,6 +611,15 @@ public interface SCChartsPackage extends EPackage {
     int STATE__REFERENCE = SCOPE__REFERENCE;
 
     /**
+     * The feature id for the '<em><b>Generic Parameter Declarations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int STATE__GENERIC_PARAMETER_DECLARATIONS = SCOPE__GENERIC_PARAMETER_DECLARATIONS;
+
+    /**
      * The feature id for the '<em><b>Parent Region</b></em>' container reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -772,6 +801,15 @@ public interface SCChartsPackage extends EPackage {
     int REGION__REFERENCE = SCOPE__REFERENCE;
 
     /**
+     * The feature id for the '<em><b>Generic Parameter Declarations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int REGION__GENERIC_PARAMETER_DECLARATIONS = SCOPE__GENERIC_PARAMETER_DECLARATIONS;
+
+    /**
      * The feature id for the '<em><b>Parent State</b></em>' container reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -915,6 +953,15 @@ public interface SCChartsPackage extends EPackage {
      * @ordered
      */
     int CONTROLFLOW_REGION__REFERENCE = REGION__REFERENCE;
+
+    /**
+     * The feature id for the '<em><b>Generic Parameter Declarations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CONTROLFLOW_REGION__GENERIC_PARAMETER_DECLARATIONS = REGION__GENERIC_PARAMETER_DECLARATIONS;
 
     /**
      * The feature id for the '<em><b>Parent State</b></em>' container reference.
@@ -1078,6 +1125,15 @@ public interface SCChartsPackage extends EPackage {
      * @ordered
      */
     int DATAFLOW_REGION__REFERENCE = REGION__REFERENCE;
+
+    /**
+     * The feature id for the '<em><b>Generic Parameter Declarations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATAFLOW_REGION__GENERIC_PARAMETER_DECLARATIONS = REGION__GENERIC_PARAMETER_DECLARATIONS;
 
     /**
      * The feature id for the '<em><b>Parent State</b></em>' container reference.
@@ -2150,6 +2206,15 @@ public interface SCChartsPackage extends EPackage {
     int POLICY_REGION__REFERENCE = CONTROLFLOW_REGION__REFERENCE;
 
     /**
+     * The feature id for the '<em><b>Generic Parameter Declarations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int POLICY_REGION__GENERIC_PARAMETER_DECLARATIONS = CONTROLFLOW_REGION__GENERIC_PARAMETER_DECLARATIONS;
+
+    /**
      * The feature id for the '<em><b>Parent State</b></em>' container reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2415,7 +2480,6 @@ public interface SCChartsPackage extends EPackage {
      */
     int DELAY_TYPE = 21;
 
-
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.DeferredType <em>Deferred Type</em>}' enum.
      * <!-- begin-user-doc -->
@@ -2503,6 +2567,17 @@ public interface SCChartsPackage extends EPackage {
     EReference getScope_Reference();
 
     /**
+     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.sccharts.Scope#getGenericParameterDeclarations <em>Generic Parameter Declarations</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Generic Parameter Declarations</em>'.
+     * @see de.cau.cs.kieler.sccharts.Scope#getGenericParameterDeclarations()
+     * @see #getScope()
+     * @generated
+     */
+    EReference getScope_GenericParameterDeclarations();
+
+    /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.ScopeCall <em>Scope Call</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2513,15 +2588,15 @@ public interface SCChartsPackage extends EPackage {
     EClass getScopeCall();
 
     /**
-     * Returns the meta object for the reference '{@link de.cau.cs.kieler.sccharts.ScopeCall#getScope <em>Scope</em>}'.
+     * Returns the meta object for the reference '{@link de.cau.cs.kieler.sccharts.ScopeCall#getTarget <em>Target</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the reference '<em>Scope</em>'.
-     * @see de.cau.cs.kieler.sccharts.ScopeCall#getScope()
+     * @return the meta object for the reference '<em>Target</em>'.
+     * @see de.cau.cs.kieler.sccharts.ScopeCall#getTarget()
      * @see #getScopeCall()
      * @generated
      */
-    EReference getScopeCall_Scope();
+    EReference getScopeCall_Target();
 
     /**
      * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.ScopeCall#isSuper <em>Super</em>}'.
@@ -2533,6 +2608,17 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      */
     EAttribute getScopeCall_Super();
+
+    /**
+     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.sccharts.ScopeCall#getGenericParameters <em>Generic Parameters</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Generic Parameters</em>'.
+     * @see de.cau.cs.kieler.sccharts.ScopeCall#getGenericParameters()
+     * @see #getScopeCall()
+     * @generated
+     */
+    EReference getScopeCall_GenericParameters();
 
     /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.Action <em>Action</em>}'.
@@ -3213,6 +3299,14 @@ public interface SCChartsPackage extends EPackage {
         EReference SCOPE__REFERENCE = eINSTANCE.getScope_Reference();
 
         /**
+         * The meta object literal for the '<em><b>Generic Parameter Declarations</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference SCOPE__GENERIC_PARAMETER_DECLARATIONS = eINSTANCE.getScope_GenericParameterDeclarations();
+
+        /**
          * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.ScopeCallImpl <em>Scope Call</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -3223,12 +3317,12 @@ public interface SCChartsPackage extends EPackage {
         EClass SCOPE_CALL = eINSTANCE.getScopeCall();
 
         /**
-         * The meta object literal for the '<em><b>Scope</b></em>' reference feature.
+         * The meta object literal for the '<em><b>Target</b></em>' reference feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference SCOPE_CALL__SCOPE = eINSTANCE.getScopeCall_Scope();
+        EReference SCOPE_CALL__TARGET = eINSTANCE.getScopeCall_Target();
 
         /**
          * The meta object literal for the '<em><b>Super</b></em>' attribute feature.
@@ -3237,6 +3331,14 @@ public interface SCChartsPackage extends EPackage {
          * @generated
          */
         EAttribute SCOPE_CALL__SUPER = eINSTANCE.getScopeCall_Super();
+
+        /**
+         * The meta object literal for the '<em><b>Generic Parameters</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference SCOPE_CALL__GENERIC_PARAMETERS = eINSTANCE.getScopeCall_GenericParameters();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.ActionImpl <em>Action</em>}' class.

@@ -6,10 +6,8 @@ package de.cau.cs.kieler.sccharts.text.formatting2;
 import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.Annotation
 import de.cau.cs.kieler.annotations.Pragma
-import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.Parameter
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
-import de.cau.cs.kieler.kexpressions.keffects.Effect
 import de.cau.cs.kieler.kexpressions.kext.formatting2.KExtFormatter
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.DataflowRegion
@@ -25,7 +23,6 @@ import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.text.services.SCTXGrammarAccess
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.formatting2.IFormattableDocument
-import de.cau.cs.kieler.kexpressions.keffects.formatting2.KEffectsFormatter
 
 class SCTXFormatter extends KExtFormatter {
 	
@@ -91,9 +88,13 @@ class SCTXFormatter extends KExtFormatter {
 	}
 
 	def dispatch void format(ScopeCall scopecall, extension IFormattableDocument document) {
-        
-        scopecall.regionFor.keyword(scopeCallAccess.leftParenthesisKeyword_2_0_0)?.prepend[ noSpace ].append[ noSpace ]
-        scopecall.regionFor.keyword(scopeCallAccess.rightParenthesisKeyword_2_0_3)?.prepend[ noSpace ]
+	    
+        // If there are no spaces, the tokenizer will detect > > as >> (shift) and parsing will fail
+        scopecall.regionFor.keyword(scopeCallAccess.lessThanSignKeyword_2_0)?.prepend[ noSpace ]//.append[ noSpace ]
+        //scopecall.regionFor.keyword(scopeCallAccess.greaterThanSignKeyword_2_3)?.prepend[ noSpace ]
+            
+        scopecall.regionFor.keyword(scopeCallAccess.leftParenthesisKeyword_3_0_0)?.prepend[ noSpace ].append[ noSpace ]
+        scopecall.regionFor.keyword(scopeCallAccess.rightParenthesisKeyword_3_0_3)?.prepend[ noSpace ]
         
         for (Parameter parameters : scopecall.getParameters()) {
             format(parameters, document);

@@ -7,6 +7,8 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.Annotation
 import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.GenericTypeReference
+import de.cau.cs.kieler.kexpressions.Parameter
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
@@ -90,12 +92,23 @@ class KExtFormatter extends KEffectsFormatter {
 			format(annotations, document);
 		}
 		
-		valuedobject.regionFor.keywords(valuedObjectAccess.leftSquareBracketKeyword_2_0).forEach[prepend[ noSpace ].append[ noSpace ]]
-        valuedobject.regionFor.keywords(valuedObjectAccess.rightSquareBracketKeyword_2_2).forEach[prepend[ noSpace ]]
+		valuedobject.regionFor.keywords(valuedObjectAccess.leftSquareBracketKeyword_3_0).forEach[prepend[ noSpace ].append[ noSpace ]]
+        valuedobject.regionFor.keywords(valuedObjectAccess.rightSquareBracketKeyword_3_2).forEach[prepend[ noSpace ]]
 		
 		for (Expression cardinalities : valuedobject.getCardinalities()) {
 			format(cardinalities, document);
 		}
 		format(valuedobject.getInitialValue(), document);
 	}
+	
+
+    def dispatch void format(GenericTypeReference ref, extension IFormattableDocument document) {
+        // If there are no spaces, the tokenizer will detect > > as >> (shift) and parsing will fail
+        ref.regionFor.keyword(genericTypeReferenceAccess.lessThanSignKeyword_1_0)?.prepend[ noSpace ]//.append[ noSpace ]
+        // ref.regionFor.keyword(genericTypeReferenceAccess.greaterThanSignKeyword_1_3)?.prepend[ noSpace ]
+        
+        for (Parameter parameters : ref.getGenericParameters()) {
+            format(parameters, document);
+        }
+    }
 }

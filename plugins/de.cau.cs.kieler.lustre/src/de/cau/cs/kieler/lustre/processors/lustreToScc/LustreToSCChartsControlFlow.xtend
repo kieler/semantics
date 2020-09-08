@@ -103,7 +103,7 @@ class LustreToSCChartsControlFlow extends LustreToSCCharts {
         
         
         val outputVariable = createVariableDeclaration("v" + varNameIdx++, inferType(outputsOfCalledState.head.valuedObjects.head.reference), state)
-        val scopeCall = createScopeCall => [scope = calledState]
+        val scopeCall = createScopeCall => [target = calledState]
         calledState.reference = scopeCall
         
         for (Parameter param : kExpression.parameters) {

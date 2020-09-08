@@ -178,10 +178,6 @@ class SCChartsStateExtensions {
     def State setTypeNormal(State state) {
         state => [ connector = false ]
     }
-
-    def boolean isReferencedState(State state) {
-        state.reference !== null
-    }  
     
     def boolean hasBaseStates(State state) {
         !state.baseStates.nullOrEmpty

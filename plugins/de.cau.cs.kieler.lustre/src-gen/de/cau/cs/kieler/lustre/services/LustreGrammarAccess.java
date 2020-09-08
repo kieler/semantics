@@ -24,12 +24,11 @@ import org.eclipse.xtext.ParserRule;
 import org.eclipse.xtext.RuleCall;
 import org.eclipse.xtext.TerminalRule;
 import org.eclipse.xtext.common.services.TerminalsGrammarAccess;
-import org.eclipse.xtext.service.AbstractElementFinder.AbstractEnumRuleElementFinder;
-import org.eclipse.xtext.service.AbstractElementFinder.AbstractGrammarElementFinder;
+import org.eclipse.xtext.service.AbstractElementFinder;
 import org.eclipse.xtext.service.GrammarProvider;
 
 @Singleton
-public class LustreGrammarAccess extends AbstractGrammarElementFinder {
+public class LustreGrammarAccess extends AbstractElementFinder.AbstractGrammarElementFinder {
 	
 	public class LustreProgramElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.lustre.Lustre.LustreProgram");
@@ -380,9 +379,8 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//// External Node Declaration
 		//ExternalNodeDeclaration kexpressions::Declaration:
-		//	{ExternalNodeDeclaration} isUnsafe?='unsafe'? 'extern' ('function' | hasState?='node')
-		//	valuedObjects+=NodeValuedObject ('(' inputs+=VariableDeclarationNoInit (';' inputs+=VariableDeclarationNoInit)* ')' |
-		//	'()')
+		//	{ExternalNodeDeclaration} isUnsafe?='unsafe'? 'extern' ('function' | hasState?='node') valuedObjects+=NodeValuedObject
+		//	('(' inputs+=VariableDeclarationNoInit (';' inputs+=VariableDeclarationNoInit)* ')' | '()')
 		//	'returns' ('(' outputs+=VariableDeclarationNoInit (';' outputs+=VariableDeclarationNoInit)* ')' | '()') ';'?;
 		@Override public ParserRule getRule() { return rule; }
 		
@@ -1079,8 +1077,8 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//Equation keffects::Assignment:
 		//	{Equation} ('(' references+=ValuedObjectReference ',' references+=ValuedObjectReference (','
-		//	references+=ValuedObjectReference)* ')' | references+=ValuedObjectReference ',' references+=ValuedObjectReference
-		//	(',' references+=ValuedObjectReference)* | reference=ValuedObjectReference) operator=AssignOperator
+		//	references+=ValuedObjectReference)* ')' | references+=ValuedObjectReference ',' references+=ValuedObjectReference (','
+		//	references+=ValuedObjectReference)* | reference=ValuedObjectReference) operator=AssignOperator
 		//	expression=Expression
 		//	';';
 		@Override public ParserRule getRule() { return rule; }
@@ -1697,8 +1695,8 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		//({kexpressions::OperatorExpression.subExpressions+=current} operator=MultOperator subExpressions+=IntDivExpression ('*'
 		//subExpressions+=IntDivExpression)* | {kexpressions::OperatorExpression.subExpressions+=current} operator=DivOperator
 		//subExpressions+=IntDivExpression ('/' subExpressions+=IntDivExpression)* |
-		//{kexpressions::OperatorExpression.subExpressions+=current} operator=ModOperator subExpressions+=IntDivExpression
-		//('mod' subExpressions+=IntDivExpression)*)*
+		//{kexpressions::OperatorExpression.subExpressions+=current} operator=ModOperator subExpressions+=IntDivExpression ('mod'
+		//subExpressions+=IntDivExpression)*)*
 		public Alternatives getAlternatives_1() { return cAlternatives_1; }
 		
 		//{kexpressions::OperatorExpression.subExpressions+=current} operator=MultOperator subExpressions+=IntDivExpression ('*'
@@ -2694,7 +2692,7 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		public RuleCall getAtomicExpressionParserRuleCall_1() { return cAtomicExpressionParserRuleCall_1; }
 	}
 	
-	public class ValueTypeElements extends AbstractEnumRuleElementFinder {
+	public class ValueTypeElements extends AbstractElementFinder.AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.lustre.Lustre.ValueType");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final EnumLiteralDeclaration cBOOLEnumLiteralDeclaration_0 = (EnumLiteralDeclaration)cAlternatives.eContents().get(0);
@@ -2732,7 +2730,7 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		//"real"
 		public Keyword getFLOATRealKeyword_2_0() { return cFLOATRealKeyword_2_0; }
 	}
-	public class EnumTypeElements extends AbstractEnumRuleElementFinder {
+	public class EnumTypeElements extends AbstractElementFinder.AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.lustre.Lustre.EnumType");
 		private final EnumLiteralDeclaration cENUMEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
 		private final Keyword cENUMEnumKeyword_0 = (Keyword)cENUMEnumLiteralDeclaration.eContents().get(0);
@@ -2747,7 +2745,7 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		//"enum"
 		public Keyword getENUMEnumKeyword_0() { return cENUMEnumKeyword_0; }
 	}
-	public class AssignOperatorElements extends AbstractEnumRuleElementFinder {
+	public class AssignOperatorElements extends AbstractElementFinder.AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.lustre.Lustre.AssignOperator");
 		private final EnumLiteralDeclaration cASSIGNEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
 		private final Keyword cASSIGNEqualsSignKeyword_0 = (Keyword)cASSIGNEnumLiteralDeclaration.eContents().get(0);
@@ -2764,7 +2762,7 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		//"="
 		public Keyword getASSIGNEqualsSignKeyword_0() { return cASSIGNEqualsSignKeyword_0; }
 	}
-	public class CompareOperatorElements extends AbstractEnumRuleElementFinder {
+	public class CompareOperatorElements extends AbstractElementFinder.AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.lustre.Lustre.CompareOperator");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final EnumLiteralDeclaration cEQEnumLiteralDeclaration_0 = (EnumLiteralDeclaration)cAlternatives.eContents().get(0);
@@ -2824,7 +2822,7 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		//"<>"
 		public Keyword getNELessThanSignGreaterThanSignKeyword_5_0() { return cNELessThanSignGreaterThanSignKeyword_5_0; }
 	}
-	public class LogicalOrOperatorElements extends AbstractEnumRuleElementFinder {
+	public class LogicalOrOperatorElements extends AbstractElementFinder.AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.lustre.Lustre.LogicalOrOperator");
 		private final EnumLiteralDeclaration cLOGICAL_OREnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
 		private final Keyword cLOGICAL_OROrKeyword_0 = (Keyword)cLOGICAL_OREnumLiteralDeclaration.eContents().get(0);
@@ -2840,7 +2838,7 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		//"or"
 		public Keyword getLOGICAL_OROrKeyword_0() { return cLOGICAL_OROrKeyword_0; }
 	}
-	public class LogicalAndOperatorElements extends AbstractEnumRuleElementFinder {
+	public class LogicalAndOperatorElements extends AbstractElementFinder.AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.lustre.Lustre.LogicalAndOperator");
 		private final EnumLiteralDeclaration cLOGICAL_ANDEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
 		private final Keyword cLOGICAL_ANDAndKeyword_0 = (Keyword)cLOGICAL_ANDEnumLiteralDeclaration.eContents().get(0);
@@ -2856,7 +2854,7 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		//"and"
 		public Keyword getLOGICAL_ANDAndKeyword_0() { return cLOGICAL_ANDAndKeyword_0; }
 	}
-	public class NotOperatorElements extends AbstractEnumRuleElementFinder {
+	public class NotOperatorElements extends AbstractElementFinder.AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.lustre.Lustre.NotOperator");
 		private final EnumLiteralDeclaration cNOTEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
 		private final Keyword cNOTNotKeyword_0 = (Keyword)cNOTEnumLiteralDeclaration.eContents().get(0);
@@ -2872,7 +2870,7 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		//"not"
 		public Keyword getNOTNotKeyword_0() { return cNOTNotKeyword_0; }
 	}
-	public class FbyOperatorElements extends AbstractEnumRuleElementFinder {
+	public class FbyOperatorElements extends AbstractElementFinder.AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.lustre.Lustre.FbyOperator");
 		private final EnumLiteralDeclaration cFBYEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
 		private final Keyword cFBYFbyKeyword_0 = (Keyword)cFBYEnumLiteralDeclaration.eContents().get(0);
@@ -2888,7 +2886,7 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		//"fby"
 		public Keyword getFBYFbyKeyword_0() { return cFBYFbyKeyword_0; }
 	}
-	public class ModOperatorElements extends AbstractEnumRuleElementFinder {
+	public class ModOperatorElements extends AbstractElementFinder.AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.lustre.Lustre.ModOperator");
 		private final EnumLiteralDeclaration cMODEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
 		private final Keyword cMODModKeyword_0 = (Keyword)cMODEnumLiteralDeclaration.eContents().get(0);
@@ -2904,7 +2902,7 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		//"mod"
 		public Keyword getMODModKeyword_0() { return cMODModKeyword_0; }
 	}
-	public class CurrentOperatorElements extends AbstractEnumRuleElementFinder {
+	public class CurrentOperatorElements extends AbstractElementFinder.AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.lustre.Lustre.CurrentOperator");
 		private final EnumLiteralDeclaration cCURRENTEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
 		private final Keyword cCURRENTCurrentKeyword_0 = (Keyword)cCURRENTEnumLiteralDeclaration.eContents().get(0);
@@ -2919,7 +2917,7 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		//"current"
 		public Keyword getCURRENTCurrentKeyword_0() { return cCURRENTCurrentKeyword_0; }
 	}
-	public class WhenOperatorElements extends AbstractEnumRuleElementFinder {
+	public class WhenOperatorElements extends AbstractElementFinder.AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.lustre.Lustre.WhenOperator");
 		private final EnumLiteralDeclaration cWHENEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
 		private final Keyword cWHENWhenKeyword_0 = (Keyword)cWHENEnumLiteralDeclaration.eContents().get(0);
@@ -2934,7 +2932,7 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		//"when"
 		public Keyword getWHENWhenKeyword_0() { return cWHENWhenKeyword_0; }
 	}
-	public class InitOperatorElements extends AbstractEnumRuleElementFinder {
+	public class InitOperatorElements extends AbstractElementFinder.AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.lustre.Lustre.InitOperator");
 		private final EnumLiteralDeclaration cINITEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
 		private final Keyword cINITHyphenMinusGreaterThanSignKeyword_0 = (Keyword)cINITEnumLiteralDeclaration.eContents().get(0);
@@ -2950,7 +2948,7 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		//"->"
 		public Keyword getINITHyphenMinusGreaterThanSignKeyword_0() { return cINITHyphenMinusGreaterThanSignKeyword_0; }
 	}
-	public class LogicalXorOperatorElements extends AbstractEnumRuleElementFinder {
+	public class LogicalXorOperatorElements extends AbstractElementFinder.AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.lustre.Lustre.LogicalXorOperator");
 		private final EnumLiteralDeclaration cBITWISE_XOREnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
 		private final Keyword cBITWISE_XORXorKeyword_0 = (Keyword)cBITWISE_XOREnumLiteralDeclaration.eContents().get(0);
@@ -2965,7 +2963,7 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		//"xor"
 		public Keyword getBITWISE_XORXorKeyword_0() { return cBITWISE_XORXorKeyword_0; }
 	}
-	public class ImpliesOperatorElements extends AbstractEnumRuleElementFinder {
+	public class ImpliesOperatorElements extends AbstractElementFinder.AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.lustre.Lustre.ImpliesOperator");
 		private final EnumLiteralDeclaration cIMPLIESEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
 		private final Keyword cIMPLIESEqualsSignGreaterThanSignKeyword_0 = (Keyword)cIMPLIESEnumLiteralDeclaration.eContents().get(0);
@@ -2980,7 +2978,7 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		//"=>"
 		public Keyword getIMPLIESEqualsSignGreaterThanSignKeyword_0() { return cIMPLIESEqualsSignGreaterThanSignKeyword_0; }
 	}
-	public class IntDivOperatorElements extends AbstractEnumRuleElementFinder {
+	public class IntDivOperatorElements extends AbstractElementFinder.AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.lustre.Lustre.IntDivOperator");
 		private final EnumLiteralDeclaration cDIVEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
 		private final Keyword cDIVDivKeyword_0 = (Keyword)cDIVEnumLiteralDeclaration.eContents().get(0);
@@ -2995,7 +2993,7 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		//"div"
 		public Keyword getDIVDivKeyword_0() { return cDIVDivKeyword_0; }
 	}
-	public class ConditionalOperatorElements extends AbstractEnumRuleElementFinder {
+	public class ConditionalOperatorElements extends AbstractElementFinder.AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.lustre.Lustre.ConditionalOperator");
 		private final EnumLiteralDeclaration cCONDITIONALEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
 		private final Keyword cCONDITIONALIfKeyword_0 = (Keyword)cCONDITIONALEnumLiteralDeclaration.eContents().get(0);
@@ -3011,7 +3009,7 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		//"if"
 		public Keyword getCONDITIONALIfKeyword_0() { return cCONDITIONALIfKeyword_0; }
 	}
-	public class AtMostOneOperatorElements extends AbstractEnumRuleElementFinder {
+	public class AtMostOneOperatorElements extends AbstractElementFinder.AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.lustre.Lustre.AtMostOneOperator");
 		private final EnumLiteralDeclaration cATMOSTONEOFEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
 		private final Keyword cATMOSTONEOFNumberSignKeyword_0 = (Keyword)cATMOSTONEOFEnumLiteralDeclaration.eContents().get(0);
@@ -3026,7 +3024,7 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		//"#"
 		public Keyword getATMOSTONEOFNumberSignKeyword_0() { return cATMOSTONEOFNumberSignKeyword_0; }
 	}
-	public class NorOperatorElements extends AbstractEnumRuleElementFinder {
+	public class NorOperatorElements extends AbstractElementFinder.AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.lustre.Lustre.NorOperator");
 		private final EnumLiteralDeclaration cNOREnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
 		private final Keyword cNORNorKeyword_0 = (Keyword)cNOREnumLiteralDeclaration.eContents().get(0);
@@ -3041,7 +3039,7 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		//"nor"
 		public Keyword getNORNorKeyword_0() { return cNORNorKeyword_0; }
 	}
-	public class LastOperatorElements extends AbstractEnumRuleElementFinder {
+	public class LastOperatorElements extends AbstractElementFinder.AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.lustre.Lustre.LastOperator");
 		private final EnumLiteralDeclaration cLASTEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
 		private final Keyword cLASTLastKeyword_0 = (Keyword)cLASTEnumLiteralDeclaration.eContents().get(0);
@@ -3303,9 +3301,8 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//// External Node Declaration
 	//ExternalNodeDeclaration kexpressions::Declaration:
-	//	{ExternalNodeDeclaration} isUnsafe?='unsafe'? 'extern' ('function' | hasState?='node')
-	//	valuedObjects+=NodeValuedObject ('(' inputs+=VariableDeclarationNoInit (';' inputs+=VariableDeclarationNoInit)* ')' |
-	//	'()')
+	//	{ExternalNodeDeclaration} isUnsafe?='unsafe'? 'extern' ('function' | hasState?='node') valuedObjects+=NodeValuedObject
+	//	('(' inputs+=VariableDeclarationNoInit (';' inputs+=VariableDeclarationNoInit)* ')' | '()')
 	//	'returns' ('(' outputs+=VariableDeclarationNoInit (';' outputs+=VariableDeclarationNoInit)* ')' | '()') ';'?;
 	public ExternalNodeDeclarationElements getExternalNodeDeclarationAccess() {
 		return pExternalNodeDeclaration;
@@ -3390,8 +3387,8 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//Equation keffects::Assignment:
 	//	{Equation} ('(' references+=ValuedObjectReference ',' references+=ValuedObjectReference (','
-	//	references+=ValuedObjectReference)* ')' | references+=ValuedObjectReference ',' references+=ValuedObjectReference
-	//	(',' references+=ValuedObjectReference)* | reference=ValuedObjectReference) operator=AssignOperator
+	//	references+=ValuedObjectReference)* ')' | references+=ValuedObjectReference ',' references+=ValuedObjectReference (','
+	//	references+=ValuedObjectReference)* | reference=ValuedObjectReference) operator=AssignOperator
 	//	expression=Expression
 	//	';';
 	public EquationElements getEquationAccess() {
@@ -4154,19 +4151,11 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		return getMethodDeclarationWOSemicolonAccess().getRule();
 	}
 	
-	//NamespaceID:
-	//	ExtendedID (':' PrimeID)*;
-	public KExtGrammarAccess.NamespaceIDElements getNamespaceIDAccess() {
-		return gaKExt.getNamespaceIDAccess();
-	}
-	
-	public ParserRule getNamespaceIDRule() {
-		return getNamespaceIDAccess().getRule();
-	}
-	
 	//ReferenceDeclaration kexpressions::ReferenceDeclaration:
 	//	annotations+=Annotation*
-	//	access=AccessModifier? ('ref' reference=[annotations::NamedObject|NamespaceID] |
+	//	access=AccessModifier? ('ref' reference=[annotations::NamedObject|NamespaceID] ('<'
+	//	genericParameters+=GenericParameter (',' genericParameters+=GenericParameter)* '>')?
+	//	|
 	//	'extern' extern+=ExternString (',' extern+=ExternString)*) valuedObjects+=ValuedObject (','
 	//	valuedObjects+=ValuedObject)* ';'
 	//	annotations+=CommentAnnotatonSL?;
@@ -4180,7 +4169,9 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//ReferenceDeclarationWOSemicolon kexpressions::ReferenceDeclaration:
 	//	annotations+=Annotation*
-	//	access=AccessModifier? ('ref' reference=[annotations::NamedObject|NamespaceID] |
+	//	access=AccessModifier? ('ref' reference=[annotations::NamedObject|NamespaceID] ('<'
+	//	genericParameters+=GenericParameter (',' genericParameters+=GenericParameter)* '>')?
+	//	|
 	//	'extern' extern+=ExternString (',' extern+=ExternString)*) valuedObjects+=ValuedObject (','
 	//	valuedObjects+=ValuedObject)*
 	//	annotations+=CommentAnnotatonSL?;
@@ -4203,6 +4194,96 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		return getExternStringAccess().getRule();
 	}
 	
+	//// ---
+	////  Generics
+	//// ---
+	//GenericParameterDeclaration kexpressions::GenericParameterDeclaration:
+	//	annotations+=QuotedStringAnnotation*
+	//	valuedObjects+=SimpleValuedObject ('is' valueType=super::ValueType | 'is' reference?='ref'?
+	//	type=[annotations::NamedObject|PrimeID])?;
+	public KExtGrammarAccess.GenericParameterDeclarationElements getGenericParameterDeclarationAccess() {
+		return gaKExt.getGenericParameterDeclarationAccess();
+	}
+	
+	public ParserRule getGenericParameterDeclarationRule() {
+		return getGenericParameterDeclarationAccess().getRule();
+	}
+	
+	//GenericParameter kexpressions::Parameter:
+	//	expression=(ValueTypeReference
+	//	| AnyValue
+	//	| GenericParameter_GenericTypeReference_Parameterized
+	//	| GenericParameter_ValuedObjectReference_Array
+	//	| GenericParameter_ValuedObjectReference_Sub
+	//	| GenericTypeReference
+	//	| ValuedObjectReference);
+	public KExtGrammarAccess.GenericParameterElements getGenericParameterAccess() {
+		return gaKExt.getGenericParameterAccess();
+	}
+	
+	public ParserRule getGenericParameterRule() {
+		return getGenericParameterAccess().getRule();
+	}
+	
+	//ValueTypeReference kexpressions::ValueTypeReference:
+	//	valueType=super::ValueType;
+	public KExtGrammarAccess.ValueTypeReferenceElements getValueTypeReferenceAccess() {
+		return gaKExt.getValueTypeReferenceAccess();
+	}
+	
+	public ParserRule getValueTypeReferenceRule() {
+		return getValueTypeReferenceAccess().getRule();
+	}
+	
+	//GenericTypeReference kexpressions::GenericTypeReference:
+	//	type=[annotations::NamedObject|PrimeID] ('<' genericParameters+=GenericParameter (','
+	//	genericParameters+=GenericParameter)* '>')?;
+	public KExtGrammarAccess.GenericTypeReferenceElements getGenericTypeReferenceAccess() {
+		return gaKExt.getGenericTypeReferenceAccess();
+	}
+	
+	public ParserRule getGenericTypeReferenceRule() {
+		return getGenericTypeReferenceAccess().getRule();
+	}
+	
+	//// Special rules for GenericParameter parsing
+	//GenericParameter_GenericTypeReference_Parameterized kexpressions::GenericTypeReference:
+	//	type=[annotations::NamedObject|PrimeID]
+	//	'<' genericParameters+=GenericParameter (',' genericParameters+=GenericParameter)* '>' // mandatory
+	//;
+	public KExtGrammarAccess.GenericParameter_GenericTypeReference_ParameterizedElements getGenericParameter_GenericTypeReference_ParameterizedAccess() {
+		return gaKExt.getGenericParameter_GenericTypeReference_ParameterizedAccess();
+	}
+	
+	public ParserRule getGenericParameter_GenericTypeReference_ParameterizedRule() {
+		return getGenericParameter_GenericTypeReference_ParameterizedAccess().getRule();
+	}
+	
+	//GenericParameter_ValuedObjectReference_Array kexpressions::ValuedObjectReference:
+	//	valuedObject=[kexpressions::ValuedObject|PrimeID] ('[' indices+=Expression ']')+ ('.'
+	//	subReference=ValuedObjectReference)?;
+	public KExtGrammarAccess.GenericParameter_ValuedObjectReference_ArrayElements getGenericParameter_ValuedObjectReference_ArrayAccess() {
+		return gaKExt.getGenericParameter_ValuedObjectReference_ArrayAccess();
+	}
+	
+	public ParserRule getGenericParameter_ValuedObjectReference_ArrayRule() {
+		return getGenericParameter_ValuedObjectReference_ArrayAccess().getRule();
+	}
+	
+	//GenericParameter_ValuedObjectReference_Sub kexpressions::ValuedObjectReference:
+	//	valuedObject=[kexpressions::ValuedObject|PrimeID] ('[' indices+=Expression ']')* ('.'
+	//	subReference=ValuedObjectReference);
+	public KExtGrammarAccess.GenericParameter_ValuedObjectReference_SubElements getGenericParameter_ValuedObjectReference_SubAccess() {
+		return gaKExt.getGenericParameter_ValuedObjectReference_SubAccess();
+	}
+	
+	public ParserRule getGenericParameter_ValuedObjectReference_SubRule() {
+		return getGenericParameter_ValuedObjectReference_SubAccess().getRule();
+	}
+	
+	//// ---
+	////  Scheduling Directives 
+	//// ---
 	//ScheduleDeclaration kexpressions::ScheduleDeclaration:
 	//	annotations+=Annotation*
 	//	access=AccessModifier?
@@ -4249,7 +4330,8 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 	//// Examples: array[10], initial = false, z = 0 combine max
 	//ValuedObject kexpressions::ValuedObject:
 	//	annotations+=QuotedStringAnnotation*
-	//	name=PrimeID ('[' cardinalities+=Expression ']')* ('=' initialValue=Expression)? ('combine'
+	//	name=PrimeID ('<' genericParameters+=GenericParameter (',' genericParameters+=GenericParameter)* '>')? ('['
+	//	cardinalities+=Expression ']')* ('=' initialValue=Expression)? ('combine'
 	//	combineOperator=CombineOperator)? ('label' label=STRING)?;
 	public KExtGrammarAccess.ValuedObjectElements getValuedObjectAccess() {
 		return gaKExt.getValuedObjectAccess();
@@ -4268,6 +4350,16 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getSimpleValuedObjectRule() {
 		return getSimpleValuedObjectAccess().getRule();
+	}
+	
+	//NamespaceID:
+	//	ExtendedID (':' PrimeID)*;
+	public KExtGrammarAccess.NamespaceIDElements getNamespaceIDAccess() {
+		return gaKExt.getNamespaceIDAccess();
+	}
+	
+	public ParserRule getNamespaceIDRule() {
+		return getNamespaceIDAccess().getRule();
 	}
 	
 	///**
@@ -4425,8 +4517,7 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 	//// A print functions that enables target-independent prints in the model.    
 	//PrintCallEffect keffects::PrintCallEffect:
 	//	annotations+=Annotation*
-	//	'print' ('(' parameters+=Parameter (',' parameters+=Parameter)* ')') ('schedule'
-	//	schedule+=ScheduleObjectReference+)?;
+	//	'print' ('(' parameters+=Parameter (',' parameters+=Parameter)* ')') ('schedule' schedule+=ScheduleObjectReference+)?;
 	public KEffectsGrammarAccess.PrintCallEffectElements getPrintCallEffectAccess() {
 		return gaKEffects.getPrintCallEffectAccess();
 	}

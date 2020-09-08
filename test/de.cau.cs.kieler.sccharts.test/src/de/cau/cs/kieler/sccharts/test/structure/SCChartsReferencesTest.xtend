@@ -67,9 +67,10 @@ class SCChartsReferencesTest extends AbstractXTextModelRepositoryTest<SCCharts> 
             parserNodes.asTreeIterable.filter[
                 grammarElement.eClass.equals(keyword.eClass)
                 && (grammarElement as Keyword).value == keyword.value
+                && semanticElement instanceof Scope
             ].forEach[
                 assertTrue("Referenced state " + (semanticElement as Scope).name + " in " + res.getURI.segment(res.getURI.segmentCount - 1) + " cannot be resolved",
-                    (semanticElement as Scope).reference.scope !== null)
+                    (semanticElement as Scope).reference.target !== null)
             ]
         }
     }

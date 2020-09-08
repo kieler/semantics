@@ -15,6 +15,8 @@ import de.cau.cs.kieler.kexpressions.BoolValue;
 import de.cau.cs.kieler.kexpressions.ExternString;
 import de.cau.cs.kieler.kexpressions.FloatValue;
 import de.cau.cs.kieler.kexpressions.FunctionCall;
+import de.cau.cs.kieler.kexpressions.GenericParameterDeclaration;
+import de.cau.cs.kieler.kexpressions.GenericTypeReference;
 import de.cau.cs.kieler.kexpressions.IgnoreValue;
 import de.cau.cs.kieler.kexpressions.IntValue;
 import de.cau.cs.kieler.kexpressions.JsonAnnotation;
@@ -35,6 +37,7 @@ import de.cau.cs.kieler.kexpressions.ScheduleDeclaration;
 import de.cau.cs.kieler.kexpressions.ScheduleObjectReference;
 import de.cau.cs.kieler.kexpressions.StringValue;
 import de.cau.cs.kieler.kexpressions.TextExpression;
+import de.cau.cs.kieler.kexpressions.ValueTypeReference;
 import de.cau.cs.kieler.kexpressions.ValuedObject;
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference;
 import de.cau.cs.kieler.kexpressions.VariableDeclaration;
@@ -62,6 +65,8 @@ import org.eclipse.xtext.Action;
 import org.eclipse.xtext.Parameter;
 import org.eclipse.xtext.ParserRule;
 import org.eclipse.xtext.serializer.ISerializationContext;
+import org.eclipse.xtext.serializer.acceptor.SequenceFeeder;
+import org.eclipse.xtext.serializer.sequencer.ITransientValueService.ValueTransient;
 
 @SuppressWarnings("all")
 public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequencer {
@@ -403,6 +408,19 @@ public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequ
 					return; 
 				}
 				else break;
+			case KExpressionsPackage.GENERIC_PARAMETER_DECLARATION:
+				sequence_GenericParameterDeclaration(context, (GenericParameterDeclaration) semanticObject); 
+				return; 
+			case KExpressionsPackage.GENERIC_TYPE_REFERENCE:
+				if (rule == grammarAccess.getGenericParameter_GenericTypeReference_ParameterizedRule()) {
+					sequence_GenericParameter_GenericTypeReference_Parameterized(context, (GenericTypeReference) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getGenericTypeReferenceRule()) {
+					sequence_GenericTypeReference(context, (GenericTypeReference) semanticObject); 
+					return; 
+				}
+				else break;
 			case KExpressionsPackage.IGNORE_VALUE:
 				sequence_IgnoreValue(context, (IgnoreValue) semanticObject); 
 				return; 
@@ -600,8 +618,15 @@ public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequ
 				}
 				else break;
 			case KExpressionsPackage.PARAMETER:
-				sequence_Parameter(context, (de.cau.cs.kieler.kexpressions.Parameter) semanticObject); 
-				return; 
+				if (rule == grammarAccess.getGenericParameterRule()) {
+					sequence_GenericParameter(context, (de.cau.cs.kieler.kexpressions.Parameter) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getParameterRule()) {
+					sequence_Parameter(context, (de.cau.cs.kieler.kexpressions.Parameter) semanticObject); 
+					return; 
+				}
+				else break;
 			case KExpressionsPackage.PRINT_CALL:
 				sequence_PrintCall(context, (PrintCall) semanticObject); 
 				return; 
@@ -973,6 +998,9 @@ public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequ
 					return; 
 				}
 				else break;
+			case KExpressionsPackage.VALUE_TYPE_REFERENCE:
+				sequence_ValueTypeReference(context, (ValueTypeReference) semanticObject); 
+				return; 
 			case KExpressionsPackage.VALUED_OBJECT:
 				if (rule == grammarAccess.getSimpleValuedObjectRule()) {
 					sequence_SimpleValuedObject(context, (ValuedObject) semanticObject); 
@@ -986,6 +1014,14 @@ public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequ
 			case KExpressionsPackage.VALUED_OBJECT_REFERENCE:
 				if (rule == grammarAccess.getBoolScheduleExpressionRule()) {
 					sequence_BoolScheduleExpression_ValuedObjectReference(context, (ValuedObjectReference) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getGenericParameter_ValuedObjectReference_ArrayRule()) {
+					sequence_GenericParameter_ValuedObjectReference_Array(context, (ValuedObjectReference) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getGenericParameter_ValuedObjectReference_SubRule()) {
+					sequence_GenericParameter_ValuedObjectReference_Sub(context, (ValuedObjectReference) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getRootRule()
@@ -1273,6 +1309,86 @@ public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequ
 	
 	/**
 	 * Contexts:
+	 *     GenericParameterDeclaration returns GenericParameterDeclaration
+	 *
+	 * Constraint:
+	 *     (annotations+=QuotedStringAnnotation* valuedObjects+=SimpleValuedObject (valueType=ValueType | (reference?='ref'? type=[NamedObject|PrimeID]))?)
+	 */
+	protected void sequence_GenericParameterDeclaration(ISerializationContext context, GenericParameterDeclaration semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     GenericParameter_GenericTypeReference_Parameterized returns GenericTypeReference
+	 *
+	 * Constraint:
+	 *     (type=[NamedObject|PrimeID] genericParameters+=GenericParameter genericParameters+=GenericParameter*)
+	 */
+	protected void sequence_GenericParameter_GenericTypeReference_Parameterized(ISerializationContext context, GenericTypeReference semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     GenericParameter returns Parameter
+	 *
+	 * Constraint:
+	 *     (
+	 *         expression=ValueTypeReference | 
+	 *         expression=AnyValue | 
+	 *         expression=GenericParameter_GenericTypeReference_Parameterized | 
+	 *         expression=GenericParameter_ValuedObjectReference_Array | 
+	 *         expression=GenericParameter_ValuedObjectReference_Sub | 
+	 *         expression=GenericTypeReference | 
+	 *         expression=ValuedObjectReference
+	 *     )
+	 */
+	protected void sequence_GenericParameter(ISerializationContext context, de.cau.cs.kieler.kexpressions.Parameter semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     GenericParameter_ValuedObjectReference_Array returns ValuedObjectReference
+	 *
+	 * Constraint:
+	 *     (valuedObject=[ValuedObject|PrimeID] indices+=Expression+ subReference=ValuedObjectReference?)
+	 */
+	protected void sequence_GenericParameter_ValuedObjectReference_Array(ISerializationContext context, ValuedObjectReference semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     GenericParameter_ValuedObjectReference_Sub returns ValuedObjectReference
+	 *
+	 * Constraint:
+	 *     (valuedObject=[ValuedObject|PrimeID] indices+=Expression* subReference=ValuedObjectReference)
+	 */
+	protected void sequence_GenericParameter_ValuedObjectReference_Sub(ISerializationContext context, ValuedObjectReference semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     GenericTypeReference returns GenericTypeReference
+	 *
+	 * Constraint:
+	 *     (type=[NamedObject|PrimeID] (genericParameters+=GenericParameter genericParameters+=GenericParameter*)?)
+	 */
+	protected void sequence_GenericTypeReference(ISerializationContext context, GenericTypeReference semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     Kext returns Kext
 	 *
 	 * Constraint:
@@ -1335,7 +1451,10 @@ public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequ
 	 *     (
 	 *         annotations+=Annotation* 
 	 *         access=AccessModifier? 
-	 *         (reference=[NamedObject|NamespaceID] | (extern+=ExternString extern+=ExternString*)) 
+	 *         (
+	 *             (reference=[NamedObject|NamespaceID] (genericParameters+=GenericParameter genericParameters+=GenericParameter*)?) | 
+	 *             (extern+=ExternString extern+=ExternString*)
+	 *         ) 
 	 *         valuedObjects+=ValuedObject 
 	 *         valuedObjects+=ValuedObject* 
 	 *         annotations+=CommentAnnotatonSL?
@@ -1356,7 +1475,10 @@ public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequ
 	 *     (
 	 *         annotations+=Annotation* 
 	 *         access=AccessModifier? 
-	 *         (reference=[NamedObject|NamespaceID] | (extern+=ExternString extern+=ExternString*)) 
+	 *         (
+	 *             (reference=[NamedObject|NamespaceID] (genericParameters+=GenericParameter genericParameters+=GenericParameter*)?) | 
+	 *             (extern+=ExternString extern+=ExternString*)
+	 *         ) 
 	 *         valuedObjects+=ValuedObject 
 	 *         valuedObjects+=ValuedObject* 
 	 *         annotations+=CommentAnnotatonSL?
@@ -1463,12 +1585,31 @@ public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequ
 	
 	/**
 	 * Contexts:
+	 *     ValueTypeReference returns ValueTypeReference
+	 *
+	 * Constraint:
+	 *     valueType=ValueType
+	 */
+	protected void sequence_ValueTypeReference(ISerializationContext context, ValueTypeReference semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, KExpressionsPackage.Literals.VALUE_TYPE_REFERENCE__VALUE_TYPE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KExpressionsPackage.Literals.VALUE_TYPE_REFERENCE__VALUE_TYPE));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getValueTypeReferenceAccess().getValueTypeValueTypeEnumRuleCall_0(), semanticObject.getValueType());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     ValuedObject returns ValuedObject
 	 *
 	 * Constraint:
 	 *     (
 	 *         annotations+=QuotedStringAnnotation* 
 	 *         name=PrimeID 
+	 *         (genericParameters+=GenericParameter genericParameters+=GenericParameter*)? 
 	 *         cardinalities+=Expression* 
 	 *         initialValue=Expression? 
 	 *         combineOperator=CombineOperator? 

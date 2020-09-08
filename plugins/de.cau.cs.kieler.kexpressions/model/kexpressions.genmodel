@@ -92,6 +92,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EReference kexpressions.ecore#//ValuedObject/initialValue"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EReference kexpressions.ecore#//ValuedObject/cardinalities"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute kexpressions.ecore#//ValuedObject/label"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference kexpressions.ecore#//ValuedObject/genericParameters"/>
     </genClasses>
     <genClasses ecoreClass="kexpressions.ecore#//ValuedObjectReference">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference kexpressions.ecore#//ValuedObjectReference/valuedObject"/>
@@ -160,15 +161,28 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference kexpressions.ecore#//ReferenceDeclaration/reference"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference kexpressions.ecore#//ReferenceDeclaration/parameters"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference kexpressions.ecore#//ReferenceDeclaration/extern"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference kexpressions.ecore#//ReferenceDeclaration/genericParameters"/>
+    </genClasses>
+    <genClasses ecoreClass="kexpressions.ecore#//GenericParameterDeclaration">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute kexpressions.ecore#//GenericParameterDeclaration/reference"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute kexpressions.ecore#//GenericParameterDeclaration/valueType"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference kexpressions.ecore#//GenericParameterDeclaration/type"/>
+    </genClasses>
+    <genClasses ecoreClass="kexpressions.ecore#//GenericTypeReference">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference kexpressions.ecore#//GenericTypeReference/type"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference kexpressions.ecore#//GenericTypeReference/genericParameters"/>
+    </genClasses>
+    <genClasses ecoreClass="kexpressions.ecore#//ValueTypeReference">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute kexpressions.ecore#//ValueTypeReference/valueType"/>
+    </genClasses>
+    <genClasses ecoreClass="kexpressions.ecore#//MethodDeclaration">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute kexpressions.ecore#//MethodDeclaration/returnType"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference kexpressions.ecore#//MethodDeclaration/parameterDeclarations"/>
     </genClasses>
     <genClasses ecoreClass="kexpressions.ecore#//ScheduleDeclaration">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute kexpressions.ecore#//ScheduleDeclaration/name"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute kexpressions.ecore#//ScheduleDeclaration/global"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute kexpressions.ecore#//ScheduleDeclaration/priorities"/>
-    </genClasses>
-    <genClasses ecoreClass="kexpressions.ecore#//MethodDeclaration">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute kexpressions.ecore#//MethodDeclaration/returnType"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference kexpressions.ecore#//MethodDeclaration/parameterDeclarations"/>
     </genClasses>
     <genClasses ecoreClass="kexpressions.ecore#//ScheduleObjectReference">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute kexpressions.ecore#//ScheduleObjectReference/priority"/>

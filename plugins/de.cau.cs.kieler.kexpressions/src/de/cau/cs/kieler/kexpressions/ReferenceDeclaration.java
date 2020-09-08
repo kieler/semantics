@@ -18,6 +18,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.cau.cs.kieler.kexpressions.ReferenceDeclaration#getReference <em>Reference</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.ReferenceDeclaration#getParameters <em>Parameters</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.ReferenceDeclaration#getExtern <em>Extern</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.ReferenceDeclaration#getGenericParameters <em>Generic Parameters</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.kexpressions.KExpressionsPackage#getReferenceDeclaration()
@@ -82,5 +83,17 @@ public interface ReferenceDeclaration extends Declaration {
      * @generated
      */
     EList<ExternString> getExtern();
+
+    /**
+     * Returns the value of the '<em><b>Generic Parameters</b></em>' containment reference list.
+     * The list contents are of type {@link de.cau.cs.kieler.kexpressions.Parameter}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Generic Parameters</em>' containment reference list.
+     * @see de.cau.cs.kieler.kexpressions.KExpressionsPackage#getReferenceDeclaration_GenericParameters()
+     * @model containment="true"
+     * @generated
+     */
+    EList<Parameter> getGenericParameters();
 
 } // ReferenceDeclaration

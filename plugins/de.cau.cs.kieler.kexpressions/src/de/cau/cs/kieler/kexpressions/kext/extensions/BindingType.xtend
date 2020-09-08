@@ -19,5 +19,5 @@ package de.cau.cs.kieler.kexpressions.kext.extensions
  *
  */
 enum BindingType {
-    EXPLICIT, ORDER, IMPLICIT
+    EXPLICIT, ORDER, IMPLICIT, GENERIC, GENERIC_TYPE
 }

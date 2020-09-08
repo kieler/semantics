@@ -239,7 +239,7 @@ class SCChartsLegacyConverter {
                 s
             }
             referenceCalls.put(entry.key, createScopeCall => [
-                scope = state
+                target = state
                 if (bindings.containsKey(entry.key)) {
                     for (bind : bindings.get(entry.key)) {
                         parameters += createParameter => [
