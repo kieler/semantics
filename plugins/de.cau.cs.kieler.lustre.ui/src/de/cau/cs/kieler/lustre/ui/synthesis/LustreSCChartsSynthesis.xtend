@@ -21,6 +21,7 @@ import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.ViewContext
+import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
 
 /**
  * A Synthesis that invoked the Lustre to SCCharts transformation and then invokes the SCCharts synthesis.
@@ -31,6 +32,7 @@ import de.cau.cs.kieler.klighd.ViewContext
 @ViewSynthesisShared
 class LustreSCChartsSynthesis extends AbstractDiagramSynthesis<LustreProgram> {
     
+    @Inject extension KNodeExtensions
     @Inject SCChartsSynthesis scchartsSynthesis
     
     val compilationSystemID = "de.cau.cs.kieler.lustre.scc.dataflow"
@@ -45,7 +47,20 @@ class LustreSCChartsSynthesis extends AbstractDiagramSynthesis<LustreProgram> {
     
     override transform(LustreProgram model) {
         val scc = model.compile
-        scchartsSynthesis.transform(scc.processorInstancesSequence.last.targetModel as SCCharts)
+        val rootModel = scchartsSynthesis.transform(scc.processorInstancesSequence.last.targetModel as SCCharts)
+        val noInterfaceNode = createNode
+        
+        val r = rootModel.children.get(0)
+        noInterfaceNode.children.addAll(r.children)
+        
+        // We want to omit the region border if its just one region
+        if (noInterfaceNode.children.size == 1) { 
+            val child = noInterfaceNode.children.get(0)
+            noInterfaceNode.children.remove(child)
+            noInterfaceNode.children.addAll(child.children)
+        }
+        
+        return noInterfaceNode
     }
     
     private def compile(LustreProgram lus) {
