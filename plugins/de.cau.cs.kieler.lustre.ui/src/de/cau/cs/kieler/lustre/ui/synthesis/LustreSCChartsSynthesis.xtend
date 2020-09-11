@@ -35,7 +35,7 @@ class LustreSCChartsSynthesis extends AbstractDiagramSynthesis<LustreProgram> {
     @Inject extension KNodeExtensions
     @Inject SCChartsSynthesis scchartsSynthesis
     
-    val compilationSystemID = "de.cau.cs.kieler.lustre.scc.dataflow"
+    val compilationSystemID = "de.cau.cs.kieler.lustre.scc.dataflow.regionVariables"
     
     override getDisplayedActions() {
         scchartsSynthesis.displayedActions
