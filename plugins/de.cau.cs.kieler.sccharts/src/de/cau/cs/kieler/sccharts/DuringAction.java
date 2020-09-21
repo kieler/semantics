@@ -61,10 +61,6 @@ public interface DuringAction extends LocalAction {
      * The default value is <code>"UNDEFINED"</code>.
      * The literals are from the enumeration {@link de.cau.cs.kieler.sccharts.DelayType}.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Reset</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Reset</em>' attribute.
      * @see de.cau.cs.kieler.sccharts.DelayType

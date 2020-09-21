@@ -16,10 +16,16 @@
         eType="#//LocalAction" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="reference" eType="#//ScopeCall"
         containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="genericParameterDeclarations"
+        upperBound="-1" eType="ecore:EClass ../../de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//GenericParameterDeclaration"
+        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ScopeCall" eSuperTypes="../../de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//Call">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="scope" eType="#//Scope"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="target" eType="ecore:EClass ../../de.cau.cs.kieler.annotations/model/annotations.ecore#//NamedObject"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="super" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="genericParameters" upperBound="-1"
+        eType="ecore:EClass ../../de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//Parameter"
+        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Action" abstract="true" eSuperTypes="../../de.cau.cs.kieler.annotations/model/annotations.ecore#//Annotatable ../../de.cau.cs.kieler.kexpressions/model/keffects.ecore#//Linkable">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">

@@ -69,10 +69,6 @@ public interface State extends Scope {
      * Returns the value of the '<em><b>Parent Region</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.cau.cs.kieler.sccharts.ControlflowRegion#getStates <em>States</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Parent Region</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Parent Region</em>' container reference.
      * @see #setParentRegion(ControlflowRegion)
@@ -98,10 +94,6 @@ public interface State extends Scope {
      * The list contents are of type {@link de.cau.cs.kieler.sccharts.Region}.
      * It is bidirectional and its opposite is '{@link de.cau.cs.kieler.sccharts.Region#getParentState <em>Parent State</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Regions</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Regions</em>' containment reference list.
      * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getState_Regions()
@@ -114,10 +106,6 @@ public interface State extends Scope {
     /**
      * Returns the value of the '<em><b>Initial</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Initial</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Initial</em>' attribute.
      * @see #setInitial(boolean)
@@ -140,10 +128,6 @@ public interface State extends Scope {
     /**
      * Returns the value of the '<em><b>Final</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Final</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Final</em>' attribute.
      * @see #setFinal(boolean)
@@ -166,10 +150,6 @@ public interface State extends Scope {
     /**
      * Returns the value of the '<em><b>Violation</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Violation</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Violation</em>' attribute.
      * @see #setViolation(boolean)
@@ -192,10 +172,6 @@ public interface State extends Scope {
     /**
      * Returns the value of the '<em><b>Connector</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Connector</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Connector</em>' attribute.
      * @see #setConnector(boolean)
@@ -220,10 +196,6 @@ public interface State extends Scope {
      * The list contents are of type {@link de.cau.cs.kieler.sccharts.Transition}.
      * It is bidirectional and its opposite is '{@link de.cau.cs.kieler.sccharts.Transition#getSourceState <em>Source State</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Outgoing Transitions</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Outgoing Transitions</em>' containment reference list.
      * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getState_OutgoingTransitions()
@@ -238,10 +210,6 @@ public interface State extends Scope {
      * The list contents are of type {@link de.cau.cs.kieler.sccharts.Transition}.
      * It is bidirectional and its opposite is '{@link de.cau.cs.kieler.sccharts.Transition#getTargetState <em>Target State</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Incoming Transitions</em>' reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Incoming Transitions</em>' reference list.
      * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getState_IncomingTransitions()
@@ -255,10 +223,6 @@ public interface State extends Scope {
      * Returns the value of the '<em><b>Base States</b></em>' reference list.
      * The list contents are of type {@link de.cau.cs.kieler.sccharts.State}.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Base States</em>' reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Base States</em>' reference list.
      * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getState_BaseStates()

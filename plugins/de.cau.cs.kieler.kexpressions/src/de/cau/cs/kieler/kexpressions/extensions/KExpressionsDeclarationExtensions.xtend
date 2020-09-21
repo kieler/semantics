@@ -14,12 +14,14 @@
 package de.cau.cs.kieler.kexpressions.extensions
 
 import com.google.inject.Inject
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kexpressions.BoolValue
 import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.ExternString
 import de.cau.cs.kieler.kexpressions.FloatValue
 import de.cau.cs.kieler.kexpressions.IntValue
 import de.cau.cs.kieler.kexpressions.KExpressionsFactory
+import de.cau.cs.kieler.kexpressions.MethodDeclaration
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 import de.cau.cs.kieler.kexpressions.ScheduleDeclaration
 import de.cau.cs.kieler.kexpressions.StringValue
@@ -27,13 +29,11 @@ import de.cau.cs.kieler.kexpressions.Value
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
-import java.util.List
-import org.eclipse.emf.ecore.EObject
-import java.util.Map
 import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
 import de.cau.cs.kieler.kexpressions.kext.KExtFactory
-import de.cau.cs.kieler.kexpressions.MethodDeclaration
-import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import java.util.List
+import java.util.Map
+import org.eclipse.emf.ecore.EObject
 
 /**
  * @author ssm
@@ -188,6 +188,8 @@ class KExpressionsDeclarationExtensions {
     def ReferenceDeclaration createReferenceDeclaration(ReferenceDeclaration declaration) {
         (createReferenceDeclaration as ReferenceDeclaration) => [ d |
             d.reference = declaration.reference
+            d.access = declaration.access
+            d.genericParameters += declaration.genericParameters.map[copy]
             declaration.extern.forEach[
                 d.extern += it.createExternString
             ]

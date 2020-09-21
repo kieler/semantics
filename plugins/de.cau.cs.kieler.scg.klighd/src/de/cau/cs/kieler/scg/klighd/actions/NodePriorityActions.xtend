@@ -37,8 +37,8 @@ class NodePriorityActions implements IAction {
     @Inject
     extension KRenderingExtensions
 
-    public static val SHOW_NODE_PRIORITY = SynthesisOption::createCheckOption(NodePriorityActions, "Node Priorities", true).
-        setUpdateAction(NODE_ID).setCategory(PRIO);
+    public static val SynthesisOption SHOW_NODE_PRIORITY = SynthesisOption::createCheckOption(NodePriorityActions,
+        "Node Priorities", true).setUpdateAction(NODE_ID).setCategory(PRIO)
 
     override execute(ActionContext context) {
         val viewContext = context.contextViewer.viewContext

@@ -28,6 +28,8 @@ import java.util.Stack
  */
 class Replacements extends HashMap<String, Stack<Expression>> {
     
+    public val HashMap<String, Expression> typeReplacements = newHashMap
+    
     new () {
         super()
     }
@@ -35,12 +37,14 @@ class Replacements extends HashMap<String, Stack<Expression>> {
     new (Replacements replacements) {
         super()
         
-        for (k : replacements.keySet) {
-            val st = replacements.get(k)
-            // The iterator method on java.util.Stack iterates through a Stack from the bottom up. ;-)
-            for (s : st) {
-                this.push(k, s)
-            }    
+        if (replacements !== null) {
+            for (k : replacements.keySet) {
+                val st = replacements.get(k)
+                // The iterator method on java.util.Stack iterates through a Stack from the bottom up. ;-)
+                for (s : st) {
+                    this.push(k, s)
+                }    
+            }
         }
     }
     

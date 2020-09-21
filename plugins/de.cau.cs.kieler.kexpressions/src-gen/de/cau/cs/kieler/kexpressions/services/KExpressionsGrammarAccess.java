@@ -21,12 +21,11 @@ import org.eclipse.xtext.ParserRule;
 import org.eclipse.xtext.RuleCall;
 import org.eclipse.xtext.TerminalRule;
 import org.eclipse.xtext.common.services.TerminalsGrammarAccess;
-import org.eclipse.xtext.service.AbstractElementFinder.AbstractEnumRuleElementFinder;
-import org.eclipse.xtext.service.AbstractElementFinder.AbstractGrammarElementFinder;
+import org.eclipse.xtext.service.AbstractElementFinder;
 import org.eclipse.xtext.service.GrammarProvider;
 
 @Singleton
-public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
+public class KExpressionsGrammarAccess extends AbstractElementFinder.AbstractGrammarElementFinder {
 	
 	public class RootElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.Root");
@@ -3034,7 +3033,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		public RuleCall getJsonAnnotationParserRuleCall_1() { return cJsonAnnotationParserRuleCall_1; }
 	}
 	
-	public class CompareOperatorElements extends AbstractEnumRuleElementFinder {
+	public class CompareOperatorElements extends AbstractElementFinder.AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.CompareOperator");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final EnumLiteralDeclaration cEQEnumLiteralDeclaration_0 = (EnumLiteralDeclaration)cAlternatives.eContents().get(0);
@@ -3093,7 +3092,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//"!="
 		public Keyword getNEExclamationMarkEqualsSignKeyword_5_0() { return cNEExclamationMarkEqualsSignKeyword_5_0; }
 	}
-	public class PreOperatorElements extends AbstractEnumRuleElementFinder {
+	public class PreOperatorElements extends AbstractElementFinder.AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.PreOperator");
 		private final EnumLiteralDeclaration cPREEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
 		private final Keyword cPREPreKeyword_0 = (Keyword)cPREEnumLiteralDeclaration.eContents().get(0);
@@ -3108,7 +3107,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//"pre"
 		public Keyword getPREPreKeyword_0() { return cPREPreKeyword_0; }
 	}
-	public class BitwiseNotOperatorElements extends AbstractEnumRuleElementFinder {
+	public class BitwiseNotOperatorElements extends AbstractElementFinder.AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.BitwiseNotOperator");
 		private final EnumLiteralDeclaration cBITWISE_NOTEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
 		private final Keyword cBITWISE_NOTTildeKeyword_0 = (Keyword)cBITWISE_NOTEnumLiteralDeclaration.eContents().get(0);
@@ -3123,7 +3122,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//"~"
 		public Keyword getBITWISE_NOTTildeKeyword_0() { return cBITWISE_NOTTildeKeyword_0; }
 	}
-	public class BitwiseXOrOperatorElements extends AbstractEnumRuleElementFinder {
+	public class BitwiseXOrOperatorElements extends AbstractElementFinder.AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.BitwiseXOrOperator");
 		private final EnumLiteralDeclaration cBITWISE_XOREnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
 		private final Keyword cBITWISE_XORCircumflexAccentKeyword_0 = (Keyword)cBITWISE_XOREnumLiteralDeclaration.eContents().get(0);
@@ -3138,7 +3137,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//"^"
 		public Keyword getBITWISE_XORCircumflexAccentKeyword_0() { return cBITWISE_XORCircumflexAccentKeyword_0; }
 	}
-	public class BitwiseOrOperatorElements extends AbstractEnumRuleElementFinder {
+	public class BitwiseOrOperatorElements extends AbstractElementFinder.AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.BitwiseOrOperator");
 		private final EnumLiteralDeclaration cBITWISE_OREnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
 		private final Keyword cBITWISE_ORVerticalLineKeyword_0 = (Keyword)cBITWISE_OREnumLiteralDeclaration.eContents().get(0);
@@ -3153,7 +3152,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//"|"
 		public Keyword getBITWISE_ORVerticalLineKeyword_0() { return cBITWISE_ORVerticalLineKeyword_0; }
 	}
-	public class BitwiseAndOperatorElements extends AbstractEnumRuleElementFinder {
+	public class BitwiseAndOperatorElements extends AbstractElementFinder.AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.BitwiseAndOperator");
 		private final EnumLiteralDeclaration cBITWISE_ANDEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
 		private final Keyword cBITWISE_ANDAmpersandKeyword_0 = (Keyword)cBITWISE_ANDEnumLiteralDeclaration.eContents().get(0);
@@ -3168,7 +3167,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//"&"
 		public Keyword getBITWISE_ANDAmpersandKeyword_0() { return cBITWISE_ANDAmpersandKeyword_0; }
 	}
-	public class NotOperatorElements extends AbstractEnumRuleElementFinder {
+	public class NotOperatorElements extends AbstractElementFinder.AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.NotOperator");
 		private final EnumLiteralDeclaration cNOTEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
 		private final Keyword cNOTExclamationMarkKeyword_0 = (Keyword)cNOTEnumLiteralDeclaration.eContents().get(0);
@@ -3183,7 +3182,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//"!"
 		public Keyword getNOTExclamationMarkKeyword_0() { return cNOTExclamationMarkKeyword_0; }
 	}
-	public class AddOperatorElements extends AbstractEnumRuleElementFinder {
+	public class AddOperatorElements extends AbstractElementFinder.AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.AddOperator");
 		private final EnumLiteralDeclaration cADDEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
 		private final Keyword cADDPlusSignKeyword_0 = (Keyword)cADDEnumLiteralDeclaration.eContents().get(0);
@@ -3198,7 +3197,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//"+"
 		public Keyword getADDPlusSignKeyword_0() { return cADDPlusSignKeyword_0; }
 	}
-	public class SubOperatorElements extends AbstractEnumRuleElementFinder {
+	public class SubOperatorElements extends AbstractElementFinder.AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.SubOperator");
 		private final EnumLiteralDeclaration cSUBEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
 		private final Keyword cSUBHyphenMinusKeyword_0 = (Keyword)cSUBEnumLiteralDeclaration.eContents().get(0);
@@ -3213,7 +3212,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//"-"
 		public Keyword getSUBHyphenMinusKeyword_0() { return cSUBHyphenMinusKeyword_0; }
 	}
-	public class MultOperatorElements extends AbstractEnumRuleElementFinder {
+	public class MultOperatorElements extends AbstractElementFinder.AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.MultOperator");
 		private final EnumLiteralDeclaration cMULTEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
 		private final Keyword cMULTAsteriskKeyword_0 = (Keyword)cMULTEnumLiteralDeclaration.eContents().get(0);
@@ -3228,7 +3227,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//"*"
 		public Keyword getMULTAsteriskKeyword_0() { return cMULTAsteriskKeyword_0; }
 	}
-	public class ModOperatorElements extends AbstractEnumRuleElementFinder {
+	public class ModOperatorElements extends AbstractElementFinder.AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.ModOperator");
 		private final EnumLiteralDeclaration cMODEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
 		private final Keyword cMODPercentSignKeyword_0 = (Keyword)cMODEnumLiteralDeclaration.eContents().get(0);
@@ -3243,7 +3242,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//"%"
 		public Keyword getMODPercentSignKeyword_0() { return cMODPercentSignKeyword_0; }
 	}
-	public class DivOperatorElements extends AbstractEnumRuleElementFinder {
+	public class DivOperatorElements extends AbstractElementFinder.AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.DivOperator");
 		private final EnumLiteralDeclaration cDIVEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
 		private final Keyword cDIVSolidusKeyword_0 = (Keyword)cDIVEnumLiteralDeclaration.eContents().get(0);
@@ -3258,7 +3257,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//"/"
 		public Keyword getDIVSolidusKeyword_0() { return cDIVSolidusKeyword_0; }
 	}
-	public class ValOperatorElements extends AbstractEnumRuleElementFinder {
+	public class ValOperatorElements extends AbstractElementFinder.AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.ValOperator");
 		private final EnumLiteralDeclaration cVALEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
 		private final Keyword cVALValKeyword_0 = (Keyword)cVALEnumLiteralDeclaration.eContents().get(0);
@@ -3273,7 +3272,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//"val"
 		public Keyword getVALValKeyword_0() { return cVALValKeyword_0; }
 	}
-	public class LogicalOrOperatorElements extends AbstractEnumRuleElementFinder {
+	public class LogicalOrOperatorElements extends AbstractElementFinder.AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.LogicalOrOperator");
 		private final EnumLiteralDeclaration cLOGICAL_OREnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
 		private final Keyword cLOGICAL_ORVerticalLineVerticalLineKeyword_0 = (Keyword)cLOGICAL_OREnumLiteralDeclaration.eContents().get(0);
@@ -3288,7 +3287,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//"||"
 		public Keyword getLOGICAL_ORVerticalLineVerticalLineKeyword_0() { return cLOGICAL_ORVerticalLineVerticalLineKeyword_0; }
 	}
-	public class LogicalAndOperatorElements extends AbstractEnumRuleElementFinder {
+	public class LogicalAndOperatorElements extends AbstractElementFinder.AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.LogicalAndOperator");
 		private final EnumLiteralDeclaration cLOGICAL_ANDEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
 		private final Keyword cLOGICAL_ANDAmpersandAmpersandKeyword_0 = (Keyword)cLOGICAL_ANDEnumLiteralDeclaration.eContents().get(0);
@@ -3303,7 +3302,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//"&&"
 		public Keyword getLOGICAL_ANDAmpersandAmpersandKeyword_0() { return cLOGICAL_ANDAmpersandAmpersandKeyword_0; }
 	}
-	public class ShiftLeftOperatorElements extends AbstractEnumRuleElementFinder {
+	public class ShiftLeftOperatorElements extends AbstractElementFinder.AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.ShiftLeftOperator");
 		private final EnumLiteralDeclaration cSHIFT_LEFTEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
 		private final Keyword cSHIFT_LEFTLessThanSignLessThanSignKeyword_0 = (Keyword)cSHIFT_LEFTEnumLiteralDeclaration.eContents().get(0);
@@ -3318,7 +3317,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//"<<"
 		public Keyword getSHIFT_LEFTLessThanSignLessThanSignKeyword_0() { return cSHIFT_LEFTLessThanSignLessThanSignKeyword_0; }
 	}
-	public class ShiftRightOperatorElements extends AbstractEnumRuleElementFinder {
+	public class ShiftRightOperatorElements extends AbstractElementFinder.AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.ShiftRightOperator");
 		private final EnumLiteralDeclaration cSHIFT_RIGHTEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
 		private final Keyword cSHIFT_RIGHTGreaterThanSignGreaterThanSignKeyword_0 = (Keyword)cSHIFT_RIGHTEnumLiteralDeclaration.eContents().get(0);
@@ -3333,7 +3332,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//">>"
 		public Keyword getSHIFT_RIGHTGreaterThanSignGreaterThanSignKeyword_0() { return cSHIFT_RIGHTGreaterThanSignGreaterThanSignKeyword_0; }
 	}
-	public class ShiftRightUnsignedOperatorElements extends AbstractEnumRuleElementFinder {
+	public class ShiftRightUnsignedOperatorElements extends AbstractElementFinder.AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.ShiftRightUnsignedOperator");
 		private final EnumLiteralDeclaration cSHIFT_RIGHT_UNSIGNEDEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
 		private final Keyword cSHIFT_RIGHT_UNSIGNEDGreaterThanSignGreaterThanSignGreaterThanSignKeyword_0 = (Keyword)cSHIFT_RIGHT_UNSIGNEDEnumLiteralDeclaration.eContents().get(0);
@@ -3348,7 +3347,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//">>>"
 		public Keyword getSHIFT_RIGHT_UNSIGNEDGreaterThanSignGreaterThanSignGreaterThanSignKeyword_0() { return cSHIFT_RIGHT_UNSIGNEDGreaterThanSignGreaterThanSignGreaterThanSignKeyword_0; }
 	}
-	public class PostfixAddElements extends AbstractEnumRuleElementFinder {
+	public class PostfixAddElements extends AbstractElementFinder.AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.PostfixAdd");
 		private final EnumLiteralDeclaration cPOSTFIX_ADDEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
 		private final Keyword cPOSTFIX_ADDPlusSignPlusSignKeyword_0 = (Keyword)cPOSTFIX_ADDEnumLiteralDeclaration.eContents().get(0);
@@ -3363,7 +3362,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//"++"
 		public Keyword getPOSTFIX_ADDPlusSignPlusSignKeyword_0() { return cPOSTFIX_ADDPlusSignPlusSignKeyword_0; }
 	}
-	public class PostfixSubElements extends AbstractEnumRuleElementFinder {
+	public class PostfixSubElements extends AbstractElementFinder.AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.PostfixSub");
 		private final EnumLiteralDeclaration cPOSTFIX_SUBEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
 		private final Keyword cPOSTFIX_SUBHyphenMinusHyphenMinusKeyword_0 = (Keyword)cPOSTFIX_SUBEnumLiteralDeclaration.eContents().get(0);
@@ -3378,7 +3377,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//"--"
 		public Keyword getPOSTFIX_SUBHyphenMinusHyphenMinusKeyword_0() { return cPOSTFIX_SUBHyphenMinusHyphenMinusKeyword_0; }
 	}
-	public class ConditionalOperatorElements extends AbstractEnumRuleElementFinder {
+	public class ConditionalOperatorElements extends AbstractElementFinder.AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.ConditionalOperator");
 		private final EnumLiteralDeclaration cCONDITIONALEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
 		private final Keyword cCONDITIONALQuestionMarkKeyword_0 = (Keyword)cCONDITIONALEnumLiteralDeclaration.eContents().get(0);
@@ -3393,7 +3392,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//"?"
 		public Keyword getCONDITIONALQuestionMarkKeyword_0() { return cCONDITIONALQuestionMarkKeyword_0; }
 	}
-	public class InitOperatorElements extends AbstractEnumRuleElementFinder {
+	public class InitOperatorElements extends AbstractElementFinder.AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.InitOperator");
 		private final EnumLiteralDeclaration cINITEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
 		private final Keyword cINITHyphenMinusGreaterThanSignKeyword_0 = (Keyword)cINITEnumLiteralDeclaration.eContents().get(0);
@@ -3408,7 +3407,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//"->"
 		public Keyword getINITHyphenMinusGreaterThanSignKeyword_0() { return cINITHyphenMinusGreaterThanSignKeyword_0; }
 	}
-	public class FbyOperatorElements extends AbstractEnumRuleElementFinder {
+	public class FbyOperatorElements extends AbstractElementFinder.AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.FbyOperator");
 		private final EnumLiteralDeclaration cFBYEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
 		private final Keyword cFBYFbyKeyword_0 = (Keyword)cFBYEnumLiteralDeclaration.eContents().get(0);
@@ -3423,7 +3422,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//"fby"
 		public Keyword getFBYFbyKeyword_0() { return cFBYFbyKeyword_0; }
 	}
-	public class SfbyOperatorElements extends AbstractEnumRuleElementFinder {
+	public class SfbyOperatorElements extends AbstractElementFinder.AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.SfbyOperator");
 		private final EnumLiteralDeclaration cSFBYEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
 		private final Keyword cSFBYSfbyKeyword_0 = (Keyword)cSFBYEnumLiteralDeclaration.eContents().get(0);
@@ -3438,7 +3437,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//"sfby"
 		public Keyword getSFBYSfbyKeyword_0() { return cSFBYSfbyKeyword_0; }
 	}
-	public class ValueTypeElements extends AbstractEnumRuleElementFinder {
+	public class ValueTypeElements extends AbstractElementFinder.AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.ValueType");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final EnumLiteralDeclaration cPUREEnumLiteralDeclaration_0 = (EnumLiteralDeclaration)cAlternatives.eContents().get(0);
@@ -3491,7 +3490,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//"string"
 		public Keyword getSTRINGStringKeyword_4_0() { return cSTRINGStringKeyword_4_0; }
 	}
-	public class HostTypeElements extends AbstractEnumRuleElementFinder {
+	public class HostTypeElements extends AbstractElementFinder.AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.HostType");
 		private final EnumLiteralDeclaration cHOSTEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
 		private final Keyword cHOSTHostKeyword_0 = (Keyword)cHOSTEnumLiteralDeclaration.eContents().get(0);
@@ -3506,7 +3505,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//"host"
 		public Keyword getHOSTHostKeyword_0() { return cHOSTHostKeyword_0; }
 	}
-	public class StructTypeElements extends AbstractEnumRuleElementFinder {
+	public class StructTypeElements extends AbstractElementFinder.AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.StructType");
 		private final EnumLiteralDeclaration cSTRUCTEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
 		private final Keyword cSTRUCTStructKeyword_0 = (Keyword)cSTRUCTEnumLiteralDeclaration.eContents().get(0);
@@ -3521,7 +3520,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//"struct"
 		public Keyword getSTRUCTStructKeyword_0() { return cSTRUCTStructKeyword_0; }
 	}
-	public class ClassTypeElements extends AbstractEnumRuleElementFinder {
+	public class ClassTypeElements extends AbstractElementFinder.AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.ClassType");
 		private final EnumLiteralDeclaration cCLASSEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
 		private final Keyword cCLASSClassKeyword_0 = (Keyword)cCLASSEnumLiteralDeclaration.eContents().get(0);
@@ -3536,7 +3535,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//"class"
 		public Keyword getCLASSClassKeyword_0() { return cCLASSClassKeyword_0; }
 	}
-	public class CombineOperatorElements extends AbstractEnumRuleElementFinder {
+	public class CombineOperatorElements extends AbstractElementFinder.AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.CombineOperator");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final EnumLiteralDeclaration cNONEEnumLiteralDeclaration_0 = (EnumLiteralDeclaration)cAlternatives.eContents().get(0);
@@ -3612,7 +3611,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//"host"
 		public Keyword getHOSTHostKeyword_7_0() { return cHOSTHostKeyword_7_0; }
 	}
-	public class AccessModifierElements extends AbstractEnumRuleElementFinder {
+	public class AccessModifierElements extends AbstractElementFinder.AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.AccessModifier");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final EnumLiteralDeclaration cPUBLICEnumLiteralDeclaration_0 = (EnumLiteralDeclaration)cAlternatives.eContents().get(0);
@@ -3647,7 +3646,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//'private'
 		public Keyword getPRIVATEPrivateKeyword_2_0() { return cPRIVATEPrivateKeyword_2_0; }
 	}
-	public class MethodReturnTypeElements extends AbstractEnumRuleElementFinder {
+	public class MethodReturnTypeElements extends AbstractElementFinder.AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.MethodReturnType");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final EnumLiteralDeclaration cVOIDEnumLiteralDeclaration_0 = (EnumLiteralDeclaration)cAlternatives.eContents().get(0);
@@ -3700,7 +3699,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//"string"
 		public Keyword getSTRINGStringKeyword_4_0() { return cSTRINGStringKeyword_4_0; }
 	}
-	public class ParameterAccessTypeElements extends AbstractEnumRuleElementFinder {
+	public class ParameterAccessTypeElements extends AbstractElementFinder.AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.ParameterAccessType");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final EnumLiteralDeclaration cCALL_BY_REFERENCEEnumLiteralDeclaration_0 = (EnumLiteralDeclaration)cAlternatives.eContents().get(0);

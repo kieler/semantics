@@ -18,6 +18,7 @@ import de.cau.cs.kieler.sccharts.Region;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
 import de.cau.cs.kieler.sccharts.State;
 import de.cau.cs.kieler.sccharts.Transition;
+
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -29,6 +30,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
@@ -59,20 +61,20 @@ import org.eclipse.emf.ecore.util.InternalEList;
 public class StateImpl extends ScopeImpl implements State {
     /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	public static final String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\r\n\r\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\r\n\r\nCopyright 2013 by\r\n+ Kiel University\r\n  + Department of Computer Science\r\n    + Real-Time and Embedded Systems Group\r\n\r\nThis code is provided under the terms of the Eclipse Public License (EPL).\r\nSee the file epl-v10.html for the license text.";
+    public static final String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\r\n\r\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\r\n\r\nCopyright 2013 by\r\n+ Kiel University\r\n  + Department of Computer Science\r\n    + Real-Time and Embedded Systems Group\r\n\r\nThis code is provided under the terms of the Eclipse Public License (EPL).\r\nSee the file epl-v10.html for the license text.";
 
-				/**
+    /**
      * The cached value of the '{@link #getRegions() <em>Regions</em>}' containment reference list.
      * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @see #getRegions()
      * @generated
      * @ordered
      */
-   protected EList<Region> regions;
+    protected EList<Region> regions;
 
     /**
      * The default value of the '{@link #isInitial() <em>Initial</em>}' attribute.
@@ -137,32 +139,32 @@ public class StateImpl extends ScopeImpl implements State {
     /**
      * The default value of the '{@link #isConnector() <em>Connector</em>}' attribute.
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @see #isConnector()
      * @generated
      * @ordered
      */
-	protected static final boolean CONNECTOR_EDEFAULT = false;
+    protected static final boolean CONNECTOR_EDEFAULT = false;
 
     /**
      * The cached value of the '{@link #isConnector() <em>Connector</em>}' attribute.
      * <!-- begin-user-doc -->
- * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @see #isConnector()
      * @generated
      * @ordered
      */
-protected boolean connector = CONNECTOR_EDEFAULT;
+    protected boolean connector = CONNECTOR_EDEFAULT;
 
     /**
      * The cached value of the '{@link #getOutgoingTransitions() <em>Outgoing Transitions</em>}' containment reference list.
      * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @see #getOutgoingTransitions()
      * @generated
      * @ordered
      */
-   protected EList<Transition> outgoingTransitions;
+    protected EList<Transition> outgoingTransitions;
 
     /**
      * The cached value of the '{@link #getIncomingTransitions() <em>Incoming Transitions</em>}' reference list.
@@ -209,19 +211,6 @@ protected boolean connector = CONNECTOR_EDEFAULT;
      * @generated
      */
     @Override
-    public EList<Region> getRegions() {
-        if (regions == null) {
-            regions = new EObjectContainmentWithInverseEList<Region>(Region.class, this, SCChartsPackage.STATE__REGIONS, SCChartsPackage.REGION__PARENT_STATE);
-        }
-        return regions;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
     public ControlflowRegion getParentRegion() {
         if (eContainerFeatureID() != SCChartsPackage.STATE__PARENT_REGION) return null;
         return (ControlflowRegion)eInternalContainer();
@@ -257,6 +246,19 @@ protected boolean connector = CONNECTOR_EDEFAULT;
         }
         else if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.STATE__PARENT_REGION, newParentRegion, newParentRegion));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EList<Region> getRegions() {
+        if (regions == null) {
+            regions = new EObjectContainmentWithInverseEList<Region>(Region.class, this, SCChartsPackage.STATE__REGIONS, SCChartsPackage.REGION__PARENT_STATE);
+        }
+        return regions;
     }
 
     /**
@@ -330,20 +332,20 @@ protected boolean connector = CONNECTOR_EDEFAULT;
 
     /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	@Override
+    @Override
     public boolean isConnector() {
         return connector;
     }
 
-				/**
+    /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	@Override
+    @Override
     public void setConnector(boolean newConnector) {
         boolean oldConnector = connector;
         connector = newConnector;
@@ -351,7 +353,7 @@ protected boolean connector = CONNECTOR_EDEFAULT;
             eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.STATE__CONNECTOR, oldConnector, connector));
     }
 
-				/**
+    /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -377,7 +379,7 @@ protected boolean connector = CONNECTOR_EDEFAULT;
         return incomingTransitions;
     }
 
-                /**
+    /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -390,7 +392,7 @@ protected boolean connector = CONNECTOR_EDEFAULT;
         return baseStates;
     }
 
-                /**
+    /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated

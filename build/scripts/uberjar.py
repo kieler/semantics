@@ -303,13 +303,12 @@ def create_standalone_scripts(args, jar, target_dir, klighd):
     if jar_osx:
         with open(jar_osx, 'rb') as jar_file:
             code = jar_file.read()
-            osx_cmd = '#!/usr/bin/env bash\nexec java -Djava.system.class.loader=de.cau.cs.kieler.kicool.cli.CLILoader -XstartOnFirstThread -Xmx512m %s -jar $0 "$@"'
+            osx_cmd = '#!/usr/bin/env bash\nexec java -Djava.system.class.loader=de.cau.cs.kieler.kicool.cli.CLILoader -XstartOnFirstThread -Xmx512m %s -jar $0 "$@" \n'
             
             with open(join(target_dir, args.name + '-osx'), 'wb') as file:
                 write_script(file, osx_cmd % java9_options, code)
             with open(join(target_dir, args.name + '-osxJava8'), 'wb') as file:
                 write_script(file, osx_cmd % '', code)
-
 
 def write_script(file, command, code):
     print('Creating script', basename(file.name))
