@@ -21,6 +21,7 @@ import de.cau.cs.kieler.klighd.kgraph.KEdge
 import de.cau.cs.kieler.klighd.kgraph.KGraphElement
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.kgraph.KPort
+import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions
 import java.util.List
 import org.eclipse.elk.alg.layered.options.LayerConstraint
@@ -28,8 +29,8 @@ import org.eclipse.elk.alg.layered.options.LayeredOptions
 import org.eclipse.elk.core.options.Alignment
 import org.eclipse.elk.core.options.CoreOptions
 
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import static extension de.cau.cs.kieler.annotations.ide.klighd.CommonSynthesisUtil.*
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
 /**
  * @author kolja
@@ -40,7 +41,7 @@ class EquationSimplification {
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension SCChartsSerializeHRExtensions
     @Inject extension EquationSynthesisHelper
-    @Inject extension KNodeExtensionsReplacement
+    @Inject extension KNodeExtensions
 
     var List<KNode> inputNodes = null
 

@@ -20,6 +20,7 @@ import de.cau.cs.kieler.kicool.ui.kitt.tracing.TracingVisualizationProperties
 import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
+import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.sccharts.DataflowRegion
@@ -58,7 +59,7 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
     public static val SynthesisOption CIRCUIT = SynthesisOption.createCheckOption(DataflowRegionSynthesis, "Circuit layout", false).
         setCategory(GeneralSynthesisOptions::DATAFLOW)
     
-    @Inject extension KNodeExtensionsReplacement
+    @Inject extension KNodeExtensions
     @Inject extension KRenderingExtensions
     @Inject extension KExpressionsDeclarationExtensions
     @Inject extension DataflowRegionStyles

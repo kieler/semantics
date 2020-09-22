@@ -22,6 +22,7 @@ import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.KRendering
 import de.cau.cs.kieler.klighd.krendering.KText
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
+import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions
@@ -47,7 +48,7 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 @ViewSynthesisShared
 class MethodSynthesis extends SubSynthesis<MethodImplementationDeclaration, KNode> {
 
-    @Inject extension KNodeExtensionsReplacement
+    @Inject extension KNodeExtensions
     @Inject extension KRenderingExtensions
     @Inject extension SCChartsSerializeHRExtensions
     @Inject extension ControlflowRegionStyles

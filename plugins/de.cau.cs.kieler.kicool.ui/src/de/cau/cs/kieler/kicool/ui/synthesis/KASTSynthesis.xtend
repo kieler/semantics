@@ -14,33 +14,32 @@ package de.cau.cs.kieler.kicool.ui.synthesis
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.kicool.processors.ast.KAST
-import de.cau.cs.kieler.kicool.processors.ast.KAST.KASTNode
-import de.cau.cs.kieler.kicool.ui.view.registry.KNodeExtensionsReplacement
+import de.cau.cs.kieler.kicool.processors.ast.KAST.KASTFieldReference
+import de.cau.cs.kieler.kicool.processors.ast.KAST.KASTFieldValue
+import de.cau.cs.kieler.klighd.KlighdConstants
 import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.kgraph.KNode
+import de.cau.cs.kieler.klighd.krendering.Colors
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.krendering.extensions.KColorExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KLabelExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KPolylineExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KPortExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
+import de.cau.cs.kieler.klighd.util.KlighdProperties
 import java.util.List
 import java.util.regex.Pattern
 import org.eclipse.elk.alg.layered.options.LayeredOptions
 import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.core.options.Direction
 import org.eclipse.elk.core.options.EdgeRouting
+import org.eclipse.elk.core.options.SizeConstraint
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
-import de.cau.cs.kieler.kicool.processors.ast.KAST.KASTFieldReference
-import de.cau.cs.kieler.klighd.krendering.extensions.KLabelExtensions
-import de.cau.cs.kieler.klighd.util.KlighdProperties
-import de.cau.cs.kieler.klighd.krendering.Colors
-import org.eclipse.elk.core.options.SizeConstraint
-import de.cau.cs.kieler.klighd.KlighdConstants
-import de.cau.cs.kieler.kicool.processors.ast.KAST.KASTFieldValue
 
 /**
  * @author ssm
@@ -51,7 +50,7 @@ import de.cau.cs.kieler.kicool.processors.ast.KAST.KASTFieldValue
 class KASTSynthesis extends AbstractDiagramSynthesis<KAST> {
 
 
-    @Inject extension KNodeExtensionsReplacement
+    @Inject extension KNodeExtensions
     @Inject extension KEdgeExtensions
     @Inject extension KLabelExtensions
     @Inject extension KPortExtensions

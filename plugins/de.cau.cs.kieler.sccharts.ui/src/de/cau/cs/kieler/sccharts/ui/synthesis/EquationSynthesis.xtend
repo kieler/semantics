@@ -46,6 +46,8 @@ import de.cau.cs.kieler.klighd.krendering.LineStyle
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KLabelExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KPortExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.sccharts.DataflowRegion
@@ -78,9 +80,9 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.resource.XtextResource
 import org.eclipse.xtext.resource.XtextResourceSet
 
+import static extension de.cau.cs.kieler.annotations.ide.klighd.CommonSynthesisUtil.*
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import static extension de.cau.cs.kieler.annotations.ide.klighd.CommonSynthesisUtil.*
 
 /**
  * @author ssm
@@ -139,10 +141,10 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
     public static final IProperty<Boolean> INSTANCE_EDGE = new Property<Boolean>(
         "de.cau.cs.kieler.sccharts.ui.synthesis.dataflow.instance", false);
 
-    @Inject extension KNodeExtensionsReplacement
+    @Inject extension KNodeExtensions
     @Inject extension KEdgeExtensions
     @Inject extension KLabelExtensions
-    @Inject extension KPortExtensionsReplacement
+    @Inject extension KPortExtensions
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KExpressionsCreateExtensions
     @Inject extension SCChartsSerializeHRExtensions
@@ -1040,7 +1042,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                                 val v = valuedObjects.filter[it.name.equals(id.id)].head
 
                                 p.associateWith(v)
-                                node.addPort(v, p)
+                                p.registerExistingPort(node, v)
                             }
                         }
                         return node
