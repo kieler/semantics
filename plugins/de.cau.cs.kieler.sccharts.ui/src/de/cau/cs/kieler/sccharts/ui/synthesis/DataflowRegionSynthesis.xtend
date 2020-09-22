@@ -83,7 +83,7 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
         val node = region.createNode().associateWith(region)
 
         node.addLayoutParam(CoreOptions::ALGORITHM, LayeredOptions.ALGORITHM_ID)
-        node.setLayoutOption(LayeredOptions.CONSIDER_MODEL_ORDER, OrderingStrategy.PREFER_EDGES)
+        //node.setLayoutOption(LayeredOptions.CONSIDER_MODEL_ORDER, OrderingStrategy.PREFER_EDGES)
         node.addLayoutParam(CoreOptions::CONTENT_ALIGNMENT, ContentAlignment.topCenter)
         node.addLayoutParam(CoreOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL)
         node.addLayoutParam(CoreOptions::DIRECTION, Direction::RIGHT)
