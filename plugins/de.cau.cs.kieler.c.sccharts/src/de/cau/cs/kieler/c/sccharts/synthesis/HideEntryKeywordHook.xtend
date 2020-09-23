@@ -16,15 +16,15 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.Annotatable
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
-import de.cau.cs.kieler.sccharts.ui.synthesis.styles.StateStyles
+import de.cau.cs.kieler.sccharts.ide.synthesis.styles.StateStyles
 import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
 import de.cau.cs.kieler.klighd.SynthesisOption
-import de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions
+import de.cau.cs.kieler.sccharts.ide.synthesis.GeneralSynthesisOptions
 import java.util.List
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.KContainerRendering
 import de.cau.cs.kieler.klighd.krendering.KText
-import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.SynthesisHook
+import de.cau.cs.kieler.sccharts.ide.synthesis.hooks.SynthesisHook
 
 /**
  * Removes model elements marked with the annotation hide.

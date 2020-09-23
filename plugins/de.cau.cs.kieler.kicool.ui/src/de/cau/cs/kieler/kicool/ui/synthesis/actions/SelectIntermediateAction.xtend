@@ -13,23 +13,23 @@
 package de.cau.cs.kieler.kicool.ui.synthesis.actions
 
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
+import de.cau.cs.kieler.kicool.compilation.CompilationContext
+import de.cau.cs.kieler.kicool.compilation.Processor
 import de.cau.cs.kieler.kicool.environments.MessageObjectReferences
+import de.cau.cs.kieler.kicool.ide.klighd.models.CodePlaceHolder
+import de.cau.cs.kieler.kicool.ide.synthesis.Container
+import de.cau.cs.kieler.kicool.ide.synthesis.actions.IntermediateSelection
 import de.cau.cs.kieler.kicool.ui.klighd.KiCoModelViewNotifier
-import de.cau.cs.kieler.kicool.ui.klighd.models.CodePlaceHolder
-import de.cau.cs.kieler.kicool.ui.synthesis.Container
+import de.cau.cs.kieler.kicool.ui.view.CompilerView
 import de.cau.cs.kieler.klighd.IAction
+import de.cau.cs.kieler.klighd.kgraph.KIdentifier
+import de.cau.cs.kieler.klighd.kgraph.KNode
+import org.eclipse.ui.IEditorPart
+import org.eclipse.xtend.lib.annotations.Accessors
 
-import static de.cau.cs.kieler.kicool.ui.synthesis.KNodeProperties.*
+import static de.cau.cs.kieler.kicool.ui.synthesis.KNodeUIProperties.*
 
 import static extension de.cau.cs.kieler.kicool.ui.view.EditPartSystemManager.*
-import de.cau.cs.kieler.klighd.piccolo.viewer.PiccoloViewer
-import de.cau.cs.kieler.klighd.kgraph.KNode
-import de.cau.cs.kieler.kicool.ui.view.CompilerView
-import org.eclipse.xtend.lib.annotations.Accessors
-import de.cau.cs.kieler.kicool.compilation.CompilationContext
-import org.eclipse.ui.IEditorPart
-import de.cau.cs.kieler.kicool.compilation.Processor
-import de.cau.cs.kieler.klighd.kgraph.KIdentifier
 
 /**
  * Class that handles the intermediate model requests.

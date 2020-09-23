@@ -12,7 +12,7 @@
  */
 package de.cau.cs.kieler.sccharts.ui.debug.hooks
 
-import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.SynthesisHook
+import de.cau.cs.kieler.sccharts.ide.synthesis.hooks.SynthesisHook
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import com.google.inject.Inject

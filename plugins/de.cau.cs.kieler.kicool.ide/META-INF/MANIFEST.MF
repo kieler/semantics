@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: KiCool IDE
-Bundle-SymbolicName: de.cau.cs.kieler.kicool.ide
+Bundle-SymbolicName: de.cau.cs.kieler.kicool.ide;singleton:=true
 Bundle-Version: 1.2.0.qualifier
 Bundle-Vendor: Kiel University
 Automatic-Module-Name: de.cau.cs.kieler.kicool.ide
@@ -13,6 +13,26 @@ Require-Bundle: org.antlr.runtime;bundle-version="[3.2.0,3.2.1)",
  org.eclipse.xtext.xbase.lib,
  org.eclipse.xtend.lib,
  org.eclipse.xtend.lib.macro,
- org.eclipse.emf.compare
-Export-Package: de.cau.cs.kieler.kicool.ide.contentassist.antlr,
- de.cau.cs.kieler.kicool.ide.contentassist.antlr.internal
+ org.eclipse.emf.compare,
+ de.cau.cs.kieler.klighd.ide,
+ de.cau.cs.kieler.klighd.krendering.extensions,
+ org.eclipse.elk.core,
+ org.eclipse.elk.alg.layered,
+ org.eclipse.jdt.core,
+ de.cau.cs.kieler.kgraph.text,
+ de.cau.cs.kieler.klighd.piccolo
+Export-Package: de.cau.cs.kieler.kicool.ide,
+ de.cau.cs.kieler.kicool.ide.contentassist.antlr,
+ de.cau.cs.kieler.kicool.ide.contentassist.antlr.internal,
+ de.cau.cs.kieler.kicool.ide.kitt.synthesis,
+ de.cau.cs.kieler.kicool.ide.kitt.tracing,
+ de.cau.cs.kieler.kicool.ide.klighd,
+ de.cau.cs.kieler.kicool.ide.klighd.actions,
+ de.cau.cs.kieler.kicool.ide.klighd.models,
+ de.cau.cs.kieler.kicool.ide.klighd.syntheses,
+ de.cau.cs.kieler.kicool.ide.synthesis,
+ de.cau.cs.kieler.kicool.ide.synthesis.actions,
+ de.cau.cs.kieler.kicool.ide.synthesis.styles,
+ de.cau.cs.kieler.kicool.ide.synthesis.updates,
+ de.cau.cs.kieler.kicool.ide.view.actions,
+ de.cau.cs.kieler.kicool.ide.view.registry

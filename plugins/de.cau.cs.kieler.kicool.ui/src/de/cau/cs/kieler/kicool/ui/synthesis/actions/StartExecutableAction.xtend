@@ -14,7 +14,7 @@ package de.cau.cs.kieler.kicool.ui.synthesis.actions
 
 import de.cau.cs.kieler.kicool.compilation.ExecutableContainer
 import de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure
-import de.cau.cs.kieler.kicool.ui.klighd.KiCoDiagramViewProperties
+import de.cau.cs.kieler.kicool.ide.klighd.KiCoDiagramViewProperties
 import de.cau.cs.kieler.klighd.IAction
 import java.io.File
 import org.eclipse.core.externaltools.internal.IExternalToolConstants

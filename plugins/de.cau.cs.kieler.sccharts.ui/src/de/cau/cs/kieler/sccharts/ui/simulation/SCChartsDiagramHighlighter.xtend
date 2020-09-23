@@ -14,13 +14,19 @@ package de.cau.cs.kieler.sccharts.ui.simulation
 
 import com.google.gson.JsonArray
 import de.cau.cs.kieler.kexpressions.BoolValue
+import de.cau.cs.kieler.kexpressions.FloatValue
+import de.cau.cs.kieler.kexpressions.IntValue
 import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.OperatorType
+import de.cau.cs.kieler.kexpressions.Value
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kicool.ProcessorReference
 import de.cau.cs.kieler.kicool.environments.Environment
-import de.cau.cs.kieler.kicool.ui.klighd.models.ModelChain
+import de.cau.cs.kieler.kicool.ide.klighd.models.ModelChain
+import de.cau.cs.kieler.klighd.LightDiagramLayoutConfig
+import de.cau.cs.kieler.klighd.ZoomStyle
+import de.cau.cs.kieler.klighd.kgraph.KEdge
 import de.cau.cs.kieler.klighd.kgraph.KIdentifier
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.Colors
@@ -34,23 +40,17 @@ import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.iterators.StateIterator
 import de.cau.cs.kieler.sccharts.processors.TakenTransitionSignaling
+import de.cau.cs.kieler.sccharts.ide.synthesis.EquationSynthesis
 import de.cau.cs.kieler.simulation.DataPool
 import de.cau.cs.kieler.simulation.SimulationContext
 import de.cau.cs.kieler.simulation.ui.visualization.DiagramHighlighter
 import de.cau.cs.kieler.simulation.ui.visualization.Highlighting
 import de.cau.cs.kieler.simulation.ui.visualization.ValuedHighlighting
+import java.util.ArrayList
+import java.util.HashMap
 import java.util.List
 import java.util.Set
 import java.util.stream.Collectors
-import de.cau.cs.kieler.kexpressions.Value
-import de.cau.cs.kieler.kexpressions.IntValue
-import de.cau.cs.kieler.kexpressions.FloatValue
-import de.cau.cs.kieler.klighd.LightDiagramLayoutConfig
-import de.cau.cs.kieler.klighd.ZoomStyle
-import java.util.ArrayList
-import java.util.HashMap
-import de.cau.cs.kieler.klighd.kgraph.KEdge
-import de.cau.cs.kieler.sccharts.ui.synthesis.EquationSynthesis
 
 /**
  * Highlighter for SCCharts diagrams.

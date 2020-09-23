@@ -12,7 +12,7 @@
  */
 package de.cau.cs.kieler.kicool.ui.view
 
-import de.cau.cs.kieler.kicool.ui.synthesis.KiCoolSynthesis
+import de.cau.cs.kieler.kicool.ide.synthesis.KiCoolSynthesis
 import de.cau.cs.kieler.kicool.ui.view.actions.AbstractAction
 import de.cau.cs.kieler.kicool.ui.view.actions.AutoCompileToggle
 import de.cau.cs.kieler.kicool.ui.view.actions.CompilationAction

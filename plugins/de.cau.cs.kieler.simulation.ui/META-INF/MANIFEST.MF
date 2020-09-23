@@ -34,14 +34,15 @@ Require-Bundle: de.cau.cs.kieler.simulation;visibility:=reexport,
  de.cau.cs.kieler.klighd.krendering.extensions;bundle-version="0.44.0",
  com.google.gson;bundle-version="2.7.0",
  org.eclipse.elk.core;bundle-version="0.4.0",
- de.cau.cs.kieler.simulation.ide
+ de.cau.cs.kieler.simulation.ide,
+ de.cau.cs.kieler.klighd.ide,
+ de.cau.cs.kieler.kicool.ide
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Export-Package: de.cau.cs.kieler.simulation.ui,
  de.cau.cs.kieler.simulation.ui.internal,
  de.cau.cs.kieler.simulation.ui.internal.processor,
  de.cau.cs.kieler.simulation.ui.preferences,
- de.cau.cs.kieler.simulation.ui.synthesis,
  de.cau.cs.kieler.simulation.ui.synthesis.action,
  de.cau.cs.kieler.simulation.ui.trace,
  de.cau.cs.kieler.simulation.ui.trace.contentassist,

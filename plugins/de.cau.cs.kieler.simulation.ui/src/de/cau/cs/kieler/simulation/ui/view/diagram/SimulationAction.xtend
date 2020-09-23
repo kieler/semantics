@@ -14,9 +14,9 @@ package de.cau.cs.kieler.simulation.ui.view.diagram
 
 import de.cau.cs.kieler.kicool.System
 import de.cau.cs.kieler.kicool.environments.Environment
+import de.cau.cs.kieler.kicool.ide.klighd.models.ModelChain
 import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
 import de.cau.cs.kieler.kicool.ui.klighd.KiCoModelUpdateController
-import de.cau.cs.kieler.kicool.ui.klighd.models.ModelChain
 import de.cau.cs.kieler.simulation.ui.SimulationUI
 import de.cau.cs.kieler.simulation.ui.SimulationUIPlugin
 import de.cau.cs.kieler.simulation.ui.view.pool.DataPoolView

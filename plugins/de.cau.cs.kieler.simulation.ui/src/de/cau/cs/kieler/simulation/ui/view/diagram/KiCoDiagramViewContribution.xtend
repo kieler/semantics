@@ -12,11 +12,12 @@
  */
 package de.cau.cs.kieler.simulation.ui.view.diagram
 
+import de.cau.cs.kieler.kicool.ide.klighd.models.ModelChain
 import de.cau.cs.kieler.kicool.ui.klighd.KiCoModelUpdateController
 import de.cau.cs.kieler.kicool.ui.klighd.KiCoModelViewUIContributor
-import de.cau.cs.kieler.kicool.ui.klighd.models.ModelChain
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties
 import de.cau.cs.kieler.simulation.SimulationContext
+import de.cau.cs.kieler.simulation.events.ISimulationListener
 import de.cau.cs.kieler.simulation.events.SimulationControlEvent
 import de.cau.cs.kieler.simulation.events.SimulationEvent
 import de.cau.cs.kieler.simulation.ide.CentralSimulation
@@ -31,7 +32,6 @@ import org.eclipse.ui.IMemento
 
 import static de.cau.cs.kieler.simulation.ui.SimulationUI.*
 import static de.cau.cs.kieler.simulation.ui.view.diagram.SimulationAction.*
-import de.cau.cs.kieler.simulation.events.ISimulationListener
 
 /**
  * @author als

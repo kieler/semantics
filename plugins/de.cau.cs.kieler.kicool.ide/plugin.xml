@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<plugin>
+   <extension-point id="system" name="System Configuation" schema="schema/de.cau.cs.kieler.kicool.ide.system.exsd"/>
+   <extension-point id="contribution" name="KiCo Model View Contribution" schema="schema/de.cau.cs.kieler.kicool.ide.contribution.exsd"/>
+
+    
+
+<!-- adding resource factories -->
+
+
+
+    <!-- marker definitions for de.cau.cs.kieler.kicool.KiCool -->
+
+	<!-- Quick Outline -->
+    <!-- quickfix marker resolution generator for de.cau.cs.kieler.kicool.KiCool -->
+       <extension
+         point="de.cau.cs.kieler.klighd.diagramSyntheses">
+      <diagramSynthesis
+            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kicool.ide.synthesis.GenericStringSynthesis"
+            id="de.cau.cs.kieler.kicool.ide.synthesis.GenericStringSynthesis">
+      </diagramSynthesis>
+      <diagramSynthesis
+            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kicool.ide.kitt.synthesis.TracingTreeDiagramSynthesis"
+            id="de.cau.cs.kieler.kicool.ide.kitt.syntheses.TracingTreeDiagramSynthesis">
+      </diagramSynthesis>
+      <diagramSynthesis
+            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kicool.ide.klighd.syntheses.CodePlaceHolderSynthesis"
+            id="de.cau.cs.kieler.kicool.ide.klighd.syntheses.CodePlaceHolderSynthesis">
+      </diagramSynthesis>
+      <diagramSynthesis
+            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kicool.ide.klighd.syntheses.XtextSerializationSynthesis"
+            id="de.cau.cs.kieler.kicool.ide.klighd.syntheses.XtextSerializationSynthesis">
+      </diagramSynthesis>
+      <diagramSynthesis
+            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kicool.ide.synthesis.CodeContainerSynthesis"
+            id="de.cau.cs.kieler.kicool.ide.synthesis.CodeContainerSynthesis">
+      </diagramSynthesis>
+      <diagramSynthesis
+            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kicool.ide.synthesis.EnvironmentSynthesis"
+            id="de.cau.cs.kieler.kicool.ide.synthesis.EnvironmentSynthesis">
+      </diagramSynthesis>
+      <diagramSynthesis
+            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kicool.ide.synthesis.KASTSynthesis"
+            id="de.cau.cs.kieler.kicool.ide.synthesis.KASTSynthesis">
+      </diagramSynthesis>
+      <diagramSynthesis
+            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kicool.ide.synthesis.JavaASTSynthesis"
+            id="de.cau.cs.kieler.kicool.ide.JavaASTSynthesis">
+      </diagramSynthesis>
+      <diagramSynthesis
+            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kicool.ide.synthesis.KiCoolSynthesis"
+            id="de.cau.cs.kieler.kicool.ide.synthesis.KiCoolSynthesis">
+      </diagramSynthesis>
+      <diagramSynthesis
+            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kicool.ide.synthesis.GenericCompilationResultSynthesis"
+            id="GenericCompilationResult">
+      </diagramSynthesis>
+      <diagramSynthesis
+            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kicool.ide.synthesis.MessageObjectListSynthesis"
+            id="de.cau.cs.kieler.kicool.ide.synthesis.MessageObjectListSynthesis">
+      </diagramSynthesis>
+      <diagramSynthesis
+            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kicool.ide.synthesis.ExecutableContainerSynthesis"
+            id="de.cau.cs.kieler.kicool.ide.synthesis.ExecutableContainer">
+      </diagramSynthesis>
+   </extension>
+       <extension
+             point="de.cau.cs.kieler.klighd.extensions">
+          <action
+                class="de.cau.cs.kieler.kicool.ide.synthesis.actions.ToggleProcessorOnOffAction"
+                id="de.cau.cs.kieler.kicool.ide.synthesis.actions.toggleProcessorOnOffAction">
+          </action>
+       </extension>
+</plugin>

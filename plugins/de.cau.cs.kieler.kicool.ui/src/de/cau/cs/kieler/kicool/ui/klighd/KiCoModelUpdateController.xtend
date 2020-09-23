@@ -13,17 +13,18 @@
 package de.cau.cs.kieler.kicool.ui.klighd
 
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
+import de.cau.cs.kieler.kicool.ide.klighd.KiCoDiagramViewProperties
+import de.cau.cs.kieler.kicool.ide.klighd.models.ModelChain
 import de.cau.cs.kieler.kicool.kitt.tracing.Tracing
 import de.cau.cs.kieler.kicool.registration.ModelInformation
 import de.cau.cs.kieler.kicool.ui.KiCoolUiModule
 import de.cau.cs.kieler.kicool.ui.kitt.update.TracingVisualizationUpdateStrategy
-import de.cau.cs.kieler.kicool.ui.klighd.models.ModelChain
 import de.cau.cs.kieler.kicool.ui.view.CompilerView
 import de.cau.cs.kieler.klighd.IViewer
+import de.cau.cs.kieler.klighd.ide.model.MessageModel
 import de.cau.cs.kieler.klighd.ui.view.controller.AbstractViewUpdateController
 import de.cau.cs.kieler.klighd.ui.view.controllers.EditorSaveAdapter
 import de.cau.cs.kieler.klighd.ui.view.controllers.XtextSelectionHighlighter
-import de.cau.cs.kieler.klighd.ui.view.model.MessageModel
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties
 import java.io.File
 import java.io.IOException

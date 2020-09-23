@@ -15,14 +15,15 @@ package de.cau.cs.kieler.sccharts.ui.application
 import de.cau.cs.kieler.core.model.ModelUtil
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
 import de.cau.cs.kieler.kicool.compilation.Compile
+import de.cau.cs.kieler.kicool.ide.klighd.models.ModelChain
 import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
-import de.cau.cs.kieler.kicool.ui.klighd.models.ModelChain
 import de.cau.cs.kieler.klighd.IOffscreenRenderer
 import de.cau.cs.kieler.klighd.LightDiagramServices
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.text.SCTXStandaloneSetup
 import java.io.BufferedReader
 import java.io.File
+import java.io.FileNotFoundException
 import java.io.FileReader
 import java.io.IOException
 import java.io.InputStreamReader
@@ -31,6 +32,7 @@ import java.nio.file.Files
 import java.nio.file.Paths
 import java.util.HashSet
 import java.util.Locale
+import java.util.NoSuchElementException
 import java.util.Scanner
 import java.util.Set
 import java.util.stream.Stream
@@ -41,8 +43,6 @@ import org.eclipse.equinox.app.IApplication
 import org.eclipse.equinox.app.IApplicationContext
 import org.eclipse.swt.widgets.Display
 import org.eclipse.xtext.resource.XtextResourceSet
-import java.io.FileNotFoundException
-import java.util.NoSuchElementException
 
 /**
  * @author mek

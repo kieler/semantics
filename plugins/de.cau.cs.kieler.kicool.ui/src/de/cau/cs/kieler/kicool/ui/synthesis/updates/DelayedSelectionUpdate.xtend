@@ -12,16 +12,17 @@
  */
 package de.cau.cs.kieler.kicool.ui.synthesis.updates
 
-import de.cau.cs.kieler.klighd.kgraph.KNode
+import de.cau.cs.kieler.kicool.ide.synthesis.actions.IntermediateSelection
+import de.cau.cs.kieler.kicool.ui.klighd.KiCoModelViewNotifier
 import de.cau.cs.kieler.kicool.ui.view.CompilerView
-import de.cau.cs.kieler.kicool.ui.synthesis.actions.IntermediateSelection
-import org.eclipse.ui.progress.UIJob
+import de.cau.cs.kieler.klighd.kgraph.KNode
 import org.eclipse.core.runtime.IProgressMonitor
 import org.eclipse.core.runtime.IStatus
 import org.eclipse.core.runtime.Status
-import static extension de.cau.cs.kieler.kicool.ui.synthesis.updates.ProcessorDataManager.retrieveIntermediateModel
 import org.eclipse.ui.IEditorPart
-import de.cau.cs.kieler.kicool.ui.klighd.KiCoModelViewNotifier
+import org.eclipse.ui.progress.UIJob
+
+import static de.cau.cs.kieler.kicool.ui.synthesis.updates.ProcessorDataManager.*
 
 /**
  * Class that runs a selection setting in the UI thread after a short delay. 

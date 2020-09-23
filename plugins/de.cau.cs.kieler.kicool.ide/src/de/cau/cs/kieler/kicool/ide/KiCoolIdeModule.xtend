@@ -8,4 +8,13 @@ package de.cau.cs.kieler.kicool.ide
  * Use this class to register ide components.
  */
 class KiCoolIdeModule extends AbstractKiCoolIdeModule {
+    
+    // The plug-in ID
+    public static final String PLUGIN_ID = "de.cau.cs.kieler.kicool.ide"; //$NON-NLS-1$
+    public static final String UI_BUNDLE_ID = "de.cau.cs.kieler.kicool.ui";
+    /** KIEM ID for source model. */
+    public static final String SOURCE_MODEL_ID = "de.cau.cs.kieler.kico.klighd.sourceModel";    
+    
+    public static final String RESOURCE_PATH = "resources/";
+    public static final String ICON_PATH = RESOURCE_PATH + "icons/";
 }

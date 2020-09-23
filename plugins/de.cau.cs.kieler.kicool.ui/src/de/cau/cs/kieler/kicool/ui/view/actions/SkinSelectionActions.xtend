@@ -12,27 +12,21 @@
  */
 package de.cau.cs.kieler.kicool.ui.view.actions
 
-import org.eclipse.xtend.lib.annotations.Accessors
+import de.cau.cs.kieler.kicool.ide.synthesis.styles.SkinSelector
+import de.cau.cs.kieler.kicool.ide.view.actions.AbstractSkinSelectionActions
 import de.cau.cs.kieler.kicool.ui.view.CompilerView
 import java.util.List
 import org.eclipse.jface.action.IAction
-import de.cau.cs.kieler.kicool.ui.synthesis.styles.SkinSelector
+import org.eclipse.xtend.lib.annotations.Accessors
+
+import static de.cau.cs.kieler.kicool.ide.synthesis.styles.SkinSelector.*
 
 /**
  * @author ssm
  * @kieler.design 2017-05-12 proposed
  * @kieler.rating 2017-05-12 proposed yellow  
  */
-class SkinSelectionActions {
-
-    public val static SKINS = #[new Pair<String, String>("Default Skin", "default/"),
-                         new Pair<String, String>("Flexible Skin", "flexible/"),
-                         new Pair<String, String>("Fixed Skin", "fixed/"),
-                         new Pair<String, String>("SCCharts Skin", "scc/"),
-                         new Pair<String, String>("Detailed Skin", "detailed/")
-    ]
-    
-    public val static SKINS_MAX_NAME_SIZE = #[255, 255, 15, 255, 255]
+class SkinSelectionActions extends AbstractSkinSelectionActions {
 
     @Accessors List<AbstractAction> actions = <AbstractAction> newLinkedList
     @Accessors private CompilerView view

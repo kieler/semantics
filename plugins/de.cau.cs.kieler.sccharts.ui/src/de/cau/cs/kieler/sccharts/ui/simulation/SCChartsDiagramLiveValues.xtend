@@ -32,7 +32,7 @@ import de.cau.cs.kieler.klighd.ZoomStyle
 import de.cau.cs.kieler.simulation.ui.visualization.DiagramHighlighter
 import de.cau.cs.kieler.simulation.SimulationContext
 import de.cau.cs.kieler.simulation.DataPool
-import de.cau.cs.kieler.sccharts.ui.synthesis.EquationSynthesis
+import de.cau.cs.kieler.sccharts.ide.synthesis.EquationSynthesis
 
 /**
  * FIXME This class is instantiated via bundle start!

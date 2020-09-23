@@ -12,9 +12,10 @@
  */
 package de.cau.cs.kieler.kicool.ui.synthesis.actions
 
+import de.cau.cs.kieler.kicool.ide.synthesis.actions.AbstractSelectNothing
 import de.cau.cs.kieler.klighd.IAction
 
-import static de.cau.cs.kieler.kicool.ui.synthesis.KNodeProperties.*
+import static de.cau.cs.kieler.kicool.ui.synthesis.KNodeUIProperties.*
 
 /**
  * Class that handles select nothing requests.
@@ -24,9 +25,7 @@ import static de.cau.cs.kieler.kicool.ui.synthesis.KNodeProperties.*
  * @kieler.rating 2018-04-12 proposed yellow
  *
  */
-class SelectNothing implements IAction {
-    
-    public static val ID = "de.cau.cs.kieler.kicool.ui.synthesis.actions.selectNothing"
+class SelectNothing extends AbstractSelectNothing {
     
     override execute(ActionContext context) {
         val intermediateData = context.KNode.getProperty(INTERMEDIATE_DATA)
@@ -34,7 +33,7 @@ class SelectNothing implements IAction {
             intermediateData.view.editPartSystemManager.intermediateSelection = null
         }
         
-        ActionResult.createResult(false).dontAnimateLayout()
+        IAction.ActionResult.createResult(false).dontAnimateLayout()
     }
     
 }

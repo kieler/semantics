@@ -24,7 +24,7 @@ import com.google.inject.Guice
 import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import org.eclipse.emf.ecore.util.EcoreUtil
-import de.cau.cs.kieler.sccharts.ui.synthesis.styles.StateStyles
+import de.cau.cs.kieler.sccharts.ide.synthesis.styles.StateStyles
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.KContainerRendering
 import de.cau.cs.kieler.klighd.krendering.KRectangle

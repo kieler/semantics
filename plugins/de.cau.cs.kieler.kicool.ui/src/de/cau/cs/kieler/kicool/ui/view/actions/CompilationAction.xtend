@@ -16,9 +16,9 @@ import de.cau.cs.kieler.kicool.compilation.CompilationContext
 import de.cau.cs.kieler.kicool.compilation.Compile
 import de.cau.cs.kieler.kicool.deploy.processor.AbstractSystemCompilerProcessor
 import de.cau.cs.kieler.kicool.environments.Environment
+import de.cau.cs.kieler.kicool.ide.synthesis.actions.ToggleProcessorOnOffAction
 import de.cau.cs.kieler.kicool.kitt.tracing.Tracing
 import de.cau.cs.kieler.kicool.ui.klighd.ModelReaderUtil
-import de.cau.cs.kieler.kicool.ui.synthesis.actions.ToggleProcessorOnOffAction
 import de.cau.cs.kieler.kicool.ui.view.CompilerView
 import org.eclipse.jface.action.Action
 import org.eclipse.jface.action.IAction

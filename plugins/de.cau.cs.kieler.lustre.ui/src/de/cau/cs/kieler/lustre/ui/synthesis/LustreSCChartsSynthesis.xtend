@@ -15,7 +15,7 @@ package de.cau.cs.kieler.lustre.ui.synthesis
 import com.google.inject.Inject
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import de.cau.cs.kieler.lustre.lustre.LustreProgram
-import de.cau.cs.kieler.sccharts.ui.synthesis.SCChartsSynthesis
+import de.cau.cs.kieler.sccharts.ide.synthesis.SCChartsSynthesis
 import de.cau.cs.kieler.kicool.compilation.Compile
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.kicool.environments.Environment

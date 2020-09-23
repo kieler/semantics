@@ -14,18 +14,17 @@ package de.cau.cs.kieler.kicool.ui.synthesis
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.kicool.compilation.ExecutableContainer
-import de.cau.cs.kieler.kicool.ui.KiCoolUiModule
 import de.cau.cs.kieler.kicool.ui.synthesis.actions.StartExecutableAction
+import de.cau.cs.kieler.klighd.ide.model.MessageModel
+import de.cau.cs.kieler.klighd.ide.syntheses.MessageModelSynthesis
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.KImage
-import de.cau.cs.kieler.klighd.krendering.KRectangle
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
-import de.cau.cs.kieler.klighd.ui.view.model.MessageModel
-import de.cau.cs.kieler.klighd.ui.view.syntheses.MessageModelSynthesis
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
+import de.cau.cs.kieler.kicool.ide.KiCoolIdeModule
 
 /**
  * Generic synthesis for ExecutableContainer with strart button.
@@ -51,7 +50,7 @@ class ExecutableContainerSynthesis extends AbstractDiagramSynthesis<ExecutableCo
     // Synthesis
     override KNode transform(ExecutableContainer model) {
         // create basic representation with message model synthesis
-        val rootNode = (new MessageModel("Executable", model.file.toPath.fileName.toString, KiCoolUiModule.PLUGIN_ID, "icons/play-button.png", 150)).transform
+        val rootNode = (new MessageModel("Executable", model.file.toPath.fileName.toString, KiCoolIdeModule.PLUGIN_ID, "icons/play-button.png", 150)).transform
         // Add action
         if (rootNode !== null && !rootNode.children.empty) {
             rootNode.eAllContents.filter(KNode).forEach[it.suppressSelectability]

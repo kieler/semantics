@@ -12,13 +12,13 @@
  */
 package de.cau.cs.kieler.kicool.ui.synthesis.actions
 
-import de.cau.cs.kieler.klighd.IAction
-
-import de.cau.cs.kieler.klighd.kgraph.KNode
-import org.eclipse.emf.ecore.EObject
-import de.cau.cs.kieler.klighd.kgraph.KIdentifier
+import de.cau.cs.kieler.kicool.ide.synthesis.actions.AbstractSelectParent
 import de.cau.cs.kieler.kicool.ui.synthesis.updates.ProcessorDataManager
+import de.cau.cs.kieler.klighd.IAction.ActionResult
+import de.cau.cs.kieler.klighd.kgraph.KIdentifier
+import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.KContainerRendering
+import org.eclipse.emf.ecore.EObject
 
 /**
  * Class that redirects select actions to the processor body node.
@@ -28,9 +28,7 @@ import de.cau.cs.kieler.klighd.krendering.KContainerRendering
  * @kieler.rating 2018-04-12 proposed yellow
  *
  */
-class SelectParent implements IAction {
-    
-    public static val ID = "de.cau.cs.kieler.kicool.ui.synthesis.actions.selectParent"
+class SelectParent extends AbstractSelectParent {
     
     override execute(ActionContext context) {
         var EObject node = context.KNode

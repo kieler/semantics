@@ -22,17 +22,14 @@ import org.eclipse.core.runtime.IStatus
 import org.eclipse.core.runtime.Status
 import org.eclipse.ui.dialogs.ResourceSelectionDialog
 import org.eclipse.ui.statushandlers.StatusManager
+import de.cau.cs.kieler.simulation.ide.synthesis.action.AbstractAddCoSimulationAction
 
 /**
  * @author als
  * @kieler.design proposed
  * @kieler.rating proposed yellow
  */
-class AddCoSimulationAction implements IAction {
-
-    /** The action ID. */
-    public static final String ID =
-            "de.cau.cs.kieler.simulation.ui.synthesis.action.AddCoSimulationAction";
+class AddCoSimulationAction extends AbstractAddCoSimulationAction {
 
     /**
      * {@inheritDoc}

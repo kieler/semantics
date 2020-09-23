@@ -4,30 +4,6 @@
    <extension
          point="de.cau.cs.kieler.klighd.extensions">
       <action
-            class="de.cau.cs.kieler.sccharts.ui.synthesis.actions.ReferenceExpandAction"
-            id="de.cau.cs.kieler.sccharts.ui.synthesis.actions.ReferenceExpandAction">
-      </action>
-      <action
-            class="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.LabelShorteningHook"
-            id="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.LabelShorteningHook">
-      </action>
-      <action
-            class="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.LayoutHook"
-            id="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.LayoutHook">
-      </action>
-      <action
-            class="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.actions.MemorizingExpandCollapseAction"
-            id="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.actions.MemorizingExpandCollapseAction">
-      </action>
-      <action
-            class="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.actions.CollapseAllRegionsAction"
-            id="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.actions.CollapseAllRegionsAction">
-      </action>
-      <action
-            class="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.actions.ExpandAllRegionsAction"
-            id="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.actions.ExpandAllRegionsAction">
-      </action>
-      <action
             class="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.actions.ToggleDependencyAction"
             id="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.actions.toggleDependencyAction">
       </action>
@@ -42,18 +18,6 @@
    </extension>
    <extension
          point="de.cau.cs.kieler.klighd.diagramSyntheses">
-      <diagramSynthesis
-            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.sccharts.ui.synthesis.SCChartsSynthesis"
-            id="de.cau.cs.kieler.sccharts.ui.synthesis.SCChartsSynthesis">
-      </diagramSynthesis>
-      <diagramSynthesis
-            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.sccharts.ui.synthesis.srtg.SRTGSynthesis"
-            id="de.cau.cs.kieler.sccharts.ui.synthesis.srtg.SRTGSynthesis">
-      </diagramSynthesis>
-      <diagramSynthesis
-            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.sccharts.ui.synthesis.ScopeSynthesis"
-            id="de.cau.cs.kieler.sccharts.ui.synthesis.ScopeSynthesis">
-      </diagramSynthesis>
    </extension>
     <extension
             point="org.eclipse.ui.editors">

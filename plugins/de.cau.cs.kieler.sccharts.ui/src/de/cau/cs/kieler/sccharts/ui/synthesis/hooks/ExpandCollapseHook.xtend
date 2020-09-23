@@ -13,15 +13,19 @@
 package de.cau.cs.kieler.sccharts.ui.synthesis.hooks
 
 import de.cau.cs.kieler.klighd.DisplayedActionData
+import de.cau.cs.kieler.klighd.LightDiagramLayoutConfig
 import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.ViewContext
+import de.cau.cs.kieler.klighd.internal.util.KlighdInternalProperties
+import de.cau.cs.kieler.klighd.kgraph.KGraphElement
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.Scope
-import de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions
-import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.actions.CollapseAllRegionsAction
-import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.actions.ExpandAllRegionsAction
+import de.cau.cs.kieler.sccharts.ide.synthesis.GeneralSynthesisOptions
+import de.cau.cs.kieler.sccharts.ide.synthesis.hooks.SynthesisHook
+import de.cau.cs.kieler.sccharts.ide.synthesis.hooks.actions.CollapseAllRegionsAction
+import de.cau.cs.kieler.sccharts.ide.synthesis.hooks.actions.ExpandAllRegionsAction
 import de.cau.cs.kieler.sccharts.ui.text.SCTXEditor
 import java.util.Set
 import java.util.WeakHashMap
@@ -32,14 +36,9 @@ import org.eclipse.xtext.resource.XtextResource
 import org.eclipse.xtext.ui.editor.XtextEditor
 import org.eclipse.xtext.util.concurrent.IUnitOfWork
 
-import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
-import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
-import static extension de.cau.cs.kieler.sccharts.ui.synthesis.hooks.actions.MemorizingExpandCollapseAction.*
 import static extension de.cau.cs.kieler.klighd.kgraph.util.KGraphIterators.*
-import de.cau.cs.kieler.klighd.kgraph.KGraphElement
-import de.cau.cs.kieler.klighd.internal.util.KlighdInternalProperties
-import de.cau.cs.kieler.klighd.LightDiagramServices
-import de.cau.cs.kieler.klighd.LightDiagramLayoutConfig
+import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
+import static extension de.cau.cs.kieler.sccharts.ide.synthesis.hooks.actions.MemorizingExpandCollapseAction.*
 
 /**
  * Applies the correct initial expansion state to regions.

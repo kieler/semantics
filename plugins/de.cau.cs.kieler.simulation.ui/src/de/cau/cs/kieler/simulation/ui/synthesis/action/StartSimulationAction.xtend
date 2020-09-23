@@ -13,21 +13,18 @@
 package de.cau.cs.kieler.simulation.ui.synthesis.action
 
 import de.cau.cs.kieler.klighd.IAction
+import de.cau.cs.kieler.klighd.IAction.ActionResult
 import de.cau.cs.kieler.simulation.SimulationContext
+import de.cau.cs.kieler.simulation.ide.synthesis.action.AbstractStartSimulationAction
 import de.cau.cs.kieler.simulation.ui.SimulationUI
 import de.cau.cs.kieler.simulation.ui.view.pool.DataPoolView
-import org.eclipse.ui.PlatformUI
 
 /**
  * @author als
  * @kieler.design proposed
  * @kieler.rating proposed yellow
  */
-class StartSimulationAction implements IAction {
-
-    /** The action ID. */
-    public static final String ID =
-            "de.cau.cs.kieler.simulation.ui.synthesis.action.StartSimulationAction";
+class StartSimulationAction extends AbstractStartSimulationAction {
 
     /**
      * {@inheritDoc}

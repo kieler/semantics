@@ -12,23 +12,23 @@
  */
 package de.cau.cs.kieler.scg.klighd.simulation
 
+import com.google.inject.Guice
+import com.google.inject.Inject
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.kicool.ide.klighd.models.ModelChain
 import de.cau.cs.kieler.klighd.krendering.Colors
 import de.cau.cs.kieler.klighd.krendering.KForeground
 import de.cau.cs.kieler.klighd.krendering.KRenderingFactory
-import java.util.List
-import de.cau.cs.kieler.simulation.ui.visualization.DiagramHighlighter
-import de.cau.cs.kieler.simulation.SimulationContext
-import de.cau.cs.kieler.kicool.ui.klighd.models.ModelChain
-import de.cau.cs.kieler.scg.Node
-import de.cau.cs.kieler.scg.SCGraphs
-import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.Assignment
-import de.cau.cs.kieler.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
-import com.google.inject.Inject
-import com.google.inject.Guice
 import de.cau.cs.kieler.scg.Conditional
+import de.cau.cs.kieler.scg.Node
+import de.cau.cs.kieler.scg.SCGraph
+import de.cau.cs.kieler.scg.SCGraphs
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
+import de.cau.cs.kieler.simulation.SimulationContext
+import de.cau.cs.kieler.simulation.ui.visualization.DiagramHighlighter
+import java.util.List
 
 class SCGDiagramHighlighter extends DiagramHighlighter {
     

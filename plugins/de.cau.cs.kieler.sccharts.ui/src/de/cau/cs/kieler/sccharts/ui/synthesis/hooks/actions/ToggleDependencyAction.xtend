@@ -12,48 +12,31 @@
  */
 package de.cau.cs.kieler.sccharts.ui.synthesis.hooks.actions
 
-import de.cau.cs.kieler.kicool.compilation.CodeContainer
-import de.cau.cs.kieler.kicool.environments.MessageObjectReferences
-import de.cau.cs.kieler.kicool.ui.klighd.KiCoModelViewNotifier
-import de.cau.cs.kieler.kicool.ui.klighd.models.CodePlaceHolder
-import de.cau.cs.kieler.kicool.ui.synthesis.Container
-import de.cau.cs.kieler.klighd.IAction
-
-import static de.cau.cs.kieler.kicool.ui.synthesis.KNodeProperties.*
-
-import static extension de.cau.cs.kieler.kicool.ui.view.EditPartSystemManager.*
-import de.cau.cs.kieler.klighd.kgraph.KEdge
-import de.cau.cs.kieler.klighd.util.ModelingUtil
-import de.cau.cs.kieler.klighd.kgraph.KGraphPackage
-import de.cau.cs.kieler.klighd.kgraph.KGraphElement
-import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.ShowStateDependencyHook
 import de.cau.cs.kieler.kexpressions.Schedulable
-
-import de.cau.cs.kieler.kexpressions.ScheduleObjectReference
-import de.cau.cs.kieler.klighd.LightDiagramServices
-import org.eclipse.emf.ecore.EObject
-import org.eclipse.elk.graph.properties.MapPropertyHolder
-import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties
-import de.cau.cs.kieler.klighd.kgraph.KNode
-import de.cau.cs.kieler.sccharts.SCCharts
-import org.eclipse.elk.graph.properties.IProperty
-import org.eclipse.elk.graph.properties.Property
-import de.cau.cs.kieler.kexpressions.keffects.DataDependency
-import de.cau.cs.kieler.kicool.compilation.Compile
-import de.cau.cs.kieler.kicool.ui.klighd.KiCoDiagramViewProperties
-import de.cau.cs.kieler.kicool.compilation.CompilationContext
-
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.kexpressions.kext.DeclarationScope
 import de.cau.cs.kieler.kexpressions.ScheduleDeclaration
-import com.google.inject.Inject
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.ScheduleObjectReference
 import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kexpressions.keffects.DataDependency
+import de.cau.cs.kieler.kexpressions.kext.DeclarationScope
+import de.cau.cs.kieler.kicool.compilation.CompilationContext
+import de.cau.cs.kieler.kicool.compilation.Compile
+import de.cau.cs.kieler.kicool.ide.klighd.KiCoDiagramViewProperties
 import de.cau.cs.kieler.kicool.ui.view.CompilerViewPartListener
+import de.cau.cs.kieler.klighd.IAction.ActionResult
+import de.cau.cs.kieler.klighd.kgraph.KEdge
+import de.cau.cs.kieler.klighd.kgraph.KGraphElement
+import de.cau.cs.kieler.klighd.kgraph.KGraphPackage
+import de.cau.cs.kieler.klighd.util.ModelingUtil
+import de.cau.cs.kieler.sccharts.SCCharts
+import de.cau.cs.kieler.sccharts.ide.synthesis.hooks.actions.AbstractToggleDependencyAction
+import org.eclipse.emf.ecore.EObject
+import org.eclipse.xtext.resource.XtextResource
 import org.eclipse.xtext.ui.editor.XtextEditor
 import org.eclipse.xtext.util.concurrent.IUnitOfWork
-import org.eclipse.xtext.resource.XtextResource
+
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
 /**
  * Toggle the dependency direction.
@@ -63,17 +46,10 @@ import org.eclipse.xtext.resource.XtextResource
  * @kieler.rating 2018-07-30 proposed yellow
  *
  */
-class ToggleDependencyAction implements IAction {
+class ToggleDependencyAction extends AbstractToggleDependencyAction {
     
     extension KExpressionsDeclarationExtensions decl = new KExpressionsDeclarationExtensions
     extension KExpressionsValuedObjectExtensions vo = new KExpressionsValuedObjectExtensions
-    
-    public static val IProperty<DataDependency> DATA_DEPENDENCY =
-        new Property<DataDependency>("de.cau.cs.kieler.sccharts.ui.synthesis.hools.dataDependency", null)    
-    
-    public static val ID = "de.cau.cs.kieler.sccharts.ui.synthesis.hooks.actions.toggleDependencyAction"
-    
-    public static val AUTO_SCHEDULE_OBJECT_NAME = "_auto"
     
     override execute(ActionContext context) {
         val originalContext = context.viewContext.getProperty(KiCoDiagramViewProperties.COMPILATION_CONTEXT)

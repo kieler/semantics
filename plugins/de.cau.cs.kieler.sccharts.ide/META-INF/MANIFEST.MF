@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: SCCharts IDE
-Bundle-SymbolicName: de.cau.cs.kieler.sccharts.ide
+Bundle-SymbolicName: de.cau.cs.kieler.sccharts.ide;singleton:=true
 Bundle-Version: 1.2.0.qualifier
 Automatic-Module-Name: de.cau.cs.kieler.sccharts.ide
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
@@ -12,7 +12,23 @@ Require-Bundle: org.antlr.runtime;bundle-version="[3.2.0,3.2.1)",
  org.eclipse.xtend.lib.macro,
  org.eclipse.xtext.ide;bundle-version="2.12.0",
  de.cau.cs.kieler.sccharts,
- de.cau.cs.kieler.core
-Export-Package: de.cau.cs.kieler.sccharts.ide.text.contentassist.antlr,
+ de.cau.cs.kieler.core,
+ de.cau.cs.kieler.kicool.ide,
+ de.cau.cs.kieler.klighd,
+ de.cau.cs.kieler.klighd.krendering.extensions,
+ org.eclipse.elk.core,
+ de.cau.cs.kieler.klighd.ide,
+ org.eclipse.elk.alg.layered,
+ de.cau.cs.kieler.kicool,
+ de.cau.cs.kieler.scg,
+ org.eclipse.elk.alg.force,
+ de.cau.cs.kieler.klighd.piccolo
+Export-Package: de.cau.cs.kieler.sccharts.ide.synthesis,
+ de.cau.cs.kieler.sccharts.ide.synthesis.actions,
+ de.cau.cs.kieler.sccharts.ide.synthesis.hooks,
+ de.cau.cs.kieler.sccharts.ide.synthesis.hooks.actions,
+ de.cau.cs.kieler.sccharts.ide.synthesis.labels,
+ de.cau.cs.kieler.sccharts.ide.synthesis.styles,
+ de.cau.cs.kieler.sccharts.ide.text.contentassist.antlr,
  de.cau.cs.kieler.sccharts.ide.text.contentassist.antlr.internal
 

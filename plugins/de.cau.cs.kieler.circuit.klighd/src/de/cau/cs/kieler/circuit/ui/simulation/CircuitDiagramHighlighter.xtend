@@ -15,31 +15,23 @@ package de.cau.cs.kieler.circuit.ui.simulation
 
 import com.google.common.collect.HashMultimap
 import com.google.inject.Guice
+import com.google.inject.Inject
 import de.cau.cs.kieler.circuit.Actor
 import de.cau.cs.kieler.circuit.Link
 import de.cau.cs.kieler.circuit.Port
-import de.cau.cs.kieler.klighd.kgraph.KEdge
-import de.cau.cs.kieler.klighd.kgraph.KNode
+import de.cau.cs.kieler.kicool.ide.klighd.models.ModelChain
 import de.cau.cs.kieler.klighd.krendering.Colors
-import de.cau.cs.kieler.klighd.krendering.KBackground
-import de.cau.cs.kieler.klighd.krendering.KContainerRendering
 import de.cau.cs.kieler.klighd.krendering.KForeground
 import de.cau.cs.kieler.klighd.krendering.KRendering
 import de.cau.cs.kieler.klighd.krendering.KRenderingFactory
-import de.cau.cs.kieler.klighd.krendering.KRoundedBendsPolyline
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
+import de.cau.cs.kieler.simulation.SimulationContext
+import de.cau.cs.kieler.simulation.ui.visualization.DiagramHighlighter
 import java.util.HashMap
 import java.util.HashSet
 import java.util.LinkedList
 import java.util.List
 import java.util.Set
-import org.eclipse.elk.graph.properties.Property
-import org.eclipse.swt.widgets.Display
-import static java.lang.Math.toIntExact
-import de.cau.cs.kieler.simulation.ui.visualization.DiagramHighlighter
-import com.google.inject.Inject
-import de.cau.cs.kieler.simulation.SimulationContext
-import de.cau.cs.kieler.kicool.ui.klighd.models.ModelChain
 
 /**
  * @author fry 

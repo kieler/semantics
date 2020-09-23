@@ -13,40 +13,28 @@
 package de.cau.cs.kieler.c.sccharts.synthesis
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.kicool.compilation.CodeContainer
-import de.cau.cs.kieler.kicool.ui.klighd.models.CodePlaceHolder
-import de.cau.cs.kieler.klighd.LightDiagramServices
-import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
-import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
-import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
+import de.cau.cs.kieler.kicool.ide.view.registry.KNodeExtensionsReplacement
 import de.cau.cs.kieler.klighd.SynthesisOption
-import de.cau.cs.kieler.kicool.ui.klighd.syntheses.CodePlaceHolderSynthesis
 import de.cau.cs.kieler.klighd.kgraph.KNode
-import java.util.Collection
-import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
-import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
+import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.krendering.extensions.KColorExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensions
-import de.cau.cs.kieler.kicool.compilation.Processor
 import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
-import org.eclipse.elk.core.options.CoreOptions
-import org.eclipse.elk.alg.layered.options.LayeredOptions
-import org.eclipse.elk.core.options.EdgeRouting
 import de.cau.cs.kieler.klighd.krendering.extensions.KPolylineExtensions
-import de.cau.cs.kieler.kicool.ProcessorReference
-import de.cau.cs.kieler.kicool.ProcessorSystem
 import de.cau.cs.kieler.klighd.krendering.extensions.KPortExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
+import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
+import java.util.List
+import java.util.regex.Pattern
+import org.eclipse.cdt.core.dom.ast.IASTNode
+import org.eclipse.cdt.core.dom.ast.IASTTranslationUnit
+import org.eclipse.cdt.internal.core.dom.parser.c.CASTProblem
+import org.eclipse.elk.alg.layered.options.LayeredOptions
+import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.core.options.Direction
-import de.cau.cs.kieler.klighd.krendering.Trigger
+import org.eclipse.elk.core.options.EdgeRouting
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
-import org.eclipse.elk.alg.layered.options.LayerConstraint
-import de.cau.cs.kieler.kicool.ui.view.registry.KNodeExtensionsReplacement
-import org.eclipse.cdt.core.dom.ast.IASTTranslationUnit
-import org.eclipse.cdt.core.dom.ast.IASTNode
-import java.util.List
-import org.eclipse.cdt.internal.core.dom.parser.c.CASTProblem
-import java.util.regex.Pattern
 
 /**
  * @author ssm
