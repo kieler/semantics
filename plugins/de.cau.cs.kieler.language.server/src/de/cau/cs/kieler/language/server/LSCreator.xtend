@@ -61,7 +61,9 @@ class LSCreator extends AbstractLsCreator {
         rectPack.client = languageClient as KGraphLanguageClient
         diagramHighlighters = newArrayList
         for (iLSdhc : KielerServiceLoader.load(ILSDiagramHighlighterContribution)) {
-            diagramHighlighters.add(iLSdhc.getHighlighter(injector))
+            var highlighter = iLSdhc.getHighlighter(injector)
+            diagramHighlighters.add(highlighter)
+            highlighter.registerObserver
         }
     }
     

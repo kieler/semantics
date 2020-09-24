@@ -33,7 +33,7 @@ import de.cau.cs.kieler.simulation.ide.CentralSimulation
  * @author sdo
  * @see de.cau.cs.kieler.simulation.ui.visualization.KlighdPiccoloDiagramHighlightingHandler
  */
-abstract class LSDiagramHighlightingHandler extends AbstractDiagramHighlightingHandler implements ILSDiagramHighlighter {
+class LSDiagramHighlightingHandler extends AbstractDiagramHighlightingHandler implements ILSDiagramHighlighter {
 
     @Inject SimulationLanguageServerExtension simulationExt
 
