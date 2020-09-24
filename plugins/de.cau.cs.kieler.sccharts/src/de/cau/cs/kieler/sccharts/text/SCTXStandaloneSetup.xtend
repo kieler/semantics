@@ -25,9 +25,7 @@ import de.cau.cs.kieler.sccharts.SCChartsPackage
 class SCTXStandaloneSetup extends SCTXStandaloneSetupGenerated implements KielerLanguage {
 	
     protected static Injector injector
-    /**
-     * Used by LS to override previously created injector, if the current injector does not contain an SCTXIdeSetup
-     */
+    
     def static doSetup() {
         if (injector === null) {
             injector = new SCTXStandaloneSetup().createInjectorAndDoEMFRegistration()

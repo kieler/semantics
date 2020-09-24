@@ -43,7 +43,8 @@ class DataPool implements IKiCoolCloneable {
     @Accessors
     val outputs = <Simulatable, DataPool>newHashMap
     
-    public var JsonObject pool = new JsonObject
+    @Accessors(PUBLIC_GETTER)
+    var JsonObject pool = new JsonObject
     val Map<String, DataPoolEntry> entryCache = newHashMap
         
     // -----------------------------------------
