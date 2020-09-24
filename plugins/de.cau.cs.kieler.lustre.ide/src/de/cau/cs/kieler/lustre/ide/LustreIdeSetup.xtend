@@ -46,24 +46,5 @@ class LustreIdeSetup extends LustreStandaloneSetup implements ILSSetup {
     override doLSSetup() {
         return LustreIdeSetup.doSetup
     }
-    
-    override createInjectorAndDoEMFRegistration() {
-        // register default ePackages
-        if (!Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().containsKey("ecore"))
-            Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put(
-                "ecore", new EcoreResourceFactoryImpl());
-        if (!Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().containsKey("xmi"))
-            Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put(
-                "xmi", new XMIResourceFactoryImpl());
-        if (!Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().containsKey("xtextbin"))
-            Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put(
-                "xtextbin", new BinaryGrammarResourceFactoryImpl());
-        if (!EPackage.Registry.INSTANCE.containsKey(XtextPackage.eNS_URI))
-            EPackage.Registry.INSTANCE.put(XtextPackage.eNS_URI, XtextPackage.eINSTANCE);
-
-        val injector = createInjector();
-        register(injector);
-        return injector;
-    }
 	
 }
