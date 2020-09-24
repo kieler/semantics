@@ -13,6 +13,7 @@
 package de.cau.cs.kieler.lustre.ide
 
 import com.google.inject.Guice
+import de.cau.cs.kieler.core.ls.ILSSetup
 import de.cau.cs.kieler.lustre.LustreRuntimeModule
 import de.cau.cs.kieler.lustre.LustreStandaloneSetup
 import org.eclipse.emf.ecore.EPackage
@@ -29,7 +30,7 @@ import org.eclipse.xtext.util.Modules2
  * @author sdo
  * 
  */
-class LustreIdeSetup extends LustreStandaloneSetup {
+class LustreIdeSetup extends LustreStandaloneSetup implements ILSSetup {
 
 	override createInjector() {
 		Guice.createInjector(Modules2.mixin(new LustreRuntimeModule, new LustreIdeModule))
@@ -40,6 +41,10 @@ class LustreIdeSetup extends LustreStandaloneSetup {
             injector = new LustreIdeSetup().createInjectorAndDoEMFRegistration()
         }
         return injector
+    }
+    
+    override doLSSetup() {
+        return LustreIdeSetup.doSetup
     }
     
     override createInjectorAndDoEMFRegistration() {

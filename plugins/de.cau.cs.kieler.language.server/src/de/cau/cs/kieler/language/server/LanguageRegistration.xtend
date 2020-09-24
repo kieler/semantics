@@ -12,6 +12,7 @@
  */
 package de.cau.cs.kieler.language.server
 
+import de.cau.cs.kieler.core.ls.ILSSetup
 import de.cau.cs.kieler.core.services.KielerServiceLoader
 import de.cau.cs.kieler.pragmatics.language.server.PragmaticsLanguageRegistration
 
@@ -25,8 +26,8 @@ class LanguageRegistration extends PragmaticsLanguageRegistration {
     override bindAndRegisterLanguages() {        
         // Bind and register all needed languages.
         super.bindAndRegisterLanguages
-        for (contribution: KielerServiceLoader.load(ILSSetupContribution)) {
-            contribution.LSSetup.doLSSetup()
+        for (ideSetup: KielerServiceLoader.load(ILSSetup)) {
+            ideSetup.doLSSetup()
         }
     }
 }

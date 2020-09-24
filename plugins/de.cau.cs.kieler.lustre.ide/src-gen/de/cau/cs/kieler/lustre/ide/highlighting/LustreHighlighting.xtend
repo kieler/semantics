@@ -4,8 +4,8 @@
 package de.cau.cs.kieler.lustre.ide.highlighting
 
 
+import de.cau.cs.kieler.core.ls.IHighlighting
 import java.util.List
-import de.cau.cs.kieler.annotations.xtext.IHighlighting
 
 class LustreHighlighting implements IHighlighting {
     override String getId() {
@@ -15,35 +15,80 @@ class LustreHighlighting implements IHighlighting {
         return "Lustre"
     }
     override List<String> getKeywords() {
-        return #["and",
+        return #["_",
+        "and",
         "assert",
         "automaton",
-        "body",
+        "bool",
+        "class",
+        "combine",
+        "commuting",
+        "conflicting",
         "const",
-        "continue",
         "current",
+        "div",
+        "do",
         "else",
-        "end",
+        "emit",
+        "enum",
+        "expression",
+        "extern",
         "fby",
+        "float",
+        "function",
+        "global",
+        "host",
         "if",
+        "include",
+        "initial",
+        "input",
+        "int",
+        "is",
+        "json",
+        "label",
+        "last",
         "let",
+        "max",
+        "min",
         "mod",
         "node",
+        "none",
+        "nor",
         "not",
+        "null",
         "or",
-        "package",
+        "output",
         "pre",
-        "provides",
+        "print",
+        "private",
+        "protected",
+        "public",
+        "random",
+        "randomize",
+        "real",
+        "ref",
+        "restart",
+        "resume",
         "returns",
+        "schedule",
+        "scope",
+        "sfby",
+        "signal",
+        "state",
+        "static",
+        "string",
         "struct",
         "tel",
         "then",
         "type",
         "unless",
+        "unsafe",
         "until",
-        "uses",
+        "val",
         "var",
-        "when"
+        "void",
+        "when",
+        "xor"
         ]
     }
 }

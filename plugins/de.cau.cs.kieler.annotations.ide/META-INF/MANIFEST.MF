@@ -19,6 +19,5 @@ Require-Bundle: org.antlr.runtime;bundle-version="[3.2.0,3.2.1)",
 Export-Package: de.cau.cs.kieler.annotations.ide,
  de.cau.cs.kieler.annotations.ide.contentassist.antlr,
  de.cau.cs.kieler.annotations.ide.contentassist.antlr.internal,
- de.cau.cs.kieler.annotations.ide.highlighting,
  de.cau.cs.kieler.annotations.ide.klighd
 

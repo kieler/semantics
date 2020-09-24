@@ -18,11 +18,12 @@ import de.cau.cs.kieler.esterel.EsterelRuntimeModule
 import de.cau.cs.kieler.esterel.EsterelStandaloneSetup
 import de.cau.cs.kieler.scl.ide.SCLIdeSetup
 import org.eclipse.xtext.util.Modules2
+import de.cau.cs.kieler.core.ls.ILSSetup
 
 /**
  * Initialization support for running Xtext languages as language servers.
  */
-class EsterelIdeSetup extends EsterelStandaloneSetup {
+class EsterelIdeSetup extends EsterelStandaloneSetup implements ILSSetup {
 
 	override createInjector() {
 		Guice.createInjector(Modules2.mixin(new EsterelRuntimeModule, new EsterelIdeModule))
@@ -33,6 +34,10 @@ class EsterelIdeSetup extends EsterelStandaloneSetup {
             injector = new EsterelIdeSetup().createInjectorAndDoEMFRegistration()
         }
         return injector
+    }
+    
+    override doLSSetup() {
+        return EsterelIdeSetup.doSetup
     }
     
     override Injector createInjectorAndDoEMFRegistration() {
