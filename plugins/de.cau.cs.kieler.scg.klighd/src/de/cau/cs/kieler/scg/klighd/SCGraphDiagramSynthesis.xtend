@@ -308,7 +308,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         node.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 25.0);
         node.setLayoutOption(CoreOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
         node.setLayoutOption(CoreOptions::ALGORITHM, LayeredOptions.ALGORITHM_ID);
-        node.setLayoutOption(LayeredOptions::CONSIDER_MODEL_ORDER, OrderingStrategy.PREFER_EDGES);
+        //TODO Reactivate when related bug is fixed: https://github.com/eclipse/elk/issues/696
+        //node.setLayoutOption(LayeredOptions::CONSIDER_MODEL_ORDER, OrderingStrategy.PREFER_EDGES);
         node.setLayoutOption(LayeredOptions::THOROUGHNESS, 100)
         node.setLayoutOption(CoreOptions::SEPARATE_CONNECTED_COMPONENTS, false);
         if (scg.hasAnnotation(ANNOTATION_SEQUENTIALIZED)) {

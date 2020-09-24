@@ -117,7 +117,8 @@ class SCGraphHierarchySynthesis {
         }
         
         if ((SHOW_BASICBLOCKS.booleanValue || SHOW_SCHEDULINGBLOCKS.booleanValue) && !scg.basicBlocks.nullOrEmpty) {
-            root.setLayoutOption(LayeredOptions::HIERARCHY_HANDLING, HierarchyHandling.INCLUDE_CHILDREN)
+            //TODO Reactivate when related bug is fixed: https://github.com/eclipse/elk/issues/700
+            //root.setLayoutOption(LayeredOptions::HIERARCHY_HANDLING, HierarchyHandling.INCLUDE_CHILDREN)
         }
         
         scg.nodes.filter(typeof(Fork)).forEach [
