@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.sccharts.ui.simulation
+package de.cau.cs.kieler.sccharts.ide.simulation
 
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
@@ -29,10 +29,12 @@ import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.KPolygon
 import de.cau.cs.kieler.klighd.ZoomStyle
-import de.cau.cs.kieler.simulation.ui.visualization.DiagramHighlighter
 import de.cau.cs.kieler.simulation.SimulationContext
 import de.cau.cs.kieler.simulation.DataPool
-import de.cau.cs.kieler.sccharts.ui.synthesis.EquationSynthesis
+import de.cau.cs.kieler.simulation.ide.visualization.AbstractDiagramHighlighter
+
+import static de.cau.cs.kieler.sccharts.ide.synthesis.EquationSynthesisProperties.*
+import com.google.inject.Inject
 
 /**
  * FIXME This class is instantiated via bundle start!
@@ -42,14 +44,11 @@ import de.cau.cs.kieler.sccharts.ui.synthesis.EquationSynthesis
  * @kieler.rating 2017-10-05 proposed yellow
  *
  */
-class SCChartsDiagramLiveValues extends DiagramHighlighter {
+class SCChartsDiagramLiveValues extends AbstractDiagramHighlighter {
     
-    extension SCChartsScopeExtensions sccScopeExtensions = new SCChartsScopeExtensions
-    extension KExpressionsValuedObjectExtensions kexpressionsValuedObjectRExtensions = new KExpressionsValuedObjectExtensions
-    extension SCChartsSerializeHRExtensions serializeHRExtension = new SCChartsSerializeHRExtensions
-    public static val SCTXInjector = SCTXStandaloneSetup.doSetup()
-    
-    private static var SCChartsDiagramLiveValues instance
+    @Inject extension SCChartsScopeExtensions
+    @Inject extension KExpressionsValuedObjectExtensions
+    @Inject extension SCChartsSerializeHRExtensions
     
     protected val triggerEdgeMap = <Expression, KEdge> newLinkedHashMap
     protected val valuedObjectTextMap = <ValuedObject, KText> newLinkedHashMap
@@ -66,15 +65,6 @@ class SCChartsDiagramLiveValues extends DiagramHighlighter {
     private static val MAX_UPDATE_PAUSE = 1000
     
     private var long lastUpdateTime
-    
-    private new() {}
-    static def create() {
-        if(instance === null) {
-            instance = new SCChartsDiagramLiveValues
-            instance.enabled = false
-        }
-        instance
-    }
     
     override getName() {
         return "SCCharts Live Values"
@@ -124,7 +114,7 @@ class SCChartsDiagramLiveValues extends DiagramHighlighter {
             
             if (scope instanceof DataflowRegion) {
                 var node = diagramViewContext.getTargetElements(scope).filter(KNode).head
-                var nodes = node.children.filter[getProperty(EquationSynthesis.INPUT_FLAG) || getProperty(EquationSynthesis.OUTPUT_FLAG)]
+                var nodes = node.children.filter[getProperty(INPUT_FLAG) || getProperty(OUTPUT_FLAG)]
                 for (n : nodes) {
                     val voRef = diagramViewContext.getSourceElement(n)
                     if( voRef instanceof ValuedObjectReference){

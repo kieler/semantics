@@ -83,6 +83,7 @@ import org.eclipse.xtext.resource.XtextResourceSet
 import static extension de.cau.cs.kieler.annotations.ide.klighd.CommonSynthesisUtil.*
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import static de.cau.cs.kieler.sccharts.ide.synthesis.EquationSynthesisProperties.*
 
 /**
  * @author ssm
@@ -123,23 +124,6 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         EquationSynthesis, "Combine all Data Access Nodes", false).setCategory(GeneralSynthesisOptions::DATAFLOW)
     public static val SynthesisOption SHOW_ARROWS = SynthesisOption.createCheckOption(EquationSynthesis,
         "Arrows", false).setCategory(GeneralSynthesisOptions::DATAFLOW)
-
-    public static final IProperty<Boolean> INLINED_REFERENCE = new Property<Boolean>(
-        "de.cau.cs.kieler.sccharts.ui.synthesis.dataflow.inlinedReference", false);
-    public static final IProperty<Boolean> INPUT_FLAG = new Property<Boolean>(
-        "de.cau.cs.kieler.sccharts.ui.synthesis.dataflow.inputFlag", false);
-    public static final IProperty<Boolean> OUTPUT_FLAG = new Property<Boolean>(
-        "de.cau.cs.kieler.sccharts.ui.synthesis.dataflow.outputFlag", false);
-    public static final IProperty<Boolean> DATA_ARRAY_FLAG = new Property<Boolean>(
-        "de.cau.cs.kieler.sccharts.ui.synthesis.dataflow.dataArrayFlag", false);
-    public static final IProperty<Boolean> DATA_ACCESS_FLAG = new Property<Boolean>(
-        "de.cau.cs.kieler.sccharts.ui.synthesis.dataflow.dataAccessFlag", false);
-    public static final IProperty<Boolean> REFERENCE_NODE = new Property<Boolean>(
-        "de.cau.cs.kieler.sccharts.ui.synthesis.dataflow.referenceNode", false);
-    public static final IProperty<Boolean> SEQUENTIAL_EDGE = new Property<Boolean>(
-        "de.cau.cs.kieler.sccharts.ui.synthesis.dataflow.sequential", false);
-    public static final IProperty<Boolean> INSTANCE_EDGE = new Property<Boolean>(
-        "de.cau.cs.kieler.sccharts.ui.synthesis.dataflow.instance", false);
 
     @Inject extension KNodeExtensions
     @Inject extension KEdgeExtensions

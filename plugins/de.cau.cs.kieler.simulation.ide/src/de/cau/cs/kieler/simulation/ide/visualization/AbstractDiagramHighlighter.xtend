@@ -3,7 +3,7 @@
  *
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
- * Copyright 2019 by
+ * Copyright 2017 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -17,23 +17,21 @@ import de.cau.cs.kieler.klighd.kgraph.KLabeledGraphElement
 import de.cau.cs.kieler.klighd.krendering.KForeground
 import de.cau.cs.kieler.simulation.DataPool
 import de.cau.cs.kieler.simulation.SimulationContext
-import de.cau.cs.kieler.simulation.events.ISimulationListener
-import de.cau.cs.kieler.simulation.events.SimulationEvent
 import java.util.List
 import java.util.WeakHashMap
 import org.eclipse.emf.ecore.EObject
 
-import static de.cau.cs.kieler.simulation.ide.CentralSimulation.*
-
 /**
- * This diagram highĺighter one abstraction layer between the diagram highlighter used for the LS and for eclipse.
- * @author sdo
+ * Base class to highlight a model in the diagram view.
+ * This class is supposed to be handled by an implementation of an AbstractDiagramHighlightingHandler.
+ * 
+ * @author aas, als
  *
  */
-abstract class IdeDiagramHighlighter implements ISimulationListener {
+abstract class AbstractDiagramHighlighter {
     
     /**
-     * The elements that have been highlighted since the last call of unhighlightDiagram.
+     * The elements that have been highlighted scince the last call of unhighlightDiagram.
      */
     protected var List<Highlighting> lastHighlighting = newArrayList
     
@@ -49,29 +47,23 @@ abstract class IdeDiagramHighlighter implements ISimulationListener {
      */
     protected var Object diagramModel
 
+    def setDiagramViewContext(ViewContext vc) {
+        diagramViewContext = vc
+        diagramModel = vc.inputModel
+    }
+    
     /**
-     * Constructor
-     * 
-     * Registers the simulation listener for this instance.
+     * Returns a user readable name for this highlighted.
+     * This name may not contain a comma, since it can be stored with other names in a comma separated string.
      */
-    new() {
-        addListener(this)
-    }
-    
-    protected def addListener() {
-        addListener(this)
-    }
-    
-    protected def removeListener() {
-        removeListener(this)
-    }
+    abstract def String getName()
 
     /**
      * Prepares for diagram highlighting.
      * The pool is the initial pool before the first tick.
      * Typically this should not be highlighted because variables may not have been initialized yet.
      */
-    protected def void initialize(SimulationContext ctx) {
+    def void initialize(SimulationContext ctx) {
         highlightingHistory.clear
     }
     
@@ -80,38 +72,16 @@ abstract class IdeDiagramHighlighter implements ISimulationListener {
      * 
      * @param pool The pool from the simulation
      */
-    protected def void update(SimulationContext ctx) {
+    def void update(SimulationContext ctx) {
         updateHistory
     }
     
     /**
      * Stop and remove all highlighting.
      */
-    protected def void stop(SimulationContext ctx) {
+    def void stop(SimulationContext ctx) {
         unhighlightDiagram
     }
-    
-    override abstract update(SimulationContext ctx, SimulationEvent e)
-    
-    /**
-     * Returns the current model in the diagram.
-     * 
-     * @param the current model in the diagram
-     */
-    protected def Object getDiagramModel() {
-        diagramViewContext = getDiagramViewContext
-        if(diagramViewContext === null) {
-            return null
-        }
-        return diagramViewContext.inputModel
-    }
-    
-    /**
-     * Returns the diagram view context.
-     * 
-     * @return the diagram view context
-     */
-    protected abstract def ViewContext getDiagramViewContext()
     
     /**
      * Removes all highlights.
@@ -135,17 +105,7 @@ abstract class IdeDiagramHighlighter implements ISimulationListener {
             lastHighlighting.add(highlight)
         }
     }
-    
-    /**
-     * Records all following changes to the diagram to apply them all at once using applyDiagramBatchUpdate.
-     */
-    protected abstract def void startDiagramBatchUpdate()
-    
-    /**
-     * Applies all changes to the diagram that have been recorded since the last call of startDiagramBatchUpdate.
-     */
-    protected abstract def void applyDiagramBatchUpdate()
-    
+
     /**
      * Returns the highlighting of the given EObjects with the given style.
      * 
@@ -156,7 +116,7 @@ abstract class IdeDiagramHighlighter implements ISimulationListener {
         val highlighting = <Highlighting> newArrayList
         for (eObject : eObjects) {
             val element = diagramViewContext.getTargetElement(eObject, typeof(KLabeledGraphElement));
-            if (element != null) {
+            if (element !== null) {
                 highlighting.add(new Highlighting(element, style, eObject))
             }
         }
@@ -186,4 +146,4 @@ abstract class IdeDiagramHighlighter implements ISimulationListener {
 //        }
     }
 }
-                
+					

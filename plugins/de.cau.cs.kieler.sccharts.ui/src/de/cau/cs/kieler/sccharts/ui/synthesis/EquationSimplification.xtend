@@ -31,6 +31,7 @@ import org.eclipse.elk.core.options.CoreOptions
 
 import static extension de.cau.cs.kieler.annotations.ide.klighd.CommonSynthesisUtil.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import static de.cau.cs.kieler.sccharts.ide.synthesis.EquationSynthesisProperties.*
 
 /**
  * @author kolja
@@ -203,8 +204,8 @@ class EquationSimplification {
                     unneeded.redirectOutgoingWires(node)
                     nodes.betterRemove(unneeded, node)
                 }
-                node.setProperty(EquationSynthesis.INPUT_FLAG, false)
-                node.setProperty(EquationSynthesis.OUTPUT_FLAG, false)
+                node.setProperty(INPUT_FLAG, false)
+                node.setProperty(OUTPUT_FLAG, false)
                 node.setProperty(LayeredOptions::LAYERING_LAYER_CONSTRAINT, LayerConstraint::NONE)
                 node.setProperty(CoreOptions::ALIGNMENT, Alignment.AUTOMATIC)
             }

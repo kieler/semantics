@@ -11,12 +11,10 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.kicool.ui.klighd.models
+package de.cau.cs.kieler.kicool.ide.klighd.models
 
-import de.cau.cs.kieler.kicool.ide.klighd.models.CodePlaceHolder
 import de.cau.cs.kieler.kicool.kitt.tracing.Tracing
 import de.cau.cs.kieler.kicool.kitt.tracing.internal.TracingChain
-import de.cau.cs.kieler.kicool.ui.klighd.syntheses.ModelChainSynthesis
 import de.cau.cs.kieler.klighd.ide.model.MessageModel
 import java.util.HashMap
 import java.util.LinkedList
@@ -24,8 +22,6 @@ import java.util.LinkedList
 /** 
  * This is a Wrapper model for a list of models. Related to {@link ModelChainSynthesis}.
  * @author als
- * @kieler.design 2014-07-30 proposed
- * @kieler.rating 2014-07-30 proposed yellow
  */
 class ModelChain {
     /** 

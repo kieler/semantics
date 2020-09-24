@@ -10,10 +10,12 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.sccharts.ide.simulation
+package de.cau.cs.kieler.sccharts.ide.language.server
 
-import de.cau.cs.kieler.language.server.ILSDiagramHighlighterContribution
 import com.google.inject.Injector
+import de.cau.cs.kieler.language.server.ILSDiagramHighlighterContribution
+import de.cau.cs.kieler.sccharts.ide.simulation.SCChartsDiagramHighlighter
+import de.cau.cs.kieler.simulation.ide.language.server.LSDiagramHighlightingHandler
 
 /**
  * @author sdo
@@ -22,6 +24,6 @@ import com.google.inject.Injector
 class SCChartsLSDiagramHighlighterContribution implements ILSDiagramHighlighterContribution {
     
     override getHighlighter(Injector injector) {
-        return SCChartsLSDiagramHighlighter.create(injector)
+        return LSDiagramHighlightingHandler.create(injector, SCChartsDiagramHighlighter)
     }
 }

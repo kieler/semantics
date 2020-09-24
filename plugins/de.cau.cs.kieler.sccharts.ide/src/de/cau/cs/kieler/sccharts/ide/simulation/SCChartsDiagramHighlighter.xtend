@@ -10,17 +10,24 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.sccharts.ui.simulation
+package de.cau.cs.kieler.sccharts.ide.simulation
 
 import com.google.gson.JsonArray
+import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.BoolValue
+import de.cau.cs.kieler.kexpressions.FloatValue
+import de.cau.cs.kieler.kexpressions.IntValue
 import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.OperatorType
+import de.cau.cs.kieler.kexpressions.Value
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kicool.ProcessorReference
 import de.cau.cs.kieler.kicool.environments.Environment
-import de.cau.cs.kieler.kicool.ui.klighd.models.ModelChain
+import de.cau.cs.kieler.kicool.ide.klighd.models.ModelChain
+import de.cau.cs.kieler.klighd.LightDiagramLayoutConfig
+import de.cau.cs.kieler.klighd.ZoomStyle
+import de.cau.cs.kieler.klighd.kgraph.KEdge
 import de.cau.cs.kieler.klighd.kgraph.KIdentifier
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.Colors
@@ -36,21 +43,16 @@ import de.cau.cs.kieler.sccharts.iterators.StateIterator
 import de.cau.cs.kieler.sccharts.processors.TakenTransitionSignaling
 import de.cau.cs.kieler.simulation.DataPool
 import de.cau.cs.kieler.simulation.SimulationContext
+import de.cau.cs.kieler.simulation.ide.visualization.AbstractDiagramHighlighter
 import de.cau.cs.kieler.simulation.ide.visualization.Highlighting
-import de.cau.cs.kieler.simulation.ui.visualization.DiagramHighlighter
-import de.cau.cs.kieler.simulation.ui.visualization.ValuedHighlighting
+import de.cau.cs.kieler.simulation.ide.visualization.ValuedHighlighting
+import java.util.ArrayList
+import java.util.HashMap
 import java.util.List
 import java.util.Set
 import java.util.stream.Collectors
-import de.cau.cs.kieler.kexpressions.Value
-import de.cau.cs.kieler.kexpressions.IntValue
-import de.cau.cs.kieler.kexpressions.FloatValue
-import de.cau.cs.kieler.klighd.LightDiagramLayoutConfig
-import de.cau.cs.kieler.klighd.ZoomStyle
-import java.util.ArrayList
-import java.util.HashMap
-import de.cau.cs.kieler.klighd.kgraph.KEdge
-import de.cau.cs.kieler.sccharts.ui.synthesis.EquationSynthesis
+
+import static de.cau.cs.kieler.sccharts.ide.synthesis.EquationSynthesisProperties.*
 
 /**
  * Highlighter for SCCharts diagrams.
@@ -65,14 +67,9 @@ import de.cau.cs.kieler.sccharts.ui.synthesis.EquationSynthesis
  * @author aas
  * 
  */
-class SCChartsDiagramHighlighter extends DiagramHighlighter {
+class SCChartsDiagramHighlighter extends AbstractDiagramHighlighter {
 
-    extension static SCChartsStateExtensions scchartsStateExtensions = new SCChartsStateExtensions
-
-    /**
-     * Single instance.
-     */
-    static var SCChartsDiagramHighlighter instance
+    @Inject extension SCChartsStateExtensions
 
     /**
      * The traversed transitions.
@@ -117,16 +114,6 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
      * The taken transition values from the last tick
      */
     var lastTakenTransitionValues = <Integer> newLinkedList
-
-    private new() {
-    }
-
-    static def create() {
-        if (instance === null) {
-            instance = new SCChartsDiagramHighlighter
-        }
-        instance
-    }
 
     /**
      * {@inheritDoc}
@@ -192,10 +179,10 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
                     for (highlight : currentDataflowHighlighting) {
                         if (highlight.element instanceof KNode) {
                             val region = highlight.element as KNode
-                            var next = region.children.filter[it.incomingEdges.filter[!isSequential && !isInstance].size == 0 || getProperty(EquationSynthesis.REFERENCE_NODE)].toList
+                            var next = region.children.filter[it.incomingEdges.filter[!isSequential && !isInstance].size == 0 || getProperty(REFERENCE_NODE)].toList
                             next += region.children.filter [
-                                getDiagramViewContext().getSourceElement(it) instanceof OperatorExpression &&
-                                    (getDiagramViewContext().getSourceElement(it) as OperatorExpression).operator ==
+                                diagramViewContext.getSourceElement(it) instanceof OperatorExpression &&
+                                    (diagramViewContext.getSourceElement(it) as OperatorExpression).operator ==
                                         OperatorType.PRE
                             ].toList
                             val visited = newArrayList
@@ -204,7 +191,7 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
                             while (next.size != 0) {
                                 val first = next.get(0)
                                 next.remove(0)
-                                val original = getDiagramViewContext().getSourceElement(first)
+                                val original = diagramViewContext.getSourceElement(first)
                                 if (original instanceof Value) {
                                     for (e : first.outgoingEdges.filter[!isSequential && !isInstance]) {
                                         if (!visited.contains(e)) {
@@ -226,12 +213,12 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
                                                 next.add(e.target)
                                         }
                                     }
-                                } else if (first.getProperty(EquationSynthesis.REFERENCE_NODE)) {
+                                } else if (first.getProperty(REFERENCE_NODE)) {
                                     for (e : first.outgoingEdges.filter[!isSequential && !isInstance]) {
                                         if (!visited.contains(e)) {
                                             visited.add(e)
                                             cicle.clear
-                                            val referenced = getDiagramViewContext().getSourceElement(e.sourcePort)
+                                            val referenced = diagramViewContext.getSourceElement(e.sourcePort)
                                             if (referenced instanceof ValuedObjectReference) {
                                                 val name = (original as ValuedObjectReference).valuedObject.name + '_' +
                                                     referenced.valuedObject.name
@@ -876,10 +863,10 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
     }
 
     protected def isSequential(KEdge edge) {
-        edge.getProperty(EquationSynthesis.SEQUENTIAL_EDGE) as boolean
+        edge.getProperty(SEQUENTIAL_EDGE) as boolean
     }
 
     protected def isInstance(KEdge edge) {
-        edge.getProperty(EquationSynthesis.INSTANCE_EDGE) as boolean
+        edge.getProperty(INSTANCE_EDGE) as boolean
     }
 }
