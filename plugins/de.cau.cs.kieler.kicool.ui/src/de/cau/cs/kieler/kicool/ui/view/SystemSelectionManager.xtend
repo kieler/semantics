@@ -17,8 +17,10 @@ import de.cau.cs.kieler.kicool.System
 import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
 import de.cau.cs.kieler.kicool.ui.DefaultSystemAssociation
 import de.cau.cs.kieler.kicool.ui.klighd.ModelReaderUtil
+import java.nio.file.Files
+import java.nio.file.Paths
 import java.util.ArrayList
-import java.util.Date
+import java.util.Comparator
 import java.util.Map
 import org.eclipse.core.resources.IContainer
 import org.eclipse.core.resources.IProject
@@ -36,13 +38,9 @@ import org.eclipse.swt.events.SelectionListener
 import org.eclipse.swt.widgets.Combo
 import org.eclipse.swt.widgets.Composite
 import org.eclipse.swt.widgets.Control
+import org.eclipse.swt.widgets.Display
 
 import static extension de.cau.cs.kieler.kicool.util.KiCoolUtils.*
-import org.eclipse.swt.widgets.Display
-import java.util.Comparator
-import java.nio.file.Files
-import java.nio.file.Path
-import java.nio.file.Paths
 
 /**
  * The SystemSelectionManager keeps track of available systems and reacts to user input regarding selected systems. 

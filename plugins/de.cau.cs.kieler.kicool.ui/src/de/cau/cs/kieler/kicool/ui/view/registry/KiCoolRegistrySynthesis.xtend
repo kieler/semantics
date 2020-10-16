@@ -13,41 +13,32 @@
 package de.cau.cs.kieler.kicool.ui.view.registry
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.kicool.compilation.CodeContainer
-import de.cau.cs.kieler.kicool.ui.klighd.models.CodePlaceHolder
-import de.cau.cs.kieler.klighd.LightDiagramServices
-import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
-import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
-import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
-import de.cau.cs.kieler.klighd.SynthesisOption
-import de.cau.cs.kieler.kicool.ui.klighd.syntheses.CodePlaceHolderSynthesis
-import de.cau.cs.kieler.klighd.kgraph.KNode
-import java.util.Collection
-import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
-import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
-import de.cau.cs.kieler.klighd.krendering.extensions.KColorExtensions
-import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensions
-import de.cau.cs.kieler.kicool.compilation.Processor
-import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
-import org.eclipse.elk.core.options.CoreOptions
-import org.eclipse.elk.alg.layered.options.LayeredOptions
-import org.eclipse.elk.core.options.EdgeRouting
-import de.cau.cs.kieler.klighd.krendering.extensions.KPolylineExtensions
 import de.cau.cs.kieler.kicool.ProcessorReference
 import de.cau.cs.kieler.kicool.ProcessorSystem
-import de.cau.cs.kieler.klighd.krendering.extensions.KPortExtensions
-import org.eclipse.elk.core.options.Direction
+import de.cau.cs.kieler.klighd.SynthesisOption
+import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.Trigger
+import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
+import de.cau.cs.kieler.klighd.krendering.extensions.KColorExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KPolylineExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KPortExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
+import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
+import java.util.Collection
+import org.eclipse.elk.alg.layered.options.FixedAlignment
+import org.eclipse.elk.alg.layered.options.LayerConstraint
+import org.eclipse.elk.alg.layered.options.LayeredOptions
+import org.eclipse.elk.alg.layered.options.LayeringStrategy
+import org.eclipse.elk.alg.layered.options.NodePlacementStrategy
+import org.eclipse.elk.core.math.ElkPadding
+import org.eclipse.elk.core.options.CoreOptions
+import org.eclipse.elk.core.options.Direction
+import org.eclipse.elk.core.options.EdgeRouting
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
-import org.eclipse.elk.alg.layered.options.LayerConstraint
-import org.eclipse.elk.alg.layered.options.NodePlacementStrategy
-import org.eclipse.elk.alg.layered.options.FixedAlignment
-import org.eclipse.elk.core.math.ElkPadding
-import org.eclipse.elk.alg.layered.options.LayeringStrategy
-import org.eclipse.elk.alg.layered.options.WrappingStrategy
-import org.eclipse.elk.alg.layered.options.GraphCompactionStrategy
-import org.eclipse.elk.alg.layered.options.ConstraintCalculationStrategy
 
 /**
  * @author ssm
@@ -57,7 +48,7 @@ import org.eclipse.elk.alg.layered.options.ConstraintCalculationStrategy
 @ViewSynthesisShared
 class KiCoolRegistrySynthesis extends AbstractDiagramSynthesis<KiCoolRegistrySummary> {
 
-    @Inject extension KNodeExtensionsReplacement
+    @Inject extension KNodeExtensions
     @Inject extension KEdgeExtensions
     @Inject extension KPortExtensions
     @Inject extension KRenderingExtensions
@@ -70,15 +61,15 @@ class KiCoolRegistrySynthesis extends AbstractDiagramSynthesis<KiCoolRegistrySum
     
     public static val KIELER_QUALIFIED_NAME_PREFIX = "de.cau.cs.kieler."
     
-    public static val SynthesisOption SHOW_BUNDLES = SynthesisOption::createCheckOption("Show Bundles", true)
-    public static val SynthesisOption SHOW_SOURCE_FILES = SynthesisOption::createCheckOption("Show Source Files", true)
-    public static val SynthesisOption SHOW_SYSTEMS = SynthesisOption::createCheckOption("Show Systems", true)
-    public static val SynthesisOption SHOW_PROCESSORS = SynthesisOption::createCheckOption("Show Processors", true)
+    public static val SynthesisOption SHOW_BUNDLES = SynthesisOption::createCheckOption(KiCoolRegistrySynthesis, "Show Bundles", true)
+    public static val SynthesisOption SHOW_SOURCE_FILES = SynthesisOption::createCheckOption(KiCoolRegistrySynthesis, "Show Source Files", true)
+    public static val SynthesisOption SHOW_SYSTEMS = SynthesisOption::createCheckOption(KiCoolRegistrySynthesis, "Show Systems", true)
+    public static val SynthesisOption SHOW_PROCESSORS = SynthesisOption::createCheckOption(KiCoolRegistrySynthesis, "Show Processors", true)
         
-    public static val SynthesisOption FULLY_QUALIFIED_KIELER_PREFIX = SynthesisOption::createCheckOption("Show KIELER Qualified Name Prefix", false)
-    public static val SynthesisOption FULLY_QUALIFIED_PROCESSOR_NAMES = SynthesisOption::createCheckOption("Show Long Processor Names", false)
+    public static val SynthesisOption FULLY_QUALIFIED_KIELER_PREFIX = SynthesisOption::createCheckOption(KiCoolRegistrySynthesis, "Show KIELER Qualified Name Prefix", false)
+    public static val SynthesisOption FULLY_QUALIFIED_PROCESSOR_NAMES = SynthesisOption::createCheckOption(KiCoolRegistrySynthesis, "Show Long Processor Names", false)
     
-    public static val SynthesisOption USE_LEFT_TO_RIGHT = SynthesisOption::createCheckOption("Use Left-to-Right Layout", false)
+    public static val SynthesisOption USE_LEFT_TO_RIGHT = SynthesisOption::createCheckOption(KiCoolRegistrySynthesis, "Use Left-to-Right Layout", false)
     
     
     val processorConnections = <String, Integer> newHashMap

@@ -28,7 +28,6 @@ import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared;
  * @kieler.design 2015-10-27 proposed
  * @kieler.rating 2015-10-27 proposed yellow
  */
-@ViewSynthesisShared
 public class ColorStore {
 
     public enum Color {

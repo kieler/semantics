@@ -42,6 +42,7 @@ import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.krendering.extensions.KColorExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KPolylineExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.sccharts.Action
@@ -74,8 +75,9 @@ import java.util.List
 import java.util.Map
 import org.eclipse.elk.alg.layered.options.LayerConstraint
 import org.eclipse.elk.alg.layered.options.LayeredOptions
+import org.eclipse.elk.alg.layered.options.OrderingStrategy
+import org.eclipse.elk.alg.rectpacking.options.RectPackingOptions
 import org.eclipse.elk.core.math.ElkPadding
-import org.eclipse.elk.core.options.BoxLayouterOptions
 import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.core.options.Direction
 import org.eclipse.elk.core.options.SizeConstraint
@@ -85,7 +87,6 @@ import static de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions.*
 
 import static extension de.cau.cs.kieler.annotations.ide.klighd.CommonSynthesisUtil.*
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
 /**
  * Transforms {@link State} into {@link KNode} diagram elements.
@@ -100,7 +101,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
 
     extension KRenderingFactory = KRenderingFactory.eINSTANCE
     
-    @Inject extension KNodeExtensionsReplacement
+    @Inject extension KNodeExtensions
     @Inject extension KEdgeExtensions
     @Inject extension KRenderingExtensions
     @Inject extension KPolylineExtensions
@@ -287,7 +288,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         // Transform all outgoing transitions
         // Also set KIdentifier for use with incremental update
         val groupedTransitions = state.outgoingTransitions.groupBy[it.targetState]
-        for (transition : state.outgoingTransitions.reverseView) {
+        for (transition : state.outgoingTransitions) {
             transition.transform => [ edge |
                 val target = transition.targetState;
                 if (!target?.name.nullOrEmpty) {
@@ -382,8 +383,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
     
     /** Configures the default layout of children (regions in the state) */
     def static void configureLayout(KNode node) {
-        node.setLayoutOption(CoreOptions::ALGORITHM, BoxLayouterOptions.ALGORITHM_ID)
-//        node.setLayoutOption(CoreOptions::ALGORITHM, RectPackingOptions.ALGORITHM_ID)
+        node.setLayoutOption(CoreOptions::ALGORITHM, RectPackingOptions.ALGORITHM_ID)
         node.setLayoutOption(CoreOptions::EXPAND_NODES, true)
         node.setLayoutOption(CoreOptions::PADDING, new ElkPadding(0))
         node.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 1.0)
@@ -393,6 +393,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         node.setLayoutOption(CoreOptions::PADDING, new ElkPadding(5))
 //        node.setLayoutOption(CoreOptions::NODE_SIZE_CONSTRAINTS, SizeConstraint.free)
         node.setLayoutOption(CoreOptions::ALGORITHM, LayeredOptions.ALGORITHM_ID)
+        node.setLayoutOption(LayeredOptions.CONSIDER_MODEL_ORDER, OrderingStrategy.PREFER_EDGES)
         node.setLayoutOption(CoreOptions::DIRECTION, Direction.RIGHT)
         node.setLayoutOption(LayeredOptions::FEEDBACK_EDGES, true)
         node.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 10.0)

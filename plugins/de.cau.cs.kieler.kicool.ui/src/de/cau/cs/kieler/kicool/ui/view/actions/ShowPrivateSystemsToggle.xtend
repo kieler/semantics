@@ -12,9 +12,9 @@
  */
 package de.cau.cs.kieler.kicool.ui.view.actions
 
+import de.cau.cs.kieler.kicool.ui.view.CompilerView
 import org.eclipse.jface.action.IAction
 import org.eclipse.xtend.lib.annotations.Accessors
-import de.cau.cs.kieler.kicool.ui.view.CompilerView
 
 /**
  * @author ssm

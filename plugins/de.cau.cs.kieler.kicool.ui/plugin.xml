@@ -391,69 +391,6 @@
       </editor>          
     </extension>
        <extension
-         point="de.cau.cs.kieler.klighd.diagramSyntheses">
-      <diagramSynthesis
-            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kicool.ui.synthesis.KiCoolSynthesis"
-            id="de.cau.cs.kieler.kicool.ui.synthesis.KiCoolSynthesis">
-      </diagramSynthesis>
-      <diagramSynthesis
-            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kicool.ui.synthesis.GenericStringSynthesis"
-            id="de.cau.cs.kieler.kicool.ui.synthesis.GenericStringSynthesis">
-      </diagramSynthesis>
-      <diagramSynthesis
-            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kicool.ui.synthesis.MessageObjectListSynthesis"
-            id="de.cau.cs.kieler.kicool.ui.synthesis.MessageObjectListSynthesis">
-      </diagramSynthesis>
-      <diagramSynthesis
-            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kicool.ui.kitt.synthesis.TracingTreeDiagramSynthesis"
-            id="de.cau.cs.kieler.kicool.ui.kitt.syntheses.TracingTreeDiagramSynthesis">
-      </diagramSynthesis>
-      <diagramSynthesis
-            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kicool.ui.klighd.syntheses.ModelChainSynthesis"
-            id="de.cau.cs.kieler.kicool.ui.klighd.syntheses.ModelChainSynthesis">
-      </diagramSynthesis>
-      <diagramSynthesis
-            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kicool.ui.klighd.syntheses.CodePlaceHolderSynthesis"
-            id="de.cau.cs.kieler.kicool.ui.klighd.syntheses.CodePlaceHolderSynthesis">
-      </diagramSynthesis>
-      <diagramSynthesis
-            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kicool.ui.klighd.syntheses.XtextSerializationSynthesis"
-            id="de.cau.cs.kieler.kicool.ui.klighd.syntheses.XtextSerializationSynthesis">
-      </diagramSynthesis>
-      <diagramSynthesis
-            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kicool.ui.synthesis.CodeContainerSynthesis"
-            id="de.cau.cs.kieler.kicool.ui.synthesis.CodeContainerSynthesis">
-      </diagramSynthesis>
-      <diagramSynthesis
-            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kicool.ui.synthesis.EnvironmentSynthesis"
-            id="de.cau.cs.kieler.kicool.ui.synthesis.EnvironmentSynthesis">
-      </diagramSynthesis>
-      <diagramSynthesis
-            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kicool.ui.view.registry.KiCoolRegistrySynthesis"
-            id="de.cau.cs.kieler.kicool.ui.view.registry.KiCoolRegistrySynthesis">
-      </diagramSynthesis>
-      <diagramSynthesis
-            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kicool.ui.synthesis.ExecutableContainerSynthesis"
-            id="de.cau.cs.kieler.kicool.ui.synthesis.ExecutableContainer">
-      </diagramSynthesis>
-      <diagramSynthesis
-            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kicool.ui.synthesis.GenericCompilationResultSynthesis"
-            id="GenericCompilationResult">
-      </diagramSynthesis>
-      <diagramSynthesis
-            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kicool.ui.synthesis.KASTSynthesis"
-            id="de.cau.cs.kieler.kicool.ui.synthesis.KASTSynthesis">
-      </diagramSynthesis>
-      <diagramSynthesis
-            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kicool.ui.view.registry.KiCoolSystemsSynthesis"
-            id="de.cau.cs.kieler.kicool.ui.view.registry.KiCoolSystemsSynthesis">
-      </diagramSynthesis>
-      <diagramSynthesis
-            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kicool.ui.synthesis.JavaASTSynthesis"
-            id="de.cau.cs.kieler.kicool.ui.JavaASTSynthesis">
-      </diagramSynthesis>
-   </extension>
-       <extension
              point="org.eclipse.ui.views">
           <view
                 category="de.cau.cs.kieler"
@@ -481,53 +418,6 @@
           </view>
        </extension>
        <extension
-             point="de.cau.cs.kieler.klighd.extensions">
-          <action
-                class="de.cau.cs.kieler.kicool.ui.synthesis.actions.SelectIntermediateAction"
-                id="de.cau.cs.kieler.kicool.ui.synthesis.actions.selectIntermediateAction">
-          </action>
-          <action
-                class="de.cau.cs.kieler.kicool.ui.synthesis.actions.SelectAdditionalIntermediateAction"
-                id="de.cau.cs.kieler.kicool.ui.synthesis.actions.selectAdditionalIntermediateAction">
-          </action>
-          <action
-                class="de.cau.cs.kieler.kicool.ui.synthesis.actions.ToggleProcessorOnOffAction"
-                id="de.cau.cs.kieler.kicool.ui.synthesis.actions.toggleProcessorOnOffAction">
-          </action>
-          <updateStrategy
-                class="de.cau.cs.kieler.kicool.ui.kitt.update.TracingVisualizationUpdateStrategy"
-                id="de.cau.cs.kieler.kicool.ui.kitt.update.TracingVisualizationUpdateStrategy">
-          </updateStrategy>
-          <action
-                class="de.cau.cs.kieler.kicool.ui.klighd.actions.OpenCodeInEditorAction"
-                id="de.cau.cs.kieler.kicool.ui.klighd.internal.model.action.OpenCodeInEditorAction">
-          </action>
-          <action
-                class="de.cau.cs.kieler.kicool.ui.klighd.actions.RemoveChainElementAction"
-                id="de.cau.cs.kieler.kicool.ui.klighd.actions.RemoveChainElementAction">
-          </action>
-          <action
-                class="de.cau.cs.kieler.kicool.ui.synthesis.actions.SelectNothing"
-                id="de.cau.cs.kieler.kicool.ui.synthesis.actions.selectNothing">
-          </action>
-          <action
-                class="de.cau.cs.kieler.kicool.ui.synthesis.actions.SelectParent"
-                id="de.cau.cs.kieler.kicool.ui.synthesis.actions.selectParent">
-          </action>
-          <action
-                class="de.cau.cs.kieler.kicool.ui.view.registry.FocusNodeAction"
-                id="de.cau.cs.kieler.ui.view.registry.focusNode">
-          </action>
-          <action
-                class="de.cau.cs.kieler.kicool.ui.view.registry.DeFocusNodeAction"
-                id="de.cau.cs.kieler.ui.view.registry.deFocusNode">
-          </action>
-          <action
-                class="de.cau.cs.kieler.kicool.ui.synthesis.actions.StartExecutableAction"
-                id="de.cau.cs.kieler.kicool.ui.synthesis.actions.StartExecutableAction">
-          </action>
-       </extension>
-       <extension
              point="de.cau.cs.kieler.klighd.ui.view.controller">
           <controller
                 class="de.cau.cs.kieler.kicool.ui.klighd.KiCoModelUpdateController">
@@ -547,5 +437,11 @@
                 id="de.cau.cs.kieler.kicool.ui.deploy"
                 name="Compiler">
           </page>
+       </extension>
+       <extension
+             point="de.cau.cs.kieler.klighd.extensions">
+          <startupHook
+                class="de.cau.cs.kieler.kicool.ui.klighd.KicoolKlighdSetup">
+          </startupHook>
        </extension>
 </plugin>

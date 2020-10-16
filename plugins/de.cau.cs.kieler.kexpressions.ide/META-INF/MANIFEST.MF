@@ -12,10 +12,12 @@ Require-Bundle: org.antlr.runtime;bundle-version="[3.2.0,3.2.1)",
  org.eclipse.xtend.lib.macro,
  de.cau.cs.kieler.kexpressions,
  org.eclipse.xtext.ide;bundle-version="2.12.0"
-Export-Package: de.cau.cs.kieler.kexpressions.ide.contentassist.antlr.internal,
+Export-Package: de.cau.cs.kieler.kexpressions.ide,
  de.cau.cs.kieler.kexpressions.ide.contentassist.antlr,
- de.cau.cs.kieler.kexpressions.ide.keffects.contentassist.antlr.internal,
+ de.cau.cs.kieler.kexpressions.ide.contentassist.antlr.internal,
  de.cau.cs.kieler.kexpressions.ide.keffects.contentassist.antlr,
- de.cau.cs.kieler.kexpressions.ide.kext.contentassist.antlr.internal,
- de.cau.cs.kieler.kexpressions.ide.kext.contentassist.antlr
+ de.cau.cs.kieler.kexpressions.ide.keffects.contentassist.antlr.internal,
+ de.cau.cs.kieler.kexpressions.ide.kext,
+ de.cau.cs.kieler.kexpressions.ide.kext.contentassist.antlr,
+ de.cau.cs.kieler.kexpressions.ide.kext.contentassist.antlr.internal
 

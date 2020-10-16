@@ -39,7 +39,7 @@ class SCCActions implements IAction {
     
     private final static String SCC_ID = "de.cau.cs.kieler.scg.klighd.actions.sccActions"
     
-    public static final SynthesisOption SHOW_SCC = SynthesisOption::createCheckOption("Strongly Connected Components", 
+    public static final SynthesisOption SHOW_SCC = SynthesisOption::createCheckOption(SCCActions, "Strongly Connected Components", 
         true).setUpdateAction(SCC_ID).setCategory(PRIO);
         
     public static val IProperty<Boolean> P = new Property("id")

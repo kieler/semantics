@@ -38,8 +38,8 @@ class PrioStatementsActions implements IAction {
     extension KRenderingExtensions
 //    @Inject
 //    extension KPortExtensions
-    
-    public static final SynthesisOption SHOW_PRIO_STATEMENTS = SynthesisOption::createCheckOption("Priority Statements", 
+
+    public static final SynthesisOption SHOW_PRIO_STATEMENTS = SynthesisOption::createCheckOption(PrioStatementsActions, "Priority Statements", 
         true).setUpdateAction(PRIO_STATEMENTS_ID).setCategory(PRIO);
     
     

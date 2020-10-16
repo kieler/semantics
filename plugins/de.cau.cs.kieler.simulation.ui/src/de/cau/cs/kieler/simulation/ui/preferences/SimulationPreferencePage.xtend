@@ -25,6 +25,7 @@ import org.eclipse.swt.widgets.Composite
 import org.eclipse.swt.widgets.Spinner
 import org.eclipse.ui.IWorkbench
 import org.eclipse.ui.IWorkbenchPreferencePage
+import de.cau.cs.kieler.simulation.ide.preferences.SimulationPreferences
 
 /**
  * @author aas

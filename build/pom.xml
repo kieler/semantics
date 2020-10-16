@@ -79,6 +79,16 @@
         <module>de.cau.cs.kieler.semantics.product.repository</module>
         <module>de.cau.cs.kieler.kicool.cli</module>
         <module>de.cau.cs.kieler.sccharts.cli</module>
+        <module>de.cau.cs.kieler.language.server.cli</module>
+      </modules>
+    </profile>
+
+    <profile>
+      <id>semantics.ls</id>
+      <modules>
+        <module>../plugins</module>
+        <module>de.cau.cs.kieler.semantics.targetplatform</module>
+        <module>de.cau.cs.kieler.language.server.cli</module>
       </modules>
     </profile>  
   

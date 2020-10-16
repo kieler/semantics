@@ -44,7 +44,7 @@ class DeclarationsHook extends SynthesisHook {
     /** Action ID */
     public static final String ID = "de.cau.cs.kieler.sccharts.ui.synthesis.hooks.DeclarationsHook";
     /** The related synthesis option */
-    public static final SynthesisOption SHOW_DECLARATIONS = SynthesisOption.createCheckOption("Declarations", true).
+    public static final SynthesisOption SHOW_DECLARATIONS = SynthesisOption.createCheckOption(DeclarationsHook, "Declarations", true).
         setCategory(GeneralSynthesisOptions::APPEARANCE)
 
     override getDisplayedSynthesisOptions() {

@@ -37,7 +37,7 @@ class ThreadPriorityActions implements IAction {
     
     private static final String THREAD_ID  = "de.cau.cs.kieler.scg.klighd.actions.ThreadPriorityActions"
     
-    public static final SynthesisOption SHOW_THREAD_PRIO = SynthesisOption::createCheckOption("Thread Priority IDs", 
+    public static final SynthesisOption SHOW_THREAD_PRIO = SynthesisOption::createCheckOption(ThreadPriorityActions, "Thread Priority IDs", 
         true).setUpdateAction(THREAD_ID).setCategory(PRIO);
     
         

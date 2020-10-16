@@ -15,7 +15,7 @@ package de.cau.cs.kieler.sccharts.ui.debug.highlighting
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.klighd.krendering.KRenderingFactory
-import de.cau.cs.kieler.simulation.ui.visualization.Highlighting
+import de.cau.cs.kieler.simulation.ide.visualization.Highlighting
 import de.cau.cs.kieler.sccharts.ui.debug.view.DebugDiagramView
 import de.cau.cs.kieler.klighd.krendering.Colors
 import com.google.inject.Inject

@@ -14,7 +14,7 @@ package de.cau.cs.kieler.simulation.ui.view.diagram
 
 import de.cau.cs.kieler.kicool.ui.klighd.KiCoModelUpdateController
 import de.cau.cs.kieler.kicool.ui.klighd.KiCoModelViewUIContributor
-import de.cau.cs.kieler.kicool.ui.klighd.models.ModelChain
+import de.cau.cs.kieler.kicool.ide.klighd.models.ModelChain
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties
 import de.cau.cs.kieler.simulation.SimulationContext
 import de.cau.cs.kieler.simulation.events.SimulationControlEvent

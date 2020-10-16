@@ -25,7 +25,6 @@ import de.cau.cs.kieler.simulation.events.TraceMismatchEvent
 import de.cau.cs.kieler.simulation.ide.CentralSimulation
 import de.cau.cs.kieler.simulation.ide.server.SimulationServer
 import de.cau.cs.kieler.simulation.trace.TraceFileUtil
-import de.cau.cs.kieler.simulation.ui.SimulationUI
 import de.cau.cs.kieler.simulation.ui.SimulationUIPlugin
 import de.cau.cs.kieler.simulation.ui.view.SimulationControlButtons
 import java.io.File
@@ -509,7 +508,7 @@ class DataPoolView extends ViewPart implements ISimulationListener {
     private def void addKeyListeners() {
         viewer.control.addKeyListener(new KeyAdapter() {
             override keyPressed(KeyEvent e) {
-                val sim = SimulationUI.currentSimulation
+                val sim = currentSimulation
                 if(sim === null) return
                 val mod = e.stateMask
                 // CTRL + RIGHT: step history forward
@@ -719,8 +718,8 @@ class DataPoolView extends ViewPart implements ISimulationListener {
         historyColumn.labelProvider = new AbstractDataPoolColumnLabelProvider(this) {
             override String getText(Object element) {
                 if(element instanceof DataPoolEntry) {
-                    if (SimulationUI.currentSimulation !== null && !SimulationUI.currentSimulation.history.empty) {
-                        val values = SimulationUI.currentSimulation.history.take(SHOWN_HISTORY_LENGTH).map[
+                    if (currentSimulation !== null && !currentSimulation.history.empty) {
+                        val values = currentSimulation.history.take(SHOWN_HISTORY_LENGTH).map[
                             val entry = entries.get(element.name)
                             if (entry !== null) {
                                 val value = entry.rawValue
@@ -735,7 +734,7 @@ class DataPoolView extends ViewPart implements ISimulationListener {
                             }
                             return "null"
                         ]
-                        return values.join(", ") + if (SimulationUI.currentSimulation.history.size > SHOWN_HISTORY_LENGTH) " ..." else ""
+                        return values.join(", ") + if (currentSimulation.history.size > SHOWN_HISTORY_LENGTH) " ..." else ""
                     }
                 }
                 return ""

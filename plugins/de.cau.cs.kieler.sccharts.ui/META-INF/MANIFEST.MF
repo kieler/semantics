@@ -33,13 +33,15 @@ Require-Bundle: de.cau.cs.kieler.klighd,
  de.cau.cs.kieler.simulation.ui,
  com.google.gson;bundle-version="2.7.0",
  org.eclipse.ui.ide;bundle-version="3.14.0",
+ de.cau.cs.kieler.simulation.ide,
  de.cau.cs.kieler.scl.ui,
- de.cau.cs.kieler.klighd.ui.view,
+ de.cau.cs.kieler.klighd.ide,
  org.eclipse.jdt.debug;bundle-version="3.13.100",
  org.eclipse.jdt.ui;bundle-version="3.19.0",
  org.eclipse.jdt.core;bundle-version="3.19.0",
  de.cau.cs.kieler.kicool.ide,
- de.cau.cs.kieler.annotations.ide
+ de.cau.cs.kieler.annotations.ide,
+ org.eclipse.elk.core.service
 Bundle-Vendor: Kiel University
 Bundle-ActivationPolicy: lazy
 Export-Package: de.cau.cs.kieler.sccharts.ui,

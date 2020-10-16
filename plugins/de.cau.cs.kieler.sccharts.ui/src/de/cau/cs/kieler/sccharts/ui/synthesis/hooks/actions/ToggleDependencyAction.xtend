@@ -12,48 +12,32 @@
  */
 package de.cau.cs.kieler.sccharts.ui.synthesis.hooks.actions
 
-import de.cau.cs.kieler.kicool.compilation.CodeContainer
-import de.cau.cs.kieler.kicool.environments.MessageObjectReferences
-import de.cau.cs.kieler.kicool.ui.klighd.KiCoModelViewNotifier
-import de.cau.cs.kieler.kicool.ui.klighd.models.CodePlaceHolder
-import de.cau.cs.kieler.kicool.ui.synthesis.Container
-import de.cau.cs.kieler.klighd.IAction
-
-import static de.cau.cs.kieler.kicool.ui.synthesis.KNodeProperties.*
-
-import static extension de.cau.cs.kieler.kicool.ui.view.EditPartSystemManager.*
-import de.cau.cs.kieler.klighd.kgraph.KEdge
-import de.cau.cs.kieler.klighd.util.ModelingUtil
-import de.cau.cs.kieler.klighd.kgraph.KGraphPackage
-import de.cau.cs.kieler.klighd.kgraph.KGraphElement
-import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.ShowStateDependencyHook
 import de.cau.cs.kieler.kexpressions.Schedulable
-
+import de.cau.cs.kieler.kexpressions.ScheduleDeclaration
 import de.cau.cs.kieler.kexpressions.ScheduleObjectReference
-import de.cau.cs.kieler.klighd.LightDiagramServices
-import org.eclipse.emf.ecore.EObject
-import org.eclipse.elk.graph.properties.MapPropertyHolder
-import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties
-import de.cau.cs.kieler.klighd.kgraph.KNode
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kexpressions.keffects.DataDependency
+import de.cau.cs.kieler.kexpressions.kext.DeclarationScope
+import de.cau.cs.kieler.kicool.compilation.CompilationContext
+import de.cau.cs.kieler.kicool.compilation.Compile
+import de.cau.cs.kieler.kicool.ide.klighd.KiCoDiagramViewProperties
+import de.cau.cs.kieler.kicool.ui.view.CompilerViewPartListener
+import de.cau.cs.kieler.klighd.IAction
+import de.cau.cs.kieler.klighd.kgraph.KEdge
+import de.cau.cs.kieler.klighd.kgraph.KGraphElement
+import de.cau.cs.kieler.klighd.kgraph.KGraphPackage
+import de.cau.cs.kieler.klighd.util.ModelingUtil
 import de.cau.cs.kieler.sccharts.SCCharts
 import org.eclipse.elk.graph.properties.IProperty
 import org.eclipse.elk.graph.properties.Property
-import de.cau.cs.kieler.kexpressions.keffects.DataDependency
-import de.cau.cs.kieler.kicool.compilation.Compile
-import de.cau.cs.kieler.kicool.ide.klighd.KiCoDiagramViewProperties
-import de.cau.cs.kieler.kicool.compilation.CompilationContext
-
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.kexpressions.kext.DeclarationScope
-import de.cau.cs.kieler.kexpressions.ScheduleDeclaration
-import com.google.inject.Inject
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
-import de.cau.cs.kieler.kexpressions.ValuedObject
-import de.cau.cs.kieler.kicool.ui.view.CompilerViewPartListener
+import org.eclipse.emf.ecore.EObject
+import org.eclipse.xtext.resource.XtextResource
 import org.eclipse.xtext.ui.editor.XtextEditor
 import org.eclipse.xtext.util.concurrent.IUnitOfWork
-import org.eclipse.xtext.resource.XtextResource
+
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
 /**
  * Toggle the dependency direction.
