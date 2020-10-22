@@ -175,7 +175,7 @@ abstract class RunSmvProcessor extends RunModelCheckerProcessorBase {
         val counterexample = interpreter.counterexamples.head
         val passedSpec = interpreter.passedSpecs.head
         if(counterexample !== null && property.matches(counterexample.spec)) {
-            val store = VariableStore.get(compilationContext.startEnvironment)
+            val store = VariableStore.get(sourceEnvironment)
             property.updateTaskDescriptionAndNotify("Saving KTrace...")
             val createCounterexampleWithOutputs = verificationContext.createCounterexamplesWithOutputs
             val ktrace = counterexample.getKtrace(store, createCounterexampleWithOutputs)
