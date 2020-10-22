@@ -1,5 +1,8 @@
 developer system de.cau.cs.kieler.sccharts.statebased.lean.arduino.deploy
     label "State-based Lean Deployment (Arduino)"
+    start config {
+        "de.cau.cs.kieler.kicool.deploy.compiler.arduino.port": "COM5"
+    }
 
 system de.cau.cs.kieler.sccharts.statebased.lean
 pre process de.cau.cs.kieler.kicool.deploy.model.includes
@@ -29,7 +32,6 @@ de.cau.cs.kieler.kicool.deploy.compiler.arduino config {
     "de.cau.cs.kieler.kicool.deploy.compiler.sources": ["kieler-gen.ino"],
     "de.cau.cs.kieler.kicool.deploy.compiler.sources.include-generated": false,
     "de.cau.cs.kieler.kicool.deploy.compiler.arduino.board": "arduino:avr:uno",
-    "de.cau.cs.kieler.kicool.deploy.compiler.arduino.port": "COM5",
     "de.cau.cs.kieler.kicool.deploy.compiler.arduino.upload": true,
     "de.cau.cs.kieler.kicool.deploy.compiler.arduino.verify": false    
 }
