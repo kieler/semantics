@@ -52,13 +52,14 @@ class LSCreator extends AbstractLsCreator {
     }
     
     override onConnect() {
+        super.onConnect
         for (Object ext : iLanguageServerExtensions) {
             if (ext instanceof ILanguageClientProvider) {
                 ext.languageClient = languageClient
             }
         }
-        constraints.client = languageClient as KGraphLanguageClient
-        rectPack.client = languageClient as KGraphLanguageClient
+        constraints.client = languageClient
+        rectPack.client = languageClient
         diagramHighlighters = newArrayList
         for (iLSdhc : KielerServiceLoader.load(ILSDiagramHighlighterContribution)) {
             var highlighter = iLSdhc.getHighlighter(injector)
@@ -68,6 +69,7 @@ class LSCreator extends AbstractLsCreator {
     }
     
     override onReload() {
+        super.onReload
         // On reload remove all diagram highlighters.
         // The diagram highlighters are as everything else created again on reload.
         diagramHighlighters.forEach[it.unregisterObserver()]
