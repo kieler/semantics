@@ -75,7 +75,7 @@ class KicoolKlighdSetup implements IKlighdStartupHook {
             .registerDiagramSynthesisClass("GenericCompilationResult", GenericCompilationResultSynthesis)
             .registerDiagramSynthesisClass("de.cau.cs.kieler.kicool.ui.synthesis.KASTSynthesis", KASTSynthesis)
             .registerDiagramSynthesisClass("de.cau.cs.kieler.kicool.ui.view.registry.KiCoolSystemsSynthesis", KiCoolSystemsSynthesis)
-            .registerDiagramSynthesisClass("de.cau.cs.kieler.kicool.ui.JavaASTSynthesis", JavaASTSynthesis)
+//            .registerDiagramSynthesisClass("de.cau.cs.kieler.kicool.ui.JavaASTSynthesis", JavaASTSynthesis)
     }
     
 }
