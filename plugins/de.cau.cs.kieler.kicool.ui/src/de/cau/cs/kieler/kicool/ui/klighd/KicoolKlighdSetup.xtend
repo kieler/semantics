@@ -53,7 +53,7 @@ class KicoolKlighdSetup implements IKlighdStartupHook {
             .registerAction(SelectIntermediateAction.ID, new SelectIntermediateAction)
             .registerAction(SelectAdditionalIntermediateAction.ID, new SelectAdditionalIntermediateAction)
             .registerAction(ToggleProcessorOnOffAction.ID, new ToggleProcessorOnOffAction)
-            .registerAction(OpenCodeInEditorAction.ID, new OpenCodeInEditorAction)
+//            .registerAction(OpenCodeInEditorAction.ID, new OpenCodeInEditorAction)
             .registerAction(RemoveChainElementAction.ID, new RemoveChainElementAction)
             .registerAction(SelectNothing.ID, new SelectNothing)
             .registerAction(SelectParent.ID, new SelectParent)
