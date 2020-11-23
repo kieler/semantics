@@ -368,6 +368,10 @@
              class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.scl.ui.synthesis.SCLSynthesis"
              id="de.cau.cs.kieler.SCLGraphSynthesis">
        </diagramSynthesis>
+       <diagramSynthesis
+             class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.scl.ui.synthesis.SCLProgramGraphSynthesis"
+             id="de.cau.cs.kieler.SCLProgramGraphSynthesis">
+       </diagramSynthesis>
     </extension>
     <extension
           point="de.cau.cs.kieler.kicool.ui.system">

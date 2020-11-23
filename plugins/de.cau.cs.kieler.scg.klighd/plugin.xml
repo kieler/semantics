@@ -15,6 +15,10 @@
             class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.scg.klighd.ssa.domtree.DominatorTreeSynthesis"
             id="de.cau.cs.kieler.scg.ssa.domtree">
       </diagramSynthesis>
+      <diagramSynthesis
+            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.scg.klighd.ProgramGraphSynthesis"
+            id="de.cau.cs.kieler.scg.klighd.diagramSynthesis.programGraph">
+      </diagramSynthesis>
    </extension>
    <extension
          point="de.cau.cs.kieler.klighd.extensions">
@@ -38,5 +42,8 @@
             class="de.cau.cs.kieler.scg.klighd.actions.PrioStatementsActions"
             id="de.cau.cs.kieler.scg.klighd.actions.priorityStatements">
       </action>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.klighd.diagramSyntheses">
    </extension>   
 </plugin>
