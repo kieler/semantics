@@ -42,6 +42,9 @@ import de.cau.cs.kieler.kexpressions.keffects.DataDependency
 import de.cau.cs.kieler.scg.extensions.SCGDependencyExtensions
 import de.cau.cs.kieler.scg.extensions.SCGMethodExtensions
 import de.cau.cs.kieler.kexpressions.keffects.ControlDependency
+import de.cau.cs.kieler.core.properties.IProperty
+import de.cau.cs.kieler.core.properties.Property
+
 
 /**
  * @author ssm
@@ -58,6 +61,9 @@ class StructuralDepthJoinProcessor extends InplaceProcessor<SCGraphs> {
     @Inject extension SCGDependencyExtensions
     @Inject extension SCGMethodExtensions
     
+    public static val IProperty<Boolean> SDJ_ENABLED = 
+        new Property<Boolean>("de.cau.cs.kieler.scg.sdj.enabled", true)        
+    
     val curedForks = <Fork> newHashSet
     
     override getId() {
@@ -69,6 +75,8 @@ class StructuralDepthJoinProcessor extends InplaceProcessor<SCGraphs> {
     }
     
     override process() {
+        if (!getProperty(SDJ_ENABLED)) return;
+        
         val loopAnalyzer = createCoProcessor("de.cau.cs.kieler.scg.processors.loopAnalyzerV2") as LoopAnalyzerV2
         
         val threadData = environment.getProperty(ThreadAnalyzer.THREAD_DATA)

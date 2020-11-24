@@ -123,6 +123,7 @@ import de.cau.cs.kieler.klighd.LightDiagramServices
 import de.cau.cs.kieler.klighd.krendering.Colors
 import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
 import de.cau.cs.kieler.annotations.Pragmatable
+import org.eclipse.elk.core.options.HierarchyHandling
 
 /** 
  * SCCGraph KlighD synthesis class. It contains all method mandatory to handle the visualization of
@@ -616,6 +617,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                     node.setLayoutOption(CoreOptions::ASPECT_RATIO, Double.parseDouble(parent.getStringPragmas("aspectRatio").head.values.head));
             }
             
+            node.setLayoutOption(LayeredOptions::HIERARCHY_HANDLING, HierarchyHandling.INCLUDE_CHILDREN)
             
             // Sausage folding on/off
             if ((SHOW_SAUSAGE_FOLDING.booleanValue) && scg.hasAnnotation(SCGFeatures::SEQUENTIALIZE_ID)) {
