@@ -156,7 +156,7 @@ class CSimulationTemplateGenerator extends AbstractSimulationTemplateGenerator {
                 «ENDFOR»
                 
                 if (send_interface) {
-                    cJSON *interface = cJSON_CreateObject();
+                    cJSON *_interface = cJSON_CreateObject();
                     cJSON *info, *properties;
                     
                     «FOR v : store.orderedVariables.dropHostTypes.dropBlacklisted»
@@ -167,10 +167,10 @@ class CSimulationTemplateGenerator extends AbstractSimulationTemplateGenerator {
                         «ENDFOR»
                         cJSON_AddItemToObject(info, "type", cJSON_CreateString("«v.value.typeName»"));
                         cJSON_AddItemToObject(info, "properties", properties);
-                        cJSON_AddItemToObject(interface, "«v.key»", info);
+                        cJSON_AddItemToObject(_interface, "«v.key»", info);
                     «ENDFOR»
                     
-                    cJSON_AddItemToObject(root, "#interface", interface);
+                    cJSON_AddItemToObject(root, "#interface", _interface);
                 }
             
                 // Get JSON object as string

@@ -155,4 +155,12 @@ class SCChartsControlflowRegionExtensions {
         return pull
     }
     
+    def Region getEnclosingRegion(EObject eObject) {
+        var enclosing = eObject.eContainer
+        while (!(enclosing instanceof Region) && enclosing !== null) {
+            enclosing = enclosing.eContainer
+        }    
+        return if (enclosing !== null) enclosing as Region else null 
+    }    
+    
 }

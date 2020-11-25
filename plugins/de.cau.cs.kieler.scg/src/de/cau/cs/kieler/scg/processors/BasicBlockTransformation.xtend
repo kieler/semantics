@@ -557,8 +557,13 @@ class BasicBlockTransformation extends InplaceProcessor<SCGraphs> implements Tra
        			    * Therefore, check whether first node of the target block is the target of the then or else 
        			    * branch of the conditional and add this information to the predecessor object. 
        			    */
+       			    val alreadyHasTrueBranch = 
+       			      target.predecessors.exists[ basicBlock == bb && branchType == BranchType::TRUEBRANCH ]
+       			    
        			    if (lastNode.then !== null && 
-       			      target.schedulingBlocks.head.nodes.head == lastNode.then.target) {
+       			      target.schedulingBlocks.head.nodes.head == lastNode.then.target &&
+       			      !alreadyHasTrueBranch
+       			    ) {
 						predecessor.branchType = BranchType::TRUEBRANCH
        			    } else {
        			    	predecessor.branchType = BranchType::ELSEBRANCH

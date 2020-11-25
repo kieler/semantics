@@ -29,8 +29,11 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
+import de.cau.cs.kieler.core.properties.IProperty
+import de.cau.cs.kieler.core.properties.Property
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.kexpressions.ValuedObject
 
 /**
  * SCCharts Init Operator Transformation.
@@ -49,6 +52,8 @@ class InitOperator extends SCChartsProcessor implements Traceable {
     @Inject extension KExpressionsCreateExtensions
     @Inject extension KExpressionsTypeExtensions
     
+    public static val IProperty<Boolean> ENFORCE_SD = 
+        new Property<Boolean>("de.cau.cs.kieler.processors.initOperator.enforceSD", false)       
     
     static val GENERATED_PREFIX = "__iop_"
     
@@ -62,11 +67,20 @@ class InitOperator extends SCChartsProcessor implements Traceable {
     
     override process() {
         for (rootState : getModel.rootStates) {
-            rootState.transformInitOperator
+            if (getProperty(ENFORCE_SD)) {
+                val scheduleDeclaration = createScheduleDeclaration.assignPrioritiesQuickly(#[1,1]) 
+                val iopSchedule = scheduleDeclaration.createSchedule("iop")  
+                val hasIOps = rootState.transformInitOperator(iopSchedule)
+                if (hasIOps) {
+                    rootState.declarations += scheduleDeclaration
+                }
+            } else {
+                rootState.transformInitOperator(null)
+            }
         }
     }
     
-    def transformInitOperator(State rootState) {
+    def boolean transformInitOperator(State rootState, ValuedObject iopSchedule) {
         var allInits = rootState.eAllContents.filter(OperatorExpression).filter[ operator == OperatorType.INIT ].toList
         
         for (init : allInits.indexed) {
@@ -78,7 +92,8 @@ class InitOperator extends SCChartsProcessor implements Traceable {
         
         for (init : allInits.indexed) {
             val action = init.value.enclosingAction
-            val parent = if(action instanceof Transition) action.enclosingState.enclosingState else action.enclosingState
+            val actionRegion = action.getEnclosingRegion
+            val parent = if (action instanceof Transition) action.enclosingState.enclosingState else action.enclosingState
 
             if (parent !== null) {
                 
@@ -88,7 +103,7 @@ class InitOperator extends SCChartsProcessor implements Traceable {
                 ]
                 voStore.update(localVariable, SCCHARTS_GENERATED)
 
-                val fbyRegion = parent.createControlflowRegion(GENERATED_PREFIX + init.key) => [final = true]
+                val fbyRegion = parent.createControlflowRegion(GENERATED_PREFIX + init.key) => [ final = true ]
                 
                 var initial = fbyRegion.createInitialState("__Init_")
                 var delay = fbyRegion.createState("__Delay_")
@@ -103,8 +118,14 @@ class InitOperator extends SCChartsProcessor implements Traceable {
                 createImmediateTransitionTo(loop, delay)
                 
                 init.value.replace(localVariable.reference)
+                
+                if (getProperty(ENFORCE_SD)) {
+                    iopSchedule.assignSchedule(fbyRegion, actionRegion, 0, 1)
+                }
             }
         }
+        
+        return allInits.size > 0
     }
     
     private def Expression replaceInitPreByFby(Expression expression) {

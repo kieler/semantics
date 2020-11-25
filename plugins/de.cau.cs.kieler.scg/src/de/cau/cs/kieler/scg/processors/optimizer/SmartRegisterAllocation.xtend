@@ -49,7 +49,9 @@ class SmartRegisterAllocation extends InplaceProcessor<SCGraphs> {
     public static val IProperty<Boolean> SMART_REGISTER_ALLOCATION_ENABLED = 
         new Property<Boolean>("de.cau.cs.kieler.scg.opt.smartRegisterAllocation", false)
     public static val IProperty<Boolean> SMART_REGISTER_ALLLOCATION_CONSIDER_CONDITIONAL_GUARDS = 
-        new Property<Boolean>("de.cau.cs.kieler.scg.processors.copyPropagation.considerConditionalGuards", false)     
+        new Property<Boolean>("de.cau.cs.kieler.scg.processors.smartRegisterAllocation.considerConditionalGuards", false)     
+    public static val IProperty<Boolean> SMART_REGISTER_ALLLOCATION_FREE_AFTER_RECYCLE_RANGE = 
+        new Property<Boolean>("de.cau.cs.kieler.scg.processors.smartRegisterAllocation.freeAfterRecycleRange", true)     
             
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KExtDeclarationExtensions
@@ -80,7 +82,9 @@ class SmartRegisterAllocation extends InplaceProcessor<SCGraphs> {
     def performSmartRegisterAllocation(SCGraph scg) {
         val nextNodes = <Node> newLinkedList(scg.nodes.head)
         val registerAllocation = new RegisterAllocation
-        val preNodes = <Assignment> newLinkedHashSet        
+        val preNodes = <Assignment> newLinkedHashSet  
+        val usedInPreNodes = <String> newHashSet      
+        val assignedVariables = <String> newHashSet
         
         while (!nextNodes.empty) {
             val node = nextNodes.pop
@@ -140,13 +144,24 @@ class SmartRegisterAllocation extends InplaceProcessor<SCGraphs> {
                 }
             }                
             if (node instanceof Assignment) {
+                if (node.expression.isPreOperatorExpression) {
+                    usedInPreNodes.add(node.expression.asOperatorExpression.subExpressions.head.asValuedObjectReference.valuedObject.name)
+                }
+                
                 if (!node.reference.valuedObject.name.startsWith(SimpleGuardExpressions.CONDITIONAL_EXPRESSION_PREFIX) &&
                     !node.reference.valuedObject.name.startsWith(SimpleGuardExpressions.TERM_GUARD_NAME)
                 ) {
                     if (!registerAllocation.freedRegister.empty) {
-                        val recycledRegister = registerAllocation.freedRegister.pop
+                        val recycledRegister = node.selectRecycledRegister(registerAllocation, preNodes, usedInPreNodes, assignedVariables)
                         val vo = scg.findValuedObjectByName(recycledRegister) 
                         if (vo !== null) {
+                            if (getProperty(SMART_REGISTER_ALLLOCATION_FREE_AFTER_RECYCLE_RANGE)
+                                && !usedInPreNodes.contains(node.reference.valuedObject.name)
+                            ) {
+                                registerAllocation.recycleAfterNode.put(
+                                    registerAllocation.registerRange.peek(node.reference.valuedObject.name), 
+                                    recycledRegister)
+                            }
                             replacements.push(node.reference.valuedObject.name, vo.reference)
                             node.reference.valuedObject = vo
                         }
@@ -154,8 +169,15 @@ class SmartRegisterAllocation extends InplaceProcessor<SCGraphs> {
                 }
                 
                 node.expression.replaceExpression(replacements, node)
+                assignedVariables.add(node.reference.valuedObject.name)
             } else if (node instanceof Conditional) {
                 node.condition.replaceExpression(replacements, node)
+            }
+            
+            if (registerAllocation.recycleAfterNode.keySet.contains(node)) {
+                for (fr : registerAllocation.recycleAfterNode.get(node)) {
+                    registerAllocation.freedRegister.push(fr)
+                }
             }
             
             if (node instanceof Conditional) {
@@ -170,6 +192,28 @@ class SmartRegisterAllocation extends InplaceProcessor<SCGraphs> {
         
         for (node : preNodes) {
             node.expression.replaceExpression(replacements, node)
+        }
+    }
+    
+    private def String selectRecycledRegister(Assignment assignment, RegisterAllocation registerAllocation, 
+        Set<Assignment> preNodes, Set<String> usedInPreNodes, Set<String> assignedVariables
+    ) {
+        if (usedInPreNodes.contains(assignment.reference.valuedObject.name)) {
+            val check = <String> newLinkedList
+            var String reg = null
+            while (reg === null && !registerAllocation.freedRegister.empty) {
+                val r = registerAllocation.freedRegister.pop
+                val isPreReceiver = false //preNodes.exists[ reference.valuedObject.name == r ] 
+                if (!isPreReceiver && assignedVariables.exists[ it == r ]) {
+                    reg = r
+                } else {
+                    check.push(r)
+                }
+            }
+            while (!check.empty) registerAllocation.freedRegister.push(check.pop)
+            return reg
+        } else {
+            return registerAllocation.freedRegister.pop
         }
     }
     
@@ -189,7 +233,7 @@ class SmartRegisterAllocation extends InplaceProcessor<SCGraphs> {
             if (replacements.keySet.contains(expression.valuedObject.name)) { 
                 if (replacedNodeReference.contains(new Pair<Node, ValuedObjectReference>(node, expression))) return;
                 val VOR = replacements.peek(expression.valuedObject.name) as ValuedObjectReference
-                environment.infos.add("SRA: " + expression.valuedObject.name + " / " + VOR.valuedObject.name, node, true)
+                environment.infos.add("RR: " + expression.valuedObject.name + " / " + VOR.valuedObject.name, node, true)
                 replacedNodeReference.add(new Pair<Node, ValuedObjectReference>(node, expression))
                 expression.valuedObject = VOR.valuedObject
             } else {
