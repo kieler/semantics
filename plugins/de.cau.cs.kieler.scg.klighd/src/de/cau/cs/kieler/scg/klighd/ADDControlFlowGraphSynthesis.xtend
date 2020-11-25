@@ -42,12 +42,16 @@ import info.scce.cfg.ControlFlowGraph
 import info.scce.cfg.Vertex
 import de.cau.cs.kieler.scg.processors.add.ADDCFGWrapper
 import com.google.inject.Guice
+import com.google.inject.Module
+import com.google.inject.Binder
+import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
+import com.google.inject.Scopes
 
 /**
  * @author ssm
  *
  */
-class ADDControlFlowGraphSynthesis extends AbstractDiagramSynthesis<ADDCFGWrapper> {
+class ADDControlFlowGraphSynthesis extends AbstractDiagramSynthesis<ControlFlowGraph> {
   
     @Inject extension SCGControlFlowExtensions
     @Inject extension AnnotationsExtensions
@@ -63,15 +67,7 @@ class ADDControlFlowGraphSynthesis extends AbstractDiagramSynthesis<ADDCFGWrappe
     
     var int nodeNum = 0;
     
-    new() {
-        Guice.createInjector().injectMembers(this)
-    }
-    
-    override getInputDataType() {
-        return ADDCFGWrapper
-    }
-    
-    override transform(ADDCFGWrapper model) {
+    override transform(ControlFlowGraph model) {
         val node = createNode
         
         node.setLayoutOption(CoreOptions::DIRECTION, Direction::DOWN)
@@ -82,7 +78,7 @@ class ADDControlFlowGraphSynthesis extends AbstractDiagramSynthesis<ADDCFGWrappe
         node.setLayoutOption(LayeredOptions::EDGE_ROUTING_SPLINES_SLOPPY_LAYER_SPACING_FACTOR, 0.5d)
         
         nodeNum = 0;
-        (model.model as ControlFlowGraph).transformControlFlowGraph(node);
+        (model as ControlFlowGraph).transformControlFlowGraph(node);
         
         node
     }

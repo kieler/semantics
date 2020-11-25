@@ -23,5 +23,3 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: de.cau.cs.kieler.scg.klighd
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: de.cau.cs.kieler.scg.klighd.SCGUIModule
-Bundle-ClassPath: cfg-0.0.1-SNAPSHOT-jar-with-dependencies.jar,
- .

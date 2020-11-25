@@ -67,7 +67,7 @@ import info.scce.cfg.Vertex
  * @kieler.rating 2020-11-25 proposed yellow
  */
 
-class ADDControlFlowGraph extends ExogenousProcessor<SCGraphs, ADDCFGWrapper> implements Traceable {
+class ADDControlFlowGraph extends ExogenousProcessor<SCGraphs, ControlFlowGraph> implements Traceable {
 
     @Inject extension KExpressionsDeclarationExtensions
     @Inject extension KEffectsExtensions
@@ -93,7 +93,7 @@ class ADDControlFlowGraph extends ExogenousProcessor<SCGraphs, ADDCFGWrapper> im
         
         model.scgs.head.transformSCGToAddControlFlowGraph(cfg)
         
-        setModel(new ADDCFGWrapper => [ model = cfg ])
+        setModel(cfg)
     }
     
     def void transformSCGToAddControlFlowGraph(SCGraph scg, ControlFlowGraph cfg) {
