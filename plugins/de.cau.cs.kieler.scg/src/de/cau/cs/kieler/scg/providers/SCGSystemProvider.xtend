@@ -41,7 +41,8 @@ class SCGSystemProvider implements ISystemProvider {
             "system/de.cau.cs.kieler.scg.priority.kico",  
             "system/de.cau.cs.kieler.sccharts.netlist.guardOpt.kico",
             "system/de.cau.cs.kieler.sccharts.priority.legacy.kico",
-            "system/de.cau.cs.kieler.sccharts.priority.java.legacy.kico"
+            "system/de.cau.cs.kieler.sccharts.priority.java.legacy.kico",
+            "system/de.cau.cs.kieler.scl.add.kico"
         ]
     }
 }

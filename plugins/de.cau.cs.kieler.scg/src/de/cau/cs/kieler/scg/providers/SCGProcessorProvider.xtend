@@ -69,7 +69,8 @@ class SCGProcessorProvider implements IProcessorProvider {
             de.cau.cs.kieler.scg.processors.analyzer.GuardDefUseAnalyzer,
             de.cau.cs.kieler.scg.processors.optimizer.GOInitOptimizer,
             de.cau.cs.kieler.scg.processors.FinalThreadProcessor,
-            de.cau.cs.kieler.scg.processors.optimizer.NotGOOptimizer
+            de.cau.cs.kieler.scg.processors.optimizer.NotGOOptimizer,
+            de.cau.cs.kieler.scg.processors.add.ADDControlFlowGraph
         ]
     }
     

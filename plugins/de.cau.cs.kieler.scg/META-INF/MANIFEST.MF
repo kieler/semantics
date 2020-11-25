@@ -3,7 +3,8 @@ Bundle-ManifestVersion: 2
 Bundle-Name: KIELER SC Graph
 Bundle-SymbolicName: de.cau.cs.kieler.scg;singleton:=true
 Bundle-Version: 1.1.0.qualifier
-Bundle-ClassPath: .
+Bundle-ClassPath: .,
+ cfg-0.0.1-SNAPSHOT-jar-with-dependencies.jar
 Bundle-Vendor: Kiel University
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.emf.ecore;visibility:=reexport,
@@ -24,6 +25,7 @@ Export-Package: de.cau.cs.kieler.scg,
  de.cau.cs.kieler.scg.extensions,
  de.cau.cs.kieler.scg.impl,
  de.cau.cs.kieler.scg.processors,
+ de.cau.cs.kieler.scg.processors.add,
  de.cau.cs.kieler.scg.processors.analyzer,
  de.cau.cs.kieler.scg.processors.codegen,
  de.cau.cs.kieler.scg.processors.codegen.c,
