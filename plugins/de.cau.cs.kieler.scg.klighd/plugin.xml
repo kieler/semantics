@@ -19,6 +19,10 @@
             class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.scg.klighd.ProgramGraphSynthesis"
             id="de.cau.cs.kieler.scg.klighd.diagramSynthesis.programGraph">
       </diagramSynthesis>
+      <diagramSynthesis
+            class="de.cau.cs.kieler.scg.klighd.ADDControlFlowGraphSynthesis"
+            id="de.cau.cs.kieler.scg.klighd.diagramSynthesis.addGraph">
+      </diagramSynthesis>
    </extension>
    <extension
          point="de.cau.cs.kieler.klighd.extensions">
@@ -43,7 +47,4 @@
             id="de.cau.cs.kieler.scg.klighd.actions.priorityStatements">
       </action>
    </extension>
-   <extension
-         point="de.cau.cs.kieler.klighd.diagramSyntheses">
-   </extension>   
 </plugin>
