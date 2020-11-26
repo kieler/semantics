@@ -27,6 +27,7 @@ import info.scce.cfg.Vertex
 import info.scce.cfg.transformation.ExpressionDAG
 import de.cau.cs.kieler.kicool.compilation.ExogenousProcessor
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
+import de.dvs23.codegen.CodeGenSequential
 
 /** 
  * 
@@ -60,7 +61,11 @@ class ADDSerialization extends ExogenousProcessor<SymbolicExecuterWrapper, CodeC
     override process() {
         val cc = new CodeContainer
 
-        cc.addCCode("add.c", "empty")
+        val labelMap = model.executer.getLabelXDDMap();
+        val parameters = #["n"]
+        val generatedCode = CodeGenSequential.gen(labelMap, true, false, parameters, "st", "te");
+
+        cc.addCCode("add.c", generatedCode)
 
         setModel(cc)
     }
