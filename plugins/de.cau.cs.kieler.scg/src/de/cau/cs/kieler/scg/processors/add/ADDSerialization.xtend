@@ -60,6 +60,8 @@ class ADDSerialization extends ExogenousProcessor<SymbolicExecuterWrapper, CodeC
     override process() {
         val cc = new CodeContainer
 
+        cc.addCCode("add.c", "empty")
+
         setModel(cc)
     }
       

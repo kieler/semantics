@@ -58,6 +58,10 @@ import info.scce.cfg.condition.BinaryConditionNode
 import info.scce.cfg.condition.LeafConditionNode
 import info.scce.cfg.term.BinaryTermNode
 import info.scce.cfg.expression.ExpressionNode
+import de.cau.cs.kieler.klighd.krendering.KLineStyle
+import de.cau.cs.kieler.klighd.krendering.LineStyle
+import info.scce.cfg.xdd.ParallelAssignment
+import de.cau.cs.kieler.klighd.SynthesisOption
 
 /**
  * @author ssm
@@ -77,7 +81,16 @@ class ADDSymbolicExecuterSynthesis extends AbstractDiagramSynthesis<SymbolicExec
     @Inject extension KColorExtensions
     @Inject extension SCGSerializeHRExtensions
     
-    var int nodeNum = 0;
+    static val SynthesisOption CONNECT_ADDS = SynthesisOption::createCheckOption("Connect ADDs", true);
+    
+    override getDisplayedSynthesisOptions() {
+        return newLinkedList(
+            SynthesisOption::createSeparator("Visibility"),
+            CONNECT_ADDS
+            )
+    }    
+    
+    var int dupXDDNum = 0;
     
     override transform(SymbolicExecuterWrapper model) {
         val node = createNode
@@ -85,9 +98,9 @@ class ADDSymbolicExecuterSynthesis extends AbstractDiagramSynthesis<SymbolicExec
         node.setLayoutOption(CoreOptions::DIRECTION, Direction::DOWN)
         node.setLayoutOption(CoreOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
         node.setLayoutOption(LayeredOptions::LAYERING_STRATEGY, LayeringStrategy::LONGEST_PATH)
-        node.setLayoutOption(LayeredOptions::SPACING_NODE_NODE_BETWEEN_LAYERS, 5d)
+        node.setLayoutOption(LayeredOptions::SPACING_NODE_NODE_BETWEEN_LAYERS, 20d)
         node.setLayoutOption(LayeredOptions::SPACING_NODE_NODE, 5d)
-        node.setLayoutOption(LayeredOptions::EDGE_ROUTING_SPLINES_SLOPPY_LAYER_SPACING_FACTOR, 0.5d)
+        node.setLayoutOption(LayeredOptions::EDGE_ROUTING_SPLINES_SLOPPY_LAYER_SPACING_FACTOR, 0.2d)
 
         if (model.stage == SymbolicExecuterStages.CUTPOINTS) model.transformCutpoints(node)
         if (model.stage == SymbolicExecuterStages.ADDS) model.transformADDs(node)        
@@ -148,36 +161,102 @@ class ADDSymbolicExecuterSynthesis extends AbstractDiagramSynthesis<SymbolicExec
     def transformADDs(SymbolicExecuterWrapper model, KNode rootKNode) {
         val xddMap = model.executer.labelXDDMap   
         for (node : xddMap.keySet) {
+            
+            val n = node.createNode
+            val figure = n.addRectangle() => [
+                associateWith(n)
+                n.setMinimalNodeSize(20f, 20f)
+                it.addText(node).associateWith(n).setSurroundingSpace(4, 0.1f, 2, 0)
+                it.foreground.color = "#fff".color
+                
+            ]   
+            rootKNode.children.add(n)
+        }
+        
+        if (CONNECT_ADDS.booleanValue) {
+            val n = "te".createNode
+            val figure = n.addRectangle() => [
+                associateWith(n)
+                n.setMinimalNodeSize(20f, 20f)
+                it.addText("te").associateWith(n).setSurroundingSpace(4, 0.1f, 2, 0)
+                it.foreground.color = "#fff".color
+                
+            ]   
+            rootKNode.children.add(n)
+        }        
+                       
+        for (node : xddMap.keySet) {
+            
             val xdd = xddMap.get(node)
-            xdd.transformXDD(rootKNode)            
+            xdd.transformXDD(rootKNode)
+            node.createXDDEdge(xdd, XDDEdge.SOLID)            
         }     
     }
     
     def transformXDD(XDD xdd, KNode kNode) {
         val node = xdd.createNode
         if (xdd.isConstant) {
-            val figure = node.addRoundedRectangle(20f, 20f, 1f) => [
+            val v = xdd.v as ParallelAssignment
+            val label = v.assignments.join(", \n")
+            val figure = node.addRectangle() => [
                 associateWith(node)
                 node.setMinimalNodeSize(20f, 20f)
-                it.addText(xdd.v.toString).associateWith(node).setSurroundingSpace(4, 0.1f, 2, 0) 
-                background = "#88d".color
+                it.addText(label).associateWith(node).setSurroundingSpace(4, 0.1f, 2, 0) 
             ]                  
             // xdd.v.getTargetVertex
-            // xdd.v.getAssignments        
+            // xdd.v.getAssignments
+            if (v instanceof ParallelAssignment) {
+                if (CONNECT_ADDS.booleanValue) {
+                    xdd.createXDDEdge(v.targetVertex, XDDEdge.DOTTED)
+                } else {
+                    val pair = new Pair<String, Integer>(v.targetVertex, dupXDDNum)
+                    val n = pair.createNode
+                    dupXDDNum = dupXDDNum + 1
+                    val f = n.addRectangle() => [
+                        associateWith(n)
+                        n.setMinimalNodeSize(20f, 20f)
+                        it.addText(v.targetVertex).associateWith(n).setSurroundingSpace(4, 0.1f, 2, 0)
+                        it.foreground.color = "#fff".color
+                        
+                    ]
+                    kNode.children.add(n)
+                    xdd.createXDDEdge(pair, XDDEdge.DOTTED)                      
+                }  
+            }      
         } else {
             val figure = node.addRoundedRectangle(20f, 20f, 1f) => [
                 associateWith(node)
                 node.setMinimalNodeSize(20f, 20f)
                 it.addText(xdd.readName).associateWith(node).setSurroundingSpace(4, 0.1f, 2, 0) 
-                background = "#88d".color
             ]                          
             
-            xdd.t.transformXDD(kNode)
-            xdd.e.transformXDD(kNode)                              
+            val elseXDD = xdd.e.transformXDD(kNode)
+            val trueXDD = xdd.t.transformXDD(kNode)
+            
+            xdd.createXDDEdge(trueXDD, XDDEdge.DASHED)
+            xdd.createXDDEdge(elseXDD, XDDEdge.SOLID)                              
         }
         
         kNode.children.add(node)
+        
+        xdd
     }
+    
+    def createXDDEdge(Object source, Object target, XDDEdge edgeType) {
+        val edge = createEdge()
+        edge.source = source.getNode
+        edge.target = target.getNode
+        edge.addSpline => [
+            lineWidth = 1;
+            foreground = "#000".color
+            addArrowDecorator
+            if (edgeType == XDDEdge.DASHED) lineStyle = LineStyle.DASH
+            if (edgeType == XDDEdge.DOTTED) lineStyle = LineStyle.DOT 
+        ]
+        edge               
+    }    
+    
+    
     
     def transformED(SymbolicExecuterWrapper model, KNode rootKNode) {
         val ed = model.expressionDAG
