@@ -42,7 +42,7 @@ import info.scce.cfg.VertexType
  * @kieler.rating 2020-11-25 proposed yellow
  */
 
-class ADDControlFlowGraph extends ExogenousProcessor<SCGraphs, ControlFlowGraph> implements Traceable {
+class ADDControlFlowGraphCutpoints extends ExogenousProcessor<SCGraphs, ControlFlowGraph> implements Traceable {
 
     @Inject extension KExpressionsDeclarationExtensions
     @Inject extension KEffectsExtensions
@@ -57,66 +57,17 @@ class ADDControlFlowGraph extends ExogenousProcessor<SCGraphs, ControlFlowGraph>
     protected var Node exitNode
     
     override getId() {
-        "de.cau.cs.kieler.scg.processors.add.cfg"
+        "de.cau.cs.kieler.scg.processors.add.cfg.cutpoints"
     }
     
     override getName() {
-        "ADD CFG"
+        "ADD CFG Cutpoints"
     }
     
     override process() {
         val ControlFlowGraph cfg = new ControlFlowGraph();
         
-        model.scgs.head.transformSCGToAddControlFlowGraph(cfg)
-        
         setModel(cfg)
     }
-    
-    def void transformSCGToAddControlFlowGraph(SCGraph scg, ControlFlowGraph cfg) {
-        var vertexNum = 0;
-        val entryNode = scg.nodes.head.asEntry?.next.target
-        val exitNode = scg.nodes.filter(Exit).head
-        
-        if (entryNode === null) return;
-        
-        for (n : scg.nodes.filter[ it instanceof Assignment || it instanceof Conditional ]) {
-            val vType = if (n == entryNode) VertexType.START else VertexType.NORMAL
-            val vDesc = if (n == entryNode) "st" else "" + vertexNum
-            val v = switch(n) {
-                Assignment: new AssignmentVertex(vDesc, vType)
-                Conditional: new ConditionVertex(vDesc, vType)
-            }
-            vertexNum = vertexNum + 1
-            
-            if (n.hasAnnotation("cutPoint")) v.cutpoint = true
-            
-            cfg.addVertex(v)
-            
-            nodeMapping.put(n, v)
-        }
-        
-        val te = new Vertex("te", VertexType.END)
-        te.cutpoint = true
-        cfg.addVertex(te)
-        nodeMapping.put(exitNode, te)
-        
-        for (node : nodeMapping.keySet) {
-            val nodeVertex = nodeMapping.get(node)
-            if (nodeVertex !== null) {
-                switch(node) {
-                    Assignment: {
-                        val nextVertex = nodeMapping.get(node.next.target)
-                        (nodeVertex as AssignmentVertex).setAssignmentEdge(nextVertex, serializeHR(node) as String);
-                    }
-                    Conditional: {
-                        val nextVertexTrue = nodeMapping.get(node.then.target)
-                        val nextVertexFalse = nodeMapping.get(node.^else.target)
-                        (nodeVertex as ConditionVertex).setConditionEdges(nextVertexTrue, nextVertexFalse, serializeHR(node.condition) as String)
-                    }
-                }
-            }
-        }
-    }
-
-  
+      
 }

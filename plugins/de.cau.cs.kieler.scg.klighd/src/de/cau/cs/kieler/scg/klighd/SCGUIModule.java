@@ -15,7 +15,6 @@ import com.google.common.collect.Multimap;
 import de.cau.cs.kieler.klighd.KlighdDataManager;
 import de.cau.cs.kieler.klighd.internal.ISynthesis;
 import de.cau.cs.kieler.scg.klighd.simulation.SCGDiagramHighlighter;
-import de.cau.cs.kieler.scg.processors.add.ADDCFGWrapper;
 
 public class SCGUIModule implements BundleActivator {
 

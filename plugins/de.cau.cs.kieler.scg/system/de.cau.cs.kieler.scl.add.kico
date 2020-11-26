@@ -2,4 +2,4 @@ public system de.cau.cs.kieler.scl.add
 	label "SCL ADD Compilation (ADD, C)"
 
 de.cau.cs.kieler.scl.processors.transformators.scl2scg
-de.cau.cs.kieler.scg.processors.addcfg
+de.cau.cs.kieler.scg.processors.add.cfg

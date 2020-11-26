@@ -40,12 +40,13 @@ import org.eclipse.elk.alg.layered.options.LayeredOptions
 import org.eclipse.elk.alg.layered.options.LayeringStrategy
 import info.scce.cfg.ControlFlowGraph
 import info.scce.cfg.Vertex
-import de.cau.cs.kieler.scg.processors.add.ADDCFGWrapper
 import com.google.inject.Guice
 import com.google.inject.Module
 import com.google.inject.Binder
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import com.google.inject.Scopes
+import info.scce.cfg.ConditionEdge
+import info.scce.cfg.AssignmentEdge
 
 /**
  * @author ssm
@@ -106,70 +107,26 @@ class ADDControlFlowGraphSynthesis extends AbstractDiagramSynthesis<ControlFlowG
                 if (cutPoints.contains(v)) background = "#88d".color
             ]                
         }
-    }
-    
-    def transformProgramGraph(SCGraph scg, KNode rootKNode) {
         
-        val visited = <Node> newHashSet
-        val nodeList = newLinkedList => [ it.push(scg.nodes.head.allNext.head.target as Node) ]
-        
-        while (!nodeList.empty) {
-            val node = nodeList.pop
-            visited += node
-            val knode = node.createNode => [
-                rootKNode.children.add(it)
-            ]
-            
-            val nextNodes = node.allNext.toList
-            
-            val nodeLabel = 
-                if (nodeNum == 0) "st" else 
-                if (nextNodes.size == 0) "te" else
-                "" + nodeNum  
-            if (nextNodes.size != 0) nodeNum = nodeNum + 1
-            
-            val cutPoint = node.hasAnnotation("cutPoint") || nextNodes.size == 0
-            
-            val figure = knode.addRoundedRectangle(20f, 20f, 1f) => [
-                associateWith(node)
-                knode.setMinimalNodeSize(20f, 20f)
-                it.addText(nodeLabel).associateWith(node).setSurroundingSpace(4, 0.1f, 2, 0) 
-                
-                if (cutPoint) background = "#88d".color
-            ]            
-            
-            nextNodes.map[target].filter(Node).forEach[ 
-                if (!visited.contains(it))
-                if (it instanceof Assignment || it instanceof Conditional || it instanceof Exit) 
-                nodeList.push(it)
-            ]
-        }
-        
-        for (node : visited) {
-            for (prevNode : node.allNext.map[target].filter(Node)) {
+        for (v : vertices) {
+            val outgoingEdges = v.getOutgoingEdges();
+            for (e : outgoingEdges) {
                 val edge = createEdge()
-                edge.source = node.getNode
-                edge.target = prevNode.getNode
+                edge.source = v.getNode
+                edge.target = e.targetVertex.getNode
                 edge.addSpline => [
                     lineWidth = 1;
                     foreground = "#000".color
                     addArrowDecorator
-                ]                
-                switch(node) {
-                    Assignment: {
-                        edge.createLabel.configureCenterEdgeLabel(serializeHR(node) as String, 9, KlighdConstants::DEFAULT_FONT_NAME)       
-                    }
-                    Conditional: {
-                        if ((node.then.target as Node).getNode === prevNode.getNode) {
-                            edge.createLabel.configureCenterEdgeLabel(serializeHR(node.condition) as String, 9, KlighdConstants::DEFAULT_FONT_NAME)                        
-                        } else {
-                            edge.createLabel.configureCenterEdgeLabel("!(" + serializeHR(node.condition) as String + ")", 9, KlighdConstants::DEFAULT_FONT_NAME)
-                        }
-                    }
+                ]   
+                if (e instanceof AssignmentEdge) {
+                    edge.createLabel.configureCenterEdgeLabel(e.getAssignment.toString, 9, KlighdConstants::DEFAULT_FONT_NAME)
                 }
+                if (e instanceof ConditionEdge) {
+                    edge.createLabel.configureCenterEdgeLabel(e.getCondition.toString, 9, KlighdConstants::DEFAULT_FONT_NAME)
+                }                 
             }
         }
-
-    }        
-        
+    }
+    
 }
