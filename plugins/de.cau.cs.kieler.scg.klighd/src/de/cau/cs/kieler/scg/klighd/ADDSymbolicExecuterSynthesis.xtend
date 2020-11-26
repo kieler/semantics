@@ -191,11 +191,16 @@ class ADDSymbolicExecuterSynthesis extends AbstractDiagramSynthesis<SymbolicExec
                 }
 
             val node = exp.createNode
-            val figure = node.addRoundedRectangle(20f, 20f, 1f) => [
+            
+            val isOperator = exp instanceof BinaryConditionCompareNode ||
+                             exp instanceof BinaryConditionNode ||
+                             exp instanceof BinaryTermNode
+            
+            val figure = (if (isOperator) node.addRoundedRectangle(20f, 20f, 1f) else node.addRectangle()) 
+            => [
                 associateWith(node)
                 node.setMinimalNodeSize(20f, 20f)
                 it.addText(label).associateWith(node).setSurroundingSpace(4, 0.1f, 2, 0) 
-                background = "#88d".color
             ]       
             
             rootKNode.children.add(node)

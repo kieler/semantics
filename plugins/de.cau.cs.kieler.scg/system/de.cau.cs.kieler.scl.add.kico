@@ -6,3 +6,4 @@ de.cau.cs.kieler.scg.processors.add.cfg
 de.cau.cs.kieler.scg.processors.add.symbolicExecuter.cutpoints
 de.cau.cs.kieler.scg.processors.add.symbolicExecuter.adds
 de.cau.cs.kieler.scg.processors.add.symbolicExecuter.ed
+de.cau.cs.kieler.scg.processors.add.serialization
