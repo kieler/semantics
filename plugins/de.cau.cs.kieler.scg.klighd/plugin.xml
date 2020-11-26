@@ -23,6 +23,10 @@
             class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.scg.klighd.ADDControlFlowGraphSynthesis"
             id="de.cau.cs.kieler.scg.klighd.diagramSynthesis.addGraph">
       </diagramSynthesis>
+      <diagramSynthesis
+            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.scg.klighd.ADDSymbolicExecuterSynthesis"
+            id="de.cau.cs.kieler.scg.klighd.diagramSynthesis.addSymbolicExecuter">
+      </diagramSynthesis>
    </extension>
    <extension
          point="de.cau.cs.kieler.klighd.extensions">

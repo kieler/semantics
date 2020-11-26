@@ -12,41 +12,29 @@
  */
 package de.cau.cs.kieler.scg.klighd
 
-import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
-import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
-import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
-import de.cau.cs.kieler.scg.SCGraphs
-import javax.inject.Inject
-import de.cau.cs.kieler.scg.SCGraph
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.klighd.KlighdConstants
 import de.cau.cs.kieler.klighd.kgraph.KNode
-import de.cau.cs.kieler.scg.Node
-import de.cau.cs.kieler.scg.Assignment
-import de.cau.cs.kieler.scg.Conditional
-import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KColorExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KLabelExtensions
-import de.cau.cs.kieler.klighd.krendering.extensions.KPortExtensions
-import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KPolylineExtensions
-import de.cau.cs.kieler.klighd.krendering.extensions.KColorExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KPortExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
+import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
+import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
+import de.cau.cs.kieler.scg.extensions.SCGSerializeHRExtensions
+import info.scce.cfg.AssignmentEdge
+import info.scce.cfg.ConditionEdge
+import info.scce.cfg.ControlFlowGraph
+import javax.inject.Inject
+import org.eclipse.elk.alg.layered.options.LayeredOptions
+import org.eclipse.elk.alg.layered.options.LayeringStrategy
 import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.core.options.Direction
 import org.eclipse.elk.core.options.EdgeRouting
-import de.cau.cs.kieler.klighd.KlighdConstants
-import de.cau.cs.kieler.scg.extensions.SCGSerializeHRExtensions
-import de.cau.cs.kieler.scg.Exit
-import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
-import org.eclipse.elk.alg.layered.options.LayeredOptions
-import org.eclipse.elk.alg.layered.options.LayeringStrategy
-import info.scce.cfg.ControlFlowGraph
-import info.scce.cfg.Vertex
-import com.google.inject.Guice
-import com.google.inject.Module
-import com.google.inject.Binder
-import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
-import com.google.inject.Scopes
-import info.scce.cfg.ConditionEdge
-import info.scce.cfg.AssignmentEdge
 
 /**
  * @author ssm

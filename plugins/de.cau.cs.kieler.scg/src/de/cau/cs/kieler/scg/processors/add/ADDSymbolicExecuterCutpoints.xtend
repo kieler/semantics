@@ -19,21 +19,14 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtension
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.kicool.compilation.ExogenousProcessor
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
-import de.cau.cs.kieler.scg.Assignment
-import de.cau.cs.kieler.scg.Conditional
-import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.scg.Node
-import de.cau.cs.kieler.scg.SCGraph
-import de.cau.cs.kieler.scg.SCGraphs
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.extensions.SCGMethodExtensions
 import de.cau.cs.kieler.scg.extensions.SCGSerializeHRExtensions
-import info.scce.cfg.AssignmentVertex
-import info.scce.cfg.ConditionVertex
 import info.scce.cfg.ControlFlowGraph
 import info.scce.cfg.Vertex
-import info.scce.cfg.VertexType
+import info.scce.cfg.transformation.SymbolicExecuter
 
 /** 
  * 
@@ -42,7 +35,7 @@ import info.scce.cfg.VertexType
  * @kieler.rating 2020-11-25 proposed yellow
  */
 
-class ADDControlFlowGraphCutpoints extends ExogenousProcessor<SCGraphs, ControlFlowGraph> implements Traceable {
+class ADDSymbolicExecuterCutpoints extends ExogenousProcessor<ControlFlowGraph, SymbolicExecuterWrapper> implements Traceable {
 
     @Inject extension KExpressionsDeclarationExtensions
     @Inject extension KEffectsExtensions
@@ -57,17 +50,21 @@ class ADDControlFlowGraphCutpoints extends ExogenousProcessor<SCGraphs, ControlF
     protected var Node exitNode
     
     override getId() {
-        "de.cau.cs.kieler.scg.processors.add.cfg.cutpoints"
+        "de.cau.cs.kieler.scg.processors.add.symbolicExecuter.cutpoints"
     }
     
     override getName() {
-        "ADD CFG Cutpoints"
+        "SE Cutpoints"
     }
     
     override process() {
-        val ControlFlowGraph cfg = new ControlFlowGraph();
+        val cfg = model.copy
+        val wrapper = new SymbolicExecuterWrapper
+        wrapper.executer = new SymbolicExecuter(cfg)
+        wrapper.stage = SymbolicExecuterStages.CUTPOINTS
+        wrapper.executer.start
         
-        setModel(cfg)
+        setModel(wrapper)
     }
       
 }
