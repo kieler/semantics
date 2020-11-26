@@ -141,8 +141,8 @@ class ADDSymbolicExecuterSynthesis extends AbstractDiagramSynthesis<SymbolicExec
         for (cp : model.executer.cutpointToLeafs.keySet) {
             val info = model.executer.cutpointToLeafs.get(cp)
             for (i : info) {
-                var label = i.pathCondition.toString + ", \n {" +
-                    i.assignments.toString.replaceAll(", ", ",\n") + "}"
+                var label = i.pathCondition.toString + " \n { " +
+                    i.assignments.join(", \n    ") + " }"
                     
                 val edge = createEdge()
                 edge.source = cp.getNode
