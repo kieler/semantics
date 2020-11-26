@@ -233,8 +233,8 @@ class ADDSymbolicExecuterSynthesis extends AbstractDiagramSynthesis<SymbolicExec
             val elseXDD = xdd.e.transformXDD(kNode)
             val trueXDD = xdd.t.transformXDD(kNode)
             
-            xdd.createXDDEdge(trueXDD, XDDEdge.DASHED)
-            xdd.createXDDEdge(elseXDD, XDDEdge.SOLID)                              
+            xdd.createXDDEdge(trueXDD, XDDEdge.SOLID)
+            xdd.createXDDEdge(elseXDD, XDDEdge.DASHED)                              
         }
         
         kNode.children.add(node)
