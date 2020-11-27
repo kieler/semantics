@@ -3,6 +3,7 @@ public system de.cau.cs.kieler.scl.add
 
 de.cau.cs.kieler.scl.processors.transformators.scl2scg
 de.cau.cs.kieler.scg.processors.add.cfg
+de.cau.cs.kieler.scg.processors.add.unrollLoops
 de.cau.cs.kieler.scg.processors.add.symbolicExecuter.cutpoints
 de.cau.cs.kieler.scg.processors.add.symbolicExecuter.adds
 de.cau.cs.kieler.scg.processors.add.symbolicExecuter.ed

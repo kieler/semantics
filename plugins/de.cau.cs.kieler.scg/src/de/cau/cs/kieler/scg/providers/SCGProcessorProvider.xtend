@@ -74,7 +74,8 @@ class SCGProcessorProvider implements IProcessorProvider {
             de.cau.cs.kieler.scg.processors.add.ADDSymbolicExecuterCutpoints,
             de.cau.cs.kieler.scg.processors.add.ADDSymbolicExecuterADDs,
             de.cau.cs.kieler.scg.processors.add.ADDSymbolicExecuterED,
-            de.cau.cs.kieler.scg.processors.add.ADDSerialization
+            de.cau.cs.kieler.scg.processors.add.ADDSerialization,
+            de.cau.cs.kieler.scg.processors.add.ADDUnrollLoops
         ]
     }
     
