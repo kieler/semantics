@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Annotations IDE
 Bundle-SymbolicName: de.cau.cs.kieler.annotations.ide
-Bundle-Version: 1.1.0.qualifier
+Bundle-Version: 1.2.0.qualifier
 Automatic-Module-Name: de.cau.cs.kieler.annotations.ide
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: org.antlr.runtime;bundle-version="[3.2.0,3.2.1)",
@@ -12,9 +12,12 @@ Require-Bundle: org.antlr.runtime;bundle-version="[3.2.0,3.2.1)",
  org.eclipse.xtend.lib.macro,
  de.cau.cs.kieler.annotations,
  com.google.inject;bundle-version="3.0.0",
- org.eclipse.xtext.util;bundle-version="2.12.0",
- org.eclipse.xtext;bundle-version="2.12.0",
- org.eclipse.xtext.ide;bundle-version="2.12.0"
-Export-Package: de.cau.cs.kieler.annotations.ide.contentassist.antlr.internal,
- de.cau.cs.kieler.annotations.ide.contentassist.antlr
+ org.eclipse.xtext.util;bundle-version="2.16.0",
+ org.eclipse.xtext;bundle-version="2.16.0",
+ org.eclipse.xtext.ide;bundle-version="2.16.0",
+ de.cau.cs.kieler.klighd.kgraph;bundle-version="1.1.0"
+Export-Package: de.cau.cs.kieler.annotations.ide,
+ de.cau.cs.kieler.annotations.ide.contentassist.antlr,
+ de.cau.cs.kieler.annotations.ide.contentassist.antlr.internal,
+ de.cau.cs.kieler.annotations.ide.klighd
 

@@ -68,7 +68,7 @@ class DominatorTreeSynthesis extends AbstractDiagramSynthesis<SCGraphs> {
     private static val EDGE_OPTIONS = #["Immediate Dominators", "Dominance Frontiers", "DFS Sequence", "BB Hierarchy"]
     
     /** Edge options */
-    public static val SynthesisOption EDGES = SynthesisOption::createChoiceOption("Edges", EDGE_OPTIONS, EDGE_OPTIONS.head)
+    public static val SynthesisOption EDGES = SynthesisOption::createChoiceOption(DominatorTreeSynthesis, "Edges", EDGE_OPTIONS, EDGE_OPTIONS.head)
     
     override getDisplayedSynthesisOptions() {
         return newLinkedList(EDGES)
@@ -203,7 +203,6 @@ class DominatorTreeSynthesis extends AbstractDiagramSynthesis<SCGraphs> {
                         }
                         node.children += nNode
                     }
-//                    node.addLayoutParam(CoreOptions::ALGORITHM, "org.elk.klay.layered")
                     node.addLayoutParam(CoreOptions::DIRECTION, Direction.DOWN)
                 }
             }

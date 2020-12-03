@@ -56,6 +56,7 @@ import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTraci
 import de.cau.cs.kieler.kexpressions.MethodDeclaration
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCallExtensions
 import de.cau.cs.kieler.kexpressions.Call
+import de.cau.cs.kieler.kexpressions.KExpressionsFactory
 
 /** 
  * @author ssm
@@ -81,6 +82,12 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
 
     public static val IProperty<Boolean> PROCESS_CALL_PARAMETERS = 
         new Property<Boolean>("de.cau.cs.kieler.kexpressions.dependencies.processCallParameters", true)
+
+    /** Adds a global identifier to hostcode effects, which allows scheduling via SDs 
+     * of effects that do not share common variables. */
+    public static val IProperty<Boolean> ADD_DEFAULT_ARTIFICAL_HOSTCODE_WRITER = 
+        new Property<Boolean>("de.cau.cs.kieler.kexpressions.dependencies.addDefaultArtificialHostcodeWriter", false)
+    static val ARTIFICIAL_HOSTCODE_WRITER = new ValuedObjectIdentifier(KExpressionsFactory::eINSTANCE.createValuedObject)
 
         
     public static val IProperty<ValuedObjectAccessors> VALUED_OBJECT_ACCESSORS = 
@@ -154,6 +161,9 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
             // User defined schedules on assignments without VOs e.g. RefCallEffects
             if (!assignment.schedule.nullOrEmpty) {
                 val artificialWriters = assignment.eAllContents.filter(ReferenceCall).map[new ValuedObjectIdentifier(it)].toList
+                if (getProperty(ADD_DEFAULT_ARTIFICAL_HOSTCODE_WRITER)) {
+                    artificialWriters += ARTIFICIAL_HOSTCODE_WRITER
+                }
                 // Respect user-defined schedules.
                 for(sched : assignment.schedule) {
                     val schedule = sched.valuedObject.declaration as ScheduleDeclaration

@@ -37,7 +37,7 @@ public abstract class AbstractSCTXSyntacticSequencer extends AbstractSyntacticSe
 	protected AbstractElementAlias match_Module_ColonKeyword_3_q;
 	protected AbstractElementAlias match_RandomCall_LeftParenthesisRightParenthesisKeyword_2_q;
 	protected AbstractElementAlias match_RandomizeCall_LeftParenthesisRightParenthesisKeyword_2_q;
-	protected AbstractElementAlias match_ScopeCall___LeftParenthesisKeyword_2_1_0_RightParenthesisKeyword_2_1_1__q;
+	protected AbstractElementAlias match_ScopeCall_LeftParenthesisRightParenthesisKeyword_3_1_q;
 	protected AbstractElementAlias match_State___LeftCurlyBracketKeyword_8_1_2_RightCurlyBracketKeyword_8_1_6__q;
 	protected AbstractElementAlias match_Thread___LeftCurlyBracketKeyword_1_0_1_RightCurlyBracketKeyword_1_0_4__q;
 	
@@ -59,7 +59,7 @@ public abstract class AbstractSCTXSyntacticSequencer extends AbstractSyntacticSe
 		match_Module_ColonKeyword_3_q = new TokenAlias(false, true, grammarAccess.getModuleAccess().getColonKeyword_3());
 		match_RandomCall_LeftParenthesisRightParenthesisKeyword_2_q = new TokenAlias(false, true, grammarAccess.getRandomCallAccess().getLeftParenthesisRightParenthesisKeyword_2());
 		match_RandomizeCall_LeftParenthesisRightParenthesisKeyword_2_q = new TokenAlias(false, true, grammarAccess.getRandomizeCallAccess().getLeftParenthesisRightParenthesisKeyword_2());
-		match_ScopeCall___LeftParenthesisKeyword_2_1_0_RightParenthesisKeyword_2_1_1__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getScopeCallAccess().getLeftParenthesisKeyword_2_1_0()), new TokenAlias(false, false, grammarAccess.getScopeCallAccess().getRightParenthesisKeyword_2_1_1()));
+		match_ScopeCall_LeftParenthesisRightParenthesisKeyword_3_1_q = new TokenAlias(false, true, grammarAccess.getScopeCallAccess().getLeftParenthesisRightParenthesisKeyword_3_1());
 		match_State___LeftCurlyBracketKeyword_8_1_2_RightCurlyBracketKeyword_8_1_6__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getStateAccess().getLeftCurlyBracketKeyword_8_1_2()), new TokenAlias(false, false, grammarAccess.getStateAccess().getRightCurlyBracketKeyword_8_1_6()));
 		match_Thread___LeftCurlyBracketKeyword_1_0_1_RightCurlyBracketKeyword_1_0_4__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getThreadAccess().getLeftCurlyBracketKeyword_1_0_1()), new TokenAlias(false, false, grammarAccess.getThreadAccess().getRightCurlyBracketKeyword_1_0_4()));
 	}
@@ -106,8 +106,8 @@ public abstract class AbstractSCTXSyntacticSequencer extends AbstractSyntacticSe
 				emit_RandomCall_LeftParenthesisRightParenthesisKeyword_2_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_RandomizeCall_LeftParenthesisRightParenthesisKeyword_2_q.equals(syntax))
 				emit_RandomizeCall_LeftParenthesisRightParenthesisKeyword_2_q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_ScopeCall___LeftParenthesisKeyword_2_1_0_RightParenthesisKeyword_2_1_1__q.equals(syntax))
-				emit_ScopeCall___LeftParenthesisKeyword_2_1_0_RightParenthesisKeyword_2_1_1__q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_ScopeCall_LeftParenthesisRightParenthesisKeyword_3_1_q.equals(syntax))
+				emit_ScopeCall_LeftParenthesisRightParenthesisKeyword_3_1_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_State___LeftCurlyBracketKeyword_8_1_2_RightCurlyBracketKeyword_8_1_6__q.equals(syntax))
 				emit_State___LeftCurlyBracketKeyword_8_1_2_RightCurlyBracketKeyword_8_1_6__q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_Thread___LeftCurlyBracketKeyword_1_0_1_RightCurlyBracketKeyword_1_0_4__q.equals(syntax))
@@ -344,12 +344,13 @@ public abstract class AbstractSCTXSyntacticSequencer extends AbstractSyntacticSe
 	
 	/**
 	 * Ambiguous syntax:
-	 *     ('(' ')')?
+	 *     '()'?
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     scope=[Scope|ID] (ambiguity) (rule end)
+	 *     genericParameters+=GenericParameter '>' (ambiguity) (rule end)
+	 *     target=[NamedObject|ID] (ambiguity) (rule end)
 	 */
-	protected void emit_ScopeCall___LeftParenthesisKeyword_2_1_0_RightParenthesisKeyword_2_1_1__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_ScopeCall_LeftParenthesisRightParenthesisKeyword_3_1_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	

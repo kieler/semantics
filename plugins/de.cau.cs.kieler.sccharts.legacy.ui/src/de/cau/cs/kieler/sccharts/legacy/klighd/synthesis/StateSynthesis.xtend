@@ -34,6 +34,7 @@ import org.eclipse.elk.core.options.CoreOptions
 import static de.cau.cs.kieler.sccharts.legacy.klighd.synthesis.GeneralSynthesisOptions.*
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
+import org.eclipse.elk.core.options.BoxLayouterOptions
 
 /**
  * Transforms {@link State} into {@link KNode} diagram elements.
@@ -72,7 +73,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
             node.data.add(KGraphFactory::eINSTANCE.createKIdentifier => [it.id = state.id])
         }
         
-        node.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.box");
+        node.addLayoutParam(CoreOptions::ALGORITHM, BoxLayouterOptions.ALGORITHM_ID);
         node.setLayoutOption(CoreOptions::EXPAND_NODES, true);
         node.setLayoutOption(CoreOptions::PADDING, new ElkPadding(0));
         node.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 1.0);

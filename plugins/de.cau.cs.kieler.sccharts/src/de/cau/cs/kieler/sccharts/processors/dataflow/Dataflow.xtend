@@ -13,6 +13,7 @@
 package de.cau.cs.kieler.sccharts.processors.dataflow
 
 import com.google.inject.Inject
+import de.cau.cs.kieler.annotations.NamedObject
 import de.cau.cs.kieler.kexpressions.IgnoreValue
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 import de.cau.cs.kieler.kexpressions.ScheduleDeclaration
@@ -29,12 +30,12 @@ import de.cau.cs.kieler.sccharts.DataflowRegion
 import de.cau.cs.kieler.sccharts.DelayType
 import de.cau.cs.kieler.sccharts.PreemptionType
 import de.cau.cs.kieler.sccharts.SCChartsFactory
-import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsDataflowRegionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsInheritanceExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
 import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
@@ -61,6 +62,7 @@ class Dataflow extends SCChartsProcessor {
     @Inject extension KExpressionsDeclarationExtensions
     @Inject extension KExpressionsCreateExtensions
     @Inject extension SCChartsInheritanceExtensions
+    @Inject extension SCChartsScopeExtensions
     
     
     extension SCChartsFactory sccFactory = SCChartsFactory.eINSTANCE
@@ -149,7 +151,10 @@ class Dataflow extends SCChartsProcessor {
             newRefDelayState.createTransitionTo(newRefState).trace(rdEquationMappingForTracing.get(rdInstance.value))
             
             val ref = rdInstance.value.referenceDeclaration.reference
-            newRefState.reference.scope = ref as Scope
+            newRefState.reference.target = ref as NamedObject
+            newRefState.reference.genericParameters += (
+                rdInstance.value.genericParameters.nullOrEmpty ? rdInstance.value.referenceDeclaration.genericParameters :rdInstance.value.genericParameters
+            )?:emptyList.map[copy]
             
             val decls = newArrayList()
             decls += ref.asDeclarationScope.declarations

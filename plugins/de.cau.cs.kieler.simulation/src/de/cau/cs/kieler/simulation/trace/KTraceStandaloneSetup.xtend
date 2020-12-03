@@ -46,5 +46,4 @@ class KTraceStandaloneSetup extends KTraceStandaloneSetupGenerated implements Ki
         }
         return null
     }
-    
 }

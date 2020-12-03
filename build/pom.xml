@@ -9,8 +9,8 @@
 
   <!-- Define a few properties used throughout all build profiles. -->
   <properties>
-    <tycho-version>1.4.0</tycho-version>
-    <xtend-version>2.19.0</xtend-version>
+    <tycho-version>1.7.0</tycho-version>
+    <xtend-version>2.22.0</xtend-version>
     <targetJdk>1.8</targetJdk>
   
     <!-- Non-breakable space, as normal spaces are trimmed. -->
@@ -79,29 +79,18 @@
         <module>de.cau.cs.kieler.semantics.product.repository</module>
         <module>de.cau.cs.kieler.kicool.cli</module>
         <module>de.cau.cs.kieler.sccharts.cli</module>
-      </modules>
-    </profile>  
-
-
-    <!-- The Semantics bechmarks. -->
-    <profile>
-      <id>semantics.benchmarks</id>
-    
-      <repositories>
-        <repository>
-          <id>p2.kieler-semantics</id>
-          <layout>p2</layout>
-          <url>${kieler.semantics.updatesite}</url>
-        </repository>
-      </repositories>
-      
-      <modules>
-        <module>../test</module>
-        <module>../features/de.cau.cs.kieler.benchmark.feature</module>
-        <module>de.cau.cs.kieler.semantics.benchmark.repository</module>
-        <module>de.cau.cs.kieler.semantics.targetplatform</module>  
+        <module>de.cau.cs.kieler.language.server.cli</module>
       </modules>
     </profile>
+
+    <profile>
+      <id>semantics.ls</id>
+      <modules>
+        <module>../plugins</module>
+        <module>de.cau.cs.kieler.semantics.targetplatform</module>
+        <module>de.cau.cs.kieler.language.server.cli</module>
+      </modules>
+    </profile>  
   
   </profiles>
 
@@ -111,12 +100,12 @@
     <pluginRepository>
       <id>central</id>
       <name>Maven Plugin Repository</name>
-      <url>http://repo1.maven.org/maven2</url>
+      <url>https://repo1.maven.org/maven2</url>
     </pluginRepository>
     <pluginRepository>
       <id>xtend</id>
       <layout>default</layout>
-      <url>http://build.eclipse.org/common/xtend/maven</url>
+      <url>https://build.eclipse.org/common/xtend/maven</url>
     </pluginRepository>
   </pluginRepositories>
 

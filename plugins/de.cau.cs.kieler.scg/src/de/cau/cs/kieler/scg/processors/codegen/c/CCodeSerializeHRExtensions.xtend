@@ -22,18 +22,26 @@ import de.cau.cs.kieler.annotations.registry.AnnotationsRegistry
 import de.cau.cs.kieler.annotations.registry.AnnotationsType
 import de.cau.cs.kieler.kexpressions.BoolValue
 import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.FloatValue
 import de.cau.cs.kieler.kexpressions.FunctionCall
+import de.cau.cs.kieler.kexpressions.IntValue
+import de.cau.cs.kieler.kexpressions.MethodDeclaration
 import de.cau.cs.kieler.kexpressions.OperatorExpression
+import de.cau.cs.kieler.kexpressions.Parameter
+import de.cau.cs.kieler.kexpressions.ParameterAccessType
 import de.cau.cs.kieler.kexpressions.PrintCall
 import de.cau.cs.kieler.kexpressions.RandomCall
 import de.cau.cs.kieler.kexpressions.RandomizeCall
 import de.cau.cs.kieler.kexpressions.ReferenceCall
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
+import de.cau.cs.kieler.kexpressions.StringValue
 import de.cau.cs.kieler.kexpressions.TextExpression
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCallExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsTypeExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
@@ -42,15 +50,10 @@ import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.codegen.CodeGeneratorSerializeHRExtensions
+import de.cau.cs.kieler.scg.extensions.SCGMethodExtensions
+import java.util.ArrayList
 import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
-import de.cau.cs.kieler.scg.extensions.SCGMethodExtensions
-import de.cau.cs.kieler.kexpressions.MethodDeclaration
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
-import java.util.ArrayList
-import de.cau.cs.kieler.kexpressions.Parameter
-import de.cau.cs.kieler.kexpressions.ParameterAccessType
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCallExtensions
 
 /**
  * @author ssm
@@ -250,7 +253,42 @@ class CCodeSerializeHRExtensions extends CodeGeneratorSerializeHRExtensions {
         if (!modifications.containsEntry(INCLUDES, "<stdio.h>"))
             modifications.put(INCLUDES, "<stdio.h>")
         
-        return "printf(" + paramStr.substring(1, paramStr.length - 1) + ")"
+        if (!(printCall.parameters.head instanceof StringValue)) {
+            val formats = newArrayList
+            for (p : printCall.parameters.map[expression]) {
+                var format = "%X"
+                switch(p) {
+                    StringValue: format = "%s"
+                    BoolValue: format = "%x"
+                    IntValue: format = "%d"
+                    FloatValue: format = "%f"
+                    ValuedObjectReference: {
+                        val ref = (p as ValuedObjectReference).lowermostReference
+                        if (ref !== null) {
+                            var ValueType vType
+                            val decl = ref.valuedObject.eContainer
+                            if (decl instanceof MethodDeclaration) {
+                                vType = decl.returnType
+                            } else if (decl instanceof VariableDeclaration) {
+                                vType = decl.type
+                            }
+                            switch(vType) {
+                                case BOOL: format = "%x"
+                                case FLOAT: format = "%f"
+                                case INT: format = "%d"
+                                case STRING: format = "%s"
+                            }
+                        }
+                    }
+                }
+                formats += format
+            }
+            if (!formats.empty) {
+                paramStr = formats.join("(\"", " ", "\", ")[it] + paramStr.substring(1)
+            }
+        }
+        
+        return "printf" + paramStr
     }
     
     def dispatch CharSequence serializeHR(TextExpression textExp) {

@@ -17,7 +17,7 @@ import de.cau.cs.kieler.simulation.ui.view.SimulationControlButtons
 import de.cau.cs.kieler.simulation.ui.view.pool.DataPoolView
 import org.eclipse.swt.widgets.Display
 import org.eclipse.xtend.lib.annotations.Accessors
-import de.cau.cs.kieler.simulation.ui.preferences.SimulationPreferences
+import de.cau.cs.kieler.simulation.ide.preferences.SimulationPreferences
 
 /**
  * Handles UI integration of .

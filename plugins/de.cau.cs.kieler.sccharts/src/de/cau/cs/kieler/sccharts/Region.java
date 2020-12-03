@@ -16,7 +16,6 @@ package de.cau.cs.kieler.sccharts;
 import de.cau.cs.kieler.kexpressions.Expression;
 import de.cau.cs.kieler.kexpressions.ValuedObject;
 
-
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Region</b></em>'.
@@ -49,10 +48,6 @@ public interface Region extends Scope {
      * Returns the value of the '<em><b>Parent State</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.cau.cs.kieler.sccharts.State#getRegions <em>Regions</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Parent State</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Parent State</em>' container reference.
      * @see #setParentState(State)
@@ -76,10 +71,6 @@ public interface Region extends Scope {
     /**
      * Returns the value of the '<em><b>Counter Variable</b></em>' containment reference.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Counter Variable</em>' containment reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Counter Variable</em>' containment reference.
      * @see #setCounterVariable(ValuedObject)
@@ -102,10 +93,6 @@ public interface Region extends Scope {
     /**
      * Returns the value of the '<em><b>For Start</b></em>' containment reference.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>For Start</em>' containment reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>For Start</em>' containment reference.
      * @see #setForStart(Expression)
@@ -128,10 +115,6 @@ public interface Region extends Scope {
     /**
      * Returns the value of the '<em><b>For End</b></em>' containment reference.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>For End</em>' containment reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>For End</em>' containment reference.
      * @see #setForEnd(Expression)
@@ -154,10 +137,6 @@ public interface Region extends Scope {
     /**
      * Returns the value of the '<em><b>Override</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Override</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Override</em>' attribute.
      * @see #setOverride(boolean)

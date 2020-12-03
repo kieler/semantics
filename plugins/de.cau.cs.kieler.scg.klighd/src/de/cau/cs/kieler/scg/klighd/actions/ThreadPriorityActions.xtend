@@ -21,6 +21,8 @@ import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.scg.klighd.SCGraphDiagramSynthesis
 
+import static de.cau.cs.kieler.scg.klighd.SCGraphSynthesisOptions.*
+
 import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
 
 /**
@@ -35,8 +37,8 @@ class ThreadPriorityActions implements IAction {
     
     private static final String THREAD_ID  = "de.cau.cs.kieler.scg.klighd.actions.ThreadPriorityActions"
     
-    public static final SynthesisOption SHOW_THREAD_PRIO = SynthesisOption::createCheckOption("Thread Priority IDs", 
-        true).setUpdateAction(THREAD_ID);
+    public static final SynthesisOption SHOW_THREAD_PRIO = SynthesisOption::createCheckOption(ThreadPriorityActions, "Thread Priority IDs", 
+        true).setUpdateAction(THREAD_ID).setCategory(PRIO);
     
         
     override execute(ActionContext context) {

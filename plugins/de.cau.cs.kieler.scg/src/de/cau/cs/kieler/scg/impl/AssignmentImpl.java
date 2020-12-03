@@ -498,7 +498,12 @@ public class AssignmentImpl extends NodeImpl implements Assignment {
         result.append("@");
         result.append(String.format("%08x", this.hashCode()));
         result.append(" ");
-        result.append(serializer.serialize(this).toString());
+        CharSequence serialized = serializer.serialize(this);
+        if (serialized != null) {
+            result.append(serialized.toString());
+        } else {
+            result.append("<null>");
+        }
         return result.toString();
 
     }

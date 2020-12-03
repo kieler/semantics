@@ -143,7 +143,7 @@ class SimpleGuardTransformation extends Processor<SCGraphs, SCGraphs> implements
          * basic blocks.
          */
         newSCG => [
-            annotations += createStringAnnotation(SCGFeatures.GUARDS_ID, SCGFeatures.GUARDS_NAME)
+            addTagAnnotation(SCGAnnotations.ANNOTATION_GUARDED)
             label = scg.label
             scg.copyAnnotations(it, <String> newHashSet("main", "voLink"))
         ]

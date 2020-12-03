@@ -22,12 +22,11 @@ import org.eclipse.xtext.ParserRule;
 import org.eclipse.xtext.RuleCall;
 import org.eclipse.xtext.TerminalRule;
 import org.eclipse.xtext.common.services.TerminalsGrammarAccess;
-import org.eclipse.xtext.service.AbstractElementFinder.AbstractEnumRuleElementFinder;
-import org.eclipse.xtext.service.AbstractElementFinder.AbstractGrammarElementFinder;
+import org.eclipse.xtext.service.AbstractElementFinder;
 import org.eclipse.xtext.service.GrammarProvider;
 
 @Singleton
-public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
+public class KEffectsGrammarAccess extends AbstractElementFinder.AbstractGrammarElementFinder {
 	
 	public class EffectElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.keffects.KEffects.Effect");
@@ -632,8 +631,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		//// A print functions that enables target-independent prints in the model.    
 		//PrintCallEffect keffects::PrintCallEffect:
 		//	annotations+=Annotation*
-		//	'print' ('(' parameters+=Parameter (',' parameters+=Parameter)* ')') ('schedule'
-		//	schedule+=ScheduleObjectReference+)?;
+		//	'print' ('(' parameters+=Parameter (',' parameters+=Parameter)* ')') ('schedule' schedule+=ScheduleObjectReference+)?;
 		@Override public ParserRule getRule() { return rule; }
 		
 		//annotations+=Annotation* 'print' ('(' parameters+=Parameter (',' parameters+=Parameter)* ')') ('schedule'
@@ -763,7 +761,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		public Keyword getLeftParenthesisRightParenthesisKeyword_3_1() { return cLeftParenthesisRightParenthesisKeyword_3_1; }
 	}
 	
-	public class AssignOperatorElements extends AbstractEnumRuleElementFinder {
+	public class AssignOperatorElements extends AbstractElementFinder.AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.keffects.KEffects.AssignOperator");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final EnumLiteralDeclaration cASSIGNEnumLiteralDeclaration_0 = (EnumLiteralDeclaration)cAlternatives.eContents().get(0);
@@ -891,7 +889,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		//"max="
 		public Keyword getASSIGNMAXMaxKeyword_13_0() { return cASSIGNMAXMaxKeyword_13_0; }
 	}
-	public class PostfixOperatorElements extends AbstractEnumRuleElementFinder {
+	public class PostfixOperatorElements extends AbstractElementFinder.AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.keffects.KEffects.PostfixOperator");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final EnumLiteralDeclaration cPOSTFIXADDEnumLiteralDeclaration_0 = (EnumLiteralDeclaration)cAlternatives.eContents().get(0);
@@ -1155,8 +1153,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	//// A print functions that enables target-independent prints in the model.    
 	//PrintCallEffect keffects::PrintCallEffect:
 	//	annotations+=Annotation*
-	//	'print' ('(' parameters+=Parameter (',' parameters+=Parameter)* ')') ('schedule'
-	//	schedule+=ScheduleObjectReference+)?;
+	//	'print' ('(' parameters+=Parameter (',' parameters+=Parameter)* ')') ('schedule' schedule+=ScheduleObjectReference+)?;
 	public PrintCallEffectElements getPrintCallEffectAccess() {
 		return pPrintCallEffect;
 	}
@@ -1454,10 +1451,9 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//SumExpression Expression:
-	//	ProductExpression ({OperatorExpression.subExpressions+=current} operator=AddOperator
-	//	subExpressions+=ProductExpression ('+' subExpressions+=ProductExpression)* |
-	//	{OperatorExpression.subExpressions+=current} operator=SubOperator subExpressions+=ProductExpression ('-'
-	//	subExpressions+=ProductExpression)*)*;
+	//	ProductExpression ({OperatorExpression.subExpressions+=current} operator=AddOperator subExpressions+=ProductExpression
+	//	('+' subExpressions+=ProductExpression)* | {OperatorExpression.subExpressions+=current} operator=SubOperator
+	//	subExpressions+=ProductExpression ('-' subExpressions+=ProductExpression)*)*;
 	public KExpressionsGrammarAccess.SumExpressionElements getSumExpressionAccess() {
 		return gaKExpressions.getSumExpressionAccess();
 	}
@@ -1514,8 +1510,8 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	//// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
 	//// Example: 2 * 4
 	//MultExpression Expression:
-	//	NegExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=NegExpression)
-	//	('*' subExpressions+=NegExpression)*)?;
+	//	NegExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=NegExpression) ('*'
+	//	subExpressions+=NegExpression)*)?;
 	public KExpressionsGrammarAccess.MultExpressionElements getMultExpressionAccess() {
 		return gaKExpressions.getMultExpressionAccess();
 	}
@@ -1650,6 +1646,18 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getAtomicValuedExpressionRule() {
 		return getAtomicValuedExpressionAccess().getRule();
+	}
+	
+	//// Boolean expression with scheduling directives.
+	//// Is meant to be used in derived grammars. Do not delete this rule.     
+	//BoolScheduleExpression Expression:
+	//	LogicalOrExpression ('schedule' schedule+=ScheduleObjectReference)?;
+	public KExpressionsGrammarAccess.BoolScheduleExpressionElements getBoolScheduleExpressionAccess() {
+		return gaKExpressions.getBoolScheduleExpressionAccess();
+	}
+	
+	public ParserRule getBoolScheduleExpressionRule() {
+		return getBoolScheduleExpressionAccess().getRule();
 	}
 	
 	//// Valued Object Test Expression Rule

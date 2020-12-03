@@ -1,6 +1,6 @@
 /*
  * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
- *
+ * 
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
  * Copyright 2017 by
@@ -17,29 +17,29 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.klighd.IAction
 import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.ViewContext
-import de.cau.cs.kieler.scg.klighd.SCGraphDiagramSynthesis
+import de.cau.cs.kieler.klighd.kgraph.KNode
+import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
+import de.cau.cs.kieler.scg.klighd.SCGraphSynthesisHelper
+
+import static de.cau.cs.kieler.scg.klighd.SCGraphSynthesisOptions.*
 
 import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
-import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
-import de.cau.cs.kieler.klighd.kgraph.KNode
 
 /**
  * Action class to display the node priority in the SCG.
  * @author lpe
- *
+ * 
  */
 class NodePriorityActions implements IAction {
-    
-    private static final String NODE_ID    = "de.cau.cs.kieler.scg.klighd.actions.priorityActions"
-    
+
+    private static final String NODE_ID = "de.cau.cs.kieler.scg.klighd.actions.priorityActions"
+
     @Inject
     extension KRenderingExtensions
-    
-    public static final SynthesisOption SHOW_NODE_PRIORITY = SynthesisOption::createCheckOption("Node Priorities", 
-        true).setUpdateAction(NODE_ID);
-    
-    
-        
+
+    public static val SynthesisOption SHOW_NODE_PRIORITY = SynthesisOption::createCheckOption(NodePriorityActions,
+        "Node Priorities", true).setUpdateAction(NODE_ID).setCategory(PRIO)
+
     override execute(ActionContext context) {
         val viewContext = context.contextViewer.viewContext
         val rootNode = context.KNode
@@ -47,7 +47,7 @@ class NodePriorityActions implements IAction {
             if (viewContext.getSourceElement(node) != null) {
                 val container = node.KContainerRendering
                 for (text : container.children) {
-                    if (text.getProperty(SCGraphDiagramSynthesis.NODE_PRIO_PROPERTY)) {
+                    if (text.getProperty(SCGraphSynthesisHelper.NODE_PRIO_PROPERTY)) {
                         if (SHOW_NODE_PRIORITY.booleanValue(viewContext)) {
                             text.invisible = false
                         } else {
@@ -57,30 +57,29 @@ class NodePriorityActions implements IAction {
                 }
             }
         }
-        
+
         ActionResult.createResult(true)
-        
+
     }
-    
+
     def booleanValue(SynthesisOption option, ViewContext viewContext) {
         val value = viewContext.getOptionValue(option)
-        
-        if(value == null) {
+
+        if (value == null) {
             return false
         } else if (value instanceof Boolean) {
             return value as Boolean;
 
         } else {
-            throw new IllegalArgumentException("KLighD transformation option handling: "
-                    + "The transformation " + this
-                    + " attempted to evaluate the non-Boolean valued transformation option "
-                    + option.getName() + " expecting a Boolean value.");
+            throw new IllegalArgumentException(
+                "KLighD transformation option handling: " + "The transformation " + this +
+                    " attempted to evaluate the non-Boolean valued transformation option " + option.getName() +
+                    " expecting a Boolean value.");
         }
     }
-    
-    new(){
+
+    new() {
         Guice.createInjector.injectMembers(this)
     }
-    
-    
+
 }

@@ -53,7 +53,10 @@ class PartialExpressionEvaluator {
     
     // -- Config --
     
-    @Accessors var boolean inplace = false
+    // als: Inplace was intendet to reduces copy but in compute fails and aborts evaluation
+    // the inplace mode might already have decomposed the input expression which leads to an broken result
+    //@Accessors var boolean inplace = false
+    @Accessors var boolean alwaysReturnCopy = false
     @Accessors var boolean compute = false
     
     // -- Vars --
@@ -83,11 +86,17 @@ class PartialExpressionEvaluator {
         var Expression parEval = expression?.eval
         if (parEval !== null) {
             return parEval
-        } else if (inplace) {
-            return expression
-        } else {
+        } else if (alwaysReturnCopy) {
             return expression.copy
+        } else {
+            return expression
         }
+    }
+
+    def Expression evaluateAndReplace(Expression expression) {
+        val result = expression.evaluate
+        expression.replace(result)
+        return result
     }
     
     // ------------------------------------
@@ -114,7 +123,7 @@ class PartialExpressionEvaluator {
     // ------------------------------------
     
     protected dispatch def Expression eval(ValuedObjectReference vor) {
-        var cp = if(inplace) vor else vor.copy
+        var cp = vor.copy//if(inplace) vor else vor.copy
         for (expr : vor.indices.immutableCopy) {
             cp.indices.set(vor.indices.indexOf(expr), expr.evaluate)
         }
@@ -253,12 +262,12 @@ class PartialExpressionEvaluator {
                     return newOp
                 }
             }
-            default: return if (inplace) op else op.copy // Not yet supported
+            default: return op.copy//if (inplace) op else op.copy // Not yet supported
         }
     }
     
     protected dispatch def Expression eval(Value value) {
-        return if (inplace) value else value.copy
+        return value.copy//if (inplace) value else value.copy
     }
     
     // Fallback

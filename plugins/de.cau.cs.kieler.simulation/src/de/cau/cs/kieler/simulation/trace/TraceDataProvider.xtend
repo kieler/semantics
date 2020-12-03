@@ -145,7 +145,7 @@ class TraceDataProvider {
             if (applyInputs) {
                 // Reset all signals
                 val reset = tracefile.aggregatedValuedObjects.toMap([
-                    name
+                    label
                 ],[
                     new JsonPrimitive(false) as JsonElement
                 ])
@@ -154,7 +154,7 @@ class TraceDataProvider {
             
             // Set emmited signals
             val inputs = effects.filter(Emission).toMap([
-                reference.valuedObject.name
+                reference.valuedObject.label
             ],[
                 newValue
             ])
@@ -175,41 +175,45 @@ class TraceDataProvider {
         } else {
             for (input : effects.filter(Assignment)) {
                 var vor = input.reference
-                val name = vor.valuedObject.name
-                if (applyInputs) {
-                    inputNames += name
-                } else {
-                    outputNames += name
-                }
-                var value = input.expression.toJsonValue
-                
-                if (!vor.indices.nullOrEmpty) {
-                    var idx = 0
-                    val entry = state.entries.get(name)
-                    var JsonArray array = if (entry !== null && entry.rawValue?.isJsonArray) {
-                        entry.rawValue.asJsonArray
+                val name = vor.valuedObject.label
+                if (!name.nullOrEmpty) {
+                    if (applyInputs) {
+                        inputNames += name
                     } else {
-                        new JsonArray
+                        outputNames += name
                     }
-                    state.setValue(name, array)
-                    val iter = vor.indices.iterator
-                    do {
-                        idx = (iter.next as IntValue).value
-                        if (array.size <= idx) {
-                            for (var i = array.size; i <= idx; i++) {
-                                array.add(JsonNull.INSTANCE)
+                    var value = input.expression.toJsonValue
+                    
+                    if (!vor.indices.nullOrEmpty) {
+                        var idx = 0
+                        val entry = state.entries.get(name)
+                        var JsonArray array = if (entry !== null && entry.rawValue?.isJsonArray) {
+                            entry.rawValue.asJsonArray
+                        } else {
+                            new JsonArray
+                        }
+                        state.setValue(name, array)
+                        val iter = vor.indices.iterator
+                        do {
+                            idx = (iter.next as IntValue).value
+                            if (array.size <= idx) {
+                                for (var i = array.size; i <= idx; i++) {
+                                    array.add(JsonNull.INSTANCE)
+                                }
+                                if (iter.hasNext) {
+                                    array.set(idx, new JsonArray)
+                                }
                             }
                             if (iter.hasNext) {
-                                array.set(idx, new JsonArray)
+                                array = array.get(idx).asJsonArray
                             }
-                        }
-                        if (iter.hasNext) {
-                            array = array.get(idx).asJsonArray
-                        }
-                    } while (iter.hasNext)
-                    array.set(idx, value)
+                        } while (iter.hasNext)
+                        array.set(idx, value)
+                    } else {
+                        state.setValue(name, value)
+                    }
                 } else {
-                    state.setValue(name, value)
+                    throw new NullPointerException("Missing variable name in trace")
                 }
             }
         }
@@ -279,7 +283,7 @@ class TraceDataProvider {
         if (trace.isJsonPrimitive
             && trace.asJsonPrimitive.isBoolean) {
             return trace.asJsonPrimitive.asBoolean.booleanValue.xor(pool.isTruthy)
-        } else if (signalSemantics // Legacy boolean encoding as numbers in eso
+        } else if ((signalSemantics || poolEntry.combinedProperties.contains("esterel-orig")) // Legacy boolean encoding as numbers in eso
             && pool.isJsonPrimitive
             && pool.asJsonPrimitive.isBoolean
             && trace.isJsonPrimitive

@@ -13,35 +13,33 @@
 package de.cau.cs.kieler.kicool.ui.synthesis
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
-import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
-import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
+import com.google.inject.Injector
+import de.cau.cs.kieler.kgraph.text.KGraphStandaloneSetup
 import de.cau.cs.kieler.kicool.System
-import org.eclipse.elk.core.options.CoreOptions
-import org.eclipse.elk.core.options.EdgeRouting
-import org.eclipse.elk.core.options.Direction
-import org.eclipse.elk.alg.layered.options.NodePlacementStrategy
-import org.eclipse.elk.alg.layered.options.LayeredOptions
-import org.eclipse.emf.common.util.URI
-import org.eclipse.xtext.resource.XtextResourceSet
-import org.eclipse.xtext.resource.XtextResource
-import org.eclipse.elk.core.math.ElkPadding
+import de.cau.cs.kieler.kicool.ui.synthesis.actions.SelectNothing
+import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.kgraph.util.KGraphUtil
-import org.eclipse.elk.alg.layered.options.LayeringStrategy
-import org.eclipse.elk.alg.layered.options.FixedAlignment
-import de.cau.cs.kieler.kicool.ui.synthesis.styles.SkinSelector
-import de.cau.cs.kieler.kgraph.text.KGraphStandaloneSetup
-import org.eclipse.elk.alg.layered.options.WrappingStrategy
-import org.eclipse.elk.alg.layered.options.GraphCompactionStrategy
+import de.cau.cs.kieler.klighd.krendering.Trigger
+import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
+import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
+import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import org.eclipse.elk.alg.layered.options.ConstraintCalculationStrategy
-import de.cau.cs.kieler.klighd.SynthesisOption
+import org.eclipse.elk.alg.layered.options.FixedAlignment
+import org.eclipse.elk.alg.layered.options.GraphCompactionStrategy
+import org.eclipse.elk.alg.layered.options.LayeredOptions
+import org.eclipse.elk.alg.layered.options.LayeringStrategy
+import org.eclipse.elk.alg.layered.options.NodePlacementStrategy
+import org.eclipse.elk.alg.layered.options.WrappingStrategy
+import org.eclipse.elk.core.options.CoreOptions
+import org.eclipse.elk.core.options.Direction
+import org.eclipse.elk.core.options.EdgeRouting
+import org.eclipse.emf.common.util.URI
+import org.eclipse.xtext.resource.XtextResource
+import org.eclipse.xtext.resource.XtextResourceSet
 
 import static extension de.cau.cs.kieler.klighd.kgraph.util.KGraphIterators.*
-import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
-import de.cau.cs.kieler.klighd.krendering.Trigger
-import de.cau.cs.kieler.kicool.ui.synthesis.actions.SelectNothing
-import com.google.inject.Injector
 
 /**
  * Main diagram synthesis for KiCool.
@@ -58,51 +56,57 @@ class KiCoolSynthesis extends AbstractDiagramSynthesis<System> {
     @Inject extension ProcessorSynthesis
     @Inject extension SourceSynthesis
 
-    public static final SynthesisOption FLATTEN_SYSTEM = SynthesisOption.createCheckOption("Flatten System", false)
-
+    public static final SynthesisOption FLATTEN_SYSTEM = SynthesisOption.createCheckOption(KiCoolSynthesis, "Flatten System", false)
+    public static final SynthesisOption ON_OFF_BUTTONS = SynthesisOption.createCheckOption(KiCoolSynthesis, "On Off Buttons", false)
+    
     override transform(System model) {
+        onOffButtons = ON_OFF_BUTTONS.booleanValue
         val rootNode = model.createNode
 
-        rootNode.setLayoutOption(CoreOptions::ALGORITHM, "org.eclipse.elk.layered");
-        rootNode.setLayoutOption(CoreOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
-        rootNode.setLayoutOption(CoreOptions::DIRECTION, Direction::RIGHT);
-        rootNode.setLayoutOption(LayeredOptions::NODE_PLACEMENT_STRATEGY, NodePlacementStrategy::BRANDES_KOEPF)
-        rootNode.setLayoutOption(LayeredOptions::NODE_PLACEMENT_BK_FIXED_ALIGNMENT, FixedAlignment.BALANCED)
-//        rootNode.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 10d);
-        rootNode.setLayoutOption(LayeredOptions::SPACING_NODE_NODE_BETWEEN_LAYERS, 12d)
-        rootNode.setLayoutOption(CoreOptions::PADDING, new ElkPadding(8d))
-        rootNode.setLayoutOption(LayeredOptions::LAYERING_STRATEGY, LayeringStrategy::LONGEST_PATH)
-        rootNode.setLayoutOption(LayeredOptions::WRAPPING_STRATEGY, WrappingStrategy.SINGLE_EDGE)
-        rootNode.setLayoutOption(LayeredOptions::COMPACTION_POST_COMPACTION_STRATEGY, GraphCompactionStrategy.LEFT)
-        rootNode.setLayoutOption(LayeredOptions::COMPACTION_POST_COMPACTION_CONSTRAINTS,
-            ConstraintCalculationStrategy.QUADRATIC)
-        rootNode.setLayoutOption(LayeredOptions::SPACING_EDGE_NODE, 5.0)
-        rootNode.setLayoutOption(LayeredOptions::SPACING_NODE_NODE, 2.0)
-        rootNode.setLayoutOption(LayeredOptions::WRAPPING_ADDITIONAL_EDGE_SPACING, 0.0)
-
-        // Workaround until we use the next version of ELK        
-        // val size = usedContext.getProperty(KlighdOptions.VIEWER).getControl.getSize
-//      val aspectRatio = size.x as double / size.y * 2
-//        rootNode.setLayoutOption(LayeredOptions::ASPECT_RATIO, 10.0) 
-        rootNode.setLayoutOption(LayeredOptions::WRAPPING_CORRECTION_FACTOR, 1.4)
+        rootNode.configureBasicLayout()
 
         rootNode.addRectangle => [
             addAction(Trigger::SINGLECLICK, SelectNothing.ID)
         ]
+        
+        // Workaround to propagate aspectratio
+        val size = usedContext.viewer?.control?.size
+        if (size !== null) {
+            // scale width down in consideration of other nodes in the chain
+            defaultProcessGroupAspectRatio = ((size.x as double) * 0.8) / (size.y)
+        }
 
         val source = sourceNode
-        val processorNodes = model.processors.transform
+        val processorNodes = model.processors.transform()
         val nodes = processorNodes.head.children
         source.sourceConnect(nodes.head)
         nodes += source
 
         rootNode.children += nodes
 
-        if(FLATTEN_SYSTEM.booleanValue) rootNode.flattenHierarchy
-
+        if(FLATTEN_SYSTEM.booleanValue) {
+            rootNode.flattenHierarchy
+        }
         rootNode
     }
-        
+    
+    /** Used for Root node and processor groups!!! */
+    def static configureBasicLayout(KNode node) {
+        node.setProperty(CoreOptions::ALGORITHM, LayeredOptions.ALGORITHM_ID);
+        node.setProperty(CoreOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
+        node.setProperty(CoreOptions::DIRECTION, Direction::RIGHT);
+        node.setProperty(LayeredOptions::NODE_PLACEMENT_STRATEGY, NodePlacementStrategy::BRANDES_KOEPF)
+        node.setProperty(LayeredOptions::NODE_PLACEMENT_BK_FIXED_ALIGNMENT, FixedAlignment.BALANCED)
+        node.setProperty(LayeredOptions::LAYERING_STRATEGY, LayeringStrategy::LONGEST_PATH)
+        node.setProperty(LayeredOptions::WRAPPING_STRATEGY, WrappingStrategy.SINGLE_EDGE)
+        node.setProperty(LayeredOptions::WRAPPING_ADDITIONAL_EDGE_SPACING, 0.0)
+        node.setProperty(LayeredOptions::WRAPPING_CORRECTION_FACTOR, 1.4)
+        node.setProperty(LayeredOptions::COMPACTION_POST_COMPACTION_STRATEGY, GraphCompactionStrategy.LEFT)
+        node.setProperty(LayeredOptions::COMPACTION_POST_COMPACTION_CONSTRAINTS, ConstraintCalculationStrategy.QUADRATIC)
+        node.setProperty(LayeredOptions::SPACING_NODE_NODE_BETWEEN_LAYERS, 12d)
+        node.setProperty(LayeredOptions::SPACING_EDGE_NODE, 5.0)
+        node.setProperty(LayeredOptions::SPACING_NODE_NODE, 2.0)
+    }
     public static val Injector KGTInjector = new KGraphStandaloneSetup().createInjectorAndDoEMFRegistration
     
     def static doesKGTExist(String bundleId, String resourceLocation, String skinPrefix) {
@@ -145,18 +149,20 @@ class KiCoolSynthesis extends AbstractDiagramSynthesis<System> {
                 val tail = node.children.findFirst[it.outgoingEdges.empty]
                 if (parent !== null && head !== null && tail !== null) {
                     // Reconnect
-                    node.incomingEdges.immutableCopy.forEach[target = head]
-                    node.outgoingEdges.immutableCopy.forEach[tail.outgoingEdges.add(it)]
+                    node.incomingEdges.immutableCopy.forEach[
+                        target = head
+                        targetPort = head.ports.head // Assuming the first port is left
+                    ]
+                    node.outgoingEdges.immutableCopy.forEach[
+                        source = tail
+                        sourcePort = tail.ports.last // Assuming the last port is right
+                    ]
                     // Move
                     parent.children.addAll(node.children)
                     parent.children.remove(node)
                 }
             }
         }
-    }
-
-    def static getKGTFromBundle(String bundleId, String resourceLocation) {
-        return getKGTFromBundle(bundleId, resourceLocation, SkinSelector.skinPrefix)
     }
 
 }

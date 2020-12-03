@@ -40,8 +40,7 @@ public class SCTGeneratorDialogHandler extends AbstractHandler {
             "de.cau.cs.kieler.sccharts.ui.text.SCTGenerator.openDialog";
 
     /** The SCT injector */
-    private static Injector injector =
-            new SCTXStandaloneSetup().createInjectorAndDoEMFRegistration();
+    private static Injector injector = SCTXStandaloneSetup.doSetup();
 
     /**
      * {@inheritDoc}

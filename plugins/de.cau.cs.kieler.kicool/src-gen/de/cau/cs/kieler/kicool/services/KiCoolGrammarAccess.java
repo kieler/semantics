@@ -22,11 +22,11 @@ import org.eclipse.xtext.ParserRule;
 import org.eclipse.xtext.RuleCall;
 import org.eclipse.xtext.TerminalRule;
 import org.eclipse.xtext.common.services.TerminalsGrammarAccess;
-import org.eclipse.xtext.service.AbstractElementFinder.AbstractGrammarElementFinder;
+import org.eclipse.xtext.service.AbstractElementFinder;
 import org.eclipse.xtext.service.GrammarProvider;
 
 @Singleton
-public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
+public class KiCoolGrammarAccess extends AbstractElementFinder.AbstractGrammarElementFinder {
 	
 	public class SystemElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kicool.KiCool.System");
@@ -78,8 +78,8 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 		@Override public ParserRule getRule() { return rule; }
 		
 		//pragmas+=Pragma* annotations+=Annotation* public?='public'? developer?='developer'? simulation?='simulation'? 'system'
-		//id=QualifiedID 'label' label=EString ('start' 'config' startConfig=JsonObjectValue)? ('config'
-		//config=JsonObjectValue)? intermediates+=IntermediateReference* processors=ProcessorGroup
+		//id=QualifiedID 'label' label=EString ('start' 'config' startConfig=JsonObjectValue)? ('config' config=JsonObjectValue)?
+		//intermediates+=IntermediateReference* processors=ProcessorGroup
 		public Group getGroup() { return cGroup; }
 		
 		//pragmas+=Pragma*
@@ -993,19 +993,11 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 		return getMethodDeclarationWOSemicolonAccess().getRule();
 	}
 	
-	//NamespaceID:
-	//	ExtendedID (':' PrimeID)*;
-	public KExtGrammarAccess.NamespaceIDElements getNamespaceIDAccess() {
-		return gaKExt.getNamespaceIDAccess();
-	}
-	
-	public ParserRule getNamespaceIDRule() {
-		return getNamespaceIDAccess().getRule();
-	}
-	
 	//ReferenceDeclaration kexpressions::ReferenceDeclaration:
 	//	annotations+=Annotation*
-	//	access=AccessModifier? ('ref' reference=[annotations::NamedObject|NamespaceID] |
+	//	access=AccessModifier? ('ref' reference=[annotations::NamedObject|NamespaceID] ('<'
+	//	genericParameters+=GenericParameter (',' genericParameters+=GenericParameter)* '>')?
+	//	|
 	//	'extern' extern+=ExternString (',' extern+=ExternString)*) valuedObjects+=ValuedObject (','
 	//	valuedObjects+=ValuedObject)* ';'
 	//	annotations+=CommentAnnotatonSL?;
@@ -1019,7 +1011,9 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//ReferenceDeclarationWOSemicolon kexpressions::ReferenceDeclaration:
 	//	annotations+=Annotation*
-	//	access=AccessModifier? ('ref' reference=[annotations::NamedObject|NamespaceID] |
+	//	access=AccessModifier? ('ref' reference=[annotations::NamedObject|NamespaceID] ('<'
+	//	genericParameters+=GenericParameter (',' genericParameters+=GenericParameter)* '>')?
+	//	|
 	//	'extern' extern+=ExternString (',' extern+=ExternString)*) valuedObjects+=ValuedObject (','
 	//	valuedObjects+=ValuedObject)*
 	//	annotations+=CommentAnnotatonSL?;
@@ -1042,6 +1036,96 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 		return getExternStringAccess().getRule();
 	}
 	
+	//// ---
+	////  Generics
+	//// ---
+	//GenericParameterDeclaration kexpressions::GenericParameterDeclaration:
+	//	annotations+=QuotedStringAnnotation*
+	//	valuedObjects+=SimpleValuedObject ('is' valueType=ValueType | 'is' reference?='ref'?
+	//	type=[annotations::NamedObject|PrimeID])?;
+	public KExtGrammarAccess.GenericParameterDeclarationElements getGenericParameterDeclarationAccess() {
+		return gaKExt.getGenericParameterDeclarationAccess();
+	}
+	
+	public ParserRule getGenericParameterDeclarationRule() {
+		return getGenericParameterDeclarationAccess().getRule();
+	}
+	
+	//GenericParameter kexpressions::Parameter:
+	//	expression=(ValueTypeReference
+	//	| AnyValue
+	//	| GenericParameter_GenericTypeReference_Parameterized
+	//	| GenericParameter_ValuedObjectReference_Array
+	//	| GenericParameter_ValuedObjectReference_Sub
+	//	| GenericTypeReference
+	//	| ValuedObjectReference);
+	public KExtGrammarAccess.GenericParameterElements getGenericParameterAccess() {
+		return gaKExt.getGenericParameterAccess();
+	}
+	
+	public ParserRule getGenericParameterRule() {
+		return getGenericParameterAccess().getRule();
+	}
+	
+	//ValueTypeReference kexpressions::ValueTypeReference:
+	//	valueType=ValueType;
+	public KExtGrammarAccess.ValueTypeReferenceElements getValueTypeReferenceAccess() {
+		return gaKExt.getValueTypeReferenceAccess();
+	}
+	
+	public ParserRule getValueTypeReferenceRule() {
+		return getValueTypeReferenceAccess().getRule();
+	}
+	
+	//GenericTypeReference kexpressions::GenericTypeReference:
+	//	type=[annotations::NamedObject|PrimeID] ('<' genericParameters+=GenericParameter (','
+	//	genericParameters+=GenericParameter)* '>')?;
+	public KExtGrammarAccess.GenericTypeReferenceElements getGenericTypeReferenceAccess() {
+		return gaKExt.getGenericTypeReferenceAccess();
+	}
+	
+	public ParserRule getGenericTypeReferenceRule() {
+		return getGenericTypeReferenceAccess().getRule();
+	}
+	
+	//// Special rules for GenericParameter parsing
+	//GenericParameter_GenericTypeReference_Parameterized kexpressions::GenericTypeReference:
+	//	type=[annotations::NamedObject|PrimeID]
+	//	'<' genericParameters+=GenericParameter (',' genericParameters+=GenericParameter)* '>' // mandatory
+	//;
+	public KExtGrammarAccess.GenericParameter_GenericTypeReference_ParameterizedElements getGenericParameter_GenericTypeReference_ParameterizedAccess() {
+		return gaKExt.getGenericParameter_GenericTypeReference_ParameterizedAccess();
+	}
+	
+	public ParserRule getGenericParameter_GenericTypeReference_ParameterizedRule() {
+		return getGenericParameter_GenericTypeReference_ParameterizedAccess().getRule();
+	}
+	
+	//GenericParameter_ValuedObjectReference_Array kexpressions::ValuedObjectReference:
+	//	valuedObject=[kexpressions::ValuedObject|PrimeID] ('[' indices+=Expression ']')+ ('.'
+	//	subReference=ValuedObjectReference)?;
+	public KExtGrammarAccess.GenericParameter_ValuedObjectReference_ArrayElements getGenericParameter_ValuedObjectReference_ArrayAccess() {
+		return gaKExt.getGenericParameter_ValuedObjectReference_ArrayAccess();
+	}
+	
+	public ParserRule getGenericParameter_ValuedObjectReference_ArrayRule() {
+		return getGenericParameter_ValuedObjectReference_ArrayAccess().getRule();
+	}
+	
+	//GenericParameter_ValuedObjectReference_Sub kexpressions::ValuedObjectReference:
+	//	valuedObject=[kexpressions::ValuedObject|PrimeID] ('[' indices+=Expression ']')* ('.'
+	//	subReference=ValuedObjectReference);
+	public KExtGrammarAccess.GenericParameter_ValuedObjectReference_SubElements getGenericParameter_ValuedObjectReference_SubAccess() {
+		return gaKExt.getGenericParameter_ValuedObjectReference_SubAccess();
+	}
+	
+	public ParserRule getGenericParameter_ValuedObjectReference_SubRule() {
+		return getGenericParameter_ValuedObjectReference_SubAccess().getRule();
+	}
+	
+	//// ---
+	////  Scheduling Directives 
+	//// ---
 	//ScheduleDeclaration kexpressions::ScheduleDeclaration:
 	//	annotations+=Annotation*
 	//	access=AccessModifier?
@@ -1088,7 +1172,8 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 	//// Examples: array[10], initial = false, z = 0 combine max
 	//ValuedObject kexpressions::ValuedObject:
 	//	annotations+=QuotedStringAnnotation*
-	//	name=PrimeID ('[' cardinalities+=Expression ']')* ('=' initialValue=Expression)? ('combine'
+	//	name=PrimeID ('<' genericParameters+=GenericParameter (',' genericParameters+=GenericParameter)* '>')? ('['
+	//	cardinalities+=Expression ']')* ('=' initialValue=Expression)? ('combine'
 	//	combineOperator=CombineOperator)? ('label' label=STRING)?;
 	public KExtGrammarAccess.ValuedObjectElements getValuedObjectAccess() {
 		return gaKExt.getValuedObjectAccess();
@@ -1107,6 +1192,16 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getSimpleValuedObjectRule() {
 		return getSimpleValuedObjectAccess().getRule();
+	}
+	
+	//NamespaceID:
+	//	ExtendedID (':' PrimeID)*;
+	public KExtGrammarAccess.NamespaceIDElements getNamespaceIDAccess() {
+		return gaKExt.getNamespaceIDAccess();
+	}
+	
+	public ParserRule getNamespaceIDRule() {
+		return getNamespaceIDAccess().getRule();
 	}
 	
 	///**
@@ -1264,8 +1359,7 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 	//// A print functions that enables target-independent prints in the model.    
 	//PrintCallEffect keffects::PrintCallEffect:
 	//	annotations+=Annotation*
-	//	'print' ('(' parameters+=Parameter (',' parameters+=Parameter)* ')') ('schedule'
-	//	schedule+=ScheduleObjectReference+)?;
+	//	'print' ('(' parameters+=Parameter (',' parameters+=Parameter)* ')') ('schedule' schedule+=ScheduleObjectReference+)?;
 	public KEffectsGrammarAccess.PrintCallEffectElements getPrintCallEffectAccess() {
 		return gaKEffects.getPrintCallEffectAccess();
 	}
@@ -1563,10 +1657,9 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//SumExpression Expression:
-	//	ProductExpression ({OperatorExpression.subExpressions+=current} operator=AddOperator
-	//	subExpressions+=ProductExpression ('+' subExpressions+=ProductExpression)* |
-	//	{OperatorExpression.subExpressions+=current} operator=SubOperator subExpressions+=ProductExpression ('-'
-	//	subExpressions+=ProductExpression)*)*;
+	//	ProductExpression ({OperatorExpression.subExpressions+=current} operator=AddOperator subExpressions+=ProductExpression
+	//	('+' subExpressions+=ProductExpression)* | {OperatorExpression.subExpressions+=current} operator=SubOperator
+	//	subExpressions+=ProductExpression ('-' subExpressions+=ProductExpression)*)*;
 	public KExpressionsGrammarAccess.SumExpressionElements getSumExpressionAccess() {
 		return gaKExpressions.getSumExpressionAccess();
 	}
@@ -1623,8 +1716,8 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 	//// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
 	//// Example: 2 * 4
 	//MultExpression Expression:
-	//	NegExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=NegExpression)
-	//	('*' subExpressions+=NegExpression)*)?;
+	//	NegExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=NegExpression) ('*'
+	//	subExpressions+=NegExpression)*)?;
 	public KExpressionsGrammarAccess.MultExpressionElements getMultExpressionAccess() {
 		return gaKExpressions.getMultExpressionAccess();
 	}
@@ -1759,6 +1852,18 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getAtomicValuedExpressionRule() {
 		return getAtomicValuedExpressionAccess().getRule();
+	}
+	
+	//// Boolean expression with scheduling directives.
+	//// Is meant to be used in derived grammars. Do not delete this rule.     
+	//BoolScheduleExpression Expression:
+	//	LogicalOrExpression ('schedule' schedule+=ScheduleObjectReference)?;
+	public KExpressionsGrammarAccess.BoolScheduleExpressionElements getBoolScheduleExpressionAccess() {
+		return gaKExpressions.getBoolScheduleExpressionAccess();
+	}
+	
+	public ParserRule getBoolScheduleExpressionRule() {
+		return getBoolScheduleExpressionAccess().getRule();
 	}
 	
 	//// Valued Object Test Expression Rule

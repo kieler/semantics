@@ -14,49 +14,48 @@
 package de.cau.cs.kieler.sccharts.ui.synthesis.hooks
 
 import com.google.inject.Inject
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.kexpressions.keffects.DataDependency
+import de.cau.cs.kieler.kexpressions.keffects.DataDependencyType
+import de.cau.cs.kieler.kicool.ide.klighd.KiCoDiagramViewProperties
+import de.cau.cs.kieler.kicool.ui.kitt.tracing.TracingEdgeNode
 import de.cau.cs.kieler.klighd.SynthesisOption
+import de.cau.cs.kieler.klighd.kgraph.KEdge
 import de.cau.cs.kieler.klighd.kgraph.KNode
-import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
-import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.SynthesisHook
-import de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions
-import de.cau.cs.kieler.sccharts.ui.synthesis.KNodeExtensionsReplacement
-import org.eclipse.elk.core.options.CoreOptions
-import de.cau.cs.kieler.sccharts.ui.synthesis.styles.CommentStyles
-import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
-import de.cau.cs.kieler.sccharts.ControlflowRegion
+import de.cau.cs.kieler.klighd.krendering.Colors
+import de.cau.cs.kieler.klighd.krendering.KContainerRendering
+import de.cau.cs.kieler.klighd.krendering.KCustomRendering
+import de.cau.cs.kieler.klighd.krendering.KDecoratorPlacementData
+import de.cau.cs.kieler.klighd.krendering.KPolyline
 import de.cau.cs.kieler.klighd.krendering.KRenderingFactory
-import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
-import de.cau.cs.kieler.klighd.krendering.extensions.KPolylineExtensions
+import de.cau.cs.kieler.klighd.krendering.LineStyle
+import de.cau.cs.kieler.klighd.krendering.Trigger
+import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensions
-import de.cau.cs.kieler.kicool.ui.klighd.KiCoDiagramViewProperties
-import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KPolylineExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
+import de.cau.cs.kieler.klighd.util.KlighdProperties
+import de.cau.cs.kieler.sccharts.ControlflowRegion
+import de.cau.cs.kieler.sccharts.Scope
+import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsDataflowRegionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.processors.dataflow.RegionDependencies
-import de.cau.cs.kieler.kexpressions.keffects.DataDependency
-import org.eclipse.emf.ecore.EObject
-import de.cau.cs.kieler.klighd.kgraph.KEdge
 import de.cau.cs.kieler.sccharts.processors.dataflow.RegionLCAFMap
-import de.cau.cs.kieler.kexpressions.keffects.DataDependencyType
-import java.util.Map
-import de.cau.cs.kieler.kicool.ui.kitt.tracing.TracingEdgeNode
-import de.cau.cs.kieler.klighd.util.KlighdProperties
-import de.cau.cs.kieler.klighd.krendering.LineStyle
-import de.cau.cs.kieler.klighd.krendering.Colors
-import de.cau.cs.kieler.klighd.krendering.KCustomRendering
-import de.cau.cs.kieler.klighd.krendering.KPolyline
-import de.cau.cs.kieler.klighd.krendering.KDecoratorPlacementData
-import de.cau.cs.kieler.sccharts.Scope
-import de.cau.cs.kieler.sccharts.ui.synthesis.styles.StateStyles
-import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.klighd.krendering.Trigger
+import de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions
 import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.actions.ToggleDependencyAction
-import de.cau.cs.kieler.klighd.krendering.KContainerRendering
+import de.cau.cs.kieler.sccharts.ui.synthesis.styles.CommentStyles
+import de.cau.cs.kieler.sccharts.ui.synthesis.styles.StateStyles
+import java.util.Map
+import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.graph.properties.IProperty
 import org.eclipse.elk.graph.properties.Property
+import org.eclipse.emf.ecore.EObject
 
 /**
  * Display/Hides annotations on states.
@@ -75,7 +74,7 @@ class ShowStateDependencyHook extends SynthesisHook {
     @Inject extension KPolylineExtensions
     @Inject extension KContainerRenderingExtensions
     @Inject extension KEdgeExtensions
-    @Inject extension KNodeExtensionsReplacement
+    @Inject extension KNodeExtensions
     @Inject extension CommentStyles
     @Inject extension StateStyles
     @Inject extension SCChartsStateExtensions
@@ -93,8 +92,9 @@ class ShowStateDependencyHook extends SynthesisHook {
             
     
     /** The related synthesis option */
-    public static final SynthesisOption SHOW_STATE_DEPENDENCIES_HOOK = SynthesisOption.createCheckOption("Show State Dependencies",
-            false).setCategory(GeneralSynthesisOptions::DEBUGGING);
+    public static final SynthesisOption SHOW_STATE_DEPENDENCIES_HOOK = SynthesisOption.createCheckOption(
+        ShowStateDependencyHook, "Show State Dependencies",
+        false).setCategory(GeneralSynthesisOptions::DEBUGGING);
 
     override getDisplayedSynthesisOptions() {
         return newLinkedList(SHOW_STATE_DEPENDENCIES_HOOK)

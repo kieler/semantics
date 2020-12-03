@@ -2,9 +2,10 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: KIELER Circuit KLighD Synthesis
 Bundle-Vendor: Kiel University
-Bundle-Version: 0.13.0.qualifier
-Bundle-SymbolicName: de.cau.cs.kieler.circuit.klighd; singleton:=true
+Bundle-Version: 1.2.0.qualifier
+Bundle-SymbolicName: de.cau.cs.kieler.circuit.ui;singleton:=true
 Bundle-ActivationPolicy: lazy
+Eclipse-UI: True
 Require-Bundle: javax.inject,
  com.google.guava,
  com.google.inject,
@@ -23,5 +24,9 @@ Require-Bundle: javax.inject,
  org.eclipse.emf,
  org.eclipse.xtext.ui;resolution:=optional,
  de.cau.cs.kieler.circuit,
- org.eclipse.elk.alg.layered
+ org.eclipse.elk.alg.layered,
+ de.cau.cs.kieler.simulation,
+ de.cau.cs.kieler.simulation.ui,
+ de.cau.cs.kieler.kicool.ui
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-Activator: de.cau.cs.kieler.circuit.ui.CircuitUIModule

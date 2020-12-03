@@ -22,6 +22,7 @@ import de.cau.cs.kieler.klighd.krendering.KRoundedRectangle
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.scg.klighd.SCGraphDiagramSynthesis
 
+import static de.cau.cs.kieler.scg.klighd.SCGraphSynthesisOptions.*
 import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
 
 /**
@@ -37,9 +38,9 @@ class PrioStatementsActions implements IAction {
     extension KRenderingExtensions
 //    @Inject
 //    extension KPortExtensions
-    
-    public static final SynthesisOption SHOW_PRIO_STATEMENTS = SynthesisOption::createCheckOption("Priority Statements", 
-        true).setUpdateAction(PRIO_STATEMENTS_ID);
+
+    public static final SynthesisOption SHOW_PRIO_STATEMENTS = SynthesisOption::createCheckOption(PrioStatementsActions, "Priority Statements", 
+        true).setUpdateAction(PRIO_STATEMENTS_ID).setCategory(PRIO);
     
     
         

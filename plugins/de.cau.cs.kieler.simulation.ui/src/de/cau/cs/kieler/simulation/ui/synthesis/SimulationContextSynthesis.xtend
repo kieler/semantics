@@ -14,6 +14,8 @@ package de.cau.cs.kieler.simulation.ui.synthesis
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.kicool.ui.KiCoolUiModule
+import de.cau.cs.kieler.klighd.ide.model.MessageModel
+import de.cau.cs.kieler.klighd.ide.syntheses.MessageModelSynthesis
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.Colors
 import de.cau.cs.kieler.klighd.krendering.KImage
@@ -21,8 +23,6 @@ import de.cau.cs.kieler.klighd.krendering.KText
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
-import de.cau.cs.kieler.klighd.ui.view.model.MessageModel
-import de.cau.cs.kieler.klighd.ui.view.syntheses.MessageModelSynthesis
 import de.cau.cs.kieler.simulation.SimulationContext
 import de.cau.cs.kieler.simulation.ui.synthesis.action.AddCoSimulationAction
 import de.cau.cs.kieler.simulation.ui.synthesis.action.StartSimulationAction

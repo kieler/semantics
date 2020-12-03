@@ -57,9 +57,11 @@ class ExpandCollapseHook extends SynthesisHook {
     public static val DisplayedActionData EXPAND_ALL = DisplayedActionData.create(ExpandAllRegionsAction.ID, "Expand Regions")
 
     /** The related synthesis option */
-    public static val SynthesisOption INITIALLY_COLLAPSE_ALL = SynthesisOption.createCheckOption("Initially Collapse Regions", false)
+    public static val SynthesisOption INITIALLY_COLLAPSE_ALL = SynthesisOption.createCheckOption(
+        ExpandCollapseHook, "Initially Collapse Regions", false)
         .setCategory(GeneralSynthesisOptions::NAVIGATION)
-    public static val SynthesisOption SMART_COLLAPSE = SynthesisOption.createCheckOption("Editor Context Collapse (Experimental)", false)
+    public static val SynthesisOption SMART_COLLAPSE = SynthesisOption.createCheckOption(
+        ExpandCollapseHook, "Editor Context Collapse (Experimental)", false)
         .setCategory(GeneralSynthesisOptions::NAVIGATION)
         
     /** Annotation keywords */

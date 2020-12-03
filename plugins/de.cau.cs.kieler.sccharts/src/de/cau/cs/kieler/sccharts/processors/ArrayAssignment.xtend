@@ -48,7 +48,7 @@ class ArrayAssignment extends SCChartsProcessor implements Traceable {
     }
 
     override getName() {
-        "Array assignment"
+        "Array Assignment"
     }
 
     override process() {

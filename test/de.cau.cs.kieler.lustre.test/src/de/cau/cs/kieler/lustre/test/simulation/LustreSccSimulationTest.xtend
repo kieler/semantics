@@ -14,7 +14,7 @@ package de.cau.cs.kieler.lustre.test.simulation
 
 import de.cau.cs.kieler.lustre.LustreStandaloneSetup
 import de.cau.cs.kieler.lustre.lustre.LustreProgram
-import de.cau.cs.kieler.test.common.repository.TestModelData
+import de.cau.cs.kieler.simulation.testing.TestModelData
 import de.cau.cs.kieler.test.common.simulation.AbstractSimulationTest
 import org.junit.Test
 
@@ -42,7 +42,7 @@ class LustreSccSimulationTest extends AbstractSimulationTest<LustreProgram> {
     }
     
     @Test
-    def void testSimulationSLICNetlistC(LustreProgram lustre, TestModelData modelData) {
+    def void testSimulationNetlistC(LustreProgram lustre, TestModelData modelData) {
         assumeFalse("Has 'simulation-fails' property", modelData.modelProperties.contains("simulation-fails-netlist-c") || modelData.modelProperties.contains("simulation-fails-c"))
         assumeFalse("Has 'netlist-fails' property", modelData.modelProperties.contains("netlist-fails"))
         

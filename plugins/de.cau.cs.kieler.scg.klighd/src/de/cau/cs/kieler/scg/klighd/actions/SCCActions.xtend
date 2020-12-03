@@ -18,14 +18,17 @@ import de.cau.cs.kieler.klighd.IAction
 import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.ViewContext
 import de.cau.cs.kieler.klighd.kgraph.KNode
+import de.cau.cs.kieler.klighd.krendering.KRenderingFactory
 import de.cau.cs.kieler.klighd.krendering.KRoundedBendsPolyline
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
+import de.cau.cs.kieler.scg.klighd.ColorStore
 import de.cau.cs.kieler.scg.klighd.SCGraphDiagramSynthesis
+import org.eclipse.elk.graph.properties.IProperty
+import org.eclipse.elk.graph.properties.Property
+
+import static de.cau.cs.kieler.scg.klighd.SCGraphSynthesisOptions.*
 
 import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import org.eclipse.elk.graph.properties.IProperty
-import de.cau.cs.kieler.klighd.krendering.KRenderingFactory
 
 /**
  * Action class to display Strongly Connected Components in the SCG.
@@ -36,13 +39,13 @@ class SCCActions implements IAction {
     
     private final static String SCC_ID = "de.cau.cs.kieler.scg.klighd.actions.sccActions"
     
-    public static final SynthesisOption SHOW_SCC = SynthesisOption::createCheckOption("Strongly Connected Components", 
-        true).setUpdateAction(SCC_ID);
+    public static final SynthesisOption SHOW_SCC = SynthesisOption::createCheckOption(SCCActions, "Strongly Connected Components", 
+        true).setUpdateAction(SCC_ID).setCategory(PRIO);
         
-    public static val IProperty<Boolean> P = new org.eclipse.elk.graph.properties.Property("id")
+    public static val IProperty<Boolean> P = new Property("id")
         
-    @Inject
-    extension KRenderingExtensions
+    @Inject extension KRenderingExtensions
+    @Inject extension ColorStore
     /** Bound rendering extensions */
     extension KRenderingFactory = KRenderingFactory.eINSTANCE
             
@@ -55,15 +58,15 @@ class SCCActions implements IAction {
                 val container = edge.getData(typeof(KRoundedBendsPolyline))
                 if(container.getProperty(SCGraphDiagramSynthesis.SCC_PROPERTY)) {
                     if(getBooleanValue(SHOW_SCC, viewContext)) {
-                        container.lineWidth.lineWidth = getFloatValue(SCGraphDiagramSynthesis.CONTROLFLOW_THICKNESS, viewContext) * 2
-                        //container.foreground = SCGraphDiagramSynthesis.STRONGLY_CONNECTED_COMPONENT_COLOR.copy   
-                        val style = createKForeground().setColor2(SCGraphDiagramSynthesis.STRONGLY_CONNECTED_COMPONENT_COLOR.copy)
+                        container.lineWidth.lineWidth = getFloatValue(CONTROLFLOW_THICKNESS, viewContext) * 2
+                        //container.foreground = STRONGLY_CONNECTED_COMPONENT_COLOR.copy   
+                        val style = createKForeground().setColor2(ColorStore.Color.STRONGLY_CONNECTED_COMPONENT_COLOR.color)
                         style.properties.put(P, true)
                         style.propagateToChildren = true
                         container.styles += style                    
                     } else {
-                        container.lineWidth.lineWidth = getFloatValue(SCGraphDiagramSynthesis.CONTROLFLOW_THICKNESS, viewContext)
-                        //container.foreground = SCGraphDiagramSynthesis.STANDARD_CONTROLFLOWEDGE.copy
+                        container.lineWidth.lineWidth = getFloatValue(CONTROLFLOW_THICKNESS, viewContext)
+                        //container.foreground = STANDARD_CONTROLFLOWEDGE.copy
                         container.styles.removeIf[(properties.get(P)?:false) as Boolean]
                     }
                 }

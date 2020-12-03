@@ -50,7 +50,7 @@ class HideAnnotationHook extends SynthesisHook {
     public static final String HIDE_ANNOTATION_KEYWORD = "hide";
 
     /** The related synthesis option */
-    public static final SynthesisOption SHOW_HIDDEN_ELEMENTS = SynthesisOption.createCheckOption("Hidden Elements (@Hide)",
+    public static final SynthesisOption SHOW_HIDDEN_ELEMENTS = SynthesisOption.createCheckOption(HideAnnotationHook, "Hidden Elements (@Hide)",
         false).setCategory(GeneralSynthesisOptions::APPEARANCE);
 
     override getDisplayedSynthesisOptions() {

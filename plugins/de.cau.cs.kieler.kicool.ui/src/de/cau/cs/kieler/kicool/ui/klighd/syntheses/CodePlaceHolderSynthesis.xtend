@@ -13,9 +13,11 @@
  */
 package de.cau.cs.kieler.kicool.ui.klighd.syntheses
 
+import de.cau.cs.kieler.kicool.ide.klighd.KiCoDiagramViewProperties
+import de.cau.cs.kieler.kicool.ide.klighd.models.CodePlaceHolder
 import de.cau.cs.kieler.kicool.ui.klighd.actions.OpenCodeInEditorAction
-import de.cau.cs.kieler.kicool.ui.klighd.models.CodePlaceHolder
 import de.cau.cs.kieler.klighd.KlighdConstants
+import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.extensions.KColorExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensions
@@ -51,13 +53,16 @@ class CodePlaceHolderSynthesis extends AbstractDiagramSynthesis<CodePlaceHolder>
     // -------------------------------------------------------------------------
     // Constants
     
+    public static val SynthesisOption MAX_PREVIEW_LINES = SynthesisOption::createRangeOption(CodePlaceHolderSynthesis, "Preview Lines", 0, 500, 5, 50)
+    public static val SynthesisOption WRAP_LINES = SynthesisOption::createRangeOption(CodePlaceHolderSynthesis, "Wrap Lines", 25, 300, 5, 100)
+    
     public static val String ID = "de.cau.cs.kieler.kicool.ui.klighd.syntheses.CodePlaceHolderSynthesis";
-    public static var maxPreviewLines = 50;
     static val tabSpaces = "  ";
 
     // -------------------------------------------------------------------------
     // Synthesis
     override KNode transform(CodePlaceHolder placeholder) {
+        val startTime = System.currentTimeMillis
         val rootNode = createNode();
         rootNode.children += createNode(placeholder) => [
             it.associateWith(placeholder);
@@ -67,7 +72,7 @@ class CodePlaceHolderSynthesis extends AbstractDiagramSynthesis<CodePlaceHolder>
                 it.setGridPlacement(1);
 
                 // title
-                val titleText = if (placeholder.name.nullOrEmpty) "CODE" else "CODE - " + placeholder.name
+                val titleText = if (placeholder.name.nullOrEmpty) placeholder.typeLabel else placeholder.typeLabel + " - " + placeholder.name
                 it.addText(titleText) => [
                     it.fontSize = 11;
                     it.fontBold = true;
@@ -96,22 +101,37 @@ class CodePlaceHolderSynthesis extends AbstractDiagramSynthesis<CodePlaceHolder>
                     it.addDoubleClickAction(OpenCodeInEditorAction.ID);
                 ]
             ]
-        ];
+        ]
+                
+        // Report elapsed time
+        usedContext?.setProperty(KiCoDiagramViewProperties.SYNTHESIS_TIME, System.currentTimeMillis - startTime)
+        
         return rootNode;
     }
     
     def generatePreview(String text){
         val StringBuffer preview = new StringBuffer(text);
+        val wrapAt = Math.max(WRAP_LINES.intValue, 10)
         var start = 0;
         var index = 0;
+        var newIndex = 0;
         var count = 0;
+                
         // Find nth occurrence of newline. With n <= maxPreviewLines or indexOf(nth occurrence) == length
-        while((index = preview.indexOf("\n", start)) != -1 && count < maxPreviewLines){
-            start = index + 1;
+        while((index = preview.indexOf("\n", start)) != -1 && count < MAX_PREVIEW_LINES.intValue) {
+            var continue = index + 1
+            // wrap text
+            if (index - start > wrapAt) {
+                for (i : 1..((index - start) / wrapAt)) {
+                    preview.insert(start + i * wrapAt + (i - 1) * 2, "\u23CE\n")
+                    continue += 2
+                }
+            }
+            start = continue;
             count += 1;
         }
         // If original is longer than maxPreviewLines
-        if(count == maxPreviewLines){
+        if(count == MAX_PREVIEW_LINES.intValue) {
             preview.setLength(index + 1);
             preview.append("\n...");
         }

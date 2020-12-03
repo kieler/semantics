@@ -18,7 +18,7 @@ knode source {
   }
 
   kport in0 {
-    size: width = 2 height = 2
+    size: width = 0 height = 0
     properties:
     org.eclipse.elk.port.side = WEST
     

@@ -17,7 +17,7 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kicool.compilation.Compile
-import de.cau.cs.kieler.kicool.ui.klighd.KiCoDiagramViewProperties
+import de.cau.cs.kieler.kicool.ide.klighd.KiCoDiagramViewProperties
 import de.cau.cs.kieler.klighd.LightDiagramServices
 import de.cau.cs.kieler.klighd.ViewContext
 import de.cau.cs.kieler.klighd.internal.util.SourceModelTrackingAdapter
@@ -39,10 +39,15 @@ import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.SynthesisHooks
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.TransitionStyles
 import java.util.HashMap
 import java.util.LinkedHashSet
+import java.util.List
 import org.eclipse.elk.alg.force.options.StressOptions
+import org.eclipse.elk.alg.layered.InteractiveLayeredGraphVisitor
 import org.eclipse.elk.alg.layered.options.LayeredOptions
+import org.eclipse.elk.alg.rectpacking.InteractiveRectPackingGraphVisitor
 import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.core.options.Direction
+import org.eclipse.elk.core.service.util.CompoundGraphElementVisitor
+import org.eclipse.elk.core.util.IGraphElementVisitor
 import org.eclipse.elk.graph.properties.IProperty
 import org.eclipse.elk.graph.properties.Property
 
@@ -88,9 +93,9 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
     static val PRAGMA_FONT = "font"        
     static val PRAGMA_SKINPATH = "skinpath"
     
-    static val PRAGMA_VISUALIZE_IMPORTED_SCCHARTS = "VisualizeImportedSCCharts"
+    static val PRAGMA_HIDE_IMPORTED_SCCHARTS = "HideImportedSCCharts"
           
-    val ID = "de.cau.cs.kieler.sccharts.ui.synthesis.SCChartsSynthesis"
+    public static val ID = "de.cau.cs.kieler.sccharts.ui.synthesis.SCChartsSynthesis"
     
     override getDisplayedActions() {
         return newLinkedList => [ list |
@@ -181,7 +186,7 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
             val rootStateNodes = <State, KNode> newHashMap
             val rootStates = newLinkedHashSet
             rootStates += scc.rootStates
-            if (sccharts.hasPragma(PRAGMA_VISUALIZE_IMPORTED_SCCHARTS)) {
+            if (!sccharts.hasPragma(PRAGMA_HIDE_IMPORTED_SCCHARTS)) {
                 val rs = sccharts.eResource?.resourceSet
                 if (rs !== null) {
                     for (res : rs.resources.filterNull) {
@@ -252,10 +257,8 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
             rootNode.eAllContents.filter(KText).forEach[ fontName = pragmaFont.values.head ]
         }
         
-        // Log elapsed time
-//        println(
-//            "SCCharts synthesis transformed model " + (scc.rootStates.head.label ?: scc.hash) + " in " +
-//                ((System.currentTimeMillis - startTime) as float / 1000) + "s.")
+        // Report elapsed time
+        usedContext?.setProperty(KiCoDiagramViewProperties.SYNTHESIS_TIME, System.currentTimeMillis - startTime)
 		
         return rootNode
     }
@@ -297,6 +300,18 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
     def void setSkinPath(String sp, ViewContext context) {
         val rootNode = context.viewModel
         rootNode.setProperty(SKINPATH, sp) 
+    }
+    
+    override List<? extends IGraphElementVisitor> getAdditionalLayoutConfigs(KNode viewModel) {
+        val List<IGraphElementVisitor> additionalLayoutRuns = newArrayList
+        // Add interactive Layout run.
+        if ((!viewModel.getChildren().isEmpty() && viewModel.getChildren().get(0)
+                        .getProperty(CoreOptions.INTERACTIVE_LAYOUT))) {
+            additionalLayoutRuns.add(new CompoundGraphElementVisitor(
+                    new InteractiveRectPackingGraphVisitor(),
+                    new InteractiveLayeredGraphVisitor()));
+        }
+        return additionalLayoutRuns;
     }
    
 }

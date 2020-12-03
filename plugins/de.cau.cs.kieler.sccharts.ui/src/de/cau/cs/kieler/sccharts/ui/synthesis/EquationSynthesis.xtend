@@ -15,7 +15,9 @@ package de.cau.cs.kieler.sccharts.ui.synthesis
 import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.Annotatable
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.kexpressions.FunctionCall
 import de.cau.cs.kieler.kexpressions.IgnoreValue
+import de.cau.cs.kieler.kexpressions.IntValue
 import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.OperatorType
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
@@ -23,13 +25,14 @@ import de.cau.cs.kieler.kexpressions.Value
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.VectorValue
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kexpressions.kext.DeclarationScope
 import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
 import de.cau.cs.kieler.kicool.ui.synthesis.KiCoolSynthesis
 import de.cau.cs.kieler.klighd.SynthesisOption
-import de.cau.cs.kieler.klighd.kgraph.KGraphFactory
 import de.cau.cs.kieler.klighd.kgraph.KIdentifier
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.kgraph.KPort
@@ -43,6 +46,8 @@ import de.cau.cs.kieler.klighd.krendering.LineStyle
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KLabelExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KPortExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.sccharts.DataflowRegion
@@ -52,6 +57,7 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsReferenceExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions
 import de.cau.cs.kieler.sccharts.ui.synthesis.actions.ReferenceExpandAction
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.EquationStyles
+import de.cau.cs.kieler.sccharts.ui.synthesis.styles.TransitionStyles
 import java.util.EnumSet
 import java.util.HashMap
 import java.util.List
@@ -74,13 +80,10 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.resource.XtextResource
 import org.eclipse.xtext.resource.XtextResourceSet
 
+import static extension de.cau.cs.kieler.annotations.ide.klighd.CommonSynthesisUtil.*
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
-import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
-import de.cau.cs.kieler.kexpressions.IntValue
-import de.cau.cs.kieler.kexpressions.FunctionCall
-import de.cau.cs.kieler.sccharts.ui.synthesis.styles.TransitionStyles
+import static de.cau.cs.kieler.sccharts.ide.synthesis.EquationSynthesisProperties.*
 
 /**
  * @author ssm
@@ -91,58 +94,41 @@ import de.cau.cs.kieler.sccharts.ui.synthesis.styles.TransitionStyles
 @ViewSynthesisShared
 class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
 
-    public static val SynthesisOption AUTOMATIC_INLINE = SynthesisOption.createCheckOption("Automatic inline", false).
-        setCategory(GeneralSynthesisOptions::DATAFLOW)
-    public static val SynthesisOption SEPARATED_ASSIGNMENTS = SynthesisOption.createCheckOption("Separated Assignments",
-        false).setCategory(GeneralSynthesisOptions::DATAFLOW)
+    public static val SynthesisOption AUTOMATIC_INLINE = SynthesisOption.createCheckOption(
+        EquationSynthesis, "Automatic inline", false). setCategory(GeneralSynthesisOptions::DATAFLOW)
+    public static val SynthesisOption SEPARATED_ASSIGNMENTS = SynthesisOption.createCheckOption(
+        EquationSynthesis, "Separated Assignments", false).setCategory(GeneralSynthesisOptions::DATAFLOW)
     public static val SynthesisOption ALIGN_INPUTS_OUTPUTS = SynthesisOption.createCheckOption(
-        "Inputs/Outputs Alignment", true).setCategory(GeneralSynthesisOptions::DATAFLOW)
-    public static val SynthesisOption ALIGN_CONSTANTS = SynthesisOption.createCheckOption("Constant Alignment", false).
-        setCategory(GeneralSynthesisOptions::DATAFLOW)
-    public static val SynthesisOption SHOW_WIRE_LABELS = SynthesisOption.createCheckOption("Wire Labels", true).
-        setCategory(GeneralSynthesisOptions::DATAFLOW)
+        EquationSynthesis, "Inputs/Outputs Alignment", true).setCategory(GeneralSynthesisOptions::DATAFLOW)
+    public static val SynthesisOption ALIGN_CONSTANTS = SynthesisOption.createCheckOption(
+        EquationSynthesis, "Constant Alignment", false).setCategory(GeneralSynthesisOptions::DATAFLOW)
+    public static val SynthesisOption SHOW_WIRE_LABELS = SynthesisOption.createCheckOption(
+        EquationSynthesis, "Wire Labels", true).setCategory(GeneralSynthesisOptions::DATAFLOW)
     public static val SynthesisOption SHOW_EXPRESSION_PORT_LABELS = SynthesisOption.createCheckOption(
-        "Expression Port Labels", false).setCategory(GeneralSynthesisOptions::DATAFLOW)
+        EquationSynthesis, "Expression Port Labels", false).setCategory(GeneralSynthesisOptions::DATAFLOW)
     public static val SynthesisOption SHOW_REFERENCED_PORT_LABELS = SynthesisOption.createCheckOption(
-        "Referenced Port Labels", true).setCategory(GeneralSynthesisOptions::DATAFLOW)
+        EquationSynthesis, "Referenced Port Labels", true).setCategory(GeneralSynthesisOptions::DATAFLOW)
     public static val SynthesisOption REFERENCED_PORT_LABELS_OUTSIDE = SynthesisOption.createCheckOption(
-        "Outside Referenced Port Labels", false).setCategory(GeneralSynthesisOptions::DATAFLOW)
+        EquationSynthesis, "Outside Referenced Port Labels", false).setCategory(GeneralSynthesisOptions::DATAFLOW)
     public static val SynthesisOption ALL_SEQUENTIAL_CONSTRAINTS = SynthesisOption.createCheckOption(
-        "All Sequential Constraints", false).setCategory(GeneralSynthesisOptions::DATAFLOW)
+        EquationSynthesis, "All Sequential Constraints", false).setCategory(GeneralSynthesisOptions::DATAFLOW)
     public static val SynthesisOption SEQUENTIAL_CONSTRAINTS = SynthesisOption.createCheckOption(
-        "Sequential Constraints", true).setCategory(GeneralSynthesisOptions::DATAFLOW)
+        EquationSynthesis, "Sequential Constraints", true).setCategory(GeneralSynthesisOptions::DATAFLOW)
     public static val SynthesisOption INSTANCE_CONSTRAINTS = SynthesisOption.createCheckOption(
-        "Connect Instances", true).setCategory(GeneralSynthesisOptions::DATAFLOW)
-    public static val SynthesisOption SHOW_LOCALS = SynthesisOption.createCheckOption("Local Variables", true).
-        setCategory(GeneralSynthesisOptions::DATAFLOW)
-    public static val SynthesisOption PRE_CICLES = SynthesisOption.createCheckOption("Allow Pre Cicles", false).
-        setCategory(GeneralSynthesisOptions::DATAFLOW)
+        EquationSynthesis, "Connect Instances", true).setCategory(GeneralSynthesisOptions::DATAFLOW)
+    public static val SynthesisOption SHOW_LOCALS = SynthesisOption.createCheckOption(
+        EquationSynthesis, "Local Variables", true).setCategory(GeneralSynthesisOptions::DATAFLOW)
+    public static val SynthesisOption PRE_CICLES = SynthesisOption.createCheckOption(EquationSynthesis,
+        "Allow Pre Cicles", false).setCategory(GeneralSynthesisOptions::DATAFLOW)
     public static val SynthesisOption COMBINE_ALL_DATA_ACCESS = SynthesisOption.createCheckOption(
-        "Combine all Data Access Nodes", false).setCategory(GeneralSynthesisOptions::DATAFLOW)
-    public static val SynthesisOption SHOW_ARROWS = SynthesisOption.createCheckOption("Arrows", false).setCategory(
-        GeneralSynthesisOptions::DATAFLOW)
+        EquationSynthesis, "Combine all Data Access Nodes", false).setCategory(GeneralSynthesisOptions::DATAFLOW)
+    public static val SynthesisOption SHOW_ARROWS = SynthesisOption.createCheckOption(EquationSynthesis,
+        "Arrows", false).setCategory(GeneralSynthesisOptions::DATAFLOW)
 
-    public static final IProperty<Boolean> INLINED_REFERENCE = new Property<Boolean>(
-        "de.cau.cs.kieler.sccharts.ui.synthesis.dataflow.inlinedReference", false);
-    public static final IProperty<Boolean> INPUT_FLAG = new Property<Boolean>(
-        "de.cau.cs.kieler.sccharts.ui.synthesis.dataflow.inputFlag", false);
-    public static final IProperty<Boolean> OUTPUT_FLAG = new Property<Boolean>(
-        "de.cau.cs.kieler.sccharts.ui.synthesis.dataflow.outputFlag", false);
-    public static final IProperty<Boolean> DATA_ARRAY_FLAG = new Property<Boolean>(
-        "de.cau.cs.kieler.sccharts.ui.synthesis.dataflow.dataArrayFlag", false);
-    public static final IProperty<Boolean> DATA_ACCESS_FLAG = new Property<Boolean>(
-        "de.cau.cs.kieler.sccharts.ui.synthesis.dataflow.dataAccessFlag", false);
-    public static final IProperty<Boolean> REFERENCE_NODE = new Property<Boolean>(
-        "de.cau.cs.kieler.sccharts.ui.synthesis.dataflow.referenceNode", false);
-    public static final IProperty<Boolean> SEQUENTIAL_EDGE = new Property<Boolean>(
-        "de.cau.cs.kieler.sccharts.ui.synthesis.dataflow.sequential", false);
-    public static final IProperty<Boolean> INSTANCE_EDGE = new Property<Boolean>(
-        "de.cau.cs.kieler.sccharts.ui.synthesis.dataflow.instance", false);
-
-    @Inject extension KNodeExtensionsReplacement
+    @Inject extension KNodeExtensions
     @Inject extension KEdgeExtensions
     @Inject extension KLabelExtensions
-    @Inject extension KPortExtensionsReplacement
+    @Inject extension KPortExtensions
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KExpressionsCreateExtensions
     @Inject extension SCChartsSerializeHRExtensions
@@ -257,7 +243,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
      * @param elements A list of assignments
      * @param rootNode The parent node which should be associated with a dataflow Region
      */
-    def performTranformation(List<Assignment> elements, KNode rootNode) {
+    def List<KNode> performTranformation(List<Assignment> elements, KNode rootNode) {
         sequentials.clear
         alignInputOutputs = ALIGN_INPUTS_OUTPUTS.booleanValue
         showLocals = SHOW_LOCALS.booleanValue
@@ -285,12 +271,12 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                 lastKNodes.clear
             }
         }
-        nodes.addInstanceEdges.addSequentialEdges.simplifyAndCombine(rootNode).reWireInlining
+        nodes.addInstanceEdges.addSequentialEdges.simplifyAndCombine(rootNode)
         for (n : nodes) {
             n.addLayoutParam(CoreOptions.NODE_SIZE_MINIMUM, new KVector(0, 0))
             n.addLayoutParam(CoreOptions.PADDING, new ElkPadding(0, 0, 0, 0))
         }
-        return nodes
+        return nodes.reWireInlining.addMissingReferenceInputs
     }
 
     /**
@@ -685,18 +671,18 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                     var sourcePort = source.findPortById(INSTANCE_OUT_PORT)
                     if (sourcePort === null) {
                         sourcePort = createPort => [
-                            data += KGraphFactory.eINSTANCE.createKIdentifier()
-                            setId(INSTANCE_OUT_PORT);
+                            KID = INSTANCE_OUT_PORT
                             setProperty(CoreOptions::PORT_SIDE, PortSide.EAST)
+                            setPortSize(0, 0)
                         ]
                         source.ports.add(sourcePort)
                     }
                     var targetPort = target.findPortById(INSTANCE_IN_PORT)
                     if (targetPort === null) {
                         targetPort = createPort => [
-                            data += KGraphFactory.eINSTANCE.createKIdentifier()
-                            setId(INSTANCE_IN_PORT);
+                            KID = INSTANCE_IN_PORT
                             setProperty(CoreOptions::PORT_SIDE, PortSide.WEST)
+                            setPortSize(0, 0)
                         ]
                         target.ports.add(targetPort)
                     }
@@ -782,18 +768,18 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         var sourcePort = before.findPortById(SEQUENTIAL_OUT_PORT)
         if (sourcePort === null) {
             sourcePort = createPort => [
-                data += KGraphFactory.eINSTANCE.createKIdentifier()
-                setId(SEQUENTIAL_OUT_PORT);
+                KID = SEQUENTIAL_OUT_PORT
                 setProperty(CoreOptions::PORT_SIDE, PortSide.EAST)
+                setPortSize(0, 0)
             ]
             before.ports.add(sourcePort)
         }
         var targetPort = after.findPortById(SEQUENTIAL_IN_PORT)
         if (targetPort === null) {
             targetPort = createPort => [
-                data += KGraphFactory.eINSTANCE.createKIdentifier()
-                setId(SEQUENTIAL_IN_PORT);
+                KID = SEQUENTIAL_IN_PORT
                 setProperty(CoreOptions::PORT_SIDE, PortSide.WEST)
+                setPortSize(0, 0)
             ]
             after.ports.add(targetPort)
         }
@@ -830,7 +816,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
 
         node.setLayoutOption(LayeredOptions::NODE_PLACEMENT_STRATEGY, NodePlacementStrategy.SIMPLE)
         node.setLayoutOption(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_ORDER)
-        node.setLayoutOption(CoreOptions.PORT_LABELS_PLACEMENT, PortLabelPlacement.INSIDE)
+        node.setLayoutOption(CoreOptions.PORT_LABELS_PLACEMENT, EnumSet.of(PortLabelPlacement.INSIDE))
         node.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 10d); // 10.5 // 8f
         node.setLayoutOption(CoreOptions::PADDING, new ElkPadding(4d));
         node.addLayoutParam(KlighdProperties::EXPAND, false)
@@ -898,7 +884,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                 setAsExpandedView;
                 addDoubleClickAction(ReferenceExpandAction::ID);
             ]
-            newNode.createLabel.configureInsideCenteredNodeLabel(label, INPUT_OUTPUT_TEXT_SIZE)
+            newNode.addNodeLabel(label)
         }
 
         newNode.setLayoutOption(LayeredOptions::NODE_SIZE_CONSTRAINTS,
@@ -917,6 +903,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
             for (child : node.eContents.filter(KNode).toList) {
                 nodes += child
                 child.setLayoutOption(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_ORDER)
+                child.setLayoutOption(CoreOptions::PADDING, new ElkPadding(10))
                 child.data.filter(KRendering).forEach [
                     placementData = null
                 ]
@@ -979,6 +966,22 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         }
         return nodes
     }
+    
+    private def addMissingReferenceInputs(List<KNode> nodes) {
+        nodes.filter[isReference].forEach [ node |
+            val refDec = (node.sourceElement as ValuedObjectReference).valuedObject.declaration as ReferenceDeclaration
+            refDec.getInputs.forEach [ input |
+                if (!node.ports.exists [
+                    sourceElement !== null && (sourceElement as ValuedObjectReference).valuedObject == input
+                ]) {
+                    node.getInputPortWithNumber(node.incomingEdges.filter[!isInstance && !isSequential].size +
+                        node.ports.filter[it.edges.empty].size, true).setLabel(input.serializeHR.toString, true).
+                        associateWith(input)
+                }
+            ]
+        ]
+        return nodes
+    }
 
     /**
      * create a single node from a kgt file
@@ -1023,7 +1026,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                                 val v = valuedObjects.filter[it.name.equals(id.id)].head
 
                                 p.associateWith(v)
-                                node.addPort(v, p)
+                                p.registerExistingPort(node, v)
                             }
                         }
                         return node

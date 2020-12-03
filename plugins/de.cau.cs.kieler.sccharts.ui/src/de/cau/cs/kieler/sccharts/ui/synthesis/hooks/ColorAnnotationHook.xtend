@@ -14,21 +14,20 @@ package de.cau.cs.kieler.sccharts.ui.synthesis.hooks
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.Annotatable
+import de.cau.cs.kieler.annotations.StringAnnotation
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.klighd.kgraph.KNode
-import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
-import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.SynthesisHook
-
-import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
-import de.cau.cs.kieler.sccharts.Scope
-import de.cau.cs.kieler.sccharts.ui.synthesis.KNodeExtensionsReplacement
-import de.cau.cs.kieler.klighd.krendering.KContainerRendering
-import de.cau.cs.kieler.klighd.krendering.KColoring
 import de.cau.cs.kieler.klighd.krendering.KBackground
 import de.cau.cs.kieler.klighd.krendering.KColor
+import de.cau.cs.kieler.klighd.krendering.KColoring
+import de.cau.cs.kieler.klighd.krendering.KContainerRendering
 import de.cau.cs.kieler.klighd.krendering.KForeground
-import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.annotations.StringAnnotation
 import de.cau.cs.kieler.klighd.krendering.KRenderingUtil
+import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
+import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
+import de.cau.cs.kieler.sccharts.Scope
+
+import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 
 /**
  * Removes model elements marked with the annotation hide.
@@ -42,7 +41,7 @@ import de.cau.cs.kieler.klighd.krendering.KRenderingUtil
 class ColorAnnotationHook extends SynthesisHook {
 
     @Inject extension AnnotationsExtensions
-    @Inject extension KNodeExtensionsReplacement
+    @Inject extension KNodeExtensions
 
     /** Keyword for the hide annotation */
     public static final String BACKGROUND_ANNOTATION_KEYWORD = "background"
@@ -62,7 +61,7 @@ class ColorAnnotationHook extends SynthesisHook {
         ].toIterable
         
         for (object : relevantObjects) {
-            if (object.nodeExists) {
+            if (nodeExists(object)) {
                 val kNode = object.node
                 val rendering = kNode.getContainer
                 

@@ -54,10 +54,10 @@ class StateActionsHook extends SynthesisHook {
     /** Action ID */
     public static final String ID = "de.cau.cs.kieler.sccharts.ui.synthesis.hooks.StateActionsHook"
     /** The related synthesis option */
-    public static final SynthesisOption SHOW_STATE_ACTIONS = SynthesisOption.createCheckOption("State Actions", true).
+    public static final SynthesisOption SHOW_STATE_ACTIONS = SynthesisOption.createCheckOption(StateActionsHook, "State Actions", true).
     	setCategory(GeneralSynthesisOptions::APPEARANCE)
     /** The to break lines in effect chain */
-    public static final SynthesisOption LINEBREAKS_IN_EFFECTS = SynthesisOption.createCheckOption("Linebreaks in Actions", false).
+    public static final SynthesisOption LINEBREAKS_IN_EFFECTS = SynthesisOption.createCheckOption(StateActionsHook, "Linebreaks in Actions", false).
         setCategory(GeneralSynthesisOptions::APPEARANCE)
 
     override getDisplayedSynthesisOptions() {

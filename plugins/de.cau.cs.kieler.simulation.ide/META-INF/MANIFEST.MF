@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: KIELER Simulation IDE
 Bundle-Vendor: Kiel University
-Bundle-Version: 1.1.0.qualifier
+Bundle-Version: 1.2.0.qualifier
 Bundle-SymbolicName: de.cau.cs.kieler.simulation.ide;singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.eclipse.core.runtime,
@@ -16,8 +16,14 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.xtext.ide,
  de.cau.cs.kieler.simulation,
  de.cau.cs.kieler.kexpressions,
- de.cau.cs.kieler.core,
- de.cau.cs.kieler.kicool,
+ org.eclipse.lsp4j;bundle-version="0.6.0",
+ org.eclipse.lsp4j.generator;bundle-version="0.6.0",
+ org.eclipse.lsp4j.jsonrpc;bundle-version="0.6.0",
+ org.apache.log4j;bundle-version="1.2.15",
+ de.cau.cs.kieler.language.server,
+ de.cau.cs.kieler.core;bundle-version="1.0.0",
+ de.cau.cs.kieler.kicool.ide;bundle-version="1.0.0",
+ de.cau.cs.kieler.kicool;bundle-version="1.0.0",
  org.eclipse.jetty.server;bundle-version="9.4.15",
  org.eclipse.jetty.util;bundle-version="9.4.15",
  org.eclipse.jetty.servlet;bundle-version="9.4.15",
@@ -25,11 +31,20 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.jetty.websocket.servlet;bundle-version="9.4.15",
  org.eclipse.jetty.websocket.api;bundle-version="9.4.15",
  javax.servlet;bundle-version="3.1.0",
- com.google.gson;bundle-version="2.7.0"
+ org.eclipse.jface;bundle-version="3.14.0",
+ com.google.gson;bundle-version="2.7.0",
+ de.cau.cs.kieler.klighd.krendering,
+ de.cau.cs.kieler.klighd,
+ de.cau.cs.kieler.klighd.lsp,
+ org.eclipse.elk.core
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: de.cau.cs.kieler.simulation.ide,
+ de.cau.cs.kieler.simulation.ide.language.server,
+ de.cau.cs.kieler.simulation.ide.language.server.data,
+ de.cau.cs.kieler.simulation.ide.preferences,
  de.cau.cs.kieler.simulation.ide.processor,
- de.cau.cs.kieler.simulation.ide.provider,
+ de.cau.cs.kieler.simulation.ide.providers,
  de.cau.cs.kieler.simulation.ide.server,
  de.cau.cs.kieler.simulation.ide.trace.contentassist.antlr,
- de.cau.cs.kieler.simulation.ide.trace.contentassist.antlr.internal
+ de.cau.cs.kieler.simulation.ide.trace.contentassist.antlr.internal,
+ de.cau.cs.kieler.simulation.ide.visualization

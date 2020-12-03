@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Lustre IDE
 Bundle-SymbolicName: de.cau.cs.kieler.lustre.ide
-Bundle-Version: 1.1.0.qualifier
+Bundle-Version: 1.2.0.qualifier
 Bundle-Vendor: Kiel University
 Automatic-Module-Name: de.cau.cs.kieler.lustre.ide
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
@@ -13,8 +13,10 @@ Require-Bundle: org.antlr.runtime;bundle-version="[3.2.0,3.2.1)",
  org.eclipse.xtext.xbase.lib,
  org.eclipse.xtend.lib,
  org.eclipse.xtend.lib.macro,
- de.cau.cs.kieler.core
+ de.cau.cs.kieler.core,
+ de.cau.cs.kieler.language.server
 Export-Package: de.cau.cs.kieler.lustre.ide.contentassist.antlr,
  de.cau.cs.kieler.lustre.ide.contentassist.antlr.internal,
  de.cau.cs.kieler.lustre.ide.scade.contentassist.antlr.internal,
- de.cau.cs.kieler.lustre.ide.scade.contentassist.antlr
+ de.cau.cs.kieler.lustre.ide.scade.contentassist.antlr,
+ de.cau.cs.kieler.lustre.ide.highlighting

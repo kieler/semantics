@@ -18,17 +18,18 @@ import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kicool.ui.kitt.tracing.TracingVisualizationProperties
 import de.cau.cs.kieler.kicool.ui.synthesis.updates.MessageObjectReferencesManager
-import de.cau.cs.kieler.klighd.kgraph.KGraphFactory
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.KRectangle
 import de.cau.cs.kieler.klighd.krendering.KRendering
 import de.cau.cs.kieler.klighd.krendering.KText
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
+import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions
 import de.cau.cs.kieler.sccharts.ui.synthesis.actions.ReferenceExpandAction
 import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.actions.MemorizingExpandCollapseAction
@@ -38,12 +39,15 @@ import java.util.EnumSet
 import org.eclipse.elk.alg.layered.options.CenterEdgeLabelPlacementStrategy
 import org.eclipse.elk.alg.layered.options.FixedAlignment
 import org.eclipse.elk.alg.layered.options.LayeredOptions
+import org.eclipse.elk.alg.layered.options.OrderingStrategy
+import org.eclipse.elk.core.options.ContentAlignment
 import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.core.options.EdgeRouting
 import org.eclipse.elk.core.options.SizeConstraint
 
 import static de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions.*
 
+import static extension de.cau.cs.kieler.annotations.ide.klighd.CommonSynthesisUtil.*
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
 
@@ -58,10 +62,11 @@ import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
 @ViewSynthesisShared
 class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> {
 
-    @Inject extension KNodeExtensionsReplacement
+    @Inject extension KNodeExtensions
     @Inject extension KRenderingExtensions
     @Inject extension AnnotationsExtensions
     @Inject extension SCChartsSerializeHRExtensions
+    @Inject extension SCChartsScopeExtensions
     @Inject extension KExpressionsDeclarationExtensions    
     @Inject extension StateSynthesis
     @Inject extension ControlflowRegionStyles
@@ -76,14 +81,17 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
 
         // Set KIdentifier for use with incremental update
         if (!region.name.nullOrEmpty) {
-            node.data += KGraphFactory::eINSTANCE.createKIdentifier => [it.id = region.name]
+            node.KID = region.name
         }
         
         if (USE_KLAY.booleanValue) {
-            node.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.layered")
+            node.addLayoutParam(CoreOptions::ALGORITHM, LayeredOptions.ALGORITHM_ID)
+            node.setLayoutOption(LayeredOptions.CONSIDER_MODEL_ORDER, OrderingStrategy.PREFER_EDGES)
+            node.setLayoutOption(CoreOptions::CONTENT_ALIGNMENT, ContentAlignment.topCenter())
             node.setLayoutOption(LayeredOptions::NODE_PLACEMENT_BK_FIXED_ALIGNMENT, FixedAlignment::BALANCED)
             node.setLayoutOption(LayeredOptions::EDGE_LABELS_CENTER_LABEL_PLACEMENT_STRATEGY, CenterEdgeLabelPlacementStrategy::TAIL_LAYER)
             node.setLayoutOption(CoreOptions::NODE_SIZE_CONSTRAINTS, EnumSet.of(SizeConstraint.MINIMUM_SIZE))
+            node.setLayoutOption(CoreOptions::SPACING_NODE_SELF_LOOP, 18.0)
         } else {
             node.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.graphviz.dot")
             node.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 40.0)
@@ -166,13 +174,13 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
                 node.children += state.transform;
             }
 
-        } else if (region.reference !== null) {
-            var label = if(region.label.nullOrEmpty) "" else " " + region.serializeHR.toString
-            label += "@"
-            if (region.reference.scope !== null) {
-                label += (region.reference.scope as Region).serializeHR
-            } else {
-                label += "UnresolvedReference"
+        } else if (region.isReferencingScope) {
+            val newName = if(region.label.nullOrEmpty) "" else region.serializeHR.toString
+            val refRegion = region.reference.scope !== null ? (region.reference.scope as Region).serializeHR : "UnresolvedReference"
+            val refSCC = region.reference.scope !== null ? (region.reference.scope as Region).eContainer.serializeHR : "UnresolvedReference"
+            var label = refSCC + "::" + refRegion
+            if (!newName.equals(refRegion)) {
+                label = newName + "@" + label
             }
             if (SHOW_BINDINGS.booleanValue) {
                 label += region.reference.parameters.serializeHRParameters
@@ -211,7 +219,8 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
     def KNode createReferenceRegion(State state) {
         val node = createNode().associateWith(state); // This association is important for the ReferenceExpandAction
         if (USE_KLAY.booleanValue) {
-            node.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.layered");
+            node.addLayoutParam(CoreOptions::ALGORITHM, LayeredOptions.ALGORITHM_ID);
+            node.setLayoutOption(LayeredOptions.CONSIDER_MODEL_ORDER, OrderingStrategy.PREFER_EDGES)
         } else {
             node.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.graphviz.dot");
             node.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 40.0);

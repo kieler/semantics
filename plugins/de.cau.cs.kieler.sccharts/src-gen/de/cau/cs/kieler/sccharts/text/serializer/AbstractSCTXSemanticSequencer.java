@@ -15,6 +15,8 @@ import de.cau.cs.kieler.kexpressions.BoolValue;
 import de.cau.cs.kieler.kexpressions.ExternString;
 import de.cau.cs.kieler.kexpressions.FloatValue;
 import de.cau.cs.kieler.kexpressions.FunctionCall;
+import de.cau.cs.kieler.kexpressions.GenericParameterDeclaration;
+import de.cau.cs.kieler.kexpressions.GenericTypeReference;
 import de.cau.cs.kieler.kexpressions.IgnoreValue;
 import de.cau.cs.kieler.kexpressions.IntValue;
 import de.cau.cs.kieler.kexpressions.JsonAnnotation;
@@ -34,6 +36,7 @@ import de.cau.cs.kieler.kexpressions.ScheduleDeclaration;
 import de.cau.cs.kieler.kexpressions.ScheduleObjectReference;
 import de.cau.cs.kieler.kexpressions.StringValue;
 import de.cau.cs.kieler.kexpressions.TextExpression;
+import de.cau.cs.kieler.kexpressions.ValueTypeReference;
 import de.cau.cs.kieler.kexpressions.ValuedObject;
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference;
 import de.cau.cs.kieler.kexpressions.VariableDeclaration;
@@ -439,6 +442,19 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 					return; 
 				}
 				else break;
+			case KExpressionsPackage.GENERIC_PARAMETER_DECLARATION:
+				sequence_GenericParameterDeclaration(context, (GenericParameterDeclaration) semanticObject); 
+				return; 
+			case KExpressionsPackage.GENERIC_TYPE_REFERENCE:
+				if (rule == grammarAccess.getGenericParameter_GenericTypeReference_ParameterizedRule()) {
+					sequence_GenericParameter_GenericTypeReference_Parameterized(context, (GenericTypeReference) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getGenericTypeReferenceRule()) {
+					sequence_GenericTypeReference(context, (GenericTypeReference) semanticObject); 
+					return; 
+				}
+				else break;
 			case KExpressionsPackage.IGNORE_VALUE:
 				sequence_IgnoreValue(context, (IgnoreValue) semanticObject); 
 				return; 
@@ -625,7 +641,11 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 				}
 				else break;
 			case KExpressionsPackage.PARAMETER:
-				if (rule == grammarAccess.getModuleCallParameterRule()) {
+				if (rule == grammarAccess.getGenericParameterRule()) {
+					sequence_GenericParameter(context, (de.cau.cs.kieler.kexpressions.Parameter) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getModuleCallParameterRule()) {
 					sequence_ModuleCallParameter(context, (de.cau.cs.kieler.kexpressions.Parameter) semanticObject); 
 					return; 
 				}
@@ -1019,6 +1039,9 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 					return; 
 				}
 				else break;
+			case KExpressionsPackage.VALUE_TYPE_REFERENCE:
+				sequence_ValueTypeReference(context, (ValueTypeReference) semanticObject); 
+				return; 
 			case KExpressionsPackage.VALUED_OBJECT:
 				if (rule == grammarAccess.getCounterVariableRule()) {
 					sequence_CounterVariable(context, (ValuedObject) semanticObject); 
@@ -1036,6 +1059,14 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 			case KExpressionsPackage.VALUED_OBJECT_REFERENCE:
 				if (rule == grammarAccess.getBoolScheduleExpressionRule()) {
 					sequence_BoolScheduleExpression_ValuedObjectReference(context, (ValuedObjectReference) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getGenericParameter_ValuedObjectReference_ArrayRule()) {
+					sequence_GenericParameter_ValuedObjectReference_Array(context, (ValuedObjectReference) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getGenericParameter_ValuedObjectReference_SubRule()) {
+					sequence_GenericParameter_ValuedObjectReference_Sub(context, (ValuedObjectReference) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getIntOrReferenceRule()
@@ -1412,242 +1443,6 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	
 	/**
 	 * Contexts:
-	 *     BoolScheduleExpression returns OperatorExpression
-	 *
-	 * Constraint:
-	 *     (
-	 *         (
-	 *             (
-	 *                 subExpressions+=LogicalOrExpression_OperatorExpression_1_0 
-	 *                 operator=LogicalOrOperator 
-	 *                 subExpressions+=LogicalAndExpression 
-	 *                 subExpressions+=LogicalAndExpression*
-	 *             ) | 
-	 *             (
-	 *                 subExpressions+=LogicalAndExpression_OperatorExpression_1_0 
-	 *                 operator=LogicalAndOperator 
-	 *                 subExpressions+=BitwiseOrExpression 
-	 *                 subExpressions+=BitwiseOrExpression*
-	 *             ) | 
-	 *             (
-	 *                 subExpressions+=BitwiseOrExpression_OperatorExpression_1_0 
-	 *                 operator=BitwiseOrOperator 
-	 *                 subExpressions+=BitwiseXOrExpression 
-	 *                 subExpressions+=BitwiseXOrExpression*
-	 *             ) | 
-	 *             (
-	 *                 subExpressions+=BitwiseXOrExpression_OperatorExpression_1_0 
-	 *                 operator=BitwiseXOrOperator 
-	 *                 subExpressions+=BitwiseAndExpression 
-	 *                 subExpressions+=BitwiseAndExpression*
-	 *             ) | 
-	 *             (
-	 *                 subExpressions+=BitwiseAndExpression_OperatorExpression_1_0 
-	 *                 operator=BitwiseAndOperator 
-	 *                 subExpressions+=CompareOperation 
-	 *                 subExpressions+=CompareOperation*
-	 *             ) | 
-	 *             (subExpressions+=CompareOperation_OperatorExpression_1_0 operator=CompareOperator subExpressions+=NotOrValuedExpression) | 
-	 *             (operator=BitwiseNotOperator subExpressions+=BitwiseNotExpression) | 
-	 *             (operator=NotOperator subExpressions+=NotExpression) | 
-	 *             (
-	 *                 subExpressions+=ShiftExpressions_OperatorExpression_1_0_0 
-	 *                 operator=ShiftLeftOperator 
-	 *                 subExpressions+=SumExpression 
-	 *                 subExpressions+=SumExpression*
-	 *             ) | 
-	 *             (
-	 *                 subExpressions+=ShiftExpressions_OperatorExpression_1_1_0 
-	 *                 operator=ShiftRightOperator 
-	 *                 subExpressions+=SumExpression 
-	 *                 subExpressions+=SumExpression*
-	 *             ) | 
-	 *             (
-	 *                 subExpressions+=ShiftExpressions_OperatorExpression_1_2_0 
-	 *                 operator=ShiftRightUnsignedOperator 
-	 *                 subExpressions+=SumExpression 
-	 *                 subExpressions+=SumExpression*
-	 *             ) | 
-	 *             (
-	 *                 subExpressions+=SumExpression_OperatorExpression_1_0_0 
-	 *                 operator=AddOperator 
-	 *                 subExpressions+=ProductExpression 
-	 *                 subExpressions+=ProductExpression*
-	 *             ) | 
-	 *             (
-	 *                 subExpressions+=SumExpression_OperatorExpression_1_1_0 
-	 *                 operator=SubOperator 
-	 *                 subExpressions+=ProductExpression 
-	 *                 subExpressions+=ProductExpression*
-	 *             ) | 
-	 *             (subExpressions+=ProductExpression_OperatorExpression_1_0_0 operator=MultOperator subExpressions+=NegExpression subExpressions+=NegExpression*) | 
-	 *             (subExpressions+=ProductExpression_OperatorExpression_1_1_0 operator=DivOperator subExpressions+=NegExpression subExpressions+=NegExpression*) | 
-	 *             (subExpressions+=ProductExpression_OperatorExpression_1_2_0 operator=ModOperator subExpressions+=NegExpression subExpressions+=NegExpression*) | 
-	 *             (operator=SubOperator subExpressions+=NegExpression) | 
-	 *             (
-	 *                 subExpressions+=AtomicValuedExpression 
-	 *                 operator=ConditionalOperator 
-	 *                 subExpressions+=AtomicValuedExpression 
-	 *                 subExpressions+=AtomicValuedExpression?
-	 *             ) | 
-	 *             (subExpressions+=InitExpression_OperatorExpression_1_0 operator=InitOperator subExpressions+=FbyExpression subExpressions+=FbyExpression*) | 
-	 *             (subExpressions+=FbyExpression_OperatorExpression_1_0 operator=FbyOperator subExpressions+=SfbyExpression subExpressions+=SfbyExpression*) | 
-	 *             (
-	 *                 subExpressions+=SfbyExpression_OperatorExpression_1_0 
-	 *                 operator=SfbyOperator 
-	 *                 subExpressions+=AtomicValuedExpression 
-	 *                 subExpressions+=AtomicValuedExpression*
-	 *             ) | 
-	 *             ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
-	 *         ) 
-	 *         schedule+=ScheduleObjectReference?
-	 *     )
-	 */
-	protected void sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_BoolScheduleExpression_CompareOperation_FbyExpression_InitExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NotExpression_ProductExpression_SfbyExpression_ShiftExpressions_SumExpression_TernaryOperation_ValuedObjectTestExpression(ISerializationContext context, OperatorExpression semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     BoolScheduleExpression returns BoolValue
-	 *
-	 * Constraint:
-	 *     (value=BOOLEAN schedule+=ScheduleObjectReference?)
-	 */
-	protected void sequence_BoolScheduleExpression_BoolValue(ISerializationContext context, BoolValue semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     BoolScheduleExpression returns FloatValue
-	 *
-	 * Constraint:
-	 *     (value=FLOAT schedule+=ScheduleObjectReference?)
-	 */
-	protected void sequence_BoolScheduleExpression_FloatValue(ISerializationContext context, FloatValue semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     BoolScheduleExpression returns FunctionCall
-	 *
-	 * Constraint:
-	 *     (functionName=ID (parameters+=Parameter parameters+=Parameter*)? schedule+=ScheduleObjectReference?)
-	 */
-	protected void sequence_BoolScheduleExpression_FunctionCall(ISerializationContext context, FunctionCall semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     BoolScheduleExpression returns IntValue
-	 *
-	 * Constraint:
-	 *     (value=INT schedule+=ScheduleObjectReference?)
-	 */
-	protected void sequence_BoolScheduleExpression_IntValue(ISerializationContext context, IntValue semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     BoolScheduleExpression returns RandomCall
-	 *
-	 * Constraint:
-	 *     schedule+=ScheduleObjectReference?
-	 */
-	protected void sequence_BoolScheduleExpression_RandomCall(ISerializationContext context, RandomCall semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     BoolScheduleExpression returns RandomizeCall
-	 *
-	 * Constraint:
-	 *     schedule+=ScheduleObjectReference?
-	 */
-	protected void sequence_BoolScheduleExpression_RandomizeCall(ISerializationContext context, RandomizeCall semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     BoolScheduleExpression returns ReferenceCall
-	 *
-	 * Constraint:
-	 *     (
-	 *         valuedObject=[ValuedObject|PrimeID] 
-	 *         indices+=Expression* 
-	 *         subReference=ValuedObjectReference? 
-	 *         (parameters+=Parameter parameters+=Parameter*)? 
-	 *         schedule+=ScheduleObjectReference?
-	 *     )
-	 */
-	protected void sequence_BoolScheduleExpression_ReferenceCall(ISerializationContext context, ReferenceCall semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     BoolScheduleExpression returns StringValue
-	 *
-	 * Constraint:
-	 *     (value=STRING schedule+=ScheduleObjectReference?)
-	 */
-	protected void sequence_BoolScheduleExpression_StringValue(ISerializationContext context, StringValue semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     BoolScheduleExpression returns TextExpression
-	 *
-	 * Constraint:
-	 *     (annotations+=Annotation* text=HOSTCODE schedule+=ScheduleObjectReference?)
-	 */
-	protected void sequence_BoolScheduleExpression_TextExpression(ISerializationContext context, TextExpression semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     BoolScheduleExpression returns ValuedObjectReference
-	 *
-	 * Constraint:
-	 *     (valuedObject=[ValuedObject|PrimeID] indices+=Expression* subReference=ValuedObjectReference? schedule+=ScheduleObjectReference?)
-	 */
-	protected void sequence_BoolScheduleExpression_ValuedObjectReference(ISerializationContext context, ValuedObjectReference semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     BoolScheduleExpression returns VectorValue
-	 *
-	 * Constraint:
-	 *     (values+=VectorValueMember values+=VectorValueMember* schedule+=ScheduleObjectReference?)
-	 */
-	protected void sequence_BoolScheduleExpression_VectorValue(ISerializationContext context, VectorValue semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
 	 *     Declaration returns PolicyClassDeclaration
 	 *     ClassDeclarationWOSemicolon returns PolicyClassDeclaration
 	 *     DeclarationOrMethodWithKeywordWOSemicolon returns PolicyClassDeclaration
@@ -1790,6 +1585,7 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	 *
 	 * Constraint:
 	 *     (
+	 *         annotations+=RestrictedTypeAnnotation* 
 	 *         delay=DelayType? 
 	 *         (triggerDelay=INT? trigger=BoolScheduleExpression triggerProbability=FLOAT?)? 
 	 *         (effects+=Effect effects+=Effect*)? 
@@ -1807,7 +1603,13 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	 *     EntryAction returns EntryAction
 	 *
 	 * Constraint:
-	 *     (preemption=PreemptionActionType? (trigger=BoolScheduleExpression triggerProbability=FLOAT?)? (effects+=Effect effects+=Effect*)? label=STRING?)
+	 *     (
+	 *         annotations+=RestrictedTypeAnnotation* 
+	 *         preemption=PreemptionActionType? 
+	 *         (trigger=BoolScheduleExpression triggerProbability=FLOAT?)? 
+	 *         (effects+=Effect effects+=Effect*)? 
+	 *         label=STRING?
+	 *     )
 	 */
 	protected void sequence_EntryAction(ISerializationContext context, EntryAction semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1820,7 +1622,13 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	 *     ExitAction returns ExitAction
 	 *
 	 * Constraint:
-	 *     (preemption=PreemptionActionType? (trigger=BoolScheduleExpression triggerProbability=FLOAT?)? (effects+=Effect effects+=Effect*)? label=STRING?)
+	 *     (
+	 *         annotations+=RestrictedTypeAnnotation* 
+	 *         preemption=PreemptionActionType? 
+	 *         (trigger=BoolScheduleExpression triggerProbability=FLOAT?)? 
+	 *         (effects+=Effect effects+=Effect*)? 
+	 *         label=STRING?
+	 *     )
 	 */
 	protected void sequence_ExitAction(ISerializationContext context, ExitAction semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1938,7 +1746,10 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	 *         (
 	 *             annotations+=Annotation* 
 	 *             access=AccessModifier? 
-	 *             (reference=[NamedObject|NamespaceID] | (extern+=ExternString extern+=ExternString*)) 
+	 *             (
+	 *                 (reference=[NamedObject|NamespaceID] (genericParameters+=GenericParameter genericParameters+=GenericParameter*)?) | 
+	 *                 (extern+=ExternString extern+=ExternString*)
+	 *             ) 
 	 *             valuedObjects+=ValuedObject 
 	 *             valuedObjects+=ValuedObject* 
 	 *             annotations+=CommentAnnotatonSL?
@@ -1946,7 +1757,10 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	 *         (
 	 *             annotations+=Annotation* 
 	 *             access=AccessModifier? 
-	 *             (reference=[NamedObject|NamespaceID] | (extern+=ExternString extern+=ExternString*)) 
+	 *             (
+	 *                 (reference=[NamedObject|NamespaceID] (genericParameters+=GenericParameter genericParameters+=GenericParameter*)?) | 
+	 *                 (extern+=ExternString extern+=ExternString*)
+	 *             ) 
 	 *             valuedObjects+=ValuedObject 
 	 *             valuedObjects+=ValuedObject* 
 	 *             annotations+=CommentAnnotatonSL?
@@ -1967,6 +1781,7 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	 *         annotations+=Annotation* 
 	 *         name=ExtendedID 
 	 *         label=STRING? 
+	 *         (genericParameterDeclarations+=GenericParameterDeclaration genericParameterDeclarations+=GenericParameterDeclaration*)? 
 	 *         (baseStates+=[State|ID] baseStates+=[State|ID]*)? 
 	 *         declarations+=DeclarationOrMethodWithKeywordWOSemicolon* 
 	 *         actions+=LocalAction* 
@@ -2029,7 +1844,12 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	 *     ScopeCall returns ScopeCall
 	 *
 	 * Constraint:
-	 *     (super?='super.'? scope=[Scope|ID] (parameters+=ScopeParameter parameters+=ScopeParameter*)?)
+	 *     (
+	 *         super?='super.'? 
+	 *         target=[NamedObject|ID] 
+	 *         (genericParameters+=GenericParameter genericParameters+=GenericParameter*)? 
+	 *         (parameters+=ScopeParameter parameters+=ScopeParameter*)?
+	 *     )
 	 */
 	protected void sequence_ScopeCall(ISerializationContext context, ScopeCall semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2088,7 +1908,13 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	 *     SuspendAction returns SuspendAction
 	 *
 	 * Constraint:
-	 *     (delay=DelayType? weak?='weak'? (triggerDelay=INT? trigger=BoolScheduleExpression triggerProbability=FLOAT?)? label=STRING?)
+	 *     (
+	 *         annotations+=RestrictedTypeAnnotation* 
+	 *         delay=DelayType? 
+	 *         weak?='weak'? 
+	 *         (triggerDelay=INT? trigger=BoolScheduleExpression triggerProbability=FLOAT?)? 
+	 *         label=STRING?
+	 *     )
 	 */
 	protected void sequence_SuspendAction(ISerializationContext context, SuspendAction semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

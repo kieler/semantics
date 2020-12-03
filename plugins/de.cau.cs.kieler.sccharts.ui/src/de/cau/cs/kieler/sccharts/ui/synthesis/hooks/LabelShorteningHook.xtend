@@ -46,10 +46,10 @@ class LabelShorteningHook extends SynthesisActionHook {
     /** The sub category for the label management */
     public static final SynthesisOption LABEL_MANAGEMENT_CATEGORY = GeneralSynthesisOptions::LAYOUT
     /** The synthesis option to generally hide/show labels */
-    public static final SynthesisOption HIDE_LABELS = SynthesisOption.createCheckOption("Transition Labels",
+    public static final SynthesisOption HIDE_LABELS = SynthesisOption.createCheckOption(LabelShorteningHook, "Transition Labels",
         false).setCategory(LABEL_MANAGEMENT_CATEGORY).setUpdateAction(LabelShorteningHook.ID); // Register this action as updater
     /** The synthesis option to shorten labels */
-    public static val SynthesisOption SHORTEN_LABEL_STRATEGY = SynthesisOption::createChoiceOption("Label Management",
+    public static val SynthesisOption SHORTEN_LABEL_STRATEGY = SynthesisOption::createChoiceOption(LabelShorteningHook, "Label Management",
         newLinkedList(
             LabelShorteningStrategies.NO,
             LabelShorteningStrategies.PRIORITIES,
@@ -58,7 +58,7 @@ class LabelShorteningHook extends SynthesisActionHook {
         ), LabelShorteningStrategies.NO).setCategory(LABEL_MANAGEMENT_CATEGORY).
         setUpdateAction(LabelShorteningHook.ID) // Register this action as updater
     /** The synthesis option for fixed shorten labels value */
-    public static val SynthesisOption SHORTEN_LABEL_WIDTH = SynthesisOption::createRangeOption("Shortening Width",
+    public static val SynthesisOption SHORTEN_LABEL_WIDTH = SynthesisOption::createRangeOption(LabelShorteningHook, "Shortening Width",
         0, 1000, 10, 200).setCategory(LABEL_MANAGEMENT_CATEGORY).
         setUpdateAction(LabelShorteningHook.ID) // Register this action as updater
     /** The listener for handling label focusing */

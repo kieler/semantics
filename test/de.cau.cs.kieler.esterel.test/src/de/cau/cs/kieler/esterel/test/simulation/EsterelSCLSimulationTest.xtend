@@ -14,7 +14,7 @@ package de.cau.cs.kieler.esterel.test.simulation
 
 import de.cau.cs.kieler.esterel.EsterelProgram
 import de.cau.cs.kieler.esterel.EsterelStandaloneSetup
-import de.cau.cs.kieler.test.common.repository.TestModelData
+import de.cau.cs.kieler.simulation.testing.TestModelData
 import de.cau.cs.kieler.test.common.simulation.AbstractSimulationTest
 import org.junit.Test
 

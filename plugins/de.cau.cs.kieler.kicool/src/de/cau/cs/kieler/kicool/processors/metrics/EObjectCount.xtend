@@ -51,7 +51,7 @@ class EObjectCount extends Metric<EObject, Integer> {
     }    
     
     static def count(EObject eObject) {
-        eObject.eAllContents.toList.size + 1
+        eObject.eAllContents.size + 1
     }
     
     override protected getMetricEntity() {

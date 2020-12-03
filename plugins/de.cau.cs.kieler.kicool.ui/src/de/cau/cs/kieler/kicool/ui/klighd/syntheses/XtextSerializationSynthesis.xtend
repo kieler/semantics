@@ -14,17 +14,17 @@
 package de.cau.cs.kieler.kicool.ui.klighd.syntheses
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.kicool.ui.klighd.models.CodePlaceHolder
+import de.cau.cs.kieler.kicool.ide.klighd.models.CodePlaceHolder
+import de.cau.cs.kieler.kicool.registration.ModelInformation
 import de.cau.cs.kieler.klighd.LightDiagramServices
+import de.cau.cs.kieler.klighd.ide.model.MessageModel
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
-import de.cau.cs.kieler.klighd.ui.view.model.MessageModel
 import java.io.ByteArrayOutputStream
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.resource.IResourceServiceProvider
 import org.eclipse.xtext.resource.XtextResourceSet
-import de.cau.cs.kieler.kicool.registration.ModelInformation
 
 /**
  * Diagram synthesis for Ecore models based on a XText grammar.

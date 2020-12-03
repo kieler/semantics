@@ -1,5 +1,5 @@
 knode class {
-    properties: de.cau.cs.kieler.portConstraints = FIXED_SIDE
+    properties: org.eclipse.elk.portConstraints = FIXED_SIDE
                 org.eclipse.elk.portLabels.placement = OUTSIDE
     size: width = 3 height = 25
         
@@ -8,8 +8,8 @@ knode class {
         points: right 50%,top;right 50%,bottom  
     }
   kport in0 {
-    size: width = 4 height = 2
-    properties: de.cau.cs.kieler.portSide = WEST
+    size: width = 0 height = 0
+    properties: org.eclipse.elk.port.side = WEST
                 org.eclipse.elk.port.borderOffset = -5
     klabel "" { 
         ktext {
@@ -19,9 +19,9 @@ knode class {
   }
  
   kport out {
-    size: width = 4 height = 2
+    size: width = 0 height = 0
     pos:  x = 7
-    properties: de.cau.cs.kieler.portSide = EAST
+    properties: org.eclipse.elk.port.side = EAST
                 org.eclipse.elk.port.borderOffset = -5
     klabel "" { 
         ktext {

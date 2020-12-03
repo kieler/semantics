@@ -17,7 +17,7 @@ import de.cau.cs.kieler.kicool.registration.IProcessorProvider
 /**
  * Provider to make processors available to KiCool.
  * 
- * @author Wechselberg
+ * @author Wechselberg, als
  */
 class SimulationProcessorProvider implements IProcessorProvider {
     
@@ -31,7 +31,13 @@ class SimulationProcessorProvider implements IProcessorProvider {
             de.cau.cs.kieler.simulation.internal.processor.CheckTrace,
             de.cau.cs.kieler.simulation.internal.processor.DynamicTickInput,
             de.cau.cs.kieler.simulation.processor.CTickTimeTemplateGenerator,
-            de.cau.cs.kieler.simulation.processor.JavaTickTimeTemplateGenerator
+            de.cau.cs.kieler.simulation.processor.JavaTickTimeTemplateGenerator,
+            de.cau.cs.kieler.simulation.testing.processor.TestModelsCollector,
+            de.cau.cs.kieler.simulation.testing.processor.TestModelLoader,
+            de.cau.cs.kieler.simulation.testing.processor.TraceSimulator,
+            de.cau.cs.kieler.simulation.testing.processor.TestSuiteGenerator,
+            de.cau.cs.kieler.simulation.testing.processor.SimpleSimulationBenchmarkRunner,
+            de.cau.cs.kieler.simulation.testing.processor.JsonBenchmarkRunner
         ]
     }
     

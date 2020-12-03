@@ -9,6 +9,7 @@
  * BMW Car IT - Initial API and implementation
  * Technische Universitaet Muenchen - Major refactoring and extension
  * Johannes Faltermeier - Extension
+ * Alexander Schulz-Rosengarten - Adjustments for KIELER project
  *******************************************************************************/
 package de.cau.cs.kieler.core.uri;
 
@@ -19,6 +20,7 @@ import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.Enumeration;
 
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
@@ -38,10 +40,7 @@ import org.osgi.framework.Bundle;
  * Helper methods for conversions between different types of resource
  * identifiers
  *
- * @author herrmama
- * @author $Author$
- * @version $Rev$
- * @levd.rating RED Rev:
+ * @author herrmama, als
  */
 public final class URIUtils {
 
@@ -115,8 +114,20 @@ public final class URIUtils {
 	 */
 	public static URL getURL(URI uri) {
 		try {
-			final URL url = new URL(uri.toString());
-			return url;
+            if (uri.isPlatformPlugin()) {
+    		    if (Platform.isRunning()) {
+                    Bundle bundle = Platform.getBundle(uri.segment(1));
+                    String path = String.join("/", uri.segmentsList().subList(2, uri.segmentCount() - 1));
+                    Enumeration<URL> entries = bundle.findEntries(path, uri.lastSegment(), true);
+                    if (entries.hasMoreElements()) {
+                        return entries.nextElement();
+                    }
+                    return null;
+                } else {
+                    return ClassLoader.getSystemResource(String.join("/", uri.segmentsList().subList(2, uri.segmentCount())));
+                }
+            }
+			return new URL(uri.toString());
 		} catch (final MalformedURLException e) {
 			return null;
 		}
@@ -227,4 +238,5 @@ public final class URIUtils {
 	public static URI getRelativePath(URI uri, URI relativeTo) {
 		return uri.deresolve(relativeTo, true, true, true);
 	}
+	
 }

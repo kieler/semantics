@@ -14,7 +14,7 @@ package de.cau.cs.kieler.simulation.ui.view.diagram
 
 import de.cau.cs.kieler.kicool.ui.klighd.KiCoModelUpdateController
 import de.cau.cs.kieler.kicool.ui.klighd.KiCoModelViewUIContributor
-import de.cau.cs.kieler.kicool.ui.klighd.models.ModelChain
+import de.cau.cs.kieler.kicool.ide.klighd.models.ModelChain
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties
 import de.cau.cs.kieler.simulation.SimulationContext
 import de.cau.cs.kieler.simulation.events.SimulationControlEvent
@@ -60,7 +60,7 @@ class KiCoDiagramViewContribution implements KiCoModelViewUIContributor, ISimula
         simulateActions.get(muc)?.update(model)
         
         if (SimulationUI.currentSimulation !== null) {
-            val simCC = SimulationUI.currentSimulation.startEnvironment.getProperty(SimulationContext.SOURCE_COMPILATION_CONTEXT)
+            val simCC = SimulationUI.currentSimulation.getSourceCompilationContext
             val input = simCC?.originalModel
             var inputIsShown = false
             if (input !== null) {
@@ -102,7 +102,7 @@ class KiCoDiagramViewContribution implements KiCoModelViewUIContributor, ISimula
         if (e instanceof SimulationControlEvent) {
             switch (e.operation) {
                 case START: {
-                    val simCC = ctx.startEnvironment.getProperty(SimulationContext.SOURCE_COMPILATION_CONTEXT)
+                    val simCC = ctx.getSourceCompilationContext
                     val input = simCC?.originalModel
                     if (input instanceof EObject) {
                         if (input.eResource !== null) {

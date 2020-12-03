@@ -17,6 +17,7 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
 import de.cau.cs.kieler.kexpressions.Declaration
+import de.cau.cs.kieler.kexpressions.MethodDeclaration
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kexpressions.keffects.ControlDependency
@@ -25,11 +26,10 @@ import de.cau.cs.kieler.kexpressions.keffects.DataDependencyType
 import de.cau.cs.kieler.kexpressions.keffects.Dependency
 import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
 import de.cau.cs.kieler.kicool.environments.Environment
+import de.cau.cs.kieler.kicool.ide.klighd.KiCoDiagramViewProperties
 import de.cau.cs.kieler.kicool.ui.kitt.tracing.TracingEdgeNode
 import de.cau.cs.kieler.kicool.ui.kitt.tracing.TracingVisualizationProperties
-import de.cau.cs.kieler.kicool.ui.klighd.KiCoDiagramViewProperties
 import de.cau.cs.kieler.klighd.kgraph.KEdge
-import de.cau.cs.kieler.klighd.kgraph.KGraphFactory
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.KContainerRendering
 import de.cau.cs.kieler.klighd.krendering.KPolyline
@@ -42,6 +42,7 @@ import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.krendering.extensions.KColorExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KPolylineExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.sccharts.Action
@@ -69,24 +70,23 @@ import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.actions.ToggleDependencyActi
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.StateStyles
 import de.cau.cs.kieler.scl.MethodImplementationDeclaration
 import java.util.ArrayList
+import java.util.EnumSet
 import java.util.List
 import java.util.Map
 import org.eclipse.elk.alg.layered.options.LayerConstraint
 import org.eclipse.elk.alg.layered.options.LayeredOptions
+import org.eclipse.elk.alg.layered.options.OrderingStrategy
+import org.eclipse.elk.alg.rectpacking.options.RectPackingOptions
 import org.eclipse.elk.core.math.ElkPadding
 import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.core.options.Direction
+import org.eclipse.elk.core.options.SizeConstraint
 import org.eclipse.emf.ecore.EObject
 
 import static de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions.*
 
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import static extension de.cau.cs.kieler.annotations.ide.klighd.CommonSynthesisUtil.*
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
-import de.cau.cs.kieler.klighd.SynthesisOption
-import de.cau.cs.kieler.sccharts.EntryAction
-import de.cau.cs.kieler.sccharts.ExitAction
-import de.cau.cs.kieler.sccharts.DuringAction
-import de.cau.cs.kieler.kexpressions.MethodDeclaration
 
 /**
  * Transforms {@link State} into {@link KNode} diagram elements.
@@ -101,7 +101,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
 
     extension KRenderingFactory = KRenderingFactory.eINSTANCE
     
-    @Inject extension KNodeExtensionsReplacement
+    @Inject extension KNodeExtensions
     @Inject extension KEdgeExtensions
     @Inject extension KRenderingExtensions
     @Inject extension KPolylineExtensions
@@ -142,7 +142,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
 
         // Set KIdentifier for use with incremental update
         if (!state.name.nullOrEmpty) {
-            node.data.add(KGraphFactory::eINSTANCE.createKIdentifier => [it.id = state.name])
+            node.KID = state.name
         }
         
         // configure region dependency layout config if an appropriate result is present.
@@ -172,7 +172,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         }
 
         // Styles from modifiers
-        if (state.isReferencedState) {
+        if (state.isReferencing) {
             node.setReferencedStyle
         }
         if (state.isInitial) {
@@ -204,10 +204,10 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
                 (if (state.isMacroState) {
                     val label = <Pair<? extends CharSequence, TextFormat>>newArrayList
                     label += new Pair(state.serializeHR, TextFormat.TEXT)
-                    if (state.isReferencedState) {
+                    if (state.isReferencing) {
                         label += new Pair("@", TextFormat.KEYWORD)
-                        if (state.reference.scope !== null) {
-                            label += new Pair((state.reference.scope as State).serializeHR, TextFormat.TEXT)
+                        if (state.isReferencing) {
+                            label += new Pair(state.reference.target.name, TextFormat.TEXT)
                         } else {
                             label += new Pair("UnresolvedReference", TextFormat.HIGHLIGHT)
                         }
@@ -276,23 +276,24 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
             // Add child area for regions
             if (state.controlflowRegionsContainStates
                 || state.containsDataflowRegions
-                || state.isReferencedState
+                || state.isReferencing
                 || (SHOW_INHERITANCE.booleanValue && !state.allVisibleInheritedRegions.empty)
                 || !state.declarations.filter(MethodImplementationDeclaration).empty
             ) {
-                node.addRegionsArea;
+                node.addRegionsArea
+                node.setLayoutOption(CoreOptions.NODE_SIZE_CONSTRAINTS, EnumSet.of(SizeConstraint.MINIMUM_SIZE))
             }
         }
 
         // Transform all outgoing transitions
         // Also set KIdentifier for use with incremental update
         val groupedTransitions = state.outgoingTransitions.groupBy[it.targetState]
-        for (transition : state.outgoingTransitions.reverseView) {
+        for (transition : state.outgoingTransitions) {
             transition.transform => [ edge |
                 val target = transition.targetState;
                 if (!target?.name.nullOrEmpty) {
                     val counter = groupedTransitions.get(target).indexOf(transition)
-                    edge.head.data += KGraphFactory::eINSTANCE.createKIdentifier => [it.id = target.name + counter]
+                    edge.head.KID = target.name + counter
                 }
             ];
         }
@@ -328,7 +329,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         }
 
         // Add reference region
-        if (state.isReferencedState) {
+        if (state.isReferencing) {
             node.children += state.createReferenceRegion
         }
         
@@ -382,26 +383,27 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
     
     /** Configures the default layout of children (regions in the state) */
     def static void configureLayout(KNode node) {
-        node.setLayoutOption(CoreOptions::ALGORITHM, "org.eclipse.elk.box");
-        node.setLayoutOption(CoreOptions::EXPAND_NODES, true);
-        node.setLayoutOption(CoreOptions::PADDING, new ElkPadding(0));
+        node.setLayoutOption(CoreOptions::ALGORITHM, RectPackingOptions.ALGORITHM_ID)
+        node.setLayoutOption(CoreOptions::EXPAND_NODES, true)
+        node.setLayoutOption(CoreOptions::PADDING, new ElkPadding(0))
         node.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 1.0)
     }
     
     def static void configureLayoutRegionDependencies(KNode node) {
-        node.setLayoutOption(CoreOptions::PADDING, new ElkPadding(5));
+        node.setLayoutOption(CoreOptions::PADDING, new ElkPadding(5))
 //        node.setLayoutOption(CoreOptions::NODE_SIZE_CONSTRAINTS, SizeConstraint.free)
-        node.setLayoutOption(CoreOptions::ALGORITHM, "org.eclipse.elk.layered")
+        node.setLayoutOption(CoreOptions::ALGORITHM, LayeredOptions.ALGORITHM_ID)
+        node.setLayoutOption(LayeredOptions.CONSIDER_MODEL_ORDER, OrderingStrategy.PREFER_EDGES)
         node.setLayoutOption(CoreOptions::DIRECTION, Direction.RIGHT)
-        node.setLayoutOption(LayeredOptions::FEEDBACK_EDGES, true);
-        node.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 10.0);
-        node.setLayoutOption(LayeredOptions::SPACING_EDGE_NODE_BETWEEN_LAYERS, 10.0);
+        node.setLayoutOption(LayeredOptions::FEEDBACK_EDGES, true)
+        node.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 10.0)
+        node.setLayoutOption(LayeredOptions::SPACING_EDGE_NODE_BETWEEN_LAYERS, 10.0)
     }    
 
     /** Checks if given state should be visualized as macro state */
     def boolean isMacroState(State state) {
         return state.controlflowRegionsContainStates || state.containsDataflowRegions || !state.actions.empty ||
-            !state.declarations.empty || state.isReferencedState || state.hasBaseStates;
+            !state.declarations.empty || state.isReferencing || state.hasBaseStates;
     }
     
     private val dependencyEdges = <Pair<EObject, EObject>, KEdge> newHashMap

@@ -305,6 +305,7 @@ public abstract class AbstractSCEstSyntacticSequencer extends AbstractSyntacticS
 	 * This ambiguous syntax occurs at:
 	 *     (rule start) (ambiguity) '??' trap=[TrapSignal|ID]
 	 *     (rule start) (ambiguity) 'extern' functionName=ID
+	 *     (rule start) (ambiguity) 'tick' 'schedule' schedule+=ScheduleObjectReference
 	 *     (rule start) (ambiguity) 'tick' (rule start)
 	 *     (rule start) (ambiguity) annotations+=Annotation
 	 *     (rule start) (ambiguity) constant=[Constant|ID]
@@ -416,6 +417,7 @@ public abstract class AbstractSCEstSyntacticSequencer extends AbstractSyntacticS
 	 *     ('(' ')') | '()'
 	 *
 	 * This ambiguous syntax occurs at:
+	 *     function=[Function|ID] (ambiguity) 'schedule' schedule+=ScheduleObjectReference
 	 *     function=[Function|ID] (ambiguity) (rule end)
 	 */
 	protected void emit_EsterelFunctionCall_LeftParenthesisRightParenthesisKeyword_1_1_or___LeftParenthesisKeyword_1_0_0_RightParenthesisKeyword_1_0_2__(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {

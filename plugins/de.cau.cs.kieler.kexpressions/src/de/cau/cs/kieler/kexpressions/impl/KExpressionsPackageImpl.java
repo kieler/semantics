@@ -2,8 +2,16 @@
  */
 package de.cau.cs.kieler.kexpressions.impl;
 
-import de.cau.cs.kieler.annotations.AnnotationsPackage;
+import org.eclipse.emf.ecore.EAttribute;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EEnum;
+import org.eclipse.emf.ecore.EGenericType;
+import org.eclipse.emf.ecore.EOperation;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.impl.EPackageImpl;
 
+import de.cau.cs.kieler.annotations.AnnotationsPackage;
 import de.cau.cs.kieler.kexpressions.AccessModifier;
 import de.cau.cs.kieler.kexpressions.BoolValue;
 import de.cau.cs.kieler.kexpressions.Call;
@@ -13,6 +21,8 @@ import de.cau.cs.kieler.kexpressions.Expression;
 import de.cau.cs.kieler.kexpressions.ExternString;
 import de.cau.cs.kieler.kexpressions.FloatValue;
 import de.cau.cs.kieler.kexpressions.FunctionCall;
+import de.cau.cs.kieler.kexpressions.GenericParameterDeclaration;
+import de.cau.cs.kieler.kexpressions.GenericTypeReference;
 import de.cau.cs.kieler.kexpressions.IgnoreValue;
 import de.cau.cs.kieler.kexpressions.IntValue;
 import de.cau.cs.kieler.kexpressions.JsonAnnotation;
@@ -28,7 +38,6 @@ import de.cau.cs.kieler.kexpressions.OperatorExpression;
 import de.cau.cs.kieler.kexpressions.OperatorType;
 import de.cau.cs.kieler.kexpressions.Parameter;
 import de.cau.cs.kieler.kexpressions.ParameterAccessType;
-import de.cau.cs.kieler.kexpressions.ParamterAccessType;
 import de.cau.cs.kieler.kexpressions.PrintCall;
 import de.cau.cs.kieler.kexpressions.PriorityProtocol;
 import de.cau.cs.kieler.kexpressions.RandomCall;
@@ -43,20 +52,11 @@ import de.cau.cs.kieler.kexpressions.StringValue;
 import de.cau.cs.kieler.kexpressions.TextExpression;
 import de.cau.cs.kieler.kexpressions.Value;
 import de.cau.cs.kieler.kexpressions.ValueType;
+import de.cau.cs.kieler.kexpressions.ValueTypeReference;
 import de.cau.cs.kieler.kexpressions.ValuedObject;
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference;
 import de.cau.cs.kieler.kexpressions.VariableDeclaration;
 import de.cau.cs.kieler.kexpressions.VectorValue;
-
-import org.eclipse.emf.ecore.EAttribute;
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EEnum;
-import org.eclipse.emf.ecore.EGenericType;
-import org.eclipse.emf.ecore.EOperation;
-import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.EReference;
-
-import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -211,6 +211,27 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * @generated
      */
     private EClass referenceDeclarationEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass genericParameterDeclarationEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass genericTypeReferenceEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass valueTypeReferenceEClass = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -467,6 +488,16 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
     @Override
     public EAttribute getValuedObject_Label() {
         return (EAttribute)valuedObjectEClass.getEStructuralFeatures().get(3);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getValuedObject_GenericParameters() {
+        return (EReference)valuedObjectEClass.getEStructuralFeatures().get(4);
     }
 
     /**
@@ -985,6 +1016,106 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * @generated
      */
     @Override
+    public EReference getReferenceDeclaration_GenericParameters() {
+        return (EReference)referenceDeclarationEClass.getEStructuralFeatures().get(3);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EClass getGenericParameterDeclaration() {
+        return genericParameterDeclarationEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EAttribute getGenericParameterDeclaration_Reference() {
+        return (EAttribute)genericParameterDeclarationEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EAttribute getGenericParameterDeclaration_ValueType() {
+        return (EAttribute)genericParameterDeclarationEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getGenericParameterDeclaration_Type() {
+        return (EReference)genericParameterDeclarationEClass.getEStructuralFeatures().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EClass getGenericTypeReference() {
+        return genericTypeReferenceEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getGenericTypeReference_Type() {
+        return (EReference)genericTypeReferenceEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getGenericTypeReference_GenericParameters() {
+        return (EReference)genericTypeReferenceEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EClass getValueTypeReference() {
+        return valueTypeReferenceEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EAttribute getValueTypeReference_ValueType() {
+        return (EAttribute)valueTypeReferenceEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public EClass getScheduleDeclaration() {
         return scheduleDeclarationEClass;
     }
@@ -1345,6 +1476,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         createEReference(valuedObjectEClass, VALUED_OBJECT__INITIAL_VALUE);
         createEReference(valuedObjectEClass, VALUED_OBJECT__CARDINALITIES);
         createEAttribute(valuedObjectEClass, VALUED_OBJECT__LABEL);
+        createEReference(valuedObjectEClass, VALUED_OBJECT__GENERIC_PARAMETERS);
 
         valuedObjectReferenceEClass = createEClass(VALUED_OBJECT_REFERENCE);
         createEReference(valuedObjectReferenceEClass, VALUED_OBJECT_REFERENCE__VALUED_OBJECT);
@@ -1415,15 +1547,28 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         createEReference(referenceDeclarationEClass, REFERENCE_DECLARATION__REFERENCE);
         createEReference(referenceDeclarationEClass, REFERENCE_DECLARATION__PARAMETERS);
         createEReference(referenceDeclarationEClass, REFERENCE_DECLARATION__EXTERN);
+        createEReference(referenceDeclarationEClass, REFERENCE_DECLARATION__GENERIC_PARAMETERS);
+
+        genericParameterDeclarationEClass = createEClass(GENERIC_PARAMETER_DECLARATION);
+        createEAttribute(genericParameterDeclarationEClass, GENERIC_PARAMETER_DECLARATION__REFERENCE);
+        createEAttribute(genericParameterDeclarationEClass, GENERIC_PARAMETER_DECLARATION__VALUE_TYPE);
+        createEReference(genericParameterDeclarationEClass, GENERIC_PARAMETER_DECLARATION__TYPE);
+
+        genericTypeReferenceEClass = createEClass(GENERIC_TYPE_REFERENCE);
+        createEReference(genericTypeReferenceEClass, GENERIC_TYPE_REFERENCE__TYPE);
+        createEReference(genericTypeReferenceEClass, GENERIC_TYPE_REFERENCE__GENERIC_PARAMETERS);
+
+        valueTypeReferenceEClass = createEClass(VALUE_TYPE_REFERENCE);
+        createEAttribute(valueTypeReferenceEClass, VALUE_TYPE_REFERENCE__VALUE_TYPE);
+
+        methodDeclarationEClass = createEClass(METHOD_DECLARATION);
+        createEAttribute(methodDeclarationEClass, METHOD_DECLARATION__RETURN_TYPE);
+        createEReference(methodDeclarationEClass, METHOD_DECLARATION__PARAMETER_DECLARATIONS);
 
         scheduleDeclarationEClass = createEClass(SCHEDULE_DECLARATION);
         createEAttribute(scheduleDeclarationEClass, SCHEDULE_DECLARATION__NAME);
         createEAttribute(scheduleDeclarationEClass, SCHEDULE_DECLARATION__GLOBAL);
         createEAttribute(scheduleDeclarationEClass, SCHEDULE_DECLARATION__PRIORITIES);
-
-        methodDeclarationEClass = createEClass(METHOD_DECLARATION);
-        createEAttribute(methodDeclarationEClass, METHOD_DECLARATION__RETURN_TYPE);
-        createEReference(methodDeclarationEClass, METHOD_DECLARATION__PARAMETER_DECLARATIONS);
 
         scheduleObjectReferenceEClass = createEClass(SCHEDULE_OBJECT_REFERENCE);
         createEAttribute(scheduleObjectReferenceEClass, SCHEDULE_OBJECT_REFERENCE__PRIORITY);
@@ -1520,9 +1665,12 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         declarationEClass.getESuperTypes().add(theAnnotationsPackage.getAnnotatable());
         variableDeclarationEClass.getESuperTypes().add(this.getDeclaration());
         referenceDeclarationEClass.getESuperTypes().add(this.getDeclaration());
-        scheduleDeclarationEClass.getESuperTypes().add(this.getDeclaration());
+        genericParameterDeclarationEClass.getESuperTypes().add(this.getDeclaration());
+        genericTypeReferenceEClass.getESuperTypes().add(this.getExpression());
+        valueTypeReferenceEClass.getESuperTypes().add(this.getExpression());
         methodDeclarationEClass.getESuperTypes().add(this.getDeclaration());
         methodDeclarationEClass.getESuperTypes().add(this.getSchedulable());
+        scheduleDeclarationEClass.getESuperTypes().add(this.getDeclaration());
         scheduleObjectReferenceEClass.getESuperTypes().add(this.getValuedObjectReference());
         callEClass.getESuperTypes().add(this.getExpression());
         referenceCallEClass.getESuperTypes().add(this.getValuedObjectReference());
@@ -1541,6 +1689,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         initEReference(getValuedObject_InitialValue(), this.getExpression(), null, "initialValue", null, 0, 1, ValuedObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getValuedObject_Cardinalities(), this.getExpression(), null, "cardinalities", null, 0, -1, ValuedObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getValuedObject_Label(), ecorePackage.getEString(), "label", null, 0, 1, ValuedObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getValuedObject_GenericParameters(), this.getParameter(), null, "genericParameters", null, 0, -1, ValuedObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(valuedObjectReferenceEClass, ValuedObjectReference.class, "ValuedObjectReference", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getValuedObjectReference_ValuedObject(), this.getValuedObject(), null, "valuedObject", null, 1, 1, ValuedObjectReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1619,15 +1768,28 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         initEReference(getReferenceDeclaration_Reference(), ecorePackage.getEObject(), null, "reference", null, 0, 1, ReferenceDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getReferenceDeclaration_Parameters(), this.getParameter(), null, "parameters", null, 0, -1, ReferenceDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getReferenceDeclaration_Extern(), this.getExternString(), null, "extern", null, 0, -1, ReferenceDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getReferenceDeclaration_GenericParameters(), this.getParameter(), null, "genericParameters", null, 0, -1, ReferenceDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEClass(genericParameterDeclarationEClass, GenericParameterDeclaration.class, "GenericParameterDeclaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getGenericParameterDeclaration_Reference(), ecorePackage.getEBoolean(), "reference", null, 1, 1, GenericParameterDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getGenericParameterDeclaration_ValueType(), this.getValueType(), "valueType", "UNKNOWN", 0, 1, GenericParameterDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getGenericParameterDeclaration_Type(), theAnnotationsPackage.getNamedObject(), null, "type", null, 0, 1, GenericParameterDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEClass(genericTypeReferenceEClass, GenericTypeReference.class, "GenericTypeReference", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEReference(getGenericTypeReference_Type(), theAnnotationsPackage.getNamedObject(), null, "type", null, 1, 1, GenericTypeReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getGenericTypeReference_GenericParameters(), this.getParameter(), null, "genericParameters", null, 0, -1, GenericTypeReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEClass(valueTypeReferenceEClass, ValueTypeReference.class, "ValueTypeReference", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getValueTypeReference_ValueType(), this.getValueType(), "valueType", null, 1, 1, ValueTypeReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEClass(methodDeclarationEClass, MethodDeclaration.class, "MethodDeclaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getMethodDeclaration_ReturnType(), this.getValueType(), "returnType", null, 0, 1, MethodDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getMethodDeclaration_ParameterDeclarations(), this.getDeclaration(), null, "parameterDeclarations", null, 0, -1, MethodDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(scheduleDeclarationEClass, ScheduleDeclaration.class, "ScheduleDeclaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getScheduleDeclaration_Name(), ecorePackage.getEString(), "name", null, 0, 1, ScheduleDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getScheduleDeclaration_Global(), this.getPriorityProtocol(), "global", null, 0, 1, ScheduleDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getScheduleDeclaration_Priorities(), this.getPriorityProtocol(), "priorities", null, 0, -1, ScheduleDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-        initEClass(methodDeclarationEClass, MethodDeclaration.class, "MethodDeclaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getMethodDeclaration_ReturnType(), this.getValueType(), "returnType", null, 0, 1, MethodDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getMethodDeclaration_ParameterDeclarations(), this.getDeclaration(), null, "parameterDeclarations", null, 0, -1, MethodDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(scheduleObjectReferenceEClass, ScheduleObjectReference.class, "ScheduleObjectReference", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getScheduleObjectReference_Priority(), ecorePackage.getEInt(), "priority", null, 0, 1, ScheduleObjectReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

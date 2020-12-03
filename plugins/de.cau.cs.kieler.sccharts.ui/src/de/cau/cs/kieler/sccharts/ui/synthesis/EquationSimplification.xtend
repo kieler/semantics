@@ -21,6 +21,7 @@ import de.cau.cs.kieler.klighd.kgraph.KEdge
 import de.cau.cs.kieler.klighd.kgraph.KGraphElement
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.kgraph.KPort
+import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions
 import java.util.List
 import org.eclipse.elk.alg.layered.options.LayerConstraint
@@ -28,7 +29,9 @@ import org.eclipse.elk.alg.layered.options.LayeredOptions
 import org.eclipse.elk.core.options.Alignment
 import org.eclipse.elk.core.options.CoreOptions
 
+import static extension de.cau.cs.kieler.annotations.ide.klighd.CommonSynthesisUtil.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import static de.cau.cs.kieler.sccharts.ide.synthesis.EquationSynthesisProperties.*
 
 /**
  * @author kolja
@@ -39,7 +42,7 @@ class EquationSimplification {
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension SCChartsSerializeHRExtensions
     @Inject extension EquationSynthesisHelper
-    @Inject extension KNodeExtensionsReplacement
+    @Inject extension KNodeExtensions
 
     var List<KNode> inputNodes = null
 
@@ -201,8 +204,8 @@ class EquationSimplification {
                     unneeded.redirectOutgoingWires(node)
                     nodes.betterRemove(unneeded, node)
                 }
-                node.setProperty(EquationSynthesis.INPUT_FLAG, false)
-                node.setProperty(EquationSynthesis.OUTPUT_FLAG, false)
+                node.setProperty(INPUT_FLAG, false)
+                node.setProperty(OUTPUT_FLAG, false)
                 node.setProperty(LayeredOptions::LAYERING_LAYER_CONSTRAINT, LayerConstraint::NONE)
                 node.setProperty(CoreOptions::ALIGNMENT, Alignment.AUTOMATIC)
             }
@@ -382,24 +385,19 @@ class EquationSimplification {
                         ]
                     ]
             ].toList) {
-                val List<Pair<KPort, KNode>> outputs = newArrayList
-                n.incomingEdges.map[sourcePort].forEach [ port |
-                    port.edges.map[target].filter [
-                        isOutput && !isDataAccess && sourceElement instanceof ValuedObjectReference
-                    ].forEach [
-                        outputs += new Pair(port, it)
-                    ]
-                ]
-                val source = inputNodes.findFirst[sourceEquals(outputs.get(0).value)].copy
-                nodes += source
-                source.incomingEdges.immutableCopy.forEach[source.incomingEdges.remove(it)]
-                source.outgoingEdges.immutableCopy.forEach[source.outgoingEdges.remove(it)]
-                source.ports.immutableCopy.forEach[p|p.edges.immutableCopy.forEach[p.edges.remove(it)]]
-                val sourcePort = source.findPortById(EquationSynthesis.OUT_PORT)
-                sourcePort.connectWith(
-                    n.incomingEdges.filter[it.sourcePort == outputs.get(0).key].map[targetPort].get(0),
-                    source.sourceElement.serializeHR.toString)
-                n.incomingEdges.filter[it.sourcePort == outputs.get(0).key].toList.forEach[betterRemove]
+                val source = inputNodes.findFirst[sourceEquals((n.sourceElement as OperatorExpression).subExpressions.get(0))].copy
+                if(source !== null){
+                    nodes += source
+                    source.incomingEdges.immutableCopy.forEach[source.incomingEdges.remove(it)]
+                    source.outgoingEdges.immutableCopy.forEach[source.outgoingEdges.remove(it)]
+                    source.ports.immutableCopy.forEach[p|p.edges.immutableCopy.forEach[p.edges.remove(it)]]
+                    val sourcePort = source.findPortById(EquationSynthesis.OUT_PORT)
+                    val oldEdges = n.incomingEdges.immutableCopy
+                    sourcePort.connectWith(
+                        n.incomingEdges.map[targetPort].get(0),
+                        source.sourceElement.serializeHR.toString)
+                    oldEdges.forEach[betterRemove]
+                }
             }
         }
         return nodes
@@ -503,7 +501,7 @@ class EquationSimplification {
                     targetPort = target.findPort(e.targetPort)
                     if (targetPort === null) {
                         targetPort = e.targetPort.copy
-                        targetPort.setId(EquationSynthesis.IN_PORT + "_" + target.ports.size)
+                        targetPort.KID = EquationSynthesis.IN_PORT + "_" + target.ports.size
                         target.ports.add(targetPort)
                     }
                 }
@@ -531,7 +529,7 @@ class EquationSimplification {
                     sourcePort = source.findPort(e.sourcePort)
                     if (sourcePort === null) {
                         sourcePort = e.sourcePort.copy
-                        sourcePort.setId(EquationSynthesis.OUT_PORT + "_" + source.ports.size)
+                        sourcePort.KID = (EquationSynthesis.OUT_PORT + "_" + source.ports.size)
                         source.ports.add(sourcePort)
                     }
                 }

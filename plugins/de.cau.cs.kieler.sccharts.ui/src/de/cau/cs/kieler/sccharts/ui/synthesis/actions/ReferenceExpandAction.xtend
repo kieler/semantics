@@ -13,6 +13,8 @@
  */
 package de.cau.cs.kieler.sccharts.ui.synthesis.actions
 
+import com.google.inject.Guice
+import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.klighd.LightDiagramServices
@@ -21,9 +23,9 @@ import de.cau.cs.kieler.klighd.internal.util.KlighdInternalProperties
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties
 import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.State
-import org.eclipse.elk.graph.properties.MapPropertyHolder
+import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import de.cau.cs.kieler.sccharts.ui.synthesis.SCChartsSynthesis
-import de.cau.cs.kieler.sccharts.ui.synthesis.EquationSynthesis
+import org.eclipse.elk.graph.properties.MapPropertyHolder
 
 /**
  * This Action provides the normal collapse expand behavior for a reference {@link State} and
@@ -36,15 +38,21 @@ import de.cau.cs.kieler.sccharts.ui.synthesis.EquationSynthesis
  */
 class ReferenceExpandAction extends CollapseExpandAction {
 
+    @Inject extension SCChartsScopeExtensions
+    
     /** The action id */
     public static val String ID = "de.cau.cs.kieler.sccharts.ui.synthesis.actions.ReferenceExpandAction"
+    
+    new() {
+        Guice.createInjector().injectMembers(this)
+    }
 
     override execute(ActionContext context) {
         if (context.KNode.children.empty) {
             val modelElement = context.getDomainElement(context.KNode);
             if (modelElement instanceof State) {
                 val state = modelElement as State;
-                if (state.reference !== null) {
+                if (state.isReferencingScope) {
                     val diagram = LightDiagramServices.translateModel(
                         state.reference.scope,
                         context.viewContext,
@@ -55,7 +63,7 @@ class ReferenceExpandAction extends CollapseExpandAction {
                     context.getKNode.children += diagram.children;
                 }
             } else if (modelElement instanceof Region) {
-                if (modelElement.reference !== null) {
+                if (modelElement.isReferencingScope) {
                     val diagram = LightDiagramServices.translateModel(
                         modelElement.reference.scope.eContainer,
                         context.viewContext,

@@ -3,4 +3,4 @@ developer system de.cau.cs.kieler.scl.^simulation.netlist.c
 
 de.cau.cs.kieler.kicool.deploy.variable.store.init
 system de.cau.cs.kieler.scl.netlist.c
-system de.cau.cs.kieler.^simulation.netlist.c
+system de.cau.cs.kieler.^simulation.c

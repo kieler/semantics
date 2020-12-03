@@ -2,4 +2,4 @@ developer system de.cau.cs.kieler.sccharts.^simulation.statebased.lean.cs.c
     label "State-based Lean CS Simulation (C, No-TTS)"
 
 system de.cau.cs.kieler.sccharts.statebased.lean.cs.c.template
-system de.cau.cs.kieler.^simulation.statebased.lean.c
+system de.cau.cs.kieler.^simulation.c

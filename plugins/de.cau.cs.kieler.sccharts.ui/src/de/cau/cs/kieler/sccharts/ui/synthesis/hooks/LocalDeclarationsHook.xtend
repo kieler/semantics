@@ -35,7 +35,7 @@ class LocalDeclarationsHook extends SynthesisHook {
     /** Action ID */
     public static final String ID = "de.cau.cs.kieler.sccharts.ui.synthesis.hooks.DeclarationsHook";
     /** The related synthesis option */
-    public static final SynthesisOption SHOW_LOCAL_DECLARATIONS = SynthesisOption.createCheckOption(
+    public static final SynthesisOption SHOW_LOCAL_DECLARATIONS = SynthesisOption.createCheckOption(LocalDeclarationsHook,
         "Local Declarations", true).setCategory(GeneralSynthesisOptions::APPEARANCE)
 
     override getDisplayedSynthesisOptions() {
@@ -48,8 +48,7 @@ class LocalDeclarationsHook extends SynthesisHook {
             val declarations = container?.getProperty(StateStyles.DECLARATIONS_CONTAINER)
 
             if (declarations !== null) {
-                for (var i = 0; i < declarations.children.length; i++) {
-                    val c = declarations.children.get(i)
+                for (c : declarations.children.immutableCopy) {
                     var VariableDeclaration dec = null
                     for (p : c.properties) {
                         if (p.value instanceof VariableDeclaration) {

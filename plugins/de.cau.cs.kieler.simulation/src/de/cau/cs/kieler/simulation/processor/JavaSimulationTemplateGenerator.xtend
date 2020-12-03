@@ -12,19 +12,20 @@
  */
 package de.cau.cs.kieler.simulation.processor
 
+import de.cau.cs.kieler.core.properties.IProperty
+import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
 import de.cau.cs.kieler.kicool.compilation.JavaCodeFile
 import de.cau.cs.kieler.kicool.compilation.VariableInformation
 import de.cau.cs.kieler.kicool.compilation.VariableStore
+import de.cau.cs.kieler.kicool.compilation.codegen.CodeGeneratorNames
 import de.cau.cs.kieler.kicool.deploy.CommonTemplateVariables
 import de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure
-import de.cau.cs.kieler.kicool.deploy.processor.AbstractTemplateGeneratorProcessor
 import de.cau.cs.kieler.kicool.deploy.processor.TemplateEngine
 
 import static de.cau.cs.kieler.kicool.deploy.TemplatePosition.*
 
 import static extension de.cau.cs.kieler.kicool.deploy.TemplateInjection.*
-import de.cau.cs.kieler.kicool.compilation.codegen.CodeGeneratorNames
 
 /**
  * @author als
@@ -32,6 +33,9 @@ import de.cau.cs.kieler.kicool.compilation.codegen.CodeGeneratorNames
 class JavaSimulationTemplateGenerator extends AbstractSimulationTemplateGenerator {
     
     public static val FILE_NAME = "java-simulation.ftl" 
+    
+    public static val IProperty<String> STRUCT_ACCESS = 
+        new Property<String>("de.cau.cs.kieler.simulation.java.struct.access", ".")
     
     override getId() {
         "de.cau.cs.kieler.simulation.java.template"
@@ -48,7 +52,7 @@ class JavaSimulationTemplateGenerator extends AbstractSimulationTemplateGenerato
         environment.setProperty(TemplateEngine.GENRAL_ENVIRONMENT, generalTemplateEnvironment)
         
         if (infra.sourceCode !== null) {
-            val javaClassFile = infra.sourceCode.files.filter(JavaCodeFile).head
+            val javaClassFile = infra.sourceCode.files.filter(JavaCodeFile).filter[!library].head
             if (javaClassFile !== null && !javaClassFile.className.nullOrEmpty) {
                 generalTemplateEnvironment.put(CommonTemplateVariables.MODEL_DATA_TYPE, javaClassFile.className)
                 generalTemplateEnvironment.put(CommonTemplateVariables.MODEL_DATA_FILE, javaClassFile.fileName)
@@ -139,18 +143,22 @@ class JavaSimulationTemplateGenerator extends AbstractSimulationTemplateGenerato
         return cc
     }
     
+    private def accessor() {
+        return environment.getProperty(STRUCT_ACCESS)?:STRUCT_ACCESS.^default
+    }
+    
     def serialize(Pair<String, VariableInformation> variable, String json) {
         val varName = variable.key
         val info = variable.value
         if (info.array) {
             if (info.isExternal) throw new UnsupportedOperationException("Cannot handle external array variables.")
-            return '''«json».put("«varName»", JSONObject.wrap(${tickdata_name}.«varName»));'''
+            return '''«json».put("«varName»", JSONObject.wrap(${tickdata_name}«accessor»«varName»));'''
         } else if (info.isExternal) {
             return '''«json».put("«varName»", «info.externalName»);'''
         } else if (info.isContainer) {
             throw new UnsupportedOperationException("Cannot handle class type variables.")
         } else {
-            return '''«json».put("«varName»", ${tickdata_name}.«varName»);'''
+            return '''«json».put("«varName»", JSONObject.wrap(${tickdata_name}«accessor»«varName»));'''
         }
     }
     
@@ -170,7 +178,7 @@ class JavaSimulationTemplateGenerator extends AbstractSimulationTemplateGenerato
         } else if (info.isContainer) {
             throw new UnsupportedOperationException("Cannot handle class type variables.")
         } else {
-            return '''${tickdata_name}.«varName» = «json».«info.jsonTypeGetter»("«varName»");'''
+            return '''${tickdata_name}«accessor»«varName» = «json».«info.jsonTypeGetter»("«varName»");'''
         }
     }
     
@@ -192,9 +200,9 @@ class JavaSimulationTemplateGenerator extends AbstractSimulationTemplateGenerato
     def String parseArray(VariableInformation info, String varName, int idx, int dimensions, String json) {
         if (idx == dimensions) {
             if (idx == 1) {
-                return '''${tickdata_name}.«varName»[i] = «json».«info.jsonTypeGetter»(i);'''
+                return '''${tickdata_name}«accessor»«varName»[i] = «json».«info.jsonTypeGetter»(i);'''
             } else {
-                return '''${tickdata_name}.«varName»[i]«(1..<dimensions).map["[i"+it+"]"].join» = «json».«info.jsonTypeGetter»(i«idx - 1»);'''
+                return '''${tickdata_name}«accessor»«varName»[i]«(1..<dimensions).map["[i"+it+"]"].join» = «json».«info.jsonTypeGetter»(i«idx - 1»);'''
             }
         } else {
             return '''

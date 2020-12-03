@@ -14,9 +14,12 @@ import de.cau.cs.kieler.annotations.registry.PragmaRegistry
 import de.cau.cs.kieler.kexpressions.AccessModifier
 import de.cau.cs.kieler.kexpressions.CombineOperator
 import de.cau.cs.kieler.kexpressions.Declaration
+import de.cau.cs.kieler.kexpressions.KExpressionsPackage
 import de.cau.cs.kieler.kexpressions.OperatorExpression
+import de.cau.cs.kieler.kexpressions.OperatorType
 import de.cau.cs.kieler.kexpressions.ReferenceCall
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
+import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
@@ -43,22 +46,20 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsFixExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsInheritanceExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsReferenceExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
 import de.cau.cs.kieler.sccharts.processors.For
 import de.cau.cs.kieler.sccharts.text.SCTXResource
 import java.util.Map
 import java.util.Set
+import org.eclipse.elk.core.data.LayoutMetaDataService
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.validation.AbstractDeclarativeValidator
 import org.eclipse.xtext.validation.Check
 import org.eclipse.xtext.validation.CheckType
 
 import static extension java.lang.String.*
-import org.eclipse.elk.core.data.LayoutMetaDataService
-import de.cau.cs.kieler.kexpressions.OperatorType
-
-//import org.eclipse.xtext.validation.Check
 
 /**
  * This class contains custom validation rules. 
@@ -75,6 +76,7 @@ class SCTXValidator extends AbstractSCTXValidator {
     @Inject extension SCChartsTransitionExtensions
     @Inject extension SCChartsStateExtensions
     @Inject extension SCChartsInheritanceExtensions
+    @Inject extension SCChartsScopeExtensions
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KEffectsExtensions
     
@@ -92,13 +94,12 @@ class SCTXValidator extends AbstractSCTXValidator {
     static val String DUPLICATE_REGION = "There are multiple regions with the same name.";
     static val String DUPLICATE_ROOTSTATE = "There are multiple root states with the same name.";
     
+    static val String SIGNAL_EMISSION_IN_TRIGGER = "Valued emission cannot be used in triggers. Use val() to check the value of a valued signal.";
     static val String NON_SIGNAL_EMISSION = "Non-signals should not be used in an emission.";
+    static val String NO_VALUED_INPUT_SIGNAL_EMISSION = "Valued input signals currently do not support emission (overwriting).";
     static val String NON_VARIABLE_ASSIGNMENT = "Non-variables cannot be used in an assignment.";
     static val String STATIC_VARIABLE_WITHOUT_INITIALIZATION = "Static variables should be initialized.";
-    //TODO (KISEMA-1071) Remove this message when there is a transformation that handles valued signals without combine operator.
-    static val String VALUED_SIGNAL_NEED_COMBINE = "Valued signals must have a combine function.";
     static val String MINMAX_COMBINE = "Min or max combine operators are currently not supported.";
-    static val String NOCOMBINE = "A valued signal should have a combine function, otherwise any emits cannot be scheduled.";
     
     static val String STRONG_ABORT_WITH_LOW_PRIORITY = "Causality problem!\nStrong abort transitions must have a higher priority than weak abort or termination transitions.";
     static val String ABORT_WITHOUT_TRIGGER = "Abort transitions should have a trigger.";
@@ -426,6 +427,43 @@ class SCTXValidator extends AbstractSCTXValidator {
     }
     
     /**
+     * Discourage emissions of valued input signals
+     */
+    @Check
+    def void checkValuedInputSignalEmissions(Emission emission) {
+        if (emission.valuedObject !== null && emission.valuedObject.variableDeclaration !== null) {
+            val decl = emission.valuedObject.variableDeclaration
+            if (decl.signal && decl.input && decl.type !== ValueType.PURE) {
+                warning(NO_VALUED_INPUT_SIGNAL_EMISSION, null, -1);
+            }
+        }
+    }
+    
+    /**
+     * ReferenceCalls in triggers allow some kind of emission in trigger that must be discouraged. 
+     */
+    @Check
+    def void checkNoBooleanEmissions(ReferenceCall call) {
+        if (call.valuedObject !== null && call.valuedObject.isSignal) {
+            var EObject obj = call
+            var container = call.eContainer
+            while (container !== null && !(container instanceof Transition)) {
+                if (container instanceof Scope) {
+                    container = null
+                } else {
+                    obj = container
+                    container = obj.eContainer
+                }
+            }
+            if (container instanceof Transition) {
+                if (container.trigger === obj) {
+                    error(SIGNAL_EMISSION_IN_TRIGGER, call, null, -1);
+                }
+            }         
+        }
+    }
+    
+    /**
      * Region names must be unique
      *
      * @param state the State
@@ -577,23 +615,6 @@ class SCTXValidator extends AbstractSCTXValidator {
             }
         }
     }
-
-    /**
-     * Check if valued signal has a combine functions
-     *
-     * @param valuedObject the valuedObject
-     */
-    @Check
-    public def void checkCombineFunction(ValuedObject valuedObject) {
-        // Check if actually a valued signal
-        if(valuedObject.isSignal && !valuedObject.isPureSignal) {
-            // Check if there is a combine operator
-            if(valuedObject.combineOperator === null) {
-                warning(NOCOMBINE, valuedObject, null)
-            }
-        }
-    } 
-
 
     /**
      * Check if max or min is used which is currently not supported
@@ -748,23 +769,6 @@ class SCTXValidator extends AbstractSCTXValidator {
     } 
     
     /**
-     * Checks if the given valued signal has a combination function.
-     * This check can be removed if there is a transformation
-     * that handles valued signals without combination dfunction (see KISEMA-1071).   
-     */
-    // TODO: (KISEMA-1071) Remove this check when there is a transformation that handles valued signals without combination function.
-    @Check
-    public def void checkValuedSignalHasCombinationFunction(ValuedObject valuedObject) {
-        // Check if actually a valued signal
-        if(valuedObject.isSignal && !valuedObject.isPureSignal) {
-            // Check if there is a combine operator
-            if(valuedObject.combineOperator === null || valuedObject.combineOperator.equals(CombineOperator.NONE)) {
-                warning(VALUED_SIGNAL_NEED_COMBINE, valuedObject, null)
-            }
-        }
-    } 
-    
-    /**
      * Checks that static variables are initialized.
      * If it is not initialized the static modifier is useless from a modeling perspective.   
      */
@@ -817,11 +821,11 @@ class SCTXValidator extends AbstractSCTXValidator {
     def void checkScopeCall(ScopeCall scopeCall) {
         if (scopeCall.eContainer instanceof Scope) {
             val bindings = scopeCall.eContainer.asScope.createBindings
-            var errorMessage = ""
+            var errorMessages = newArrayList
             var implicitMessage = ""
             for (binding : bindings) {
                 if (binding.errors > 0) {
-                    errorMessage = binding.errorMessages.join("\n")
+                    errorMessages += binding.errorMessages
                 }
                 if (binding.type == BindingType.IMPLICIT) {
                     implicitMessage += binding.targetValuedObject.name + ", "
@@ -829,15 +833,15 @@ class SCTXValidator extends AbstractSCTXValidator {
                 }
             }
             
-            if (errorMessage != "") {
-                error("The referencing binding is erroneous!\n" + errorMessage,
+            if (!errorMessages.empty) {
+                error("The referencing binding is erroneous!\n" + errorMessages.join("\n"),
                     scopeCall, 
-                    SCChartsPackage.eINSTANCE.scopeCall_Scope, 
-                    "The referencing binding is erroneous!\n" + errorMessage);
+                    SCChartsPackage.eINSTANCE.scopeCall_Target, 
+                    "The referencing binding is erroneous!\n" + errorMessages.join("\n"));
             } else if (implicitMessage != "" && scopeCall.eContainer instanceof de.cau.cs.kieler.sccharts.State) {
                 warning("Valued Objects are bound implicitly!\n" + implicitMessage,
                     scopeCall, 
-                    SCChartsPackage.eINSTANCE.scopeCall_Scope, 
+                    SCChartsPackage.eINSTANCE.scopeCall_Target, 
                     "Valued Objects are bound implicitly!\n" + implicitMessage);
             }
         }
@@ -845,15 +849,35 @@ class SCTXValidator extends AbstractSCTXValidator {
     
     @Check
     def void checkReferencingStateFinalState(de.cau.cs.kieler.sccharts.State state) {
-        if (state.reference === null) return;
-        if (state.reference.scope === null) return;
+        if (!state.isReferencing) return;
         if (state.terminationTransitions.empty) return;
+        
+        val scope = state.reference.resolveReferencedScope
             
-        if (!state.reference.scope.asState.mayTerminate) {
+        if (scope !== null && !scope.asState.mayTerminate) {
             warning("The referenced SCChart does not terminate, but you are using a termination to proceed.",
                 state.reference,
-                SCChartsPackage.eINSTANCE.scopeCall_Scope);
+                SCChartsPackage.eINSTANCE.scopeCall_Target);
         }            
+    }
+    
+    
+    @Check
+    def void checkReferenceDeclarationGenerics(ReferenceDeclaration decl) {
+        val bindings = decl.valuedObjects?.head?.createGenericParameterBindings
+        var errorMessages = newArrayList
+        for (binding : bindings) {
+            if (binding.errors > 0) {
+                errorMessages += binding.errorMessages
+            }
+        }
+        
+        if (!errorMessages.empty) {
+            error("The referencing binding is erroneous!\n" + errorMessages.join("\n"),
+                decl, 
+                KExpressionsPackage.eINSTANCE.referenceDeclaration_Reference, 
+                "The referencing binding is erroneous!\n" + errorMessages.join("\n"));
+        }
     }
     
     @Check

@@ -16,6 +16,7 @@ import de.cau.cs.kieler.klighd.IAction
 import de.cau.cs.kieler.simulation.CoSimulationExeWrapper
 import de.cau.cs.kieler.simulation.SimulationContext
 import de.cau.cs.kieler.simulation.ui.SimulationUIPlugin
+import java.io.File
 import org.eclipse.core.resources.IFile
 import org.eclipse.core.resources.ResourcesPlugin
 import org.eclipse.core.runtime.IStatus
@@ -55,7 +56,7 @@ class AddCoSimulationAction implements IAction {
                 try {
                     val file = results.head
                     if (file instanceof IFile) {
-                        val sim = new CoSimulationExeWrapper(file)
+                        val sim = new CoSimulationExeWrapper(new File(file.locationURI))
                         simCtx.addModel(sim)
                     }
                 } catch (Exception e) {

@@ -44,6 +44,7 @@ import static org.eclipse.emf.common.util.URI.*
 import static extension com.google.common.collect.Sets.*
 import static extension de.cau.cs.kieler.core.uri.URIUtils.*
 import de.cau.cs.kieler.scl.validation.InternalSyntaxValidation
+import de.cau.cs.kieler.kexpressions.kext.converter.KExtGenericParamterConverter
 
 /**
  * A customized {@link LazyLinkingResource}. Modifies the parsed model and fixes some runtime bugs.
@@ -57,6 +58,7 @@ public class SCTXResource extends LazyLinkingResource {
 
     @Inject extension PragmaExtensions
     @Inject extension KEffectsEmissionReferenceCallConverter
+    @Inject extension KExtGenericParamterConverter
     @Inject extension InternalSyntaxValidation
     
     public static val FILE_EXTENSION = "sctx"
@@ -136,8 +138,11 @@ public class SCTXResource extends LazyLinkingResource {
         
         // Fix Emission vs. ReferenceCallEffect uncertainty.
         parseResult.fixEmissionReferenceCallEffectDuality
-
-        super.updateInternalState(parseResult);
+        
+        // Fix Type vs. VOReference uncertainty in Generic Parameter.
+        parseResult.fixValuedObjectReferenceDetectionInGenericParamter
+        
+        super.updateInternalState(parseResult)
 
         // ssm + als magic to correct broken bidirectional references that were created by the xtext linking process.
         // Depending on the grammar and when using eOpposites, the opposite lists of the transitions sometimes include

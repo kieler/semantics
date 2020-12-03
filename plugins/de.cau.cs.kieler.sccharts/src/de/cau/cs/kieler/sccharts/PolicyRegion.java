@@ -13,6 +13,7 @@
  */
 package de.cau.cs.kieler.sccharts;
 
+
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Policy Region</b></em>'.

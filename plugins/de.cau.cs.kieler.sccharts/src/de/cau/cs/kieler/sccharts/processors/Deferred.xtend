@@ -14,34 +14,30 @@
 package de.cau.cs.kieler.sccharts.processors
 
 import com.google.inject.Inject
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsComplexCreateExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
+import de.cau.cs.kieler.sccharts.ControlflowRegion
+import de.cau.cs.kieler.sccharts.DeferredType
 import de.cau.cs.kieler.sccharts.DelayType
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
+import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
+import java.util.LinkedList
+import java.util.List
+import org.eclipse.emf.ecore.EObject
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
-import de.cau.cs.kieler.sccharts.Region
-import de.cau.cs.kieler.sccharts.ControlflowRegion
-import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
-import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
-import java.util.List
-import org.eclipse.emf.ecore.EObject
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsComplexCreateExtensions
-import java.util.LinkedList
-import de.cau.cs.kieler.kexpressions.ValuedObject
-import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
-import de.cau.cs.kieler.sccharts.DeferredType
 
 /**
  * @author kolja
@@ -74,9 +70,11 @@ class Deferred extends SCChartsProcessor implements Traceable {
     @Inject extension KExpressionsCreateExtensions
     @Inject extension KEffectsExtensions
     @Inject extension KExpressionsComplexCreateExtensions
+    @Inject extension AnnotationsExtensions
 
     // This prefix is used for naming of all generated signals, states and regions
-    static public final String GENERATED_PREFIX = "_deferred_"
+    public static val GENERATED_PREFIX = "_deferred_"
+    public static val DO_NOT_DEFER = "DoNotDefer"
 
     // ------------------------------------------------------------------------
     // --             D E F E R R E D    T R A N S I T I O N                 --
@@ -161,9 +159,7 @@ class Deferred extends SCChartsProcessor implements Traceable {
                 }
             }
             // remove all entry actions of the copy for deep deferred transitions
-            while (shallow.entryActions.size > 0) {
-                shallow.entryActions.get(0).remove
-            }
+            shallow.entryActions.filter[!hasAnnotation(DO_NOT_DEFER)].toList.forEach[remove]
             // each immediate during action in _S will be set to delayed
             for (during : shallow.duringActions) {
                 during.delay = DelayType.DELAYED
@@ -193,9 +189,7 @@ class Deferred extends SCChartsProcessor implements Traceable {
                 }
             }
             // remove all entry actions of the copy for deep deferred transitions
-            while (deep.entryActions.size > 0) {
-                deep.entryActions.get(0).remove
-            }
+            deep.entryActions.filter[!hasAnnotation(DO_NOT_DEFER)].toList.forEach[remove]
             // each immediate during action in _S will be set to delayed
             for (during : deep.duringActions) {
                 during.delay = DelayType.DELAYED
@@ -227,7 +221,7 @@ class Deferred extends SCChartsProcessor implements Traceable {
                 return true
             }
         }
-        if (s.entryActions.size > 0) {
+        if (!s.entryActions.filter[!hasAnnotation(DO_NOT_DEFER)].empty) {
             return true
         }
         for (a : s.duringActions) {
@@ -294,7 +288,7 @@ class Deferred extends SCChartsProcessor implements Traceable {
             }
         }
         if (hasDeepDeferred) {
-            if (s.entryActions.size > 0) {
+            if (!s.entryActions.filter[!hasAnnotation(DO_NOT_DEFER)].empty) {
                 return false
             }
             for (a : s.duringActions) {
@@ -360,7 +354,7 @@ class Deferred extends SCChartsProcessor implements Traceable {
             }
         }
         // add guard to all entry actions of the state
-        for( a : s.entryActions ){
+        for (a : s.entryActions.filter[!hasAnnotation(DO_NOT_DEFER)]){
             if (a.trigger === null) {
                 val deferTest = not(deferVariable.reference)
                 a.setTrigger(deferTest)

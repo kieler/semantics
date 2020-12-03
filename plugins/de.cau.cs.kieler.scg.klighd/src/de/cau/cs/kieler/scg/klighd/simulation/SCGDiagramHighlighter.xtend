@@ -12,50 +12,32 @@
  */
 package de.cau.cs.kieler.scg.klighd.simulation
 
+import com.google.inject.Inject
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.kicool.ide.klighd.models.ModelChain
 import de.cau.cs.kieler.klighd.krendering.Colors
 import de.cau.cs.kieler.klighd.krendering.KForeground
 import de.cau.cs.kieler.klighd.krendering.KRenderingFactory
-import java.util.List
-import de.cau.cs.kieler.simulation.ui.visualization.DiagramHighlighter
-import de.cau.cs.kieler.simulation.SimulationContext
-import de.cau.cs.kieler.kicool.ui.klighd.models.ModelChain
-import de.cau.cs.kieler.scg.Node
-import de.cau.cs.kieler.scg.SCGraphs
-import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.Assignment
-import de.cau.cs.kieler.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
-import com.google.inject.Inject
-import com.google.inject.Guice
 import de.cau.cs.kieler.scg.Conditional
+import de.cau.cs.kieler.scg.Node
+import de.cau.cs.kieler.scg.SCGraph
+import de.cau.cs.kieler.scg.SCGraphs
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
+import de.cau.cs.kieler.simulation.SimulationContext
+import de.cau.cs.kieler.simulation.ide.visualization.AbstractDiagramHighlighter
+import java.util.List
 
-class SCGDiagramHighlighter extends DiagramHighlighter {
+class SCGDiagramHighlighter extends AbstractDiagramHighlighter {
     
     @Inject extension KEffectsExtensions 
     @Inject extension SCGControlFlowExtensions  
-    
-    /**
-     * Single instance.
-     */
-    static var SCGDiagramHighlighter instance
     
     protected var List<Node> activeNodes = <Node> newArrayList
     
     static val KForeground TRAVERSED_ELEMENT_STYLE = createTraversedElementStyle
     static val KForeground CURRENT_ELEMENT_STYLE = createCurrentStateStyle
-
-
-    private new() {
-        Guice.createInjector().injectMembers(this)
-    }
-    
-    static def create() {
-        if(instance === null) {
-            instance = new SCGDiagramHighlighter
-        }
-        instance
-    }
     
     /**
      * {@inheritDoc}
@@ -65,7 +47,7 @@ class SCGDiagramHighlighter extends DiagramHighlighter {
     }
     
     def isSupported(SimulationContext ctx) {
-        val compileCtx = ctx.startEnvironment.getProperty(SimulationContext.SOURCE_COMPILATION_CONTEXT)
+        val compileCtx = ctx.sourceCompilationContext
         return compileCtx !== null 
     }
     
@@ -98,7 +80,7 @@ class SCGDiagramHighlighter extends DiagramHighlighter {
             }            
         } else if (currentDiagramModel instanceof ModelChain) {
             val scgs = currentDiagramModel.models.findFirst[ it instanceof SCGraphs ] as SCGraphs
-            if (!scgs.scgs.empty) {
+            if (scgs !== null && scgs.scgs !== null && !scgs.scgs.empty) {
                 scg = scgs.scgs.head
             }
         }

@@ -10,6 +10,10 @@ import de.cau.cs.kieler.kexpressions.OperatorType
 import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsTypeExtensions
 import de.cau.cs.kieler.kexpressions.AccessModifier
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.Declaration
+import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
+import de.cau.cs.kieler.kexpressions.KExpressionsPackage
 
 //import org.eclipse.xtext.validation.Check
 
@@ -53,6 +57,21 @@ class KExpressionsValidator extends AbstractKExpressionsValidator {
                 if (declaration.input || declaration.output) {
                     error("A private declaration cannot be a public input output interface", declaration, null, -1)
                 }
+            }
+        }
+    }
+    
+    
+    @Check
+    def void checkGenericParamterOnValuedObject(ValuedObject vo) {
+        if (!vo.genericParameters.nullOrEmpty) {
+            val decl = vo.eContainer
+            if (decl instanceof ReferenceDeclaration) {
+                if (!decl.genericParameters.nullOrEmpty) {
+                    error("Cannot mix generic parameters in variables and declaration", vo, KExpressionsPackage.eINSTANCE.valuedObject_GenericParameters)
+                }
+            } else if (decl instanceof Declaration) {
+                error("Generic parameters are not allowed in this context", vo, KExpressionsPackage.eINSTANCE.valuedObject_GenericParameters)
             }
         }
     }

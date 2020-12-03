@@ -15,7 +15,6 @@ package de.cau.cs.kieler.sccharts.ui.synthesis
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kicool.ui.kitt.tracing.TracingVisualizationProperties
 import de.cau.cs.kieler.kicool.ui.synthesis.updates.MessageObjectReferencesManager
@@ -27,9 +26,9 @@ import de.cau.cs.kieler.klighd.krendering.KRendering
 import de.cau.cs.kieler.klighd.krendering.KText
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.sccharts.ControlflowRegion
-import de.cau.cs.kieler.sccharts.HistoryType
 import de.cau.cs.kieler.sccharts.PolicyRegion
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
@@ -38,6 +37,7 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
 import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.actions.MemorizingExpandCollapseAction
 import de.cau.cs.kieler.sccharts.ui.synthesis.labels.TransitionLabelSerializer
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.ColorStore
+import de.cau.cs.kieler.sccharts.ui.synthesis.styles.ColorStore.Color
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.ControlflowRegionStyles
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.StateStyles
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.TransitionStyles
@@ -45,14 +45,15 @@ import org.eclipse.elk.alg.layered.options.CenterEdgeLabelPlacementStrategy
 import org.eclipse.elk.alg.layered.options.FixedAlignment
 import org.eclipse.elk.alg.layered.options.LayerConstraint
 import org.eclipse.elk.alg.layered.options.LayeredOptions
+import org.eclipse.elk.alg.layered.options.OrderingStrategy
 import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.core.options.EdgeRouting
 
 import static de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions.*
 
+import static extension de.cau.cs.kieler.annotations.ide.klighd.CommonSynthesisUtil.*
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
-import de.cau.cs.kieler.sccharts.ui.synthesis.styles.ColorStore.Color
 
 /**
  * Transforms {@link ControlflowRegion} into {@link KNode} diagram elements.
@@ -65,7 +66,7 @@ import de.cau.cs.kieler.sccharts.ui.synthesis.styles.ColorStore.Color
 @ViewSynthesisShared
 class PolicySynthesis extends SubSynthesis<PolicyRegion, KNode> {
 
-    @Inject extension KNodeExtensionsReplacement
+    @Inject extension KNodeExtensions
     @Inject extension KRenderingExtensions
     @Inject extension AnnotationsExtensions
     @Inject extension SCChartsSerializeHRExtensions
@@ -81,7 +82,7 @@ class PolicySynthesis extends SubSynthesis<PolicyRegion, KNode> {
     @Inject extension TransitionStyles
     
     public static final SynthesisOption SHOW_POLICIES =
-            SynthesisOption.createCheckOption("Policies", true).setCategory(OO)
+            SynthesisOption.createCheckOption(PolicySynthesis, "Policies", true).setCategory(OO)
             
     override getDisplayedSynthesisOptions() {
         return newArrayList(SHOW_POLICIES)
@@ -94,11 +95,12 @@ class PolicySynthesis extends SubSynthesis<PolicyRegion, KNode> {
 
         // Set KIdentifier for use with incremental update
         if (!region.name.nullOrEmpty) {
-            node.data += KGraphFactory::eINSTANCE.createKIdentifier => [it.id = region.name]
+            node.KID = region.name
         }
         
         if (USE_KLAY.booleanValue) {
-            node.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.layered");
+            node.addLayoutParam(CoreOptions::ALGORITHM, LayeredOptions.ALGORITHM_ID);
+            node.setLayoutOption(LayeredOptions.CONSIDER_MODEL_ORDER, OrderingStrategy.PREFER_EDGES)
             node.setLayoutOption(LayeredOptions::NODE_PLACEMENT_BK_FIXED_ALIGNMENT, FixedAlignment::BALANCED);
             node.setLayoutOption(LayeredOptions::EDGE_LABELS_CENTER_LABEL_PLACEMENT_STRATEGY,
                 CenterEdgeLabelPlacementStrategy::TAIL_LAYER);
@@ -245,7 +247,7 @@ class PolicySynthesis extends SubSynthesis<PolicyRegion, KNode> {
                 val target = transition.targetState;
                 if (!target.name.nullOrEmpty) {
                     val counter = groupedTransitions.get(target).indexOf(transition)
-                    edge.head.data += KGraphFactory::eINSTANCE.createKIdentifier => [it.id = target.name + counter]
+                    edge.head.KID = target.name + counter
                 }
             ];
         }

@@ -33,10 +33,10 @@ class CompileTracingToggle extends AbstractAction {
     
     new(CompilerView view) {
         super(view, 
-            "Tracing", 
+            "Model Element Tracing", 
             IAction.AS_CHECK_BOX, 
             "CompileTracingToggle", 
-            "Tracing", 
+            "Model Element Tracing", 
             "Activates tracing for all compilation systems.", 
             null)
         action.setChecked(COMPILE_TRACING_TOGGLE_ACTION_DEFAULT)

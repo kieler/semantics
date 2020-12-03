@@ -15,32 +15,29 @@ package de.cau.cs.kieler.sccharts.processors
 
 import com.google.common.collect.ImmutableList
 import com.google.inject.Inject
-import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.HistoryType
-import de.cau.cs.kieler.sccharts.State
-import java.util.ArrayList
-import java.util.List
-
-import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.sccharts.SCCharts
-import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
+import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
-import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
-import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
+import java.util.HashMap
+
+import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 
 /**
  * SCCharts History Transformation.
  * 
- * @author cmot
- * @kieler.design 2013-09-05 proposed 
- * @kieler.rating 2013-09-05 proposed yellow
+ * @author cmot/wechselberg
  */
 class History extends SCChartsProcessor implements Traceable {
 
@@ -50,7 +47,7 @@ class History extends SCChartsProcessor implements Traceable {
     override getId() {
         "de.cau.cs.kieler.sccharts.processors.history"
     }
-    
+
     override getName() {
         "History"
     }
@@ -58,7 +55,6 @@ class History extends SCChartsProcessor implements Traceable {
     override process() {
         setModel(model.transform)
     }
-
 
     //-------------------------------------------------------------------------
     @Inject extension KExpressionsCreateExtensions
@@ -77,85 +73,110 @@ class History extends SCChartsProcessor implements Traceable {
     //-------------------------------------------------------------------------
     //--                        H I S T O R Y                                --
     //-------------------------------------------------------------------------
-    // @requires: suspend
-    // Transforming History. This is using the concept of suspend so it must
-    // be followed by resolving suspension
-    def State transform(State rootState) {
-        // Traverse all states
-        rootState.getAllStates.toList.forEach [ targetState |
-            targetState.transformHistory(rootState)
-        ]
-        rootState
-    }
-
-    // Traverse all states and transform macro states that have connecting
-    // (incoming) history transitions.    
-    def void transformHistory(State state, State targetRootState) {
-        state.setDefaultTrace        
-        
-        val historyTransitions = ImmutableList::copyOf(state.incomingTransitions.filter[isHistory])
-        val nonHistoryTransitions = ImmutableList::copyOf(state.incomingTransitions.filter[!isHistory])
-        historyTransitions.setDefaultTrace
-
-        if (historyTransitions !== null && historyTransitions.size > 0 && state.regions !== null && state.regions.size > 0) {
-            var int initialValue
-            val List<ValuedObject> stateEnumsAll = new ArrayList
-            val List<ValuedObject> stateEnumsDeep = new ArrayList
-
-            val regions = state.regions.filter(ControlflowRegion).toList
-            var regionsDeep = state.regions.filter(ControlflowRegion).toList 
-            if (historyTransitions.findFirst[isDeepHistory] !== null) { // if state has any deep history transition
-                regionsDeep = state.allContainedControlflowRegions.toList
-            }
-
-            for (region : regionsDeep.toList) {
-                var counter = 0
-
-                // FIXME: stateEnum should be static
-                val stateEnum = state.parentRegion.parentState.createValuedObject(GENERATED_PREFIX + state.name, createIntDeclaration).uniqueName
-                stateEnumsAll.add(stateEnum)
-                if (!regions.contains(region)) {
-                    stateEnumsDeep.add(stateEnum)
-                }
-                val originalInitialState = region.initialState
-                originalInitialState.setNotInitial
-                val subStates = region.states.immutableCopy
-                val initialState = region.createInitialState(GENERATED_PREFIX + "Init").uniqueName
-
-                for (subState : subStates) {
-                    val transition = initialState.createImmediateTransitionTo(subState)
-                    transition.setTrigger(stateEnum.reference.createEQExpression(counter.createIntValue))
-                    subState.createEntryAction.addEffect(stateEnum.createAssignment(counter.createIntValue))
-                    if (subState == originalInitialState) {
-                        initialValue = counter
-                        stateEnum.setInitialValue(counter.createIntValue)
-                    }
-                    counter = counter + 1
-                }
-            }
-
-            for (transition : historyTransitions) {
-                if (!transition.deepHistory) {
-
-                    // Reset deepStateEnums
-                    for (stateEnum : stateEnumsDeep) {
-                        transition.addEffect(stateEnum.createAssignment(initialValue.createIntValue)).trace(transition)
-                    }
-                }
-                transition.setHistory(HistoryType::RESET)
-            }
-
-            for (transition : nonHistoryTransitions) {
-                for (stateEnum : stateEnumsAll) {
-                    transition.addEffect(stateEnum.createAssignment(initialValue.createIntValue))
-                }
-            }
-
-        }
-    }
 
     def SCCharts transform(SCCharts sccharts) {
         sccharts => [ rootStates.forEach[ transform ] ]
     }
 
+    def State transform(State rootState) {
+        // Traverse all regions and all states
+        rootState.regions.filter(ControlflowRegion).forEach[ region |
+            region.states.forEach [ state |
+                state.transformHistory(rootState)
+            ]
+        ]
+
+        rootState
+    }
+
+    def Iterable<ValuedObject> transformHistory(State state, State targetRootState) {
+        state.setDefaultTrace
+
+        // Grab all history transitions (deep and shallow)
+        val historyTransitions = ImmutableList::copyOf(state.incomingTransitions.filter[isHistory])
+        historyTransitions.setDefaultTrace
+        // Grab all non-history transitions
+        val nonHistoryTransitions = ImmutableList::copyOf(state.incomingTransitions.filter[!isHistory])
+
+        // Check if we have any work at all to do
+        if (!historyTransitions.isEmpty) {
+
+            // Gather all regions in this state, if any (none for simple state)
+            val stateRegions = ImmutableList::copyOf(state.regions.filter(ControlflowRegion))
+            // Create a management VO for each region contained in this state
+            val HashMap<ControlflowRegion, ValuedObject> stateEnums = new HashMap
+            stateRegions.forEach[
+                val stateEnum = rootState.createValuedObject(GENERATED_PREFIX + state.name, createIntDeclaration).uniqueName
+                stateEnums.put(it, stateEnum)
+                stateEnum.initialValue = 0.createIntValue
+            ]
+
+            // Reset the history enum on all non-history incoming transitions
+            nonHistoryTransitions.forEach[ transition |
+                stateEnums.values.forEach[ stateEnum |
+                    transition.addEffect(stateEnum.createAssignment(0.createIntValue))
+                ]
+            ]
+
+            // Check if we have any deep history or if we can get away with just one layer of work
+            val boolean hasDeepHistory = historyTransitions.exists[isDeepHistory]
+
+            // Process internal behaviour of all regions
+            stateRegions.forEach[ region |
+                val stateEnum = stateEnums.get(region)
+                // Find the original initial state and mark not initial anymore
+                val originalInitialState =  region.initialState
+                originalInitialState.setNotInitial
+                // Gather all other states, with the initial one as the first entry
+                val originalStates = ImmutableList::copyOf(
+                    #[originalInitialState] + region.states.filter[!equals(originalInitialState)]
+                )
+                // Create new initial dispatcher state
+                val newInitialState = region.createInitialState(GENERATED_PREFIX + "Init").uniqueName
+
+                // Create dispatcher transitions to all original states
+                originalStates.forEach[ originalState, counter |
+                    createDispatchingTransition(newInitialState, originalState, stateEnum, counter, hasDeepHistory)
+                ]
+            ]
+
+            // Process child regions/states and gather the nested stateEnums that should be reset
+            // on this states incoming transitions
+            val nestedEnums = stateRegions.flatMap[ region |
+                region.states.flatMap[ subState |
+                    transformHistory(subState, targetRootState)
+                ]
+            ].toSet
+
+            // Reset nested enums on all non-histoy and shallow-histoy transitions
+            nestedEnums.forEach[ nestedEnum |
+                nonHistoryTransitions.forEach[ trans |
+                    trans.addEffect(nestedEnum.createAssignment(0.createIntValue))
+                ]
+                historyTransitions.filter[!isDeepHistory].forEach[ trans |
+                    trans.addEffect(nestedEnum.createAssignment(0.createIntValue))
+                ]
+            ]
+
+            // Remove history feature from all history transitions
+            historyTransitions.forEach[ transition |
+                transition.setHistory(HistoryType::RESET)
+            ]
+
+            return stateEnums.values + nestedEnums
+        }
+
+        return #[]
+    }
+
+    def void createDispatchingTransition(State newInitialState, State targetState, ValuedObject stateEnum,
+        int counter, boolean needsNestedHistory
+    ) {
+        val transition = newInitialState.createImmediateTransitionTo(targetState)
+        transition.setTrigger(stateEnum.reference.createEQExpression(counter.createIntValue))
+        targetState.createEntryAction.addEffect(stateEnum.createAssignment(counter.createIntValue))
+        if (needsNestedHistory) {
+            transition.setHistory(HistoryType::DEEP)
+        }
+    }
 }
