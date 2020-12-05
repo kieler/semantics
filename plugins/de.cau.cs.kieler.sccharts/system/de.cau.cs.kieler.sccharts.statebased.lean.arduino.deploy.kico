@@ -1,11 +1,11 @@
 developer system de.cau.cs.kieler.sccharts.statebased.lean.arduino.deploy
     label "State-based Lean Deployment (Arduino)"
     start config {
-        "de.cau.cs.kieler.kicool.deploy.compiler.arduino.port": "COM5"
+        "de.cau.cs.kieler.kicool.deploy.compiler.arduino.port": "COM4"
     }
 
-system de.cau.cs.kieler.sccharts.statebased.lean
-pre process de.cau.cs.kieler.kicool.deploy.model.includes
+system de.cau.cs.kieler.sccharts.netlist 
+//pre process de.cau.cs.kieler.kicool.deploy.model.includes
 de.cau.cs.kieler.kicool.deploy.setup config {
     "de.cau.cs.kieler.kicool.deploy.setup.clear": ["lib"],
     "de.cau.cs.kieler.kicool.deploy.setup.copy": {
@@ -25,8 +25,8 @@ de.cau.cs.kieler.kicool.deploy.templates config {
     ],
     "de.cau.cs.kieler.kicool.deploy.templates": {
         "templates/arduino-main.ftl": "kieler-gen.ino"
-    },
-    "de.cau.cs.kieler.c.struct.access": ".iface."
+    }
+//    "de.cau.cs.kieler.c.struct.access": "->"
 }
 de.cau.cs.kieler.kicool.deploy.compiler.arduino config {
     "de.cau.cs.kieler.kicool.deploy.compiler.sources": ["kieler-gen.ino"],
@@ -35,4 +35,5 @@ de.cau.cs.kieler.kicool.deploy.compiler.arduino config {
     "de.cau.cs.kieler.kicool.deploy.compiler.arduino.upload": true,
     "de.cau.cs.kieler.kicool.deploy.compiler.arduino.verify": false    
 }
+
 
