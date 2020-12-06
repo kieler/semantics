@@ -35,13 +35,14 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
 import java.util.List
 import java.util.Map
+import de.cau.cs.kieler.kicool.compilation.CodeContainer
 
 /**
  * @author ssm
  * @kieler.design 2018-10-12 proposed
  * @kieler.rating 2018-10-12 proposed yellow 
  */
-class CSVToSCTX extends ExogenousProcessor<String, SCCharts> {
+class CSVToSCTX extends ExogenousProcessor<CodeContainer, SCCharts> {
     
     @Inject extension AnnotationsExtensions
     @Inject extension KExpressionsDeclarationExtensions
@@ -89,7 +90,7 @@ class CSVToSCTX extends ExogenousProcessor<String, SCCharts> {
     }
     
     override process() {
-        val sourceString = getModel
+        val sourceString = getModel.files.head.code
         
         val csvTable = new CSVTable(sourceString, environment.getProperty(CSV2SCC_SEPARATOR).charAt(0), 
             environment.getProperty(CSV2SCC_COLS)
