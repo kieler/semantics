@@ -154,6 +154,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     @Inject extension SCGDependencyExtensions
     @Inject extension SCGMethodExtensions
     @Inject extension ColorStore
+    @Inject extension CommonSynthesisUtil
 
     extension KRenderingFactory = KRenderingFactory.eINSTANCE
     
@@ -1626,6 +1627,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 	 */
     private def KEdge synthesizeTickEdge(Depth depth) {
         return depth.createNewEdge().associateWith(depth) => [ edge |
+            edge.setKID("tickedge" + depth.toString)
             edge.source = depth.surface?.node;
             edge.target = depth.node;
             edge.sourcePort = depth.surface?.node.getPort(SCGPORTID_OUTGOING)
@@ -1677,6 +1679,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         if(controlFlow.target === null || controlFlow.eContainer === null) return null;
 
         return controlFlow.createNewEdge().associateWith(controlFlow) => [ edge |
+            edge.setKID(controlFlow.toString)
             // Get and set source and target information.
             val sourceObj = controlFlow.eContainer
             val targetObj = controlFlow.target
@@ -1843,6 +1846,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 
         // Draw the dashed dependency edge....
         dependency.createNewEdge().associateWith(dependency) => [ edge |
+            edge.setKID(dependency.toString)
             if (USE_ADAPTIVEZOOM.booleanValue) edge.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.40);
             edge.source = sourceNode
             edge.target = targetNode
