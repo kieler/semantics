@@ -35,6 +35,7 @@ import org.eclipse.elk.alg.layered.options.LayeringStrategy
 import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.core.options.Direction
 import org.eclipse.elk.core.options.EdgeRouting
+import org.eclipse.elk.alg.layered.options.LayerConstraint
 
 /**
  * @author ssm
@@ -53,6 +54,7 @@ class ADDControlFlowGraphSynthesis extends AbstractDiagramSynthesis<ControlFlowG
     @Inject extension KPolylineExtensions
     @Inject extension KColorExtensions
     @Inject extension SCGSerializeHRExtensions
+    @Inject extension CommonSynthesisUtil
     
     var int nodeNum = 0;
     
@@ -80,12 +82,17 @@ class ADDControlFlowGraphSynthesis extends AbstractDiagramSynthesis<ControlFlowG
             val knode = v.createNode() => [
                 rootKNode.children.add(it)
             ]
+            knode.setKID(v.toString)
             
             val nodeLabel = 
                 if (v == cfg.startVertex) "st" else 
                 if (v == cfg.endVertex) "te" else
                 "" + nodeNum  
-            nodeNum = nodeNum + 1            
+            nodeNum = nodeNum + 1        
+            
+            if (v == cfg.startVertex) {
+                knode.addLayoutParam(LayeredOptions::LAYERING_LAYER_CONSTRAINT, LayerConstraint::FIRST)
+            }    
             
             val figure = knode.addRoundedRectangle(20f, 20f, 1f) => [
                 associateWith(node)
@@ -93,6 +100,8 @@ class ADDControlFlowGraphSynthesis extends AbstractDiagramSynthesis<ControlFlowG
                 it.addText(nodeLabel).associateWith(node).setSurroundingSpace(4, 0.1f, 2, 0) 
                 
                 if (cutPoints.contains(v)) background = "#88d".color
+                
+                
             ]                
         }
         
@@ -100,6 +109,7 @@ class ADDControlFlowGraphSynthesis extends AbstractDiagramSynthesis<ControlFlowG
             val outgoingEdges = v.getOutgoingEdges();
             for (e : outgoingEdges) {
                 val edge = createEdge()
+                edge.setKID(v.toString + e.toString)
                 edge.source = v.getNode
                 edge.target = e.targetVertex.getNode
                 edge.addSpline => [

@@ -80,6 +80,7 @@ class ADDSymbolicExecuterSynthesis extends AbstractDiagramSynthesis<SymbolicExec
     @Inject extension KPolylineExtensions
     @Inject extension KColorExtensions
     @Inject extension SCGSerializeHRExtensions
+    @Inject extension CommonSynthesisUtil
     
     static val SynthesisOption CONNECT_ADDS = SynthesisOption::createCheckOption("Connect ADDs", true);
     
@@ -116,6 +117,7 @@ class ADDSymbolicExecuterSynthesis extends AbstractDiagramSynthesis<SymbolicExec
             
             val knode = cp.createNode() => [
                 rootKNode.children.add(it)
+                setKID(cp.toString)
             ]
             
             val nodeLabel = cp
@@ -130,6 +132,7 @@ class ADDSymbolicExecuterSynthesis extends AbstractDiagramSynthesis<SymbolicExec
         
         val teNode = "te".createNode() => [
             rootKNode.children.add(it)
+            setKID("te")
         ]
         val figure = teNode.addRoundedRectangle(20f, 20f, 1f) => [
             associateWith(node)
@@ -145,6 +148,7 @@ class ADDSymbolicExecuterSynthesis extends AbstractDiagramSynthesis<SymbolicExec
                     i.assignments.join(", \n    ") + " }"
                     
                 val edge = createEdge()
+                edge.setKID(cp.toString + i.targetCutpoint.toString)
                 edge.source = cp.getNode
                 edge.target = i.targetCutpoint.getNode
                 edge.addSpline => [
@@ -163,6 +167,7 @@ class ADDSymbolicExecuterSynthesis extends AbstractDiagramSynthesis<SymbolicExec
         for (node : xddMap.keySet) {
             
             val n = node.createNode
+            n.setKID(node.toString)
             val figure = n.addRectangle() => [
                 associateWith(n)
                 n.setMinimalNodeSize(20f, 20f)
@@ -175,6 +180,7 @@ class ADDSymbolicExecuterSynthesis extends AbstractDiagramSynthesis<SymbolicExec
         
         if (CONNECT_ADDS.booleanValue) {
             val n = "te".createNode
+            n.setKID("te")
             val figure = n.addRectangle() => [
                 associateWith(n)
                 n.setMinimalNodeSize(20f, 20f)
@@ -195,6 +201,7 @@ class ADDSymbolicExecuterSynthesis extends AbstractDiagramSynthesis<SymbolicExec
     
     def transformXDD(XDD xdd, KNode kNode) {
         val node = xdd.createNode
+        node.setKID(xdd.toString)
         if (xdd.isConstant) {
             val v = xdd.v as ParallelAssignment
             val label = v.assignments.join(", \n")
@@ -211,6 +218,7 @@ class ADDSymbolicExecuterSynthesis extends AbstractDiagramSynthesis<SymbolicExec
                 } else {
                     val pair = new Pair<String, Integer>(v.targetVertex, dupXDDNum)
                     val n = pair.createNode
+                    n.setKID(pair.toString)
                     dupXDDNum = dupXDDNum + 1
                     val f = n.addRectangle() => [
                         associateWith(n)
@@ -244,6 +252,7 @@ class ADDSymbolicExecuterSynthesis extends AbstractDiagramSynthesis<SymbolicExec
     
     def createXDDEdge(Object source, Object target, XDDEdge edgeType) {
         val edge = createEdge()
+        edge.setKID(source.toString + target.toString)
         edge.source = source.getNode
         edge.target = target.getNode
         edge.addSpline => [
@@ -270,6 +279,7 @@ class ADDSymbolicExecuterSynthesis extends AbstractDiagramSynthesis<SymbolicExec
                 }
 
             val node = exp.createNode
+            node.setKID(exp.toString)
             
             val isOperator = exp instanceof BinaryConditionCompareNode ||
                              exp instanceof BinaryConditionNode ||
@@ -308,6 +318,7 @@ class ADDSymbolicExecuterSynthesis extends AbstractDiagramSynthesis<SymbolicExec
     
     def createEDEdge(ExpressionNode source, ExpressionNode target) {
         val edge = createEdge()
+        edge.setKID(source.toString + target.toString)
         edge.source = source.getNode
         edge.target = target.getNode
         edge.addSpline => [

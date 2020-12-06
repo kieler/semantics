@@ -24,7 +24,7 @@ class CommonSynthesisUtil {
     /**
      * Sets KGE ID.
      */
-    def static setKID(KGraphElement kge, String id) {
+    def setKID(KGraphElement kge, String id) {
         if (kge !== null) {
             kge.data.removeIf[it instanceof KIdentifier] // prevents confusion if multiple ids existed
             val kident = KGraphFactory.eINSTANCE.createKIdentifier()
