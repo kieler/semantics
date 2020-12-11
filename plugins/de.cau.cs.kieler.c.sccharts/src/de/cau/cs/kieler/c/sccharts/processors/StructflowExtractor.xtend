@@ -102,7 +102,7 @@ class StructflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCChar
     var functionOutputElements = <String, HashSet<String>> newHashMap
     /** Flag for each function name if it has already been built. */
     val functionBuild = <String, Boolean> newHashMap
-    val VOs = <State, HashMap<String, ArrayList<ValuedObject>>> newHashMap
+    val valuedObjects = <State, HashMap<String, ArrayList<ValuedObject>>> newHashMap
     
     var ifCounter = 0;
     var swCounter = 0;
@@ -218,7 +218,7 @@ class StructflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCChar
                             
                         varList.add(resVO)
                         stateVariables.put(outputName, varList)
-                        VOs.put(funcState, stateVariables)
+                        valuedObjects.put(funcState, stateVariables)
                          
                     }
                     
@@ -299,7 +299,7 @@ class StructflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCChar
                                 
                                 // Connect the inputs    
                                 for (funcCallInput : funcCallInputs) {
-                                    val funcCallInputVO = VOs.get(funcCallState).get(funcCallInput).get(0)
+                                    val funcCallInputVO = valuedObjects.get(funcCallState).get(funcCallInput).get(0)
                                     val inputVO = funcState.findValuedObjectByName(funcCallInput, false, dRegion)
                                         
                                     dRegion.equations += createAssignment(funcCallVO, funcCallInputVO, inputVO.reference)
@@ -307,7 +307,7 @@ class StructflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCChar
                                 
                                 // Connect the outputs    
                                 for (funcCallOutput : funcCallOutputs) {
-                                    val funcCallOutputVOList = VOs.get(funcCallState).get(funcCallOutput)
+                                    val funcCallOutputVOList = valuedObjects.get(funcCallState).get(funcCallOutput)
                                     val funcCallOutputVO = findOutputVar(funcCallOutputVOList)
                                     if (funcCallOutputVO !== null) {
                                         val outputVO = funcState.findValuedObjectByName(funcCallOutput, true, dRegion)
@@ -621,11 +621,11 @@ class StructflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCChar
         
         // Retrieve the state's variable map
         var HashMap<String, ArrayList<ValuedObject>> stateVariables = null
-        if(VOs.containsKey(state)) {
-            stateVariables = VOs.get(state)    
+        if(valuedObjects.containsKey(state)) {
+            stateVariables = valuedObjects.get(state)    
         } else {
             stateVariables = <String, ArrayList<ValuedObject>> newHashMap
-            VOs.put(state, stateVariables)
+            valuedObjects.put(state, stateVariables)
         }
         
         // Create a valued object for each declared variable 
@@ -681,7 +681,7 @@ class StructflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCChar
                 // Connect the function argument expressions        
                 var i = 0
                 for (argument : funcInit.getArguments) {
-                    val funcObjArg = funcState.declarations.filter(VariableDeclaration).map[valuedObjects].flatten.get(i)
+                    val funcObjArg = funcState.declarations.filter(VariableDeclaration).map[it.valuedObjects].flatten.get(i)
                     val connectExpr = argument.createKExpression(state, dRegion)
                     var ass = createAssignment(refObj, funcObjArg, connectExpr)
                     dRegion.equations += ass
@@ -712,7 +712,7 @@ class StructflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCChar
         
         // Create the state variable map
         val stateVariables = <String, ArrayList<ValuedObject>> newHashMap
-        VOs.put(csState, stateVariables)
+        valuedObjects.put(csState, stateVariables)
         
         for (input : inputs) {
             // Create the input
@@ -789,7 +789,7 @@ class StructflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCChar
                 
                 // Connect the argument expressions           
                 for (funcCallInput : funcCallInputs) {
-                    val funcCallInputVO = VOs.get(funcCallState).get(funcCallInput).get(0)
+                    val funcCallInputVO = valuedObjects.get(funcCallState).get(funcCallInput).get(0)
                     val inputVO = funcState.findValuedObjectByName(funcCallInput, false, dRegion)
                     dRegion.equations += createAssignment(funcCallVO, funcCallInputVO, inputVO.reference)
                 }
@@ -797,7 +797,7 @@ class StructflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCChar
                 // Connect the function outputs   
                 if (funcCallOutputs !== null) {         
                     for (funcCallOutput : funcCallOutputs) {
-                        val funcCallOutputVOList = VOs.get(funcCallState).get(funcCallOutput)
+                        val funcCallOutputVOList = valuedObjects.get(funcCallState).get(funcCallOutput)
                         val funcCallOutputVO = findOutputVar(funcCallOutputVOList)
                         if (funcCallOutputVO !== null) {
                             val outputVO = funcState.findValuedObjectByName(funcCallOutput, true, dRegion)
@@ -952,10 +952,10 @@ class StructflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCChar
             val funcState = functionStates.get(func)
             // Set up the state valued object map
             var stateVars = <String, ArrayList<ValuedObject>> newHashMap
-            if (VOs.containsKey(funcState)) {
-                stateVars = VOs.get(funcState)
+            if (valuedObjects.containsKey(funcState)) {
+                stateVars = valuedObjects.get(funcState)
             } else {
-                VOs.put(funcState, stateVars)    
+                valuedObjects.put(funcState, stateVars)    
             }
             
             // Create an input declaration    
@@ -983,11 +983,11 @@ class StructflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCChar
         
         // Retrieve the state's valued object map
         var HashMap<String, ArrayList<ValuedObject>> stateVariables = null
-        if(VOs.containsKey(newState)) {
-            stateVariables = VOs.get(newState)
+        if(valuedObjects.containsKey(newState)) {
+            stateVariables = valuedObjects.get(newState)
         } else {
             stateVariables = <String, ArrayList<ValuedObject>> newHashMap
-            VOs.put(newState, stateVariables)
+            valuedObjects.put(newState, stateVariables)
         }
         
         for (input : inputs) {
@@ -1122,10 +1122,10 @@ class StructflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCChar
             val funcState = functionStates.get(func)
             // Retrieve the state's valued object map
             var stateVars = <String, ArrayList<ValuedObject>> newHashMap
-            if (VOs.containsKey(funcState)) {
-                stateVars = VOs.get(funcState)
+            if (valuedObjects.containsKey(funcState)) {
+                stateVars = valuedObjects.get(funcState)
             } else {
-                VOs.put(funcState, stateVars)
+                valuedObjects.put(funcState, stateVars)
             }
             
             // Create an output declaration    
@@ -1152,7 +1152,7 @@ class StructflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCChar
     def ValuedObject findValuedObjectByName(State state, String name, boolean writing, Region dRegion) {
         var ValuedObject res
         // Retrieve the last VO from the ssa lsit
-        val varList = VOs.get(state).get(name)
+        val varList = valuedObjects.get(state).get(name)
         res = varList.get(varList.length - 1)
         var varName = res.getName()
         var onlyOut = false
@@ -1220,7 +1220,7 @@ class StructflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCChar
     
     // Link the last written valued obejct for a variable to its output object
     def linkOutputs(State state, DataflowRegion dRegion) {
-        var stateVariables = VOs.get(state)
+        var stateVariables = valuedObjects.get(state)
         for (varList : stateVariables.values) {
             // Retrieve the output object
             val outVO = findOutputVar(varList)
@@ -1260,7 +1260,7 @@ class StructflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCChar
     def ValuedObject findOutputVar(State state, String varName) {
         var ValuedObject res = null
         
-        var varList = VOs.get(state).get(varName)
+        var varList = valuedObjects.get(state).get(varName)
         res = varList.findOutputVar
         
         res

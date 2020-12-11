@@ -45,10 +45,12 @@ class ExpressionConverterExtensions {
     @Inject extension ValueExtensions
     @Inject extension HighlightingExtensions
     
-    // Create a list of assignments for the given binary expression
-    def ArrayList<Assignment> createKEffect(IASTBinaryExpression binExpr, State funcState, DataflowRegion dRegion) {
+    /**
+     * Create a list of assignments for the given binary expression.
+     */
+    def ArrayList<Assignment> createAssignments(IASTBinaryExpression binExpr, State funcState, DataflowRegion dRegion) {
         val operator = binExpr.getOperator
-        var res = new ArrayList<Assignment>
+        var assignments = new ArrayList<Assignment>
         var Assignment ass = null
         // Only if the binary expression is an assignment some work is needed
         if(operator == IASTBinaryExpression.op_assign) {
@@ -89,7 +91,7 @@ class ExpressionConverterExtensions {
                     val funcObjArg = refStateConst.declarations.filter(VariableDeclaration).map[ valuedObjects ].flatten.get(i)
                     val connectObj = funcState.findValuedObjectByName(argument.children.head.toString, false, dRegion)
                     ass = createAssignment(funcObj, funcObjArg, connectObj.reference)
-                    res.add(ass)
+                    assignments.add(ass)
                     i++
                 }
             // Create a value expression for a literal    
@@ -103,17 +105,23 @@ class ExpressionConverterExtensions {
             val targetExpr = binExpr.getOperand1
             if (targetExpr instanceof IASTIdExpression) {
                 target = funcState.findValuedObjectByName(targetExpr.getName.toString, true, dRegion)    
-            } else println("ExpressionConverterExtensions: Assignment to a non simple variable detected!")
+            } else if (targetExpr instanceof IASTArraySubscriptExpression) {
+                target = funcState.findValuedObjectByName(targetExpr.arrayExpression.exprToString, true, dRegion)
+            } else {
+                println("ExpressionConverterExtensions: Unsupported assignment target detected!" + targetExpr.expressionType)
+            }
             
             target.insertHighlightAnnotations(binExpr)
             ass = createAssignment(target, source)
         }
-        res.add(ass)
-        res
+        assignments.add(ass)
+        return assignments
     }
     
-    // Create a lazy assignment like +=
-    def createLazyAssignment(IASTBinaryExpression expression, State funcState, DataflowRegion dRegion, int operator) {
+    /**
+     * Create a lazy assignment like += and add them to the given dataflow region.
+     */ 
+    def void createLazyAssignment(IASTBinaryExpression expression, State funcState, DataflowRegion dRegion, int operator) {
         // Create a normal assignment out of lazy assignment
         val assExpr = expression.copy(CopyStyle.withLocations)
         assExpr.setOperator = IASTBinaryExpression.op_assign
@@ -122,21 +130,23 @@ class ExpressionConverterExtensions {
         assExpr.setOperand2 = operatorExpr
         
         // Translate the normal assignment
-        val kEffects = createKEffect(assExpr, funcState, dRegion)
-        for (kEffect : kEffects) {
-            dRegion.equations += kEffect
+        val assignments = createAssignments(assExpr, funcState, dRegion)
+        for (assignment : assignments) {
+            dRegion.equations += assignment
         }
     }
     
-    // Create the assignment out of a BinaryExpression    
-    def createBinaryAssignment(IASTBinaryExpression expression, State funcState, DataflowRegion dRegion) {
+    /**
+     * Create the assignment out of a BinaryExpression and add them to the given dataflow region.
+     */   
+    def void createBinaryAssignment(IASTBinaryExpression expression, State funcState, DataflowRegion dRegion) {
         
         switch (expression.getOperator) {
             // Translate the normal assignment
             case IASTBinaryExpression.op_assign: {
-                val kEffects = createKEffect(expression, funcState, dRegion)
-                for (kEffect : kEffects) {
-                    dRegion.equations += kEffect
+                val assignments = createAssignments(expression, funcState, dRegion)
+                for (assignment : assignments) {
+                    dRegion.equations += assignment
                 }
             }
             // Translate lazy assignments
@@ -185,8 +195,10 @@ class ExpressionConverterExtensions {
         
     }
     
-    // Translate a unary assignment like ++
-    def createUnaryAssignment(IASTUnaryExpression expression, State funcState, DataflowRegion dRegion) {
+    /**
+     * Translate a unary assignment like ++ and add them to the dataflow region.
+     */
+    def void createUnaryAssignment(IASTUnaryExpression expression, State funcState, DataflowRegion dRegion) {
         // Create the expression
         val sourceExpression = createKExpression(expression, funcState, dRegion)
         // Retrieve the respective variable VO                
@@ -199,8 +211,10 @@ class ExpressionConverterExtensions {
         
     }
     
-    // Translate a func call expression
-    def createFuncCall(IASTFunctionCallExpression expression, State funcState, DataflowRegion dRegion, State refState, boolean knownFunction) {
+    /**
+     * Translate a func call expression and add it to the dataflow region.
+     */
+    def void createFuncCall(IASTFunctionCallExpression expression, State funcState, DataflowRegion dRegion, State refState, boolean knownFunction) {
         // Create the Reference
         val refDecl = createReferenceDeclaration
         refDecl.setReference(refState)
@@ -219,7 +233,9 @@ class ExpressionConverterExtensions {
         }
     }
     
-    // Translate a CDT expression into a KExpression 
+    /**
+     * Translate a CDT expression into a KExpression 
+     */
     def Expression createKExpression(IASTNode expr, State funcState, DataflowRegion dRegion) {
         var Expression kExpression
         
@@ -232,6 +248,10 @@ class ExpressionConverterExtensions {
             IASTFieldReference: {
                 var opValObj = funcState.findValuedObjectByName((expr as IASTFieldReference).getFieldName.toString, false, dRegion)
                 kExpression = opValObj.reference
+            }
+            // For an array, just use the array expression (and leave out the subscript for now).
+            IASTArraySubscriptExpression: {
+                kExpression = (expr as IASTArraySubscriptExpression).arrayExpression.createKExpression(funcState, dRegion) 
             }
             // For a function call create a reference an return the functions output VO reference
             IASTFunctionCallExpression: {
@@ -327,23 +347,27 @@ class ExpressionConverterExtensions {
         return kExpression
     }
     
-    // Translate a bianryExpression
-    def Expression createKExpression(IASTBinaryExpression binExpr, State funcState, DataflowRegion dRegion) {
+    /**
+     * Translate a bianryExpression
+     */
+    def OperatorExpression createKExpression(IASTBinaryExpression binExpr, State funcState, DataflowRegion dRegion) {
         // Create the operator expression with the corresponding operator
         var opType = binExpr.getOperator().CDTBinaryOpTypeConversion
-        var binKExpr = opType.createOperatorExpression
+        var expression = opType.createOperatorExpression
         // Translate the operands and attach them    
         for (operand : binExpr.children) {
                 
-            binKExpr.subExpressions += operand.createKExpression(funcState, dRegion)
+            expression.subExpressions += operand.createKExpression(funcState, dRegion)
                 
         }
-        binKExpr
+        return expression
     }
     
-    // Translate an UnaryExpression
+    /**
+     * Translate an UnaryExpression
+     */
     def Expression createKExpression(IASTUnaryExpression unExpr, State funcState, DataflowRegion dRegion) {
-        var Expression res
+        var Expression expression
         // Retrieve the operator and create the operatorExpression
         var opType = unExpr.getOperator.CDTUnaryOpTypeConversion
         var OperatorExpression unKExpr
@@ -354,35 +378,37 @@ class ExpressionConverterExtensions {
             // Attach the operand
             var operand = unExpr.getOperand
             unKExpr.subExpressions += operand.createKExpression(funcState, dRegion)
-            res = unKExpr
+            expression = unKExpr
         } else {
             // Translate the operand
             var operand = unExpr.getOperand
-            res = operand.createKExpression(funcState, dRegion)
+            expression = operand.createKExpression(funcState, dRegion)
         }
-        res
+        return expression
         
     }
     
-    // Build a string representation of the expression
+    /**
+     * Build a string representation of the expression
+     */
     def String exprToString(IASTNode expr) {
-        var res = ""
+        var expressionAsString = ""
         
         if (expr instanceof IASTFunctionCallExpression) {
             // Retrieve the function's name
             val funcName = (expr.getFunctionNameExpression as IASTIdExpression).getName.toString
-            res = funcName + "("
+            expressionAsString = funcName + "("
             
             // Translate the arguments
             val arguments = expr.getArguments
             for (var i = 0; i < arguments.length; i++) {
                 val argument = arguments.get(i)
                 
-                res += argument.exprToString
+                expressionAsString += argument.exprToString
                 
                 if (i < arguments.length - 1) {
-                    res += ", "
-                } else res += ")"
+                    expressionAsString += ", "
+                } else expressionAsString += ")"
             }
             
             
@@ -392,7 +418,7 @@ class ExpressionConverterExtensions {
             val operand1 = expr.getOperand1.exprToString
             val operand2 = expr.getOperand2.exprToString
             
-            res = "(" + operand1 + " " + operator + " " + operand2 + ")" 
+            expressionAsString = "(" + operand1 + " " + operator + " " + operand2 + ")" 
         } else if (expr instanceof IASTUnaryExpression) {
             // Translate the elements of a unary expression
             var postOperator = expr.getOperator.CDTUnaryOpTypeToString
@@ -405,13 +431,13 @@ class ExpressionConverterExtensions {
             
             val operand = expr.getOperand.exprToString
             
-            res = "(" + preOperator + operand + postOperator + ")"
+            expressionAsString = "(" + preOperator + operand + postOperator + ")"
         } else if (expr instanceof IASTFieldReference) {
             // Translate the use of a struct
             val structExpr = expr.getFieldOwner
             val structName = structExpr.exprToString
             val fieldName = expr.getFieldName
-            res = structName + "->" + fieldName
+            expressionAsString = structName + "->" + fieldName
             
         } else if (expr instanceof IASTArraySubscriptExpression) {
             // Translate the use on an array
@@ -420,20 +446,20 @@ class ExpressionConverterExtensions {
             val arrayArgExpr = expr.getArgument
             val arrayArgName = arrayArgExpr.exprToString
             
-            res = arrayName + "[" + arrayArgName + "]"
+            expressionAsString = arrayName + "[" + arrayArgName + "]"
             
         } else if (expr instanceof IASTIdExpression) {
             //Translate the use of a variable
-            res = expr.getName.toString            
+            expressionAsString = expr.getName.toString            
         } else if (expr instanceof IASTLiteralExpression) {
             // Translate the use of a literal
-            res = expr.toString
+            expressionAsString = expr.toString
         } else if (expr instanceof IASTExpressionStatement) {
             // Extract the expression out of the expression statement
-            res = expr.getExpression.exprToString
+            expressionAsString = expr.getExpression.exprToString
         }
         
-        res
+        return expressionAsString
     }    
     
 }
