@@ -1,34 +1,41 @@
 package de.cau.cs.kieler.c.sccharts.extensions
 
-import java.util.ArrayList
-import de.cau.cs.kieler.kexpressions.keffects.Assignment
-import de.cau.cs.kieler.sccharts.State
 import com.google.inject.Inject
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.c.sccharts.processors.DataflowExtractor
 import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.OperatorExpression
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
-import de.cau.cs.kieler.kexpressions.OperatorExpression
-import org.eclipse.cdt.core.dom.ast.IASTNode
 import de.cau.cs.kieler.sccharts.DataflowRegion
-import org.eclipse.cdt.core.dom.ast.IASTExpressionStatement
-import org.eclipse.cdt.core.dom.ast.IASTBinaryExpression
-import org.eclipse.cdt.core.dom.ast.IASTUnaryExpression
-import org.eclipse.cdt.core.dom.ast.IASTLiteralExpression
-import org.eclipse.cdt.core.dom.ast.IASTIdExpression
-import org.eclipse.cdt.core.dom.ast.IASTFunctionCallExpression
-import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.kexpressions.ValuedObject
-import org.eclipse.cdt.core.dom.ast.IASTArraySubscriptExpression
-import org.eclipse.cdt.core.dom.ast.IASTNode.CopyStyle
-import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
-import org.eclipse.cdt.core.dom.ast.IASTFieldReference
-import org.eclipse.cdt.core.dom.ast.IASTConditionalExpression
-import org.eclipse.cdt.core.dom.ast.IASTCastExpression
+import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsDataflowRegionExtensions
-import de.cau.cs.kieler.c.sccharts.processors.DataflowExtractor
+import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
+import java.util.ArrayList
+import org.eclipse.cdt.core.dom.ast.IASTArraySubscriptExpression
+import org.eclipse.cdt.core.dom.ast.IASTBinaryExpression
+import org.eclipse.cdt.core.dom.ast.IASTCastExpression
+import org.eclipse.cdt.core.dom.ast.IASTConditionalExpression
+import org.eclipse.cdt.core.dom.ast.IASTDeclarationStatement
+import org.eclipse.cdt.core.dom.ast.IASTEqualsInitializer
+import org.eclipse.cdt.core.dom.ast.IASTExpression
+import org.eclipse.cdt.core.dom.ast.IASTExpressionStatement
+import org.eclipse.cdt.core.dom.ast.IASTFieldReference
+import org.eclipse.cdt.core.dom.ast.IASTFunctionCallExpression
+import org.eclipse.cdt.core.dom.ast.IASTIdExpression
+import org.eclipse.cdt.core.dom.ast.IASTInitializer
+import org.eclipse.cdt.core.dom.ast.IASTLiteralExpression
+import org.eclipse.cdt.core.dom.ast.IASTNode
+import org.eclipse.cdt.core.dom.ast.IASTNode.CopyStyle
+import org.eclipse.cdt.core.dom.ast.IASTSimpleDeclSpecifier
+import org.eclipse.cdt.core.dom.ast.IASTSimpleDeclaration
+import org.eclipse.cdt.core.dom.ast.IASTStatement
+import org.eclipse.cdt.core.dom.ast.IASTUnaryExpression
 
 class ExpressionConverterExtensions {
     
@@ -391,7 +398,7 @@ class ExpressionConverterExtensions {
     /**
      * Build a string representation of the expression
      */
-    def String exprToString(IASTNode expr) {
+    def String exprToString(IASTExpression expr) {
         var expressionAsString = ""
         
         if (expr instanceof IASTFunctionCallExpression) {
@@ -404,7 +411,11 @@ class ExpressionConverterExtensions {
             for (var i = 0; i < arguments.length; i++) {
                 val argument = arguments.get(i)
                 
-                expressionAsString += argument.exprToString
+                if (argument instanceof IASTExpression) {
+                    expressionAsString += argument.exprToString
+                } else {
+                    println("unsupported argument type in function call to convert to string: " + argument.class)
+                }
                 
                 if (i < arguments.length - 1) {
                     expressionAsString += ", "
@@ -444,7 +455,12 @@ class ExpressionConverterExtensions {
             val arrayExpr = expr.getArrayExpression
             val arrayName = arrayExpr.exprToString
             val arrayArgExpr = expr.getArgument
-            val arrayArgName = arrayArgExpr.exprToString
+            var String arrayArgName;
+            if (arrayArgExpr instanceof IASTExpression) {
+                arrayArgName = arrayArgExpr.exprToString
+            } else {
+                println("unsupported argument type in array subscript expression to convert to string: " + arrayArgExpr.class)
+            }
             
             expressionAsString = arrayName + "[" + arrayArgName + "]"
             
@@ -457,9 +473,129 @@ class ExpressionConverterExtensions {
         } else if (expr instanceof IASTExpressionStatement) {
             // Extract the expression out of the expression statement
             expressionAsString = expr.getExpression.exprToString
+        } else {
+            println("Unsupported expression to convert to string: " + expr.class)
         }
         
         return expressionAsString
-    }    
+    }
+    
+    /**
+     * Build a string representation of the statement
+     */
+    def String stmtToString(IASTStatement stmt) {
+        var String stmtAsString = ""
+        
+        switch (stmt) {
+            IASTDeclarationStatement: {
+                val decl = stmt.declaration
+                if (decl instanceof IASTSimpleDeclaration) {
+                    val specifier = decl.declSpecifier
+                    if (specifier instanceof IASTSimpleDeclSpecifier) {
+                        stmtAsString += specifier.specifierToString + " "
+                    }
+                    for (var int i = 0; i < decl.declarators.length; i++) {
+                        val declarator = (decl as IASTSimpleDeclaration).declarators.get(i);
+                        val name = declarator.name
+                        val initializer = declarator.initializer
+                        var String value
+                        if (initializer instanceof IASTEqualsInitializer &&
+                            (initializer as IASTEqualsInitializer).initializerClause instanceof IASTExpression) {
+                            value = ((initializer as IASTEqualsInitializer).initializerClause as IASTExpression).exprToString
+                        }
+                        stmtAsString += name + " " + initializer.initializerToString + " " + value
+                        if (i != decl.declarators.length - 1) {
+                            stmtAsString += ", "
+                        }
+                    }
+                }
+            }
+            default: {
+                println("Yet unsupported statement to String: " + stmt.class)
+            }
+        }
+        
+        return stmtAsString
+    }
+    
+    /**
+     * Build a string representation of the IASTInitializer.
+     */
+    def String initializerToString(IASTInitializer initializer) {
+        switch (initializer) {
+            IASTEqualsInitializer: {
+                return "="
+            }
+            default: {
+                println("Yet unsupported initializer to String: " + initializer.class)
+                return "unsupportedInitializer"
+            }
+        }
+    }
+    
+    /**
+     * Build a string representation of the IASTSimpleDeclSpecifier.
+     */
+    def String specifierToString(IASTSimpleDeclSpecifier specifier) {
+        switch (specifier.type) {
+            case IASTSimpleDeclSpecifier.t_unspecified: {
+                return "unspecified"
+            }
+            case IASTSimpleDeclSpecifier.t_void: {
+                return "void"
+            }
+            case IASTSimpleDeclSpecifier.t_char: {
+                return "char"
+            }
+            case IASTSimpleDeclSpecifier.t_int: {
+                return "int"
+            }
+            case IASTSimpleDeclSpecifier.t_float: {
+                return "float"
+            }
+            case IASTSimpleDeclSpecifier.t_double: {
+                return "double"
+            }
+            case IASTSimpleDeclSpecifier.t_bool: {
+                return "bool"
+            }
+            case IASTSimpleDeclSpecifier.t_wchar_t: {
+                return "wchar"
+            }
+            case IASTSimpleDeclSpecifier.t_typeof: {
+                return "typeof"
+            }
+            case IASTSimpleDeclSpecifier.t_decltype: {
+                return "decltype"
+            }
+            case IASTSimpleDeclSpecifier.t_auto: {
+                return "auto"
+            }
+            case IASTSimpleDeclSpecifier.t_char16_t: {
+                return "char16"
+            }
+            case IASTSimpleDeclSpecifier.t_char32_t: {
+                return "char32"
+            }
+            case IASTSimpleDeclSpecifier.t_int128: {
+                return "int128"
+            }
+            case IASTSimpleDeclSpecifier.t_float128: {
+                return "float128"
+            }
+            case IASTSimpleDeclSpecifier.t_decimal32: {
+                return "decimal32"
+            }
+            case IASTSimpleDeclSpecifier.t_decimal64: {
+                return "decimal64"
+            }
+            case IASTSimpleDeclSpecifier.t_decimal128: {
+                return "decimal128"
+            }
+            case IASTSimpleDeclSpecifier.t_decltype_auto: {
+                return "decltype_auto"
+            }
+        }
+    }
     
 }

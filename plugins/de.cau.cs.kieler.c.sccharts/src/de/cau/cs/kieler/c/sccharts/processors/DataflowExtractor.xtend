@@ -508,7 +508,7 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
         
         // Set the loop conditions as label
         val condExpr = forStmt.getConditionExpression.exprToString
-        val initExpr = forStmt.getInitializerStatement.exprToString // TODO: initExpr == "" for "int i = 0"?
+        val initExpr = forStmt.getInitializerStatement.stmtToString
         val itExpr = forStmt.getIterationExpression.exprToString        
         forState.label = "for (" + initExpr.serialize + "; " + condExpr.serialize + "; " + itExpr.serialize + ")"
         forCounter++
