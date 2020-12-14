@@ -249,20 +249,20 @@ class SCChartsReferenceExtensions extends KExtReferenceExtensions {
         if (ref.target !== null) {
             val target = ref.target//.resolveReferencedScope
             if (target instanceof State) {
-//                val parentScope = decl.eContainer
-//                var Map<String, ValuedObject> parentVONameMap = newHashMap
-//                if (parentScope instanceof Scope) {
-//                    parentVONameMap = parentScope.valuedObjectNameMap
-//                    // Since this funtion is only used for ref decls the inherited interface from thereplacement stack
-//                    // must be added to parentVONameMap because the parent object might alredy have been to these and
-//                    // does not contain these variables for implicit biniding. (This is ugly)
-//                    for (ioVO : target.allInheritedDeclarations.filter(VariableDeclaration).filter[input || output].map[valuedObjects].flatten) {
-//                        if (replacements.containsKey(ioVO)) {
-//                            parentVONameMap.put(ioVO.name, ioVO)
-//                        }
-//                    }
-//                }
-                bindings += ref.target.createBindings(ref.parameters, replacements, newHashMap)
+                val implicitlyBoundInSuperState = newHashSet
+                var container = ref.eContainer?.eContainer
+                while (container !== null) {
+                    if (container instanceof State) {
+                        if (!container.baseStateReferences.nullOrEmpty) {
+                            implicitlyBoundInSuperState.addAll(container.allInheritedStates.map[declarations].flatten.filter(VariableDeclaration).filter[input == true || output == true])
+                        }
+                    }
+                    container = container.eContainer
+                }
+                val Map<String, ValuedObject> parentVONameMap = newHashMap
+                implicitlyBoundInSuperState.map[valuedObjects].flatten.forEach[parentVONameMap.put(it.name, it)]
+                
+                bindings += ref.target.createBindings(ref.parameters, replacements, parentVONameMap)
                 
                 // Create binding for generic parameters
                 bindings += ref.createGenericParameterBindings

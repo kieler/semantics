@@ -306,7 +306,7 @@ class SCTXValidator extends AbstractSCTXValidator {
             }
             
             if (!errorMessages.empty) {
-                error("The binding in inheritance is erroneous!\n" + errorMessages.join("\n"),
+                error("The binding of inherited variables is erroneous!\n" + errorMessages.join("\n"),
                     state, SCChartsPackage.eINSTANCE.state_BaseStateReferences,
                     state.baseStateReferences.indexOf(ref) );
             }
