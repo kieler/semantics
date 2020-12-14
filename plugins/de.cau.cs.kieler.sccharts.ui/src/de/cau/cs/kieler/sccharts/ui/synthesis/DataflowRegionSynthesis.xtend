@@ -29,6 +29,7 @@ import de.cau.cs.kieler.sccharts.extensions.TextFormat
 import de.cau.cs.kieler.sccharts.ui.synthesis.actions.ReferenceExpandAction
 import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.actions.MemorizingExpandCollapseAction
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.DataflowRegionStyles
+import java.util.EnumSet
 import org.eclipse.elk.alg.layered.options.GreedySwitchType
 import org.eclipse.elk.alg.layered.options.LayeredOptions
 import org.eclipse.elk.alg.layered.options.NodePlacementStrategy
@@ -38,6 +39,7 @@ import org.eclipse.elk.core.options.ContentAlignment
 import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.core.options.Direction
 import org.eclipse.elk.core.options.EdgeRouting
+import org.eclipse.elk.core.options.SizeConstraint
 
 import static de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions.*
 
@@ -93,6 +95,7 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
         node.setLayoutOption(LayeredOptions::HIGH_DEGREE_NODES_TREATMENT, true)
         node.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 10d)
         node.setLayoutOption(LayeredOptions::SPACING_NODE_NODE_BETWEEN_LAYERS, 10d)
+        node.setLayoutOption(CoreOptions::NODE_SIZE_CONSTRAINTS, EnumSet.of(SizeConstraint.MINIMUM_SIZE))
         
         if (CIRCUIT.booleanValue) {
             node.addLayoutParam(LayeredOptions::CROSSING_MINIMIZATION_SEMI_INTERACTIVE, true)
