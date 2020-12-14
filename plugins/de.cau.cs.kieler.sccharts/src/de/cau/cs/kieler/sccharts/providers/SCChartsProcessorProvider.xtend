@@ -83,7 +83,8 @@ class SCChartsProcessorProvider implements IProcessorProvider {
             de.cau.cs.kieler.sccharts.processors.ArduinoTemplateGenerator,
             de.cau.cs.kieler.sccharts.processors.NXJTemplateGenerator,
             de.cau.cs.kieler.sccharts.processors.ValuedObjectRise,
-            de.cau.cs.kieler.sccharts.processors.SclCodeEffect
+            de.cau.cs.kieler.sccharts.processors.SclCodeEffect,
+            de.cau.cs.kieler.sccharts.processors.StaticAccess
         ]
     }
     

@@ -88,6 +88,7 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
             case KExpressionsPackage.RANDOM_CALL: return createRandomCall();
             case KExpressionsPackage.RANDOMIZE_CALL: return createRandomizeCall();
             case KExpressionsPackage.EXTERN_STRING: return createExternString();
+            case KExpressionsPackage.STATIC_ACCESS_EXPRESSION: return createStaticAccessExpression();
             default:
                 throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
         }
@@ -482,6 +483,17 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
     public ExternString createExternString() {
         ExternStringImpl externString = new ExternStringImpl();
         return externString;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public StaticAccessExpression createStaticAccessExpression() {
+        StaticAccessExpressionImpl staticAccessExpression = new StaticAccessExpressionImpl();
+        return staticAccessExpression;
     }
 
     /**

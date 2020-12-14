@@ -50,7 +50,7 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link de.cau.cs.kieler.sccharts.State#isConnector <em>Connector</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.State#getOutgoingTransitions <em>Outgoing Transitions</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.State#getIncomingTransitions <em>Incoming Transitions</em>}</li>
- *   <li>{@link de.cau.cs.kieler.sccharts.State#getBaseStates <em>Base States</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.State#getBaseStateReferences <em>Base State References</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getState()
@@ -220,15 +220,15 @@ public interface State extends Scope {
     EList<Transition> getIncomingTransitions();
 
     /**
-     * Returns the value of the '<em><b>Base States</b></em>' reference list.
-     * The list contents are of type {@link de.cau.cs.kieler.sccharts.State}.
+     * Returns the value of the '<em><b>Base State References</b></em>' containment reference list.
+     * The list contents are of type {@link de.cau.cs.kieler.sccharts.BaseStateReference}.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Base States</em>' reference list.
-     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getState_BaseStates()
-     * @model
+     * @return the value of the '<em>Base State References</em>' containment reference list.
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getState_BaseStateReferences()
+     * @model containment="true"
      * @generated
      */
-    EList<State> getBaseStates();
+    EList<BaseStateReference> getBaseStateReferences();
 
 } // State

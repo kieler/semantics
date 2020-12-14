@@ -66,8 +66,8 @@
         eType="#//Transition" containment="true" eOpposite="#//Transition/sourceState"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="incomingTransitions" upperBound="-1"
         eType="#//Transition" eOpposite="#//Transition/targetState"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="baseStates" upperBound="-1"
-        eType="#//State"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="baseStateReferences" upperBound="-1"
+        eType="#//BaseStateReference" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Region" abstract="true" eSuperTypes="#//Scope">
     <eStructuralFeatures xsi:type="ecore:EReference" name="parentState" eType="#//State"
@@ -204,5 +204,14 @@
     <eLiterals name="NONE"/>
     <eLiterals name="SHALLOW" value="1"/>
     <eLiterals name="DEEP" value="2"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="BaseStateReference">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="target" eType="#//State"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="genericParameters" upperBound="-1"
+        eType="ecore:EClass ../../de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//Parameter"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parameters" upperBound="-1"
+        eType="ecore:EClass ../../de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//Parameter"
+        containment="true"/>
   </eClassifiers>
 </ecore:EPackage>

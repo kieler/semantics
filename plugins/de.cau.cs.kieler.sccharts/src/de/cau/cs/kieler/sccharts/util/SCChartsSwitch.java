@@ -308,6 +308,12 @@ public class SCChartsSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
+            case SCChartsPackage.BASE_STATE_REFERENCE: {
+                BaseStateReference baseStateReference = (BaseStateReference)theEObject;
+                T result = caseBaseStateReference(baseStateReference);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
             default: return defaultCase(theEObject);
         }
     }
@@ -654,6 +660,21 @@ public class SCChartsSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseDataflowAssignment(DataflowAssignment object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Base State Reference</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Base State Reference</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseBaseStateReference(BaseStateReference object) {
         return null;
     }
 

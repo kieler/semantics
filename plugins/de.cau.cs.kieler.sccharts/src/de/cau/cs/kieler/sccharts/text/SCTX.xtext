@@ -28,8 +28,9 @@ RootState returns sccharts::State:
 	annotations+=Annotation*
 	'scchart' name=ExtendedID label=STRING?
 	('<' genericParameterDeclarations += GenericParameterDeclaration (',' genericParameterDeclarations += GenericParameterDeclaration)* '>')?
-	('extends' baseStates += [sccharts::State|ID] (',' baseStates += [sccharts::State|ID])*)? // TODO support passing generics
+	('extends' baseStateReferences += BaseStateReference (',' baseStateReferences += BaseStateReference)*)?
 	'{'
+		(genericParameterDeclarations += AlternativeGenericParameterDeclaration)*
 		declarations+=DeclarationOrMethodWithKeywordWOSemicolon*
 		actions+=LocalAction*
 		(regions+=ImplicitControlflowRegion | regions+=Region*)
@@ -46,7 +47,7 @@ State returns sccharts::State:
 	    'is' reference = ScopeCall
 	    ('schedule' schedule+=ScheduleObjectReference+)?
 	)|(
-	    ('extends' baseStates += [sccharts::State|ID] (',' baseStates += [sccharts::State|ID])*)?
+	    ('extends' baseStateReferences += BaseStateReference (',' baseStateReferences += BaseStateReference)*)?
 	    ('schedule' schedule+=ScheduleObjectReference+)?
 	   '{'
 		declarations+=DeclarationOrMethodWithKeywordWOSemicolon*
@@ -73,8 +74,12 @@ ScopeParameter returns kexpressions::Parameter:
     expression = ValuedObjectReference)
     |
     expression = Expression)
-    ('to' explicitBinding = [kexpressions::ValuedObject|ID] ('[' explicitBindingIndices+=Expression ']')*)?
-    ;    
+    ('to' explicitBinding = [kexpressions::ValuedObject|ID] ('[' explicitBindingIndices+=Expression ']')*)?;
+    
+BaseStateReference returns sccharts::BaseStateReference:
+    target = [sccharts::State|ID]
+    ('<' genericParameters += GenericParameter (',' genericParameters += GenericParameter)* '>')?
+    (('(' parameters += ScopeParameter (',' parameters += ScopeParameter)* ')') | '()')?;
     
 // ------------------ //
 //  Transition Rules  // 
@@ -319,6 +324,26 @@ KeywordMethodDeclarationWOSemicolon returns kexpressions::MethodDeclaration:
         declarations+=Declaration*
         statements+=Statement*
     '}')?
+;
+
+@Override
+ReferenceValuedObject returns kexpressions::ValuedObject:
+    annotations+=QuotedStringAnnotation*
+    name=PrimeID
+    ('[' cardinalities+=Expression ']')*
+    ('<' genericParameters += GenericParameter (',' genericParameters += GenericParameter)* '>')?
+    (('(' parameters += ScopeParameter (',' parameters += ScopeParameter)* ')') | '()')?
+    ('label' label=STRING)?;
+    
+AlternativeGenericParameterDeclaration returns kexpressions::GenericParameterDeclaration:
+    annotations+=Annotation*
+    '<input>'
+    (
+        (valueType = ValueType)
+        |
+        ((reference?='ref')? type = [annotations::NamedObject|PrimeID])
+    )
+    valuedObjects+=SimpleValuedObject
 ;
 
 // ------------ //

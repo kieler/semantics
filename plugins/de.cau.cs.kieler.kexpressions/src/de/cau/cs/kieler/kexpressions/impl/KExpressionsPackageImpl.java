@@ -48,6 +48,7 @@ import de.cau.cs.kieler.kexpressions.Referenceable;
 import de.cau.cs.kieler.kexpressions.Schedulable;
 import de.cau.cs.kieler.kexpressions.ScheduleDeclaration;
 import de.cau.cs.kieler.kexpressions.ScheduleObjectReference;
+import de.cau.cs.kieler.kexpressions.StaticAccessExpression;
 import de.cau.cs.kieler.kexpressions.StringValue;
 import de.cau.cs.kieler.kexpressions.TextExpression;
 import de.cau.cs.kieler.kexpressions.Value;
@@ -329,6 +330,13 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    private EClass staticAccessExpressionEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     private EEnum combineOperatorEEnum = null;
 
     /**
@@ -498,6 +506,16 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
     @Override
     public EReference getValuedObject_GenericParameters() {
         return (EReference)valuedObjectEClass.getEStructuralFeatures().get(4);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getValuedObject_Parameters() {
+        return (EReference)valuedObjectEClass.getEStructuralFeatures().get(5);
     }
 
     /**
@@ -1386,6 +1404,36 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * @generated
      */
     @Override
+    public EClass getStaticAccessExpression() {
+        return staticAccessExpressionEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getStaticAccessExpression_SubReference() {
+        return (EReference)staticAccessExpressionEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getStaticAccessExpression_Target() {
+        return (EReference)staticAccessExpressionEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public EEnum getCombineOperator() {
         return combineOperatorEEnum;
     }
@@ -1477,6 +1525,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         createEReference(valuedObjectEClass, VALUED_OBJECT__CARDINALITIES);
         createEAttribute(valuedObjectEClass, VALUED_OBJECT__LABEL);
         createEReference(valuedObjectEClass, VALUED_OBJECT__GENERIC_PARAMETERS);
+        createEReference(valuedObjectEClass, VALUED_OBJECT__PARAMETERS);
 
         valuedObjectReferenceEClass = createEClass(VALUED_OBJECT_REFERENCE);
         createEReference(valuedObjectReferenceEClass, VALUED_OBJECT_REFERENCE__VALUED_OBJECT);
@@ -1601,6 +1650,10 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         externStringEClass = createEClass(EXTERN_STRING);
         createEAttribute(externStringEClass, EXTERN_STRING__CODE);
 
+        staticAccessExpressionEClass = createEClass(STATIC_ACCESS_EXPRESSION);
+        createEReference(staticAccessExpressionEClass, STATIC_ACCESS_EXPRESSION__SUB_REFERENCE);
+        createEReference(staticAccessExpressionEClass, STATIC_ACCESS_EXPRESSION__TARGET);
+
         // Create enums
         combineOperatorEEnum = createEEnum(COMBINE_OPERATOR);
         operatorTypeEEnum = createEEnum(OPERATOR_TYPE);
@@ -1680,6 +1733,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         randomCallEClass.getESuperTypes().add(this.getCall());
         randomizeCallEClass.getESuperTypes().add(this.getCall());
         externStringEClass.getESuperTypes().add(theAnnotationsPackage.getAnnotatable());
+        staticAccessExpressionEClass.getESuperTypes().add(this.getExpression());
 
         // Initialize classes and features; add operations and parameters
         initEClass(expressionEClass, Expression.class, "Expression", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -1690,6 +1744,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         initEReference(getValuedObject_Cardinalities(), this.getExpression(), null, "cardinalities", null, 0, -1, ValuedObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getValuedObject_Label(), ecorePackage.getEString(), "label", null, 0, 1, ValuedObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getValuedObject_GenericParameters(), this.getParameter(), null, "genericParameters", null, 0, -1, ValuedObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getValuedObject_Parameters(), this.getParameter(), null, "parameters", null, 0, -1, ValuedObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(valuedObjectReferenceEClass, ValuedObjectReference.class, "ValuedObjectReference", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getValuedObjectReference_ValuedObject(), this.getValuedObject(), null, "valuedObject", null, 1, 1, ValuedObjectReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1821,6 +1876,10 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
 
         initEClass(externStringEClass, ExternString.class, "ExternString", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getExternString_Code(), ecorePackage.getEString(), "code", null, 0, 1, ExternString.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEClass(staticAccessExpressionEClass, StaticAccessExpression.class, "StaticAccessExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEReference(getStaticAccessExpression_SubReference(), this.getValuedObjectReference(), null, "subReference", null, 0, 1, StaticAccessExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getStaticAccessExpression_Target(), theAnnotationsPackage.getNamedObject(), null, "target", null, 0, 1, StaticAccessExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         // Initialize enums and add enum literals
         initEEnum(combineOperatorEEnum, CombineOperator.class, "CombineOperator");

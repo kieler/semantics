@@ -180,7 +180,7 @@ class SCChartsStateExtensions {
     }
     
     def boolean hasBaseStates(State state) {
-        !state.baseStates.nullOrEmpty
+        !state.baseStateReferences.nullOrEmpty
     }
     
     def State copyState(State state) {

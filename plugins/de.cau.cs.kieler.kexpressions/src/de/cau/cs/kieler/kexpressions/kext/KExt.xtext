@@ -210,7 +210,7 @@ ReferenceDeclaration returns kexpressions::ReferenceDeclaration:
     ) | (
         'extern' extern += ExternString (',' extern += ExternString)*
     ))
-    valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
+    valuedObjects+=ReferenceValuedObject (',' valuedObjects+=ReferenceValuedObject)* ';'
     annotations+=CommentAnnotatonSL?;
     
 ReferenceDeclarationWOSemicolon returns kexpressions::ReferenceDeclaration:
@@ -222,7 +222,7 @@ ReferenceDeclarationWOSemicolon returns kexpressions::ReferenceDeclaration:
     ) | (
         'extern' extern += ExternString (',' extern += ExternString)*
     ))
-    valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
+    valuedObjects+=ReferenceValuedObject (',' valuedObjects+=ReferenceValuedObject)*
     annotations+=CommentAnnotatonSL?;
     
 ExternString returns kexpressions::ExternString:
@@ -318,12 +318,19 @@ enum PriorityProtocol returns kexpressions::PriorityProtocol:
 ValuedObject returns kexpressions::ValuedObject:
 	annotations+=QuotedStringAnnotation*
     name=PrimeID
-    ('<' genericParameters += GenericParameter (',' genericParameters += GenericParameter)* '>')?
     ('[' cardinalities+=Expression ']')* 
     ('=' initialValue=Expression)?
     ( 'combine'
       (combineOperator = CombineOperator)
     )?
+    ('label' label=STRING)?;
+    
+ReferenceValuedObject returns kexpressions::ValuedObject:
+    annotations+=QuotedStringAnnotation*
+    name=PrimeID
+    ('[' cardinalities+=Expression ']')*
+    ('<' genericParameters += GenericParameter (',' genericParameters += GenericParameter)* '>')?
+    (('(' parameters += Parameter (',' parameters += Parameter)* ')') | '()')?
     ('label' label=STRING)?;
     
 SimpleValuedObject returns kexpressions::ValuedObject:

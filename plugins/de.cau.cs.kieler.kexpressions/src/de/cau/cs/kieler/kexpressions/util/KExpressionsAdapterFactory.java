@@ -225,6 +225,10 @@ public class KExpressionsAdapterFactory extends AdapterFactoryImpl {
                 return createExternStringAdapter();
             }
             @Override
+            public Adapter caseStaticAccessExpression(StaticAccessExpression object) {
+                return createStaticAccessExpressionAdapter();
+            }
+            @Override
             public Adapter caseNameable(Nameable object) {
                 return createNameableAdapter();
             }
@@ -611,6 +615,20 @@ public class KExpressionsAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createExternStringAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.StaticAccessExpression <em>Static Access Expression</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.kexpressions.StaticAccessExpression
+     * @generated
+     */
+    public Adapter createStaticAccessExpressionAdapter() {
         return null;
     }
 

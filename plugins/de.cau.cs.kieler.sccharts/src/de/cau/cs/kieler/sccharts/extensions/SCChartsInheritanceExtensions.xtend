@@ -22,6 +22,8 @@ import java.util.List
 import java.util.Set
 import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.kexpressions.AccessModifier
+import de.cau.cs.kieler.sccharts.BaseStateReference
+import de.cau.cs.kieler.sccharts.SCChartsFactory
 
 /**
  * @author als
@@ -30,20 +32,27 @@ import de.cau.cs.kieler.kexpressions.AccessModifier
 class SCChartsInheritanceExtensions {
     
     /**
+     * Returns all base states.
+     */
+    def Iterable<State> baseStates(State state) {
+        return state.baseStateReferences.map[target].filterNull
+    }
+    
+    /**
      * Returns a set of all states contained in the inheritance hierarchy of the given state.
      */
     def Set<State> getAllInheritedStates(State state) {
-        val allBaseStates = newLinkedHashSet
-        val work = newLinkedList
+        val allBaseStates = <State>newLinkedHashSet
         
-        if (state !== null) {
+        if (state !== null && !state.baseStateReferences.nullOrEmpty) {
+            val work = newLinkedList
             work.addAll(state.baseStates.toSet)
             work.removeIf[it == state]
             
             while (!work.empty) {
                 val s = work.pop
                 allBaseStates += s
-                for (base : s.baseStates.reverseView) { // Depth first
+                for (base : s.baseStateReferences.reverseView.map[target].filterNull) { // Depth first
                     if (base != state && !work.contains(base) && !allBaseStates.contains(base)) {
                         work.push(base)
                     }
@@ -51,6 +60,33 @@ class SCChartsInheritanceExtensions {
             }
         }
         return allBaseStates
+    }
+    
+    /**
+     * Returns a list of all base states references contained in the inheritance hierarchy acending depth.
+     */
+    def List<BaseStateReference> getAllInheritedStatesReferencesHierachically(State state) {
+        val allBaseStateRefs = <BaseStateReference>newLinkedHashSet
+        
+        if (state !== null && !state.baseStateReferences.nullOrEmpty) {
+            val work = newLinkedList
+            work.addAll(state.baseStateReferences)
+            work.removeIf[it.target == state]
+            
+            while (!work.empty) {
+                val ref = work.pop
+                allBaseStateRefs += ref
+                val target = ref.target
+                if (!target.baseStateReferences.nullOrEmpty) {
+                    for (baseRef : target.baseStateReferences.filterNull) { // Depth first
+                        if (baseRef.target !== null && baseRef.target != state && !work.contains(baseRef) && !allBaseStateRefs.contains(baseRef)) {
+                            work.add(baseRef)
+                        }
+                    }
+                }
+            }
+        }
+        return allBaseStateRefs.toList
     }
     
     /**
@@ -91,7 +127,7 @@ class SCChartsInheritanceExtensions {
      *
      */
     def Iterable<Region> getAllVisibleInheritedRegions(State state, boolean directOverride) {
-        if (state !== null && !state.baseStates.nullOrEmpty) {
+        if (state !== null && !state.baseStateReferences.nullOrEmpty) {
             val regions = newLinkedHashSet
             val path = newLinkedList(state)
             val indexes = newLinkedList(-1)
@@ -109,14 +145,14 @@ class SCChartsInheritanceExtensions {
                     regions += s.regions.filter[ r | r.name.nullOrEmpty || !overrides.flatten.exists[r.name.equals(name)]]
                     overrides.push(s.regions.filter[!name.nullOrEmpty && override].toList)
                 }
-                if (s.baseStates === null || s.baseStates.size <= idx) {
+                if (s.baseStateReferences === null || s.baseStateReferences.size <= idx) {
                     path.pop
                     overrides.pop
                 } else {
                     indexes.push(idx)
-                    val base = s.baseStates.get(idx)
+                    val base = s.baseStateReferences.get(idx)?.target
                     // check cycle
-                    if (!path.contains(base)) {
+                    if (base !== null && !path.contains(base)) {
                         path.push(base)
                         indexes.push(-1)
                     }
@@ -140,18 +176,18 @@ class SCChartsInheritanceExtensions {
      */
     def getHierarchyCycles(State state) {
         val cycles = HashMultimap.<State, Integer>create
-        if (state !== null && !state.baseStates.nullOrEmpty) {
+        if (state !== null && !state.baseStateReferences.nullOrEmpty) {
             // DFS with checks if new child already exists in path to root.
             val path = newLinkedList(state)
             val indexes = newLinkedList(-1)
             while (!path.empty) {
                 val s = path.peek
                 val idx = indexes.pop + 1
-                if (s.baseStates === null || s.baseStates.size <= idx) {
+                if (s.baseStateReferences === null || s.baseStateReferences.size <= idx) {
                     path.pop
                 } else {
                     indexes.push(idx)
-                    val base = s.baseStates.get(idx)
+                    val base = s.baseStateReferences.get(idx)?.target
                     // check cycle
                     if (path.contains(base)) {
                         cycles.put(base, indexes.last)
@@ -169,13 +205,19 @@ class SCChartsInheritanceExtensions {
         var EObject parent = scope
         while (parent !== null) {
             if (parent instanceof State) {
-                if (!parent.baseStates.nullOrEmpty) {
+                if (!parent.baseStateReferences.nullOrEmpty) {
                     return parent
                 }
             }
             parent = parent.eContainer
         }
         return null
+    }
+    
+    def BaseStateReference baseReference(State state) {
+        return SCChartsFactory.eINSTANCE.createBaseStateReference => [
+            target = state
+        ]
     }
 
 }

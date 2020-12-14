@@ -30,7 +30,9 @@ import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kexpressions.keffects.Emission
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.kexpressions.kext.extensions.BindingType
+import de.cau.cs.kieler.kexpressions.kext.extensions.Replacements
 import de.cau.cs.kieler.sccharts.Action
+import de.cau.cs.kieler.sccharts.BaseStateReference
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.DataflowRegion
 import de.cau.cs.kieler.sccharts.DuringAction
@@ -159,9 +161,9 @@ class SCTXValidator extends AbstractSCTXValidator {
      */
     @Check
     def void checkInheritanceHierarchy(de.cau.cs.kieler.sccharts.State state) {
-        if (!state.baseStates.nullOrEmpty) {
+        if (!state.baseStateReferences.nullOrEmpty) {
             for (cycle : state.hierarchyCycles.entries) {
-                warning(INHERITANCE_CYCLE + cycle.key.name, state, SCChartsPackage.eINSTANCE.state_BaseStates, cycle.value)
+                warning(INHERITANCE_CYCLE + cycle.key.name, state, SCChartsPackage.eINSTANCE.state_BaseStateReferences, cycle.value)
             }
         }
     }
@@ -171,14 +173,14 @@ class SCTXValidator extends AbstractSCTXValidator {
      */
     @Check
     def void checkInheritedVONameClash(de.cau.cs.kieler.sccharts.State state) {
-        if (!state.baseStates.nullOrEmpty) {
+        if (!state.baseStateReferences.nullOrEmpty) {
             val names = HashMultimap.<String, de.cau.cs.kieler.sccharts.State>create
             for (base : state.allInheritedStates) {
                 base.declarations.filter[access !== AccessModifier.PRIVATE].map[valuedObjects].flatten.forEach[names.put(it.name, base)]
             }
             val clashes = names.keySet.filter[names.get(it).size > 1].toSet
             if (!clashes.empty) {
-                val indirectClashes = state.baseStates.indexed.toMap([key], [value.allVisibleInheritedDeclarations.map[valuedObjects].flatten.map[name].toSet])
+                val indirectClashes = state.baseStates.indexed.toMap([key], [value !== null ? value.allVisibleInheritedDeclarations.map[valuedObjects].flatten.map[name].toSet : emptySet])
                 for (clash : clashes) {
                     val states = names.get(clash)
                     val marked = newHashSet
@@ -186,14 +188,14 @@ class SCTXValidator extends AbstractSCTXValidator {
                         if (state.baseStates.contains(s)) {
                             if (!marked.contains(s)) {
                                 marked += s
-                                warning(INHERITANCE_VO_NAME_CLASH.format(clash, states.map[name].join(", ")), state, SCChartsPackage.eINSTANCE.state_BaseStates, state.baseStates.indexOf(s))
+                                warning(INHERITANCE_VO_NAME_CLASH.format(clash, states.map[name].join(", ")), state, SCChartsPackage.eINSTANCE.state_BaseStateReferences, state.baseStates.toList.indexOf(s))
                             }
                         } else { // indirect
                             for (match : indirectClashes.entrySet.filter[value.contains(clash)]) {
                                 val markState = state.baseStates.get(match.key)
-                                if (!marked.contains(markState)) {
+                                if (markState !== null && !marked.contains(markState)) {
                                     marked += markState
-                                    warning(INHERITANCE_VO_NAME_CLASH.format(clash, states.map[name].join(", ")), state, SCChartsPackage.eINSTANCE.state_BaseStates, match.key)
+                                    warning(INHERITANCE_VO_NAME_CLASH.format(clash, states.map[name].join(", ")), state, SCChartsPackage.eINSTANCE.state_BaseStateReferences, match.key)
                                 }
                             }
                         }
@@ -208,7 +210,7 @@ class SCTXValidator extends AbstractSCTXValidator {
      */
     @Check
     def void checkInheritedRegionNameClash(de.cau.cs.kieler.sccharts.State state) {
-        if (!state.baseStates.nullOrEmpty) {
+        if (!state.baseStateReferences.nullOrEmpty) {
             val names = HashMultimap.<String, de.cau.cs.kieler.sccharts.State>create
             for (region : state.allVisibleInheritedRegions) {
                 if (!region.name.nullOrEmpty) {
@@ -217,7 +219,7 @@ class SCTXValidator extends AbstractSCTXValidator {
             }
             val clashes = names.keySet.filter[names.get(it).size > 1].toSet
             if (!clashes.empty) {
-                val indirectClashes = state.baseStates.indexed.toMap([key], [value.allVisibleInheritedRegions.map[name].toSet])
+                val indirectClashes = state.baseStates.indexed.toMap([key], [value !== null ? value.allVisibleInheritedRegions.map[name].toSet : emptySet])
                 for (clash : clashes) {
                     val states = names.get(clash)
                     val marked = newHashSet
@@ -225,14 +227,14 @@ class SCTXValidator extends AbstractSCTXValidator {
                         if (state.baseStates.contains(s)) {
                             if (!marked.contains(s)) {
                                 marked += s
-                                warning(INHERITANCE_REGION_NAME_CLASH.format(clash, states.map[name].join(", ")), state, SCChartsPackage.eINSTANCE.state_BaseStates, state.baseStates.indexOf(s))
+                                warning(INHERITANCE_REGION_NAME_CLASH.format(clash, states.map[name].join(", ")), state, SCChartsPackage.eINSTANCE.state_BaseStateReferences, state.baseStates.toList.indexOf(s))
                             }
                         } else { // indirect
                             for (match : indirectClashes.entrySet.filter[value.contains(clash)]) {
                                 val markState = state.baseStates.get(match.key)
-                                if (!marked.contains(markState)) {
+                                if (markState !== null && !marked.contains(markState)) {
                                     marked += markState
-                                    warning(INHERITANCE_REGION_NAME_CLASH.format(clash, states.map[name].join(", ")), state, SCChartsPackage.eINSTANCE.state_BaseStates, match.key)
+                                    warning(INHERITANCE_REGION_NAME_CLASH.format(clash, states.map[name].join(", ")), state, SCChartsPackage.eINSTANCE.state_BaseStateReferences, match.key)
                                 }
                             }
                         }
@@ -247,7 +249,7 @@ class SCTXValidator extends AbstractSCTXValidator {
      */
     @Check
     def void checkInheritedVONameReuse(de.cau.cs.kieler.sccharts.State state) {
-        if (!state.baseStates.nullOrEmpty) {
+        if (!state.baseStateReferences.nullOrEmpty) {
             val voNames = state.allVisibleInheritedDeclarations.map[valuedObjects].flatten.map[name].toSet
             for (decl : state.declarations) {
                 for (vo : decl.valuedObjects) {
@@ -273,7 +275,7 @@ class SCTXValidator extends AbstractSCTXValidator {
                     warning(REGION_OVERRIDE_SUPERFLOUSE, region, SCChartsPackage.eINSTANCE.region_Override)
                 }
             }
-        } else if (!region.parentState.baseStates.nullOrEmpty && !region.name.nullOrEmpty) {
+        } else if (!region.parentState.baseStateReferences.nullOrEmpty && !region.name.nullOrEmpty) {
             val inheritedRegions = region.parentState.getAllVisibleInheritedRegions(true)
             if (inheritedRegions.exists[region.name.equals(name)]) {
                 warning(REGION_OVERRIDE_MISSING, region, AnnotationsPackage.eINSTANCE.namedObject_Name, -1)
@@ -288,6 +290,26 @@ class SCTXValidator extends AbstractSCTXValidator {
     def void checkRegionActions(Action action) {
         if (action.eContainer instanceof ControlflowRegion && (action.eContainer as ControlflowRegion).states.exists[final]) {
             warning(REGION_ACTION_EXPERIMENTAL, action, null);
+        }
+    }
+    
+    @Check
+    def void checkBaseStateBindings(BaseStateReference ref) {
+        val state = ref.eContainer as de.cau.cs.kieler.sccharts.State
+        if (!state.rootState) {
+            val bindings = ref.createBindings(new Replacements)
+            var errorMessages = newArrayList
+            for (binding : bindings) {
+                if (binding.errors > 0) {
+                    errorMessages += binding.errorMessages
+                }
+            }
+            
+            if (!errorMessages.empty) {
+                error("The binding in inheritance is erroneous!\n" + errorMessages.join("\n"),
+                    state, SCChartsPackage.eINSTANCE.state_BaseStateReferences,
+                    state.baseStateReferences.indexOf(ref) );
+            }
         }
     }
 
@@ -815,11 +837,14 @@ class SCTXValidator extends AbstractSCTXValidator {
                 error(ASSIGNMENT_TO_CONST, assignment, null, -1);
             }
         }
-    }    
+    }
     
     @Check
     def void checkScopeCall(ScopeCall scopeCall) {
         if (scopeCall.eContainer instanceof Scope) {
+            if (scopeCall.^super) {
+                return // No binding -> no checks
+            }
             val bindings = scopeCall.eContainer.asScope.createBindings
             var errorMessages = newArrayList
             var implicitMessage = ""
@@ -863,8 +888,8 @@ class SCTXValidator extends AbstractSCTXValidator {
     
     
     @Check
-    def void checkReferenceDeclarationGenerics(ReferenceDeclaration decl) {
-        val bindings = decl.valuedObjects?.head?.createGenericParameterBindings
+    def void checkReferenceDeclarationBindings(ReferenceDeclaration decl) {
+        val bindings = decl.valuedObjects?.head?.createBindings(new Replacements)
         var errorMessages = newArrayList
         for (binding : bindings) {
             if (binding.errors > 0) {
@@ -974,7 +999,7 @@ class SCTXValidator extends AbstractSCTXValidator {
 
 
     @Check
-    def void checkCountDelayBeforeSubExpressionWarning(de.cau.cs.kieler.sccharts.Action action) {
+    def void checkCountDelayBeforeSubExpressionWarning(Action action) {
         if (action.triggerDelay > 1) {
             if (action.trigger instanceof OperatorExpression) {
                 if ((action.trigger as OperatorExpression).hasLeftUnarySubExpression) {

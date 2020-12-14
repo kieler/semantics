@@ -13,6 +13,8 @@
 package de.cau.cs.kieler.lustre.processors.lustreToScc
 
 import com.google.inject.Inject
+import de.cau.cs.kieler.core.properties.IProperty
+import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.OperatorExpression
@@ -44,14 +46,13 @@ import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsDataflowRegionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsInheritanceExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import java.util.ArrayList
 import java.util.HashMap
 import java.util.Stack
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
-import de.cau.cs.kieler.core.properties.IProperty
-import de.cau.cs.kieler.core.properties.Property
 
 /**
  * Basic class for Lustre to ScCharts transformations.
@@ -78,6 +79,7 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
     @Inject extension SCChartsDataflowRegionExtensions
     @Inject extension SCChartsStateExtensions
     @Inject extension SCChartsControlflowRegionExtensions
+    @Inject extension SCChartsInheritanceExtensions
 
     // M2M mappings
     protected HashMap<ValuedObject, ValuedObject> lustreToScchartsValuedObjectMap = new HashMap
@@ -121,7 +123,7 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
                 ]
                 processNodeDeclarations(node, nodeState)
                 if (constantsExist) {
-                    nodeState.baseStates += constantsState
+                    nodeState.baseStateReferences += constantsState.baseReference
                 }
                 nodeToStateMap.put(node, nodeState)
             }

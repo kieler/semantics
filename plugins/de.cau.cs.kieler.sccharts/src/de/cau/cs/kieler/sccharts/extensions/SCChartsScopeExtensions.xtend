@@ -145,7 +145,7 @@ class SCChartsScopeExtensions {
             if (!map.containsKey(vo.name)) map.put(vo.name, vo)
         }
         if (scope instanceof State) {
-            if (!scope.baseStates.nullOrEmpty) {
+            if (!scope.baseStateReferences.nullOrEmpty) {
                 map.putAll(scope.allInheritedDeclarations.map[valuedObjects].flatten.toMap[name])
             }
         }
