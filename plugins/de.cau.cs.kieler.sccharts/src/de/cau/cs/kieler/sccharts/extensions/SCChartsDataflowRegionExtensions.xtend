@@ -12,11 +12,16 @@
  */
 package de.cau.cs.kieler.sccharts.extensions
 
-import de.cau.cs.kieler.sccharts.State
+import com.google.inject.Inject
+import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
+import de.cau.cs.kieler.kexpressions.keffects.Assignment
+import de.cau.cs.kieler.sccharts.DataflowAssignment
 import de.cau.cs.kieler.sccharts.DataflowRegion
 import de.cau.cs.kieler.sccharts.SCChartsFactory
-import de.cau.cs.kieler.sccharts.DataflowAssignment
-import de.cau.cs.kieler.kexpressions.keffects.Assignment
+import de.cau.cs.kieler.sccharts.State
 
 /**
  * @author ssm
@@ -25,6 +30,8 @@ import de.cau.cs.kieler.kexpressions.keffects.Assignment
  *
  */
 class SCChartsDataflowRegionExtensions {
+    
+    @Inject extension KExpressionsValuedObjectExtensions
     
     def getDataflowRegions(State state) {
         state.regions.filter(DataflowRegion)
@@ -51,5 +58,28 @@ class SCChartsDataflowRegionExtensions {
     
     def isSequential(Assignment a){
         (a instanceof DataflowAssignment) && (a as DataflowAssignment).sequential
+    }
+    
+    def DataflowAssignment createDataflowAssignment(ValuedObject valuedObject, Expression expression) {
+        SCChartsFactory.eINSTANCE.createDataflowAssignment => [
+            it.reference = valuedObject.reference
+            it.expression = expression
+        ]
+    }
+    
+    def DataflowAssignment createDataflowAssignment(ValuedObject valuedObject, ValuedObject subValuedObject, Expression expression) {
+        SCChartsFactory.eINSTANCE.createDataflowAssignment => [
+            it.reference = valuedObject.reference
+            it.reference.subReference = subValuedObject.reference
+            it.expression = expression
+        ]
+    }
+    
+    def DataflowAssignment createDataflowAssignment(ValuedObject valuedObject, Expression expression, AssignOperator operator) {
+        SCChartsFactory.eINSTANCE.createDataflowAssignment => [
+            it.reference = valuedObject.reference
+            it.expression = expression
+            it.operator = operator
+        ]
     }
 }
