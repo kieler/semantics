@@ -36,6 +36,7 @@ import org.eclipse.cdt.core.dom.ast.IASTSimpleDeclSpecifier
 import org.eclipse.cdt.core.dom.ast.IASTSimpleDeclaration
 import org.eclipse.cdt.core.dom.ast.IASTStatement
 import org.eclipse.cdt.core.dom.ast.IASTUnaryExpression
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 
 class ExpressionConverterExtensions {
     
@@ -47,7 +48,6 @@ class ExpressionConverterExtensions {
     @Inject extension KExpressionsCreateExtensions
     @Inject extension KExpressionsDeclarationExtensions
     @Inject extension KExpressionsValuedObjectExtensions
-    @Inject extension KEffectsExtensions
     @Inject extension CDTConvertExtensions
     @Inject extension ValueExtensions
     @Inject extension HighlightingExtensions
@@ -97,7 +97,7 @@ class ExpressionConverterExtensions {
                 for (argument : funcCall.getArguments) {
                     val funcObjArg = refStateConst.declarations.filter(VariableDeclaration).map[ valuedObjects ].flatten.get(i)
                     val connectObj = funcState.findValuedObjectByName(argument.children.head.toString, false, dRegion)
-                    ass = createAssignment(funcObj, funcObjArg, connectObj.reference)
+                    ass = createDataflowAssignment(funcObj, funcObjArg, connectObj.reference)
                     assignments.add(ass)
                     i++
                 }
@@ -113,13 +113,16 @@ class ExpressionConverterExtensions {
             if (targetExpr instanceof IASTIdExpression) {
                 target = funcState.findValuedObjectByName(targetExpr.getName.toString, true, dRegion)    
             } else if (targetExpr instanceof IASTArraySubscriptExpression) {
-                target = funcState.findValuedObjectByName(targetExpr.arrayExpression.exprToString, true, dRegion)
+                val arrayIndex = targetExpr.argument.createKExpression(funcState, dRegion)
+                target = funcState.findValuedObjectByName(targetExpr.arrayExpression.exprToString, arrayIndex, true, dRegion)
+                target.cardinalities += targetExpr.argument.createKExpression(funcState, dRegion)
             } else {
                 println("ExpressionConverterExtensions: Unsupported assignment target detected!" + targetExpr.expressionType)
             }
             
             target.insertHighlightAnnotations(binExpr)
-            ass = createAssignment(target, source)
+            ass = createDataflowAssignment(target, source)
+            ass.reference.indices += target.cardinalities
         }
         assignments.add(ass)
         return assignments
@@ -214,7 +217,7 @@ class ExpressionConverterExtensions {
                 
         opVO.insertHighlightAnnotations(expression) 
         // Create the Assignment        
-        dRegion.equations += createAssignment(opVO, sourceExpression)
+        dRegion.equations += createDataflowAssignment(opVO, sourceExpression)
         
     }
     
@@ -235,7 +238,7 @@ class ExpressionConverterExtensions {
             val argument = arguments.get(i)
             val argExpr = argument.createKExpression(funcState, dRegion)
             var inputVO = refState.declarations.filter(VariableDeclaration).map[ valuedObjects ].flatten.get(i)
-            dRegion.equations += createAssignment(refObj, inputVO, argExpr)
+            dRegion.equations += createDataflowAssignment(refObj, inputVO, argExpr)
             
         }
     }
@@ -258,7 +261,8 @@ class ExpressionConverterExtensions {
             }
             // For an array, just use the array expression (and leave out the subscript for now).
             IASTArraySubscriptExpression: {
-                kExpression = (expr as IASTArraySubscriptExpression).arrayExpression.createKExpression(funcState, dRegion) 
+                kExpression = expr.arrayExpression.createKExpression(funcState, dRegion)
+                (kExpression as ValuedObjectReference).indices += expr.argument.createKExpression(funcState, dRegion)
             }
             // For a function call create a reference an return the functions output VO reference
             IASTFunctionCallExpression: {
@@ -285,7 +289,7 @@ class ExpressionConverterExtensions {
                 for (argument : funcCall.getArguments) {
                     val funcObjArg = refStateConst.declarations.filter(VariableDeclaration).map[ valuedObjects ].flatten.get(i)
                     val connectExpr = argument.createKExpression(funcState, dRegion)
-                    dRegion.equations += createAssignment(funcObj, funcObjArg, connectExpr)
+                    dRegion.equations += createDataflowAssignment(funcObj, funcObjArg, connectExpr)
                     i++
                 }
             }
@@ -313,14 +317,14 @@ class ExpressionConverterExtensions {
                 condState.declarations += outputDecl
                 val outputVO = outputDecl.createValuedObject("res")
                 // Create the positive expression
-                condDRegion.equations += createAssignment(outputVO, expr.getPositiveResultExpression.createKExpression(condState,condDRegion))
+                condDRegion.equations += createDataflowAssignment(outputVO, expr.getPositiveResultExpression.createKExpression(condState,condDRegion))
                 outputVO.insertHighlightAnnotations(expr)
                 // Create the nagative expression
                 val condNDRegion = createDataflowRegion("Else")
                 condNDRegion.label = "Else"
                 condState.regions += condNDRegion
                 
-                condNDRegion.equations += createAssignment(outputVO, expr.getNegativeResultExpression.createKExpression(condState,condNDRegion))
+                condNDRegion.equations += createDataflowAssignment(outputVO, expr.getNegativeResultExpression.createKExpression(condState,condNDRegion))
                 outputVO.insertHighlightAnnotations(expr)
                 
                 // Return the output reference

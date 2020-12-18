@@ -18,13 +18,17 @@ import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.c.sccharts.extensions.CDTConvertExtensions
 import de.cau.cs.kieler.c.sccharts.extensions.ExpressionConverterExtensions
 import de.cau.cs.kieler.c.sccharts.extensions.HighlightingExtensions
+import de.cau.cs.kieler.kexpressions.BoolValue
+import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.FloatValue
+import de.cau.cs.kieler.kexpressions.IntValue
+import de.cau.cs.kieler.kexpressions.StringValue
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsSerializeExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.kicool.compilation.ExogenousProcessor
 import de.cau.cs.kieler.sccharts.DataflowRegion
 import de.cau.cs.kieler.sccharts.Region
@@ -40,7 +44,9 @@ import java.time.format.DateTimeFormatter
 import java.util.ArrayList
 import java.util.HashMap
 import java.util.HashSet
+import java.util.List
 import java.util.Map
+import org.eclipse.cdt.core.dom.ast.IASTArrayDeclarator
 import org.eclipse.cdt.core.dom.ast.IASTArraySubscriptExpression
 import org.eclipse.cdt.core.dom.ast.IASTBinaryExpression
 import org.eclipse.cdt.core.dom.ast.IASTBreakStatement
@@ -86,7 +92,6 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
     @Inject extension KExpressionsDeclarationExtensions
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KExpressionsSerializeExtensions
-    @Inject extension KEffectsExtensions
     @Inject extension CDTConvertExtensions
     @Inject extension ExpressionConverterExtensions
     @Inject extension HighlightingExtensions
@@ -98,7 +103,9 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
      var whileCounter = 0;
      var doCounter = 0;
     
-    var valuedObjects = <State, HashMap<String, ArrayList<ValuedObject>>> newHashMap
+    val valuedObjects = <State, HashMap<String, ArrayList<ValuedObject>>> newHashMap
+    
+    val voWrittenIdxs = <ValuedObject, List<Expression>> newHashMap
     
     var State baseState = null
 
@@ -344,7 +351,7 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
                 
         val retVO = rootState.findValuedObjectByName("res", true, dRegion)
         retVO.insertHighlightAnnotations(stmt)
-        dRegion.equations += createAssignment(retVO, retKExpr)
+        dRegion.equations += createDataflowAssignment(retVO, retKExpr)
     }
     
     /**
@@ -610,6 +617,9 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
             val vo = variableDeclaration.createValuedObject(varName + "_0")
             vo.label = varName
             vo.insertHighlightAnnotations(decl)
+            if (decl instanceof IASTArrayDeclarator) {
+                vo.cardinalities += decl.arrayModifiers.map[it.constantExpression.createKExpression(state, dRegion)]
+            }
             
             // Add the valued object and the ssa list to the respective elements    
             varList.add(vo)
@@ -632,7 +642,7 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
             // If the init expression is not a function call translate the expression
             if(!(initializer.children.head instanceof IASTFunctionCallExpression)) {                        
                 val initExpr = createKExpression(initializer.children.head, state, dRegion)
-                dRegion.equations += createAssignment(vo, initExpr)
+                dRegion.equations += createDataflowAssignment(vo, initExpr)
                 
             } else {
                 // Retrieve the name of the called function
@@ -647,12 +657,12 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
                 val refObj = refDecl.createValuedObject(funcName)
                 refObj.insertHighlightAnnotations(funcInit)
                 
-                // Connect the function agrument expressions        
+                // Connect the function argument expressions        
                 var i = 0
                 for (argument : funcInit.getArguments) {
                     val funcObjArg = funcState.declarations.filter(VariableDeclaration).map[it.valuedObjects].flatten.get(i)
                     val connectExpr = argument.createKExpression(state, dRegion)
-                    var ass = createAssignment(refObj, funcObjArg, connectExpr)
+                    var ass = createDataflowAssignment(refObj, funcObjArg, connectExpr)
                     dRegion.equations += ass
                     i++
                 }
@@ -662,7 +672,7 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
                 val outputExpr = refObj.reference => [
                     subReference = outputSource.reference
                 ]
-                dRegion.equations += createAssignment(vo, outputExpr)
+                dRegion.equations += createDataflowAssignment(vo, outputExpr)
                         
             }
         }
@@ -716,7 +726,7 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
             val source = refObj.reference => [
                 subReference = innerOutputVO.reference
             ]            
-            dRegion.equations += createAssignment(target, source)
+            dRegion.equations += createDataflowAssignment(target, source)
         }
     }
     
@@ -792,7 +802,7 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
             }
             
             // Create the assignment    
-            dRegion.equations += createAssignment(refObj, innerInputVO, inputVO.reference)
+            dRegion.equations += createDataflowAssignment(refObj, innerInputVO, inputVO.reference)
         }
     }
     
@@ -846,7 +856,7 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
     /**
      * Find the valued object of the given state by its variables name and creates a new valued object if needed
      */
-    def ValuedObject findValuedObjectByName(State state, String name, boolean writing, Region dRegion) {
+    def ValuedObject findValuedObjectByName(State state, String name, Expression index, boolean writing, Region dRegion) {
         // Retrieve the last valued object of the variables list
         var ValuedObject vo
         val varList = valuedObjects.get(state).get(name)
@@ -868,7 +878,7 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
                 val LengthAnno = vo.getAnnotations("Length")
                 onlyOut = true
                 var varDecl = vo.getVariableDeclaration
-                varName = varName.substring(0, varName.length-3) + "0"
+                varName = varName.substring(0, varName.length - 3) + "0"
                 val type = varDecl.type
                 
                 // If the original variable declaration was attached to the state the new one should be attached to the dataflow region
@@ -887,8 +897,28 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
             }
         } 
         
+        // For Arrays only create a new VO if the specific index has been written to before to still preserve SSA (at
+        // least for constant expressions), but connect what belongs together.
+        val boolean isArray = index !== null
+        var boolean newArrayWrite = false
+        if (isArray && writing) {
+            var alreadyWrittenIdxs = voWrittenIdxs.get(vo)
+            
+            if (alreadyWrittenIdxs === null) {
+                alreadyWrittenIdxs = newArrayList
+                voWrittenIdxs.put(vo, alreadyWrittenIdxs)
+            }
+            
+            if (alreadyWrittenIdxs.exists[ it.expressionEquals(index) ]) {
+                newArrayWrite = true
+            } else {
+                alreadyWrittenIdxs.add(index)
+            }
+        }
+        
+        
         // If the valued object is meant to be read on, a new one has to be created to preserve the SSA-form
-        if (writing && !onlyOut) {
+        if (writing && !onlyOut && /* isArray => newArrayWrite */(!isArray || newArrayWrite)) {
             var varDecl = vo.getVariableDeclaration
             var newName = ""
             
@@ -918,8 +948,22 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
             } else {
                 varList.add(vo)    
             }
+            
+            // If the vo is for an array, note which index has been used now.
+            if (isArray && writing) {
+                val writtenIdxs = newArrayList
+                writtenIdxs.add(index)
+                voWrittenIdxs.put(vo, writtenIdxs)
+            }
         } 
         return vo
+    }
+    
+    /**
+     * Find the valued object of the given state by its variables name and creates a new valued object if needed
+     */
+    def ValuedObject findValuedObjectByName(State state, String name, boolean writing, Region dRegion) {
+        return findValuedObjectByName(state, name, null, writing, dRegion)
     }
     
     /**
@@ -943,7 +987,7 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
                     outVO.annotations += createStringAnnotation("Length", lastVO.getStringAnnotationValue("Length"))
                 }
                 // Add the linking assignment
-                dRegion.equations += createAssignment(outVO, lastVO.reference)
+                dRegion.equations += createDataflowAssignment(outVO, lastVO.reference)
             }
         }
     }
@@ -1001,6 +1045,29 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
             val inputVO = inputDecl.createValuedObject("")
         }
         return state
+    }
+    
+    /**
+     * Returns true if the expressions definetely contain the same value. Currently only considers constant values as
+     * the expressions.
+     */
+    def boolean expressionEquals(Expression expression1, Expression expression2) {
+        if (expression1 instanceof BoolValue && expression2 instanceof BoolValue) {
+            return (expression1 as BoolValue).value.equals((expression2 as BoolValue).value)
+        }
+        if (expression1 instanceof FloatValue && expression2 instanceof FloatValue) {
+            return (expression1 as FloatValue).value.equals((expression2 as FloatValue).value)
+        }
+        if (expression1 instanceof IntValue && expression2 instanceof IntValue) {
+            return (expression1 as IntValue).value.equals((expression2 as IntValue).value)
+        }
+        if (expression1 instanceof StringValue && expression2 instanceof StringValue) {
+            return (expression1 as StringValue).value.equals((expression2 as StringValue).value)
+        }
+        // TODO: expressions such as "n" should also be considered equal. Maybe need to consider if the variables have
+        // been modified in between.
+        
+        return false
     }
 
 }
