@@ -105,7 +105,7 @@ class SCChartsReferenceExtensions extends KExtReferenceExtensions {
             
             // Inherited Decls
             val boundInheritedVOs = <ValuedObject>newHashSet// bining in base state reference
-            for (bsr : targetState.getAllInheritedStatesReferencesHierachically.filter[!it.parameters.nullOrEmpty]) {
+            for (bsr : targetState.getAllInheritedStateReferencesHierachically.filter[!it.parameters.nullOrEmpty]) {
                 for (binding : bsr.target.createBindings(bsr.parameters, new Replacements, newHashMap)) {
                     if (binding.errorMessages.nullOrEmpty) {
                         boundInheritedVOs += binding.targetValuedObject

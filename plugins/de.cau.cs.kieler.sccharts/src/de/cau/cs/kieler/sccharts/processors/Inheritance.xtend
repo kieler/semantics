@@ -19,6 +19,7 @@ import de.cau.cs.kieler.kexpressions.AccessModifier
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.GenericParameterDeclaration
 import de.cau.cs.kieler.kexpressions.GenericTypeReference
+import de.cau.cs.kieler.kexpressions.MethodDeclaration
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 import de.cau.cs.kieler.kexpressions.Value
 import de.cau.cs.kieler.kexpressions.ValueTypeReference
@@ -108,6 +109,9 @@ class Inheritance extends SCChartsProcessor implements Traceable {
                 container = container.eContainer
             }
             
+            val methods = newHashMap
+            val methodReplacements = state.getMethodInheritanceInfos // must be analyzed before state declarations are changed
+            
             val newDecls = newArrayList
             for (baseDelc : allBaseStates.map[declarations].flatten.filter[!implicitlyBoundInSuperState.contains(it)]) {
                 var newDecl = baseDelc.copy
@@ -118,11 +122,15 @@ class Inheritance extends SCChartsProcessor implements Traceable {
                     }
                     newDecl.access = AccessModifier.PUBLIC
                 }
-
+                
                 for (baseVoIdx : baseDelc.valuedObjects.indexed) {
                     val baseVO = baseVoIdx.value
                     val newVO = newDecl.valuedObjects.get(baseVoIdx.key)
-                    if (voNames.containsKey(newVO.name)) {
+                    if (newDecl instanceof MethodDeclaration) {
+                        methods.put(baseDelc, newDecl)
+                        replacements.put(baseVO, newVO)
+                        voStore.update(newVO, "inherited")
+                    } else if (voNames.containsKey(newVO.name)) {
                         environment.errors.add("Conflicting variable declaration with name " + newVO.name + " in inheritance hierarchy.", baseVO, true)
                     } else {
                         replacements.put(baseVO, newVO)
@@ -136,6 +144,23 @@ class Inheritance extends SCChartsProcessor implements Traceable {
                 }
             }
             state.declarations.addAll(0, newDecls)
+            
+            // Handle method override and abstract methods
+            for (method : methodReplacements) {
+                if (!method.errors.empty) {
+                    environment.errors.add(method.errors.join("\n"), method.inherited ? methods.get(method.decl) : method.decl, true)
+                } else if (method.overrider !== null) {
+                    if (methods.containsKey(method.overrider)) {
+                        val oldVO = method.decl.valuedObjects.head
+                        val newVO = methods.get(method.overrider).valuedObjects.head
+                        replacements.put(oldVO, newVO)
+                        voStore.remove(methods.get(method.decl).valuedObjects.head)
+                        method.decl.remove
+                    }
+                } else if (!method.body) {
+                    environment.errors.add("Method " + method.decl.valuedObjects.head.name + " has no implementation. All abstract methods require overrides for futher compilation", method.inherited ? methods.get(method.decl) : method.decl, true)
+                }
+            }
             
             // replace references in declarations/methods
             state.declarations.forEach[replaceVOR(replacements)]
@@ -194,7 +219,7 @@ class Inheritance extends SCChartsProcessor implements Traceable {
                 }
             }
             // Bound in hierarchy
-            for (baseRef : state.getAllInheritedStatesReferencesHierachically) {
+            for (baseRef : state.getAllInheritedStateReferencesHierachically) {
                 // IO binding parameters
                 if (!baseRef.parameters.nullOrEmpty) {
                     val bindings = baseRef.target.createBindings(baseRef.parameters, new Replacements, newHashMap)

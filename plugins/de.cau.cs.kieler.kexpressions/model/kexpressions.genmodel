@@ -177,6 +177,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute kexpressions.ecore#//ValueTypeReference/valueType"/>
     </genClasses>
     <genClasses ecoreClass="kexpressions.ecore#//MethodDeclaration">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute kexpressions.ecore#//MethodDeclaration/override"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute kexpressions.ecore#//MethodDeclaration/returnType"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference kexpressions.ecore#//MethodDeclaration/parameterDeclarations"/>
     </genClasses>

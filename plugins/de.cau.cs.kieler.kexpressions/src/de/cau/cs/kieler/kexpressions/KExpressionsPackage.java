@@ -1283,13 +1283,22 @@ public interface KExpressionsPackage extends EPackage {
     int METHOD_DECLARATION__SCHEDULE = DECLARATION_FEATURE_COUNT + 0;
 
     /**
+     * The feature id for the '<em><b>Override</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int METHOD_DECLARATION__OVERRIDE = DECLARATION_FEATURE_COUNT + 1;
+
+    /**
      * The feature id for the '<em><b>Return Type</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int METHOD_DECLARATION__RETURN_TYPE = DECLARATION_FEATURE_COUNT + 1;
+    int METHOD_DECLARATION__RETURN_TYPE = DECLARATION_FEATURE_COUNT + 2;
 
     /**
      * The feature id for the '<em><b>Parameter Declarations</b></em>' containment reference list.
@@ -1298,7 +1307,7 @@ public interface KExpressionsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int METHOD_DECLARATION__PARAMETER_DECLARATIONS = DECLARATION_FEATURE_COUNT + 2;
+    int METHOD_DECLARATION__PARAMETER_DECLARATIONS = DECLARATION_FEATURE_COUNT + 3;
 
     /**
      * The number of structural features of the '<em>Method Declaration</em>' class.
@@ -1307,7 +1316,7 @@ public interface KExpressionsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int METHOD_DECLARATION_FEATURE_COUNT = DECLARATION_FEATURE_COUNT + 3;
+    int METHOD_DECLARATION_FEATURE_COUNT = DECLARATION_FEATURE_COUNT + 4;
 
     /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -2702,6 +2711,17 @@ public interface KExpressionsPackage extends EPackage {
     EClass getMethodDeclaration();
 
     /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kexpressions.MethodDeclaration#isOverride <em>Override</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Override</em>'.
+     * @see de.cau.cs.kieler.kexpressions.MethodDeclaration#isOverride()
+     * @see #getMethodDeclaration()
+     * @generated
+     */
+    EAttribute getMethodDeclaration_Override();
+
+    /**
      * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kexpressions.MethodDeclaration#getReturnType <em>Return Type</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -3689,6 +3709,14 @@ public interface KExpressionsPackage extends EPackage {
          * @generated
          */
         EClass METHOD_DECLARATION = eINSTANCE.getMethodDeclaration();
+
+        /**
+         * The meta object literal for the '<em><b>Override</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute METHOD_DECLARATION__OVERRIDE = eINSTANCE.getMethodDeclaration_Override();
 
         /**
          * The meta object literal for the '<em><b>Return Type</b></em>' attribute feature.

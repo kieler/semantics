@@ -13,23 +13,35 @@
 package de.cau.cs.kieler.sccharts.extensions
 
 import com.google.common.collect.HashMultimap
+import com.google.inject.Inject
+import de.cau.cs.kieler.kexpressions.AccessModifier
 import de.cau.cs.kieler.kexpressions.Declaration
+import de.cau.cs.kieler.kexpressions.MethodDeclaration
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.sccharts.BaseStateReference
 import de.cau.cs.kieler.sccharts.LocalAction
 import de.cau.cs.kieler.sccharts.Region
+import de.cau.cs.kieler.sccharts.SCChartsFactory
 import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
+import java.util.Collection
 import java.util.List
 import java.util.Set
 import org.eclipse.emf.ecore.EObject
-import de.cau.cs.kieler.kexpressions.AccessModifier
-import de.cau.cs.kieler.sccharts.BaseStateReference
-import de.cau.cs.kieler.sccharts.SCChartsFactory
+import org.eclipse.xtend.lib.annotations.Accessors
+import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor
+import de.cau.cs.kieler.scl.MethodImplementationDeclaration
+import java.util.LinkedHashMap
+
+import static extension java.lang.String.format
 
 /**
  * @author als
  *
  */
 class SCChartsInheritanceExtensions {
+    
+    @Inject extension KExpressionsDeclarationExtensions
     
     /**
      * Returns all base states.
@@ -65,28 +77,34 @@ class SCChartsInheritanceExtensions {
     /**
      * Returns a list of all base states references contained in the inheritance hierarchy acending depth.
      */
-    def List<BaseStateReference> getAllInheritedStatesReferencesHierachically(State state) {
-        val allBaseStateRefs = <BaseStateReference>newLinkedHashSet
+    def List<BaseStateReference> getAllInheritedStateReferencesHierachically(State state) {
+        return state.getAllInheritedStateReferencesHierachicallyLeveled.entrySet.map[key].toList
+    }
+    def LinkedHashMap<BaseStateReference, Integer> getAllInheritedStateReferencesHierachicallyLeveled(State state) {
+        val allBaseStateRefs = new LinkedHashMap<BaseStateReference, Integer>
         
         if (state !== null && !state.baseStateReferences.nullOrEmpty) {
             val work = newLinkedList
+            state.baseStateReferences.forEach[allBaseStateRefs.put(it, 1)]
             work.addAll(state.baseStateReferences)
             work.removeIf[it.target == state]
             
             while (!work.empty) {
                 val ref = work.pop
-                allBaseStateRefs += ref
                 val target = ref.target
                 if (!target.baseStateReferences.nullOrEmpty) {
+                    val level = allBaseStateRefs.get(ref) + 1
                     for (baseRef : target.baseStateReferences.filterNull) { // Depth first
-                        if (baseRef.target !== null && baseRef.target != state && !work.contains(baseRef) && !allBaseStateRefs.contains(baseRef)) {
+                        if (baseRef.target !== null && baseRef.target != state && !work.contains(baseRef) && !allBaseStateRefs.containsKey(baseRef)) {
+                            allBaseStateRefs.put(baseRef, level)
                             work.add(baseRef)
                         }
                     }
                 }
             }
         }
-        return allBaseStateRefs.toList
+        
+        return allBaseStateRefs
     }
     
     /**
@@ -201,6 +219,63 @@ class SCChartsInheritanceExtensions {
         return cycles
     }
     
+    def Collection<MethodInheritanceInfo> getMethodInheritanceInfos(State state) {
+        val infos = newArrayList
+        val effective = newHashMap
+        
+        // local ones
+        for (method : state.methodDeclarations) {
+            val info = new MethodInheritanceInfo(method)
+            infos += info
+            effective.put(info.name, info)
+        }
+        
+        // inherited
+        // TODO:
+        // - add/handle super. access
+        // - add/handle overloading
+        val leveldBaseStates = state.allInheritedStateReferencesHierachicallyLeveled
+        for (base : leveldBaseStates.entrySet) {
+            val baseState = base.key.target
+            for (method : baseState.methodDeclarations) {
+                val info = new MethodInheritanceInfo(method)
+                info.inheritanceLevel = base.value
+                infos += info
+                
+                if (method.access !== AccessModifier.PRIVATE) {
+                    if (effective.containsKey(info.name)) {
+                        val repl = effective.get(info.name)
+                        
+                        if (info.inheritanceLevel < repl.inheritanceLevel) {
+                            info.errors += "Multiple definitions of the same method (%s) in the inheritance hierachy but no overrider to solve this ambiguity (diamond problem).".format(info.name)
+                            repl.errors += "Multiple definitions of the same method (%s) in the inheritance hierachy but no overrider to solve this ambiguity (diamond problem).".format(info.name)
+                        } else if (!repl.decl.^override) {
+                            info.errors += "Method (%s) was redefined in the inheritance hierachy but not marked as override (keyword).".format(info.name)
+                        }
+                        info.overrider = repl.decl
+                        repl.overriding = true
+                    } else {
+                        effective.put(info.name, info)
+                    }
+                }
+            }
+        }
+        
+        // final checks
+        for (info : infos) {
+            if (info.decl.^override) {
+                if (!info.overriding) {
+                    info.errors += "No matching or visible method found with this signature to override."
+                }
+                if (!info.body) {
+                    info.errors += "An overriding method must provide an implementation!"
+                }
+            }
+        }
+        
+        return infos
+    }
+    
     def State getNextSuperStateWithBaseStates(Scope scope) {
         var EObject parent = scope
         while (parent !== null) {
@@ -220,4 +295,29 @@ class SCChartsInheritanceExtensions {
         ]
     }
 
+}
+
+@Accessors
+class MethodInheritanceInfo {
+    val MethodDeclaration decl
+    val boolean body
+    val List<String> errors = newArrayList
+    
+    var int inheritanceLevel = 0
+    var boolean overriding = false
+    var MethodDeclaration overrider = null
+    
+    new(MethodDeclaration decl) {
+        this.decl = decl
+        this.body = (decl instanceof MethodImplementationDeclaration)
+                    && !(decl as MethodImplementationDeclaration).statements.nullOrEmpty
+    }
+    
+    def getName() {
+        return decl?.valuedObjects?.head?.name
+    }
+    
+    def isInherited() {
+        return inheritanceLevel !== 0
+    }
 }

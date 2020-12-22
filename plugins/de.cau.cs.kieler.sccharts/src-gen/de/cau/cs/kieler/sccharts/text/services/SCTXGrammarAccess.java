@@ -2901,8 +2901,11 @@ public class SCTXGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		private final Action cMethodImplementationDeclarationAction_0 = (Action)cGroup.eContents().get(0);
 		private final Assignment cAnnotationsAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cAnnotationsAnnotationParserRuleCall_1_0 = (RuleCall)cAnnotationsAssignment_1.eContents().get(0);
-		private final Assignment cAccessAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cAccessAccessModifierEnumRuleCall_2_0 = (RuleCall)cAccessAssignment_2.eContents().get(0);
+		private final Alternatives cAlternatives_2 = (Alternatives)cGroup.eContents().get(2);
+		private final Assignment cAccessAssignment_2_0 = (Assignment)cAlternatives_2.eContents().get(0);
+		private final RuleCall cAccessAccessModifierEnumRuleCall_2_0_0 = (RuleCall)cAccessAssignment_2_0.eContents().get(0);
+		private final Assignment cOverrideAssignment_2_1 = (Assignment)cAlternatives_2.eContents().get(1);
+		private final Keyword cOverrideOverrideKeyword_2_1_0 = (Keyword)cOverrideAssignment_2_1.eContents().get(0);
 		private final Keyword cMethodKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		private final Assignment cReturnTypeAssignment_4 = (Assignment)cGroup.eContents().get(4);
 		private final RuleCall cReturnTypeMethodReturnTypeEnumRuleCall_4_0 = (RuleCall)cReturnTypeAssignment_4.eContents().get(0);
@@ -2934,8 +2937,7 @@ public class SCTXGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		private final Keyword cRightCurlyBracketKeyword_8_4 = (Keyword)cGroup_8.eContents().get(4);
 		
 		//KeywordMethodDeclarationWOSemicolon kexpressions::MethodDeclaration:
-		//	{scl::MethodImplementationDeclaration} annotations+=Annotation*
-		//	access=AccessModifier?
+		//	{scl::MethodImplementationDeclaration} annotations+=Annotation* (access=AccessModifier? | override?='override')
 		//	'method'
 		//	returnType=MethodReturnType?
 		//	valuedObjects+=SimpleValuedObject ('(' parameterDeclarations+=VariableDeclarationWOSemicolon (','
@@ -2947,7 +2949,7 @@ public class SCTXGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		//	'}')?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{scl::MethodImplementationDeclaration} annotations+=Annotation* access=AccessModifier? 'method'
+		//{scl::MethodImplementationDeclaration} annotations+=Annotation* (access=AccessModifier? | override?='override') 'method'
 		//returnType=MethodReturnType? valuedObjects+=SimpleValuedObject ('('
 		//parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)* ')'
 		//| '()') ('schedule' schedule+=ScheduleObjectReference+)? ('{' annotations+=CommentAnnotatonSL?
@@ -2963,11 +2965,20 @@ public class SCTXGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		//Annotation
 		public RuleCall getAnnotationsAnnotationParserRuleCall_1_0() { return cAnnotationsAnnotationParserRuleCall_1_0; }
 		
+		//(access=AccessModifier? | override?='override')
+		public Alternatives getAlternatives_2() { return cAlternatives_2; }
+		
 		//access=AccessModifier?
-		public Assignment getAccessAssignment_2() { return cAccessAssignment_2; }
+		public Assignment getAccessAssignment_2_0() { return cAccessAssignment_2_0; }
 		
 		//AccessModifier
-		public RuleCall getAccessAccessModifierEnumRuleCall_2_0() { return cAccessAccessModifierEnumRuleCall_2_0; }
+		public RuleCall getAccessAccessModifierEnumRuleCall_2_0_0() { return cAccessAccessModifierEnumRuleCall_2_0_0; }
+		
+		//override?='override'
+		public Assignment getOverrideAssignment_2_1() { return cOverrideAssignment_2_1; }
+		
+		//'override'
+		public Keyword getOverrideOverrideKeyword_2_1_0() { return cOverrideOverrideKeyword_2_1_0; }
 		
 		//'method'
 		public Keyword getMethodKeyword_3() { return cMethodKeyword_3; }
@@ -4134,8 +4145,7 @@ public class SCTXGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 	}
 	
 	//KeywordMethodDeclarationWOSemicolon kexpressions::MethodDeclaration:
-	//	{scl::MethodImplementationDeclaration} annotations+=Annotation*
-	//	access=AccessModifier?
+	//	{scl::MethodImplementationDeclaration} annotations+=Annotation* (access=AccessModifier? | override?='override')
 	//	'method'
 	//	returnType=MethodReturnType?
 	//	valuedObjects+=SimpleValuedObject ('(' parameterDeclarations+=VariableDeclarationWOSemicolon (','

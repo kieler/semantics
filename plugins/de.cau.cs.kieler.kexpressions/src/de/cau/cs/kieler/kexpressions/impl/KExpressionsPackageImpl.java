@@ -1184,7 +1184,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * @generated
      */
     @Override
-    public EAttribute getMethodDeclaration_ReturnType() {
+    public EAttribute getMethodDeclaration_Override() {
         return (EAttribute)methodDeclarationEClass.getEStructuralFeatures().get(0);
     }
 
@@ -1194,8 +1194,18 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * @generated
      */
     @Override
+    public EAttribute getMethodDeclaration_ReturnType() {
+        return (EAttribute)methodDeclarationEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public EReference getMethodDeclaration_ParameterDeclarations() {
-        return (EReference)methodDeclarationEClass.getEStructuralFeatures().get(1);
+        return (EReference)methodDeclarationEClass.getEStructuralFeatures().get(2);
     }
 
     /**
@@ -1611,6 +1621,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         createEAttribute(valueTypeReferenceEClass, VALUE_TYPE_REFERENCE__VALUE_TYPE);
 
         methodDeclarationEClass = createEClass(METHOD_DECLARATION);
+        createEAttribute(methodDeclarationEClass, METHOD_DECLARATION__OVERRIDE);
         createEAttribute(methodDeclarationEClass, METHOD_DECLARATION__RETURN_TYPE);
         createEReference(methodDeclarationEClass, METHOD_DECLARATION__PARAMETER_DECLARATIONS);
 
@@ -1838,6 +1849,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         initEAttribute(getValueTypeReference_ValueType(), this.getValueType(), "valueType", null, 1, 1, ValueTypeReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(methodDeclarationEClass, MethodDeclaration.class, "MethodDeclaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getMethodDeclaration_Override(), ecorePackage.getEBoolean(), "override", null, 0, 1, MethodDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getMethodDeclaration_ReturnType(), this.getValueType(), "returnType", null, 0, 1, MethodDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getMethodDeclaration_ParameterDeclarations(), this.getDeclaration(), null, "parameterDeclarations", null, 0, -1, MethodDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 

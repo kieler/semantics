@@ -277,7 +277,17 @@ class KExpressionsDeclarationExtensions {
         <ReferenceDeclaration> newArrayList => [ list |
             eObject.eContents.filter(ReferenceDeclaration).forEach[ list += it ]
         ]
-    }   
+    }
+    
+    def List<MethodDeclaration> getMethodDeclarations(EObject eObject) {
+        <MethodDeclaration> newArrayList => [ list |
+            eObject.eContents.filter(MethodDeclaration).forEach[ list += it ]
+        ]
+    } 
+    
+    def Iterable<Declaration> excludeMethods(Iterable<Declaration> iter) {
+        return iter.filter[!(it instanceof MethodDeclaration)]
+    }
     
 //    def ReferenceDeclaration getReferenceDeclaration(ValuedObject valuedObject) {
 //        valuedObject.eContainer as ReferenceDeclaration

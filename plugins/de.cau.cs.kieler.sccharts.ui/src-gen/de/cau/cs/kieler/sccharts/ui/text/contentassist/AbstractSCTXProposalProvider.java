@@ -413,6 +413,9 @@ public abstract class AbstractSCTXProposalProvider extends SCLProposalProvider {
 	public void completeKeywordMethodDeclarationWOSemicolon_Access(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
 		completeRuleCall(((RuleCall)assignment.getTerminal()), context, acceptor);
 	}
+	public void completeKeywordMethodDeclarationWOSemicolon_Override(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+		// subclasses may override
+	}
 	public void completeKeywordMethodDeclarationWOSemicolon_ReturnType(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
 		completeRuleCall(((RuleCall)assignment.getTerminal()), context, acceptor);
 	}

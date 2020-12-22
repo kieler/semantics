@@ -24,6 +24,7 @@ import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.VectorValue
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
@@ -62,6 +63,8 @@ import org.eclipse.xtext.validation.Check
 import org.eclipse.xtext.validation.CheckType
 
 import static extension java.lang.String.*
+import de.cau.cs.kieler.kexpressions.MethodDeclaration
+import com.google.common.collect.Iterables
 
 /**
  * This class contains custom validation rules. 
@@ -80,6 +83,7 @@ class SCTXValidator extends AbstractSCTXValidator {
     @Inject extension SCChartsInheritanceExtensions
     @Inject extension SCChartsScopeExtensions
     @Inject extension KExpressionsValuedObjectExtensions
+    @Inject extension KExpressionsDeclarationExtensions
     @Inject extension KEffectsExtensions
     
     /** Service class for accessing layout options by name */
@@ -163,7 +167,7 @@ class SCTXValidator extends AbstractSCTXValidator {
     def void checkInheritanceHierarchy(de.cau.cs.kieler.sccharts.State state) {
         if (!state.baseStateReferences.nullOrEmpty) {
             for (cycle : state.hierarchyCycles.entries) {
-                warning(INHERITANCE_CYCLE + cycle.key.name, state, SCChartsPackage.eINSTANCE.state_BaseStateReferences, cycle.value)
+                error(INHERITANCE_CYCLE + cycle.key.name, state, SCChartsPackage.eINSTANCE.state_BaseStateReferences, cycle.value)
             }
         }
     }
@@ -174,28 +178,28 @@ class SCTXValidator extends AbstractSCTXValidator {
     @Check
     def void checkInheritedVONameClash(de.cau.cs.kieler.sccharts.State state) {
         if (!state.baseStateReferences.nullOrEmpty) {
-            val names = HashMultimap.<String, de.cau.cs.kieler.sccharts.State>create
-            for (base : state.allInheritedStates) {
-                base.declarations.filter[access !== AccessModifier.PRIVATE].map[valuedObjects].flatten.forEach[names.put(it.name, base)]
+            val voNames = HashMultimap.<String, BaseStateReference>create
+            for (base : state.allInheritedStateReferencesHierachically) {
+                base.target.declarations.excludeMethods.filter[access !== AccessModifier.PRIVATE].map[valuedObjects].flatten.forEach[voNames.put(name, base)]
             }
-            val clashes = names.keySet.filter[names.get(it).size > 1].toSet
-            if (!clashes.empty) {
-                val indirectClashes = state.baseStates.indexed.toMap([key], [value !== null ? value.allVisibleInheritedDeclarations.map[valuedObjects].flatten.map[name].toSet : emptySet])
-                for (clash : clashes) {
-                    val states = names.get(clash)
+            val voClashes = voNames.keySet.filter[voNames.get(it).size > 1].toSet
+            if (!voClashes.empty) {
+                val indirectClashes = state.baseStateReferences.indexed.toMap([key], [value.target !== null ? value.target.allVisibleInheritedDeclarations.excludeMethods.map[valuedObjects].flatten.map[name].toSet : emptySet])
+                for (clash : voClashes) {
+                    val stateRefs = voNames.get(clash)
                     val marked = newHashSet
-                    for (s : states) {
-                        if (state.baseStates.contains(s)) {
-                            if (!marked.contains(s)) {
-                                marked += s
-                                warning(INHERITANCE_VO_NAME_CLASH.format(clash, states.map[name].join(", ")), state, SCChartsPackage.eINSTANCE.state_BaseStateReferences, state.baseStates.toList.indexOf(s))
+                    for (ref : stateRefs) {
+                        if (state.baseStateReferences.contains(ref)) {
+                            if (!marked.contains(ref)) {
+                                marked += ref
+                                error(INHERITANCE_VO_NAME_CLASH.format(clash, stateRefs.map[target.name].join(", ")), ref, SCChartsPackage.eINSTANCE.state_BaseStateReferences, state.baseStateReferences.toList.indexOf(ref))
                             }
                         } else { // indirect
                             for (match : indirectClashes.entrySet.filter[value.contains(clash)]) {
-                                val markState = state.baseStates.get(match.key)
+                                val markState = state.baseStateReferences.get(match.key)
                                 if (markState !== null && !marked.contains(markState)) {
                                     marked += markState
-                                    warning(INHERITANCE_VO_NAME_CLASH.format(clash, states.map[name].join(", ")), state, SCChartsPackage.eINSTANCE.state_BaseStateReferences, match.key)
+                                    error(INHERITANCE_VO_NAME_CLASH.format(clash, stateRefs.map[target.name].join(", ")), state, SCChartsPackage.eINSTANCE.state_BaseStateReferences, match.key)
                                 }
                             }
                         }
@@ -227,14 +231,14 @@ class SCTXValidator extends AbstractSCTXValidator {
                         if (state.baseStates.contains(s)) {
                             if (!marked.contains(s)) {
                                 marked += s
-                                warning(INHERITANCE_REGION_NAME_CLASH.format(clash, states.map[name].join(", ")), state, SCChartsPackage.eINSTANCE.state_BaseStateReferences, state.baseStates.toList.indexOf(s))
+                                error(INHERITANCE_REGION_NAME_CLASH.format(clash, states.map[name].join(", ")), state, SCChartsPackage.eINSTANCE.state_BaseStateReferences, state.baseStates.toList.indexOf(s))
                             }
                         } else { // indirect
                             for (match : indirectClashes.entrySet.filter[value.contains(clash)]) {
                                 val markState = state.baseStates.get(match.key)
                                 if (markState !== null && !marked.contains(markState)) {
                                     marked += markState
-                                    warning(INHERITANCE_REGION_NAME_CLASH.format(clash, states.map[name].join(", ")), state, SCChartsPackage.eINSTANCE.state_BaseStateReferences, match.key)
+                                    error(INHERITANCE_REGION_NAME_CLASH.format(clash, states.map[name].join(", ")), state, SCChartsPackage.eINSTANCE.state_BaseStateReferences, match.key)
                                 }
                             }
                         }
@@ -250,11 +254,11 @@ class SCTXValidator extends AbstractSCTXValidator {
     @Check
     def void checkInheritedVONameReuse(de.cau.cs.kieler.sccharts.State state) {
         if (!state.baseStateReferences.nullOrEmpty) {
-            val voNames = state.allVisibleInheritedDeclarations.map[valuedObjects].flatten.map[name].toSet
-            for (decl : state.declarations) {
+            val voNames = state.allVisibleInheritedDeclarations.excludeMethods.map[valuedObjects].flatten.map[name].toSet
+            for (decl : state.declarations.excludeMethods) {
                 for (vo : decl.valuedObjects) {
                     if (voNames.contains(vo.name)) {
-                        warning(INHERITANCE_VO_NAME_REUSE, vo, null)
+                        error(INHERITANCE_VO_NAME_REUSE, vo, null)
                     }
                 }
             }
@@ -268,20 +272,40 @@ class SCTXValidator extends AbstractSCTXValidator {
     def void checkRegionOverride(Region region) {
         if (region.override) {
             if (region.name.nullOrEmpty) {
-                warning(REGION_OVERRIDE_ANONYMOUS, region, SCChartsPackage.eINSTANCE.region_Override)
+                error(REGION_OVERRIDE_ANONYMOUS, region, SCChartsPackage.eINSTANCE.region_Override)
             } else {
                 val inheritedRegions = region.parentState.getAllVisibleInheritedRegions(false)
                 if (!inheritedRegions.exists[region.name.equals(name)]) {
-                    warning(REGION_OVERRIDE_SUPERFLOUSE, region, SCChartsPackage.eINSTANCE.region_Override)
+                    error(REGION_OVERRIDE_SUPERFLOUSE, region, SCChartsPackage.eINSTANCE.region_Override)
                 }
             }
         } else if (!region.parentState.baseStateReferences.nullOrEmpty && !region.name.nullOrEmpty) {
             val inheritedRegions = region.parentState.getAllVisibleInheritedRegions(true)
             if (inheritedRegions.exists[region.name.equals(name)]) {
-                warning(REGION_OVERRIDE_MISSING, region, AnnotationsPackage.eINSTANCE.namedObject_Name, -1)
+                error(REGION_OVERRIDE_MISSING, region, AnnotationsPackage.eINSTANCE.namedObject_Name, -1)
             }
         }
-    }    
+    }
+    
+    @Check
+    def void checkMethods(de.cau.cs.kieler.sccharts.State state) {
+        val methodInfos = state.getMethodInheritanceInfos
+        val inherited = state.baseStateReferences.indexed.toMap([key], [
+            value?.target !== null ?
+                Iterables.concat(value.target.declarations, value.target.allInheritedDeclarations).filter(MethodDeclaration).toSet
+                : emptySet
+        ])
+        for (info : methodInfos.filter[!errors.empty]) {
+            if (info.inherited) {
+                val source = inherited.entrySet.findFirst[value.contains(info.decl)]?.key?:-1
+                if (source >= 0) {
+                    error(info.errors.join("\n"), state, SCChartsPackage.eINSTANCE.state_BaseStateReferences, source)
+                }
+            } else {
+                error(info.errors.join("\n"), info.decl, null)
+            }
+        }
+    }
     
     /**
      * Checks if given layout annotation uses an existing unique layout option id (suffix).

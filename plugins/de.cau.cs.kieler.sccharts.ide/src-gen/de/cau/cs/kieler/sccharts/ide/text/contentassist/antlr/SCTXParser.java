@@ -54,6 +54,7 @@ public class SCTXParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getClassDeclarationWOSemicolonAccess().getAlternatives_9(), "rule__ClassDeclarationWOSemicolon__Alternatives_9");
 			builder.put(grammarAccess.getPolicyTransitionAccess().getAlternatives_2_1(), "rule__PolicyTransition__Alternatives_2_1");
 			builder.put(grammarAccess.getDeclarationOrMethodWithKeywordWOSemicolonAccess().getAlternatives(), "rule__DeclarationOrMethodWithKeywordWOSemicolon__Alternatives");
+			builder.put(grammarAccess.getKeywordMethodDeclarationWOSemicolonAccess().getAlternatives_2(), "rule__KeywordMethodDeclarationWOSemicolon__Alternatives_2");
 			builder.put(grammarAccess.getKeywordMethodDeclarationWOSemicolonAccess().getAlternatives_6(), "rule__KeywordMethodDeclarationWOSemicolon__Alternatives_6");
 			builder.put(grammarAccess.getReferenceValuedObjectAccess().getAlternatives_4(), "rule__ReferenceValuedObject__Alternatives_4");
 			builder.put(grammarAccess.getAlternativeGenericParameterDeclarationAccess().getAlternatives_2(), "rule__AlternativeGenericParameterDeclaration__Alternatives_2");
@@ -705,7 +706,8 @@ public class SCTXParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getPolicyTransitionAccess().getTargetStateAssignment_4(), "rule__PolicyTransition__TargetStateAssignment_4");
 			builder.put(grammarAccess.getPolicyTransitionAccess().getLabelAssignment_5_1(), "rule__PolicyTransition__LabelAssignment_5_1");
 			builder.put(grammarAccess.getKeywordMethodDeclarationWOSemicolonAccess().getAnnotationsAssignment_1(), "rule__KeywordMethodDeclarationWOSemicolon__AnnotationsAssignment_1");
-			builder.put(grammarAccess.getKeywordMethodDeclarationWOSemicolonAccess().getAccessAssignment_2(), "rule__KeywordMethodDeclarationWOSemicolon__AccessAssignment_2");
+			builder.put(grammarAccess.getKeywordMethodDeclarationWOSemicolonAccess().getAccessAssignment_2_0(), "rule__KeywordMethodDeclarationWOSemicolon__AccessAssignment_2_0");
+			builder.put(grammarAccess.getKeywordMethodDeclarationWOSemicolonAccess().getOverrideAssignment_2_1(), "rule__KeywordMethodDeclarationWOSemicolon__OverrideAssignment_2_1");
 			builder.put(grammarAccess.getKeywordMethodDeclarationWOSemicolonAccess().getReturnTypeAssignment_4(), "rule__KeywordMethodDeclarationWOSemicolon__ReturnTypeAssignment_4");
 			builder.put(grammarAccess.getKeywordMethodDeclarationWOSemicolonAccess().getValuedObjectsAssignment_5(), "rule__KeywordMethodDeclarationWOSemicolon__ValuedObjectsAssignment_5");
 			builder.put(grammarAccess.getKeywordMethodDeclarationWOSemicolonAccess().getParameterDeclarationsAssignment_6_0_1(), "rule__KeywordMethodDeclarationWOSemicolon__ParameterDeclarationsAssignment_6_0_1");

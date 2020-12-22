@@ -348,6 +348,7 @@
         eType="#//ValueType"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="MethodDeclaration" eSuperTypes="#//Declaration #//Schedulable">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="override" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="returnType" eType="#//ValueType"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="parameterDeclarations"
         upperBound="-1" eType="#//Declaration" containment="true"/>

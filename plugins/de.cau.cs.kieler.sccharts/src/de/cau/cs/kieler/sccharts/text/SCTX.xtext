@@ -313,7 +313,7 @@ DeclarationOrMethodWithKeywordWOSemicolon returns kexpressions::Declaration:
 KeywordMethodDeclarationWOSemicolon returns kexpressions::MethodDeclaration:
     {scl::MethodImplementationDeclaration}
     annotations+=Annotation*
-    access=AccessModifier?
+    ( access=AccessModifier? | override?='override' )
     'method'
     returnType=MethodReturnType?
     valuedObjects+=SimpleValuedObject
