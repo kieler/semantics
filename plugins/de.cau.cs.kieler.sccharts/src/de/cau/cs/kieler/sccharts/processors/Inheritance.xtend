@@ -30,6 +30,7 @@ import java.util.ArrayList
 import org.eclipse.emf.ecore.EObject
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
+import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 
 /**
  * 
@@ -100,7 +101,9 @@ class Inheritance extends SCChartsProcessor implements Traceable {
                         environment.errors.add("Conflicting variable declaration with name " + newVO.name + " in inheritance hierarchy.", baseVO, true)
                     } else {
                         replacements.put(baseVO, newVO)
-                        voStore.update(newVO, "inherited")
+                        if (!(newVO.declaration instanceof ReferenceDeclaration)) {
+                            voStore.update(newVO, "inherited")
+                        }
                     }
                     voNames.put(newVO.name, newVO)
                 }
