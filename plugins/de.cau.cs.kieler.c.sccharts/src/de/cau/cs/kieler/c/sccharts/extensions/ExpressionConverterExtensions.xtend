@@ -110,19 +110,22 @@ class ExpressionConverterExtensions {
             // Retrieve the assignment target
             var ValuedObject target
             val targetExpr = binExpr.getOperand1
+            var Expression index
             if (targetExpr instanceof IASTIdExpression) {
                 target = funcState.findValuedObjectByName(targetExpr.getName.toString, true, dRegion)    
             } else if (targetExpr instanceof IASTArraySubscriptExpression) {
                 val arrayIndex = targetExpr.argument.createKExpression(funcState, dRegion)
                 target = funcState.findValuedObjectByName(targetExpr.arrayExpression.exprToString, arrayIndex, true, dRegion)
-                target.cardinalities += targetExpr.argument.createKExpression(funcState, dRegion)
+                index = targetExpr.argument.createKExpression(funcState, dRegion)
             } else {
                 println("ExpressionConverterExtensions: Unsupported assignment target detected!" + targetExpr.expressionType)
             }
             
             target.insertHighlightAnnotations(binExpr)
             ass = createDataflowAssignment(target, source)
-            ass.reference.indices += target.cardinalities
+            if (index !== null) {
+                ass.reference.indices += index
+            }
         }
         assignments.add(ass)
         return assignments
