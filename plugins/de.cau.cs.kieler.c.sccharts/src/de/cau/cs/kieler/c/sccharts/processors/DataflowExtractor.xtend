@@ -897,28 +897,36 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
             }
         } 
         
-        // For Arrays only create a new VO if the specific index has been written to before to still preserve SSA (at
-        // least for constant expressions), but connect what belongs together.
+        // For Arrays only create a new VO if is written to for a first time or after a read, or if the specific index
+        // has been written to before to still preserve SSA (at least for constant expressions), but connect what
+        // belongs together.
         val boolean isArray = index !== null
-        var boolean newArrayWrite = false
-        if (isArray && writing) {
+        var boolean newArrayVONeeded = false
+        if (isArray) {
             var alreadyWrittenIdxs = voWrittenIdxs.get(vo)
             
-            if (alreadyWrittenIdxs === null) {
-                alreadyWrittenIdxs = newArrayList
-                voWrittenIdxs.put(vo, alreadyWrittenIdxs)
-            }
-            
-            if (alreadyWrittenIdxs.exists[ it.expressionEquals(index) ]) {
-                newArrayWrite = true
-            } else {
-                alreadyWrittenIdxs.add(index)
+            if (writing) {
+                if (alreadyWrittenIdxs === null || alreadyWrittenIdxs.empty) {
+                    // A first write to an array needs a new VO.
+                    alreadyWrittenIdxs = newArrayList
+                    voWrittenIdxs.put(vo, alreadyWrittenIdxs)
+                    newArrayVONeeded = true
+                } else if (alreadyWrittenIdxs.exists[ it.expressionEquals(index) ]) {
+                    // Any subsequent write to that array only needs a new VO if it is on a different array index.
+                    newArrayVONeeded = true
+                } else {
+                    alreadyWrittenIdxs.add(index)
+                }
+            } else if (alreadyWrittenIdxs !== null) {
+                // If this is a read to an array that has been written to before, clear the alreadyWrittenIdxs, so that
+                // a new VO will be created on the next write to it.
+                alreadyWrittenIdxs.clear
             }
         }
         
         
-        // If the valued object is meant to be read on, a new one has to be created to preserve the SSA-form
-        if (writing && !onlyOut && /* isArray => newArrayWrite */(!isArray || newArrayWrite)) {
+        // If the valued object is meant to be written to, a new one has to be created to preserve the SSA-form
+        if (writing && !onlyOut && /* isArray => newArrayVONeeded */(!isArray || newArrayVONeeded)) {
             var varDecl = vo.getVariableDeclaration
             var newName = ""
             

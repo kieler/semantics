@@ -264,8 +264,15 @@ class ExpressionConverterExtensions {
             }
             // For an array, just use the array expression (and leave out the subscript for now).
             IASTArraySubscriptExpression: {
-                kExpression = expr.arrayExpression.createKExpression(funcState, dRegion)
-                (kExpression as ValuedObjectReference).indices += expr.argument.createKExpression(funcState, dRegion)
+                val indexExpression = expr.argument.createKExpression(funcState, dRegion)
+                if (expr.arrayExpression instanceof IASTIdExpression) {
+                    var opValObj = funcState.findValuedObjectByName((expr.arrayExpression as IASTIdExpression).getName.toString, indexExpression, false, dRegion)
+                    kExpression = opValObj.reference
+                } else {
+                    println("Unsupported ast node to create an expression: " + expr.arrayExpression.class)         
+                    kExpression = expr.arrayExpression.createKExpression(funcState, dRegion)
+                }
+                (kExpression as ValuedObjectReference).indices += indexExpression
             }
             // For a function call create a reference an return the functions output VO reference
             IASTFunctionCallExpression: {
