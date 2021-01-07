@@ -314,6 +314,7 @@ class Inheritance extends SCChartsProcessor implements Traceable {
             // Save bindings in case we need them for later overriding (super reference)
             // TODO support scoping
             val laterBinding = newArrayList
+            laterBinding += replacements.entrySet.map[e | new Binding() => [targetValuedObject = e.key; sourceExpression = e.value.reference]]
             laterBinding += bindingReplacements.entrySet.map[e | new Binding() => [targetValuedObject = e.key; sourceExpression = e.value]]
             laterBinding += typeReplacements.entrySet.map[e | new Binding() => [type = BindingType.GENERIC_TYPE; targetValuedObject = e.key; sourceExpression = e.value]]
             lateInheritanceBindings.put(state, laterBinding)
