@@ -350,7 +350,7 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
     
 
     protected def generateMethods(extension CCodeSerializeHRExtensions serializer) {
-        for (scg : SCGraphs.scgs.filter[method]) {            
+        for (scg : SCGraphs.scgs.filter[method]) {
             val method = scg.methodDeclaration
             if (method.hasSelfInParameter) {
                 val selfVO = scg.declarations.map[valuedObjects].flatten.filter[parameter].findFirst[parameterIndex == -1]
