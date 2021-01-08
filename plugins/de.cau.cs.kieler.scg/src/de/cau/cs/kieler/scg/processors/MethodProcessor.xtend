@@ -105,15 +105,14 @@ class MethodProcessor extends InplaceProcessor<SCGraphs> implements Traceable {
         for (scg : normalSCGs) {
             for (node : scg.nodes) {
                 if (node instanceof Assignment || node instanceof Conditional) {
-                    for (refcall : node.eAllContents.filter(ReferenceCall).toIterable) {
-                        var ValuedObjectReference vor = refcall
-                        do {
-                            val method = vor.valuedObject.eContainer
-                            if (method instanceof MethodDeclaration) {
-                                calls.put(method, node, refcall)
-                            }
-                            vor = vor.subReference
-                        } while (vor !== null)
+                    // Method calls must be added and process in reverse hierachy such that call that have call as parameter are correctly handled
+                    // TODO check is iteration order is really deterministic
+                    for (refcall : node.eAllContents.filter(ReferenceCall).toList.reverseView) {
+                        var ValuedObjectReference vor = refcall.lowermostReference
+                        val method = vor.valuedObject.eContainer
+                        if (method instanceof MethodDeclaration) {
+                            calls.put(method, node, refcall)
+                        }
                     }
                 }
             }
