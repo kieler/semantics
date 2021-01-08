@@ -80,7 +80,10 @@ class KEffectsEmissionReferenceCallConverter {
                             voNameNode = voNameNode.nextSibling
                         }
                         if (voNameNode !== null) {
-                            emission.reference.link((voNameNode.getCrossRefNodeAsString(true)?:"").split("\\.").map[trim])
+                            emission.reference.link((voNameNode.getCrossRefNodeAsString(true)?:"").split("\\.").map[
+                                // Name might iclude array or bindinf brackets -> drop
+                                it.replaceAll("\\[.\\]|<.>|\\(.\\)","").trim()
+                            ])
                             val vo = emission.reference.lowermostReference.valuedObject
                             if (vo !== null && (vo.eContainer instanceof ReferenceDeclaration || vo.eContainer instanceof MethodDeclaration)) {
                                 toConvert += emission
