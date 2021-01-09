@@ -49,13 +49,12 @@ class JavaPrioCodeGeneratorStructModule extends JavaCodeGeneratorStructModule {
         super.generateInit()
     }
     
-    override generateDone() {
+    override addRootConstructor() {
+        code.append("\n")
         addStates
         
-        val superCall = "  super(State." + initialState + ", " + startPriority + ", " + maxPriority + ");\n";
-        createConstructor(scg.declarations, (parent as JavaPrioCodeGeneratorModule).getProgramName, 
-            superCall, serializer
-        )
+        val superCall = "  super(State." + initialState + ", " + startPriority + ", " + maxPriority + ");\n\n";
+        createConstructor(scg.declarations, (parent as JavaPrioCodeGeneratorModule).getProgramName, superCall, 0, serializer)
     }    
     
     protected def void addStates() {

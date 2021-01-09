@@ -190,12 +190,6 @@ class MethodProcessor extends InplaceProcessor<SCGraphs> implements Traceable {
     }
     
     def void preprocess(MethodDeclaration method, SCGraph scg) {
-        if (scg.declarations.map[valuedObjects].flatten.filter[isParameter].exists[parameterIndex == 1]) {
-            method.markSelfInParameter
-        }
-        if (scg.nodes.map[eAllContents.toIterable].flatten.filter(ValuedObjectReference).exists[!(valuedObject.declaration instanceof ClassDeclaration) && valuedObject.declaration.eContainer !== scg]) {
-            method.markTickDataInParameter
-        }
         // Fix return
         if (!SUPPORTED_RETURN_TYPES.contains(method.returnType)) {
             method.returnType = ValueType.VOID
@@ -231,20 +225,16 @@ class MethodProcessor extends InplaceProcessor<SCGraphs> implements Traceable {
         val entry = scg.nodes.filter(Entry).head
         val exit = scg.nodes.filter(Exit).head
         val returnVO = scg.nodes.filter(Assignment).findFirst[isReturn]?.valuedObject
+        val selfVO = scg.declarations.findFirst[isSelfVO]?.valuedObjects?.head
         val params = scg.declarations.map[valuedObjects].flatten.filter[isParameter].toMap([it],[parameterIndex])
         
         // Replace params
         val methodCalls = HashBasedTable.create
-        var Declaration selfDecl
         for (node : scg.nodes) {
             for (vor : node.eAllContents.filter(ValuedObjectReference).toList) {
                 if (params.containsKey(vor.valuedObject)) {
                     val index = params.get(vor.valuedObject)
-                    if (index == -1) { // self
-                        selfDecl = vor.valuedObject.declaration
-                        vor.valuedObject = call.valuedObject
-                        vor.indices += call.indices.map[copy]
-                    } else if (index < call.parameters.size) {
+                    if (index >= 0 && index < call.parameters.size) {
                         val exp = call.parameters.get(index).expression
                         if (exp instanceof ValuedObjectReference) {
                             vor.valuedObject = exp.valuedObject
@@ -252,6 +242,25 @@ class MethodProcessor extends InplaceProcessor<SCGraphs> implements Traceable {
                             vor.indices.addAll(0, exp.indices.map[copy])
                         } else {
                             vor.replace(exp.copy)
+                        }
+                    }
+                }
+                if (vor.valuedObject === selfVO) {
+                    vor.valuedObject = call.valuedObject
+                    vor.indices += call.indices.map[copy]
+                    // remaining sub refs
+                    var subVOR = call as ValuedObjectReference
+                    var insertAt = vor
+                    while (subVOR !== null && subVOR.subReference !== null) {
+                        subVOR = subVOR.subReference
+                        if (subVOR.subReference !== null) { // skip last because it is the method
+                            val insert = subVOR.valuedObject.reference
+                            insert.indices += subVOR.indices.map[copy]
+                            insert.subReference = vor.subReference
+                            insertAt.subReference = insert
+                            insertAt = insert
+                        } else {
+                            subVOR = null
                         }
                     }
                 }
@@ -267,7 +276,7 @@ class MethodProcessor extends InplaceProcessor<SCGraphs> implements Traceable {
                 }
             }
         }
-        if (selfDecl !== null) selfDecl.remove
+        if (selfVO !== null) selfVO.declaration.remove
         
         // Rename VOs
         val allVOs = scg.declarations.map[valuedObjects].flatten.toList
@@ -307,6 +316,10 @@ class MethodProcessor extends InplaceProcessor<SCGraphs> implements Traceable {
             if (targetSCG.isMethod) {
                 returnVO.markLocalVariable
             }
+        }
+        // Fix if any deeper inline method wants to have local variables
+        if (!targetSCG.isMethod) {
+            scg.unmarkAllLocalVariables
         }
         
         // Move nodes

@@ -66,12 +66,13 @@ class CCodeSerializeHRExtensions extends CodeGeneratorSerializeHRExtensions {
     public static val HEADER_INCLUDES = "header-includes"
     protected var CODE_ANNOTATION = "C"
     protected var CONDITIONAL_PLACEHOLDER = " : __CONDSELF__"
+    public var assumeOnlyGlobalFunctions = true
     
     static val HOSTCODE_EVAL = AnnotationsRegistry.register("eval", AnnotationsType.USER, StringAnnotation,  TextExpression, 
         "Annotation that tells the hostcode text expression which parts should be evaluation to valued objects")
     
     @Inject extension AnnotationsExtensions
-    @Inject extension KEffectsExtensions    
+    @Inject extension KEffectsExtensions
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KExpressionsCreateExtensions
     @Inject extension KExtDeclarationExtensions
@@ -108,7 +109,7 @@ class CCodeSerializeHRExtensions extends CodeGeneratorSerializeHRExtensions {
     
     override dispatch CharSequence serialize(ValuedObjectReference valuedObjectReference) {
         var vo = valuedObjectReference.valuedObject.name
-        if (!valuedObjectReference.valuedObject.isLocalVariable) {
+        if (!(valuedObjectReference.valuedObject.isLocalVariable || valuedObjectReference.valuedObject.isSelfVO)) {
             vo = valuedObjectPrefix + vo
         }
         if (valuedObjectReference.valuedObject.isExternalReference) {
@@ -126,7 +127,7 @@ class CCodeSerializeHRExtensions extends CodeGeneratorSerializeHRExtensions {
     
     override dispatch CharSequence serializeHR(ValuedObjectReference valuedObjectReference) {
         var vo = valuedObjectReference.valuedObject.name
-        if (!valuedObjectReference.valuedObject.isLocalVariable) {
+        if (!(valuedObjectReference.valuedObject.isLocalVariable || valuedObjectReference.valuedObject.isSelfVO)) {
             vo = valuedObjectPrefix + vo
         }
         if (valuedObjectReference.valuedObject.isExternalReference) {
@@ -357,11 +358,15 @@ class CCodeSerializeHRExtensions extends CodeGeneratorSerializeHRExtensions {
                 }
                 return code + referenceCall.parameters.serializeHRParameters
             }
-        } if (declaration instanceof MethodDeclaration) {
+        } else if (declaration instanceof MethodDeclaration) {
             val params = newArrayList
             params.addAll(referenceCall.parameters)
             params.addPlatformDependentParamsToMethodCall(declaration, referenceCall)
-            return code + referenceCall.serializeVOR.toString + params.serializeParameters
+            if (assumeOnlyGlobalFunctions) {
+                return rcVOR.serializeVOR.toString + params.serializeParameters
+            } else {
+                return code + referenceCall.serializeVOR.toString + params.serializeParameters
+            }
         } else {
             return referenceCall.serializeVOR.toString + referenceCall.parameters.serializeParameters
         }
@@ -372,12 +377,12 @@ class CCodeSerializeHRExtensions extends CodeGeneratorSerializeHRExtensions {
             params.add(0, createParameter =>[
                 accessType = ParameterAccessType.CALL_BY_REFERENCE
                 val ex = referenceCall.serializeVOR.toString
-                expression = ("(" + valuedObjectPrefix + ex.substring(0, ex.lastIndexOf(".")) + ")").asTextExpression
+                expression = ("(" + (!referenceCall.valuedObject.isParameter ? valuedObjectPrefix : "") + ex.substring(0, ex.lastIndexOf(".")) + ")").asTextExpression
             ])
         }
         if (declaration.hasTickDataInParameter) {
             params.add(0, createParameter =>[
-                expression = valuedObjectPrefix.replaceAll("\\.", "").replaceAll("->", "").asTextExpression
+                expression = valuedObjectPrefix.replaceAll("\\.|->", "").asTextExpression
             ])
         }
     }

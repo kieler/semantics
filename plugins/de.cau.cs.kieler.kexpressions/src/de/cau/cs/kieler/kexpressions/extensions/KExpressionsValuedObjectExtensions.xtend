@@ -444,4 +444,12 @@ class KExpressionsValuedObjectExtensions {
         return false
     }
     
+    def void prependReferenceToReference(ValuedObjectReference vor, ValuedObject vo) {
+        val newSub = vor.valuedObject.reference
+        newSub.subReference = vor.subReference
+        newSub.indices += vor.indices
+        vor.valuedObject = vo
+        vor.subReference = newSub
+    }
+    
 }

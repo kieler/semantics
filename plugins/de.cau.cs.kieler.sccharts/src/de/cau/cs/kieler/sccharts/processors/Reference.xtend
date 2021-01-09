@@ -860,7 +860,7 @@ class Reference extends SCChartsProcessor implements Traceable {
                                 newRegion.name = vo.name + (region.name?:"default")
                                 for (vor : newRegion.eAllContents.filter(ValuedObjectReference).toList) {
                                     if (!(vor.eContainer instanceof ValuedObjectReference) && classVOs.contains(vor.valuedObject)) {// Not a sub reference and local variable
-                                        vor.prependReferenceToVO(vo)
+                                        vor.prependReferenceToReference(vo)
                                         if (vo.array) {
                                             vor.indices += nextIndices.map[createIntValue(it)]
                                         }
@@ -872,7 +872,7 @@ class Reference extends SCChartsProcessor implements Traceable {
                                 val newAction = action.copy
                                 for (vor : newAction.eAllContents.filter(ValuedObjectReference).toList) {
                                     if (!(vor.eContainer instanceof ValuedObjectReference) && classVOs.contains(vor.valuedObject)) {// Not a sub reference and local variable
-                                        vor.prependReferenceToVO(vo)
+                                        vor.prependReferenceToReference(vo)
                                         if (vo.array) {
                                             vor.indices += nextIndices.map[createIntValue(it)]
                                         }
@@ -923,14 +923,6 @@ class Reference extends SCChartsProcessor implements Traceable {
             
             environment.setProperty(Environment.SNAPSHOTS_ENABLED, initialSnapshotsFlag)
         }
-    }
-    
-    protected def prependReferenceToVO(ValuedObjectReference vor, ValuedObject vo) {
-        val newSub = vor.valuedObject.reference
-        newSub.subReference = vor.subReference
-        newSub.indices += vor.indices
-        vor.valuedObject = vo
-        vor.subReference = newSub
     }
 
 }

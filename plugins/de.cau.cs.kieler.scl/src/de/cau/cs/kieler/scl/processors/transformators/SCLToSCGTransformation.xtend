@@ -370,22 +370,23 @@ class SCLToSCGTransformation extends Processor<SCLProgram, SCGraphs> implements 
                 val innerVOs = classDecl.declarations.map[valuedObjects].flatten.toList
                 val VORtoInner = scg.nodes.map[eAllContents.filter(ValuedObjectReference).toIterable].flatten.filter[innerVOs.contains(valuedObject)].toList
                 if (!VORtoInner.empty) {
-                    if (classDecl.eContainer instanceof ClassDeclaration) {
-                        throw new IllegalArgumentException("Cannot handle methods in nested classes")
-                    } else {
-                        val selfVO = createValuedObject("self")
-                        scg.declarations += createVariableDeclaration(ValueType.HOST) => [
-                            valuedObjects += selfVO
-                            hostType = classDecl.name
-                        ]
-                        selfVO.addIntAnnotation(SCGAnnotations.ANNOTATION_METHOD_PARAMETER, -1)
-                        // Fix VOR
-                        for (vor : VORtoInner) {
-                            val wrapper = selfVO.reference
-                            vor.replace(wrapper)
-                            wrapper.subReference = vor
-                        }
+                    val selfVO = createValuedObject("self") => [markSelfVO]
+                    scg.declarations += createVariableDeclaration(ValueType.HOST) => [
+                        valuedObjects += selfVO
+                        hostType = classDecl.name
+                        setSelfParameterClass(classDecl)
+                    ]
+                    newMethod.markSelfInParameter
+                    // Fix VOR
+                    for (vor : VORtoInner) {
+                        vor.prependReferenceToReference(selfVO)
                     }
+                }
+            } else {
+                // Check for external VO access
+                if (scg.nodes.map[eAllContents.toIterable].flatten.filter(ValuedObjectReference).exists[
+                       !it.isSubReference && !valuedObject.isParameter && !valuedObject.isLocalVariable]) {
+                    newMethod.markTickDataInParameter
                 }
             }
         }

@@ -16,6 +16,7 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.StringAnnotation
 import de.cau.cs.kieler.kexpressions.FunctionCall
 import de.cau.cs.kieler.kexpressions.IgnoreValue
+import de.cau.cs.kieler.kexpressions.MethodDeclaration
 import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.PrintCall
 import de.cau.cs.kieler.kexpressions.RandomizeCall
@@ -49,7 +50,6 @@ import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.kexpressions.MethodDeclaration
 
 /**
  * C Code Generator Logic Module
@@ -352,20 +352,27 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
     protected def generateMethods(extension CCodeSerializeHRExtensions serializer) {
         for (scg : SCGraphs.scgs.filter[method]) {
             val method = scg.methodDeclaration
-            if (method.hasSelfInParameter) {
-                val selfVO = scg.declarations.map[valuedObjects].flatten.filter[parameter].findFirst[parameterIndex == -1]
-                if (selfVO !== null && !selfVO.name.startsWith("(")) {
-                    selfVO.name = "(*" + selfVO.name + ")" // simulate pointer access
-                }
-            }
             indent(0)
             code.append(method.returnType.serialize)
             code.append(" ").append(method.valuedObjects.head.name)
             code.append("(")
-            val params = scg.declarations.filter[parameter].map[it as VariableDeclaration].toList
+            val params = scg.declarations.filter[parameter].map[it as VariableDeclaration].sortBy[valuedObjects.head.parameterIndex].toList
             if (method.hasTickDataInParameter && !struct.getVariableName.nullOrEmpty) {
                 code.append(struct.getName).append("* ").append(struct.getVariableName)
                 if (!params.empty) code.append(", ")
+            }
+            if (method.hasSelfInParameter) {
+                val selfDecl = scg.declarations.findFirst[isSelfVO] as VariableDeclaration
+                if (selfDecl !== null) {
+                    val selfClass = selfDecl.selfParameterClass
+                    val selfVO = selfDecl.valuedObjects.head
+                    code.append(selfClass !== null ? selfClass.name : selfDecl.hostType).append("* ").append(selfVO.name)
+                    if (!params.empty) code.append(", ")
+                    // simulate pointer access in self VO
+                    if (!selfVO.name.startsWith("(")) {
+                        selfVO.name = "(*" + selfVO.name + ")" 
+                    }
+                }
             }
             for (param : params) {
                 if (param.type === ValueType.HOST) {
@@ -382,13 +389,16 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
             // Temporarily redirect struct module output to this module
             val structCode = struct.code
             struct.newCodeStringBuilder = code
-            struct.generateDeclarations(scg.declarations.filter[!parameter && !explicitLoop && !isReturn].toList, 0, serializer)
+            struct.generateDeclarations(scg.declarations.filter[!parameter && !explicitLoop && !isReturn && !selfVO].toList, 0, serializer)
             struct.newCodeStringBuilder = structCode
             
             // Generate body
             conditionalStack.clear
             processedNodes.clear
             processedCF.clear
+            if (method.hasTickDataInParameter) {
+                valuedObjectPrefix = struct.getVariableName + struct.separator
+            }
             var nodes = newLinkedList => [ it += scg.nodes.head ]
             while(!nodes.empty) {
                 val node = nodes.pop

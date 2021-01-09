@@ -91,7 +91,7 @@ class SimpleGuardSequentializer extends Processor<SCGraphs, SCGraphs> implements
             SCGGraphs.scgs += scg.transform(SCGMap.get(scg), SCGMap)                           
         }
         // retain method SCGs
-        SCGGraphs.scgs.addAll(0, model.scgs.copyMethodSCGs(globalVOMap))    
+        SCGGraphs.scgs.addAll(0, model.scgs.copyMethodSCGs(globalVOMap, environment))    
             
         setModel(SCGGraphs)
     }
