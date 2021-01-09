@@ -152,7 +152,12 @@ import org.eclipse.xtext.xbase.lib.Functions.Function1
 					candidates += VO
 				}
 			}				
-			declarationScope = declarationScope.nextDeclarationScope
+			if (declarationScope instanceof ClassDeclaration) {
+                // Classes do not give access to outer scopes
+                declarationScope = null
+            } else {
+                declarationScope = declarationScope.nextDeclarationScope
+            }
 		}
 		return Scopes.scopeFor(candidates)
 	}

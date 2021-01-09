@@ -43,6 +43,7 @@ import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.scoping.IScope
 import org.eclipse.xtext.scoping.Scopes
 import org.eclipse.xtext.xbase.lib.Functions.Function1
+import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
 
 /**
  * This class contains custom scoping description.
@@ -280,7 +281,12 @@ class SCTXScopeProvider extends KExtScopeProvider {
                 candidates += declarationScope.genericValuedObjectParameters
             }
             
-            declarationScope = declarationScope.nextDeclarationScope
+            if (declarationScope instanceof ClassDeclaration) {
+                // Classes do not give access to outer scopes
+                declarationScope = null
+            } else {
+                declarationScope = declarationScope.nextDeclarationScope
+            }
         }
         return Scopes.scopeFor(candidates)
     }
