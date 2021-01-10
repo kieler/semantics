@@ -120,8 +120,12 @@ class SCGControlFlowExtensions {
      * 			the node in question
      * @return Returns a list of control flows.
      */
-    def Iterable<ControlFlow> getAllNext (Node node) {
+    def Iterable<ControlFlow> getAllNext(Node node) {
         node.eContents.filter(typeof(ControlFlow))
+    }
+    
+    def Iterable<Node> getAllNextNodes(Node node) {
+        return node.allNext.map[targetNode]
     }
 
 	/** 

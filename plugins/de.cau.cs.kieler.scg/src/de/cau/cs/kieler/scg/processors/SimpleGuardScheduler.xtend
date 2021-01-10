@@ -51,7 +51,7 @@ class SimpleGuardScheduler extends InplaceProcessor<SCGraphs> implements Traceab
     }
     
     override getName() {
-        "Scheduler V2"
+        "Scheduler"
     }
     
     override process() {

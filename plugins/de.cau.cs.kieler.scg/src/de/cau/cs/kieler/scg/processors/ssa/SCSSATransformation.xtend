@@ -243,7 +243,7 @@ class SCSSATransformation extends InplaceProcessor<SCGraphs> implements Traceabl
         val use = scg.uses
         // If any assignment in any thread dominates its exit node and is always instantaneously executed, the values sequentially before the fork can never reach the join and can be removed
         for (asm : def.values.filter[!dependencies.filter(DataDependency).filter[concurrent == true && confluent == false].empty]) {
-            val entry = (asm.threadEntryNode as Entry)
+            val entry = asm.threadEntry
             if (dt.isDominator(asm.basicBlock, entry.exit.basicBlock) && entry.getIndirectControlFlows(asm).forall[instantaneousFlow]){
                 val fork = asm.ancestorFork;
                 // Find definitions dominated by this instantaneous concurrent write

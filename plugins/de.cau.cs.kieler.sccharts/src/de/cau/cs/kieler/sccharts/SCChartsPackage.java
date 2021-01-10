@@ -1027,13 +1027,22 @@ public interface SCChartsPackage extends EPackage {
     int CONTROLFLOW_REGION__FINAL = REGION_FEATURE_COUNT + 1;
 
     /**
+     * The feature id for the '<em><b>Abort</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CONTROLFLOW_REGION__ABORT = REGION_FEATURE_COUNT + 2;
+
+    /**
      * The number of structural features of the '<em>Controlflow Region</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int CONTROLFLOW_REGION_FEATURE_COUNT = REGION_FEATURE_COUNT + 2;
+    int CONTROLFLOW_REGION_FEATURE_COUNT = REGION_FEATURE_COUNT + 3;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.DataflowRegionImpl <em>Dataflow Region</em>}' class.
@@ -2278,6 +2287,15 @@ public interface SCChartsPackage extends EPackage {
     int POLICY_REGION__FINAL = CONTROLFLOW_REGION__FINAL;
 
     /**
+     * The feature id for the '<em><b>Abort</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int POLICY_REGION__ABORT = CONTROLFLOW_REGION__ABORT;
+
+    /**
      * The number of structural features of the '<em>Policy Region</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2968,6 +2986,17 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      */
     EAttribute getControlflowRegion_Final();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.ControlflowRegion#isAbort <em>Abort</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Abort</em>'.
+     * @see de.cau.cs.kieler.sccharts.ControlflowRegion#isAbort()
+     * @see #getControlflowRegion()
+     * @generated
+     */
+    EAttribute getControlflowRegion_Abort();
 
     /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.DataflowRegion <em>Dataflow Region</em>}'.
@@ -3662,6 +3691,14 @@ public interface SCChartsPackage extends EPackage {
          * @generated
          */
         EAttribute CONTROLFLOW_REGION__FINAL = eINSTANCE.getControlflowRegion_Final();
+
+        /**
+         * The meta object literal for the '<em><b>Abort</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute CONTROLFLOW_REGION__ABORT = eINSTANCE.getControlflowRegion_Abort();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.DataflowRegionImpl <em>Dataflow Region</em>}' class.

@@ -101,8 +101,8 @@ Transition returns sccharts::Transition:
         ('Pr=' triggerProbability=FLOAT)? nondeterministic?='nondeterministic'?
     )?
     ('do' effects+=Effect (';' effects+=Effect)*)?
-    preemption=PreemptionType 
-    targetState=[sccharts::State|ID]
+    preemption=PreemptionType
+    'to' targetState=[sccharts::State|ID]
     deferred=DeferredType?
     history=HistoryType?
 	
@@ -122,8 +122,12 @@ ImplicitControlflowRegion returns sccharts::ControlflowRegion:
 ControlflowRegion returns sccharts::ControlflowRegion:
     {sccharts::ControlflowRegion}
     annotations+=Annotation*
-    override?='override'?
-    final?='final'?
+    (
+        abort?='abort' // only works if preemtion does not have 'abort to' keyword, otherwise 'abort' cannot be detected since ' to' is missing
+        |
+        override?='override'?
+        final?='final'?
+    )?
     'region' name=ExtendedID? label=STRING?
     ((
         'is'
@@ -302,7 +306,7 @@ PolicyTransition returns sccharts::Transition:
     ('if' (trigger=LogicalOrExpression | trigger=ValuedObjectReference) 
      (':' effects+=PureEmission (',' effects+=PureEmission)*)?
     )?
-    'go to'
+    'go' 'to'
     targetState=[sccharts::State|ID]    
     ('label' label=STRING)?;
     
@@ -351,7 +355,7 @@ AlternativeGenericParameterDeclaration returns kexpressions::GenericParameterDec
 // ------------ //
 
 enum PreemptionType returns sccharts::PreemptionType:
-	WEAK = 'go to' | STRONG = 'abort to' | TERMINATION = 'join to';
+	WEAK = 'go' | STRONG = 'abort' | TERMINATION = 'join';
 
 enum PreemptionActionType returns sccharts::PreemptionType:
     WEAK = 'weak' | STRONG = 'strong';

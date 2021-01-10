@@ -18,15 +18,24 @@ import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.KExpressionsFactory
+import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.OperatorType
 import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsComplexCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kexpressions.keffects.KEffectsFactory
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
+import de.cau.cs.kieler.kicool.compilation.VariableStore
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.scg.BasicBlock
 import de.cau.cs.kieler.scg.BranchType
 import de.cau.cs.kieler.scg.Conditional
+import de.cau.cs.kieler.scg.Depth
+import de.cau.cs.kieler.scg.Entry
+import de.cau.cs.kieler.scg.ForkType
 import de.cau.cs.kieler.scg.Guard
 import de.cau.cs.kieler.scg.Join
 import de.cau.cs.kieler.scg.Node
@@ -35,26 +44,22 @@ import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.SCGraphs
 import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.scg.SchedulingBlock
+import de.cau.cs.kieler.scg.Surface
+import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
+import de.cau.cs.kieler.scg.extensions.SCGDependencyExtensions
+import de.cau.cs.kieler.scg.extensions.SCGMethodExtensions
+import de.cau.cs.kieler.scg.extensions.SCGSalamiForkExtensions
+import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 import de.cau.cs.kieler.scg.extensions.UnsupportedSCGException
+import de.cau.cs.kieler.scg.processors.synchronizer.SynchronizerSelector
 import java.util.HashMap
 import java.util.List
 
 import static de.cau.cs.kieler.scg.processors.SCGAnnotations.*
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
-import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
-import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
-import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
-import de.cau.cs.kieler.scg.Entry
-import de.cau.cs.kieler.scg.Depth
-import de.cau.cs.kieler.scg.extensions.SCGDependencyExtensions
-import de.cau.cs.kieler.kicool.compilation.VariableStore
-import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
-import de.cau.cs.kieler.scg.processors.synchronizer.SynchronizerSelector
-import de.cau.cs.kieler.kexpressions.keffects.KEffectsFactory
-import de.cau.cs.kieler.scg.extensions.SCGMethodExtensions
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -93,13 +98,16 @@ class SimpleGuardExpressions extends InplaceProcessor<SCGraphs> implements Trace
     @Inject extension SCGControlFlowExtensions
     @Inject extension SCGDeclarationExtensions
     @Inject extension SCGDependencyExtensions
+    @Inject extension SCGThreadExtensions
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KExpressionsCreateExtensions
+    @Inject extension KExpressionsComplexCreateExtensions
     @Inject extension KExpressionsDeclarationExtensions
     @Inject extension AnnotationsExtensions
     @Inject extension SynchronizerSelector
     @Inject extension KEffectsExtensions
     @Inject extension SCGMethodExtensions
+    @Inject extension SCGSalamiForkExtensions
 
     protected val schedulingBlocks = <SchedulingBlock>newArrayList
     protected val schedulingBlockCache = new HashMap<Node, SchedulingBlock>
@@ -290,11 +298,49 @@ class SimpleGuardExpressions extends InplaceProcessor<SCGraphs> implements Trace
     // --- CREATE GUARDS: DEPTH BLOCK 
     protected def void createDepthBlockGuardExpression(Guard guard, SchedulingBlock schedulingBlock, SCGraph scg) {
 //        guard.setDefaultTrace
-        val firstExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression => [
-            setOperator(OperatorType::PRE)
-            subExpressions.add(schedulingBlock.basicBlock.preGuard.reference)
-        ] 
-        if (schedulingBlock.basicBlock.finalBlock) {
+        var Expression firstExpression = createPreExpression(schedulingBlock.basicBlock.preGuard.reference)
+        
+        val ownEntry = schedulingBlock.nodes.head.threadEntry
+        val forks = ownEntry.ancestorForks
+        
+        if (forks.exists[join.any]) { // Weak abort
+            // Join.any joins as soon any thread terminates and weakly aborts all remaining
+            // Assumtion: No thread reincarnation
+            // Supress continuing a weakly aborted thead by checking if it was join in the last tick
+            // Hence, overrule pre(guard) guard with pre(join)
+            firstExpression = and(firstExpression,not(or(forks.map[join].filter[any].map[
+                createPreExpression(it.schedulingBlock.guards.head.valuedObject.reference)
+            ].toList)))
+        }
+        
+        if (forks.exists[nonParallel]) { // Sequential start and strong abort
+            val guards = <Expression>newArrayList(firstExpression)
+            for (fork : forks.filter[nonParallel]) {
+                // Special guards for deths in sequential forks
+                // Only start deth if all left-hand threads under sequential forks are finished (run into a surface or exit)
+                // Strong preemtion in is achived by not considering exit as trigger
+                
+                val entries = fork.allNextNodes.filter(Entry).toList
+                var ownEntryInFork = ownEntry
+                while (ownEntryInFork !== null && !entries.contains(ownEntryInFork)) {
+                    ownEntryInFork = ownEntryInFork.threadEntry
+                }
+                if (entries.head !== ownEntryInFork) { // Not first
+                    val leftEntry = entries.get(entries.indexOf(ownEntryInFork) - 1)
+                    val surfaceSBs = leftEntry.getThreadNodes.filter(Surface).map[it.schedulingBlock].toSet
+                    guards += or(surfaceSBs.map[it.guards.head.valuedObject.reference].toList)
+                    
+                    if (fork.asFork.type === ForkType.SEQUENTIAL) {
+                        // If no preemtion, than also start is predecessor
+                        val or = (guard.expression as OperatorExpression).subExpressions.last as OperatorExpression
+                        or.subExpressions += leftEntry.exit.schedulingBlock.guards.head.valuedObject.reference
+                    }
+                }
+            }
+            
+            guard.expression = and(guards)
+        } else if (schedulingBlock.basicBlock.finalBlock) {
+            // FIXME Does not work with par-or (redundant behavior)
             val joinNode = schedulingBlock.basicBlock.threadEntry.allPrevious.map[eContainer].head.asNode.asFork.join
             val joinBlock = schedulingBlockCache.get(joinNode)
             if (!joinBlock.basicBlock.deadBlock) {
@@ -321,11 +367,7 @@ class SimpleGuardExpressions extends InplaceProcessor<SCGraphs> implements Trace
                     ]                 
                     else secondExpression
                 
-                guard.expression = KExpressionsFactory::eINSTANCE.createOperatorExpression => [
-                    setOperator(OperatorType::LOGICAL_AND)
-                    subExpressions.add(firstExpression)
-                    subExpressions.add(thirdExpression)
-                ]
+                guard.expression = and(firstExpression, thirdExpression)
             } else {
                 guard.expression = firstExpression
             }
@@ -384,9 +426,33 @@ class SimpleGuardExpressions extends InplaceProcessor<SCGraphs> implements Trace
         } 
         // If it is exactly one predecessor, we can use its expression directly.
         else if (relevantPredecessors.size == 1) {
-
-            //            if (!scheduledBlock.schizophrenic || basicBlock.predecessors.head.basicBlock.entryBlock)
-            guard.expression = guard.predecessorExpression(relevantPredecessors.head, schedulingBlock, scg)
+            val pred = relevantPredecessors.head
+            if (pred.isNonParalellFork) {
+                // Special guards for entries with sequential forks
+                // Only start entry if left-hand thread is finished (run into surface or exit)
+                // Preemtion in first tick is achived by not considering exit as trigger
+                val fork = pred.basicBlock.fork
+                val ownEntry = schedulingBlock.nodes.head as Entry
+                
+                val entries = fork.allNextNodes.filter(Entry).toList
+                if (entries.head == ownEntry) { // First
+                    guard.expression = guard.predecessorExpression(pred, schedulingBlock, scg)
+                } else {
+                    val leftEntry = entries.get(entries.indexOf(ownEntry) - 1)
+                    val surfaceSBs = leftEntry.getShallowSurfaceThreadNodes.filter(Surface).map[it.schedulingBlock].toSet
+                    guard.expression = and(guard.predecessorExpression(pred, schedulingBlock, scg), 
+                                        or(surfaceSBs.map[it.guards.head.valuedObject.reference].toList))
+                    
+                    if (fork.type === ForkType.SEQUENTIAL) {
+                        // If no preemtion, than also start is predecessor
+                        val or = (guard.expression as OperatorExpression).subExpressions.last as OperatorExpression
+                        or.subExpressions += leftEntry.exit.schedulingBlock.guards.head.valuedObject.reference
+                    }
+                }
+            } else {
+                //            if (!scheduledBlock.schizophrenic || basicBlock.predecessors.head.basicBlock.entryBlock)
+                guard.expression = guard.predecessorExpression(pred, schedulingBlock, scg)
+            }
         } else {
 
             /**

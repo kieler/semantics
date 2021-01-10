@@ -29,6 +29,14 @@
   <eClassifiers xsi:type="ecore:EClass" name="Parallel" eSuperTypes="#//Statement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="threads" upperBound="-1"
         eType="#//Thread" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="joinAny" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="forkType" lowerBound="1"
+        eType="#//ForkType" defaultValueLiteral="PARALLEL"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="ForkType">
+    <eLiterals name="PARALLEL"/>
+    <eLiterals name="SEQUENTIAL" value="1"/>
+    <eLiterals name="SEQUENTIAL_PREEMPTIVE" value="2"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ModuleCall" eSuperTypes="../../de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//Call #//Statement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="module" lowerBound="1"

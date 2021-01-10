@@ -84,7 +84,9 @@ class SCChartsProcessorProvider implements IProcessorProvider {
             de.cau.cs.kieler.sccharts.processors.NXJTemplateGenerator,
             de.cau.cs.kieler.sccharts.processors.ValuedObjectRise,
             de.cau.cs.kieler.sccharts.processors.SclCodeEffect,
-            de.cau.cs.kieler.sccharts.processors.StaticAccess
+            de.cau.cs.kieler.sccharts.processors.StaticAccess,
+            de.cau.cs.kieler.sccharts.processors.AbortRegion,
+            de.cau.cs.kieler.sccharts.processors.scg.SCGAbortRegionProcessor
         ]
     }
     

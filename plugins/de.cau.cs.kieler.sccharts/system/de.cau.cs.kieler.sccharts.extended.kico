@@ -38,6 +38,7 @@ de.cau.cs.kieler.sccharts.processors.history
 	de.cau.cs.kieler.sccharts.processors.entryAction config {
 	  "de.cau.cs.kieler.sccharts.entry.preemptionType": "weak"
 	}
+	pre process silent de.cau.cs.kieler.sccharts.processors.abortRegions
 	de.cau.cs.kieler.sccharts.processors.abort
 	de.cau.cs.kieler.sccharts.processors.exitAction config {
       "de.cau.cs.kieler.sccharts.exit.preemptionType": "strong"

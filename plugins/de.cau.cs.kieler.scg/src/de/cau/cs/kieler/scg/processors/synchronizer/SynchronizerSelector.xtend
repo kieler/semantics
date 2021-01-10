@@ -49,6 +49,7 @@ class SynchronizerSelector {
     public static val ANNOTATION_SELECTEDSYNCHRONIZER = "synchronizer"
 
     protected val List<Class<? extends AbstractSynchronizer>> SYNCHRONIZER_LIST = <Class<? extends AbstractSynchronizer>> newArrayList(
+        typeof(ParOrSynchronizer), // Must come first because others can not handle join.any == true
         typeof(InstantaneousSynchronizer),
         typeof(DepthSynchronizer),
         typeof(SurfaceSynchronizer)

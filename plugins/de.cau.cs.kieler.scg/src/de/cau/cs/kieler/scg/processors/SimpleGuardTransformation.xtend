@@ -97,7 +97,7 @@ class SimpleGuardTransformation extends Processor<SCGraphs, SCGraphs> implements
     }
     
     override getName() {
-        "Guards V2"
+        "Guards"
     }
     
     override getType() {

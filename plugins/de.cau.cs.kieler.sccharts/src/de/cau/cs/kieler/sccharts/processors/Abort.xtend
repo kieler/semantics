@@ -51,6 +51,7 @@ import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTraci
 class Abort extends SCChartsProcessor implements Traceable {
 
     protected static val ANNOTATION_IGNORETHREAD = "ignore"
+    protected static val ANNOTATION_SKIP = "skipAbort"
 
     // -------------------------------------------------------------------------
     // --                 K I C O      C O N F I G U R A T I O N              --
@@ -111,6 +112,11 @@ class Abort extends SCChartsProcessor implements Traceable {
     // -------------------------------------------------------------------------
     // Transforming Aborts.
     def State transform(State rootState) {
+        if (rootState.hasAnnotation(ANNOTATION_SKIP)) {
+            rootState.removeAnnotations(ANNOTATION_SKIP)
+            return rootState
+        }
+        
         termTrans.setEnvironment(environments.source, environments.target)
         val abortMarkings = <Annotation>newHashSet
         abortMarkings.addAll(rootState.valuedObjectsList.map[annotations].flatten.filter[REMOVE_ANNOTATIONS.contains(name)])

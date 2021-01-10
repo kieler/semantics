@@ -74,7 +74,7 @@ class SCTXFormatter extends KExtFormatter {
 		    format(state.regions.head, document)
     		for (Region regions : state.regions.drop(1)) {
       		    switch (regions) {
-       	           ControlflowRegion: regions.regionFor.keyword(controlflowRegionAccess.regionKeyword_4).prepend[ setNewLines(2) ]
+       	           ControlflowRegion: regions.regionFor.keyword(controlflowRegionAccess.regionKeyword_3).prepend[ setNewLines(2) ]
        	           DataflowRegion: regions.regionFor.keyword(dataflowRegionAccess.dataflowKeyword_3).prepend[ setNewLines(2) ]
        	        }
     			format(regions, document)

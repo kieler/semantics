@@ -26,6 +26,7 @@ import org.eclipse.emf.common.util.EList;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scg.Fork#getJoin <em>Join</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.Fork#getNext <em>Next</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scg.Fork#getType <em>Type</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.scg.ScgPackage#getFork()
@@ -76,5 +77,31 @@ public interface Fork extends Node {
      * @generated
      */
     EList<ControlFlow> getNext();
+
+    /**
+     * Returns the value of the '<em><b>Type</b></em>' attribute.
+     * The default value is <code>"PARALLEL"</code>.
+     * The literals are from the enumeration {@link de.cau.cs.kieler.scg.ForkType}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Type</em>' attribute.
+     * @see de.cau.cs.kieler.scg.ForkType
+     * @see #setType(ForkType)
+     * @see de.cau.cs.kieler.scg.ScgPackage#getFork_Type()
+     * @model default="PARALLEL" required="true"
+     * @generated
+     */
+    ForkType getType();
+
+    /**
+     * Sets the value of the '{@link de.cau.cs.kieler.scg.Fork#getType <em>Type</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Type</em>' attribute.
+     * @see de.cau.cs.kieler.scg.ForkType
+     * @see #getType()
+     * @generated
+     */
+    void setType(ForkType value);
 
 } // Fork

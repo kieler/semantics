@@ -191,7 +191,7 @@ class SCGraphHierarchySynthesis {
             }
             kContainer.incomingEdges.filter [
                 getProperty(SCGraphDiagramSynthesis.GRAPH_DEPENDENCY) instanceof GuardDependency
-            ].head?.getData(typeof(KRoundedBendsPolyline)).addHeadArrowDecorator
+            ].head?.getData(typeof(KRoundedBendsPolyline))?.addHeadArrowDecorator
         ]
     }
 

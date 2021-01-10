@@ -76,6 +76,7 @@ import de.cau.cs.kieler.scg.extensions.SCGMethodExtensions
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ScheduleObjectReference
 import de.cau.cs.kieler.kexpressions.Schedulable
+import de.cau.cs.kieler.scg.ForkType
 
 /** 
  * SCL to SCG Transformation 
@@ -533,10 +534,12 @@ class SCLToSCGTransformation extends Processor<SCLProgram, SCGraphs> implements 
             val fork = createFork.trace(parallel).createNodeList(parallel) as Fork => [
                 scg.nodes += it
                 it.controlFlowTarget(incoming)
+                type = ForkType.get(parallel.forkType.value)
             ]
             val join = createJoin.trace(parallel).createNodeList(parallel) as Join => [
                 scg.nodes += it
                 it.fork = fork
+                any = parallel.joinAny
             ]
             parallel.threads.forEach [ thread |
                 val forkFlow = fork.createControlFlow

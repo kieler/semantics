@@ -13,11 +13,17 @@
  */
 package de.cau.cs.kieler.scg.processors.optimizer
 
+import com.google.inject.Guice
 import com.google.inject.Inject
+import de.cau.cs.kieler.core.properties.IProperty
+import de.cau.cs.kieler.core.properties.Property
+import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
+import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.scg.ControlFlow
 import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.SCGraph
+import de.cau.cs.kieler.scg.SCGraphs
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 import de.cau.cs.kieler.scg.extensions.UnsupportedSCGException
@@ -33,14 +39,28 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
  * Eventually, all superfluous nodes and control flows are removed. 
  * 
  * @author ssm
- * @kieler.design 2014-05-04 proposed 
- * @kieler.rating 2014-05-04 proposed yellow
  *
  */
-class SuperfluousForkRemover {
+class SuperfluousForkRemover extends InplaceProcessor<SCGraphs> implements Traceable {
+
+    public static val IProperty<Boolean> ENABLE_SFR = new Property<Boolean>("de.cau.cs.kieler.sccharts.scg.sfr", true);
 
     @Inject extension SCGControlFlowExtensions
     @Inject extension SCGThreadExtensions
+
+    override getId() {
+        "de.cau.cs.kieler.scg.processors.sfr"
+    }
+    
+    override getName() {
+        "Superfluous Fork Remover"
+    }
+    
+    override process() {
+        if (environment.getProperty(ENABLE_SFR)) {
+            model.scgs.forEach[optimize]
+        }
+    }
 
     def optimize(SCGraph scg) {
 
@@ -111,6 +131,7 @@ class SuperfluousForkRemover {
         ]
         
         scg
+        
     }
 
 }

@@ -8,6 +8,8 @@ de.cau.cs.kieler.sccharts.processors.surfaceDepth config {
 }
 post process de.cau.cs.kieler.sccharts.processors.voRise
 de.cau.cs.kieler.sccharts.scg.processors.SCG
+post process de.cau.cs.kieler.scg.processors.str
+post process de.cau.cs.kieler.scg.processors.sfr
 de.cau.cs.kieler.scg.processors.dependency
 de.cau.cs.kieler.scg.processors.priorities
 de.cau.cs.kieler.sccharts.scg.processors.SCG2SCC

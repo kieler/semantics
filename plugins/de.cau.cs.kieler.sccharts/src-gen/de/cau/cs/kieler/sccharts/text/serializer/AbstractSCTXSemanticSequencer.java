@@ -1605,8 +1605,7 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	 * Constraint:
 	 *     (
 	 *         annotations+=Annotation* 
-	 *         override?='override'? 
-	 *         final?='final'? 
+	 *         (abort?='abort' | (override?='override'? final?='final'?))? 
 	 *         name=ExtendedID? 
 	 *         label=STRING? 
 	 *         (

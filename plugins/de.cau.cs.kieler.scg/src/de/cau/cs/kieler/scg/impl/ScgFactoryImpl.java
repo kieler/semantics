@@ -90,6 +90,8 @@ public class ScgFactoryImpl extends EFactoryImpl implements ScgFactory {
     @Override
     public Object createFromString(EDataType eDataType, String initialValue) {
         switch (eDataType.getClassifierID()) {
+            case ScgPackage.FORK_TYPE:
+                return createForkTypeFromString(eDataType, initialValue);
             case ScgPackage.BRANCH_TYPE:
                 return createBranchTypeFromString(eDataType, initialValue);
             default:
@@ -105,6 +107,8 @@ public class ScgFactoryImpl extends EFactoryImpl implements ScgFactory {
     @Override
     public String convertToString(EDataType eDataType, Object instanceValue) {
         switch (eDataType.getClassifierID()) {
+            case ScgPackage.FORK_TYPE:
+                return convertForkTypeToString(eDataType, instanceValue);
             case ScgPackage.BRANCH_TYPE:
                 return convertBranchTypeToString(eDataType, instanceValue);
             default:
@@ -300,6 +304,26 @@ public class ScgFactoryImpl extends EFactoryImpl implements ScgFactory {
     public TickBoundaryDependency createTickBoundaryDependency() {
         TickBoundaryDependencyImpl tickBoundaryDependency = new TickBoundaryDependencyImpl();
         return tickBoundaryDependency;
+    }
+
+                /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public ForkType createForkTypeFromString(EDataType eDataType, String initialValue) {
+        ForkType result = ForkType.get(initialValue);
+        if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+        return result;
+    }
+
+                /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public String convertForkTypeToString(EDataType eDataType, Object instanceValue) {
+        return instanceValue == null ? null : instanceValue.toString();
     }
 
                 /**

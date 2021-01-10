@@ -77,6 +77,7 @@
     <genClasses ecoreClass="sccharts.ecore#//ControlflowRegion">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference sccharts.ecore#//ControlflowRegion/states"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute sccharts.ecore#//ControlflowRegion/final"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute sccharts.ecore#//ControlflowRegion/abort"/>
     </genClasses>
     <genClasses ecoreClass="sccharts.ecore#//DataflowRegion">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference sccharts.ecore#//DataflowRegion/equations"/>

@@ -48,7 +48,7 @@
 '^'=19
 '^='=74
 '_'=144
-'abort to'=45
+'abort'=45
 'auto'=52
 'bool'=59
 'class'=40
@@ -75,7 +75,7 @@
 'float'=61
 'for'=115
 'global'=137
-'go to'=44
+'go'=44
 'goto'=128
 'history'=55
 'host'=38
@@ -86,7 +86,7 @@
 'input'=158
 'int'=60
 'is'=103
-'join to'=46
+'join'=46
 'json'=134
 'label'=113
 'max'=89
