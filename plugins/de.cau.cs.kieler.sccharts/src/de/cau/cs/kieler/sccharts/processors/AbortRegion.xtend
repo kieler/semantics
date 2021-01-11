@@ -25,14 +25,17 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensio
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.ControlflowRegion
+import de.cau.cs.kieler.sccharts.DelayType
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsTransformationExtension
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
-import de.cau.cs.kieler.sccharts.DelayType
+
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
 /**
  * SCCharts Abort transformation with abort Regions
@@ -86,6 +89,7 @@ class AbortRegion extends SCChartsProcessor implements Traceable {
     @Inject extension SCChartsStateExtensions
     @Inject extension SCChartsActionExtensions
     @Inject extension SCChartsTransitionExtensions
+    @Inject extension SCChartsTransformationExtension
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KExpressionsDeclarationExtensions
 
@@ -99,18 +103,11 @@ class AbortRegion extends SCChartsProcessor implements Traceable {
         for (state : rootState.allContainedStates.toIterable) {
             if (state.controlflowRegionsContainStates) {
                 if (!state.outgoingTransitions.empty &&
-                        // not a single outgoing termination
+                        // not a single outgoing simple termination
                        !(state.outgoingTransitions.size === 1 
                         && state.outgoingTransitions.head.isTermination
+                        && state.outgoingTransitions.head.delay !== DelayType.DELAYED
                         && state.outgoingTransitions.head.trigger === null)) {
-                    if (state.outgoingTransitions.exists[ isTermination && trigger !== null ]) {
-                        environment.warnings.add("AbortRegion transformatio currently does not support conditional termination", state ,true)
-                        return
-                    }
-                    if (state.outgoingTransitions.exists[ isTermination && delay === DelayType.DELAYED ]) {
-                        environment.warnings.add("AbortRegion transformatio currently does not support delayed termination", state ,true)
-                        return
-                    }
                     complexToProcess += state
                 }
             } else {
@@ -134,7 +131,7 @@ class AbortRegion extends SCChartsProcessor implements Traceable {
         rootState.addTagAnnotation(Abort.ANNOTATION_SKIP) // Mark for skipping in normal abort
     }
     
-    def boolean transformMacroState(State state) {
+    def void transformMacroState(State state) {
         val flagsDecl = createVariableDeclaration(ValueType.BOOL)
         
         // Add normal termination indicators
@@ -153,42 +150,116 @@ class AbortRegion extends SCChartsProcessor implements Traceable {
             }
         }
         
-        // Handle leaving state
-        val dispatcher = state.parentRegion.createState(GENERATED_PREFIX + "dispatch").uniqueName.setTypeConnector
-        var strongAbortPos = 0
-        for (trans : state.outgoingTransitions.immutableCopy) {
-            val trigVO = createValuedObject(flagsDecl, GENERATED_PREFIX + "trig").uniqueName
-            trigVO.initialValue = FALSE
+        // Handle delayed and conditional termination
+        var Pair<State, State> terminationHandler = null
+        if (state.outgoingTransitions.exists[ isTermination && (delay === DelayType.DELAYED || trigger !== null) ]) {
+            // Special termination region
+            val lastNonAbortRegion = state.controlflowRegions.toList.reverseView.dropWhile[abort].head
+            val region = createControlflowRegion(GENERATED_PREFIX + "termination").uniqueName
+            region.label = region.name
             
-            switch (trans.preemption) {
-                case STRONG,
-                case WEAK: {
-                    val r = createAbortRegion(trans, trigVO)
+            val start = region.createInitialState(GENERATED_PREFIX + "wait")
+            val term = region.createState(GENERATED_PREFIX + "term")
+            val end = region.createFinalState(GENERATED_PREFIX + "trig")
+            
+            val termTrans = start.createTransitionTo(term)
+            termTrans.immediate = state.controlflowRegions.filter[!abort].forall[canImmediateTerminate]
+            termTrans.trigger = and(termVOs.map[reference])
+            
+            state.regions.add(state.regions.indexOf(lastNonAbortRegion) + 1, region)
+            
+            terminationHandler = new Pair(term, end)
+        } else if (!state.outgoingTransitions.exists[isTermination] && state.controlflowRegions.forall[states.exists[isFinal && !incomingTransitions.empty]]) {
+            // If all regions can terminat but state has no termination, add idle state to prevent preemtion of abort regions and unidentifiable termination
+            val region = createControlflowRegion(GENERATED_PREFIX + "idle").uniqueName
+            region.label = region.name
+            region.createInitialState(GENERATED_PREFIX + "idle").label = "Prevent Normal Termination"
+        }
+        
+        // Handle leaving state
+        val State dispatcher = if (state.outgoingTransitions.size > 1) {
+            state.parentRegion.createState(GENERATED_PREFIX + "dispatch").uniqueName.setTypeConnector
+        }
+        var strongAbortPos = 0
+        // Transform transitions
+        if (dispatcher === null) { // single outgoing transition
+            val trans = state.outgoingTransitions.head
+            if (trans.isStrongAbort || trans.isWeakAbort) {
+                val r = createAbortRegion(trans, null)
+                if (trans.isStrongAbort) {
+                    state.regions.add(0, r)
+                } else {
+                    state.regions.add(r)
+                }
+            } else if (trans.isTermination) {
+                // In this case termination is either delayed or has a trigger because otherwide it would not beed transformed at all
+                if (terminationHandler !== null) {
+                    if (trans.trigger !== null) {
+                        val termTrans = terminationHandler.key.createTransitionTo(terminationHandler.value)
+                        // react immediately if termination is immediate or delay is already present in transition to term state because no region can terminate instantaneously 
+                        termTrans.immediate = trans.implicitlyImmediate || terminationHandler.key.incomingTransitions.head.delayed
+                        termTrans.trigger = trans.trigger
+                    } else if (trans.delay === DelayType.DELAYED) {
+                        terminationHandler.value.remove
+                        terminationHandler.key.setFinal
+                        terminationHandler.key.incomingTransitions.head.immediate = false // always delay termination
+                    } else {
+                        throw new IllegalStateException()
+                    }
+                } else {
+                    throw new IllegalStateException()
+                }
+            } else {
+                throw new IllegalStateException("Cannot handle UNDEFINED preemtion state")
+            }
+            
+            // turn into single outgoing termination
+            trans.setTypeTermination // idle state will prevent termination without abort triggered
+            trans.immediate = true
+        } else { // use dispatcher
+            for (trans : state.outgoingTransitions.immutableCopy) {
+                if (trans.isStrongAbort || trans.isWeakAbort) {
+                    val trigVO = createValuedObject(flagsDecl, GENERATED_PREFIX + "trig").uniqueName
+                    trigVO.initialValue = FALSE
                     
+                    val r = createAbortRegion(trans, trigVO)
                     if (trans.isStrongAbort) {
                         state.regions.add(strongAbortPos, r)
                         strongAbortPos++
                     } else {
                         state.regions.add(r)
                     }
+                    
                     trans.trigger = trigVO.reference
-                }
-                case TERMINATION: {
-                    // TODO support triggers and delay!
-                    trans.trigger = and(termVOs.map[reference])
-                }
-                case UNDEFINED: {
+                } else if (trans.isTermination) {
+                    if (terminationHandler !== null) {
+                        val trigVO = createValuedObject(flagsDecl, GENERATED_PREFIX + "termTrig").uniqueName
+                        trigVO.initialValue = FALSE
+                        
+                        val termTrans = terminationHandler.key.createTransitionTo(terminationHandler.value)
+                        // react immediately if termination is immediate or delay is already present in transition to term state because no region can terminate instantaneously 
+                        termTrans.immediate = trans.implicitlyImmediate || terminationHandler.key.incomingTransitions.head.delayed
+                        termTrans.trigger = trans.trigger
+                        termTrans.addEffect(trigVO.createAssignment(TRUE))
+                        
+                        trans.trigger = trigVO.reference
+                    } else { // only immediate termination without trigger or delay
+                        trans.trigger = and(termVOs.map[reference])
+                    }
+                } else {
                     throw new IllegalStateException("Cannot handle UNDEFINED preemtion state")
                 }
+                
+                trans.sourceState = dispatcher
+                trans.setTypeWeakAbort
+                trans.immediate = true
             }
-            
-            trans.sourceState = dispatcher
-            trans.setTypeWeakAbort
-            trans.immediate = true
         }
         
-        // connect dispatch
-        state.createTransitionTo(dispatcher).setTypeTermination
+        // connect dispatch (after all transitions are processed)
+        if (dispatcher !== null) {
+            state.createTransitionTo(dispatcher).setTypeTermination
+        }
         
         // Add flags
         if (!flagsDecl.valuedObjects.empty) {
@@ -201,13 +272,15 @@ class AbortRegion extends SCChartsProcessor implements Traceable {
         region.label = region.name
         region.abort = true
         
-        val end = region.createFinalState(GENERATED_PREFIX + "trig")
         val start = region.createInitialState(GENERATED_PREFIX + "wait")
+        val end = region.createFinalState(GENERATED_PREFIX + "trig")
         val abortTrans = start.createTransitionTo(end)
         
         abortTrans.immediate = transition.immediate
         abortTrans.trigger = transition.trigger
-        abortTrans.addEffect(indicator.createAssignment(TRUE))
+        if (indicator !== null) {
+            abortTrans.addEffect(indicator.createAssignment(TRUE))
+        }
         
         return region
     }
