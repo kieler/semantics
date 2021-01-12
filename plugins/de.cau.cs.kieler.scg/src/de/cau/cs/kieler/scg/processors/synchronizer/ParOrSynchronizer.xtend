@@ -25,6 +25,7 @@ import de.cau.cs.kieler.scg.Join
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.SchedulingBlock
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
+import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.extensions.ThreadPathType
 import java.util.Map
 
@@ -45,6 +46,7 @@ class ParOrSynchronizer extends AbstractSynchronizer {
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KExpressionsComplexCreateExtensions
     @Inject extension SCGControlFlowExtensions
+    @Inject extension SCGCoreExtensions
     @Inject extension KEffectsExtensions
 
     public static val SYNCHRONIZER_ID = "de.cau.cs.kieler.scg.synchronizer.any"
@@ -60,7 +62,7 @@ class ParOrSynchronizer extends AbstractSynchronizer {
         ]
 		
 		val joinSB = join.getCachedSchedulingBlock
-        val exitNodes = join.allPrevious.map[ eContainer as Exit ]
+        val exitNodes = join.allPrevious.map[ eContainer as Exit ].filter[ !it.getCachedSchedulingBlock.basicBlock.deadBlock ]
         data.guardExpression.valuedObject = joinSB.guards.head.valuedObject
         data.guardExpression.expression = or(exitNodes.map[getCachedSchedulingBlock.guards.head.valuedObject.reference].toList)
         
