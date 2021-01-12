@@ -19,6 +19,9 @@ import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.MethodDeclaration
+import de.cau.cs.kieler.kexpressions.Schedulable
+import de.cau.cs.kieler.kexpressions.ScheduleObjectReference
+import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
@@ -37,6 +40,7 @@ import de.cau.cs.kieler.scg.Depth
 import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.scg.Fork
+import de.cau.cs.kieler.scg.ForkType
 import de.cau.cs.kieler.scg.Join
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
@@ -44,6 +48,7 @@ import de.cau.cs.kieler.scg.SCGraphs
 import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.scg.Surface
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
+import de.cau.cs.kieler.scg.extensions.SCGMethodExtensions
 import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 import de.cau.cs.kieler.scg.processors.SCGAnnotations
 import de.cau.cs.kieler.scl.Goto
@@ -72,11 +77,6 @@ import static de.cau.cs.kieler.scg.processors.SCGAnnotations.*
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
-import de.cau.cs.kieler.scg.extensions.SCGMethodExtensions
-import de.cau.cs.kieler.kexpressions.ValueType
-import de.cau.cs.kieler.kexpressions.ScheduleObjectReference
-import de.cau.cs.kieler.kexpressions.Schedulable
-import de.cau.cs.kieler.scg.ForkType
 
 /** 
  * SCL to SCG Transformation 
@@ -88,7 +88,6 @@ import de.cau.cs.kieler.scg.ForkType
 class SCLToSCGTransformation extends Processor<SCLProgram, SCGraphs> implements Traceable {
 
     static val String ANNOTATION_HOSTCODE = "hostcode"
-    static val String ANNOTATION_CONTROLFLOWTHREADPATHTYPE = "cfPathType"
 
     @Inject extension SCGControlFlowExtensions 
     @Inject extension SCGThreadExtensions   

@@ -67,6 +67,7 @@ import static de.cau.cs.kieler.scg.processors.SCGAnnotations.*
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.scg.processors.SCGAnnotations
 
 /**
  * @author kolja
@@ -137,7 +138,8 @@ class SCGraphHierarchySynthesis {
                         val threadPathType = threadTypes.get(entry)
                         if (threadPathType !== null) {
                             if(!REGION_LABEL.nullOrEmpty) text = text + " - "
-                            text = text + threadPathType.toString2
+                            text = text + threadPathType.toString2 + 
+                                (entry.hasAnnotation(SCGAnnotations.ANNOTATION_CONTROLFLOWTHREADPATHTYPE_PREEMPTION) ? " " + entry.getStringAnnotationValue(SCGAnnotations.ANNOTATION_CONTROLFLOWTHREADPATHTYPE_PREEMPTION) : "" )
                         }
 
                         var threadSegmentIDText = ""
