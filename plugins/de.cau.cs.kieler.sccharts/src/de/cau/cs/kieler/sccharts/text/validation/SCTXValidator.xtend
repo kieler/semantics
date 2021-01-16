@@ -913,6 +913,13 @@ class SCTXValidator extends AbstractSCTXValidator {
     
     @Check
     def void checkReferenceDeclarationBindings(ReferenceDeclaration decl) {
+        val parent = decl.nextScope
+        if (parent instanceof de.cau.cs.kieler.sccharts.State) {
+            if (parent.regions.filter(DataflowRegion).exists[eAllContents.filter(ValuedObjectReference).exists[decl.valuedObjects.contains(valuedObject)]]) {
+                return // Do not check those instanciated by dataflow regions
+            }
+        }
+        
         val bindings = decl.valuedObjects?.head?.createBindings(new Replacements)
         var errorMessages = newArrayList
         for (binding : bindings) {
