@@ -99,7 +99,7 @@ class ThreadAnalyzer extends InplaceProcessor<SCGraphs> {
                 if (currType !== ThreadPathType.UNKNOWN) {
                     if (currType.ordinal < fastest.ordinal) {
                         fastest = currType
-                    } else if (currType.ordinal > fastest.ordinal) {
+                    } else if (currType.ordinal > fastest.ordinal && fastest.ordinal < ThreadPathType.DELAYED.ordinal) {
                         // degrade
                         threadPathTypes.put(entry, fastest)
                         alreadyDegraded += entry

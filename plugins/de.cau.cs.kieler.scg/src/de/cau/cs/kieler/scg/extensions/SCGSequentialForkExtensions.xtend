@@ -23,13 +23,13 @@ import de.cau.cs.kieler.scg.ForkType
  * 
  * @author als
  */
-class SCGSalamiForkExtensions { 
+class SCGSequentialForkExtensions { 
 
     def isNonParalellFork(Predecessor pred) {
         return pred?.basicBlock?.isNonParalellFork
     }
     def isNonParalellFork(BasicBlock bb) {
-        return bb?.fork.isNonParallel
+        return bb?.fork?.isNonParallel
     }
     
     def isNonParallel(Fork f) {

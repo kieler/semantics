@@ -107,7 +107,7 @@ class AnnotationsExtensions {
     
     def void removeAnnotations(Annotatable annotatable, String name) {
         if (!annotatable.annotations.nullOrEmpty) {
-            !annotatable.annotations.removeIf[ it.name.equalsIgnoreCase(name) ]
+            !annotatable.annotations.removeIf[ it.name !== null && it.name.equalsIgnoreCase(name) ]
         }
     }
     
