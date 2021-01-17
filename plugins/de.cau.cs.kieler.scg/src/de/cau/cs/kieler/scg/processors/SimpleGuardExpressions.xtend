@@ -302,10 +302,10 @@ class SimpleGuardExpressions extends InplaceProcessor<SCGraphs> implements Trace
 //        guard.setDefaultTrace
         var Expression firstExpression = createPreExpression(schedulingBlock.basicBlock.preGuard.reference)
         
-        val ownEntry = schedulingBlock.nodes.head.threadEntry
-        val forks = ownEntry.ancestorForks
+        val ownEntry = schedulingBlock.nodes.head?.threadEntry
+        val forks = ownEntry?.ancestorForks
         
-        if (forks.exists[join.any]) { // Weak abort
+        if (forks !== null && forks.exists[join.any]) { // Weak abort
             // Join.any joins as soon any thread terminates and weakly aborts all remaining
             // Supress continuing a weakly aborted thead by checking if it was join in the last tick
             // Hence, overrule pre(guard) guard with pre(join)
@@ -373,7 +373,7 @@ class SimpleGuardExpressions extends InplaceProcessor<SCGraphs> implements Trace
             
         }
         
-        if (forks.exists[nonParallel]) { // Sequential start and strong abort
+        if (forks !== null && forks.exists[nonParallel]) { // Sequential start and strong abort
             val guards = <Expression>newArrayList(firstExpression)
             for (fork : forks.filter[nonParallel]) {
                 // Special guards for deths in sequential forks
