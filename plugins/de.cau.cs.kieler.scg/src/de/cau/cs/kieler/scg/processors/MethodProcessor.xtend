@@ -106,6 +106,7 @@ class MethodProcessor extends InplaceProcessor<SCGraphs> implements Traceable {
         // inline calls in main SCGs
         for (scg : normalSCGs) {
             scg.inlineCalls(methodSCGs, inlined, remainingCalls)
+            if (environment.inDeveloperMode) snapshot
         }
         // Inline method calls in non-inlined methods
         val processedIntramethodCalls = newHashSet
@@ -115,6 +116,7 @@ class MethodProcessor extends InplaceProcessor<SCGraphs> implements Traceable {
             if (!processedIntramethodCalls.contains(method)) {
                 processedIntramethodCalls += method
                 methodSCGs.get(method).inlineCalls(methodSCGs, inlined, remainingCalls)
+                if (environment.inDeveloperMode) snapshot
             }
         }
         remainingCalls += processedIntramethodCalls

@@ -920,9 +920,9 @@ class Reference extends SCChartsProcessor implements Traceable {
                     }
                 }
             }
-            
-            environment.setProperty(Environment.SNAPSHOTS_ENABLED, initialSnapshotsFlag)
         }
+        
+        environment.setProperty(Environment.SNAPSHOTS_ENABLED, initialSnapshotsFlag)
     }
 
 }

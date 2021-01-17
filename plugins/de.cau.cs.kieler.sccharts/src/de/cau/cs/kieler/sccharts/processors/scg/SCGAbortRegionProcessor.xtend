@@ -160,8 +160,6 @@ class SCGAbortRegionProcessor extends InplaceProcessor<SCGraphs> implements Trac
                 }
             }
         }
-        
-        if (environment.inDeveloperMode && !process.empty) snapshot
     }
     
 }
