@@ -32,7 +32,7 @@ public class SCTXParser extends AbstractContentAssistParser {
 		
 		private static void init(ImmutableMap.Builder<AbstractElement, String> builder, SCTXGrammarAccess grammarAccess) {
 			builder.put(grammarAccess.getSCChartsAccess().getAlternatives_0(), "rule__SCCharts__Alternatives_0");
-			builder.put(grammarAccess.getRootStateAccess().getAlternatives_10(), "rule__RootState__Alternatives_10");
+			builder.put(grammarAccess.getRootStateAccess().getAlternatives_9(), "rule__RootState__Alternatives_9");
 			builder.put(grammarAccess.getStateAccess().getAlternatives_8(), "rule__State__Alternatives_8");
 			builder.put(grammarAccess.getStateAccess().getAlternatives_8_1_5(), "rule__State__Alternatives_8_1_5");
 			builder.put(grammarAccess.getScopeCallAccess().getAlternatives_3(), "rule__ScopeCall__Alternatives_3");
@@ -58,7 +58,6 @@ public class SCTXParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getKeywordMethodDeclarationWOSemicolonAccess().getAlternatives_2(), "rule__KeywordMethodDeclarationWOSemicolon__Alternatives_2");
 			builder.put(grammarAccess.getKeywordMethodDeclarationWOSemicolonAccess().getAlternatives_6(), "rule__KeywordMethodDeclarationWOSemicolon__Alternatives_6");
 			builder.put(grammarAccess.getReferenceValuedObjectAccess().getAlternatives_4(), "rule__ReferenceValuedObject__Alternatives_4");
-			builder.put(grammarAccess.getAlternativeGenericParameterDeclarationAccess().getAlternatives_2(), "rule__AlternativeGenericParameterDeclaration__Alternatives_2");
 			builder.put(grammarAccess.getHiddenKeywordsAccess().getAlternatives(), "rule__HiddenKeywords__Alternatives");
 			builder.put(grammarAccess.getSclEffectAssignmentAccess().getExpressionAlternatives_1_0(), "rule__SclEffectAssignment__ExpressionAlternatives_1_0");
 			builder.put(grammarAccess.getConditionalAccess().getExpressionAlternatives_2_0(), "rule__Conditional__ExpressionAlternatives_2_0");
@@ -243,8 +242,6 @@ public class SCTXParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getReferenceValuedObjectAccess().getGroup_4_0(), "rule__ReferenceValuedObject__Group_4_0__0");
 			builder.put(grammarAccess.getReferenceValuedObjectAccess().getGroup_4_0_2(), "rule__ReferenceValuedObject__Group_4_0_2__0");
 			builder.put(grammarAccess.getReferenceValuedObjectAccess().getGroup_5(), "rule__ReferenceValuedObject__Group_5__0");
-			builder.put(grammarAccess.getAlternativeGenericParameterDeclarationAccess().getGroup(), "rule__AlternativeGenericParameterDeclaration__Group__0");
-			builder.put(grammarAccess.getAlternativeGenericParameterDeclarationAccess().getGroup_2_1(), "rule__AlternativeGenericParameterDeclaration__Group_2_1__0");
 			builder.put(grammarAccess.getSCLProgramAccess().getGroup(), "rule__SCLProgram__Group__0");
 			builder.put(grammarAccess.getModuleAccess().getGroup(), "rule__Module__Group__0");
 			builder.put(grammarAccess.getPauseAccess().getGroup(), "rule__Pause__Group__0");
@@ -542,11 +539,10 @@ public class SCTXParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getRootStateAccess().getGenericParameterDeclarationsAssignment_4_2_1(), "rule__RootState__GenericParameterDeclarationsAssignment_4_2_1");
 			builder.put(grammarAccess.getRootStateAccess().getBaseStateReferencesAssignment_5_1(), "rule__RootState__BaseStateReferencesAssignment_5_1");
 			builder.put(grammarAccess.getRootStateAccess().getBaseStateReferencesAssignment_5_2_1(), "rule__RootState__BaseStateReferencesAssignment_5_2_1");
-			builder.put(grammarAccess.getRootStateAccess().getGenericParameterDeclarationsAssignment_7(), "rule__RootState__GenericParameterDeclarationsAssignment_7");
-			builder.put(grammarAccess.getRootStateAccess().getDeclarationsAssignment_8(), "rule__RootState__DeclarationsAssignment_8");
-			builder.put(grammarAccess.getRootStateAccess().getActionsAssignment_9(), "rule__RootState__ActionsAssignment_9");
-			builder.put(grammarAccess.getRootStateAccess().getRegionsAssignment_10_0(), "rule__RootState__RegionsAssignment_10_0");
-			builder.put(grammarAccess.getRootStateAccess().getRegionsAssignment_10_1(), "rule__RootState__RegionsAssignment_10_1");
+			builder.put(grammarAccess.getRootStateAccess().getDeclarationsAssignment_7(), "rule__RootState__DeclarationsAssignment_7");
+			builder.put(grammarAccess.getRootStateAccess().getActionsAssignment_8(), "rule__RootState__ActionsAssignment_8");
+			builder.put(grammarAccess.getRootStateAccess().getRegionsAssignment_9_0(), "rule__RootState__RegionsAssignment_9_0");
+			builder.put(grammarAccess.getRootStateAccess().getRegionsAssignment_9_1(), "rule__RootState__RegionsAssignment_9_1");
 			builder.put(grammarAccess.getStateAccess().getAnnotationsAssignment_0(), "rule__State__AnnotationsAssignment_0");
 			builder.put(grammarAccess.getStateAccess().getInitialAssignment_1(), "rule__State__InitialAssignment_1");
 			builder.put(grammarAccess.getStateAccess().getFinalAssignment_2(), "rule__State__FinalAssignment_2");
@@ -727,11 +723,6 @@ public class SCTXParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getReferenceValuedObjectAccess().getParametersAssignment_4_0_1(), "rule__ReferenceValuedObject__ParametersAssignment_4_0_1");
 			builder.put(grammarAccess.getReferenceValuedObjectAccess().getParametersAssignment_4_0_2_1(), "rule__ReferenceValuedObject__ParametersAssignment_4_0_2_1");
 			builder.put(grammarAccess.getReferenceValuedObjectAccess().getLabelAssignment_5_1(), "rule__ReferenceValuedObject__LabelAssignment_5_1");
-			builder.put(grammarAccess.getAlternativeGenericParameterDeclarationAccess().getAnnotationsAssignment_0(), "rule__AlternativeGenericParameterDeclaration__AnnotationsAssignment_0");
-			builder.put(grammarAccess.getAlternativeGenericParameterDeclarationAccess().getValueTypeAssignment_2_0(), "rule__AlternativeGenericParameterDeclaration__ValueTypeAssignment_2_0");
-			builder.put(grammarAccess.getAlternativeGenericParameterDeclarationAccess().getReferenceAssignment_2_1_0(), "rule__AlternativeGenericParameterDeclaration__ReferenceAssignment_2_1_0");
-			builder.put(grammarAccess.getAlternativeGenericParameterDeclarationAccess().getTypeAssignment_2_1_1(), "rule__AlternativeGenericParameterDeclaration__TypeAssignment_2_1_1");
-			builder.put(grammarAccess.getAlternativeGenericParameterDeclarationAccess().getValuedObjectsAssignment_3(), "rule__AlternativeGenericParameterDeclaration__ValuedObjectsAssignment_3");
 			builder.put(grammarAccess.getSCLProgramAccess().getPragmasAssignment_0(), "rule__SCLProgram__PragmasAssignment_0");
 			builder.put(grammarAccess.getSCLProgramAccess().getModulesAssignment_1(), "rule__SCLProgram__ModulesAssignment_1");
 			builder.put(grammarAccess.getModuleAccess().getAnnotationsAssignment_0(), "rule__Module__AnnotationsAssignment_0");

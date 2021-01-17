@@ -445,15 +445,8 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 				}
 				else break;
 			case KExpressionsPackage.GENERIC_PARAMETER_DECLARATION:
-				if (rule == grammarAccess.getAlternativeGenericParameterDeclarationRule()) {
-					sequence_AlternativeGenericParameterDeclaration(context, (GenericParameterDeclaration) semanticObject); 
-					return; 
-				}
-				else if (rule == grammarAccess.getGenericParameterDeclarationRule()) {
-					sequence_GenericParameterDeclaration(context, (GenericParameterDeclaration) semanticObject); 
-					return; 
-				}
-				else break;
+				sequence_GenericParameterDeclaration(context, (GenericParameterDeclaration) semanticObject); 
+				return; 
 			case KExpressionsPackage.GENERIC_TYPE_REFERENCE:
 				if (rule == grammarAccess.getGenericParameter_GenericTypeReference_ParameterizedRule()) {
 					sequence_GenericParameter_GenericTypeReference_Parameterized(context, (GenericTypeReference) semanticObject); 
@@ -1526,18 +1519,6 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	
 	/**
 	 * Contexts:
-	 *     AlternativeGenericParameterDeclaration returns GenericParameterDeclaration
-	 *
-	 * Constraint:
-	 *     (annotations+=Annotation* (valueType=ValueType | (reference?='ref'? type=[NamedObject|PrimeID])) valuedObjects+=SimpleValuedObject)
-	 */
-	protected void sequence_AlternativeGenericParameterDeclaration(ISerializationContext context, GenericParameterDeclaration semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
 	 *     BaseStateReference returns BaseStateReference
 	 *
 	 * Constraint:
@@ -1912,7 +1893,6 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	 *         label=STRING? 
 	 *         (genericParameterDeclarations+=GenericParameterDeclaration genericParameterDeclarations+=GenericParameterDeclaration*)? 
 	 *         (baseStateReferences+=BaseStateReference baseStateReferences+=BaseStateReference*)? 
-	 *         genericParameterDeclarations+=AlternativeGenericParameterDeclaration* 
 	 *         declarations+=DeclarationOrMethodWithKeywordWOSemicolon* 
 	 *         actions+=LocalAction* 
 	 *         (regions+=ImplicitControlflowRegion | regions+=Region+)?

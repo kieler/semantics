@@ -30,7 +30,6 @@ RootState returns sccharts::State:
 	('<' genericParameterDeclarations += GenericParameterDeclaration (',' genericParameterDeclarations += GenericParameterDeclaration)* '>')?
 	('extends' baseStateReferences += BaseStateReference (',' baseStateReferences += BaseStateReference)*)?
 	'{'
-		(genericParameterDeclarations += AlternativeGenericParameterDeclaration)*
 		declarations+=DeclarationOrMethodWithKeywordWOSemicolon*
 		actions+=LocalAction*
 		(regions+=ImplicitControlflowRegion | regions+=Region*)
@@ -338,17 +337,6 @@ ReferenceValuedObject returns kexpressions::ValuedObject:
     ('<' genericParameters += GenericParameter (',' genericParameters += GenericParameter)* '>')?
     (('(' parameters += ScopeParameter (',' parameters += ScopeParameter)* ')') | '()')?
     ('label' label=STRING)?;
-    
-AlternativeGenericParameterDeclaration returns kexpressions::GenericParameterDeclaration:
-    annotations+=Annotation*
-    '<input>'
-    (
-        (valueType = ValueType)
-        |
-        ((reference?='ref')? type = [annotations::NamedObject|PrimeID])
-    )
-    valuedObjects+=SimpleValuedObject
-;
 
 // ------------ //
 //  Enum Rules  // 
