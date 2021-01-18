@@ -4,17 +4,20 @@
 package de.cau.cs.kieler.sccharts.text.validation
 
 import com.google.common.collect.HashMultimap
+import com.google.common.collect.Iterables
 import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.Annotation
 import de.cau.cs.kieler.annotations.AnnotationsPackage
 import de.cau.cs.kieler.annotations.StringPragma
 import de.cau.cs.kieler.annotations.TypedStringAnnotation
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
 import de.cau.cs.kieler.annotations.registry.PragmaRegistry
 import de.cau.cs.kieler.kexpressions.AccessModifier
 import de.cau.cs.kieler.kexpressions.CombineOperator
 import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage
+import de.cau.cs.kieler.kexpressions.MethodDeclaration
 import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.OperatorType
 import de.cau.cs.kieler.kexpressions.ReferenceCall
@@ -30,6 +33,7 @@ import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kexpressions.keffects.Emission
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.kexpressions.kext.KExtPackage
 import de.cau.cs.kieler.kexpressions.kext.extensions.BindingType
 import de.cau.cs.kieler.kexpressions.kext.extensions.Replacements
 import de.cau.cs.kieler.sccharts.Action
@@ -63,8 +67,6 @@ import org.eclipse.xtext.validation.Check
 import org.eclipse.xtext.validation.CheckType
 
 import static extension java.lang.String.*
-import de.cau.cs.kieler.kexpressions.MethodDeclaration
-import com.google.common.collect.Iterables
 
 /**
  * This class contains custom validation rules. 
@@ -85,6 +87,7 @@ class SCTXValidator extends AbstractSCTXValidator {
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KExpressionsDeclarationExtensions
     @Inject extension KEffectsExtensions
+    @Inject extension AnnotationsExtensions
     
     /** Service class for accessing layout options by name */
     private static final LayoutMetaDataService LAYOUT_OPTIONS_SERVICE = LayoutMetaDataService.getInstance();
@@ -913,26 +916,66 @@ class SCTXValidator extends AbstractSCTXValidator {
     
     @Check
     def void checkReferenceDeclarationBindings(ReferenceDeclaration decl) {
+        if (decl.hasAnnotation("noBindingCheck")) {
+            return
+        }
+        
         val parent = decl.nextScope
+        val dfVOs = newHashSet
         if (parent instanceof de.cau.cs.kieler.sccharts.State) {
-            if (parent.regions.filter(DataflowRegion).exists[eAllContents.filter(ValuedObjectReference).exists[decl.valuedObjects.contains(valuedObject)]]) {
-                return // Do not check those instanciated by dataflow regions
+            for (vo : decl.valuedObjects) {
+                if (parent.regions.filter(DataflowRegion).exists[eAllContents.filter(ValuedObjectReference).exists[valuedObject === vo]]) {
+                    dfVOs += vo // Do not check those instanciated by dataflow regions
+                }
+            }
+        } else if (parent instanceof DataflowRegion) {
+            for (vo : decl.valuedObjects) {
+                if (parent.eAllContents.filter(ValuedObjectReference).exists[valuedObject === vo]) {
+                    dfVOs += vo // Do not check those instanciated by dataflow regions
+                }
             }
         }
         
-        val bindings = decl.valuedObjects?.head?.createBindings(new Replacements)
-        var errorMessages = newArrayList
-        for (binding : bindings) {
-            if (binding.errors > 0) {
-                errorMessages += binding.errorMessages
-            }
+        if (dfVOs.size === decl.valuedObjects.size) {
+            return
+        } else if (!dfVOs.empty) {
+            warning("This reference declaration contains some valued objects that are used in dataflow regions and some not. This might cause problems since reference valued objects not used in dataflow will be instaciated as class instances.",
+                parent, KExtPackage.eINSTANCE.declarationScope_Declarations, parent.declarations.indexOf(decl))
         }
         
-        if (!errorMessages.empty) {
-            error("The referencing binding is erroneous!\n" + errorMessages.join("\n"),
-                decl, 
-                KExpressionsPackage.eINSTANCE.referenceDeclaration_Reference, 
-                "The referencing binding is erroneous!\n" + errorMessages.join("\n"));
+        if (!dfVOs.empty || (decl.valuedObjects.size > 1 && decl.valuedObjects.exists[!parameters.empty || !genericParameters.empty])) {
+            // Check each VO
+            for (vo : decl.valuedObjects.filter[!dfVOs.contains(it)]) {
+                val bindings = vo.createBindings(new Replacements)
+                var errorMessages = newArrayList
+                for (binding : bindings) {
+                    if (binding.errors > 0) {
+                        errorMessages += binding.errorMessages
+                    }
+                }
+                
+                if (!errorMessages.empty) {
+                    error("The referencing binding is erroneous!\n" + errorMessages.join("\n"),
+                        decl, 
+                        KExpressionsPackage.eINSTANCE.declaration_ValuedObjects,
+                        decl.valuedObjects.indexOf(vo));
+                }
+            }
+        } else {
+            // One check for all
+            val bindings = decl.valuedObjects?.head?.createBindings(new Replacements)
+            var errorMessages = newArrayList
+            for (binding : bindings) {
+                if (binding.errors > 0) {
+                    errorMessages += binding.errorMessages
+                }
+            }
+            
+            if (!errorMessages.empty) {
+                error("The referencing binding is erroneous!\n" + errorMessages.join("\n"),
+                    decl, 
+                    KExpressionsPackage.eINSTANCE.referenceDeclaration_Reference);
+            }
         }
     }
     
