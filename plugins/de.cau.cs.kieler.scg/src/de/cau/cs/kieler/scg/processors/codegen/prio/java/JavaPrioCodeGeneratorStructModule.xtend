@@ -50,12 +50,17 @@ class JavaPrioCodeGeneratorStructModule extends JavaCodeGeneratorStructModule {
     }
     
     override addRootConstructor() {
+        // Do not add constructor here because state are not yet known
+    }  
+    
+    override generateDone() {
+        // Add constructor at the end of file when all state are known
         code.append("\n")
         addStates
         
         val superCall = "  super(State." + initialState + ", " + startPriority + ", " + maxPriority + ");\n\n";
         createConstructor(scg.declarations, (parent as JavaPrioCodeGeneratorModule).getProgramName, superCall, 0, serializer)
-    }    
+    }
     
     protected def void addStates() {
         code.appendInd("public static enum State {\n")
