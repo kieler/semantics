@@ -251,7 +251,7 @@ class Reference extends SCChartsProcessor implements Traceable {
                     scopeWithReference, true)
             } else if (binding.type === BindingType.GENERIC_TYPE) {
                 replacements.typeReplacements.put(binding.targetValuedObject.name, binding.sourceExpression)
-            } else {
+            } else if (!scopeWithReference.reference.^super || !replacements.containsKey(binding.targetValuedObject)){ // if binding is super binding, only register in replacements if VO does not exits there yet
                 // TODO: target indices not supported yet
                 replacements.push(binding.targetValuedObject, binding.sourceExpression)
             }
