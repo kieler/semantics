@@ -390,9 +390,18 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
         
         // Create the state for the then part
         val thenState = cRegion.createState("then")
-        val thenCompound = ifStmt.getThenClause as IASTCompoundStatement
-        thenState.insertHighlightAnnotations(thenCompound)
-        val thenRegion = buildCompound(thenCompound, ifState)
+        val thenStmt = ifStmt.getThenClause
+        thenState.insertHighlightAnnotations(thenStmt)
+        var DataflowRegion thenRegion
+        if (thenStmt instanceof IASTCompoundStatement) {
+            thenRegion = buildCompound(thenStmt, ifState)
+        } else {
+            thenRegion = createDataflowRegion("")
+            thenRegion.insertHighlightAnnotations(thenStmt)
+            buildStatement(thenStmt, ifState, thenRegion)
+            
+            linkOutputs(ifState, thenRegion)
+        }
         thenState.label = "then"
         thenState.regions += thenRegion
         val thenTransition = initState.createImmediateTransitionTo(thenState)
@@ -401,9 +410,18 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
         // If an else is given the state is also created
         if (ifStmt.getElseClause !== null) {
             val elseState = cRegion.createState("else")
-            val elseCompound = ifStmt.getElseClause as IASTCompoundStatement
-            elseState.insertHighlightAnnotations(elseCompound)
-            val elseRegion = buildCompound(elseCompound, ifState)
+            val elseStmt = ifStmt.getElseClause
+            elseState.insertHighlightAnnotations(elseStmt)
+            var DataflowRegion elseRegion
+            if (elseStmt instanceof IASTCompoundStatement) {
+                elseRegion = buildCompound(elseStmt, ifState)
+            } else {
+                elseRegion = createDataflowRegion("")
+                elseRegion.insertHighlightAnnotations(elseStmt)
+                buildStatement(elseStmt, ifState, elseRegion)
+                
+                linkOutputs(ifState, elseRegion)
+            }
             elseState.label = "else"
             elseState.regions += elseRegion
             initState.createImmediateTransitionTo(elseState)
