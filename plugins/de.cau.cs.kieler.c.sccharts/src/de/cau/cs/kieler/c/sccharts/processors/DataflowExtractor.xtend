@@ -3,7 +3,7 @@
  * 
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
- * Copyright 2015 by
+ * Copyright 2015,2021 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -16,20 +16,25 @@ package de.cau.cs.kieler.c.sccharts.processors
 import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.c.sccharts.extensions.CDTConvertExtensions
-import de.cau.cs.kieler.c.sccharts.extensions.ExpressionConverterExtensions
 import de.cau.cs.kieler.c.sccharts.extensions.HighlightingExtensions
+import de.cau.cs.kieler.c.sccharts.extensions.ValueExtensions
 import de.cau.cs.kieler.kexpressions.BoolValue
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.FloatValue
 import de.cau.cs.kieler.kexpressions.IntValue
+import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.StringValue
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsSerializeExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kicool.compilation.ExogenousProcessor
+import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.DataflowRegion
 import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.SCCharts
@@ -39,6 +44,9 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsDataflowRegionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
+import java.nio.charset.StandardCharsets
+import java.nio.file.Files
+import java.nio.file.Paths
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.ArrayList
@@ -51,19 +59,26 @@ import org.eclipse.cdt.core.dom.ast.IASTArraySubscriptExpression
 import org.eclipse.cdt.core.dom.ast.IASTBinaryExpression
 import org.eclipse.cdt.core.dom.ast.IASTBreakStatement
 import org.eclipse.cdt.core.dom.ast.IASTCaseStatement
+import org.eclipse.cdt.core.dom.ast.IASTCastExpression
 import org.eclipse.cdt.core.dom.ast.IASTCompoundStatement
+import org.eclipse.cdt.core.dom.ast.IASTConditionalExpression
 import org.eclipse.cdt.core.dom.ast.IASTDeclarationStatement
 import org.eclipse.cdt.core.dom.ast.IASTDeclarator
 import org.eclipse.cdt.core.dom.ast.IASTDefaultStatement
 import org.eclipse.cdt.core.dom.ast.IASTDoStatement
 import org.eclipse.cdt.core.dom.ast.IASTEqualsInitializer
+import org.eclipse.cdt.core.dom.ast.IASTExpression
 import org.eclipse.cdt.core.dom.ast.IASTExpressionStatement
+import org.eclipse.cdt.core.dom.ast.IASTFieldReference
 import org.eclipse.cdt.core.dom.ast.IASTForStatement
 import org.eclipse.cdt.core.dom.ast.IASTFunctionCallExpression
 import org.eclipse.cdt.core.dom.ast.IASTFunctionDefinition
 import org.eclipse.cdt.core.dom.ast.IASTIdExpression
 import org.eclipse.cdt.core.dom.ast.IASTIfStatement
+import org.eclipse.cdt.core.dom.ast.IASTInitializer
+import org.eclipse.cdt.core.dom.ast.IASTLiteralExpression
 import org.eclipse.cdt.core.dom.ast.IASTNode
+import org.eclipse.cdt.core.dom.ast.IASTNode.CopyStyle
 import org.eclipse.cdt.core.dom.ast.IASTReturnStatement
 import org.eclipse.cdt.core.dom.ast.IASTSimpleDeclSpecifier
 import org.eclipse.cdt.core.dom.ast.IASTSimpleDeclaration
@@ -72,11 +87,12 @@ import org.eclipse.cdt.core.dom.ast.IASTSwitchStatement
 import org.eclipse.cdt.core.dom.ast.IASTTranslationUnit
 import org.eclipse.cdt.core.dom.ast.IASTUnaryExpression
 import org.eclipse.cdt.core.dom.ast.IASTWhileStatement
+import org.eclipse.cdt.internal.core.dom.parser.ASTNode
 import org.eclipse.cdt.internal.core.dom.parser.c.CASTFunctionDeclarator
 import org.eclipse.emf.ecore.EObject
 
 /**
- * @author lan
+ * @author lan, nre
  * 
  */
 
@@ -84,24 +100,26 @@ import org.eclipse.emf.ecore.EObject
 class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts> {
 
     @Inject extension AnnotationsExtensions
-    @Inject extension SCChartsCoreExtensions
-    @Inject extension SCChartsStateExtensions
-    @Inject extension SCChartsControlflowRegionExtensions
-    @Inject extension SCChartsDataflowRegionExtensions
-    @Inject extension SCChartsTransitionExtensions
-    @Inject extension KExpressionsDeclarationExtensions
-    @Inject extension KExpressionsValuedObjectExtensions
-    @Inject extension KExpressionsSerializeExtensions
     @Inject extension CDTConvertExtensions
-    @Inject extension ExpressionConverterExtensions
     @Inject extension HighlightingExtensions
+    @Inject extension KExpressionsCreateExtensions
+    @Inject extension KExpressionsDeclarationExtensions
+    @Inject extension KExpressionsSerializeExtensions
+    @Inject extension KExpressionsValuedObjectExtensions
+    @Inject extension SCChartsControlflowRegionExtensions
+    @Inject extension SCChartsCoreExtensions
+    @Inject extension SCChartsDataflowRegionExtensions
+    @Inject extension SCChartsStateExtensions
+    @Inject extension SCChartsTransitionExtensions
+    @Inject extension ValueExtensions    
     
-     var functions = <String, State> newHashMap
-     var ifCounter = 0;
-     var swCounter = 0;
-     var forCounter = 0;
-     var whileCounter = 0;
-     var doCounter = 0;
+    
+    var functions = <String, State> newHashMap
+    var ifCounter = 0;
+    var swCounter = 0;
+    var forCounter = 0;
+    var whileCounter = 0;
+    var doCounter = 0;
     
     val valuedObjects = <State, HashMap<String, ArrayList<ValuedObject>>> newHashMap
     
@@ -109,6 +127,8 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
     
     var State baseState = null
 
+    /** The file contents, for referencing direct String representations. */
+    var byte[] sourceFile
 
     override String getId() {
         return "de.cau.cs.kieler.c.sccharts.dataflowExtractor"
@@ -124,6 +144,14 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
         
         println("Starting Dataflow Extractor - Time: " + dtf.format(now))
         val tUnit = getModel
+        // Remember the file contents as well for direct string representations in the diagram.
+        if (tUnit instanceof ASTNode) {
+            val String filePath = tUnit.filePath
+            if (filePath !== null) {
+                sourceFile = Files.readAllBytes(Paths.get(filePath))
+            }
+        }
+        
         val model = tUnit.transform as SCCharts
          
         now = LocalDateTime.now
@@ -260,8 +288,29 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
      * Create the dataflow region for a compound statement and extract each containing statement
      */
     def DataflowRegion buildCompound(IASTCompoundStatement body, State bodyState) {
+        return buildCompound(body, bodyState, null)
+    }
+    
+    /**
+     * Create the dataflow region for a compound statement and extract each containing statement.
+     * Additional declarations are added to the DF region as well, without their initializations, if any.
+     */
+    def DataflowRegion buildCompound(IASTCompoundStatement body, State bodyState, IASTStatement additionalDeclarations) {
         val dfRegion = createDataflowRegion("")
         dfRegion.insertHighlightAnnotations(body)
+
+        // Strip away the initializations of the declaration.   
+        var usedDeclarators = additionalDeclarations     
+        if (additionalDeclarations instanceof IASTDeclarationStatement) {
+            usedDeclarators = additionalDeclarations.copy
+            val declaration = (usedDeclarators as IASTDeclarationStatement).declaration
+            if (declaration instanceof IASTSimpleDeclaration) {
+                declaration.declarators.forEach [ initializer = null ]
+            }
+        }
+        if (usedDeclarators !== null) {
+            buildStatement(usedDeclarators, bodyState, dfRegion)
+        }
         
         val statements = body.getStatements
         for (stmt : statements) {
@@ -389,44 +438,74 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
         initState.initial = true
         
         // Create the state for the then part
-        val thenState = cRegion.createState("then")
         val thenStmt = ifStmt.getThenClause
-        thenState.insertHighlightAnnotations(thenStmt)
-        var DataflowRegion thenRegion
-        if (thenStmt instanceof IASTCompoundStatement) {
-            thenRegion = buildCompound(thenStmt, ifState)
-        } else {
-            thenRegion = createDataflowRegion("")
-            thenRegion.insertHighlightAnnotations(thenStmt)
-            buildStatement(thenStmt, ifState, thenRegion)
-            
-            linkOutputs(ifState, thenRegion)
-        }
-        thenState.label = "then"
-        thenState.regions += thenRegion
+        val State thenState = createStateForStatement(thenStmt, cRegion, ifState, "then")
         val thenTransition = initState.createImmediateTransitionTo(thenState)
         thenTransition.trigger = (ifStmt.getConditionExpression).createKExpression(ifState, dRegion)
         
         // If an else is given the state is also created
         if (ifStmt.getElseClause !== null) {
-            val elseState = cRegion.createState("else")
             val elseStmt = ifStmt.getElseClause
-            elseState.insertHighlightAnnotations(elseStmt)
-            var DataflowRegion elseRegion
-            if (elseStmt instanceof IASTCompoundStatement) {
-                elseRegion = buildCompound(elseStmt, ifState)
-            } else {
-                elseRegion = createDataflowRegion("")
-                elseRegion.insertHighlightAnnotations(elseStmt)
-                buildStatement(elseStmt, ifState, elseRegion)
-                
-                linkOutputs(ifState, elseRegion)
-            }
-            elseState.label = "else"
-            elseState.regions += elseRegion
+            val State elseState = createStateForStatement(elseStmt, cRegion, ifState, "else")
             initState.createImmediateTransitionTo(elseState)
         }
         
+    }
+    
+    /**
+     * Creates and returns a new state in the {@code parentRegion} of the {@code parentState} with a {@code name}
+     * that contains the dataflow behavior of the {@code statement}.
+     */
+    private def State createStateForStatement(IASTStatement statement, ControlflowRegion parentRegion, State parentState, String name) {
+        val newState = parentRegion.createState(name)
+        newState.insertHighlightAnnotations(statement)
+        val DataflowRegion thenRegion = createDFRegionForStatement(statement, parentState)
+        newState.label = name
+        newState.regions += thenRegion
+        
+        return newState
+    }
+    
+    /**
+     * Creates and returns a new dataflow region using the in/outputs of the {@code parentState} for the given
+     * {@code statement}.
+     */
+    private def DataflowRegion createDFRegionForStatement(IASTStatement statement, State parentState) {
+        return createDFRegionForStatement(statement, parentState, null)
+    }
+    
+    /**
+     * Creates and returns a new dataflow region using the in/outputs of the {@code parentState} for the given
+     * {@code statement}. The {@code additionalDeclarations} can be used if this region needs some declariations defined
+     * as well that should not be visible from the outside. Used for example for 'for' loop's initializer statement.
+     */
+    private def DataflowRegion createDFRegionForStatement(IASTStatement statement, State parentState,
+        IASTStatement additionalDeclarations) {
+        var DataflowRegion newRegion
+        if (statement instanceof IASTCompoundStatement) {
+            newRegion = buildCompound(statement, parentState, additionalDeclarations)
+        } else {
+            newRegion = createDataflowRegion("")
+            newRegion.insertHighlightAnnotations(statement)
+            var usedDeclarators = additionalDeclarations
+            
+            // From the additional initializers, only their declarations should be used, but no
+            // initialization should be added to the region. So strip that initialization away
+            // from a copy of the declaration.
+            if (additionalDeclarations instanceof IASTDeclarationStatement) {
+                usedDeclarators = additionalDeclarations.copy
+                val declaration = (usedDeclarators as IASTDeclarationStatement).declaration
+                if (declaration instanceof IASTSimpleDeclaration) {
+                    declaration.declarators.forEach [ initializer = null ]
+                }
+            }
+            buildStatement(usedDeclarators, parentState, newRegion)
+            buildStatement(statement, parentState, newRegion)
+            
+            linkOutputs(parentState, newRegion)
+        }
+        
+        return newRegion
     }
     
     /**
@@ -532,14 +611,17 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
         setOutputs(forStmt, rootState, forState, dRegion, forObj)
         
         // Set the loop conditions as label
-        val condExpr = forStmt.getConditionExpression.exprToString
-        val initExpr = forStmt.getInitializerStatement.stmtToString
-        val itExpr = forStmt.getIterationExpression.exprToString        
+        val condExpr = forStmt.getConditionExpression.exprToString(sourceFile)
+        var initExpr = forStmt.getInitializerStatement.stmtToString(sourceFile)
+        if (initExpr.endsWith(";")) {
+            initExpr = initExpr.substring(0, initExpr.length - 1)
+        }
+        val itExpr = forStmt.getIterationExpression.exprToString(sourceFile)
         forState.label = "for (" + initExpr.serialize + "; " + condExpr.serialize + "; " + itExpr.serialize + ")"
         forCounter++
         
         // Translate the body
-        val forDBodyRegion = buildCompound(forStmt.getBody as IASTCompoundStatement, forState) 
+        val forDBodyRegion = createDFRegionForStatement(forStmt.getBody, forState, forStmt.getInitializerStatement) 
         forState.regions += forDBodyRegion
         forDBodyRegion.label = forState.label        
     }
@@ -568,7 +650,7 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
         whileCounter++
         
         // Translate the loop body
-        val whileDBodyRegion = buildCompound(whileStmt.getBody as IASTCompoundStatement, whileState) 
+        val DataflowRegion whileDBodyRegion = createDFRegionForStatement(whileStmt.getBody, whileState) 
         whileState.regions += whileDBodyRegion
         whileDBodyRegion.label = whileState.label
         
@@ -598,7 +680,7 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
         doCounter++
         
         // Translate the body
-        val doDBodyRegion = buildCompound(doStmt.getBody as IASTCompoundStatement, doState) 
+        val doDBodyRegion = createDFRegionForStatement(doStmt.getBody, doState) 
         doState.regions += doDBodyRegion
         doDBodyRegion.label = doState.label
                
@@ -1094,6 +1176,581 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
         // been modified in between.
         
         return false
+    }
+    
+    /**
+     * Create a list of assignments for the given binary expression.
+     */
+    def ArrayList<Assignment> createAssignments(IASTBinaryExpression binExpr, State funcState, DataflowRegion dRegion) {
+        val operator = binExpr.getOperator
+        var assignments = new ArrayList<Assignment>
+        var Assignment ass = null
+        // Only if the binary expression is an assignment some work is needed
+        if(operator == IASTBinaryExpression.op_assign) {
+            var sourceExpr = binExpr.children.get(1)
+            var Expression source = null
+            // If source expression is a variable read retrieve the respective VO
+            if(sourceExpr instanceof IASTIdExpression) {
+                source = funcState.findValuedObjectByName((sourceExpr as IASTIdExpression).getName.toString, false, dRegion).reference
+            // Translate the expression that is meant to be assigned
+            } else if(sourceExpr instanceof IASTBinaryExpression) {
+                source = createKExpression(sourceExpr, funcState, dRegion)
+            } else if(sourceExpr instanceof IASTUnaryExpression) {
+                source = createKExpression(sourceExpr, funcState, dRegion)
+            // Translate a function call that will be assigned
+            } else if(sourceExpr instanceof IASTFunctionCallExpression) {
+                // Create the function reference
+                val funcCall = sourceExpr as IASTFunctionCallExpression
+                var refDecl = createReferenceDeclaration
+                dRegion.declarations += refDecl
+                val funcName = (funcCall.getFunctionNameExpression as IASTIdExpression).getName.toString
+                var refState = funcName.findFunctionState
+                if (refState === null) {
+                    refState = createUnknownFuncState(funcName, funcCall, true)
+                }
+                val refStateConst = refState
+                refDecl.setReference(refState)
+                refDecl.annotations += createTagAnnotation("hide")
+                // Create Func Object
+                val funcObj = refDecl.createValuedObject(funcName)
+                funcObj.insertHighlightAnnotations(sourceExpr)
+                // Retrieve Func output
+                source = funcObj.reference => [
+                    subReference = refStateConst.declarations.filter(VariableDeclaration).map[ it.valuedObjects ].flatten.filter [ name == "res_out" ].head.reference
+                ]
+                // Link func inputs (add assignments to result)
+                var i = 0
+                for (argument : funcCall.getArguments) {
+                    val funcObjArg = refStateConst.declarations.filter(VariableDeclaration).map[ it.valuedObjects ].flatten.get(i)
+                    val connectObj = funcState.findValuedObjectByName(argument.children.head.toString, false, dRegion)
+                    ass = createDataflowAssignment(funcObj, funcObjArg, connectObj.reference)
+                    assignments.add(ass)
+                    i++
+                }
+            // Create a value expression for a literal    
+            } else if(sourceExpr instanceof IASTLiteralExpression){
+                
+                source = createValue(sourceExpr)
+            }
+            
+            // Retrieve the assignment target
+            var ValuedObject target
+            val targetExpr = binExpr.getOperand1
+            var Expression index
+            if (targetExpr instanceof IASTIdExpression) {
+                target = funcState.findValuedObjectByName(targetExpr.getName.toString, true, dRegion)    
+            } else if (targetExpr instanceof IASTArraySubscriptExpression) {
+                val arrayIndex = targetExpr.argument.createKExpression(funcState, dRegion)
+                target = funcState.findValuedObjectByName(targetExpr.arrayExpression.exprToString(sourceFile), arrayIndex, true, dRegion)
+                index = targetExpr.argument.createKExpression(funcState, dRegion)
+            } else {
+                println("ExpressionConverterExtensions: Unsupported assignment target detected!" + targetExpr.expressionType)
+            }
+            
+            target.insertHighlightAnnotations(binExpr)
+            ass = createDataflowAssignment(target, source)
+            if (index !== null) {
+                ass.reference.indices += index
+            }
+        }
+        assignments.add(ass)
+        return assignments
+    }
+    
+    /**
+     * Create a lazy assignment like += and add them to the given dataflow region.
+     */ 
+    def void createLazyAssignment(IASTBinaryExpression expression, State funcState, DataflowRegion dRegion, int operator) {
+        // Create a normal assignment out of lazy assignment
+        val assExpr = expression.copy(CopyStyle.withLocations)
+        assExpr.setOperator = IASTBinaryExpression.op_assign
+        val operatorExpr = expression.copy(CopyStyle.withLocations)
+        operatorExpr.setOperator = operator
+        assExpr.setOperand2 = operatorExpr
+        
+        // Translate the normal assignment
+        val assignments = createAssignments(assExpr, funcState, dRegion)
+        for (assignment : assignments) {
+            dRegion.equations += assignment
+        }
+    }
+    
+    /**
+     * Create the assignment out of a BinaryExpression and add them to the given dataflow region.
+     */   
+    def void createBinaryAssignment(IASTBinaryExpression expression, State funcState, DataflowRegion dRegion) {
+        
+        switch (expression.getOperator) {
+            // Translate the normal assignment
+            case IASTBinaryExpression.op_assign: {
+                val assignments = createAssignments(expression, funcState, dRegion)
+                for (assignment : assignments) {
+                    dRegion.equations += assignment
+                }
+            }
+            // Translate lazy assignments
+            case IASTBinaryExpression.op_multiplyAssign: {
+                val arithmeticOP = IASTBinaryExpression.op_multiply
+                createLazyAssignment(expression, funcState, dRegion, arithmeticOP)
+            }
+            case IASTBinaryExpression.op_divideAssign: {
+                val arithmeticOP = IASTBinaryExpression.op_divide
+                createLazyAssignment(expression, funcState, dRegion, arithmeticOP)
+            }
+            case IASTBinaryExpression.op_moduloAssign: {
+                val arithmeticOP = IASTBinaryExpression.op_modulo
+                createLazyAssignment(expression, funcState, dRegion, arithmeticOP)
+            }
+            case IASTBinaryExpression.op_plusAssign: {
+                val arithmeticOP = IASTBinaryExpression.op_plus
+                createLazyAssignment(expression, funcState, dRegion, arithmeticOP)
+            }
+            case IASTBinaryExpression.op_minusAssign: {
+                val arithmeticOP = IASTBinaryExpression.op_minus
+                createLazyAssignment(expression, funcState, dRegion, arithmeticOP)
+            }
+            case IASTBinaryExpression.op_shiftLeftAssign: {
+                val arithmeticOP = IASTBinaryExpression.op_shiftLeft
+                createLazyAssignment(expression, funcState, dRegion, arithmeticOP)
+            }
+            case IASTBinaryExpression.op_shiftRightAssign: {
+                val arithmeticOP = IASTBinaryExpression.op_shiftRight
+                createLazyAssignment(expression, funcState, dRegion, arithmeticOP)
+            }
+            case IASTBinaryExpression.op_binaryAndAssign: {
+                val arithmeticOP = IASTBinaryExpression.op_binaryAnd
+                createLazyAssignment(expression, funcState, dRegion, arithmeticOP)
+            }
+            case IASTBinaryExpression.op_binaryXorAssign: {
+                val arithmeticOP = IASTBinaryExpression.op_binaryXor
+                createLazyAssignment(expression, funcState, dRegion, arithmeticOP)
+            }
+            case IASTBinaryExpression.op_binaryOrAssign: {
+                val arithmeticOP = IASTBinaryExpression.op_binaryOr
+                createLazyAssignment(expression, funcState, dRegion, arithmeticOP)
+            }
+            
+        }
+        
+    }
+    
+    /**
+     * Translate a unary assignment like ++ and add them to the dataflow region.
+     */
+    def void createUnaryAssignment(IASTUnaryExpression expression, State funcState, DataflowRegion dRegion) {
+        // Create the expression
+        val sourceExpression = createKExpression(expression, funcState, dRegion)
+        // Retrieve the respective variable VO                
+        val opName = (expression.getOperand as IASTIdExpression).getName.toString
+        val opVO = funcState.findValuedObjectByName(opName, true, dRegion)
+                
+        opVO.insertHighlightAnnotations(expression) 
+        // Create the Assignment        
+        dRegion.equations += createDataflowAssignment(opVO, sourceExpression)
+        
+    }
+    
+    /**
+     * Translate a func call expression and add it to the dataflow region.
+     */
+    def void createFuncCall(IASTFunctionCallExpression expression, State funcState, DataflowRegion dRegion, State refState, boolean knownFunction) {
+        // Create the Reference
+        val refDecl = createReferenceDeclaration
+        refDecl.setReference(refState)
+        refDecl.annotations += createTagAnnotation("hide")
+        dRegion.declarations += refDecl
+        val refObj = refDecl.createValuedObject(refState.name)
+        refObj.insertHighlightAnnotations(expression)
+        // Link the arguments        
+        var arguments = expression.getArguments
+        for(var i = 0; i < arguments.length; i++) {
+            val argument = arguments.get(i)
+            val argExpr = argument.createKExpression(funcState, dRegion)
+            var inputVO = refState.declarations.filter(VariableDeclaration).map[ it.valuedObjects ].flatten.get(i)
+            dRegion.equations += createDataflowAssignment(refObj, inputVO, argExpr)
+            
+        }
+    }
+    
+    /**
+     * Translate a CDT expression into a KExpression 
+     */
+    def Expression createKExpression(IASTNode expr, State funcState, DataflowRegion dRegion) {
+        var Expression kExpression
+        
+        switch expr {
+            // For variable uses create a VO reference
+            IASTIdExpression: {
+                var opValObj = funcState.findValuedObjectByName((expr as IASTIdExpression).getName.toString, false, dRegion)
+                kExpression = opValObj.reference
+            }
+            IASTFieldReference: {
+                var opValObj = funcState.findValuedObjectByName((expr as IASTFieldReference).getFieldName.toString, false, dRegion)
+                kExpression = opValObj.reference
+            }
+            // For an array, just use the array expression (and leave out the subscript for now).
+            IASTArraySubscriptExpression: {
+                val indexExpression = expr.argument.createKExpression(funcState, dRegion)
+                if (expr.arrayExpression instanceof IASTIdExpression) {
+                    var opValObj = funcState.findValuedObjectByName((expr.arrayExpression as IASTIdExpression).getName.toString, indexExpression, false, dRegion)
+                    kExpression = opValObj.reference
+                } else {
+                    println("Unsupported ast node to create an expression: " + expr.arrayExpression.class)         
+                    kExpression = expr.arrayExpression.createKExpression(funcState, dRegion)
+                }
+                (kExpression as ValuedObjectReference).indices += indexExpression
+            }
+            // For a function call create a reference an return the functions output VO reference
+            IASTFunctionCallExpression: {
+                // Create the Reference
+                val funcCall = expr as IASTFunctionCallExpression
+                var refDecl = createReferenceDeclaration
+                dRegion.declarations += refDecl
+                val funcName = (funcCall.getFunctionNameExpression as IASTIdExpression).getName.toString//children.head.toString
+                var refState = funcName.findFunctionState
+                if (refState === null) {
+                    refState = createUnknownFuncState(funcName, funcCall, true)
+                }
+                val refStateConst = refState
+                refDecl.setReference(refStateConst)
+                refDecl.annotations += createTagAnnotation("Hide")
+                val funcObj = refDecl.createValuedObject(funcName)
+                funcObj.insertHighlightAnnotations(expr)
+                // Retrieve the output VO                
+                kExpression = funcObj.reference => [
+                    subReference = refStateConst.declarations.filter(VariableDeclaration).map[ it.valuedObjects ].flatten.filter [ name == "res_out" ].head.reference
+                ]
+                // Connect the Inputs    
+                var i = 0
+                for (argument : funcCall.getArguments) {
+                    val funcObjArg = refStateConst.declarations.filter(VariableDeclaration).map[ it.valuedObjects ].flatten.get(i)
+                    val connectExpr = argument.createKExpression(funcState, dRegion)
+                    dRegion.equations += createDataflowAssignment(funcObj, funcObjArg, connectExpr)
+                    i++
+                }
+            }
+            // For a conditional expression create a state similar to an if    
+            IASTConditionalExpression: {
+                val condExpr = expr.getLogicalConditionExpression
+                //Create the State
+                val condState = createState(condExpr.exprToString(sourceFile))
+                condState.insertHighlightAnnotations(expr)
+                val condDRegion = createDataflowRegion(condState.name)
+                condDRegion.label = condState.name
+                condState.regions += condDRegion
+                // Create the reference
+                val refDecl = createReferenceDeclaration
+                refDecl.setReference(condState)
+                refDecl.annotations += createTagAnnotation("hide")
+                dRegion.declarations += refDecl
+                val condStateVO = refDecl.createValuedObject("?")
+                // Set the inputs
+                setInputs(expr, funcState, condState, dRegion, condStateVO)
+                
+                // Create the output
+                val outputDecl = createVariableDeclaration
+                outputDecl.output = true
+                condState.declarations += outputDecl
+                val outputVO = outputDecl.createValuedObject("res")
+                // Create the positive expression
+                condDRegion.equations += createDataflowAssignment(outputVO, expr.getPositiveResultExpression.createKExpression(condState,condDRegion))
+                outputVO.insertHighlightAnnotations(expr)
+                // Create the nagative expression
+                val condNDRegion = createDataflowRegion("Else")
+                condNDRegion.label = "Else"
+                condState.regions += condNDRegion
+                
+                condNDRegion.equations += createDataflowAssignment(outputVO, expr.getNegativeResultExpression.createKExpression(condState,condNDRegion))
+                outputVO.insertHighlightAnnotations(expr)
+                
+                // Return the output reference
+                kExpression = condStateVO.reference => [
+                    subReference = outputVO.reference
+                ]
+            }
+            // Skip a cast and translate the inner expression
+            IASTCastExpression: {
+                kExpression = expr.getOperand.createKExpression(funcState, dRegion)
+            }
+            // Call subsequent translations for unary and binary expressions
+            IASTUnaryExpression: {
+                kExpression = (expr as IASTUnaryExpression).createKExpression(funcState, dRegion)
+            }
+            IASTBinaryExpression: {
+                kExpression = (expr as IASTBinaryExpression).createKExpression(funcState, dRegion)
+            }
+            // Create a value expression for a literal
+            IASTLiteralExpression: {
+                kExpression = expr.createValue
+            }
+            // Extract the expression of an expression statement and translate it
+            IASTExpressionStatement: {
+                kExpression = expr.getExpression.createKExpression(funcState, dRegion)
+            }
+            default: {
+                println("Unsupported ast node to create an expression: " + expr.class)
+            }
+        }
+        return kExpression
+    }
+    
+    /**
+     * Translate a bianryExpression
+     */
+    def OperatorExpression createKExpression(IASTBinaryExpression binExpr, State funcState, DataflowRegion dRegion) {
+        // Create the operator expression with the corresponding operator
+        var opType = binExpr.getOperator().CDTBinaryOpTypeConversion
+        var expression = opType.createOperatorExpression
+        // Translate the operands and attach them    
+        for (operand : binExpr.children) {
+                
+            expression.subExpressions += operand.createKExpression(funcState, dRegion)
+                
+        }
+        return expression
+    }
+    
+    /**
+     * Translate an UnaryExpression
+     */
+    def Expression createKExpression(IASTUnaryExpression unExpr, State funcState, DataflowRegion dRegion) {
+        var Expression expression
+        // Retrieve the operator and create the operatorExpression
+        var opType = unExpr.getOperator.CDTUnaryOpTypeConversion
+        var OperatorExpression unKExpr
+        
+        // Test if the operator exists (parentheses are an unary expression thus skip them)
+        if(opType !== null) {
+            unKExpr = opType.createOperatorExpression
+            // Attach the operand
+            var operand = unExpr.getOperand
+            unKExpr.subExpressions += operand.createKExpression(funcState, dRegion)
+            expression = unKExpr
+        } else {
+            // Translate the operand
+            var operand = unExpr.getOperand
+            expression = operand.createKExpression(funcState, dRegion)
+        }
+        return expression
+        
+    }
+    
+    /**
+     * Build a string representation of the expression.
+     */
+    def String exprToString(IASTExpression expr, byte[] sourceFileContents) {
+        if (expr instanceof ASTNode && sourceFileContents !== null && !sourceFileContents.empty) {
+            return stringContentFromNode(expr as ASTNode, sourceFileContents)
+        }
+        
+        // Otherwise, do a best effort for reconstructing the string.
+        var expressionAsString = ""
+        
+        if (expr instanceof IASTFunctionCallExpression) {
+            // Retrieve the function's name
+            val funcName = (expr.getFunctionNameExpression as IASTIdExpression).getName.toString
+            expressionAsString = funcName + "("
+            
+            // Translate the arguments
+            val arguments = expr.getArguments
+            for (var i = 0; i < arguments.length; i++) {
+                val argument = arguments.get(i)
+                
+                if (argument instanceof IASTExpression) {
+                    expressionAsString += argument.exprToString(sourceFileContents)
+                } else {
+                    println("unsupported argument type in function call to convert to string: " + argument.class)
+                }
+                
+                if (i < arguments.length - 1) {
+                    expressionAsString += ", "
+                } else expressionAsString += ")"
+            }
+            
+            
+        } else if (expr instanceof IASTBinaryExpression) {
+            // Translate the elemenmts of the binary expression
+            val operator = expr.getOperator.CDTBinaryOpTypeToString
+            val operand1 = expr.getOperand1.exprToString(sourceFileContents)
+            val operand2 = expr.getOperand2.exprToString(sourceFileContents)
+            
+            expressionAsString = "(" + operand1 + " " + operator + " " + operand2 + ")" 
+        } else if (expr instanceof IASTUnaryExpression) {
+            // Translate the elements of a unary expression
+            var postOperator = expr.getOperator.CDTUnaryOpTypeToString
+            var preOperator = ""
+            
+            if (postOperator.contains("exp")) {
+                preOperator = postOperator.substring(0, postOperator.indexOf("exp"))
+                postOperator = ""
+            }
+            
+            val operand = expr.getOperand.exprToString(sourceFileContents)
+            
+            expressionAsString = "(" + preOperator + operand + postOperator + ")"
+        } else if (expr instanceof IASTFieldReference) {
+            // Translate the use of a struct
+            val structExpr = expr.getFieldOwner
+            val structName = structExpr.exprToString(sourceFileContents)
+            val fieldName = expr.getFieldName
+            expressionAsString = structName + "->" + fieldName
+            
+        } else if (expr instanceof IASTArraySubscriptExpression) {
+            // Translate the use on an array
+            val arrayExpr = expr.getArrayExpression
+            val arrayName = arrayExpr.exprToString(sourceFileContents)
+            val arrayArgExpr = expr.getArgument
+            var String arrayArgName;
+            if (arrayArgExpr instanceof IASTExpression) {
+                arrayArgName = arrayArgExpr.exprToString(sourceFileContents)
+            } else {
+                println("unsupported argument type in array subscript expression to convert to string: " + arrayArgExpr.class)
+            }
+            
+            expressionAsString = arrayName + "[" + arrayArgName + "]"
+            
+        } else if (expr instanceof IASTIdExpression) {
+            //Translate the use of a variable
+            expressionAsString = expr.getName.toString            
+        } else if (expr instanceof IASTLiteralExpression) {
+            // Translate the use of a literal
+            expressionAsString = expr.toString
+        } else if (expr instanceof IASTExpressionStatement) {
+            // Extract the expression out of the expression statement
+            expressionAsString = expr.getExpression.exprToString(sourceFileContents)
+        } else {
+            println("Unsupported expression to convert to string: " + expr.class)
+        }
+        
+        return expressionAsString
+    }
+    
+    /**
+     * Build a string representation of the statement
+     */
+    def String stmtToString(IASTStatement stmt, byte[] sourceFileContents) {
+        if (stmt instanceof ASTNode && sourceFileContents !== null && !sourceFileContents.empty) {
+            return stringContentFromNode(stmt as ASTNode, sourceFileContents)
+        }
+        
+        // Otherwise, do a best effort for reconstructing the string.
+        var String stmtAsString = ""
+        
+        switch (stmt) {
+            IASTDeclarationStatement: {
+                val decl = stmt.declaration
+                if (decl instanceof IASTSimpleDeclaration) {
+                    val specifier = decl.declSpecifier
+                    if (specifier instanceof IASTSimpleDeclSpecifier) {
+                        stmtAsString += specifier.specifierToString + " "
+                    }
+                    for (var int i = 0; i < decl.declarators.length; i++) {
+                        val declarator = (decl as IASTSimpleDeclaration).declarators.get(i);
+                        val name = declarator.name
+                        val initializer = declarator.initializer
+                        var String value
+                        if (initializer instanceof IASTEqualsInitializer &&
+                            (initializer as IASTEqualsInitializer).initializerClause instanceof IASTExpression) {
+                            value = ((initializer as IASTEqualsInitializer).initializerClause as IASTExpression).exprToString(sourceFileContents)
+                        }
+                        stmtAsString += name + " " + initializer.initializerToString + " " + value
+                        if (i != decl.declarators.length - 1) {
+                            stmtAsString += ", "
+                        }
+                    }
+                }
+            }
+            default: {
+                println("Yet unsupported statement to String: " + stmt.class)
+            }
+        }
+        
+        return stmtAsString
+    }
+    
+    /** Return the given node as a String from the given source file contents. */
+    def String stringContentFromNode(ASTNode node, byte[] sourceFileContents) {
+        return new String(sourceFileContents,node.offset,node.length, StandardCharsets.UTF_8)
+    }
+    
+    /**
+     * Build a string representation of the IASTInitializer.
+     */
+    def String initializerToString(IASTInitializer initializer) {
+        switch (initializer) {
+            IASTEqualsInitializer: {
+                return "="
+            }
+            default: {
+                println("Yet unsupported initializer to String: " + initializer.class)
+                return "unsupportedInitializer"
+            }
+        }
+    }
+    
+    /**
+     * Build a string representation of the IASTSimpleDeclSpecifier.
+     */
+    def String specifierToString(IASTSimpleDeclSpecifier specifier) {
+        switch (specifier.type) {
+            case IASTSimpleDeclSpecifier.t_unspecified: {
+                return "unspecified"
+            }
+            case IASTSimpleDeclSpecifier.t_void: {
+                return "void"
+            }
+            case IASTSimpleDeclSpecifier.t_char: {
+                return "char"
+            }
+            case IASTSimpleDeclSpecifier.t_int: {
+                return "int"
+            }
+            case IASTSimpleDeclSpecifier.t_float: {
+                return "float"
+            }
+            case IASTSimpleDeclSpecifier.t_double: {
+                return "double"
+            }
+            case IASTSimpleDeclSpecifier.t_bool: {
+                return "bool"
+            }
+            case IASTSimpleDeclSpecifier.t_wchar_t: {
+                return "wchar"
+            }
+            case IASTSimpleDeclSpecifier.t_typeof: {
+                return "typeof"
+            }
+            case IASTSimpleDeclSpecifier.t_decltype: {
+                return "decltype"
+            }
+            case IASTSimpleDeclSpecifier.t_auto: {
+                return "auto"
+            }
+            case IASTSimpleDeclSpecifier.t_char16_t: {
+                return "char16"
+            }
+            case IASTSimpleDeclSpecifier.t_char32_t: {
+                return "char32"
+            }
+            case IASTSimpleDeclSpecifier.t_int128: {
+                return "int128"
+            }
+            case IASTSimpleDeclSpecifier.t_float128: {
+                return "float128"
+            }
+            case IASTSimpleDeclSpecifier.t_decimal32: {
+                return "decimal32"
+            }
+            case IASTSimpleDeclSpecifier.t_decimal64: {
+                return "decimal64"
+            }
+            case IASTSimpleDeclSpecifier.t_decimal128: {
+                return "decimal128"
+            }
+            case IASTSimpleDeclSpecifier.t_decltype_auto: {
+                return "decltype_auto"
+            }
+        }
     }
 
 }
