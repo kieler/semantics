@@ -23,6 +23,7 @@ import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.FloatValue
 import de.cau.cs.kieler.kexpressions.IntValue
 import de.cau.cs.kieler.kexpressions.OperatorExpression
+import de.cau.cs.kieler.kexpressions.OperatorType
 import de.cau.cs.kieler.kexpressions.StringValue
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObject
@@ -1234,27 +1235,42 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
             }
             
             // Retrieve the assignment target
-            var ValuedObject target
-            val targetExpr = binExpr.getOperand1
-            var Expression index
-            if (targetExpr instanceof IASTIdExpression) {
-                target = funcState.findValuedObjectByName(targetExpr.getName.toString, true, dRegion)    
-            } else if (targetExpr instanceof IASTArraySubscriptExpression) {
-                val arrayIndex = targetExpr.argument.createKExpression(funcState, dRegion)
-                target = funcState.findValuedObjectByName(targetExpr.arrayExpression.exprToString(sourceFile), arrayIndex, true, dRegion)
-                index = targetExpr.argument.createKExpression(funcState, dRegion)
-            } else {
-                println("ExpressionConverterExtensions: Unsupported assignment target detected!" + targetExpr.expressionType)
-            }
+            val targetAndIndex = retrieveTargetAndIndexExpr(binExpr.getOperand1, funcState, dRegion)
             
-            target.insertHighlightAnnotations(binExpr)
-            ass = createDataflowAssignment(target, source)
-            if (index !== null) {
-                ass.reference.indices += index
+            targetAndIndex.target.insertHighlightAnnotations(binExpr)
+            ass = createDataflowAssignment(targetAndIndex.target, source)
+            if (targetAndIndex.index !== null) {
+                ass.reference.indices += targetAndIndex.index
             }
         }
         assignments.add(ass)
         return assignments
+    }
+    
+    /**
+     * Retrieve the target valued object for the given target expression for the given function state and dataflow
+     * region, as well as the index if the target is an array.
+     */
+    def ValuedObjectAndExpression retrieveTargetAndIndexExpr(IASTExpression targetExpr, State funcState, DataflowRegion dRegion) {
+        val ValuedObjectAndExpression result = new ValuedObjectAndExpression
+        if (targetExpr instanceof IASTIdExpression) {
+            result.target = funcState.findValuedObjectByName(targetExpr.getName.toString, true, dRegion)    
+        } else if (targetExpr instanceof IASTArraySubscriptExpression) {
+            val arrayIndex = targetExpr.argument.createKExpression(funcState, dRegion)
+            result.target = funcState.findValuedObjectByName(targetExpr.arrayExpression.exprToString(sourceFile), arrayIndex, true, dRegion)
+            result.index = targetExpr.argument.createKExpression(funcState, dRegion)
+        } else {
+            println("DataflowExtractor: Unsupported assignment target detected!" + targetExpr.expressionType)
+        }
+        return result
+    }
+    
+    /**
+     * Structure class to return a {@code ValuedObject} and an {@code Expression} in a method.
+     */
+    private static class ValuedObjectAndExpression {
+        public ValuedObject target
+        public Expression index
     }
     
     /**
@@ -1335,9 +1351,33 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
     }
     
     /**
-     * Translate a unary assignment like ++ and add them to the dataflow region.
+     * Translate a unary assignment and add it to the dataflow region.
      */
     def void createUnaryAssignment(IASTUnaryExpression expression, State funcState, DataflowRegion dRegion) {
+        val inc = #[IASTUnaryExpression.op_postFixIncr, IASTUnaryExpression .op_prefixIncr]
+        val dec = #[IASTUnaryExpression.op_postFixDecr, IASTUnaryExpression .op_prefixDecr]
+        if ((inc + dec).contains(expression.operator)) {
+            // Translate this pre- or postfix increment/decrement like a usual assignment such as i = i + 1
+            
+            // Create the source expression, for example i + 1
+            val operator = if (inc.contains(expression.operator)) OperatorType::ADD else OperatorType::SUB
+            val source = createOperatorExpression(operator) => [
+                it.subExpressions += createKExpression(expression.operand, funcState, dRegion)
+                it.subExpressions += createIntValue(1)
+            ]
+            
+            // look for the target and add it to the dataflow region as an assignment.
+            val targetAndIndex = retrieveTargetAndIndexExpr(expression.operand, funcState, dRegion)
+            
+            targetAndIndex.target.insertHighlightAnnotations(expression)
+            val Assignment ass = createDataflowAssignment(targetAndIndex.target, source)
+            if (targetAndIndex.index !== null) {
+                ass.reference.indices += targetAndIndex.index
+            }
+            dRegion.equations += ass
+            return
+        }
+        
         // Create the expression
         val sourceExpression = createKExpression(expression, funcState, dRegion)
         // Retrieve the respective variable VO                
