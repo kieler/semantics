@@ -500,7 +500,9 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
                     declaration.declarators.forEach [ initializer = null ]
                 }
             }
-            buildStatement(usedDeclarators, parentState, newRegion)
+            if (usedDeclarators !== null) {
+                buildStatement(usedDeclarators, parentState, newRegion)
+            }
             buildStatement(statement, parentState, newRegion)
             
             linkOutputs(parentState, newRegion)
