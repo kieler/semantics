@@ -910,13 +910,21 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
 
                 val inputNames = <String, KNode>newHashMap
                 for (inputNode : child.children.filter(KNode).filter[getProperty(INPUT_FLAG)]) {
-                    val name = inputNode.data.filter(KPolygon).head.children.filter(KText).head.text
-                    inputNames.put(name, inputNode)
+                    val inputFlag = inputNode.data.filter(KPolygon).head
+                    // Some other elements other than the input flag KPolygon itself may have the INPUT_FLAG set,
+                    // check for that here.
+                    if (inputFlag !== null) {
+                        val name = inputFlag.children.filter(KText).head.text
+                        inputNames.put(name, inputNode)
+                    }
                 }
                 val outputNames = <String, KNode>newHashMap
                 for (outputNode : child.children.filter(KNode).filter[getProperty(OUTPUT_FLAG)]) {
-                    val name = outputNode.data.filter(KPolygon).head.children.filter(KText).head.text
-                    outputNames.put(name, outputNode)
+                    val outputFlag = outputNode.data.filter(KPolygon).head
+                    if (outputFlag !== null) {
+                        val name = outputFlag.children.filter(KText).head.text
+                        outputNames.put(name, outputNode)
+                    }
                 }
 
                 for (port : node.ports.immutableCopy.reverseView) {
