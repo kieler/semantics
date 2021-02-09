@@ -141,8 +141,6 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
     val valuedObjects = <State, HashMap<String, ArrayList<ValuedObject>>> newHashMap
     
     val voWrittenIdxs = <ValuedObject, List<Expression>> newHashMap
-    
-    var State baseState = null
 
     /** The file contents, for referencing direct String representations. */
     var byte[] sourceFile
@@ -184,11 +182,7 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
         }
         
         // Create SCCharts root elements
-        val sCChart = createSCChart        
-        baseState = createState("rootState")
-        baseState.label = "Dataflow Extractor"        
-        sCChart.rootStates += baseState        
-        val topCRegion = baseState.createControlflowRegion("")
+        val scChart = createSCChart
         
         // Start extraction for each defined function
         for(child : ast.children) {
@@ -196,12 +190,12 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
             if(child instanceof IASTFunctionDefinition) {
                 val state = buildFunction(child)
                 functions.put(state.label, state)
-                topCRegion.states += state
+                scChart.rootStates += state
             } 
              
         }
         
-        return sCChart
+        return scChart
         
     }
 
@@ -210,7 +204,7 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
      * The function used to create the state representing a function
      */
     def State buildFunction(IASTFunctionDefinition func) {
-       // Determine function name
+        // Determine function name
         val funcDeclarator = func.getDeclarator
         val funcName = funcDeclarator.getName.toString
         
@@ -898,9 +892,6 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
         for (input : inputs) {
             // Retrieve the respective valued object of the containing state 
             var inputVO = rootState.findValuedObjectByName(input, false, dRegion)
-            if (inputVO === null) {
-                inputVO = baseState.findValuedObjectByName(input, false, dRegion)
-            }
             val inputRootDecl = inputVO.getVariableDeclaration
             val inputType = inputRootDecl.getType
             
