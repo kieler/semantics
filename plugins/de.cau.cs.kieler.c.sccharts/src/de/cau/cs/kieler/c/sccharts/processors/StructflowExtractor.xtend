@@ -613,7 +613,7 @@ class StructflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCChar
         // Create the declaration with the cdt type
         val res = createVariableDeclaration
         if (declaration.declSpecifier instanceof IASTSimpleDeclSpecifier) {
-            res.type = (declaration.getDeclSpecifier as IASTSimpleDeclSpecifier).type.CDTTypeConversion
+            res.type = (declaration.getDeclSpecifier as IASTSimpleDeclSpecifier).type.cdtTypeConversion
         } else {
             println("non-simple variable declaration type. Not setting the SCCharts Variable type.")
         }

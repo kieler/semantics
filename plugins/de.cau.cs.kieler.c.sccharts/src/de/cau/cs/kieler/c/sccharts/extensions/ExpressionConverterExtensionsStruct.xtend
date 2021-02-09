@@ -30,6 +30,8 @@ import org.eclipse.cdt.core.dom.ast.IASTNode
 import org.eclipse.cdt.core.dom.ast.IASTNode.CopyStyle
 import org.eclipse.cdt.core.dom.ast.IASTUnaryExpression
 
+import static de.cau.cs.kieler.c.sccharts.processors.CDTToStringConverter.*
+
 class ExpressionConverterExtensionsStruct {
     
     @Inject extension SCChartsStateExtensions
@@ -341,7 +343,7 @@ class ExpressionConverterExtensionsStruct {
     // Translate a bianryExpression
     def Expression createKExpression(IASTBinaryExpression binExpr, State funcState, DataflowRegion dRegion) {
         // Create the operator expression with the corresponding operator
-        var opType = binExpr.getOperator().CDTBinaryOpTypeConversion
+        var opType = binExpr.getOperator().cdtBinaryOpTypeConversion
         var binKExpr = opType.createOperatorExpression
         // Translate the operands and attach them    
         for (operand : binExpr.children) {
@@ -357,7 +359,7 @@ class ExpressionConverterExtensionsStruct {
     def Expression createKExpression(IASTUnaryExpression unExpr, State funcState, DataflowRegion dRegion) {
         var Expression res
         // Retrieve the operator and create the operatorExpression
-        var opType = unExpr.getOperator.CDTUnaryOpTypeConversion
+        var opType = unExpr.getOperator.cdtUnaryOpTypeConversion
         var OperatorExpression unKExpr
         
         // Test if the operator exists (parentheses are an unary expression thus skip them)
@@ -400,14 +402,14 @@ class ExpressionConverterExtensionsStruct {
             
         } else if (expr instanceof IASTBinaryExpression) {
             // Translate the elemenmts of the binary expression
-            val operator = expr.getOperator.CDTBinaryOpTypeToString
+            val operator = cdtBinaryOpTypeToString(expr.getOperator)
             val operand1 = expr.getOperand1.exprToString
             val operand2 = expr.getOperand2.exprToString
             
             res = "(" + operand1 + " " + operator + " " + operand2 + ")" 
         } else if (expr instanceof IASTUnaryExpression) {
             // Translate the elements of a unary expression
-            var postOperator = expr.getOperator.CDTUnaryOpTypeToString
+            var postOperator = cdtUnaryOpTypeToString(expr.getOperator)
             var preOperator = ""
             
             if (postOperator.contains("exp")) {

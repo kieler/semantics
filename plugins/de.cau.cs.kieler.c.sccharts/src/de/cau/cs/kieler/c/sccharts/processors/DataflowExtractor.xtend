@@ -31,7 +31,6 @@ import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsSerializeExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kicool.compilation.ExogenousProcessor
@@ -45,7 +44,6 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsDataflowRegionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
-import java.nio.charset.StandardCharsets
 import java.nio.file.Files
 import java.nio.file.Paths
 import java.time.LocalDateTime
@@ -76,21 +74,22 @@ import org.eclipse.cdt.core.dom.ast.IASTFunctionCallExpression
 import org.eclipse.cdt.core.dom.ast.IASTFunctionDefinition
 import org.eclipse.cdt.core.dom.ast.IASTIdExpression
 import org.eclipse.cdt.core.dom.ast.IASTIfStatement
-import org.eclipse.cdt.core.dom.ast.IASTInitializer
 import org.eclipse.cdt.core.dom.ast.IASTLiteralExpression
 import org.eclipse.cdt.core.dom.ast.IASTNode
 import org.eclipse.cdt.core.dom.ast.IASTNode.CopyStyle
 import org.eclipse.cdt.core.dom.ast.IASTReturnStatement
 import org.eclipse.cdt.core.dom.ast.IASTSimpleDeclSpecifier
 import org.eclipse.cdt.core.dom.ast.IASTSimpleDeclaration
+import org.eclipse.cdt.core.dom.ast.IASTStandardFunctionDeclarator
 import org.eclipse.cdt.core.dom.ast.IASTStatement
 import org.eclipse.cdt.core.dom.ast.IASTSwitchStatement
 import org.eclipse.cdt.core.dom.ast.IASTTranslationUnit
 import org.eclipse.cdt.core.dom.ast.IASTUnaryExpression
 import org.eclipse.cdt.core.dom.ast.IASTWhileStatement
 import org.eclipse.cdt.internal.core.dom.parser.ASTNode
-import org.eclipse.cdt.internal.core.dom.parser.c.CASTFunctionDeclarator
 import org.eclipse.emf.ecore.EObject
+
+import static de.cau.cs.kieler.c.sccharts.processors.CDTToStringConverter.*
 
 /**
  * @author lan, nre
@@ -105,15 +104,32 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
     @Inject extension HighlightingExtensions
     @Inject extension KExpressionsCreateExtensions
     @Inject extension KExpressionsDeclarationExtensions
-    @Inject extension KExpressionsSerializeExtensions
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension SCChartsControlflowRegionExtensions
     @Inject extension SCChartsCoreExtensions
     @Inject extension SCChartsDataflowRegionExtensions
     @Inject extension SCChartsStateExtensions
     @Inject extension SCChartsTransitionExtensions
-    @Inject extension ValueExtensions    
+    @Inject extension ValueExtensions
     
+    /**
+     * The name of the valued objects for returns.
+     * Starts with a whitespace prefix so that it is not possible to clash with real variable names.
+     */
+    static final String returnObjectName = " res"
+    
+    /** Shown name prefix for if statements. */
+    static final String ifName = "if"
+    /** Shown name prefix for then statements. */
+    static final String thenName = "then"
+    /** Shown name prefix for else statements. */
+    static final String elseName = "else"
+    /** Shown name prefix for do..while statements. */
+    static final String doName = "do"
+    /** Shown name prefix for for statements. */
+    static final String forName = "for"
+    /** Shown name prefix for while statements. */
+    static final String whileName = "while"
     
     var functions = <String, State> newHashMap
     var ifCounter = 0;
@@ -195,7 +211,7 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
      */
     def State buildFunction(IASTFunctionDefinition func) {
        // Determine function name
-        val funcDeclarator = func.getDeclarator as CASTFunctionDeclarator
+        val funcDeclarator = func.getDeclarator
         val funcName = funcDeclarator.getName.toString
         
         // Create the state
@@ -215,42 +231,44 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
         }
     
         // Create inputs for the functions parameters
-        val parameters = funcDeclarator.getParameters
-        val Map<ValueType, VariableDeclaration> declarations = newHashMap
-        for (par : parameters) {
-            
-            
-            val declSpecifier = par.getDeclSpecifier
-            if (declSpecifier instanceof IASTSimpleDeclSpecifier) {
-                // Determine parameter type
-                val inputType = declSpecifier.type.CDTTypeConversion
-                if (!declarations.containsKey(inputType)) {
-                    val newDecl = createVariableDeclaration
-                    state.declarations += newDecl
-                    newDecl.type = inputType
-                    newDecl.input = true       
-                    declarations.put(inputType, newDecl)
+        if (funcDeclarator instanceof IASTStandardFunctionDeclarator) {
+            val parameters = funcDeclarator.getParameters
+            val Map<ValueType, VariableDeclaration> declarations = newHashMap
+            for (par : parameters) {
+                
+                
+                val declSpecifier = par.getDeclSpecifier
+                if (declSpecifier instanceof IASTSimpleDeclSpecifier) {
+                    // Determine parameter type
+                    val inputType = declSpecifier.type.cdtTypeConversion
+                    if (!declarations.containsKey(inputType)) {
+                        val newDecl = createVariableDeclaration
+                        state.declarations += newDecl
+                        newDecl.type = inputType
+                        newDecl.input = true       
+                        declarations.put(inputType, newDecl)
+                    }
+                    val decl = declarations.get(inputType)
+                    // Determine parameter name
+                    val varName = par.getDeclarator.getName.toString
+                    var varList = <ValuedObject> newArrayList
+                    
+                    // Create valued object for the input
+                    val VO = decl.createValuedObject(varName + "_in")
+                    VO.label = varName
+                    VO.insertHighlightAnnotations(par)
+                    
+                    // Attach the valued object to its list and the list to the map
+                    varList.add(VO)
+                    stateVariables.put(varName, varList)
                 }
-                val decl = declarations.get(inputType)
-                // Determine parameter name
-                val varName = par.getDeclarator.getName.toString
-                var varList = <ValuedObject> newArrayList
-                
-                // Create valued object for the input
-                val VO = decl.createValuedObject(varName + "_in")
-                VO.label = varName
-                VO.insertHighlightAnnotations(par)
-                
-                // Attach the valued object to its list and the list to the map
-                varList.add(VO)
-                stateVariables.put(varName, varList) 
             }
         }
         
         // Determine function output
         val declSpecifier = func.getDeclSpecifier
         if (declSpecifier instanceof IASTSimpleDeclSpecifier) {
-            val type = (declSpecifier as IASTSimpleDeclSpecifier).type.CDTTypeConversion
+            val type = (declSpecifier as IASTSimpleDeclSpecifier).type.cdtTypeConversion
             if (type !== null) {
                 // Determine output type
                 val retDecl = createVariableDeclaration
@@ -258,8 +276,8 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
                 retDecl.output = true  
                 state.declarations += retDecl
                 
-                // Set output name to res
-                var varName = "res"
+                // Set output name
+                var varName = returnObjectName
                 var varList = <ValuedObject> newArrayList
                 
                 // Create valued object
@@ -399,7 +417,7 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
     def dispatch void buildStatement(IASTReturnStatement stmt, State rootState, DataflowRegion dRegion) {
         val retKExpr = createKExpression(stmt.getReturnValue, rootState, dRegion)
                 
-        val retVO = rootState.findValuedObjectByName("res", true, dRegion)
+        val retVO = rootState.findValuedObjectByName(returnObjectName, true, dRegion)
         retVO.insertHighlightAnnotations(stmt)
         dRegion.equations += createDataflowAssignment(retVO, retKExpr)
     }
@@ -418,13 +436,13 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
      */
     def void buildIf(IASTIfStatement ifStmt, State rootState, DataflowRegion dRegion) {
         // Creating the state to represent the if statement
-        val ifState = createState("If_" + ifCounter)
+        val ifState = createState(ifName + "_" + ifCounter)
         
         // Create a reference for this if state in the containing dataflow-region
         val refDecl = createReferenceDeclaration
         dRegion.declarations += refDecl
         refDecl.setReference(ifState)
-        val ifObj = refDecl.createValuedObject("If_" + ifCounter)
+        val ifObj = refDecl.createValuedObject(ifName + "_" + ifCounter)
         ifObj.insertHighlightAnnotations(ifStmt)
         ifCounter++
         
@@ -440,14 +458,14 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
         
         // Create the state for the then part
         val thenStmt = ifStmt.getThenClause
-        val State thenState = createStateForStatement(thenStmt, cRegion, ifState, "then")
+        val State thenState = createStateForStatement(thenStmt, cRegion, ifState, thenName)
         val thenTransition = initState.createImmediateTransitionTo(thenState)
         thenTransition.trigger = (ifStmt.getConditionExpression).createKExpression(ifState, dRegion)
         
         // If an else is given the state is also created
         if (ifStmt.getElseClause !== null) {
             val elseStmt = ifStmt.getElseClause
-            val State elseState = createStateForStatement(elseStmt, cRegion, ifState, "else")
+            val State elseState = createStateForStatement(elseStmt, cRegion, ifState, elseName)
             initState.createImmediateTransitionTo(elseState)
         }
         
@@ -516,13 +534,13 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
      */
     def void buildSwitch(IASTSwitchStatement swStmt, State rootState, DataflowRegion dRegion) {
         // Create the State representing the switch
-        val swState = createState("Switch_" + swCounter)
+        val swState = createState("switch_" + swCounter)
         
         // Create the reference for the containing dataflow region
         val refDecl = createReferenceDeclaration
         dRegion.declarations += refDecl
         refDecl.setReference(swState)
-        val swObj = refDecl.createValuedObject("Switch_" + swCounter)        
+        val swObj = refDecl.createValuedObject("switch_" + swCounter)        
         swObj.insertHighlightAnnotations(swStmt)
         swCounter++
         
@@ -535,8 +553,9 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
         cRegion.insertHighlightAnnotations(swStmt.getBody)
         
         // Create the controller expression label
-        val controller = swStmt.getControllerExpression.createKExpression(swState, dRegion)
-        cRegion.label = "switch (" + controller.serialize + ")"       
+        swStmt.getControllerExpression.createKExpression(swState, dRegion)
+        val controller = exprToString(swStmt.getControllerExpression, sourceFile)
+        cRegion.label = "switch (" + controller + ")"       
         
         // Create the initial state
         val initState = cRegion.createState("")
@@ -576,7 +595,7 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
                 if (child instanceof IASTCaseStatement) {
                     val caseTransition = initState.createImmediateTransitionTo(activeCase)
                     caseTransition.trigger = child.getExpression.createKExpression(swState, dRegion)                    
-                    activeCase.label = controller.serialize + " == " + caseTransition.trigger.serialize
+                    activeCase.label = controller + " == " + exprToString(child.getExpression, sourceFile)
                 // Create a transition without a trigger for a default statement    
                 } else {
                     initState.createImmediateTransitionTo(activeCase)                 
@@ -600,13 +619,13 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
      */
     def void buildFor(IASTForStatement forStmt, State rootState, DataflowRegion dRegion) {
         // Create the state
-        val forState = createState("For_" + forCounter)
+        val forState = createState(forName + "_" + forCounter)
         
         // Reference the state in the containing dataflow region
         val refDecl = createReferenceDeclaration
         dRegion.declarations += refDecl
         refDecl.setReference(forState)
-        val forObj = refDecl.createValuedObject("For_" + forCounter)        
+        val forObj = refDecl.createValuedObject(forName + "_" + forCounter)        
         forObj.insertHighlightAnnotations(forStmt)
         
         // Set the in and outputs
@@ -614,13 +633,13 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
         setOutputs(forStmt, rootState, forState, dRegion, forObj)
         
         // Set the loop conditions as label
-        val condExpr = forStmt.getConditionExpression.exprToString(sourceFile)
-        var initExpr = forStmt.getInitializerStatement.stmtToString(sourceFile)
+        val condExpr = exprToString(forStmt.getConditionExpression, sourceFile)
+        var initExpr = stmtToString(forStmt.getInitializerStatement, sourceFile)
         if (initExpr.endsWith(";")) {
             initExpr = initExpr.substring(0, initExpr.length - 1)
         }
-        val itExpr = forStmt.getIterationExpression.exprToString(sourceFile)
-        forState.label = "for (" + initExpr.serialize + "; " + condExpr.serialize + "; " + itExpr.serialize + ")"
+        val itExpr = exprToString(forStmt.getIterationExpression, sourceFile)
+        forState.label = "for (" + initExpr + "; " + condExpr + "; " + itExpr + ")"
         forCounter++
         
         // Translate the body
@@ -634,13 +653,13 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
      */
     def void buildWhile(IASTWhileStatement whileStmt, State rootState, DataflowRegion dRegion) {
         // Create the state        
-        val whileState = createState("While_" + whileCounter)
+        val whileState = createState(whileName + "_" + whileCounter)
         
         // Create the reference in the containing dataflow region
         val refDecl = createReferenceDeclaration
         dRegion.declarations += refDecl
         refDecl.setReference(whileState)
-        val whileObj = refDecl.createValuedObject("While_" + whileCounter)        
+        val whileObj = refDecl.createValuedObject(whileName + "_" + whileCounter)        
         whileObj.insertHighlightAnnotations(whileStmt)
         
         // Set the in and outputs
@@ -648,8 +667,8 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
         setOutputs(whileStmt, rootState, whileState, dRegion, whileObj)
         
         // Create the condition expression label
-        val condExpr = createKExpression(whileStmt.getCondition, whileState, dRegion)
-        whileState.label = "while " + condExpr.serialize
+        createKExpression(whileStmt.getCondition, whileState, dRegion)
+        whileState.label = "while (" + exprToString(whileStmt.getCondition, sourceFile) + ")"
         whileCounter++
         
         // Translate the loop body
@@ -664,13 +683,13 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
      */
     def void buildDo(IASTDoStatement doStmt, State rootState, DataflowRegion dRegion) {
         // Create the state        
-        val doState = createState("Do_" + doCounter)
+        val doState = createState(doName + "_" + doCounter)
         
         // Create the reference in the containing dataflow region
         val refDecl = createReferenceDeclaration
         dRegion.declarations += refDecl
         refDecl.setReference(doState)
-        val doObj = refDecl.createValuedObject("Do_" + doCounter)        
+        val doObj = refDecl.createValuedObject(doName + "_" + doCounter)        
         doObj.insertHighlightAnnotations(doStmt)
         
         // Set the in and outputs
@@ -678,8 +697,8 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
         setOutputs(doStmt, rootState, doState, dRegion, doObj)
         
         // Create the condition expression label
-        val condExpr = createKExpression(doStmt.getCondition, doState, dRegion)
-        doState.label = "do ... while " + condExpr.serialize
+        createKExpression(doStmt.getCondition, doState, dRegion)
+        doState.label = "do ... while (" + exprToString(doStmt.getCondition, sourceFile) + ")"
         doCounter++
         
         // Translate the body
@@ -696,7 +715,7 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
         
         // Create the declaration with the cdt type
         val variableDeclaration = createVariableDeclaration
-        variableDeclaration.type = (declaration.getDeclSpecifier as IASTSimpleDeclSpecifier).type.CDTTypeConversion
+        variableDeclaration.type = (declaration.getDeclSpecifier as IASTSimpleDeclSpecifier).type.cdtTypeConversion
         variableDeclaration.insertHighlightAnnotations(declaration)
         
         // Retrieve the state's variable map
@@ -771,7 +790,7 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
                 }
                 
                 // Create the assignment to the given valued object        
-                val outputSource = funcState.findOutputVar("res")
+                val outputSource = funcState.findOutputVar(returnObjectName)
                 val outputExpr = refObj.reference => [
                     subReference = outputSource.reference
                 ]
@@ -1144,8 +1163,8 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
             val outputDecl = createVariableDeclaration
             outputDecl.output = true
             state.declarations += outputDecl
-            val outputVO = outputDecl.createValuedObject("res_out") 
-            outputVO.label = "res"
+            val outputVO = outputDecl.createValuedObject(returnObjectName + "_out") 
+            outputVO.label = returnObjectName
         }
         
         // Create an input for each argument
@@ -1153,7 +1172,7 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
             val inputDecl = createVariableDeclaration
             inputDecl.input = true
             state.declarations += inputDecl
-            val inputVO = inputDecl.createValuedObject("")
+            inputDecl.createValuedObject("")
         }
         return state
     }
@@ -1219,7 +1238,9 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
                 funcObj.insertHighlightAnnotations(sourceExpr)
                 // Retrieve Func output
                 source = funcObj.reference => [
-                    subReference = refStateConst.declarations.filter(VariableDeclaration).map[ it.valuedObjects ].flatten.filter [ name == "res_out" ].head.reference
+                    subReference = refStateConst.declarations.filter(VariableDeclaration)
+                        .map[ it.valuedObjects ].flatten
+                        .filter [ name == returnObjectName + "_out" ].head.reference
                 ]
                 // Link func inputs (add assignments to result)
                 var i = 0
@@ -1259,7 +1280,7 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
             result.target = funcState.findValuedObjectByName(targetExpr.getName.toString, true, dRegion)    
         } else if (targetExpr instanceof IASTArraySubscriptExpression) {
             val arrayIndex = targetExpr.argument.createKExpression(funcState, dRegion)
-            result.target = funcState.findValuedObjectByName(targetExpr.arrayExpression.exprToString(sourceFile), arrayIndex, true, dRegion)
+            result.target = funcState.findValuedObjectByName(exprToString(targetExpr.arrayExpression, sourceFile), arrayIndex, true, dRegion)
             result.index = targetExpr.argument.createKExpression(funcState, dRegion)
         } else {
             println("DataflowExtractor: Unsupported assignment target detected!" + targetExpr.expressionType)
@@ -1460,7 +1481,9 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
                 funcObj.insertHighlightAnnotations(expr)
                 // Retrieve the output VO                
                 kExpression = funcObj.reference => [
-                    subReference = refStateConst.declarations.filter(VariableDeclaration).map[ it.valuedObjects ].flatten.filter [ name == "res_out" ].head.reference
+                    subReference = refStateConst.declarations.filter(VariableDeclaration)
+                    .map[ it.valuedObjects ].flatten
+                    .filter [ name == returnObjectName + "_out" ].head.reference
                 ]
                 // Connect the Inputs    
                 var i = 0
@@ -1475,7 +1498,7 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
             IASTConditionalExpression: {
                 val condExpr = expr.getLogicalConditionExpression
                 //Create the State
-                val condState = createState(condExpr.exprToString(sourceFile))
+                val condState = createState(exprToString(condExpr, sourceFile))
                 condState.insertHighlightAnnotations(expr)
                 val condDRegion = createDataflowRegion(condState.name)
                 condDRegion.label = condState.name
@@ -1493,13 +1516,13 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
                 val outputDecl = createVariableDeclaration
                 outputDecl.output = true
                 condState.declarations += outputDecl
-                val outputVO = outputDecl.createValuedObject("res")
+                val outputVO = outputDecl.createValuedObject(returnObjectName)
                 // Create the positive expression
                 condDRegion.equations += createDataflowAssignment(outputVO, expr.getPositiveResultExpression.createKExpression(condState,condDRegion))
                 outputVO.insertHighlightAnnotations(expr)
                 // Create the nagative expression
-                val condNDRegion = createDataflowRegion("Else")
-                condNDRegion.label = "Else"
+                val condNDRegion = createDataflowRegion(elseName)
+                condNDRegion.label = elseName
                 condState.regions += condNDRegion
                 
                 condNDRegion.equations += createDataflowAssignment(outputVO, expr.getNegativeResultExpression.createKExpression(condState,condNDRegion))
@@ -1541,7 +1564,7 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
      */
     def OperatorExpression createKExpression(IASTBinaryExpression binExpr, State funcState, DataflowRegion dRegion) {
         // Create the operator expression with the corresponding operator
-        var opType = binExpr.getOperator().CDTBinaryOpTypeConversion
+        var opType = binExpr.getOperator().cdtBinaryOpTypeConversion
         var expression = opType.createOperatorExpression
         // Translate the operands and attach them    
         for (operand : binExpr.children) {
@@ -1558,7 +1581,7 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
     def Expression createKExpression(IASTUnaryExpression unExpr, State funcState, DataflowRegion dRegion) {
         var Expression expression
         // Retrieve the operator and create the operatorExpression
-        var opType = unExpr.getOperator.CDTUnaryOpTypeConversion
+        var opType = unExpr.getOperator.cdtUnaryOpTypeConversion
         var OperatorExpression unKExpr
         
         // Test if the operator exists (parentheses are an unary expression thus skip them)
@@ -1575,224 +1598,6 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
         }
         return expression
         
-    }
-    
-    /**
-     * Build a string representation of the expression.
-     */
-    def String exprToString(IASTExpression expr, byte[] sourceFileContents) {
-        if (expr instanceof ASTNode && sourceFileContents !== null && !sourceFileContents.empty) {
-            return stringContentFromNode(expr as ASTNode, sourceFileContents)
-        }
-        
-        // Otherwise, do a best effort for reconstructing the string.
-        var expressionAsString = ""
-        
-        if (expr instanceof IASTFunctionCallExpression) {
-            // Retrieve the function's name
-            val funcName = (expr.getFunctionNameExpression as IASTIdExpression).getName.toString
-            expressionAsString = funcName + "("
-            
-            // Translate the arguments
-            val arguments = expr.getArguments
-            for (var i = 0; i < arguments.length; i++) {
-                val argument = arguments.get(i)
-                
-                if (argument instanceof IASTExpression) {
-                    expressionAsString += argument.exprToString(sourceFileContents)
-                } else {
-                    println("unsupported argument type in function call to convert to string: " + argument.class)
-                }
-                
-                if (i < arguments.length - 1) {
-                    expressionAsString += ", "
-                } else expressionAsString += ")"
-            }
-            
-            
-        } else if (expr instanceof IASTBinaryExpression) {
-            // Translate the elemenmts of the binary expression
-            val operator = expr.getOperator.CDTBinaryOpTypeToString
-            val operand1 = expr.getOperand1.exprToString(sourceFileContents)
-            val operand2 = expr.getOperand2.exprToString(sourceFileContents)
-            
-            expressionAsString = "(" + operand1 + " " + operator + " " + operand2 + ")" 
-        } else if (expr instanceof IASTUnaryExpression) {
-            // Translate the elements of a unary expression
-            var postOperator = expr.getOperator.CDTUnaryOpTypeToString
-            var preOperator = ""
-            
-            if (postOperator.contains("exp")) {
-                preOperator = postOperator.substring(0, postOperator.indexOf("exp"))
-                postOperator = ""
-            }
-            
-            val operand = expr.getOperand.exprToString(sourceFileContents)
-            
-            expressionAsString = "(" + preOperator + operand + postOperator + ")"
-        } else if (expr instanceof IASTFieldReference) {
-            // Translate the use of a struct
-            val structExpr = expr.getFieldOwner
-            val structName = structExpr.exprToString(sourceFileContents)
-            val fieldName = expr.getFieldName
-            expressionAsString = structName + "->" + fieldName
-            
-        } else if (expr instanceof IASTArraySubscriptExpression) {
-            // Translate the use on an array
-            val arrayExpr = expr.getArrayExpression
-            val arrayName = arrayExpr.exprToString(sourceFileContents)
-            val arrayArgExpr = expr.getArgument
-            var String arrayArgName;
-            if (arrayArgExpr instanceof IASTExpression) {
-                arrayArgName = arrayArgExpr.exprToString(sourceFileContents)
-            } else {
-                println("unsupported argument type in array subscript expression to convert to string: " + arrayArgExpr.class)
-            }
-            
-            expressionAsString = arrayName + "[" + arrayArgName + "]"
-            
-        } else if (expr instanceof IASTIdExpression) {
-            //Translate the use of a variable
-            expressionAsString = expr.getName.toString            
-        } else if (expr instanceof IASTLiteralExpression) {
-            // Translate the use of a literal
-            expressionAsString = expr.toString
-        } else if (expr instanceof IASTExpressionStatement) {
-            // Extract the expression out of the expression statement
-            expressionAsString = expr.getExpression.exprToString(sourceFileContents)
-        } else {
-            println("Unsupported expression to convert to string: " + expr.class)
-        }
-        
-        return expressionAsString
-    }
-    
-    /**
-     * Build a string representation of the statement
-     */
-    def String stmtToString(IASTStatement stmt, byte[] sourceFileContents) {
-        if (stmt instanceof ASTNode && sourceFileContents !== null && !sourceFileContents.empty) {
-            return stringContentFromNode(stmt as ASTNode, sourceFileContents)
-        }
-        
-        // Otherwise, do a best effort for reconstructing the string.
-        var String stmtAsString = ""
-        
-        switch (stmt) {
-            IASTDeclarationStatement: {
-                val decl = stmt.declaration
-                if (decl instanceof IASTSimpleDeclaration) {
-                    val specifier = decl.declSpecifier
-                    if (specifier instanceof IASTSimpleDeclSpecifier) {
-                        stmtAsString += specifier.specifierToString + " "
-                    }
-                    for (var int i = 0; i < decl.declarators.length; i++) {
-                        val declarator = (decl as IASTSimpleDeclaration).declarators.get(i);
-                        val name = declarator.name
-                        val initializer = declarator.initializer
-                        var String value
-                        if (initializer instanceof IASTEqualsInitializer &&
-                            (initializer as IASTEqualsInitializer).initializerClause instanceof IASTExpression) {
-                            value = ((initializer as IASTEqualsInitializer).initializerClause as IASTExpression).exprToString(sourceFileContents)
-                        }
-                        stmtAsString += name + " " + initializer.initializerToString + " " + value
-                        if (i != decl.declarators.length - 1) {
-                            stmtAsString += ", "
-                        }
-                    }
-                }
-            }
-            default: {
-                println("Yet unsupported statement to String: " + stmt.class)
-            }
-        }
-        
-        return stmtAsString
-    }
-    
-    /** Return the given node as a String from the given source file contents. */
-    def String stringContentFromNode(ASTNode node, byte[] sourceFileContents) {
-        return new String(sourceFileContents,node.offset,node.length, StandardCharsets.UTF_8)
-    }
-    
-    /**
-     * Build a string representation of the IASTInitializer.
-     */
-    def String initializerToString(IASTInitializer initializer) {
-        switch (initializer) {
-            IASTEqualsInitializer: {
-                return "="
-            }
-            default: {
-                println("Yet unsupported initializer to String: " + initializer.class)
-                return "unsupportedInitializer"
-            }
-        }
-    }
-    
-    /**
-     * Build a string representation of the IASTSimpleDeclSpecifier.
-     */
-    def String specifierToString(IASTSimpleDeclSpecifier specifier) {
-        switch (specifier.type) {
-            case IASTSimpleDeclSpecifier.t_unspecified: {
-                return "unspecified"
-            }
-            case IASTSimpleDeclSpecifier.t_void: {
-                return "void"
-            }
-            case IASTSimpleDeclSpecifier.t_char: {
-                return "char"
-            }
-            case IASTSimpleDeclSpecifier.t_int: {
-                return "int"
-            }
-            case IASTSimpleDeclSpecifier.t_float: {
-                return "float"
-            }
-            case IASTSimpleDeclSpecifier.t_double: {
-                return "double"
-            }
-            case IASTSimpleDeclSpecifier.t_bool: {
-                return "bool"
-            }
-            case IASTSimpleDeclSpecifier.t_wchar_t: {
-                return "wchar"
-            }
-            case IASTSimpleDeclSpecifier.t_typeof: {
-                return "typeof"
-            }
-            case IASTSimpleDeclSpecifier.t_decltype: {
-                return "decltype"
-            }
-            case IASTSimpleDeclSpecifier.t_auto: {
-                return "auto"
-            }
-            case IASTSimpleDeclSpecifier.t_char16_t: {
-                return "char16"
-            }
-            case IASTSimpleDeclSpecifier.t_char32_t: {
-                return "char32"
-            }
-            case IASTSimpleDeclSpecifier.t_int128: {
-                return "int128"
-            }
-            case IASTSimpleDeclSpecifier.t_float128: {
-                return "float128"
-            }
-            case IASTSimpleDeclSpecifier.t_decimal32: {
-                return "decimal32"
-            }
-            case IASTSimpleDeclSpecifier.t_decimal64: {
-                return "decimal64"
-            }
-            case IASTSimpleDeclSpecifier.t_decimal128: {
-                return "decimal128"
-            }
-            case IASTSimpleDeclSpecifier.t_decltype_auto: {
-                return "decltype_auto"
-            }
-        }
     }
 
 }

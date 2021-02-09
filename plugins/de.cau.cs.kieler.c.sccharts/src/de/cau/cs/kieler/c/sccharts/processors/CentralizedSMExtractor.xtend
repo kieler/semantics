@@ -470,7 +470,7 @@ class CentralizedSMExtractor extends ExogenousProcessor<IASTTranslationUnit, SCC
              }
          // Extract an Unary Expression for the trigger such as NOT    
          } else if (expr instanceof IASTUnaryExpression) {
-             var opType = expr.getOperator.CDTUnaryOpTypeConversion
+             var opType = expr.getOperator.cdtUnaryOpTypeConversion
              if (opType !== null) {
                  var unExpr = opType.createOperatorExpression
                  
@@ -483,7 +483,7 @@ class CentralizedSMExtractor extends ExogenousProcessor<IASTTranslationUnit, SCC
              }
          // Extract Binary Expression for the trigger such as AND    
          } else if (expr instanceof IASTBinaryExpression) {
-             var opType = expr.getOperator.CDTBinaryOpTypeConversion
+             var opType = expr.getOperator.cdtBinaryOpTypeConversion
              if (opType !== null) {
                  var unExpr = opType.createOperatorExpression
                  
