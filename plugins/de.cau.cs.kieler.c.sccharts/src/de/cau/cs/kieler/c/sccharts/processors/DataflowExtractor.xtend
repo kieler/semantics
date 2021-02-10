@@ -74,6 +74,7 @@ import org.eclipse.cdt.core.dom.ast.IASTFunctionCallExpression
 import org.eclipse.cdt.core.dom.ast.IASTFunctionDefinition
 import org.eclipse.cdt.core.dom.ast.IASTIdExpression
 import org.eclipse.cdt.core.dom.ast.IASTIfStatement
+import org.eclipse.cdt.core.dom.ast.IASTInitializerList
 import org.eclipse.cdt.core.dom.ast.IASTLiteralExpression
 import org.eclipse.cdt.core.dom.ast.IASTNode
 import org.eclipse.cdt.core.dom.ast.IASTNode.CopyStyle
@@ -1542,6 +1543,11 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
             // Extract the expression of an expression statement and translate it
             IASTExpressionStatement: {
                 kExpression = expr.getExpression.createKExpression(funcState, dRegion)
+            }
+            IASTInitializerList: {
+                kExpression = createVectorValue => [
+                    values += expr.clauses.map [ it.createKExpression(funcState, dRegion) ]
+                ]
             }
             default: {
                 println("Unsupported ast node to create an expression: " + expr.class)

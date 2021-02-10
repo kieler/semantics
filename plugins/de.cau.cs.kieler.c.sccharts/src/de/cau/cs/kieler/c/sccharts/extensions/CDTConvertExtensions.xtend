@@ -31,17 +31,19 @@ class CDTConvertExtensions {
     def ValueType cdtTypeConversion(int n) {
         switch (n) {
             case IASTSimpleDeclSpecifier.t_void: return null
-            case IASTSimpleDeclSpecifier.t_char: return ValueType::STRING
+            // SCChart does not have char, for the visuals a mapping to int is feasible, as
+            // SCCharts even allows to assign a char as a strings into an int. 
+            case IASTSimpleDeclSpecifier.t_char: return ValueType::INT
             case IASTSimpleDeclSpecifier.t_int: return ValueType::INT
             case IASTSimpleDeclSpecifier.t_float: return ValueType::FLOAT
             case IASTSimpleDeclSpecifier.t_double: return ValueType::DOUBLE
             case IASTSimpleDeclSpecifier.t_bool: return ValueType::BOOL
-            case IASTSimpleDeclSpecifier.t_wchar_t: return ValueType::STRING
+            case IASTSimpleDeclSpecifier.t_wchar_t: return ValueType::INT
             case IASTSimpleDeclSpecifier.t_typeof: return null
             case IASTSimpleDeclSpecifier.t_decltype: return null
             case IASTSimpleDeclSpecifier.t_auto: return null
-            case IASTSimpleDeclSpecifier.t_char16_t: return ValueType::STRING
-            case IASTSimpleDeclSpecifier.t_char32_t: return ValueType::STRING
+            case IASTSimpleDeclSpecifier.t_char16_t: return ValueType::INT
+            case IASTSimpleDeclSpecifier.t_char32_t: return ValueType::INT
             default: return null
         }
     }
