@@ -119,6 +119,13 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
      */
     static final String returnObjectName = " res"
     
+    /** The seperator for valued object names and its further SSA objects. */
+    static final String ssaNameSeperator = "_"
+    /** The valued object suffix for the input SSA object. */
+    static final String inSuffix = ssaNameSeperator + "in"
+    /** The valued object suffix for the output SSA object. */
+    static final String outSuffix = ssaNameSeperator + "out"
+    
     /** Shown name prefix for if statements. */
     static final String ifName = "if"
     /** Shown name prefix for then statements. */
@@ -131,6 +138,10 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
     static final String forName = "for"
     /** Shown name prefix for while statements. */
     static final String whileName = "while"
+    /** Shown name prefix for switch statements. */
+    static final String switchName = "switch"
+    /** Shown name prefix for default case statements in switches. */
+    static final String defaultCaseName = "default"
     
     var functions = <String, State> newHashMap
     var ifCounter = 0;
@@ -246,24 +257,24 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
                     val decl = declarations.get(inputType)
                     // Determine parameter name
                     val varName = par.getDeclarator.getName.toString
-                    var varList = <ValuedObject> newArrayList
+                    val varList = <ValuedObject> newArrayList
                     
                     // Create valued object for the input
-                    val VO = decl.createValuedObject(varName + "_in")
-                    VO.label = varName
-                    VO.insertHighlightAnnotations(par)
+                    val vo = decl.createValuedObject(varName + inSuffix)
+                    vo.label = varName
+                    vo.insertHighlightAnnotations(par)
                     
                     // Attach the valued object to its list and the list to the map
-                    varList.add(VO)
+                    varList.add(vo)
                     stateVariables.put(varName, varList)
                 }
             }
         }
         
         // Determine function output
-        val declSpecifier = func.getDeclSpecifier
-        if (declSpecifier instanceof IASTSimpleDeclSpecifier) {
-            val type = (declSpecifier as IASTSimpleDeclSpecifier).type.cdtTypeConversion
+        val outputDeclSpecifier = func.getDeclSpecifier
+        if (outputDeclSpecifier instanceof IASTSimpleDeclSpecifier) {
+            val type = (outputDeclSpecifier as IASTSimpleDeclSpecifier).type.cdtTypeConversion
             if (type !== null) {
                 // Determine output type
                 val retDecl = createVariableDeclaration
@@ -273,10 +284,10 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
                 
                 // Set output name
                 var varName = returnObjectName
-                var varList = <ValuedObject> newArrayList
+                val varList = <ValuedObject> newArrayList
                 
                 // Create valued object
-                val resVO = retDecl.createValuedObject(varName + "_out")
+                val resVO = retDecl.createValuedObject(varName + outSuffix)
                 resVO.label = varName
                 
                 // Attach valued object to the listing
@@ -431,13 +442,13 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
      */
     def void buildIf(IASTIfStatement ifStmt, State rootState, DataflowRegion dRegion) {
         // Creating the state to represent the if statement
-        val ifState = createState(ifName + "_" + ifCounter)
+        val ifState = createState(ifName + ssaNameSeperator + ifCounter)
         
         // Create a reference for this if state in the containing dataflow-region
         val refDecl = createReferenceDeclaration
         dRegion.declarations += refDecl
         refDecl.setReference(ifState)
-        val ifObj = refDecl.createValuedObject(ifName + "_" + ifCounter)
+        val ifObj = refDecl.createValuedObject(ifName + ssaNameSeperator + ifCounter)
         ifObj.insertHighlightAnnotations(ifStmt)
         ifCounter++
         
@@ -529,13 +540,13 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
      */
     def void buildSwitch(IASTSwitchStatement swStmt, State rootState, DataflowRegion dRegion) {
         // Create the State representing the switch
-        val swState = createState("switch_" + swCounter)
+        val swState = createState(switchName + ssaNameSeperator + swCounter)
         
         // Create the reference for the containing dataflow region
         val refDecl = createReferenceDeclaration
         dRegion.declarations += refDecl
         refDecl.setReference(swState)
-        val swObj = refDecl.createValuedObject("switch_" + swCounter)        
+        val swObj = refDecl.createValuedObject(switchName + ssaNameSeperator + swCounter)        
         swObj.insertHighlightAnnotations(swStmt)
         swCounter++
         
@@ -594,7 +605,7 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
                 // Create a transition without a trigger for a default statement    
                 } else {
                     initState.createImmediateTransitionTo(activeCase)                 
-                    activeCase.label = "default"
+                    activeCase.label = defaultCaseName
                 }
             // Create a transition to the final state for break statements    
             } else if (child instanceof IASTBreakStatement) {
@@ -614,13 +625,13 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
      */
     def void buildFor(IASTForStatement forStmt, State rootState, DataflowRegion dRegion) {
         // Create the state
-        val forState = createState(forName + "_" + forCounter)
+        val forState = createState(forName + ssaNameSeperator + forCounter)
         
         // Reference the state in the containing dataflow region
         val refDecl = createReferenceDeclaration
         dRegion.declarations += refDecl
         refDecl.setReference(forState)
-        val forObj = refDecl.createValuedObject(forName + "_" + forCounter)        
+        val forObj = refDecl.createValuedObject(forName + ssaNameSeperator + forCounter)        
         forObj.insertHighlightAnnotations(forStmt)
         
         // Set the in and outputs
@@ -648,13 +659,13 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
      */
     def void buildWhile(IASTWhileStatement whileStmt, State rootState, DataflowRegion dRegion) {
         // Create the state        
-        val whileState = createState(whileName + "_" + whileCounter)
+        val whileState = createState(whileName + ssaNameSeperator + whileCounter)
         
         // Create the reference in the containing dataflow region
         val refDecl = createReferenceDeclaration
         dRegion.declarations += refDecl
         refDecl.setReference(whileState)
-        val whileObj = refDecl.createValuedObject(whileName + "_" + whileCounter)        
+        val whileObj = refDecl.createValuedObject(whileName + ssaNameSeperator + whileCounter)        
         whileObj.insertHighlightAnnotations(whileStmt)
         
         // Set the in and outputs
@@ -678,13 +689,13 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
      */
     def void buildDo(IASTDoStatement doStmt, State rootState, DataflowRegion dRegion) {
         // Create the state        
-        val doState = createState(doName + "_" + doCounter)
+        val doState = createState(doName + ssaNameSeperator + doCounter)
         
         // Create the reference in the containing dataflow region
         val refDecl = createReferenceDeclaration
         dRegion.declarations += refDecl
         refDecl.setReference(doState)
-        val doObj = refDecl.createValuedObject(doName + "_" + doCounter)        
+        val doObj = refDecl.createValuedObject(doName + ssaNameSeperator + doCounter)        
         doObj.insertHighlightAnnotations(doStmt)
         
         // Set the in and outputs
@@ -731,7 +742,7 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
             var varList = <ValuedObject> newArrayList
             
             //Create the valued object
-            val vo = variableDeclaration.createValuedObject(varName + "_0")
+            val vo = variableDeclaration.createValuedObject(varName + ssaNameSeperator + "0")
             vo.label = varName
             vo.insertHighlightAnnotations(decl)
             if (decl instanceof IASTArrayDeclarator) {
@@ -824,7 +835,7 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
             newState.declarations += decl
             decl.type = outputType
             decl.output = true            
-            val innerOutputVO = decl.createValuedObject(output + "_out")
+            val innerOutputVO = decl.createValuedObject(output + outSuffix)
             innerOutputVO.label = output
             innerOutputVO.insertHighlightAnnotations(stmt)
             
@@ -901,7 +912,7 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
             newState.declarations += decl
             decl.type = inputType
             decl.input = true            
-            val innerInputVO = decl.createValuedObject(input + "_in")
+            val innerInputVO = decl.createValuedObject(input + inSuffix)
             innerInputVO.label = input
             innerInputVO.insertHighlightAnnotations(stmt)
             
@@ -977,22 +988,22 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
         vo = varList.get(varList.length - 1)
         var varName = vo.getName()
         
-        // If the last object is the "_out" object the preceding valued object has to be used
+        // If the last object is the outSuffix object the preceding valued object has to be used
         var onlyOut = false
         var hasOut = false
-        if ((varName.contains("_out")) && (varName.lastIndexOf("_out") == (varName.length - 4))) {
+        if ((varName.contains(outSuffix)) && (varName.lastIndexOf(outSuffix) == (varName.length - outSuffix.length))) {
             hasOut = true
             if (varList.length > 1) {
                 vo = varList.get(varList.length - 2)
                 varName = vo.getName()
                 
-            // If the list only contains the "_out" valued object, a preceding one has to be created  
+            // If the list only contains the outSuffix valued object, a preceding one has to be created  
             } else {
                 val OffsetAnno = vo.getAnnotations("Offset")
                 val LengthAnno = vo.getAnnotations("Length")
                 onlyOut = true
                 var varDecl = vo.getVariableDeclaration
-                varName = varName.substring(0, varName.length - 3) + "0"
+                varName = varName.substring(0, varName.length - outSuffix.length) + ssaNameSeperator + "0"
                 val type = varDecl.type
                 
                 // If the original variable declaration was attached to the state the new one should be attached to the dataflow region
@@ -1003,7 +1014,7 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
                     dRegion.declarations += varDecl
                 }
                 
-                // Create the valued object and add it to the variable list, before the "_out" object
+                // Create the valued object and add it to the variable list, before the outSuffix object
                 vo = varDecl.createValuedObject(varName)
                 if (OffsetAnno.length > 0) vo.annotations += OffsetAnno.head
                 if (LengthAnno.length > 0) vo.annotations += LengthAnno.head                
@@ -1045,13 +1056,13 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
             var newName = ""
             
             // Create the right valued object suffix
-            if (!(varName.lastIndexOf("_in") == varName.length - 3)) {
-                val idxOfUS = varName.lastIndexOf("_")
+            if (!(varName.lastIndexOf(inSuffix) == varName.length - inSuffix.length)) {
+                val idxOfUS = varName.lastIndexOf(ssaNameSeperator)
                 val varSuffix = varName.substring(idxOfUS + 1)
                 val varNmr = Integer.parseInt(varSuffix)
                 newName = varName.substring(0, idxOfUS + 1) + (varNmr + 1)    
             } else {
-                newName = varName.substring(0, varName.length - 2) + "0"
+                newName = varName.substring(0, varName.length - inSuffix.length) + ssaNameSeperator + "0"
             }
             
             // Make sure the declaration is attached to the dataflow region
@@ -1100,7 +1111,7 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
             if (outVO !== null && (varList.length > 1)) {
                 // Retrieve the last ssa valued object
                 var lastVO = varList.get(varList.length - 1)
-                if (lastVO.getName.contains("_out") && (varList.length > 1)) {
+                if (lastVO.getName.contains(outSuffix) && (varList.length > 1)) {
                     lastVO = varList.get(varList.length - 2)
                 }
                 // Copy the location information of the last ssa vo to the output vo
@@ -1122,7 +1133,7 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
         
         for (var i = 0; (i < varList.length) && (vo === null); i++) {
             var varName = varList.get(i).getName
-            if (varName.contains("_out")) {
+            if (varName.contains(outSuffix)) {
                 vo = varList.get(i)
             }
         }
@@ -1155,7 +1166,7 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
             val outputDecl = createVariableDeclaration
             outputDecl.output = true
             state.declarations += outputDecl
-            val outputVO = outputDecl.createValuedObject(returnObjectName + "_out") 
+            val outputVO = outputDecl.createValuedObject(returnObjectName + outSuffix) 
             outputVO.label = returnObjectName
         }
         
@@ -1232,7 +1243,7 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
                 source = funcObj.reference => [
                     subReference = refStateConst.declarations.filter(VariableDeclaration)
                         .map[ it.valuedObjects ].flatten
-                        .filter [ name == returnObjectName + "_out" ].head.reference
+                        .filter [ name == returnObjectName + outSuffix ].head.reference
                 ]
                 // Link func inputs (add assignments to result)
                 var i = 0
@@ -1475,7 +1486,7 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
                 kExpression = funcObj.reference => [
                     subReference = refStateConst.declarations.filter(VariableDeclaration)
                     .map[ it.valuedObjects ].flatten
-                    .filter [ name == returnObjectName + "_out" ].head.reference
+                    .filter [ name == returnObjectName + outSuffix ].head.reference
                 ]
                 // Connect the Inputs    
                 var i = 0
