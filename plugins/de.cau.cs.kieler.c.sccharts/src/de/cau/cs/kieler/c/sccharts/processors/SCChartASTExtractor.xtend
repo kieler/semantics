@@ -3,7 +3,7 @@
  *
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
- * Copyright ${year} by
+ * Copyright 2019 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -12,24 +12,21 @@
  */
 package de.cau.cs.kieler.c.sccharts.processors
 
-import de.cau.cs.kieler.kicool.compilation.ExogenousProcessor
-import org.eclipse.cdt.core.dom.ast.IASTTranslationUnit
-import de.cau.cs.kieler.sccharts.SCCharts
-import org.eclipse.emf.ecore.EObject
 import com.google.inject.Inject
+import de.cau.cs.kieler.kicool.compilation.ExogenousProcessor
+import de.cau.cs.kieler.sccharts.ControlflowRegion
+import de.cau.cs.kieler.sccharts.SCCharts
+import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
-import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.ControlflowRegion
-import org.eclipse.cdt.core.dom.ast.IASTNode
-import org.eclipse.cdt.core.dom.ast.IASTIdExpression
-import org.eclipse.cdt.core.dom.ast.IASTNameOwner
-import org.eclipse.cdt.core.dom.ast.IASTIfStatement
-import org.eclipse.cdt.core.dom.ast.IASTFunctionCallExpression
-import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import java.util.ArrayList
+import org.eclipse.cdt.core.dom.ast.IASTFunctionCallExpression
+import org.eclipse.cdt.core.dom.ast.IASTIdExpression
+import org.eclipse.cdt.core.dom.ast.IASTNode
+import org.eclipse.cdt.core.dom.ast.IASTTranslationUnit
+import org.eclipse.emf.ecore.EObject
 
 /**
  * @author lewe
@@ -41,7 +38,6 @@ class SCChartASTExtractor extends ExogenousProcessor<IASTTranslationUnit, SCChar
     @Inject extension SCChartsStateExtensions
     @Inject extension SCChartsTransitionExtensions
     @Inject extension SCChartsControlflowRegionExtensions
-    @Inject extension AnnotationsExtensions
         
     val layers = <Integer, ArrayList<Integer>> newHashMap    
         

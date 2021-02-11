@@ -200,7 +200,7 @@ class SMExtractorExtensions {
          var idx = -1
          
          for (var i = 0; i < comments.length && idx == -1; i++) {
-             if(comments.get(i).toString.equals(comment)) {
+             if (comments.get(i).toString.equals(comment)) {
                  idx = i
              }
          }
