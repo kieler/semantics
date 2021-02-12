@@ -24,6 +24,7 @@ import de.cau.cs.kieler.kexpressions.FloatValue
 import de.cau.cs.kieler.kexpressions.IntValue
 import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.OperatorType
+import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 import de.cau.cs.kieler.kexpressions.StringValue
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObject
@@ -38,6 +39,7 @@ import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.DataflowRegion
 import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.SCCharts
+import de.cau.cs.kieler.sccharts.SCChartsFactory
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
@@ -120,11 +122,13 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
     static final String returnObjectName = " res"
     
     /** The seperator for valued object names and its further SSA objects. */
-    static final String ssaNameSeperator = "_"
+    static final String ssaNameSeperator = " "
     /** The valued object suffix for the input SSA object. */
     static final String inSuffix = ssaNameSeperator + "in"
     /** The valued object suffix for the output SSA object. */
     static final String outSuffix = ssaNameSeperator + "out"
+    /** The name prefix of function parameters with an unknown name. */
+    static final String unknownParamName = "param"
     
     /** Shown name prefix for if statements. */
     static final String ifName = "if"
@@ -153,6 +157,8 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
     val valuedObjects = <State, HashMap<String, ArrayList<ValuedObject>>> newHashMap
     
     val voWrittenIdxs = <ValuedObject, List<Expression>> newHashMap
+    
+    var SCCharts rootSCChart
 
     /** The file contents, for referencing direct String representations. */
     var byte[] sourceFile
@@ -194,7 +200,7 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
         }
         
         // Create SCCharts root elements
-        val scChart = createSCChart
+        rootSCChart = createSCChart
         
         // Start extraction for each defined function
         for (child : ast.children) {
@@ -202,12 +208,12 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
             if (child instanceof IASTFunctionDefinition) {
                 val state = buildFunction(child)
                 functions.put(state.label, state)
-                scChart.rootStates += state
+                rootSCChart.rootStates += state
             } 
              
         }
         
-        return scChart
+        return rootSCChart
         
     }
 
@@ -251,7 +257,7 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
                         val newDecl = createVariableDeclaration
                         state.declarations += newDecl
                         newDecl.type = inputType
-                        newDecl.input = true       
+                        newDecl.input = true
                         declarations.put(inputType, newDecl)
                     }
                     val decl = declarations.get(inputType)
@@ -298,13 +304,136 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
         
         // Translate function body
         val body = func.getBody
+        var DataflowRegion bodyRegion
         if (body instanceof IASTCompoundStatement) {
-            val bodyRegion = buildCompound(body, state)
+            bodyRegion = buildCompound(body, state)
             state.regions += bodyRegion
             bodyRegion.label = funcName
         } else {
             println("ERROR: Body of " + funcName + " is not a Compound Statement!")
         }
+        
+        // For each array/pointer parameter, determine if it has been written to in the function
+        // by analyzing the valued objects for said parameter. If written to, add another output
+        // declaration with an assignment of the final value to that output declaration.
+        if (funcDeclarator instanceof IASTStandardFunctionDeclarator) {
+            val parameters = funcDeclarator.getParameters
+            for (par : parameters) {
+                val isArray = par.getDeclSpecifier instanceof IASTSimpleDeclSpecifier
+                           && par.declarator       instanceof IASTArrayDeclarator
+                if (isArray) {
+                    val type = (outputDeclSpecifier as IASTSimpleDeclSpecifier).type.cdtTypeConversion
+                    // Determine parameter name
+                    val varName = par.getDeclarator.getName.toString
+                    val varList = stateVariables.get(varName)
+                    
+                    // Find declaration for this parameter in the body's region.
+                    val decl = bodyRegion.declarations.findFirst[ // The declaration...
+                        it.valuedObjects.findFirst[ // ... with a valued object ...
+                            it.name.startsWith(varName + ssaNameSeperator) // ... named "varName"
+                        ] !== null
+                    ]
+                    
+                    // If there is a declaration in the region, then it has been written to, so we need to create a new
+                    // output.
+                    if (decl !== null) {
+                        // Create output declaration                    
+                        val outDecl = createVariableDeclaration
+                        outDecl.type = type
+                        outDecl.output = true  
+                        state.declarations += outDecl
+                        
+                        // Create valued object for the output.
+                        val outputVo = outDecl.createValuedObject(varName + outSuffix)
+                        outputVo.label = varName
+                        outputVo.insertHighlightAnnotations(par)
+                        
+                        // Attach the valued object to its list.
+                        varList.add(outputVo)
+                        
+                        // Add an assignment of the last VO to the output VO.
+                        val source = decl.valuedObjects.get(decl.valuedObjects.filter[ // The last VO with the variable's name
+                            it.name.startsWith(varName + ssaNameSeperator)
+                        ].size - 1)
+                        val target = outputVo
+                        val assignment = createDataflowAssignment(target,  source.reference)
+                        bodyRegion.equations += assignment
+                    }
+                }
+            }
+        }
+        
+        return state
+    }
+    
+    /**
+     * Create a state representation for a call of a not known function
+     * 
+     * @param funcName The name this function state should have.
+     * @param funcCall The AST function call expression of which to get the data from to create the state.
+     * @param dRegion The parent dataflow region that will be containing this state, for reference.
+     * @return A new state for a function unknown in the AST.
+     */
+    def State createUnknownFuncState(String funcName, IASTFunctionCallExpression funcCall, DataflowRegion dRegion) {
+        // Create the state
+        val state = createState(funcName)
+        state.label = funcName
+        val bodyRegion = state.createDataflowRegion(funcName)
+        bodyRegion.label = funcName
+        
+        // Create an output
+        val outputDecl = createVariableDeclaration
+        outputDecl.output = true
+        state.declarations += outputDecl
+        val outputVO = outputDecl.createValuedObject(returnObjectName + outSuffix) 
+        outputVO.label = returnObjectName
+
+        // For each array/pointer parameter, determine if it has been written to in the function
+        // by analyzing the valued objects for said parameter. If written to, add another output
+        // declaration with an assignment of the final value to that output declaration.
+        // Create inputs for the functions parameters
+        val declaration = createVariableDeclaration
+        declaration.input = true
+        state.declarations += declaration
+        for (arg : funcCall.arguments) {
+            var needsOutput = true
+            // Determine parameter name
+            var String varName
+            if (arg instanceof IASTIdExpression) {
+                varName = arg.getName.toString
+                val parentDeclarations = dRegion.declarations.filter(VariableDeclaration)
+                val potentialInputVOs  = parentDeclarations.map[it.valuedObjects].flatten
+                val varName_ = varName
+                val inputVO = potentialInputVOs.findFirst[it.label.equals(varName_)]
+                if (inputVO === null || inputVO.cardinalities.empty) {
+                    needsOutput = false
+                }
+            } else {
+                needsOutput = false
+                varName = unknownParamName + ssaNameSeperator + funcCall.arguments.indexOf(arg)
+            }
+            
+                
+            // Create valued object for the input
+            val vo = declaration.createValuedObject(varName + inSuffix)
+            vo.label = varName
+            vo.insertHighlightAnnotations(arg)
+            
+            if (needsOutput) {
+                // Create output declaration
+                val outDecl = createVariableDeclaration
+                outDecl.output = true
+                state.declarations += outDecl
+                
+                // Create valued object for the output.
+                val outputVo = outDecl.createValuedObject(varName + outSuffix)
+                outputVo.label = varName
+                outputVo.insertHighlightAnnotations(arg)
+            }
+        }
+        
+        functions.put(funcName, state)
+        rootSCChart.rootStates += state
         
         return state
     }
@@ -369,16 +498,7 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
             createUnaryAssignment(expression, rootState, dRegion)
         // Create a function call by referencing the function state    
         } else if (expression instanceof IASTFunctionCallExpression) {
-                
-            val funcName = (expression.getFunctionNameExpression as IASTIdExpression).getName.toString
-            val knownFunction = functions.containsKey(funcName)
-            var State funcState 
-            if (knownFunction) {
-                funcState = functions.get(funcName)
-            } else {
-                funcState = createUnknownFuncState(funcName, expression, false)
-            }
-            createFuncCall(expression, rootState, dRegion, funcState, knownFunction)                
+            createFunctionCall(expression, rootState, dRegion)
         }
     }
     
@@ -767,42 +887,15 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
     def void initializeValuedObject(ValuedObject vo, IASTDeclarator decl, State state, DataflowRegion dRegion) {
         val initializer = decl.getInitializer
         if (initializer instanceof IASTEqualsInitializer) {
-            // If the init expression is not a function call translate the expression
-            if (!(initializer.children.head instanceof IASTFunctionCallExpression)) {                        
-                val initExpr = createKExpression(initializer.children.head, state, dRegion)
-                dRegion.equations += createDataflowAssignment(vo, initExpr)
-                
+            var Expression initExpr
+            if (initializer.children.head instanceof IASTFunctionCallExpression) {
+                val expression = initializer.children.head as IASTFunctionCallExpression
+                initExpr = createFunctionCall(expression, state, dRegion)
             } else {
-                // Retrieve the name of the called function
-                val funcInit = initializer.children.head as IASTFunctionCallExpression
-                val funcName = (funcInit.getFunctionNameExpression as IASTIdExpression).getName.toString
-                val funcState = findFunctionState(funcName)
-                
-                // Reference the function state         
-                val refDecl = createReferenceDeclaration
-                state.declarations += refDecl
-                refDecl.setReference(funcState)                        
-                val refObj = refDecl.createValuedObject(funcName)
-                refObj.insertHighlightAnnotations(funcInit)
-                
-                // Connect the function argument expressions        
-                var i = 0
-                for (argument : funcInit.getArguments) {
-                    val funcObjArg = funcState.declarations.filter(VariableDeclaration).map[it.valuedObjects].flatten.get(i)
-                    val connectExpr = argument.createKExpression(state, dRegion)
-                    var ass = createDataflowAssignment(refObj, funcObjArg, connectExpr)
-                    dRegion.equations += ass
-                    i++
-                }
-                
-                // Create the assignment to the given valued object        
-                val outputSource = funcState.findOutputVar(returnObjectName)
-                val outputExpr = refObj.reference => [
-                    subReference = outputSource.reference
-                ]
-                dRegion.equations += createDataflowAssignment(vo, outputExpr)
-                        
+                // Simply translate the expression
+                initExpr = createKExpression(initializer.children.head, state, dRegion)
             }
+            dRegion.equations += createDataflowAssignment(vo, initExpr)
         }
     }
     
@@ -976,6 +1069,22 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
      */
     def State findFunctionState(String funcName) {
         return functions.get(funcName)
+    }
+    
+    /**
+     * Find the state for the given function name, or create a new unknown function state and remember it.
+     * 
+     * @param expression The function call expression to find the state for.
+     * @param dRegion The surrounding dataflow region that will contain this state, for reference.
+     * @return The state for the function.
+     */
+    def State findFunctionState(IASTFunctionCallExpression expression, DataflowRegion dRegion) {
+        val funcName = (expression.getFunctionNameExpression as IASTIdExpression).getName.toString
+        val existingFunction = findFunctionState(funcName)
+        if(existingFunction === null) {
+            return createUnknownFuncState(funcName, expression, dRegion)
+        }
+        return existingFunction
     }
     
     /**
@@ -1154,34 +1263,7 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
     }
     
     /**
-     * Create a state representation for a call of a not known function
-     */
-    def State createUnknownFuncState(String funcName, IASTFunctionCallExpression funcCall, boolean writing) {
-        // Create the state
-        val state = createState(funcName)
-        state.label = funcName
-        
-        // Create an output if needed
-        if (writing) {
-            val outputDecl = createVariableDeclaration
-            outputDecl.output = true
-            state.declarations += outputDecl
-            val outputVO = outputDecl.createValuedObject(returnObjectName + outSuffix) 
-            outputVO.label = returnObjectName
-        }
-        
-        // Create an input for each argument
-        for (argument : funcCall.getArguments) {
-            val inputDecl = createVariableDeclaration
-            inputDecl.input = true
-            state.declarations += inputDecl
-            inputDecl.createValuedObject("")
-        }
-        return state
-    }
-    
-    /**
-     * Returns true if the expressions definetely contain the same value. Currently only considers constant values as
+     * Returns true if the expressions definitely contain the same value. Currently only considers constant values as
      * the expressions.
      */
     def boolean expressionEquals(Expression expression1, Expression expression2) {
@@ -1225,35 +1307,7 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
             // Translate a function call that will be assigned
             } else if (sourceExpr instanceof IASTFunctionCallExpression) {
                 // Create the function reference
-                val funcCall = sourceExpr as IASTFunctionCallExpression
-                var refDecl = createReferenceDeclaration
-                dRegion.declarations += refDecl
-                val funcName = (funcCall.getFunctionNameExpression as IASTIdExpression).getName.toString
-                var refState = funcName.findFunctionState
-                if (refState === null) {
-                    refState = createUnknownFuncState(funcName, funcCall, true)
-                }
-                val refStateConst = refState
-                refDecl.setReference(refState)
-                refDecl.annotations += createTagAnnotation("hide")
-                // Create Func Object
-                val funcObj = refDecl.createValuedObject(funcName)
-                funcObj.insertHighlightAnnotations(sourceExpr)
-                // Retrieve Func output
-                source = funcObj.reference => [
-                    subReference = refStateConst.declarations.filter(VariableDeclaration)
-                        .map[ it.valuedObjects ].flatten
-                        .filter [ name == returnObjectName + outSuffix ].head.reference
-                ]
-                // Link func inputs (add assignments to result)
-                var i = 0
-                for (argument : funcCall.getArguments) {
-                    val funcObjArg = refStateConst.declarations.filter(VariableDeclaration).map[ it.valuedObjects ].flatten.get(i)
-                    val connectObj = funcState.findValuedObjectByName(argument.children.head.toString, false, dRegion)
-                    ass = createDataflowAssignment(funcObj, funcObjArg, connectObj.reference)
-                    assignments.add(ass)
-                    i++
-                }
+                source = createFunctionCall(sourceExpr, funcState, dRegion)
             // Create a value expression for a literal    
             } else if (sourceExpr instanceof IASTLiteralExpression){
                 
@@ -1280,7 +1334,7 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
     def ValuedObjectAndExpression retrieveTargetAndIndexExpr(IASTExpression targetExpr, State funcState, DataflowRegion dRegion) {
         val ValuedObjectAndExpression result = new ValuedObjectAndExpression
         if (targetExpr instanceof IASTIdExpression) {
-            result.target = funcState.findValuedObjectByName(targetExpr.getName.toString, true, dRegion)    
+            result.target = funcState.findValuedObjectByName(targetExpr.getName.toString, true, dRegion)
         } else if (targetExpr instanceof IASTArraySubscriptExpression) {
             val arrayIndex = targetExpr.argument.createKExpression(funcState, dRegion)
             result.target = funcState.findValuedObjectByName(exprToString(targetExpr.arrayExpression, sourceFile), arrayIndex, true, dRegion)
@@ -1417,25 +1471,70 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
     }
     
     /**
-     * Translate a func call expression and add it to the dataflow region.
+     * Translate a function call expression and add it to the dataflow region.
+     * 
+     * @param expression The function call expression to translate into SCCharts.
+     * @param state The surrounding state where this function call should be added to.
+     * @param dRegion The dataflow region where this dunction call should be added to.
+     * @return A reference to the valued object for this function call.
      */
-    def void createFuncCall(IASTFunctionCallExpression expression, State funcState, DataflowRegion dRegion, State refState, boolean knownFunction) {
-        // Create the Reference
-        val refDecl = createReferenceDeclaration
-        refDecl.setReference(refState)
-        refDecl.annotations += createTagAnnotation("hide")
-        dRegion.declarations += refDecl
+    def ValuedObjectReference createFunctionCall(IASTFunctionCallExpression expression, State state, DataflowRegion dRegion) {
+        val refState = findFunctionState(expression, dRegion)
+        
+        // Find an existing reference to this state the reference
+        var ReferenceDeclaration refDecl = dRegion.declarations.filter(ReferenceDeclaration).findFirst[
+            it.reference === refState
+        ]
+        // Create a new reference if none was found yet
+        if (refDecl === null) {
+            refDecl = createReferenceDeclaration
+            refDecl.setReference(refState)
+            refDecl.annotations += createTagAnnotation("hide")
+            dRegion.declarations += refDecl
+        }
+        
+        // Create a valued object for the referenced state
         val refObj = refDecl.createValuedObject(refState.name)
         refObj.insertHighlightAnnotations(expression)
-        // Link the arguments        
-        var arguments = expression.getArguments
-        for (var i = 0; i < arguments.length; i++) {
-            val argument = arguments.get(i)
-            val argExpr = argument.createKExpression(funcState, dRegion)
-            var inputVO = refState.declarations.filter(VariableDeclaration).map[ it.valuedObjects ].flatten.get(i)
+        
+        // Create all assignments for the function call
+        var index = 0
+        for (argument : expression.arguments) {
+            // Create the assignments from the function inputs to inputs of the referenced state.
+            val argExpr = argument.createKExpression(state, dRegion)
+            val stateDeclarations = refState.declarations.filter(VariableDeclaration)
+            val inputVOs  = stateDeclarations.filter[it.isInput] .map[it.valuedObjects].flatten
+            val outputVOs = stateDeclarations.filter[it.isOutput].map[it.valuedObjects].flatten
+                .filter[it.name != returnObjectName + outSuffix]
+            val inputVO = inputVOs.get(index)
             dRegion.equations += createDataflowAssignment(refObj, inputVO, argExpr)
             
+            // Create the assignments from the referenced state's outputs to the corresponding
+            // previous input VOs.
+            val outputVO = outputVOs.findFirst[
+                it                 .name.substring(0, it     .name.length - outSuffix.length)
+                    .equals(inputVO.name.substring(0, inputVO.name.length -  inSuffix.length))
+            ]
+            if (outputVO !== null && argExpr instanceof ValuedObjectReference) {
+                // Search for the VO in the surrounding state that was given as the argument
+                val variableVOName = (argExpr as ValuedObjectReference).valuedObject.name
+                val outputToVO = findValuedObjectByName(state,
+                    variableVOName.substring(0, variableVOName.indexOf(ssaNameSeperator)), true, dRegion)
+                
+                val assignment = SCChartsFactory.eINSTANCE.createDataflowAssignment => [
+                    it.reference = outputToVO.reference
+                    it.expression = refObj.reference => [
+                        it.subReference = outputVO.reference
+                    ]
+                ]
+                
+                dRegion.equations += assignment
+            }
+            index++
         }
+        
+        // Wire the sub-reference to the output VO of the reference state.
+        return refObj.reference.outputReference(refState, returnObjectName + outSuffix) 
     }
     
     /**
@@ -1469,33 +1568,7 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
             // For a function call create a reference an return the functions output VO reference
             IASTFunctionCallExpression: {
                 // Create the Reference
-                val funcCall = expr as IASTFunctionCallExpression
-                var refDecl = createReferenceDeclaration
-                dRegion.declarations += refDecl
-                val funcName = (funcCall.getFunctionNameExpression as IASTIdExpression).getName.toString//children.head.toString
-                var refState = funcName.findFunctionState
-                if (refState === null) {
-                    refState = createUnknownFuncState(funcName, funcCall, true)
-                }
-                val refStateConst = refState
-                refDecl.setReference(refStateConst)
-                refDecl.annotations += createTagAnnotation("Hide")
-                val funcObj = refDecl.createValuedObject(funcName)
-                funcObj.insertHighlightAnnotations(expr)
-                // Retrieve the output VO                
-                kExpression = funcObj.reference => [
-                    subReference = refStateConst.declarations.filter(VariableDeclaration)
-                    .map[ it.valuedObjects ].flatten
-                    .filter [ name == returnObjectName + outSuffix ].head.reference
-                ]
-                // Connect the Inputs    
-                var i = 0
-                for (argument : funcCall.getArguments) {
-                    val funcObjArg = refStateConst.declarations.filter(VariableDeclaration).map[ it.valuedObjects ].flatten.get(i)
-                    val connectExpr = argument.createKExpression(funcState, dRegion)
-                    dRegion.equations += createDataflowAssignment(funcObj, funcObjArg, connectExpr)
-                    i++
-                }
+                kExpression = createFunctionCall(expr, funcState, dRegion)
             }
             // For a conditional expression create a state similar to an if    
             IASTConditionalExpression: {
@@ -1606,6 +1679,21 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
         }
         return expression
         
+    }
+    
+    /**
+     * Adds the sub reference to the output valued object of the given reference in the state.
+     * 
+     * @param reference The reference of which to modify the sub reference.
+     * @param referenceState The state this reference belongs to.
+     * @return The same reference, for convenience.
+     */
+    def ValuedObjectReference outputReference(ValuedObjectReference reference, State referenceState, String objectName) {
+        return reference => [
+            subReference = referenceState.declarations.filter(VariableDeclaration)
+                .map[ it.valuedObjects ].flatten
+                .filter [ name == objectName ].head.reference
+        ]
     }
 
 }
