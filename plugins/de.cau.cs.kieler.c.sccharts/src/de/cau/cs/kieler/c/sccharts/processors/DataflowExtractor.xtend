@@ -970,23 +970,41 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
      */
     def HashSet<String> findOutputs(IASTNode stmt, State parentState, boolean checkId) {
         var outputs = <String> newHashSet
-        if (stmt instanceof IASTIdExpression && checkId) {
-            val varName = (stmt as IASTIdExpression).getName.toString 
-            if (valuedObjects.get(parentState).containsKey(varName)) outputs += varName 
-        // Consider only non local variables that are target of an assignment
-        } else if (stmt instanceof IASTBinaryExpression) {
-            val operator = stmt.getOperator
-            if ((operator >= IASTBinaryExpression.op_assign) && (operator <= IASTBinaryExpression.op_binaryOrAssign)) {
-                val op1 = stmt.getOperand1
-                if (op1 instanceof IASTIdExpression ||
-                    op1 instanceof IASTArraySubscriptExpression) {
-                    outputs += findOutputs(op1, parentState, true)
+        
+        switch (stmt) {
+            IASTIdExpression case checkId: {
+                val varName = (stmt as IASTIdExpression).getName.toString
+                if (valuedObjects.get(parentState).containsKey(varName)) outputs += varName
+            }
+            IASTBinaryExpression: {
+                // Consider only non-local variables that are target of an assignment.
+                val operator = stmt.getOperator
+                if ((operator >= IASTBinaryExpression.op_assign) && (operator <= IASTBinaryExpression.op_binaryOrAssign)) {
+                    val op1 = stmt.getOperand1
+                    if (op1 instanceof IASTIdExpression ||
+                        op1 instanceof IASTArraySubscriptExpression) {
+                        outputs += findOutputs(op1, parentState, true)
+                    }
                 }
             }
-        // Check every child for other statements    
-        } else {
-            for (child : stmt.children) {
-                outputs += findOutputs(child, parentState, false)
+            IASTUnaryExpression: {
+                // Consider non-local
+                val operator = stmt.getOperator
+                val writingUnaryOps = #[IASTUnaryExpression.op_prefixIncr,  IASTUnaryExpression.op_prefixDecr,
+                                        IASTUnaryExpression.op_postFixIncr, IASTUnaryExpression.op_postFixDecr]
+                if (writingUnaryOps.contains(operator)) {
+                    val operand = stmt.operand
+                    if (operand instanceof IASTIdExpression ||
+                        operand instanceof IASTArraySubscriptExpression) {
+                        outputs += findOutputs(operand, parentState, true)
+                    }
+                }
+            }
+            default: {
+                // Check every child for other statements.
+                for (child : stmt.children) {
+                    outputs += findOutputs(child, parentState, false)
+                }
             }
         }
         return outputs
