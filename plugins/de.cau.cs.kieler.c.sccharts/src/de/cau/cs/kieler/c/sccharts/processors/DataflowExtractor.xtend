@@ -80,6 +80,7 @@ import org.eclipse.cdt.core.dom.ast.IASTInitializerList
 import org.eclipse.cdt.core.dom.ast.IASTLiteralExpression
 import org.eclipse.cdt.core.dom.ast.IASTNode
 import org.eclipse.cdt.core.dom.ast.IASTNode.CopyStyle
+import org.eclipse.cdt.core.dom.ast.IASTNullStatement
 import org.eclipse.cdt.core.dom.ast.IASTReturnStatement
 import org.eclipse.cdt.core.dom.ast.IASTSimpleDeclSpecifier
 import org.eclipse.cdt.core.dom.ast.IASTSimpleDeclaration
@@ -557,6 +558,12 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
         for (child : stmt.getStatements) {
             buildStatement(child, rootState, dRegion)
         }
+    }
+    
+    /**
+     * Translate a Null statement. Does nothing.
+     */
+    def dispatch void buildStatement(IASTNullStatement stmt, State rootState, DataflowRegion dRegion) {
     }
     
     /**

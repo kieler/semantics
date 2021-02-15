@@ -46,6 +46,10 @@ final class CDTToStringConverter {
      * Build a string representation of the expression.
      */
     static def String exprToString(IASTExpression expr, byte[] sourceFileContents) {
+        if (expr === null) {
+            return ""
+        }
+        
         if (expr instanceof ASTNode && sourceFileContents !== null && !sourceFileContents.empty) {
             return stringContentFromNode(expr as ASTNode, sourceFileContents)
         }
@@ -53,80 +57,86 @@ final class CDTToStringConverter {
         // Otherwise, do a best effort for reconstructing the string.
         var expressionAsString = ""
         
-        if (expr instanceof IASTFunctionCallExpression) {
-            // Retrieve the function's name
-            val funcName = (expr.getFunctionNameExpression as IASTIdExpression).getName.toString
-            expressionAsString = funcName + "("
-            
-            // Translate the arguments
-            val arguments = expr.getArguments
-            for (var i = 0; i < arguments.length; i++) {
-                val argument = arguments.get(i)
+        switch (expr) {
+            IASTFunctionCallExpression: {
+                // Retrieve the function's name
+                val funcName = (expr.getFunctionNameExpression as IASTIdExpression).getName.toString
+                expressionAsString = funcName + "("
                 
-                if (argument instanceof IASTExpression) {
-                    expressionAsString += argument.exprToString(sourceFileContents)
-                } else {
-                    println("unsupported argument type in function call to convert to string: " + argument.class)
+                // Translate the arguments
+                val arguments = expr.getArguments
+                for (var i = 0; i < arguments.length; i++) {
+                    val argument = arguments.get(i)
+                    
+                    if (argument instanceof IASTExpression) {
+                        expressionAsString += argument.exprToString(sourceFileContents)
+                    } else {
+                        println("unsupported argument type in function call to convert to string: " + argument.class)
+                    }
+                    
+                    if (i < arguments.length - 1) {
+                        expressionAsString += ", "
+                    } else expressionAsString += ")"
+                }
+            }
+            IASTBinaryExpression: {
+                // Translate the elemenmts of the binary expression
+                val operator = expr.getOperator.cdtBinaryOpTypeToString
+                val operand1 = expr.getOperand1.exprToString(sourceFileContents)
+                val operand2 = expr.getOperand2.exprToString(sourceFileContents)
+                
+                expressionAsString = "(" + operand1 + " " + operator + " " + operand2 + ")"
+            }
+            IASTUnaryExpression: {
+                // Translate the elements of a unary expression
+                var postOperator = expr.getOperator.cdtUnaryOpTypeToString
+                var preOperator = ""
+                
+                if (postOperator.contains("exp")) {
+                    preOperator = postOperator.substring(0, postOperator.indexOf("exp"))
+                    postOperator = ""
                 }
                 
-                if (i < arguments.length - 1) {
-                    expressionAsString += ", "
-                } else expressionAsString += ")"
+                val operand = expr.getOperand.exprToString(sourceFileContents)
+                
+                expressionAsString = "(" + preOperator + operand + postOperator + ")"
             }
-            
-            
-        } else if (expr instanceof IASTBinaryExpression) {
-            // Translate the elemenmts of the binary expression
-            val operator = expr.getOperator.cdtBinaryOpTypeToString
-            val operand1 = expr.getOperand1.exprToString(sourceFileContents)
-            val operand2 = expr.getOperand2.exprToString(sourceFileContents)
-            
-            expressionAsString = "(" + operand1 + " " + operator + " " + operand2 + ")" 
-        } else if (expr instanceof IASTUnaryExpression) {
-            // Translate the elements of a unary expression
-            var postOperator = expr.getOperator.cdtUnaryOpTypeToString
-            var preOperator = ""
-            
-            if (postOperator.contains("exp")) {
-                preOperator = postOperator.substring(0, postOperator.indexOf("exp"))
-                postOperator = ""
+            IASTFieldReference: {
+                // Translate the use of a struct
+                val structExpr = expr.getFieldOwner
+                val structName = structExpr.exprToString(sourceFileContents)
+                val fieldName = expr.getFieldName
+                expressionAsString = structName + "->" + fieldName
             }
-            
-            val operand = expr.getOperand.exprToString(sourceFileContents)
-            
-            expressionAsString = "(" + preOperator + operand + postOperator + ")"
-        } else if (expr instanceof IASTFieldReference) {
-            // Translate the use of a struct
-            val structExpr = expr.getFieldOwner
-            val structName = structExpr.exprToString(sourceFileContents)
-            val fieldName = expr.getFieldName
-            expressionAsString = structName + "->" + fieldName
-            
-        } else if (expr instanceof IASTArraySubscriptExpression) {
-            // Translate the use on an array
-            val arrayExpr = expr.getArrayExpression
-            val arrayName = arrayExpr.exprToString(sourceFileContents)
-            val arrayArgExpr = expr.getArgument
-            var String arrayArgName;
-            if (arrayArgExpr instanceof IASTExpression) {
-                arrayArgName = arrayArgExpr.exprToString(sourceFileContents)
-            } else {
-                println("unsupported argument type in array subscript expression to convert to string: " + arrayArgExpr.class)
+            IASTArraySubscriptExpression: {
+                // Translate the use on an array
+                val arrayExpr = expr.getArrayExpression
+                val arrayName = arrayExpr.exprToString(sourceFileContents)
+                val arrayArgExpr = expr.getArgument
+                var String arrayArgName;
+                if (arrayArgExpr instanceof IASTExpression) {
+                    arrayArgName = arrayArgExpr.exprToString(sourceFileContents)
+                } else {
+                    println("unsupported argument type in array subscript expression to convert to string: " + arrayArgExpr.class)
+                }
+                
+                expressionAsString = arrayName + "[" + arrayArgName + "]"
             }
-            
-            expressionAsString = arrayName + "[" + arrayArgName + "]"
-            
-        } else if (expr instanceof IASTIdExpression) {
-            //Translate the use of a variable
-            expressionAsString = expr.getName.toString            
-        } else if (expr instanceof IASTLiteralExpression) {
-            // Translate the use of a literal
-            expressionAsString = expr.toString
-        } else if (expr instanceof IASTExpressionStatement) {
-            // Extract the expression out of the expression statement
-            expressionAsString = expr.getExpression.exprToString(sourceFileContents)
-        } else {
-            println("Unsupported expression to convert to string: " + expr.class)
+            IASTIdExpression: {
+                //Translate the use of a variable
+                expressionAsString = expr.getName.toString    
+            }
+            IASTLiteralExpression: {
+                // Translate the use of a literal
+                expressionAsString = expr.toString
+            }
+            IASTExpressionStatement: {
+                // Extract the expression out of the expression statement
+                expressionAsString = expr.getExpression.exprToString(sourceFileContents)
+            }
+            default: {
+                println("Unsupported expression to convert to string: " + expr?.class)
+            }
         }
         
         return expressionAsString
