@@ -195,7 +195,6 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
     }    
 
     def EObject transform(IASTTranslationUnit ast) {
-        
         if (ast === null) {
             return null
         }
@@ -205,19 +204,15 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
         
         // Start extraction for each defined function
         for (child : ast.children) {
-            
             if (child instanceof IASTFunctionDefinition) {
                 val state = buildFunction(child)
-                functions.put(state.label, state)
                 rootSCChart.rootStates += state
             } 
              
         }
         
         return rootSCChart
-        
     }
-
 
     /**
      * The function used to create the state representing a function
@@ -229,6 +224,7 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
         
         // Create the state
         val State state = createState(funcName)
+        functions.put(funcName, state)
         state.label = funcName
         
         // Insert text highlighting annotations
@@ -378,6 +374,7 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
     def State createUnknownFuncState(String funcName, IASTFunctionCallExpression funcCall, DataflowRegion dRegion) {
         // Create the state
         val state = createState(funcName)
+        functions.put(funcName, state)
         state.label = funcName
         val bodyRegion = state.createDataflowRegion(funcName)
         bodyRegion.label = funcName
@@ -433,7 +430,6 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
             }
         }
         
-        functions.put(funcName, state)
         rootSCChart.rootStates += state
         
         return state
