@@ -475,7 +475,9 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
         return dfRegion
     }
     
-    // Create a declaration of a local variable and attach it to the dataflow region
+    /**
+     *  Create a declaration of a local variable and attach it to the dataflow region
+     */
     def dispatch void buildStatement(IASTDeclarationStatement stmt, State rootState, DataflowRegion dRegion) {
         val declaration = stmt.getDeclaration
         if (declaration instanceof IASTSimpleDeclaration) {
@@ -904,7 +906,7 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
      */
     def void setOutputs(IASTNode stmt, State rootState, State newState, DataflowRegion dRegion, ValuedObject refObj) {
         // Retrieve the set of outputs of the control statement
-        var outputs = findOutputs(stmt, rootState)
+        var outputs = findOutputs(stmt, rootState, false)
         
         // Retrieve the state valued object map
         var HashMap<String, ArrayList<ValuedObject>> stateVariables = null
@@ -952,12 +954,17 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
     }
     
     /**
-     * Find the Outputs from the given control statements
+     * Find the outputs from the given control statement.
+     * 
+     * @param stmt The control statement
+     * @param parentState The state this control statement is contained in.
+     * @param checkId If IdExpressions should also be considered an output. Should be false for any call from the
+     *                outside.
      */
-    def HashSet<String> findOutputs(IASTNode stmt, State parentState) {
+    def HashSet<String> findOutputs(IASTNode stmt, State parentState, boolean checkId) {
         var outputs = <String> newHashSet
-        if (stmt instanceof IASTIdExpression) {
-            val varName = stmt.getName.toString 
+        if (stmt instanceof IASTIdExpression && checkId) {
+            val varName = (stmt as IASTIdExpression).getName.toString 
             if (valuedObjects.get(parentState).containsKey(varName)) outputs += varName 
         // Consider only non local variables that are target of an assignment
         } else if (stmt instanceof IASTBinaryExpression) {
@@ -966,15 +973,15 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
                 val op1 = stmt.getOperand1
                 if (op1 instanceof IASTIdExpression ||
                     op1 instanceof IASTArraySubscriptExpression) {
-                    outputs += findOutputs(op1, parentState)
+                    outputs += findOutputs(op1, parentState, true)
                 }
             }
         // Check every child for other statements    
         } else {
             for (child : stmt.children) {
-                outputs += findOutputs(child, parentState)
+                outputs += findOutputs(child, parentState, false)
             }
-        }        
+        }
         return outputs
     }
     
