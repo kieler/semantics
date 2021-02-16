@@ -34,6 +34,7 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
+import de.cau.cs.kieler.kexpressions.kext.DeclarationScope
 import de.cau.cs.kieler.kicool.compilation.ExogenousProcessor
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.DataflowRegion
@@ -51,7 +52,6 @@ import java.nio.file.Paths
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.ArrayList
-import java.util.HashMap
 import java.util.HashSet
 import java.util.List
 import java.util.Map
@@ -147,6 +147,8 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
     static final String switchName = "switch"
     /** Shown name prefix for default case statements in switches. */
     static final String defaultCaseName = "default"
+    /** Name for the return combine state. */
+    static final String returnCombine = " returnCombine"
     
     var functions = <String, State> newHashMap
     var ifCounter = 0;
@@ -155,11 +157,13 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
     var whileCounter = 0;
     var doCounter = 0;
     
-    val valuedObjects = <State, HashMap<String, ArrayList<ValuedObject>>> newHashMap
+    val Map<State, Map<String, List<ValuedObject>>> valuedObjects = newHashMap
     
     val voWrittenIdxs = <ValuedObject, List<Expression>> newHashMap
     
     var SCCharts rootSCChart
+    
+    var ValueType currentReturnType = null
 
     /** The file contents, for referencing direct String representations. */
     var byte[] sourceFile
@@ -231,11 +235,11 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
         state.insertHighlightAnnotations(func)
         
         // Create a hashmap for the functions valued objects if needed
-        var HashMap<String, ArrayList<ValuedObject>> stateVariables = null
+        var Map<String, List<ValuedObject>> stateVariables = null
         if (valuedObjects.containsKey(state)) {
             stateVariables = valuedObjects.get(state)
         } else {
-            stateVariables = <String,ArrayList<ValuedObject>> newHashMap
+            stateVariables = newHashMap
             valuedObjects.put(state, stateVariables)    
         }
     
@@ -278,24 +282,10 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
         val outputDeclSpecifier = func.getDeclSpecifier
         if (outputDeclSpecifier instanceof IASTSimpleDeclSpecifier) {
             val type = (outputDeclSpecifier as IASTSimpleDeclSpecifier).type.cdtTypeConversion
+            currentReturnType = type
             if (type !== null) {
-                // Determine output type
-                val retDecl = createVariableDeclaration
-                retDecl.type = type
-                retDecl.output = true  
-                state.declarations += retDecl
-                
-                // Set output name
-                var varName = returnObjectName
-                val varList = <ValuedObject> newArrayList
-                
-                // Create valued object
-                val resVO = retDecl.createValuedObject(varName + outSuffix)
-                resVO.label = varName
-                
-                // Attach valued object to the listing
-                varList.add(resVO)
-                stateVariables.put(varName, varList)   
+                val varList = addReturnDecl(state)
+                stateVariables.put(returnObjectName, varList)
             }
         }
         
@@ -353,8 +343,7 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
                             it.name.startsWith(varName + ssaNameSeperator)
                         ].size - 1)
                         val target = outputVo
-                        val assignment = createDataflowAssignment(target,  source.reference)
-                        bodyRegion.equations += assignment
+                        bodyRegion.equations += createDataflowAssignment(target,  source.reference)
                     }
                 }
             }
@@ -447,7 +436,7 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
      * Additional declarations are added to the DF region as well, without their initializations, if any.
      */
     def DataflowRegion buildCompound(IASTCompoundStatement body, State bodyState, IASTStatement additionalDeclarations) {
-        val dfRegion = createDataflowRegion("")
+        val dfRegion = createDataflowRegion("DF-" + bodyState.name)
         dfRegion.insertHighlightAnnotations(body)
 
         // Strip away the initializations of the declaration.   
@@ -541,7 +530,7 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
      */
     def dispatch void buildStatement(IASTReturnStatement stmt, State rootState, DataflowRegion dRegion) {
         val retKExpr = createKExpression(stmt.getReturnValue, rootState, dRegion)
-                
+        
         val retVO = rootState.findValuedObjectByName(returnObjectName, true, dRegion)
         retVO.insertHighlightAnnotations(stmt)
         dRegion.equations += createDataflowAssignment(retVO, retKExpr)
@@ -589,53 +578,69 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
         
         // Create the state for the then part
         val thenStmt = ifStmt.getThenClause
-        val State thenState = createStateForStatement(thenStmt, cRegion, ifState, thenName)
+        val State thenState = createStateForStatement(thenStmt, cRegion, rootState, dRegion, ifObj, thenName)
         val thenTransition = initState.createImmediateTransitionTo(thenState)
         thenTransition.trigger = (ifStmt.getConditionExpression).createKExpression(ifState, dRegion)
         
         // If an else is given the state is also created
         if (ifStmt.getElseClause !== null) {
             val elseStmt = ifStmt.getElseClause
-            val State elseState = createStateForStatement(elseStmt, cRegion, ifState, elseName)
+            val State elseState = createStateForStatement(elseStmt, cRegion, rootState, dRegion, ifObj, elseName)
             initState.createImmediateTransitionTo(elseState)
         }
         
+        assignOutputs(ifState, ifObj, rootState, dRegion)
     }
     
     /**
-     * Creates and returns a new state in the {@code parentRegion} of the {@code parentState} with a {@code name}
+     * Creates and returns a new state in the {@code parentRegion} of the {@code currentState} with a {@code name}
      * that contains the dataflow behavior of the {@code statement}.
      */
-    private def State createStateForStatement(IASTStatement statement, ControlflowRegion parentRegion, State parentState, String name) {
-        val newState = parentRegion.createState(name)
-        newState.insertHighlightAnnotations(statement)
-        val DataflowRegion thenRegion = createDFRegionForStatement(statement, parentState)
+    private def State createStateForStatement(IASTStatement statement, ControlflowRegion parentCRegion,
+        State parentState, DataflowRegion parentDRegion, ValuedObject parentReference, String name) {
+        val newState = parentCRegion.createState(name)
         newState.label = name
-        newState.regions += thenRegion
+        newState.insertHighlightAnnotations(statement)
+        // Set the in and outputs of the state
+        setInputs(statement, parentState, newState, parentDRegion, null, false)
+        setOutputs(statement, parentState, newState, parentDRegion, null, false)
+        
+        val DataflowRegion region = createDFRegionForStatement(statement, newState, parentState, parentDRegion, parentReference)
+        region.label = name
+        newState.regions += region
         
         return newState
     }
     
     /**
-     * Creates and returns a new dataflow region using the in/outputs of the {@code parentState} for the given
+     * Creates and returns a new dataflow region using the in/outputs of the {@code currentState} for the given
      * {@code statement}.
      */
-    private def DataflowRegion createDFRegionForStatement(IASTStatement statement, State parentState) {
-        return createDFRegionForStatement(statement, parentState, null)
+    private def DataflowRegion createDFRegionForStatement(IASTStatement statement, State currentState, State parentState,
+        DataflowRegion parentRegion, ValuedObject parentReference) {
+        return createDFRegionForStatement(statement, currentState, parentState, parentRegion, parentReference, null)
     }
     
     /**
-     * Creates and returns a new dataflow region using the in/outputs of the {@code parentState} for the given
-     * {@code statement}. The {@code additionalDeclarations} can be used if this region needs some declariations defined
+     * Creates and returns a new dataflow region using the in/outputs of the {@code currentState} for the given
+     * {@code statement}. The {@code additionalDeclarations} can be used if this region needs some declarations defined
      * as well that should not be visible from the outside. Used for example for 'for' loop's initializer statement.
+     * 
+     * @param statement The statement to create the region for.
+     * @param currentState The state this region should be contained in.
+     * @param parentState The parent state containing the currentState.
+     * @param parentRegion The dataflow region containing the state for this new region.
+     * @param parentReference The reference valued object used for the parentState.
+     * @param additionalDeclarations Any additional declarations that need to be known for creating this state.
+     * @return The new dataflow region.
      */
-    private def DataflowRegion createDFRegionForStatement(IASTStatement statement, State parentState,
-        IASTStatement additionalDeclarations) {
+    private def DataflowRegion createDFRegionForStatement(IASTStatement statement, State currentState, State parentState,
+        DataflowRegion parentRegion, ValuedObject parentReference, IASTStatement additionalDeclarations) {
         var DataflowRegion newRegion
         if (statement instanceof IASTCompoundStatement) {
-            newRegion = buildCompound(statement, parentState, additionalDeclarations)
+            newRegion = buildCompound(statement, currentState, additionalDeclarations)
         } else {
-            newRegion = createDataflowRegion("")
+            newRegion = createDataflowRegion("DF-" + currentState.name)
             newRegion.insertHighlightAnnotations(statement)
             var usedDeclarators = additionalDeclarations
             
@@ -650,14 +655,60 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
                 }
             }
             if (usedDeclarators !== null) {
-                buildStatement(usedDeclarators, parentState, newRegion)
+                buildStatement(usedDeclarators, currentState, newRegion)
             }
-            buildStatement(statement, parentState, newRegion)
+            buildStatement(statement, currentState, newRegion)
             
-            linkOutputs(parentState, newRegion)
+            linkOutputs(currentState, newRegion)
         }
         
+        linkReturn(currentState, parentState, newRegion, parentRegion, parentReference)
         return newRegion
+    }
+    
+    /**
+     * Links the return output of the {@code currentRegion} to its parent.
+     * 
+     * @param currentState The state containing the current region.
+     * @param parentState The state containing the current state.
+     * @param currentRegion The region that may define a return output that needs to be linked.
+     * @param parentRegion The parent region, where the new assignment is put.
+     * @param parentReference The reference object used for the parent state in the parent region.
+     */
+    def void linkReturn(State currentState, State parentState, DataflowRegion currentRegion,
+        DataflowRegion parentRegion, ValuedObject parentReference) {
+        val returnDeclaration = currentState.declarations.findFirst[
+            it.valuedObjects.findFirst[it.name.startsWith(returnObjectName)] !== null
+        ]
+        if (returnDeclaration !== null) {
+            val returnedVO = returnDeclaration.valuedObjects.last
+            returnedVO.label = returnObjectName
+            // Look if there already is a valued object for the return statements of the parent state.
+            val vos = valuedObjects.get(currentState)
+            var returnObjects = vos.get(returnObjectName)
+            if (returnObjects === null) {
+                returnObjects = newArrayList
+                
+                // Create a declaration with the same type as the return function.
+                val returnDecl = createVariableDeclaration
+                returnDecl.type = currentReturnType
+                returnDecl.output = true
+                parentState.declarations += returnDecl
+                
+                val returnVO = returnDecl.createValuedObject(returnObjectName + outSuffix)
+                returnVO.label = returnObjectName
+                returnObjects += returnVO
+                vos.put(returnObjectName, returnObjects)
+            }
+            
+            val retVO = parentState.findValuedObjectByName(returnObjectName, true, currentRegion)
+            
+            // res_i = while_0.res_out
+            val source = parentReference.reference => [
+                subReference = returnedVO.reference
+            ]
+            parentRegion.equations += createDataflowAssignment(retVO, source)
+        }
     }
     
     /**
@@ -711,6 +762,8 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
                 activeCase = cRegion.createState("")
                 activeCase.insertHighlightAnnotations(child)
                 
+                setInputs(swBody, rootState, activeCase, dRegion, null, false)
+                setOutputs(swBody, rootState, activeCase, dRegion, null, false)
                 // Create its dataflow region
                 activeDRegion = createDataflowRegion("")
                 activeCase.regions += activeDRegion
@@ -734,15 +787,20 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
                 }
             // Create a transition to the final state for break statements    
             } else if (child instanceof IASTBreakStatement) {
-                linkOutputs(swState, activeDRegion)
+                assignOutputs(swState, swObj, rootState, dRegion)
                 activeCase = null
             // Translate other statements into the currently active dataflow region    
             } else {
-                buildStatement(child as IASTStatement, swState, activeDRegion)
+                buildStatement(child as IASTStatement, activeCase, activeDRegion)
             }
             
         }
-        linkOutputs(swState, activeDRegion)
+        // If the last statement is missing a break, link inputs anyway.
+        if (!(swBody.children.last instanceof IASTBreakStatement)) {
+            assignOutputs(swState, swObj, rootState, dRegion)
+        }
+        linkReturn(activeCase, rootState, activeDRegion, dRegion, swObj)
+        assignOutputs(swState, swObj, rootState, dRegion)
     }
     
     /**
@@ -774,7 +832,7 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
         forCounter++
         
         // Translate the body
-        val forDBodyRegion = createDFRegionForStatement(forStmt.getBody, forState, forStmt.getInitializerStatement) 
+        val forDBodyRegion = createDFRegionForStatement(forStmt.getBody, forState, rootState, dRegion, forObj, forStmt.getInitializerStatement) 
         forState.regions += forDBodyRegion
         forDBodyRegion.label = forState.label        
     }
@@ -803,7 +861,7 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
         whileCounter++
         
         // Translate the loop body
-        val DataflowRegion whileDBodyRegion = createDFRegionForStatement(whileStmt.getBody, whileState) 
+        val DataflowRegion whileDBodyRegion = createDFRegionForStatement(whileStmt.getBody, whileState, rootState, dRegion, whileObj) 
         whileState.regions += whileDBodyRegion
         whileDBodyRegion.label = whileState.label
         
@@ -833,7 +891,7 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
         doCounter++
         
         // Translate the body
-        val doDBodyRegion = createDFRegionForStatement(doStmt.getBody, doState) 
+        val doDBodyRegion = createDFRegionForStatement(doStmt.getBody, doState, rootState, dRegion, doObj)
         doState.regions += doDBodyRegion
         doDBodyRegion.label = doState.label
                
@@ -850,11 +908,11 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
         variableDeclaration.insertHighlightAnnotations(declaration)
         
         // Retrieve the state's variable map
-        var HashMap<String, ArrayList<ValuedObject>> stateVariables = null
+        var Map<String, List<ValuedObject>> stateVariables = null
         if (valuedObjects.containsKey(state)) {
             stateVariables = valuedObjects.get(state)    
         } else {
-            stateVariables = <String, ArrayList<ValuedObject>> newHashMap
+            stateVariables = newHashMap
             valuedObjects.put(state, stateVariables)
         }
         
@@ -908,15 +966,23 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
      * Connect the outputs of a control statement state to the respective valued objects of the containing state
      */
     def void setOutputs(IASTNode stmt, State rootState, State newState, DataflowRegion dRegion, ValuedObject refObj) {
+        setOutputs(stmt, rootState, newState, dRegion, refObj, true)
+    }
+    
+    /**
+     * Connect the outputs of a control statement state to the respective valued objects of the containing state
+     */
+    def void setOutputs(IASTNode stmt, State rootState, State newState, DataflowRegion dRegion, ValuedObject refObj,
+        boolean addAssignments) {
         // Retrieve the set of outputs of the control statement
         var outputs = findOutputs(stmt, rootState, false)
         
         // Retrieve the state valued object map
-        var HashMap<String, ArrayList<ValuedObject>> stateVariables = null
+        var Map<String, List<ValuedObject>> stateVariables = null
         if (valuedObjects.containsKey(newState)) {
             stateVariables = valuedObjects.get(newState)
         } else {
-            stateVariables = <String, ArrayList<ValuedObject>> newHashMap
+            stateVariables = newHashMap
             valuedObjects.put(newState, stateVariables)
         }
         
@@ -947,13 +1013,78 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
                 stateVariables.put(output, varList)
             }
             
-            // Create the assignment
-            val target = outputVO
-            val source = refObj.reference => [
-                subReference = innerOutputVO.reference
-            ]            
-            dRegion.equations += createDataflowAssignment(target, source)
+            if (addAssignments) {
+                // Create the assignment
+                val target = outputVO
+                if (refObj === null) {
+                    dRegion.equations += createDataflowAssignment(target, innerOutputVO.reference)
+                } else {
+                    val source = refObj.reference => [
+                        subReference = innerOutputVO.reference
+                    ]
+                    dRegion.equations += createDataflowAssignment(target, source)
+                }
+            }
         }
+        
+        // If the statement contains a return statement, add a return declaration to the region.
+        val isReturn = findReturn(stmt)
+        val hasReturn = valuedObjects.get(newState).containsKey(returnObjectName)
+        if (isReturn && !hasReturn) {
+            val varList = addReturnDecl(newState)
+            if (varList !== null) {
+                stateVariables.put(returnObjectName, varList)   
+            }
+        }
+    }
+    
+    /**
+     * Adds a return declaration to the given declaration scope.
+     * 
+     * @param state The state to add the declaration to.
+     * @return A new list with a new valued object for the return value for this declaration.
+     */
+    def List<ValuedObject> addReturnDecl(State state) {
+            // Add a new return declaration and initialize it with the _out valued object.
+            if (currentReturnType !== null) {
+                // Determine output type
+                val retDecl = createVariableDeclaration
+                retDecl.type = currentReturnType
+                retDecl.output = true  
+                state.declarations += retDecl
+                
+                // Set output name
+                var varName = returnObjectName
+                val varList = <ValuedObject> newArrayList
+                
+                // Create valued object
+                val resVO = retDecl.createValuedObject(varName + outSuffix)
+                resVO.label = varName
+                
+                // Attach valued object to the listing
+                varList.add(resVO)
+                return varList
+            }
+    }
+    
+    /**
+     * Returns true if the statement or any of its children are a return statement, false otherwise.
+     * 
+     * @param statement The AST node to search the return statement in.
+     * @return If a return statement was found.
+     */
+    def boolean findReturn(IASTNode statement) {
+        if (statement instanceof IASTReturnStatement) {
+            return true
+        } else {
+            for (child : statement.children) {
+                val childHasReturn = findReturn(child)
+                if (childHasReturn) {
+                    return true
+                }
+            }
+        }
+        return false
     }
     
     /**
@@ -1010,15 +1141,28 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
      * Connect the Inputs of the given control statement to their respective valued objects of the containing state
      */
     def void setInputs(IASTNode stmt, State rootState, State newState, DataflowRegion dRegion, ValuedObject refObj) {
+        setInputs(stmt, rootState, newState, dRegion, refObj, true)
+    }
+    
+    /**
+     * Connect the Inputs of the given control statement to their respective valued objects of the containing state
+     */
+    def void setInputs(IASTNode stmt, State rootState, State newState, DataflowRegion dRegion, ValuedObject refObj,
+        boolean addAssigments) {
         // Find the needed inputs of the given control statement
         var inputs = findInputs(stmt, rootState)
         
+        // All outputs are also shown as inputs. As no control statement is required to be executed, this allows
+        // to be interpreted as "take either the output of this control statement or the previous input value".
+        var outputs = findOutputs(stmt, rootState, false)
+        inputs.addAll(outputs)
+        
         // Retrieve the state's valued object map
-        var HashMap<String, ArrayList<ValuedObject>> stateVariables = null
+        var Map<String, List<ValuedObject>> stateVariables = null
         if (valuedObjects.containsKey(newState)) {
             stateVariables = valuedObjects.get(newState)
         } else {
-            stateVariables = <String, ArrayList<ValuedObject>> newHashMap
+            stateVariables = newHashMap
             valuedObjects.put(newState, stateVariables)
         }
         
@@ -1047,8 +1191,14 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
                 stateVariables.put(input, varList)
             }
             
-            // Create the assignment    
-            dRegion.equations += createDataflowAssignment(refObj, innerInputVO, inputVO.reference)
+            if (addAssigments) {
+                // Create the assignment
+                if (refObj === null) {
+                    dRegion.equations += createDataflowAssignment(innerInputVO, inputVO.reference)
+                } else {
+                    dRegion.equations += createDataflowAssignment(refObj, innerInputVO, inputVO.reference)
+                }
+            }
         }
     }
     
@@ -1246,18 +1396,88 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
             val outVO = findOutputVar(varList)
             // If an output exists connect it
             if (outVO !== null && (varList.length > 1)) {
-                // Retrieve the last ssa valued object
-                var lastVO = varList.get(varList.length - 1)
-                if (lastVO.getName.contains(outSuffix) && (varList.length > 1)) {
-                    lastVO = varList.get(varList.length - 2)
+                if (varList.length > 2 && varList.head.name.startsWith(returnObjectName)) {
+                    // The return value is a special case, every assignment to it comes from a possible return statement
+                    // somewhere in the given state. 
+                    val allReturns = varList.filter[it !== outVO]
+                    
+                    // Create a state to combine all returns
+                    val returnState = createState(returnCombine)
+                    returnState.createDataflowRegion(returnCombine)
+                    
+                    // Create the reference to this state in the containing dataflow region
+                    val refDecl = createReferenceDeclaration
+                    refDecl.setReference(returnState)
+                    dRegion.declarations += refDecl
+                    val returnStateObject = refDecl.createValuedObject(returnCombine)
+                    
+                    // Set the inputs of the state
+                    for (inputVO : allReturns) {
+                        val newDecl = createVariableDeclaration
+                        newDecl.type = inputVO.variableDeclaration.type
+                        newDecl.input = true
+                        returnState.declarations += newDecl
+                        val innerInputVO = newDecl.createValuedObject(inputVO.name)
+                        innerInputVO.label = inputVO.name
+                        
+                        // Create the assignment
+                        // The assignment is of the form 'return_combine.res_n = res_n'
+                        dRegion.equations += createDataflowAssignment(returnStateObject, innerInputVO, inputVO.reference)
+                    }
+                    
+                    // Set the output of the state
+                    val outDecl = createVariableDeclaration
+                    outDecl.type = outVO.type
+                    outDecl.output = true
+                    returnState.declarations += outDecl
+                    val innerOutputVO = outDecl.createValuedObject(outVO.name)
+                    innerOutputVO.label = returnObjectName
+                    
+                    // Create the assignment
+                    // The assignment is of the form 'res = return_combine.res out'
+                    val source = returnStateObject.reference => [
+                        subReference = innerOutputVO.reference
+                    ]
+                    dRegion.equations += createDataflowAssignment(outVO, source)
+                } else {
+                    // Connect the last valued object in the list not being the output variable to the
+                    // output suffixed valued object as the last SSA object is the output value for that variable.
+                
+                    // Retrieve the last ssa valued object
+                    var lastVO = varList.get(varList.length - 1)
+                    if (lastVO.getName.contains(outSuffix) && (varList.length > 1)) {
+                        lastVO = varList.get(varList.length - 2)
+                    }
+                    // Copy the location information of the last ssa vo to the output vo
+                    if (outVO.annotations.length < 2) {
+                        outVO.annotations += createStringAnnotation("Offset", lastVO.getStringAnnotationValue("Offset"))
+                        outVO.annotations += createStringAnnotation("Length", lastVO.getStringAnnotationValue("Length"))
+                    }
+                    // Add the linking assignment
+                    dRegion.equations += createDataflowAssignment(outVO, lastVO.reference)
                 }
-                // Copy the location information of the last ssa vo to the output vo
-                if (outVO.annotations.length < 2) {
-                    outVO.annotations += createStringAnnotation("Offset", lastVO.getStringAnnotationValue("Offset"))
-                    outVO.annotations += createStringAnnotation("Length", lastVO.getStringAnnotationValue("Length"))
-                }
-                // Add the linking assignment
-                dRegion.equations += createDataflowAssignment(outVO, lastVO.reference)
+            }
+        }
+    }
+    
+    /**
+     * Assigns the output valued of the ssa list to the surrounding region for each outputof the given state.
+     */
+    def void assignOutputs(State state, ValuedObject refObject, State rootState, DataflowRegion dRegion) {
+        var stateVariables = valuedObjects.get(state)
+        for (varList : stateVariables.values) {
+            // Retrieve the output valued object
+            val outVO = findOutputVar(varList)
+            if (outVO !== null && !varList.head.name.startsWith(returnObjectName)) {
+                // All none-return object variables that are output of the state need to be assigned in the outer region.
+                // This function call called with true handles that for us.
+                val name = outVO.label
+                val target = findValuedObjectByName(rootState, name, true, dRegion)
+                // newVar = ref.output
+                val source = refObject.reference => [
+                    subReference = outVO.reference
+                ]
+                dRegion.equations += createDataflowAssignment(target, source)
             }
         }
     }
@@ -1265,7 +1485,7 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
     /**
      * Find the output valued object of the given ssa list
      */
-    def ValuedObject findOutputVar(ArrayList<ValuedObject> varList) {
+    def ValuedObject findOutputVar(List<ValuedObject> varList) {
         var ValuedObject vo = null
         
         for (var i = 0; (i < varList.length) && (vo === null); i++) {
@@ -1318,7 +1538,7 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
      */
     def ArrayList<Assignment> createAssignments(IASTBinaryExpression binExpr, State funcState, DataflowRegion dRegion) {
         val operator = binExpr.getOperator
-        var assignments = new ArrayList<Assignment>
+        var assignments = <Assignment> newArrayList
         var Assignment ass = null
         // Only if the binary expression is an assignment some work is needed
         if (operator == IASTBinaryExpression.op_assign) {
