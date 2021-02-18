@@ -1118,9 +1118,10 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
                 val operator = stmt.getOperator
                 if ((operator >= IASTBinaryExpression.op_assign) && (operator <= IASTBinaryExpression.op_binaryOrAssign)) {
                     val op1 = stmt.getOperand1
-                    if (op1 instanceof IASTIdExpression ||
-                        op1 instanceof IASTArraySubscriptExpression) {
+                    if (op1 instanceof IASTIdExpression) {
                         outputs += findOutputs(op1, parentState, true)
+                    } else if (op1 instanceof IASTArraySubscriptExpression) {
+                        outputs += findOutputs(op1.arrayExpression, parentState, true)
                     }
                 }
             }
@@ -1131,9 +1132,10 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
                                         IASTUnaryExpression.op_postFixIncr, IASTUnaryExpression.op_postFixDecr]
                 if (writingUnaryOps.contains(operator)) {
                     val operand = stmt.operand
-                    if (operand instanceof IASTIdExpression ||
-                        operand instanceof IASTArraySubscriptExpression) {
+                    if (operand instanceof IASTIdExpression) {
                         outputs += findOutputs(operand, parentState, true)
+                    } else if (operand instanceof IASTArraySubscriptExpression) {
+                        outputs += findOutputs(operand.arrayExpression, parentState, true)
                     }
                 }
             }
@@ -1221,9 +1223,6 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
         if (stmt instanceof IASTIdExpression) {
             val varName = stmt.getName.toString
             if (valuedObjects.get(parentState).containsKey(varName)) inputs += varName
-        // Add a found non local array variable use.
-        } else if (stmt instanceof IASTArraySubscriptExpression) {
-            inputs += findInputs(stmt.arrayExpression, parentState)
         // Consider only variables that are not target of an assignment    
         } else if (stmt instanceof IASTBinaryExpression) {
             val operator = stmt.getOperator
@@ -1471,7 +1470,7 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
     }
     
     /**
-     * Assigns the output valued of the ssa list to the surrounding region for each outputof the given state.
+     * Assigns the output valued of the ssa list to the surrounding region for each output of the given state.
      */
     def void assignOutputs(State state, ValuedObject refObject, State rootState, DataflowRegion dRegion) {
         var stateVariables = valuedObjects.get(state)
