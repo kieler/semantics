@@ -929,7 +929,17 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
             vo.label = varName
             vo.insertHighlightAnnotations(decl)
             if (decl instanceof IASTArrayDeclarator) {
-                vo.cardinalities += decl.arrayModifiers.map[it.constantExpression.createKExpression(state, dRegion)]
+                vo.cardinalities += decl.arrayModifiers.map[
+                    val expr = it.constantExpression?.createKExpression(state, dRegion)
+                    if (expr !== null) {
+                        return expr
+                    } else {
+                        // For declarations such as 'char string[] = "foo"' there is no constant expression,
+                        // so just add some cardinality to the array, that SCChart does not really matter about anyways
+                        // for the visual representation.
+                        return createIntValue(1)
+                    }
+                ]
             }
             
             // Add the valued object and the ssa list to the respective elements    
