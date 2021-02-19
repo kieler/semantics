@@ -24,6 +24,7 @@ import org.eclipse.cdt.core.dom.ast.IASTFunctionCallExpression
 import org.eclipse.cdt.core.dom.ast.IASTIdExpression
 import org.eclipse.cdt.core.dom.ast.IASTInitializer
 import org.eclipse.cdt.core.dom.ast.IASTLiteralExpression
+import org.eclipse.cdt.core.dom.ast.IASTNode
 import org.eclipse.cdt.core.dom.ast.IASTSimpleDeclSpecifier
 import org.eclipse.cdt.core.dom.ast.IASTSimpleDeclaration
 import org.eclipse.cdt.core.dom.ast.IASTStatement
@@ -202,6 +203,17 @@ final class CDTToStringConverter {
                 println("Yet unsupported initializer to String: " + initializer.class)
                 return "unsupportedInitializer"
             }
+        }
+    }
+    
+    /**
+     * Build a string representation from an unknown ast node type.
+     */
+    static def String nodeToString(IASTNode node, byte[] sourceFileContents) {
+        switch (node) {
+            IASTStatement: stmtToString(node, sourceFileContents)
+            IASTExpression: exprToString(node, sourceFileContents)
+            ASTNode: stringContentFromNode(node, sourceFileContents)
         }
     }
     

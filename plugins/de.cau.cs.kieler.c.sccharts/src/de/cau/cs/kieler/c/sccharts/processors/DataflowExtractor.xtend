@@ -34,7 +34,6 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
-import de.cau.cs.kieler.kexpressions.kext.DeclarationScope
 import de.cau.cs.kieler.kicool.compilation.ExogenousProcessor
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.DataflowRegion
@@ -64,7 +63,6 @@ import org.eclipse.cdt.core.dom.ast.IASTCastExpression
 import org.eclipse.cdt.core.dom.ast.IASTCompoundStatement
 import org.eclipse.cdt.core.dom.ast.IASTConditionalExpression
 import org.eclipse.cdt.core.dom.ast.IASTDeclarationStatement
-import org.eclipse.cdt.core.dom.ast.IASTDeclarator
 import org.eclipse.cdt.core.dom.ast.IASTDefaultStatement
 import org.eclipse.cdt.core.dom.ast.IASTDoStatement
 import org.eclipse.cdt.core.dom.ast.IASTEqualsInitializer
@@ -76,6 +74,7 @@ import org.eclipse.cdt.core.dom.ast.IASTFunctionCallExpression
 import org.eclipse.cdt.core.dom.ast.IASTFunctionDefinition
 import org.eclipse.cdt.core.dom.ast.IASTIdExpression
 import org.eclipse.cdt.core.dom.ast.IASTIfStatement
+import org.eclipse.cdt.core.dom.ast.IASTInitializer
 import org.eclipse.cdt.core.dom.ast.IASTInitializerList
 import org.eclipse.cdt.core.dom.ast.IASTLiteralExpression
 import org.eclipse.cdt.core.dom.ast.IASTNode
@@ -88,6 +87,7 @@ import org.eclipse.cdt.core.dom.ast.IASTStandardFunctionDeclarator
 import org.eclipse.cdt.core.dom.ast.IASTStatement
 import org.eclipse.cdt.core.dom.ast.IASTSwitchStatement
 import org.eclipse.cdt.core.dom.ast.IASTTranslationUnit
+import org.eclipse.cdt.core.dom.ast.IASTTypeIdExpression
 import org.eclipse.cdt.core.dom.ast.IASTUnaryExpression
 import org.eclipse.cdt.core.dom.ast.IASTWhileStatement
 import org.eclipse.cdt.internal.core.dom.parser.ASTNode
@@ -147,8 +147,11 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
     static final String switchName = "switch"
     /** Shown name prefix for default case statements in switches. */
     static final String defaultCaseName = "default"
+    
     /** Name for the return combine state. */
-    static final String returnCombine = " returnCombine"
+    static final String returnCombineName = " returnCombine"
+    /** Name for the sizeof state. */
+    static final String sizeofName = " sizeof"
     
     var functions = <String, State> newHashMap
     var ifCounter = 0;
@@ -948,7 +951,7 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
             
             // Add the initialization assignment if needed
             if (decl.getInitializer !== null) {
-                vo.initializeValuedObject(decl, state, dRegion)
+                vo.initializeValuedObject(decl.getInitializer, state, dRegion)
             }
         }
         return variableDeclaration
@@ -957,8 +960,7 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
     /**
      * Add an initialization assignment to the given valued object
      */
-    def void initializeValuedObject(ValuedObject vo, IASTDeclarator decl, State state, DataflowRegion dRegion) {
-        val initializer = decl.getInitializer
+    def void initializeValuedObject(ValuedObject vo, IASTInitializer initializer, State state, DataflowRegion dRegion) {
         if (initializer instanceof IASTEqualsInitializer) {
             var Expression initExpr
             if (initializer.children.head instanceof IASTFunctionCallExpression) {
@@ -1411,14 +1413,14 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
                     val allReturns = varList.filter[it !== outVO]
                     
                     // Create a state to combine all returns
-                    val returnState = createState(returnCombine)
-                    returnState.createDataflowRegion(returnCombine)
+                    val returnState = createState(returnCombineName)
+                    returnState.createDataflowRegion(returnCombineName)
                     
                     // Create the reference to this state in the containing dataflow region
                     val refDecl = createReferenceDeclaration
                     refDecl.setReference(returnState)
                     dRegion.declarations += refDecl
-                    val returnStateObject = refDecl.createValuedObject(returnCombine)
+                    val returnStateObject = refDecl.createValuedObject(returnCombineName)
                     
                     // Set the inputs of the state
                     for (inputVO : allReturns) {
@@ -1795,7 +1797,7 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
     }
     
     /**
-     * Translate a CDT expression into a KExpression 
+     * Translate a CDT expression into a KExpression
      */
     def Expression createKExpression(IASTNode expr, State funcState, DataflowRegion dRegion) {
         var Expression kExpression
@@ -1890,6 +1892,14 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
                     values += expr.clauses.map [ it.createKExpression(funcState, dRegion) ]
                 ]
             }
+            IASTTypeIdExpression: {
+                val declSpecifier = expr.typeId.declSpecifier
+                if (declSpecifier instanceof IASTSimpleDeclSpecifier) {
+                    val inputType = declSpecifier.type.cdtTypeConversion
+                    val inputTypeName = nodeToString(expr, sourceFile)
+                    kExpression = createSizeofState(null, inputType, inputTypeName, dRegion)
+                }
+            }
             default: {
                 println("Unsupported ast node to create an expression: " + expr.class)
             }
@@ -1917,25 +1927,92 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
      * Translate an UnaryExpression
      */
     def Expression createKExpression(IASTUnaryExpression unExpr, State funcState, DataflowRegion dRegion) {
-        var Expression expression
         // Retrieve the operator and create the operatorExpression
         var opType = unExpr.getOperator.cdtUnaryOpTypeConversion
         var OperatorExpression unKExpr
         
-        // Test if the operator exists (parentheses are an unary expression thus skip them)
+        // Test if the operator is a simple translatable operator.
         if (opType !== null) {
             unKExpr = opType.createOperatorExpression
             // Attach the operand
             var operand = unExpr.getOperand
             unKExpr.subExpressions += operand.createKExpression(funcState, dRegion)
-            expression = unKExpr
+            return unKExpr
         } else {
-            // Translate the operand
-            var operand = unExpr.getOperand
-            expression = operand.createKExpression(funcState, dRegion)
+            // If the operator is not translatable as an KExpression OperatorType, check for some
+            // special cases that we do handle.
+            switch (unExpr.getOperator) {
+                case IASTUnaryExpression.op_sizeof: {
+                    // sizeof will get translated to a new sizeof operator box
+                    // First, translate its operand as the input for the sizeof.
+                    var operand = unExpr.getOperand
+                    val sizeofInput = operand.createKExpression(funcState, dRegion)
+                    
+                    // Create the operator as a sizeof state that gets wired up in its parent dataflow region.
+                    
+                    return createSizeofState(sizeofInput, ValueType::INT, null, dRegion)
+                }
+                default: {
+                    // Otherwise, translate the operand
+                    var operand = unExpr.getOperand
+                    return operand.createKExpression(funcState, dRegion)
+                }
+            }
         }
-        return expression
+    }
+    
+    /**
+     * Creates a new state for the sizeof expression.
+     * 
+     * @param sizeofInput The expression that is the input for this expression, or {@code null} if there is no input.
+     * @param inputType The input type as a ValueType.
+     * @param nodeName The name of the node, or null. Is only used if {@code sizeofInput} is null, this string is shown
+     *                 as a label instead.
+     * @param dRegion The region the state for this sizeof expression should be put in.
+     * @return A reference to the created state's valued object.
+     */
+    def ValuedObjectReference createSizeofState(Expression sizeofInput, ValueType inputType, String nodeName,
+        DataflowRegion dRegion) {
+        val label = if (sizeofInput === null) {
+            nodeName
+        } else {
+            sizeofName
+        }
         
+        val sizeofState = createState(label)
+        sizeofState.createDataflowRegion(label) => [
+            it.label = label
+        ]
+        val refDecl = createReferenceDeclaration
+        dRegion.declarations += refDecl
+        refDecl.setReference(sizeofState)
+        val sizeofObject = refDecl.createValuedObject(label)
+        
+        // Input
+        if (sizeofInput !== null) {
+            val sizeofInputDecl = createVariableDeclaration => [
+                type = inputType
+                input = true
+            ]
+            sizeofState.declarations += sizeofInputDecl
+            val sizeofInputVO = sizeofInputDecl.createValuedObject(inSuffix)
+            sizeofInputVO.label = ""
+            
+            dRegion.equations += createDataflowAssignment(sizeofObject, sizeofInputVO, sizeofInput)
+        }
+        
+        // Output
+        val sizeofOutputDecl = createVariableDeclaration => [
+            type = ValueType::INT
+            output = true
+        ]
+        sizeofState.declarations += sizeofOutputDecl
+        val sizeofOutputVO = sizeofOutputDecl.createValuedObject(outSuffix)
+        sizeofOutputVO.label = ""
+        
+        return sizeofObject.reference => [
+            subReference = sizeofOutputVO.reference
+        ]
     }
     
     /**
