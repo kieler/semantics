@@ -164,8 +164,6 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
     
     val voWrittenIdxs = <ValuedObject, List<Expression>> newHashMap
     
-    var SCCharts rootSCChart
-    
     var ValueType currentReturnType = null
 
     /** The file contents, for referencing direct String representations. */
@@ -193,7 +191,7 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
             }
         }
         
-        val model = tUnit.transform as SCCharts
+        val model = tUnit.transform
          
         now = LocalDateTime.now
         println("Dataflow Extractor finished - Time: " + dtf.format(now))
@@ -201,13 +199,13 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
         setModel(model)
     }    
 
-    def EObject transform(IASTTranslationUnit ast) {
+    def SCCharts transform(IASTTranslationUnit ast) {
         if (ast === null) {
             return null
         }
         
         // Create SCCharts root elements
-        rootSCChart = createSCChart
+        val SCCharts rootSCChart = createSCChart
         
         // Start extraction for each defined function
         for (child : ast.children) {
@@ -366,7 +364,6 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
     def State createUnknownFuncState(String funcName, IASTFunctionCallExpression funcCall, DataflowRegion dRegion) {
         // Create the state
         val state = createState(funcName)
-        functions.put(funcName, state)
         state.label = funcName
         val bodyRegion = state.createDataflowRegion(funcName)
         bodyRegion.label = funcName
@@ -421,8 +418,6 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
                 outputVo.insertHighlightAnnotations(arg)
             }
         }
-        
-        rootSCChart.rootStates += state
         
         return state
     }
