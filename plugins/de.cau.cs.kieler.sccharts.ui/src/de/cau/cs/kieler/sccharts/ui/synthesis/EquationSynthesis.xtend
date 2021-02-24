@@ -73,17 +73,16 @@ import org.eclipse.elk.core.options.PortConstraints
 import org.eclipse.elk.core.options.PortLabelPlacement
 import org.eclipse.elk.core.options.PortSide
 import org.eclipse.elk.core.options.SizeConstraint
-import org.eclipse.elk.graph.properties.IProperty
-import org.eclipse.elk.graph.properties.Property
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.resource.XtextResource
 import org.eclipse.xtext.resource.XtextResourceSet
 
+import static de.cau.cs.kieler.sccharts.ide.synthesis.EquationSynthesisProperties.*
+
 import static extension de.cau.cs.kieler.annotations.ide.klighd.CommonSynthesisUtil.*
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import static de.cau.cs.kieler.sccharts.ide.synthesis.EquationSynthesisProperties.*
 
 /**
  * @author ssm
@@ -168,52 +167,80 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
     protected static val INSTANCE_OUT_PORT = "out_inst"
 
     protected val defaultFigures = #{
+        OperatorType.NOT.getName ->
+            #["OperatorExpressionNOT.kgt", "OperatorExpressionUnary.kgt", "OperatorExpression.kgt"],
+        OperatorType.EQ.getName ->
+            #["OperatorExpressionEQ.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
+        OperatorType.LT.getName ->
+            #["OperatorExpressionLT.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
+        OperatorType.LEQ.getName ->
+            #["OperatorExpressionLEQ.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
+        OperatorType.LOGICAL_AND.getName -> #["OperatorExpressionLOGICAL_AND.kgt", "OperatorExpression.kgt"],
+        OperatorType.LOGICAL_OR.getName -> #["OperatorExpressionLOGICAL_OR.kgt", "OperatorExpression.kgt"],
+        OperatorType.ADD.getName ->
+            #["OperatorExpressionADD.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
+        OperatorType.SUB.getName ->
+            #["OperatorExpressionSUB.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
+        OperatorType.MULT.getName ->
+            #["OperatorExpressionMULT.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
+        OperatorType.DIV.getName ->
+            #["OperatorExpressionDIV.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
+        OperatorType.GEQ.getName ->
+            #["OperatorExpressionGEQ.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
+        OperatorType.PRE.getName ->
+            #["OperatorExpressionPRE.kgt", "OperatorExpressionUnary.kgt", "OperatorExpression.kgt"],
+        OperatorType.GT.getName ->
+            #["OperatorExpressionGT.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
+        OperatorType.MOD.getName ->
+            #["OperatorExpressionMOD.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
+        OperatorType.NE.getName ->
+            #["OperatorExpressionNE.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
+        OperatorType.VAL.getName ->
+            #["OperatorExpressionVAL.kgt", "OperatorExpressionUnary.kgt", "OperatorExpression.kgt"],
+        OperatorType.BITWISE_AND.getName ->
+            #["OperatorExpressionBITWISE_AND.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
+        OperatorType.BITWISE_OR.getName ->
+            #["OperatorExpressionBITWISE_OR.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
+        OperatorType.POSTFIX_ADD.getName ->
+            #["OperatorExpressionPOSTFIX_ADD.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
+        OperatorType.POSTFIX_SUB.getName ->
+            #["OperatorExpressionPOSTFIX_SUB.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
+        OperatorType.SHIFT_LEFT.getName ->
+            #["OperatorExpressionSHIFT_LEFT.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
+        OperatorType.SHIFT_RIGHT.getName ->
+            #["OperatorExpressionSHIFT_RIGHT.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
+        OperatorType.SHIFT_RIGHT_UNSIGNED.getName ->
+            #["OperatorExpressionSHIFT_RIGHT_UNSIGNED.kgt", "OperatorExpressionArithmetical.kgt",
+                "OperatorExpression.kgt"],
+        OperatorType.BITWISE_XOR.getName ->
+            #["OperatorExpressionBITWISE_XOR.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
+        OperatorType.BITWISE_NOT.getName ->
+            #["OperatorExpressionBITWISE_NOT.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
+        OperatorType.CONDITIONAL.getName -> #["OperatorExpressionCONDITIONAL.kgt", "OperatorExpression.kgt"],
+        OperatorType.FBY.getName -> #["OperatorExpressionFBY.kgt", "OperatorExpression.kgt"],
+        OperatorType.CURRENT.getName -> #["OperatorExpressionCURRENT.kgt", "OperatorExpression.kgt"],
+        OperatorType.WHEN.getName -> #["OperatorExpressionWHEN.kgt", "OperatorExpression.kgt"],
+        OperatorType.INIT.getName -> #["OperatorExpressionINIT.kgt", "OperatorExpression.kgt"],
+        OperatorType.ATMOSTONEOF.getName -> #["OperatorExpressionATMOSTONEOF.kgt", "OperatorExpression.kgt"],
+        OperatorType.NOR.getName -> #["OperatorExpressionNOR.kgt", "OperatorExpression.kgt"],
+        OperatorType.IMPLIES.getName -> #["OperatorExpressionIMPLIES.kgt", "OperatorExpression.kgt"],
+        OperatorType.SFBY.getName -> #["OperatorExpressionSFBY.kgt", "OperatorExpression.kgt"],
+        OperatorType.LAST.getName -> #["OperatorExpressionLAST.kgt", "OperatorExpression.kgt"],
         "CLASS_INPUT" -> #["InputClass.kgt", "Class.kgt"],
         "CLASS_OUTPUT" -> #["InputClass.kgt", "Class.kgt"],
         "ARRAY_INPUT" -> #["InputArray.kgt", "Array.kgt"],
         "ARRAY_OUTPUT" -> #["InputArray.kgt", "Array.kgt"],
         "OPERATOR" -> #["OperatorExpression.kgt"],
         "FUNCTION" -> #["FunktionExpression.kgt", "OperatorExpression.kgt"],
-        "PRE" -> #["OperatorExpressionPRE.kgt", "OperatorExpressionUnary.kgt", "OperatorExpression.kgt"],
-        "NOT" -> #["OperatorExpressionNOT.kgt", "OperatorExpressionUnary.kgt", "OperatorExpression.kgt"],
-        "EQ" -> #["OperatorExpressionEQ.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
-        "LT" -> #["OperatorExpressionLT.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
-        "LEQ" -> #["OperatorExpressionLEQ.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
-        "LOGICAL_AND" -> #["OperatorExpressionLOGICAL_AND.kgt", "OperatorExpression.kgt"],
-        "LOGICAL_OR" -> #["OperatorExpressionLOGICAL_OR.kgt", "OperatorExpression.kgt"],
-        "ADD" -> #["OperatorExpressionADD.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
         "UNARY_SUB" -> #["OperatorExpressionUnarySUB.kgt", "OperatorExpressionUnary.kgt", "OperatorExpression.kgt"],
         "ARITHMETICAL_SUB" ->
             #["OperatorExpressionArithmeticalSUB.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
-        "VAL" -> #["OperatorExpressionVAL.kgt", "OperatorExpressionUnary.kgt", "OperatorExpression.kgt"],
-        "NE" -> #["OperatorExpressionNE.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
         "CONDITIONAL_UPDATE" -> #["OperatorExpressionUPDATE.kgt", "OperatorExpression.kgt"],
-        "CONDITIONAL" -> #["OperatorExpressionCONDITIONAL.kgt", "OperatorExpression.kgt"],
-        "INIT" -> #["OperatorExpressionINIT.kgt", "OperatorExpression.kgt"],
-        "FBY" -> #["OperatorExpressionFBY.kgt", "OperatorExpression.kgt"],
-        "MULT" -> #["OperatorExpressionMULT.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
-        "DIV" -> #["OperatorExpressionDIV.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
-        "SHIFT_LEFT" ->
-            #["OperatorExpressionSHIFT_LEFT.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
-        "SHIFT_RIGHT" ->
-            #["OperatorExpressionSHIFT_RIGHT.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
-        "SHIFT_RIGHT_UNSIGNED" -> #["OperatorExpressionSHIFT_RIGHT_UNSIGNED.kgt", "OperatorExpressionArithmetical.kgt",
-            "OperatorExpression.kgt"],
-        "MOD" -> #["OperatorExpressionMOD.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
-        "GEQ" -> #["OperatorExpressionGEQ.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
-        "GT" -> #["OperatorExpressionGT.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
         "INPUT" -> #["Input.kgt", "OperatorExpression.kgt"],
         "OUTPUT" -> #["Output.kgt", "OperatorExpression.kgt"],
         "INPUT_OUTPUT" -> #["InputOutput.kgt", "OperatorExpression.kgt"],
         "LOCAL" -> #["Local.kgt", "OperatorExpression.kgt"],
-        "EXTERNAL_FUNCTION" -> #["OperatorExpressionUnary.kgt", "OperatorExpression.kgt"],
-        "BITWISE_AND" ->
-            #["OperatorExpresOperatorExpressionLOGICAL_AND.kgtsionBITWISE_AND.kgt",
-                "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
-        "BITWISE_OR" ->
-            #["OperatorExpressionBITWISE_OR.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
-        "BITWISE_XOR" ->
-            #["OperatorExpressionBITWISE_XOR.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"]
+        "EXTERNAL_FUNCTION" -> #["OperatorExpressionUnary.kgt", "OperatorExpression.kgt"]
     }
 
     override getDisplayedSynthesisOptions() {
@@ -1050,7 +1077,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
             val sl = createExtensionObject.eResource.URI.segmentsList
             val nsl = sl.take(sl.length - 1).drop(1)
             val path = nsl.join("/") + "/" + getSkinPath(usedContext)
-            for (figure : defaultFigures.get(figureId)) {
+            for (figure : defaultFigures.get(figureId) ?: #[]) {
                 val kgt = path + if(!path.endsWith("/")) "/" + figure
                 val newURI = URI.createPlatformResourceURI(kgt, false)
                 val newResourceSet = KiCoolSynthesis.KGTInjector.getInstance(XtextResourceSet)
@@ -1073,7 +1100,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         skinPrefix = getSkinPath(usedContext)
         skinPrefix += if(!skinPrefix.endsWith("/")) "/"
         showLabel = false
-        for (figure : defaultFigures.get(figureId)) {
+        for (figure : defaultFigures.get(figureId) ?: #[]) {
             if (doesKGTExist(figure)) {
                 val node = getKGTFromBundle(figure)
                 skinPrefix = oldSkinPrefix
@@ -1087,7 +1114,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         skinPrefix = oldSkinPrefix
         showLabel = false
         // fall back to default figures
-        for (figure : defaultFigures.get(figureId)) {
+        for (figure : defaultFigures.get(figureId) ?: #[]) {
             if (doesKGTExist(figure)) {
                 val node = getKGTFromBundle(figure)
                 if (!label.nullOrEmpty && showLabel) {
