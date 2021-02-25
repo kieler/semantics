@@ -482,18 +482,7 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
         val dfRegion = createDataflowRegion("DF-" + bodyState.name)
         dfRegion.insertHighlightAnnotations(body)
 
-        // Strip away the initializations of the declaration.   
-        var usedDeclarators = additionalDeclarations     
-        if (additionalDeclarations instanceof IASTDeclarationStatement) {
-            usedDeclarators = additionalDeclarations.copy
-            val declaration = (usedDeclarators as IASTDeclarationStatement).declaration
-            if (declaration instanceof IASTSimpleDeclaration) {
-                declaration.declarators.forEach [ initializer = null ]
-            }
-        }
-        if (usedDeclarators !== null) {
-            buildStatement(usedDeclarators, bodyState, dfRegion)
-        }
+        addAdditionalDeclarations(additionalDeclarations, bodyState, dfRegion)
         
         val statements = body.getStatements
         for (stmt : statements) {
@@ -685,21 +674,9 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
         } else {
             newRegion = createDataflowRegion("DF-" + currentState.name)
             newRegion.insertHighlightAnnotations(statement)
-            var usedDeclarators = additionalDeclarations
             
-            // From the additional initializers, only their declarations should be used, but no
-            // initialization should be added to the region. So strip that initialization away
-            // from a copy of the declaration.
-            if (additionalDeclarations instanceof IASTDeclarationStatement) {
-                usedDeclarators = additionalDeclarations.copy
-                val declaration = (usedDeclarators as IASTDeclarationStatement).declaration
-                if (declaration instanceof IASTSimpleDeclaration) {
-                    declaration.declarators.forEach [ initializer = null ]
-                }
-            }
-            if (usedDeclarators !== null) {
-                buildStatement(usedDeclarators, currentState, newRegion)
-            }
+            addAdditionalDeclarations(additionalDeclarations, currentState, newRegion)
+            
             buildStatement(statement, currentState, newRegion)
             
             linkOutputs(currentState, newRegion)
@@ -938,6 +915,27 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
         doState.regions += doDBodyRegion
         doDBodyRegion.label = doState.label
                
+    }
+    
+    /**
+     * From some statement containing additional declarations, only those declarations and no initialization are
+     * added to the dataflow region. This way any variables declared in the additional statement are known in the 
+     * given region.
+     * 
+     * @param additionalDeclarations The declaration possibly containing some declarations.
+     * @param bodyState The state in which the dataflow region resides.
+     * @param dfRegion The dataflow region to add the declarations to.
+     */
+    def void addAdditionalDeclarations(IASTStatement additionalDeclarations, State bodyState, DataflowRegion dfRegion) {
+        if (additionalDeclarations instanceof IASTDeclarationStatement) {
+            // Strip the initialization away from a copy of the declaration.  
+            val usedDeclarators = additionalDeclarations.copy
+            val declaration = (usedDeclarators as IASTDeclarationStatement).declaration
+            if (declaration instanceof IASTSimpleDeclaration) {
+                declaration.declarators.forEach [ initializer = null ]
+            }
+            buildStatement(usedDeclarators, bodyState, dfRegion)
+        }
     }
     
     /**
