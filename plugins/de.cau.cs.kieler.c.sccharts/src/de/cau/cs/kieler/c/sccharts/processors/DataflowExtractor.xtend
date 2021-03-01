@@ -661,6 +661,7 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
         val State thenState = createStateForNode(positive, cRegion, rootState, dRegion, ifObj, thenName)
         val thenTransition = initState.createImmediateTransitionTo(thenState)
         thenTransition.trigger = (condition).createKExpression(ifState, dRegion)
+        thenTransition.label = exprToString(condition, sourceFile)
         
         // If an else is given the state is also created
         if (negative !== null) {
