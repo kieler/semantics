@@ -91,7 +91,6 @@ import org.eclipse.cdt.core.dom.ast.IASTTypeIdExpression
 import org.eclipse.cdt.core.dom.ast.IASTUnaryExpression
 import org.eclipse.cdt.core.dom.ast.IASTWhileStatement
 import org.eclipse.cdt.internal.core.dom.parser.ASTNode
-import org.eclipse.emf.ecore.EObject
 
 import static de.cau.cs.kieler.c.sccharts.processors.CDTToStringConverter.*
 
@@ -122,6 +121,8 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
      */
     static final String returnObjectName = " res"
     
+    static final String hiddenVariableName = " hiddenVariable"
+    
     /** The seperator for valued object names and its further SSA objects. */
     static final String ssaNameSeperator = " "
     /** The valued object suffix for the input SSA object. */
@@ -147,6 +148,10 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
     static final String switchName = "switch"
     /** Shown name prefix for default case statements in switches. */
     static final String defaultCaseName = "default"
+    /** Shown name for break statements in loops. */
+    static final String breakName = "break"
+    /** Shown name for continue statements in loops. */
+    static final String continueName = "continue"
     
     /** Name for the return combine state. */
     static final String returnCombineName = " returnCombine"
@@ -392,10 +397,12 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
      * 
      * @param funcName The name this function state should have.
      * @param funcCall The AST function call expression of which to get the data from to create the state.
+     * @param parentState The parent state that will be containing this state, for reference.
      * @param dRegion The parent dataflow region that will be containing this state, for reference.
      * @return A new state for a function unknown in the AST.
      */
-    def State createUnknownFuncState(String funcName, IASTFunctionCallExpression funcCall, DataflowRegion dRegion) {
+    def State createUnknownFuncState(String funcName, IASTFunctionCallExpression funcCall, State parentState,
+        DataflowRegion dRegion) {
         // Create the state
         val state = createState(funcName)
         state.label = funcName
@@ -436,6 +443,7 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
                 val fullVariableName = idExpression.name.toString
                 varName = '&' + fullVariableName
                 val parentDeclarations = dRegion.declarations.filter(VariableDeclaration)
+                    + parentState.declarations.filter(VariableDeclaration)
                 val inputVO = parentDeclarations.map[it.valuedObjects].flatten
                     .findFirst[it.name.substring(0, it.name.indexOf(ssaNameSeperator)).equals(fullVariableName)]
                 getStatePointers(state).put(arg as IASTUnaryExpression, inputVO)
@@ -510,15 +518,31 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
      */
     def dispatch void buildStatement(IASTExpressionStatement stmt, State rootState, DataflowRegion dRegion) {
         val expression = stmt.getExpression
-                
+        
+        createExpression(expression, rootState, dRegion)
+    }
+    
+    /**
+     * Create the expression of an expression statement.
+     * 
+     * @param expression The expression to create.
+     * @param rootState The state to link this expression to.
+     * @param dRegion The region to link this expression to.
+     * @return a reference to the expression value, if applicable, {@code null} otherwise.
+     */
+    def ValuedObjectReference createExpression(IASTExpression expression, State rootState, DataflowRegion dRegion) {   
         // Translate binary and unary expressions
         if (expression instanceof IASTBinaryExpression) {
             createBinaryAssignment(expression, rootState, dRegion)
+            return null
         } else if (expression instanceof IASTUnaryExpression) {
             createUnaryAssignment(expression, rootState, dRegion)
+            return null
         // Create a function call by referencing the function state    
         } else if (expression instanceof IASTFunctionCallExpression) {
-            createFunctionCall(expression, rootState, dRegion)
+            return createFunctionCall(expression, rootState, dRegion)
+        } else if (expression instanceof IASTConditionalExpression) {
+            return createConditionalExpression(expression, rootState, dRegion)
         }
     }
     
@@ -584,60 +608,85 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
     }
     
     /**
+     * Fallback translation of any not yet covered statement. Does nothing.
+     */
+    def dispatch void buildStatement(IASTStatement stmt, State rootState, DataflowRegion dRegion) {
+        println("DataflowExtractor: Unsupported statement class detected! " + stmt.class.name)
+    }
+    
+    /**
      * Extract the body of an if Statement
      */
     def void buildIf(IASTIfStatement ifStmt, State rootState, DataflowRegion dRegion) {
-        // Creating the state to represent the if statement
+        buildConditional(ifStmt, ifStmt.conditionExpression, ifStmt.thenClause, ifStmt.elseClause, rootState, dRegion)
+    }
+    
+    /**
+     * Create a state for a conditional expression, linked with its in- and outputs.
+     */
+    def ValuedObjectReference createConditionalExpression(IASTConditionalExpression expr, State rootState, DataflowRegion dRegion) {
+        buildConditional(expr, expr.logicalConditionExpression,  expr.positiveResultExpression,
+            expr.negativeResultExpression, rootState, dRegion)
+    }
+    
+    /**
+     * Build a conditional expression or statement, as in a ternary conditional expression using ? and : or an if[else]
+     * construct.
+     */
+    private def ValuedObjectReference buildConditional(IASTNode node, IASTExpression condition, IASTNode positive, IASTNode negative,
+        State rootState, DataflowRegion dRegion) {
+        
+        // Create the state to represent the if statement.
         val ifState = createState(ifName + ssaNameSeperator + ifCounter)
         
-        // Create a reference for this if state in the containing dataflow-region
+        // Create a reference for this if state in the containing dataflow-region.
         val refDecl = createReferenceDeclaration
         dRegion.declarations += refDecl
         refDecl.setReference(ifState)
         val ifObj = refDecl.createValuedObject(ifName + ssaNameSeperator + ifCounter)
-        ifObj.insertHighlightAnnotations(ifStmt)
+        ifObj.insertHighlightAnnotations(node)
         ifCounter++
         
         // Set the in and outputs of the state
-        setInputs(ifStmt, rootState, ifState, dRegion, ifObj)
-        setOutputs(ifStmt, rootState, ifState, dRegion, ifObj)
+        setInputs(node, rootState, ifState, dRegion, ifObj)
+        setOutputs(node, rootState, ifState, dRegion, ifObj)
         
         // Create the controlflow region for the if state and the initial state
         val cRegion = ifState.createControlflowRegion("")
         val initState = cRegion.createState("")
-        initState.insertHighlightAnnotations(ifStmt)
+        initState.insertHighlightAnnotations(node)
         initState.initial = true
         
         // Create the state for the then part
-        val thenStmt = ifStmt.getThenClause
-        val State thenState = createStateForStatement(thenStmt, cRegion, rootState, dRegion, ifObj, thenName)
+        val State thenState = createStateForNode(positive, cRegion, rootState, dRegion, ifObj, thenName)
         val thenTransition = initState.createImmediateTransitionTo(thenState)
-        thenTransition.trigger = (ifStmt.getConditionExpression).createKExpression(ifState, dRegion)
+        thenTransition.trigger = (condition).createKExpression(ifState, dRegion)
         
         // If an else is given the state is also created
-        if (ifStmt.getElseClause !== null) {
-            val elseStmt = ifStmt.getElseClause
-            val State elseState = createStateForStatement(elseStmt, cRegion, rootState, dRegion, ifObj, elseName)
+        if (negative !== null) {
+            val State elseState = createStateForNode(negative, cRegion, rootState, dRegion, ifObj, elseName)
             initState.createImmediateTransitionTo(elseState)
         }
         
         assignOutputs(ifState, ifObj, rootState, dRegion)
+        
+        return ifObj.reference
     }
     
     /**
      * Creates and returns a new state in the {@code parentRegion} of the {@code currentState} with a {@code name}
-     * that contains the dataflow behavior of the {@code statement}.
+     * that contains the dataflow behavior of the {@code node}.
      */
-    private def State createStateForStatement(IASTStatement statement, ControlflowRegion parentCRegion,
+    private def State createStateForNode(IASTNode node, ControlflowRegion parentCRegion,
         State parentState, DataflowRegion parentDRegion, ValuedObject parentReference, String name) {
         val newState = parentCRegion.createState(name)
         newState.label = name
-        newState.insertHighlightAnnotations(statement)
+        newState.insertHighlightAnnotations(node)
         // Set the in and outputs of the state
-        setInputs(statement, parentState, newState, parentDRegion, null, false)
-        setOutputs(statement, parentState, newState, parentDRegion, null, false)
+        setInputs(node, parentState, newState, parentDRegion, null, false)
+        setOutputs(node, parentState, newState, parentDRegion, null, false)
         
-        val DataflowRegion region = createDFRegionForStatement(statement, newState, parentState, parentDRegion, parentReference)
+        val DataflowRegion region = createDFRegionForNode(node, newState, parentState, parentDRegion, parentReference)
         region.label = name
         newState.regions += region
         
@@ -646,19 +695,19 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
     
     /**
      * Creates and returns a new dataflow region using the in/outputs of the {@code currentState} for the given
-     * {@code statement}.
+     * {@code node}.
      */
-    private def DataflowRegion createDFRegionForStatement(IASTStatement statement, State currentState, State parentState,
+    private def DataflowRegion createDFRegionForNode(IASTNode node, State currentState, State parentState,
         DataflowRegion parentRegion, ValuedObject parentReference) {
-        return createDFRegionForStatement(statement, currentState, parentState, parentRegion, parentReference, null)
+        return createDFRegionForNode(node, currentState, parentState, parentRegion, parentReference, null)
     }
     
     /**
      * Creates and returns a new dataflow region using the in/outputs of the {@code currentState} for the given
-     * {@code statement}. The {@code additionalDeclarations} can be used if this region needs some declarations defined
+     * {@code node}. The {@code additionalDeclarations} can be used if this region needs some declarations defined
      * as well that should not be visible from the outside. Used for example for 'for' loop's initializer statement.
      * 
-     * @param statement The statement to create the region for.
+     * @param node The node to create the region for.
      * @param currentState The state this region should be contained in.
      * @param parentState The parent state containing the currentState.
      * @param parentRegion The dataflow region containing the state for this new region.
@@ -666,18 +715,46 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
      * @param additionalDeclarations Any additional declarations that need to be known for creating this state.
      * @return The new dataflow region.
      */
-    private def DataflowRegion createDFRegionForStatement(IASTStatement statement, State currentState, State parentState,
+    private def DataflowRegion createDFRegionForNode(IASTNode node, State currentState, State parentState,
         DataflowRegion parentRegion, ValuedObject parentReference, IASTStatement additionalDeclarations) {
         var DataflowRegion newRegion
-        if (statement instanceof IASTCompoundStatement) {
-            newRegion = buildCompound(statement, currentState, additionalDeclarations)
+        if (node instanceof IASTCompoundStatement) {
+            newRegion = buildCompound(node, currentState, additionalDeclarations)
         } else {
             newRegion = createDataflowRegion("DF-" + currentState.name)
-            newRegion.insertHighlightAnnotations(statement)
+            newRegion.insertHighlightAnnotations(node)
             
             addAdditionalDeclarations(additionalDeclarations, currentState, newRegion)
             
-            buildStatement(statement, currentState, newRegion)
+            // If this is a single statement, it is translated by the function for that.
+            // If the node is an expression, this expression is created and wired up and assigned to a hidden variable,
+            // used if this region is further used in an assignment, for example as in ternary conditional expressions.
+            if (node instanceof IASTStatement) {
+                buildStatement(node, currentState, newRegion)
+            } else if (node instanceof IASTExpression) {
+                val output = createKExpression(node, currentState, newRegion)
+                
+                // use this as the output of the state, declare that and add an equation to it.
+                val hiddenDecl = createVariableDeclaration
+                hiddenDecl.type = ValueType::INT
+                hiddenDecl.output = true  
+                currentState.declarations += hiddenDecl
+                
+                // Set hidden var name
+                var varName = hiddenVariableName
+                val varList = <ValuedObject> newArrayList
+                
+                // Create valued object
+                val hiddenVO = hiddenDecl.createValuedObject(varName + outSuffix)
+                hiddenVO.label = varName
+                
+                // Attach valued object to the listing
+                varList.add(hiddenVO)
+                
+                getStateVariables(currentState).put(varName, varList)
+                hiddenVO.insertHighlightAnnotations(node)
+                newRegion.equations += createDataflowAssignment(hiddenVO, output)
+            }
             
             linkOutputs(currentState, newRegion)
         }
@@ -852,7 +929,7 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
         forCounter++
         
         // Translate the body
-        val forDBodyRegion = createDFRegionForStatement(forStmt.getBody, forState, rootState, dRegion, forObj, forStmt.getInitializerStatement) 
+        val forDBodyRegion = createDFRegionForNode(forStmt.getBody, forState, rootState, dRegion, forObj, forStmt.getInitializerStatement) 
         forState.regions += forDBodyRegion
         forDBodyRegion.label = forState.label        
     }
@@ -881,7 +958,7 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
         whileCounter++
         
         // Translate the loop body
-        val DataflowRegion whileDBodyRegion = createDFRegionForStatement(whileStmt.getBody, whileState, rootState, dRegion, whileObj) 
+        val DataflowRegion whileDBodyRegion = createDFRegionForNode(whileStmt.getBody, whileState, rootState, dRegion, whileObj) 
         whileState.regions += whileDBodyRegion
         whileDBodyRegion.label = whileState.label
         
@@ -911,7 +988,7 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
         doCounter++
         
         // Translate the body
-        val doDBodyRegion = createDFRegionForStatement(doStmt.getBody, doState, rootState, dRegion, doObj)
+        val doDBodyRegion = createDFRegionForNode(doStmt.getBody, doState, rootState, dRegion, doObj)
         doState.regions += doDBodyRegion
         doDBodyRegion.label = doState.label
                
@@ -1284,14 +1361,15 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
      * Find the state for the given function name, or create a new unknown function state and remember it.
      * 
      * @param expression The function call expression to find the state for.
+     * @param state The surrounding state that will contain this state, for reference.
      * @param dRegion The surrounding dataflow region that will contain this state, for reference.
      * @return The state for the function.
      */
-    def State findFunctionState(IASTFunctionCallExpression expression, DataflowRegion dRegion) {
+    def State findFunctionState(IASTFunctionCallExpression expression, State state, DataflowRegion dRegion) {
         val funcName = (expression.getFunctionNameExpression as IASTIdExpression).getName.toString
         val existingFunction = findFunctionState(funcName)
         if(existingFunction === null) {
-            return createUnknownFuncState(funcName, expression, dRegion)
+            return createUnknownFuncState(funcName, expression, state, dRegion)
         }
         return existingFunction
     }
@@ -1758,7 +1836,7 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
      * @return A reference to the valued object for this function call.
      */
     def ValuedObjectReference createFunctionCall(IASTFunctionCallExpression expression, State state, DataflowRegion dRegion) {
-        val refState = findFunctionState(expression, dRegion)
+        val refState = findFunctionState(expression, state, dRegion)
         
         // Find an existing reference to this state the reference
         var ReferenceDeclaration refDecl = dRegion.declarations.filter(ReferenceDeclaration).findFirst[
@@ -1868,42 +1946,8 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
             }
             // For a conditional expression create a state similar to an if    
             IASTConditionalExpression: {
-                val condExpr = expr.getLogicalConditionExpression
-                //Create the State
-                val condState = createState(exprToString(condExpr, sourceFile))
-                condState.insertHighlightAnnotations(expr)
-                val condDRegion = createDataflowRegion(condState.name)
-                condDRegion.label = condState.name
-                condState.regions += condDRegion
-                // Create the reference
-                val refDecl = createReferenceDeclaration
-                refDecl.setReference(condState)
-                refDecl.annotations += createTagAnnotation("hide")
-                dRegion.declarations += refDecl
-                val condStateVO = refDecl.createValuedObject("?")
-                // Set the inputs
-                setInputs(expr, funcState, condState, dRegion, condStateVO)
-                
-                // Create the output
-                val outputDecl = createVariableDeclaration
-                outputDecl.output = true
-                condState.declarations += outputDecl
-                val outputVO = outputDecl.createValuedObject(returnObjectName)
-                // Create the positive expression
-                condDRegion.equations += createDataflowAssignment(outputVO, expr.getPositiveResultExpression.createKExpression(condState,condDRegion))
-                outputVO.insertHighlightAnnotations(expr)
-                // Create the nagative expression
-                val condNDRegion = createDataflowRegion(elseName)
-                condNDRegion.label = elseName
-                condState.regions += condNDRegion
-                
-                condNDRegion.equations += createDataflowAssignment(outputVO, expr.getNegativeResultExpression.createKExpression(condState,condNDRegion))
-                outputVO.insertHighlightAnnotations(expr)
-                
-                // Return the output reference
-                kExpression = condStateVO.reference => [
-                    subReference = outputVO.reference
-                ]
+                kExpression = buildConditional(expr, expr.logicalConditionExpression, expr.positiveResultExpression,
+                    expr.negativeResultExpression, funcState, dRegion)
             }
             // Skip a cast and translate the inner expression
             IASTCastExpression: {
