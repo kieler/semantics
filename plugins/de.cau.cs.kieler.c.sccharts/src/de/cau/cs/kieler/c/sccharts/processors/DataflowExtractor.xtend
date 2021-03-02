@@ -121,7 +121,7 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
      */
     static final String returnObjectName = " res"
     
-    static final String hiddenVariableName = " hiddenVariable"
+    static final String hiddenVariableName = " cond_res"
     
     /** The seperator for valued object names and its further SSA objects. */
     static final String ssaNameSeperator = " "
@@ -633,8 +633,8 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
      * Build a conditional expression or statement, as in a ternary conditional expression using ? and : or an if[else]
      * construct.
      */
-    private def ValuedObjectReference buildConditional(IASTNode node, IASTExpression condition, IASTNode positive, IASTNode negative,
-        State rootState, DataflowRegion dRegion) {
+    private def ValuedObjectReference buildConditional(IASTNode node, IASTExpression condition, IASTNode positive,
+        IASTNode negative, State rootState, DataflowRegion dRegion) {
         
         // Create the state to represent the if statement.
         val ifState = createState(ifName + ssaNameSeperator + ifCounter)
@@ -664,14 +664,22 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
         thenTransition.label = exprToString(condition, sourceFile)
         
         // If an else is given the state is also created
+        var State elseState
         if (negative !== null) {
-            val State elseState = createStateForNode(negative, cRegion, rootState, dRegion, ifObj, elseName)
+            elseState = createStateForNode(negative, cRegion, rootState, dRegion, ifObj, elseName)
             initState.createImmediateTransitionTo(elseState)
         }
         
         assignOutputs(ifState, ifObj, rootState, dRegion)
         
-        return ifObj.reference
+        // If there is some assignment to the hidden variable from a conditional expression, use it as the sub-reference
+        val subReference = (getStateVariables(ifState) + getStateVariables(thenState) + getStateVariables(elseState))
+            .filter[
+                key, value | key.equals(hiddenVariableName)
+            ].values.head?.last?.reference
+        return ifObj.reference => [
+            it.subReference = subReference
+        ]
     }
     
     /**
@@ -1679,8 +1687,9 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
                 source = createFunctionCall(sourceExpr, funcState, dRegion)
             // Create a value expression for a literal    
             } else if (sourceExpr instanceof IASTLiteralExpression){
-                
                 source = createValue(sourceExpr)
+            } else if (sourceExpr instanceof IASTConditionalExpression) {
+                source = createKExpression(sourceExpr, funcState, dRegion)
             }
             
             // Retrieve the assignment target
