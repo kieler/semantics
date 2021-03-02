@@ -1220,7 +1220,7 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
                 if (getStateVariables(parentState).containsKey(varName)) outputs += varName
             }
             IASTBinaryExpression: {
-                // Consider only non-local variables that are target of an assignment.
+                // Consider non-local variables that are target of an assignment.
                 val operator = stmt.getOperator
                 if ((operator >= IASTBinaryExpression.op_assign) && (operator <= IASTBinaryExpression.op_binaryOrAssign)) {
                     val op1 = stmt.getOperand1
@@ -1229,6 +1229,9 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
                     } else if (op1 instanceof IASTArraySubscriptExpression) {
                         outputs += findOutputs(op1.arrayExpression, parentState, true)
                     }
+                    // Also consider the source of the expression, as assignments may be nested in other expressions,
+                    // such as in 'var1 = var2 = 0' or 'callFunc(var1 = 0)'.
+                    outputs += findOutputs(stmt.operand2, parentState, false)
                 }
             }
             IASTUnaryExpression: {
@@ -1992,16 +1995,24 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
     /**
      * Translate a bianryExpression
      */
-    def OperatorExpression createKExpression(IASTBinaryExpression binExpr, State funcState, DataflowRegion dRegion) {
-        // Create the operator expression with the corresponding operator
-        var opType = binExpr.getOperator().cdtBinaryOpTypeConversion
-        var expression = opType.createOperatorExpression
-        // Translate the operands and attach them    
-        for (operand : binExpr.children) {
-                
-            expression.subExpressions += operand.createKExpression(funcState, dRegion)
-                
+    def Expression createKExpression(IASTBinaryExpression binExpr, State funcState, DataflowRegion dRegion) {
+        var Expression expression 
+        if (binExpr.getOperator() == IASTBinaryExpression.op_assign) {
+            val assignments = createAssignments(binExpr, funcState, dRegion)
+            for (assignment : assignments) {
+                dRegion.equations += assignment
+            }
+            expression = assignments.head.reference.valuedObject.reference
+        } else {
+            // Create the operator expression with the corresponding operator
+            var opType = binExpr.getOperator().cdtBinaryOpTypeConversion
+            expression = opType.createOperatorExpression
+            // Translate the operands and attach them    
+            for (operand : binExpr.children) {    
+                (expression as OperatorExpression).subExpressions += operand.createKExpression(funcState, dRegion)
+            }
         }
+        
         return expression
     }
     
