@@ -1247,6 +1247,14 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
                         outputs += findOutputs(operand.arrayExpression, parentState, true)
                     }
                 }
+                
+                // Consider pointers to variables
+                if (operator === IASTUnaryExpression.op_amper && stmt.operand instanceof IASTIdExpression) {
+                    val idExpression = stmt.operand as IASTIdExpression
+                    val varName = idExpression.name.toString
+                    outputs += varName
+                }
+                
             }
             default: {
                 // Check every child for other statements.
