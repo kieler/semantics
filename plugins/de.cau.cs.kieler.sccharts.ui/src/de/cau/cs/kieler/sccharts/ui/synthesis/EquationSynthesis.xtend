@@ -278,7 +278,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         showWireLabels = SHOW_WIRE_LABELS.booleanValue
         combineAllDataAccessNodes = COMBINE_ALL_DATA_ACCESS.booleanValue
         showArrows = SHOW_ARROWS.booleanValue
-        currentRegion = rootNode.sourceElement as DataflowRegion
+        currentRegions.push(rootNode.sourceElement as DataflowRegion)
         var nodes = <KNode>newLinkedList
         val List<KNode> lastKNodes = newArrayList
         for (assignment : elements) {
@@ -303,6 +303,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
             n.addLayoutParam(CoreOptions.NODE_SIZE_MINIMUM, new KVector(0, 0))
             n.addLayoutParam(CoreOptions.PADDING, new ElkPadding(0, 0, 0, 0))
         }
+        currentRegions.pop
         return nodes.reWireInlining.addMissingReferenceInputs
     }
 
