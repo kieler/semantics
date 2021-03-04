@@ -325,7 +325,9 @@ class KiVisView extends ViewPart implements ISimulationListener {
                     if (url.protocol.equals("file")) {
                         // Ecliplse cannot load file urls properly
                         try {
-                            isLoaded = browser.setText(new String(Files.readAllBytes(new File(new URL(vizURL).toURI).toPath), StandardCharsets.UTF_8))
+                            if (!browser.isDisposed) {
+                                isLoaded = browser.setText(new String(Files.readAllBytes(new File(new URL(vizURL).toURI).toPath), StandardCharsets.UTF_8))
+                            }
                         } catch (Exception e) {
                             e.printStackTrace
                         }

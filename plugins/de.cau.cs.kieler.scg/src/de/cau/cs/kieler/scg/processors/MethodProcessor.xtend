@@ -194,7 +194,7 @@ class MethodProcessor extends InplaceProcessor<SCGraphs> implements Traceable {
     }
     
     def void preprocess(MethodDeclaration method, SCGraph scg) {
-        if (scg.declarations.map[valuedObjects].flatten.filter[isParameter].exists[parameterIndex == 1]) {
+        if (scg.declarations.map[valuedObjects].flatten.filter[isParameter].exists[parameterIndex == -1]) {
             method.markSelfInParameter
         }
         if (scg.nodes.map[eAllContents.toIterable].flatten.filter(ValuedObjectReference).exists[!(valuedObject.declaration instanceof ClassDeclaration) && valuedObject.declaration.eContainer !== scg]) {
