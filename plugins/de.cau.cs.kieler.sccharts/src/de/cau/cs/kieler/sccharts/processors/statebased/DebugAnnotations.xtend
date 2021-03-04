@@ -24,8 +24,7 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import de.cau.cs.kieler.sccharts.Transition
-import de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure
-import de.cau.cs.kieler.sccharts.text.SCTXResource
+import de.cau.cs.kieler.kicool.environments.Environment
 
 /**
  * This processor annotates every state in the current model 
@@ -73,15 +72,15 @@ class DebugAnnotations extends SCChartsProcessor implements Traceable {
             return model
         }
 
-        val sourceFile = environment.findResource(source) as SCTXResource
-        val sourcePath = ProjectInfrastructure.getProjectInfrastructure(environment).getProjectRelativeFile(sourceFile.underlyingFile)
+        val SCCharts originalSource = environment.getProperty(Environment.ORIGINAL_MODEL) as SCCharts;
+        val sourcePath = originalSource.eResource.getURI.toString;
         
         // Retrieve mapping information for each current model element
         val mapping = tracing.getMapping(model, source)
         model => [rootStates.forEach[transform(mapping)]]
         model => [rootStates.forEach[allContainedTransitions.forEach[transform(mapping)]]]
         
-        model => [rootStates.forEach[addStringAnnotation("ORIGINAL_SCCHART", sourcePath.toString)]]
+        model => [rootStates.forEach[addStringAnnotation("ORIGINAL_SCCHART", sourcePath)]]
         return model
     }
     
