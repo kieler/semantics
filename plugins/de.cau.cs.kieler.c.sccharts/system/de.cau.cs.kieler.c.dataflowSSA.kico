@@ -1,5 +1,4 @@
-system de.cau.cs.kieler.c.dataflowSSA
+system de.cau.cs.kieler.c.sccharts.dataflowExtractor
     label "C to Dataflow"
 
-de.cau.cs.kieler.c.sccharts.cParser
 de.cau.cs.kieler.c.sccharts.dataflowExtractor

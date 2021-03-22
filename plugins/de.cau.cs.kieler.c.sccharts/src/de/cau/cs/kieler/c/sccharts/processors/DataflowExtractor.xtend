@@ -34,7 +34,9 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
+import de.cau.cs.kieler.kicool.compilation.CodeContainer
 import de.cau.cs.kieler.kicool.compilation.ExogenousProcessor
+import de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.DataflowRegion
 import de.cau.cs.kieler.sccharts.Region
@@ -51,6 +53,7 @@ import java.nio.file.Paths
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.ArrayList
+import java.util.HashMap
 import java.util.HashSet
 import java.util.List
 import java.util.Map
@@ -90,9 +93,29 @@ import org.eclipse.cdt.core.dom.ast.IASTTranslationUnit
 import org.eclipse.cdt.core.dom.ast.IASTTypeIdExpression
 import org.eclipse.cdt.core.dom.ast.IASTUnaryExpression
 import org.eclipse.cdt.core.dom.ast.IASTWhileStatement
+import org.eclipse.cdt.core.dom.ast.gnu.c.GCCLanguage
+import org.eclipse.cdt.core.parser.DefaultLogService
+import org.eclipse.cdt.core.parser.FileContent
+import org.eclipse.cdt.core.parser.IParserLogService
+import org.eclipse.cdt.core.parser.IncludeFileContentProvider
 import org.eclipse.cdt.internal.core.dom.parser.ASTNode
 
 import static de.cau.cs.kieler.c.sccharts.processors.CDTToStringConverter.*
+import org.eclipse.cdt.core.parser.ScannerInfo
+import org.eclipse.core.resources.IFile
+import org.eclipse.core.resources.ResourcesPlugin
+import org.eclipse.core.runtime.Path
+import org.eclipse.cdt.core.model.CoreModel
+import org.eclipse.cdt.core.model.ITranslationUnit
+import org.eclipse.ui.PlatformUI
+import org.eclipse.ui.IEditorPart
+import org.eclipse.cdt.ui.CDTUITools
+import org.eclipse.cdt.core.model.ICProject
+import org.eclipse.cdt.core.index.IIndex
+import org.eclipse.cdt.core.CCorePlugin
+import org.eclipse.cdt.core.dom.ast.IASTDeclarator
+import org.eclipse.cdt.core.dom.ast.IASTDeclaration
+import org.eclipse.cdt.internal.core.dom.parser.c.CFunction
 
 /**
  * @author lan, nre
@@ -100,7 +123,7 @@ import static de.cau.cs.kieler.c.sccharts.processors.CDTToStringConverter.*
  */
 
 @SuppressWarnings("all","unchecked")
-class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts> {
+class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
 
     @Inject extension AnnotationsExtensions
     @Inject extension CDTConvertExtensions
@@ -158,6 +181,7 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
     /** Name for the sizeof state. */
     static final String sizeofName = " sizeof"
     
+    // TODO: not string, but some CFunction interface
     var functions = <String, State> newHashMap
     var ifCounter = 0;
     var swCounter = 0;
@@ -227,16 +251,9 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
         var now = LocalDateTime.now
         
         println("Starting Dataflow Extractor - Time: " + dtf.format(now))
-        val tUnit = getModel
-        // Remember the file contents as well for direct string representations in the diagram.
-        if (tUnit instanceof ASTNode) {
-            val String filePath = tUnit.filePath
-            if (filePath !== null) {
-                sourceFile = Files.readAllBytes(Paths.get(filePath))
-            }
-        }
+        val container = getModel
         
-        val model = tUnit.transform
+        val model = container.transform
          
         now = LocalDateTime.now
         println("Dataflow Extractor finished - Time: " + dtf.format(now))
@@ -244,9 +261,54 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
         setModel(model)
     }    
 
-    def SCCharts transform(IASTTranslationUnit ast) {
+    def SCCharts transform(CodeContainer codeContainer) {
+        
+        // Get the AST from the code container
+        val infrastructure = ProjectInfrastructure.getProjectInfrastructure(environment)
+        
+        val cFileName = infrastructure.modelFile.absolutePath
+        
+        val FileContent fileContent = FileContent.createForExternalFileLocation(cFileName)
+
+        val definedSymbols = new HashMap
+        val String[] includePaths = #[]
+        val ScannerInfo info = new ScannerInfo(definedSymbols, includePaths);
+        val IParserLogService log = new DefaultLogService();
+
+        val IncludeFileContentProvider emptyIncludes = IncludeFileContentProvider.getEmptyFilesProvider();
+
+        val int opts = 8;
+        val IASTTranslationUnit ast = 
+            GCCLanguage.getDefault().getASTTranslationUnit(fileContent, info, emptyIncludes, null, opts, log);
+        
+        
+        // TODO: get some other stuff from the container that may be relevant for us
+//        val IFile file = ResourcesPlugin.workspace.root.getFile(new Path(cFileName))
+        // Only works like this with a Eclipse workspace path.
+        try {
+            val IFile file = ResourcesPlugin.workspace.root.getFile(new Path("C-Tutorial-Examples/084-user_defined_function.c"))
+            var ITranslationUnit tu = CoreModel.^default.create(file) as ITranslationUnit
+            println(tu)
+            println(tu.children)
+            val ICProject[] allProjects = CoreModel.getDefault().getCModel().getCProjects();
+            val IIndex index = CCorePlugin.getIndexManager().getIndex(allProjects);
+        } catch (Exception e) {
+            e.printStackTrace
+        }
+        
+//        val IEditorPart editor = PlatformUI.workbench.activeWorkbenchWindow.activePage.activeEditor
+//        tu = CDTUITools.getEditorInputCElement(editor.getEditorInput()) as ITranslationUnit
+        
+        
         if (ast === null) {
             return null
+        }
+        // Remember the file contents as well for direct string representations in the diagram.
+        if (ast instanceof ASTNode) {
+            val String filePath = ast.filePath
+            if (filePath !== null) {
+                sourceFile = Files.readAllBytes(Paths.get(filePath))
+            }
         }
         
         // Create SCCharts root elements
@@ -254,6 +316,26 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
         
         // Start extraction for each defined function
         for (child : ast.children) {
+            var IASTDeclarator[] declarators
+            if (child instanceof IASTFunctionDefinition) {
+                declarators = #[child.declarator]
+            }
+            if (child instanceof IASTSimpleDeclaration) {
+                declarators = child.declarators
+            }
+            for (declarator : declarators) {
+                // Put this in a processor and give the function definitions AND the AST to here.
+                val function = new CFunction(declarator)
+                println(function)
+            }
+            // TODO: this.
+            // CDT probably can do a lot more than just creating the AST for us, but also find function definitions
+            // and such. Try to use that instead of searching everything by hand.
+            // Extract a function skeleton with its in- and outputs for each function declaration
+            if (child instanceof IASTSimpleDeclaration) {
+                
+            }
+            // Function definitions fill the function skeletons created above or create them completely new.
             if (child instanceof IASTFunctionDefinition) {
                 val state = buildFunction(child)
                 rootSCChart.rootStates += state
@@ -1532,7 +1614,9 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
                     
                     // Create a state to combine all returns
                     val returnState = createState(returnCombineName)
-                    returnState.createDataflowRegion(returnCombineName)
+                    returnState.createDataflowRegion(returnCombineName) => [
+                        label = returnCombineName
+                    ]
                     
                     // Create the reference to this state in the containing dataflow region
                     val refDecl = createReferenceDeclaration
