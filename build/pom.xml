@@ -10,8 +10,8 @@
   <!-- Define a few properties used throughout all build profiles. -->
   <properties>
     <tycho-version>1.7.0</tycho-version>
-    <xtend-version>2.22.0</xtend-version>
-    <targetJdk>1.8</targetJdk>
+    <xtend-version>2.25.0</xtend-version>
+    <targetJdk>1.11</targetJdk>
   
     <!-- Non-breakable space, as normal spaces are trimmed. -->
     <sourceFeatureLabelSuffix>&#xA0;(Sources)</sourceFeatureLabelSuffix>
