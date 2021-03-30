@@ -27,7 +27,6 @@ import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor
  * @author aas
  *
  */
-@FinalFieldsConstructor
 abstract class AbstractDataPoolColumnLabelProvider extends ColumnLabelProvider {
     
     /**
@@ -39,6 +38,10 @@ abstract class AbstractDataPoolColumnLabelProvider extends ColumnLabelProvider {
      * The view
      */
     private val DataPoolView view
+    
+    new (DataPoolView view) {
+        this.view = view
+    }
     
     /**
      * Cells for models get a color that is readable with their dark background.
