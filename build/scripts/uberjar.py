@@ -42,6 +42,7 @@ IGNORED_FILES = [
     'org/*/*.java',
     'com/*/*.java',
     'de/*/*.java',
+    'module-info.class',
     '*._trace',
     '*.g',
     '*.mwe2',
@@ -171,7 +172,7 @@ def extract(args, extracted, merged, klighd):
                 os.makedirs(target)
 
             # Unpack jar
-            check_call(['jar', 'xf', abspath(join(args.source, jar))], cwd=target)
+            check_call([args.jar, 'xf', abspath(join(args.source, jar))], cwd=target)
 
             if klighd and jar.startswith('org.eclipse.swt.'): # Do not merge swt fragments
                 if 'gtk.linux.x86_64' in jar:
@@ -246,7 +247,7 @@ def bundle(args, target_dir, merged, klighd):
     if not isdir(dirname(jar)):
         os.makedirs(dirname(jar))
 
-    check_call(['jar', 'cfe', jar, args.main, '.'], cwd=merged)
+    check_call([args.jar, 'cfe', jar, args.main, '.'], cwd=merged)
 
     if klighd: # Include SWT
         jars = {}
@@ -255,7 +256,7 @@ def bundle(args, target_dir, merged, klighd):
             print('Creating jar:', relpath(pjar, target_dir))
 
             shutil.copy(jar, pjar) # copy SWT-less base jar
-            check_call(['jar', 'uf', pjar, '.'], cwd=klighd_swt[platform]) # Bundle platform-spefic SWT into new platform-spefic jar
+            check_call([args.jar, 'uf', pjar, '.'], cwd=klighd_swt[platform]) # Bundle platform-spefic SWT into new platform-spefic jar
             
             jars[platform] = pjar
 
@@ -285,8 +286,9 @@ def create_standalone_scripts(args, jar, target_dir, klighd):
             
             with open(join(target_dir, args.name + '-linux'), 'wb') as file:
                 write_script(file, linux_cmd % java9_options, code)
-            with open(join(target_dir, args.name + '-linuxJava8'), 'wb') as file:
-                write_script(file, linux_cmd % '', code)
+            if args.java8:
+                with open(join(target_dir, args.name + '-linuxJava8'), 'wb') as file:
+                    write_script(file, linux_cmd % '', code)
 
     # windows
     if jar_win:
@@ -296,8 +298,9 @@ def create_standalone_scripts(args, jar, target_dir, klighd):
             
             with open(join(target_dir, args.name + '-win.bat'), 'wb') as file:
                 write_script(file, win_cmd % java9_options, code)
-            with open(join(target_dir, args.name + '-winJava8.bat'), 'wb') as file:
-                write_script(file, win_cmd % '', code)
+            if args.java8:
+                with open(join(target_dir, args.name + '-winJava8.bat'), 'wb') as file:
+                    write_script(file, win_cmd % '', code)
         
     # osx
     if jar_osx:
@@ -307,8 +310,9 @@ def create_standalone_scripts(args, jar, target_dir, klighd):
             
             with open(join(target_dir, args.name + '-osx'), 'wb') as file:
                 write_script(file, osx_cmd % java9_options, code)
-            with open(join(target_dir, args.name + '-osxJava8'), 'wb') as file:
-                write_script(file, osx_cmd % '', code)
+            if args.java8:
+                with open(join(target_dir, args.name + '-osxJava8'), 'wb') as file:
+                    write_script(file, osx_cmd % '', code)
 
 def write_script(file, command, code):
     print('Creating script', basename(file.name))
@@ -330,6 +334,8 @@ def errPrint(*args, **kwargs):
 if __name__ == '__main__':
     argParser = argparse.ArgumentParser(description='This script bundles a self-contained eclipse update site into an executable uber-jar (no shading!) and several platform specific executable scripts bundling the jar.')
     argParser.add_argument('-s', dest='scripts', action='store_true', help='create platform specific standalone scripts of the jar')
+    argParser.add_argument('-jar', default='jar', help='override jar command to adjust java version, e.g. /usr/lib/jvm/java-11-openjdk-amd64/bin/jar')
+    argParser.add_argument('--java8', dest='java8', action='store_true', help='activate Java 8 support')
     argParser.add_argument('--ignore-conflicts', dest='ignore_conflicts', action='store_true', help='prevents failing if merge fail due to a conflict.')
     argParser.add_argument('source', help='directory containing all plugins that should be bundled (self-contained update site)')
     argParser.add_argument('name', help='name of the generated executable jar/script')
