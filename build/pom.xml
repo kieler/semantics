@@ -55,6 +55,7 @@
         <module>../test</module>
         <module>de.cau.cs.kieler.sccharts.cli</module>
         <module>de.cau.cs.kieler.kicool.cli</module>
+        <module>de.cau.cs.kieler.language.server.cli</module>
         <module>../test/de.cau.cs.kieler.cli.test</module>
       </modules>
     </profile>

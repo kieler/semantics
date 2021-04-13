@@ -93,7 +93,10 @@ IGNORE_MERGE = [
     'icons/*.png', # Assuming icons are always the same if they have the same name or de.* overrides org.*
     'icons/*.gif',
     'epl-v10.html',
-    'org/osgi/service/log/*', # known duplicate in org.eclipse.osgi and org.eclipse.osgi.services
+    'org/osgi/service/log/*', # known duplicate in org.eclipse.osgi and org.eclipse.osgi.services,
+    'META-INF/AL*',
+    'META-INF/LGPL*',
+    'META-INF/GPL*',
 ]
 
 # Special klighd handling
@@ -158,12 +161,18 @@ def main(args):
 def extract(args, extracted, merged, klighd):
     conflicts = False
     jars = sorted(os.listdir(args.source))
+    processed_jars = [] # Tuples of plugin name and jar
     for jar in jars:
         if not jar.endswith('.jar') or any(fnmatch(jar, ign) for ign in IGNORED_JARS):
             print('Skipping file:', jar)
             continue
         elif klighd and any(fnmatch(jar, ign) for ign in KLIGHD_JARS_BLACKLIST) and not any(fnmatch(jar, req) for req in KLIGHD_JARS_WHITELIST):
             print('Skipping file (special klighd handling):', jar)
+            continue
+        elif jar.split("_")[0] in (p[0] for p in processed_jars):
+            print('Multiple versions of the same plugin detected.')
+            print('WARNING: This script does not support shading. Only the lower version of this plugin will be used (%s). This will cause runtime errors if any plugin requires a higher version API.' % next((p[1] for p in processed_jars if p[0] == jar.split("_")[0]), None))
+            print('Skipping file:', jar)
             continue
         else:
             print('Extracting jar:', jar)
@@ -218,6 +227,7 @@ def extract(args, extracted, merged, klighd):
                             if not isdir(dirname(dest)):
                                 os.makedirs(dirname(dest))
                             os.rename(src, dest)
+                processed_jars.append((jar.split("_")[0], jar))
     return conflicts
 
 def handleNestedJarsOnClasspath(dir, jars_dir):
