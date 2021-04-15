@@ -206,7 +206,7 @@ class SimulationModelWrapper implements Simulatable, ExecutableContainerWrapper 
     }
 }
 
-@FinalFieldsConstructor
+
 class AsynchronousRedirect extends Thread {
 //    val timeLimiter = new SimpleTimeLimiter
 //    static val TIMEOUT_SECONS = 10
@@ -215,6 +215,13 @@ class AsynchronousRedirect extends Thread {
     val BufferedReader input
     val PrintStream output
     val boolean redirectJSON
+    
+    new(SimulationModelWrapper sim, BufferedReader input, PrintStream output, boolean redirectJSON) {
+        this.sim = sim
+        this.input = input
+        this.output = output
+        this.redirectJSON = redirectJSON
+    }
     
     override run() {
 //        val read = new Callable<String>(){ 

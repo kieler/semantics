@@ -52,6 +52,7 @@ class LSCreator extends AbstractLsCreator {
     }
     
     override onConnect() {
+        super.onConnect()
         for (Object ext : iLanguageServerExtensions) {
             if (ext instanceof ILanguageClientProvider) {
                 ext.languageClient = languageClient
