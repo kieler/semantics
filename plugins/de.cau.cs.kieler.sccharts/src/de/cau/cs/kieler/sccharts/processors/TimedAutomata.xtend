@@ -291,27 +291,31 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
                             }
                             region = regionsUsingClock.head
                             if (regionsUsingClock.size > 1) {
-                                environment.errors.add("Cannot handle concurrent timed automata using the same clock. Add @" + USE_SD_NAME + " annotation for experimental support based on SDs.", state)
+                                environment.errors.add("Cannot handle concurrent timed automata using the same clock. Add @" + USE_SD_NAME + " annotation for experimental support based on schduling directives.", state)
                             }
                         }
                         
-                        for (subState : region.states.toList) {
-                            // error case
-                            if (subState.containsInnerActions || !subState.regions.nullOrEmpty) {
-                                if (subState.actions.exists[trigger?.eAllContents?.filter(ValuedObjectReference)?.exists[valuedObject == clock]] ||
-                                    subState.controlflowRegions.exists[eAllContents?.filter(ValuedObjectReference)?.exists[valuedObject == clock]]) {
-                                        environment.errors.add("Cannot handle hierarchical timed automata. Add @" + USE_SD_NAME + " annotation for experimental support based on SDs.", subState)
+                        if (region === null) {
+                            environment.errors.add("Cannot handle concurrent or hierarchical timed automata using the same clock. Add @" + USE_SD_NAME + " annotation for experimental support based on schduling directives.", state)
+                        } else {
+                            for (subState : region.states.toList) {
+                                // error case
+                                if (subState.containsInnerActions || !subState.regions.nullOrEmpty) {
+                                    if (subState.actions.exists[trigger?.eAllContents?.filter(ValuedObjectReference)?.exists[valuedObject == clock]] ||
+                                        subState.controlflowRegions.exists[eAllContents?.filter(ValuedObjectReference)?.exists[valuedObject == clock]]) {
+                                            environment.errors.add("Cannot handle hierarchical timed automata. Add @" + USE_SD_NAME + " annotation for experimental support based on SDs.", subState)
+                                    }
                                 }
-                            }
-                            
-                            // time progress
-                            subState.createDuringAction => [
-                                it.createAssignment(clock, deltaT.reference) => [operator = AssignOperator.ASSIGNADD]
-                            ]
-                            
-                            // sleep time
-                            if (!noSleep) {
-                                subState.handleSleep(clock, sleepT)
+                                
+                                // time progress
+                                subState.createDuringAction => [
+                                    it.createAssignment(clock, deltaT.reference) => [operator = AssignOperator.ASSIGNADD]
+                                ]
+                                
+                                // sleep time
+                                if (!noSleep) {
+                                    subState.handleSleep(clock, sleepT)
+                                }
                             }
                         }
                     }

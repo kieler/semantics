@@ -14,6 +14,7 @@ package de.cau.cs.kieler.scg.processors.codegen.java
 
 import com.google.inject.Inject
 import com.google.inject.Injector
+import de.cau.cs.kieler.scg.SCGraphs
 import de.cau.cs.kieler.scg.codegen.SCGCodeGeneratorModule
 import de.cau.cs.kieler.scg.processors.codegen.c.CCodeGenerator
 
@@ -39,6 +40,10 @@ class JavaCodeGenerator extends CCodeGenerator {
     
     override SCGCodeGeneratorModule createCodeGeneratorModule() {
         return injector.getInstance(JavaCodeGeneratorModule)
+    }
+    
+    override fixClassNameClashes(SCGraphs rootModel) {
+        // No name fixing neccessary due to proper OO scoping
     }
 }
 

@@ -97,7 +97,7 @@ class SimpleGuardTransformation extends Processor<SCGraphs, SCGraphs> implements
     }
     
     override getName() {
-        "Guards V2"
+        "Guards"
     }
     
     override getType() {
@@ -127,7 +127,7 @@ class SimpleGuardTransformation extends Processor<SCGraphs, SCGraphs> implements
             ]
         }
         // retain method SCGs
-        SCGGraphs.scgs.addAll(0, model.scgs.copyMethodSCGs(globalVOMap))
+        SCGGraphs.scgs.addAll(0, model.scgs.copyMethodSCGs(globalVOMap, environment))
         
         setModel(SCGGraphs)
     }

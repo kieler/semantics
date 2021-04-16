@@ -237,7 +237,7 @@ class CSimulationTemplateGenerator extends AbstractSimulationTemplateGenerator {
                 case INT,
                 case DOUBLE,
                 case FLOAT: '''cJSON_CreateNumber(«access»)'''
-                case STRING: '''cJSON_CreateString((«access» != NULL) ? «access» : "")'''
+                case STRING: '''cJSON_CreateStringReference((«access» != NULL) ? «access» : "")'''
                 case CLASS,
                 case STRUCT: '''cJSON_CreateObject()'''
                 default: {

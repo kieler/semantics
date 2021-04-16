@@ -37,6 +37,7 @@ import de.cau.cs.kieler.kexpressions.RandomCall
 import de.cau.cs.kieler.kexpressions.RandomizeCall
 import de.cau.cs.kieler.annotations.NamedObject
 import de.cau.cs.kieler.kexpressions.ParameterAccessType
+import de.cau.cs.kieler.kexpressions.StaticAccessExpression
 
 /**
  * Serialization of KExpressions.
@@ -348,7 +349,11 @@ class KExpressionsSerializeExtensions {
     
     def dispatch CharSequence serialize(RandomizeCall randomizeCall) {
         return "randomize"
-    }    
+    }  
+    
+    def dispatch CharSequence serialize(StaticAccessExpression access) {
+        return access.target?.name + "." + access.subReference.serialize
+    }
     
     def protected CharSequence serializeParameters(List<Parameter> parameters) {
         val sb = new StringBuilder

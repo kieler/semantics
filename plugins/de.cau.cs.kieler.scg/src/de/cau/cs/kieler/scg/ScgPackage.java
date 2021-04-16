@@ -736,13 +736,22 @@ public interface ScgPackage extends EPackage {
 	int FORK__NEXT = NODE_FEATURE_COUNT + 1;
 
 	/**
+     * The feature id for the '<em><b>Type</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int FORK__TYPE = NODE_FEATURE_COUNT + 2;
+
+    /**
      * The number of structural features of the '<em>Fork</em>' class.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-	int FORK_FEATURE_COUNT = NODE_FEATURE_COUNT + 2;
+	int FORK_FEATURE_COUNT = NODE_FEATURE_COUNT + 3;
 
 	/**
      * The meta object id for the '{@link de.cau.cs.kieler.scg.impl.JoinImpl <em>Join</em>}' class.
@@ -827,13 +836,22 @@ public interface ScgPackage extends EPackage {
 	int JOIN__NEXT = NODE_FEATURE_COUNT + 1;
 
 	/**
+     * The feature id for the '<em><b>Any</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int JOIN__ANY = NODE_FEATURE_COUNT + 2;
+
+    /**
      * The number of structural features of the '<em>Join</em>' class.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-	int JOIN_FEATURE_COUNT = NODE_FEATURE_COUNT + 2;
+	int JOIN_FEATURE_COUNT = NODE_FEATURE_COUNT + 3;
 
 	/**
      * The meta object id for the '{@link de.cau.cs.kieler.scg.impl.EntryImpl <em>Entry</em>}' class.
@@ -1729,6 +1747,16 @@ public interface ScgPackage extends EPackage {
     int TICK_BOUNDARY_DEPENDENCY_FEATURE_COUNT = KEffectsPackage.DEPENDENCY_FEATURE_COUNT + 0;
 
     /**
+     * The meta object id for the '{@link de.cau.cs.kieler.scg.ForkType <em>Fork Type</em>}' enum.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.scg.ForkType
+     * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getForkType()
+     * @generated
+     */
+    int FORK_TYPE = 20;
+
+    /**
      * The meta object id for the '{@link de.cau.cs.kieler.scg.BranchType <em>Branch Type</em>}' enum.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1736,7 +1764,7 @@ public interface ScgPackage extends EPackage {
      * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getBranchType()
      * @generated
      */
-	int BRANCH_TYPE = 20;
+	int BRANCH_TYPE = 21;
 
 
 	/**
@@ -1996,6 +2024,17 @@ public interface ScgPackage extends EPackage {
 	EReference getFork_Next();
 
 	/**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.scg.Fork#getType <em>Type</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Type</em>'.
+     * @see de.cau.cs.kieler.scg.Fork#getType()
+     * @see #getFork()
+     * @generated
+     */
+    EAttribute getFork_Type();
+
+    /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.scg.Join <em>Join</em>}'.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2028,6 +2067,17 @@ public interface ScgPackage extends EPackage {
 	EReference getJoin_Next();
 
 	/**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.scg.Join#isAny <em>Any</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Any</em>'.
+     * @see de.cau.cs.kieler.scg.Join#isAny()
+     * @see #getJoin()
+     * @generated
+     */
+    EAttribute getJoin_Any();
+
+    /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.scg.Entry <em>Entry</em>}'.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2392,6 +2442,16 @@ public interface ScgPackage extends EPackage {
     EClass getTickBoundaryDependency();
 
     /**
+     * Returns the meta object for enum '{@link de.cau.cs.kieler.scg.ForkType <em>Fork Type</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for enum '<em>Fork Type</em>'.
+     * @see de.cau.cs.kieler.scg.ForkType
+     * @generated
+     */
+    EEnum getForkType();
+
+    /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.scg.Guard <em>Guard</em>}'.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2642,6 +2702,14 @@ public interface ScgPackage extends EPackage {
 		EReference FORK__NEXT = eINSTANCE.getFork_Next();
 
 		/**
+         * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute FORK__TYPE = eINSTANCE.getFork_Type();
+
+        /**
          * The meta object literal for the '{@link de.cau.cs.kieler.scg.impl.JoinImpl <em>Join</em>}' class.
          * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -2668,6 +2736,14 @@ public interface ScgPackage extends EPackage {
 		EReference JOIN__NEXT = eINSTANCE.getJoin_Next();
 
 		/**
+         * The meta object literal for the '<em><b>Any</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute JOIN__ANY = eINSTANCE.getJoin_Any();
+
+        /**
          * The meta object literal for the '{@link de.cau.cs.kieler.scg.impl.EntryImpl <em>Entry</em>}' class.
          * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -2958,6 +3034,16 @@ public interface ScgPackage extends EPackage {
          * @generated
          */
         EClass TICK_BOUNDARY_DEPENDENCY = eINSTANCE.getTickBoundaryDependency();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.scg.ForkType <em>Fork Type</em>}' enum.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.scg.ForkType
+         * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getForkType()
+         * @generated
+         */
+        EEnum FORK_TYPE = eINSTANCE.getForkType();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.scg.impl.GuardImpl <em>Guard</em>}' class.

@@ -15,8 +15,10 @@ package de.cau.cs.kieler.sccharts.processors
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.kexpressions.IntValue
 import de.cau.cs.kieler.kexpressions.TextExpression
 import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
@@ -61,7 +63,8 @@ class Initialization extends SCChartsProcessor implements Traceable {
 
 
     //-------------------------------------------------------------------------
-    @Inject extension KExpressionsValuedObjectExtensions  
+    @Inject extension KExpressionsValuedObjectExtensions
+    @Inject extension KExpressionsCreateExtensions
     @Inject extension KExpressionsDeclarationExtensions  
     @Inject extension KEffectsExtensions
     @Inject extension KExtDeclarationExtensions
@@ -106,15 +109,15 @@ class Initialization extends SCChartsProcessor implements Traceable {
                             val oldPaths = paths
                             paths = newArrayList
                             for (parentVO : parent.valuedObjects) {
-                                if (parentVO.cardinalities.nullOrEmpty) {
+//                                if (parentVO.cardinalities.nullOrEmpty) {
                                     for (oldPath : oldPaths) {
                                         val newPath = newArrayList(parentVO)
                                         newPath.addAll(oldPath)
                                         paths += newPath
                                     }
-                                } else {
-                                    environment.errors.add("Cannot initialize members of class/sturct types. Feature is currently not supported, please initialize manually.")
-                                }
+//                                } else {
+//                                    environment.errors.add("Cannot initialize members of class/sturct types. Feature is currently not supported, please initialize manually.")
+//                                }
                             }
                             if (parent == decl) {
                                 parent = null
@@ -132,14 +135,63 @@ class Initialization extends SCChartsProcessor implements Traceable {
         initVOs.reverse
         for (valuedObjects : initVOs) {
             val valuedObject = valuedObjects.last
+            val assignments = newArrayList
             setDefaultTrace(valuedObject, valuedObject.declaration)
             
-            val assignment = valuedObjects.head.createAssignment(valuedObject.initialValue.copy)
-            // Initialize class members
-            var vor = assignment.reference
-            for (subVO : valuedObjects.drop(1)) {
-                vor.subReference = subVO.reference
-                vor = vor.subReference
+            if (valuedObjects.size == 1) {
+                assignments += valuedObjects.head.createAssignment(valuedObject.initialValue.copy)
+            } else { // Handle class members and arrays
+                val assignment = valuedObjects.head.createAssignment(valuedObject.initialValue.copy)
+                var inits = 1
+                val cardinalities = newArrayList
+                // Initialize class members
+                var vor = assignment.reference
+                for (subVO : valuedObjects.drop(1)) {
+                    if (!vor.valuedObject.cardinalities.nullOrEmpty) {
+                        for (card : vor.valuedObject.cardinalities) {
+                            if (card instanceof IntValue) {
+                                cardinalities += card.value
+                                inits *= card.value
+                            } else {
+                                environment.errors.add("Cannot initialize members of class/sturct type with non-integer cardianlities in membership hierarchy.")
+                            }
+                        }
+                        vor.indices += vor.valuedObject.cardinalities.map[createIntValue(0)]
+                    }
+                    vor.subReference = subVO.reference
+                    vor = vor.subReference
+                }
+                assignments += assignment
+                if (inits > 1) {
+                    val nextIndices = newArrayList()
+                    nextIndices += cardinalities.map[0]
+                    for (x : 1..inits-1) {
+                        // next index
+                        var next = true
+                        for (i : (cardinalities.size-1)..0) {
+                            if (next) {
+                                nextIndices.set(i, nextIndices.get(i) + 1)
+                                if (nextIndices.get(i) >= cardinalities.get(i)) {
+                                    nextIndices.set(i, 0)
+                                } else {
+                                    next = false
+                                }
+                            }
+                        }
+                        // copy and set
+                        val nextAsm = assignment.copy
+                        val idxIter = nextIndices.iterator
+                        
+                        vor = nextAsm.reference
+                        while (vor !== null) {
+                            for (idx : vor.indices) {
+                                (idx as IntValue).value = idxIter.next
+                            }
+                            vor = vor.subReference
+                        }
+                        assignments += nextAsm
+                    }
+                }
             }
             
             // Initialization combined with existing entry action: The order in which new, 
@@ -149,10 +201,10 @@ class Initialization extends SCChartsProcessor implements Traceable {
             // entry actions to keep the original order. 
             if (scope instanceof State) {
                 val entryAction = scope.createEntryAction(0)
-                entryAction.addAssignment(assignment)
+                assignments.forEach[entryAction.addAssignment(it)]
             } else if (scope instanceof ControlflowRegion) {
                 val entryAction = scope.states.findFirst[initial].createEntryAction(0)
-                entryAction.addAssignment(assignment)
+                assignments.forEach[entryAction.addAssignment(it)]
             }
         }
         // Clear initial values AFTER all assignments are created because some nested VOs might need

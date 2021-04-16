@@ -5,6 +5,7 @@ package de.cau.cs.kieler.scl.impl;
 import de.cau.cs.kieler.scl.Assignment;
 import de.cau.cs.kieler.scl.Conditional;
 import de.cau.cs.kieler.scl.ElseScope;
+import de.cau.cs.kieler.scl.ForkType;
 import de.cau.cs.kieler.scl.Goto;
 import de.cau.cs.kieler.scl.Label;
 import de.cau.cs.kieler.scl.Loop;
@@ -19,6 +20,7 @@ import de.cau.cs.kieler.scl.SCLProgram;
 import de.cau.cs.kieler.scl.ScopeStatement;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 
@@ -87,6 +89,36 @@ public class SCLFactoryImpl extends EFactoryImpl implements SCLFactory {
             case SCLPackage.LOOP: return createLoop();
             default:
                 throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+        }
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Object createFromString(EDataType eDataType, String initialValue) {
+        switch (eDataType.getClassifierID()) {
+            case SCLPackage.FORK_TYPE:
+                return createForkTypeFromString(eDataType, initialValue);
+            default:
+                throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+        }
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public String convertToString(EDataType eDataType, Object instanceValue) {
+        switch (eDataType.getClassifierID()) {
+            case SCLPackage.FORK_TYPE:
+                return convertForkTypeToString(eDataType, instanceValue);
+            default:
+                throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
         }
     }
 
@@ -253,6 +285,26 @@ public class SCLFactoryImpl extends EFactoryImpl implements SCLFactory {
     public Loop createLoop() {
         LoopImpl loop = new LoopImpl();
         return loop;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public ForkType createForkTypeFromString(EDataType eDataType, String initialValue) {
+        ForkType result = ForkType.get(initialValue);
+        if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+        return result;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public String convertForkTypeToString(EDataType eDataType, Object instanceValue) {
+        return instanceValue == null ? null : instanceValue.toString();
     }
 
     /**

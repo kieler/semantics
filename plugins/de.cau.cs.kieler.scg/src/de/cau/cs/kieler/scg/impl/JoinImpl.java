@@ -25,6 +25,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scg.impl.JoinImpl#getFork <em>Fork</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.JoinImpl#getNext <em>Next</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scg.impl.JoinImpl#isAny <em>Any</em>}</li>
  * </ul>
  *
  * @generated
@@ -49,6 +50,26 @@ public class JoinImpl extends NodeImpl implements Join {
      * @ordered
      */
     protected ControlFlow next;
+
+    /**
+     * The default value of the '{@link #isAny() <em>Any</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isAny()
+     * @generated
+     * @ordered
+     */
+    protected static final boolean ANY_EDEFAULT = false;
+
+    /**
+     * The cached value of the '{@link #isAny() <em>Any</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isAny()
+     * @generated
+     * @ordered
+     */
+    protected boolean any = ANY_EDEFAULT;
 
     /**
      * <!-- begin-user-doc -->
@@ -177,6 +198,27 @@ public class JoinImpl extends NodeImpl implements Join {
      * <!-- end-user-doc -->
      * @generated
      */
+    public boolean isAny() {
+        return any;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setAny(boolean newAny) {
+        boolean oldAny = any;
+        any = newAny;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.JOIN__ANY, oldAny, any));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     @Override
     public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
@@ -217,6 +259,8 @@ public class JoinImpl extends NodeImpl implements Join {
                 return basicGetFork();
             case ScgPackage.JOIN__NEXT:
                 return getNext();
+            case ScgPackage.JOIN__ANY:
+                return isAny();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -234,6 +278,9 @@ public class JoinImpl extends NodeImpl implements Join {
                 return;
             case ScgPackage.JOIN__NEXT:
                 setNext((ControlFlow)newValue);
+                return;
+            case ScgPackage.JOIN__ANY:
+                setAny((Boolean)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -253,6 +300,9 @@ public class JoinImpl extends NodeImpl implements Join {
             case ScgPackage.JOIN__NEXT:
                 setNext((ControlFlow)null);
                 return;
+            case ScgPackage.JOIN__ANY:
+                setAny(ANY_EDEFAULT);
+                return;
         }
         super.eUnset(featureID);
     }
@@ -269,8 +319,26 @@ public class JoinImpl extends NodeImpl implements Join {
                 return fork != null;
             case ScgPackage.JOIN__NEXT:
                 return next != null;
+            case ScgPackage.JOIN__ANY:
+                return any != ANY_EDEFAULT;
         }
         return super.eIsSet(featureID);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public String toString() {
+        if (eIsProxy()) return super.toString();
+
+        StringBuilder result = new StringBuilder(super.toString());
+        result.append(" (any: ");
+        result.append(any);
+        result.append(')');
+        return result.toString();
     }
 
 } //JoinImpl

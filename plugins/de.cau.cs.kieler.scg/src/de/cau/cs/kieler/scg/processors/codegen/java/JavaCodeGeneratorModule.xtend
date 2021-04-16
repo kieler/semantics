@@ -75,7 +75,7 @@ class JavaCodeGeneratorModule extends CCodeGeneratorModule {
         
         cFile.append("public class " + codeFilename + " {\n\n")
 
-        cFile.append(struct.code).append("\n")        
+        cFile.append(struct.code).append("\n")
         cFile.append(reset.code).append("\n")
         cFile.append(logic.code).append("\n")
         cFile.append(tick.code)

@@ -151,8 +151,9 @@ import org.eclipse.xtext.xbase.lib.Functions.Function1
 				for(VO : declaration.valuedObjects) {
 					candidates += VO
 				}
-			}				
-			declarationScope = declarationScope.nextDeclarationScope
+			}
+            // This also give nested classes access to variable of surrounding scopes (only partially supported in code gen)
+            declarationScope = declarationScope.nextDeclarationScope
 		}
 		return Scopes.scopeFor(candidates)
 	}

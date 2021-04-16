@@ -20,6 +20,7 @@ import de.cau.cs.kieler.annotations.NamedObject
 import de.cau.cs.kieler.kexpressions.AccessModifier
 import de.cau.cs.kieler.kexpressions.CombineOperator
 import de.cau.cs.kieler.kexpressions.Declaration
+import de.cau.cs.kieler.kexpressions.GenericParameterDeclaration
 import de.cau.cs.kieler.kexpressions.MethodDeclaration
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 import de.cau.cs.kieler.kexpressions.ScheduleDeclaration
@@ -27,6 +28,7 @@ import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsGenericParameterExtensions
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kexpressions.keffects.Emission
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsSerializeHRExtensions
@@ -44,9 +46,10 @@ import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.SuspendAction
 import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.processors.For
+import de.cau.cs.kieler.scl.MethodImplementationDeclaration
 import de.cau.cs.kieler.scl.extensions.SCLSerializeExtensions
 import java.util.List
-import de.cau.cs.kieler.scl.MethodImplementationDeclaration
+
 import static de.cau.cs.kieler.sccharts.PreemptionType.*
 
 /**
@@ -59,6 +62,7 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
     
     @Inject
     var SCLSerializeExtensions sclSerializer
+    @Inject extension KExpressionsGenericParameterExtensions
     
     def dispatch CharSequence serialize(Transition transition) {
         transition.serialize(false);
@@ -283,6 +287,20 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
                 components.addText(",");
             }
         }
+        
+        if (declaration instanceof GenericParameterDeclaration) {
+            if (declaration.valueDeclaration) {
+                components.addKeyword("is")
+                components.addText(declaration.valueType.serializeHR)
+            } else if (declaration.referenceDeclaration) {
+                components.addKeyword("is")
+                components.addKeyword("ref")
+                components.addText(declaration.type.serializeHR)
+            } else if (declaration.type !== null) {
+                components.addKeyword("is")
+                components.addText(declaration.type.serializeHR)
+            }
+        }
 
         return components;
     }
@@ -389,6 +407,21 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
             }
         }
 
+        return components;
+    }
+    
+    def List<Pair<? extends CharSequence, TextFormat>> serializeGenericParametersHighlighted(List<GenericParameterDeclaration> decls) {
+        val components = <Pair<? extends CharSequence, TextFormat>> newArrayList
+        components.addText("<")
+
+        for (param : decls.indexed) {
+            components += param.value.serializeHighlighted(true)
+            if (param.key < decls.size - 1) {
+                components.addText(",")
+            }
+        }
+
+        components.addText(">")
         return components;
     }
     
@@ -538,7 +571,7 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
         } else {
             return emission.reference.valuedObject.name.applySymbolTable
         }
-    } 
+    }
     
     def dispatch CharSequence serializeHR(CodeEffect code) {
         code.serialize

@@ -75,7 +75,7 @@ class DependencyTransformationV2 extends AbstractDependencyAnalysis<SCGraphs, SC
     }
     
     override getName() {
-        "Dependency V2"
+        "Dependency"
     }
     
     override process() {

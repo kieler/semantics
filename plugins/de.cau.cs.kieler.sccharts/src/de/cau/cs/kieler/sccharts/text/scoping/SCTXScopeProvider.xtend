@@ -13,12 +13,16 @@ import de.cau.cs.kieler.kexpressions.KExpressionsPackage
 import de.cau.cs.kieler.kexpressions.MethodDeclaration
 import de.cau.cs.kieler.kexpressions.Parameter
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
+import de.cau.cs.kieler.kexpressions.StaticAccessExpression
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsGenericParameterExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kexpressions.kext.DeclarationScope
 import de.cau.cs.kieler.kexpressions.kext.scoping.KExtScopeProvider
+import de.cau.cs.kieler.sccharts.BaseStateReference
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.DataflowRegion
 import de.cau.cs.kieler.sccharts.Region
@@ -39,6 +43,7 @@ import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.scoping.IScope
 import org.eclipse.xtext.scoping.Scopes
 import org.eclipse.xtext.xbase.lib.Functions.Function1
+import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
 
 /**
  * This class contains custom scoping description.
@@ -54,6 +59,7 @@ class SCTXScopeProvider extends KExtScopeProvider {
     @Inject extension SCChartsInheritanceExtensions
     @Inject extension AnnotationsExtensions
     @Inject extension KExpressionsDeclarationExtensions
+    @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KExpressionsGenericParameterExtensions
     
     @Inject SCTXQualifiedNameProvider nameProvider
@@ -61,11 +67,12 @@ class SCTXScopeProvider extends KExtScopeProvider {
     override getScope(EObject context, EReference reference) {
         switch(context) {
             Transition: return getScopeForTransition(context, reference)
-            State: return getScopeForState(context, reference)
             Region: return getScopeForRegion(context, reference)
             ScopeCall: return getScopeForScopeCall(context, reference)
             GenericTypeReference: return getScopeForGenericTypeReference(context, reference)
             GenericParameterDeclaration: return getScopeForGenericParameterDeclaration(context, reference)
+            BaseStateReference: return getScopeForBaseStateReference(context, reference)
+            StaticAccessExpression: return getScopeForStaticStateAccess(context, reference)
         }
         
         return super.getScope(context, reference);
@@ -83,12 +90,12 @@ class SCTXScopeProvider extends KExtScopeProvider {
         return SCTXScopes.scopeFor(states)
     }
     
-    protected def IScope getScopeForState(State state, EReference reference) {
-        if (reference == SCChartsPackage.Literals.STATE__BASE_STATES) {
-            return SCTXScopes.scopeFor(state.eResource.allAvailableRootStates)
+    protected def IScope getScopeForBaseStateReference(BaseStateReference ref, EReference reference) {
+        if (reference == SCChartsPackage.Literals.BASE_STATE_REFERENCE__TARGET) {
+            return SCTXScopes.scopeFor(ref.eResource.allAvailableRootStates)
         }
         
-        return super.getScope(state, reference)
+        return super.getScope(ref, reference)
     }
     
     protected def IScope getScopeForRegion(Region region, EReference reference) {
@@ -123,9 +130,18 @@ class SCTXScopeProvider extends KExtScopeProvider {
         if (reference == KExpressionsPackage.Literals.PARAMETER__EXPLICIT_BINDING) {
             val voCandidates = <ValuedObject> newArrayList
             
-            val scopeCall = parameter.eContainer as ScopeCall
-            if (scopeCall !== null && scopeCall.target !== null) {
-                var target = scopeCall.target
+            var EObject target
+            val container = parameter.eContainer
+            
+            if (container instanceof ScopeCall) {
+                target = container.target
+            } else if (container instanceof BaseStateReference) {
+                target = container.target
+            } else if (container instanceof ValuedObject) {
+                target = container.referenceDeclaration?.reference
+            }
+            
+            if (target !== null) {
                 if (target instanceof Scope) {
                     for (declaration : target.variableDeclarations.filter[ input || output ]) {
                         voCandidates += declaration.valuedObjects
@@ -203,6 +219,25 @@ class SCTXScopeProvider extends KExtScopeProvider {
         }
         return IScope.NULLSCOPE
     }
+    
+    def IScope getScopeForStaticStateAccess(StaticAccessExpression context, EReference reference) {
+        return SCTXScopes.scopeFor(context.eResource.getAllAvailableRootStates)
+    }
+    
+    override protected getScopeForValuedObjectReference(EObject context, EReference reference) {
+        val contextContainer = context.eContainer
+        if (contextContainer instanceof StaticAccessExpression && (contextContainer as StaticAccessExpression).subReference === context) {
+            val target = (contextContainer as StaticAccessExpression).target
+            // The context is a subreference of static access!
+            if (target instanceof DeclarationScope) {
+                return Scopes.scopeFor(target.declarations.map[valuedObjects].flatten)
+            } else {
+                return IScope.NULLSCOPE
+            }
+        } else {
+            return super.getScopeForValuedObjectReference(context, reference)
+        }
+    }
 
     override IScope getScopeHierarchical(EObject context, EReference reference) {
         val candidates = <ValuedObject> newArrayList
@@ -235,7 +270,7 @@ class SCTXScopeProvider extends KExtScopeProvider {
             
             if (declarationScope instanceof State) {
                 // Inherited VOs
-                if (!declarationScope.baseStates.nullOrEmpty) {
+                if (!declarationScope.baseStateReferences.nullOrEmpty) {
                     for (decl : declarationScope.allVisibleInheritedDeclarations) {
                         for(VO : decl.valuedObjects) {
                             candidates += VO
@@ -246,12 +281,13 @@ class SCTXScopeProvider extends KExtScopeProvider {
                 candidates += declarationScope.genericValuedObjectParameters
             }
             
+            // This also give nested classes access to variable of surrounding scopes (only partially supported in code gen)
             declarationScope = declarationScope.nextDeclarationScope
         }
         return Scopes.scopeFor(candidates)
     }
     
-    protected def getAllAvailableRootStates(Resource eResource) {
+    def getAllAvailableRootStates(Resource eResource) {
         if (eResource !== null) {
             val scchartsInScope = newHashSet(eResource.contents.head as SCCharts)
             val eResourceSet = eResource.resourceSet
@@ -277,7 +313,7 @@ class SCTXScopeProvider extends KExtScopeProvider {
         if (reference instanceof State) {
             val additionalCandidates = newArrayList
             additionalCandidates += reference.declarations.filter(MethodDeclaration).map[valuedObjects.head]
-            if (!reference.baseStates.nullOrEmpty) {
+            if (!reference.baseStateReferences.nullOrEmpty) {
                 for (decl : reference.allVisibleInheritedDeclarations) {
                     for(VO : decl.valuedObjects) {
                         additionalCandidates += VO

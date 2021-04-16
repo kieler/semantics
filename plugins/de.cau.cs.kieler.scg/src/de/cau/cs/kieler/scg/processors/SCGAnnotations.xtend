@@ -68,6 +68,10 @@ class SCGAnnotations {
         register("cfPathType", AnnotationsType.SYSTEM, StringAnnotation, Entry, 
             "Annotation that determines the control flow type of a thread.")
 
+    public static val ANNOTATION_CONTROLFLOWTHREADPATHTYPE_PREEMPTION = 
+        register("cfPathTypeByPreemtion", AnnotationsType.SYSTEM, StringAnnotation, Entry, 
+            "Annotation that has a comment about alteration of the control flow type of a thread.")
+            
     public static val ANNOTATION_IGNORETHREAD = 
         register("ignoreThread", AnnotationsType.USER, Annotation, Entry, 
             "Orders the synchronizer to ignore a specific thread.")

@@ -22,13 +22,11 @@ import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.internal.util.KlighdInternalProperties
 import de.cau.cs.kieler.klighd.kgraph.KEdge
 import de.cau.cs.kieler.klighd.kgraph.KGraphElement
-import de.cau.cs.kieler.klighd.kgraph.KGraphFactory
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.kgraph.KPort
 import de.cau.cs.kieler.klighd.krendering.Colors
 import de.cau.cs.kieler.klighd.krendering.KColor
 import de.cau.cs.kieler.klighd.krendering.KContainerRendering
-import de.cau.cs.kieler.klighd.krendering.KRendering
 import de.cau.cs.kieler.klighd.krendering.KRenderingFactory
 import de.cau.cs.kieler.klighd.krendering.KRoundedBendsPolyline
 import de.cau.cs.kieler.klighd.krendering.KRoundedRectangle
@@ -43,6 +41,7 @@ import de.cau.cs.kieler.klighd.krendering.extensions.KPortExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import de.cau.cs.kieler.klighd.util.KlighdProperties
+import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.ControlFlow
 import de.cau.cs.kieler.scg.Depth
 import de.cau.cs.kieler.scg.Node
@@ -162,7 +161,7 @@ class SCGraphSynthesisHelper {
             if (object.hasAnnotation(ANNOTATION_LABEL)) {
                 label = object.getStringAnnotationValue(ANNOTATION_LABEL)
             } else if (object.hasAnnotation(ANNOTATION_RETURN_NODE)) {
-                label = "return " + serializeHR(object)
+                label = "return " + serializeHR((object as Assignment).expression)
             } else {
                 label = serializeHR(object) as String
             }

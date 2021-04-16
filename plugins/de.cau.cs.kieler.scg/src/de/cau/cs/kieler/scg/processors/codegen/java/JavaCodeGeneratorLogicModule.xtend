@@ -50,10 +50,7 @@ class JavaCodeGeneratorLogicModule extends CCodeGeneratorLogicModule {
 
     override generateInit() {
         preVariables.clear
-        
-        // Generate functions
-        serializer.generateMethods
-        
+                
         indent(0)
         code.append("public void ").append(getName)
         code.append("(")
@@ -89,46 +86,6 @@ class JavaCodeGeneratorLogicModule extends CCodeGeneratorLogicModule {
     }
     
     override generateMethods(extension CCodeSerializeHRExtensions serializer) {
-        for (scg : SCGraphs.scgs.filter[method]) {
-            val method = scg.methodDeclaration
-                        
-            indent(0)
-            code.append(method.returnType.serialize)
-            code.append(" ").append(method.valuedObjects.head.name)
-            code.append("(")
-            val params = scg.declarations.filter[parameter].map[it as VariableDeclaration].toList
-            for (param : params) {
-                if (param.type === ValueType.HOST) {
-                    code.append(param.hostType)
-                } else {
-                    code.append(param.type.serializeHR)
-                }
-                code.append(" ")
-                code.append(param.valuedObjects.head.name)
-                if (params.last !== param) code.append(", ")
-            }
-            code.append(") {\n")
-            
-            // Temporarily redirect struct module output to this module
-            val structCode = struct.code
-            struct.newCodeStringBuilder = code
-            struct.generateDeclarations(scg.declarations.filter[!parameter && !explicitLoop && !isReturn].toList, 0, serializer)
-            struct.newCodeStringBuilder = structCode
-            
-            // Generate body
-            conditionalStack.clear
-            processedNodes.clear
-            processedCF.clear
-            var nodes = newLinkedList => [ it += scg.nodes.head ]
-            while(!nodes.empty) {
-                val node = nodes.pop
-                if (!processedNodes.contains(node)) {
-                    node.generate(nodes, serializer)
-                    processedNodes += node
-                }
-            }
-            indent(0)
-            code.append("}\n\n")
-        }
+        // In Java this is handled by the StructModule since methodes are in classes due to proper OO
     }   
 }

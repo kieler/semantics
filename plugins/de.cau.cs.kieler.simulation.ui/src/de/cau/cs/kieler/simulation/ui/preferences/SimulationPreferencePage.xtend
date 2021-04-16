@@ -88,6 +88,7 @@ class SimulationPreferencePage extends PreferencePage implements IWorkbenchPrefe
         SWTFactory.createLabel(group, "Maxium length", 1)
         historyLengthControl = new Spinner(group, SWT.BORDER)
         historyLengthControl.minimum = 1
+        historyLengthControl.maximum = Integer.MAX_VALUE
         historyLengthControl.increment = 1
         historyLengthControl.pageIncrement = 1
         historyLengthControl.selection = getIntValue(SimulationContext.MAX_HISTORY_LENGTH.id)
