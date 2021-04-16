@@ -11,7 +11,11 @@
   <properties>
     <tycho-version>1.7.0</tycho-version>
     <xtend-version>2.25.0</xtend-version>
-    <targetJdk>1.11</targetJdk>
+    
+    <!-- Java 8 source compatibility and cross-compilation! -->
+    <!-- <maven.compiler.release>8</maven.compiler.release> -->
+    <!-- <maven.compiler.source>8</maven.compiler.source> -->
+    <!-- <maven.compiler.target>8</maven.compiler.target> -->
   
     <!-- Non-breakable space, as normal spaces are trimmed. -->
     <sourceFeatureLabelSuffix>&#xA0;(Sources)</sourceFeatureLabelSuffix>
@@ -55,6 +59,7 @@
         <module>../test</module>
         <module>de.cau.cs.kieler.sccharts.cli</module>
         <module>de.cau.cs.kieler.kicool.cli</module>
+        <module>de.cau.cs.kieler.kicool.klighd.cli</module>
         <module>de.cau.cs.kieler.language.server.cli</module>
         <module>../test/de.cau.cs.kieler.cli.test</module>
       </modules>
@@ -78,8 +83,9 @@
         <module>../plugins/de.cau.cs.kieler.core.product</module>
         <module>../features/de.cau.cs.kieler.product.feature</module>
         <module>de.cau.cs.kieler.semantics.product.repository</module>
-        <module>de.cau.cs.kieler.kicool.cli</module>
         <module>de.cau.cs.kieler.sccharts.cli</module>
+        <module>de.cau.cs.kieler.kicool.cli</module>
+        <module>de.cau.cs.kieler.kicool.klighd.cli</module>
         <module>de.cau.cs.kieler.language.server.cli</module>
       </modules>
     </profile>
