@@ -377,7 +377,11 @@ class CCodeSerializeHRExtensions extends CodeGeneratorSerializeHRExtensions {
             params.add(0, createParameter =>[
                 accessType = ParameterAccessType.CALL_BY_REFERENCE
                 val ex = referenceCall.serializeVOR.toString
-                expression = ("(" + (!referenceCall.valuedObject.isParameter ? valuedObjectPrefix : "") + ex.substring(0, ex.lastIndexOf(".")) + ")").asTextExpression
+                if (referenceCall.valuedObject.isSelfVO || referenceCall.valuedObject.isLocalVariable) {
+                    expression = ("(" + ex.substring(0, ex.lastIndexOf(".")) + ")").asTextExpression
+                } else {
+                    expression = ("(" + (!referenceCall.valuedObject.isParameter ? valuedObjectPrefix : "") + ex.substring(0, ex.lastIndexOf(".")) + ")").asTextExpression
+                }
             ])
         }
         if (declaration.hasTickDataInParameter) {
