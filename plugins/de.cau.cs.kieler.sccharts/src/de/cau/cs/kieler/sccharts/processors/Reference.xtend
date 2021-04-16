@@ -805,6 +805,11 @@ class Reference extends SCChartsProcessor implements Traceable {
                     }
                     
                     newState.expandRoot(replacements, false)
+                    if (refTarget.genericParameterDeclarations.empty && refTarget.baseStateReferences.empty) {
+                        // In case there are no base states or generic, the binding is not implicitly performed and must be done here
+                        newState.replaceValuedObjectReferencesInState(replacements, false)
+                    }
+                    
                     val classDecl = createPolicyClassDeclaration => [
                         type = ValueType.CLASS
                         name = newState.name
@@ -813,6 +818,10 @@ class Reference extends SCChartsProcessor implements Traceable {
                         annotations += newState.annotations
                     ]
                     classDecl.addStringAnnotation(REF_CLASS_ORIGIN, Iterables.concat(#[refTarget.name], refTarget.baseStates.map[name]))
+                    
+                    // Remove the input/output declarations from the new class. They should be bound beforehand.
+                    classDecl.declarations.removeIf[ if (it instanceof VariableDeclaration) { input || output } else false ]
+                    
                     val classVOs = classDecl.innerValuedObjects.toSet
                     ref.replace(classDecl)
                     

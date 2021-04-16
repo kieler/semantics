@@ -382,12 +382,11 @@ class SCLToSCGTransformation extends Processor<SCLProgram, SCGraphs> implements 
                         vor.prependReferenceToReference(selfVO)
                     }
                 }
-            } else {
-                // Check for external VO access
-                if (scg.nodes.map[eAllContents.toIterable].flatten.filter(ValuedObjectReference).exists[
-                       !it.isSubReference && !valuedObject.isParameter && !valuedObject.isLocalVariable]) {
-                    newMethod.markTickDataInParameter
-                }
+            }
+            // Check for external VO access
+            if (scg.nodes.map[eAllContents.toIterable].flatten.filter(ValuedObjectReference).exists[
+                   !it.isSubReference && !valuedObject.isParameter && !valuedObject.isLocalVariable]) {
+                newMethod.markTickDataInParameter
             }
         }
         

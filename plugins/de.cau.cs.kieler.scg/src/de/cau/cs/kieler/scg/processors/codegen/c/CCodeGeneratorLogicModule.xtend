@@ -94,7 +94,7 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
           
         // Generate functions
         serializer.generateMethods
-                
+
         val signature = new StringBuilder
         signature.append("void ").append(getName)
         signature.append("(")
@@ -349,7 +349,7 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
     }
     
 
-    protected def generateMethods(extension CCodeSerializeHRExtensions serializer) {
+    def generateMethods(extension CCodeSerializeHRExtensions serializer) {
         for (scg : SCGraphs.scgs.filter[method]) {
             val method = scg.methodDeclaration
             indent(0)
@@ -359,7 +359,7 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
             val params = scg.declarations.filter[parameter].map[it as VariableDeclaration].sortBy[valuedObjects.head.parameterIndex].toList
             if (method.hasTickDataInParameter && !struct.getVariableName.nullOrEmpty) {
                 code.append(struct.getName).append("* ").append(struct.getVariableName)
-                if (!params.empty) code.append(", ")
+                if (!params.empty || method.hasSelfInParameter) code.append(", ")
             }
             if (method.hasSelfInParameter) {
                 val selfDecl = scg.declarations.findFirst[isSelfVO] as VariableDeclaration
