@@ -821,6 +821,7 @@ class Reference extends SCChartsProcessor implements Traceable {
                     
                     // Remove the input/output declarations from the new class. They should be bound beforehand.
                     classDecl.declarations.removeIf[ if (it instanceof VariableDeclaration) { input || output } else false ]
+                    classDecl.valuedObjects.forEach[ parameters.clear ]
                     
                     val classVOs = classDecl.innerValuedObjects.toSet
                     ref.replace(classDecl)
