@@ -126,6 +126,14 @@ class SCGMethodExtensions {
     def void markTickDataInParameter(MethodDeclaration method) {
         method?.addTagAnnotation(SCGAnnotations.ANNOTATION_METHOD_REQUIRES_TICKDATA)
     }
+    
+    def isHostMethod(MethodDeclaration method) {
+        val container = method.eContainer
+        if (container instanceof ClassDeclaration) {
+            return container.host
+        }
+        return false
+    }
 
     def Collection<? extends SCGraph> copyMethodSCGs(Iterable<SCGraph> scgs, Map<ValuedObject, ValuedObject> VOmap, Environment env) {
         val newSCGs = newArrayList

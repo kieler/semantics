@@ -362,7 +362,7 @@ class CCodeSerializeHRExtensions extends CodeGeneratorSerializeHRExtensions {
             val params = newArrayList
             params.addAll(referenceCall.parameters)
             params.addPlatformDependentParamsToMethodCall(declaration, referenceCall)
-            if (assumeOnlyGlobalFunctions) {
+            if (assumeOnlyGlobalFunctions && !declaration.isHostMethod) {
                 return rcVOR.serializeVOR.toString + params.serializeParameters
             } else {
                 return code + referenceCall.serializeVOR.toString + params.serializeParameters
