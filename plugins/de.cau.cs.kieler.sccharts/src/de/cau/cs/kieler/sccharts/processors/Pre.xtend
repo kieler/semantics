@@ -23,6 +23,7 @@ import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsArrayExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
@@ -31,7 +32,6 @@ import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransformationExtension
-import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
 import java.util.HashMap
 import java.util.List
 import java.util.Stack
@@ -71,6 +71,7 @@ class Pre extends SCChartsProcessor implements Traceable {
     @Inject extension SCChartsActionExtensions
     @Inject extension SCChartsTransformationExtension
     @Inject extension KExpressionsArrayExtensions
+    @Inject extension KExpressionsValuedObjectExtensions
     
     val nameCache = new UniqueNameCache
 
@@ -99,7 +100,7 @@ class Pre extends SCChartsProcessor implements Traceable {
             if(obj instanceof OperatorExpression) {
                 if(obj.operator == OperatorType::PRE) {
                     allPreExpressionsInnerFirst.add(obj)    
-                }    
+                }
             }
         }
 
@@ -112,7 +113,7 @@ class Pre extends SCChartsProcessor implements Traceable {
     }
     
     private def transform(OperatorExpression pre, State targetRootState, HashMap<ValuedObject, ValuedObject> transformedVariables) {
-        val valuedObjectRef = pre.valuedObjectReference
+        val valuedObjectRef = pre.valuedObjectReference?.lowermostReference
         if(valuedObjectRef !== null) {
             val valuedObject = valuedObjectRef.valuedObject
             if(valuedObject !== null && !transformedVariables.containsKey(valuedObject)) {

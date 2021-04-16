@@ -63,7 +63,7 @@ class FinalThreadProcessor extends InplaceProcessor<SCGraphs> {
         for (scg : model.scgs.ignoreMethods) {
             processFinalRegions(scg, threadData)
         }
-    }	
+    }
 	
     private def List<Dependency> processFinalRegions(SCGraph scg, ThreadData threadData) {
         val frDependencies = <Dependency> newLinkedList

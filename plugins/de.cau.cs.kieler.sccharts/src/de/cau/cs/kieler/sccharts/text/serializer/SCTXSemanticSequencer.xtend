@@ -78,18 +78,18 @@ class SCTXSemanticSequencer extends AbstractSCTXSemanticSequencer {
         // go to / abort to / join to
         feeder.accept(tg.preemptionPreemptionTypeEnumRuleCall_5_0, transition.preemption)
         // <state>
-        feeder.accept(tg.targetStateStateIDTerminalRuleCall_6_0_1 , transition.targetState) 
+        feeder.accept(tg.targetStateStateIDTerminalRuleCall_7_0_1 , transition.targetState) 
         // deferred?
         if (transition.deferred != DeferredType::NONE) {
-            feeder.accept(tg.deferredDeferredTypeEnumRuleCall_7_0, transition.deferred)
+            feeder.accept(tg.deferredDeferredTypeEnumRuleCall_8_0, transition.deferred)
         }
         // history?
         if (transition.history != HistoryType.RESET) {
-            feeder.accept(tg.historyHistoryTypeEnumRuleCall_8_0, transition.history)
+            feeder.accept(tg.historyHistoryTypeEnumRuleCall_9_0, transition.history)
         }
 
         if (!transition.label.nullOrEmpty) {
-            feeder.accept(tg.labelSTRINGTerminalRuleCall_9_1_0, transition.label)
+            feeder.accept(tg.labelSTRINGTerminalRuleCall_10_1_0, transition.label)
         } 
                 
         feeder.finish
@@ -105,48 +105,53 @@ class SCTXSemanticSequencer extends AbstractSCTXSemanticSequencer {
             feeder.accept(rg.annotationsAnnotationParserRuleCall_1_0, idxAnnotation.value, idxAnnotation.key)
         }
         // override
-        if (region.override) {
-            feeder.accept(rg.overrideOverrideKeyword_2_0)
-        }
-        // final
-        if (region.final) {
-            feeder.accept(rg.finalFinalKeyword_3_0)
+        if (region.abort) {
+            feeder.accept(rg.abortAbortKeyword_2_0_0)
+        } else {
+            // override
+            if (region.override) {
+                feeder.accept(rg.overrideOverrideKeyword_2_1_0_0)
+            }
+            // final
+            if (region.final) {
+                feeder.accept(rg.finalFinalKeyword_2_1_1_0)
+            }
         }
         // name
         if (!region.name.nullOrEmpty) {
-            feeder.accept(rg.nameExtendedIDParserRuleCall_5_0, region.name)
+            feeder.accept(rg.nameExtendedIDParserRuleCall_4_0, region.name)
         }
         // label
         if (!region.label.nullOrEmpty && !region.label.equals(region.name)) {
-            feeder.accept(rg.labelSTRINGTerminalRuleCall_6_0, region.label)
+            feeder.accept(rg.labelSTRINGTerminalRuleCall_5_0, region.label)
         }
         // is
         if (region.reference !== null) {
-            feeder.accept(rg.referenceScopeCallParserRuleCall_7_0_1_0, region.reference)
+            feeder.accept(rg.referenceScopeCallParserRuleCall_6_0_1_0, region.reference)
             //for
             if (region.counterVariable !== null) {
-                feeder.accept(rg.counterVariableCounterVariableParserRuleCall_7_0_2_1_0, region.counterVariable)
-                feeder.accept(rg.forStartIntOrReferenceParserRuleCall_7_0_2_3_0, region.forStart)
+                feeder.accept(rg.counterVariableCounterVariableParserRuleCall_6_0_2_1_0, region.counterVariable)
+                feeder.accept(rg.forStartIntOrReferenceParserRuleCall_6_0_2_3_0, region.forStart)
                 if (region.forEnd !== null) {
-                    feeder.accept(rg.forEndIntOrReferenceParserRuleCall_7_0_2_4_1_0, region.forEnd)
+                    feeder.accept(rg.forEndIntOrReferenceParserRuleCall_6_0_2_4_1_0, region.forEnd)
                 }
             }
             // schedule
             for (idxSchedule : region.schedule.indexed) {
-                feeder.accept(rg.scheduleScheduleObjectReferenceParserRuleCall_7_0_3_1_0, idxSchedule.value, idxSchedule.key)
+                feeder.accept(rg.scheduleScheduleObjectReferenceParserRuleCall_6_0_3_1_0, idxSchedule.value, idxSchedule.key)
             }
         } else { // normal region
             // for
             if (region.counterVariable !== null) {
-                feeder.accept(rg.counterVariableCounterVariableParserRuleCall_7_1_0_1_0, region.counterVariable)
-                feeder.accept(rg.forStartIntOrReferenceParserRuleCall_7_1_0_3_0, region.forStart)
+                feeder.accept(rg.counterVariableCounterVariableParserRuleCall_6_1_0_1_0, region.counterVariable)
+                feeder.accept(rg.forStartIntOrReferenceParserRuleCall_6_1_0_3_0, region.forStart)
                 if (region.forEnd !== null) {
-                    feeder.accept(rg.forEndIntOrReferenceParserRuleCall_7_1_0_4_1_0, region.forEnd)
+                    feeder.accept(rg.forEndIntOrReferenceParserRuleCall_6_1_0_4_1_0, region.forEnd)
                 }
             }
             // schedule
             for (idxSchedule : region.schedule.indexed) {
-                feeder.accept(rg.scheduleScheduleObjectReferenceParserRuleCall_7_1_1_1_0, idxSchedule.value, idxSchedule.key)
+                feeder.accept(rg.scheduleScheduleObjectReferenceParserRuleCall_6_1_1_1_0, idxSchedule.value, idxSchedule.key)
             }
             // Decide wich variant schould be used
             val isImplicit = !region.states.nullOrEmpty
@@ -160,37 +165,37 @@ class SCTXSemanticSequencer extends AbstractSCTXSemanticSequencer {
                 && !region.states.head.regions.nullOrEmpty
             val node = if (!region.states.nullOrEmpty) nodes.getNodeForMultiValue(pkg.controlflowRegion_States, 0, 0, region.states.head)
             // Prefer curly bracket version when model does not already has a textuel preference (user typed region:)
-            val prefersColon = node !== null && node.grammarElement === rg.statesStateParserRuleCall_7_1_2_1_3_0
+            val prefersColon = node !== null && node.grammarElement === rg.statesStateParserRuleCall_6_1_2_1_3_0
 
             if (isImplicit || !prefersColon) { // region {}
                 // declarations
                 for (idxDecl : region.declarations.filter[!(it instanceof MethodImplementationDeclaration)].indexed) {
-                    feeder.accept(rg.declarationsDeclarationOrMethodWithKeywordWOSemicolonParserRuleCall_7_1_2_0_1_0, idxDecl.value, idxDecl.key)
+                    feeder.accept(rg.declarationsDeclarationOrMethodWithKeywordWOSemicolonParserRuleCall_6_1_2_0_1_0, idxDecl.value, idxDecl.key)
                 }
                 // actions
                 for (idxAction : region.actions.indexed) {
-                    feeder.accept(rg.actionsLocalActionParserRuleCall_7_1_2_0_2_0, idxAction.value, idxAction.key)
+                    feeder.accept(rg.actionsLocalActionParserRuleCall_6_1_2_0_2_0, idxAction.value, idxAction.key)
                 }
                 // states
                 if (isImplicit) {
-                    feeder.accept(rg.statesImplicitStateParserRuleCall_7_1_2_0_3_0_0, region.states.head, 0)
+                    feeder.accept(rg.statesImplicitStateParserRuleCall_6_1_2_0_3_0_0, region.states.head, 0)
                 } else {
                     for (idxState : region.states.indexed) {
-                        feeder.accept(rg.statesStateParserRuleCall_7_1_2_0_3_1_0, idxState.value, idxState.key)
+                        feeder.accept(rg.statesStateParserRuleCall_6_1_2_0_3_1_0, idxState.value, idxState.key)
                     }
                 }
             } else { // region:
                 // declarations
                 for (idxDecl : region.declarations.filter[!(it instanceof MethodImplementationDeclaration)].indexed) {
-                    feeder.accept(rg.declarationsDeclarationOrMethodWithKeywordWOSemicolonParserRuleCall_7_1_2_1_1_0, idxDecl.value, idxDecl.key)
+                    feeder.accept(rg.declarationsDeclarationOrMethodWithKeywordWOSemicolonParserRuleCall_6_1_2_1_1_0, idxDecl.value, idxDecl.key)
                 }
                 // actions
                 for (idxAction : region.actions.indexed) {
-                    feeder.accept(rg.actionsLocalActionParserRuleCall_7_1_2_1_2_0, idxAction.value, idxAction.key)
+                    feeder.accept(rg.actionsLocalActionParserRuleCall_6_1_2_1_2_0, idxAction.value, idxAction.key)
                 }
                 // states
                 for (idxState : region.states.indexed) {
-                    feeder.accept(rg.statesStateParserRuleCall_7_1_2_1_3_0, idxState.value, idxState.key)
+                    feeder.accept(rg.statesStateParserRuleCall_6_1_2_1_3_0, idxState.value, idxState.key)
                 }
             }
         }

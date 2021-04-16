@@ -21,6 +21,7 @@ import de.cau.cs.kieler.kexpressions.IntValue
 import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.OperatorType
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
+import de.cau.cs.kieler.kexpressions.StaticAccessExpression
 import de.cau.cs.kieler.kexpressions.Value
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
@@ -581,6 +582,28 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
      * @param output Will be ignored in this case
      */
     private def dispatch KNode performTransformation(Value e, List<KNode> nodes, boolean output) {
+        val node = e.createKGTNode("INPUT", "")
+        val text = e.serializeHR.toString
+        node.addNodeLabelWithPadding(text, INPUT_OUTPUT_TEXT_SIZE, PADDING_INPUT_LEFT, PADDING_INPUT_RIGHT)
+        node.setProperty(INPUT_FLAG, true)
+
+        if (ALIGN_CONSTANTS.booleanValue) {
+            node.addLayoutParam(LayeredOptions::LAYERING_LAYER_CONSTRAINT, LayerConstraint::FIRST)
+            node.addLayoutParam(CoreOptions::ALIGNMENT, Alignment.LEFT)
+        }
+        node.associateWith(e)
+        nodes += node
+        return node
+    }
+    
+    /**
+     * creates an equation tree graph from an expression and returns the root node of the tree
+     * create an input node for constant values
+     * @param e The StaticAccessExpression to which the tree should be generated
+     * @param nodes All created nodes are added to this list
+     * @param output Will be ignored in this case
+     */
+    private def dispatch KNode performTransformation(StaticAccessExpression e, List<KNode> nodes, boolean output) {
         val node = e.createKGTNode("INPUT", "")
         val text = e.serializeHR.toString
         node.addNodeLabelWithPadding(text, INPUT_OUTPUT_TEXT_SIZE, PADDING_INPUT_LEFT, PADDING_INPUT_RIGHT)

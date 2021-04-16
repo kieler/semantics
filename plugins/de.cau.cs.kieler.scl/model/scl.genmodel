@@ -7,6 +7,11 @@
     editorPluginID="de.cau.cs.kieler.scl.editor" runtimeVersion="2.10" usedGenPackages="../../de.cau.cs.kieler.annotations/model/annotations.genmodel#//annotations ../../de.cau.cs.kieler.kexpressions/model/keffects.genmodel#//keffects ../../de.cau.cs.kieler.kexpressions/model/kexpressions.genmodel#//kexpressions ../../de.cau.cs.kieler.kexpressions/model/kext.genmodel#//kext">
   <genPackages prefix="SCL" basePackage="de.cau.cs.kieler" disposableProviderFactory="true"
       ecorePackage="scl.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="scl.ecore#//ForkType">
+      <genEnumLiterals ecoreEnumLiteral="scl.ecore#//ForkType/PARALLEL"/>
+      <genEnumLiterals ecoreEnumLiteral="scl.ecore#//ForkType/SEQUENTIAL"/>
+      <genEnumLiterals ecoreEnumLiteral="scl.ecore#//ForkType/SEQUENTIAL_PREEMPTIVE"/>
+    </genEnums>
     <genClasses ecoreClass="scl.ecore#//SCLProgram">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference scl.ecore#//SCLProgram/modules"/>
     </genClasses>
@@ -28,6 +33,8 @@
     </genClasses>
     <genClasses ecoreClass="scl.ecore#//Parallel">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference scl.ecore#//Parallel/threads"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute scl.ecore#//Parallel/joinAny"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute scl.ecore#//Parallel/forkType"/>
     </genClasses>
     <genClasses ecoreClass="scl.ecore#//ModuleCall">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference scl.ecore#//ModuleCall/module"/>

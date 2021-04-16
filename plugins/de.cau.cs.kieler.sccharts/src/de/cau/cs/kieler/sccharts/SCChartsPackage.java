@@ -692,13 +692,13 @@ public interface SCChartsPackage extends EPackage {
     int STATE__INCOMING_TRANSITIONS = SCOPE_FEATURE_COUNT + 7;
 
     /**
-     * The feature id for the '<em><b>Base States</b></em>' reference list.
+     * The feature id for the '<em><b>Base State References</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int STATE__BASE_STATES = SCOPE_FEATURE_COUNT + 8;
+    int STATE__BASE_STATE_REFERENCES = SCOPE_FEATURE_COUNT + 8;
 
     /**
      * The number of structural features of the '<em>State</em>' class.
@@ -1027,13 +1027,22 @@ public interface SCChartsPackage extends EPackage {
     int CONTROLFLOW_REGION__FINAL = REGION_FEATURE_COUNT + 1;
 
     /**
+     * The feature id for the '<em><b>Abort</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CONTROLFLOW_REGION__ABORT = REGION_FEATURE_COUNT + 2;
+
+    /**
      * The number of structural features of the '<em>Controlflow Region</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int CONTROLFLOW_REGION_FEATURE_COUNT = REGION_FEATURE_COUNT + 2;
+    int CONTROLFLOW_REGION_FEATURE_COUNT = REGION_FEATURE_COUNT + 3;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.DataflowRegionImpl <em>Dataflow Region</em>}' class.
@@ -2278,6 +2287,15 @@ public interface SCChartsPackage extends EPackage {
     int POLICY_REGION__FINAL = CONTROLFLOW_REGION__FINAL;
 
     /**
+     * The feature id for the '<em><b>Abort</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int POLICY_REGION__ABORT = CONTROLFLOW_REGION__ABORT;
+
+    /**
      * The number of structural features of the '<em>Policy Region</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2451,6 +2469,52 @@ public interface SCChartsPackage extends EPackage {
     int DATAFLOW_ASSIGNMENT_FEATURE_COUNT = KEffectsPackage.ASSIGNMENT_FEATURE_COUNT + 1;
 
     /**
+     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.BaseStateReferenceImpl <em>Base State Reference</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.sccharts.impl.BaseStateReferenceImpl
+     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getBaseStateReference()
+     * @generated
+     */
+    int BASE_STATE_REFERENCE = 19;
+
+    /**
+     * The feature id for the '<em><b>Target</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int BASE_STATE_REFERENCE__TARGET = 0;
+
+    /**
+     * The feature id for the '<em><b>Generic Parameters</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int BASE_STATE_REFERENCE__GENERIC_PARAMETERS = 1;
+
+    /**
+     * The feature id for the '<em><b>Parameters</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int BASE_STATE_REFERENCE__PARAMETERS = 2;
+
+    /**
+     * The number of structural features of the '<em>Base State Reference</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int BASE_STATE_REFERENCE_FEATURE_COUNT = 3;
+
+    /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.PreemptionType <em>Preemption Type</em>}' enum.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2458,7 +2522,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getPreemptionType()
      * @generated
      */
-    int PREEMPTION_TYPE = 19;
+    int PREEMPTION_TYPE = 20;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.HistoryType <em>History Type</em>}' enum.
@@ -2468,7 +2532,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getHistoryType()
      * @generated
      */
-    int HISTORY_TYPE = 20;
+    int HISTORY_TYPE = 21;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.DelayType <em>Delay Type</em>}' enum.
@@ -2478,7 +2542,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getDelayType()
      * @generated
      */
-    int DELAY_TYPE = 21;
+    int DELAY_TYPE = 22;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.DeferredType <em>Deferred Type</em>}' enum.
@@ -2488,7 +2552,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getDeferredType()
      * @generated
      */
-    int DEFERRED_TYPE = 22;
+    int DEFERRED_TYPE = 23;
 
 
     /**
@@ -2816,15 +2880,15 @@ public interface SCChartsPackage extends EPackage {
     EReference getState_IncomingTransitions();
 
     /**
-     * Returns the meta object for the reference list '{@link de.cau.cs.kieler.sccharts.State#getBaseStates <em>Base States</em>}'.
+     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.sccharts.State#getBaseStateReferences <em>Base State References</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the reference list '<em>Base States</em>'.
-     * @see de.cau.cs.kieler.sccharts.State#getBaseStates()
+     * @return the meta object for the containment reference list '<em>Base State References</em>'.
+     * @see de.cau.cs.kieler.sccharts.State#getBaseStateReferences()
      * @see #getState()
      * @generated
      */
-    EReference getState_BaseStates();
+    EReference getState_BaseStateReferences();
 
     /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.Region <em>Region</em>}'.
@@ -2922,6 +2986,17 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      */
     EAttribute getControlflowRegion_Final();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.ControlflowRegion#isAbort <em>Abort</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Abort</em>'.
+     * @see de.cau.cs.kieler.sccharts.ControlflowRegion#isAbort()
+     * @see #getControlflowRegion()
+     * @generated
+     */
+    EAttribute getControlflowRegion_Abort();
 
     /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.DataflowRegion <em>Dataflow Region</em>}'.
@@ -3175,6 +3250,49 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      */
     EAttribute getDataflowAssignment_Sequential();
+
+    /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.BaseStateReference <em>Base State Reference</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Base State Reference</em>'.
+     * @see de.cau.cs.kieler.sccharts.BaseStateReference
+     * @generated
+     */
+    EClass getBaseStateReference();
+
+    /**
+     * Returns the meta object for the reference '{@link de.cau.cs.kieler.sccharts.BaseStateReference#getTarget <em>Target</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference '<em>Target</em>'.
+     * @see de.cau.cs.kieler.sccharts.BaseStateReference#getTarget()
+     * @see #getBaseStateReference()
+     * @generated
+     */
+    EReference getBaseStateReference_Target();
+
+    /**
+     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.sccharts.BaseStateReference#getGenericParameters <em>Generic Parameters</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Generic Parameters</em>'.
+     * @see de.cau.cs.kieler.sccharts.BaseStateReference#getGenericParameters()
+     * @see #getBaseStateReference()
+     * @generated
+     */
+    EReference getBaseStateReference_GenericParameters();
+
+    /**
+     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.sccharts.BaseStateReference#getParameters <em>Parameters</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Parameters</em>'.
+     * @see de.cau.cs.kieler.sccharts.BaseStateReference#getParameters()
+     * @see #getBaseStateReference()
+     * @generated
+     */
+    EReference getBaseStateReference_Parameters();
 
     /**
      * Returns the meta object for enum '{@link de.cau.cs.kieler.sccharts.PreemptionType <em>Preemption Type</em>}'.
@@ -3491,12 +3609,12 @@ public interface SCChartsPackage extends EPackage {
         EReference STATE__INCOMING_TRANSITIONS = eINSTANCE.getState_IncomingTransitions();
 
         /**
-         * The meta object literal for the '<em><b>Base States</b></em>' reference list feature.
+         * The meta object literal for the '<em><b>Base State References</b></em>' containment reference list feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference STATE__BASE_STATES = eINSTANCE.getState_BaseStates();
+        EReference STATE__BASE_STATE_REFERENCES = eINSTANCE.getState_BaseStateReferences();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.RegionImpl <em>Region</em>}' class.
@@ -3573,6 +3691,14 @@ public interface SCChartsPackage extends EPackage {
          * @generated
          */
         EAttribute CONTROLFLOW_REGION__FINAL = eINSTANCE.getControlflowRegion_Final();
+
+        /**
+         * The meta object literal for the '<em><b>Abort</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute CONTROLFLOW_REGION__ABORT = eINSTANCE.getControlflowRegion_Abort();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.DataflowRegionImpl <em>Dataflow Region</em>}' class.
@@ -3787,6 +3913,40 @@ public interface SCChartsPackage extends EPackage {
          * @generated
          */
         EAttribute DATAFLOW_ASSIGNMENT__SEQUENTIAL = eINSTANCE.getDataflowAssignment_Sequential();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.BaseStateReferenceImpl <em>Base State Reference</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.sccharts.impl.BaseStateReferenceImpl
+         * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getBaseStateReference()
+         * @generated
+         */
+        EClass BASE_STATE_REFERENCE = eINSTANCE.getBaseStateReference();
+
+        /**
+         * The meta object literal for the '<em><b>Target</b></em>' reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference BASE_STATE_REFERENCE__TARGET = eINSTANCE.getBaseStateReference_Target();
+
+        /**
+         * The meta object literal for the '<em><b>Generic Parameters</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference BASE_STATE_REFERENCE__GENERIC_PARAMETERS = eINSTANCE.getBaseStateReference_GenericParameters();
+
+        /**
+         * The meta object literal for the '<em><b>Parameters</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference BASE_STATE_REFERENCE__PARAMETERS = eINSTANCE.getBaseStateReference_Parameters();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.PreemptionType <em>Preemption Type</em>}' enum.

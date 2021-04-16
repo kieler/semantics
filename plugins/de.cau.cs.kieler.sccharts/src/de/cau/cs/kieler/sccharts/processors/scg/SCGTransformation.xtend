@@ -99,10 +99,6 @@ import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTraci
  * @kieler.rating 2013-09-05 proposed yellow
  */
 class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceable {
-    
-    // Property to disable SuperflousForkRemover because KiCo has no proper support for processors
-    public static val IProperty<Boolean> ENABLE_SFR = new Property<Boolean>("de.cau.cs.kieler.sccharts.scg.sfr", true);
-    public static val IProperty<Boolean> ENABLE_STR = new Property<Boolean>("de.cau.cs.kieler.sccharts.scg.str", true);
 
     @Inject extension KExpressionsCreateExtensions
     @Inject extension KExpressionsDeclarationExtensions
@@ -250,25 +246,8 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
     def ValuedObject getSCGValuedObject(ValuedObject valuedObjectSCChart) {
         valuedObjectSSChart2SCG.get(valuedObjectSCChart)
     }
-
-
-
-    def SCGraph transform(EObject eObject) {
-        return switch (eObject) {
-            SCGraph: return eObject.processSCG
-            State: eObject.transformSCG
-            SCCharts: eObject.rootStates.head.transformSCG
-        }
-    }
-
-    def SCGraph processSCG(SCGraph scg) {
-        val SuperfluousForkRemover superfluousForkRemover = Guice.createInjector().getInstance(
-            typeof(SuperfluousForkRemover))
-        val newSCG = superfluousForkRemover.optimize(scg)
-        newSCG
-    }
     
-    def SCGraph transformSCG(State rootState) {
+    def SCGraph transform(State rootState) {
         val voStore = VariableStore.get(environment)
         val scopeList = rootState.eAllContents.filter(Scope).toList
         val stateList = scopeList.filter(State).toList
@@ -346,19 +325,8 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
 
         // Fix superfluous exit nodes
         sCGraph.trimExitNodes.trimConditioanlNodes
-
-        // Remove superfluous fork constructs 
-        var scg = sCGraph
-        if (environment.getProperty(ENABLE_STR)) {
-            val superfluousThreadRemover = Guice.createInjector().getInstance(SuperfluousThreadRemover)
-            scg = superfluousThreadRemover.optimize(scg)
-        }
-        if (environment.getProperty(ENABLE_SFR)) {
-            val superfluousForkRemover = Guice.createInjector().getInstance(SuperfluousForkRemover)
-            scg = superfluousForkRemover.optimize(scg)
-        }
         
-        scg
+        return sCGraph
     }
 
     // -------------------------------------------------------------------------   
@@ -528,7 +496,10 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
     def void transformSCGGenerateNodes(ControlflowRegion region, SCGraph sCGraph) {
         val entry = sCGraph.addEntry.trace(region, region.parentState)
         if (region.hasAnnotation(ANNOTATION_IGNORETHREAD)) {
-              entry.createStringAnnotation(ANNOTATION_IGNORETHREAD, "")
+            entry.createStringAnnotation(ANNOTATION_IGNORETHREAD, "")
+        }
+        if (region.abort) { // Mark for later processing
+            entry.addTagAnnotation(SCGAbortRegionProcessor.ANNOTATION_ABORT)
         }
 //        val exit = sCGraph.addExit.trace(region, region.parentState)
         val exit = sCGraph.addExit

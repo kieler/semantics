@@ -14,6 +14,7 @@ package de.cau.cs.kieler.sccharts.processors.dataflow
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.NamedObject
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kexpressions.IgnoreValue
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 import de.cau.cs.kieler.kexpressions.ScheduleDeclaration
@@ -56,6 +57,7 @@ class Dataflow extends SCChartsProcessor {
     @Inject extension SCChartsStateExtensions
     @Inject extension SCChartsTransitionExtensions
     @Inject extension SCChartsActionExtensions
+    @Inject extension AnnotationsExtensions
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KEffectsExtensions
     @Inject extension KExtDeclarationExtensions
@@ -68,9 +70,12 @@ class Dataflow extends SCChartsProcessor {
     extension SCChartsFactory sccFactory = SCChartsFactory.eINSTANCE
     
     static val GENERATED_PREFIX = "__df_"
+    static val IGNORE_ANNOTATION = "DFignore"
+    
+    public static val ID = "de.cau.cs.kieler.sccharts.processors.dataflow"
     
     override getId() {
-        "de.cau.cs.kieler.sccharts.processors.dataflow"
+        ID
     }
     
     override getName() {
@@ -122,7 +127,8 @@ class Dataflow extends SCChartsProcessor {
         for (equation : dataflowRegion.equations.immutableCopy) {
             equation.allAssignmentReferences.filter[ 
                 isReferenceDeclarationReference &&
-                (it.valuedObject.eContainer as ReferenceDeclaration).extern.size == 0
+                (it.valuedObject.eContainer as ReferenceDeclaration).extern.size == 0 &&
+                !(it.valuedObject.eContainer as ReferenceDeclaration).hasAnnotation(IGNORE_ANNOTATION)
             ].forEach[
                 rdInstances += it.valuedObject
                 rdEquationMappingForTracing.put(it.valuedObject, equation)

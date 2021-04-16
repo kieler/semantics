@@ -54,7 +54,11 @@ class CCodeGeneratorStructModule extends SCGCodeGeneratorModule {
     }    
     
     override generateInit() {
-        code.append("typedef struct {\n")
+        // Prepend all inner classes
+        for (classDecl : scg.eAllContents.filter(ClassDeclaration).filter[!host].toList.reverseView) {
+            classDecl.generateClassDeclaration(serializer)
+        }
+        code.append("\ntypedef struct {\n")
     }
     
     override generate() {
@@ -65,21 +69,30 @@ class CCodeGeneratorStructModule extends SCGCodeGeneratorModule {
         // Add the declarations of the model.
         scg.declarations.generateDeclarations(0, serializer)
     }
+        
+    def void generateClassDeclaration(ClassDeclaration declaration, extension CCodeSerializeHRExtensions serializer) {
+        code.append("typedef struct {\n")
+        declaration.declarations.generateDeclarations(0, serializer)
+        code.append("} ")
+        code.append(declaration.name)
+        code.append(";\n")
+    }
     
     def void generateDeclarations(List<Declaration> declarations, int depth, extension CCodeSerializeHRExtensions serializer) {
         for (declaration : declarations) {
             if (declaration instanceof ClassDeclaration) {
                 (0..depth).forEach[code.append(indentation)]
-                if (!declaration.host || !declaration.hasAnnotation("typedef")) {
-                    code.append("struct ")
-                }
+//                if (!declaration.host || !declaration.hasAnnotation("typedef")) {
+//                    code.append("struct ")
+//                }
                 code.append(declaration.name)
-                if (!declaration.host) {
-                    code.append(" {\n")
-                    declaration.declarations.generateDeclarations(depth + 1, serializer)
-                    (0..depth).forEach[code.append(indentation)]
-                    code.append("}")
-                }
+                // Disabled this code because nested structs do not allow methods with access via self paramter
+//                if (!declaration.host) {
+//                    code.append(" {\n")
+//                    declaration.declarations.generateDeclarations(depth + 1, serializer)
+//                    (0..depth).forEach[code.append(indentation)]
+//                    code.append("}")
+//                }
                 for (valuedObject : declaration.valuedObjects) {
                     code.append(" ")
                     code.append(valuedObject.name)

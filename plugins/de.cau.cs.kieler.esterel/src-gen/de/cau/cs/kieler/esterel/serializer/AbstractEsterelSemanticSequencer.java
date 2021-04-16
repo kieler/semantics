@@ -105,6 +105,7 @@ import de.cau.cs.kieler.kexpressions.ReferenceCall;
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration;
 import de.cau.cs.kieler.kexpressions.ScheduleDeclaration;
 import de.cau.cs.kieler.kexpressions.ScheduleObjectReference;
+import de.cau.cs.kieler.kexpressions.StaticAccessExpression;
 import de.cau.cs.kieler.kexpressions.StringValue;
 import de.cau.cs.kieler.kexpressions.TextExpression;
 import de.cau.cs.kieler.kexpressions.ValueTypeReference;
@@ -1178,6 +1179,9 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 			case KExpressionsPackage.SCHEDULE_OBJECT_REFERENCE:
 				sequence_ScheduleObjectReference(context, (ScheduleObjectReference) semanticObject); 
 				return; 
+			case KExpressionsPackage.STATIC_ACCESS_EXPRESSION:
+				sequence_StaticAccessExpression(context, (StaticAccessExpression) semanticObject); 
+				return; 
 			case KExpressionsPackage.STRING_VALUE:
 				sequence_StringValue(context, (StringValue) semanticObject); 
 				return; 
@@ -1257,7 +1261,11 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 				sequence_ValueTypeReference(context, (ValueTypeReference) semanticObject); 
 				return; 
 			case KExpressionsPackage.VALUED_OBJECT:
-				if (rule == grammarAccess.getSimpleValuedObjectRule()) {
+				if (rule == grammarAccess.getReferenceValuedObjectRule()) {
+					sequence_ReferenceValuedObject(context, (ValuedObject) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getSimpleValuedObjectRule()) {
 					sequence_SimpleValuedObject(context, (ValuedObject) semanticObject); 
 					return; 
 				}

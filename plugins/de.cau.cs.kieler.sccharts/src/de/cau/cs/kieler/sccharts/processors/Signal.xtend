@@ -36,7 +36,7 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
-import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
+import de.cau.cs.kieler.scl.MethodImplementationDeclaration
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
@@ -212,27 +212,30 @@ class Signal extends SCChartsProcessor implements Traceable {
                     }
                 }
     
-                val allActions = state.eAllContents.filter(typeof(Action)).toList
-                for (Action action : allActions) {
-                    if (supportsWriting) {
-                        // Wherever an emission is, create a new assignment right behind
-                        val allSignalEmissions = action.getAllContainedEmissions.filter[e|e.valuedObject == signal].toList
-                        for (Emission signalEmission : allSignalEmissions.immutableCopy) {
-                            if (signalEmission.newValue !== null) {
-    
-                                // Assign the emitted valued and combine!
-                                val variableAssignment = currentValueVariable.createAssignment(signalEmission.newValue, combineOperator)
-                                variableAssignment.reference.applyIndices(signalEmission.reference)
-                                
-                                // Put it in right order
-                                val index = action.effects.indexOf(signalEmission);
-                                action.effects.add(index, variableAssignment);
+                val allActionsAndMethods = state.eAllContents.filter[it instanceof Action || it instanceof MethodImplementationDeclaration].toList
+                for (actionOrMethod : allActionsAndMethods) {
+                    if (actionOrMethod instanceof Action) {
+                        val action = actionOrMethod
+                        if (supportsWriting) {
+                            // Wherever an emission is, create a new assignment right behind
+                            val allSignalEmissions = action.getAllContainedEmissions.filter[e|e.valuedObject == signal].toList
+                            for (Emission signalEmission : allSignalEmissions.immutableCopy) {
+                                if (signalEmission.newValue !== null) {
+        
+                                    // Assign the emitted valued and combine!
+                                    val variableAssignment = currentValueVariable.createAssignment(signalEmission.newValue, combineOperator)
+                                    variableAssignment.reference.applyIndices(signalEmission.reference)
+                                    
+                                    // Put it in right order
+                                    val index = action.effects.indexOf(signalEmission);
+                                    action.effects.add(index, variableAssignment);
+                                }
                             }
                         }
                     }
 
                     // Wherever an val test is, put the valueVariable there instead
-                    val allSignalValTests = action.eAllContents.filter(typeof(OperatorExpression)).filter(
+                    val allSignalValTests = actionOrMethod.eAllContents.filter(typeof(OperatorExpression)).filter(
                         e |
                             e.operator == OperatorType::VAL &&
                                 e.subExpressions.get(0) instanceof ValuedObjectReference &&

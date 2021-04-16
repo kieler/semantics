@@ -115,6 +115,7 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
                 associateWith(region)
                 addDoubleClickAction(MemorizingExpandCollapseAction::ID)
                 if (region.override) addOverrideRegionStyle
+                if (region.abort) addAbortRegionStyle
                 if (region.final) addFinalRegionStyle
                 if (region.declarations.empty && region.actions.empty) {
                     addStatesArea(!label.nullOrEmpty);
@@ -159,6 +160,7 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
                 if (region.schedule.size > 0) it.setUserScheduleStyle
                 addDoubleClickAction(MemorizingExpandCollapseAction::ID)
                 if (region.override) addOverrideRegionStyle
+                if (region.abort) addAbortRegionStyle
                 if (region.final) addFinalRegionStyle
                 addExpandButton(label) => [
                     addSingleClickAction(MemorizingExpandCollapseAction.ID)
@@ -195,6 +197,7 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
         } else {
             node.addRegionFigure => [
                 if (region.override) addOverrideRegionStyle
+                if (region.abort) addAbortRegionStyle
                 if (region.final) addFinalRegionStyle
             ]
         }

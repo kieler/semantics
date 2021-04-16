@@ -163,6 +163,7 @@ public class KExpressionsParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getBoolScheduleExpressionAccess().getGroup_1(), "rule__BoolScheduleExpression__Group_1__0");
 			builder.put(grammarAccess.getValuedObjectTestExpressionAccess().getGroup_0(), "rule__ValuedObjectTestExpression__Group_0__0");
 			builder.put(grammarAccess.getValuedObjectTestExpressionAccess().getGroup_0_4(), "rule__ValuedObjectTestExpression__Group_0_4__0");
+			builder.put(grammarAccess.getStaticAccessExpressionAccess().getGroup(), "rule__StaticAccessExpression__Group__0");
 			builder.put(grammarAccess.getPrimeIDAccess().getGroup(), "rule__PrimeID__Group__0");
 			builder.put(grammarAccess.getValuedObjectReferenceAccess().getGroup(), "rule__ValuedObjectReference__Group__0");
 			builder.put(grammarAccess.getValuedObjectReferenceAccess().getGroup_1(), "rule__ValuedObjectReference__Group_1__0");
@@ -305,6 +306,8 @@ public class KExpressionsParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getValuedObjectTestExpressionAccess().getOperatorAssignment_0_1(), "rule__ValuedObjectTestExpression__OperatorAssignment_0_1");
 			builder.put(grammarAccess.getValuedObjectTestExpressionAccess().getSubExpressionsAssignment_0_3(), "rule__ValuedObjectTestExpression__SubExpressionsAssignment_0_3");
 			builder.put(grammarAccess.getValuedObjectTestExpressionAccess().getSubExpressionsAssignment_0_4_1(), "rule__ValuedObjectTestExpression__SubExpressionsAssignment_0_4_1");
+			builder.put(grammarAccess.getStaticAccessExpressionAccess().getTargetAssignment_2(), "rule__StaticAccessExpression__TargetAssignment_2");
+			builder.put(grammarAccess.getStaticAccessExpressionAccess().getSubReferenceAssignment_5(), "rule__StaticAccessExpression__SubReferenceAssignment_5");
 			builder.put(grammarAccess.getValuedObjectReferenceAccess().getValuedObjectAssignment_0(), "rule__ValuedObjectReference__ValuedObjectAssignment_0");
 			builder.put(grammarAccess.getValuedObjectReferenceAccess().getIndicesAssignment_1_1(), "rule__ValuedObjectReference__IndicesAssignment_1_1");
 			builder.put(grammarAccess.getValuedObjectReferenceAccess().getSubReferenceAssignment_2_1(), "rule__ValuedObjectReference__SubReferenceAssignment_2_1");

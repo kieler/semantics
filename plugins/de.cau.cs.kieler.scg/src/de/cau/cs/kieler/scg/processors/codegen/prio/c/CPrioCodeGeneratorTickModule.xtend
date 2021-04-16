@@ -43,25 +43,32 @@ class CPrioCodeGeneratorTickModule extends CCodeGeneratorTickModule {
     override generateInit() {
         val maxPID = (scg.getAnnotation("maxPrioID") as IntAnnotation).value
         
-        val pSB = new StringBuilder 
-        
-        pSB.append("#define _SC_NOTRACE\n")
+        val head = new StringBuilder
+        head.append("#define _SC_NOTRACE\n")
            .append("#define _SC_NO_SIGNALS2VARS\n")
            .append("#define _SC_ID_MAX " + maxPID + "\n\n")
            .append("#include \"scl.h\"\n")
            .append("#include \"sc.h\"\n")
            .append("#include \"sc-generic.h\"\n\n")
-            
-        code.append("int ").append(getName)
-        code.append("(")
-        code.append(struct.getName).append("* ").append(struct.getVariableName)
-        code.append(")")
+           
+        val signature = new StringBuilder
+        signature.append("int ").append(getName)
+        signature.append("(")
+        signature.append(struct.getName).append("* ").append(struct.getVariableName)
+        signature.append(")")
         
-        struct.forwardDeclarations.append(code).append(";\n")
+        struct.forwardDeclarations.append(signature).append(";\n")
         
-        code.append(" {\n")
-       
-       setNewCodeStringBuilder(pSB.append(code))        
+        code.append(head)
+        
+        // Generate methods
+        val logicCode = logic.code
+        logic.setNewCodeStringBuilder = this.code
+        logic.generateMethods(serializer)
+        logic.newCodeStringBuilder = logicCode
+        
+        code.append(signature)
+        code.append(" {\n") 
     }
     
     override generate() {

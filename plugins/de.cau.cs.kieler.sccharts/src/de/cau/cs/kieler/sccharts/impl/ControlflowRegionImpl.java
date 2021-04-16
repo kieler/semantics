@@ -42,6 +42,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ControlflowRegionImpl#getStates <em>States</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ControlflowRegionImpl#isFinal <em>Final</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.impl.ControlflowRegionImpl#isAbort <em>Abort</em>}</li>
  * </ul>
  *
  * @generated
@@ -83,6 +84,26 @@ public class ControlflowRegionImpl extends RegionImpl implements ControlflowRegi
      * @ordered
      */
     protected boolean final_ = FINAL_EDEFAULT;
+
+    /**
+     * The default value of the '{@link #isAbort() <em>Abort</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isAbort()
+     * @generated
+     * @ordered
+     */
+    protected static final boolean ABORT_EDEFAULT = false;
+
+    /**
+     * The cached value of the '{@link #isAbort() <em>Abort</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isAbort()
+     * @generated
+     * @ordered
+     */
+    protected boolean abort = ABORT_EDEFAULT;
 
     /**
      * <!-- begin-user-doc -->
@@ -144,6 +165,29 @@ public class ControlflowRegionImpl extends RegionImpl implements ControlflowRegi
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
+    public boolean isAbort() {
+        return abort;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public void setAbort(boolean newAbort) {
+        boolean oldAbort = abort;
+        abort = newAbort;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.CONTROLFLOW_REGION__ABORT, oldAbort, abort));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     @SuppressWarnings("unchecked")
     @Override
     public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
@@ -180,6 +224,8 @@ public class ControlflowRegionImpl extends RegionImpl implements ControlflowRegi
                 return getStates();
             case SCChartsPackage.CONTROLFLOW_REGION__FINAL:
                 return isFinal();
+            case SCChartsPackage.CONTROLFLOW_REGION__ABORT:
+                return isAbort();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -200,6 +246,9 @@ public class ControlflowRegionImpl extends RegionImpl implements ControlflowRegi
             case SCChartsPackage.CONTROLFLOW_REGION__FINAL:
                 setFinal((Boolean)newValue);
                 return;
+            case SCChartsPackage.CONTROLFLOW_REGION__ABORT:
+                setAbort((Boolean)newValue);
+                return;
         }
         super.eSet(featureID, newValue);
     }
@@ -218,6 +267,9 @@ public class ControlflowRegionImpl extends RegionImpl implements ControlflowRegi
             case SCChartsPackage.CONTROLFLOW_REGION__FINAL:
                 setFinal(FINAL_EDEFAULT);
                 return;
+            case SCChartsPackage.CONTROLFLOW_REGION__ABORT:
+                setAbort(ABORT_EDEFAULT);
+                return;
         }
         super.eUnset(featureID);
     }
@@ -234,6 +286,8 @@ public class ControlflowRegionImpl extends RegionImpl implements ControlflowRegi
                 return states != null && !states.isEmpty();
             case SCChartsPackage.CONTROLFLOW_REGION__FINAL:
                 return final_ != FINAL_EDEFAULT;
+            case SCChartsPackage.CONTROLFLOW_REGION__ABORT:
+                return abort != ABORT_EDEFAULT;
         }
         return super.eIsSet(featureID);
     }
@@ -250,6 +304,8 @@ public class ControlflowRegionImpl extends RegionImpl implements ControlflowRegi
         StringBuilder result = new StringBuilder(super.toString());
         result.append(" (final: ");
         result.append(final_);
+        result.append(", abort: ");
+        result.append(abort);
         result.append(')');
         return result.toString();
     }

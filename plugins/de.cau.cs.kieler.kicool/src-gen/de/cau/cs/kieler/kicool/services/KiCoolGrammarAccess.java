@@ -998,8 +998,8 @@ public class KiCoolGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	//	access=AccessModifier? ('ref' reference=[annotations::NamedObject|NamespaceID] ('<'
 	//	genericParameters+=GenericParameter (',' genericParameters+=GenericParameter)* '>')?
 	//	|
-	//	'extern' extern+=ExternString (',' extern+=ExternString)*) valuedObjects+=ValuedObject (','
-	//	valuedObjects+=ValuedObject)* ';'
+	//	'extern' extern+=ExternString (',' extern+=ExternString)*) valuedObjects+=ReferenceValuedObject (','
+	//	valuedObjects+=ReferenceValuedObject)* ';'
 	//	annotations+=CommentAnnotatonSL?;
 	public KExtGrammarAccess.ReferenceDeclarationElements getReferenceDeclarationAccess() {
 		return gaKExt.getReferenceDeclarationAccess();
@@ -1014,8 +1014,8 @@ public class KiCoolGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	//	access=AccessModifier? ('ref' reference=[annotations::NamedObject|NamespaceID] ('<'
 	//	genericParameters+=GenericParameter (',' genericParameters+=GenericParameter)* '>')?
 	//	|
-	//	'extern' extern+=ExternString (',' extern+=ExternString)*) valuedObjects+=ValuedObject (','
-	//	valuedObjects+=ValuedObject)*
+	//	'extern' extern+=ExternString (',' extern+=ExternString)*) valuedObjects+=ReferenceValuedObject (','
+	//	valuedObjects+=ReferenceValuedObject)*
 	//	annotations+=CommentAnnotatonSL?;
 	public KExtGrammarAccess.ReferenceDeclarationWOSemicolonElements getReferenceDeclarationWOSemicolonAccess() {
 		return gaKExt.getReferenceDeclarationWOSemicolonAccess();
@@ -1172,8 +1172,7 @@ public class KiCoolGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	//// Examples: array[10], initial = false, z = 0 combine max
 	//ValuedObject kexpressions::ValuedObject:
 	//	annotations+=QuotedStringAnnotation*
-	//	name=PrimeID ('<' genericParameters+=GenericParameter (',' genericParameters+=GenericParameter)* '>')? ('['
-	//	cardinalities+=Expression ']')* ('=' initialValue=Expression)? ('combine'
+	//	name=PrimeID ('[' cardinalities+=Expression ']')* ('=' initialValue=Expression)? ('combine'
 	//	combineOperator=CombineOperator)? ('label' label=STRING)?;
 	public KExtGrammarAccess.ValuedObjectElements getValuedObjectAccess() {
 		return gaKExt.getValuedObjectAccess();
@@ -1181,6 +1180,19 @@ public class KiCoolGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	
 	public ParserRule getValuedObjectRule() {
 		return getValuedObjectAccess().getRule();
+	}
+	
+	//ReferenceValuedObject kexpressions::ValuedObject:
+	//	annotations+=QuotedStringAnnotation*
+	//	name=PrimeID ('[' cardinalities+=Expression ']')* ('<' genericParameters+=GenericParameter (','
+	//	genericParameters+=GenericParameter)* '>')? ('(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()')?
+	//	('label' label=STRING)?;
+	public KExtGrammarAccess.ReferenceValuedObjectElements getReferenceValuedObjectAccess() {
+		return gaKExt.getReferenceValuedObjectAccess();
+	}
+	
+	public ParserRule getReferenceValuedObjectRule() {
+		return getReferenceValuedObjectAccess().getRule();
 	}
 	
 	//SimpleValuedObject kexpressions::ValuedObject:
@@ -1826,6 +1838,7 @@ public class KiCoolGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	//	| RandomCall
 	//	| RandomizeCall
 	//	| ValuedObjectTestExpression // Last to allow detection of calls
+	//	| StaticAccessExpression
 	//	| TextExpression;
 	public KExpressionsGrammarAccess.AtomicExpressionElements getAtomicExpressionAccess() {
 		return gaKExpressions.getAtomicExpressionAccess();
@@ -1880,6 +1893,19 @@ public class KiCoolGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	
 	public ParserRule getValuedObjectTestExpressionRule() {
 		return getValuedObjectTestExpressionAccess().getRule();
+	}
+	
+	//// Accesses a arbitrary target in a static way (needs to be adjusted in the scoper of the deriving language)
+	//// Example: static(Constants).MAX
+	//StaticAccessExpression:
+	//	'static' '(' target=[annotations::NamedObject|PrimeID] ')'
+	//	'.' subReference=ValuedObjectReference;
+	public KExpressionsGrammarAccess.StaticAccessExpressionElements getStaticAccessExpressionAccess() {
+		return gaKExpressions.getStaticAccessExpressionAccess();
+	}
+	
+	public ParserRule getStaticAccessExpressionRule() {
+		return getStaticAccessExpressionAccess().getRule();
 	}
 	
 	//// ID with primes
