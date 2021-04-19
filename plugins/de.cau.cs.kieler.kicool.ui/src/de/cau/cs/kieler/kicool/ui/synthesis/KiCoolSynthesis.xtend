@@ -107,39 +107,6 @@ class KiCoolSynthesis extends AbstractDiagramSynthesis<System> {
         node.setProperty(LayeredOptions::SPACING_EDGE_NODE, 5.0)
         node.setProperty(LayeredOptions::SPACING_NODE_NODE, 2.0)
     }
-    public static val Injector KGTInjector = new KGraphStandaloneSetup().createInjectorAndDoEMFRegistration
-    
-    def static doesKGTExist(String bundleId, String resourceLocation, String skinPrefix) {
-        val newURI = URI.createPlatformPluginURI("/" + bundleId + "/" + skinPrefix + resourceLocation, true)
-        val newResourceSet = KGTInjector.getInstance(XtextResourceSet)
-        newResourceSet.addLoadOption(XtextResource.OPTION_RESOLVE_ALL, Boolean.FALSE)
-        val res = newResourceSet.createResource(newURI)
-        try {
-            res.load(newResourceSet.loadOptions)
-            (res.getContents().get(0) as KNode).children.head
-            return true
-        } catch (Exception e) {
-            return false
-        }
-    }
-    
-    /**
-     * Load a KGT from a bundle.
-     */
-    def static getKGTFromBundle(String bundleId, String resourceLocation, String skinPrefix) {
-        val newURI = URI.createPlatformPluginURI("/" + bundleId + "/" + skinPrefix + resourceLocation, true)
-        val newResourceSet = KGTInjector.getInstance(XtextResourceSet)
-        newResourceSet.addLoadOption(XtextResource.OPTION_RESOLVE_ALL, Boolean.FALSE)
-        val res = newResourceSet.createResource(newURI)
-        try {
-            res.load(newResourceSet.loadOptions)
-            val node = (res.getContents().get(0) as KNode).children.head
-            return node
-        } catch (Exception e) {
-            e.printStackTrace
-        }
-        return KGraphUtil::createInitializedNode
-    }
 
     def void flattenHierarchy(KNode rootNode) {
         for (node : rootNode.getKNodeIterator(false).toList) {

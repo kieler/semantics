@@ -32,6 +32,7 @@ import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kexpressions.kext.DeclarationScope
 import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
+import de.cau.cs.kieler.kicool.ui.synthesis.KGTLoader
 import de.cau.cs.kieler.kicool.ui.synthesis.KiCoolSynthesis
 import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.kgraph.KIdentifier
@@ -56,6 +57,7 @@ import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsDataflowRegionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsReferenceExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions
+import de.cau.cs.kieler.sccharts.ui.SCChartsUiModule
 import de.cau.cs.kieler.sccharts.ui.synthesis.actions.ReferenceExpandAction
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.EquationStyles
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.TransitionStyles
@@ -146,6 +148,11 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
 
     val HashMap<ReferenceDeclaration, KNode> referenceNodes = newHashMap
 
+    /** 
+     * Prefix for the resource location when loading KGTs from the bundle 
+     */
+    static val SKIN_BUNDLE_FOLDER = "resources/skins/"
+    static val SKIN_PREFIX_DEFAULT = "default/"
     static val ANNOTATION_FIGURE = "figure"
 
     static val PORT_LABEL_FONT_SIZE = 5
@@ -1036,36 +1043,22 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
     /**
      * create a single node from a kgt file
      */
-    private def KNode createKGTNode(
-        EObject createExtensionObject,
-        String figureId,
-        String label
-    ) {
-        if (createExtensionObject instanceof Annotatable) {
-            var annotationObject = createExtensionObject as Annotatable
-            if (annotationObject.hasAnnotation(ANNOTATION_FIGURE)) {
+    private def KNode createKGTNode(EObject obj, String figureId, String label) {
+        if (obj instanceof Annotatable) {
+            if (obj.hasAnnotation(ANNOTATION_FIGURE)) {
                 val path = getSkinPath(usedContext)
-                val kgt = path +
-                    if(!path.endsWith("/")) "/" + annotationObject.getStringAnnotationValue(ANNOTATION_FIGURE)
-                val sl = createExtensionObject.eResource?.URI?.segmentsList
-                if (sl !== null) {
-                    val nsl = sl.take(sl.length - 1).drop(1)
-                    val newURI = URI.createPlatformResourceURI(nsl.join("/") + "/" + kgt, false)
-
-                    val newResourceSet = KiCoolSynthesis.KGTInjector.getInstance(XtextResourceSet)
-                    newResourceSet.addLoadOption(XtextResource.OPTION_RESOLVE_ALL, Boolean.FALSE)
-                    val res = newResourceSet.createResource(newURI)
-
-                    try {
-                        res.load(newResourceSet.loadOptions)
-                        val node = (res.getContents().get(0) as KNode).children.head
+                val kgt = path + if(!path.empty && !path.endsWith("/")) "/" + obj.getStringAnnotationValue(ANNOTATION_FIGURE)
+                val uri = KGTLoader.createModelRelativeURI(obj, kgt)
+                if (uri !== null) {
+                    val node = KGTLoader.loadKGT(uri)
+                    if (node !== null) {
                         var List<ValuedObject> valuedObjects = null
-                        if (createExtensionObject instanceof DeclarationScope) {
-                            valuedObjects = createExtensionObject.asDeclarationScope.valuedObjects.filter [
+                        if (obj instanceof DeclarationScope) {
+                            valuedObjects = obj.asDeclarationScope.valuedObjects.filter [
                                 input || output
                             ].toList
-                        } else if (createExtensionObject instanceof ReferenceDeclaration) {
-                            valuedObjects = (createExtensionObject as ReferenceDeclaration).reference.
+                        } else if (obj instanceof ReferenceDeclaration) {
+                            valuedObjects = (obj as ReferenceDeclaration).reference.
                                 asDeclarationScope.valuedObjects.filter [
                                     input || output
                                 ].toList
@@ -1074,70 +1067,64 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                             for (p : node.eAllContents.filter(KPort).toList) {
                                 val id = p.data.filter(KIdentifier).head
                                 val v = valuedObjects.filter[it.name.equals(id.id)].head
-
+    
                                 p.associateWith(v)
                                 p.registerExistingPort(node, v)
                             }
                         }
                         return node
-                    } catch (Exception e) {
-                        e.printStackTrace()
                     }
                 }
             }
         }
         var showLabel = false
         // check if a figure file in the skin folder exists
-        if (createExtensionObject.eResource !== null && createExtensionObject.eResource.URI !== null) {
-            val sl = createExtensionObject.eResource.URI.segmentsList
-            val nsl = sl.take(sl.length - 1).drop(1)
-            val path = nsl.join("/") + "/" + getSkinPath(usedContext)
-            for (figure : defaultFigures.get(figureId) ?: #[]) {
-                val kgt = path + if(!path.endsWith("/")) "/" + figure
-                val newURI = URI.createPlatformResourceURI(kgt, false)
-                val newResourceSet = KiCoolSynthesis.KGTInjector.getInstance(XtextResourceSet)
-                newResourceSet.addLoadOption(XtextResource.OPTION_RESOLVE_ALL, Boolean.FALSE)
-                val res = newResourceSet.createResource(newURI)
-                try {
-                    res.load(newResourceSet.loadOptions)
-                    val node = (res.getContents().get(0) as KNode).children.head
-                    if (!label.nullOrEmpty && showLabel) {
-                        node.addNodeLabel(label, INPUT_OUTPUT_TEXT_SIZE)
+        if (obj.eResource !== null && obj.eResource.URI !== null) {
+            var path = getSkinPath(usedContext)
+            if (!path.nullOrEmpty) {
+                path += if(!path.empty && !path.endsWith("/")) "/"
+                for (figure : defaultFigures.get(figureId) ?: #[]) {
+                    val uri = KGTLoader.createModelRelativeURI(obj, path + figure)
+                    if (uri !== null) {
+                        val node = KGTLoader.loadKGT(uri)
+                        if (node !== null) {
+                            if (!label.nullOrEmpty && showLabel) {
+                                node.addNodeLabel(label, INPUT_OUTPUT_TEXT_SIZE)
+                            }
+                            return node
+                        }
                     }
-                    return node
-                } catch (Exception _) {
-                    showLabel = true
                 }
             }
+            showLabel = true
         }
         // check if the skin folder in inside of the plugin
-        val oldSkinPrefix = skinPrefix
-        skinPrefix = getSkinPath(usedContext)
-        skinPrefix += if(!skinPrefix.endsWith("/")) "/"
+        var skinPrefix = getSkinPath(usedContext)
+        skinPrefix += if(!skinPrefix.empty && !skinPrefix.endsWith("/")) "/"
         showLabel = false
         for (figure : defaultFigures.get(figureId) ?: #[]) {
-            if (doesKGTExist(figure)) {
-                val node = getKGTFromBundle(figure)
-                skinPrefix = oldSkinPrefix
+            val node = KGTLoader.loadFromBundle(this, SCChartsUiModule.PLUGIN_ID, SKIN_BUNDLE_FOLDER + skinPrefix + figure)
+            if (node !== null) {
                 if (!label.nullOrEmpty && showLabel) {
                     node.addNodeLabel(label, INPUT_OUTPUT_TEXT_SIZE)
                 }
                 return node
-            } else
+            } else {
                 showLabel = true
+            }
         }
-        skinPrefix = oldSkinPrefix
         showLabel = false
         // fall back to default figures
         for (figure : defaultFigures.get(figureId) ?: #[]) {
-            if (doesKGTExist(figure)) {
-                val node = getKGTFromBundle(figure)
+            val node = KGTLoader.loadFromBundle(this, SCChartsUiModule.PLUGIN_ID, SKIN_BUNDLE_FOLDER + SKIN_PREFIX_DEFAULT + figure)
+            if (node !== null) {
                 if (!label.nullOrEmpty && showLabel) {
                     node.addNodeLabel(label, INPUT_OUTPUT_TEXT_SIZE)
                 }
                 return node
-            } else
+            } else {
                 showLabel = true
+            }
         }
         throw new IllegalArgumentException("Resource not found")
     }

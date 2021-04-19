@@ -45,12 +45,6 @@ abstract class AbstractSubSynthesis<I extends EObject, O extends KGraphElement> 
      * The input type this synthesis handles 
      */
     protected final Type hookType
-    
-    /** 
-     * Prefix for the resource location when loading KGTs from the bundle 
-     */
-    protected static String SKIN_FOLDER = "resources/skins/"
-    protected static String skinPrefix = "default/"
 
     @Inject new() {
         var java.lang.reflect.Type[] generics = ((getClass().getGenericSuperclass() as ParameterizedType)).getActualTypeArguments()
@@ -142,17 +136,5 @@ abstract class AbstractSubSynthesis<I extends EObject, O extends KGraphElement> 
 
     def ViewContext getUsedContext() {
         return parent.getUsedContext()
-    }
-
-    def static doesKGTExist(String resourceLocation) {
-        KiCoolSynthesis.doesKGTExist(SCChartsUiModule.PLUGIN_ID, resourceLocation, SKIN_FOLDER + skinPrefix)
-    }
-    /** 
-     * Loads a KGT from the bundle.
-     * @param resourceLocation
-     * @return the KNode from the KGT
-     */
-    def static KNode getKGTFromBundle(String resourceLocation) {
-        return KiCoolSynthesis.getKGTFromBundle(SCChartsUiModule.PLUGIN_ID, resourceLocation, SKIN_FOLDER + skinPrefix)
     }
 }

@@ -145,10 +145,10 @@ import static picocli.CommandLine.Help.Column.Overflow.WRAP;
 public class CommandLine {
 
     /** This is picocli version {@value}. */
-    public static final String VERSION = "4.0.5-SNAPSHOT";
+    public static final String VERSION = "4.6.1";
 
     private final Tracer tracer = new Tracer();
-    private final CommandSpec commandSpec;
+    private CommandSpec commandSpec;
     private final Interpreter interpreter;
     private final IFactory factory;
 
@@ -218,12 +218,42 @@ public class CommandLine {
      * @throws InitializationException if the specified command object does not have a {@link Command}, {@link Option} or {@link Parameters} annotation
      * @since 2.2 */
     public CommandLine(Object command, IFactory factory) {
+        this(command, factory, true);
+    }
+
+    private CommandLine(Object command, IFactory factory, boolean userCalled) {
         this.factory = Assert.notNull(factory, "factory");
         interpreter = new Interpreter();
         commandSpec = CommandSpec.forAnnotatedObject(command, factory);
         commandSpec.commandLine(this);
+        if (userCalled) { this.applyModelTransformations(); }
         commandSpec.validate();
         if (commandSpec.unmatchedArgsBindings().size() > 0) { setUnmatchedArgumentsAllowed(true); }
+    }
+
+    /** Apply transformers to command spec recursively. */
+    private void applyModelTransformations() {
+        if (commandSpec.modelTransformer != null) {
+            commandSpec = commandSpec.modelTransformer.transform(commandSpec);
+        }
+        for (CommandLine cmd : getSubcommands().values()) {
+            cmd.applyModelTransformations();
+        }
+    }
+
+    private CommandLine copy() {
+        CommandLine result = new CommandLine(commandSpec.copy(), factory); // create a new sub-hierarchy
+        result.err = err;
+        result.out = out;
+        result.colorScheme = colorScheme;
+        result.executionStrategy = executionStrategy;
+        result.exitCodeExceptionMapper = exitCodeExceptionMapper;
+        result.executionExceptionHandler = executionExceptionHandler;
+        result.parameterExceptionHandler = parameterExceptionHandler;
+
+        result.interpreter.converterRegistry.clear();
+        result.interpreter.converterRegistry.putAll(interpreter.converterRegistry);
+        return result;
     }
 
     /**
@@ -255,14 +285,14 @@ public class CommandLine {
     public Map<String, Object> getMixins() {
         Map<String, CommandSpec> mixins = getCommandSpec().mixins();
         Map<String, Object> result = new LinkedHashMap<String, Object>();
-        for (String name : mixins.keySet()) { result.put(name, mixins.get(name).userObject); }
+        for (String name : mixins.keySet()) { result.put(name, mixins.get(name).userObject.getInstance()); }
         return result;
     }
 
     /** Registers a subcommand with the name obtained from the {@code @Command(name = "...")} {@linkplain Command#name() annotation attribute} of the specified command.
      * @param command the object to initialize with command line arguments following the subcommand name.
      *                This may be a {@code Class} that has a {@code @Command} annotation, or an instance of such a
-     *                class, or a {@code ComandSpec} or {@code CommandLine} instance with its own (nested) subcommands.
+     *                class, or a {@code CommandSpec} or {@code CommandLine} instance with its own (nested) subcommands.
      * @return this CommandLine object, to allow method chaining
      * @since 4.0
      * @throws InitializationException if no name could be found for the specified subcommand,
@@ -311,7 +341,7 @@ public class CommandLine {
      *             if this is also {@code null}, the first {@linkplain CommandSpec#aliases() alias} is used.
      * @param command the object to initialize with command line arguments following the subcommand name.
      *                This may be a {@code Class} that has a {@code @Command} annotation, or an instance of such a
-     *                class, or a {@code ComandSpec} or {@code CommandLine} instance with its own (nested) subcommands.
+     *                class, or a {@code CommandSpec} or {@code CommandLine} instance with its own (nested) subcommands.
      * @return this CommandLine object, to allow method chaining
      * @see #registerConverter(Class, ITypeConverter)
      * @since 0.9.7
@@ -330,7 +360,7 @@ public class CommandLine {
      *             if this is also {@code null}, the first {@linkplain CommandSpec#aliases() alias} is used.
      * @param command the object to initialize with command line arguments following the subcommand name.
      *                This may be a {@code Class} that has a {@code @Command} annotation, or an instance of such a
-     *                class, or a {@code ComandSpec} or {@code CommandLine} instance with its own (nested) subcommands.
+     *                class, or a {@code CommandSpec} or {@code CommandLine} instance with its own (nested) subcommands.
      * @param aliases zero or more alias names that are also recognized on the command line as this subcommand
      * @return this CommandLine object, to allow method chaining
      * @since 3.1
@@ -343,7 +373,6 @@ public class CommandLine {
         CommandLine subcommandLine = toCommandLine(command, factory);
         subcommandLine.getCommandSpec().aliases.addAll(Arrays.asList(aliases));
         getCommandSpec().addSubcommand(name, subcommandLine);
-        subcommandLine.getCommandSpec().initParentCommand(getCommandSpec().userObject());
         return this;
     }
     /** Returns a map with the subcommands {@linkplain #addSubcommand(String, Object) registered} on this instance.
@@ -351,7 +380,7 @@ public class CommandLine {
      * @since 0.9.7
      */
     public Map<String, CommandLine> getSubcommands() {
-        return new LinkedHashMap<String, CommandLine>(getCommandSpec().subcommands());
+        return new CaseAwareLinkedMap<String, CommandLine>(getCommandSpec().commands);
     }
     /**
      * Returns the command that this is a subcommand of, or {@code null} if this is a top-level command.
@@ -375,6 +404,11 @@ public class CommandLine {
         return (T) getCommandSpec().userObject();
     }
 
+    /** Returns the factory that this {@code CommandLine} was constructed with.
+     * @return the factory that this {@code CommandLine} was constructed with, never {@code null}
+     * @since 4.6 */
+    public IFactory getFactory() { return factory; }
+
     /** Returns {@code true} if an option annotated with {@link Option#usageHelp()} was specified on the command line.
      * @return whether the parser encountered an option annotated with {@link Option#usageHelp()}.
      * @since 0.9.8 */
@@ -384,7 +418,16 @@ public class CommandLine {
      * @return whether the parser encountered an option annotated with {@link Option#versionHelp()}.
      * @since 0.9.8 */
     public boolean isVersionHelpRequested() { return interpreter.parseResultBuilder != null && interpreter.parseResultBuilder.versionHelpRequested; }
-
+    /** Returns a new {@code Help} object created by the {@code IHelpFactory} with the {@code CommandSpec} and {@code ColorScheme} of this command.
+     * @see Help#Help(CommandSpec, Help.ColorScheme)
+     * @see #getHelpFactory()
+     * @see #getCommandSpec()
+     * @see #getColorScheme()
+     * @since 4.1
+     */
+    public Help getHelp() {
+        return getHelpFactory().create(getCommandSpec(), getColorScheme());
+    }
     /** Returns the {@code IHelpFactory} that is used to construct the usage help message.
      * @see #setHelpFactory(IHelpFactory)
      * @since 3.9
@@ -421,6 +464,7 @@ public class CommandLine {
      *   <li>{@link UsageMessageSpec#SECTION_KEY_DESCRIPTION_HEADING SECTION_KEY_DESCRIPTION_HEADING}</li>
      *   <li>{@link UsageMessageSpec#SECTION_KEY_DESCRIPTION SECTION_KEY_DESCRIPTION}</li>
      *   <li>{@link UsageMessageSpec#SECTION_KEY_PARAMETER_LIST_HEADING SECTION_KEY_PARAMETER_LIST_HEADING}</li>
+     *   <li>{@link UsageMessageSpec#SECTION_KEY_AT_FILE_PARAMETER SECTION_KEY_AT_FILE_PARAMETER}</li>
      *   <li>{@link UsageMessageSpec#SECTION_KEY_PARAMETER_LIST SECTION_KEY_PARAMETER_LIST}</li>
      *   <li>{@link UsageMessageSpec#SECTION_KEY_OPTION_LIST_HEADING SECTION_KEY_OPTION_LIST_HEADING}</li>
      *   <li>{@link UsageMessageSpec#SECTION_KEY_OPTION_LIST SECTION_KEY_OPTION_LIST}</li>
@@ -630,8 +674,7 @@ public class CommandLine {
     /** Returns whether the parser should trim quotes from command line arguments. The default is
      * read from the system property "picocli.trimQuotes" and will be {@code true} if the property is present and empty,
      * or if its value is "true".
-     * <p>
-     * If this property is set to {@code true}, the parser will remove quotes from the command line arguments, as follows:
+     * <p>If this property is set to {@code true}, the parser will remove quotes from the command line arguments, as follows:</p>
      * <ul>
      *   <li>if the command line argument contains just the leading and trailing quote, these quotes are removed</li>
      *   <li>if the command line argument contains more quotes than just the leading and trailing quote, the parser first
@@ -639,7 +682,6 @@ public class CommandLine {
      *   a quoted region should be ignored, so arguments like {@code "a,b","x,y"} are handled correctly.
      *   For arguments with nested quotes, quotes are removed later in the processing pipeline, after {@code split} operations are applied.</li>
      * </ul>
-     * </p>
      * @return {@code true} if the parser should trim quotes from command line arguments before processing them, {@code false} otherwise;
      * @see ParserSpec#trimQuotes()
      * @since 3.7 */
@@ -648,8 +690,7 @@ public class CommandLine {
     /** Sets whether the parser should trim quotes from command line arguments before processing them. The default is
      * read from the system property "picocli.trimQuotes" and will be {@code true} if the property is set and empty, or
      * if its value is "true".
-     * <p>
-     * If this property is set to {@code true}, the parser will remove quotes from the command line arguments, as follows:
+     * <p>If this property is set to {@code true}, the parser will remove quotes from the command line arguments, as follows:</p>
      * <ul>
      *   <li>if the command line argument contains just the leading and trailing quote, these quotes are removed</li>
      *   <li>if the command line argument contains more quotes than just the leading and trailing quote, the parser first
@@ -657,7 +698,6 @@ public class CommandLine {
      *   a quoted region should be ignored, so arguments like {@code "a,b","x,y"} are handled correctly.
      *   For arguments with nested quotes, quotes are removed later in the processing pipeline, after {@code split} operations are applied.</li>
      * </ul>
-     * </p>
      * <p>The specified setting will be registered with this {@code CommandLine} and the full hierarchy of its
      * subcommands and nested sub-subcommands <em>at the moment this method is called</em>. Subcommands added
      * later will have the default setting. To ensure a setting is applied to all
@@ -735,6 +775,109 @@ public class CommandLine {
         getCommandSpec().parser().endOfOptionsDelimiter(delimiter);
         for (CommandLine command : getCommandSpec().subcommands().values()) {
             command.setEndOfOptionsDelimiter(delimiter);
+        }
+        return this;
+    }
+
+    /** Returns whether upper case and lower case should be ignored when matching subcommands. The default is {@code false}.
+     * @return {@code true} if subcommands can be matched when they differ only in case from the {@code getCommandName()} value of a registered one, {@code false} otherwise.
+     *       For example, if true, for a subcommand with name {@code help}, inputs like {@code help}, {@code HeLp} and {@code HELP} are all recognized.
+     * @since 4.3 */
+    public boolean isSubcommandsCaseInsensitive() { return getCommandSpec().subcommandsCaseInsensitive(); }
+
+    /** Sets whether upper case and lower case should be ignored when matching subcommands. The default is {@code false}.
+     * For example, when set to {@code true}, for a subcommand with name {@code help}, inputs like {@code help}, {@code HeLp} and {@code HELP} are all recognized.
+     * <p>The specified setting will be registered with this {@code CommandLine} and the full hierarchy of its
+     * subcommands and nested sub-subcommands <em>at the moment this method is called</em>. Subcommands added
+     * later will have the default setting. To ensure a setting is applied to all
+     * subcommands, call the setter last, after adding subcommands.</p>
+     * @param newValue the new setting
+     * @return this {@code CommandLine} object, to allow method chaining
+     * @since 4.3
+     */
+    public CommandLine setSubcommandsCaseInsensitive(boolean newValue) {
+        getCommandSpec().subcommandsCaseInsensitive(newValue);
+        for (CommandLine command : getCommandSpec().subcommands().values()) {
+            command.setSubcommandsCaseInsensitive(newValue);
+        }
+        return this;
+    }
+
+    /** Returns whether upper case and lower case should be ignored when matching option names. The default is {@code false}.
+     * @return {@code true} if options can be matched when they differ only in case from the {@code names()} value of a registered one, {@code false} otherwise;
+     *       For example, if true, for an option with name {@code -h}, inputs like {@code -h}, {@code -H} are both recognized.
+     * @since 4.3 */
+    public boolean isOptionsCaseInsensitive() { return getCommandSpec().optionsCaseInsensitive(); }
+
+    /** Sets whether upper case and lower case should be ignored when matching option names. The default is {@code false}.
+     * For example, when set to {@code true}, for an option with name {@code -h}, inputs like {@code -h}, {@code -H} are both recognized.
+     * <p>The specified setting will be registered with this {@code CommandLine} and the full hierarchy of its
+     * subcommands and nested sub-subcommands <em>at the moment this method is called</em>. Subcommands added
+     * later will have the default setting. To ensure a setting is applied to all
+     * subcommands, call the setter last, after adding subcommands.</p>
+     * Note that changing case sensitivity will also change the case sensitivity of {@linkplain Option#negatable() negatable} options:
+     * any custom {@link INegatableOptionTransformer} that was previously installed will be replaced by the case-insensitive
+     * version of the default transformer. To ensure your custom transformer is used, install it last, after changing case sensitivity.
+     * @param newValue the new setting
+     * @return this {@code CommandLine} object, to allow method chaining
+     * @since 4.3
+     */
+    public CommandLine setOptionsCaseInsensitive(boolean newValue) {
+        getCommandSpec().optionsCaseInsensitive(newValue);
+        for (CommandLine command : getCommandSpec().subcommands().values()) {
+            command.setOptionsCaseInsensitive(newValue);
+        }
+        return this;
+    }
+
+    /** Returns whether abbreviation of subcommands should be allowed when matching subcommands. The default is {@code false}.
+     * @return {@code true} if subcommands can be matched when they are abbrevations of the {@code getCommandName()} value of a registered one, {@code false} otherwise.
+     *       For example, if true, for a subcommand with name {@code helpCommand}, inputs like {@code h}, {@code h-c} and {@code hC} are all recognized.
+     * @since 4.4 */
+    public boolean isAbbreviatedSubcommandsAllowed() {
+        return getCommandSpec().parser().abbreviatedSubcommandsAllowed();
+    }
+
+    /** Sets whether abbreviated subcommands should be matched. The default is {@code false}.
+     * For example, when set to {@code true}, for a subcommand {@code helpCommand}, inputs like {@code h}, {@code h-c} and {@code hC} are all recognized.
+     * <p>The specified setting will be registered with this {@code CommandLine} and the full hierarchy of its
+     * subcommands and nested sub-subcommands <em>at the moment this method is called</em>. Subcommands added
+     * later will have the default setting. To ensure a setting is applied to all
+     * subcommands, call the setter last, after adding subcommands.</p>
+     * @param newValue the new setting
+     * @return this {@code CommandLine} object, to allow method chaining
+     * @since 4.4
+     */
+    public CommandLine setAbbreviatedSubcommandsAllowed(boolean newValue) {
+        getCommandSpec().parser().abbreviatedSubcommandsAllowed(newValue);
+        for (CommandLine command : getCommandSpec().subcommands().values()) {
+            command.setAbbreviatedSubcommandsAllowed(newValue);
+        }
+        return this;
+    }
+
+    /** Returns whether abbreviation of option names should be allowed when matching options. The default is {@code false}.
+     * @return {@code true} if options can be matched when they are abbrevations of the {@code names()} value of a registered one, {@code false} otherwise.
+     *       For example, if true, for a subcommand with name {@code --helpMe}, inputs like {@code --h}, {@code --h-m} and {@code --hM} are all recognized.
+     * @since 4.4 */
+    public boolean isAbbreviatedOptionsAllowed() {
+        return getCommandSpec().parser().abbreviatedOptionsAllowed();
+    }
+
+    /** Sets whether abbreviated option names should be matched. The default is {@code false}.
+     * For example, when set to {@code true}, for an option with name {@code --helpMe}, inputs like {@code --h}, {@code --h-m} and {@code --hM} are all recognized.
+     * <p>The specified setting will be registered with this {@code CommandLine} and the full hierarchy of its
+     * subcommands and nested sub-subcommands <em>at the moment this method is called</em>. Subcommands added
+     * later will have the default setting. To ensure a setting is applied to all
+     * subcommands, call the setter last, after adding subcommands.</p>
+     * @param newValue the new setting
+     * @return this {@code CommandLine} object, to allow method chaining
+     * @since 4.4
+     */
+    public CommandLine setAbbreviatedOptionsAllowed(boolean newValue) {
+        getCommandSpec().parser().abbreviatedOptionsAllowed(newValue);
+        for (CommandLine command : getCommandSpec().subcommands().values()) {
+            command.setAbbreviatedOptionsAllowed(newValue);
         }
         return this;
     }
@@ -830,6 +973,33 @@ public class CommandLine {
         return this;
     }
 
+    /** Returns whether options can have parameter values that resemble an option, or whether such values should be rejected as unknown options.
+     * The default is {@code true}, so by default input like {@code -x=-unknown} is accepted if {@code -x} is an option that takes a String parameter.
+     * @return {@code true} when options can have parameter values that resemble an option, {@code false} when such values should be rejected as unknown options
+     * @since 4.4
+     */
+    public boolean isUnmatchedOptionsAllowedAsOptionParameters() {
+        return getCommandSpec().parser().unmatchedOptionsAllowedAsOptionParameters();
+    }
+
+    /** Sets whether options can have parameter values that resemble an option, or whether such values should be rejected as unknown options.
+     * The default is {@code false}, so by default
+     * input like {@code -x=-unknown} is accepted if {@code -x} is an option that takes a String parameter.
+     * <p>The specified setting will be registered with this {@code CommandLine} and the full hierarchy of its
+     * subcommands and nested sub-subcommands <em>at the moment this method is called</em>. Subcommands added
+     * later will have the default setting. To ensure a setting is applied to all
+     * subcommands, call the setter last, after adding subcommands.</p>
+     * @param newValue the new setting. When {@code true}, options can have parameter values that resemble an option, when {@code false}, such values are rejected as unknown options
+     * @return this {@code CommandLine} object, to allow method chaining
+     * @since 4.4
+     */
+    public CommandLine setUnmatchedOptionsAllowedAsOptionParameters(boolean newValue) {
+        getCommandSpec().parser().unmatchedOptionsAllowedAsOptionParameters(newValue);
+        for (CommandLine command : getCommandSpec().subcommands().values()) {
+            command.setUnmatchedOptionsAllowedAsOptionParameters(newValue);
+        }
+        return this;
+    }
     /** Returns whether arguments on the command line that resemble an option should be treated as positional parameters.
      * The default is {@code false} and the parser behaviour depends on {@link #isUnmatchedArgumentsAllowed()}.
      * @return {@code true} arguments on the command line that resemble an option should be treated as positional parameters, {@code false} otherwise
@@ -1035,7 +1205,10 @@ public class CommandLine {
      * By <a href="http://www.gnu.org/prep/standards/html_node/_002d_002dhelp.html">convention</a>, when the user requests
      * help with a {@code --help} or similar option, the usage help message is printed to the standard output stream so that it can be easily searched and paged.</p>
      * @since 4.0 */
-    public PrintWriter getOut() { return out != null ? out : new PrintWriter(System.out, true); }
+    public PrintWriter getOut() {
+        if (out == null) { setOut(new PrintWriter(System.out, true)); }
+        return out;
+    }
 
     /** Sets the writer to use when printing user-requested usage help or version help during command {@linkplain #execute(String...) execution}.
      * <p>This method is used by {@link #execute(String...)}. Custom {@link IExecutionStrategy IExecutionStrategy} implementations should also use this writer.</p>
@@ -1059,7 +1232,10 @@ public class CommandLine {
      * {@link IParameterExceptionHandler IParameterExceptionHandler} and {@link IExecutionExceptionHandler IExecutionExceptionHandler} implementations
      * should use this writer to print error messages (which may include a usage help message) when an unexpected error occurs.</p>
      * @since 4.0 */
-    public PrintWriter getErr() { return err != null ? err : new PrintWriter(System.err, true); }
+    public PrintWriter getErr() {
+        if (err == null) { setErr(new PrintWriter(System.err, true)); }
+        return err;
+    }
 
     /** Sets the writer to use when printing diagnostic (error) messages during command {@linkplain #execute(String...) execution}.
      * <p>This method is used by {@link #execute(String...)}.
@@ -1124,8 +1300,36 @@ public class CommandLine {
      * Returns the handler for dealing with invalid user input when the command is {@linkplain #execute(String...) executed}.
      * <p>The default implementation prints an error message describing the problem, followed by either {@linkplain UnmatchedArgumentException#printSuggestions(PrintWriter) suggested alternatives}
      * for mistyped options, or the full {@linkplain #usage(PrintWriter, Help.ColorScheme) usage} help message of the {@linkplain ParameterException#getCommandLine() problematic command};
-     * it then delegates to the {@linkplain #getExitCodeExceptionMapper() exit code execution mapper} for an exit code, with
+     * it then delegates to the {@linkplain #getExitCodeExceptionMapper() exit code exception mapper} for an exit code, with
      * {@link CommandSpec#exitCodeOnInvalidInput() exitCodeOnInvalidInput} as the default exit code.</p>
+     * <p>
+     * Alternatively, you can install a "short error message handler" like this:
+     * </p>
+     * <pre>
+     * static class ShortErrorMessageHandler implements IParameterExceptionHandler {
+     *     public int handleParseException(ParameterException ex, String[] args) {
+     *         CommandLine cmd = ex.getCommandLine();
+     *         PrintWriter writer = cmd.getErr();
+     *
+     *         writer.println(ex.getMessage());
+     *         UnmatchedArgumentException.printSuggestions(ex, writer);
+     *         writer.print(cmd.getHelp().fullSynopsis());
+     *
+     *         CommandSpec spec = cmd.getCommandSpec();
+     *         writer.printf("Try '%s --help' for more information.%n", spec.qualifiedName());
+     *
+     *         return cmd.getExitCodeExceptionMapper() != null
+     *                     ? cmd.getExitCodeExceptionMapper().getExitCode(ex)
+     *                     : spec.exitCodeOnInvalidInput();
+     *     }
+     * }
+     * </pre>
+     * <p>Install this error handler like this:</p>
+     * <pre>
+     * new CommandLine(new MyApp())
+     *     .setParameterExceptionHandler(new ShortErrorMessageHandler())
+     *     .execute(args);
+     * </pre>
      * @return the handler for dealing with invalid user input
      * @since 4.0 */
     public IParameterExceptionHandler getParameterExceptionHandler() { return parameterExceptionHandler; }
@@ -1138,6 +1342,7 @@ public class CommandLine {
      * subcommands, call the setter last, after adding subcommands.</p>
      * @param parameterExceptionHandler  the new handler for dealing with invalid user input
      * @return this CommandLine for method chaining
+     * @see #getParameterExceptionHandler()  an example short exception handler
      * @since 4.0 */
     public CommandLine setParameterExceptionHandler(IParameterExceptionHandler parameterExceptionHandler) {
         this.parameterExceptionHandler = Assert.notNull(parameterExceptionHandler, "parameterExceptionHandler");
@@ -1231,7 +1436,8 @@ public class CommandLine {
         return cli.getCommand();
     }
 
-    /** Parses the specified command line arguments and returns a list of {@code CommandLine} objects representing the
+    /** Expands any {@linkplain CommandLine#isExpandAtFiles() @-files} in the specified command line arguments, then
+     * parses the arguments and returns a list of {@code CommandLine} objects representing the
      * top-level command and any subcommands (if any) that were recognized and initialized during the parsing process.
      * <p>
      * If parsing succeeds, the first element in the returned list is always {@code this CommandLine} object. The
@@ -1253,7 +1459,8 @@ public class CommandLine {
     @Deprecated public List<CommandLine> parse(String... args) {
         return interpreter.parse(args);
     }
-    /** Parses the specified command line arguments and returns a list of {@code ParseResult} with the options, positional
+    /** Expands any {@linkplain CommandLine#isExpandAtFiles() @-files} in the specified command line arguments, then
+     * parses the arguments and returns a {@code ParseResult} with the options, positional
      * parameters, and subcommands (if any) that were recognized and initialized during the parsing process.
      * <p>If parsing fails, a {@link ParameterException} is thrown.</p>
      * <p>All this method does is parse the arguments and populate the annotated fields and methods.
@@ -1312,7 +1519,7 @@ public class CommandLine {
      * @see RunAll
      * @deprecated Use {@link IExecutionStrategy} instead.
      * @since 2.0 */
-    @Deprecated public static interface IParseResultHandler {
+    @Deprecated public interface IParseResultHandler {
         /** Processes a List of {@code CommandLine} objects resulting from successfully
          * {@linkplain #parse(String...) parsing} the command line arguments and optionally returns a list of results.
          * @param parsedCommands the {@code CommandLine} objects that resulted from successfully parsing the command line arguments
@@ -1346,7 +1553,7 @@ public class CommandLine {
      * @see RunAll
      * @deprecated use {@link IExecutionStrategy} instead, see {@link #execute(String...)}
      * @since 3.0 */
-    @Deprecated public static interface IParseResultHandler2<R> {
+    @Deprecated public interface IParseResultHandler2<R> {
         /** Processes the {@code ParseResult} object resulting from successfully
          * {@linkplain CommandLine#parseArgs(String...) parsing} the command line arguments and returns a return value.
          * @param parseResult the {@code ParseResult} that resulted from successfully parsing the command line arguments
@@ -1398,7 +1605,7 @@ public class CommandLine {
      * </p>
      * @deprecated see {@link #execute(String...)}, {@link IParameterExceptionHandler} and {@link IExecutionExceptionHandler}
      * @since 2.0 */
-    @Deprecated public static interface IExceptionHandler {
+    @Deprecated public interface IExceptionHandler {
         /** Handles a {@code ParameterException} that occurred while {@linkplain #parse(String...) parsing} the command
          * line arguments and optionally returns a list of results.
          * @param ex the ParameterException describing the problem that occurred while parsing the command line arguments,
@@ -1423,7 +1630,7 @@ public class CommandLine {
      * @see DefaultExceptionHandler
      * @deprecated see {@link #execute(String...)}, {@link IParameterExceptionHandler} and {@link IExecutionExceptionHandler}
      * @since 3.0 */
-    @Deprecated public static interface IExceptionHandler2<R> {
+    @Deprecated public interface IExceptionHandler2<R> {
         /** Handles a {@code ParameterException} that occurred while {@linkplain #parseArgs(String...) parsing} the command
          * line arguments and optionally returns a list of results.
          * @param ex the ParameterException describing the problem that occurred while parsing the command line arguments,
@@ -1600,7 +1807,7 @@ public class CommandLine {
      * @since 2.0 */
     @Deprecated public static class DefaultExceptionHandler<R> extends AbstractHandler<R, DefaultExceptionHandler<R>> implements IExceptionHandler, IExceptionHandler2<R> {
         public List<Object> handleException(ParameterException ex, PrintStream out, Help.Ansi ansi, String... args) {
-            internalHandleParseException(ex, new PrintWriter(out, true), Help.defaultColorScheme(ansi)); return Collections.<Object>emptyList(); }
+            internalHandleParseException(ex, new PrintWriter(out, true), Help.defaultColorScheme(ansi)); return Collections.emptyList(); }
 
         /** Prints the message of the specified exception, followed by the usage message for the command or subcommand
          * whose input was invalid, to the stream returned by {@link #err()}.
@@ -1613,9 +1820,13 @@ public class CommandLine {
             internalHandleParseException(ex, new PrintWriter(err(), true), colorScheme()); return returnResultOrExit(null); }
 
         static void internalHandleParseException(ParameterException ex, PrintWriter writer, Help.ColorScheme colorScheme) {
-            writer.println(ex.getMessage());
+            writer.println(colorScheme.errorText(ex.getMessage()));
             if (!UnmatchedArgumentException.printSuggestions(ex, writer)) {
                 ex.getCommandLine().usage(writer, colorScheme);
+            }
+            Tracer tracer = new Tracer();
+            if (tracer.isDebug()) { // #956 show error details if DEBUG is enabled
+                ex.printStackTrace(tracer.stream);
             }
         }
         /** This implementation always simply rethrows the specified exception.
@@ -1699,8 +1910,7 @@ public class CommandLine {
     }
     /** @since 4.0 */
     static Integer executeHelpRequest(List<CommandLine> parsedCommands) {
-        for (int i = 0; i < parsedCommands.size(); i++) {
-            CommandLine parsed = parsedCommands.get(i);
+        for (CommandLine parsed : parsedCommands) {
             Help.ColorScheme colorScheme = parsed.getColorScheme();
             PrintWriter out = parsed.getOut();
             if (parsed.isUsageHelpRequested()) {
@@ -1754,7 +1964,7 @@ public class CommandLine {
         } else if (command instanceof Method) {
             try {
                 Method method = (Method) command;
-                Object[] parsedArgs = parsed.getCommandSpec().argValues();
+                Object[] parsedArgs = parsed.getCommandSpec().commandMethodParamValues();
                 Object executionResult;
                 if (Modifier.isStatic(method.getModifiers())) {
                     executionResult = method.invoke(null, parsedArgs); // invoke static method
@@ -1779,7 +1989,11 @@ public class CommandLine {
                 throw new ExecutionException(parsed, "Unhandled error while calling command (" + command + "): " + ex, ex);
             }
         }
-        throw new ExecutionException(parsed, "Parsed command (" + command + ") is not a Method, Runnable or Callable");
+        if (parsed.getSubcommands().isEmpty()) {
+            throw new ExecutionException(parsed, "Parsed command (" + command + ") is not a Method, Runnable or Callable");
+        } else {
+            throw new ParameterException(parsed, "Missing required subcommand");
+        }
     }
 
     /**
@@ -1870,7 +2084,6 @@ public class CommandLine {
             }
         } catch (ExecutionException ex) {
             try {
-                @SuppressWarnings("unchecked")
                 Exception cause = ex.getCause() instanceof Exception ? (Exception) ex.getCause() : ex;
                 return getExecutionExceptionHandler().handleExecutionException(cause, ex.getCommandLine(), parseResult[0]);
             } catch (Exception ex2) {
@@ -1881,8 +2094,39 @@ public class CommandLine {
         }
     }
     private static int handleUnhandled(Exception ex, CommandLine cmd, int defaultExitCode) {
-        ex.printStackTrace(cmd.getErr());
+        cmd.getErr().print(throwableToColorString(ex, cmd.getColorScheme()));
+        cmd.getErr().flush();
         return mappedExitCode(ex, cmd.getExitCodeExceptionMapper(), defaultExitCode);
+    }
+
+    /**
+     * Convert a {@code Throwable} to a {@code String} , with message and stack traces extracted and colored
+     * according to {@code ColorScheme}.
+     * @param t the {@code Throwable} to be converted
+     * @param existingColorScheme the {@code ColorScheme} to use
+     * @return converted and colored {@code String}
+     */
+    private static String throwableToColorString(Throwable t, Help.ColorScheme existingColorScheme) {
+        Help.ColorScheme colorScheme = new Help.ColorScheme.Builder(existingColorScheme).applySystemProperties().build();
+        StringWriter stringWriter = new ColoredStackTraceWriter(colorScheme);
+        t.printStackTrace(new PrintWriter(stringWriter));
+        return stringWriter.toString();
+    }
+
+    /**
+     * Extends StringWriter to use ColorScheme. Allows separating
+     * exception messages from stack traces by intercepting write method.
+     */
+    static class ColoredStackTraceWriter extends StringWriter {
+        Help.ColorScheme colorScheme;
+
+        public ColoredStackTraceWriter(Help.ColorScheme colorScheme) { this.colorScheme = colorScheme; }
+
+        @Override
+        public void write(String str, int off, int len) {
+            List<IStyle> styles = str.startsWith("\t") ? colorScheme.stackTraceStyles() : colorScheme.errorStyles();
+            super.write(colorScheme.apply(str.substring(off, len), styles).toString());
+        }
     }
 
     private <T> T enrichForBackwardsCompatibility(T obj) {
@@ -1943,7 +2187,7 @@ public class CommandLine {
             for (IExitCodeGenerator generator : exitCodeGenerators) {
                 try {
                     int exitCode = generator.getExitCode();
-                    if ((exitCode > 0 && exitCode > result) || (exitCode < 0 && result <= 0 && exitCode < result)) {
+                    if ((exitCode > 0 && exitCode > result) || (exitCode < result && result <= 0)) {
                         result = exitCode;
                     }
                 } catch (Exception ex) {
@@ -1955,8 +2199,8 @@ public class CommandLine {
                 List<?> resultList = (List<?>) executionResult;
                 for (Object obj : resultList) {
                     if (obj instanceof Integer) {
-                        Integer exitCode = (Integer) obj;
-                        if ((exitCode > 0 && exitCode > result) || (exitCode < 0 && result <= 0 && exitCode < result)) {
+                        int exitCode = (Integer) obj;
+                        if ((exitCode > 0 && exitCode > result) || (exitCode < result && result <= 0)) {
                             result = exitCode;
                         }
                     }
@@ -1983,7 +2227,6 @@ public class CommandLine {
      * {@code Runnable} or {@code Callable} command.
      * For use by the {@link #execute(String...) execute} method.
      * @since 2.0 */
-    @SuppressWarnings("deprecation")
     public static class RunFirst extends AbstractParseResultHandler<List<Object>> implements IParseResultHandler {
         /** Prints help if requested, and otherwise executes the top-level {@code Runnable} or {@code Callable} command.
          * Finally, either a list of result objects is returned, or the JVM is terminated if an exit code {@linkplain #andExit(int) was set}.
@@ -2020,7 +2263,7 @@ public class CommandLine {
 
         protected List<IExitCodeGenerator> extractExitCodeGenerators(ParseResult parseResult) {
             if (parseResult.commandSpec().userObject() instanceof IExitCodeGenerator) {
-                return Arrays.asList((IExitCodeGenerator) parseResult.commandSpec().userObject());
+                return Collections.singletonList((IExitCodeGenerator) parseResult.commandSpec().userObject());
             }
             return Collections.emptyList();
         }
@@ -2065,12 +2308,13 @@ public class CommandLine {
      * and {@link #call(Callable, PrintStream, PrintStream, Help.Ansi, String...) call} convenience methods.
      * </p>
      * @since 2.0 */
-    @SuppressWarnings("deprecation")
     public static class RunLast extends AbstractParseResultHandler<List<Object>> implements IParseResultHandler {
         /** Prints help if requested, and otherwise executes the most specific {@code Runnable} or {@code Callable} subcommand.
-         * Finally, either a list of result objects is returned, or the JVM is terminated if an exit code {@linkplain #andExit(int) was set}.
-         * If the last (sub)command does not implement either {@code Runnable} or {@code Callable}, an {@code ExecutionException}
-         * is thrown detailing the problem and capturing the offending {@code CommandLine} object.
+         * <p>For {@linkplain Command#subcommandsRepeatable() repeatable subcommands}, this method
+         * may execute multiple subcommands: the most deeply nested subcommands that have the same parent command.</p>
+         * <p>Finally, either a list of result objects is returned, or the JVM is terminated if an exit code {@linkplain #andExit(int) was set}.</p>
+         * <p>If the last (sub)command does not implement either {@code Runnable} or {@code Callable}, an {@code ExecutionException}
+         * is thrown detailing the problem and capturing the offending {@code CommandLine} object.</p>
          *
          * @param parsedCommands the {@code CommandLine} objects that resulted from successfully parsing the command line arguments
          * @param out the {@code PrintStream} to print help to if requested
@@ -2084,11 +2328,13 @@ public class CommandLine {
          */
         public List<Object> handleParseResult(List<CommandLine> parsedCommands, PrintStream out, Help.Ansi ansi) {
             if (printHelpIfRequested(parsedCommands, out, err(), ansi)) { return returnResultOrExit(Collections.emptyList()); }
-            return returnResultOrExit(executeUserObject(parsedCommands.get(parsedCommands.size() - 1), new ArrayList<Object>()));
+            return returnResultOrExit(executeUserObjectOfLastSubcommandWithSameParent(parsedCommands));
         }
         /** Executes the most specific {@code Runnable} or {@code Callable} subcommand.
-         * If the last (sub)command does not implement either {@code Runnable} or {@code Callable} and is not a {@code Method}, an {@code ExecutionException}
-         * is thrown detailing the problem and capturing the offending {@code CommandLine} object.
+         * <p>For {@linkplain Command#subcommandsRepeatable() repeatable subcommands}, this method
+         * may execute multiple subcommands: the most deeply nested subcommands that have the same parent command.</p>
+         * <p>If the user object of the executed (sub)command does not implement either {@code Runnable} or {@code Callable} and is not a {@code Method}, an {@code ExecutionException}
+         * is thrown detailing the problem and capturing the offending {@code CommandLine} object.</p>
          *
          * @param parseResult the {@code ParseResult} that resulted from successfully parsing the command line arguments
          * @return an empty list if help was requested, or a list containing a single element: the result of calling the
@@ -2097,14 +2343,35 @@ public class CommandLine {
          *      {@link ExecutionException#getCommandLine()} to get the command or subcommand where processing failed
          * @since 3.0 */
         protected List<Object> handle(ParseResult parseResult) throws ExecutionException {
-            List<CommandLine> parsedCommands = parseResult.asCommandLineList();
-            return executeUserObject(parsedCommands.get(parsedCommands.size() - 1), new ArrayList<Object>());
+            return executeUserObjectOfLastSubcommandWithSameParent(parseResult.asCommandLineList());
         }
+        private static List<Object> executeUserObjectOfLastSubcommandWithSameParent(List<CommandLine> parsedCommands) {
+            int start = indexOfLastSubcommandWithSameParent(parsedCommands);
+            List<Object> result = new ArrayList<Object>();
+            for (int i = start; i < parsedCommands.size(); i++) {
+                executeUserObject(parsedCommands.get(i), result);
+            }
+            return result;
+        }
+        // find list of most deeply nested sub-(sub*)-commands
+        private static int indexOfLastSubcommandWithSameParent(List<CommandLine> parsedCommands) {
+            int start = parsedCommands.size() - 1;
+            for (int i = parsedCommands.size() - 2; i >= 0; i--) {
+                if (parsedCommands.get(i).getParent() != parsedCommands.get(i + 1).getParent()) { break; }
+                start = i;
+            }
+            return start;
+        }
+
         protected List<IExitCodeGenerator> extractExitCodeGenerators(ParseResult parseResult) {
             List<CommandLine> parsedCommands = parseResult.asCommandLineList();
-            Object userObject = parsedCommands.get(parsedCommands.size() - 1).getCommandSpec().userObject();
-            if (userObject instanceof IExitCodeGenerator) { return Arrays.asList((IExitCodeGenerator) userObject); }
-            return Collections.emptyList();
+            int start = indexOfLastSubcommandWithSameParent(parsedCommands);
+            List<IExitCodeGenerator> result = new ArrayList<IExitCodeGenerator>();
+            for (int i = start; i < parsedCommands.size(); i++) {
+                Object userObject = parsedCommands.get(i).getCommandSpec().userObject();
+                if (userObject instanceof IExitCodeGenerator) { result.add((IExitCodeGenerator) userObject); }
+            }
+            return result;
         }
         @Override protected RunLast self() { return this; }
     }
@@ -2113,7 +2380,6 @@ public class CommandLine {
      * all subcommands as {@code Runnable}, {@code Callable} or {@code Method}.
      * For use by the {@link #execute(String...) execute} method.
      * @since 2.0 */
-    @SuppressWarnings("deprecation")
     public static class RunAll extends AbstractParseResultHandler<List<Object>> implements IParseResultHandler {
         /** Prints help if requested, and otherwise executes the top-level command and all subcommands as {@code Runnable},
          * {@code Callable} or {@code Method}. Finally, either a list of result objects is returned, or the JVM is terminated if an exit
@@ -2150,20 +2416,22 @@ public class CommandLine {
          *      {@link ExecutionException#getCommandLine()} to get the command or subcommand where processing failed
          * @since 3.0 */
         protected List<Object> handle(ParseResult parseResult) throws ExecutionException {
-            List<Object> result = new ArrayList<Object>();
+            return returnResultOrExit(recursivelyExecuteUserObject(parseResult, new ArrayList<Object>()));
+        }
+        private List<Object> recursivelyExecuteUserObject(ParseResult parseResult, List<Object> result) throws ExecutionException {
             executeUserObject(parseResult.commandSpec().commandLine(), result);
-            while (parseResult.hasSubcommand()) {
-                parseResult = parseResult.subcommand();
-                executeUserObject(parseResult.commandSpec().commandLine(), result);
+            for (ParseResult pr : parseResult.subcommands()) {
+                recursivelyExecuteUserObject(pr, result);
             }
-            return returnResultOrExit(result);
+            return result;
         }
         protected List<IExitCodeGenerator> extractExitCodeGenerators(ParseResult parseResult) {
-            List<IExitCodeGenerator> result = new ArrayList<IExitCodeGenerator>();
+            return recursivelyExtractExitCodeGenerators(parseResult, new ArrayList<IExitCodeGenerator>());
+        }
+        private List<IExitCodeGenerator> recursivelyExtractExitCodeGenerators(ParseResult parseResult, List<IExitCodeGenerator> result) throws ExecutionException {
             if (parseResult.commandSpec().userObject() instanceof IExitCodeGenerator) { result.add((IExitCodeGenerator) parseResult.commandSpec().userObject()); }
-            while (parseResult.hasSubcommand()) {
-                parseResult = parseResult.subcommand();
-                if (parseResult.commandSpec().userObject() instanceof IExitCodeGenerator) { result.add((IExitCodeGenerator) parseResult.commandSpec().userObject()); }
+            for (ParseResult pr : parseResult.subcommands()) {
+                recursivelyExtractExitCodeGenerators(pr, result);
             }
             return result;
         }
@@ -2386,7 +2654,7 @@ public class CommandLine {
     /** Similar to {@link #usage(PrintStream)}, but returns the usage help message as a String instead of printing it to the {@code PrintStream}.
      * @since 3.2 */
     public String getUsageMessage() {
-        return usage(new StringBuilder(), getHelpFactory().create(getCommandSpec(), getColorScheme())).toString();
+        return usage(new StringBuilder(), getHelp()).toString();
     }
     /** Similar to {@link #usage(PrintStream, Help.Ansi)}, but returns the usage help message as a String instead of printing it to the {@code PrintStream}.
      * @since 3.2 */
@@ -2428,7 +2696,7 @@ public class CommandLine {
      */
     public void printVersionHelp(PrintStream out, Help.Ansi ansi) {
         for (String versionInfo : getCommandSpec().version()) {
-            out.println(ansi.new Text(versionInfo));
+            out.println(ansi.new Text(versionInfo, getColorScheme()));
         }
         out.flush();
     }
@@ -2447,7 +2715,7 @@ public class CommandLine {
      */
     public void printVersionHelp(PrintStream out, Help.Ansi ansi, Object... params) {
         for (String versionInfo : getCommandSpec().version()) {
-            out.println(ansi.new Text(format(versionInfo, params)));
+            out.println(ansi.new Text(format(versionInfo, params), getColorScheme()));
         }
         out.flush();
     }
@@ -2470,7 +2738,7 @@ public class CommandLine {
      * @since 4.0 */
     public void printVersionHelp(PrintWriter out, Help.Ansi ansi, Object... params) {
         for (String versionInfo : getCommandSpec().version()) {
-            out.println(ansi.new Text(format(versionInfo, params)));
+            out.println(ansi.new Text(format(versionInfo, params), getColorScheme()));
         }
         out.flush();
     }
@@ -2935,9 +3203,14 @@ public class CommandLine {
      * @since 3.6.0
      */
     public static List<Method> getCommandMethods(Class<?> cls, String methodName) {
+        return getCommandMethods(cls, methodName, true);
+    }
+    private static List<Method> getCommandMethods(Class<?> cls, String methodName, boolean includeInherited) {
         Set<Method> candidates = new HashSet<Method>();
-        // traverse public member methods (excludes static/non-public, includes inherited)
-        candidates.addAll(Arrays.asList(Assert.notNull(cls, "class").getMethods()));
+        if (includeInherited) {
+            // traverse public member methods (excludes static/non-public, includes inherited)
+            candidates.addAll(Arrays.asList(Assert.notNull(cls, "class").getMethods()));
+        }
         // traverse directly declared methods (includes static/non-public, excludes inherited)
         candidates.addAll(Arrays.asList(Assert.notNull(cls, "class").getDeclaredMethods()));
 
@@ -3070,6 +3343,34 @@ public class CommandLine {
         return this;
     }
 
+    /** Returns the maximum usage help long options column max width to the specified value.
+     * This value controls the maximum width of the long options column: any positional parameter
+     * labels or long options that are longer than the specified value will overflow into
+     * the description column, and cause the description to be displayed on the next line.
+     * @see UsageMessageSpec#longOptionsMaxWidth()
+     * @since 4.2*/
+    public int getUsageHelpLongOptionsMaxWidth() { return getCommandSpec().usageMessage().longOptionsMaxWidth(); }
+
+    /** Returns the maximum usage help long options column max width to the specified value.
+     * This value controls the maximum width of the long options column: any positional parameter
+     * labels or long options that are longer than the specified value will overflow into
+     * the description column, and cause the description to be displayed on the next line.
+     * <p>The specified setting will be registered with this {@code CommandLine} and the full hierarchy of its
+     * subcommands and nested sub-subcommands <em>at the moment this method is called</em>. Subcommands added
+     * later will have the default setting. To ensure a setting is applied to all
+     * subcommands, call the setter last, after adding subcommands.</p>
+     * @param columnWidth the new maximum usage help long options column max width. Must be 20 or greater.
+     * @see UsageMessageSpec#longOptionsMaxWidth(int)
+     * @return this {@code CommandLine} object, to allow method chaining
+     * @since 4.2 */
+    public CommandLine setUsageHelpLongOptionsMaxWidth(int columnWidth) {
+        getCommandSpec().usageMessage().longOptionsMaxWidth(columnWidth);
+        for (CommandLine command : getCommandSpec().subcommands().values()) {
+            command.setUsageHelpLongOptionsMaxWidth(columnWidth);
+        }
+        return this;
+    }
+
     /** Returns whether picocli should attempt to detect the terminal size and adjust the usage help message width
      * to take the full terminal width. End users may enable this by setting system property {@code "picocli.usage.width"} to {@code AUTO},
      * and may disable this by setting this system property to a {@linkplain UsageMessageSpec#width() numeric value}.
@@ -3193,10 +3494,13 @@ public class CommandLine {
      * subcommands and nested sub-subcommands <em>at the moment this method is called</em>. Subcommands added
      * later will have the default setting. To ensure a setting is applied to all
      * subcommands, call the setter last, after adding subcommands.</p>
+     * Note that {@link CommandLine#setOptionsCaseInsensitive} will also change the case sensitivity of {@linkplain Option#negatable() negatable} options:
+     * any custom {@link INegatableOptionTransformer} that was previously installed will be replaced by the case-insensitive
+     * version of the default transformer. To ensure your custom transformer is used, install it last, after changing case sensitivity.
      * @param transformer the {@code INegatableOptionTransformer} used to create negative option names.
      * @return this {@code CommandLine} object, to allow method chaining
      * @see Option#negatable()
-     * @see CommandSpec#negatableOptionTransformer(INegatableOptionTransformer)
+     * @see CommandSpec#negatableOptionTransformer(CommandLine.INegatableOptionTransformer)
      * @since 4.0 */
     public CommandLine setNegatableOptionTransformer(INegatableOptionTransformer transformer) {
         getCommandSpec().negatableOptionTransformer(transformer);
@@ -3208,9 +3512,17 @@ public class CommandLine {
     private static boolean empty(String str) { return str == null || str.trim().length() == 0; }
     private static boolean empty(Object[] array) { return array == null || array.length == 0; }
     private static String str(String[] arr, int i) { return (arr == null || arr.length <= i) ? "" : arr[i]; }
+    private static boolean isBoolean(Class<?>[] types) { return isBoolean(types[0]) || (isOptional(types[0]) && isBoolean(types[1])); }
     private static boolean isBoolean(Class<?> type) { return type == Boolean.class || type == Boolean.TYPE; }
-    private static CommandLine toCommandLine(Object obj, IFactory factory) { return obj instanceof CommandLine ? (CommandLine) obj : new CommandLine(obj, factory);}
+    private static CommandLine toCommandLine(Object obj, IFactory factory) { return obj instanceof CommandLine ? (CommandLine) obj : new CommandLine(obj, factory, false);}
     private static boolean isMultiValue(Class<?> cls) { return cls.isArray() || Collection.class.isAssignableFrom(cls) || Map.class.isAssignableFrom(cls); }
+    private static boolean isOptional(Class<?> cls) { return cls != null && "java.util.Optional".equals(cls.getName()); } // #1108
+    private static Object getOptionalEmpty() throws Exception {
+        return Class.forName("java.util.Optional").getMethod("empty").invoke(null);
+    }
+    private static Object getOptionalOfNullable(Object newValue) throws Exception {
+        return Class.forName("java.util.Optional").getMethod("ofNullable", Object.class).invoke(null, newValue);
+    }
     private static String format(String formatString, Object... params) {
         try {
             return formatString == null ? "" : String.format(formatString, params);
@@ -3221,9 +3533,25 @@ public class CommandLine {
             return formatString;
         }
     }
+    private static Map<String, Object> mapOf(String key, Object value, Object... other) {
+        LinkedHashMap<String, Object> result = new LinkedHashMap<String, Object>();
+        result.put(key, value);
+        for (int i = 0; i < other.length - 1; i += 2) {
+            result.put(String.valueOf(other[i]), other[i + 1]);
+        }
+        return result;
+    }
 
     private static class NoCompletionCandidates implements Iterable<String> {
         public Iterator<String> iterator() { throw new UnsupportedOperationException(); }
+    }
+    /** Specifies the scope of the element.
+     * @since 4.3 */
+    public enum ScopeType {
+        /** The element only exists in the current command. */
+        LOCAL,
+        /** The element exists in the command where the element is defined and all descendents (subcommands, sub-subcommands, etc.). */
+        INHERIT,
     }
     /**
      * <p>
@@ -3258,6 +3586,12 @@ public class CommandLine {
     @Retention(RetentionPolicy.RUNTIME)
     @Target({ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER})
     public @interface Option {
+        /** Special value that can be used in some annotation attributes to designate {@code null}.
+         * @see Option#defaultValue()
+         * @see Option#fallbackValue()
+         * @see Option#mapFallbackValue()
+         * @since 4.6 */
+        public static final String NULL_VALUE = ArgSpec.NULL_VALUE;
         /**
          * One or more option names. At least one option name is required.
          * <p>
@@ -3390,6 +3724,7 @@ public class CommandLine {
          * Also, embedded {@code %n} newline markers are converted to actual newlines.
          * </p>
          * @return the description of this option
+         * @see <a href="https://picocli.info/#_variable_interpolation">Variable Interpolation section of the user manual</a>
          */
         String[] description() default {};
 
@@ -3509,12 +3844,20 @@ public class CommandLine {
         String split() default "";
 
         /**
+         * Specify the string to display for the {@link #split split} regular expression in the usage help synopsis.
+         * @since 4.3 */
+        String splitSynopsisLabel() default "";
+
+      /**
          * Set {@code hidden=true} if this option should not be included in the usage help message.
          * @return whether this option should be excluded from the usage documentation
          */
         boolean hidden() default false;
 
         /** Returns the default value of this option, before splitting and type conversion.
+         * <p>To get a {@code null} default value, omit specifying a default value or use the special value {@link Option#NULL_VALUE} -
+         * for options of type {@code Optional<T>} that will result in the {@code Optional.empty()}
+         * value being assigned when the option is not specified on the command line.</p>
          * @return a String that (after type conversion) will be used as the value for this option if the option was not specified on the command line
          * @see #fallbackValue()
          * @since 3.2 */
@@ -3524,7 +3867,8 @@ public class CommandLine {
          * help message. If not specified, the default value is only shown when the {@link Command#showDefaultValues()}
          * is set {@code true} on the command. Use this attribute to specify whether the default value
          * for this specific option should always be shown or never be shown, regardless of the command setting.
-         * <p>Note that picocli 3.2 allows {@linkplain #description() embedding default values} anywhere in the description that ignores this setting.</p>
+         * <p>Note that picocli 3.2 allows {@linkplain #description() embedding default values} by specifying the variable
+         * {@code ${DEFAULT-VALUE}} anywhere in the description that ignores this setting.</p>
          * @return whether this option's default value should be shown in the usage help message
          */
         Help.Visibility showDefaultValue() default Help.Visibility.ON_DEMAND;
@@ -3547,11 +3891,13 @@ public class CommandLine {
         Class<? extends Iterable<String>> completionCandidates() default NoCompletionCandidates.class;
 
         /**
-         * Set {@code interactive=true} if this option will prompt the end user for a value (like a password).
+         * Set {@code interactive=true} to make this option prompt the end user for a value (like a password).
          * Only supported for single-value options and {@code char[]} arrays (no collections, maps or other array types).
-         * When running on Java 6 or greater, this will use the {@link Console#readPassword()} API to get a value without echoing input to the console.
+         * When running on Java 6 or greater and {@link Option#echo() echo = false} (the default),
+         * this will use the {@link Console#readPassword()} API to get a value without echoing input to the console,
+         * otherwise it will simply read a value from {@code System.in}.
          * <p>
-         * Best security practice is to use type {@code char[]} instead of {@code String}, and to to null out the array after use.
+         * For passwords, best security practice is to use type {@code char[]} instead of {@code String}, and to to null out the array after use.
          * </p><p>
          * When defined with {@code arity = "0..1"}, the option can also take a value from the command line.
          * (The user will still be prompted if no option parameter was specified on the command line.)
@@ -3561,6 +3907,22 @@ public class CommandLine {
          * @since 3.5
          */
         boolean interactive() default false;
+
+        /** Use this attribute to control whether user input for an interactive option is echoed to the console or not.
+         * If {@code echo = true}, the user input is echoed to the console.
+         * This attribute is ignored when {@code interactive = false} (the default).
+         * @return whether the user input for an interactive option should be echoed to the console or not
+         * @see OptionSpec#echo()
+         * @since 4.6 */
+        boolean echo() default false;
+
+        /** Use this attribute to customize the text displayed to the end user for an interactive option when asking for user input.
+         * When omitted, the displayed text is derived from the option name and the first description line.
+         * This attribute is ignored when {@code interactive = false} (the default).
+         * @return the text to display to the end user for an interactive option when asking for user input
+         * @see OptionSpec#prompt()
+         * @since 4.6 */
+        String prompt() default "";
 
         /** ResourceBundle key for this option. If not specified, (and a ResourceBundle {@linkplain Command#resourceBundle() exists for this command}) an attempt
          * is made to find the option description using any of the option names (without leading hyphens) as key.
@@ -3591,6 +3953,11 @@ public class CommandLine {
          * @since 4.0 */
         boolean negatable() default false;
 
+        /** Determines on which command(s) this option exists: on this command only (the default), or
+         * whether this is a "global" option that is applied to this command and all subcommands, sub-subcommands, etc.
+         * @since 4.3
+         */
+        ScopeType scope() default ScopeType.LOCAL;
         /**
          * For options with an optional parameter (for example, {@code arity = "0..1"}), this value is assigned to the annotated element
          * if the option is specified on the command line without an option parameter.
@@ -3606,9 +3973,24 @@ public class CommandLine {
          * <p>This is useful to define options that can function as a boolean "switch"
          * and optionally allow users to provide a (strongly typed) extra parameter value.
          * </p>
+         * <p>Use the special value {@link Option#NULL_VALUE} to specify {@code null} -
+         * for options of type {@code Optional<T>} that will result in the {@code Optional.empty()}
+         * value being assigned when the option name is specified without a parameter on the command line.</p>
          * @see OptionSpec#fallbackValue()
          * @since 4.0 */
         String fallbackValue() default "";
+
+        /** For options of type Map, setting the {@code mapFallbackValue} to any value allows end user
+         * to specify key-only parameters for this option. For example, {@code -Dkey} instead of {@code -Dkey=value}.
+         * <p>The value specified in this annotation is the value that is put into the Map for the user-specified key.
+         * Use the special value {@link Option#NULL_VALUE} to specify {@code null} -
+         * for maps of type {@code Map<K, Optional<V>>} that will result in {@code Optional.empty()}
+         * values in the map when only the key is specified.</p>
+         * <p>If no {@code mapFallbackValue} is set, key-only Map parameters like {@code -Dkey}
+         * are considered invalid user input and cause a {@link ParameterException} to be thrown.</p>
+         * @see ArgSpec#mapFallbackValue()
+         * @since 4.6 */
+        String mapFallbackValue() default ArgSpec.UNSPECIFIED;
 
         /**
          * Optionally specify a custom {@code IParameterConsumer} to temporarily suspend picocli's parsing logic
@@ -3616,6 +3998,11 @@ public class CommandLine {
          * This may be useful when passing arguments through to another program.
          * @since 4.0 */
         Class<? extends IParameterConsumer> parameterConsumer() default NullParameterConsumer.class;
+
+        /** Returns the preprocessor for this option.
+         * @see IParameterPreprocessor
+         * @since 4.6 */
+        Class<? extends IParameterPreprocessor> preprocessor() default NoOpParameterPreprocessor.class;
     }
     /**
      * <p>
@@ -3645,6 +4032,11 @@ public class CommandLine {
     @Retention(RetentionPolicy.RUNTIME)
     @Target({ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER})
     public @interface Parameters {
+        /** Special value that can be used in some annotation attributes to designate {@code null}.
+         * @see Parameters#defaultValue()
+         * @see Parameters#mapFallbackValue()
+         * @since 4.6 */
+        public static final String NULL_VALUE = ArgSpec.NULL_VALUE;
         /** Specify an index ("0", or "1", etc.) to pick which of the command line arguments should be assigned to this
          * field. For array or Collection fields, you can also specify an index range ("0..3", or "2..*", etc.) to assign
          * a subset of the command line arguments to this field. The default is "*", meaning all command line arguments.
@@ -3663,6 +4055,7 @@ public class CommandLine {
          * Also, embedded {@code %n} newline markers are converted to actual newlines.
          * </p>
          * @return the description of the parameter(s)
+         * @see <a href="https://picocli.info/#_variable_interpolation">Variable Interpolation section of the user manual</a>
          */
         String[] description() default {};
 
@@ -3752,12 +4145,21 @@ public class CommandLine {
         String split() default "";
 
         /**
+         * Specify a string to show the split option parameter values in usage
+         * @since 4.3
+         */
+        String splitSynopsisLabel() default "";
+
+        /**
          * Set {@code hidden=true} if this parameter should not be included in the usage message.
          * @return whether this parameter should be excluded from the usage message
          */
         boolean hidden() default false;
 
         /** Returns the default value of this positional parameter, before splitting and type conversion.
+         * <p>To get a {@code null} default value, omit specifying a default value or use the special value {@link Parameters#NULL_VALUE} -
+         * for positional parameters of type {@code Optional<T>} that will result in the {@code Optional.empty()}
+         * value being assigned when the positional parameters is not specified on the command line.</p>
          * @return a String that (after type conversion) will be used as the value for this positional parameter if no value was specified on the command line
          * @since 3.2 */
         String defaultValue() default "__no_default_value__";
@@ -3766,7 +4168,8 @@ public class CommandLine {
          * help message. If not specified, the default value is only shown when the {@link Command#showDefaultValues()}
          * is set {@code true} on the command. Use this attribute to specify whether the default value
          * for this specific positional parameter should always be shown or never be shown, regardless of the command setting.
-         * <p>Note that picocli 3.2 allows {@linkplain #description() embedding default values} anywhere in the description that ignores this setting.</p>
+         * <p>Note that picocli 3.2 allows {@linkplain #description() embedding default values} by specifying the variable
+         * {@code ${DEFAULT-VALUE}} anywhere in the description that ignores this setting.</p>
          * @return whether this positional parameter's default value should be shown in the usage help message
          */
         Help.Visibility showDefaultValue() default Help.Visibility.ON_DEMAND;
@@ -3786,11 +4189,30 @@ public class CommandLine {
         /**
          * Set {@code interactive=true} if this positional parameter will prompt the end user for a value (like a password).
          * Only supported for single-value positional parameters (not arrays, collections or maps).
-         * When running on Java 6 or greater, this will use the {@link Console#readPassword()} API to get a value without echoing input to the console.
+         * When running on Java 6 or greater and {@link Option#echo() echo = false} (the default),
+         * this will use the {@link Console#readPassword()} API to get a value without echoing input to the console,
+         * otherwise it will simply read a value from {@code System.in}.
          * @return whether this positional parameter prompts the end user for a value to be entered on the command line
          * @since 3.5
          */
         boolean interactive() default false;
+
+        /** Use this attribute to control whether user input for an interactive positional parameter is echoed to the console or not.
+         * If {@code echo = true}, the user input is echoed to the console.
+         * This attribute is ignored when {@code interactive = false} (the default).
+         * @return whether the user input for an interactive positional parameter should be echoed to the console or not
+         * @see PositionalParamSpec#echo()
+         * @since 4.6 */
+        boolean echo() default false;
+
+        /** Use this attribute to customize the text displayed to the end user for an interactive positional parameter when asking for user input.
+         * When omitted, the displayed text is derived from the positional parameter's
+         * position (index) and the first description line.
+         * This attribute is ignored when {@code interactive = false} (the default).
+         * @return the text to display to the end user for an interactive positional parameter when asking for user input
+         * @see PositionalParamSpec#prompt()
+         * @since 4.6 */
+        String prompt() default "";
 
         /** ResourceBundle key for this option. If not specified, (and a ResourceBundle {@linkplain Command#resourceBundle() exists for this command}) an attempt
          * is made to find the positional parameter description using {@code paramLabel() + "[" + index() + "]"} as key.
@@ -3800,11 +4222,33 @@ public class CommandLine {
          */
         String descriptionKey() default "";
 
+        /** Determines on which command(s) this positional parameter exists: on this command only (the default), or
+         * whether this is a "global" parameter that is applied to this command and all subcommands, sub-subcommands, etc.
+         * @since 4.3
+         */
+        ScopeType scope() default ScopeType.LOCAL;
         /**
          * Optionally specify a custom {@code IParameterConsumer} to temporarily suspend picocli's parsing logic
          * and process one or more command line arguments in a custom manner.
          * @since 4.0 */
         Class<? extends IParameterConsumer> parameterConsumer() default NullParameterConsumer.class;
+
+        /** For positional parameters of type Map, setting the {@code mapFallbackValue} to any value allows end user
+         * to specify key-only parameters for this parameter. For example, {@code key} instead of {@code key=value}.
+         * <p>The value specified in this annotation is the value that is put into the Map for the user-specified key.
+         * Use the special value {@link Parameters#NULL_VALUE} to specify {@code null} -
+         * for maps of type {@code Map<K, Optional<V>>} that will result in {@code Optional.empty()}
+         * values in the map when only the key is specified.</p>
+         * <p>If no {@code mapFallbackValue} is set, key-only Map parameters like {@code -Dkey}
+         * are considered invalid user input and cause a {@link ParameterException} to be thrown.</p>
+         * @see ArgSpec#mapFallbackValue()
+         * @since 4.6 */
+        String mapFallbackValue() default ArgSpec.UNSPECIFIED;
+
+        /** Returns the preprocessor for this positional parameter.
+         * @see IParameterPreprocessor
+         * @since 4.6 */
+        Class<? extends IParameterPreprocessor> preprocessor() default NoOpParameterPreprocessor.class;
     }
 
     /**
@@ -3861,11 +4305,12 @@ public class CommandLine {
      * </p><p>
      * The {@code Mixin} annotation provides a way to reuse common options and parameters without subclassing. For example:
      * </p><pre>
+     * &#064;Command(name="HelloWorld")
      * class HelloWorld implements Runnable {
      *
      *     // adds the --help and --version options to this command
      *     &#064;Mixin
-     *     private HelpOptions = new HelpOptions();
+     *     private HelpOptions options = new HelpOptions();
      *
      *     &#064;Option(names = {"-u", "--userName"}, required = true, description = "The user name")
      *     String userName;
@@ -3908,7 +4353,23 @@ public class CommandLine {
      */
     @Retention(RetentionPolicy.RUNTIME)
     @Target({ElementType.FIELD, ElementType.METHOD})
-    public @interface Spec { }
+    public @interface Spec {
+        /** Identifies what kind of {@code CommandSpec} should be injected.
+         * @since 4.3.0 */
+        enum Target {
+            /** Injects the {@code CommandSpec} of the command where this {@code @Spec}-annotated program element is declared. */
+            SELF,
+            /** Injects the {@code CommandSpec} of the "mixee" command that receives the options and other command elements defined here,
+             * or {@code null} if this commands is not {@linkplain Mixin mixed into} another command.
+             * The "mixee" command has a {@code @Mixin}-annotated program element with the type of the class where this {@code @Spec}-annotated program element is declared. */
+            MIXEE}
+
+        /** Whether to inject the {@code CommandSpec} of this command (the default) or the {@code CommandSpec}
+         * of the "mixee" command that receives the options and other command elements defined here.
+         * @see Mixin
+         * @since 4.3.0 */
+        Target value() default Target.SELF;
+    }
 
     /**
      * <p>Annotate your class with {@code @Command} when you want more control over the format of the generated help
@@ -3982,12 +4443,23 @@ public class CommandLine {
          *         .addSubcommand("commit",   new GitCommit())
          *         .addSubcommand("branch",   new GitBranch());
          * </pre>
+         * Applications may be interested in the following built-in commands in picocli
+         * that can be used as subcommands:
+         * <ul>
+         *   <li>{@link HelpCommand} - a {@code help} subcommand that prints help on the following or preceding command</li>
+         *   <li>{@link AutoComplete.GenerateCompletion} - a {@code generate-completion} subcommand that prints a Bash/ZSH completion script for its parent command, so that clients can install autocompletion in one line by running {@code source <(parent-command generate-completion)} in the shell</li>
+         * </ul>
          * @return the declaratively registered subcommands of this command, or an empty array if none
          * @see CommandLine#addSubcommand(String, Object)
          * @see HelpCommand
          * @since 0.9.8
          */
         Class<?>[] subcommands() default {};
+
+        /** Returns whether the subcommands of this command are repeatable, that is, whether such subcommands can
+         * occur multiple times and may be followed by sibling commands instead of only by child commands of the subcommand.
+         * @since 4.2 */
+        boolean subcommandsRepeatable() default false;
 
         /** Specify whether methods annotated with {@code @Command} should be registered as subcommands of their
          * enclosing {@code @Command} class.
@@ -4140,6 +4612,11 @@ public class CommandLine {
 
         /** Class that can provide default values dynamically at runtime. An implementation may return default
          * value obtained from a configuration file like a properties file or some other source.
+         * <p>
+         * Applications may be interested in the {@link PropertiesDefaultProvider} built-in default provider
+         * that allows end users to maintain their own default values for options and positional parameters,
+         * which may override the defaults that are hard-coded in the application.
+         * </p>
          * @return a Class that can provide default values dynamically at runtime
          * @since 3.6 */
         Class<? extends IDefaultValueProvider> defaultValueProvider() default NoDefaultProvider.class;
@@ -4150,6 +4627,17 @@ public class CommandLine {
          * option or positional parameter description that ignores this setting.</p>
          * @return whether the default values for options and parameters should be shown in the description column */
         boolean showDefaultValues() default false;
+
+        /** Specify {@code true} to show a {@code [@<filename>...]} entry
+         * in the synopsis and parameter list of the usage help message.
+         * (The entry is not shown if {@linkplain CommandLine#isExpandAtFiles() expanding parameter files} is disabled.)
+         * @since 4.2 */
+        boolean showAtFileInUsageHelp() default false;
+
+        /** Specify {@code true} to show a {@code [--]} "End of options" entry
+         * in the synopsis and option list of the usage help message.
+         * @since 4.3 */
+        boolean showEndOfOptionsDelimiterInUsageHelp() default false;
 
         /** Set the heading preceding the subcommands list. The default heading is {@code "Commands:%n"} (with a line break at the end).
          * <p>May contain embedded {@linkplain java.util.Formatter format specifiers} like {@code %n} line separators. Literal percent {@code '%'} characters must be escaped with another {@code %}.</p>
@@ -4243,6 +4731,19 @@ public class CommandLine {
          * </pre>
          * @since 4.0 */
         String[] exitCodeList() default {};
+
+        /** Returns whether subcommands inherit their attributes from this parent command.
+         * @since 4.6 */
+        ScopeType scope() default ScopeType.LOCAL;
+
+        /** Returns the model transformer for this command.
+         * @since 4.6 */
+        Class<? extends IModelTransformer> modelTransformer() default NoOpModelTransformer.class;
+
+        /** Returns the preprocessor for this command.
+         * @see IParameterPreprocessor
+         * @since 4.6 */
+        Class<? extends IParameterPreprocessor> preprocessor() default NoOpParameterPreprocessor.class;
     }
     /** A {@code Command} may define one or more {@code ArgGroups}: a group of options, positional parameters or a mixture of the two.
      * Groups can be used to:
@@ -4361,7 +4862,14 @@ public class CommandLine {
          * Converts the specified command line argument value to some domain object.
          * @param value the command line argument String value
          * @return the resulting domain object
-         * @throws Exception an exception detailing what went wrong during the conversion
+         * @throws Exception an exception detailing what went wrong during the conversion.
+         *          Any exception thrown from this method will be caught and shown to the end user.
+         *          An example error message shown to the end user could look something like this:
+         *          {@code Invalid value for option '--some-option': cannot convert 'xxxinvalidinput' to SomeType (java.lang.IllegalArgumentException: Invalid format: must be 'x:y:z' but was 'xxxinvalidinput')}
+         * @throws TypeConversionException throw this exception to have more control over the error
+         *          message that is shown to the end user when type conversion fails.
+         *          An example message shown to the user could look like this:
+         *          {@code Invalid value for option '--some-option': Invalid format: must be 'x:y:z' but was 'xxxinvalidinput'}
          */
         K convert(String value) throws Exception;
     }
@@ -4380,6 +4888,39 @@ public class CommandLine {
     }
     private static class NoVersionProvider implements IVersionProvider {
         public String[] getVersion() throws Exception { throw new UnsupportedOperationException(); }
+    }
+
+    /**
+     * Provides a way to modify how the command model is built.
+     * This is useful for applications that need to modify the model dynamically depending on the runtime environment.
+     * <p>
+     * Commands may configure a model transformer using the
+     * {@link Command#modelTransformer()} annotation attribute, or via the
+     * {@link CommandSpec#modelTransformer(IModelTransformer)} programmatic API.
+     * <p>
+     * Model transformers are invoked only once, after the full command hierarchy is constructed.
+     * @since 4.6
+     */
+    public interface IModelTransformer {
+        /**
+         * Given an original CommandSpec, return the object that should be used
+         * instead. Implementors may modify the specified CommandSpec and return it,
+         * or create a full or partial copy of the specified CommandSpec, and return
+         * that, or even return a completely new CommandSpec.
+         * <p>
+         * Implementors are free to add or remove options, positional parameters,
+         * subcommands or modify the command in any other way.
+         * </p><p>
+         * This method is called once, after the full command hierarchy is
+         * constructed, and before any command line arguments are parsed.
+         * </p>
+         * @return the CommandSpec to use instead of the specified one
+         */
+        CommandSpec transform(CommandSpec commandSpec);
+    }
+
+    private static class NoOpModelTransformer implements IModelTransformer {
+        public CommandSpec transform(CommandSpec commandSpec) { return commandSpec; }
     }
 
     /**
@@ -4464,6 +5005,129 @@ public class CommandLine {
     }
     private static class NullParameterConsumer implements IParameterConsumer {
         public void consumeParameters(Stack<String> args, ArgSpec argSpec, CommandSpec commandSpec) { throw new UnsupportedOperationException(); }
+    }
+    /**
+     * Options, positional parameters and commands can be assigned a {@code IParameterPreprocessor} that
+     * implements custom logic to preprocess the parameters for this option, position or command.
+     * When an option, positional parameter or command with a custom {@code IParameterPreprocessor} is matched
+     * on the command line, picocli's internal parser is temporarily suspended, and this custom logic is invoked.
+     * <p>
+     * This custom logic may completely replace picocli's internal parsing for this option, positional parameter
+     * or command, or it may do some preprocessing before picocli's internal parsing is resumed for this option,
+     * positional parameter or command.
+     * </p><p>
+     * The "preprocessing" can include modifying the stack of command line parameters, or modifying the model.
+     * </p>
+     * <p>This may be useful when disambiguating input for commands that have both a positional parameter and an
+     * option with an optional parameter.</p>
+     * <p>Example usage:</p>
+     * <pre>
+     * &#064;Command(name = "edit")
+     * class Edit {
+     *     &#064;Parameters(index = "0", description = "The file to edit.")
+     *     File file;
+     *
+     *     enum Editor { defaultEditor, eclipse, idea, netbeans }
+     *
+     *     &#064;Option(names = "--open", arity = "0..1", preprocessor = Edit.MyPreprocessor.class,
+     *         description = {
+     *             "Optionally specify the editor to use; if omitted the default editor is used. ",
+     *             "Example: edit --open=idea FILE opens IntelliJ IDEA (notice the '=' separator)",
+     *             "         edit --open FILE opens the specified file in the default editor"
+     *         })
+     *     Editor editor = Editor.defaultEditor;
+     *
+     *     static class MyPreprocessor implements IParameterPreprocessor {
+     *         public boolean preprocess(Stack&lt;String&gt; args, CommandSpec commandSpec, ArgSpec argSpec, Map&lt;String, Object&gt; info) {
+     *             // we need to decide whether the next arg is the file to edit or the name of the editor to use...
+     *             if (" ".equals(info.get("separator"))) { // parameter was not attached to option
+     *                 args.push(Editor.defaultEditor.name()); // act as if the user specified --open=defaultEditor
+     *             }
+     *             return false; // picocli's internal parsing is resumed for this option
+     *         }
+     *     }
+     * }</pre>
+     * @see Option#preprocessor()
+     * @see Parameters#preprocessor()
+     * @since 4.6 */
+    public interface IParameterPreprocessor {
+        /**
+         * Called when either the command, option or positional parameter that has this preprocessor configured was
+         * recognized by the picocli parser.
+         * <p>Implementors are free to modify one or more of the specified command line arguments before they are
+         * processed by the picocli parser (or by the option's {@link IParameterConsumer parameter consumer}, if one is specified).
+         * </p><p>
+         * Implementors may optionally <em>consume</em> one or more of the specified command line arguments:
+         * a return value of {@code true} signals that the preprocessor consumed the parameter:
+         * picocli should skip further processing of this option or positional parameter,
+         * and the preprocessor implementation takes responsibility for assigning the
+         * option or positional parameter a value. A return value of {@code false} means that picocli should
+         * process the stack as usual for this option or positional parameter, and picocli is responsible for
+         * assigning this option or positional parameter a value.
+         * </p><p>
+         * For a command, returning {@code true} signals that the preprocessor takes responsibility for parsing all
+         * options and positional parameters for this command, and takes responsibility for validating constraints like
+         * whether all required options and positional parameters were specified.
+         * A return value of {@code false} means that picocli should
+         * process the stack as usual for this command, and picocli is responsible for validation.
+         * Command preprocessors can signal back to the picocli parser when they detect that the user requested version
+         * information or usage help by putting a value of {@code true} in the specified
+         * {@code info} map for keys {@code versionHelpRequested} or {@code usageHelpRequested}, respectively.
+         * </p><p>
+         * If the user input is invalid, implementations should throw a {@link ParameterException}
+         * with a message to display to the user.
+         * </p>
+         * @param args the remaining command line arguments that follow the matched argument
+         *           (the matched argument is not on the stack anymore)
+         * @param commandSpec the command or subcommand that was matched (if the specified {@code argSpec} is
+         *            {@code null}), or the command that the matched option or positional parameter belongs to
+         * @param argSpec the option or positional parameter for which to pre-process command line arguments
+         *             (may be {@code null} when this method is called for a subcommand that was matched)
+         * @param info a map containing additional information on the current parser state,
+         *                including whether the option parameter was attached to the option name with
+         *                a `=` separator, whether quotes have already been stripped off the option, etc.
+         *             Implementations may modify this map to communicate back to the picocli parser.
+         *             Supported values:
+         *             <table>
+         *               <tr>
+         *                 <th>key</th><th>valid values</th><th>type</th>
+         *               </tr>
+         *               <tr>
+         *                 <td>separator</td><td>'' (empty string): attached without separator, ' ' (space): not attached, (any other string): option name was attached to option param with specified separator</td>
+         *                 <td>java.lang.String</td>
+         *               </tr>
+         *               <tr>
+         *                 <td>negated</td>
+         *                 <td>{@code true}: the option or positional parameter is a {@linkplain Option#negatable() negated} option/parameter, {@code false}: the option or positional parameter is not a negated option/parameter</td>
+         *                 <td>java.lang.Boolean</td>
+         *               </tr>
+         *               <tr>
+         *                 <td>unquoted</td>
+         *                 <td>{@code true}: quotes surrounding the value have already been stripped off, {@code false}: quotes surrounding the value have not yet been stripped off</td>
+         *                 <td>java.lang.Boolean</td>
+         *               </tr>
+         *               <tr>
+         *                 <td>versionHelpRequested</td>
+         *                 <td>{@code true}: version help was requested, {@code false}: version help was not requested</td>
+         *                 <td>java.lang.Boolean</td>
+         *               </tr>
+         *               <tr>
+         *                 <td>usageHelpRequested</td>
+         *                 <td>{@code true}: usage help was requested, {@code false}: usage help was not requested</td>
+         *                 <td>java.lang.Boolean</td>
+         *               </tr>
+         *             </table>
+         * @returns true if the preprocessor consumed the parameter
+         *          and picocli should skip further processing of the stack for this option or positional parameter;
+         *          false if picocli should continue processing the stack for this option or positional parameter
+         * @throws ParameterException if the user input is invalid
+         */
+        boolean preprocess(Stack<String> args, CommandSpec commandSpec, ArgSpec argSpec, Map<String, Object> info);
+    }
+    private static class NoOpParameterPreprocessor implements IParameterPreprocessor {
+        public boolean preprocess(Stack<String> args, CommandSpec commandSpec, ArgSpec argSpec, Map<String, Object> info) { return false; }
+        public boolean equals(Object obj) { return obj instanceof NoOpParameterPreprocessor; }
+        public int hashCode() { return NoOpParameterPreprocessor.class.hashCode() + 7; }
     }
 
     /** Determines the option name transformation of {@linkplain Option#negatable() negatable} boolean options.
@@ -4560,6 +5224,53 @@ public class CommandLine {
             return transformer;
         }
 
+        /**
+         * Returns the {@code RegexTransformer} for case-insensitive negatable options.
+         * <table border="1">
+         *   <caption>The regular expressions for case-insensitive negatable options</caption>
+         *   <tr>
+         *     <th>Regex</th>
+         *     <th>Negative Replacement</th>
+         *     <th>Synopsis Replacement</th>
+         *     <th>Comment</th>
+         *   </tr>
+         *   <tr>
+         *     <td>^--((?i)no)-(\w(-|\w)*)$</td>
+         *     <td>--$2</td>
+         *     <td>--[$1-]$2</td>
+         *     <td>Converts <code>--no-force</code> to <code>--force</code></td>
+         *     <td>     and <code>--NO-force</code> to <code>--force</code></td>
+         *   </tr>
+         *   <tr>
+         *     <td>^--(\w(-|\w)*)$</td>
+         *     <td>--no-$1</td>
+         *     <td>--[no-]$1</td>
+         *     <td>Converts <code>--force</code> to <code>--no-force</code></td>
+         *   </tr>
+         *   <tr>
+         *     <td>^(-|--)(\w*:)\+(\w(-|\w)*)$</td>
+         *     <td>$1$2-$3</td>
+         *     <td>$1$2(+|-)$3</td>
+         *     <td>Converts <code>-XX:+Inline</code> to <code>-XX:-Inline</code></td>
+         *   </tr>
+         *   <tr>
+         *     <td>^(-|--)(\w*:)\-(\w(-|\w)*)$</td>
+         *     <td>$1$2+$3</td>
+         *     <td>$1$2(+|-)$3</td>
+         *     <td>Converts <code>-XX:-Inline</code> to <code>-XX:+Inline</code></td>
+         *   </tr>
+         * </table>
+         */
+        public static RegexTransformer createCaseInsensitive() {
+            CommandLine.RegexTransformer transformer = new CommandLine.RegexTransformer.Builder()
+                    .addPattern("^--((?i)no)-(\\w(-|\\w)*)$", "--$2", "--[$1-]$2")
+                    .addPattern("^--(\\w(-|\\w)*)$", "--no-$1", "--[no-]$1")
+                    .addPattern("^(-|--)(\\w*:)\\+(\\w(-|\\w)*)$", "$1$2-$3", "$1$2(+|-)$3")
+                    .addPattern("^(-|--)(\\w*:)\\-(\\w(-|\\w)*)$", "$1$2+$3", "$1$2(+|-)$3")
+                    .build();
+            return transformer;
+        }
+
         /** {@inheritDoc} */
         public String makeNegative(String optionName, CommandSpec cmd) {
             for (Map.Entry<Pattern, String> entry : replacements.entrySet()) {
@@ -4620,8 +5331,8 @@ public class CommandLine {
              * </table>
              *
              * @param regex regular expression to match an option name
-             * @param negativeReplacement the replacement to use to generate a {@linkplain #makeNegative(String, CommandSpec) negative name} when the option name matches
-             * @param synopsisReplacement the replacement to use to generate a {@linkplain #makeSynopsis(String, CommandSpec) documentation string} when the option name matches
+             * @param negativeReplacement the replacement to use to generate a {@linkplain RegexTransformer#makeNegative(String, CommandLine.Model.CommandSpec) negative name} when the option name matches
+             * @param synopsisReplacement the replacement to use to generate a {@linkplain RegexTransformer#makeSynopsis(String, CommandLine.Model.CommandSpec) documentation string} when the option name matches
              * @return this {@code RegexTransformer} for method chaining
              */
             public RegexTransformer.Builder addPattern(String regex, String negativeReplacement, String synopsisReplacement) {
@@ -4672,11 +5383,39 @@ public class CommandLine {
     /**
      * Factory for instantiating classes that are registered declaratively with annotation attributes, like
      * {@link Command#subcommands()}, {@link Option#converter()}, {@link Parameters#converter()} and {@link Command#versionProvider()}.
-     * <p>The default factory implementation simply creates a new instance of the specified class when {@link #create(Class)} is invoked.
-     * </p><p>
-     * You may provide a custom implementation of this interface.
-     * For example, a custom factory implementation could delegate to a dependency injection container that provides the requested instance.
+     * The factory is also used to instantiate the {@code Collection} or {@code Map} implementation class for multi-value
+     * options and positional parameters with an abstract type, like {@code List<String>}.
+     * <p>You may provide a custom implementation of this interface.
+     * For example, a custom factory implementation could delegate to a dependency injection container that provides the requested instance.</p>
+     * <p><b><em>Custom factory implementations should always fall back to the {@linkplain #defaultFactory() default factory} if instantiation failed.</em></b> For example:
      * </p>
+     * <pre>
+     * class MyFactory implements IFactory {
+     *     private final ApplicationContext applicationContext = getAppContext();
+     *
+     *     public &lt;T&gt; T create(Class&lt;T&gt; cls) throws Exception {
+     *         try {
+     *             applicationContext.getBean(cls);
+     *         } catch (Exception ex) {
+     *             CommandLine.defaultFactory().create(cls);
+     *         }
+     *     }
+     * }
+     * </pre>
+     * <p>Tip: custom factory implementations that have resources that need to be closed when done should consider
+     * implementing {@code java.lang.AutoCloseable} or {@code java.io.Closeable}. This allows applications to use
+     * the following idiom for configuring picocli before running their application:</p>
+     * <pre>
+     * public static void main(String[] args) {
+     *     int exitCode = 0;
+     *     try (MyFactory factory = createMyFactory()) {
+     *         exitCode = new CommandLine(MyClass.class, factory)
+     *                 .setXxx(x) // configure the picocli parser...
+     *                 .execute(args);
+     *     }
+     *     System.exit(exitCode);
+     * }
+     * </pre>
      * @see picocli.CommandLine#CommandLine(Object, IFactory)
      * @see #call(Class, IFactory, PrintStream, PrintStream, Help.Ansi, String...)
      * @see #run(Class, IFactory, PrintStream, PrintStream, Help.Ansi, String...)
@@ -4693,10 +5432,37 @@ public class CommandLine {
         <K> K create(Class<K> cls) throws Exception;
     }
     /** Returns the default {@link IFactory} implementation used if no factory was specified in the {@link #CommandLine(Object) CommandLine constructor}.
+     * <p>This implementation has special logic for instantiating {@code Collections}
+     * and {@code Maps}, and otherwise tries to create an instance by invoking the default constructor of the specified class.
+     * </p><p>Special logic for instantiating Collections and Maps:</p>
+     * <pre>{@code
+     * // if class is an interface that extends java.util.Collection, return a new instance of:
+     * 1. List       -> ArrayList
+     * 2. SortedSet  -> TreeSet
+     * 3. Set        -> LinkedHashSet
+     * 4. Queue      -> LinkedList
+     * 5. Collection -> ArrayList
+     *
+     * // if extending or implementing java.util.Map:
+     * 1. try invoking the default constructor; return this on success.
+     * 2. if this fails, return a LinkedHashMap
+     * }</pre>
      * @since 4.0 */
     public static IFactory defaultFactory() { return new DefaultFactory(); }
     private static class DefaultFactory implements IFactory {
+        static Class<?> GROOVY_CLOSURE_CLASS = loadClosureClass();
+        private static Class<?> loadClosureClass() {
+            try { return Class.forName("groovy.lang.Closure"); }
+            catch (Exception ignored) { return null;}
+        }
+        @SuppressWarnings("unchecked")
         public <T> T create(Class<T> cls) throws Exception {
+            if (GROOVY_CLOSURE_CLASS != null && GROOVY_CLOSURE_CLASS.isAssignableFrom(cls)) {
+                Callable<?> callable = Callable.class.cast(cls.getConstructor(Object.class, Object.class).newInstance(null, null));
+                try { return (T) callable.call(); }
+                catch (Exception ex) { throw new InitializationException("Error in Groovy closure: " + ex); }
+
+            }
             if (cls.isInterface() && Collection.class.isAssignableFrom(cls)) {
                 if (List.class.isAssignableFrom(cls)) {
                     return cls.cast(new ArrayList<Object>());
@@ -4744,13 +5510,15 @@ public class CommandLine {
         }
         static <T> T create(IFactory factory, Class<T> cls) {
             try { return factory.create(cls); }
+            catch (NoSuchMethodException ex) { throw new InitializationException("Cannot instantiate " +
+                    cls.getName() + ": the class has no constructor", ex); }
+            catch (InitializationException ex) { throw ex; }
             catch (Exception ex) { throw new InitializationException("Could not instantiate " + cls + ": " + ex, ex); }
         }
     }
     /** Describes the number of parameters required and accepted by an option or a positional parameter.
      * @since 0.9.7
      */
-    @SuppressWarnings("deprecation")
     public static class Range implements Comparable<Range> {
         /** @deprecated use {@link #min()} instead */
         @Deprecated public final int min;
@@ -4760,6 +5528,8 @@ public class CommandLine {
         @Deprecated public final boolean isVariable;
         private final boolean isUnspecified;
         private final String originalValue;
+        private final boolean relative;
+        private final int anchor;
 
         /** Constructs a new Range object with the specified parameters.
          * @param min minimum number of required parameters
@@ -4776,6 +5546,13 @@ public class CommandLine {
             this.isVariable = variable;
             this.isUnspecified = unspecified;
             this.originalValue = originalValue;
+            this.relative = originalValue != null && originalValue.contains("+");
+            // relative indices have an anchorPoint that is used for sorting
+            if (relative) {
+                anchor = "+".equals(originalValue) ? Integer.MAX_VALUE : parseInt(originalValue, Integer.MAX_VALUE);
+            } else {
+                anchor = min;
+            }
         }
         /** Returns a new {@code Range} based on the {@link Option#arity()} annotation on the specified field,
          * or the field type's default arity if no arity was specified.
@@ -4813,9 +5590,12 @@ public class CommandLine {
             if (member.isMethodParameter()) {
                 int min = member.getMethodParamPosition();
                 int max = member.isMultiValue() ? Integer.MAX_VALUE : min;
-                return new Range(min, max, member.isMultiValue(), false, "");
+                return new Range(min, max, member.isMultiValue(), false, null);
             }
-            return Range.valueOf("*"); // the default
+            return defaultParameterIndex(member.getTypeInfo());
+        }
+        private static Range defaultParameterIndex(ITypeInfo typeInfo) {
+            return Range.valueOf(typeInfo.isMultiValue() ? "*" : "0+"); // the default
         }
         static Range adjustForType(Range result, IAnnotatedElement member) {
             return result.isUnspecified ? defaultArity(member) : result;
@@ -4848,7 +5628,7 @@ public class CommandLine {
         @Deprecated public static Range defaultArity(Class<?> type) {
             return isBoolean(type) ? Range.valueOf("0").unspecified(true) : Range.valueOf("1").unspecified(true);
         }
-        private int size() { return 1 + max - min; }
+        private int size() { return isRelative() ? 1 : 1 + max - min; }
         static Range parameterCapacity(IAnnotatedElement member) {
             Range arity = parameterArity(member);
             if (!member.isMultiValue()) { return arity; }
@@ -4864,7 +5644,7 @@ public class CommandLine {
             return Range.valueOf(arity.min * index.size() + ".." + arity.max * index.size());
         }
 
-        /** Leniently parses the specified String as an {@code Range} value and return the result. A range string can
+        /** Leniently parses the specified String as a {@code Range} value and return the result. A range string can
          * be a fixed integer value or a range of the form {@code MIN_VALUE + ".." + MAX_VALUE}. If the
          * {@code MIN_VALUE} string is not numeric, the minimum is zero. If the {@code MAX_VALUE} is not numeric, the
          * range is taken to be variable and the maximum is {@code Integer.MAX_VALUE}.
@@ -4876,24 +5656,24 @@ public class CommandLine {
             }
             range = range.trim();
             boolean unspecified = range.length() == 0 || range.startsWith(".."); // || range.endsWith("..");
-            int min = -1, max = -1;
-            boolean variable = false;
-            int dots = -1;
+            int min, max;
+            boolean variable;
+            int dots;
             if ((dots = range.indexOf("..")) >= 0) {
                 min = parseInt(range.substring(0, dots), 0);
                 max = parseInt(range.substring(dots + 2), Integer.MAX_VALUE);
                 variable = max == Integer.MAX_VALUE;
             } else {
                 max = parseInt(range, Integer.MAX_VALUE);
-                variable = max == Integer.MAX_VALUE;
+                variable = !range.contains("+") && max == Integer.MAX_VALUE;
                 min = variable ? 0 : max;
             }
-            Range result = new Range(min, max, variable, unspecified, range);
-            return result;
+            return new Range(min, max, variable, unspecified, unspecified ? null : range);
         }
         private static int parseInt(String str, int defaultValue) {
             try {
-                return Integer.parseInt(str);
+                int pos = str.indexOf('+');
+                return Integer.parseInt(pos < 0 ? str : str.substring(0, str.indexOf('+')));
             } catch (Exception ex) {
                 return defaultValue;
             }
@@ -4917,10 +5697,25 @@ public class CommandLine {
         /** Returns {@code true} if this Range is a default value, {@code false} if the user specified this value.
          * @since 4.0 */
         public boolean isUnspecified() { return isUnspecified; }
-        /** Returns {@code true} if this range contains variables that have not been expanded yet,
-         * {@code false} if this Range does not contain any variables.
+        /** Returns {@code true} if this range contains a relative index like {@code "1+"}, or variables that have not been expanded yet,
+         * {@code false} if this Range does not contain any variables or relative indices.
          * @since 4.0 */
         public boolean isUnresolved() { return originalValue != null && originalValue.contains("${"); }
+        /** Returns {@code true} if this Range contains a relative index like {@code "1+"}, or
+         * {@code false} if this Range does not contain any relative indices.
+         * @since 4.3 */
+        public boolean isRelative() { return relative; }
+
+        /** Returns the anchor position that this Range is {@linkplain #isRelative() relative} to,
+         * or {@link #min()} if this Range is absolute.
+         * @return {@code 1} for a relative index like {@code "1+"},
+         *      or {@code Integer.MAX_VALUE} for a relative index without an anchor, like {@code "+"}
+         * @since 4.3 */
+        int anchor() { return anchor; } // not public (yet): TBD if we need a minAnchor and maxAnchor in the future
+        boolean isRelativeToAnchor() { return anchor != Integer.MAX_VALUE && isRelative(); }
+        /** Returns the original String value that this range was constructed with.
+         * @since 4.3 */
+        public String originalValue() { return originalValue; }
         /** Returns the lower bound of this range (inclusive).
          * @since 4.0 */
         public int min() { return min; }
@@ -4948,11 +5743,31 @@ public class CommandLine {
         }
         public String toString() {
             if (isUnresolved()) { return originalValue; }
-            return min == max ? String.valueOf(min) : min + ".." + (isVariable ? "*" : max);
+            if (min == max) {
+                return (relative && min == Integer.MAX_VALUE) ? "+" : String.valueOf(min);
+            } else {
+                return min + ".." + (isVariable ? "*" : max);
+            }
+        }
+        /** Returns equivalent of {@code format("%s (%s)", originalValue, toString())}. */
+        String internalToString() {
+            if (isUnresolved()) { return originalValue; }
+            return isRelative() ? originalValue + " (" + toString() + ")" : toString();
         }
         public int compareTo(Range other) {
-            int result = min - other.min;
-            return (result == 0) ? max - other.max : result;
+            if (originalValue != null && other.originalValue != null && originalValue.equals(other.originalValue)) {
+                return 0; // try to keep stable sort for relative indexes
+            }
+            int result = (anchor() < other.anchor()) ? -1 : ((anchor() == other.anchor()) ? 0 : 1); // don't subtract; prevent overflow
+            if (result == 0) {
+                result = (max < other.max) ? -1 : ((max == other.max) ? 0 : 1);
+            }
+            if (result == 0) {
+                if (this.isRelative() != other.isRelative()) {
+                    result = isRelative() ? 1 : -1; // relative follows absolute
+                }
+            }
+            return result;
         }
         /** Returns true for these ranges: 0 and 0..1. */
         boolean isValidForInteractiveArgs() { return (min == 0 && (max == 0 || max == 1)); }
@@ -4960,13 +5775,15 @@ public class CommandLine {
             return contains(index.min) || contains(index.max) || index.contains(min) || index.contains(max);
         }
     }
-    private static void validatePositionalParameters(List<PositionalParamSpec> positionalParametersFields) {
+    private static void validatePositionalParameters(List<PositionalParamSpec> positionals) {
         int min = 0;
-        for (PositionalParamSpec positional : positionalParametersFields) {
+        for (PositionalParamSpec positional : positionals) {
             Range index = positional.index();
-            if (index.min > min) {
+            if (index.min > min && !index.isRelative()) {
+                List<String> indices = new ArrayList<String>();
+                for (PositionalParamSpec pos : positionals) {indices.add(pos.index().internalToString());}
                 throw new ParameterIndexGapException("Command definition should have a positional parameter with index=" + min +
-                        ". Nearest positional parameter '" + positional.paramLabel() + "' has index=" + index.min);
+                        ". Nearest positional parameter '" + positional.paramLabel() + "' has index=" + index + ". (Full list: " + indices + ")");
             }
             min = Math.max(min, index.max);
             min = min == Integer.MAX_VALUE ? min : min + 1;
@@ -4981,15 +5798,23 @@ public class CommandLine {
         Collections.reverse(list);
         return list;
     }
+    private static <T> T[] reverseArray(T[] all) {
+        for (int i = 0; i < all.length / 2; i++) {
+            T temp = all[i];
+            all[i] = all[all.length - i - 1];
+            all[all.length - i - 1] = temp;
+        }
+        return all;
+    }
 
     /** This class provides a namespace for classes and interfaces that model concepts and attributes of command line interfaces in picocli.
      * @since 3.0 */
     public static final class Model {
         private Model() {}
 
-        /** The scope of a binding is the context where the current value should be gotten from or set to.
-         * For a field, the scope is the object whose field value to get/set. For a method binding, it is the
-         * object on which the method should be invoked.
+        /** The scope of a getter/setter binding is the context where the current value should be gotten from or set to.
+         * Usually, this is an instance of the enclosing element. For a field, the scope is the object whose field value to get/set.
+         * For a method binding, it is the object on which the method should be invoked.
          * <p>The getter and setter of the scope allow you to change the object onto which the option and positional parameter getters and setters should be applied.</p>
          * @since 4.0
          */
@@ -5000,7 +5825,7 @@ public class CommandLine {
          * For example, an option can be bound to a field or a method, and when the option is matched on the command line, the
          * field's value is set or the method is invoked with the option parameter value.
          * @since 3.0 */
-        public static interface IGetter {
+        public interface IGetter {
             /** Returns the current value of the binding. For multi-value options and positional parameters,
              * this method returns an array, collection or map to add values to.
              * @throws PicocliException if a problem occurred while obtaining the current value
@@ -5012,7 +5837,7 @@ public class CommandLine {
          * For example, an option can be bound to a field or a method, and when the option is matched on the command line, the
          * field's value is set or the method is invoked with the option parameter value.
          * @since 3.0 */
-        public static interface ISetter {
+        public interface ISetter {
             /** Sets the new value of the option or positional parameter.
              *
              * @param value the new value of the option or positional parameter
@@ -5021,6 +5846,196 @@ public class CommandLine {
              * @throws PicocliException if a problem occurred while setting the new value
              * @throws Exception internally, picocli call sites will catch any exceptions thrown from here and rethrow them wrapped in a PicocliException */
             <T> T set(T value) throws Exception;
+        }
+
+        /**
+         * This class provides a case-aware Linked HashMap. Supports both case-sensitive and case-insensitive modes.
+         * @param <V> type of the value
+         */
+        static class CaseAwareLinkedMap<K, V> extends AbstractMap<K, V> {
+            class CaseAwareKeySet extends AbstractSet<K> {
+                @Override
+                public boolean contains(Object o) {
+                    return containsKey(o);
+                }
+
+                @Override
+                public Iterator<K> iterator() {
+                    return targetMap.keySet().iterator();
+                }
+
+                @Override
+                public int size() {
+                    return targetMap.keySet().size();
+                }
+            }
+
+            private final LinkedHashMap<K, V> targetMap = new LinkedHashMap<K, V>();
+            private final HashMap<K, K> keyMap = new HashMap<K, K>();
+            private final Set<K> keySet = new CaseAwareKeySet();
+            private boolean caseInsensitive = false;
+            private final Locale locale;
+
+            /**
+             * Constructs an empty {@code CaseAwareLinkedMap} instance with {@link java.util.Locale#ENGLISH}.
+             */
+            public CaseAwareLinkedMap() {
+                this(ENGLISH);
+            }
+
+            /**
+             * Constructs an empty {@code CaseAwareLinkedMap} instance with the specified {@link java.util.Locale}.
+             * @param locale the locale to convert character cases
+             */
+            public CaseAwareLinkedMap(Locale locale) {
+                this.locale = locale;
+            }
+
+            /**
+             * Constructs a {@code CaseAwareLinkedMap} instance with the same mappings, case-sensitivity and locale as the specified map.
+             * @param map the map whose mappings, case-sensitivity and locale are to be placed in this map
+             * @throws NullPointerException if the specified map is null
+             */
+            public CaseAwareLinkedMap(CaseAwareLinkedMap<? extends K, ? extends V> map) {
+                this.targetMap.putAll(map.targetMap);
+                this.keyMap.putAll(map.keyMap);
+                this.caseInsensitive = map.caseInsensitive;
+                this.locale = map.locale;
+            }
+
+            static boolean isCaseConvertible(Class<?> clazz) {
+                return clazz == String.class || clazz == Character.class;
+            }
+
+            @SuppressWarnings("unchecked")
+            private K toLowerCase(Object caseSensitiveKey) {
+                if (caseSensitiveKey.getClass() == String.class) {
+                    return (K) ((String) caseSensitiveKey).toLowerCase(locale);
+                } else if (caseSensitiveKey.getClass() == Character.class) {
+                    return (K) (Character) Character.toLowerCase((Character) caseSensitiveKey);
+                } else {
+                    throw new UnsupportedOperationException("Unsupported case-conversion for key " + caseSensitiveKey.getClass());
+                }
+            }
+
+            /** Returns the case-insensitivity of the map. */
+            public boolean isCaseInsensitive() {
+                return caseInsensitive;
+            }
+
+            /** Sets the case-insensitivity of the map. */
+            public void setCaseInsensitive(boolean caseInsensitive) {
+                if (!isCaseInsensitive() && caseInsensitive) {
+                    for (K key : targetMap.keySet()) {
+                        K duplicatedKey = keyMap.put(key != null ? toLowerCase(key) : null, key);
+                        if (duplicatedKey != null) {
+                            throw new DuplicateNameException("Duplicated keys: " + duplicatedKey + " and " + key);
+                        }
+                    }
+                } else if (isCaseInsensitive()) {
+                    keyMap.clear();
+                }
+                this.caseInsensitive = caseInsensitive;
+            }
+
+            /** Returns the locale of the map. */
+            public Locale getLocale() {
+                return locale;
+            }
+
+            /**
+             * Returns the case-sensitive key of the specified case-insensitive key if {@code isCaseSensitive()}.
+             * Otherwise, the specified case-insensitive key is returned.
+             */
+            public K getCaseSensitiveKey(K caseInsensitiveKey) {
+                if (caseInsensitiveKey != null && caseInsensitive) {
+                    return keyMap.get(toLowerCase(caseInsensitiveKey));
+                } else {
+                    return caseInsensitiveKey;
+                }
+            }
+
+            @Override
+            public int size() {
+                return targetMap.size();
+            }
+
+            @Override
+            public boolean containsKey(Object key) {
+                if (key != null && caseInsensitive) {
+                    if (!isCaseConvertible(key.getClass())) {
+                        return false;
+                    }
+                    return keyMap.containsKey(toLowerCase(key));
+                } else {
+                    return targetMap.containsKey(key);
+                }
+            }
+
+            @Override
+            public boolean containsValue(Object value) {
+                return targetMap.containsValue(value);
+            }
+
+            @Override
+            public V get(Object key) {
+                if (key != null && isCaseConvertible(key.getClass()) && caseInsensitive) {
+                    K caseSensitiveKey = keyMap.get(toLowerCase(key));
+                    if (caseSensitiveKey == null) {
+                        return null;
+                    }
+                    return targetMap.get(caseSensitiveKey);
+                } else {
+                    return targetMap.get(key);
+                }
+            }
+
+            @Override
+            public V put(K key, V value) {
+                if (key != null && caseInsensitive) {
+                    K caseSensitiveKey = keyMap.put(toLowerCase(key), key);
+                    if (caseSensitiveKey != null) {
+                        V removedValue = targetMap.remove(caseSensitiveKey);
+                        targetMap.put(key, value);
+                        return removedValue;
+                    }
+                }
+                return targetMap.put(key, value);
+            }
+
+            @Override
+            public V remove(Object key) {
+                if (key != null && caseInsensitive) {
+                    K caseSensitiveKey = keyMap.remove(toLowerCase(key));
+                    if (caseSensitiveKey == null) {
+                        return null;
+                    }
+                    return targetMap.remove(caseSensitiveKey);
+                } else {
+                    return targetMap.remove(key);
+                }
+            }
+
+            @Override
+            public void clear() {
+                targetMap.clear();
+                keyMap.clear();
+            }
+
+            @Override
+            public Set<K> keySet() {
+                return keySet;
+            }
+
+            @Override
+            public Collection<V> values() {
+                return targetMap.values();
+            }
+
+            @Override
+            public Set<Entry<K, V>> entrySet() {
+                return targetMap.entrySet();
+            }
         }
 
         /** The {@code CommandSpec} class models a command specification, including the options, positional parameters and subcommands
@@ -5051,11 +6066,14 @@ public class CommandLine {
             /** Constant Boolean holding the default setting for whether variables should be interpolated in String values: <code>{@value}</code>.*/
             static final Boolean DEFAULT_INTERPOLATE_VARIABLES = true;
 
-            private final Map<String, CommandLine> commands = new LinkedHashMap<String, CommandLine>();
-            private final Map<String, OptionSpec> optionsByNameMap = new LinkedHashMap<String, OptionSpec>();
-            private final Map<String, OptionSpec> negatedOptionsByNameMap = new LinkedHashMap<String, OptionSpec>();
-            private final Map<Character, OptionSpec> posixOptionsByKeyMap = new LinkedHashMap<Character, OptionSpec>();
+            static final Boolean DEFAULT_SUBCOMMANDS_REPEATABLE = false;
+
+            private final CaseAwareLinkedMap<String, CommandLine> commands = new CaseAwareLinkedMap<String, CommandLine>();
+            private final CaseAwareLinkedMap<String, OptionSpec> optionsByNameMap = new CaseAwareLinkedMap<String, OptionSpec>();
+            private final CaseAwareLinkedMap<String, OptionSpec> negatedOptionsByNameMap = new CaseAwareLinkedMap<String, OptionSpec>();
+            private final CaseAwareLinkedMap<Character, OptionSpec> posixOptionsByKeyMap = new CaseAwareLinkedMap<Character, OptionSpec>();
             private final Map<String, CommandSpec> mixins = new LinkedHashMap<String, CommandSpec>();
+            private final Map<String, IAnnotatedElement> mixinAnnotatedElements = new LinkedHashMap<String, IAnnotatedElement>();
             private final List<ArgSpec> requiredArgs = new ArrayList<ArgSpec>();
             private final List<ArgSpec> args = new ArrayList<ArgSpec>();
             private final List<OptionSpec> options = new ArrayList<OptionSpec>();
@@ -5067,8 +6085,9 @@ public class CommandLine {
             private final ParserSpec parser = new ParserSpec();
             private final Interpolator interpolator = new Interpolator(this);
             private final UsageMessageSpec usageMessage = new UsageMessageSpec(interpolator);
+            private TypedMember[] methodParams;
 
-            private final Object userObject;
+            private final CommandUserObject userObject;
             private CommandLine commandLine;
             private CommandSpec parent;
             private Boolean isAddMethodSubcommands;
@@ -5080,8 +6099,11 @@ public class CommandLine {
             private IVersionProvider versionProvider;
             private IDefaultValueProvider defaultValueProvider;
             private INegatableOptionTransformer negatableOptionTransformer = RegexTransformer.createDefault();
+            private Boolean subcommandsRepeatable;
             private String[] version;
             private String toString;
+            private boolean inherited = false;
+            private ScopeType scopeType = null;
 
             private Integer exitCodeOnSuccess;
             private Integer exitCodeOnUsageHelp;
@@ -5089,7 +6111,63 @@ public class CommandLine {
             private Integer exitCodeOnInvalidInput;
             private Integer exitCodeOnExecutionException;
 
-            private CommandSpec(Object userObject) { this.userObject = userObject; }
+            private IModelTransformer modelTransformer = null;
+            private IParameterPreprocessor preprocessor = new NoOpParameterPreprocessor();
+
+            private CommandSpec(CommandUserObject userObject) {
+                this.userObject = userObject;
+                this.userObject.commandSpec = this;
+            }
+
+            private CommandSpec copy() {
+                Object obj = userObject.type == null ? userObject.instance : userObject.type;
+                CommandSpec result = obj == null ? CommandSpec.create() : CommandSpec.forAnnotatedObject(obj, userObject.factory);
+                result.commandLine = commandLine;
+                result.parent = parent;
+                result.methodParams = methodParams;
+                result.isAddMethodSubcommands = isAddMethodSubcommands;
+                result.interpolateVariables = interpolateVariables;
+                result.name = name;
+                result.aliases = aliases;
+                result.isHelpCommand = isHelpCommand;
+                result.versionProvider = versionProvider;
+                result.modelTransformer = modelTransformer;
+                result.defaultValueProvider = defaultValueProvider;
+                result.negatableOptionTransformer = negatableOptionTransformer;
+                result.subcommandsRepeatable = subcommandsRepeatable;
+                result.version = version;
+                result.toString = toString;
+
+                result.exitCodeOnSuccess = exitCodeOnSuccess;
+                result.exitCodeOnUsageHelp = exitCodeOnUsageHelp;
+                result.exitCodeOnVersionHelp = exitCodeOnVersionHelp;
+                result.exitCodeOnInvalidInput = exitCodeOnInvalidInput;
+                result.exitCodeOnExecutionException = exitCodeOnExecutionException;
+
+                result.usageMessage.initFrom(usageMessage, this);
+                result.parser(parser);
+                result.inherited = inherited;
+                result.scopeType = scopeType;
+
+                // TODO if this CommandSpec was created/modified via the programmatic API,
+                //   we need to copy all attributes that are modifiable via the programmatic API
+                //   and point them to this CommandSpec instance.
+//                result.commands.clear();                result.commands.putAll(this.commands);
+//                result.optionsByNameMap.clear();        result.optionsByNameMap.putAll(this.optionsByNameMap);
+//                result.negatedOptionsByNameMap.clear(); result.negatedOptionsByNameMap.putAll(this.negatedOptionsByNameMap);
+//                result.posixOptionsByKeyMap.clear();    result.posixOptionsByKeyMap.putAll(this.posixOptionsByKeyMap);
+//                result.mixins.clear();                  result.mixins.putAll(this.mixins);
+//                result.mixinAnnotatedElements.clear();  result.mixinAnnotatedElements.putAll(this.mixinAnnotatedElements);
+//                result.requiredArgs.clear();            result.requiredArgs.addAll(requiredArgs);
+//                result.args.clear();                    result.args.addAll(args);
+//                result.options.clear();                 result.options.addAll(options);
+//                result.positionalParameters.clear();    result.positionalParameters.addAll(positionalParameters);
+//                result.unmatchedArgs.clear();           result.unmatchedArgs.addAll(unmatchedArgs);
+//                result.specElements.clear();            result.specElements.addAll(specElements);
+//                result.parentCommandElements.clear();   result.parentCommandElements.addAll(parentCommandElements);
+//                result.groups.clear();                  result.groups.addAll(groups);
+                return result;
+            }
 
             /** Creates and returns a new {@code CommandSpec} without any associated user object. */
             public static CommandSpec create() { return wrapWithoutInspection(null); }
@@ -5098,7 +6176,15 @@ public class CommandLine {
              * The specified user object is <em>not</em> inspected for annotations.
              * @param userObject the associated user object. May be any object, may be {@code null}.
              */
-            public static CommandSpec wrapWithoutInspection(Object userObject) { return new CommandSpec(userObject); }
+            public static CommandSpec wrapWithoutInspection(Object userObject) { return new CommandSpec(CommandUserObject.create(userObject, defaultFactory())); }
+
+            /** Creates and returns a new {@code CommandSpec} with the specified associated user object.
+             * The specified user object is <em>not</em> inspected for annotations.
+             * @param userObject the associated user object. May be any object, may be {@code null}.
+             * @param factory the factory used to create instances of {@linkplain Command#subcommands() subcommands}, {@linkplain Option#converter() converters}, etc., that are registered declaratively with annotation attributes
+             * @since 4.2
+             */
+            public static CommandSpec wrapWithoutInspection(Object userObject, IFactory factory) { return new CommandSpec(CommandUserObject.create(userObject, factory)); }
 
             /** Creates and returns a new {@code CommandSpec} initialized from the specified associated user object. The specified
              * user object must have at least one {@link Command}, {@link Option} or {@link Parameters} annotation.
@@ -5162,7 +6248,7 @@ public class CommandLine {
 
             /** Returns the user object associated with this command.
              * @see CommandLine#getCommand() */
-            public Object userObject() { return userObject; }
+            public Object userObject() { return userObject.getInstance(); }
 
             /** Returns the CommandLine constructed with this {@code CommandSpec} model. */
             public CommandLine commandLine() { return commandLine;}
@@ -5189,13 +6275,46 @@ public class CommandLine {
             /** Initializes the usageMessage specification for this command from the specified settings and returns this commandSpec.*/
             public CommandSpec usageMessage(UsageMessageSpec settings) { usageMessage.initFrom(settings, this); return this; }
 
+            /** Returns whether the subcommands are case-insensitive.
+             * @since 4.3 */
+            public boolean subcommandsCaseInsensitive() { return commands.isCaseInsensitive(); }
+            /** Sets the case-insensitivity of subcommands.
+             * @since 4.3 */
+            public CommandSpec subcommandsCaseInsensitive(boolean caseInsensitiveSubcommands) {
+                if (subcommandsCaseInsensitive() == caseInsensitiveSubcommands) { return this; } // no change, no action
+                new Tracer().debug("Changing subcommandsCaseInsensitive to %s%n", caseInsensitiveSubcommands);
+                commands.setCaseInsensitive(caseInsensitiveSubcommands);
+                return this;
+            }
+
+            /** Returns whether the options are case-insensitive.
+             * @since 4.3 */
+            public boolean optionsCaseInsensitive() { return optionsByNameMap.isCaseInsensitive(); }
+            /** Sets the case-insensitivity of options.
+             * Note that changing case sensitivity will also change the case sensitivity of {@linkplain Option#negatable() negatable} options:
+             * any custom {@link INegatableOptionTransformer} that was previously installed will be replaced by the case-insensitive
+             * version of the default transformer. To ensure your custom transformer is used, install it last, after changing case sensitivity.
+             * @since 4.3 */
+            public CommandSpec optionsCaseInsensitive(boolean caseInsensitiveOptions) {
+                if (optionsCaseInsensitive() == caseInsensitiveOptions) { return this; } // no change, no action
+                new Tracer().debug("Changing optionsCaseInsensitive to %s%n", caseInsensitiveOptions);
+                optionsByNameMap.setCaseInsensitive(caseInsensitiveOptions);
+                negatedOptionsByNameMap.setCaseInsensitive(caseInsensitiveOptions);
+                posixOptionsByKeyMap.setCaseInsensitive(caseInsensitiveOptions);
+                RegexTransformer transformer = caseInsensitiveOptions
+                        ? RegexTransformer.createCaseInsensitive()
+                        : RegexTransformer.createDefault();
+                negatableOptionTransformer(transformer);
+                return this;
+            }
+
             /** Returns the resource bundle base name for this command.
              * @return the resource bundle base name from the {@linkplain UsageMessageSpec#messages()}
              * @since 4.0 */
             public String resourceBundleBaseName() { return Messages.resourceBundleBaseName(usageMessage.messages()); }
-            /** Initializes the resource bundle for this command: sets the {@link UsageMessageSpec#messages(Messages) UsageMessageSpec.messages} to
+            /** Initializes the resource bundle for this command: sets the {@link UsageMessageSpec#messages(CommandLine.Model.Messages) UsageMessageSpec.messages} to
              * a {@link Messages Messages} object created from this command spec and the specified bundle, and then sets the
-             * {@link ArgSpec#messages(Messages) ArgSpec.messages} of all options and positional parameters in this command
+             * {@link ArgSpec#messages(CommandLine.Model.Messages) ArgSpec.messages} of all options and positional parameters in this command
              * to the same {@code Messages} instance. Subcommands are not modified.
              * <p>This method is preferable to {@link #resourceBundle(ResourceBundle)} for pre-Java 8</p>
              * @param resourceBundleBaseName the base name of the ResourceBundle to set, may be {@code null}
@@ -5211,9 +6330,9 @@ public class CommandLine {
              * @return the resource bundle from the {@linkplain UsageMessageSpec#messages()}
              * @since 3.6 */
             public ResourceBundle resourceBundle() { return Messages.resourceBundle(usageMessage.messages()); }
-            /** Initializes the resource bundle for this command: sets the {@link UsageMessageSpec#messages(Messages) UsageMessageSpec.messages} to
+            /** Initializes the resource bundle for this command: sets the {@link UsageMessageSpec#messages(CommandLine.Model.Messages) UsageMessageSpec.messages} to
              * a {@link Messages Messages} object created from this command spec and the specified bundle, and then sets the
-             * {@link ArgSpec#messages(Messages) ArgSpec.messages} of all options and positional parameters in this command
+             * {@link ArgSpec#messages(CommandLine.Model.Messages) ArgSpec.messages} of all options and positional parameters in this command
              * to the same {@code Messages} instance. Subcommands are not modified.
              * @param bundle the ResourceBundle to set, may be {@code null}
              * @return this commandSpec
@@ -5269,17 +6388,80 @@ public class CommandLine {
                 String actualName = validateSubcommandName(name, subSpec);
                 Tracer t = new Tracer();
                 if (t.isDebug()) {t.debug("Adding subcommand '%s' to '%s'%n", actualName, this.qualifiedName());}
+                String previousName = commands.getCaseSensitiveKey(actualName);
                 CommandLine previous = commands.put(actualName, subCommandLine);
-                if (previous != null && previous != subCommandLine) { throw new InitializationException("Another subcommand named '" + actualName + "' already exists for command '" + this.name() + "'"); }
+                if (previous != null && previous != subCommandLine) { throw new DuplicateNameException("Another subcommand named '" + previousName + "' already exists for command '" + this.name() + "'"); }
                 if (subSpec.name == null) { subSpec.name(actualName); }
                 subSpec.parent(this);
                 for (String alias : subSpec.aliases()) {
-                    if (t.isDebug()) {t.debug("Adding alias '%s' for subcommand '%s' to '%s'%n", alias, actualName, this.qualifiedName());}
+                    if (t.isDebug()) {t.debug("Adding alias '%s' for '%s'%n", (parent == null ? "" : parent.qualifiedName() + " ") + alias, this.qualifiedName());}
                     previous = commands.put(alias, subCommandLine);
-                    if (previous != null && previous != subCommandLine) { throw new InitializationException("Alias '" + alias + "' for subcommand '" + actualName + "' is already used by another subcommand of '" + this.name() + "'"); }
+                    if (previous != null && previous != subCommandLine) { throw new DuplicateNameException("Alias '" + alias + "' for subcommand '" + actualName + "' is already used by another subcommand of '" + this.name() + "'"); }
                 }
                 subSpec.initCommandHierarchyWithResourceBundle(resourceBundleBaseName(), resourceBundle());
+                if (scopeType() == ScopeType.INHERIT) {
+                    subSpec.inheritAttributesFrom(this);
+                } else if (this.inherited()) {
+                    CommandSpec root = this.parent();
+                    while (root != null && root.scopeType() != ScopeType.INHERIT) { root = root.parent(); }
+                    if (root == null) { throw new InitializationException("Cannot find scope=INHERIT root for " + this); }
+                    subSpec.inheritAttributesFrom(root);
+                }
+
+                for (ArgSpec arg : args()) {
+                    if (arg.scopeType() == ScopeType.INHERIT) {
+                        subSpec.add(arg.isOption()
+                                ? OptionSpec.builder((OptionSpec) arg).inherited(true).build()
+                                : PositionalParamSpec.builder((PositionalParamSpec) arg).inherited(true).build());
+                    }
+                }
                 return this;
+            }
+            private void inheritAttributesFrom(CommandSpec root) {
+                inherited = true;
+                initFrom(root);
+                updatedSubcommandsToInheritFrom(root);
+            }
+            private void updatedSubcommandsToInheritFrom(CommandSpec root) {
+                if (root != this) {
+                    mixinStandardHelpOptions(root.mixinStandardHelpOptions());
+                }
+                Set<CommandLine> subcommands = new HashSet<CommandLine>(subcommands().values());
+                for (CommandLine sub : subcommands) {
+                    sub.getCommandSpec().inheritAttributesFrom(root);
+                }
+            }
+
+            /**
+             * Removes the subcommand with the specified name or alias from this CommandSpec and
+             * returns the {@code CommandLine} instance that was associated with the specified name,
+             * or {@code null} of the specified name was not associated with a subcommand.
+             * @param name name or alias of the subcommand to remove; may be
+             *      {@link #isAbbreviatedSubcommandsAllowed() abbreviated} or {@link #isSubcommandsCaseInsensitive() case-insensitive}
+             * @return the removed {@code CommandLine} instance or {@code null}
+             * @since 4.6
+             */
+            public CommandLine removeSubcommand(String name) {
+                String actualName = name;
+                if (parser().abbreviatedSubcommandsAllowed()) {
+                    actualName = AbbreviationMatcher.match(commands.keySet(), name, subcommandsCaseInsensitive(), commandLine);
+                }
+
+                Set<String> removedNames = new TreeSet<String>();
+                CommandLine result = commands.remove(actualName);
+                if (result != null) {
+                    removedNames.add(actualName);
+                    commands.remove(result.getCommandName());
+                    removedNames.add(result.getCommandName());
+                    for (String alias : result.getCommandSpec().aliases()) {
+                        commands.remove(alias);
+                        removedNames.add(alias);
+                    }
+                }
+                Tracer t = new Tracer();
+                if (t.isDebug()) {t.debug("Removed %d subcommand entries %s for key '%s' from '%s'%n",
+                        removedNames.size(), removedNames, name, this.qualifiedName());}
+                return result;
             }
 
             private String validateSubcommandName(String name, CommandSpec subSpec) {
@@ -5322,7 +6504,7 @@ public class CommandLine {
              * (class methods annotated with {@code @Command}) as subcommands.
              *
              * @return this {@link CommandSpec} object for method chaining
-             * @see #addMethodSubcommands(IFactory)
+             * @see #addMethodSubcommands(CommandLine.IFactory)
              * @see #addSubcommand(String, CommandLine)
              * @since 3.6.0
              */
@@ -5336,18 +6518,18 @@ public class CommandLine {
              * @since 3.7.0
              */
             public CommandSpec addMethodSubcommands(IFactory factory) {
-                if (userObject() instanceof Method) {
-                    throw new InitializationException("Cannot discover subcommand methods of this Command Method: " + userObject());
+                if (userObject.isMethod()) {
+                    throw new InitializationException("Cannot discover subcommand methods of this Command Method: " + userObject);
                 }
-                for (CommandLine sub : createMethodSubcommands(userObject().getClass(), factory)) {
+                for (CommandLine sub : createMethodSubcommands(userObject.getType(), factory, true)) {
                     addSubcommand(sub.getCommandName(), sub);
                 }
                 isAddMethodSubcommands = true;
                 return this;
             }
-            static List<CommandLine> createMethodSubcommands(Class<?> cls, IFactory factory) {
+            static List<CommandLine> createMethodSubcommands(Class<?> cls, IFactory factory, boolean includeInherited) {
                 List<CommandLine> result = new ArrayList<CommandLine>();
-                for (Method method : getCommandMethods(cls, null)) {
+                for (Method method : getCommandMethods(cls, null, includeInherited)) {
                     result.add(new CommandLine(method, factory));
                 }
                 return result;
@@ -5356,9 +6538,17 @@ public class CommandLine {
             /** Returns the parent command of this subcommand, or {@code null} if this is a top-level command. */
             public CommandSpec parent() { return parent; }
 
+            /** Returns the root command: the top-level command of the hierarchy, never {@code null}.
+             * @since 4.3 */
+            public CommandSpec root() { CommandSpec root = this; while (root.parent != null) { root = root.parent; } return root; }
+
             /** Sets the parent command of this subcommand.
              * @return this CommandSpec for method chaining */
-            public CommandSpec parent(CommandSpec parent) { this.parent = parent; return this; }
+            public CommandSpec parent(CommandSpec parent) {
+                this.parent = parent;
+                injectParentCommand(parent.userObject);
+                return this;
+            }
 
             /** Adds the specified option spec or positional parameter spec to the list of configured arguments to expect.
              * @param arg the option spec or positional parameter spec to add
@@ -5376,20 +6566,36 @@ public class CommandLine {
             public CommandSpec addOption(OptionSpec option) {
                 Tracer tracer = new Tracer();
                 for (String name : interpolator.interpolate(option.names())) { // cannot be null or empty
+                    String existingName = optionsByNameMap.getCaseSensitiveKey(name);
                     OptionSpec existing = optionsByNameMap.put(name, option);
                     if (existing != null) { /* was: && !existing.equals(option)) {*/ // since 4.0 ArgGroups: an option cannot be in multiple groups
-                        throw DuplicateOptionAnnotationsException.create(name, option, existing);
+                        throw DuplicateOptionAnnotationsException.create(existingName, option, existing);
+                    }
+                    // #1022 checks if negated options exist with the same name
+                    String existingNegatedName = negatedOptionsByNameMap.getCaseSensitiveKey(name);
+                    OptionSpec existingNegated = negatedOptionsByNameMap.get(name);
+                    if (existingNegated != null && existingNegated != option) {
+                        throw DuplicateOptionAnnotationsException.create(existingNegatedName, option, existingNegated);
                     }
                     if (name.length() == 2 && name.startsWith("-")) { posixOptionsByKeyMap.put(name.charAt(1), option); }
                 }
                 options.add(option);
                 addOptionNegative(option, tracer);
+                if (option.scopeType() == ScopeType.INHERIT) {
+                    Set<CommandLine> done = new HashSet<CommandLine>();
+                    for (CommandLine sub : subcommands().values()) {
+                        if (!done.contains(sub)) {
+                            sub.getCommandSpec().addOption(OptionSpec.builder(option).inherited(true).build());
+                            done.add(sub);
+                        }
+                    }
+                }
                 return addArg(option);
             }
 
             private void addOptionNegative(OptionSpec option, Tracer tracer) {
                 if (option.negatable()) {
-                    if (!option.typeInfo().isBoolean()) {
+                    if (!option.typeInfo().isBoolean() && !option.typeInfo().isOptional()) { // #1108
                         throw new InitializationException("Only boolean options can be negatable, but " + option + " is of type " + option.typeInfo().getClassName());
                     }
                     for (String name : interpolator.interpolate(option.names())) { // cannot be null or empty
@@ -5398,10 +6604,14 @@ public class CommandLine {
                             tracer.debug("Option %s is negatable, but has no negative form.%n", name);
                         } else {
                             tracer.debug("Option %s is negatable, registering negative name %s.%n", name, negatedName);
+                            String existingName = negatedOptionsByNameMap.getCaseSensitiveKey(negatedName);
                             OptionSpec existing = negatedOptionsByNameMap.put(negatedName, option);
-                            if (existing == null) { existing = optionsByNameMap.get(negatedName); }
+                            if (existing == null) {
+                                existingName = optionsByNameMap.getCaseSensitiveKey(negatedName);
+                                existing = optionsByNameMap.get(negatedName);
+                            }
                             if (existing != null) {
-                                throw DuplicateOptionAnnotationsException.create(negatedName, option, existing);
+                                throw DuplicateOptionAnnotationsException.create(existingName, option, existing);
                             }
                         }
                     }
@@ -5431,8 +6641,36 @@ public class CommandLine {
                     positional.index = Range.valueOf(interpolator.interpolate(positional.index().originalValue));
                     positional.initCapacity();
                 }
+                adjustRelativeIndices(positional);
+                if (positional.scopeType() == ScopeType.INHERIT) {
+                    Set<CommandLine> subCmds = new HashSet<CommandLine>(subcommands().values());// subcommands may be registered multiple times with different aliases
+                    for (CommandLine sub : subCmds) {
+                        sub.getCommandSpec().addPositional(PositionalParamSpec.builder(positional).inherited(true).build());
+                    }
+                }
                 return this;
             }
+
+            /** Adjusts the index of the new positional param and all others with relative indices
+             * that were sorted after this positional.
+             * @param newlyAdded the newly added positional parameter
+             */
+            private void adjustRelativeIndices(PositionalParamSpec newlyAdded) {
+                Collections.sort(positionalParameters, new PositionalParametersSorter());
+                for (int i = positionalParameters.indexOf(newlyAdded); i < positionalParameters.size(); i++) {
+                    PositionalParamSpec adjust = positionalParameters.get(i);
+                    Range index = adjust.index();
+                    if (index.isRelative()) {
+                        //int min = i == 0 ? 0 : positionalParameters.get(i - 1).index().min();
+                        int previousMax = i == 0 ? -1 : positionalParameters.get(i - 1).index().max();
+                        int max = i == 0 ? 0 : (previousMax == Integer.MAX_VALUE ? previousMax : previousMax + 1); // prevent overflow
+                        max = index.isRelativeToAnchor() ? Math.max(max, index.anchor()) : max; // never less than anchor
+                        adjust.index = new Range(max, max, index.isVariable(), index.isUnspecified, index.originalValue);
+                        adjust.initCapacity();
+                    }
+                }
+            }
+
             private CommandSpec addArg(ArgSpec arg) {
                 args.add(arg);
                 arg.messages(usageMessage().messages());
@@ -5441,7 +6679,7 @@ public class CommandLine {
                     arg.arity = Range.valueOf(interpolator.interpolate(arg.arity().originalValue));
                 }
                 // do this last: arg.required() needs to resolve variables in arg.defaultValue()
-                if (arg.required() && arg.group() == null) { requiredArgs.add(arg); }
+                if (arg.required() && arg.group() == null && !arg.inherited()) { requiredArgs.add(arg); }
                 return this;
             }
 
@@ -5508,10 +6746,10 @@ public class CommandLine {
                         String[] names = interpolator.interpolate(((OptionSpec) arg).names());
                         for (String name : names) {
                             ArgGroupSpec other = added.get(name);
-                            if (other != null && other == group) {
+                            if (other == null) { continue; }
+                            if (other == group) {
                                 throw DuplicateOptionAnnotationsException.create(name, arg, options.get(name));
-                            }
-                            if (other != null && other != group) {
+                            } else {
                                 throw new DuplicateNameException("An option cannot be in multiple groups but " + name + " is in " + group.synopsisUnit() + " and " + added.get(name).synopsisUnit() + ". Refactor to avoid this. For example, (-a | (-a -b)) can be rewritten as (-a [-b]), and (-a -b | -a -c) can be rewritten as (-a (-b | -c)).");
                             }
                         }
@@ -5543,23 +6781,27 @@ public class CommandLine {
             /** Adds the specified mixin {@code CommandSpec} object to the map of mixins for this command.
              * @param name the name that can be used to later retrieve the mixin
              * @param mixin the mixin whose options and positional parameters and other attributes to add to this command
+             * @param annotatedElement the `{@literal @}Mixin`-annotated program element
+             * @return this CommandSpec for method chaining
+             * @see #mixinAnnotatedElements()
+             * @since 4.1 */
+            public CommandSpec addMixin(String name, CommandSpec mixin, IAnnotatedElement annotatedElement) {
+                CommandSpec result = addMixin(name, mixin);
+                mixinAnnotatedElements.put(interpolator.interpolate(name), annotatedElement);
+                return result;
+            }
+
+            /** Adds the specified mixin {@code CommandSpec} object to the map of mixins for this command.
+             * @param name the name that can be used to later retrieve the mixin
+             * @param mixin the mixin whose options and positional parameters and other attributes to add to this command
              * @return this CommandSpec for method chaining */
             public CommandSpec addMixin(String name, CommandSpec mixin) {
                 mixins.put(interpolator.interpolate(name), mixin);
 
-                initExitCodeOnSuccess(mixin.exitCodeOnSuccess());
-                initExitCodeOnUsageHelp(mixin.exitCodeOnUsageHelp());
-                initExitCodeOnVersionHelp(mixin.exitCodeOnVersionHelp());
-                initExitCodeOnInvalidInput(mixin.exitCodeOnInvalidInput());
-                initExitCodeOnExecutionException(mixin.exitCodeOnExecutionException());
-
-                parser.initSeparator(mixin.parser.separator());
                 initName(interpolator.interpolateCommandName(mixin.name()));
-                initVersion(mixin.version());
-                initHelpCommand(mixin.helpCommand());
-                initVersionProvider(mixin.versionProvider());
-                initDefaultValueProvider(mixin.defaultValueProvider());
-                usageMessage.initFromMixin(mixin.usageMessage, this);
+                // TODO initAliases(mixin.aliases()); // should we?
+                // TODO initCommandHierarchyWithResourceBundle(mixin.usageMessage().messages().resourceBundleBaseName(), );
+                initFrom(mixin);
 
                 for (Map.Entry<String, CommandLine> entry : mixin.subcommands().entrySet()) {
                     addSubcommand(entry.getKey(), entry.getValue());
@@ -5577,6 +6819,23 @@ public class CommandLine {
                 for (PositionalParamSpec paramSpec : positionals) { addPositional(paramSpec); }
                 return this;
             }
+            private void initFrom(CommandSpec spec) {
+                initExitCodeOnSuccess(spec.exitCodeOnSuccess());
+                initExitCodeOnUsageHelp(spec.exitCodeOnUsageHelp());
+                initExitCodeOnVersionHelp(spec.exitCodeOnVersionHelp());
+                initExitCodeOnInvalidInput(spec.exitCodeOnInvalidInput());
+                initExitCodeOnExecutionException(spec.exitCodeOnExecutionException());
+
+                parser.initSeparator(spec.parser.separator());
+                initVersion(spec.version());
+                initHelpCommand(spec.helpCommand());
+                initVersionProvider(spec.versionProvider());
+                initDefaultValueProvider(spec.defaultValueProvider());
+                initModelTransformer(spec.modelTransformer());
+                initPreprocessor(spec.preprocessor());
+                usageMessage.initFromMixin(spec.usageMessage, this);
+                initSubcommandsRepeatable(spec.subcommandsRepeatable());
+            }
 
             /** Adds the specified {@code UnmatchedArgsBinding} to the list of model objects to capture unmatched arguments for this command.
              * @param spec the unmatched arguments binding to capture unmatched arguments
@@ -5591,10 +6850,10 @@ public class CommandLine {
              * @return this CommandSpec for method chaining
              * @since 4.0 */
             public CommandSpec addParentCommandElement(IAnnotatedElement spec) { parentCommandElements.add(spec); return this; }
-            void initParentCommand(Object parent) {
+            void injectParentCommand(CommandUserObject commandUserObject) {
                 try {
-                    for (IAnnotatedElement injectParentCommand : parentCommandElements()) {
-                        injectParentCommand.setter().set(parent);
+                    for (IAnnotatedElement injectionTarget : parentCommandElements()) {
+                        injectionTarget.setter().set(commandUserObject.getInstance());
                     }
                 } catch (Exception ex) {
                     throw new InitializationException("Unable to initialize @ParentCommand field: " + ex, ex);
@@ -5604,6 +6863,12 @@ public class CommandLine {
             /** Returns a map of the mixin names to mixin {@code CommandSpec} objects configured for this command.
              * @return an immutable map of mixins added to this command. */
             public Map<String, CommandSpec> mixins() { return Collections.unmodifiableMap(mixins); }
+
+            /** Returns a map of the mixin names to mixin {@code IAnnotatedElement} objects for this command.
+             * @return an immutable map of `{@literal @}Mixin`-annotated elements added to this command.
+             * @see #addMixin(String, CommandLine.Model.CommandSpec, CommandLine.Model.IAnnotatedElement)
+             * @since 4.1 */
+            public Map<String, IAnnotatedElement> mixinAnnotatedElements() { return Collections.unmodifiableMap(mixinAnnotatedElements); }
 
             /** Returns the list of options configured for this command.
              * @return an immutable list of options that this command recognizes. */
@@ -5668,40 +6933,26 @@ public class CommandLine {
             /** Returns the list of all options and positional parameters configured for this command.
              * @return an immutable list of all options and positional parameters for this command. */
             public List<ArgSpec> args() { return Collections.unmodifiableList(args); }
-            Object[] argValues() {
-                Map<Class<?>, CommandSpec> allMixins = null;
-                int argsLength = args.size();
-                int shift = 0;
-                for (Map.Entry<String, CommandSpec> mixinEntry : mixins.entrySet()) {
-                    if (mixinEntry.getKey().equals(AutoHelpMixin.KEY)) {
-                        shift = 2;
-                        argsLength -= shift;
-                        continue;
-                    }
-                    CommandSpec mixin = mixinEntry.getValue();
-                    int mixinArgs = mixin.args.size();
-                    argsLength -= (mixinArgs - 1); // subtract 1 because that's the mixin
-                    if (allMixins == null) {
-                        allMixins = new IdentityHashMap<Class<?>, CommandSpec>(mixins.size());
-                    }
-                    allMixins.put(mixin.userObject.getClass(), mixin);
-                }
-
-                Object[] values = new Object[argsLength];
-                if (allMixins == null) {
-                    for (int i = 0; i < values.length; i++) { values[i] = args.get(i + shift).getValue(); }
-                } else {
-                    int argIndex = shift;
-                    Class<?>[] methodParams = ((Method) userObject).getParameterTypes();
-                    for (int i = 0; i < methodParams.length; i++) {
-                        final Class<?> param = methodParams[i];
-                        CommandSpec mixin = allMixins.remove(param);
-                        if (mixin == null) {
-                            values[i] = args.get(argIndex++).getValue();
-                        } else {
-                            values[i] = mixin.userObject;
-                            argIndex += mixin.args.size();
+            Object[] commandMethodParamValues() {
+                Object[] values = new Object[methodParams.length];
+                int argIndex = mixins.containsKey(AutoHelpMixin.KEY) ? 2 : 0;
+                for (int i = 0; i < methodParams.length; i++) {
+                    if (methodParams[i].isAnnotationPresent(Mixin.class)) {
+                        String name = methodParams[i].getAnnotation(Mixin.class).name();
+                        CommandSpec mixin = mixins.get(empty(name) ? methodParams[i].name : name);
+                        values[i] = mixin.userObject.getInstance();
+                        argIndex += mixin.args.size();
+                    } else if (methodParams[i].isAnnotationPresent(ArgGroup.class)) {
+                        values[i] = null;
+                        for (ArgGroupSpec group : groups) {
+                            if (group.typeInfo.equals(methodParams[i].typeInfo)) {
+                                values[i] = group.userObjectOr(null);
+                                argIndex += group.argCount();
+                                break;
+                            }
                         }
+                    } else {
+                        values[i] = args.get(argIndex++).getValue();
                     }
                 }
                 return values;
@@ -5777,8 +7028,14 @@ public class CommandLine {
             /** Returns {@code true} if the standard help options have been mixed in with this command, {@code false} otherwise. */
             public boolean mixinStandardHelpOptions() { return mixins.containsKey(AutoHelpMixin.KEY); }
 
+            /** Returns whether the subcommands of this command are repeatable, that is, whether such subcommands can
+             * occur multiple times and may be followed by sibling commands instead of just child commands.
+             * @see Command#subcommandsRepeatable()
+             * @since 4.2 */
+            public boolean subcommandsRepeatable() { return (subcommandsRepeatable == null) ? DEFAULT_SUBCOMMANDS_REPEATABLE : subcommandsRepeatable; }
+
             /** Returns a string representation of this command, used in error messages and trace messages. */
-            public String toString() { return toString == null ? String.valueOf(userObject) : toString; }
+            public String toString() { return toString == null ? "command '" + name + "' (user object: " + userObject + ")" : toString; }
 
             /** Sets the String to use as the program name in the synopsis line of the help message.
              * @return this CommandSpec for method chaining */
@@ -5839,7 +7096,48 @@ public class CommandLine {
              * @see #execute(String...)
              * @since 4.0 */
             public CommandSpec exitCodeOnExecutionException(int newValue) { exitCodeOnExecutionException = newValue; return this; }
+
+            /** Returns whether this command is inherited from a parent command.
+             * @see Command#scope()
+             * @since 4.6 */
+            public boolean inherited() { return inherited; }
+            /** Returns the scope of this argument; it it local, or inherited (it applies to this command as well as all sub- and sub-subcommands).
+             * @return whether this argument applies to all descendent subcommands of the command where it is defined
+             * @since 4.6 */
+            public ScopeType scopeType() { return scopeType == null ? ScopeType.LOCAL : scopeType; }
+            /** Sets the scope of where this argument applies: only this command, or also all sub (and sub-sub) commands, and returns this builder.
+             * @since 4.6 */
+            public CommandSpec scopeType(ScopeType scopeType) {
+                if (this.scopeType == ScopeType.INHERIT && scopeType != ScopeType.INHERIT && !subcommands().isEmpty()) {
+                    throw new IllegalStateException("Cannot un-inherit: subcommands have already been initialized with values from this command");
+                }
+                this.scopeType = scopeType;
+                if (scopeType == ScopeType.INHERIT) {
+                    updatedSubcommandsToInheritFrom(this);
+                }
+                return this;
+            }
+
+            /** Returns the model transformer for this CommandSpec instance.
+             * @since 4.6 */
+            public IModelTransformer modelTransformer() { return modelTransformer; }
+
+            /** Sets the model transformer for this CommandSpec instance.
+             * @since 4.6 */
+            public CommandSpec modelTransformer(IModelTransformer modelTransformer) { this.modelTransformer = modelTransformer; return this; }
+
+            /** Returns the preprocessor for this CommandSpec instance.
+             * @since 4.6 */
+            public IParameterPreprocessor preprocessor() { return preprocessor; }
+
+            /** Sets the preprocessor for this CommandSpec instance.
+             * @since 4.6 */
+            public CommandSpec preprocessor(IParameterPreprocessor preprocessor) { this.preprocessor = Assert.notNull(preprocessor, "preprocessor"); return this; }
+
             /** Sets the {@code INegatableOptionTransformer} used to create the negative form of {@linkplain Option#negatable() negatable} options.
+             * Note that {@link CommandSpec#optionsCaseInsensitive()} will also change the case sensitivity of {@linkplain Option#negatable() negatable} options:
+             * any custom {@link INegatableOptionTransformer} that was previously installed will be replaced by the case-insensitive
+             * version of the default transformer. To ensure your custom transformer is used, install it last, after changing case sensitivity.
              * @see Option#negatable()
              * @since 4.0 */
             public CommandSpec negatableOptionTransformer(INegatableOptionTransformer newValue) {
@@ -5869,8 +7167,18 @@ public class CommandLine {
                         }
                     }
                 }
+                if (scopeType() == ScopeType.INHERIT || inherited()) {
+                    for (CommandLine sub : new HashSet<CommandLine>(subcommands().values())) {
+                        sub.getCommandSpec().mixinStandardHelpOptions(newValue);
+                    }
+                }
                 return this;
             }
+            /** Sets whether the subcommands of this command are repeatable, that is, whether such subcommands can
+             * occur multiple times and may be followed by sibling commands instead of just child commands.
+             * @see Command#subcommandsRepeatable()
+             * @since 4.2 */
+            public CommandSpec subcommandsRepeatable(boolean subcommandsRepeatable) { this.subcommandsRepeatable = subcommandsRepeatable; return this; }
 
             /** Sets the string representation of this command, used in error messages and trace messages.
              * @param newValue the string representation
@@ -5898,12 +7206,17 @@ public class CommandLine {
                 updateName(cmd.name());
                 updateVersion(cmd.version());
                 updateHelpCommand(cmd.helpCommand());
+                updateSubcommandsRepeatable(cmd.subcommandsRepeatable());
                 updateAddMethodSubcommands(cmd.addMethodSubcommands());
                 usageMessage().updateFromCommand(cmd, this, factory != null);
 
+                updateScopeType(cmd.scope());
+
                 if (factory != null) {
+                    updateModelTransformer(cmd.modelTransformer(), factory);
                     updateVersionProvider(cmd.versionProvider(), factory);
                     initDefaultValueProvider(cmd.defaultValueProvider(), factory);
+                    updatePreprocessor(cmd.preprocessor(), factory);
                 }
             }
 
@@ -5915,15 +7228,25 @@ public class CommandLine {
             void initDefaultValueProvider(Class<? extends IDefaultValueProvider> value, IFactory factory) {
                 if (initializable(defaultValueProvider, value, NoDefaultProvider.class)) { defaultValueProvider = (DefaultFactory.createDefaultValueProvider(factory, value)); }
             }
+            void initSubcommandsRepeatable(boolean value)       { if (initializable(subcommandsRepeatable, value, DEFAULT_SUBCOMMANDS_REPEATABLE)) {subcommandsRepeatable = value;} }
             void initExitCodeOnSuccess(int exitCode)            { if (initializable(exitCodeOnSuccess, exitCode, ExitCode.OK)) { exitCodeOnSuccess = exitCode; } }
             void initExitCodeOnUsageHelp(int exitCode)          { if (initializable(exitCodeOnUsageHelp, exitCode, ExitCode.OK)) { exitCodeOnUsageHelp = exitCode; } }
             void initExitCodeOnVersionHelp(int exitCode)        { if (initializable(exitCodeOnVersionHelp, exitCode, ExitCode.OK)) { exitCodeOnVersionHelp = exitCode; } }
             void initExitCodeOnInvalidInput(int exitCode)       { if (initializable(exitCodeOnInvalidInput, exitCode, ExitCode.USAGE)) { exitCodeOnInvalidInput = exitCode; } }
             void initExitCodeOnExecutionException(int exitCode) { if (initializable(exitCodeOnExecutionException, exitCode, ExitCode.SOFTWARE)) { exitCodeOnExecutionException = exitCode; } }
-            void updateName(String value)               { if (isNonDefault(value, DEFAULT_COMMAND_NAME))                 {name = value;} }
-            void updateHelpCommand(boolean value)       { if (isNonDefault(value, DEFAULT_IS_HELP_COMMAND))              {isHelpCommand = value;} }
-            void updateAddMethodSubcommands(boolean value) { if (isNonDefault(value, DEFAULT_IS_ADD_METHOD_SUBCOMMANDS)) {isAddMethodSubcommands = value;} }
-            void updateVersion(String[] value)          { if (isNonDefault(value, UsageMessageSpec.DEFAULT_MULTI_LINE))  {version = value.clone();} }
+            void updateName(String value)                   { if (isNonDefault(value, DEFAULT_COMMAND_NAME))                {name = value;} }
+            void initModelTransformer(IModelTransformer value) { if (modelTransformer == null) {modelTransformer = value;}}
+            void updateModelTransformer(Class<? extends IModelTransformer> value, IFactory factory) {
+                if (isNonDefault(value, NoOpModelTransformer.class)) { this.modelTransformer = DefaultFactory.create(factory, value); }
+            }
+            void initPreprocessor(IParameterPreprocessor value) { if (preprocessor instanceof NoOpParameterPreprocessor) {preprocessor = Assert.notNull(value, "preprocessor");}}
+            void updatePreprocessor(Class<? extends IParameterPreprocessor> value, IFactory factory) {
+                if (isNonDefault(value, NoOpParameterPreprocessor.class)) { this.preprocessor = DefaultFactory.create(factory, value); }
+            }
+            void updateHelpCommand(boolean value)           { if (isNonDefault(value, DEFAULT_IS_HELP_COMMAND))             {isHelpCommand = value;} }
+            void updateSubcommandsRepeatable(boolean value) { if (isNonDefault(value, DEFAULT_SUBCOMMANDS_REPEATABLE))      {subcommandsRepeatable = value;} }
+            void updateAddMethodSubcommands(boolean value)  { if (isNonDefault(value, DEFAULT_IS_ADD_METHOD_SUBCOMMANDS))   {isAddMethodSubcommands = value;} }
+            void updateVersion(String[] value)              { if (isNonDefault(value, UsageMessageSpec.DEFAULT_MULTI_LINE)) {version = value.clone();} }
             void updateVersionProvider(Class<? extends IVersionProvider> value, IFactory factory) {
                 if (isNonDefault(value, NoVersionProvider.class)) { versionProvider = (DefaultFactory.createVersionProvider(factory, value)); }
             }
@@ -5932,6 +7255,7 @@ public class CommandLine {
             void updateExitCodeOnVersionHelp(int exitCode)        { if (isNonDefault(exitCode, ExitCode.OK))       { exitCodeOnVersionHelp = exitCode; } }
             void updateExitCodeOnInvalidInput(int exitCode)       { if (isNonDefault(exitCode, ExitCode.USAGE))    { exitCodeOnInvalidInput = exitCode; } }
             void updateExitCodeOnExecutionException(int exitCode) { if (isNonDefault(exitCode, ExitCode.SOFTWARE)) { exitCodeOnExecutionException = exitCode; } }
+            void updateScopeType(ScopeType scopeType)             { if (this.scopeType == null)                    { scopeType(scopeType); } }
 
             /** Returns the option with the specified short name, or {@code null} if no option with that name is defined for this command. */
             public OptionSpec findOption(char shortName) { return findOption(shortName, options()); }
@@ -5962,25 +7286,25 @@ public class CommandLine {
                 }
                 return prefixed;
             }
-            List<String> findOptionNamesWithPrefix(String prefix) {
+            List<String> findVisibleOptionNamesWithPrefix(String prefix) {
                 List<String> result = new ArrayList<String>();
                 for (OptionSpec option : options()) {
                     for (String name : option.names()) {
-                        if (stripPrefix(name).startsWith(prefix)) { result.add(name); }
+                        if (!option.hidden() && stripPrefix(name).startsWith(prefix)) { result.add(name); }
                     }
                 }
                 return result;
             }
 
             boolean resemblesOption(String arg, Tracer tracer) {
-                if (parser().unmatchedOptionsArePositionalParams()) {
-                    if (tracer != null && tracer.isDebug()) {tracer.debug("Parser is configured to treat all unmatched options as positional parameter%n", arg);}
-                    return false;
-                }
+                if (arg == null) { return false; }
                 if (arg.length() == 1) {
                     if (tracer != null && tracer.isDebug()) {tracer.debug("Single-character arguments that don't match known options are considered positional parameters%n", arg);}
                     return false;
                 }
+                try { Long.decode(arg);        return false; } catch (NumberFormatException nan) {} // negative numbers are not unknown options
+                try { Double.parseDouble(arg); return false; } catch (NumberFormatException nan) {} // negative numbers are not unknown options
+
                 if (options().isEmpty()) {
                     boolean result = arg.startsWith("-");
                     if (tracer != null && tracer.isDebug()) {tracer.debug("'%s' %s an option%n", arg, (result ? "resembles" : "doesn't resemble"));}
@@ -5997,6 +7321,7 @@ public class CommandLine {
                 return result;
             }
         }
+
         private static boolean initializable(Object current, Object candidate, Object defaultValue) {
             return current == null && isNonDefault(candidate, defaultValue);
         }
@@ -6101,6 +7426,11 @@ public class CommandLine {
              * @since 3.9 */
             public static final String SECTION_KEY_PARAMETER_LIST_HEADING = "parameterListHeading";
 
+            /** {@linkplain #sectionKeys() Section key} to {@linkplain #sectionMap() control} the {@linkplain IHelpSectionRenderer section renderer} for the @-file parameter list section.
+             * The default renderer for this section calls {@link Help#atFileParameterList()}.
+             * @since 4.2 */
+            public static final String SECTION_KEY_AT_FILE_PARAMETER = "atFileParameterList";
+
             /** {@linkplain #sectionKeys() Section key} to {@linkplain #sectionMap() control} the {@linkplain IHelpSectionRenderer section renderer} for the Parameter List section.
              * The default renderer for this section calls {@link Help#parameterList()}.
              * @since 3.9 */
@@ -6115,6 +7445,11 @@ public class CommandLine {
              * The default renderer for this section calls {@link Help#optionList()}.
              * @since 3.9 */
             public static final String SECTION_KEY_OPTION_LIST = "optionList";
+
+            /** {@linkplain #sectionKeys() Section key} to {@linkplain #sectionMap() control} the {@linkplain IHelpSectionRenderer section renderer} for the {@code --} End of Options list section.
+             * The default renderer for this section calls {@link Help#endOfOptionsList()}.
+             * @since 4.3 */
+            public static final String SECTION_KEY_END_OF_OPTIONS = "endOfOptionsList";
 
             /** {@linkplain #sectionKeys() Section key} to {@linkplain #sectionMap() control} the {@linkplain IHelpSectionRenderer section renderer} for the Subcommand List Heading section.
              * The default renderer for this section calls {@link Help#commandListHeading(Object...)}.
@@ -6147,9 +7482,10 @@ public class CommandLine {
             public static final String SECTION_KEY_FOOTER = "footer";
 
             /** Constant holding the default usage message width: <code>{@value}</code>. */
-            public  final static int    DEFAULT_USAGE_WIDTH         = 80;
-            private final static int    MINIMUM_USAGE_WIDTH         = 55;
-            private final static int    DEFAULT_SYNOPSIS_INDENT     = -1; // by default, fall back to aligning to the synopsis heading
+            public  final static int    DEFAULT_USAGE_WIDTH              = 80;
+            private final static int    MINIMUM_USAGE_WIDTH              = 55;
+                    final static int    DEFAULT_USAGE_LONG_OPTIONS_WIDTH = 20;
+            private final static int    DEFAULT_SYNOPSIS_INDENT          = -1; // by default, fall back to aligning to the synopsis heading
             private final static double DEFAULT_SYNOPSIS_AUTO_INDENT_THRESHOLD = 0.5;
             private final static double MAX_SYNOPSIS_AUTO_INDENT_THRESHOLD     = 0.9;
 
@@ -6174,6 +7510,12 @@ public class CommandLine {
             /** Constant Boolean holding the default setting for whether to sort the options alphabetically: <code>{@value}</code>.*/
             static final Boolean DEFAULT_SORT_OPTIONS = Boolean.TRUE;
 
+            /** Constant Boolean holding the default setting for whether to show an entry for @-files in the usage help message.*/
+            static final Boolean DEFAULT_SHOW_AT_FILE = Boolean.FALSE;
+
+            /** Constant Boolean holding the default setting for whether to show an entry for the {@code --} End of Options delimiter in the usage help message.*/
+            static final Boolean DEFAULT_SHOW_END_OF_OPTIONS = Boolean.FALSE;
+
             /** Constant Boolean holding the default setting for whether to show default values in the usage help message: <code>{@value}</code>.*/
             static final Boolean DEFAULT_SHOW_DEFAULT_VALUES = Boolean.FALSE;
 
@@ -6196,9 +7538,11 @@ public class CommandLine {
                     SECTION_KEY_DESCRIPTION_HEADING,
                     SECTION_KEY_DESCRIPTION,
                     SECTION_KEY_PARAMETER_LIST_HEADING,
+                    SECTION_KEY_AT_FILE_PARAMETER,
                     SECTION_KEY_PARAMETER_LIST,
                     SECTION_KEY_OPTION_LIST_HEADING,
                     SECTION_KEY_OPTION_LIST,
+                    SECTION_KEY_END_OF_OPTIONS,
                     SECTION_KEY_COMMAND_LIST_HEADING,
                     SECTION_KEY_COMMAND_LIST,
                     SECTION_KEY_EXIT_CODE_LIST_HEADING,
@@ -6215,6 +7559,8 @@ public class CommandLine {
             private Boolean abbreviateSynopsis;
             private Boolean sortOptions;
             private Boolean showDefaultValues;
+            private Boolean showAtFileInUsageHelp;
+            private Boolean showEndOfOptionsDelimiterInUsageHelp;
             private Boolean hidden;
             private Boolean autoWidth;
             private Character requiredOptionMarker;
@@ -6231,7 +7577,8 @@ public class CommandLine {
             private String exitCodeListHeading;
             private String[] exitCodeListStrings;
             private Map<String, String> exitCodeList;
-            private int width = DEFAULT_USAGE_WIDTH;
+            private Integer width;
+            private Integer longOptionsMaxWidth;
             private Integer cachedTerminalWidth;
 
             private final Interpolator interpolator;
@@ -6252,6 +7599,21 @@ public class CommandLine {
                     throw new InitializationException("Invalid usage message width " + newValue + ". Minimum value is " + MINIMUM_USAGE_WIDTH);
                 }
                 width = newValue; return this;
+            }
+            /**
+             * Sets the maximum usage help long options column max width to the specified value.
+             * This value controls the maximum width of the long options column: any positional parameter labels or long options that are longer than the specified value will overflow into the description column, and cause the description to be displayed on the next line.
+             * @param newValue the new maximum usage help long options column max width. Must be 20 or greater.
+             * @return this {@code UsageMessageSpec} for method chaining
+             * @throws IllegalArgumentException if the specified long options column max is less than 20
+             * @since 4.2 */
+            public UsageMessageSpec longOptionsMaxWidth(int newValue) {
+                if (newValue < DEFAULT_USAGE_LONG_OPTIONS_WIDTH) {
+                    throw new InitializationException("Invalid usage long options max width " + newValue + ". Minimum value is " + DEFAULT_USAGE_LONG_OPTIONS_WIDTH);
+                } else if (newValue > width() - DEFAULT_USAGE_LONG_OPTIONS_WIDTH) {
+                    throw new InitializationException("Invalid usage long options max width " + newValue + ". Value must not exceed width(" + width() + ") - " + DEFAULT_USAGE_LONG_OPTIONS_WIDTH);
+                }
+                longOptionsMaxWidth = newValue; return this;
             }
 
             private int getSysPropertyWidthOrDefault(int defaultWidth, boolean detectTerminalSize) {
@@ -6286,14 +7648,16 @@ public class CommandLine {
             }
 
             private static int getTerminalWidth() {
+                return (Help.Ansi.isTTY() || Help.Ansi.isPseudoTTY()) ? detectTerminalWidth() : -1;
+            }
+            private static int detectTerminalWidth() {
                 long start = System.nanoTime();
                 final Tracer tracer = new Tracer();
                 final AtomicInteger size = new AtomicInteger(-1);
-                if (!Help.Ansi.isTTY() && !Help.Ansi.isPseudoTTY()) { return size.intValue(); }
                 final String[] cmd = (Help.Ansi.isWindows() && !Help.Ansi.isPseudoTTY())
                         ? new String[] {"cmd.exe", "/c", "mode con"}
                         : (Help.Ansi.isMac()
-                                ? new String[] {"stty", "-a", "-f", "/dev/tty"}
+                                ? new String[] {"tput", "cols"}
                                 : new String[] {"stty", "-a", "-F", "/dev/tty"});
                 Thread t = new Thread(new Runnable() {
                     public void run() {
@@ -6309,13 +7673,17 @@ public class CommandLine {
                             redirectError.invoke(pb, INHERIT);
                             proc = pb.start();
                             reader = new BufferedReader(new InputStreamReader(proc.getInputStream()));
-                            String line = null;
                             String txt = "";
+                            String line;
                             while ((line = reader.readLine()) != null) {
                                 txt += " " + line;
                             }
                             tracer.debug("getTerminalWidth() parsing output: %s%n", txt);
-                            Pattern pattern = Pattern.compile(".*olumns(:)?\\s+(\\d+)\\D.*", Pattern.DOTALL);
+                            Pattern pattern = (Help.Ansi.isWindows() && !Help.Ansi.isPseudoTTY())
+                                    ? Pattern.compile(".*?:\\s*(\\d+)\\D.*?:\\s*(\\d+)\\D.*", Pattern.DOTALL)
+                                    : (Help.Ansi.isMac()
+                                            ? Pattern.compile("(\\s*)(\\d+)\\s*")
+                                            : Pattern.compile(".*olumns(:)?\\s+(\\d+)\\D.*", Pattern.DOTALL));
                             Matcher matcher = pattern.matcher(txt);
                             if (matcher.matches()) {
                                 size.set(Integer.parseInt(matcher.group(2)));
@@ -6324,7 +7692,7 @@ public class CommandLine {
                             tracer.debug("getTerminalWidth() ERROR: %s%n", ignored);
                         } finally {
                             if (proc != null) { proc.destroy(); }
-                            if (reader != null) { try { reader.close(); } catch (Exception ignored) {} }
+                            close(reader);
                         }
                     }
                 });
@@ -6333,15 +7701,22 @@ public class CommandLine {
                 do {
                     if (size.intValue() >= 0) { break; }
                     try { Thread.sleep(25); } catch (InterruptedException ignored) {}
-                } while (System.currentTimeMillis() < now + 2000);
+                } while (System.currentTimeMillis() < now + 2000 && t.isAlive());
                 double duration = (System.nanoTime() - start) / 1000000.0;
                 tracer.debug("getTerminalWidth() returning: %s in %,.1fms%n", size, duration);
                 return size.intValue();
             }
+
             /** Returns the maximum usage help message width. Derived from system property {@code "picocli.usage.width"}
              * if set, otherwise returns the value set via the {@link #width(int)} method, or if not set, the {@linkplain #DEFAULT_USAGE_WIDTH default width}.
              * @return the maximum usage help message width. Never returns less than 55. */
-            public int width() { return getSysPropertyWidthOrDefault(width, autoWidth()); }
+            public int width() { return getSysPropertyWidthOrDefault(width == null ? DEFAULT_USAGE_WIDTH : width, autoWidth()); }
+
+            /** Returns the maximum usage help long options column max width to the specified value.
+             * This value controls the maximum width of the long options column: any positional parameter labels or long options that are longer than the specified value will overflow into the description column, and cause the description to be displayed on the next line.
+             * @return the new maximum usage help long options column max width. Always 20 or greater.
+             * @since 4.2 */
+            public int longOptionsMaxWidth() { return longOptionsMaxWidth == null ? DEFAULT_USAGE_LONG_OPTIONS_WIDTH : longOptionsMaxWidth; }
 
             /** Returns whether picocli should attempt to detect the terminal size and adjust the usage help message width
              * to take the full terminal width. End users may enable this by setting system property {@code "picocli.usage.width"} to {@code AUTO},
@@ -6402,12 +7777,16 @@ public class CommandLine {
                 result.put(SECTION_KEY_DESCRIPTION,            new IHelpSectionRenderer() { public String render(Help help) { return help.description(); } });
                 //e.g. %nPositional parameters:%n%n
                 result.put(SECTION_KEY_PARAMETER_LIST_HEADING, new IHelpSectionRenderer() { public String render(Help help) { return help.parameterListHeading(); } });
+                //e.g. [@<filename>...] One or more argument files containing options.
+                result.put(SECTION_KEY_AT_FILE_PARAMETER,      new IHelpSectionRenderer() { public String render(Help help) { return help.atFileParameterList(); } });
                 //e.g. [FILE...] the files to convert
                 result.put(SECTION_KEY_PARAMETER_LIST,         new IHelpSectionRenderer() { public String render(Help help) { return help.parameterList(); } });
                 //e.g. %nOptions:%n%n
                 result.put(SECTION_KEY_OPTION_LIST_HEADING,    new IHelpSectionRenderer() { public String render(Help help) { return help.optionListHeading(); } });
                 //e.g. -h, --help   displays this help and exits
                 result.put(SECTION_KEY_OPTION_LIST,            new IHelpSectionRenderer() { public String render(Help help) { return help.optionList(); } });
+                //e.g. [--] This option can be used to separate command-line options from the list of positional parameters.
+                result.put(SECTION_KEY_END_OF_OPTIONS,      new IHelpSectionRenderer() { public String render(Help help) { return help.endOfOptionsList(); } });
                 //e.g. %nCommands:%n%n
                 result.put(SECTION_KEY_COMMAND_LIST_HEADING,   new IHelpSectionRenderer() { public String render(Help help) { return help.commandListHeading(); } });
                 //e.g.    add       adds the frup to the frooble
@@ -6430,9 +7809,11 @@ public class CommandLine {
              *   <li>{@link UsageMessageSpec#SECTION_KEY_DESCRIPTION_HEADING SECTION_KEY_DESCRIPTION_HEADING}</li>
              *   <li>{@link UsageMessageSpec#SECTION_KEY_DESCRIPTION SECTION_KEY_DESCRIPTION}</li>
              *   <li>{@link UsageMessageSpec#SECTION_KEY_PARAMETER_LIST_HEADING SECTION_KEY_PARAMETER_LIST_HEADING}</li>
+             *   <li>{@link UsageMessageSpec#SECTION_KEY_AT_FILE_PARAMETER SECTION_KEY_AT_FILE_PARAMETER}</li>
              *   <li>{@link UsageMessageSpec#SECTION_KEY_PARAMETER_LIST SECTION_KEY_PARAMETER_LIST}</li>
              *   <li>{@link UsageMessageSpec#SECTION_KEY_OPTION_LIST_HEADING SECTION_KEY_OPTION_LIST_HEADING}</li>
              *   <li>{@link UsageMessageSpec#SECTION_KEY_OPTION_LIST SECTION_KEY_OPTION_LIST}</li>
+             *   <li>{@link UsageMessageSpec#SECTION_KEY_END_OF_OPTIONS SECTION_KEY_END_OF_OPTIONS}</li>
              *   <li>{@link UsageMessageSpec#SECTION_KEY_COMMAND_LIST_HEADING SECTION_KEY_COMMAND_LIST_HEADING}</li>
              *   <li>{@link UsageMessageSpec#SECTION_KEY_COMMAND_LIST SECTION_KEY_COMMAND_LIST}</li>
              *   <li>{@link UsageMessageSpec#SECTION_KEY_EXIT_CODE_LIST_HEADING SECTION_KEY_EXIT_CODE_LIST_HEADING}</li>
@@ -6565,7 +7946,15 @@ public class CommandLine {
 
             /** Returns whether the options list in the usage help message should show default values for all non-boolean options. */
             public boolean showDefaultValues() { return (showDefaultValues == null) ? DEFAULT_SHOW_DEFAULT_VALUES : showDefaultValues; }
-
+            /** Sets whether to show a {@code [@<filename>...]} entry in the synopsis and parameter list of the usage help message.
+             * (The entry is not shown if {@linkplain CommandLine#isExpandAtFiles() expanding parameter files} is disabled.)
+             * @see Command#showAtFileInUsageHelp()
+             * @since 4.2*/
+            public boolean showAtFileInUsageHelp() {return (showAtFileInUsageHelp == null) ? DEFAULT_SHOW_AT_FILE : showAtFileInUsageHelp; }
+            /** Sets whether to show a {@code [--]} (End of Options) entry in the synopsis and options list of the usage help message.
+             * @see Command#showEndOfOptionsDelimiterInUsageHelp()
+             * @since 4.3*/
+            public boolean showEndOfOptionsDelimiterInUsageHelp() {return (showEndOfOptionsDelimiterInUsageHelp == null) ? DEFAULT_SHOW_END_OF_OPTIONS : showEndOfOptionsDelimiterInUsageHelp; }
             /**
              * Returns whether this command should be hidden from the usage help message of the parent command.
              * @return {@code true} if this command should not appear in the usage help message of the parent command
@@ -6594,7 +7983,7 @@ public class CommandLine {
                 String[] bundleValues = resourceArr("usage.exitCodeList");
                 if (bundleValues == null && exitCodeList != null) { return exitCodeList; }
                 Map<String, String> result = keyValuesMap(arr(bundleValues, exitCodeListStrings, DEFAULT_MULTI_LINE));
-                return result == null ? Collections.<String, String>emptyMap() : Collections.unmodifiableMap(result);
+                return Collections.unmodifiableMap(result);
             }
 
             /** Creates and returns a {@code Map} that contains an entry for each specified String that is in {@code "key:value"} format.
@@ -6704,6 +8093,19 @@ public class CommandLine {
              * @return this UsageMessageSpec for method chaining */
             public UsageMessageSpec showDefaultValues(boolean newValue) {showDefaultValues = newValue; return this;}
 
+            /** Sets whether to show a {@code [@<filename>...]} entry in the synopsis and parameter list of the usage help message.
+             * (The entry is not shown if {@linkplain CommandLine#isExpandAtFiles() expanding parameter files} is disabled.)
+             * @see Command#showAtFileInUsageHelp()
+             * @return this UsageMessageSpec for method chaining
+             * @since 4.2*/
+            public UsageMessageSpec showAtFileInUsageHelp(boolean newValue) {showAtFileInUsageHelp = newValue; return this;}
+
+            /** Sets whether to show a {@code [--]} (End of Options) entry in the synopsis and options list of the usage help message.
+             * @see Command#showEndOfOptionsDelimiterInUsageHelp()
+             * @return this UsageMessageSpec for method chaining
+             * @since 4.3*/
+            public UsageMessageSpec showEndOfOptionsDelimiterInUsageHelp(boolean newValue) {showEndOfOptionsDelimiterInUsageHelp = newValue; return this;}
+
             /**
              * Set the hidden flag on this command to control whether to show or hide it in the help usage text of the parent command.
              * @param value enable or disable the hidden flag
@@ -6767,77 +8169,93 @@ public class CommandLine {
                         messages(new Messages(commandSpec, cmd.resourceBundle(), rb));
                     }
                 }
-                if (isNonDefault(cmd.synopsisHeading(), DEFAULT_SYNOPSIS_HEADING))            {synopsisHeading = cmd.synopsisHeading();}
-                if (isNonDefault(cmd.synopsisSubcommandLabel(), DEFAULT_SYNOPSIS_SUBCOMMANDS)){synopsisSubcommandLabel = cmd.synopsisSubcommandLabel();}
-                if (isNonDefault(cmd.commandListHeading(), DEFAULT_COMMAND_LIST_HEADING))     {commandListHeading = cmd.commandListHeading();}
-                if (isNonDefault(cmd.requiredOptionMarker(), DEFAULT_REQUIRED_OPTION_MARKER)) {requiredOptionMarker = cmd.requiredOptionMarker();}
                 if (isNonDefault(cmd.abbreviateSynopsis(), DEFAULT_ABBREVIATE_SYNOPSIS))      {abbreviateSynopsis = cmd.abbreviateSynopsis();}
-                if (isNonDefault(cmd.sortOptions(), DEFAULT_SORT_OPTIONS))                    {sortOptions = cmd.sortOptions();}
-                if (isNonDefault(cmd.showDefaultValues(), DEFAULT_SHOW_DEFAULT_VALUES))       {showDefaultValues = cmd.showDefaultValues();}
-                if (isNonDefault(cmd.hidden(), DEFAULT_HIDDEN))                               {hidden = cmd.hidden();}
+                if (isNonDefault(cmd.usageHelpAutoWidth(), DEFAULT_USAGE_AUTO_WIDTH))         {autoWidth = cmd.usageHelpAutoWidth();}
+                if (isNonDefault(cmd.commandListHeading(), DEFAULT_COMMAND_LIST_HEADING))     {commandListHeading = cmd.commandListHeading();}
                 if (isNonDefault(cmd.customSynopsis(), DEFAULT_MULTI_LINE))                   {customSynopsis = cmd.customSynopsis().clone();}
                 if (isNonDefault(cmd.description(), DEFAULT_MULTI_LINE))                      {description = cmd.description().clone();}
                 if (isNonDefault(cmd.descriptionHeading(), DEFAULT_SINGLE_VALUE))             {descriptionHeading = cmd.descriptionHeading();}
-                if (isNonDefault(cmd.header(), DEFAULT_MULTI_LINE))                           {header = cmd.header().clone();}
-                if (isNonDefault(cmd.headerHeading(), DEFAULT_SINGLE_VALUE))                  {headerHeading = cmd.headerHeading();}
                 if (isNonDefault(cmd.exitCodeList(), DEFAULT_MULTI_LINE))                     {exitCodeListStrings = cmd.exitCodeList().clone();}
                 if (isNonDefault(cmd.exitCodeListHeading(), DEFAULT_SINGLE_VALUE))            {exitCodeListHeading = cmd.exitCodeListHeading();}
                 if (isNonDefault(cmd.footer(), DEFAULT_MULTI_LINE))                           {footer = cmd.footer().clone();}
                 if (isNonDefault(cmd.footerHeading(), DEFAULT_SINGLE_VALUE))                  {footerHeading = cmd.footerHeading();}
-                if (isNonDefault(cmd.parameterListHeading(), DEFAULT_SINGLE_VALUE))           {parameterListHeading = cmd.parameterListHeading();}
+                if (isNonDefault(cmd.header(), DEFAULT_MULTI_LINE))                           {header = cmd.header().clone();}
+                if (isNonDefault(cmd.headerHeading(), DEFAULT_SINGLE_VALUE))                  {headerHeading = cmd.headerHeading();}
+                if (isNonDefault(cmd.hidden(), DEFAULT_HIDDEN))                               {hidden = cmd.hidden();}
+                //if (isNonDefault(cmd.longOptionsMaxWidth(), DEFAULT_USAGE_LONG_OPTIONS_WIDTH)){longOptionsMaxWidth = cmd.longOptionsMaxWidth();}
                 if (isNonDefault(cmd.optionListHeading(), DEFAULT_SINGLE_VALUE))              {optionListHeading = cmd.optionListHeading();}
-                if (isNonDefault(cmd.usageHelpAutoWidth(), DEFAULT_USAGE_AUTO_WIDTH))         {autoWidth = cmd.usageHelpAutoWidth();}
+                if (isNonDefault(cmd.parameterListHeading(), DEFAULT_SINGLE_VALUE))           {parameterListHeading = cmd.parameterListHeading();}
+                if (isNonDefault(cmd.requiredOptionMarker(), DEFAULT_REQUIRED_OPTION_MARKER)) {requiredOptionMarker = cmd.requiredOptionMarker();}
+                if (isNonDefault(cmd.showAtFileInUsageHelp(), DEFAULT_SHOW_AT_FILE))          {showAtFileInUsageHelp = cmd.showAtFileInUsageHelp();}
+                if (isNonDefault(cmd.showDefaultValues(), DEFAULT_SHOW_DEFAULT_VALUES))       {showDefaultValues = cmd.showDefaultValues();}
+                if (isNonDefault(cmd.showEndOfOptionsDelimiterInUsageHelp(), DEFAULT_SHOW_END_OF_OPTIONS)) {showEndOfOptionsDelimiterInUsageHelp = cmd.showEndOfOptionsDelimiterInUsageHelp();}
+                if (isNonDefault(cmd.sortOptions(), DEFAULT_SORT_OPTIONS))                    {sortOptions = cmd.sortOptions();}
+                if (isNonDefault(cmd.synopsisHeading(), DEFAULT_SYNOPSIS_HEADING))            {synopsisHeading = cmd.synopsisHeading();}
+                if (isNonDefault(cmd.synopsisSubcommandLabel(), DEFAULT_SYNOPSIS_SUBCOMMANDS)){synopsisSubcommandLabel = cmd.synopsisSubcommandLabel();}
                 if (isNonDefault(cmd.usageHelpWidth(), DEFAULT_USAGE_WIDTH))                  {width(cmd.usageHelpWidth());} // validate
             }
             void initFromMixin(UsageMessageSpec mixin, CommandSpec commandSpec) {
-                if (initializable(synopsisHeading, mixin.synopsisHeading(), DEFAULT_SYNOPSIS_HEADING))                 {synopsisHeading = mixin.synopsisHeading();}
-                if (initializable(synopsisSubcommandLabel, mixin.synopsisSubcommandLabel(), DEFAULT_SYNOPSIS_SUBCOMMANDS)) {synopsisHeading = mixin.synopsisHeading();}
-                if (initializable(commandListHeading, mixin.commandListHeading(), DEFAULT_COMMAND_LIST_HEADING))       {commandListHeading = mixin.commandListHeading();}
-                if (initializable(requiredOptionMarker, mixin.requiredOptionMarker(), DEFAULT_REQUIRED_OPTION_MARKER)) {requiredOptionMarker = mixin.requiredOptionMarker();}
                 if (initializable(abbreviateSynopsis, mixin.abbreviateSynopsis(), DEFAULT_ABBREVIATE_SYNOPSIS))        {abbreviateSynopsis = mixin.abbreviateSynopsis();}
-                if (initializable(sortOptions, mixin.sortOptions(), DEFAULT_SORT_OPTIONS))                             {sortOptions = mixin.sortOptions();}
-                if (initializable(showDefaultValues, mixin.showDefaultValues(), DEFAULT_SHOW_DEFAULT_VALUES))          {showDefaultValues = mixin.showDefaultValues();}
-                if (initializable(hidden, mixin.hidden(), DEFAULT_HIDDEN))                                             {hidden = mixin.hidden();}
+                if (initializable(adjustLineBreaksForWideCJKCharacters, mixin.adjustLineBreaksForWideCJKCharacters(), DEFAULT_ADJUST_CJK)) {adjustLineBreaksForWideCJKCharacters = mixin.adjustLineBreaksForWideCJKCharacters();}
+                if (initializable(autoWidth, mixin.autoWidth(), DEFAULT_USAGE_AUTO_WIDTH))                             {autoWidth = mixin.autoWidth();}
+                if (initializable(commandListHeading, mixin.commandListHeading(), DEFAULT_COMMAND_LIST_HEADING))       {commandListHeading = mixin.commandListHeading();}
                 if (initializable(customSynopsis, mixin.customSynopsis(), DEFAULT_MULTI_LINE))                         {customSynopsis = mixin.customSynopsis().clone();}
                 if (initializable(description, mixin.description(), DEFAULT_MULTI_LINE))                               {description = mixin.description().clone();}
                 if (initializable(descriptionHeading, mixin.descriptionHeading(), DEFAULT_SINGLE_VALUE))               {descriptionHeading = mixin.descriptionHeading();}
-                if (initializable(header, mixin.header(), DEFAULT_MULTI_LINE))                                         {header = mixin.header().clone();}
-                if (initializable(headerHeading, mixin.headerHeading(), DEFAULT_SINGLE_VALUE))                         {headerHeading = mixin.headerHeading();}
                 if (initializable(exitCodeList, mixin.exitCodeList(), Collections.emptyMap()) && exitCodeListStrings == null) {exitCodeList = Collections.unmodifiableMap(new LinkedHashMap<String, String>(mixin.exitCodeList()));}
                 if (initializable(exitCodeListHeading, mixin.exitCodeListHeading(), DEFAULT_SINGLE_VALUE))             {exitCodeListHeading = mixin.exitCodeListHeading();}
                 if (initializable(footer, mixin.footer(), DEFAULT_MULTI_LINE))                                         {footer = mixin.footer().clone();}
                 if (initializable(footerHeading, mixin.footerHeading(), DEFAULT_SINGLE_VALUE))                         {footerHeading = mixin.footerHeading();}
-                if (initializable(parameterListHeading, mixin.parameterListHeading(), DEFAULT_SINGLE_VALUE))           {parameterListHeading = mixin.parameterListHeading();}
-                if (initializable(optionListHeading, mixin.optionListHeading(), DEFAULT_SINGLE_VALUE))                 {optionListHeading = mixin.optionListHeading();}
+                if (initializable(header, mixin.header(), DEFAULT_MULTI_LINE))                                         {header = mixin.header().clone();}
+                if (initializable(headerHeading, mixin.headerHeading(), DEFAULT_SINGLE_VALUE))                         {headerHeading = mixin.headerHeading();}
+                if (initializable(hidden, mixin.hidden(), DEFAULT_HIDDEN))                                             {hidden = mixin.hidden();}
+                if (initializable(longOptionsMaxWidth, mixin.longOptionsMaxWidth(), DEFAULT_USAGE_LONG_OPTIONS_WIDTH)) {longOptionsMaxWidth = mixin.longOptionsMaxWidth();}
                 if (Messages.empty(messages) && Messages.resourceBundleBaseName(messages) == null) { messages(Messages.copy(commandSpec, mixin.messages())); }
-                if (initializable(adjustLineBreaksForWideCJKCharacters, mixin.adjustLineBreaksForWideCJKCharacters(), DEFAULT_ADJUST_CJK)) {adjustLineBreaksForWideCJKCharacters = mixin.adjustLineBreaksForWideCJKCharacters();}
+                if (initializable(optionListHeading, mixin.optionListHeading(), DEFAULT_SINGLE_VALUE))                 {optionListHeading = mixin.optionListHeading();}
+                if (initializable(parameterListHeading, mixin.parameterListHeading(), DEFAULT_SINGLE_VALUE))           {parameterListHeading = mixin.parameterListHeading();}
+                if (initializable(requiredOptionMarker, mixin.requiredOptionMarker(), DEFAULT_REQUIRED_OPTION_MARKER)) {requiredOptionMarker = mixin.requiredOptionMarker();}
+                if (initializable(showAtFileInUsageHelp, mixin.showAtFileInUsageHelp(), DEFAULT_SHOW_AT_FILE))         {showAtFileInUsageHelp = mixin.showAtFileInUsageHelp();}
+                if (initializable(showDefaultValues, mixin.showDefaultValues(), DEFAULT_SHOW_DEFAULT_VALUES))          {showDefaultValues = mixin.showDefaultValues();}
+                if (initializable(showEndOfOptionsDelimiterInUsageHelp, mixin.showEndOfOptionsDelimiterInUsageHelp(), DEFAULT_SHOW_END_OF_OPTIONS)) {showEndOfOptionsDelimiterInUsageHelp = mixin.showEndOfOptionsDelimiterInUsageHelp();}
+                if (initializable(sortOptions, mixin.sortOptions(), DEFAULT_SORT_OPTIONS))                             {sortOptions = mixin.sortOptions();}
+                if (initializable(synopsisHeading, mixin.synopsisHeading(), DEFAULT_SYNOPSIS_HEADING))                 {synopsisHeading = mixin.synopsisHeading();}
+                if (initializable(synopsisSubcommandLabel, mixin.synopsisSubcommandLabel(), DEFAULT_SYNOPSIS_SUBCOMMANDS)) {synopsisSubcommandLabel = mixin.synopsisSubcommandLabel();}
                 if (initializable(width, mixin.width(), DEFAULT_USAGE_WIDTH))                                          {width = mixin.width();}
-                if (initializable(autoWidth, mixin.autoWidth(), DEFAULT_USAGE_AUTO_WIDTH))                             {autoWidth = mixin.autoWidth();}
             }
             void initFrom(UsageMessageSpec settings, CommandSpec commandSpec) {
-                description = settings.description;
-                customSynopsis = settings.customSynopsis;
-                header = settings.header;
-                footer = settings.footer;
                 abbreviateSynopsis = settings.abbreviateSynopsis;
-                sortOptions = settings.sortOptions;
-                showDefaultValues = settings.showDefaultValues;
-                hidden = settings.hidden;
-                requiredOptionMarker = settings.requiredOptionMarker;
-                headerHeading = settings.headerHeading;
-                synopsisHeading = settings.synopsisHeading;
-                synopsisSubcommandLabel = settings.synopsisSubcommandLabel;
-                synopsisIndent = settings.synopsisIndent;
-                synopsisAutoIndentThreshold = settings.synopsisAutoIndentThreshold;
-                descriptionHeading = settings.descriptionHeading;
-                parameterListHeading = settings.parameterListHeading;
-                optionListHeading = settings.optionListHeading;
-                commandListHeading = settings.commandListHeading;
-                footerHeading = settings.footerHeading;
-                width = settings.width;
-                autoWidth = settings.autoWidth;
-                messages = Messages.copy(commandSpec, settings.messages());
                 adjustLineBreaksForWideCJKCharacters = settings.adjustLineBreaksForWideCJKCharacters;
+                autoWidth = settings.autoWidth;
+                // cachedTerminalWidth not copied
+                commandListHeading = settings.commandListHeading;
+                customSynopsis = settings.customSynopsis;
+                description = settings.description;
+                descriptionHeading = settings.descriptionHeading;
+                exitCodeList = settings.exitCodeList;
+                exitCodeListHeading = settings.exitCodeListHeading;
+                exitCodeListStrings = settings.exitCodeListStrings;
+                footer = settings.footer;
+                footerHeading = settings.footerHeading;
+                header = settings.header;
+                headerHeading = settings.headerHeading;
+                helpFactory = settings.helpFactory;
+                helpSectionRendererMap = settings.helpSectionRendererMap;
+                hidden = settings.hidden;
+                longOptionsMaxWidth = settings.longOptionsMaxWidth;
+                messages = Messages.copy(commandSpec, settings.messages());
+                optionListHeading = settings.optionListHeading;
+                parameterListHeading = settings.parameterListHeading;
+                requiredOptionMarker = settings.requiredOptionMarker;
+                sectionKeys = settings.sectionKeys;
+                showAtFileInUsageHelp = settings.showAtFileInUsageHelp;
+                showDefaultValues = settings.showDefaultValues;
+                showEndOfOptionsDelimiterInUsageHelp = settings.showEndOfOptionsDelimiterInUsageHelp;
+                sortOptions = settings.sortOptions;
+                synopsisAutoIndentThreshold = settings.synopsisAutoIndentThreshold;
+                synopsisHeading = settings.synopsisHeading;
+                synopsisIndent = settings.synopsisIndent;
+                synopsisSubcommandLabel = settings.synopsisSubcommandLabel;
+                width = settings.width;
             }
         }
         /** Models parser configuration specification.
@@ -6846,24 +8264,28 @@ public class CommandLine {
 
             /** Constant String holding the default separator between options and option parameters: <code>{@value}</code>.*/
             static final String DEFAULT_SEPARATOR = "=";
-            private String separator;
-            private boolean stopAtUnmatched = false;
-            private boolean stopAtPositional = false;
-            private String endOfOptionsDelimiter = "--";
-            private boolean toggleBooleanFlags = false;
-            private boolean overwrittenOptionsAllowed = false;
-            private boolean unmatchedArgumentsAllowed = false;
-            private boolean expandAtFiles = true;
-            private boolean useSimplifiedAtFiles = false;
-            private Character atFileCommentChar = '#';
-            private boolean posixClusteredShortOptionsAllowed = true;
-            private boolean unmatchedOptionsArePositionalParams = false;
-            private boolean limitSplit = false;
+            static final String DEFAULT_END_OF_OPTIONS_DELIMITER = "--";
+            private boolean abbreviatedOptionsAllowed = false;
+            private boolean abbreviatedSubcommandsAllowed = false;
             private boolean aritySatisfiedByAttachedOptionParam = false;
-            private boolean collectErrors = false;
+            private Character atFileCommentChar = '#';
             private boolean caseInsensitiveEnumValuesAllowed = false;
-            private boolean trimQuotes = shouldTrimQuotes();
+            private boolean collectErrors = false;
+            private String endOfOptionsDelimiter = DEFAULT_END_OF_OPTIONS_DELIMITER;
+            private boolean expandAtFiles = true;
+            private boolean limitSplit = false;
+            private boolean overwrittenOptionsAllowed = false;
+            private boolean posixClusteredShortOptionsAllowed = true;
+            private String separator;
             private boolean splitQuotedStrings = false;
+            private boolean stopAtPositional = false;
+            private boolean stopAtUnmatched = false;
+            private boolean toggleBooleanFlags = false;
+            private boolean trimQuotes = shouldTrimQuotes();
+            private boolean unmatchedArgumentsAllowed = false;
+            private boolean unmatchedOptionsAllowedAsOptionParameters = true;
+            private boolean unmatchedOptionsArePositionalParams = false;
+            private boolean useSimplifiedAtFiles = false;
 
             /** Returns the String to use as the separator between options and option parameters. {@code "="} by default,
              * initialized from {@link Command#separator()} if defined.*/
@@ -6882,6 +8304,10 @@ public class CommandLine {
             public boolean overwrittenOptionsAllowed()         { return overwrittenOptionsAllowed; }
             /** @see CommandLine#isUnmatchedArgumentsAllowed() */
             public boolean unmatchedArgumentsAllowed()         { return unmatchedArgumentsAllowed; }
+            /** @see CommandLine#isAbbreviatedSubcommandsAllowed() */
+            public boolean abbreviatedSubcommandsAllowed()         { return abbreviatedSubcommandsAllowed; }
+            /** @see CommandLine#isAbbreviatedOptionsAllowed() */
+            public boolean abbreviatedOptionsAllowed()         { return abbreviatedOptionsAllowed; }
             /** @see CommandLine#isExpandAtFiles() */
             public boolean expandAtFiles()                     { return expandAtFiles; }
             /** @see CommandLine#getAtFileCommentChar()
@@ -6892,7 +8318,7 @@ public class CommandLine {
             public boolean useSimplifiedAtFiles()              {
                 String value = System.getProperty("picocli.useSimplifiedAtFiles");
                 if (value != null) {
-                    return "".equals(value) || Boolean.valueOf(value);
+                    return "".equals(value) || Boolean.parseBoolean(value);
                 }
                 return useSimplifiedAtFiles;
             }
@@ -6909,6 +8335,10 @@ public class CommandLine {
             public boolean splitQuotedStrings()  { return splitQuotedStrings; }
             /** @see CommandLine#isUnmatchedOptionsArePositionalParams() */
             public boolean unmatchedOptionsArePositionalParams() { return unmatchedOptionsArePositionalParams; }
+            /**
+             * @see CommandLine#isUnmatchedOptionsAllowedAsOptionParameters()
+             * @since 4.4 */
+            public boolean unmatchedOptionsAllowedAsOptionParameters() { return unmatchedOptionsAllowedAsOptionParameters; }
             private boolean splitFirst()                       { return limitSplit(); }
             /** Returns true if arguments should be split first before any further processing and the number of
              * parts resulting from the split is limited to the max arity of the argument. */
@@ -6936,6 +8366,10 @@ public class CommandLine {
             public ParserSpec overwrittenOptionsAllowed(boolean overwrittenOptionsAllowed) { this.overwrittenOptionsAllowed = overwrittenOptionsAllowed; return this; }
             /** @see CommandLine#setUnmatchedArgumentsAllowed(boolean) */
             public ParserSpec unmatchedArgumentsAllowed(boolean unmatchedArgumentsAllowed) { this.unmatchedArgumentsAllowed = unmatchedArgumentsAllowed; return this; }
+            /** @see CommandLine#setAbbreviatedSubcommandsAllowed(boolean) */
+            public ParserSpec abbreviatedSubcommandsAllowed(boolean abbreviatedSubcommandsAllowed) { this.abbreviatedSubcommandsAllowed = abbreviatedSubcommandsAllowed; return this; }
+            /** @see CommandLine#setAbbreviatedOptionsAllowed(boolean) */
+            public ParserSpec abbreviatedOptionsAllowed(boolean abbreviatedOptionsAllowed) { this.abbreviatedOptionsAllowed = abbreviatedOptionsAllowed; return this; }
             /** @see CommandLine#setExpandAtFiles(boolean) */
             public ParserSpec expandAtFiles(boolean expandAtFiles)                         { this.expandAtFiles = expandAtFiles; return this; }
             /** @see CommandLine#setAtFileCommentChar(Character)
@@ -6955,6 +8389,10 @@ public class CommandLine {
             /** @see CommandLine#setSplitQuotedStrings(boolean)
              * @since 3.7 */
             public ParserSpec splitQuotedStrings(boolean splitQuotedStrings)  { this.splitQuotedStrings = splitQuotedStrings; return this; }
+            /**
+             * @see CommandLine#setUnmatchedOptionsAllowedAsOptionParameters(boolean)
+             * @since 4.4 */
+            public ParserSpec unmatchedOptionsAllowedAsOptionParameters(boolean unmatchedOptionsAllowedAsOptionParameters) { this.unmatchedOptionsAllowedAsOptionParameters = unmatchedOptionsAllowedAsOptionParameters; return this; }
             /** @see CommandLine#setUnmatchedOptionsArePositionalParams(boolean) */
             public ParserSpec unmatchedOptionsArePositionalParams(boolean unmatchedOptionsArePositionalParams) { this.unmatchedOptionsArePositionalParams = unmatchedOptionsArePositionalParams; return this; }
             /** Sets whether exceptions during parsing should be collected instead of thrown.
@@ -6972,51 +8410,71 @@ public class CommandLine {
             private boolean shouldTrimQuotes() {
                 String value = System.getProperty("picocli.trimQuotes");
                 if ("".equals(value)) { value = "true"; }
-                return Boolean.valueOf(value);
+                return Boolean.parseBoolean(value);
             }
 
             void initSeparator(String value)   { if (initializable(separator, value, DEFAULT_SEPARATOR)) {separator = value;} }
             void updateSeparator(String value) { if (isNonDefault(value, DEFAULT_SEPARATOR))             {separator = value;} }
             public String toString() {
-                return String.format("posixClusteredShortOptionsAllowed=%s, stopAtPositional=%s, stopAtUnmatched=%s, " +
-                                "separator=%s, overwrittenOptionsAllowed=%s, unmatchedArgumentsAllowed=%s, expandAtFiles=%s, " +
-                                "atFileCommentChar=%s, useSimplifiedAtFiles=%s, endOfOptionsDelimiter=%s, limitSplit=%s, aritySatisfiedByAttachedOptionParam=%s, " +
-                                "toggleBooleanFlags=%s, unmatchedOptionsArePositionalParams=%s, collectErrors=%s," +
-                                "caseInsensitiveEnumValuesAllowed=%s, trimQuotes=%s, splitQuotedStrings=%s",
-                        posixClusteredShortOptionsAllowed, stopAtPositional, stopAtUnmatched,
-                        separator, overwrittenOptionsAllowed, unmatchedArgumentsAllowed, expandAtFiles,
-                        atFileCommentChar, useSimplifiedAtFiles, endOfOptionsDelimiter, limitSplit, aritySatisfiedByAttachedOptionParam,
-                        toggleBooleanFlags, unmatchedOptionsArePositionalParams, collectErrors,
-                        caseInsensitiveEnumValuesAllowed, trimQuotes, splitQuotedStrings);
+                return String.format("abbreviatedOptionsAllowed=%s, abbreviatedSubcommandsAllowed=%s, aritySatisfiedByAttachedOptionParam=%s, atFileCommentChar=%s, " +
+                                "caseInsensitiveEnumValuesAllowed=%s, collectErrors=%s, endOfOptionsDelimiter=%s, expandAtFiles=%s, " +
+                                "limitSplit=%s, overwrittenOptionsAllowed=%s, posixClusteredShortOptionsAllowed=%s, " +
+                                "separator=%s, splitQuotedStrings=%s, stopAtPositional=%s, stopAtUnmatched=%s, " +
+                                "toggleBooleanFlags=%s, trimQuotes=%s, " +
+                                "unmatchedArgumentsAllowed=%s, unmatchedOptionsAllowedAsOptionParameters=%s, unmatchedOptionsArePositionalParams=%s, useSimplifiedAtFiles=%s",
+                        abbreviatedOptionsAllowed, abbreviatedSubcommandsAllowed, aritySatisfiedByAttachedOptionParam, atFileCommentChar,
+                        caseInsensitiveEnumValuesAllowed, collectErrors, endOfOptionsDelimiter, expandAtFiles,
+                        limitSplit, overwrittenOptionsAllowed, posixClusteredShortOptionsAllowed,
+                        separator, splitQuotedStrings, stopAtPositional, stopAtUnmatched,
+                        toggleBooleanFlags, trimQuotes,
+                        unmatchedArgumentsAllowed, unmatchedOptionsAllowedAsOptionParameters, unmatchedOptionsArePositionalParams, useSimplifiedAtFiles);
             }
 
             void initFrom(ParserSpec settings) {
-                separator = settings.separator;
-                stopAtUnmatched = settings.stopAtUnmatched;
-                stopAtPositional = settings.stopAtPositional;
-                endOfOptionsDelimiter = settings.endOfOptionsDelimiter;
-                toggleBooleanFlags = settings.toggleBooleanFlags;
-                overwrittenOptionsAllowed = settings.overwrittenOptionsAllowed;
-                unmatchedArgumentsAllowed = settings.unmatchedArgumentsAllowed;
-                expandAtFiles = settings.expandAtFiles;
-                atFileCommentChar = settings.atFileCommentChar;
-                posixClusteredShortOptionsAllowed = settings.posixClusteredShortOptionsAllowed;
-                unmatchedOptionsArePositionalParams = settings.unmatchedOptionsArePositionalParams;
-                limitSplit = settings.limitSplit;
+                abbreviatedOptionsAllowed = settings.abbreviatedOptionsAllowed;
+                abbreviatedSubcommandsAllowed = settings.abbreviatedSubcommandsAllowed;
                 aritySatisfiedByAttachedOptionParam = settings.aritySatisfiedByAttachedOptionParam;
-                collectErrors = settings.collectErrors;
+                atFileCommentChar = settings.atFileCommentChar;
                 caseInsensitiveEnumValuesAllowed = settings.caseInsensitiveEnumValuesAllowed;
-                trimQuotes = settings.trimQuotes;
+                collectErrors = settings.collectErrors;
+                endOfOptionsDelimiter = settings.endOfOptionsDelimiter;
+                expandAtFiles = settings.expandAtFiles;
+                limitSplit = settings.limitSplit;
+                overwrittenOptionsAllowed = settings.overwrittenOptionsAllowed;
+                posixClusteredShortOptionsAllowed = settings.posixClusteredShortOptionsAllowed;
+                separator = settings.separator;
                 splitQuotedStrings = settings.splitQuotedStrings;
+                stopAtPositional = settings.stopAtPositional;
+                stopAtUnmatched = settings.stopAtUnmatched;
+                toggleBooleanFlags = settings.toggleBooleanFlags;
+                trimQuotes = settings.trimQuotes;
+                unmatchedArgumentsAllowed = settings.unmatchedArgumentsAllowed;
+                unmatchedOptionsAllowedAsOptionParameters = settings.unmatchedOptionsAllowedAsOptionParameters;
+                unmatchedOptionsArePositionalParams = settings.unmatchedOptionsArePositionalParams;
+                useSimplifiedAtFiles = settings.useSimplifiedAtFiles;
             }
         }
+        enum InitialValueState {CACHED, POSTPONED, UNAVAILABLE}
         /** Models the shared attributes of {@link OptionSpec} and {@link PositionalParamSpec}.
          * @since 3.0 */
         public abstract static class ArgSpec {
+            /** Special value that can be used to designate {@code null}.
+             * @see Option#defaultValue()
+             * @see Option#fallbackValue()
+             * @see Option#mapFallbackValue()
+             * @see Parameters#defaultValue()
+             * @see Parameters#mapFallbackValue()
+             * @since 4.6 */
+            static final String NULL_VALUE = "_NULL_";
             static final String DESCRIPTION_VARIABLE_DEFAULT_VALUE = "${DEFAULT-VALUE}";
             static final String DESCRIPTION_VARIABLE_FALLBACK_VALUE = "${FALLBACK-VALUE}";
+            static final String DESCRIPTION_VARIABLE_MAP_FALLBACK_VALUE = "${MAP-FALLBACK-VALUE}";
             static final String DESCRIPTION_VARIABLE_COMPLETION_CANDIDATES = "${COMPLETION-CANDIDATES}";
             private static final String NO_DEFAULT_VALUE = "__no_default_value__";
+            private static final String UNSPECIFIED = "__unspecified__";
+
+            private final boolean inherited;
+            private final ArgSpec root;
 
             // help-related fields
             private final boolean hidden;
@@ -7031,24 +8489,32 @@ public class CommandLine {
             private final Object userObject;
 
             // parser fields
+            private boolean required;
             private final boolean interactive;
-            private final boolean required;
+            private final boolean echo;
+            private final String prompt;
             private final String splitRegex;
-            private final ITypeInfo typeInfo;
+            private final String splitRegexSynopsisLabel;
+            protected final ITypeInfo typeInfo;
             private final ITypeConverter<?>[] converters;
             private final Iterable<String> completionCandidates;
             private final IParameterConsumer parameterConsumer;
+            private final IParameterPreprocessor preprocessor;
+            private final String mapFallbackValue;
             private final String defaultValue;
-            private final Object initialValue;
+            private       Object initialValue;
             private final boolean hasInitialValue;
+            private       InitialValueState initialValueState;
+            protected final IAnnotatedElement annotatedElement;
             private final IGetter getter;
             private final ISetter setter;
             private final IScope scope;
+            private final ScopeType scopeType;
             private Range arity;
             private List<String> stringValues = new ArrayList<String>();
             private List<String> originalStringValues = new ArrayList<String>();
             protected String toString;
-            private List<Object> typedValues = new ArrayList<Object>();
+            private final List<Object> typedValues = new ArrayList<Object>();
             Map<Integer, Object> typedValueAtPosition = new TreeMap<Integer, Object>();
 
             /** Constructs a new {@code ArgSpec}. */
@@ -7057,21 +8523,31 @@ public class CommandLine {
                 description = builder.description == null ? new String[0] : builder.description;
                 descriptionKey = builder.descriptionKey;
                 splitRegex = builder.splitRegex == null ? "" : builder.splitRegex;
+                splitRegexSynopsisLabel = builder.splitRegexSynopsisLabel == null ? "" : builder.splitRegexSynopsisLabel;
                 paramLabel = empty(builder.paramLabel) ? "PARAM" : builder.paramLabel;
                 hideParamSyntax = builder.hideParamSyntax;
                 converters = builder.converters == null ? new ITypeConverter<?>[0] : builder.converters;
                 parameterConsumer = builder.parameterConsumer;
+                preprocessor = builder.preprocessor != null ? builder.preprocessor : new NoOpParameterPreprocessor();
                 showDefaultValue = builder.showDefaultValue == null ? Help.Visibility.ON_DEMAND : builder.showDefaultValue;
                 hidden = builder.hidden;
+                inherited = builder.inherited;
+                root = builder.root == null && ScopeType.INHERIT.equals(builder.scopeType) ? this : builder.root;
                 interactive = builder.interactive;
+                echo = builder.echo;
+                prompt = builder.prompt;
                 initialValue = builder.initialValue;
                 hasInitialValue = builder.hasInitialValue;
+                initialValueState = builder.initialValueState;
+                annotatedElement = builder.annotatedElement;
                 defaultValue = NO_DEFAULT_VALUE.equals(builder.defaultValue) ? null : builder.defaultValue;
                 required = builder.required;
                 toString = builder.toString;
                 getter = builder.getter;
                 setter = builder.setter;
                 scope  = builder.scope;
+                scopeType = builder.scopeType;
+                mapFallbackValue = builder.mapFallbackValue;
 
                 Range tempArity = builder.arity;
                 if (tempArity == null) {
@@ -7108,6 +8584,7 @@ public class CommandLine {
                     throw new InitializationException("Only multi-value options and positional parameters should have a split regex (this check can be disabled by setting system property 'picocli.ignore.invalid.split')");
                 }
             }
+
             void applyInitialValue(Tracer tracer) {
                 if (hasInitialValue()) {
                     try {
@@ -7129,14 +8606,25 @@ public class CommandLine {
                 return required && defaultValue() == null && defaultValueFromProvider() == null;
             }
             /** Returns whether this option will prompt the user to enter a value on the command line.
+             * @see Parameters#interactive()
              * @see Option#interactive() */
             public boolean interactive()   { return interactive; }
+            /** Returns whether the user input is echoed to the console or not for an interactive option or positional parameter when asking for user input.
+             * @see Option#echo()
+             * @see Parameters#echo()
+             * @since 4.6 */
+            public boolean echo() { return echo; }
+            /** Returns the text displayed to the end user for an interactive option or positional parameter when asking for user input.
+             * @see Option#prompt()
+             * @see Parameters#prompt()
+             * @since 4.6 */
+            public String prompt() { return prompt; }
 
             /** Returns the description of this option or positional parameter, after all variables have been rendered,
              * including the {@code ${DEFAULT-VALUE}} and {@code ${COMPLETION-CANDIDATES}} variables.
              * Use {@link CommandSpec#interpolateVariables(Boolean)} to switch off variable expansion if needed.
              * <p>
-             * If a resource bundle has been {@linkplain ArgSpec#messages(Messages) set}, this method will first try to find a value in the resource bundle:
+             * If a resource bundle has been {@linkplain ArgSpec#messages(CommandLine.Model.Messages) set}, this method will first try to find a value in the resource bundle:
              * If the resource bundle has no entry for the {@code fully qualified commandName + "." + descriptionKey} or for the unqualified {@code descriptionKey},
              * an attempt is made to find the option or positional parameter description using any of the
              * {@linkplain #getAdditionalDescriptionKeys() additional description keys}, first with the {@code fully qualified commandName + "."} prefix, then without.
@@ -7188,10 +8676,12 @@ public class CommandLine {
                 }
                 String defaultValueString = defaultValueString(false); // interpolate later
                 String fallbackValueString = isOption() ? ((OptionSpec) this).fallbackValue : ""; // interpolate later
+                String mapFallbackValueString = String.valueOf(mapFallbackValue); // interpolate later
                 String[] result = new String[desc.length];
                 for (int i = 0; i < desc.length; i++) {
                     result[i] = format(desc[i].replace(DESCRIPTION_VARIABLE_DEFAULT_VALUE, defaultValueString.replace("%", "%%"))
                             .replace(DESCRIPTION_VARIABLE_FALLBACK_VALUE, fallbackValueString.replace("%", "%%"))
+                            .replace(DESCRIPTION_VARIABLE_MAP_FALLBACK_VALUE, mapFallbackValueString.replace("%", "%%"))
                             .replace(DESCRIPTION_VARIABLE_COMPLETION_CANDIDATES, candidates.toString()));
                 }
                 return interpolate(result);
@@ -7214,7 +8704,9 @@ public class CommandLine {
              * @since 3.6.0 */
             public boolean hideParamSyntax()     { return hideParamSyntax; }
 
-            /** Returns auxiliary type information used when the {@link #type()} is a generic {@code Collection}, {@code Map} or an abstract class.
+            /** Returns auxiliary type information used when the {@link #type()} is a generic type like
+             * {@code Collection}, {@code Map} or {@code Optional}; returns the concrete type when {@link #type()}
+             * is an abstract class, otherwise, returns the same as {@link #type()}.
              * @see Option#type() */
             public Class<?>[] auxiliaryTypes() { return typeInfo.getAuxiliaryTypes(); }
 
@@ -7228,11 +8720,31 @@ public class CommandLine {
              * @see Option#split() */
             public String splitRegex()     { return interpolate(splitRegex); }
 
+            /**
+             * Returns a regular expression to split option parameter for usage information.
+             * @see Option#splitSynopsisLabel()
+             * @since 4.3
+             * */
+            public String splitRegexSynopsisLabel() { return interpolate(splitRegexSynopsisLabel); }
+
             /** Returns whether this option should be excluded from the usage message.
              * @see Option#hidden() */
             public boolean hidden()        { return hidden; }
 
-            /** Returns the type to convert the option or positional parameter to before {@linkplain #setValue(Object) setting} the value. */
+            /** Returns whether this option is inherited from a parent command.
+             * @see Option#scope()
+             * @since 4.3.0 */
+            public boolean inherited() { return inherited; }
+
+            /** Returns the root option or positional parameter (on the parent command), if this option or positional parameter was inherited;
+             * or {@code null} if it was not.
+             * @see Option#scope()
+             * @since 4.6.1 */
+            public ArgSpec root() { return root; }
+
+            /** Returns the type to convert the option or positional parameter to before {@linkplain #setValue(Object) setting} the value.
+             * This may be a container type like {@code List}, {@code Map}, or {@code Optional},
+             * in which case the type or types of the elements are returned by {@link #auxiliaryTypes()}. */
             public Class<?> type()         { return typeInfo.getType(); }
 
             /** Returns the {@code ITypeInfo} that can be used both at compile time (by annotation processors) and at runtime.
@@ -7243,6 +8755,19 @@ public class CommandLine {
              * @return may return the annotated program element, or some other useful object
              * @since 4.0 */
             public Object userObject()     { return userObject; }
+
+            /** Returns the fallback value for this Map option or positional parameter: the value that is put into the Map when only the
+             * key is specified for the option or positional parameter, like {@code -Dkey} instead of {@code -Dkey=value}.
+             * <p>If no {@code mapFallbackValue} is set, key-only Map parameters like {@code -Dkey}
+             * are considered invalid user input and cause a {@link ParameterException} to be thrown.</p>
+             * <p>By default, this method returns a special "__unspecified__" value indicating that no {@code mapFallbackValue} was set.</p>
+             * @see Option#mapFallbackValue()
+             * @see Parameters#mapFallbackValue()
+             * @since 4.6 */
+            public String mapFallbackValue() {
+                String result = interpolate(mapFallbackValue);
+                return NULL_VALUE.equals(result) ? null : result;
+            }
 
             /** Returns the default value to assign if this option or positional parameter was not specified on the command line, before splitting and type conversion.
              * This method returns the programmatically set value; this may differ from the default value that is actually used:
@@ -7255,13 +8780,20 @@ public class CommandLine {
              * @see OptionSpec#fallbackValue()
              */
             public String defaultValue()   { return interpolate(defaultValue); }
-            /** Returns the initial value this option or positional parameter. If {@link #hasInitialValue()} is true,
-             * the option will be reset to the initial value before parsing (regardless of whether a default value exists),
+            /** Returns the initial value of this option or positional parameter: the value that, if {@link #hasInitialValue()} is true,
+             * the option will be reset to before parsing (regardless of whether a default value exists),
              * to clear values that would otherwise remain from parsing previous input. */
-            public Object initialValue()     { return initialValue; }
+            public Object initialValue()   {
+                // not not initialize if already CACHED, or UNAVAILABLE, or if annotatedElement==null
+                if (initialValueState == InitialValueState.POSTPONED && annotatedElement != null) {
+                    try { initialValue = annotatedElement.getter().get(); } catch (Exception ex) { }
+                    initialValueState = InitialValueState.CACHED;
+                }
+                return initialValue;
+            }
             /** Determines whether the option or positional parameter will be reset to the {@link #initialValue()}
              * before parsing new input.*/
-            public boolean hasInitialValue() { return hasInitialValue; }
+            public boolean hasInitialValue() { return hasInitialValue || initialValueState == InitialValueState.CACHED || initialValueState == InitialValueState.POSTPONED; }
 
             /** Returns whether this option or positional parameter's default value should be shown in the usage help. */
             public Help.Visibility showDefaultValue() { return showDefaultValue; }
@@ -7300,13 +8832,14 @@ public class CommandLine {
             }
 
             private String defaultValueFromProvider() {
+                if (commandSpec == null) { return null; } // still initializing...
                 String fromProvider = null;
                 IDefaultValueProvider defaultValueProvider = null;
                 try {
                     defaultValueProvider = commandSpec.defaultValueProvider();
                     fromProvider = defaultValueProvider == null ? null : defaultValueProvider.defaultValue(this);
                 } catch (Exception ex) {
-                    new Tracer().info("Error getting default value for %s from %s: %s", this, defaultValueProvider, ex);
+                    new Tracer().info("Error getting default value for %s from %s: %s%n", this, defaultValueProvider, ex);
                 }
                 return fromProvider;
             }
@@ -7325,12 +8858,22 @@ public class CommandLine {
              * @since 4.0 */
             public IParameterConsumer parameterConsumer() { return parameterConsumer; }
 
+            /** Returns a custom {@code IParameterPreprocessor} to either replace or complement picocli's parsing logic
+             * for the parameter(s) of this option or position.
+             * @since 4.6 */
+            public IParameterPreprocessor preprocessor() { return preprocessor; }
+
             /** Returns the {@link IGetter} that is responsible for supplying the value of this argument. */
             public IGetter getter()        { return getter; }
             /** Returns the {@link ISetter} that is responsible for modifying the value of this argument. */
             public ISetter setter()        { return setter; }
-            /** Returns the {@link IScope} that determines on which object to set the value (or from which object to get the value) of this argument. */
+            /** Returns the binding {@link IScope} that determines on which object to set the value (or from which object to get the value) of this argument. */
             public IScope scope()          { return scope; }
+
+            /** Returns the scope of this argument; it it local, or inherited (it applies to this command as well as all sub- and sub-subcommands).
+             * @return whether this argument applies to all descendent subcommands of the command where it is defined
+             * @since 4.3 */
+            public ScopeType scopeType() { return scopeType; }
 
             /** Returns the current value of this argument. Delegates to the current {@link #getter()}. */
             public <T> T getValue() throws PicocliException {
@@ -7366,6 +8909,14 @@ public class CommandLine {
              * @since 4.0 */
             public ArgGroupSpec group() { return group; }
 
+            /** Returns the command this option or positional parameter belongs to.
+             * <p>Beware that it is possible to programmatically add an option or positional parameter to more than one command model.
+             * (This will not happen in models that are auto-generated from annotations). In that case this method will only return
+             * the one it was added to last.
+             * <p>If the option or positional parameter has not yet been attached to a command, {@code null} will be returned.
+             * @since 4.1 */
+            public CommandSpec command() { return commandSpec; }
+
             /** Returns the untyped command line arguments matched by this option or positional parameter spec.
              * @return the matched arguments after {@linkplain #splitRegex() splitting}, but before type conversion.
              *      For map properties, {@code "key=value"} values are split into the key and the value part. */
@@ -7392,7 +8943,7 @@ public class CommandLine {
             protected boolean internalShowDefaultValue(boolean usageHelpShowDefaults) {
                 if (showDefaultValue() == Help.Visibility.ALWAYS)   { return true; }  // override global usage help setting
                 if (showDefaultValue() == Help.Visibility.NEVER)    { return false; } // override global usage help setting
-                if (initialValue == null && defaultValue() == null && defaultValueFromProvider() == null) { return false; } // no default value to show
+                if (initialValue() == null && defaultValue() == null && defaultValueFromProvider() == null) { return false; } // no default value to show
                 return usageHelpShowDefaults && !isBoolean(type());
             }
             /** Returns the Messages for this arg specification, or {@code null}.
@@ -7408,6 +8959,17 @@ public class CommandLine {
 
             /** Returns a string respresentation of this option or positional parameter. */
             public String toString() { return toString; }
+            private String scopeString() {
+                try {
+                    Object obj = scope.get();
+                    if (obj == null) {
+                        return "<no user object>";
+                    }
+                    return obj.getClass().getSimpleName() + "@" + Integer.toHexString(System.identityHashCode(obj));
+                } catch (Exception ex) {
+                    return "?: " + ex.toString();
+                }
+            }
 
             String[] splitValue(String value, ParserSpec parser, Range arity, int consumed) {
                 if (splitRegex().length() == 0) { return new String[] {value}; }
@@ -7429,7 +8991,7 @@ public class CommandLine {
                 StringBuilder temp = new StringBuilder();
                 StringBuilder current = splittable;
                 boolean escaping = false, inQuote = false;
-                for (int ch = 0, i = 0; i < value.length(); i += Character.charCount(ch)) {
+                for (int ch, i = 0; i < value.length(); i += Character.charCount(ch)) {
                     ch = value.codePointAt(i);
                     switch (ch) {
                         case '\\': escaping = !escaping; break;
@@ -7471,7 +9033,7 @@ public class CommandLine {
             private static String restoreQuotedValues(String part, Queue<String> quotedValues, ParserSpec parser) {
                 StringBuilder result = new StringBuilder();
                 boolean escaping = false, inQuote = false, skip = false;
-                for (int ch = 0, i = 0; i < part.length(); i += Character.charCount(ch)) {
+                for (int ch, i = 0; i < part.length(); i += Character.charCount(ch)) {
                     ch = part.codePointAt(i);
                     switch (ch) {
                         case '\\': escaping = !escaping; break;
@@ -7491,42 +9053,65 @@ public class CommandLine {
             }
 
             protected boolean equalsImpl(ArgSpec other) {
-                boolean result = Assert.equals(this.defaultValue, other.defaultValue)
+                return Assert.equals(this.defaultValue, other.defaultValue)
+                        && Assert.equals(this.mapFallbackValue, other.mapFallbackValue)
                         && Assert.equals(this.arity, other.arity)
                         && Assert.equals(this.hidden, other.hidden)
+                        && Assert.equals(this.inherited, other.inherited)
                         && Assert.equals(this.paramLabel, other.paramLabel)
                         && Assert.equals(this.hideParamSyntax, other.hideParamSyntax)
                         && Assert.equals(this.required, other.required)
                         && Assert.equals(this.splitRegex, other.splitRegex)
+                        && Assert.equals(this.splitRegexSynopsisLabel, other.splitRegexSynopsisLabel)
                         && Arrays.equals(this.description, other.description)
                         && Assert.equals(this.descriptionKey, other.descriptionKey)
                         && Assert.equals(this.parameterConsumer, other.parameterConsumer)
+                        && Assert.equals(this.preprocessor, other.preprocessor)
                         && this.typeInfo.equals(other.typeInfo)
-                        ;
-                return result;
+                        && this.scopeType.equals(other.scopeType);
             }
             protected int hashCodeImpl() {
                 return 17
                         + 37 * Assert.hashCode(defaultValue)
+                        + 37 * Assert.hashCode(mapFallbackValue)
                         + 37 * Assert.hashCode(arity)
                         + 37 * Assert.hashCode(hidden)
+                        + 37 * Assert.hashCode(inherited)
                         + 37 * Assert.hashCode(paramLabel)
                         + 37 * Assert.hashCode(hideParamSyntax)
                         + 37 * Assert.hashCode(required)
                         + 37 * Assert.hashCode(splitRegex)
+                        + 37 * Assert.hashCode(splitRegexSynopsisLabel)
                         + 37 * Arrays.hashCode(description)
                         + 37 * Assert.hashCode(descriptionKey)
                         + 37 * Assert.hashCode(parameterConsumer)
+                        + 37 * Assert.hashCode(preprocessor)
                         + 37 * typeInfo.hashCode()
+                        + 37 * scopeType.hashCode()
                         ;
             }
 
-            private static String describe(Collection<ArgSpec> args) { return describe(args, ", "); }
-            private static String describe(Collection<ArgSpec> args, String separator) {
+            private static String describeTypes(Collection<ArgSpec> args) {
+                if (args.isEmpty()) { return ""; }
+                int optionCount = 0;
+                int paramCount = 0;
+                for (ArgSpec arg : args) { if (arg.isOption()) {optionCount++;} else {paramCount++;} }
+                if (optionCount == 0) { return paramCount == 1 ? "parameter" : "parameters"; }
+                if (paramCount == 0) { return optionCount == 1 ? "option" : "options"; }
+                return "options and parameters";
+            }
+            private static String describe(Collection<ArgSpec> args) { return describe(args, ", ", "=", "", ""); }
+            private static String describe(Collection<ArgSpec> args, String separator, String optionParamSeparator, String openingQuote, String closingQuote) {
                 StringBuilder sb = new StringBuilder();
                 for (ArgSpec arg : args) {
                     if (sb.length() > 0) { sb.append(separator); }
-                    sb.append(describe(arg, "="));
+                    if (arg.isPositional()) {
+                        sb.append(openingQuote).append(arg.paramLabel()).append(closingQuote);
+                    } else {
+                        sb.append(openingQuote).append(((OptionSpec) arg).longestName());
+                        if (arg.arity().min() > 0) { sb.append(optionParamSeparator).append(arg.paramLabel()); }
+                        sb.append(closingQuote);
+                    }
                 }
                 return sb.toString();
             }
@@ -7553,10 +9138,15 @@ public class CommandLine {
                 private String descriptionKey;
                 private boolean required;
                 private boolean interactive;
+                private boolean echo;
+                private String prompt;
                 private String paramLabel;
                 private boolean hideParamSyntax;
                 private String splitRegex;
+                private String splitRegexSynopsisLabel;
                 private boolean hidden;
+                private ArgSpec root;
+                private boolean inherited;
                 private Class<?> type;
                 private Class<?>[] auxiliaryTypes;
                 private ITypeInfo typeInfo;
@@ -7564,13 +9154,18 @@ public class CommandLine {
                 private String defaultValue;
                 private Object initialValue;
                 private boolean hasInitialValue = true;
+                private InitialValueState initialValueState = InitialValueState.UNAVAILABLE;
                 private Help.Visibility showDefaultValue;
                 private Iterable<String> completionCandidates;
                 private IParameterConsumer parameterConsumer;
+                private IParameterPreprocessor preprocessor;
                 private String toString;
                 private IGetter getter = new ObjectBinding();
                 private ISetter setter = (ISetter) getter;
                 private IScope scope = new ObjectScope(null);
+                private ScopeType scopeType = ScopeType.LOCAL;
+                private IAnnotatedElement annotatedElement;
+                private String mapFallbackValue = UNSPECIFIED;
 
                 Builder() {}
                 Builder(ArgSpec original) {
@@ -7580,48 +9175,67 @@ public class CommandLine {
                     descriptionKey = original.descriptionKey;
                     required = original.required;
                     interactive = original.interactive;
+                    echo = original.echo;
+                    prompt = original.prompt;
                     paramLabel = original.paramLabel;
                     hideParamSyntax = original.hideParamSyntax;
                     splitRegex = original.splitRegex;
+                    splitRegexSynopsisLabel = original.splitRegexSynopsisLabel;
                     hidden = original.hidden;
+                    inherited = original.inherited;
+                    root = original.root;
                     setTypeInfo(original.typeInfo);
                     converters = original.converters;
                     defaultValue = original.defaultValue;
+                    annotatedElement = original.annotatedElement;
                     initialValue = original.initialValue;
+                    initialValueState = original.initialValueState;
                     hasInitialValue = original.hasInitialValue;
                     showDefaultValue = original.showDefaultValue;
                     completionCandidates = original.completionCandidates;
                     parameterConsumer = original.parameterConsumer;
+                    preprocessor = original.preprocessor;
                     toString = original.toString;
                     getter = original.getter;
                     setter = original.setter;
                     scope = original.scope;
+                    scopeType = original.scopeType;
+                    mapFallbackValue = original.mapFallbackValue;
                 }
-                Builder(IAnnotatedElement source) {
-                    userObject = source.userObject();
-                    setTypeInfo(source.getTypeInfo());
-                    toString = source.getToString();
-                    getter = source.getter();
-                    setter = source.setter();
-                    scope = source.scope();
-                    hasInitialValue = source.hasInitialValue();
-                    try { initialValue = source.getter().get(); } catch (Exception ex) { initialValue = null; hasInitialValue = false; }
+                Builder(IAnnotatedElement annotatedElement) {
+                    this.annotatedElement = annotatedElement;
+                    userObject = annotatedElement.userObject();
+                    setTypeInfo(annotatedElement.getTypeInfo());
+                    toString = annotatedElement.getToString();
+                    getter = annotatedElement.getter();
+                    setter = annotatedElement.setter();
+                    scope = annotatedElement.scope();
+                    hasInitialValue = annotatedElement.hasInitialValue();
+                    if (annotatedElement instanceof IExtensible) {
+                        initialValueState = ((IExtensible) annotatedElement).getExtension(InitialValueState.class);
+                    }
                 }
-                Builder(Option option, IAnnotatedElement source, IFactory factory) {
-                    this(source);
-                    arity = Range.optionArity(source);
+                Builder(Option option, IAnnotatedElement annotatedElement, IFactory factory) {
+                    this(annotatedElement);
+                    arity = Range.optionArity(annotatedElement);
                     required = option.required();
 
-                    paramLabel = inferLabel(option.paramLabel(), source.getName(), source.getTypeInfo());
+                    paramLabel = inferLabel(option.paramLabel(), annotatedElement.getName(), annotatedElement.getTypeInfo());
 
                     hideParamSyntax = option.hideParamSyntax();
                     interactive = option.interactive();
+                    echo = option.echo();
+                    prompt = option.prompt();
                     description = option.description();
                     descriptionKey = option.descriptionKey();
                     splitRegex = option.split();
+                    splitRegexSynopsisLabel = option.splitSynopsisLabel();
                     hidden = option.hidden();
-                    defaultValue = option.defaultValue();
+                    defaultValue = NULL_VALUE.equals(option.defaultValue()) ? null : option.defaultValue();
+                    mapFallbackValue = NULL_VALUE.equals(option.mapFallbackValue()) ? null : option.mapFallbackValue();
                     showDefaultValue = option.showDefaultValue();
+                    scopeType = option.scope();
+                    inherited = false;
                     if (factory != null) {
                         converters = DefaultFactory.createConverter(factory, option.converter());
                         if (!NoCompletionCandidates.class.equals(option.completionCandidates())) {
@@ -7630,27 +9244,36 @@ public class CommandLine {
                         if (!NullParameterConsumer.class.equals(option.parameterConsumer())) {
                             parameterConsumer = DefaultFactory.createParameterConsumer(factory, option.parameterConsumer());
                         }
+                        if (!NoOpParameterPreprocessor.class.equals(option.preprocessor())) {
+                            preprocessor = DefaultFactory.create(factory, option.preprocessor());
+                        }
                     }
                 }
-                Builder(Parameters parameters, IAnnotatedElement source, IFactory factory) {
-                    this(source);
-                    arity = Range.parameterArity(source);
+                Builder(Parameters parameters, IAnnotatedElement annotatedElement, IFactory factory) {
+                    this(annotatedElement);
+                    arity = Range.parameterArity(annotatedElement);
                     required = arity.min > 0;
 
                     // method parameters may be positional parameters without @Parameters annotation
                     if (parameters == null) {
-                        paramLabel = inferLabel(null, source.getName(), source.getTypeInfo());
+                        paramLabel = inferLabel(null, annotatedElement.getName(), annotatedElement.getTypeInfo());
                     } else {
-                        paramLabel = inferLabel(parameters.paramLabel(), source.getName(), source.getTypeInfo());
+                        paramLabel = inferLabel(parameters.paramLabel(), annotatedElement.getName(), annotatedElement.getTypeInfo());
 
                         hideParamSyntax = parameters.hideParamSyntax();
                         interactive = parameters.interactive();
+                        echo = parameters.echo();
+                        prompt = parameters.prompt();
                         description = parameters.description();
                         descriptionKey = parameters.descriptionKey();
                         splitRegex = parameters.split();
+                        splitRegexSynopsisLabel = parameters.splitSynopsisLabel();
                         hidden = parameters.hidden();
-                        defaultValue = parameters.defaultValue();
+                        defaultValue = NULL_VALUE.equals(parameters.defaultValue()) ? null : parameters.defaultValue();
+                        mapFallbackValue = NULL_VALUE.equals(parameters.mapFallbackValue()) ? null : parameters.mapFallbackValue();
                         showDefaultValue = parameters.showDefaultValue();
+                        scopeType = parameters.scope();
+                        inherited = false;
                         if (factory != null) { // annotation processors will pass a null factory
                             converters = DefaultFactory.createConverter(factory, parameters.converter());
                             if (!NoCompletionCandidates.class.equals(parameters.completionCandidates())) {
@@ -7658,6 +9281,9 @@ public class CommandLine {
                             }
                             if (!NullParameterConsumer.class.equals(parameters.parameterConsumer())) {
                                 parameterConsumer = DefaultFactory.createParameterConsumer(factory, parameters.parameterConsumer());
+                            }
+                            if (!NoOpParameterPreprocessor.class.equals(parameters.preprocessor())) {
+                                preprocessor = DefaultFactory.create(factory, parameters.preprocessor());
                             }
                         }
                     }
@@ -7682,6 +9308,16 @@ public class CommandLine {
                 /** Returns whether this option prompts the user to enter a value on the command line.
                  * @see Option#interactive() */
                 public boolean interactive()   { return interactive; }
+                /** Returns whether the user input is echoed to the console or not for an interactive option or positional parameter when asking for user input.
+                 * @see Option#echo()
+                 * @see Parameters#echo()
+                 * @since 4.6 */
+                public boolean echo() { return echo; }
+                /** Returns the text displayed to the end user for an interactive option or positional parameter when asking for user input.
+                 * @see Option#prompt()
+                 * @see Parameters#prompt()
+                 * @since 4.6 */
+                public String prompt() { return prompt; }
 
                 /** Returns the description of this option, used when generating the usage documentation.
                  * @see Option#description() */
@@ -7707,7 +9343,8 @@ public class CommandLine {
                  * @since 3.6.0 */
                 public boolean hideParamSyntax()     { return hideParamSyntax; }
 
-                /** Returns auxiliary type information used when the {@link #type()} is a generic {@code Collection}, {@code Map} or an abstract class.
+                /** Returns auxiliary type information used when the {@link #type()} is a generic container like
+                 * {@code Collection}, {@code Map}, {@code Optional} or an abstract class.
                  * @see Option#type() */
                 public Class<?>[] auxiliaryTypes() { return auxiliaryTypes; }
 
@@ -7721,11 +9358,29 @@ public class CommandLine {
                  * @see Option#split() */
                 public String splitRegex()     { return splitRegex; }
 
+                /**
+                 * Returns a regular expression to split option parameter for usage information.
+                 * @see Option#splitSynopsisLabel()
+                 * @since 4.3 */
+                public String splitRegexSynopsisLabel() { return splitRegexSynopsisLabel; }
                 /** Returns whether this option should be excluded from the usage message.
                  * @see Option#hidden() */
                 public boolean hidden()        { return hidden; }
 
-                /** Returns the type to convert the option or positional parameter to before {@linkplain #setValue(Object) setting} the value. */
+                /** Returns whether this option is inherited from a parent command.
+                 * @see Option#scope()
+                 * @since 4.3.0 */
+                public boolean inherited() { return inherited; }
+
+                /** Returns the root option or positional parameter (on the parent command), if this option or positional parameter was inherited;
+                 * or {@code null} if it was not.
+                 * @see Option#scope()
+                 * @since 4.6.1 */
+                public ArgSpec root() { return root; }
+
+                /** Returns the type to convert the option or positional parameter to before {@linkplain #setValue(Object) setting} the value.
+                 * This may be a container type like {@code List}, {@code Map}, or {@code Optional},
+                 * in which case the type or types of the elements are returned by {@link #auxiliaryTypes()}. */
                 public Class<?> type()         { return type; }
 
                 /** Returns the type info for this option or positional parameter.
@@ -7739,13 +9394,23 @@ public class CommandLine {
                  * @since 4.0 */
                 public Object userObject()     { return userObject; }
 
+                /** Returns the fallback value for this Map option or positional parameter: the value that is put into the Map when only the
+                 * key is specified for the option or positional parameter, like {@code -Dkey} instead of {@code -Dkey=value}.
+                 * <p>If no {@code mapFallbackValue} is set, key-only Map parameters like {@code -Dkey}
+                 * are considered invalid user input and cause a {@link ParameterException} to be thrown.</p>
+                 * <p>By default, this method returns a special "__unspecified__" value indicating that no {@code mapFallbackValue} was set.</p>
+                 * @see Option#mapFallbackValue()
+                 * @see Parameters#mapFallbackValue()
+                 * @since 4.6 */
+                public String mapFallbackValue() { return mapFallbackValue; }
+
                 /** Returns the default value of this option or positional parameter, before splitting and type conversion.
                  * A value of {@code null} means this option or positional parameter does not have a default. */
                 public String defaultValue()   { return defaultValue; }
                 /** Returns the initial value this option or positional parameter. If {@link #hasInitialValue()} is true,
                  * the option will be reset to the initial value before parsing (regardless of whether a default value exists),
                  * to clear values that would otherwise remain from parsing previous input. */
-                public Object initialValue()     { return initialValue; }
+                public Object initialValue()   { return initialValue; }
                 /** Determines whether the option or positional parameter will be reset to the {@link #initialValue()}
                  * before parsing new input.*/
                 public boolean hasInitialValue() { return hasInitialValue; }
@@ -7761,12 +9426,21 @@ public class CommandLine {
                  * @since 4.0 */
                 public IParameterConsumer parameterConsumer() { return parameterConsumer; }
 
+                /** Returns the custom {@code IParameterPreprocessor} to either replace or complement picocli's parsing logic
+                 * for the parameter(s) of this option or position, or {@code null}.
+                 * @since 4.6 */
+                public IParameterPreprocessor preprocessor() { return preprocessor; }
+
                 /** Returns the {@link IGetter} that is responsible for supplying the value of this argument. */
                 public IGetter getter()        { return getter; }
                 /** Returns the {@link ISetter} that is responsible for modifying the value of this argument. */
                 public ISetter setter()        { return setter; }
-                /** Returns the {@link IScope} that determines where the setter sets the value (or the getter gets the value) of this argument. */
+                /** Returns the binding {@link IScope} that determines the instance of the enclosing element where the setter sets the value (or the getter gets the value) of this argument. */
                 public IScope scope()          { return scope; }
+                /** Returns the scope of this argument.
+                 * @return whether this argument applies to all descendent subcommands of the command where it is defined
+                 * @since 4.3 */
+                public ScopeType scopeType() { return scopeType; }
 
                 public String toString() { return toString; }
 
@@ -7775,6 +9449,12 @@ public class CommandLine {
 
                 /** Sets whether this option prompts the user to enter a value on the command line, and returns this builder. */
                 public T interactive(boolean interactive)    { this.interactive = interactive; return self(); }
+
+                /** Sets whether the user input is echoed to the console or not for an interactive option or positional parameter. */
+                public T echo(boolean echo) { this.echo = echo; return self(); }
+
+                /** Sets the text displayed to the end user for an interactive option or positional parameter when asking for user input. */
+                public T prompt(String prompt) { this.prompt = prompt; return self(); }
 
                 /** Sets the description of this option, used when generating the usage documentation, and returns this builder.
                  * @see Option#description() */
@@ -7802,7 +9482,7 @@ public class CommandLine {
                 public T hideParamSyntax(boolean hideParamSyntax) { this.hideParamSyntax = hideParamSyntax; return self(); }
 
                 /** Sets auxiliary type information, and returns this builder.
-                 * @param types  the element type(s) when the {@link #type()} is a generic {@code Collection} or a {@code Map};
+                 * @param types  the element type(s) when the {@link #type()} is a generic type like {@code Collection}, {@code Map} or {@code Optional};
                  * or the concrete type when the {@link #type()} is an abstract class. */
                 public T auxiliaryTypes(Class<?>... types)   { this.auxiliaryTypes = Assert.notNull(types, "types").clone(); return self(); }
 
@@ -7810,8 +9490,10 @@ public class CommandLine {
                 public T converters(ITypeConverter<?>... cs) { this.converters = Assert.notNull(cs, "type converters").clone(); return self(); }
 
                 /** Sets a regular expression to split option parameter values or {@code ""} if the value should not be split, and returns this builder. */
-                public T splitRegex(String splitRegex)       { this.splitRegex = Assert.notNull(splitRegex, "splitRegex"); return self(); }
+                public T splitRegex(String splitRegex)  { this.splitRegex = Assert.notNull(splitRegex, "splitRegex"); return self(); }
 
+                /** Sets a regular expression to split option parameter for usage information. */
+                public T splitRegexSynopsisLabel(String splitRegexSynopsisLabel) { this.splitRegexSynopsisLabel = Assert.notNull(splitRegexSynopsisLabel, "splitRegexSynopsisLabel"); return self(); }
                 /** Sets whether this option or positional parameter's default value should be shown in the usage help, and returns this builder. */
                 public T showDefaultValue(Help.Visibility visibility) { showDefaultValue = Assert.notNull(visibility, "visibility"); return self(); }
 
@@ -7823,8 +9505,21 @@ public class CommandLine {
                  * @since 4.0 */
                 public T parameterConsumer(IParameterConsumer parameterConsumer) { this.parameterConsumer = parameterConsumer; return self(); }
 
+                /** Sets the custom {@code IParameterPreprocessor} for this option or position, and returns this builder.
+                 * @since 4.6 */
+                public T preprocessor(IParameterPreprocessor preprocessor) { this.preprocessor = preprocessor; return self(); }
+
                 /** Sets whether this option should be excluded from the usage message, and returns this builder. */
                 public T hidden(boolean hidden)              { this.hidden = hidden; return self(); }
+
+                /** Sets whether this option is inherited from a parent command, and returns this builder.
+                 * @since 4.3.0 */
+                public T inherited(boolean inherited)        { this.inherited = inherited; return self(); }
+
+                /**
+                 * Sets the root object for this inherited option, and returns this builder.
+                 * @since 4.6.1 */
+                public T root(ArgSpec root)                  { this.root = root ; return self(); }
 
                 /** Sets the type to convert the option or positional parameter to before {@linkplain #setValue(Object) setting} the value, and returns this builder.
                  * @param propertyType the type of this option or parameter. For multi-value options and positional parameters this can be an array, or a (sub-type of) Collection or Map. */
@@ -7850,6 +9545,15 @@ public class CommandLine {
                  * @since 4.0 */
                 public T userObject(Object userObject)     { this.userObject = Assert.notNull(userObject, "userObject"); return self(); }
 
+                /** Sets the fallback value for this Map option or positional parameter: the value that is put into the Map when only the
+                 * key is specified for the option or positional parameter, like {@code -Dkey} instead of {@code -Dkey=value}.
+                 * <p>If no {@code mapFallbackValue} is set, key-only Map parameters like {@code -Dkey}
+                 * are considered invalid user input and cause a {@link ParameterException} to be thrown.</p>
+                 * @see Option#mapFallbackValue()
+                 * @see Parameters#mapFallbackValue()
+                 * @since 4.6 */
+                public Builder mapFallbackValue(String fallbackValue) { this.mapFallbackValue = fallbackValue; return self(); }
+
                 /** Sets the default value of this option or positional parameter to the specified value, and returns this builder.
                  * Before parsing the command line, the result of {@linkplain #splitRegex() splitting} and {@linkplain #converters() type converting}
                  * this default value is applied to the option or positional parameter. A value of {@code null} or {@code "__no_default_value__"} means no default. */
@@ -7858,7 +9562,9 @@ public class CommandLine {
                 /** Sets the initial value of this option or positional parameter to the specified value, and returns this builder.
                  * If {@link #hasInitialValue()} is true, the option will be reset to the initial value before parsing (regardless
                  * of whether a default value exists), to clear values that would otherwise remain from parsing previous input. */
-                public T initialValue(Object initialValue)   { this.initialValue = initialValue; return self(); }
+                // TODO test ModelCommandSpecTest.testDontClearScalarOptionOldValueBeforeParseIfInitialValueFalse and Groovy CliBuilder before setting state to CACHED
+                //   testDontClearListOptionOldValueBeforeParseIfInitialValueFalse and testDontClearArrayOptionOldValueBeforeParse
+                public T initialValue(Object initialValue)   { this.initialValue = initialValue; /*initialValueState = InitialValueState.CACHED;*/ return self(); }
 
                 /** Determines whether the option or positional parameter will be reset to the {@link #initialValue()}
                  * before parsing new input.*/
@@ -7868,10 +9574,13 @@ public class CommandLine {
                 public T getter(IGetter getter)              { this.getter = getter; return self(); }
                 /** Sets the {@link ISetter} that is responsible for modifying the value of this argument, and returns this builder. */
                 public T setter(ISetter setter)              { this.setter = setter; return self(); }
-                /** Sets the {@link IScope} that targets where the setter sets the value, and returns this builder. */
+                /** Sets the binding {@link IScope} that targets where the setter sets the value, and returns this builder. */
                 public T scope(IScope scope)                 { this.scope = scope; return self(); }
+                /** Sets the scope of where this argument applies: only this command, or also all sub (and sub-sub) commands, and returns this builder.
+                 * @since 4.3 */
+                public T scopeType(ScopeType scopeType) { this.scopeType = scopeType; return self(); }
 
-                /** Sets the string respresentation of this option or positional parameter to the specified value, and returns this builder. */
+                /** Sets the string representation of this option or positional parameter to the specified value, and returns this builder. */
                 public T withToString(String toString)       { this.toString = toString; return self(); }
             }
         }
@@ -7919,13 +9628,13 @@ public class CommandLine {
         public static class OptionSpec extends ArgSpec implements IOrdered {
             public static final String DEFAULT_FALLBACK_VALUE = "";
             static final int DEFAULT_ORDER = -1;
-            private String[] names;
-            private boolean help;
-            private boolean usageHelp;
-            private boolean versionHelp;
-            private boolean negatable;
-            private String fallbackValue;
-            private int order;
+            private final String[] names;
+            private final boolean help;
+            private final boolean usageHelp;
+            private final boolean versionHelp;
+            private final boolean negatable;
+            private final String fallbackValue;
+            private final int order;
 
             public static OptionSpec.Builder builder(String name, String... names) {
                 String[] copy = new String[Assert.notNull(names, "names").length + 1];
@@ -7956,11 +9665,12 @@ public class CommandLine {
                 if (names.length == 0 || Arrays.asList(names).contains("")) {
                     throw new InitializationException("Invalid names: " + Arrays.toString(names));
                 }
-                if (toString() == null) { toString = "option " + longestName(); }
+                if (toString == null) { toString = "option " + longestName(); }
 
-//                if (arity().max == 0 && !(isBoolean(type()) || (isMultiValue() && isBoolean(auxiliaryTypes()[0])))) {
-//                    throw new InitializationException("Option " + longestName() + " is not a boolean so should not be defined with arity=" + arity());
-//                }
+                // https://github.com/remkop/picocli/issues/511
+                //if (arity().max == 0 && !(isBoolean(type()) || (isMultiValue() && isBoolean(auxiliaryTypes()[0])))) {
+                //    throw new InitializationException("Option " + longestName() + " is not a boolean so should not be defined with arity=" + arity());
+                //}
             }
 
             /** Returns a new Builder initialized with the attributes from this {@code OptionSpec}. Calling {@code build} immediately will return a copy of this {@code OptionSpec}.
@@ -8021,16 +9731,19 @@ public class CommandLine {
 
             /** Returns the fallback value for this option: the value that is assigned for options with an optional parameter
              * (for example, {@code arity = "0..1"}) if the option was specified on the command line without parameter.
+             * <p>If the special value {@link #NULL_VALUE} is set, this method returns {@code null}.</p>
              * @see Option#fallbackValue()
              * @see #defaultValue()
              * @since 4.0 */
-            public String fallbackValue() { return interpolate(fallbackValue); }
+            public String fallbackValue() {
+                return interpolate(fallbackValue);
+            }
 
             public boolean equals(Object obj) {
                 if (obj == this) { return true; }
                 if (!(obj instanceof OptionSpec)) { return false; }
                 OptionSpec other = (OptionSpec) obj;
-                boolean result = super.equalsImpl(other)
+                return super.equalsImpl(other)
                         && help == other.help
                         && usageHelp == other.usageHelp
                         && versionHelp == other.versionHelp
@@ -8038,7 +9751,6 @@ public class CommandLine {
                         && negatable == other.negatable
                         && Assert.equals(fallbackValue, other.fallbackValue)
                         && new HashSet<String>(Arrays.asList(names)).equals(new HashSet<String>(Arrays.asList(other.names)));
-                return result;
             }
             public int hashCode() {
                 return super.hashCodeImpl()
@@ -8082,7 +9794,7 @@ public class CommandLine {
                     usageHelp = option.usageHelp();
                     versionHelp = option.versionHelp();
                     negatable = option.negatable();
-                    fallbackValue = option.fallbackValue();
+                    fallbackValue = NULL_VALUE.equals(option.fallbackValue()) ? null : option.fallbackValue();
                     order = option.order();
                 }
 
@@ -8093,7 +9805,7 @@ public class CommandLine {
 
                 /** Returns one or more option names. At least one option name is required.
                  * @see Option#names() */
-                public String[] names()       { return names; }
+                public String[] names()       { return names.clone(); }
 
                 /** Returns whether this option disables validation of the other arguments.
                  * @see Option#help()
@@ -8198,12 +9910,16 @@ public class CommandLine {
         public static class PositionalParamSpec extends ArgSpec {
             private Range index;
             private Range capacity;
-            private Range builderCapacity;
+            private final Range builderCapacity;
 
             /** Ensures all attributes of this {@code PositionalParamSpec} have a valid value; throws an {@link InitializationException} if this cannot be achieved. */
             private PositionalParamSpec(Builder builder) {
                 super(builder);
-                index = builder.index == null ? Range.valueOf("*") : builder.index;
+                if (builder.index == null) {
+                    index = Range.defaultParameterIndex(typeInfo);
+                } else {
+                    index = builder.index;
+                }
                 builderCapacity = builder.capacity;
                 initCapacity();
                 if (toString == null) { toString = "positional parameter[" + index() + "]"; }
@@ -8227,7 +9943,7 @@ public class CommandLine {
              * @return a collection with the following single value: {@code paramLabel() + "[" + index() + "]"}.
              * @since 4.0 */
             @Override protected Collection<String> getAdditionalDescriptionKeys() {
-                return Arrays.asList(paramLabel() + "[" + index() + "]");
+                return Collections.singletonList(paramLabel() + "[" + index() + "]");
             }
 
             /** Returns an index or range specifying which of the command line arguments should be assigned to this positional parameter.
@@ -8323,11 +10039,12 @@ public class CommandLine {
             private Messages messages;
             private ArgGroupSpec parentGroup;
             private String id = "1";
+            private final List<IAnnotatedElement> specElements;
 
             ArgGroupSpec(ArgGroupSpec.Builder builder) {
                 heading          = NO_HEADING    .equals(builder.heading)    ? null : builder.heading;
                 headingKey       = NO_HEADING_KEY.equals(builder.headingKey) ? null : builder.headingKey;
-                exclusive        = builder.exclusive;
+                exclusive        = builder.exclusive && builder.validate; // non-validating groups cannot be exclusive: https://github.com/remkop/picocli/issues/810
                 multiplicity     = builder.multiplicity;
                 validate         = builder.validate;
                 order            = builder.order;
@@ -8336,13 +10053,31 @@ public class CommandLine {
                 setter           = builder.setter;
                 scope            = builder.scope;
 
-                args      = Collections.unmodifiableSet(new LinkedHashSet<ArgSpec>(builder.args()));
-                subgroups = Collections.unmodifiableList(new ArrayList<ArgGroupSpec>(builder.subgroups()));
-                if (args.isEmpty() && subgroups.isEmpty()) { throw new InitializationException("ArgGroup has no options or positional parameters, and no subgroups: " + scope + " " + (getter == null ? setter : getter)); }
+                specElements = Collections.unmodifiableList(new ArrayList<IAnnotatedElement>(builder.specElements()));
+                args         = Collections.unmodifiableSet(new LinkedHashSet<ArgSpec>(builder.args()));
+                subgroups    = Collections.unmodifiableList(new ArrayList<ArgGroupSpec>(builder.subgroups()));
+                if (args.isEmpty() && subgroups.isEmpty()) { throw new InitializationException("ArgGroup has no options or positional parameters, and no subgroups: " + (getter == null ? setter : getter) + " in " + scope); }
 
                 int i = 1;
                 for (ArgGroupSpec sub : subgroups) { sub.parentGroup = this; sub.id = id + "." + i++; }
                 for (ArgSpec arg : args)           { arg.group = this; }
+
+                if (!validate && builder.exclusive) {
+                    new Tracer().info("Setting exclusive=%s because %s is a non-validating group.%n", exclusive, synopsisUnit());
+                }
+                if (exclusive) {
+                    String modifiedArgs = ""; String sep = "";
+                    for (ArgSpec arg : args) {
+                        if (!arg.required()) {
+                            modifiedArgs += sep + (arg.isOption() ? ((OptionSpec) arg).longestName() : (arg.paramLabel() + "[" + ((PositionalParamSpec) arg).index() + "]"));
+                            sep = ",";
+                            arg.required = true;
+                        }
+                    }
+                    if (modifiedArgs.length() > 0) {
+                        new Tracer().info("Made %s required in the group because %s is an exclusive group.%n", modifiedArgs, synopsisUnit());
+                    }
+                }
             }
 
             /** Returns a new {@link Builder}.
@@ -8400,6 +10135,9 @@ public class CommandLine {
             /** Return the subgroups that this group is composed of; may be empty but not {@code null}.
              * @return immutable list of subgroups that this group is composed of. */
             public List<ArgGroupSpec> subgroups() { return subgroups; }
+            /** Returns the list of program elements annotated with {@code {@literal @}Spec} configured for this group.
+             * @since 4.6 */
+            public List<IAnnotatedElement> specElements() { return specElements; }
 
             /**
              * Returns {@code true} if this group is a subgroup (or a nested sub-subgroup, to any level of depth)
@@ -8427,7 +10165,23 @@ public class CommandLine {
             public IScope scope()          { return scope; }
 
             Object userObject() { try { return getter.get(); } catch (Exception ex) { return ex.toString(); } }
+            Object userObjectOr(Object defaultValue) { try { return getter.get(); } catch (Exception ex) { return defaultValue; } }
             String id() { return id; }
+            int argCount() {
+                int result = args.size();
+                for (ArgGroupSpec sub : subgroups()) { result += sub.argCount(); }
+                return result;
+            }
+
+            int localPositionalParamCount() {
+                int result = 0;
+                for (ArgSpec arg : args) {
+                    if (arg.isPositional()) {
+                        result += ((PositionalParamSpec) arg).capacity().min();
+                    }
+                }
+                return result;
+            }
 
             /** Returns the options and positional parameters in this group; may be empty but not {@code null}. */
             public Set<ArgSpec> args() { return args; }
@@ -8453,6 +10207,32 @@ public class CommandLine {
                 List<OptionSpec> result = new ArrayList<OptionSpec>();
                 for (ArgSpec arg : args()) { if (arg instanceof OptionSpec) { result.add((OptionSpec) arg); } }
                 return Collections.unmodifiableList(result);
+            }
+            /** Returns all options configured for this group and all subgroups.
+             * @return an immutable list of all options in this group and its subgroups.
+             * @since 4.4 */
+            public List<OptionSpec> allOptionsNested() {
+                return addGroupOptionsToListRecursively(new ArrayList<OptionSpec>());
+            }
+            private List<OptionSpec> addGroupOptionsToListRecursively(List<OptionSpec> result) {
+                result.addAll(options());
+                for (ArgGroupSpec subGroup : subgroups()) {
+                    subGroup.addGroupOptionsToListRecursively(result);
+                }
+                return result;
+            }
+            /** Returns all positional parameters configured for this group and all subgroups.
+             * @return an immutable list of all positional parameters in this group and its subgroups.
+             * @since 4.4 */
+            public List<PositionalParamSpec> allPositionalParametersNested() {
+                return addGroupPositionalsToListRecursively(new ArrayList<PositionalParamSpec>());
+            }
+            private List<PositionalParamSpec> addGroupPositionalsToListRecursively(List<PositionalParamSpec> result) {
+                result.addAll(positionalParameters());
+                for (ArgGroupSpec subGroup : subgroups()) {
+                    subGroup.addGroupPositionalsToListRecursively(result);
+                }
+                return result;
             }
 
             /** Returns the synopsis of this group. */
@@ -8491,18 +10271,18 @@ public class CommandLine {
             private Text synopsisUnitText(Help.ColorScheme colorScheme, Text synopsis) {
                 String prefix = multiplicity().min() > 0 ? "(" : "[";
                 String postfix = multiplicity().min() > 0 ? ")" : "]";
-                return colorScheme.ansi().text(prefix).concat(synopsis).concat(postfix);
+                return colorScheme.text(prefix).concat(synopsis).concat(postfix);
             }
 
             private Text rawSynopsisUnitText(Help.ColorScheme colorScheme, Set<ArgSpec> outparam_groupArgs) {
                 String infix = exclusive() ? " | " : " ";
                 Text synopsis = colorScheme.ansi().new Text(0);
                 for (ArgSpec arg : args()) {
-                    if (synopsis.length > 0) { synopsis = synopsis.concat(infix); }
+                    String prefix = synopsis.length > 0 ? infix : "";
                     if (arg instanceof OptionSpec) {
-                        synopsis = concatOptionText(synopsis, colorScheme, (OptionSpec) arg);
+                        synopsis = concatOptionText(prefix, synopsis, colorScheme, (OptionSpec) arg);
                     } else {
-                        synopsis = concatPositionalText(synopsis, colorScheme, (PositionalParamSpec) arg);
+                        synopsis = concatPositionalText(prefix, synopsis, colorScheme, (PositionalParamSpec) arg);
                     }
                     outparam_groupArgs.add(arg);
                 }
@@ -8513,29 +10293,13 @@ public class CommandLine {
                 return synopsis;
             }
 
-            private Text concatOptionText(Text text, Help.ColorScheme colorScheme, OptionSpec option) {
-                if (!option.hidden()) {
-                    Text name = option.negatable()
-                            ? colorScheme.optionText(option.commandSpec.negatableOptionTransformer().makeSynopsis(option.shortestName(), option.commandSpec))
-                            : colorScheme.optionText(option.shortestName());
-                    Text param = createLabelRenderer(option.commandSpec).renderParameterLabel(option, colorScheme.ansi(), colorScheme.optionParamStyles);
-                    text = text.concat(open(option)).concat(name).concat(param).concat(close(option));
-                    if (option.isMultiValue()) { // e.g., -x=VAL [-x=VAL]...
-                        text = text.concat(" [").concat(name).concat(param).concat("]...");
-                    }
-                }
-                return text;
+            private Text concatOptionText(String prefix, Text text, Help.ColorScheme colorScheme, OptionSpec option) {
+                return Help.concatOptionText(prefix, text, colorScheme, option, createLabelRenderer(option.commandSpec));
             }
 
-            private Text concatPositionalText(Text text, Help.ColorScheme colorScheme, PositionalParamSpec positionalParam) {
-                if (!positionalParam.hidden()) {
-                    Text label = createLabelRenderer(positionalParam.commandSpec).renderParameterLabel(positionalParam, colorScheme.ansi(), colorScheme.parameterStyles);
-                    text = text.concat(open(positionalParam)).concat(label).concat(close(positionalParam));
-                }
-                return text;
+            private Text concatPositionalText(String prefix, Text text, Help.ColorScheme colorScheme, PositionalParamSpec positionalParam) {
+                return Help.concatPositionalText(prefix, text, colorScheme, positionalParam, createLabelRenderer(positionalParam.commandSpec));
             }
-            private String open(ArgSpec argSpec)  { return argSpec.required() ? "" : "["; }
-            private String close(ArgSpec argSpec) { return argSpec.required() ? "" : "]"; }
 
             public Help.IParamLabelRenderer createLabelRenderer(CommandSpec commandSpec) {
                 return new Help.DefaultParamLabelRenderer(commandSpec == null ? CommandSpec.create() : commandSpec);
@@ -8581,15 +10345,6 @@ public class CommandLine {
             }
 
             @Override public String toString() {
-                List<String> argNames = new ArrayList<String>();
-                for (ArgSpec arg : args()) {
-                    if (arg instanceof OptionSpec) {
-                        argNames.add(((OptionSpec) arg).shortestName());
-                    } else {
-                        PositionalParamSpec p = (PositionalParamSpec) arg;
-                        argNames.add(p.index() + " (" + p.paramLabel() + ")");
-                    }
-                }
                 return "ArgGroup[exclusive=" + exclusive + ", multiplicity=" + multiplicity +
                         ", validate=" + validate + ", order=" + order + ", args=[" + ArgSpec.describe(args()) +
                         "], headingKey=" + quote(headingKey) + ", heading=" + quote(heading) +
@@ -8598,7 +10353,10 @@ public class CommandLine {
             private static String quote(String s) { return s == null ? "null" : "'" + s + "'"; }
 
             void initUserObject(CommandLine commandLine) {
-                if (commandLine == null) { new Tracer().debug("Could not create user object for %s with null CommandLine%n.", this); }
+                if (commandLine == null) {
+                    new Tracer().debug("Could not create user object for %s with null CommandLine%n.", this);
+                    return;
+                }
                 try {
                     tryInitUserObject(commandLine);
                 } catch (PicocliException ex) {
@@ -8626,6 +10384,11 @@ public class CommandLine {
                         tracer.debug("Setting scope for subgroup %s with setter=%s in group %s to user object %s%n", subgroup.synopsis(), subgroup.setter(), synopsis(), userObject);
                         subgroup.scope().set(userObject); // flip the actual user object for the arg (and all other args in this group; they share the same IScope instance)
                     }
+                    for (IAnnotatedElement specElement : specElements()) {
+                        tracer.debug("Setting @Spec with setter=%s in user object %s to %s%n", specElement.setter(), userObject, commandLine.getCommandSpec());
+                        specElement.scope().set(userObject);
+                        specElement.setter().set(commandLine.getCommandSpec());
+                    }
                 } else {
                     tracer.debug("No type information available for group %s: cannot create new user object. Scope for arg setters is not changed.%n", synopsis());
                 }
@@ -8634,7 +10397,7 @@ public class CommandLine {
 
             void setUserObject(Object userObject, IFactory factory) throws Exception {
                 if (typeInfo().isCollection()) {
-                    @SuppressWarnings("unchecked") Collection<Object> c = (Collection<Object>) getter().get();
+                    Collection<Object> c = getter().get();
                     if (c == null) {
                         @SuppressWarnings("unchecked")
                         Collection<Object> c2 = (Collection<Object>) DefaultFactory.create(factory, typeInfo.getType());
@@ -8658,12 +10421,11 @@ public class CommandLine {
             ParseResult.GroupValidationResult validateArgs(CommandLine commandLine, Collection<ArgSpec> matchedArgs) {
                 Set<ArgSpec> intersection = new LinkedHashSet<ArgSpec>(args());
                 Set<ArgSpec> missing = new LinkedHashSet<ArgSpec>(requiredArgs());
-                Set<ArgSpec> found = new LinkedHashSet<ArgSpec>();
-                found.addAll(matchedArgs);
+                Set<ArgSpec> found = new LinkedHashSet<ArgSpec>(matchedArgs);
                 missing.removeAll(matchedArgs);
                 intersection.retainAll(found);
                 int presentCount = intersection.size();
-                boolean haveMissing = !missing.isEmpty();
+                boolean haveMissing = !missing.isEmpty() && !exclusive();
                 boolean someButNotAllSpecified = haveMissing && !intersection.isEmpty();
                 String exclusiveElements = ArgSpec.describe(intersection);
                 String requiredElements = ArgSpec.describe(requiredArgs());
@@ -8717,12 +10479,13 @@ public class CommandLine {
                 private Range multiplicity = Range.valueOf("0..1");
                 private boolean validate   = true;
                 private int order          = DEFAULT_ORDER;
-                private List<ArgSpec> args = new ArrayList<ArgSpec>();
-                private List<ArgGroupSpec> subgroups = new ArrayList<ArgGroupSpec>();
+                private final List<ArgSpec> args = new ArrayList<ArgSpec>();
+                private final List<ArgGroupSpec> subgroups = new ArrayList<ArgGroupSpec>();
+                private final List<IAnnotatedElement> specElements = new ArrayList<IAnnotatedElement>();
 
                 // for topological sorting; private only
                 private Boolean topologicalSortDone;
-                private List<Builder> compositesReferencingMe = new ArrayList<Builder>();
+                private final List<Builder> compositesReferencingMe = new ArrayList<Builder>();
 
                 Builder() { }
                 Builder(IAnnotatedElement source) {
@@ -8850,6 +10613,14 @@ public class CommandLine {
 
                 /** Returns the list of subgroups that this group is composed of.*/
                 public List<ArgGroupSpec> subgroups() { return subgroups; }
+
+                /** Adds the specified {@code {@literal @}Spec} annotated program element to the list of spec elements for this group.
+                 * @since 4.6 */
+                public Builder addSpecElement(IAnnotatedElement element) { specElements.add(element); return this; }
+
+                /** Returns the list of program elements annotated with {@code {@literal @}Spec} configured for this group.
+                 * @since 4.6 */
+                public List<IAnnotatedElement> specElements() { return specElements; }
             }
         }
 
@@ -8861,7 +10632,6 @@ public class CommandLine {
             private final IGetter getter;
             private final ISetter setter;
             private Object initialValue;
-            private boolean isStringArray;
 
             /** Creates a {@code UnmatchedArgsBinding} for a setter that consumes {@code String[]} objects.
              * @param setter consumes the String[] array with unmatched arguments. */
@@ -8950,7 +10720,7 @@ public class CommandLine {
             public Method getDeclaringExecutable() { return method; }
             @Override public <T extends Annotation> T getAnnotation(Class<T> annotationClass) {
                 for (Annotation annotation : getDeclaredAnnotations()) {
-                    if (annotationClass.isAssignableFrom(annotation.getClass())) { return annotationClass.cast(annotation); }
+                    if (annotationClass.isAssignableFrom(annotation.annotationType())) { return annotationClass.cast(annotation); }
                 }
                 return null;
             }
@@ -8971,6 +10741,10 @@ public class CommandLine {
             boolean isBoolean();
             /** Returns {@code true} if {@link #getType()} is an array, map or collection. */
             boolean isMultiValue();
+
+            /** Returns {@code true} if {@link #getType()} is {@code java.util.Optional}
+             * @since 4.6 */
+            boolean isOptional();
             boolean isArray();
             boolean isCollection();
             boolean isMap();
@@ -8997,6 +10771,7 @@ public class CommandLine {
             Class<?>[] getAuxiliaryTypes();
         }
         static class RuntimeTypeInfo implements ITypeInfo {
+            final static String ERRORMSG = "Unsupported generic type %s. Only List<T>, Map<K,V>, Optional<T>, and Map<K, Optional<V>> are supported. Type parameters may be char[], a non-array type, or a wildcard type with an upper or lower bound.";
             private final Class<?> type;
             private final Class<?>[] auxiliaryTypes;
             private final List<String> actualGenericTypeArguments;
@@ -9008,7 +10783,7 @@ public class CommandLine {
             }
 
             static ITypeInfo createForAuxType(Class<?> type) {
-                return create(type, new Class[0], (Type) null, Range.valueOf("1"), String.class, false);
+                return create(type, new Class<?>[0], (Type) null, Range.valueOf("1"), String.class, false);
             }
             public static ITypeInfo create(Class<?> type,
                                            Class<?>[] annotationTypes,
@@ -9019,7 +10794,7 @@ public class CommandLine {
                 Class<?>[] auxiliaryTypes = RuntimeTypeInfo.inferTypes(type, annotationTypes, genericType);
                 List<String> actualGenericTypeArguments = new ArrayList<String>();
                 if (genericType instanceof ParameterizedType)  {
-                    Class[] declaredTypeParameters = extractTypeParameters((ParameterizedType) genericType);
+                    Class<?>[] declaredTypeParameters = extractTypeParameters((ParameterizedType) genericType);
                     for (Class<?> c : declaredTypeParameters) { actualGenericTypeArguments.add(c.getName()); }
                 }
                 return create(type, auxiliaryTypes, actualGenericTypeArguments, arity, defaultType, interactive);
@@ -9060,8 +10835,18 @@ public class CommandLine {
             }
             static Class<?>[] inferTypes(Class<?> propertyType, Class<?>[] annotationTypes, Type genericType) {
                 if (annotationTypes != null && annotationTypes.length > 0) { return annotationTypes; }
-                if (propertyType.isArray()) { return new Class<?>[] { propertyType.getComponentType() }; }
-                if (CommandLine.isMultiValue(propertyType)) {
+                if (propertyType.isArray()) {
+                    if (CommandLine.isOptional(propertyType.getComponentType())) { // #1108
+                        throw new InitializationException(String.format(ERRORMSG, genericType));
+                        //List<Class<?>> result = new ArrayList<Class<?>>();
+                        //result.add(propertyType.getComponentType());
+                        //GenericArrayType genericComponentType = (GenericArrayType) genericType;
+                        //result.addAll(Arrays.asList(extractTypeParameters((ParameterizedType) genericComponentType.getGenericComponentType())));
+                        //return result.toArray(new Class[0]);
+                    }
+                    return new Class<?>[] { propertyType.getComponentType() };
+                }
+                if (CommandLine.isMultiValue(propertyType) || CommandLine.isOptional(propertyType)) { // #1108
                     if (genericType instanceof ParameterizedType) {// e.g. Map<Long, ? extends Number>
                         return extractTypeParameters((ParameterizedType) genericType);
                     }
@@ -9071,26 +10856,49 @@ public class CommandLine {
             }
 
             static Class<?>[] extractTypeParameters(ParameterizedType genericType) {
-                ParameterizedType parameterizedType = genericType;
-                Type[] paramTypes = parameterizedType.getActualTypeArguments(); // e.g. ? extends Number
-                Class<?>[] result = new Class<?>[paramTypes.length];
+                Type[] paramTypes = genericType.getActualTypeArguments(); // e.g. ? extends Number
+                List<Class<?>> result = new ArrayList<Class<?>>();
                 for (int i = 0; i < paramTypes.length; i++) {
-                    if (paramTypes[i] instanceof Class) { result[i] = (Class<?>) paramTypes[i]; continue; } // e.g. Long
-                    else if (paramTypes[i] instanceof WildcardType) { // e.g. ? extends Number
+                    if (paramTypes[i] instanceof Class) {// e.g. Long
+                        result.add((Class<?>) paramTypes[i]);
+                        continue;
+                    } else if (paramTypes[i] instanceof ParameterizedType) { // e.g. Optional<Integer>
+                        ParameterizedType parameterizedParamType = (ParameterizedType) paramTypes[i];
+                        Type raw = parameterizedParamType.getRawType();
+                        if (i == 1 && raw instanceof Class && CommandLine.isOptional((Class) raw)) { // #1108 and #1214
+                            result.add((Class) raw);
+                            Class<?>[] aux = extractTypeParameters(parameterizedParamType);
+                            if (aux.length == 1) {
+                                result.add(aux[0]);
+                                continue;
+                            }
+                        }
+                    } else if (paramTypes[i] instanceof WildcardType) { // e.g. ? extends Number
                         WildcardType wildcardType = (WildcardType) paramTypes[i];
                         Type[] lower = wildcardType.getLowerBounds(); // e.g. []
-                        if (lower.length > 0 && lower[0] instanceof Class) { result[i] = (Class<?>) lower[0]; continue; }
+                        if (lower.length > 0 && lower[0] instanceof Class) {
+                            result.add((Class<?>) lower[0]);
+                            continue;
+                        }
                         Type[] upper = wildcardType.getUpperBounds(); // e.g. Number
-                        if (upper.length > 0 && upper[0] instanceof Class) { result[i] = (Class<?>) upper[0]; continue; }
+                        if (upper.length > 0 && upper[0] instanceof Class) {
+                            result.add((Class<?>) upper[0]);
+                            continue;
+                        }
                     } else if (paramTypes[i] instanceof GenericArrayType) {
                         GenericArrayType gat = (GenericArrayType) paramTypes[i];
                         if (char.class.equals(gat.getGenericComponentType())) {
-                            result[i] = char[].class; continue;
+                            result.add(char[].class);
+                            continue;
                         }
                     }
-                    Arrays.fill(result, String.class); return result; // too convoluted generic type, giving up
+                    throw new InitializationException(String.format(ERRORMSG, genericType));
+//                    // too convoluted generic type, giving up
+//                    result.clear();
+//                    result.addAll(Arrays.asList(String.class, String.class));
+//                    break;
                 }
-                return result; // we inferred all types from ParameterizedType
+                return result.toArray(new Class<?>[0]); // we inferred all types from ParameterizedType
             }
 
             public boolean isBoolean()            { return auxiliaryTypes[0] == boolean.class || auxiliaryTypes[0] == Boolean.class; }
@@ -9098,6 +10906,7 @@ public class CommandLine {
             public boolean isArray()              { return type.isArray(); }
             public boolean isCollection()         { return Collection.class.isAssignableFrom(type); }
             public boolean isMap()                { return Map.class.isAssignableFrom(type); }
+            public boolean isOptional()           { return CommandLine.isOptional(type); }
             public boolean isEnum()               { return auxiliaryTypes[0].isEnum(); }
             public String getClassName()          { return type.getName(); }
             public String getClassSimpleName()    { return type.getSimpleName(); }
@@ -9159,11 +10968,29 @@ public class CommandLine {
             String getToString();
         }
 
-        static class TypedMember implements IAnnotatedElement {
+        /** Interface to allow extending the capabilities of other interface without Java 8 default methods.
+         * <p>Example usage:</p><pre>
+         * // suppose we want to add a method `getInitialValueState` to `IAnnotatedElement`
+         * IAnnotatedElement element = getAnnotatedElement();
+         * if (element instanceof IExtensible) {
+         *     InitialValueState state = ((IExtensible) element).getExtension(InitialValueState.class);
+         *     if (state != null) {
+         *         // ...
+         *     }
+         * }
+         * </pre>
+         * @since 4.3 */
+        public interface IExtensible {
+            /** Returns an instance of the specified class, or {@code null} if this extension is not supported.
+             * @param cls class of the desired extension */
+            <T> T getExtension(Class<T> cls);
+        }
+
+        static class TypedMember implements IAnnotatedElement, IExtensible {
             final AccessibleObject accessible;
             final String name;
             final ITypeInfo typeInfo;
-            boolean hasInitialValue;
+            private final InitialValueState initialValueState;
             private IScope scope;
             private IGetter getter;
             private ISetter setter;
@@ -9185,23 +11012,22 @@ public class CommandLine {
                 accessible.setAccessible(true);
                 name = field.getName();
                 typeInfo = createTypeInfo(field.getType(), field.getGenericType());
-                hasInitialValue = true;
+                initialValueState = InitialValueState.POSTPONED;
             }
             private TypedMember(Field field, IScope scope) {
                 this(field);
-                Object obj = ObjectScope.tryGet(scope);
-                if (obj != null && Proxy.isProxyClass(obj.getClass())) {
+                if (ObjectScope.isProxyClass(scope)) {
                     throw new InitializationException("Invalid picocli annotation on interface field");
                 }
                 FieldBinding binding = new FieldBinding(scope, field);
                 getter = binding; setter = binding;
                 this.scope = scope;
-                hasInitialValue &= obj != null ;
             }
             static TypedMember createIfAnnotated(Method method, IScope scope, CommandSpec spec) {
                 return isAnnotated(method) ? new TypedMember(method, scope, spec) : null;
             }
             private TypedMember(Method method, IScope scope, CommandSpec spec) {
+                this.scope = scope;
                 accessible = Assert.notNull(method, "method");
                 accessible.setAccessible(true);
                 name = propertyName(method.getName());
@@ -9210,27 +11036,28 @@ public class CommandLine {
                 boolean isSetter = parameterTypes.length > 0;
                 if (isSetter == isGetter) { throw new InitializationException("Invalid method, must be either getter or setter: " + method); }
                 if (isGetter) {
-                    hasInitialValue = true;
                     typeInfo = createTypeInfo(method.getReturnType(), method.getGenericReturnType());
-                    Object proxy = ObjectScope.tryGet(scope);
-                    if (Proxy.isProxyClass(proxy.getClass())) {
+                    if (ObjectScope.isProxyClass(scope)) {
+                        Object proxy = ObjectScope.tryGet(scope);
                         PicocliInvocationHandler handler = (PicocliInvocationHandler) Proxy.getInvocationHandler(proxy);
                         PicocliInvocationHandler.ProxyBinding binding = handler.new ProxyBinding(method);
                         getter = binding; setter = binding;
-                        initializeInitialValue(method);
+                        initializeInitialValue(method); // arg is an interface method; we have to create initial values ourselves
                     } else {
                         //throw new IllegalArgumentException("Getter method but not a proxy: " + scope + ": " + method);
                         MethodBinding binding = new MethodBinding(scope, method, spec);
                         getter = binding; setter = binding;
                     }
+                    initialValueState = InitialValueState.POSTPONED; // the initial value can be obtained from the getter
                 } else {
-                    hasInitialValue = false;
                     typeInfo = createTypeInfo(parameterTypes[0], method.getGenericParameterTypes()[0]);
                     MethodBinding binding = new MethodBinding(scope, method, spec);
                     getter = binding; setter = binding;
+                    initialValueState = InitialValueState.UNAVAILABLE; // arg is setter method;
                 }
             }
             TypedMember(MethodParam param, IScope scope) {
+                this.scope = scope;
                 accessible = Assert.notNull(param, "command method parameter");
                 accessible.setAccessible(true);
                 name = param.getName();
@@ -9238,8 +11065,8 @@ public class CommandLine {
                 // bind parameter
                 ObjectBinding binding = new ObjectBinding();
                 getter = binding; setter = binding;
-                initializeInitialValue(param);
-                hasInitialValue = true;
+                initializeInitialValue(param); // arg is a method param; we have to create initial values ourselves
+                initialValueState = InitialValueState.POSTPONED; // the initial value can be obtained from the getter
             }
 
             private ITypeInfo createTypeInfo(Class<?> type, Type genericType) {
@@ -9261,13 +11088,13 @@ public class CommandLine {
                 Class<?> type = typeInfo.getType();
                 try {
                     if      (type == Boolean.TYPE  ) { setter.set(false); }
-                    else if (type == Byte.TYPE     ) { setter.set(Byte.valueOf((byte) 0)); }
-                    else if (type == Character.TYPE) { setter.set(Character.valueOf((char) 0)); }
-                    else if (type == Short.TYPE    ) { setter.set(Short.valueOf((short) 0)); }
-                    else if (type == Integer.TYPE  ) { setter.set(Integer.valueOf(0)); }
-                    else if (type == Long.TYPE     ) { setter.set(Long.valueOf(0L)); }
-                    else if (type == Float.TYPE    ) { setter.set(Float.valueOf(0f)); }
-                    else if (type == Double.TYPE   ) { setter.set(Double.valueOf(0d)); }
+                    else if (type == Byte.TYPE     ) { setter.set((byte) 0); }
+                    else if (type == Character.TYPE) { setter.set((char) 0); }
+                    else if (type == Short.TYPE    ) { setter.set((short) 0); }
+                    else if (type == Integer.TYPE  ) { setter.set(0); }
+                    else if (type == Long.TYPE     ) { setter.set(0L); }
+                    else if (type == Float.TYPE    ) { setter.set(0f); }
+                    else if (type == Double.TYPE   ) { setter.set(0d); }
                     else {                             setter.set(null); }
                 } catch (Exception ex) {
                     throw new InitializationException("Could not set initial value for " + arg + ": " + ex.toString(), ex);
@@ -9296,15 +11123,15 @@ public class CommandLine {
             private Class<?>[] annotationTypes() {
                 if (isOption())    { return getAnnotation(Option.class).type(); }
                 if (isParameter()) { return getAnnotation(Parameters.class).type(); }
-                return new Class[0];
+                return new Class<?>[0];
             }
             public String toString() { return accessible.toString(); }
             public String getToString()  {
                 if (isMixin()) { return abbreviate("mixin from member " + toGenericString()); }
                 return (accessible instanceof Field ? "field " : accessible instanceof Method ? "method " : accessible.getClass().getSimpleName() + " ") + abbreviate(toGenericString());
             }
-            public String toGenericString() { return accessible instanceof Field ? ((Field) accessible).toGenericString() : accessible instanceof Method ? ((Method) accessible).toGenericString() : ((MethodParam)accessible).toString(); }
-            public boolean hasInitialValue()    { return hasInitialValue; }
+            public String toGenericString() { return accessible instanceof Field ? ((Field) accessible).toGenericString() : accessible instanceof Method ? ((Method) accessible).toGenericString() : accessible.toString(); }
+            public boolean hasInitialValue()    { return initialValueState == InitialValueState.CACHED || initialValueState == InitialValueState.POSTPONED; }
             public boolean isMethodParameter()  { return accessible instanceof MethodParam; }
             public int getMethodParamPosition() { return isMethodParameter() ? ((MethodParam) accessible).position : -1; }
             public String getMixinName()    {
@@ -9326,6 +11153,10 @@ public class CommandLine {
                         .replace("protected ", "")
                         .replace("public ", "")
                         .replace("java.lang.", "");
+            }
+            public <T> T getExtension(Class<T> cls) {
+                if (cls == InitialValueState.class) { return cls.cast(initialValueState); }
+                return null;
             }
         }
 
@@ -9401,7 +11232,9 @@ public class CommandLine {
                 this.bundleBaseName = baseName;
                 this.rb = rb;
                 this.keys = keys(rb);
-                new Tracer().debug("Created Messages from resourceBundle[base=%s] for command '%s' (%s)%n", baseName, spec.name(), spec);
+                if (rb != null) {
+                    new Tracer().debug("Created Messages from resourceBundle[base=%s] for command '%s' (%s)%n", baseName, spec.name(), spec);
+                }
             }
             private static ResourceBundle createBundle(String baseName) {
                 return ResourceBundle.getBundle(baseName);
@@ -9409,7 +11242,7 @@ public class CommandLine {
             private static String extractName(ResourceBundle rb) {
                 try { // ResourceBundle.getBaseBundleName was introduced in Java 8
                     return (String) ResourceBundle.class.getDeclaredMethod("getBaseBundleName").invoke(rb);
-                } catch (Exception ignored) { return ""; }
+                } catch (Exception ignored) { return "?"; }
             }
             private static Set<String> keys(ResourceBundle rb) {
                 if (rb == null) { return Collections.emptySet(); }
@@ -9484,12 +11317,14 @@ public class CommandLine {
             /** Returns the CommandSpec of this object, never {@code null}. */
             public CommandSpec commandSpec() { return spec; }
         }
+        private interface Predicate<T> {
+            boolean test(T t);
+        }
         private static class CommandReflection {
             static ArgGroupSpec extractArgGroupSpec(IAnnotatedElement member, IFactory factory, CommandSpec commandSpec, boolean annotationsAreMandatory) throws Exception {
                 Object instance = null;
                 try { instance = member.getter().get(); } catch (Exception ignored) {}
                 Class<?> cls = instance == null ? member.getTypeInfo().getType() : instance.getClass();
-                Tracer t = new Tracer();
 
                 if (member.isMultiValue()) {
                     cls = member.getTypeInfo().getAuxiliaryTypes()[0];
@@ -9507,97 +11342,83 @@ public class CommandLine {
                 boolean hasArgAnnotation = false;
                 while (!hierarchy.isEmpty()) {
                     cls = hierarchy.pop();
-                    hasArgAnnotation |= initFromAnnotatedFields(scope, cls, commandSpec, builder, factory);
+                    hasArgAnnotation |= initFromAnnotatedFields(scope, cls, commandSpec, builder, factory, null);
                 }
                 ArgGroupSpec result = builder.build();
                 if (annotationsAreMandatory) {validateArgGroupSpec(result, hasArgAnnotation, cls.getName()); }
                 return result;
             }
             static CommandSpec extractCommandSpec(Object command, IFactory factory, boolean annotationsAreMandatory) {
-                Class<?> cls = command.getClass();
+                Assert.notNull(command, "command user object");
                 Tracer t = new Tracer();
-                t.debug("Creating CommandSpec for object of class %s with factory %s%n", cls.getName(), factory.getClass().getName());
-                if (command instanceof CommandSpec) { return (CommandSpec) command; }
-
-                Object[] tmp = getOrCreateInstance(cls, command, factory, t);
-                cls = (Class<?>) tmp[0];
-                Object instance = tmp[1];
-                String commandClassName = (String) tmp[2];
-
-                CommandSpec result = CommandSpec.wrapWithoutInspection(Assert.notNull(instance, "command"));
-                ObjectScope scope = new ObjectScope(instance);
-
-                Stack<Class<?>> hierarchy = new Stack<Class<?>>();
-                while (cls != null) { hierarchy.add(cls); cls = cls.getSuperclass(); }
-                @SuppressWarnings("unchecked")
-                Stack<Class<?>> originalHierarchy = (Stack<Class<?>>) hierarchy.clone();
-                boolean hasCommandAnnotation = false;
-                boolean mixinStandardHelpOptions = false;
-                while (!hierarchy.isEmpty()) {
-                    cls = hierarchy.pop();
-                    Command cmd = cls.getAnnotation(Command.class);
-                    if (cmd != null) {
-                        result.updateCommandAttributes(cmd, factory);
-                        initSubcommands(cmd, cls, result, factory, originalHierarchy);
-                        hasCommandAnnotation = true;
-                    }
-                    hasCommandAnnotation |= initFromAnnotatedFields(scope, cls, result, null, factory);
-                    if (cls.isAnnotationPresent(Command.class)) {
-                        mixinStandardHelpOptions |= cls.getAnnotation(Command.class).mixinStandardHelpOptions();
-                    }
+                if (command instanceof CommandSpec) {
+                    t.debug("extractCommandSpec returning existing CommandSpec instance %s%n", command);
+                    return (CommandSpec) command;
                 }
-                result.mixinStandardHelpOptions(mixinStandardHelpOptions); //#377 Standard help options should be added last
-                if (command instanceof Method) {
+
+                CommandUserObject userObject = CommandUserObject.create(command, factory);
+                t.debug("Creating CommandSpec for %s with factory %s%n", userObject, factory.getClass().getName());
+                CommandSpec result = CommandSpec.wrapWithoutInspection(userObject);
+
+                boolean hasCommandAnnotation = false;
+                if (userObject.isMethod()) {
                     Method method = (Method) command;
                     t.debug("Using method %s as command %n", method);
-                    commandClassName = method.toString();
+                    method.setAccessible(true);
                     Command cmd = method.getAnnotation(Command.class);
                     result.updateCommandAttributes(cmd, factory);
+                    injectSpecIntoVersionProvider(result, cmd, factory);
                     result.setAddMethodSubcommands(false); // method commands don't have method subcommands
-                    initSubcommands(cmd, null, result, factory, originalHierarchy);
                     hasCommandAnnotation = true;
-                    result.mixinStandardHelpOptions(method.getAnnotation(Command.class).mixinStandardHelpOptions());
-                    initFromMethodParameters(scope, method, result, null, factory);
+                    initSubcommands(cmd, null, result, factory, new Stack<Class<?>>()); // after adding options
+                    result.mixinStandardHelpOptions(cmd.mixinStandardHelpOptions()); // do this last
+                    initFromMethodParameters(userObject, method, result, null, factory);
                     // set command name to method name, unless @Command#name is set
                     result.initName(((Method)command).getName());
+                } else {
+                    Stack<Class<?>> hierarchy = new Stack<Class<?>>();
+                    Class<?> cls = userObject.getType();
+                    while (cls != null) {
+                        hierarchy.add(cls);
+                        cls = cls.getSuperclass();
+                    }
+                    @SuppressWarnings("unchecked")
+                    Stack<Class<?>> originalHierarchy = (Stack<Class<?>>) hierarchy.clone();
+                    boolean mixinStandardHelpOptions = false;
+                    while (!hierarchy.isEmpty()) {
+                        cls = hierarchy.pop();
+                        Command cmd = cls.getAnnotation(Command.class);
+                        if (cmd != null) {
+                            result.updateCommandAttributes(cmd, factory);
+                            injectSpecIntoVersionProvider(result, cmd, factory);
+                            hasCommandAnnotation = true;
+                            mixinStandardHelpOptions |= cmd.mixinStandardHelpOptions();
+                        }
+                        initSubcommands(cmd, cls, result, factory, originalHierarchy); // after adding options
+                        initMethodSubcommands(cls, result, factory); // regardless of @Command annotation. NOTE: after adding options
+                        hasCommandAnnotation |= initFromAnnotatedFields(userObject, cls, result, null, factory, null);
+                    }
+                    result.mixinStandardHelpOptions(mixinStandardHelpOptions); //#377 Standard help options should be added last
                 }
+
                 result.updateArgSpecMessages();
 
-                if (annotationsAreMandatory) {validateCommandSpec(result, hasCommandAnnotation, commandClassName); }
-                result.withToString(commandClassName).validate();
+                if (annotationsAreMandatory) {validateCommandSpec(result, hasCommandAnnotation, userObject.toString()); }
+                result.validate();
                 return result;
             }
 
-            private static Object[] getOrCreateInstance(Class<?> cls, Object command, IFactory factory, Tracer t) {
-                Object instance = command;
-                String commandClassName = cls.getName();
-                if (command instanceof Class) {
-                    cls = (Class) command;
-                    commandClassName = cls.getName();
-                    try {
-                        t.debug("Getting a %s instance from the factory%n", cls.getName());
-                        instance = DefaultFactory.create(factory, cls);
-                        cls = instance.getClass();
-                        commandClassName = cls.getName();
-                        t.debug("Factory returned a %s instance%n", commandClassName);
-                    } catch (InitializationException ex) {
-                        if (cls.isInterface()) {
-                            t.debug("%s. Creating Proxy for interface %s%n", ex.getCause(), cls.getName());
-                            instance = Proxy.newProxyInstance(cls.getClassLoader(), new Class<?>[]{cls}, new PicocliInvocationHandler());
-                        } else {
-                            throw ex;
-                        }
+            private static void injectSpecIntoVersionProvider(CommandSpec result, Command cmd, IFactory factory) {
+                if (result.versionProvider() == null) { return; }
+                CommandReflection.initFromAnnotatedFields(new ObjectScope(result.versionProvider()), cmd.versionProvider(), result, null, factory, new Predicate<TypedMember>() {
+                    public boolean test(TypedMember tm) {
+                        return tm.isSpec() && !(tm.isArgGroup() || tm.isUnmatched() || tm.isMixin() || tm.isOption() || tm.isParameter() || tm.isParentCommand());
                     }
-                } else if (command instanceof Method) {
-                    cls = null; // don't mix in options/positional params from outer class @Command
-                } else if (instance == null) {
-                    t.debug("Getting a %s instance from the factory%n", cls.getName());
-                    instance = DefaultFactory.create(factory, cls);
-                    t.debug("Factory returned a %s instance%n", instance.getClass().getName());
-                }
-                return new Object[] { cls, instance, commandClassName };
+                });
             }
+
             private static void initSubcommands(Command cmd, Class<?> cls, CommandSpec parent, IFactory factory, Stack<Class<?>> hierarchy) {
+                if (cmd == null) { return; }
                 for (Class<?> sub : cmd.subcommands()) {
                     if (sub.equals(cls)) {
                         throw new InitializationException(cmd.name() + " (" + cls.getName() + ") cannot be a subcommand of itself");
@@ -9607,21 +11428,27 @@ public class CommandLine {
                     }
                     try {
                         if (Help.class == sub) { throw new InitializationException(Help.class.getName() + " is not a valid subcommand. Did you mean " + HelpCommand.class.getName() + "?"); }
-                        CommandLine subcommandLine = toCommandLine(factory.create(sub), factory);
+                        CommandLine subcommandLine = toCommandLine(sub, factory);
                         parent.addSubcommand(subcommandName(sub), subcommandLine);
-                        subcommandLine.getCommandSpec().initParentCommand(parent.userObject());
+                        subcommandLine.getCommandSpec().injectParentCommand(parent.userObject);
+                        for (CommandSpec mixin : subcommandLine.getCommandSpec().mixins().values()) {
+                            mixin.injectParentCommand(parent.userObject);
+                        }
                     }
                     catch (InitializationException ex) { throw ex; }
-                    catch (NoSuchMethodException ex) { throw new InitializationException("Cannot instantiate subcommand " +
-                            sub.getName() + ": the class has no constructor", ex); }
                     catch (Exception ex) {
                         throw new InitializationException("Could not instantiate and add subcommand " +
                                 sub.getName() + ": " + ex, ex);
                     }
                 }
-                if (cmd.addMethodSubcommands() && cls != null) {
-                    for (CommandLine sub : CommandSpec.createMethodSubcommands(cls, factory)) {
+            }
+            private static void initMethodSubcommands(Class<?> cls, CommandSpec parent, IFactory factory) {
+                if (parent.isAddMethodSubcommands() && cls != null) {
+                    for (CommandLine sub : CommandSpec.createMethodSubcommands(cls, factory, false)) {
                         parent.addSubcommand(sub.getCommandName(), sub);
+                        for (CommandSpec mixin : sub.getCommandSpec().mixins().values()) {
+                            mixin.injectParentCommand(parent.userObject);
+                        }
                     }
                 }
             }
@@ -9633,30 +11460,37 @@ public class CommandLine {
                 }
                 return subCommand.name();
             }
-            private static boolean initFromAnnotatedFields(IScope scope, Class<?> cls, CommandSpec receiver, ArgGroupSpec.Builder groupBuilder, IFactory factory) {
+            private static boolean initFromAnnotatedFields(IScope scope, Class<?> cls, CommandSpec receiver, ArgGroupSpec.Builder groupBuilder, IFactory factory, Predicate<TypedMember> predicate) {
                 boolean result = false;
                 for (Field field : cls.getDeclaredFields()) {
-                    result |= initFromAnnotatedTypedMembers(TypedMember.createIfAnnotated(field, scope), receiver, groupBuilder, factory);
+                    result |= initFromAnnotatedTypedMembers(TypedMember.createIfAnnotated(field, scope), predicate, receiver, groupBuilder, factory);
                 }
                 for (Method method : cls.getDeclaredMethods()) {
-                    result |= initFromAnnotatedTypedMembers(TypedMember.createIfAnnotated(method, scope, receiver), receiver, groupBuilder, factory);
+                    result |= initFromAnnotatedTypedMembers(TypedMember.createIfAnnotated(method, scope, receiver), predicate, receiver, groupBuilder, factory);
                 }
                 return result;
             }
             @SuppressWarnings("unchecked")
             private static boolean initFromAnnotatedTypedMembers(TypedMember member,
+                                                                 Predicate<TypedMember> predicate,
                                                                  CommandSpec commandSpec,
                                                                  ArgGroupSpec.Builder groupBuilder,
                                                                  IFactory factory) {
+                if (member == null || (predicate != null && !predicate.test(member))) { return false; }
                 boolean result = false;
-                if (member == null) { return result; }
                 if (member.isMixin()) {
                     assertNoDuplicateAnnotations(member, Mixin.class, Option.class, Parameters.class, Unmatched.class, Spec.class, ArgGroup.class);
                     if (groupBuilder != null) {
                         throw new InitializationException("@Mixins are not supported on @ArgGroups");
                         // TODO groupBuilder.addMixin(member.getMixinName(), buildMixinForMember(member, factory));
                     } else {
-                        commandSpec.addMixin(member.getMixinName(), buildMixinForMember(member, factory));
+                        CommandSpec mixin = buildMixinForMember(member, factory);
+                        commandSpec.addMixin(member.getMixinName(), mixin, member);
+                        for (IAnnotatedElement specElement : mixin.specElements) {
+                            if (specElement.getAnnotation(Spec.class).value() == Spec.Target.MIXEE) {
+                                try { specElement.setter().set(commandSpec); } catch (Exception ex) { throw new InitializationException("Could not inject MIXEE spec", ex); }
+                            }
+                        }
                     }
                     result = true;
                 }
@@ -9689,8 +11523,15 @@ public class CommandLine {
                 }
                 if (member.isSpec()) {
                     validateInjectSpec(member);
-                    commandSpec.addSpecElement(member);
-                    try { member.setter().set(commandSpec); } catch (Exception ex) { throw new InitializationException("Could not inject spec", ex); }
+                    if (groupBuilder != null) {
+                        groupBuilder.addSpecElement(member);
+                        // for ArgGroups, injecting the command spec is postponed until the user object is created
+                    } else {
+                        commandSpec.addSpecElement(member);
+                        if (member.getAnnotation(Spec.class).value() == Spec.Target.SELF) {
+                            try { member.setter().set(commandSpec); } catch (Exception ex) { throw new InitializationException("Could not inject spec", ex); }
+                        }
+                    }
                 }
                 if (member.isParentCommand()) {
                     commandSpec.addParentCommandElement(member);
@@ -9700,15 +11541,19 @@ public class CommandLine {
             private static boolean initFromMethodParameters(IScope scope, Method method, CommandSpec receiver, ArgGroupSpec.Builder groupBuilder, IFactory factory) {
                 boolean result = false;
                 int optionCount = 0;
-                for (int i = 0, count = method.getParameterTypes().length; i < count; i++) {
+                TypedMember[] members = new TypedMember[method.getParameterTypes().length];
+                for (int i = 0, count = members.length; i < count; i++) {
                     MethodParam param = new MethodParam(method, i);
-                    if (param.isAnnotationPresent(Option.class) || param.isAnnotationPresent(Mixin.class)) {
+                    if (param.isAnnotationPresent(Option.class) || param.isAnnotationPresent(Mixin.class) || param.isAnnotationPresent(ArgGroup.class)) {
                         optionCount++;
                     } else {
+
                         param.position = i - optionCount;
                     }
-                    result |= initFromAnnotatedTypedMembers(new TypedMember(param, scope), receiver, groupBuilder, factory);
+                    members[i] = new TypedMember(param, scope);
+                    result |= initFromAnnotatedTypedMembers(members[i], null, receiver, groupBuilder, factory);
                 }
+                receiver.methodParams = members;
                 return result;
             }
             @SuppressWarnings("unchecked")
@@ -9744,6 +11589,7 @@ public class CommandLine {
                     throw new InitializationException("@picocli.CommandLine.Spec annotation is only supported on fields of type " + CommandSpec.class.getName());
                 }
             }
+            @SuppressWarnings("unchecked") //warning: [unchecked] Possible heap pollution from parameterized vararg type Class<? extends Annotation>
             private static void assertNoDuplicateAnnotations(TypedMember member, Class<? extends Annotation> myAnnotation, Class<? extends Annotation>... forbidden) {
                 for (Class<? extends Annotation> annotation : forbidden) {
                     if (member.isAnnotationPresent(annotation)) {
@@ -9783,7 +11629,7 @@ public class CommandLine {
             private static UnmatchedArgsBinding buildUnmatchedForMember(final IAnnotatedElement member) {
                 ITypeInfo info = member.getTypeInfo();
                 if (!(info.getClassName().equals(String[].class.getName()) ||
-                        (info.isCollection() && info.getActualGenericTypeArguments().equals(Arrays.asList(String.class.getName()))))) {
+                        (info.isCollection() && info.getActualGenericTypeArguments().equals(Collections.singletonList(String.class.getName()))))) {
                     throw new InitializationException("Invalid type for " + member + ": must be either String[] or List<String>");
                 }
                 if (info.getClassName().equals(String[].class.getName())) {
@@ -9797,11 +11643,10 @@ public class CommandLine {
         static class FieldBinding implements IGetter, ISetter {
             private final IScope scope;
             private final Field field;
-            private static IScope asScope(Object scope) { return scope instanceof IScope ? ((IScope) scope) : new ObjectScope(scope); }
-            FieldBinding(Object scope, Field field) { this(asScope(scope), field); }
+            FieldBinding(Object scope, Field field) { this(ObjectScope.asScope(scope), field); }
             FieldBinding(IScope scope, Field field) { this.scope = scope; this.field = field; }
             public <T> T get() throws PicocliException {
-                Object obj = null;
+                Object obj;
                 try { obj = scope.get(); }
                 catch (Exception ex) { throw new PicocliException("Could not get scope for field " + field, ex); }
                 try {
@@ -9812,7 +11657,7 @@ public class CommandLine {
                 }
             }
             public <T> T set(T value) throws PicocliException {
-                Object obj = null;
+                Object obj;
                 try { obj = scope.get(); }
                 catch (Exception ex) { throw new PicocliException("Could not get scope for field " + field, ex); }
                 try {
@@ -9840,7 +11685,7 @@ public class CommandLine {
             }
             @SuppressWarnings("unchecked") public <T> T get() { return (T) currentValue; }
             public <T> T set(T value) throws PicocliException {
-                Object obj = null;
+                Object obj;
                 try { obj = scope.get(); }
                 catch (Exception ex) { throw new PicocliException("Could not get scope for method " + method, ex); }
                 try {
@@ -9849,15 +11694,15 @@ public class CommandLine {
                     currentValue = value;
                     return result;
                 } catch (InvocationTargetException ex) {
-                    if (ex.getCause() instanceof PicocliException) { throw (PicocliException) ex.getCause(); }
-                    throw createParameterException(value, ex.getCause());
+                    if (ex.getTargetException() instanceof PicocliException) { throw (PicocliException) ex.getTargetException(); }
+                    throw createParameterException(value, ex.getTargetException());
                 } catch (Exception ex) {
                     throw createParameterException(value, ex);
                 }
             }
             private ParameterException createParameterException(Object value, Throwable t) {
                 CommandLine cmd = spec.commandLine() == null ? new CommandLine(spec) : spec.commandLine();
-                return new ParameterException(cmd, "Could not invoke " + method + " with " + value, t);
+                return new ParameterException(cmd, "Could not invoke " + method + " with " + value + " (" + t + ")", t);
             }
             public String toString() {
                 return String.format("%s(%s)", getClass().getSimpleName(), method);
@@ -9883,7 +11728,7 @@ public class CommandLine {
             private Object value;
             @SuppressWarnings("unchecked") public <T> T get() { return (T) value; }
             public <T> T set(T value) {
-                @SuppressWarnings("unchecked") T result = value;
+                T result = value;
                 this.value = value;
                 return result;
             }
@@ -9894,6 +11739,22 @@ public class CommandLine {
         static class ObjectScope implements IScope {
             private Object value;
             public ObjectScope(Object value) { this.value = value; }
+
+            public static boolean isProxyClass(IScope scope) {
+                if (scope instanceof CommandUserObject) {
+                    return ((CommandUserObject) scope).isProxyClass();
+                }
+                Object obj = ObjectScope.tryGet(scope);
+                return obj != null && Proxy.isProxyClass(obj.getClass());
+            }
+
+            public static boolean hasInstance(IScope scope) {
+                if (scope instanceof CommandUserObject) {
+                    return ((CommandUserObject) scope).instance != null;
+                }
+                return ObjectScope.tryGet(scope) != null;
+            }
+
             @SuppressWarnings("unchecked") public <T> T get() { return (T) value; }
             @SuppressWarnings("unchecked") public <T> T set(T value) { T old = (T) this.value; this.value = value; return old; }
             public static Object tryGet(IScope scope) {
@@ -9903,7 +11764,84 @@ public class CommandLine {
                     throw new InitializationException("Could not get scope value", e);
                 }
             }
+            static IScope asScope(Object scope) { return scope instanceof IScope ? ((IScope) scope) : new ObjectScope(scope); }
             public String toString() { return String.format("Scope(value=%s)", value); }
+        }
+        static class CommandUserObject implements IScope {
+            private final IFactory factory;
+            private Object instance;
+            private Class<?> type;
+            private CommandSpec commandSpec; // initialized in CommandSpec constructor
+
+            private CommandUserObject(Object objectOrClass, IFactory factory) {
+                this.factory = Assert.notNull(factory, "factory");
+                type = objectOrClass == null ? null : objectOrClass.getClass();
+                instance = objectOrClass;
+                if (objectOrClass instanceof Class) {
+                    type = (Class<?>) objectOrClass;
+                    instance = null;
+                } else if (objectOrClass instanceof Method) {
+                    type = null; // don't mix in options/positional params from outer class @Command
+                }
+            }
+            @Override public String toString() {
+                if (type == null && instance == null) { return "null"; }
+                if (type == null) { return String.valueOf(instance); }
+                if (instance == null) { return String.valueOf(type); }
+                return type.getName() + "@" + Integer.toHexString(System.identityHashCode(instance));
+            }
+
+            public CommandUserObject copy() {
+                // type is only null for @Command-annotated Methods
+                return new CommandUserObject(type == null ? instance : type, factory);
+            }
+
+            public static CommandUserObject create(Object userObject, IFactory factory) {
+                if (userObject instanceof CommandUserObject) { return (CommandUserObject) userObject; }
+                return new CommandUserObject(userObject, factory);
+            }
+
+            public Object getInstance() {
+                if (instance == null) {
+                    Tracer t = new Tracer();
+                    if (type == null) {
+                        t.debug("Returning a null user object instance%n");
+                        return null;
+                    }
+                    try {
+                        t.debug("Getting a %s instance from factory %s%n", type.getName(), factory);
+                        instance = DefaultFactory.create(factory, type);
+                        type = instance.getClass(); // potentially change interface name to impl type name
+                        t.debug("Factory returned a %s instance (%s)%n", type.getName(), Integer.toHexString(System.identityHashCode(instance)));
+                    } catch (InitializationException ex) {
+                        if (type.isInterface()) {
+                            t.debug("%s. Creating Proxy for interface %s%n", ex.getCause(), type.getName());
+                            instance = Proxy.newProxyInstance(type.getClassLoader(), new Class<?>[]{type}, new PicocliInvocationHandler());
+                            t.debug("Created Proxy instance (%s)%n", Integer.toHexString(System.identityHashCode(instance)));
+                        } else {
+                            throw ex;
+                        }
+                    }
+                    if (commandSpec != null) { // now initialize initial values: this CUO _is_ the IScope for the command's args
+                        for (ArgSpec arg : commandSpec.args()) {
+                            if (arg.group() == null && !arg.hasInitialValue()) {
+                                arg.initialValue(); // initializes isInitialValueCached
+                            }
+                        }
+                    }
+                }
+                return instance;
+            }
+            public Class<?> getType() { return type; }
+            public boolean isMethod() { return instance instanceof Method; }
+
+            @SuppressWarnings("unchecked") public <T> T get() { return (T) getInstance(); }
+            public <T> T set(T value) { throw new UnsupportedOperationException(); }
+
+            public boolean isProxyClass() {
+                if (type == null || !type.isInterface()) { return false; }
+                return Proxy.isProxyClass(getInstance().getClass());
+            }
         }
         static class Interpolator {
             private final CommandSpec commandSpec;
@@ -9921,7 +11859,13 @@ public class CommandLine {
                 });
                 lookups.put("", new ILookup() {
                     public String get(String key) {
-                        String result = System.getProperty(key);
+                        String result = "COMMAND-NAME".equals(key) ? commandSpec.name()
+                                : "COMMAND-FULL-NAME".equals(key) ? commandSpec.qualifiedName()
+                                : "PARENT-COMMAND-NAME".equals(key) && commandSpec.parent() != null ? commandSpec.parent().name()
+                                : "PARENT-COMMAND-FULL-NAME".equals(key) && commandSpec.parent() != null ? commandSpec.parent().qualifiedName()
+                                : "ROOT-COMMAND-NAME".equals(key) ? commandSpec.root().name()
+                                : null;
+                        if (result == null) { result = System.getProperty(key); }
                         if (result == null) { result = System.getenv(key); }
                         if (result == null) { result = bundleValue(commandSpec.resourceBundle(), key); }
                         return result;
@@ -9943,15 +11887,7 @@ public class CommandLine {
             }
             public String interpolate(String original) {
                 if (original == null || !commandSpec.interpolateVariables()) { return original; }
-                // TODO don't expand escaped vars, like $${COMMAND-NAME}
-                String result1 = original.replaceAll("\\$\\{COMMAND-NAME}", commandSpec.name());
-                String result2 = result1.replaceAll("\\$\\{COMMAND-FULL-NAME}", commandSpec.qualifiedName());
-                if (commandSpec.parent() != null) {
-                    String tmp = result2.replaceAll("\\$\\{PARENT-COMMAND-NAME}", commandSpec.parent().name());
-                    result2 = tmp.replaceAll("\\$\\{PARENT-COMMAND-FULL-NAME}", commandSpec.parent().qualifiedName());
-                }
-                String result = resolveLookups(result2, new HashSet<String>(), new HashMap<String, String>());
-                return result;
+                return resolveLookups(original, new HashSet<String>(), new HashMap<String, String>());
             }
             public String interpolateCommandName(String original) {
                 if (original == null || !commandSpec.interpolateVariables()) { return original; }
@@ -9999,16 +11935,13 @@ public class CommandLine {
             private int findOpeningDollar(String text, String prefix, int start) {
                 int open = -1;
                 boolean escaping = false;
-                for (int ch = 0, i = start; i < text.length(); i += Character.charCount(ch)) {
+                for (int ch, i = start; i < text.length(); i += Character.charCount(ch)) {
                     ch = text.codePointAt(i);
-                    switch (ch) {
-                        case '$':
-                            open = escaping ? -1 : i;
-                            escaping = !escaping;
-                            break;
-                        default:
-                            escaping = false;
-                            break;
+                    if (ch == '$') {
+                        open = escaping ? -1 : i;
+                        escaping = !escaping;
+                    } else {
+                        escaping = false;
                     }
                     if (open != -1 && ch != prefix.codePointAt(i - open)) {
                         open = -1;
@@ -10023,7 +11956,7 @@ public class CommandLine {
             private int findClosingBrace(String text, int start) {
                 int open = 1;
                 boolean escaping = false;
-                for (int ch = 0, i = start; i < text.length(); i += Character.charCount(ch)) {
+                for (int ch, i = start; i < text.length(); i += Character.charCount(ch)) {
                     ch = text.codePointAt(i);
                     switch (ch) {
                         case '\\':
@@ -10062,23 +11995,25 @@ public class CommandLine {
         private final List<OptionSpec> matchedOptions;
         private final List<PositionalParamSpec> matchedPositionals;
         private final List<String> originalArgs;
+        private final List<String> expandedArgs;
         private final List<String> unmatched;
         private final List<List<PositionalParamSpec>> matchedPositionalParams;
         private final List<Exception> errors;
         private final GroupMatchContainer groupMatchContainer;
+        private final List<ParseResult> subcommands;
         final List<Object> tentativeMatch;
 
-        private final ParseResult subcommand;
         private final boolean usageHelpRequested;
         private final boolean versionHelpRequested;
 
         private ParseResult(ParseResult.Builder builder) {
             commandSpec = builder.commandSpec;
-            subcommand = builder.subcommand;
+            subcommands = builder.subcommands;
             matchedOptions = new ArrayList<OptionSpec>(builder.matchedOptionsList);
             matchedUniqueOptions = new LinkedHashSet<OptionSpec>(builder.options);
             unmatched = new ArrayList<String>(builder.unmatched);
             originalArgs = new ArrayList<String>(builder.originalArgList);
+            expandedArgs = new ArrayList<String>(builder.expandedArgList);
             matchedArgs = new ArrayList<ArgSpec>(builder.matchedArgsList);
             matchedUniquePositionals = new LinkedHashSet<PositionalParamSpec>(builder.positionals);
             matchedPositionals = new ArrayList<PositionalParamSpec>(builder.matchedPositionalsList);
@@ -10105,7 +12040,7 @@ public class CommandLine {
          * If the user input was a valid combination of group arguments, the returned list should contain a single
          * {@linkplain GroupMatch match}. Details of the {@linkplain GroupMatchContainer matched groups} encountered
          * on the command line can be obtained via its {@link GroupMatch#matchedSubgroups() matchedSubgroups()} method.
-         * The top-level match returned by this method contains no {@linkplain GroupMatch#matchedValues(ArgSpec) matched arguments}.
+         * The top-level match returned by this method contains no {@linkplain GroupMatch#matchedValues(CommandLine.Model.ArgSpec) matched arguments}.
          * </p><p>
          * If the returned list contains more than one {@linkplain GroupMatch match}, the user input was invalid:
          * the maximum {@linkplain ArgGroup#multiplicity() multiplicity} of a group was exceeded, and the parser created an extra
@@ -10198,8 +12133,15 @@ public class CommandLine {
         /** Returns a list of command line arguments that did not match any options or positional parameters. */
         public List<String> unmatched()                     { return Collections.unmodifiableList(unmatched); }
 
-        /** Returns the command line arguments that were parsed. */
+        /** Returns the original command line arguments that were passed to the {@link CommandLine#parseArgs(String...)} method, before {@linkplain CommandLine#isExpandAtFiles() @-file expansion}.
+         * @see #expandedArgs() */
         public List<String> originalArgs()                  { return Collections.unmodifiableList(originalArgs); }
+
+        /** Returns the command line arguments after {@linkplain CommandLine#isExpandAtFiles() @-files were expanded};
+         * these are the arguments that were actually parsed.
+         * @see #originalArgs()
+         * @since 4.4 */
+        public List<String> expandedArgs()                  { return Collections.unmodifiableList(expandedArgs); }
 
         /** If {@link ParserSpec#collectErrors} is {@code true}, returns the list of exceptions that were encountered during parsing, otherwise, returns an empty list.
          * @since 3.2 */
@@ -10220,10 +12162,16 @@ public class CommandLine {
         private <T> T matchedPositionalValue(PositionalParamSpec positional, T defaultValue) { return positional == null ? defaultValue : (T) positional.getValue(); }
 
         /** Returns {@code true} if a subcommand was matched on the command line, {@code false} otherwise. */
-        public boolean hasSubcommand()          { return subcommand != null; }
+        public boolean hasSubcommand()          { return !subcommands.isEmpty(); }
 
-        /** Returns the {@code ParseResult} for the subcommand of this command that was matched on the command line, or {@code null} if no subcommand was matched. */
-        public ParseResult subcommand()         { return subcommand; }
+        /** Returns the {@code ParseResult} for the last subcommand of this command that was matched on the command line, or {@code null} if no subcommand was matched. */
+        public ParseResult subcommand()         { return !hasSubcommand() ? null : subcommands.get(subcommands.size() - 1); }
+
+        /** Returns a list with the {@code ParseResult} objects for each subcommand of this command
+         * that was matched on the command line or an empty list if no subcommands were matched.
+         * The returned list can only contain multiple values if this command's {@link CommandSpec#subcommandsRepeatable() subcommandsRepeatable} attribute is {@code true}.
+         * @since 4.2 */
+        public List<ParseResult> subcommands()  { return Collections.unmodifiableList(subcommands); }
 
         /** Returns {@code true} if one of the options that was matched on the command line is a {@link OptionSpec#usageHelp() usageHelp} option. */
         public boolean isUsageHelpRequested()   { return usageHelpRequested; }
@@ -10232,11 +12180,14 @@ public class CommandLine {
         public boolean isVersionHelpRequested() { return versionHelpRequested; }
 
         /** Returns this {@code ParseResult} as a list of {@code CommandLine} objects, one for each matched command/subcommand.
-         * For backwards compatibility with pre-3.0 methods. */
+         * Note that for repeatable subcommands, there may be multiple commands at each level of the hierarchy in the returned list.
+         * @since 3.0 */
         public List<CommandLine> asCommandLineList() {
-            List<CommandLine> result = new ArrayList<CommandLine>();
-            ParseResult pr = this;
-            while (pr != null) { result.add(pr.commandSpec().commandLine()); pr = pr.hasSubcommand() ? pr.subcommand() : null; }
+            return recursivelyAddCommandLineTo(new ArrayList<CommandLine>());
+        }
+        private List<CommandLine> recursivelyAddCommandLineTo(List<CommandLine> result) {
+            result.add(this.commandSpec().commandLine());
+            for (ParseResult sub : subcommands()) { sub.recursivelyAddCommandLineTo(result); }
             return result;
         }
 
@@ -10256,15 +12207,17 @@ public class CommandLine {
             private final Set<OptionSpec> options = new LinkedHashSet<OptionSpec>();
             private final Set<PositionalParamSpec> positionals = new LinkedHashSet<PositionalParamSpec>();
             private final List<String> unmatched = new ArrayList<String>();
+            private int firstUnmatchedPosition = Integer.MAX_VALUE;
             private final List<String> originalArgList = new ArrayList<String>();
+            private final List<String> expandedArgList = new ArrayList<String>();
             private final List<List<PositionalParamSpec>> positionalParams = new ArrayList<List<PositionalParamSpec>>();
-            private ParseResult subcommand;
+            private final List<ParseResult> subcommands = new ArrayList<ParseResult>();
             private boolean usageHelpRequested;
             private boolean versionHelpRequested;
             boolean isInitializingDefaultValues;
-            private List<Exception> errors = new ArrayList<Exception>(1);
+            private final List<Exception> errors = new ArrayList<Exception>(1);
             private List<Object> nowProcessing;
-            private GroupMatchContainer groupMatchContainer = new GroupMatchContainer(null, null);
+            private final GroupMatchContainer groupMatchContainer = new GroupMatchContainer(null, null);
 
             private Builder(CommandSpec spec) { commandSpec = Assert.notNull(spec, "commandSpec"); }
             /** Creates and returns a new {@code ParseResult} instance for this builder's configuration. */
@@ -10314,14 +12267,41 @@ public class CommandLine {
                 positionalParams.get(position).add(positionalParam);
                 return this;
             }
+            /** Adds the specified command line argument to the list of unmatched command line arguments,
+             * and remembers the position of this argument. This position is used in the UnmatchedArgumentException message.
+             * @position ignored if negative, remembered in firstUnmatchedPosition if it precedes a previously set value
+             * @since 4.6 */
+            private Builder addUnmatched(int position, String arg) {
+                if (position >= 0) {
+                    firstUnmatchedPosition = Math.min(position, firstUnmatchedPosition);
+                }
+                unmatched.add(arg); return this;
+            }
             /** Adds the specified command line argument to the list of unmatched command line arguments. */
-            public Builder addUnmatched(String arg) { unmatched.add(arg); return this; }
+            public Builder addUnmatched(String arg) { return addUnmatched(-1, arg); }
             /** Adds all elements of the specified command line arguments stack to the list of unmatched command line arguments. */
-            public Builder addUnmatched(Stack<String> args) { while (!args.isEmpty()) { addUnmatched(args.pop()); } return this; }
+            public Builder addUnmatched(Stack<String> args) {
+                while (!args.isEmpty()) { addUnmatched(totalArgCount() - args.size(), args.pop()); }
+                return this;
+            }
+            private int totalArgCount() {
+                CommandLine c = commandSpec.root().commandLine;
+                Builder b = (c == null || c.interpreter.parseResultBuilder == null) ? this : c.interpreter.parseResultBuilder;
+                return b.expandedArgList.size();
+            }
             /** Sets the specified {@code ParseResult} for a subcommand that was matched on the command line. */
-            public Builder subcommand(ParseResult subcommand) { this.subcommand = subcommand; return this; }
-            /** Sets the specified command line arguments that were parsed. */
-            public Builder originalArgs(String[] originalArgs) { originalArgList.addAll(Arrays.asList(originalArgs)); return this;}
+            // implementation note: this method gets called with the most recently matched subcommand first, then the subcommand matched before that, etc
+            public Builder subcommand(ParseResult subcommand) { subcommands.add(0, subcommand); return this; }
+            /** Sets the specified original command line arguments that were passed to the {@link CommandLine#parseArgs(String...)} method, before {@linkplain CommandLine#isExpandAtFiles() @-file expansion}.
+             * @see #expandedArgs(Collection)
+             * @see ParseResult#originalArgs() */
+            public Builder originalArgs(String[] originalArgs) { originalArgList.addAll(Arrays.asList(originalArgs)); return this; }
+            /** Sets the specified command line arguments after {@linkplain CommandLine#isExpandAtFiles() @-files were expanded};
+             * these are the arguments that were actually parsed.
+             * @see #originalArgs(String[])
+             * @see ParseResult#expandedArgs()
+             * @since 4.4 */
+            public Builder expandedArgs(Collection<String> expandedArgs) { expandedArgList.addAll(expandedArgs); return this; }
 
             void addStringValue        (ArgSpec argSpec, String value) { if (!isInitializingDefaultValues) { argSpec.stringValues.add(value);} }
             void addOriginalStringValue(ArgSpec argSpec, String value) {
@@ -10353,14 +12333,21 @@ public class CommandLine {
             void beforeMatchingGroupElement(ArgSpec argSpec) throws Exception {
                 ArgGroupSpec group = argSpec.group();
                 if (group == null || isInitializingDefaultValues) { return; }
+                Tracer tracer = commandSpec.commandLine.tracer;
                 GroupMatchContainer foundGroupMatchContainer = this.groupMatchContainer.findOrCreateMatchingGroup(argSpec, commandSpec.commandLine);
-                if (foundGroupMatchContainer.lastMatch().matchedMinElements() &&
-                        (argSpec.required() || foundGroupMatchContainer.lastMatch().matchCount(argSpec) > 0)) {
+                GroupMatch match = foundGroupMatchContainer.lastMatch();
+                boolean greedy = true; // commandSpec.parser().greedyMatchMultiValueArgsInGroup(); // or @Option(multiplicity=0..*) to control min/max matches
+                boolean allowMultipleMatchesInGroup = greedy && argSpec.isMultiValue(); // https://github.com/remkop/picocli/issues/815
+                String elementDescription = ArgSpec.describe(argSpec, "=");
+                if (match.matchedMinElements() &&
+                        (argSpec.required() || match.matchCount(argSpec) > 0) && !allowMultipleMatchesInGroup) {
                     // we need to create a new match; if maxMultiplicity has been reached, we need to add a new GroupMatchContainer.
                     String previousMatch = argSpec.required() ? "is required" : "has already been matched";
-                    String elementDescription = ArgSpec.describe(argSpec, "=");
-                    Tracer tracer = commandSpec.commandLine.tracer;
                     tracer.info("GroupMatch %s is complete: its mandatory elements are all matched. (User object: %s.) %s %s in the group, so it starts a new GroupMatch.%n", foundGroupMatchContainer.lastMatch(), foundGroupMatchContainer.group.userObject(), elementDescription, previousMatch);
+                    foundGroupMatchContainer.addMatch(commandSpec.commandLine);
+                    this.groupMatchContainer.findOrCreateMatchingGroup(argSpec, commandSpec.commandLine);
+                } else if (match.matchCount(argSpec) > 0 && !allowMultipleMatchesInGroup) {
+                    tracer.info("GroupMatch %s is incomplete: its mandatory elements are not all matched. (User object: %s.) However, %s has already been matched in the group, so it starts a new GroupMatch.%n", foundGroupMatchContainer.lastMatch(), foundGroupMatchContainer.group.userObject(), elementDescription);
                     foundGroupMatchContainer.addMatch(commandSpec.commandLine);
                     this.groupMatchContainer.findOrCreateMatchingGroup(argSpec, commandSpec.commandLine);
                 }
@@ -10372,7 +12359,7 @@ public class CommandLine {
             static final GroupValidationResult SUCCESS_ABSENT = new GroupValidationResult(Type.SUCCESS_ABSENT);
             enum Type {
                 SUCCESS_PRESENT, SUCCESS_ABSENT,
-                FAILURE_PRESENT, FAILURE_ABSENT, FAILURE_PARTIAL;
+                FAILURE_PRESENT, FAILURE_ABSENT, FAILURE_PARTIAL
             }
             Type type;
             ParameterException exception;
@@ -10408,8 +12395,8 @@ public class CommandLine {
         public static class GroupMatchContainer {
             private final ArgGroupSpec group;
             private GroupMatchContainer parentContainer;
-            private List<ArgGroupSpec> unmatchedSubgroups = new ArrayList<ArgGroupSpec>();
-            private List<GroupMatch> matches = new ArrayList<GroupMatch>();
+            private final List<ArgGroupSpec> unmatchedSubgroups = new ArrayList<ArgGroupSpec>();
+            private final List<GroupMatch> matches = new ArrayList<GroupMatch>();
             private GroupValidationResult validationResult;
 
             GroupMatchContainer(ArgGroupSpec group, CommandLine cmd) { this.group = group; addMatch(cmd);}
@@ -10428,7 +12415,7 @@ public class CommandLine {
                     complete(commandLine);
                 } else {
                     if (group != null) {
-                        tracer.info("Adding match to GroupMatchContainer %s (group=%s %s).%n", this, group == null ? "?" : group.id(), group == null ? "ROOT" : group.synopsisUnit());
+                        tracer.info("Adding match to GroupMatchContainer %s (group=%s %s).%n", this, group.id(), group.synopsisUnit());
                     }
                     matches.add(new GroupMatch(this));
                     if (group == null) { return; }
@@ -10593,14 +12580,18 @@ public class CommandLine {
                 String msg = "";
                 for (ParseResult.GroupMatch match : groupMatches) {
                     if (msg.length() > 0) { msg += " and "; }
-                    msg += match.toString();
+                    msg += match;
                     Map<ArgGroupSpec, GroupMatchContainer> subgroups = match.matchedSubgroups();
                     for (ArgGroupSpec group : subgroups.keySet()) {
-                        addValueToListInMap(matchesPerGroup, group, subgroups.get(group).matches());
+                        if (group.validate()) { // don't raise errors for non-validating groups: https://github.com/remkop/picocli/issues/810
+                            addValueToListInMap(matchesPerGroup, group, subgroups.get(group).matches());
+                        }
                     }
                 }
-                if (!simplifyErrorMessageForSingleGroup(matchesPerGroup, commandLine)) {
-                    commandLine.interpreter.maybeThrow(new MaxValuesExceededException(commandLine, "Error: expected only one match but got " + msg));
+                if (!matchesPerGroup.isEmpty()) {
+                    if (!simplifyErrorMessageForSingleGroup(matchesPerGroup, commandLine)) {
+                        commandLine.interpreter.maybeThrow(new MaxValuesExceededException(commandLine, "Error: expected only one match but got " + msg));
+                    }
                 }
             }
 
@@ -10644,6 +12635,22 @@ public class CommandLine {
                     }
                 }
             }
+
+            boolean canMatchPositionalParam(PositionalParamSpec positionalParam) {
+                boolean mayCreateNewMatch = !matches.isEmpty() && lastMatch().matchedMinElements();
+                boolean mustCreateNewMatch = !matches.isEmpty() && lastMatch().matchedMaxElements();
+                if (mustCreateNewMatch && isMaxMultiplicityReached()) {
+                    return false;
+                }
+                int startPosition = matches.isEmpty() ? 0 : lastMatch().startPosition;
+                int accumulatedPosition = matches.isEmpty() ? 0 : lastMatch().position;
+                int localPosition = accumulatedPosition - startPosition;
+                if (mayCreateNewMatch) {
+                    int positionalParamCount = positionalParam.group().localPositionalParamCount();
+                    if (positionalParamCount != 0) { localPosition %= positionalParamCount; } // #1213 prevent ArithmeticException: / by zero
+                }
+                return positionalParam.index().contains(localPosition) && !lastMatch().hasMatchedValueAtPosition(positionalParam, accumulatedPosition);
+            }
         }
 
         /** A group's {@linkplain ArgGroup#multiplicity() multiplicity} specifies how many matches of a group may
@@ -10653,6 +12660,7 @@ public class CommandLine {
          */
         public static class GroupMatch {
             int position;
+            final int startPosition;
             final GroupMatchContainer container;
 
             Map<ArgGroupSpec, GroupMatchContainer> matchedSubgroups = new LinkedHashMap<ArgGroupSpec, GroupMatchContainer>(2); // preserve order: used in toString()
@@ -10661,7 +12669,13 @@ public class CommandLine {
             Map<ArgSpec, Map<Integer, List<Object>>> matchedValuesAtPosition = new IdentityHashMap<ArgSpec, Map<Integer, List<Object>>>();
             private GroupValidationResult validationResult;
 
-            GroupMatch(GroupMatchContainer container) { this.container = container; }
+            GroupMatch(GroupMatchContainer container) {
+                this.container = container;
+                if (!container.matches().isEmpty()) {
+                    position = container.matches().get(container.matches().size() - 1).position;
+                }
+                startPosition = position;
+            }
 
             /** Returns {@code true} if this match has no matched arguments and no matched subgroups. */
             public boolean isEmpty() { return originalStringValues.isEmpty() && matchedSubgroups.isEmpty(); }
@@ -10753,37 +12767,46 @@ public class CommandLine {
                 }
                 // finally, validate that the combination of matched args and matched subgroups is valid
                 if (group() != null) {
+
+                    // first validate the options and positional params in the group in isolation
+                    validationResult = group().validateArgs(commandLine, matchedValues.keySet());
+                    if (validationResult.blockingFailure()) {
+                        return;
+                    }
+
+                    // now validate the args combined with subgroups:
+                    // some groups may consist of a required option + a required subgroup:
+                    // the presence of either means that the other must occur
                     Set<ArgSpec> intersection = new LinkedHashSet<ArgSpec>(group().args());
                     Set<ArgSpec> missing = new LinkedHashSet<ArgSpec>(group().requiredArgs());
-                    Set<ArgSpec> found = new LinkedHashSet<ArgSpec>();
-                    found.addAll(matchedValues.keySet());
+                    Set<ArgSpec> found = new LinkedHashSet<ArgSpec>(matchedValues.keySet());
                     missing.removeAll(matchedValues.keySet());
                     intersection.retainAll(found);
-
-                    String exclusiveElements = ArgSpec.describe(intersection, ", ");
-                    String requiredElements = ArgSpec.describe(group().requiredArgs(), ", ");
-                    String missingElements = ArgSpec.describe(missing, ", ");
+                    String exclusiveElements = ArgSpec.describe(intersection);
+                    String requiredElements = ArgSpec.describe(group().requiredArgs());
+                    String missingElements = ArgSpec.describe(missing);
 
                     Set<ArgGroupSpec> missingSubgroups = new LinkedHashSet<ArgGroupSpec>(group().subgroups());
                     missingSubgroups.removeAll(matchedSubgroups.keySet());
+                    int missingRequiredSubgroupCount = 0;
                     for (ArgGroupSpec missingSubgroup : missingSubgroups) {
-                        if (missingElements.length() > 0) { missingElements += " and "; }
-                        missingElements += missingSubgroup.synopsisUnit();
+                        if (missingSubgroup.multiplicity().min() > 0) {
+                            missingRequiredSubgroupCount++;
+                            if (missingElements.length() > 0) { missingElements += " and "; }
+                            missingElements += missingSubgroup.synopsisUnit();
+                        }
                     }
 
-                    int requiredSubgroupCount = 0;
                     for (ArgGroupSpec subgroup : group().subgroups()) {
                         if (exclusiveElements.length() > 0) { exclusiveElements += " and "; }
                         exclusiveElements += subgroup.synopsisUnit();
                         if (subgroup.multiplicity().min > 0) {
-                            requiredSubgroupCount++;
                             if (requiredElements.length() > 0) { requiredElements += " and "; }
                             requiredElements += subgroup.synopsisUnit();
                         }
                     }
-                    int requiredCount = group().requiredArgs().size() + requiredSubgroupCount;
                     int presentCount = matchedValues.size() + matchedSubgroups.size();
-                    boolean haveMissing = presentCount < requiredCount;
+                    boolean haveMissing = !missing.isEmpty() || missingRequiredSubgroupCount > 0;
                     validationResult = group().validate(commandLine, presentCount, haveMissing,
                             presentCount > 0 && haveMissing, exclusiveElements, requiredElements, missingElements);
                 }
@@ -10801,6 +12824,17 @@ public class CommandLine {
         return result;
     }
     private enum LookBehind { SEPARATE, ATTACHED, ATTACHED_WITH_SEPARATOR;
+
+        static LookBehind parse(String separator) {
+            if ("".equals(separator)) { return LookBehind.ATTACHED; }
+            if (" ".equals(separator)) { return LookBehind.SEPARATE; }
+            return ATTACHED_WITH_SEPARATOR;
+        }
+
+        String toString(String separator) {
+            return this == LookBehind.ATTACHED ? "" : this == LookBehind.SEPARATE ? " " : separator;
+        }
+
         public boolean isAttached() { return this != LookBehind.SEPARATE; }
     }
     /**
@@ -10897,7 +12931,7 @@ public class CommandLine {
             Assert.notNull(args, "argument array");
             if (tracer.isInfo()) {tracer.info("Picocli version: %s%n", versionString());}
             if (tracer.isInfo()) {tracer.info("Parsing %d command line args %s%n", args.length, Arrays.toString(args));}
-            if (tracer.isDebug()){tracer.debug("Parser configuration: %s%n", config());}
+            if (tracer.isDebug()){tracer.debug("Parser configuration: optionsCaseInsensitive=%s, subcommandsCaseInsensitive=%s, %s%n", commandSpec.optionsCaseInsensitive(), commandSpec.subcommandsCaseInsensitive(), config());}
             if (tracer.isDebug()){tracer.debug("(ANSI is %s by default: systemproperty[picocli.ansi]=%s, isatty=%s, TERM=%s, OSTYPE=%s, isWindows=%s, JansiConsoleInstalled=%s, ANSICON=%s, ConEmuANSI=%s, NO_COLOR=%s, CLICOLOR=%s, CLICOLOR_FORCE=%s)%n",
                     Help.Ansi.AUTO.enabled() ? "enabled" : "disabled", System.getProperty("picocli.ansi"), Help.Ansi.isTTY(), System.getenv("TERM"), System.getenv("OSTYPE"), Help.Ansi.isWindows(), Help.Ansi.isJansiConsoleInstalled(), System.getenv("ANSICON"), System.getenv("ConEmuANSI"), System.getenv("NO_COLOR"), System.getenv("CLICOLOR"), System.getenv("CLICOLOR_FORCE"));}
             List<String> expanded = new ArrayList<String>();
@@ -10905,7 +12939,7 @@ public class CommandLine {
             Stack<String> arguments = new Stack<String>();
             arguments.addAll(reverseList(expanded));
             List<CommandLine> result = new ArrayList<CommandLine>();
-            parse(result, arguments, args, new ArrayList<Object>());
+            parse(result, arguments, args, new ArrayList<Object>(), new HashSet<ArgSpec>());
             return result;
         }
 
@@ -10963,26 +12997,32 @@ public class CommandLine {
             } catch (Exception ex) {
                 throw new InitializationException("Could not read argument file @" + fileName, ex);
             } finally {
-                if (reader != null) { try {reader.close();} catch (Exception ignored) {} }
+                close(reader);
             }
             if (tracer.isInfo()) {tracer.info("Expanded file @%s to arguments %s%n", fileName, result);}
             arguments.addAll(result);
         }
         private void clear() {
+            getCommandSpec().userObject(); // #690 instantiate user object when cmd matched on the command line
             position = 0;
             endOfOptions = false;
             isHelpRequested = false;
             parseResultBuilder = ParseResult.builder(getCommandSpec());
-            for (OptionSpec option : getCommandSpec().options())                           { clear(option); }
-            for (PositionalParamSpec positional : getCommandSpec().positionalParameters()) { clear(positional); }
-            for (ArgGroupSpec group : getCommandSpec().argGroups())                        { clear(group); }
+            for (OptionSpec option : getCommandSpec().options())                            { clear(option); }
+            for (PositionalParamSpec positional : getCommandSpec().positionalParameters())  { clear(positional); }
+            for (ArgGroupSpec group : getCommandSpec().argGroups())                         { clear(group); }
+            for (UnmatchedArgsBinding unmatched : getCommandSpec().unmatchedArgsBindings()) { unmatched.clear(); }
         }
         private void clear(ArgSpec argSpec) {
             argSpec.resetStringValues();
             argSpec.resetOriginalStringValues();
             argSpec.typedValues.clear();
             argSpec.typedValueAtPosition.clear();
-            if (argSpec.group() == null) { argSpec.applyInitialValue(tracer); } // groups do their own initialization
+            if (argSpec.inherited()) { //inherited args are cleared only at their origin
+                tracer.debug("Not applying initial value for inherited %s%n", optionDescription("", argSpec, -1));
+            } else { // groups do their own initialization;
+                if (argSpec.group() == null) { argSpec.applyInitialValue(tracer); }
+            }
         }
         private void clear(ArgGroupSpec group) {
             for (ArgSpec arg : group.args()) { clear(arg); }
@@ -10997,24 +13037,42 @@ public class CommandLine {
             }
         }
 
-        private void parse(List<CommandLine> parsedCommands, Stack<String> argumentStack, String[] originalArgs, List<Object> nowProcessing) {
-            clear(); // first reset any state in case this CommandLine instance is being reused
+        private void parse(List<CommandLine> parsedCommands, Stack<String> argumentStack, String[] originalArgs, List<Object> nowProcessing, Collection<ArgSpec> inheritedRequired) {
+            parse(parsedCommands, argumentStack, originalArgs, nowProcessing, inheritedRequired, new LinkedHashSet<ArgSpec>());
+        }
+
+        private void parse(List<CommandLine> parsedCommands, Stack<String> argumentStack, String[] originalArgs, List<Object> nowProcessing, Collection<ArgSpec> inheritedRequired, Set<ArgSpec> initialized) {
             if (tracer.isDebug()) {
                 tracer.debug("Initializing %s: %d options, %d positional parameters, %d required, %d groups, %d subcommands.%n",
                         commandSpec.toString(), new HashSet<ArgSpec>(commandSpec.optionsMap().values()).size(),
                         commandSpec.positionalParameters().size(), commandSpec.requiredArgs().size(),
                         commandSpec.argGroups().size(), commandSpec.subcommands().size());
             }
+            clear(); // first reset any state in case this CommandLine instance is being reused
             parsedCommands.add(CommandLine.this);
             List<ArgSpec> required = new ArrayList<ArgSpec>(commandSpec.requiredArgs());
-            Set<ArgSpec> initialized = new LinkedHashSet<ArgSpec>();
+            addPostponedRequiredArgs(inheritedRequired, required);
             Collections.sort(required, new PositionalParametersSorter());
+
+            // TODO Callback to preprocessor here? // https://github.com/remkop/picocli/issues/1217
+
             boolean continueOnError = commandSpec.parser().collectErrors();
+
+            Map<String, Object> info = mapOf(
+                    "versionHelpRequested", parseResultBuilder.versionHelpRequested,
+                    "usageHelpRequested", parseResultBuilder.usageHelpRequested);
+            if (commandSpec.preprocessor().preprocess(argumentStack, commandSpec, null, info)) {
+                parseResultBuilder.versionHelpRequested = (Boolean) info.get("versionHelpRequested");
+                parseResultBuilder.usageHelpRequested = (Boolean) info.get("usageHelpRequested");
+                return;
+            }
             do {
                 int stackSize = argumentStack.size();
                 try {
-                    applyDefaultValues(required);
                     processArguments(parsedCommands, argumentStack, required, initialized, originalArgs, nowProcessing);
+                    applyDefaultValues(required, initialized);
+                } catch (InitializationException ex) {
+                    maybeThrow(ex);
                 } catch (ParameterException ex) {
                     maybeThrow(ex);
                 } catch (Exception ex) {
@@ -11023,12 +13081,46 @@ public class CommandLine {
                     maybeThrow(ParameterException.create(CommandLine.this, ex, arg, offendingArgIndex, originalArgs));
                 }
                 if (continueOnError && stackSize == argumentStack.size() && stackSize > 0) {
-                    parseResultBuilder.unmatched.add(argumentStack.pop());
+                    parseResultBuilder.addUnmatched(parseResultBuilder.totalArgCount() - argumentStack.size(), argumentStack.pop());
                 }
             } while (!argumentStack.isEmpty() && continueOnError);
 
-            if (!isAnyHelpRequested()) {
+            boolean anyHelpRequested = isAnyHelpRequested();
+            CommandLine parsed = CommandLine.this;
+            while (parsed.getParent() != null) {
+                parsed = parsed.getParent();
+                anyHelpRequested |= parsed.interpreter.isAnyHelpRequested();
+            }
+            if (!anyHelpRequested) {
                 validateConstraints(argumentStack, required, initialized);
+            }
+        }
+
+        private void addPostponedRequiredArgs(Collection<ArgSpec> inheritedRequired, List<ArgSpec> required) {
+            for (ArgSpec postponed : inheritedRequired) {
+                if (postponed.isOption()) {
+                    OptionSpec inherited = commandSpec.findOption(((OptionSpec) postponed).longestName());
+                    Assert.notNull(inherited, "inherited option " + postponed);
+                    required.add(inherited);
+                } else {
+                    PositionalParamSpec positional = (PositionalParamSpec) postponed;
+                    for (PositionalParamSpec existing : commandSpec.positionalParameters()) {
+                        if (existing.inherited()
+                                && existing.index().equals(positional.index())
+                                && existing.arity().equals(positional.arity())
+                                && existing.typeInfo().equals(positional.typeInfo())
+                                && Assert.equals(existing.paramLabel(), positional.paramLabel())
+                                && Assert.equals(existing.hideParamSyntax(), positional.hideParamSyntax())
+                                && Assert.equals(existing.required(), positional.required())
+                                && Assert.equals(existing.splitRegex(), positional.splitRegex())
+                                && Arrays.equals(existing.description(), positional.description())
+                                && Assert.equals(existing.descriptionKey(), positional.descriptionKey())
+                                && Assert.equals(existing.parameterConsumer(), positional.parameterConsumer())
+                        ) {
+                            required.add(existing);
+                        }
+                    }
+                }
             }
         }
 
@@ -11055,29 +13147,36 @@ public class CommandLine {
             pr.validateGroups();
         }
 
-        private void applyDefaultValues(List<ArgSpec> required) throws Exception {
+        private void applyDefaultValues(List<ArgSpec> required, Set<ArgSpec> initialized) throws Exception {
             parseResultBuilder.isInitializingDefaultValues = true;
+            tracer.debug("Applying default values for command '%s'%n", CommandLine.this.commandSpec.qualifiedName());
             for (ArgSpec arg : commandSpec.args()) {
-                if (arg.group() == null) {
-                    if (applyDefault(commandSpec.defaultValueProvider(), arg)) { required.remove(arg); }
+                if (arg.group() == null && !initialized.contains(arg)) {
+                    if (arg.inherited()) {
+                        tracer.debug("Not applying default value for inherited %s%n", optionDescription("", arg, -1));
+                    } else {
+                        if (applyDefault(commandSpec.defaultValueProvider(), arg)) { required.remove(arg); }
+                    }
                 }
             }
             for (ArgGroupSpec group : commandSpec.argGroups()) {
-                applyGroupDefaults(commandSpec.defaultValueProvider(), group, required);
-            }
-            for (UnmatchedArgsBinding unmatched : commandSpec.unmatchedArgsBindings()) {
-                unmatched.clear();
+                applyGroupDefaults(commandSpec.defaultValueProvider(), group, required, initialized);
             }
             parseResultBuilder.isInitializingDefaultValues = false;
         }
-        private void applyGroupDefaults(IDefaultValueProvider defaultValueProvider, ArgGroupSpec group, List<ArgSpec> required) throws Exception {
+        private void applyGroupDefaults(IDefaultValueProvider defaultValueProvider, ArgGroupSpec group, List<ArgSpec> required, Set<ArgSpec> initialized) throws Exception {
+            tracer.debug("Applying default values for group '%s'%n", group.synopsis());
             for (ArgSpec arg : group.args()) {
-                if (arg.scope().get() != null) {
-                    if (applyDefault(defaultValueProvider, arg)) { required.remove(arg); }
+                if (arg.scope().get() != null && !initialized.contains(arg)) {
+                    if (arg.inherited()) {
+                        tracer.debug("Not applying default value for inherited %s%n", optionDescription("", arg, -1));
+                    } else {
+                        if (applyDefault(defaultValueProvider, arg)) { required.remove(arg); }
+                    }
                 }
             }
             for (ArgGroupSpec sub : group.subgroups()) {
-                applyGroupDefaults(defaultValueProvider, sub, required);
+                applyGroupDefaults(defaultValueProvider, sub, required, initialized);
             }
         }
         private boolean applyDefault(IDefaultValueProvider defaultValueProvider, ArgSpec arg) throws Exception {
@@ -11087,10 +13186,18 @@ public class CommandLine {
             String fromProvider = defaultValueProvider == null ? null : defaultValueProvider.defaultValue(arg);
             String defaultValue = fromProvider == null ? arg.defaultValue() : fromProvider;
 
-            if (defaultValue != null) {
-                if (tracer.isDebug()) {tracer.debug("Applying defaultValue (%s) to %s%n", defaultValue, arg);}
+            if (defaultValue != null && !ArgSpec.NULL_VALUE.equals(defaultValue)) {
+                String provider = defaultValueProvider == null ? "" : (" from " + defaultValueProvider.toString());
+                if (tracer.isDebug()) {tracer.debug("Applying defaultValue (%s)%s to %s on %s%n", defaultValue, provider, arg, arg.scopeString());}
                 Range arity = arg.arity().min(Math.max(1, arg.arity().min));
                 applyOption(arg, false, LookBehind.SEPARATE, false, arity, stack(defaultValue), new HashSet<ArgSpec>(), arg.toString);
+            } else {
+                if (arg.typeInfo().isOptional()) {
+                    if (tracer.isDebug()) {tracer.debug("Applying Optional.empty() to %s on %s%n", arg, arg.scopeString());}
+                    arg.setValue(getOptionalEmpty());
+                } else {
+                    tracer.debug("defaultValue not defined for %s%n", arg);
+                }
             }
             return defaultValue != null;
         }
@@ -11112,8 +13219,14 @@ public class CommandLine {
             // 4. a combination of stand-alone options, like "-vxr". Equivalent to "-v -x -r", "-v true -x true -r true"
             // 5. a combination of stand-alone options and one option with an argument, like "-vxrffile"
 
-            parseResultBuilder.originalArgs(originalArgs);
-            parseResultBuilder.nowProcessing = nowProcessing;
+            if (parseResultBuilder.expandedArgList.isEmpty()) { // don't add args again if called from do-while in parse()
+                List<String> expandedArgs = new ArrayList<String>(args);
+                Collections.reverse(expandedArgs); // Need to reverse the stack to get args in specified order
+                parseResultBuilder.expandedArgs(expandedArgs);
+                parseResultBuilder.originalArgs(originalArgs);
+                parseResultBuilder.nowProcessing = nowProcessing;
+            }
+
             String separator = config().separator();
             while (!args.isEmpty()) {
                 if (endOfOptions) {
@@ -11124,8 +13237,9 @@ public class CommandLine {
                 String arg = smartUnquoteIfEnabled(originalArg);
                 boolean actuallyUnquoted = !originalArg.equals(arg);
                 if (tracer.isDebug()) {
-                    if (actuallyUnquoted) { tracer.debug("Processing argument '%s' (trimmed from '%s'). Remainder=%s%n", arg, originalArg, reverse(copy(args))); }
-                    else { tracer.debug("Processing argument '%s'. Remainder=%s%n", arg, reverse(copy(args))); }
+                    int argIndex = originalArgs.length - (args.size() + 1);
+                    if (actuallyUnquoted) { tracer.debug("[%d] Processing argument '%s' (trimmed from '%s'). Remainder=%s%n", argIndex, arg, originalArg, reverse(copy(args))); }
+                    else { tracer.debug("[%d] Processing argument '%s'. Remainder=%s%n", argIndex, arg, reverse(copy(args))); }
                 }
 
                 // Double-dash separates options from positional arguments.
@@ -11138,27 +13252,41 @@ public class CommandLine {
                 }
 
                 // if we find another command, we are done with the current command
+                if (commandSpec.parser().abbreviatedSubcommandsAllowed()) {
+                    arg = AbbreviationMatcher.match(commandSpec.subcommands().keySet(), arg, commandSpec.subcommandsCaseInsensitive(), CommandLine.this);
+                }
                 if (commandSpec.subcommands().containsKey(arg)) {
                     CommandLine subcommand = commandSpec.subcommands().get(arg);
-                    nowProcessing.add(subcommand.commandSpec);
-                    updateHelpRequested(subcommand.commandSpec);
-                    if (!isAnyHelpRequested() && !required.isEmpty()) { // ensure current command portion is valid
-                        throw MissingParameterException.create(CommandLine.this, required, separator);
-                    }
-                    if (tracer.isDebug()) {tracer.debug("Found subcommand '%s' (%s)%n", arg, subcommand.commandSpec.toString());}
-                    subcommand.interpreter.parse(parsedCommands, args, originalArgs, nowProcessing);
-                    parseResultBuilder.subcommand(subcommand.interpreter.parseResultBuilder.build());
+                    processSubcommand(subcommand, parseResultBuilder, parsedCommands, args, required, initialized, originalArgs, nowProcessing, separator, arg);
                     return; // remainder done by the command
+                }
+                if (commandSpec.parent() != null && commandSpec.parent().subcommandsRepeatable() && commandSpec.parent().subcommands().containsKey(arg)) {
+                    tracer.debug("'%s' is a repeatable subcommand of %s%n", arg, commandSpec.parent().qualifiedName());// #454 repeatable subcommands
+                    CommandLine subcommand = commandSpec.parent().subcommands().get(arg);
+                    if (subcommand.interpreter.parseResultBuilder != null) {
+                        tracer.debug("Subcommand '%s' has been matched before. Making a copy...%n", subcommand.getCommandName());
+                        subcommand = subcommand.copy();
+                        subcommand.getCommandSpec().parent(commandSpec.parent()); // hook it up with its parent
+                    }
+                    processSubcommand(subcommand, getParent().interpreter.parseResultBuilder, parsedCommands, args, required, initialized, originalArgs, nowProcessing, separator, arg);
+                    continue;
                 }
 
                 // First try to interpret the argument as a single option (as opposed to a compact group of options).
                 // A single option may be without option parameters, like "-v" or "--verbose" (a boolean value),
                 // or an option may have one or more option parameters.
                 // A parameter may be attached to the option.
+                Set<String> aggregatedOptionNames = new LinkedHashSet<String>();
+                if (commandSpec.parser().abbreviatedOptionsAllowed()) {
+                    aggregatedOptionNames.addAll(commandSpec.optionsMap().keySet());
+                    aggregatedOptionNames.addAll(commandSpec.negatedOptionsMap().keySet());
+                    arg = AbbreviationMatcher.match(aggregatedOptionNames, arg, commandSpec.optionsCaseInsensitive(), CommandLine.this);
+                }
                 LookBehind lookBehind = LookBehind.SEPARATE;
                 int separatorIndex = arg.indexOf(separator);
                 if (separatorIndex > 0) {
                     String key = arg.substring(0, separatorIndex);
+                    key = AbbreviationMatcher.match(aggregatedOptionNames, key, commandSpec.optionsCaseInsensitive(), CommandLine.this); //#1159, #1162
                     // be greedy. Consume the whole arg as an option if possible.
                     if (isStandaloneOption(key) && isStandaloneOption(arg)) {
                         tracer.warn("Both '%s' and '%s' are valid option names in %s. Using '%s'...%n", arg, key, getCommandName(), arg);
@@ -11187,25 +13315,44 @@ public class CommandLine {
                 else {
                     args.push(arg);
                     if (tracer.isDebug()) {tracer.debug("Could not find option '%s', deciding whether to treat as unmatched option or positional parameter...%n", arg);}
-                    if (commandSpec.resemblesOption(arg, tracer)) { handleUnmatchedArgument(args); continue; } // #149
                     if (tracer.isDebug()) {tracer.debug("No option named '%s' found. Processing as positional parameter%n", arg);}
                     processPositionalParameter(required, initialized, actuallyUnquoted, args);
                 }
             }
         }
 
+        private void processSubcommand(CommandLine subcommand, ParseResult.Builder builder, List<CommandLine> parsedCommands, Stack<String> args, Collection<ArgSpec> required, Set<ArgSpec> initialized, String[] originalArgs, List<Object> nowProcessing, String separator, String arg) {
+            if (tracer.isDebug()) {tracer.debug("Found subcommand '%s' (%s)%n", arg, subcommand.commandSpec.toString());}
+            nowProcessing.add(subcommand.commandSpec);
+            updateHelpRequested(subcommand.commandSpec);
+            List<ArgSpec> inheritedRequired = new ArrayList<ArgSpec>();
+            if (tracer.isDebug()) {tracer.debug("Checking required args for parent %s...%n", subcommand.commandSpec.parent());}
+            Iterator<ArgSpec> requiredIter = required.iterator();
+            while (requiredIter.hasNext()) {
+                ArgSpec requiredArg = requiredIter.next();
+                if (requiredArg.scopeType() == ScopeType.INHERIT || requiredArg.inherited()) {
+                    if (tracer.isDebug()) {tracer.debug("Postponing validation for required %s: scopeType=%s, inherited=%s%n", optionDescription("", requiredArg, -1), requiredArg.scopeType(), requiredArg.inherited());}
+                    if (!inheritedRequired.contains(requiredArg)) {inheritedRequired.add(requiredArg);}
+                    requiredIter.remove();
+                }
+            }
+            if (!isAnyHelpRequested() && !required.isEmpty()) { // ensure current command portion is valid
+                throw MissingParameterException.create(CommandLine.this, required, separator);
+            }
+            Set<ArgSpec> inheritedInitialized = new LinkedHashSet<ArgSpec>();
+            subcommand.interpreter.parse(parsedCommands, args, originalArgs, nowProcessing, inheritedRequired, inheritedInitialized);
+            initialized.addAll(inheritedInitialized);
+            builder.subcommand(subcommand.interpreter.parseResultBuilder.build());
+        }
+
         private boolean isStandaloneOption(String arg) {
             return commandSpec.optionsMap().containsKey(arg) || commandSpec.negatedOptionsMap().containsKey(arg);
         }
         private void handleUnmatchedArgument(Stack<String> args) throws Exception {
-            if (!args.isEmpty()) { handleUnmatchedArgument(args.pop()); }
-            if (config().stopAtUnmatched()) {
-                // addAll would give args in reverse order
-                while (!args.isEmpty()) { handleUnmatchedArgument(args.pop()); }
+            if (!args.isEmpty()) {
+                parseResultBuilder.addUnmatched(parseResultBuilder.totalArgCount() - args.size(), args.pop());
             }
-        }
-        private void handleUnmatchedArgument(String arg) {
-            parseResultBuilder.unmatched.add(arg);
+            if (config().stopAtUnmatched()) { parseResultBuilder.addUnmatched(args); }
         }
 
         private void processRemainderAsPositionalParameters(Collection<ArgSpec> required, Set<ArgSpec> initialized, Stack<String> args) throws Exception {
@@ -11214,7 +13361,16 @@ public class CommandLine {
             }
         }
         private void processPositionalParameter(Collection<ArgSpec> required, Set<ArgSpec> initialized, boolean alreadyUnquoted, Stack<String> args) throws Exception {
-            if (tracer.isDebug()) {tracer.debug("Processing next arg as a positional parameter. Command-local position=%d. Remainder=%s%n", position, reverse(copy(args)));}
+            String arg = args.peek();
+            if (!endOfOptions && commandSpec.resemblesOption(arg, tracer)) {
+                if (!commandSpec.parser().unmatchedOptionsArePositionalParams()) {
+                    handleUnmatchedArgument(args); // #149
+                    return;
+                }
+                if (tracer.isDebug()) {tracer.debug("Parser is configured to treat all unmatched options as positional parameter%n", arg);}
+            }
+            int argIndex = parseResultBuilder.originalArgList.size() - args.size();
+            if (tracer.isDebug()) {tracer.debug("[%d] Processing next arg as a positional parameter. Command-local position=%d. Remainder=%s%n", argIndex, position, reverse(copy(args)));}
             if (config().stopAtPositional()) {
                 if (!endOfOptions && tracer.isDebug()) {tracer.debug("Parser was configured with stopAtPositional=true, treating remaining arguments as positional parameters.%n");}
                 endOfOptions = true;
@@ -11224,13 +13380,14 @@ public class CommandLine {
             int argsConsumed = 0;
             int interactiveConsumed = 0;
             int originalNowProcessingSize = parseResultBuilder.nowProcessing.size();
-            Map<PositionalParamSpec, Integer> newPositions = new IdentityHashMap<PositionalParamSpec, Integer>();
-            for (PositionalParamSpec positionalParam : commandSpec.positionalParameters()) {
+            List<Runnable> bookKeeping = new ArrayList<Runnable>();
+            for (int i = 0; i < commandSpec.positionalParameters().size(); i++) {
+                PositionalParamSpec positionalParam = commandSpec.positionalParameters().get(i);
                 Range indexRange = positionalParam.index();
                 int localPosition = getPosition(positionalParam);
                 if (positionalParam.group() != null) { // does the positionalParam's index range contain the current position in the currently matching group
                     GroupMatchContainer groupMatchContainer = parseResultBuilder.groupMatchContainer.findOrCreateMatchingGroup(positionalParam, commandSpec.commandLine());
-                    if (!indexRange.contains(localPosition) || (groupMatchContainer != null && groupMatchContainer.lastMatch().hasMatchedValueAtPosition(positionalParam, localPosition))) {
+                    if (!groupMatchContainer.canMatchPositionalParam(positionalParam)) {
                         continue;
                     }
                 } else {
@@ -11240,10 +13397,10 @@ public class CommandLine {
                 }
                 Stack<String> argsCopy = copy(args);
                 Range arity = positionalParam.arity();
-                if (tracer.isDebug()) {tracer.debug("Position %s is in index range %s. Trying to assign args to %s, arity=%s%n", positionDesc(positionalParam), indexRange, positionalParam, arity);}
+                if (tracer.isDebug()) {tracer.debug("Position %s is in index range %s. Trying to assign args to %s, arity=%s%n", positionDesc(positionalParam), indexRange.internalToString(), positionalParam, arity);}
                 if (!assertNoMissingParameters(positionalParam, arity, argsCopy)) { break; } // #389 collectErrors parsing
                 int originalSize = argsCopy.size();
-                int actuallyConsumed = applyOption(positionalParam, false, LookBehind.SEPARATE, alreadyUnquoted, arity, argsCopy, initialized, "args[" + indexRange + "] at position " + localPosition);
+                int actuallyConsumed = applyOption(positionalParam, false, LookBehind.SEPARATE, alreadyUnquoted, arity, argsCopy, initialized, "args[" + indexRange.internalToString() + "] at position " + localPosition);
                 int count = originalSize - argsCopy.size();
                 if (count > 0 || actuallyConsumed > 0) {
                     required.remove(positionalParam);
@@ -11252,7 +13409,16 @@ public class CommandLine {
                 if (positionalParam.group() == null) { // don't update the command-level position for group args
                     argsConsumed = Math.max(argsConsumed, count);
                 } else {
-                    newPositions.put(positionalParam, localPosition + count);
+                    final int updatedPosition = localPosition + count;
+                    final GroupMatchContainer groupMatchContainer = parseResultBuilder.groupMatchContainer.findOrCreateMatchingGroup(positionalParam, commandSpec.commandLine());
+                    bookKeeping.add(new Runnable() {
+                        public void run() {
+                            if (groupMatchContainer != null) {
+                                groupMatchContainer.lastMatch().position = updatedPosition;
+                                if (tracer.isDebug()) {tracer.debug("Updated group position to %s for group %s.%n", groupMatchContainer.lastMatch().position, groupMatchContainer);}
+                            }
+                        }
+                    });
                     consumedByGroup = Math.max(consumedByGroup, count);
                 }
                 while (parseResultBuilder.nowProcessing.size() > originalNowProcessingSize + count) {
@@ -11264,15 +13430,24 @@ public class CommandLine {
             for (int i = 0; i < maxConsumed; i++) { args.pop(); }
             position += argsConsumed + interactiveConsumed;
             if (tracer.isDebug()) {tracer.debug("Consumed %d arguments and %d interactive values, moving command-local position to index %d.%n", argsConsumed, interactiveConsumed, position);}
-            for (PositionalParamSpec positional : newPositions.keySet()) {
-                GroupMatchContainer inProgress = parseResultBuilder.groupMatchContainer.findOrCreateMatchingGroup(positional, commandSpec.commandLine());
-                if (inProgress != null) {
-                    inProgress.lastMatch().position = newPositions.get(positional);
-                    if (tracer.isDebug()) {tracer.debug("Updated group position to %s for group %s.%n", inProgress.lastMatch().position, inProgress);}
-                }
-            }
+            for (Runnable task : bookKeeping) { task.run(); }
             if (consumedByGroup == 0 && argsConsumed == 0 && interactiveConsumed == 0 && !args.isEmpty()) {
-                handleUnmatchedArgument(args);
+                handleUnmatchedArgument(args); // this gives error msg: "Unmatched argument at index 1: 'val2'"
+//                // instead, we want a "positional parameter at index 0..* (<str>) should be specified only once"
+//                List<String> unmatched = new ArrayList<String>();
+//                while (!args.isEmpty()) {unmatched.add(args.pop());}
+//                // positional parameter at index 0..* (<str>) should be specified only once
+//                String msg = null; // FIXME report which positional has been fully filled and cannot take more args
+//                for (int i = 0; i < commandSpec.positionalParameters().size(); i++) {
+//                    PositionalParamSpec positionalParam = commandSpec.positionalParameters().get(i);
+//                    Range indexRange = positionalParam.index();
+//                    if (indexRange.contains(position - 1) && positionalParam.typedValueAtPosition.get(position - 1) == null) {
+//                        aaaaa;
+//                    }
+//                }
+//                if (!isUnmatchedArgumentsAllowed()) {
+//                    maybeThrow(new UnmatchedArgumentException(CommandLine.this, unmatched, msg));
+//                }
             }
         }
 
@@ -11352,7 +13527,6 @@ public class CommandLine {
                         args.push(paramAttachedToOption ? prefix + cluster : cluster);
                         if (args.peek().equals(arg)) { // #149 be consistent between unmatched short and long options
                             if (tracer.isDebug()) {tracer.debug("Could not match any short options in %s, deciding whether to treat as unmatched option or positional parameter...%n", arg);}
-                            if (commandSpec.resemblesOption(arg, tracer)) { handleUnmatchedArgument(args); return; } // #149
                             processPositionalParameter(required, initialized, alreadyUnquoted, args);
                             return;
                         }
@@ -11381,8 +13555,27 @@ public class CommandLine {
                                 Set<ArgSpec> initialized,
                                 String argDescription) throws Exception {
             updateHelpRequested(argSpec);
+
+            parseResultBuilder.beforeMatchingGroupElement(argSpec); //#1004 ensure groups are initialized before calling parameter consumer
+
+            int originalSize = args.size();
+            Map<String, Object> info = mapOf(
+                    "separator", lookBehind.toString(commandSpec.parser().separator()),
+                    "negated", negated,
+                    "unquoted", alreadyUnquoted,
+                    "versionHelpRequested", parseResultBuilder.versionHelpRequested,
+                    "usageHelpRequested", parseResultBuilder.usageHelpRequested);
+            boolean done = argSpec.preprocessor().preprocess(args, commandSpec, argSpec, info);
+            parseResultBuilder.versionHelpRequested = (Boolean) info.get("versionHelpRequested");
+            parseResultBuilder.usageHelpRequested = (Boolean) info.get("usageHelpRequested");
+            negated = (Boolean) info.get("negated");
+            alreadyUnquoted = (Boolean) info.get("unquoted");
+            lookBehind = LookBehind.parse(String.valueOf(info.get("separator")));
+            if (done) {
+                return args.size() - originalSize;
+            }
+
             if (argSpec.parameterConsumer() != null) {
-                int originalSize = args.size();
                 argSpec.parameterConsumer().consumeParameters(args, argSpec, commandSpec);
                 return args.size() - originalSize;
             }
@@ -11393,8 +13586,6 @@ public class CommandLine {
             } else {
                 if (!assertNoMissingParameters(argSpec, arity, args)) { return 0; } // #389 collectErrors parsing
             }
-
-            parseResultBuilder.beforeMatchingGroupElement(argSpec);
 
             int result;
             if (argSpec.type().isArray() && !(argSpec.interactive() && argSpec.type() == char[].class)) {
@@ -11413,6 +13604,14 @@ public class CommandLine {
             return result;
         }
 
+        private void addToInitialized(ArgSpec argSpec, Set<ArgSpec> initialized) {
+            initialized.add(argSpec);
+            ArgSpec rootArgSpec = argSpec.root();
+            if (rootArgSpec != null) {
+                initialized.add(rootArgSpec);
+            }
+        }
+
         private int applyValueToSingleValuedField(ArgSpec argSpec,
                                                   boolean negated,
                                                   LookBehind lookBehind,
@@ -11422,12 +13621,20 @@ public class CommandLine {
                                                   Set<ArgSpec> initialized,
                                                   String argDescription) throws Exception {
             boolean noMoreValues = args.isEmpty();
-            String value = args.isEmpty() ? null : args.pop();
+            String value = noMoreValues ? null : args.pop();
+            String quotedValue = value;
             if (commandSpec.parser().trimQuotes() && !alreadyUnquoted) {value = unquote(value);}
             Range arity = argSpec.arity().isUnspecified ? derivedArity : argSpec.arity(); // #509
             if (arity.max == 0 && !arity.isUnspecified && lookBehind == LookBehind.ATTACHED_WITH_SEPARATOR) { // #509
                 throw new MaxValuesExceededException(CommandLine.this, optionDescription("", argSpec, 0) +
                         " should be specified without '" + value + "' parameter");
+            }
+            if (arity.min > 0) {
+                args.push(quotedValue);
+                boolean discontinue = assertNoMissingMandatoryParameter(argSpec, args, 0, arity) // #1055
+                        || isArgResemblesOptionThereforeDiscontinue(argSpec, args, 0, arity); // #1015 #639
+                args.pop();
+                if (discontinue) { return 0; }
             }
             int consumed = arity.min; // the number or args we need to consume
 
@@ -11444,7 +13651,7 @@ public class CommandLine {
                     // boolean option with arity = 0..1 or 0..*: value MAY be a param
                     boolean optionalWithBooleanValue = arity.max > 0 && ("true".equalsIgnoreCase(value) || "false".equalsIgnoreCase(value));
                     if (!optionalWithBooleanValue && lookBehind != LookBehind.ATTACHED_WITH_SEPARATOR) { // if attached, try converting the value to boolean (and fail if invalid value)
-                        Boolean defaultValue = booleanValue(argSpec, String.valueOf(argSpec.calcDefaultValue(true))); // #712 flip the default value
+                        Boolean defaultValue = booleanValue(argSpec, argSpec.calcDefaultValue(true)); // #712 flip the default value
                         if (argSpec.isOption() && !empty(((OptionSpec) argSpec).fallbackValue())) {
                             defaultValue = !booleanValue(argSpec, ((OptionSpec) argSpec).fallbackValue()); // #754 Allow boolean options to get value from fallback instead of defaultProvider
                         }
@@ -11462,6 +13669,7 @@ public class CommandLine {
                     }
                 } else { // non-boolean option with optional value #325, #279
                     String fallbackValue = argSpec.isOption() ? ((OptionSpec) argSpec).fallbackValue() : "";
+                    // #828 should we call varargCanConsumeNextValue(argSpec, value)?
                     if (isOption(value)) { // value is not a parameter
                         actualValue = fallbackValue;
                         optionalValueExists = false;
@@ -11476,7 +13684,7 @@ public class CommandLine {
                 // - if arity = 0   : ALWAYS read from console
                 // - if arity = 0..1: ONLY read from console if user specified a non-option value
                 if (argSpec.interactive() && (arity.max == 0 || !optionalValueExists)) {
-                    interactiveValue = readPassword(argSpec);
+                    interactiveValue = readUserInput(argSpec);
                     consumed = 0;
                 }
             }
@@ -11488,25 +13696,35 @@ public class CommandLine {
                 // process the command line value
                 if (!lookBehind.isAttached()) { parseResultBuilder.nowProcessing(argSpec, value); } // update position for Completers
             }
+            String initValueMessage = "Setting %s to '%3$s' (was '%2$s') for %4$s on %5$s%n";
+            String overwriteValueMessage = "Overwriting %s value '%s' with '%s' for %s on %s%n";
+            Object newValue = interactiveValue != null ? interactiveValue : actualValue;
             if (noMoreValues && actualValue == null && interactiveValue == null) {
-                return 0;
-            }
-            Object newValue = interactiveValue;
-            String initValueMessage = "Setting %s to *** (masked interactive value) for %4$s%n";
-            String overwriteValueMessage = "Overwriting %s value with *** (masked interactive value) for %s%n";
-            if (!char[].class.equals(cls) && !char[].class.equals(argSpec.type())) {
-                if (interactiveValue != null) {
-                    actualValue = new String(interactiveValue);
-                }
-                ITypeConverter<?> converter = getTypeConverter(cls, argSpec, 0);
-                newValue = tryConvert(argSpec, -1, converter, actualValue, cls);
-                initValueMessage = "Setting %s to '%3$s' (was '%2$s') for %4$s%n";
-                overwriteValueMessage = "Overwriting %s value '%s' with '%s' for %s%n";
+                consumed = 0;
             } else {
-                if (interactiveValue == null) { // setting command line arg to char[] field
-                    newValue = actualValue.toCharArray();
-                } else {
-                    actualValue = "***"; // mask interactive value
+                consumed = 1;
+                if (interactiveValue != null) {
+                    if (argSpec.echo()) {
+                        initValueMessage = "Setting %s to %3$s (interactive value) for %4$s on %5$s%n";
+                        overwriteValueMessage = "Overwriting %s value with %3$s (interactive value) for %s on %5$s%n";
+                    } else {
+                        initValueMessage = "Setting %s to *** (masked interactive value) for %4$s on %5$s%n";
+                        overwriteValueMessage = "Overwriting %s value with *** (masked interactive value) for %s on %5$s%n";
+                    }
+                }
+                if (!char[].class.equals(cls) && !char[].class.equals(argSpec.type())) {
+                    if (interactiveValue != null) {
+                        actualValue = new String(interactiveValue);
+                    }
+                    ITypeConverter<?> converter = getTypeConverter(argSpec.auxiliaryTypes(), argSpec, 0);
+                    newValue = tryConvert(argSpec, -1, converter, actualValue, 0);
+                } else { // type is char[], no type conversion needed
+                    if (interactiveValue == null) { // setting command line arg to char[] field
+                        newValue = actualValue.toCharArray();
+                    } else {
+                        actualValue = getMaskedValue(argSpec, new String(interactiveValue)); // mask interactive value if echo is false
+                        newValue = interactiveValue;
+                    }
                 }
             }
             Object oldValue = argSpec.getValue();
@@ -11517,16 +13735,19 @@ public class CommandLine {
                 }
                 traceMessage = overwriteValueMessage;
             }
-            initialized.add(argSpec);
+            addToInitialized(argSpec, initialized);
 
-            if (tracer.isInfo()) { tracer.info(traceMessage, argSpec.toString(), String.valueOf(oldValue), String.valueOf(newValue), argDescription); }
+            if (argSpec.typeInfo().isOptional()) {
+                newValue = getOptionalOfNullable(newValue);
+            }
+            if (tracer.isInfo()) { tracer.info(traceMessage, argSpec.toString(), String.valueOf(oldValue), String.valueOf(newValue), argDescription, argSpec.scopeString()); }
             int pos = getPosition(argSpec);
             argSpec.setValue(newValue);
             parseResultBuilder.addOriginalStringValue(argSpec, actualValue);// #279 track empty string value if no command line argument was consumed
             parseResultBuilder.addStringValue(argSpec, actualValue);
             parseResultBuilder.addTypedValues(argSpec, pos, newValue);
             parseResultBuilder.add(argSpec, pos);
-            return 1;
+            return consumed;
         }
         private int applyValuesToMapField(ArgSpec argSpec,
                                           LookBehind lookBehind,
@@ -11535,20 +13756,17 @@ public class CommandLine {
                                           Stack<String> args,
                                           Set<ArgSpec> initialized,
                                           String argDescription) throws Exception {
-            Class<?>[] classes = argSpec.auxiliaryTypes();
-            if (classes.length < 2) { throw new ParameterException(CommandLine.this, argSpec.toString() + " needs two types (one for the map key, one for the value) but only has " + classes.length + " types configured.",argSpec, null); }
-            ITypeConverter<?> keyConverter   = getTypeConverter(classes[0], argSpec, 0);
-            ITypeConverter<?> valueConverter = getTypeConverter(classes[1], argSpec, 1);
-            @SuppressWarnings("unchecked") Map<Object, Object> map = (Map<Object, Object>) argSpec.getValue();
-            if (map == null || (!map.isEmpty() && !initialized.contains(argSpec))) {
-                tracer.debug("Initializing binding for %s with empty %s%n", optionDescription("", argSpec, 0), argSpec.type().getSimpleName());
+            if (argSpec.auxiliaryTypes().length < 2) { throw new ParameterException(CommandLine.this, argSpec.toString() + " needs two types (one for the map key, one for the value) but only has " + argSpec.auxiliaryTypes().length + " types configured.",argSpec, null); }
+            Map<Object, Object> map = argSpec.getValue();
+            if (map == null || !initialized.contains(argSpec)) {
+                tracer.debug("Initializing binding for %s on %s with empty %s%n", optionDescription("", argSpec, 0), argSpec.scopeString(), argSpec.type().getSimpleName());
                 map = createMap(argSpec.type()); // map class
                 argSpec.setValue(map);
             }
-            initialized.add(argSpec);
+            addToInitialized(argSpec, initialized);
             int originalSize = map.size();
             int pos = getPosition(argSpec);
-            consumeMapArguments(argSpec, lookBehind, alreadyUnquoted, arity, args, classes, keyConverter, valueConverter, map, argDescription);
+            consumeMapArguments(argSpec, lookBehind, alreadyUnquoted, arity, args, map, argDescription);
             parseResultBuilder.add(argSpec, pos);
             argSpec.setValue(map);
             return map.size() - originalSize;
@@ -11559,14 +13777,15 @@ public class CommandLine {
                                          boolean alreadyUnquoted,
                                          Range arity,
                                          Stack<String> args,
-                                         Class<?>[] classes,
-                                         ITypeConverter<?> keyConverter,
-                                         ITypeConverter<?> valueConverter,
                                          Map<Object, Object> result,
                                          String argDescription) throws Exception {
 
             // don't modify Interpreter.position: same position may be consumed by multiple ArgSpec objects
             int currentPosition = getPosition(argSpec);
+
+            Class<?>[] classes = argSpec.auxiliaryTypes();
+            ITypeConverter<?> keyConverter   = getTypeConverter(classes, argSpec, 0);
+            ITypeConverter<?> valueConverter = getTypeConverter(classes, argSpec, 1);
 
             // first do the arity.min mandatory parameters
             int initialSize = argSpec.stringValues().size();
@@ -11574,7 +13793,9 @@ public class CommandLine {
             for (int i = 0; consumed < arity.min && !args.isEmpty(); i++) {
                 Map<Object, Object> typedValuesAtPosition = new LinkedHashMap<Object, Object>();
                 parseResultBuilder.addTypedValues(argSpec, currentPosition++, typedValuesAtPosition);
-                assertNoMissingMandatoryParameter(argSpec, args, i, arity);
+                if (assertNoMissingMandatoryParameter(argSpec, args, i, arity) || isArgResemblesOptionThereforeDiscontinue(argSpec, args, i, arity)) {
+                    break;
+                }
                 consumeOneMapArgument(argSpec, lookBehind, alreadyUnquoted, arity, consumed, args.pop(), classes, keyConverter, valueConverter, typedValuesAtPosition, i, argDescription);
                 result.putAll(typedValuesAtPosition);
                 consumed = consumedCountMap(i + 1, initialSize, argSpec);
@@ -11595,6 +13816,9 @@ public class CommandLine {
                 parseResultBuilder.addTypedValues(argSpec, currentPosition++, typedValuesAtPosition);
                 if (!canConsumeOneMapArgument(argSpec, lookBehind, alreadyUnquoted, arity, consumed, args.peek(), classes, keyConverter, valueConverter, argDescription)) {
                     break; // leave empty map at argSpec.typedValueAtPosition[currentPosition] so we won't try to consume that position again
+                }
+                if (isArgResemblesOptionThereforeDiscontinue(argSpec, args, i, arity)) {
+                    break;
                 }
                 consumeOneMapArgument(argSpec, lookBehind, alreadyUnquoted, arity, consumed, args.pop(), classes, keyConverter, valueConverter, typedValuesAtPosition, i, argDescription);
                 result.putAll(typedValuesAtPosition);
@@ -11617,13 +13841,14 @@ public class CommandLine {
             String[] values = unquoteAndSplit(argSpec, lookBehind, alreadyUnquoted, arity, consumed, arg);
             for (String value : values) {
                 String[] keyValue = splitKeyValue(argSpec, value);
-                Object mapKey =   tryConvert(argSpec, index, keyConverter,   keyValue[0], classes[0]);
-                Object mapValue = tryConvert(argSpec, index, valueConverter, keyValue[1], classes[1]);
+                Object mapKey =   tryConvert(argSpec, index, keyConverter,   keyValue[0], 0);
+                String rawMapValue = keyValue.length == 1 ? argSpec.mapFallbackValue() : keyValue[1];
+                Object mapValue = tryConvert(argSpec, index, valueConverter, rawMapValue, 1);
                 result.put(mapKey, mapValue);
-                if (tracer.isInfo()) { tracer.info("Putting [%s : %s] in %s<%s, %s> %s for %s%n", String.valueOf(mapKey), String.valueOf(mapValue),
-                        result.getClass().getSimpleName(), classes[0].getSimpleName(), classes[1].getSimpleName(), argSpec.toString(), argDescription); }
+                if (tracer.isInfo()) { tracer.info("Putting [%s : %s] in %s<%s, %s> %s for %s on %s%n", String.valueOf(mapKey), String.valueOf(mapValue),
+                        result.getClass().getSimpleName(), classes[0].getSimpleName(), classes[1].getSimpleName(), argSpec.toString(), argDescription, argSpec.scopeString()); }
                 parseResultBuilder.addStringValue(argSpec, keyValue[0]);
-                parseResultBuilder.addStringValue(argSpec, keyValue[1]);
+                parseResultBuilder.addStringValue(argSpec, rawMapValue);
             }
             parseResultBuilder.addOriginalStringValue(argSpec, arg);
         }
@@ -11631,8 +13856,7 @@ public class CommandLine {
         private String[] unquoteAndSplit(ArgSpec argSpec, LookBehind lookBehind, boolean alreadyUnquoted, Range arity, int consumed, String arg) {
             String raw = lookBehind.isAttached() && alreadyUnquoted ? arg : smartUnquoteIfEnabled(arg); // if attached, we already trimmed quotes once
 //            String raw = smartUnquoteIfEnabled(arg);
-            String[] values = argSpec.splitValue(raw, commandSpec.parser(), arity, consumed);
-            return values;
+            return argSpec.splitValue(raw, commandSpec.parser(), arity, consumed);
         }
 
         private boolean canConsumeOneMapArgument(ArgSpec argSpec, LookBehind lookBehind, boolean alreadyUnquoted, Range arity, int consumed,
@@ -11643,12 +13867,13 @@ public class CommandLine {
             try {
                 for (String value : values) {
                     String[] keyValue = splitKeyValue(argSpec, value);
-                    tryConvert(argSpec, -1, keyConverter, keyValue[0], classes[0]);
-                    tryConvert(argSpec, -1, valueConverter, keyValue[1], classes[1]);
+                    tryConvert(argSpec, -1, keyConverter, keyValue[0], 0);
+                    String mapValue = keyValue.length == 1 ? argSpec.mapFallbackValue() : keyValue[1];
+                    tryConvert(argSpec, -1, valueConverter, mapValue, 1);
                 }
                 return true;
             } catch (PicocliException ex) {
-                tracer.debug("$s cannot be assigned to %s: type conversion fails: %s.%n", arg, argDescription, ex.getMessage());
+                tracer.debug("%s cannot be assigned to %s: type conversion fails: %s.%n", arg, argDescription, ex.getMessage());
                 return false;
             }
         }
@@ -11656,7 +13881,9 @@ public class CommandLine {
         private String[] splitKeyValue(ArgSpec argSpec, String value) {
             String[] keyValue = ArgSpec.splitRespectingQuotedStrings(value, 2, config(), argSpec, "=");
 
-            if (keyValue.length < 2) {
+            // #1214: support for -Dkey map options
+            // validation is disabled if `mapFallbackValue` is specified
+            if (keyValue.length < 2 && ArgSpec.UNSPECIFIED.equals(argSpec.mapFallbackValue())) {
                 String splitRegex = argSpec.splitRegex();
                 if (splitRegex.length() == 0) {
                     throw new ParameterException(CommandLine.this, "Value for option " + optionDescription("",
@@ -11669,11 +13896,36 @@ public class CommandLine {
             return keyValue;
         }
 
-        private void assertNoMissingMandatoryParameter(ArgSpec argSpec, Stack<String> args, int i, Range arity) {
+        private boolean assertNoMissingMandatoryParameter(ArgSpec argSpec, Stack<String> args, int i, Range arity) {
             if (!varargCanConsumeNextValue(argSpec, args.peek())) {
-                String desc = arity.min > 1 ? (i + 1) + " (of " + arity.min + " mandatory parameters) " : "";
-                throw new MissingParameterException(CommandLine.this, argSpec, "Expected parameter " + desc + "for " + optionDescription("", argSpec, -1) + " but found '" + args.peek() + "'");
+                String msg = createMissingParameterMessageFoundOtherOption(argSpec, args, i, arity);
+                maybeThrow(new MissingParameterException(CommandLine.this, argSpec, msg));
+                return true;
             }
+            return false;
+        }
+
+        private String createMissingParameterMessageFoundOtherOption(ArgSpec argSpec, Stack<String> args, int i, Range arity) {
+            String desc = arity.min > 1 ? (i + 1) + " (of " + arity.min + " mandatory parameters) " : "";
+            return "Expected parameter " + desc + "for " + optionDescription("", argSpec, -1) + " but found '" + args.peek() + "'";
+        }
+
+        private boolean isArgResemblesOptionThereforeDiscontinue(ArgSpec argSpec, Stack<String> args, int i, Range arity) throws Exception {
+            boolean result = false;
+            String arg = args.peek();
+            if (commandSpec.resemblesOption(arg, tracer)) {
+                if (argSpec.isPositional() && !(endOfOptions || commandSpec.parser().unmatchedOptionsArePositionalParams())) { // #1015
+                    handleUnmatchedArgument(args);
+                    result = true;
+                }
+                if (argSpec.isOption() && !commandSpec.parser().unmatchedOptionsAllowedAsOptionParameters()) { // #639
+                    String msg = "Unknown option: '" + arg + "'; " + createMissingParameterMessageFoundOtherOption(argSpec, args, i, arity);
+                    maybeThrow(new UnmatchedArgumentException(commandSpec.commandLine(), msg));
+                    result = true;
+                }
+                if (tracer.isDebug()) {tracer.debug("Parser is configured to allow unmatched option '%s' as option or positional parameter.%n", arg);}
+            }
+            return result;
         }
         private int applyValuesToArrayField(ArgSpec argSpec,
                                             boolean negated,
@@ -11685,16 +13937,15 @@ public class CommandLine {
                                             String argDescription) throws Exception {
             Object existing = argSpec.getValue();
             int length = existing == null ? 0 : Array.getLength(existing);
-            Class<?> type = argSpec.auxiliaryTypes()[0];
             int pos = getPosition(argSpec);
-            List<Object> converted = consumeArguments(argSpec, negated, lookBehind, alreadyUnquoted, alreadyUnquoted, arity, args, type, argDescription);
+            List<Object> converted = consumeArguments(argSpec, negated, lookBehind, alreadyUnquoted, alreadyUnquoted, arity, args, argDescription);
             List<Object> newValues = new ArrayList<Object>();
             if (initialized.contains(argSpec)) { // existing values are default values if initialized does NOT contain argsSpec
                 for (int i = 0; i < length; i++) {
                     newValues.add(Array.get(existing, i)); // keep non-default values
                 }
             }
-            initialized.add(argSpec);
+            addToInitialized(argSpec, initialized);
             for (Object obj : converted) {
                 if (obj instanceof Collection<?>) {
                     newValues.addAll((Collection<?>) obj);
@@ -11702,7 +13953,7 @@ public class CommandLine {
                     newValues.add(obj);
                 }
             }
-            Object array = Array.newInstance(type, newValues.size());
+            Object array = Array.newInstance(argSpec.auxiliaryTypes()[0], newValues.size());
             for (int i = 0; i < newValues.size(); i++) {
                 Array.set(array, i, newValues.get(i));
             }
@@ -11711,7 +13962,6 @@ public class CommandLine {
             return converted.size(); // return how many args were consumed
         }
 
-        @SuppressWarnings("unchecked")
         private int applyValuesToCollectionField(ArgSpec argSpec,
                                                  boolean negated,
                                                  LookBehind lookBehind,
@@ -11720,16 +13970,15 @@ public class CommandLine {
                                                  Stack<String> args,
                                                  Set<ArgSpec> initialized,
                                                  String argDescription) throws Exception {
-            Collection<Object> collection = (Collection<Object>) argSpec.getValue();
-            Class<?> type = argSpec.auxiliaryTypes()[0];
+            Collection<Object> collection = argSpec.getValue();
             int pos = getPosition(argSpec);
-            List<Object> converted = consumeArguments(argSpec, negated, lookBehind, alreadyUnquoted, alreadyUnquoted, arity, args, type, argDescription);
-            if (collection == null || (!collection.isEmpty() && !initialized.contains(argSpec))) {
-                tracer.debug("Initializing binding for %s with empty %s%n", optionDescription("", argSpec, 0), argSpec.type().getSimpleName());
-                collection = createCollection(argSpec.type(), type); // collection type, element type
+            List<Object> converted = consumeArguments(argSpec, negated, lookBehind, alreadyUnquoted, alreadyUnquoted, arity, args, argDescription);
+            if (collection == null ||  !initialized.contains(argSpec))  {
+                tracer.debug("Initializing binding for %s on %s with empty %s%n", optionDescription("", argSpec, 0), argSpec.scopeString(), argSpec.type().getSimpleName());
+                collection = createCollection(argSpec.type(), argSpec.auxiliaryTypes()); // collection type, element type
                 argSpec.setValue(collection);
             }
-            initialized.add(argSpec);
+            addToInitialized(argSpec, initialized);
             for (Object element : converted) {
                 if (element instanceof Collection<?>) {
                     collection.addAll((Collection<?>) element);
@@ -11748,7 +13997,6 @@ public class CommandLine {
                                               boolean alreadyUnquoted,
                                               boolean unquoted, Range arity,
                                               Stack<String> args,
-                                              Class<?> type,
                                               String argDescription) throws Exception {
             List<Object> result = new ArrayList<Object>();
 
@@ -11761,15 +14009,17 @@ public class CommandLine {
             for (int i = 0; consumed < arity.min && !args.isEmpty(); i++) {
                 List<Object> typedValuesAtPosition = new ArrayList<Object>();
                 parseResultBuilder.addTypedValues(argSpec, currentPosition++, typedValuesAtPosition);
-                assertNoMissingMandatoryParameter(argSpec, args, i, arity);
-                consumeOneArgument(argSpec, lookBehind, alreadyUnquoted, arity, consumed, args.pop(), type, typedValuesAtPosition, i, argDescription);
+                if (assertNoMissingMandatoryParameter(argSpec, args, i, arity) || isArgResemblesOptionThereforeDiscontinue(argSpec, args, i, arity)) {
+                    break;
+                }
+                consumeOneArgument(argSpec, lookBehind, alreadyUnquoted, arity, consumed, args.pop(), typedValuesAtPosition, i, argDescription);
                 result.addAll(typedValuesAtPosition);
                 consumed = consumedCount(i + 1, initialSize, argSpec);
                 lookBehind = LookBehind.SEPARATE;
                 alreadyUnquoted = false;
             }
             if (argSpec.interactive() && argSpec.arity().max == 0) {
-                consumed = addPasswordToList(argSpec, type, result, consumed, argDescription);
+                consumed = addUserInputToList(argSpec, result, consumed, argDescription);
             }
             // now process the varargs if any
             String fallback = consumed == 0 && argSpec.isOption() && !OptionSpec.DEFAULT_FALLBACK_VALUE.equals(((OptionSpec) argSpec).fallbackValue())
@@ -11781,35 +14031,38 @@ public class CommandLine {
             for (int i = consumed; consumed < arity.max && !args.isEmpty(); i++) {
                 if (argSpec.interactive() && argSpec.arity().max == 1 && !varargCanConsumeNextValue(argSpec, args.peek())) {
                     // if interactive and arity = 0..1, we consume from command line if possible (if next arg not an option or subcommand)
-                    consumed = addPasswordToList(argSpec, type, result, consumed, argDescription);
+                    consumed = addUserInputToList(argSpec, result, consumed, argDescription);
                 } else {
                     if (!varargCanConsumeNextValue(argSpec, args.peek())) { break; }
                     List<Object> typedValuesAtPosition = new ArrayList<Object>();
                     parseResultBuilder.addTypedValues(argSpec, currentPosition++, typedValuesAtPosition);
-                    if (!canConsumeOneArgument(argSpec, lookBehind, alreadyUnquoted, arity, consumed, args.peek(), type, argDescription)) {
+                    if (!canConsumeOneArgument(argSpec, lookBehind, alreadyUnquoted, arity, consumed, args.peek(), argDescription)) {
                         break; // leave empty list at argSpec.typedValueAtPosition[currentPosition] so we won't try to consume that position again
                     }
-                    consumeOneArgument(argSpec, lookBehind, alreadyUnquoted, arity, consumed, args.pop(), type, typedValuesAtPosition, i, argDescription);
+                    if (isArgResemblesOptionThereforeDiscontinue(argSpec, args, i, arity)) {
+                        break;
+                    }
+                    consumeOneArgument(argSpec, lookBehind, alreadyUnquoted, arity, consumed, args.pop(), typedValuesAtPosition, i, argDescription);
                     result.addAll(typedValuesAtPosition);
                     consumed = consumedCount(i + 1, initialSize, argSpec);
                     lookBehind = LookBehind.SEPARATE;
                     alreadyUnquoted = false;
                 }
             }
-            if (result.isEmpty() && arity.min == 0 && arity.max <= 1 && isBoolean(type)) {
+            if (result.isEmpty() && arity.min == 0 && arity.max <= 1 && isBoolean(argSpec.auxiliaryTypes())) {
                 if (argSpec.isOption() && ((OptionSpec) argSpec).negatable()) {
                     Object defaultValue = argSpec.calcDefaultValue(true);
                     boolean booleanDefault = false;
                     if (defaultValue instanceof String) {
-                        booleanDefault = Boolean.valueOf(String.valueOf(defaultValue));
+                        booleanDefault = Boolean.parseBoolean(String.valueOf(defaultValue));
                     }
                     if (negated) {
-                        return Arrays.asList((Object) booleanDefault);
+                        return Collections.singletonList((Object) booleanDefault);
                     } else {
-                        return Arrays.asList((Object) !booleanDefault);
+                        return Collections.singletonList((Object) !booleanDefault);
                     }
                 } else {
-                    return Arrays.asList((Object) Boolean.TRUE);
+                    return Collections.singletonList((Object) Boolean.TRUE);
                 }
             }
             return result;
@@ -11823,48 +14076,53 @@ public class CommandLine {
             return commandSpec.parser().splitFirst() ? (arg.stringValues().size() - initialSize) / 2 : i;
         }
 
-        private int addPasswordToList(ArgSpec argSpec, Class<?> type, List<Object> result, int consumed, String argDescription) {
-            char[] password = readPassword(argSpec);
+        private int addUserInputToList(ArgSpec argSpec, List<Object> result, int consumed, String argDescription) {
+            char[] input = readUserInput(argSpec);
+            String inputString = new String(input);
             if (tracer.isInfo()) {
-                tracer.info("Adding *** (masked interactive value) to %s for %s%n", argSpec.toString(), argDescription);
+                String value = argSpec.echo() ? inputString + " (interactive value)" : "*** (masked interactive value)";
+                tracer.info("Adding %s to %s for %s on %s%n", value, argSpec.toString(), argDescription, argSpec.scopeString());
             }
-            parseResultBuilder.addStringValue(argSpec, "***");
-            parseResultBuilder.addOriginalStringValue(argSpec, "***");
+            String maskedValue = getMaskedValue(argSpec, inputString);
+            parseResultBuilder.addStringValue(argSpec, maskedValue);
+            parseResultBuilder.addOriginalStringValue(argSpec, maskedValue);
             if (!char[].class.equals(argSpec.auxiliaryTypes()[0]) && !char[].class.equals(argSpec.type())) {
-                Object value = tryConvert(argSpec, consumed, getTypeConverter(type, argSpec, consumed), new String(password), type);
+                Object value = tryConvert(argSpec, consumed, getTypeConverter(argSpec.auxiliaryTypes(), argSpec, 0), new String(input), 0);
                 result.add(value);
             } else {
-                result.add(password);
+                result.add(input);
             }
             consumed++;
             return consumed;
+        }
+        private String getMaskedValue(ArgSpec argSpec, String input) {
+            return argSpec.echo() ? input : "***";
         }
         private int consumeOneArgument(ArgSpec argSpec,
                                        LookBehind lookBehind,
                                        boolean alreadyUnquoted, Range arity,
                                        int consumed,
                                        String arg,
-                                       Class<?> type,
                                        List<Object> result,
                                        int index,
                                        String argDescription) {
             if (!lookBehind.isAttached()) { parseResultBuilder.nowProcessing(argSpec, arg); }
             String[] values = unquoteAndSplit(argSpec, lookBehind, alreadyUnquoted, arity, consumed, arg);
-            ITypeConverter<?> converter = getTypeConverter(type, argSpec, 0);
-            for (int j = 0; j < values.length; j++) {
-                Object stronglyTypedValue = tryConvert(argSpec, index, converter, values[j], type);
+            ITypeConverter<?> converter = getTypeConverter(argSpec.auxiliaryTypes(), argSpec, 0);
+            for (String value : values) {
+                Object stronglyTypedValue = tryConvert(argSpec, index, converter, value, 0);
                 result.add(stronglyTypedValue);
                 if (tracer.isInfo()) {
-                    tracer.info("Adding [%s] to %s for %s%n", String.valueOf(result.get(result.size() - 1)), argSpec.toString(), argDescription);
+                    tracer.info("Adding [%s] to %s for %s on %s%n", String.valueOf(result.get(result.size() - 1)), argSpec.toString(), argDescription, argSpec.scopeString());
                 }
-                parseResultBuilder.addStringValue(argSpec, values[j]);
+                parseResultBuilder.addStringValue(argSpec, value);
             }
             parseResultBuilder.addOriginalStringValue(argSpec, arg);
             return ++index;
         }
-        private boolean canConsumeOneArgument(ArgSpec argSpec, LookBehind lookBehind, boolean alreadyUnquoted, Range arity, int consumed, String arg, Class<?> type, String argDescription) {
+        private boolean canConsumeOneArgument(ArgSpec argSpec, LookBehind lookBehind, boolean alreadyUnquoted, Range arity, int consumed, String arg, String argDescription) {
             if (char[].class.equals(argSpec.auxiliaryTypes()[0]) || char[].class.equals(argSpec.type())) { return true; }
-            ITypeConverter<?> converter = getTypeConverter(type, argSpec, 0);
+            ITypeConverter<?> converter = getTypeConverter(argSpec.auxiliaryTypes(), argSpec, 0);
             try {
                 String[] values = unquoteAndSplit(argSpec, lookBehind, alreadyUnquoted, arity, consumed, arg);
 //                if (!argSpec.acceptsValues(values.length, commandSpec.parser())) {
@@ -11872,11 +14130,11 @@ public class CommandLine {
 //                    return false;
 //                }
                 for (String value : values) {
-                    tryConvert(argSpec, -1, converter, value, type);
+                    tryConvert(argSpec, -1, converter, value, 0);
                 }
                 return true;
             } catch (PicocliException ex) {
-                tracer.debug("$s cannot be assigned to %s: type conversion fails: %s.%n", arg, argDescription, ex.getMessage());
+                tracer.debug("%s cannot be assigned to %s: type conversion fails: %s.%n", arg, argDescription, ex.getMessage());
                 return false;
             }
         }
@@ -11905,6 +14163,19 @@ public class CommandLine {
             if (commandSpec.optionsMap().containsKey(arg)) { // -v or -f or --file (not attached to param or other option)
                 return true;
             }
+            if (commandSpec.negatedOptionsByNameMap.containsKey(arg)) { // negated option like --no-verbose
+                return true;
+            }
+            // [#828] Subcommands should not be parsed as option values for options with optional parameters.
+            if (commandSpec.subcommands().containsKey(arg)) {
+                return true;
+            }
+            // #454 repeatable subcommands
+            if (commandSpec.parent() != null && commandSpec.parent().subcommandsRepeatable()) {
+                if (commandSpec.parent().subcommands().containsKey(arg)) {
+                    return true;
+                }
+            }
             int separatorIndex = arg.indexOf(config().separator());
             if (separatorIndex > 0) { // -f=FILE or --file==FILE (attached to param via separator)
                 if (commandSpec.optionsMap().containsKey(arg.substring(0, separatorIndex))) {
@@ -11913,34 +14184,22 @@ public class CommandLine {
             }
             return (arg.length() > 2 && arg.startsWith("-") && commandSpec.posixOptionsMap().containsKey(arg.charAt(1)));
         }
-        private Object tryConvert(ArgSpec argSpec, int index, ITypeConverter<?> converter, String value, Class<?> type)
+        private Object tryConvert(ArgSpec argSpec, int index, ITypeConverter<?> converter, String value, int typeIndex)
                 throws ParameterException {
             try {
                 return converter.convert(value);
             } catch (TypeConversionException ex) {
                 String msg = String.format("Invalid value for %s: %s", optionDescription("", argSpec, index), ex.getMessage());
-                throw new ParameterException(CommandLine.this, msg, argSpec, value);
+                throw new ParameterException(CommandLine.this, msg, ex, argSpec, value);
             } catch (Exception other) {
                 String desc = optionDescription("", argSpec, index);
-                String msg = String.format("Invalid value for %s: cannot convert '%s' to %s (%s)", desc, value, type.getSimpleName(), other);
+                String typeDescr = argSpec.auxiliaryTypes()[typeIndex].getSimpleName();
+                if (isOptional(argSpec.auxiliaryTypes()[typeIndex])) {
+                    typeDescr += "<" + argSpec.auxiliaryTypes()[typeIndex + 1].getSimpleName() + ">";
+                }
+                String msg = String.format("Invalid value for %s: cannot convert '%s' to %s (%s)", desc, value, typeDescr, other);
                 throw new ParameterException(CommandLine.this, msg, other, argSpec, value);
             }
-        }
-
-        private String optionDescription(String prefix, ArgSpec argSpec, int index) {
-            String desc = "";
-            if (argSpec.isOption()) {
-                desc = prefix + "option '" + ((OptionSpec) argSpec).longestName() + "'";
-                if (index >= 0) {
-                    if (argSpec.arity().max > 1) {
-                        desc += " at index " + index;
-                    }
-                    desc += " (" + argSpec.paramLabel() + ")";
-                }
-            } else {
-                desc = prefix + "positional parameter at index " + ((PositionalParamSpec) argSpec).index() + " (" + argSpec.paramLabel() + ")";
-            }
-            return desc;
         }
 
         private boolean isAnyHelpRequested() { return isHelpRequested || parseResultBuilder.versionHelpRequested || parseResultBuilder.usageHelpRequested; }
@@ -11961,9 +14220,9 @@ public class CommandLine {
             return value;
         }
         @SuppressWarnings("unchecked")
-        private Collection<Object> createCollection(Class<?> collectionClass, Class<?> elementType) throws Exception {
-            if (EnumSet.class.isAssignableFrom(collectionClass) && Enum.class.isAssignableFrom(elementType)) {
-                Object enumSet = EnumSet.noneOf((Class<Enum>) elementType);
+        private Collection<Object> createCollection(Class<?> collectionClass, Class<?>[] elementType) throws Exception {
+            if (EnumSet.class.isAssignableFrom(collectionClass) && Enum.class.isAssignableFrom(elementType[0])) {
+                Object enumSet = EnumSet.noneOf((Class<Enum>) elementType[0]);
                 return (Collection<Object>) enumSet;
             }
             // custom Collection implementation class must have default constructor
@@ -11972,8 +14231,22 @@ public class CommandLine {
         @SuppressWarnings("unchecked") private Map<Object, Object> createMap(Class<?> mapClass) throws Exception {
             return (Map<Object, Object>) factory.create(mapClass);
         }
-        private ITypeConverter<?> getTypeConverter(final Class<?> type, ArgSpec argSpec, int index) {
-            if (argSpec.converters().length > index) { return argSpec.converters()[index]; }
+        private ITypeConverter<?> getTypeConverter(Class<?>[] types, final ArgSpec argSpec, int index) {
+            if (argSpec.converters().length > index) { return argSpec.converters()[index]; } // use custom converters if defined
+            Class<?> type = types[index];
+            if (isOptional(type)) { // #1214 #1108
+                if (types.length <= index + 1) { throw new PicocliException("Cannot create converter for types " + Arrays.asList(types) + " for " + argSpec); }
+                final ITypeConverter<?> converter = getActualTypeConverter(types[index + 1], argSpec);
+                return new ITypeConverter<Object>() {
+                    public Object convert(String value) throws Exception {
+                        return value == null ? getOptionalEmpty() : getOptionalOfNullable(converter.convert(value));
+                    }
+                };
+            }
+            return getActualTypeConverter(type, argSpec);
+        }
+
+        private ITypeConverter<?> getActualTypeConverter(final Class<?> type, ArgSpec argSpec) {
             // https://github.com/remkop/picocli/pull/648
             // consider adding ParserSpec.charArraysCanCaptureStrings() to allow non-interactive options to capture multi-char values in a char[] array
             // Note that this will require special logic for char[] types in CommandLine$Interpreter.applyValuesToArrayField;
@@ -11981,35 +14254,56 @@ public class CommandLine {
             if (char[].class.equals(argSpec.type()) && argSpec.interactive()) { return converterRegistry.get(char[].class); }
             if (converterRegistry.containsKey(type)) { return converterRegistry.get(type); }
             if (type.isEnum()) {
-                return new ITypeConverter<Object>() {
-                    @SuppressWarnings("unchecked")
-                    public Object convert(String value) throws Exception {
-                        String sensitivity = "case-sensitive";
-                        if (commandSpec.parser().caseInsensitiveEnumValuesAllowed()) {
-                            String upper = value.toUpperCase();
-                            for (Object enumConstant : type.getEnumConstants()) {
-                                if (upper.equals(String.valueOf(enumConstant).toUpperCase())) { return enumConstant; }
-                            }
-                            sensitivity = "case-insensitive";
-                        }
-                        try { return Enum.valueOf((Class<Enum>) type, value); }
-                        catch (Exception ex) {
-                            Enum<?>[] constants = ((Class<Enum<?>>) type).getEnumConstants();
-                            String[] names = new String[constants.length];
-                            for (int i = 0; i < names.length; i++) { names[i] = constants[i].name(); }
-                            throw new TypeConversionException(
-                                    String.format("expected one of %s (%s) but was '%s'", Arrays.asList(names), sensitivity, value)); }
-                    }
-                };
+                return getEnumTypeConverter(type);
             }
             throw new MissingTypeConverterException(CommandLine.this, "No TypeConverter registered for " + type.getName() + " of " + argSpec);
         }
 
-        private boolean booleanValue(ArgSpec argSpec, String value) {
-            if (empty(value) || "null".equals(value)) { return false; }
-            ITypeConverter<?> converter = getTypeConverter(Boolean.class, argSpec, 0);
+        private ITypeConverter<Object> getEnumTypeConverter(final Class<?> type) {
+            return new ITypeConverter<Object>() {
+                @SuppressWarnings("unchecked")
+                public Object convert(String value) throws Exception {
+                    try { return Enum.valueOf((Class<Enum>) type, value); }
+                    catch (IllegalArgumentException ex) {
+                        boolean insensitive = commandSpec.parser().caseInsensitiveEnumValuesAllowed();
+                        for (Enum<?> enumConstant : ((Class<Enum<?>>) type).getEnumConstants()) {
+                            String str = enumConstant.toString();
+                            String name = enumConstant.name();
+                            if (value.equals(str) || value.equals(name) || insensitive && (value.equalsIgnoreCase(str) || value.equalsIgnoreCase(name))) {
+                                return enumConstant;
+                            }                            }
+                        String sensitivity = insensitive ? "case-insensitive" : "case-sensitive";
+                        Enum<?>[] constants = ((Class<Enum<?>>) type).getEnumConstants();
+                        List<String> names = new ArrayList<String>();
+                        for (Enum<?> constant : constants) {
+                            names.add(constant.name());
+                            if (!names.contains(constant.toString())) { // name() != toString()
+                                if (!(insensitive && constant.name().equalsIgnoreCase(constant.toString()))) {
+                                    names.add(constant.toString());
+                                }
+                            }
+                        }
+                        throw new TypeConversionException(
+                                format("expected one of %s (%s) but was '%s'", names, sensitivity, value));
+                    }
+                }
+            };
+        }
+
+        private boolean booleanValue(ArgSpec argSpec, Object value) {
+            if (value == null) { return false; }
+            if (isOptional(value.getClass())) {
+                try {
+                    value = value.getClass().getMethod("orElse", Object.class).invoke(value, "null");
+                } catch (Exception e) {
+                    throw new TypeConversionException("Could not convert '" + value + "' to an Optional<Boolean>: " + e.getMessage());
+                }
+            }
+            String stringValue = String.valueOf(value);
+            if (empty(stringValue) || "null".equals(stringValue) || "Optional.empty".equals(value)) { return false; }
+            ITypeConverter<?> converter = getTypeConverter(new Class<?>[]{Boolean.class}, argSpec, 0);
             try {
-                return (Boolean) converter.convert(value);
+                return (Boolean) converter.convert(stringValue);
             } catch (TypeConversionException e) {
                 throw e;
             } catch (Exception e) {
@@ -12024,49 +14318,34 @@ public class CommandLine {
                 available += argSpec.splitValue(args.peek(), commandSpec.parser(), arity, 0).length - 1;
             }
             if (arity.min > available) {
-                if (arity.min == 1) {
-                    if (argSpec.isOption()) {
-                        maybeThrow(new MissingParameterException(CommandLine.this, argSpec, "Missing required parameter for " +
-                                optionDescription("", argSpec, 0)));
-                        return false;
-                    }
-                    Range indexRange = ((PositionalParamSpec) argSpec).index();
-                    String sep = "";
-                    String names = ": ";
-                    int count = 0;
-                    List<PositionalParamSpec> positionalParameters = commandSpec.positionalParameters();
-                    for (int i = indexRange.min; i < positionalParameters.size(); i++) {
-                        if (positionalParameters.get(i).arity().min > 0) {
-                            names += sep + positionalParameters.get(i).paramLabel();
-                            sep = ", ";
-                            count++;
-                        }
-                    }
-                    String msg = "Missing required parameter";
-                    Range paramArity = argSpec.arity();
-                    if (count > 1 || arity.min - available > 1) {
-                        msg += "s";
-                    }
-                    maybeThrow(new MissingParameterException(CommandLine.this, argSpec, msg + names));
-                } else if (args.isEmpty()) {
-                    maybeThrow(new MissingParameterException(CommandLine.this, argSpec, optionDescription("", argSpec, 0) +
-                            " requires at least " + arity.min + " values, but none were specified."));
-                } else {
-                    maybeThrow(new MissingParameterException(CommandLine.this, argSpec, optionDescription("", argSpec, 0) +
-                            " requires at least " + arity.min + " values, but only " + available + " were specified: " + reverse(args)));
+                List<PositionalParamSpec> missingList = Collections.emptyList();
+                List<PositionalParamSpec> positionals = commandSpec.positionalParameters();
+                if (argSpec.isPositional() && positionals.contains(argSpec)) {
+                    missingList = positionals.subList(positionals.indexOf(argSpec), positionals.size());
                 }
+                String msg = createMissingParameterMessage(argSpec, arity, missingList, args, available);
+                maybeThrow(new MissingParameterException(CommandLine.this, argSpec, msg));
                 return false;
             }
             return true;
         }
 
-        char[] readPassword(ArgSpec argSpec) {
+        char[] readUserInput(ArgSpec argSpec) {
             String name = argSpec.isOption() ? ((OptionSpec) argSpec).longestName() : "position " + position;
-            String prompt = String.format("Enter value for %s (%s): ", name, str(argSpec.description(), 0));
-            if (tracer.isDebug()) {tracer.debug("Reading value for %s from console...%n", name);}
-            char[] result = readPassword(prompt);
-            if (tracer.isDebug()) {tracer.debug("User entered %d characters for %s.%n", result.length, name);}
-            return result;
+            String prompt = !empty(argSpec.prompt()) ? argSpec.prompt() : String.format("Enter value for %s (%s): ", name, str(argSpec.description(), 0));
+            try {
+                if (tracer.isDebug()) {tracer.debug("Reading value for %s from console...%n", name);}
+                char[] result = argSpec.echo() ? readUserInputWithEchoing(prompt) : readPassword(prompt);
+                if (tracer.isDebug()) {tracer.debug(createUserInputDebugString(argSpec, result, name));}
+                return result;
+            } finally {
+                interactiveCount++;
+            }
+        }
+        private String createUserInputDebugString(ArgSpec argSpec, char[] result, String name) {
+            return argSpec.echo() ?
+                String.format("User entered %s for %s.%n", new String(result), name) :
+                String.format("User entered %d characters for %s.%n", result.length, name);
         }
         char[] readPassword(String prompt) {
             try {
@@ -12074,16 +14353,18 @@ public class CommandLine {
                 Method method = Class.forName("java.io.Console").getDeclaredMethod("readPassword", String.class, Object[].class);
                 return (char[]) method.invoke(console, prompt, new Object[0]);
             } catch (Exception e) {
-                System.out.print(prompt);
-                InputStreamReader isr = new InputStreamReader(System.in);
-                BufferedReader in = new BufferedReader(isr);
-                try {
-                    return in.readLine().toCharArray();
-                } catch (IOException ex2) {
-                    throw new IllegalStateException(ex2);
-                }
-            } finally {
-                interactiveCount++;
+                return readUserInputWithEchoing(prompt);
+            }
+        }
+        char[] readUserInputWithEchoing(String prompt) {
+            System.out.print(prompt);
+            InputStreamReader isr = new InputStreamReader(System.in);
+            BufferedReader in = new BufferedReader(isr);
+            try {
+                String input = in.readLine();
+                return input == null ? new char[0] : input.toCharArray();
+            } catch (IOException e) {
+                throw new IllegalStateException(e);
             }
         }
         int getPosition(ArgSpec arg) {
@@ -12097,6 +14378,55 @@ public class CommandLine {
         }
     }
 
+    private static String optionDescription(String prefix, ArgSpec argSpec, int optionParamIndex) {
+        String desc;
+        if (argSpec.isOption()) {
+            desc = prefix + "option '" + ((OptionSpec) argSpec).longestName() + "'";
+            if (optionParamIndex >= 0) { // we are describing an option parameter
+                if (argSpec.arity().max > 1) {
+                    desc += " at index " + optionParamIndex;
+                }
+                desc += " (" + argSpec.paramLabel() + ")";
+            }
+        } else {
+            desc = prefix + "positional parameter at index " + ((PositionalParamSpec) argSpec).index() + " (" + argSpec.paramLabel() + ")";
+        }
+        return desc;
+    }
+
+    private static String createMissingParameterMessage(ArgSpec argSpec, Range arity, List<PositionalParamSpec> missingList, Stack<String> args, int available) {
+        if (arity.min == 1) {
+            if (argSpec.isOption()) {
+                return "Missing required parameter for " + optionDescription("", argSpec, 0);
+            }
+            String sep = "";
+            String names = ": ";
+            String indices = "";
+            String infix = " at index ";
+            int count = 0;
+            for (PositionalParamSpec missing : missingList) {
+                if (missing.arity().min > 0) {
+                    names += sep + "'" + missing.paramLabel() + "'";
+                    indices += sep + missing.index();
+                    sep = ", ";
+                    count++;
+                }
+            }
+            String msg = "Missing required parameter";
+            if (count > 1 || arity.min - available > 1) {
+                msg += "s";
+            }
+            if (count > 1) { infix = " at indices "; }
+            return System.getProperty("picocli.verbose.errors") != null ? msg + names + infix + indices : msg + names;
+        } else if (args.isEmpty()) {
+            return optionDescription("", argSpec, 0) +
+                    " requires at least " + arity.min + " values, but none were specified.";
+        } else {
+            return optionDescription("", argSpec, 0) +
+                    " requires at least " + arity.min + " values, but only " + available + " were specified: " + reverse(args);
+        }
+    }
+
     /** Return the unquoted value if the value contains no nested quotes, otherwise, return the value as is. */
     String smartUnquoteIfEnabled(String value) {
         if (value == null || !commandSpec.parser().trimQuotes()) { return value; }
@@ -12106,9 +14436,8 @@ public class CommandLine {
         String unquoted = unquote(value);
         if (unquoted == value) { return value; }
         StringBuilder result = new StringBuilder();
-        boolean requote = false;
         int slashCount = 0;
-        for (int ch = 0, i = 0; i < unquoted.length(); i += Character.charCount(ch)) {
+        for (int ch, i = 0; i < unquoted.length(); i += Character.charCount(ch)) {
             ch = unquoted.codePointAt(i);
             switch (ch) {
                 case '\\':
@@ -12126,12 +14455,20 @@ public class CommandLine {
         return result.toString();
     }
     private static String unquote(String value) {
-        if (value == null) { return value; }
+        if (value == null) { return null; }
         return (value.length() > 1 && value.startsWith("\"") && value.endsWith("\""))
                 ? value.substring(1, value.length() - 1)
                 : value;
     }
-    private static class PositionalParametersSorter implements Comparator<ArgSpec> {
+    static void close(Closeable closeable) {
+        if (closeable == null) { return; }
+        try {
+            closeable.close();
+        } catch (Exception ex) {
+            new Tracer().warn("Could not close " + closeable + ": " + ex.toString());
+        }
+    }
+    static class PositionalParametersSorter implements Comparator<ArgSpec> {
         private static final Range OPTION_INDEX = new Range(0, 0, false, true, "0");
         public int compare(ArgSpec p1, ArgSpec p2) {
             int result = index(p1).compareTo(index(p2));
@@ -12317,7 +14654,7 @@ public class CommandLine {
         static Set<String> traced = new HashSet<String>();
         static class ReflectionConverter implements ITypeConverter<Object> {
             private final Method method;
-            private Class<?>[] paramTypes;
+            private final Class<?>[] paramTypes;
 
             public ReflectionConverter(Method method, Class<?>... paramTypes) {
                 this.method = Assert.notNull(method, "method");
@@ -12397,7 +14734,13 @@ public class CommandLine {
             if (parent == null) { return; }
             Help.ColorScheme colors = colorScheme != null ? colorScheme : Help.defaultColorScheme(ansi);
             if (commands.length > 0) {
-                CommandLine subcommand = parent.getSubcommands().get(commands[0]);
+                Map<String, CommandLine> parentSubcommands = parent.getCommandSpec().subcommands();
+                String fullName = commands[0];
+                if (parent.isAbbreviatedSubcommandsAllowed()) {
+                    fullName = AbbreviationMatcher.match(parentSubcommands.keySet(), fullName,
+                            parent.isSubcommandsCaseInsensitive(), self);
+                }
+                CommandLine subcommand = parentSubcommands.get(fullName);
                 if (subcommand != null) {
                     if (outWriter != null) {
                         subcommand.usage(outWriter, colors);
@@ -12442,7 +14785,7 @@ public class CommandLine {
      * </p>
      * @deprecated use {@link IHelpCommandInitializable2} instead
      * @since 3.0 */
-    @Deprecated public static interface IHelpCommandInitializable {
+    @Deprecated public interface IHelpCommandInitializable {
         /** Initializes this object with the information needed to implement a help command that provides usage help for other commands.
          * @param helpCommandLine the {@code CommandLine} object associated with this help command. Implementors can use
          *                        this to walk the command hierarchy and get access to the help command's parent and sibling commands.
@@ -12463,7 +14806,7 @@ public class CommandLine {
      * The {@link DefaultExceptionHandler default ParameterException handler} will print the error message and the usage for the parent command.
      * </p>
      * @since 4.0 */
-    public static interface IHelpCommandInitializable2 {
+    public interface IHelpCommandInitializable2 {
         /** Initializes this object with the information needed to implement a help command that provides usage help for other commands.
          * @param helpCommandLine the {@code CommandLine} object associated with this help command. Implementors can use
          *                        this to walk the command hierarchy and get access to the help command's parent and sibling commands.
@@ -12543,29 +14886,42 @@ public class CommandLine {
         /** Constant String holding the default string that separates options from option parameters, value defined in {@link ParserSpec#DEFAULT_SEPARATOR}. */
         protected static final String DEFAULT_SEPARATOR = ParserSpec.DEFAULT_SEPARATOR;
 
-        private final static int defaultOptionsColumnWidth = 24;
+        public final PositionalParamSpec AT_FILE_POSITIONAL_PARAM = PositionalParamSpec.builder()
+                .paramLabel("${picocli.atfile.label:-@<filename>}").description("${picocli.atfile.description:-One or more argument files containing options.}").arity("0..*")
+                .descriptionKey("picocli.atfile").build();
+
+        public final OptionSpec END_OF_OPTIONS_OPTION = createEndOfOptionsOption(ParserSpec.DEFAULT_END_OF_OPTIONS_DELIMITER);
+
+        private OptionSpec createEndOfOptionsOption(String name) {
+            return OptionSpec.builder(name)
+                    .description("${picocli.endofoptions.description:-This option can be used to separate command-line options from the list of positional parameters.}").arity("0")
+                    .descriptionKey("picocli.endofoptions")
+                    .build();
+        }
+
         private final CommandSpec commandSpec;
         private final ColorScheme colorScheme;
-        private final Map<String, Help> commands = new LinkedHashMap<String, Help>();
-        private List<String> aliases = Collections.emptyList();
+        private final Map<String, Help> allCommands = new LinkedHashMap<String, Help>();
+        private final Map<String, Help> visibleCommands = new LinkedHashMap<String, Help>();
+        private List<String> aliases;
 
-        private IParamLabelRenderer parameterLabelRenderer;
+        private final IParamLabelRenderer parameterLabelRenderer;
 
-        /** Constructs a new {@code Help} instance with a default color scheme, initialized from annotatations
+        /** Constructs a new {@code Help} instance with a default color scheme, initialized from annotations
          * on the specified class and superclasses.
          * @param command the annotated object to create usage help for */
         public Help(Object command) {
             this(command, Ansi.AUTO);
         }
 
-        /** Constructs a new {@code Help} instance with a default color scheme, initialized from annotatations
+        /** Constructs a new {@code Help} instance with a default color scheme, initialized from annotations
          * on the specified class and superclasses.
          * @param command the annotated object to create usage help for
          * @param ansi whether to emit ANSI escape codes or not */
         public Help(Object command, Ansi ansi) {
             this(command, defaultColorScheme(ansi));
         }
-        /** Constructs a new {@code Help} instance with the specified color scheme, initialized from annotatations
+        /** Constructs a new {@code Help} instance with the specified color scheme, initialized from annotations
          * on the specified class and superclasses.
          * @param command the annotated object to create usage help for
          * @param colorScheme the color scheme to use
@@ -12573,7 +14929,7 @@ public class CommandLine {
         @Deprecated public Help(Object command, ColorScheme colorScheme) {
             this(CommandSpec.forAnnotatedObject(command, new DefaultFactory()), colorScheme);
         }
-        /** Constructs a new {@code Help} instance with the specified color scheme, initialized from annotatations
+        /** Constructs a new {@code Help} instance with the specified color scheme, initialized from annotations
          * on the specified class and superclasses.
          * @param commandSpec the command model to create usage help for
          * @param colorScheme the color scheme to use */
@@ -12582,9 +14938,10 @@ public class CommandLine {
             this.aliases = new ArrayList<String>(Arrays.asList(commandSpec.aliases()));
             this.aliases.add(0, commandSpec.name());
             this.colorScheme = new ColorScheme.Builder(colorScheme).applySystemProperties().build();
-            parameterLabelRenderer = createDefaultParamLabelRenderer(); // uses help separator
+            this.parameterLabelRenderer = new DefaultParamLabelRenderer(commandSpec); // uses help separator
 
-            this.addAllSubcommands(commandSpec.subcommands());
+            this.registerSubcommands(commandSpec.subcommands());
+            AT_FILE_POSITIONAL_PARAM.commandSpec = commandSpec; // for interpolation
         }
 
         Help withCommandNames(List<String> aliases) { this.aliases = aliases; return this; }
@@ -12601,9 +14958,15 @@ public class CommandLine {
          * @since 3.9 */
         private IHelpFactory getHelpFactory() { return commandSpec.usageMessage().helpFactory(); }
 
-        /** Returns the map of subcommand {@code Help} instances for this command Help.
-         * @since 3.9 */
-        protected Map<String, Help> subcommands() { return Collections.unmodifiableMap(commands); }
+        /** Returns the map of non-hidden subcommand {@code Help} instances for this command Help.
+         * @since 3.9
+         * @see #allSubcommands() */
+        public Map<String, Help> subcommands() { return Collections.unmodifiableMap(visibleCommands); }
+
+        /** Returns the map of all subcommand {@code Help} instances (including hidden commands) for this command Help.
+         * @since 4.4
+         * @see #subcommands() */
+        public Map<String, Help> allSubcommands() { return Collections.unmodifiableMap(allCommands); }
 
         /** Returns the list of aliases for the command in this Help.
          * @since 3.9 */
@@ -12616,59 +14979,60 @@ public class CommandLine {
         public IParamLabelRenderer parameterLabelRenderer() {return parameterLabelRenderer;}
 
         /** Registers all specified subcommands with this Help.
-         * @param commands maps the command names to the associated CommandLine object
+         * @param subcommands the subcommands of this command
          * @return this Help instance (for method chaining)
-         * @see CommandLine#getSubcommands()
+         * @see #subcommands()
+         * @see #allSubcommands()
          */
-        public Help addAllSubcommands(Map<String, CommandLine> commands) {
-            if (commands != null) {
-                // first collect aliases
-                Map<CommandLine, List<String>> done = new IdentityHashMap<CommandLine, List<String>>();
-                for (CommandLine cmd : commands.values()) {
-                    if (!done.containsKey(cmd)) {
-                        done.put(cmd, new ArrayList<String>(Arrays.asList(cmd.commandSpec.aliases())));
-                    }
-                }
-                // then loop over all names that the command was registered with and add this name to the front of the list (if it isn't already in the list)
-                for (Map.Entry<String, CommandLine> entry : commands.entrySet()) {
-                    List<String> aliases = done.get(entry.getValue());
-                    if (!aliases.contains(entry.getKey())) { aliases.add(0, entry.getKey()); }
-                }
-                // The aliases list for each command now has at least one entry, with the main name at the front.
-                // Now we loop over the commands in the order that they were registered on their parent command.
-                for (Map.Entry<String, CommandLine> entry : commands.entrySet()) {
-                    // not registering hidden commands is easier than suppressing display in Help.commandList():
-                    // if all subcommands are hidden, help should not show command list header
-                    if (!entry.getValue().getCommandSpec().usageMessage().hidden()) {
-                        List<String> aliases = done.remove(entry.getValue());
-                        if (aliases != null) { // otherwise we already processed this command by another alias
-                            addSubcommand(aliases, entry.getValue());
-                        }
-                    }
-                }
+        public Help addAllSubcommands(Map<String, CommandLine> subcommands) {
+            if (subcommands != null) {
+                registerSubcommands(subcommands);
             }
             return this;
         }
 
-        /** Registers the specified subcommand with this Help.
-         * @param commandNames the name and aliases of the subcommand to display in the usage message
-         * @param commandLine the {@code CommandLine} object to get more information from
-         * @return this Help instance (for method chaining) */
-        Help addSubcommand(List<String> commandNames, CommandLine commandLine) {
-            String all = commandNames.toString();
-            commands.put(all.substring(1, all.length() - 1), getHelpFactory().create(commandLine.commandSpec, colorScheme).withCommandNames(commandNames));
-            return this;
+        private void registerSubcommands(Map<String, CommandLine> subcommands) {
+            // first collect aliases
+            Map<CommandLine, List<String>> done = new IdentityHashMap<CommandLine, List<String>>();
+            for (CommandLine cmd : subcommands.values()) {
+                if (!done.containsKey(cmd)) {
+                    done.put(cmd, new ArrayList<String>(Arrays.asList(cmd.commandSpec.aliases())));
+                }
+            }
+            // then loop over all names that the command was registered with and add this name to the front of the list (if it isn't already in the list)
+            for (Map.Entry<String, CommandLine> entry : subcommands.entrySet()) {
+                List<String> aliases = done.get(entry.getValue());
+                if (!aliases.contains(entry.getKey())) { aliases.add(0, entry.getKey()); }
+            }
+            // The aliases list for each command now has at least one entry, with the main name at the front.
+            // Now we loop over the commands in the order that they were registered on their parent command.
+            for (Map.Entry<String, CommandLine> entry : subcommands.entrySet()) {
+                // not registering hidden commands is easier than suppressing display in Help.commandList():
+                // if all subcommands are hidden, help should not show command list header
+                CommandLine commandLine = entry.getValue();
+                List<String> commandNames = done.remove(commandLine);
+                if (commandNames == null) { continue; }  // we already processed this command by another alias
+                String key = commandNames.toString().substring(1, commandNames.toString().length() - 1);
+                Help sub = getHelpFactory().create(commandLine.commandSpec, colorScheme).withCommandNames(commandNames);
+                allCommands.put(key, sub);
+                if (!sub.commandSpec().usageMessage().hidden()) {
+                    visibleCommands.put(key, sub);
+                }
+            }
         }
 
-        /** Registers the specified subcommand with this Help.
+        /** Registers the specified subcommand as one of the visible commands in this Help.
+         * This method does not check whether the specified command is hidden or not.
          * @param commandName the name of the subcommand to display in the usage message
          * @param command the {@code CommandSpec} or {@code @Command} annotated object to get more information from
          * @return this Help instance (for method chaining)
-         * @deprecated
+         * @see #subcommands()
+         * @deprecated use {@link #addAllSubcommands(Map)} instead
          */
         @Deprecated public Help addSubcommand(String commandName, Object command) {
-            commands.put(commandName,
-                    getHelpFactory().create(CommandSpec.forAnnotatedObject(command, commandSpec.commandLine().factory), defaultColorScheme(Ansi.AUTO)));
+            Help sub = getHelpFactory().create(CommandSpec.forAnnotatedObject(command, commandSpec.commandLine().factory), defaultColorScheme(Ansi.AUTO));
+            visibleCommands.put(commandName, sub);
+            allCommands.put(commandName, sub);
             return this;
         }
 
@@ -12676,6 +15040,14 @@ public class CommandLine {
         List<PositionalParamSpec> positionalParameters() { return commandSpec.positionalParameters(); }
         String commandName() { return commandSpec.name(); }
 
+        /**
+         * Returns the full usage synopsis of this command. This is equivalent to:
+         * {@code this.synopsisHeading() + this.synopsis(this.synopsisHeadingLength())}
+         * @since 4.1
+         */
+        public String fullSynopsis() {
+            return this.synopsisHeading() + this.synopsis(this.synopsisHeadingLength());
+        }
         /** Returns a synopsis for the command without reserving space for the synopsis heading.
          * @return a synopsis
          * @see #abbreviatedSynopsis()
@@ -12742,11 +15114,38 @@ public class CommandLine {
             Set<ArgSpec> argsInGroups = new HashSet<ArgSpec>();
             Text groupsText = createDetailedSynopsisGroupsText(argsInGroups);
             Text optionText = createDetailedSynopsisOptionsText(argsInGroups, optionSort, clusterBooleanOptions);
+            Text endOfOptionsText = createDetailedSynopsisEndOfOptionsText();
             Text positionalParamText = createDetailedSynopsisPositionalsText(argsInGroups);
             Text commandText = createDetailedSynopsisCommandText();
 
-            Text text = groupsText.concat(optionText).concat(positionalParamText).concat(commandText);
+            return makeSynopsisFromParts(synopsisHeadingLength, optionText, groupsText, endOfOptionsText, positionalParamText, commandText);
+        }
 
+        /**
+         * Concatenates the command name and the specified synopsis parts and returns a fully rendered synopsis String.
+         * @param synopsisHeadingLength length of the synopsis heading string to be displayed on the same line as the first synopsis line.
+         *                              For example, if the synopsis heading is {@code "Usage: "}, this value is 7.
+         * @param optionText the Ansi.Text object with the rendered options list (excluding the argument groups)
+         * @param groupsText the Ansi.Text object showing the rendered argument groups
+         * @param endOfOptionsText the Ansi.Text object containing the end of options delimiter (if enabled)
+         * @param positionalParamText the Ansi.Text object showing the rendered positional parameters
+         * @param commandText the Ansi.Text object showing the subcommands part of the synopsis
+         * @return a fully rendered synopsis String
+         * @since 4.4
+         */
+        protected String makeSynopsisFromParts(int synopsisHeadingLength, Text optionText, Text groupsText, Text endOfOptionsText, Text positionalParamText, Text commandText) {
+            boolean positionalsOnly = true;
+            for (ArgGroupSpec group : commandSpec().argGroups()) {
+                if (group.validate()) { // non-validating groups are not shown in the synopsis
+                    positionalsOnly &= group.allOptionsNested().isEmpty();
+                }
+            }
+            Text text;
+            if (positionalsOnly) { // show end-of-options delimiter before the (all-positional params) groups
+                text = optionText.concat(endOfOptionsText).concat(groupsText).concat(positionalParamText).concat(commandText);
+            } else {
+                text = optionText.concat(groupsText).concat(endOfOptionsText).concat(positionalParamText).concat(commandText);
+            }
             return insertSynopsisCommandName(synopsisHeadingLength, text);
         }
 
@@ -12773,8 +15172,19 @@ public class CommandLine {
          * @return the formatted options, starting with a {@code " "} space, or an empty Text if this command has no named options
          * @since 3.9 */
         protected Text createDetailedSynopsisOptionsText(Collection<ArgSpec> done, Comparator<OptionSpec> optionSort, boolean clusterBooleanOptions) {
+            return createDetailedSynopsisOptionsText(done, commandSpec.options(), optionSort, clusterBooleanOptions);
+        }
+        /** Returns a Text object containing a partial detailed synopsis showing only the specified options, starting with a {@code " "} space.
+         * Follows the unix convention of showing optional options and parameters in square brackets ({@code [ ]}).
+         * @param done the list of options and positional parameters for which a synopsis was already generated. Options in this set should be excluded.
+         * @param optionList the list of options to include in the synopsis
+         * @param optionSort comparator to sort options or {@code null} if options should not be sorted
+         * @param clusterBooleanOptions {@code true} if boolean short options should be clustered into a single string
+         * @return the formatted options, starting with a {@code " "} space, or an empty Text if this command has no named options
+         * @since 4.4 */
+        protected Text createDetailedSynopsisOptionsText(Collection<ArgSpec> done, List<OptionSpec> optionList, Comparator<OptionSpec> optionSort, boolean clusterBooleanOptions) {
             Text optionText = ansi().new Text(0);
-            List<OptionSpec> options = new ArrayList<OptionSpec>(commandSpec.options()); // iterate in declaration order
+            List<OptionSpec> options = new ArrayList<OptionSpec>(optionList); // iterate in declaration order
             if (optionSort != null) {
                 Collections.sort(options, optionSort);// iterate in specified sort order
             }
@@ -12810,25 +15220,45 @@ public class CommandLine {
                 }
             }
             for (OptionSpec option : options) {
-                if (!option.hidden()) {
-                    Text name = option.negatable()
-                            ? colorScheme.optionText(option.commandSpec.negatableOptionTransformer().makeSynopsis(option.shortestName(), option.commandSpec))
-                            : colorScheme.optionText(option.shortestName());
-                    Text param = parameterLabelRenderer().renderParameterLabel(option, colorScheme.ansi(), colorScheme.optionParamStyles);
-                    if (option.required()) { // e.g., -x=VAL
-                        optionText = optionText.concat(" ").concat(name).concat(param).concat("");
-                        if (option.isMultiValue()) { // e.g., -x=VAL [-x=VAL]...
-                            optionText = optionText.concat(" [").concat(name).concat(param).concat("]...");
-                        }
-                    } else {
-                        optionText = optionText.concat(" [").concat(name).concat(param).concat("]");
-                        if (option.isMultiValue()) { // add ellipsis to show option is repeatable
-                            optionText = optionText.concat("...");
-                        }
+                optionText = concatOptionText(" ", optionText, colorScheme, option, parameterLabelRenderer());
+            }
+            return optionText;
+        }
+
+        static Text concatOptionText(String prefix, Text text, Help.ColorScheme colorScheme, OptionSpec option, Help.IParamLabelRenderer parameterLabelRenderer) {
+            if (!option.hidden()) {
+                String nameString = option.shortestName();
+                if (option.negatable) {
+                    INegatableOptionTransformer trans = option.commandSpec == null ? RegexTransformer.createDefault() : option.commandSpec.negatableOptionTransformer();
+                    nameString = trans.makeSynopsis(option.shortestName(), option.commandSpec);
+                }
+                Text name = colorScheme.optionText(nameString);
+                Text param = parameterLabelRenderer.renderParameterLabel(option, colorScheme.ansi(), colorScheme.optionParamStyles);
+                text = text.concat(prefix);
+                if (option.required()) { // e.g., -x=VAL
+                    text = text.concat(name).concat(param).concat("");
+                    if (option.isMultiValue()) { // e.g., -x=VAL [-x=VAL]...
+                        text = text.concat(" [").concat(name).concat(param).concat("]...");
+                    }
+                } else {
+                    text = text.concat("[").concat(name).concat(param).concat("]");
+                    if (option.isMultiValue()) { // add ellipsis to show option is repeatable
+                        text = text.concat("...");
                     }
                 }
             }
-            return optionText;
+            return text;
+        }
+
+        /** Returns a Text object containing a partial detailed synopsis showing only the end of options delimiter (if enabled), starting with a {@code " "} space.
+         * Follows the unix convention of showing optional options and parameters in square brackets ({@code [ ]}).
+         * @return the formatted end of options delimiter, starting with a {@code " "} space, or an empty Text if the end of options delimiter should not be shown
+         * @since 4.3 */
+        protected Text createDetailedSynopsisEndOfOptionsText() {
+            if (!commandSpec.usageMessage.showEndOfOptionsDelimiterInUsageHelp()) {
+                return ansi().new Text(0);
+            }
+            return ansi().new Text(0).concat(" [").concat(colorScheme.optionText(commandSpec.parser().endOfOptionsDelimiter())).concat("]");
         }
 
         /** Returns a Text object containing a partial detailed synopsis showing only the positional parameters, starting with a {@code " "} space.
@@ -12839,15 +15269,22 @@ public class CommandLine {
         protected Text createDetailedSynopsisPositionalsText(Collection<ArgSpec> done) {
             Text positionalParamText = ansi().new Text(0);
             List<PositionalParamSpec> positionals = new ArrayList<PositionalParamSpec>(commandSpec.positionalParameters()); // iterate in declaration order
+            if (hasAtFileParameter()) {
+                positionals.add(0, AT_FILE_POSITIONAL_PARAM);
+                AT_FILE_POSITIONAL_PARAM.messages(commandSpec.usageMessage().messages());
+            }
             positionals.removeAll(done);
             for (PositionalParamSpec positionalParam : positionals) {
-                if (!positionalParam.hidden()) {
-                    positionalParamText = positionalParamText.concat(" ");
-                    Text label = parameterLabelRenderer().renderParameterLabel(positionalParam, colorScheme.ansi(), colorScheme.parameterStyles);
-                    positionalParamText = positionalParamText.concat(label);
-                }
+                positionalParamText = concatPositionalText(" ", positionalParamText, colorScheme, positionalParam, parameterLabelRenderer());
             }
             return positionalParamText;
+        }
+        static Text concatPositionalText(String prefix, Text text, Help.ColorScheme colorScheme, PositionalParamSpec positionalParam, IParamLabelRenderer parameterLabelRenderer) {
+            if (!positionalParam.hidden()) {
+                Text label = parameterLabelRenderer.renderParameterLabel(positionalParam, colorScheme.ansi(), colorScheme.parameterStyles);
+                text = text.concat(prefix).concat(label);
+            }
+            return text;
         }
 
         /** Returns a Text object containing a partial detailed synopsis showing only the subcommands, starting with a {@code " "} space.
@@ -12882,12 +15319,12 @@ public class CommandLine {
                 indent = commandSpec.usageMessage().synopsisIndent() < 0 ? synopsisHeadingLength : commandSpec.usageMessage().synopsisIndent();
                 indent = Math.min(indent, (int) (UsageMessageSpec.MAX_SYNOPSIS_AUTO_INDENT_THRESHOLD * width()));
             }
-            TextTable textTable = TextTable.forColumnWidths(ansi(), width());
+            TextTable textTable = TextTable.forColumnWidths(colorScheme, width());
             textTable.setAdjustLineBreaksForWideCJKCharacters(commandSpec.usageMessage().adjustLineBreaksForWideCJKCharacters());
             textTable.indentWrappedLines = indent;
 
             // right-adjust the command name by length of synopsis heading
-            Text PADDING = Ansi.OFF.new Text(stringOf('X', synopsisHeadingLength));
+            Text PADDING = Ansi.OFF.new Text(stringOf('X', synopsisHeadingLength), optionsAndPositionalsAndCommandsDetails.colorScheme);
             textTable.addRowValues(PADDING.concat(colorScheme.commandText(commandName)).concat(optionsAndPositionalsAndCommandsDetails));
             return textTable.toString().substring(synopsisHeadingLength); // cut off leading synopsis heading spaces
         }
@@ -12900,20 +15337,25 @@ public class CommandLine {
             String[] lines = Ansi.OFF.new Text(commandSpec.usageMessage().synopsisHeading()).toString().split("\\r?\\n|\\r|%n", -1);
             return lines[lines.length - 1].length();
         }
-        /**
-         * <p>Returns a description of the {@linkplain Option options} supported by the application.
-         * This implementation {@linkplain #createShortOptionNameComparator() sorts options alphabetically}, and shows
-         * only the {@linkplain Option#hidden() non-hidden} options in a {@linkplain TextTable tabular format}
-         * using the {@linkplain #createDefaultOptionRenderer() default renderer} and {@linkplain Layout default layout}.</p>
-         * @return the fully formatted option list
-         * @see #optionList(Layout, Comparator, IParamLabelRenderer)
-         */
-        public String optionList() {
-            Comparator<OptionSpec> sortOrder = commandSpec.usageMessage().sortOptions()
-                    ? createShortOptionNameComparator()
-                    : createOrderComparatorIfNecessary(commandSpec.options());
-
-            return optionList(createDefaultLayout(), sortOrder, parameterLabelRenderer());
+        private List<OptionSpec> excludeHiddenAndGroupOptions(List<OptionSpec> all) {
+            List<OptionSpec> result = new ArrayList<OptionSpec>(all);
+            for (ArgGroupSpec group : optionSectionGroups()) { result.removeAll(group.allOptionsNested()); }
+            for (Iterator<OptionSpec> iter = result.iterator(); iter.hasNext(); ) {
+                if (iter.next().hidden()) {
+                    iter.remove();
+                }
+            }
+            return result;
+        }
+        private List<PositionalParamSpec> excludeHiddenAndGroupParams(List<PositionalParamSpec> all) {
+            List<PositionalParamSpec> result = new ArrayList<PositionalParamSpec>(all);
+            for (ArgGroupSpec group : optionSectionGroups()) { result.removeAll(group.allPositionalParametersNested()); }
+            for (Iterator<PositionalParamSpec> iter = result.iterator(); iter.hasNext(); ) {
+                if (iter.next().hidden()) {
+                    iter.remove();
+                }
+            }
+            return result;
         }
 
         private static Comparator<OptionSpec> createOrderComparatorIfNecessary(List<OptionSpec> options) {
@@ -12921,92 +15363,219 @@ public class CommandLine {
             return null;
         }
 
-        private int calcLongOptionColumnWidth() {
-            int max = 0;
-            IOptionRenderer optionRenderer = new DefaultOptionRenderer(false, " ");
-            boolean cjk = commandSpec.usageMessage().adjustLineBreaksForWideCJKCharacters();
-            for (OptionSpec option : commandSpec.options()) {
-                Text[][] values = optionRenderer.render(option, parameterLabelRenderer(), colorScheme);
-                int len = cjk ? values[0][3].getCJKAdjustedLength() : values[0][3].length;
-                if (len < Help.defaultOptionsColumnWidth - 3) { max = Math.max(max, len); }
-            }
-            IParameterRenderer paramRenderer = new DefaultParameterRenderer(false, " ");
-            for (PositionalParamSpec positional : commandSpec.positionalParameters()) {
-                Text[][] values = paramRenderer.render(positional, parameterLabelRenderer(), colorScheme);
-                int len = cjk ? values[0][3].getCJKAdjustedLength() : values[0][3].length;
-                if (len < Help.defaultOptionsColumnWidth - 3) { max = Math.max(max, len); }
-            }
-            return max + 3;
+        /**
+         * Returns a comparator for sorting options, or {@code null}, depending on the settings for this command.
+         * @return if {@linkplain Command#sortOptions() sortOptions} is selected,
+         *      return a comparator for sorting options based on their short name.
+         *      Otherwise, if any of the options has a non-default value for their {@linkplain Option#order() order} attribute,
+         *      then return a comparator for sorting options based on the order attribute.
+         *      Otherwise, return {@code null} to indicate that options should not be sorted.
+         * @since 4.4
+         */
+        public Comparator<OptionSpec> createDefaultOptionSort() {
+            return commandSpec.usageMessage().sortOptions()
+                    ? createShortOptionNameComparator()
+                    : createOrderComparatorIfNecessary(commandSpec.options());
         }
-
+        /**
+         * <p>Returns a description of {@linkplain #options() all options} in this command, including any argument groups.
+         * </p><p>
+         * This implementation {@linkplain #createShortOptionNameComparator() sorts options alphabetically}, and shows
+         * only the {@linkplain Option#hidden() non-hidden} options in a {@linkplain TextTable tabular format}
+         * using the {@linkplain #createDefaultOptionRenderer() default renderer} and {@linkplain Layout default layout}.</p>
+         * @return the fully formatted option list, including any argument groups
+         * @see #optionListExcludingGroups(List)
+         * @see #optionListGroupSections()
+         */
+        public String optionList() {
+            return optionList(createDefaultLayout(), createDefaultOptionSort(), parameterLabelRenderer());
+        }
+        /**
+         * <p>Returns a description of the specified list of options.
+         * </p><p>
+         * This implementation {@linkplain #createShortOptionNameComparator() sorts options alphabetically}, and shows
+         * only the specified options in a {@linkplain TextTable tabular format}
+         * using the {@linkplain #createDefaultOptionRenderer() default renderer} and {@linkplain #createDefaultLayout(List, List, ColorScheme)} default layout}.
+         * </p><p>
+         * Argument groups are not rendered by this method.
+         * </p>
+         * @param options the options to display in the returned rendered section of the usage help message
+         * @return the fully formatted portion of the option list for the specified options only (argument groups are not included)
+         * @see #optionListExcludingGroups(List, Layout, Comparator, IParamLabelRenderer)
+         * @since 4.4
+         */
+        public String optionListExcludingGroups(List<OptionSpec> options) {
+            return optionListExcludingGroups(options, createDefaultLayout(), createDefaultOptionSort(), parameterLabelRenderer());
+        }
         /** Sorts all {@code Options} with the specified {@code comparator} (if the comparator is non-{@code null}),
          * then {@linkplain Layout#addOption(CommandLine.Model.OptionSpec, CommandLine.Help.IParamLabelRenderer) adds} all non-hidden options to the
          * specified TextTable and returns the result of TextTable.toString().
-         * @param layout responsible for rendering the option list
+         * @param layout the layout responsible for rendering the option list
          * @param valueLabelRenderer used for options with a parameter
-         * @return the fully formatted option list
+         * @return the fully formatted option list, including any argument groups
+         * @see #optionListExcludingGroups(List, Layout, Comparator, IParamLabelRenderer)
+         * @see #optionListGroupSections()
          * @since 3.0 */
         public String optionList(Layout layout, Comparator<OptionSpec> optionSort, IParamLabelRenderer valueLabelRenderer) {
-            List<OptionSpec> options = new ArrayList<OptionSpec>(commandSpec.options()); // options are stored in order of declaration
+            List<OptionSpec> visibleOptionsNotInGroups = excludeHiddenAndGroupOptions(options());
+            return optionListExcludingGroups(visibleOptionsNotInGroups, layout, optionSort, valueLabelRenderer) + optionListGroupSections();
+        }
+        /** Sorts all {@code Options} with the specified {@code comparator} (if the comparator is non-{@code null}),
+         * then {@linkplain Layout#addOption(CommandLine.Model.OptionSpec, CommandLine.Help.IParamLabelRenderer) adds} the specified options to the
+         * specified TextTable and returns the result of TextTable.toString().
+         * Argument groups are not rendered by this method.
+         * @param optionList the options to show (this may be a subset of the options in this command);
+         *                   it is the responsibility of the caller to remove options that should not be displayed
+         * @param layout the layout responsible for rendering the option list
+         * @param valueLabelRenderer used for options with a parameter
+         * @return the fully formatted portion of the option list for the specified options only (argument groups are not included)
+         * @since 4.4 */
+        public String optionListExcludingGroups(List<OptionSpec> optionList, Layout layout, Comparator<OptionSpec> optionSort, IParamLabelRenderer valueLabelRenderer) {
+            List<OptionSpec> options = new ArrayList<OptionSpec>(optionList); // options are stored in order of declaration
             if (optionSort != null) {
                 Collections.sort(options, optionSort); // default: sort options ABC
             }
-            List<ArgGroupSpec> groups = optionListGroups();
-            for (ArgGroupSpec group : groups) { options.removeAll(group.options()); }
+
+            layout.addAllOptions(options, valueLabelRenderer);
+            return layout.toString();
+        }
+
+        /**
+         * Returns a rendered section of the usage help message that contains the argument groups that have a non-{@code null} {@linkplain ArgGroup#heading() heading}.
+         * This is usually shown below the "normal" options of the command (that are not in an argument group).
+         * @return the fully formatted portion of the option list showing the argument groups
+         * @since 4.4
+         * @see #optionList()
+         * @see #optionListExcludingGroups(List)
+         * @see #optionSectionGroups()
+         */
+        public String optionListGroupSections() {
+            return optionListGroupSections(optionSectionGroups(), createDefaultOptionSort(), parameterLabelRenderer());
+        }
+        // @since 4.4
+        private String optionListGroupSections(List<ArgGroupSpec> groupList, Comparator<OptionSpec> optionSort, IParamLabelRenderer paramLabelRenderer) {
+            Set<ArgSpec> done = new HashSet<ArgSpec>();
+            List<ArgGroupSpec> groups = new ArrayList<ArgGroupSpec>(groupList);
+            Collections.sort(groups, new SortByOrder<ArgGroupSpec>());
 
             StringBuilder sb = new StringBuilder();
-            layout.addOptions(options, valueLabelRenderer);
-            sb.append(layout.toString());
-
-            Collections.sort(groups, new SortByOrder<ArgGroupSpec>());
             for (ArgGroupSpec group : groups) {
-                sb.append(heading(ansi(), width(), adjustCJK(), group.heading()));
+                List<OptionSpec> groupOptions = new ArrayList<OptionSpec>(group.allOptionsNested());
+                if (optionSort != null) { Collections.sort(groupOptions, optionSort); }
+                groupOptions.removeAll(done);
+                done.addAll(groupOptions);
 
-                Layout groupLayout = createDefaultLayout();
-                groupLayout.addPositionalParameters(group.positionalParameters(), valueLabelRenderer);
-                List<OptionSpec> groupOptions = new ArrayList<OptionSpec>(group.options());
-                if (optionSort != null) {
-                    Collections.sort(groupOptions, optionSort);
-                }
-                groupLayout.addOptions(groupOptions, valueLabelRenderer);
+                List<PositionalParamSpec> groupPositionals = new ArrayList<PositionalParamSpec>(group.allPositionalParametersNested());
+                groupPositionals.removeAll(done);
+                done.addAll(groupPositionals);
+
+                Layout groupLayout = createDefaultLayout(); // create new empty layout based on the length of all options/positionals in this command
+                groupLayout.addPositionalParameters(groupPositionals, paramLabelRenderer);
+                groupLayout.addOptions(groupOptions, paramLabelRenderer);
+
+                sb.append(createHeading(group.heading()));
                 sb.append(groupLayout);
             }
             return sb.toString();
         }
 
-        /** Returns the list of {@code ArgGroupSpec}s with a non-{@code null} heading. */
-        private List<ArgGroupSpec> optionListGroups() {
+        /** Returns the list of {@code ArgGroupSpec} instances in this command that have a non-{@code null} heading, most deeply nested argument groups first.
+         * @see #optionListGroupSections()
+         * @since 4.4 */
+        public List<ArgGroupSpec> optionSectionGroups() {
             List<ArgGroupSpec> result = new ArrayList<ArgGroupSpec>();
-            optionListGroups(commandSpec.argGroups(), result);
+            optionSectionGroups(commandSpec.argGroups(), result);
             return result;
         }
-        private static void optionListGroups(List<ArgGroupSpec> groups, List<ArgGroupSpec> result) {
+        private static void optionSectionGroups(List<ArgGroupSpec> groups, List<ArgGroupSpec> result) {
             for (ArgGroupSpec group : groups) {
-                optionListGroups(group.subgroups(), result);
+                optionSectionGroups(group.subgroups(), result);
                 if (group.heading() != null) { result.add(group); }
             }
         }
 
         /**
-         * Returns the section of the usage help message that lists the parameters with their descriptions.
+         * Returns the rendered positional parameters section of the usage help message for {@linkplain #positionalParameters() all positional parameters} in this command.
          * @return the section of the usage help message that lists the parameters
+         * @see #parameterList(List)
          */
         public String parameterList() {
-            return parameterList(createDefaultLayout(), parameterLabelRenderer());
+            return parameterList(excludeHiddenAndGroupParams(positionalParameters()));
         }
         /**
-         * Returns the section of the usage help message that lists the parameters with their descriptions.
+         * Returns the rendered positional parameters section of the usage help message for the specified positional parameters.
+         * @param positionalParams the positional parameters to display in the returned rendered section of the usage help message;
+         *                         the caller is responsible for removing parameters that should not be displayed
+         * @return the section of the usage help message that lists the parameters
+         * @see #parameterList(List, Layout, IParamLabelRenderer)
+         * @since 4.4 */
+        public String parameterList(List<PositionalParamSpec> positionalParams) {
+            return parameterList(positionalParams, createDefaultLayout(), parameterLabelRenderer());
+        }
+        /**
+         * Returns the rendered section of the usage help message that lists all positional parameters in this command with their descriptions.
          * @param layout the layout to use
          * @param paramLabelRenderer for rendering parameter names
          * @return the section of the usage help message that lists the parameters
          */
         public String parameterList(Layout layout, IParamLabelRenderer paramLabelRenderer) {
-            List<PositionalParamSpec> positionals = new ArrayList<PositionalParamSpec>(commandSpec.positionalParameters());
-            List<ArgGroupSpec> groups = optionListGroups();
-            for (ArgGroupSpec group : groups) { positionals.removeAll(group.positionalParameters()); }
-
-            layout.addPositionalParameters(positionals, paramLabelRenderer);
+            return parameterList(excludeHiddenAndGroupParams(positionalParameters()), layout, paramLabelRenderer);
+        }
+        /**
+         * Returns the rendered section of the usage help message that lists the specified parameters with their descriptions.
+         * @param positionalParams the positional parameters to display in the returned rendered section of the usage help message;
+         *                         the caller is responsible for removing parameters that should not be displayed
+         * @param layout the layout to use
+         * @param paramLabelRenderer for rendering parameter names
+         * @return the section of the usage help message that lists the parameters
+         * @since 4.4 */
+        public String parameterList(List<PositionalParamSpec> positionalParams, Layout layout, IParamLabelRenderer paramLabelRenderer) {
+            layout.addAllPositionalParameters(positionalParams, paramLabelRenderer);
             return layout.toString();
+        }
+
+        /** Returns true if the usage help should show the at file parameter in the parameter list, otherwise false.
+         * @since 4.3 */
+        public boolean hasAtFileParameter() {
+            return commandSpec.parser.expandAtFiles() && commandSpec.usageMessage.showAtFileInUsageHelp();
+        }
+
+        /**
+         * Returns the section of the usage help message that lists the @-file and its description.
+         * @return the section of the usage help message that lists the @-file and its description
+         * @since 4.2
+         */
+        public String atFileParameterList() {
+            if (hasAtFileParameter()) {
+                AT_FILE_POSITIONAL_PARAM.messages(commandSpec.usageMessage().messages());
+                Layout layout = createDefaultLayout();
+                layout.addPositionalParameter(AT_FILE_POSITIONAL_PARAM, parameterLabelRenderer());
+                return layout.toString();
+            }
+            return "";
+        }
+
+        /**
+         * Returns the section of the usage help message that lists the {@code --} End of Options delimiter and its description.
+         * @return the section of the usage help message that lists the {@code --} End of Options delimiter and its description.
+         * @since 4.3
+         */
+        public String endOfOptionsList() {
+            if (!commandSpec.usageMessage.showEndOfOptionsDelimiterInUsageHelp()) {
+                return "";
+            }
+            OptionSpec endOfOptionsOption = ParserSpec.DEFAULT_END_OF_OPTIONS_DELIMITER.equals(commandSpec.parser().endOfOptionsDelimiter())
+                    ? END_OF_OPTIONS_OPTION
+                    : createEndOfOptionsOption(commandSpec.parser().endOfOptionsDelimiter());
+            endOfOptionsOption.commandSpec = this.commandSpec; // needed for interpolation
+            try {
+                endOfOptionsOption.messages(commandSpec.usageMessage().messages());
+                Layout layout = createDefaultLayout();
+                layout.addOption(endOfOptionsOption, parameterLabelRenderer());
+                return layout.toString();
+            } finally {
+                endOfOptionsOption.commandSpec = null;
+            }
         }
 
         private static String heading(Ansi ansi, int usageWidth, boolean adjustCJK, String values, Object... params) {
@@ -13097,14 +15666,14 @@ public class CommandLine {
          * @param params the parameters to use to format the header heading
          * @return the formatted header heading */
         public String headerHeading(Object... params) {
-            return heading(ansi(), width(), adjustCJK(), commandSpec.usageMessage().headerHeading(), params);
+            return createHeading(commandSpec.usageMessage().headerHeading(), params);
         }
 
         /** Returns the text displayed before the synopsis text; the result of {@code String.format(synopsisHeading, params)}.
          * @param params the parameters to use to format the synopsis heading
          * @return the formatted synopsis heading */
         public String synopsisHeading(Object... params) {
-            return heading(ansi(), width(), adjustCJK(), commandSpec.usageMessage().synopsisHeading(), params);
+            return createHeading(commandSpec.usageMessage().synopsisHeading(), params);
         }
 
         /** Returns the text displayed before the description text; an empty string if there is no description,
@@ -13112,7 +15681,7 @@ public class CommandLine {
          * @param params the parameters to use to format the description heading
          * @return the formatted description heading */
         public String descriptionHeading(Object... params) {
-            return empty(commandSpec.usageMessage().descriptionHeading()) ? "" : heading(ansi(), width(), adjustCJK(), commandSpec.usageMessage().descriptionHeading(), params);
+            return empty(commandSpec.usageMessage().descriptionHeading()) ? "" : createHeading(commandSpec.usageMessage().descriptionHeading(), params);
         }
 
         /** Returns the text displayed before the positional parameter list; an empty string if there are no positional
@@ -13120,7 +15689,10 @@ public class CommandLine {
          * @param params the parameters to use to format the parameter list heading
          * @return the formatted parameter list heading */
         public String parameterListHeading(Object... params) {
-            return commandSpec.positionalParameters().isEmpty() ? "" : heading(ansi(), width(), adjustCJK(), commandSpec.usageMessage().parameterListHeading(), params);
+            if (hasAtFileParameter() || !commandSpec.positionalParameters().isEmpty()) {
+                return createHeading(commandSpec.usageMessage().parameterListHeading(), params);
+            }
+            return "";
         }
 
         /** Returns the text displayed before the option list; an empty string if there are no options,
@@ -13128,7 +15700,12 @@ public class CommandLine {
          * @param params the parameters to use to format the option list heading
          * @return the formatted option list heading */
         public String optionListHeading(Object... params) {
-            return commandSpec.optionsMap().isEmpty() ? "" : heading(ansi(), width(), adjustCJK(), commandSpec.usageMessage().optionListHeading(), params);
+            boolean hasVisibleOption = false;
+            for (OptionSpec option : commandSpec.options()) { hasVisibleOption |= !option.hidden(); }
+            if (commandSpec.usageMessage().showEndOfOptionsDelimiterInUsageHelp() || hasVisibleOption) {
+                return createHeading(commandSpec.usageMessage().optionListHeading(), params);
+            }
+            return "";
         }
 
         /** Returns the text displayed before the command list; an empty string if there are no commands,
@@ -13136,14 +15713,14 @@ public class CommandLine {
          * @param params the parameters to use to format the command list heading
          * @return the formatted command list heading */
         public String commandListHeading(Object... params) {
-            return commands.isEmpty() ? "" : heading(ansi(), width(), adjustCJK(), commandSpec.usageMessage().commandListHeading(), params);
+            return visibleCommands.isEmpty() ? "" : createHeading(commandSpec.usageMessage().commandListHeading(), params);
         }
 
         /** Returns the text displayed before the footer text; the result of {@code String.format(footerHeading, params)}.
          * @param params the parameters to use to format the footer heading
          * @return the formatted footer heading */
         public String footerHeading(Object... params) {
-            return heading(ansi(), width(), adjustCJK(), commandSpec.usageMessage().footerHeading(), params);
+            return createHeading(commandSpec.usageMessage().footerHeading(), params);
         }
 
         /** Returns the text displayed before the exit code list text; the result of {@code String.format(exitCodeHeading, params)}.
@@ -13151,52 +15728,95 @@ public class CommandLine {
          * @return the formatted heading of the exit code section of the usage help message
          * @since 4.0 */
         public String exitCodeListHeading(Object... params) {
-            return heading(ansi(), width(), adjustCJK(), commandSpec.usageMessage().exitCodeListHeading(), params);
+            return createHeading(commandSpec.usageMessage().exitCodeListHeading(), params);
         }
         /** Returns a 2-column list with exit codes and their description. Descriptions containing {@code "%n"} line separators are broken up into multiple lines.
          * @return a usage help section describing the exit codes
          * @since 4.0 */
         public String exitCodeList() {
-            Map<String, String> map = commandSpec.usageMessage().exitCodeList();
-            if (map.isEmpty()) { return ""; }
-            int keyLength = maxLength(map.keySet());
+            return createTextTable(commandSpec.usageMessage().exitCodeList()).toString();
+        }
+
+        /**
+         * Returns a String that can be used as a help section heading. Embedded {@code %n} format
+         * specifiers will be converted to platform-specific line breaks. Long lines will be wrapped
+         * on word boundaries to ensure they do not exceed the {@linkplain UsageMessageSpec#width() usage message width}.
+         * Embedded {@code @|style[,style] ...|@} markup will be converted to {@linkplain Ansi.Text Ansi} escape codes when
+         * {@linkplain Ansi#enabled() Ansi is enabled}, and stripped out otherwise.
+         * @param text a printf-style {@linkplain Formatter format string} that may one or more embedded format specifiers
+         * @param params optional parameters to use when formatting the specified text string
+         * @return a help section heading String
+         * @since 4.1
+         */
+        public String createHeading(String text, Object... params) {
+            return heading(ansi(), width(), adjustCJK(), text, params);
+        }
+
+        /**
+         * Returns a 2-column {@code TextTable} containing data from the specified map:
+         * the keys are put in the left column and the map values are in the right column.
+         * <p>
+         * The width of the left column is the width of the longest key, plus 3 for spacing between the columns.</p>
+         * <p>All map entries are converted to Strings and any embedded {@code %n} format
+         * specifiers are converted to platform-specific line breaks. Long lines are wrapped
+         * on word boundaries to ensure they do not exceed the column width.</p>
+         * <p>Embedded {@code @|style[,style] ...|@} markup will be converted to {@linkplain Ansi.Text Ansi} escape codes when
+         * {@linkplain Ansi#enabled() Ansi is enabled}, and stripped out otherwise.</p>
+         * @param map the map to convert to a {@code TextTable}
+         * @return a 2-column {@code TextTable} containing data from the specified map
+         * @since 4.1
+         */
+        public TextTable createTextTable(Map<?, ?> map) {
+            if (map == null || map.isEmpty()) { return TextTable.forColumnWidths(colorScheme, 10, width() - 10); }
+            int spacing = 3;
+            int indent = 2;
+            int keyLength = Math.min(width() - spacing - 1, maxLength(map.keySet()));
             Help.TextTable textTable = Help.TextTable.forColumns(ansi(),
-                    new Help.Column(keyLength + 3, 2, Help.Column.Overflow.SPAN),
-                    new Help.Column(width() - (keyLength + 3), 2, Help.Column.Overflow.WRAP));
+                    new Help.Column(keyLength + spacing, indent, Help.Column.Overflow.SPAN),
+                    new Help.Column(width() - (keyLength + spacing), indent, Help.Column.Overflow.WRAP));
             textTable.setAdjustLineBreaksForWideCJKCharacters(adjustCJK());
 
-            for (Map.Entry<String, String> entry : map.entrySet()) {
-                textTable.addRowValues(format(entry.getKey()), format(entry.getValue()));
+            for (Map.Entry<?, ?> entry : map.entrySet()) {
+                textTable.addRowValues(format(String.valueOf(entry.getKey())), format(String.valueOf(entry.getValue())));
             }
-            return textTable.toString();
+            return textTable;
         }
-        /** Returns a 2-column list with command names and the first line of their header or (if absent) description.
-         * @return a usage help section describing the added commands */
+        /** Returns a 2-column list with the command names and first line of their header or (if absent) description of the commands returned by {@link #subcommands()}.
+         * @return a usage help section describing the added commands
+         * @see #commandList(Map) */
         public String commandList() {
-            if (subcommands().isEmpty()) { return ""; }
-            int commandLength = maxLength(subcommands().keySet());
-            Help.TextTable textTable = Help.TextTable.forColumns(ansi(),
+            return commandList(subcommands());
+        }
+        /** Returns a 2-column list with the command names and first line of their header or (if absent) description of the specified command map.
+         * @return a usage help section describing the added commands
+         * @see #subcommands()
+         * @see #allSubcommands()
+         * @since 4.4 */
+        public String commandList(Map<String, Help> subcommands) {
+            if (subcommands.isEmpty()) { return ""; }
+            int commandLength = maxLength(subcommands.keySet());
+            Help.TextTable textTable = Help.TextTable.forColumns(colorScheme().ansi(),
                     new Help.Column(commandLength + 2, 2, Help.Column.Overflow.SPAN),
                     new Help.Column(width() - (commandLength + 2), 2, Help.Column.Overflow.WRAP));
             textTable.setAdjustLineBreaksForWideCJKCharacters(adjustCJK());
 
-            for (Map.Entry<String, Help> entry : subcommands().entrySet()) {
+            for (Map.Entry<String, Help> entry : subcommands.entrySet()) {
                 Help help = entry.getValue();
                 UsageMessageSpec usage = help.commandSpec().usageMessage();
                 String header = !empty(usage.header())
                         ? usage.header()[0]
                         : (!empty(usage.description()) ? usage.description()[0] : "");
-                Text[] lines = ansi().text(format(header)).splitLines();
+                Text[] lines = colorScheme().text(format(header)).splitLines();
                 for (int i = 0; i < lines.length; i++) {
                     textTable.addRowValues(i == 0 ? help.commandNamesText(", ") : Ansi.EMPTY_TEXT, lines[i]);
                 }
             }
             return textTable.toString();
         }
-        private static int maxLength(Collection<String> any) {
-            List<String> strings = new ArrayList<String>(any);
-            Collections.sort(strings, Collections.reverseOrder(Help.shortestFirst()));
-            return strings.get(0).length();
+        private static int maxLength(Collection<?> any) {
+            int result = 0;
+            for (Object value : any) { result = Math.max(result, String.valueOf(value).length()); }
+            return result;
         }
 
         /** Returns a {@code Text} object containing the command name and all aliases, separated with the specified separator.
@@ -13226,13 +15846,56 @@ public class CommandLine {
         /** Returns a {@code Layout} instance configured with the user preferences captured in this Help instance.
          * @return a Layout */
         public Layout createDefaultLayout() {
-            return createLayout(calcLongOptionColumnWidth());
+            return createDefaultLayout(options(), positionalParameters(), colorScheme());
+        }
+        /** Returns a {@code Layout} instance configured with the user preferences captured in this Help instance.
+         * @param options used to calculate the long options column width in the layout
+         * @param positionals used to calculate the long options column width in the layout
+         * @param aColorScheme used in the layout to create {@linkplain Text} values
+         * @return a Layout with the default columns
+         * @since 4.4 */
+        public Layout createDefaultLayout(List<OptionSpec> options, List<PositionalParamSpec> positionals, ColorScheme aColorScheme) {
+            return createLayout(calcLongOptionColumnWidth(options, positionals, aColorScheme), aColorScheme);
         }
 
-        private Layout createLayout(int longOptionsColumnWidth) {
-            TextTable tt = TextTable.forDefaultColumns(colorScheme.ansi(), longOptionsColumnWidth, width());
+        private Layout createLayout(int longOptionsColumnWidth, ColorScheme aColorScheme) {
+            TextTable tt = TextTable.forDefaultColumns(aColorScheme, longOptionsColumnWidth, width());
             tt.setAdjustLineBreaksForWideCJKCharacters(commandSpec.usageMessage().adjustLineBreaksForWideCJKCharacters());
-            return new Layout(colorScheme, tt, createDefaultOptionRenderer(), createDefaultParameterRenderer());
+            return new Layout(aColorScheme, tt, createDefaultOptionRenderer(), createDefaultParameterRenderer());
+        }
+
+        /** Returns the width of the long options column in the usage help message.
+         * @param options the options shown in the usage help message
+         * @param positionals the positional parameters shown in the usage help message
+         * @param aColorScheme the colorscheme used in the layout to create {@linkplain Text} values
+         * @return the width of the long options column in the layout
+         * @since 4.6 */
+        public int calcLongOptionColumnWidth(List<OptionSpec> options, List<PositionalParamSpec> positionals, ColorScheme aColorScheme) {
+            int max = 0;
+            IOptionRenderer optionRenderer = createDefaultOptionRenderer();
+            boolean cjk = commandSpec.usageMessage().adjustLineBreaksForWideCJKCharacters();
+            int longOptionsColWidth = commandSpec.usageMessage().longOptionsMaxWidth() + 1; // add 1 space for indentation
+            for (OptionSpec option : options) {
+                if (option.hidden()) { continue; }
+                Text[][] values = optionRenderer.render(option, parameterLabelRenderer(), aColorScheme);
+                int len = cjk ? values[0][3].getCJKAdjustedLength() : values[0][3].length;
+                if (len < longOptionsColWidth) { max = Math.max(max, len); }
+            }
+            List<PositionalParamSpec> positionalsWithAtFile = new ArrayList<PositionalParamSpec>(positionals); // iterate in declaration order
+            if (hasAtFileParameter()) {
+                positionalsWithAtFile.add(0, AT_FILE_POSITIONAL_PARAM);
+                AT_FILE_POSITIONAL_PARAM.messages(commandSpec.usageMessage().messages());
+            }
+            //IParameterRenderer paramRenderer = new DefaultParameterRenderer(false, " ");
+            for (PositionalParamSpec positional : positionalsWithAtFile) {
+                if (positional.hidden()) { continue; }
+                //Text[][] values = paramRenderer.render(positional, parameterLabelRenderer(), colorScheme); // values[0][3]; //
+                Text label = parameterLabelRenderer().renderParameterLabel(positional, aColorScheme.ansi(), aColorScheme.parameterStyles);
+                int len = cjk ? label.getCJKAdjustedLength() : label.length;
+                if (len < longOptionsColWidth) { max = Math.max(max, len); }
+            }
+
+            return max + 3;
         }
 
         /** Returns a new default OptionRenderer which converts {@link OptionSpec Options} to five columns of text to match
@@ -13287,7 +15950,9 @@ public class CommandLine {
         public static IParamLabelRenderer createMinimalParamLabelRenderer() {
             return new IParamLabelRenderer() {
                 public Text renderParameterLabel(ArgSpec argSpec, Ansi ansi, List<IStyle> styles) {
-                    return ansi.apply(argSpec.paramLabel(), styles);
+                    return argSpec.command() != null && argSpec.command().commandLine() != null
+                            ? argSpec.command().commandLine().getColorScheme().apply(argSpec.paramLabel(), styles)
+                            : ansi.apply(argSpec.paramLabel(), styles);
                 }
                 public String separator() { return ""; }
             };
@@ -13359,8 +16024,8 @@ public class CommandLine {
          *   OptionSpec#description()} array, and these rows look like {@code {"", "", "", option.description()[i]}}.</p>
          */
         static class DefaultOptionRenderer implements IOptionRenderer {
-            private String requiredMarker = " ";
-            private boolean showDefaultValues;
+            private final String requiredMarker;
+            private final boolean showDefaultValues;
             private String sep;
             public DefaultOptionRenderer(boolean showDefaultValues, String requiredMarker) {
                 this.showDefaultValues = showDefaultValues;
@@ -13416,12 +16081,12 @@ public class CommandLine {
                 String[] description = option.description();
                 Text[] descriptionFirstLines = createDescriptionFirstLines(scheme, option, description, showDefault);
                 result.add(new Text[] { scheme.optionText(requiredOption), scheme.optionText(shortOption),
-                        scheme.ansi().new Text(sep), longOptionText, descriptionFirstLines[0] });
+                        scheme.ansi().new Text(sep, scheme), longOptionText, descriptionFirstLines[0] });
                 for (int i = 1; i < descriptionFirstLines.length; i++) {
                     result.add(new Text[] { EMPTY, EMPTY, EMPTY, EMPTY, descriptionFirstLines[i] });
                 }
                 for (int i = 1; i < description.length; i++) {
-                    Text[] descriptionNextLines = scheme.ansi().new Text(description[i]).splitLines();
+                    Text[] descriptionNextLines = scheme.ansi().new Text(description[i], scheme).splitLines();
                     for (Text line : descriptionNextLines) {
                         result.add(new Text[] { EMPTY, EMPTY, EMPTY, EMPTY, line });
                     }
@@ -13440,7 +16105,7 @@ public class CommandLine {
                 Text paramLabelText = parameterLabelRenderer.renderParameterLabel(option, scheme.ansi(), scheme.optionParamStyles);
                 optionText = optionText.concat(paramLabelText);
                 return new Text[][] {{ optionText,
-                        scheme.ansi().new Text(option.description().length == 0 ? "" : option.description()[0]) }};
+                        scheme.ansi().new Text(option.description().length == 0 ? "" : option.description()[0], scheme) }};
             }
         }
         /** The MinimalParameterRenderer converts {@linkplain PositionalParamSpec positional parameters} to a single row with two columns of
@@ -13448,7 +16113,7 @@ public class CommandLine {
         static class MinimalParameterRenderer implements IParameterRenderer {
             public Text[][] render(PositionalParamSpec param, IParamLabelRenderer parameterLabelRenderer, ColorScheme scheme) {
                 return new Text[][] {{ parameterLabelRenderer.renderParameterLabel(param, scheme.ansi(), scheme.parameterStyles),
-                        scheme.ansi().new Text(param.description().length == 0 ? "" : param.description()[0]) }};
+                        scheme.ansi().new Text(param.description().length == 0 ? "" : param.description()[0], scheme) }};
             }
         }
         /** When customizing online help for {@linkplain PositionalParamSpec positional parameters} details, a custom {@code IParameterRenderer}
@@ -13479,8 +16144,8 @@ public class CommandLine {
          *   PositionalParamSpec#description()} array, and these rows look like {@code {"", "", "", param.description()[i]}}.</p>
          */
         static class DefaultParameterRenderer implements IParameterRenderer {
-            private String requiredMarker = " ";
-            private boolean showDefaultValues;
+            private final String requiredMarker;
+            private final boolean showDefaultValues;
             public DefaultParameterRenderer(boolean showDefaultValues, String requiredMarker) {
                 this.showDefaultValues = showDefaultValues;
                 this.requiredMarker = Assert.notNull(requiredMarker, "requiredMarker");
@@ -13499,7 +16164,7 @@ public class CommandLine {
                     result.add(new Text[] { EMPTY, EMPTY, EMPTY, EMPTY, descriptionFirstLines[i] });
                 }
                 for (int i = 1; i < description.length; i++) {
-                    Text[] descriptionNextLines = scheme.ansi().new Text(description[i]).splitLines();
+                    Text[] descriptionNextLines = scheme.ansi().new Text(description[i], scheme).splitLines();
                     for (Text line : descriptionNextLines) {
                         result.add(new Text[] { EMPTY, EMPTY, EMPTY, EMPTY, line });
                     }
@@ -13511,14 +16176,14 @@ public class CommandLine {
 
         private static void addTrailingDefaultLine(List<Text[]> result, ArgSpec arg, ColorScheme scheme) {
             Text EMPTY = Ansi.EMPTY_TEXT;
-            result.add(new Text[]{EMPTY, EMPTY, EMPTY, EMPTY, scheme.ansi().new Text("  Default: " + arg.defaultValueString(true))});
+            result.add(new Text[]{EMPTY, EMPTY, EMPTY, EMPTY, scheme.ansi().new Text("  Default: " + arg.defaultValueString(true), scheme)});
         }
 
         private static Text[] createDescriptionFirstLines(ColorScheme scheme, ArgSpec arg, String[] description, boolean[] showDefault) {
-            Text[] result = scheme.ansi().new Text(str(description, 0)).splitLines();
+            Text[] result = scheme.ansi().new Text(str(description, 0), scheme).splitLines();
             if (result.length == 0 || (result.length == 1 && result[0].plain.length() == 0)) {
                 if (showDefault[0]) {
-                    result = new Text[]{scheme.ansi().new Text("  Default: " + arg.defaultValueString(true))};
+                    result = new Text[]{scheme.ansi().new Text("  Default: " + arg.defaultValueString(true), scheme)};
                     showDefault[0] = false; // don't show the default value twice
                 } else {
                     result = new Text[]{ Ansi.EMPTY_TEXT };
@@ -13559,16 +16224,20 @@ public class CommandLine {
             public String separator() { return commandSpec.parser().separator(); }
             public Text renderParameterLabel(ArgSpec argSpec, Ansi ansi, List<IStyle> styles) {
                 Range capacity = argSpec.isOption() ? argSpec.arity() : ((PositionalParamSpec)argSpec).capacity();
-                if (capacity.max == 0) { return ansi.new Text(""); }
-                if (argSpec.hideParamSyntax()) { return ansi.apply((argSpec.isOption() ? separator() : "") + argSpec.paramLabel(), styles); }
+                ColorScheme colorScheme = commandSpec.commandLine() == null ? Help.defaultColorScheme(ansi) : commandSpec.commandLine().getColorScheme();
+                if (capacity.max == 0) { return ansi.new Text("", colorScheme); }
+                if (argSpec.hideParamSyntax()) { return colorScheme.apply((argSpec.isOption() ? separator() : "") + argSpec.paramLabel(), styles); }
 
-                Text paramName = ansi.apply(argSpec.paramLabel(), styles);
                 String split = argSpec.splitRegex();
+                if (!empty(split)) { // #1044 only check splitSynopsisLabel if we have a split regex
+                    split = empty(argSpec.splitRegexSynopsisLabel()) ? split : argSpec.splitRegexSynopsisLabel();
+                }
                 String mandatorySep = empty(split) ? " "  : split;
                 String optionalSep  = empty(split) ? " [" : "[" + split;
 
                 boolean unlimitedSplit = !empty(split) && !commandSpec.parser().limitSplit();
                 boolean limitedSplit =   !empty(split) &&  commandSpec.parser().limitSplit();
+                Text paramName = colorScheme.apply(argSpec.paramLabel(), styles);
                 Text repeating = paramName;
                 int paramCount = 1;
                 if (unlimitedSplit) {
@@ -13600,16 +16269,16 @@ public class CommandLine {
                 }
                 if (effectivelyVariable) {
                     if (!argSpec.arity().isVariable && argSpec.arity().min > 1) {
-                        result = ansi.new Text("(").concat(result).concat(")"); // repeating group
+                        result = ansi.new Text("(", colorScheme).concat(result).concat(")"); // repeating group
                     }
                     result = result.concat("..."); // PARAM...
                 }
                 String optionSeparator = argSpec.isOption() ? separator() : "";
                 if (capacity.min == 0) { // optional
                     String sep2 = empty(optionSeparator.trim()) ? optionSeparator + "[" : "[" + optionSeparator;
-                    result = ansi.new Text(sep2).concat(result).concat("]");
+                    result = ansi.new Text(sep2, colorScheme).concat(result).concat("]");
                 } else {
-                    result = ansi.new Text(optionSeparator).concat(result);
+                    result = ansi.new Text(optionSeparator, colorScheme).concat(result);
                 }
                 return result;
             }
@@ -13634,7 +16303,7 @@ public class CommandLine {
              * {@linkplain Help#createDefaultParameterRenderer() default parameter renderer}.
              * @param colorScheme the color scheme to use for common, auto-generated parts of the usage help message */
             public Layout(ColorScheme colorScheme, int tableWidth) { this(colorScheme,
-                    TextTable.forDefaultColumns(colorScheme.ansi(), tableWidth)); }
+                    TextTable.forDefaultColumns(colorScheme, UsageMessageSpec.DEFAULT_USAGE_LONG_OPTIONS_WIDTH + 4, tableWidth)); }
 
             /** Constructs a Layout with the specified color scheme, the specified TextTable, the
              * {@linkplain Help#createDefaultOptionRenderer() default option renderer}, and the
@@ -13679,6 +16348,14 @@ public class CommandLine {
                     }
                 }
             }
+            /** Calls {@link #addOption(CommandLine.Model.OptionSpec, CommandLine.Help.IParamLabelRenderer)} for all Options in the specified list.
+             * @param options options to add usage descriptions for;
+             *                it is the responsibility of the caller to exclude options that should not be shown
+             * @param paramLabelRenderer object that knows how to render option parameters
+             * @since 4.4 */
+            public void addAllOptions(List<OptionSpec> options, IParamLabelRenderer paramLabelRenderer) {
+                for (OptionSpec option : options) { addOption(option, paramLabelRenderer); }
+            }
             /**
              * Delegates to the {@link #optionRenderer option renderer} of this layout to obtain
              * text values for the specified {@link OptionSpec}, and then calls the {@link #layout(CommandLine.Model.ArgSpec, CommandLine.Help.Ansi.Text[][])}
@@ -13701,6 +16378,14 @@ public class CommandLine {
                     }
                 }
             }
+            /** Calls {@link #addPositionalParameter(CommandLine.Model.PositionalParamSpec, CommandLine.Help.IParamLabelRenderer)} for all positional parameters in the specified list.
+             * @param params positional parameters to add usage descriptions for;
+             *               it is the responsibility of the caller to exclude positional parameters that should not be shown
+             * @param paramLabelRenderer knows how to render option parameters
+             * @since 4.4 */
+            public void addAllPositionalParameters(List<PositionalParamSpec> params, IParamLabelRenderer paramLabelRenderer) {
+                for (PositionalParamSpec param : params) { addPositionalParameter(param, paramLabelRenderer); }
+            }
             /**
              * Delegates to the {@link #parameterRenderer parameter renderer} of this layout
              * to obtain text values for the specified {@linkplain PositionalParamSpec positional parameter}, and then calls
@@ -13714,6 +16399,18 @@ public class CommandLine {
             }
             /** Returns the section of the usage help message accumulated in the TextTable owned by this layout. */
             @Override public String toString() { return table.toString(); }
+            /** Returns the ColorScheme used to create Text objects in this layout.
+             * @since 4.6 */
+            public ColorScheme colorScheme() { return colorScheme; }
+            /** Returns the TextTable used in this layout.
+             * @since 4.6 */
+            public TextTable textTable() { return table; }
+            /** Returns the IOptionRenderer used to render options to Text before adding this text to the TextTable in this layout.
+             * @since 4.6 */
+            public IOptionRenderer optionRenderer() { return optionRenderer; }
+            /** Returns the IParameterRenderer used to render positional params to Text before adding this text to the TextTable in this layout.
+             * @since 4.6 */
+            public IParameterRenderer parameterRenderer() { return parameterRenderer; }
         }
         /** Sorts short strings before longer strings. */
         static class ShortestFirst implements Comparator<String> {
@@ -13799,7 +16496,7 @@ public class CommandLine {
             /** By default, indent wrapped lines by 2 spaces. */
             public int indentWrappedLines = 2;
 
-            private final Ansi ansi;
+            private final ColorScheme colorScheme;
             private final int tableWidth;
             private boolean adjustLineBreaksForWideCJKCharacters = true;
 
@@ -13813,9 +16510,11 @@ public class CommandLine {
              * </ol>
              * @param ansi whether to emit ANSI escape codes or not
              * @param usageHelpWidth the total width of the columns combined
+             * @deprecated use {@link #forDefaultColumns(CommandLine.Help.Ansi, int, int)} instead
              */
-            public static TextTable forDefaultColumns(Ansi ansi, int usageHelpWidth) {
-                return forDefaultColumns(ansi, defaultOptionsColumnWidth, usageHelpWidth);
+            @Deprecated public static TextTable forDefaultColumns(Ansi ansi, int usageHelpWidth) {
+                // TODO split out the 1 (for long column indent) and 3 (should be description indent)
+                return forDefaultColumns(Help.defaultColorScheme(ansi), UsageMessageSpec.DEFAULT_USAGE_LONG_OPTIONS_WIDTH + 4, usageHelpWidth);
             }
 
             /** Constructs a TextTable with five columns as follows:
@@ -13829,35 +16528,67 @@ public class CommandLine {
              * @param ansi whether to emit ANSI escape codes or not
              * @param longOptionsColumnWidth the width of the long options column
              * @param usageHelpWidth the total width of the columns combined
-             */
-            public static TextTable forDefaultColumns(Ansi ansi, int longOptionsColumnWidth, int usageHelpWidth) {
+             * @deprecated use {@link #forDefaultColumns(CommandLine.Help.ColorScheme, int, int)} instead */
+            @Deprecated public static TextTable forDefaultColumns(Ansi ansi, int longOptionsColumnWidth, int usageHelpWidth) {
+                return forDefaultColumns(Help.defaultColorScheme(ansi), longOptionsColumnWidth, usageHelpWidth);
+            }
+            /** Constructs a TextTable with five columns as follows:
+             * <ol>
+             * <li>required option/parameter marker (width: 2, indent: 0, TRUNCATE on overflow)</li>
+             * <li>short option name (width: 2, indent: 0, TRUNCATE on overflow)</li>
+             * <li>comma separator (width: 1, indent: 0, TRUNCATE on overflow)</li>
+             * <li>long option name(s) (width: 24, indent: 1, SPAN multiple columns on overflow)</li>
+             * <li>description line(s) (width: 51, indent: 1, WRAP to next row on overflow)</li>
+             * </ol>
+             * @param colorScheme the styles and ANSI mode to use for embedded markup
+             * @param longOptionsColumnWidth the width of the long options column
+             * @param usageHelpWidth the total width of the columns combined
+             * @since 4.2 */
+            public static TextTable forDefaultColumns(ColorScheme colorScheme, int longOptionsColumnWidth, int usageHelpWidth) {
                 // "* -c, --create                Creates a ...."
-                return forColumns(ansi,
-                        new Column(2,                                       0, TRUNCATE), // "*"
-                        new Column(2,                                       0, SPAN), // "-c"
-                        new Column(1,                                       0, TRUNCATE), // ","
-                        new Column(longOptionsColumnWidth,                  1, SPAN),  // " --create"
-                        new Column(usageHelpWidth - 5 - longOptionsColumnWidth, 1, WRAP)); // " Creates a ..."
+                int descriptionWidth = usageHelpWidth - 5 - longOptionsColumnWidth;
+                return forColumns(colorScheme,
+                        new Column(2,                0, TRUNCATE), // "*"
+                        new Column(2,                0, SPAN), // "-c"
+                        new Column(1,                0, TRUNCATE), // ","
+                        new Column(longOptionsColumnWidth, 1, SPAN),  // " --create"
+                        new Column(descriptionWidth, 1, WRAP)); // " Creates a ..."
             }
 
             /** Constructs a new TextTable with columns with the specified width, all SPANning  multiple columns on
              * overflow except the last column which WRAPS to the next row.
              * @param ansi whether to emit ANSI escape codes or not
              * @param columnWidths the width of each table column (all columns have zero indent)
-             */
-            public static TextTable forColumnWidths(Ansi ansi, int... columnWidths) {
+             * @deprecated use {@link #forColumns(CommandLine.Help.ColorScheme, CommandLine.Help.Column...)} instead */
+            @Deprecated public static TextTable forColumnWidths(Ansi ansi, int... columnWidths) {
+                return forColumnWidths(Help.defaultColorScheme(ansi), columnWidths);
+            }
+            /** Constructs a new TextTable with columns with the specified width, all SPANning  multiple columns on
+             * overflow except the last column which WRAPS to the next row.
+             * @param colorScheme the styles and ANSI mode to use for embedded markup
+             * @param columnWidths the width of each table column (all columns have zero indent)
+             * @since 4.2 */
+            public static TextTable forColumnWidths(ColorScheme colorScheme, int... columnWidths) {
                 Column[] columns = new Column[columnWidths.length];
                 for (int i = 0; i < columnWidths.length; i++) {
                     columns[i] = new Column(columnWidths[i], 0, i == columnWidths.length - 1 ? WRAP : SPAN);
                 }
-                return new TextTable(ansi, columns);
+                return new TextTable(colorScheme, columns);
             }
             /** Constructs a {@code TextTable} with the specified columns.
              * @param ansi whether to emit ANSI escape codes or not
-             * @param columns columns to construct this TextTable with */
-            public static TextTable forColumns(Ansi ansi, Column... columns) { return new TextTable(ansi, columns); }
-            protected TextTable(Ansi ansi, Column[] columns) {
-                this.ansi = Assert.notNull(ansi, "ansi");
+             * @param columns columns to construct this TextTable with
+             * @deprecated use {@link #forColumns(CommandLine.Help.ColorScheme, CommandLine.Help.Column...)} instead */
+            @Deprecated public static TextTable forColumns(Ansi ansi, Column... columns) { return new TextTable(ansi, columns); }
+            /** Constructs a {@code TextTable} with the specified columns.
+             * @param colorScheme the styles and ANSI mode to use for embedded markup
+             * @param columns columns to construct this TextTable with
+             * @since 4.2 */
+            public static TextTable forColumns(ColorScheme colorScheme, Column... columns) { return new TextTable(colorScheme, columns); }
+            /** @deprecated use {@link picocli.CommandLine.Help.TextTable#TextTable(picocli.CommandLine.Help.ColorScheme, picocli.CommandLine.Help.Column[])}  instead */
+            @Deprecated protected TextTable(Ansi ansi, Column[] columns) { this(Help.defaultColorScheme(ansi), columns); }
+            protected TextTable(ColorScheme colorScheme, Column[] columns) {
+                this.colorScheme = Assert.notNull(colorScheme, "ansi");
                 this.columns = Assert.notNull(columns, "columns").clone();
                 if (columns.length == 0) { throw new IllegalArgumentException("At least one column is required"); }
                 int totalWidth = 0;
@@ -13895,8 +16626,8 @@ public class CommandLine {
 
             /** Adds the required {@code char[]} slots for a new row to the {@link #columnValues} field. */
             public void addEmptyRow() {
-                for (int i = 0; i < columns.length; i++) {
-                    columnValues.add(ansi.new Text(columns[i].width));
+                for (Column column : columns) {
+                    columnValues.add(colorScheme.ansi().new Text(column.width, colorScheme));
                 }
             }
 
@@ -13910,10 +16641,10 @@ public class CommandLine {
                 for (int col = 0; col < numColumns; col++) {
                     cells[col] = values[col] == null
                             ? new Text[] {Ansi.EMPTY_TEXT}
-                            : ansi.new Text(values[col]).splitLines();
+                            : colorScheme.text(values[col]).splitLines();
                     maxRows = Math.max(maxRows, cells[col].length);
                 }
-                Text rowValues[] = new Text[numColumns];
+                Text[] rowValues = new Text[numColumns];
                 for (int row = 0; row < maxRows; row++) {
                     Arrays.fill(rowValues, Ansi.EMPTY_TEXT);
                     for (int col = 0; col < numColumns; col++) {
@@ -14105,6 +16836,14 @@ public class CommandLine {
                 this.indent = indent;
                 this.overflow = Assert.notNull(overflow, "overflow");
             }
+            public boolean equals(Object obj) {
+                return obj instanceof Column
+                        && ((Column) obj).width == width
+                        && ((Column) obj).indent == indent
+                        && ((Column) obj).overflow == overflow;
+            }
+            public int hashCode() { return 17 * width + 37 * indent + 37 * overflow.hashCode();}
+            public String toString() { return String.format("Column[width=%d, indent=%d, overflow=%s]", width, indent, overflow); }
         }
 
         /** All usage help message are generated with a color scheme that assigns certain styles and colors to common
@@ -14117,11 +16856,18 @@ public class CommandLine {
          * @see Help#defaultColorScheme(Ansi)
          */
         public static class ColorScheme {
+            private static final IStyle EMPTY_STYLE = new IStyle() {
+                public String on() { return ""; }
+                public String off() { return ""; }
+            };
             private final List<IStyle> commandStyles;
             private final List<IStyle> optionStyles;
             private final List<IStyle> parameterStyles;
             private final List<IStyle> optionParamStyles;
+            private final List<IStyle> errorStyles;
+            private final List<IStyle> stackTraceStyles;
             private final Ansi ansi;
+            private final Map<String, IStyle> markupMap;
 
             /** Constructs a new empty ColorScheme with the specified Ansi enabled mode.
              * @see Help#defaultColorScheme(Ansi)
@@ -14134,23 +16880,52 @@ public class CommandLine {
                 optionStyles      = Collections.unmodifiableList(new ArrayList<IStyle>(builder.optionStyles()));
                 parameterStyles   = Collections.unmodifiableList(new ArrayList<IStyle>(builder.parameterStyles()));
                 optionParamStyles = Collections.unmodifiableList(new ArrayList<IStyle>(builder.optionParamStyles()));
+                errorStyles       = Collections.unmodifiableList(new ArrayList<IStyle>(builder.errorStyles()));
+                stackTraceStyles  = Collections.unmodifiableList(new ArrayList<IStyle>(builder.stackTraceStyles()));
+                markupMap         = builder.markupMap == null ? null : Collections.unmodifiableMap(new HashMap<String, IStyle>(builder.markupMap));
             }
             /** Returns a Text with all command styles applied to the specified command string.
              * @param command the command string to apply the registered command styles to
              * @return a Text with all command styles applied to the specified command string */
-            public Ansi.Text commandText(String command)         { return ansi().apply(command,     commandStyles); }
+            public Ansi.Text commandText(String command)         { return apply(command,     commandStyles); }
             /** Returns a Text with all option styles applied to the specified option string.
              * @param option the option string to apply the registered option styles to
              * @return a Text with all option styles applied to the specified option string */
-            public Ansi.Text optionText(String option)           { return ansi().apply(option,      optionStyles); }
+            public Ansi.Text optionText(String option)           { return apply(option,      optionStyles); }
             /** Returns a Text with all parameter styles applied to the specified parameter string.
              * @param parameter the parameter string to apply the registered parameter styles to
              * @return a Text with all parameter styles applied to the specified parameter string */
-            public Ansi.Text parameterText(String parameter)     { return ansi().apply(parameter,   parameterStyles); }
+            public Ansi.Text parameterText(String parameter)     { return apply(parameter,   parameterStyles); }
             /** Returns a Text with all optionParam styles applied to the specified optionParam string.
              * @param optionParam the option parameter string to apply the registered option parameter styles to
              * @return a Text with all option parameter styles applied to the specified option parameter string */
-            public Ansi.Text optionParamText(String optionParam) { return ansi().apply(optionParam, optionParamStyles); }
+            public Ansi.Text optionParamText(String optionParam) { return apply(optionParam, optionParamStyles); }
+            /** Returns a Text with all error styles applied to the specified error string.
+             * @param error the error string to apply the registered error styles to
+             * @return a Text with all error styles applied to the specified error string
+             * @since 4.3 */
+            public Ansi.Text errorText(String error) {return apply(error, errorStyles); }
+            /** Returns a Text with all stackTrace styles applied to all lines in the specified stackTrace string.
+             * @param stackTrace the stack trace string to apply the registered stack trace styles to
+             * @return a Text with all stack trace styles applied to the specified stack trace string
+             * @since 4.3 */
+            public Ansi.Text stackTraceText(String stackTrace) {return apply(stackTrace, stackTraceStyles); }
+            /** Returns a Text with all stackTrace styles applied to all lines in the stack trace of the specified Throwable.
+             * @param t the Throwable whose stack trace string to apply the registered stack trace styles to
+             * @return a Text with all stack trace styles applied to the stack trace of the specified Throwable
+             * @since 4.5 */
+            public Ansi.Text stackTraceText(Throwable t) {
+                StringWriter sw = new StringWriter();
+                t.printStackTrace(new PrintWriter(sw, true));
+                return stackTraceText(sw.toString());
+            }
+            /** Returns a String with the {@link #errorStyles() error styles} applied to the stack trace lines showing the
+             * throwable class name and error message (including "Caused by:..." lines), and the {@link #stackTraceStyles() stack trace styles}
+             * applied to the remaining stack trace of lines the specified Throwable.
+             * @param t the Throwable whose stack trace string to apply the error and stack trace styles to
+             * @return a String with error and stack trace styles applied to the stack trace of the specified Throwable
+             * @since 4.5 */
+            public String richStackTraceString(Throwable t) { return throwableToColorString(t, this); }
 
             /** Returns the {@code Ansi} setting of this color scheme. */
             public Ansi ansi() { return ansi; }
@@ -14166,6 +16941,47 @@ public class CommandLine {
             /** Returns the registered styles for option parameters in this color scheme.
              * @since 4.0 */
             public List<IStyle> optionParamStyles() { return optionParamStyles; }
+            /** Returns the registered styles for errors in this color scheme.
+             * @since 4.3 */
+            public List<IStyle> errorStyles() {return errorStyles; }
+            /** Returns the registered styles for stack traces in this color scheme.
+             * @since 4.3 */
+            public List<IStyle> stackTraceStyles() {return stackTraceStyles;}
+
+            /** Returns the custom mapping from markup names (the names of the {@link Style} enum constants, like bold, italic, fg_blue, bg_green, etc) to {@link IStyle} objects in this color scheme.
+             * By default this returns an empty map, unless a custom map was configured.
+             * @since 4.2 */
+            public Map<String, IStyle> customMarkupMap() { return markupMap == null ? Collections.<String, IStyle>emptyMap() : markupMap; }
+
+            /** Converts the specified markup styles to an array of {@link IStyle} objects.
+             * If no {@linkplain #customMarkupMap() custom markup mapping} is specified, this method delegates to {@link Style#parse(String)},
+             * otherwise it returns the styles found in the custom mapping for the specified markup styles.
+             * @param commaSeparatedCodes a string with a comma-separated list of markup styles (for example, {@code "bold,underline,bg_red"}
+             * @since 4.2 */
+            public IStyle[] parse(String commaSeparatedCodes) {
+                if (markupMap == null) {
+                    return Style.parse(commaSeparatedCodes);
+                }
+                String[] codes = commaSeparatedCodes.split(",");
+                List<IStyle> styles = new ArrayList<IStyle>();
+                for (String code : codes) {
+                    code = code.toLowerCase(ENGLISH).replace("(", "_").replace(")", "");
+                    IStyle found = (markupMap.containsKey(code)) ? markupMap.get(code) : markupMap.get("fg_" + code);
+                    if (found != null) {
+                        styles.add(found);
+                    }
+                }
+                return styles.toArray(new IStyle[0]);
+            }
+
+            /** Returns the style that "resets" the style state to neutral.
+             * @return {@link Style#reset} if no {@linkplain #customMarkupMap()} is defined, otherwise either the style registered with the "reset" name or an empty {@code IStyle} if no such style is registered.
+             * @since 4.2
+             */
+            public IStyle resetStyle() {
+                if (markupMap == null) { return Style.reset; }
+                return markupMap.containsKey("reset") ? markupMap.get("reset") : EMPTY_STYLE;
+            }
 
             @Override public boolean equals(Object obj) {
                 if (this == obj) { return true; }
@@ -14175,7 +16991,10 @@ public class CommandLine {
                         && commandStyles.equals(other.commandStyles)
                         && optionStyles.equals(other.optionStyles)
                         && parameterStyles.equals(other.parameterStyles)
-                        && optionParamStyles.equals(other.optionParamStyles);
+                        && optionParamStyles.equals(other.optionParamStyles)
+                        && errorStyles.equals(other.errorStyles)
+                        && stackTraceStyles.equals(other.stackTraceStyles)
+                        && markupMap == null ? other.markupMap == null : markupMap.equals(other.markupMap);
             }
             @Override public int hashCode() {
                 int result = 17;
@@ -14184,8 +17003,63 @@ public class CommandLine {
                 result = result * 37 + optionStyles.hashCode();
                 result = result * 37 + parameterStyles.hashCode();
                 result = result * 37 + optionParamStyles.hashCode();
+                result = result * 37 + errorStyles.hashCode();
+                result = result * 37 + stackTraceStyles.hashCode();
+                result = result * 37 + (markupMap == null ? 0 : markupMap.hashCode());
                 return result;
             }
+            @Override public String toString() {
+                return "ColorScheme[ansi=" + ansi +
+                        ", commands=" + commandStyles +
+                        ", optionStyles=" + optionStyles +
+                        ", parameterStyles=" + parameterStyles +
+                        ", optionParamStyles=" + optionParamStyles +
+                        ", errorStyles=" + errorStyles +
+                        ", stackTraceStyles=" + stackTraceStyles +
+                        ", customMarkupMap=" + markupMap +
+                "]";
+            }
+
+            /**
+             * Returns a new Text object where all the specified styles are applied to the full length of the
+             * specified plain text.
+             * @param plainText the string to apply all styles to. Must not contain markup!
+             * @param styles the styles to apply to the full plain text
+             * @return a new Text object
+             * @since 4.2 */
+            public Text apply(String plainText, List<IStyle> styles) {
+                Text result = ansi().new Text(plainText.length());
+                result.colorScheme = this;
+                if (plainText.length() == 0) { return result; }
+                IStyle[] all = styles.toArray(new IStyle[styles.size()]);
+                result.sections.add(new Ansi.StyledSection(
+                        0, plainText.length(), Style.on(all), Style.off(reverseArray(all)) + resetStyle().off()));
+                result.plain.append(plainText);
+                result.length = result.plain.length();
+                return result;
+            }
+            /**
+             * Returns a new Text object for this ColorScheme, encapsulating the specified string
+             * which may contain markup like {@code @|bg(red),white,underline some text|@}.
+             * <p>
+             * Calling {@code toString()} on the returned Text will {@linkplain ColorScheme#parse(String) convert}
+             * the markup to the styles defined in this ColorScheme
+             * (if its Ansi mode is ON), or to the plain text without the markup (if this ColorScheme's Ansi mode is OFF).
+             * <p>
+             * Equivalent to {@code this.ansi().new Text(stringWithMarkup, this)}.
+             * @see Ansi#text(String)
+             * @since 4.2 */
+            public Text text(String stringWithMarkup) { return ansi().new Text(stringWithMarkup, this); }
+
+            /**
+             * Returns a String where any markup like
+             * {@code @|bg(red),white,underline some text|@} is {@linkplain ColorScheme#parse(String) converted} to the styles defined in this ColorScheme
+             * (if its Ansi mode is ON), or to the plain text without the markup (if this ColorScheme's Ansi mode is OFF).
+             * <p>
+             * Equivalent to {@code this.ansi().new Text(stringWithMarkup, this).toString()}.
+             * @see Ansi#string(String)
+             * @since 4.2 */
+            public String string(String stringWithMarkup) { return ansi().new Text(stringWithMarkup, this).toString(); }
 
             /** Builder class to create {@code ColorScheme} instances.
              * @since 4.0 */
@@ -14194,7 +17068,10 @@ public class CommandLine {
                 private final List<IStyle> optionStyles = new ArrayList<IStyle>();
                 private final List<IStyle> parameterStyles = new ArrayList<IStyle>();
                 private final List<IStyle> optionParamStyles = new ArrayList<IStyle>();
+                private final List<IStyle> errorStyles = new ArrayList<IStyle>();
+                private final List<IStyle> stackTraceStyles = new ArrayList<IStyle>();
                 private Ansi ansi = Ansi.AUTO;
+                private Map<String, IStyle> markupMap;
 
                 /** Constructs an empty color scheme builder with Ansi.AUTO. */
                 public Builder() { }
@@ -14208,6 +17085,11 @@ public class CommandLine {
                     this.optionStyles.addAll(existing.optionStyles());
                     this.parameterStyles.addAll(existing.parameterStyles());
                     this.optionParamStyles.addAll(existing.optionParamStyles());
+                    this.errorStyles.addAll(existing.errorStyles());
+                    this.stackTraceStyles.addAll(existing.stackTraceStyles());
+                    if (existing.markupMap != null) {
+                        this.markupMap = new HashMap<String, IStyle>(existing.markupMap);
+                    }
                 }
                 /** Returns the {@code Ansi} setting of this color scheme builder. */
                 public Ansi ansi() { return ansi; }
@@ -14221,6 +17103,20 @@ public class CommandLine {
                 public List<IStyle> parameterStyles()   { return parameterStyles; }
                 /** Returns the registered styles for option parameters in this color scheme builder. */
                 public List<IStyle> optionParamStyles() { return optionParamStyles; }
+                /** Returns the registered styles for errors in this color scheme builder.
+                 * @since 4.3 */
+                public List<IStyle> errorStyles() { return errorStyles; }
+                /** Returns the registered styles for stack traces in this color scheme builder.
+                 * @since 4.3 */
+                public List<IStyle> stackTraceStyles() { return stackTraceStyles; }
+                /** Returns the custom mapping from markup names (the names of the {@link Style} enum constants, like bold, italic, fg_blue, bg_green, etc) to {@link IStyle} objects in this color scheme.
+                 * By default this returns {@code null}, unless a custom map was configured.
+                 * @since 4.2 */
+                public Map<String, IStyle> customMarkupMap() { return markupMap; }
+                /** Sets the custom mapping from markup names (the names of the {@link Style} enum constants, like bold, italic, fg_blue, bg_green, etc) to {@link IStyle} objects in this color scheme.
+                 * @return this color scheme builder to enable method chaining for a more fluent API
+                 * @since 4.2 */
+                public ColorScheme.Builder customMarkupMap(Map<String, IStyle> newValue) { markupMap = newValue; return this; }
 
                 /** Adds the specified styles to the registered styles for commands in this color scheme builder and returns this builder.
                  * @param styles the styles to add to the registered styles for commands in this color scheme builder
@@ -14238,6 +17134,16 @@ public class CommandLine {
                  * @param styles the styles to add to the registered styles for option parameters in this color scheme builder
                  * @return this color scheme builder to enable method chaining for a more fluent API */
                 public ColorScheme.Builder optionParams(IStyle... styles) { return addAll(optionParamStyles, styles);}
+                /** Adds the specified styles to the registered styles for errors in this color scheme builder and returns this builder.
+                 * @param styles the styles to add to the registered styles for errors in this color scheme builder
+                 * @return this color scheme builder to enable method chaining for a more fluent API
+                 * @since 4.3 */
+                public ColorScheme.Builder errors(IStyle... styles) { return addAll(errorStyles, styles);}
+                /** Adds the specified styles to the registered styles for stack traces in this color scheme builder and returns this builder.
+                 * @param styles the styles to add to the registered styles for stack traces in this color scheme builder
+                 * @return this color scheme builder to enable method chaining for a more fluent API
+                 * @since 4.3 */
+                public ColorScheme.Builder stackTraces(IStyle... styles) { return addAll(stackTraceStyles, styles);}
 
                 /** Replaces colors and styles in this scheme builder with ones specified in system properties, and returns this builder.
                  * Supported property names:<ul>
@@ -14245,6 +17151,8 @@ public class CommandLine {
                  *     <li>{@code picocli.color.options}</li>
                  *     <li>{@code picocli.color.parameters}</li>
                  *     <li>{@code picocli.color.optionParams}</li>
+                 *     <li>{@code picocli.color.errors}</li>
+                 *     <li>{@code picocli.color.stackTraces}</li>
                  * </ul><p>Property values can be anything that {@link Help.Ansi.Style#parse(String)} can handle.</p>
                  * @return this ColorScheme builder
                  */
@@ -14253,6 +17161,8 @@ public class CommandLine {
                     replace(optionStyles,      System.getProperty("picocli.color.options"));
                     replace(parameterStyles,   System.getProperty("picocli.color.parameters"));
                     replace(optionParamStyles, System.getProperty("picocli.color.optionParams"));
+                    replace(errorStyles,       System.getProperty("picocli.color.errors"));
+                    replace(stackTraceStyles,  System.getProperty("picocli.color.stackTraces"));
                     return this;
                 }
                 private void replace(List<IStyle> styles, String property) {
@@ -14280,7 +17190,9 @@ public class CommandLine {
                     .commands(Style.bold)
                     .options(Style.fg_yellow)
                     .parameters(Style.fg_yellow)
-                    .optionParams(Style.italic).build();
+                    .optionParams(Style.italic)
+                    .errors(Style.fg_red, Style.bold)
+                    .stackTraces(Style.italic).build();
         }
 
         /** Provides methods and inner classes to support using ANSI escape codes in usage help messages. */
@@ -14302,6 +17214,7 @@ public class CommandLine {
             static final boolean isWindows()    { return System.getProperty("os.name").toLowerCase().contains("win"); }
             static final boolean isMac()        { return System.getProperty("os.name").toLowerCase().contains("mac"); }
             static final boolean isXterm()      { return System.getenv("TERM") != null && System.getenv("TERM").startsWith("xterm"); }
+            static final boolean isCygwin()     { return System.getenv("TERM") != null && System.getenv("TERM").toLowerCase(ENGLISH).contains("cygwin"); }
             // null on Windows unless on Cygwin or MSYS
             static final boolean hasOsType()    { return System.getenv("OSTYPE") != null; }
 
@@ -14328,7 +17241,7 @@ public class CommandLine {
                 catch (Throwable reflectionFailed) { return true; }
             }
             /** Cygwin and MSYS use pseudo-tty and console is always null... */
-            static boolean isPseudoTTY() { return isWindows() && (isXterm() || hasOsType()); }
+            static boolean isPseudoTTY() { return isWindows() && (isXterm() || isCygwin() || hasOsType()); }
 
             static boolean ansiPossible() {
                 if (forceDisabled())                          { return false; }
@@ -14336,12 +17249,16 @@ public class CommandLine {
                 if (isWindows() && isJansiConsoleInstalled()) { return true; } // #630 JVM crash loading jansi.AnsiConsole on Linux
                 if (hintDisabled())                           { return false; }
                 if (!isTTY() && !isPseudoTTY())               { return false; }
-                return hintEnabled() || !isWindows() || isXterm() || hasOsType();
+                return hintEnabled() || !isWindows() || isXterm() || isCygwin() || hasOsType();
             }
             static boolean isJansiConsoleInstalled() {
                 try {
-                    // first check if JANSI was explicitly disabled: by default this uses
-                    // system property "org.fusesource.jansi.Ansi.disable"
+                    // first check if JANSI was explicitly disabled _without loading any JANSI classes_:
+                    // see https://github.com/remkop/picocli/issues/1106
+                    if (Boolean.getBoolean("org.fusesource.jansi.Ansi.disable")) {
+                        return false;
+                    }
+                    // the Ansi class internally also checks system property "org.fusesource.jansi.Ansi.disable"
                     // but may also have been set with Ansi.setEnabled or a custom detector
                     Class<?> ansi = Class.forName("org.fusesource.jansi.Ansi");
                     Boolean enabled = (Boolean) ansi.getDeclaredMethod("isEnabled").invoke(null);
@@ -14358,14 +17275,19 @@ public class CommandLine {
             }
 
             /** Returns {@code true} if ANSI escape codes should be emitted, {@code false} otherwise.
-             * @return ON: {@code true}, OFF: {@code false}, AUTO: if system property {@code "picocli.ansi"} is
-             *      defined then return its boolean value, otherwise return whether the platform supports ANSI escape codes */
+             * @return ON: {@code true}, OFF: {@code false}, AUTO: if system property {@code "picocli.ansi"} has value
+             *      {@code "tty"} (case-insensitive), then return {@code true} if either {@code System.console() != null}
+             *      or picocli guesses the application is running in a pseudo-terminal pty on a Linux emulator in Windows.
+             *      If system property {@code "picocli.ansi"} has value {@code "true"} (case-sensitive) then return {@code true}.
+             *      Otherwise use picocli's <a href="https://picocli.info/#_heuristics_for_enabling_ansi">Heuristics for Enabling ANSI</a>
+             *      to determine whether the platform supports ANSI escape codes. */
             public boolean enabled() {
                 if (this == ON)  { return true; }
                 if (this == OFF) { return false; }
                 String ansi = System.getProperty("picocli.ansi");
                 boolean auto = ansi == null || "AUTO".equalsIgnoreCase(ansi);
-                return auto ? ansiPossible() : Boolean.getBoolean("picocli.ansi");
+                boolean tty = "TTY".equalsIgnoreCase(ansi) && (isTTY() || isPseudoTTY());
+                return auto ? ansiPossible() : tty || Boolean.getBoolean("picocli.ansi");
             }
             /**
              * Returns a new Text object for this Ansi mode, encapsulating the specified string
@@ -14375,6 +17297,7 @@ public class CommandLine {
              * (if this Ansi mode is ON), or suppress ANSI escape codes (if this Ansi mode is OFF).
              * <p>
              * Equivalent to {@code this.new Text(stringWithMarkup)}.
+             * @see ColorScheme#text(String)
              * @since 3.4 */
             public Text text(String stringWithMarkup) { return this.new Text(stringWithMarkup); }
 
@@ -14384,6 +17307,7 @@ public class CommandLine {
              * if this Ansi is ON, or suppressed if this Ansi is OFF.
              * <p>
              * Equivalent to {@code this.new Text(stringWithMarkup).toString()}.
+             * @see ColorScheme#string(String)
              * @since 3.4 */
             public String string(String stringWithMarkup) { return this.new Text(stringWithMarkup).toString(); }
 
@@ -14529,31 +17453,9 @@ public class CommandLine {
                 }
             }
 
-            /**
-             * Returns a new Text object where all the specified styles are applied to the full length of the
-             * specified plain text.
-             * @param plainText the string to apply all styles to. Must not contain markup!
-             * @param styles the styles to apply to the full plain text
-             * @return a new Text object
-             */
-            public Text apply(String plainText, List<IStyle> styles) {
-                if (plainText.length() == 0) { return new Text(0); }
-                Text result = new Text(plainText.length());
-                IStyle[] all = styles.toArray(new IStyle[styles.size()]);
-                result.sections.add(new StyledSection(
-                        0, plainText.length(), Style.on(all), Style.off(reverse(all)) + Style.reset.off()));
-                result.plain.append(plainText);
-                result.length = result.plain.length();
-                return result;
-            }
-
-            private static <T> T[] reverse(T[] all) {
-                for (int i = 0; i < all.length / 2; i++) {
-                    T temp = all[i];
-                    all[i] = all[all.length - i - 1];
-                    all[all.length - i - 1] = temp;
-                }
-                return all;
+            /** @deprecated use {@link ColorScheme#apply(String, List)} instead */
+            @Deprecated public Text apply(String plainText, List<IStyle> styles) {
+                return CommandLine.Help.defaultColorScheme(this).apply(plainText, styles);
             }
             /** Encapsulates rich text with styles and colors. Text objects may be constructed with Strings containing
              * markup like {@code @|bg(red),white,underline some text|@}, and this class converts the markup to ANSI
@@ -14567,10 +17469,16 @@ public class CommandLine {
                 private int length;
                 private StringBuilder plain = new StringBuilder();
                 private List<StyledSection> sections = new ArrayList<StyledSection>();
+                private ColorScheme colorScheme;
 
                 /** Constructs a Text with the specified max length (for use in a TextTable Column).
                  * @param maxLength max length of this text */
-                public Text(int maxLength) { this.maxLength = maxLength; }
+                public Text(int maxLength) { this(maxLength, Help.defaultColorScheme(Ansi.this)); }
+                /** Constructs a Text with the specified max length (for use in a TextTable Column).
+                 * @param maxLength max length of this text
+                 * @param colorScheme the colorScheme to use
+                 * @since 4.2*/
+                public Text(int maxLength, ColorScheme colorScheme) { this.maxLength = maxLength; this.colorScheme = colorScheme; }
 
                 /** Copy constructor.
                  * @since 3.9 */
@@ -14580,6 +17488,7 @@ public class CommandLine {
                     this.length = other.length;
                     this.plain = new StringBuilder(other.plain);
                     this.sections = new ArrayList<StyledSection>(other.sections);
+                    this.colorScheme = other.colorScheme;
                 }
                 /**
                  * Constructs a Text with the specified String, which may contain markup like
@@ -14587,6 +17496,16 @@ public class CommandLine {
                  * @param input the string with markup to parse
                  */
                 public Text(String input) {
+                    this(input, Help.defaultColorScheme(Ansi.this));
+                }
+                /**
+                 * Constructs a Text with the specified String (which may contain markup), and ColorScheme.
+                 * @param input the string with markup like {@code @|bg(red),white,underline some text|@} to parse
+                 * @param colorScheme the ColorScheme to use to map markup to replacement strings
+                 * @since 4.2
+                 */
+                public Text(String input, ColorScheme colorScheme) {
+                    this.colorScheme = colorScheme;
                     maxLength = -1;
                     plain.setLength(0);
                     int i = 0;
@@ -14599,11 +17518,11 @@ public class CommandLine {
                                 length = plain.length();
                                 return;
                             }
-                            plain.append(input.substring(i, input.length()));
+                            plain.append(input.substring(i));
                             length = plain.length();
                             return;
                         }
-                        plain.append(input.substring(i, j));
+                        plain.append(input, i, j);
                         int k = input.indexOf("|@", j);
                         if (k == -1) {
                             plain.append(input);
@@ -14620,9 +17539,9 @@ public class CommandLine {
                             return;
                         }
 
-                        IStyle[] styles = Style.parse(items[0]);
+                        IStyle[] styles = colorScheme.parse(items[0]);
                         addStyledSection(plain.length(), items[1].length(),
-                                Style.on(styles), Style.off(reverse(styles)) + Style.reset.off());
+                                Style.on(styles), Style.off(reverseArray(styles)) + colorScheme.resetStyle().off());
                         plain.append(items[1]);
                         i = k + 2;
                     }
@@ -14665,18 +17584,24 @@ public class CommandLine {
                     Text result = (Text) clone();
                     result.from = from + start;
                     result.length = end - start;
+                    result.sections.clear();
+                    for (StyledSection section : this.sections) {
+                        if (section.startIndex >= result.from + result.length) { continue; }
+                        if (section.startIndex + section.length <= result.from) { continue; }
+                        result.sections.add(section);
+                    }
                     return result;
                 }
                 /** @deprecated use {@link #concat(String)} instead */
                 @Deprecated public Text append(String string) { return concat(string); }
-                /** @deprecated use {@link #concat(Text)} instead */
+                /** @deprecated use {@link #concat(CommandLine.Help.Ansi.Text)} instead */
                 @Deprecated public Text append(Text text) { return concat(text); }
 
                 /** Returns a copy of this {@code Text} instance with the specified text concatenated to the end. Does not modify this instance!
                  * @param string the text to concatenate to the end of this Text
                  * @return a new Text instance
                  * @since 3.0 */
-                public Text concat(String string) { return concat(new Text(string)); }
+                public Text concat(String string) { return concat(new Text(string, colorScheme)); }
 
                 /** Returns a copy of this {@code Text} instance with the specified text concatenated to the end. Does not modify this instance!
                  * @param other the text to concatenate to the end of this Text
@@ -14690,7 +17615,7 @@ public class CommandLine {
                     for (StyledSection section : sections) {
                         result.sections.add(section.withStartIndex(section.startIndex - from));
                     }
-                    result.plain.append(other.plain.toString().substring(other.from, other.from + other.length));
+                    result.plain.append(other.plain.toString(), other.from, other.from + other.length);
                     for (StyledSection section : other.sections) {
                         int index = result.length + section.startIndex - other.from;
                         result.sections.add(section.withStartIndex(index));
@@ -14714,9 +17639,11 @@ public class CommandLine {
                         destination.length = offset;
                     }
                     for (StyledSection section : sections) {
-                        destination.sections.add(section.withStartIndex(section.startIndex - from + destination.length));
+                        if ((section.startIndex - from) + section.length >= 0) {
+                            destination.sections.add(section.withStartIndex(section.startIndex - from + destination.length));
+                        }
                     }
-                    destination.plain.append(plain.toString().substring(from, from + length));
+                    destination.plain.append(plain.toString(), from, from + length);
                     destination.length = destination.plain.length();
                 }
                 /** Returns the plain text without any formatting.
@@ -14816,7 +17743,7 @@ public class CommandLine {
             if (tracer.level.isEnabled(this)) { tracer.stream.printf(prefix(msg), params); }
         }
         private String prefix(String msg) { return "[picocli " + this + "] " + msg; }
-        static TraceLevel lookup(String key) { return key == null ? WARN : empty(key) || "true".equalsIgnoreCase(key) ? INFO : valueOf(key); }
+        static TraceLevel lookup(String key) { return key == null ? WARN : empty(key) || "true".equalsIgnoreCase(key) ? INFO : valueOf(key.toUpperCase(ENGLISH)); }
     }
     static class Tracer {
         TraceLevel level = TraceLevel.lookup(System.getProperty("picocli.trace"));
@@ -14909,6 +17836,8 @@ public class CommandLine {
     /** Exception thrown by {@link ITypeConverter} implementations to indicate a String could not be converted. */
     public static class TypeConversionException extends PicocliException {
         private static final long serialVersionUID = 4251973913816346114L;
+        /** Constructs a TypeConversionException.
+         * @see ITypeConverter#convert(String) */
         public TypeConversionException(String msg) { super(msg); }
     }
     /** Exception indicating something went wrong while parsing command line options. */
@@ -14997,22 +17926,16 @@ public class CommandLine {
     public static class MissingParameterException extends ParameterException {
         private static final long serialVersionUID = 5075678535706338753L;
         private final List<ArgSpec> missing;
-        public MissingParameterException(CommandLine commandLine, ArgSpec missing, String msg) { this(commandLine, Arrays.asList(missing), msg); }
+        public MissingParameterException(CommandLine commandLine, ArgSpec missing, String msg) { this(commandLine, Collections.singletonList(missing), msg); }
         public MissingParameterException(CommandLine commandLine, Collection<ArgSpec> missing, String msg) {
             super(commandLine, msg);
             this.missing = Collections.unmodifiableList(new ArrayList<ArgSpec>(missing));
         }
         public List<ArgSpec> getMissing() { return missing; }
         private static MissingParameterException create(CommandLine cmd, Collection<ArgSpec> missing, String separator) {
-            if (missing.size() == 1) {
-                return new MissingParameterException(cmd, missing, "Missing required option '"
-                        + ArgSpec.describe(missing.iterator().next(), separator) + "'");
-            }
-            List<String> names = new ArrayList<String>(missing.size());
-            for (ArgSpec argSpec : missing) {
-                names.add(ArgSpec.describe(argSpec, separator));
-            }
-            return new MissingParameterException(cmd, missing, "Missing required options " + names.toString());
+            String missingArgs = ArgSpec.describe(missing, ", ", separator, "'", "'");
+            String types = ArgSpec.describeTypes(missing);
+            return new MissingParameterException(cmd, missing, "Missing required " + types + ": " + missingArgs);
         }
     }
     /** Exception indicating that the user input included multiple arguments from a mutually exclusive group.
@@ -15049,11 +17972,12 @@ public class CommandLine {
      * {@link Option} or {@link Parameters}. */
     public static class UnmatchedArgumentException extends ParameterException {
         private static final long serialVersionUID = -8700426380701452440L;
-        private List<String> unmatched = Collections.<String>emptyList();
+        private List<String> unmatched = Collections.emptyList();
         public UnmatchedArgumentException(CommandLine commandLine, String msg) { super(commandLine, msg); }
         public UnmatchedArgumentException(CommandLine commandLine, Stack<String> args) { this(commandLine, new ArrayList<String>(reverse(args))); }
-        public UnmatchedArgumentException(CommandLine commandLine, List<String> args) {
-            this(commandLine, describe(Assert.notNull(args, "unmatched list"), commandLine) + ": " + quoteElements(args));
+        public UnmatchedArgumentException(CommandLine commandLine, List<String> args)  { this(commandLine, args, ""); }
+        public UnmatchedArgumentException(CommandLine commandLine, List<String> args, String extraMsg) {
+            this(commandLine, describe(Assert.notNull(args, "unmatched list"), commandLine) + ": " + quoteElements(args) + extraMsg);
             unmatched = new ArrayList<String>(args);
         }
         /** Returns {@code true} and prints suggested solutions to the specified stream if such solutions exist, otherwise returns {@code false}.
@@ -15072,7 +17996,7 @@ public class CommandLine {
         static List<String> stripErrorMessage(List<String> unmatched) {
             List<String> result = new ArrayList<String>();
             for (String s : unmatched) {
-                if (s == null) { result.add(null); }
+                if (s == null) { result.add(null); continue; }
                 int pos = s.indexOf(" (while processing option:");
                 result.add(pos < 0 ? s : s.substring(0, pos));
             }
@@ -15092,6 +18016,7 @@ public class CommandLine {
                 writer.println(isUnknownOption()
                         ? "Possible solutions: " + str(suggestions)
                         : "Did you mean: " + str(suggestions).replace(", ", " or ") + "?");
+                writer.flush();
             }
             return !suggestions.isEmpty();
         }
@@ -15107,9 +18032,13 @@ public class CommandLine {
             String stripped = CommandSpec.stripPrefix(arg);
             CommandSpec spec = getCommandLine().getCommandSpec();
             if (spec.resemblesOption(arg, null)) {
-                return spec.findOptionNamesWithPrefix(stripped.substring(0, Math.min(2, stripped.length())));
+                return spec.findVisibleOptionNamesWithPrefix(stripped.substring(0, Math.min(2, stripped.length())));
             } else if (!spec.subcommands().isEmpty()) {
-                List<String> mostSimilar = CosineSimilarity.mostSimilar(arg, spec.subcommands().keySet());
+                List<String> visibleSubs = new ArrayList<String>();
+                for (Map.Entry<String, CommandLine> entry : spec.subcommands().entrySet()) {
+                    if (!entry.getValue().getCommandSpec().usageMessage().hidden()) { visibleSubs.add(entry.getKey()); }
+                }
+                List<String> mostSimilar = CosineSimilarity.mostSimilar(arg, visibleSubs);
                 return mostSimilar.subList(0, Math.min(3, mostSimilar.size()));
             }
             return Collections.emptyList();
@@ -15119,14 +18048,18 @@ public class CommandLine {
         }
         private static String describe(List<String> unmatch, CommandLine cmd) {
             String plural = unmatch.size() == 1 ? "" : "s";
+            if (isUnknownOption(unmatch, cmd)) {
+                return "Unknown option" + plural;
+            }
             String at = unmatch.size() == 1 ? " at" : " from";
-            return isUnknownOption(unmatch, cmd) ? "Unknown option" + plural : "Unmatched argument" + plural + at + " index " + (cmd.interpreter.parseResultBuilder == null ? "0" : cmd.interpreter.parseResultBuilder.originalArgList.indexOf(unmatch.get(0)));
+            int index = cmd.interpreter.parseResultBuilder == null ? 0 : cmd.interpreter.parseResultBuilder.firstUnmatchedPosition;
+            return "Unmatched argument" + plural + at + " index " + index;
         }
         static String quoteElements(List<String> list) {
             String result = "", suffix = "";
-            int pos = 0;
+            int pos;
             for (String element : list) {
-                if (result.length() > 0) {result += ", ";}
+                if (result.length() > 0) { result += ", "; }
                 if (element != null && (pos = element.indexOf(" (while processing option:")) >= 0) {
                     suffix = element.substring(pos);
                     element = element.substring(0, pos);
@@ -15161,5 +18094,319 @@ public class CommandLine {
     public static class MissingTypeConverterException extends ParameterException {
         private static final long serialVersionUID = -6050931703233083760L;
         public MissingTypeConverterException(CommandLine commandLine, String msg) { super(commandLine, msg); }
+    }
+    /**
+     * {@link IDefaultValueProvider IDefaultValueProvider} implementation that loads default values for command line
+     * options and positional parameters from a properties file or {@code Properties} object.
+     * <h2>Location</h2>
+     * By default, this implementation tries to find a properties file named
+     * {@code ".<YOURCOMMAND>.properties"} in the user home directory, where {@code "<YOURCOMMAND>"} is the {@linkplain CommandLine.Command#name() name} of the command.
+     * If a command has {@linkplain CommandLine.Command#aliases() aliases} in addition to its {@linkplain CommandLine.Command#name() name},
+     * these aliases are also used to try to find the properties file. For example:
+     * <pre>
+     * &#64;Command(name = "git", defaultValueProvider = PropertiesDefaultProvider.class)
+     * class Git { }
+     * </pre>
+     * <p>The above will try to load default values from {@code new File(System.getProperty("user.home"), ".git.properties")}.
+     * </p>
+     * <p>
+     * The location of the properties file can also be controlled with system property {@code "picocli.defaults.<YOURCOMMAND>.path"},
+     * in which case the value of the property must be the path to the file containing the default values.
+     * </p>
+     * <p>
+     * The location of the properties file may also be specified programmatically. For example:
+     * </p>
+     * <pre>
+     * CommandLine cmd = new CommandLine(new MyCommand());
+     * File defaultsFile = new File("path/to/config/mycommand.properties");
+     * cmd.setDefaultValueProvider(new PropertiesDefaultProvider(defaultsFile));
+     * cmd.execute(args);
+     * </pre>
+     * <h2>Format</h2>
+     * <p>
+     * For options, the key is either the {@linkplain CommandLine.Option#descriptionKey() descriptionKey},
+     * or the option's {@linkplain OptionSpec#longestName() longest name}.
+     * </p><p>
+     * For positional parameters, the key is either the
+     * {@linkplain CommandLine.Parameters#descriptionKey() descriptionKey},
+     * or the positional parameter's {@linkplain PositionalParamSpec#paramLabel() param label}.
+     * </p><p>
+     * End users may not know what the {@code descriptionKey} of your options and positional parameters are, so be sure
+     * to document that with your application.
+     * </p>
+     * <h2>Subcommands</h2>
+     * <p>
+     * The default values for options and positional parameters of subcommands can be included in the
+     * properties file for the top-level command, so that end users need to maintain only a single file.
+     * This can be achieved by prefixing the key with the command's qualified name.
+     * For example, to give the {@code `git commit`} command's {@code --cleanup} option a
+     * default value of {@code strip}, define a key of {@code git.commit.cleanup} and assign
+     * it a default value.
+     * </p><pre>
+     * # /home/remko/.git.properties
+     * git.commit.cleanup = strip
+     * </pre>
+     * @since 4.1
+     */
+    public static class PropertiesDefaultProvider implements IDefaultValueProvider {
+
+        private Properties properties;
+        private File location;
+
+        /**
+         * Default constructor, used when this default value provider is specified in
+         * the annotations:
+         * <pre>
+         * &#64;Command(name = "mycmd",
+         *     defaultValueProvider = PropertiesDefaultProvider.class)
+         * class MyCommand // ...
+         * </pre>
+         * <p>
+         * This loads default values from a properties file named
+         * {@code ".mycmd.properties"} in the user home directory.
+         * </p><p>
+         * The location of the properties file can also be controlled with system property {@code "picocli.defaults.<YOURCOMMAND>.path"},
+         * in which case the value of the property must be the path to the file containing the default values.
+         * </p>
+         * @see PropertiesDefaultProvider the PropertiesDefaultProvider class description
+         */
+        public PropertiesDefaultProvider() {}
+
+        /**
+         * This constructor loads default values from the specified properties object.
+         * This may be used programmatically. For example:
+         * <pre>
+         * CommandLine cmd = new CommandLine(new MyCommand());
+         * Properties defaults = getProperties();
+         * cmd.setDefaultValueProvider(new PropertiesDefaultProvider(defaults));
+         * cmd.execute(args);
+         * </pre>
+         * @param properties the properties containing the default values
+         * @see PropertiesDefaultProvider the PropertiesDefaultProvider class description
+         */
+        public PropertiesDefaultProvider(Properties properties) {
+            this.properties = properties;
+        }
+
+        /**
+         * This constructor loads default values from the specified properties file.
+         * This may be used programmatically. For example:
+         * <pre>
+         * CommandLine cmd = new CommandLine(new MyCommand());
+         * File defaultsFile = new File("path/to/config/file.properties");
+         * cmd.setDefaultValueProvider(new PropertiesDefaultProvider(defaultsFile));
+         * cmd.execute(args);
+         * </pre>
+         * @param file the file to load default values from. Must be non-{@code null} and
+         *             must contain default values in the standard java {@link Properties} format.
+         * @see PropertiesDefaultProvider the PropertiesDefaultProvider class description
+         */
+        public PropertiesDefaultProvider(File file) {
+            this(createProperties(file, null));
+            properties.remove("__picocli_internal_location");
+            location = file;
+        }
+
+        private static Properties createProperties(File file, CommandSpec commandSpec) {
+            if (file == null) {
+                throw new NullPointerException("file is null");
+            }
+            Tracer tracer = new Tracer();
+            Properties result = new Properties();
+            if (file.exists() && file.canRead()) {
+                InputStream in = null;
+                try {
+                    String command = commandSpec == null ? "unknown command" : commandSpec.qualifiedName();
+                    tracer.debug("Reading defaults from %s for %s%n", file.getAbsolutePath(), command);
+                    in = new FileInputStream(file);
+                    result.load(in);
+                    result.put("__picocli_internal_location", file);
+                } catch (IOException ioe) {
+                    tracer.warn("could not read defaults from %s: %s%n", file.getAbsolutePath(), ioe);
+                } finally {
+                    close(in);
+                }
+            } else {
+                tracer.warn("defaults configuration file %s does not exist or is not readable%n", file.getAbsolutePath());
+            }
+            return result;
+        }
+
+        private static Properties loadProperties(CommandSpec commandSpec) {
+            if (commandSpec == null) { return null; }
+            Properties p = System.getProperties();
+            for (String name : commandSpec.names()) {
+                String path = p.getProperty("picocli.defaults." + name + ".path");
+                File defaultPath = new File(p.getProperty("user.home"), "." + name + ".properties");
+                File file = path == null ? defaultPath : new File(path);
+                if (file.canRead()) {
+                    return createProperties(file, commandSpec);
+                }
+            }
+            return loadProperties(commandSpec.parent());
+        }
+
+        public String defaultValue(ArgSpec argSpec) throws Exception {
+            if (properties == null) {
+                properties = loadProperties(argSpec.command());
+                location = properties == null ? null : (File) properties.remove("__picocli_internal_location");
+            }
+            if (properties == null || properties.isEmpty()) {
+                return null;
+            }
+            return argSpec.isOption()
+                    ? optionDefaultValue((OptionSpec) argSpec)
+                    : positionalDefaultValue((PositionalParamSpec) argSpec);
+        }
+
+        private String optionDefaultValue(OptionSpec option) {
+            String result = getValue(option.descriptionKey(), option.command());
+            result = result != null ? result : getValue(stripPrefix(option.longestName()), option.command());
+            return result;
+        }
+        private static String stripPrefix(String prefixed) {
+            for (int i = 0; i < prefixed.length(); i++) {
+                if (Character.isJavaIdentifierPart(prefixed.charAt(i))) {
+                    return prefixed.substring(i);
+                }
+            }
+            return prefixed;
+        }
+
+        private String positionalDefaultValue(PositionalParamSpec positional) {
+            String result = getValue(positional.descriptionKey(), positional.command());
+            result = result != null ? result : getValue(positional.paramLabel(), positional.command());
+            return result;
+        }
+
+        private String getValue(String key, CommandSpec spec) {
+            String result = null;
+            if (spec != null) {
+                String cmd = spec.qualifiedName(".");
+                result = properties.getProperty(cmd + "." + key);
+            }
+            if (result != null) { return result; }
+            return key == null ? null : properties.getProperty(key);
+        }
+        @Override public String toString() {
+            return getClass().getSimpleName() + "[" + location + "]";
+        }
+    }
+
+    static class AbbreviationMatcher {
+        public static List<String> splitIntoChunks(String command, boolean caseInsensitive) {
+            List<String> result = new ArrayList<String>();
+            int start = 0, codepoint;
+            StringBuilder nonAlphabeticPrefix = new StringBuilder();
+            while (start < command.length()) {
+                codepoint = command.codePointAt(start);
+                if (Character.isLetterOrDigit(codepoint)) {
+                    break;
+                }
+                nonAlphabeticPrefix.appendCodePoint(codepoint);
+                start += Character.charCount(codepoint);
+            }
+            if (nonAlphabeticPrefix.length() > 0) {
+                result.add(nonAlphabeticPrefix.toString());
+//                if (command.codePointBefore(start) == '-') {
+//                    start--; // hint makeCanonical() to canonicalize the first chunk
+//                }
+            }
+            for (int i = start; i < command.length(); i += Character.charCount(codepoint)) {
+                codepoint = command.codePointAt(i);
+                if ((!caseInsensitive && Character.isUpperCase(codepoint)) || '-' == codepoint) {
+                    String chunk = makeCanonical(command.substring(start, i));
+                    if (chunk.length() > 0) {
+                        result.add(chunk);
+                    }
+                    start = i;
+                }
+            }
+            if (start < command.length()) {
+                String chunk = makeCanonical(command.substring(start));
+                if (chunk.length() > 0) {
+                    result.add(chunk);
+                }
+            }
+            return result;
+        }
+
+        private static String makeCanonical(String str) {
+            if ("-".equals(str)) {
+                return "";
+            }
+            if (str.startsWith("-") && str.length() > 1) {
+                String uppercase = String.valueOf(Character.toChars(Character.toUpperCase(str.codePointAt(1))));
+                return uppercase + str.substring(1 + uppercase.length());
+            }
+            return str;
+        }
+
+        /** Returns the non-abbreviated name if found, otherwise returns the specified original abbreviation value. */
+        public static String match(Set<String> set, String abbreviation, boolean caseInsensitive, CommandLine source) {
+            if (set.contains(abbreviation) || set.isEmpty()) { // return exact match
+                return abbreviation;
+            }
+            List<String> abbreviatedKeyChunks = splitIntoChunks(abbreviation, caseInsensitive);
+            List<String> candidates = new ArrayList<String>();
+            for (String key : set) {
+                List<String> keyChunks = splitIntoChunks(key, caseInsensitive);
+                if (matchKeyChunks(abbreviatedKeyChunks, keyChunks, caseInsensitive)) {
+                    candidates.add(key);
+                }
+            }
+            if (candidates.size() > 1) {
+                String str = candidates.toString();
+                throw new ParameterException(source, "Error: '" + abbreviation + "' is not unique: it matches '" +
+                        str.substring(1, str.length() - 1).replace(", ", "', '") + "'");
+            }
+            return candidates.isEmpty() ? abbreviation : candidates.get(0); // return the original if no match found
+        }
+
+        private static boolean matchKeyChunks(List<String> abbreviatedKeyChunks, List<String> keyChunks, boolean caseInsensitive) {
+            if (abbreviatedKeyChunks.size() > keyChunks.size()) {
+                return false;
+            }
+            int matchCount = 0;
+            if (isNonAlphabetic(keyChunks.get(0))) { // non-alphabetic prefix must be exactly the same
+                if (!keyChunks.get(0).equals(abbreviatedKeyChunks.get(0))) {
+                    return false;
+                }
+                matchCount++;
+            }
+            if (!startsWith(keyChunks.get(matchCount), abbreviatedKeyChunks.get(matchCount), caseInsensitive)) { // first alphabetic chunk must match
+                return false;
+            }
+            matchCount++;
+            for (int i = matchCount, lastMatchChunk = matchCount; i < abbreviatedKeyChunks.size(); i++, matchCount++) {
+                boolean found = false;
+                for (int j = lastMatchChunk; j < keyChunks.size(); j++) {
+                    if ((found = startsWith(keyChunks.get(j), abbreviatedKeyChunks.get(i), caseInsensitive))) {
+                        lastMatchChunk = j + 1;
+                        break;
+                    }
+                }
+                if (!found) { // not a candidate
+                    break;
+                }
+            }
+            return matchCount == abbreviatedKeyChunks.size();
+        }
+
+        private static boolean startsWith(String str, String prefix, boolean caseInsensitive) {
+            if (prefix.length() > str.length()) {
+                return false;
+            }
+            String strPrefix = str.substring(0, prefix.length());
+            return caseInsensitive ? strPrefix.equalsIgnoreCase(prefix) : strPrefix.equals(prefix);
+        }
+
+        private static boolean isNonAlphabetic(String str) {
+            for (int i = 0, codepoint; i < str.length(); i += Character.charCount(codepoint)) {
+                codepoint = str.codePointAt(i);
+                if (Character.isLetterOrDigit(codepoint)) { return false; }
+            }
+            return true;
+        }
     }
 }

@@ -34,7 +34,7 @@ from fnmatch import fnmatch
 from os.path import isfile, isdir, join, abspath, relpath, dirname, basename
 
 IGNORED_JARS = [
-    'org.apache.ant*'
+    'org.apache.ant*',
 ]
 IGNORE_NESTED_JARS = [
 ]
@@ -79,13 +79,13 @@ IGNORED_FILES = [
     'profile.list',
     'systembundle.properties',
     'version.txt',
-    'xtend-gen/*'
+    'xtend-gen/*',
 ]
 APPEND_MERGE = [
     'plugin.properties',
     'META-INF/services/*',
     'META-INF/LICENSE.txt',
-    'META-INF/LICENSE'
+    'META-INF/LICENSE',
 ]
 IGNORE_MERGE = [
     'eclipse32.png',
@@ -104,17 +104,19 @@ KLIGHD_JARS_BLACKLIST = [
     'org.eclipse.ui*',
     'org.eclipse.e4*',
     'org.eclipse.*.ui*',
-    'de.cau.cs.kieler.simulation.ui*'
+    'de.cau.cs.kieler.simulation.ui*',
 ]
 KLIGHD_JARS_WHITELIST = [
-    'org.eclipse.ui.workbench*'
+    'org.eclipse.ui.workbench_*',
+    'org.eclipse.ui.ide_*', # For some reason IStorageEditorInput is required
 ]
 KLIGHD_IGNORED_FILES = [
     'org/eclipse/ui/[!I]*', # Keep Interfaces for Klighd
     'org/eclipse/ui/*/*',
-    'de.cau.cs.kieler.simulation.ui/*/*'
-    'de.cau.cs.kieler.simulation.ui/[!icons]/*'
-    'fragment.properties'
+    'org.eclipse.ui.ide*/icons/*',
+    'de.cau.cs.kieler.simulation.ui/*/*',
+    'de.cau.cs.kieler.simulation.ui/[!icons]/*',
+    'fragment.properties',
 ]
 klighd_swt = {}
 
