@@ -64,8 +64,8 @@ class KGTLoader {
             return (res.getContents().get(0) as KNode).children.head
         } catch (Exception e) {
             // Will also be used to test existence of files
-            // Hence, do not spam irrelevant exeception
-            e.printStackTrace()
+            // Hence, do not spam irrelevant exceptions!!
+            //e.printStackTrace()
         } finally {
             stream?.close
         }
