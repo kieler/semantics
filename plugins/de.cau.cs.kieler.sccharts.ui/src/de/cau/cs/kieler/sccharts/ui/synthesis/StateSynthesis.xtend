@@ -204,7 +204,10 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
                 (if (state.isMacroState) {
                     val label = <Pair<? extends CharSequence, TextFormat>>newArrayList
                     label += new Pair(state.serializeHR, TextFormat.TEXT)
-                    if (state.isReferencing) {
+                    if (!state.genericParameterDeclarations.nullOrEmpty) {
+                        label += state.genericParameterDeclarations.serializeGenericParametersHighlighted
+                    }
+                    if (state.reference !== null) {
                         label += new Pair("@", TextFormat.KEYWORD)
                         if (state.isReferencing) {
                             label += new Pair(state.reference.target.name, TextFormat.TEXT)
@@ -214,13 +217,25 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
                         if (SHOW_BINDINGS.booleanValue) {
                             label += new Pair(state.reference.parameters.serializeHRParameters, TextFormat.TEXT)
                         }
-                    } else if (!state.baseStates.nullOrEmpty) {
+                    } else if (!state.baseStateReferences.nullOrEmpty) {
                         label += new Pair("extends", TextFormat.KEYWORD)
-                        for (baseState : state.baseStates.indexed) {
-                            if (baseState.key == state.baseStates.length - 1) {
-                                label += new Pair(baseState.value.serializeHR, TextFormat.TEXT)
+                        for (baseState : state.baseStateReferences.indexed) {
+                            val baseRef = baseState.value
+                            if (baseRef.target !== null) {
+                                label += new Pair(baseRef.target.serializeHR, TextFormat.TEXT)
                             } else {
-                                label += new Pair(baseState.value.serializeHR + ",", TextFormat.TEXT)
+                                label += new Pair("UnresolvedReference", TextFormat.HIGHLIGHT)
+                            }
+                            if (SHOW_BINDINGS.booleanValue) {
+                                if (!baseRef.genericParameters.nullOrEmpty) {
+                                    label += new Pair(baseRef.genericParameters.serializeHRParameters("<", ">"), TextFormat.TEXT)
+                                }
+                                if (!baseRef.parameters.nullOrEmpty) {
+                                    label += new Pair(baseRef.parameters.serializeHRParameters, TextFormat.TEXT)
+                                }
+                            }
+                            if (baseState.key < state.baseStates.length - 1) {
+                                label += new Pair(",", TextFormat.TEXT)
                             }
                         }
                     }

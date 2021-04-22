@@ -17,14 +17,16 @@ import com.google.inject.Guice
 import com.google.inject.Inject
 import com.google.inject.Singleton
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.scg.Join
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
+import de.cau.cs.kieler.scg.extensions.ThreadPathType
 import de.cau.cs.kieler.scg.extensions.UnsupportedSCGException
 import java.util.List
-import de.cau.cs.kieler.scg.Entry
-import de.cau.cs.kieler.scg.extensions.ThreadPathType
+
+import static de.cau.cs.kieler.scg.processors.SCGAnnotations.*
 
 /**
  * @author ssm
@@ -44,11 +46,11 @@ class SynchronizerSelector {
     @Inject
     extension AnnotationsExtensions 
     
-    protected static val ANNOTATION_CONTROLFLOWTHREADPATHTYPE = "cfPathType"    
     protected static val ANNOTATION_IGNORETHREAD = "ignore"
     public static val ANNOTATION_SELECTEDSYNCHRONIZER = "synchronizer"
 
     protected val List<Class<? extends AbstractSynchronizer>> SYNCHRONIZER_LIST = <Class<? extends AbstractSynchronizer>> newArrayList(
+        typeof(ParOrSynchronizer), // Must come first because others can not handle join.any == true
         typeof(InstantaneousSynchronizer),
         typeof(DepthSynchronizer),
         typeof(SurfaceSynchronizer)

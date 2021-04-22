@@ -13,6 +13,7 @@
  */
 package de.cau.cs.kieler.sccharts.impl;
 
+import de.cau.cs.kieler.sccharts.BaseStateReference;
 import de.cau.cs.kieler.sccharts.ControlflowRegion;
 import de.cau.cs.kieler.sccharts.Region;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
@@ -31,8 +32,8 @@ import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
-import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -53,7 +54,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.StateImpl#isConnector <em>Connector</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.StateImpl#getOutgoingTransitions <em>Outgoing Transitions</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.StateImpl#getIncomingTransitions <em>Incoming Transitions</em>}</li>
- *   <li>{@link de.cau.cs.kieler.sccharts.impl.StateImpl#getBaseStates <em>Base States</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.impl.StateImpl#getBaseStateReferences <em>Base State References</em>}</li>
  * </ul>
  *
  * @generated
@@ -177,14 +178,14 @@ public class StateImpl extends ScopeImpl implements State {
     protected EList<Transition> incomingTransitions;
 
     /**
-     * The cached value of the '{@link #getBaseStates() <em>Base States</em>}' reference list.
+     * The cached value of the '{@link #getBaseStateReferences() <em>Base State References</em>}' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getBaseStates()
+     * @see #getBaseStateReferences()
      * @generated
      * @ordered
      */
-    protected EList<State> baseStates;
+    protected EList<BaseStateReference> baseStateReferences;
 
     /**
      * <!-- begin-user-doc -->
@@ -385,11 +386,11 @@ public class StateImpl extends ScopeImpl implements State {
      * @generated
      */
     @Override
-    public EList<State> getBaseStates() {
-        if (baseStates == null) {
-            baseStates = new EObjectResolvingEList<State>(State.class, this, SCChartsPackage.STATE__BASE_STATES);
+    public EList<BaseStateReference> getBaseStateReferences() {
+        if (baseStateReferences == null) {
+            baseStateReferences = new EObjectContainmentEList<BaseStateReference>(BaseStateReference.class, this, SCChartsPackage.STATE__BASE_STATE_REFERENCES);
         }
-        return baseStates;
+        return baseStateReferences;
     }
 
     /**
@@ -431,6 +432,8 @@ public class StateImpl extends ScopeImpl implements State {
                 return ((InternalEList<?>)getOutgoingTransitions()).basicRemove(otherEnd, msgs);
             case SCChartsPackage.STATE__INCOMING_TRANSITIONS:
                 return ((InternalEList<?>)getIncomingTransitions()).basicRemove(otherEnd, msgs);
+            case SCChartsPackage.STATE__BASE_STATE_REFERENCES:
+                return ((InternalEList<?>)getBaseStateReferences()).basicRemove(otherEnd, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
@@ -473,8 +476,8 @@ public class StateImpl extends ScopeImpl implements State {
                 return getOutgoingTransitions();
             case SCChartsPackage.STATE__INCOMING_TRANSITIONS:
                 return getIncomingTransitions();
-            case SCChartsPackage.STATE__BASE_STATES:
-                return getBaseStates();
+            case SCChartsPackage.STATE__BASE_STATE_REFERENCES:
+                return getBaseStateReferences();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -515,9 +518,9 @@ public class StateImpl extends ScopeImpl implements State {
                 getIncomingTransitions().clear();
                 getIncomingTransitions().addAll((Collection<? extends Transition>)newValue);
                 return;
-            case SCChartsPackage.STATE__BASE_STATES:
-                getBaseStates().clear();
-                getBaseStates().addAll((Collection<? extends State>)newValue);
+            case SCChartsPackage.STATE__BASE_STATE_REFERENCES:
+                getBaseStateReferences().clear();
+                getBaseStateReferences().addAll((Collection<? extends BaseStateReference>)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -555,8 +558,8 @@ public class StateImpl extends ScopeImpl implements State {
             case SCChartsPackage.STATE__INCOMING_TRANSITIONS:
                 getIncomingTransitions().clear();
                 return;
-            case SCChartsPackage.STATE__BASE_STATES:
-                getBaseStates().clear();
+            case SCChartsPackage.STATE__BASE_STATE_REFERENCES:
+                getBaseStateReferences().clear();
                 return;
         }
         super.eUnset(featureID);
@@ -586,8 +589,8 @@ public class StateImpl extends ScopeImpl implements State {
                 return outgoingTransitions != null && !outgoingTransitions.isEmpty();
             case SCChartsPackage.STATE__INCOMING_TRANSITIONS:
                 return incomingTransitions != null && !incomingTransitions.isEmpty();
-            case SCChartsPackage.STATE__BASE_STATES:
-                return baseStates != null && !baseStates.isEmpty();
+            case SCChartsPackage.STATE__BASE_STATE_REFERENCES:
+                return baseStateReferences != null && !baseStateReferences.isEmpty();
         }
         return super.eIsSet(featureID);
     }

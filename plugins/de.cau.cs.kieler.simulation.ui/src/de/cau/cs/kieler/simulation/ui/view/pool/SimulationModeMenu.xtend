@@ -189,11 +189,14 @@ class SimulationModeMenu implements SelectionListener {
     
 }
 
-@FinalFieldsConstructor
 class DynamicInfoLabelUpdater extends Thread {
     
     static val long SLEEP = TimedSimulationModeCountDown.SLEEP_MSEC
     val SimulationModeMenu menu
+    
+    new(SimulationModeMenu menu) {
+        this.menu = menu
+    }
     
     override run() {
         name = this.class.simpleName

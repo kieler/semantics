@@ -20,7 +20,10 @@ import de.cau.cs.kieler.klighd.krendering.KColor
 import de.cau.cs.kieler.klighd.krendering.KDecoratorPlacementData
 import de.cau.cs.kieler.klighd.krendering.KPolyline
 import de.cau.cs.kieler.klighd.krendering.KRendering
+import de.cau.cs.kieler.klighd.krendering.KRenderingFactory
 import de.cau.cs.kieler.klighd.krendering.KSpline
+import de.cau.cs.kieler.klighd.krendering.LineCap
+import de.cau.cs.kieler.klighd.krendering.LineJoin
 import de.cau.cs.kieler.klighd.krendering.LineStyle
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensions
@@ -28,6 +31,8 @@ import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KLabelExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KPolylineExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.PositionReferenceX
+import de.cau.cs.kieler.klighd.krendering.extensions.PositionReferenceY
 import de.cau.cs.kieler.sccharts.Transition
 import java.util.List
 
@@ -63,6 +68,8 @@ class TransitionStyles {
 
     @Inject
     extension ColorStore
+    
+    extension KRenderingFactory = KRenderingFactory::eINSTANCE
 
     private static val float TRANSITION_LINE_WIDTH = 2;
     private static val float TRANSITION_DASH_BLACK = 7;
@@ -286,6 +293,27 @@ class TransitionStyles {
     def setUserScheduleStyle(KEdge edge) {
         edge.line => [
             foreground = USER_SCHEDULE_COLOR.color
+        ]
+    }
+    
+    def addAggregationArrowDecorator(KPolyline line) {
+        line.lineCap = LineCap::CAP_FLAT
+        createKPolygon => [
+            line.addChild(it).withCopyOf(line.lineWidth).withCopyOf(line.foreground).setBackground(line.foreground).setLineJoin(LineJoin::JOIN_ROUND)
+            points += createKPosition(PositionReferenceX::LEFT, 0, 0, PositionReferenceY::TOP, 0, 0.5f)
+            points += createKPosition(PositionReferenceX::LEFT, 0, 0.5f, PositionReferenceY::TOP, 0, 0)
+            points += createKPosition(PositionReferenceX::RIGHT, 0, 0, PositionReferenceY::BOTTOM, 0, 0.5f)
+            points += createKPosition(PositionReferenceX::RIGHT, 0, 0.5f, PositionReferenceY::BOTTOM, 0, 0)
+            
+            placementData = createKDecoratorPlacementData => [
+                it.rotateWithLine = true;
+                it.relative = 0f
+                it.absolute = 0f
+                it.width = 16
+                it.height = 10
+                it.setXOffset(0f)
+                it.setYOffset(-5f)
+            ]
         ]
     }
     

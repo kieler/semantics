@@ -42,6 +42,7 @@ import de.cau.cs.kieler.kexpressions.ValuedObject;
  *   <li>{@link de.cau.cs.kieler.kexpressions.impl.ValuedObjectImpl#getCardinalities <em>Cardinalities</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.impl.ValuedObjectImpl#getLabel <em>Label</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.impl.ValuedObjectImpl#getGenericParameters <em>Generic Parameters</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.impl.ValuedObjectImpl#getParameters <em>Parameters</em>}</li>
  * </ul>
  *
  * @generated
@@ -126,6 +127,16 @@ public class ValuedObjectImpl extends NamedObjectImpl implements ValuedObject {
      * @ordered
      */
     protected EList<Parameter> genericParameters;
+
+                /**
+     * The cached value of the '{@link #getParameters() <em>Parameters</em>}' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getParameters()
+     * @generated
+     * @ordered
+     */
+    protected EList<Parameter> parameters;
 
                 /**
      * <!-- begin-user-doc -->
@@ -259,6 +270,19 @@ public class ValuedObjectImpl extends NamedObjectImpl implements ValuedObject {
      * @generated
      */
     @Override
+    public EList<Parameter> getParameters() {
+        if (parameters == null) {
+            parameters = new EObjectContainmentEList<Parameter>(Parameter.class, this, KExpressionsPackage.VALUED_OBJECT__PARAMETERS);
+        }
+        return parameters;
+    }
+
+                /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
             case KExpressionsPackage.VALUED_OBJECT__ANNOTATIONS:
@@ -269,6 +293,8 @@ public class ValuedObjectImpl extends NamedObjectImpl implements ValuedObject {
                 return ((InternalEList<?>)getCardinalities()).basicRemove(otherEnd, msgs);
             case KExpressionsPackage.VALUED_OBJECT__GENERIC_PARAMETERS:
                 return ((InternalEList<?>)getGenericParameters()).basicRemove(otherEnd, msgs);
+            case KExpressionsPackage.VALUED_OBJECT__PARAMETERS:
+                return ((InternalEList<?>)getParameters()).basicRemove(otherEnd, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
@@ -316,6 +342,8 @@ public class ValuedObjectImpl extends NamedObjectImpl implements ValuedObject {
                 return getLabel();
             case KExpressionsPackage.VALUED_OBJECT__GENERIC_PARAMETERS:
                 return getGenericParameters();
+            case KExpressionsPackage.VALUED_OBJECT__PARAMETERS:
+                return getParameters();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -350,6 +378,10 @@ public class ValuedObjectImpl extends NamedObjectImpl implements ValuedObject {
                 getGenericParameters().clear();
                 getGenericParameters().addAll((Collection<? extends Parameter>)newValue);
                 return;
+            case KExpressionsPackage.VALUED_OBJECT__PARAMETERS:
+                getParameters().clear();
+                getParameters().addAll((Collection<? extends Parameter>)newValue);
+                return;
         }
         super.eSet(featureID, newValue);
     }
@@ -380,6 +412,9 @@ public class ValuedObjectImpl extends NamedObjectImpl implements ValuedObject {
             case KExpressionsPackage.VALUED_OBJECT__GENERIC_PARAMETERS:
                 getGenericParameters().clear();
                 return;
+            case KExpressionsPackage.VALUED_OBJECT__PARAMETERS:
+                getParameters().clear();
+                return;
         }
         super.eUnset(featureID);
     }
@@ -404,6 +439,8 @@ public class ValuedObjectImpl extends NamedObjectImpl implements ValuedObject {
                 return LABEL_EDEFAULT == null ? label != null : !LABEL_EDEFAULT.equals(label);
             case KExpressionsPackage.VALUED_OBJECT__GENERIC_PARAMETERS:
                 return genericParameters != null && !genericParameters.isEmpty();
+            case KExpressionsPackage.VALUED_OBJECT__PARAMETERS:
+                return parameters != null && !parameters.isEmpty();
         }
         return super.eIsSet(featureID);
     }

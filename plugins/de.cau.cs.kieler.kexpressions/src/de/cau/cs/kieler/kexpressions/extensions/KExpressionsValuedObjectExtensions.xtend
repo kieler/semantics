@@ -68,6 +68,13 @@ class KExpressionsValuedObjectExtensions {
             return null        
     }
     
+    def ClassDeclaration getClassDeclaration(ValuedObject valuedObject) {
+        if (valuedObject.eContainer instanceof ClassDeclaration) 
+            return valuedObject.eContainer as ClassDeclaration
+        else
+            return null        
+    }
+    
     def asVariableDeclaration(EObject eObject) {
         eObject as VariableDeclaration
     }
@@ -427,6 +434,22 @@ class KExpressionsValuedObjectExtensions {
     
     def asValuedObjectFromReference(Expression expression) {
         expression.asValuedObjectReference.valuedObject
+    }
+    
+    def boolean isSubReference(ValuedObjectReference vor) {
+        val container = vor.eContainer
+        if (container instanceof ValuedObjectReference) {
+            return container.subReference === vor
+        }
+        return false
+    }
+    
+    def void prependReferenceToReference(ValuedObjectReference vor, ValuedObject vo) {
+        val newSub = vor.valuedObject.reference
+        newSub.subReference = vor.subReference
+        newSub.indices += vor.indices
+        vor.valuedObject = vo
+        vor.subReference = newSub
     }
     
 }

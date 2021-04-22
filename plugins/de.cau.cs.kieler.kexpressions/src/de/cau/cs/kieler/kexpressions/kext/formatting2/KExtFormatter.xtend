@@ -92,8 +92,8 @@ class KExtFormatter extends KEffectsFormatter {
 			format(annotations, document);
 		}
 		
-		valuedobject.regionFor.keywords(valuedObjectAccess.leftSquareBracketKeyword_3_0).forEach[prepend[ noSpace ].append[ noSpace ]]
-        valuedobject.regionFor.keywords(valuedObjectAccess.rightSquareBracketKeyword_3_2).forEach[prepend[ noSpace ]]
+		valuedobject.regionFor.keywords(valuedObjectAccess.leftSquareBracketKeyword_2_0).forEach[prepend[ noSpace ].append[ noSpace ]]
+        valuedobject.regionFor.keywords(valuedObjectAccess.rightSquareBracketKeyword_2_2).forEach[prepend[ noSpace ]]
 		
 		for (Expression cardinalities : valuedobject.getCardinalities()) {
 			format(cardinalities, document);

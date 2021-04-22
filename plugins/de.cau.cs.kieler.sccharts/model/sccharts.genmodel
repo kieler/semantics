@@ -65,7 +65,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute sccharts.ecore#//State/connector"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference sccharts.ecore#//State/outgoingTransitions"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference sccharts.ecore#//State/incomingTransitions"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference sccharts.ecore#//State/baseStates"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference sccharts.ecore#//State/baseStateReferences"/>
     </genClasses>
     <genClasses ecoreClass="sccharts.ecore#//Region">
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference sccharts.ecore#//Region/parentState"/>
@@ -77,6 +77,7 @@
     <genClasses ecoreClass="sccharts.ecore#//ControlflowRegion">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference sccharts.ecore#//ControlflowRegion/states"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute sccharts.ecore#//ControlflowRegion/final"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute sccharts.ecore#//ControlflowRegion/abort"/>
     </genClasses>
     <genClasses ecoreClass="sccharts.ecore#//DataflowRegion">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference sccharts.ecore#//DataflowRegion/equations"/>
@@ -109,6 +110,11 @@
     <genClasses ecoreClass="sccharts.ecore#//CodeEffect"/>
     <genClasses ecoreClass="sccharts.ecore#//DataflowAssignment">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute sccharts.ecore#//DataflowAssignment/sequential"/>
+    </genClasses>
+    <genClasses ecoreClass="sccharts.ecore#//BaseStateReference">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference sccharts.ecore#//BaseStateReference/target"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference sccharts.ecore#//BaseStateReference/genericParameters"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference sccharts.ecore#//BaseStateReference/parameters"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

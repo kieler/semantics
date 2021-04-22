@@ -69,38 +69,28 @@ class KEffectsEmissionReferenceCallConverter {
             if (node instanceof CompositeNodeWithSemanticElement) {
                 val emission = node.semanticElement
                 if (emission instanceof Emission) {
-                    if (emission.newValue !== null) {
+                    //print("Emission " + node.text)
+                    if (emission.hasAnnotation(ANNOTATION)) {
+                        if (emission.eContainer !== null) {
+                            System.err.println("KEffectsEmissionReferenceCallConverter: Replaced emission reappeared!")
+                        }
+                    } else if (emission.newValue !== null) {
                         var voNameNode = node.firstChild
                         while (voNameNode !== null && !(voNameNode.grammarElement instanceof RuleCall)) {
                             voNameNode = voNameNode.nextSibling
                         }
                         if (voNameNode !== null) {
-                            emission.reference.link((voNameNode.getCrossRefNodeAsString(true)?:"").split("\\.").map[trim])
-//                            var voRef = emission.reference.lowermostReference
-//                            val candidates = getScope(voRef, expPackage.valuedObjectReference_ValuedObject)
-//                            if (candidates !== null) {
-//                                var name = voNameNode.getCrossRefNodeAsString(true)
-////                                val nameParts = name.split(".")
-//                                if (emission.reference.subReference !== null && name.contains(".")) { // only name of last reference
-//                                    name = name.substring(name.lastIndexOf(".") + 1)
-//                                }
-//                                val qualifiedName = name.toQualifiedName
-//                                val candidate = candidates.getSingleElement(qualifiedName)
-//                                if (candidate !== null) {
-//                                    val vo = candidate.EObjectOrProxy
-//                                    if (vo instanceof ValuedObject) {
-//                                        if (vo.eContainer instanceof ReferenceDeclaration || vo.eContainer instanceof MethodDeclaration) {
-//                                            toConvert.put(emission, vo)
-//                                        }
-//                                    }
-//                                }
-//                            }
+                            emission.reference.link((voNameNode.getCrossRefNodeAsString(true)?:"").split("\\.").map[
+                                // Name might iclude array or bindinf brackets -> drop
+                                it.replaceAll("\\s|\\[.*\\]|<.*>|\\(.*\\)","").trim()
+                            ])
                             val vo = emission.reference.lowermostReference.valuedObject
                             if (vo !== null && (vo.eContainer instanceof ReferenceDeclaration || vo.eContainer instanceof MethodDeclaration)) {
                                 toConvert += emission
                             }
                         }
                     }
+                    //println(" is " + (toConvert.contains(emission) ? "VOR" : "Emit"))
                 }
             }
         }

@@ -28,6 +28,10 @@ import java.util.Stack
  */
 class Replacements extends HashMap<String, Stack<Expression>> {
     
+    /** 
+     * Nested replacement for generic types.
+     * Static parameters that are not types will appear in normal replacemnts!
+     */
     public val HashMap<String, Expression> typeReplacements = newHashMap
     
     new () {
@@ -92,5 +96,10 @@ class Replacements extends HashMap<String, Stack<Expression>> {
         } else {
             return stack.pop
         }
+    }
+    
+    /** Returns true if there is a entry for a VO with the same name */
+    def boolean containsKey(ValuedObject valuedObject) {
+        return containsKey(valuedObject.name)
     }
 }

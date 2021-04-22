@@ -109,6 +109,14 @@ class SCGControlFlowExtensions {
     // -- Control flow queries
     // -------------------------------------------------------------------------
    
+    def Node sourceNode(Link cf) {
+        val source = cf.eContainer
+        if (source instanceof Node) {
+            return source
+        }
+        return null
+    }
+   
     def Node targetNode(Link cf) {
         cf.target as Node
     }
@@ -120,8 +128,12 @@ class SCGControlFlowExtensions {
      * 			the node in question
      * @return Returns a list of control flows.
      */
-    def Iterable<ControlFlow> getAllNext (Node node) {
+    def Iterable<ControlFlow> getAllNext(Node node) {
         node.eContents.filter(typeof(ControlFlow))
+    }
+    
+    def Iterable<Node> getAllNextNodes(Node node) {
+        return node.allNext.map[targetNode]
     }
 
 	/** 
@@ -253,6 +265,10 @@ class SCGControlFlowExtensions {
 	 */
     def Iterable<List<ControlFlow>> getInstantaneousControlFlows(Node source, Node target) {
     	source.getIndirectControlFlows(target).filter[ instantaneousFlow ]
+    }
+    
+    def boolean hasInstantaneousControlFlowTo(Node source, Node target) {
+        return !source.getInstantaneousControlFlows(target).empty
     }
     
     /**

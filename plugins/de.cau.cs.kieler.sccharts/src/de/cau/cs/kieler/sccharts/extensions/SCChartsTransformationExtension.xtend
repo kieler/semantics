@@ -148,17 +148,7 @@ class SCChartsTransformationExtension {
         valuedObject
     }
 
-//    // ========= ATTRIBUTE GETTER =========
-    def public ValueType getType(ValuedObject valuedObject) {
-        valuedObject.variableDeclaration.type
-    }
-
-    // Create a ValuedObjectReference to a valuedObject
-    def ValuedObjectReference reference(ValuedObject valuedObject) {
-        KExpressionsFactory::eINSTANCE.createValuedObjectReference() => [
-            setValuedObject(valuedObject)
-        ]
-    }
+    // ========= ATTRIBUTE GETTER =========
 
     // Return whether the ValuedObject is an input.
     def public boolean getInput(ValuedObject valuedObject) {
@@ -209,11 +199,6 @@ class SCChartsTransformationExtension {
     // Return whether the ValuedObject is a const.
     def public boolean isExtern(ValuedObject valuedObject) {
         valuedObject.declaration2.isExtern
-    }
-
-    // Return whether the ValuedObject is an array.
-    def public boolean isArray(ValuedObject valuedObject) {
-        !valuedObject.cardinalities.nullOrEmpty
     }
 
     // Return whether the ValuedObject is a signal.

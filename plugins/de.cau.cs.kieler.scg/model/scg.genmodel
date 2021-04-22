@@ -9,6 +9,11 @@
   <foreignModel>scg.ecore</foreignModel>
   <genPackages prefix="Scg" basePackage="de.cau.cs.kieler" disposableProviderFactory="true"
       ecorePackage="scg.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="scg.ecore#//ForkType">
+      <genEnumLiterals ecoreEnumLiteral="scg.ecore#//ForkType/PARALLEL"/>
+      <genEnumLiterals ecoreEnumLiteral="scg.ecore#//ForkType/SEQUENTIAL"/>
+      <genEnumLiterals ecoreEnumLiteral="scg.ecore#//ForkType/SEQUENTIAL_PREEMPTIVE"/>
+    </genEnums>
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="scg.ecore#//BranchType">
       <genEnumLiterals ecoreEnumLiteral="scg.ecore#//BranchType/NORMAL"/>
       <genEnumLiterals ecoreEnumLiteral="scg.ecore#//BranchType/TRUEBRANCH"/>
@@ -45,10 +50,12 @@
     <genClasses ecoreClass="scg.ecore#//Fork">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference scg.ecore#//Fork/join"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference scg.ecore#//Fork/next"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute scg.ecore#//Fork/type"/>
     </genClasses>
     <genClasses ecoreClass="scg.ecore#//Join">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference scg.ecore#//Join/fork"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference scg.ecore#//Join/next"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute scg.ecore#//Join/any"/>
     </genClasses>
     <genClasses ecoreClass="scg.ecore#//Entry">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference scg.ecore#//Entry/exit"/>

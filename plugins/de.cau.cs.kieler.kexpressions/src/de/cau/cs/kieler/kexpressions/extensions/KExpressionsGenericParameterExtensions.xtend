@@ -17,6 +17,7 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.GenericParameterDeclaration
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import org.eclipse.emf.ecore.EObject
 
 /**
@@ -33,7 +34,9 @@ class KExpressionsGenericParameterExtensions {
 		    if (obj.declaration instanceof GenericParameterDeclaration) {
 		        return true
 		    }
-		}
+		} else if (obj instanceof ValuedObjectReference) {
+            return obj.valuedObject.isGenericParamter
+        }
 		return false
 	}
 	

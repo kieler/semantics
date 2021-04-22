@@ -98,10 +98,14 @@ class KExpressionsSerializeHRExtensions extends KExpressionsSerializeExtensions 
     def dispatch CharSequence serializeHR(RandomizeCall randomizeCall) {
         return "randomize"
     }
-        
+    
     def CharSequence serializeHRParameters(List<Parameter> parameters) {
+        parameters.serializeHRParameters("(", ")")
+    }
+        
+    def CharSequence serializeHRParameters(List<Parameter> parameters, String start, String end) {
         val sb = new StringBuilder
-        sb.append("(")
+        sb.append(start)
         var cnt = 0
         for (par : parameters) {
             if (cnt > 0) {
@@ -117,7 +121,7 @@ class KExpressionsSerializeHRExtensions extends KExpressionsSerializeExtensions 
             sb.append(par.expression.serializeHR)
             cnt = cnt + 1
         }
-        sb.append(")") 
+        sb.append(end) 
         return sb.toString      
     }    
 

@@ -222,16 +222,13 @@ class SCGDeclarationExtensions {
     	// Use the ecore utils to copy the expression. 
         val newExpression = expression.copy
         
-        if (newExpression instanceof ValuedObjectReference) {
-	        // If it is a single object reference, simply replace the reference with the object of the target SCG.
-            (newExpression as ValuedObjectReference).valuedObject = 
-                (expression as ValuedObjectReference).valuedObject.getValuedObjectCopy(map)                    
-        } else {
-        	// Otherwise, query all references in the expression and replace the object with the new copy
-        	// in the target SCG.
-        	if (newExpression !== null)
-                newExpression.eAllContents.filter(typeof(ValuedObjectReference)).
-            	   forEach[ valuedObject = valuedObject.getValuedObjectCopy(map) ]        
+        if (newExpression !== null) {
+            val vors = newArrayList()
+            if (newExpression instanceof ValuedObjectReference) {
+                vors += newExpression
+            }
+            vors += newExpression.eAllContents.filter(ValuedObjectReference).toIterable
+            vors.forEach[ valuedObject = valuedObject.getValuedObjectCopy(map) ]
         }
         
         // Return the new expression.

@@ -88,6 +88,14 @@ class ControlflowRegionStyles {
             lineWidth = 1.3f;
         ]
     }
+       
+    def KRectangle addAbortRegionStyle(KRectangle rect) {
+        return rect => [
+            background = REGION_ABORT_BACKGROUND.color
+            foreground = REGION_ABORT_FOREGROUND.color
+            lineWidth = 1.3f;
+        ]
+    }
     
     def KRectangle addFinalRegionStyle(KRectangle rect) {
         return rect.addRectangle => [

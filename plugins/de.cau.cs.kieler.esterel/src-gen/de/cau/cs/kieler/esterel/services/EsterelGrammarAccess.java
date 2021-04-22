@@ -9444,8 +9444,8 @@ public class EsterelGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	//	access=AccessModifier? ('ref' reference=[annotations::NamedObject|NamespaceID] ('<'
 	//	genericParameters+=GenericParameter (',' genericParameters+=GenericParameter)* '>')?
 	//	|
-	//	'extern' extern+=ExternString (',' extern+=ExternString)*) valuedObjects+=ValuedObject (','
-	//	valuedObjects+=ValuedObject)* ';'
+	//	'extern' extern+=ExternString (',' extern+=ExternString)*) valuedObjects+=ReferenceValuedObject (','
+	//	valuedObjects+=ReferenceValuedObject)* ';'
 	//	annotations+=CommentAnnotatonSL?;
 	public KExtGrammarAccess.ReferenceDeclarationElements getReferenceDeclarationAccess() {
 		return gaKExt.getReferenceDeclarationAccess();
@@ -9460,8 +9460,8 @@ public class EsterelGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	//	access=AccessModifier? ('ref' reference=[annotations::NamedObject|NamespaceID] ('<'
 	//	genericParameters+=GenericParameter (',' genericParameters+=GenericParameter)* '>')?
 	//	|
-	//	'extern' extern+=ExternString (',' extern+=ExternString)*) valuedObjects+=ValuedObject (','
-	//	valuedObjects+=ValuedObject)*
+	//	'extern' extern+=ExternString (',' extern+=ExternString)*) valuedObjects+=ReferenceValuedObject (','
+	//	valuedObjects+=ReferenceValuedObject)*
 	//	annotations+=CommentAnnotatonSL?;
 	public KExtGrammarAccess.ReferenceDeclarationWOSemicolonElements getReferenceDeclarationWOSemicolonAccess() {
 		return gaKExt.getReferenceDeclarationWOSemicolonAccess();
@@ -9618,8 +9618,7 @@ public class EsterelGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	//// Examples: array[10], initial = false, z = 0 combine max
 	//ValuedObject kexpressions::ValuedObject:
 	//	annotations+=QuotedStringAnnotation*
-	//	name=PrimeID ('<' genericParameters+=GenericParameter (',' genericParameters+=GenericParameter)* '>')? ('['
-	//	cardinalities+=super::Expression ']')* ('=' initialValue=super::Expression)? ('combine'
+	//	name=PrimeID ('[' cardinalities+=super::Expression ']')* ('=' initialValue=super::Expression)? ('combine'
 	//	combineOperator=CombineOperator)? ('label' label=super::STRING)?;
 	public KExtGrammarAccess.ValuedObjectElements getValuedObjectAccess() {
 		return gaKExt.getValuedObjectAccess();
@@ -9627,6 +9626,19 @@ public class EsterelGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	
 	public ParserRule getValuedObjectRule() {
 		return getValuedObjectAccess().getRule();
+	}
+	
+	//ReferenceValuedObject kexpressions::ValuedObject:
+	//	annotations+=QuotedStringAnnotation*
+	//	name=PrimeID ('[' cardinalities+=super::Expression ']')* ('<' genericParameters+=GenericParameter (','
+	//	genericParameters+=GenericParameter)* '>')? ('(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()')?
+	//	('label' label=super::STRING)?;
+	public KExtGrammarAccess.ReferenceValuedObjectElements getReferenceValuedObjectAccess() {
+		return gaKExt.getReferenceValuedObjectAccess();
+	}
+	
+	public ParserRule getReferenceValuedObjectRule() {
+		return getReferenceValuedObjectAccess().getRule();
 	}
 	
 	//SimpleValuedObject kexpressions::ValuedObject:
@@ -10133,6 +10145,19 @@ public class EsterelGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	
 	public ParserRule getValuedObjectTestExpressionRule() {
 		return getValuedObjectTestExpressionAccess().getRule();
+	}
+	
+	//// Accesses a arbitrary target in a static way (needs to be adjusted in the scoper of the deriving language)
+	//// Example: static(Constants).MAX
+	//StaticAccessExpression:
+	//	'static' '(' target=[annotations::NamedObject|PrimeID] ')'
+	//	'.' subReference=ValuedObjectReference;
+	public KExpressionsGrammarAccess.StaticAccessExpressionElements getStaticAccessExpressionAccess() {
+		return gaKExpressions.getStaticAccessExpressionAccess();
+	}
+	
+	public ParserRule getStaticAccessExpressionRule() {
+		return getStaticAccessExpressionAccess().getRule();
 	}
 	
 	//// ID with primes

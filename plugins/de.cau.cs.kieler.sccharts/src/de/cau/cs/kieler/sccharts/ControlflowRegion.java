@@ -37,6 +37,7 @@ import org.eclipse.emf.common.util.EList;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.sccharts.ControlflowRegion#getStates <em>States</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.ControlflowRegion#isFinal <em>Final</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.ControlflowRegion#isAbort <em>Abort</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getControlflowRegion()
@@ -86,5 +87,27 @@ public interface ControlflowRegion extends Region {
      * @generated
      */
     void setFinal(boolean value);
+
+    /**
+     * Returns the value of the '<em><b>Abort</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Abort</em>' attribute.
+     * @see #setAbort(boolean)
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getControlflowRegion_Abort()
+     * @model
+     * @generated
+     */
+    boolean isAbort();
+
+    /**
+     * Sets the value of the '{@link de.cau.cs.kieler.sccharts.ControlflowRegion#isAbort <em>Abort</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Abort</em>' attribute.
+     * @see #isAbort()
+     * @generated
+     */
+    void setAbort(boolean value);
 
 } // ControlflowRegion

@@ -7,7 +7,7 @@
    <bundle id="de.cau.cs.kieler.graphs.klighd"/>
    <bundle id="de.cau.cs.kieler.kicool"/>
    <bundle id="de.cau.cs.kieler.kicool.ide"/>
-   <bundle id="de.cau.cs.kieler.kicool.ui"/>
+   <bundle id="de.cau.cs.kieler.kicool.ui"/> <!-- REMOVE after full deeclipsefication -->
    <bundle id="de.cau.cs.kieler.kivis.ide"/>
    <bundle id="de.cau.cs.kieler.klighd.ide"/>
    <bundle id="de.cau.cs.kieler.klighd.incremental"/>
@@ -16,7 +16,7 @@
    <bundle id="de.cau.cs.kieler.lustre.ide"/>
    <bundle id="de.cau.cs.kieler.sccharts"/>
    <bundle id="de.cau.cs.kieler.sccharts.ide"/>
-   <bundle id="de.cau.cs.kieler.sccharts.ui"/>
+   <bundle id="de.cau.cs.kieler.sccharts.ui"/> <!-- REMOVE after full deeclipsefication -->
    <bundle id="de.cau.cs.kieler.scg"/>
    <bundle id="de.cau.cs.kieler.scg.klighd"/>
    <bundle id="de.cau.cs.kieler.simulation.ide"/>

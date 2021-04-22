@@ -710,6 +710,15 @@ public interface LustrePackage extends EPackage
   int LUSTRE_VALUED_OBJECT__GENERIC_PARAMETERS = KExpressionsPackage.VALUED_OBJECT__GENERIC_PARAMETERS;
 
   /**
+   * The feature id for the '<em><b>Parameters</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LUSTRE_VALUED_OBJECT__PARAMETERS = KExpressionsPackage.VALUED_OBJECT__PARAMETERS;
+
+  /**
    * The feature id for the '<em><b>Type</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -937,6 +946,15 @@ public interface LustrePackage extends EPackage
   int NODE_VALUED_OBJECT__GENERIC_PARAMETERS = KExpressionsPackage.VALUED_OBJECT__GENERIC_PARAMETERS;
 
   /**
+   * The feature id for the '<em><b>Parameters</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int NODE_VALUED_OBJECT__PARAMETERS = KExpressionsPackage.VALUED_OBJECT__PARAMETERS;
+
+  /**
    * The number of structural features of the '<em>Node Valued Object</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1145,6 +1163,15 @@ public interface LustrePackage extends EPackage
    * @ordered
    */
   int STATE_VALUED_OBJECT__GENERIC_PARAMETERS = KExpressionsPackage.VALUED_OBJECT__GENERIC_PARAMETERS;
+
+  /**
+   * The feature id for the '<em><b>Parameters</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int STATE_VALUED_OBJECT__PARAMETERS = KExpressionsPackage.VALUED_OBJECT__PARAMETERS;
 
   /**
    * The number of structural features of the '<em>State Valued Object</em>' class.

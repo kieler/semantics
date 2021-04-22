@@ -19,6 +19,9 @@ import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.MethodDeclaration
+import de.cau.cs.kieler.kexpressions.Schedulable
+import de.cau.cs.kieler.kexpressions.ScheduleObjectReference
+import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
@@ -37,6 +40,7 @@ import de.cau.cs.kieler.scg.Depth
 import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.scg.Fork
+import de.cau.cs.kieler.scg.ForkType
 import de.cau.cs.kieler.scg.Join
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
@@ -44,6 +48,7 @@ import de.cau.cs.kieler.scg.SCGraphs
 import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.scg.Surface
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
+import de.cau.cs.kieler.scg.extensions.SCGMethodExtensions
 import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 import de.cau.cs.kieler.scg.processors.SCGAnnotations
 import de.cau.cs.kieler.scl.Goto
@@ -72,10 +77,6 @@ import static de.cau.cs.kieler.scg.processors.SCGAnnotations.*
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
-import de.cau.cs.kieler.scg.extensions.SCGMethodExtensions
-import de.cau.cs.kieler.kexpressions.ValueType
-import de.cau.cs.kieler.kexpressions.ScheduleObjectReference
-import de.cau.cs.kieler.kexpressions.Schedulable
 
 /** 
  * SCL to SCG Transformation 
@@ -87,7 +88,6 @@ import de.cau.cs.kieler.kexpressions.Schedulable
 class SCLToSCGTransformation extends Processor<SCLProgram, SCGraphs> implements Traceable {
 
     static val String ANNOTATION_HOSTCODE = "hostcode"
-    static val String ANNOTATION_CONTROLFLOWTHREADPATHTYPE = "cfPathType"
 
     @Inject extension SCGControlFlowExtensions 
     @Inject extension SCGThreadExtensions   
@@ -370,23 +370,23 @@ class SCLToSCGTransformation extends Processor<SCLProgram, SCGraphs> implements 
                 val innerVOs = classDecl.declarations.map[valuedObjects].flatten.toList
                 val VORtoInner = scg.nodes.map[eAllContents.filter(ValuedObjectReference).toIterable].flatten.filter[innerVOs.contains(valuedObject)].toList
                 if (!VORtoInner.empty) {
-                    if (classDecl.eContainer instanceof ClassDeclaration) {
-                        throw new IllegalArgumentException("Cannot handle methods in nested classes")
-                    } else {
-                        val selfVO = createValuedObject("self")
-                        scg.declarations += createVariableDeclaration(ValueType.HOST) => [
-                            valuedObjects += selfVO
-                            hostType = classDecl.name
-                        ]
-                        selfVO.addIntAnnotation(SCGAnnotations.ANNOTATION_METHOD_PARAMETER, -1)
-                        // Fix VOR
-                        for (vor : VORtoInner) {
-                            val wrapper = selfVO.reference
-                            vor.replace(wrapper)
-                            wrapper.subReference = vor
-                        }
+                    val selfVO = createValuedObject("self") => [markSelfVO]
+                    scg.declarations += createVariableDeclaration(ValueType.HOST) => [
+                        valuedObjects += selfVO
+                        hostType = classDecl.name
+                        setSelfParameterClass(classDecl)
+                    ]
+                    newMethod.markSelfInParameter
+                    // Fix VOR
+                    for (vor : VORtoInner) {
+                        vor.prependReferenceToReference(selfVO)
                     }
                 }
+            }
+            // Check for external VO access
+            if (scg.nodes.map[eAllContents.toIterable].flatten.filter(ValuedObjectReference).exists[
+                   !it.isSubReference && !valuedObject.isParameter && !valuedObject.isLocalVariable]) {
+                newMethod.markTickDataInParameter
             }
         }
         
@@ -532,10 +532,12 @@ class SCLToSCGTransformation extends Processor<SCLProgram, SCGraphs> implements 
             val fork = createFork.trace(parallel).createNodeList(parallel) as Fork => [
                 scg.nodes += it
                 it.controlFlowTarget(incoming)
+                type = ForkType.get(parallel.forkType.value)
             ]
             val join = createJoin.trace(parallel).createNodeList(parallel) as Join => [
                 scg.nodes += it
                 it.fork = fork
+                any = parallel.joinAny
             ]
             parallel.threads.forEach [ thread |
                 val forkFlow = fork.createControlFlow

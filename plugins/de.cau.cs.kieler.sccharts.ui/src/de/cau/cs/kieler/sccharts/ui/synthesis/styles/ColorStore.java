@@ -58,6 +58,8 @@ public class ColorStore {
         REGION_BACKGROUND(Colors.WHITE),
         REGION_OVERRIDE_FOREGROUND(0xaa, 0xd4, 0x00),
         REGION_OVERRIDE_BACKGROUND(Colors.WHITE),
+        REGION_ABORT_FOREGROUND(Colors.RED),
+        REGION_ABORT_BACKGROUND(Colors.WHITE),
         REGION_BUTTON_FOREGROUND(Colors.WHITE),
         REGION_LABEL(Colors.DIM_GRAY),
         

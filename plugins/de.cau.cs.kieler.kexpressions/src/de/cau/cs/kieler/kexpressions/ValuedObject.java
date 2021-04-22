@@ -29,6 +29,7 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link de.cau.cs.kieler.kexpressions.ValuedObject#getCardinalities <em>Cardinalities</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.ValuedObject#getLabel <em>Label</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.ValuedObject#getGenericParameters <em>Generic Parameters</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.ValuedObject#getParameters <em>Parameters</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.kexpressions.KExpressionsPackage#getValuedObject()
@@ -140,5 +141,17 @@ public interface ValuedObject extends NamedObject, Annotatable, Referenceable {
      * @generated
      */
     EList<Parameter> getGenericParameters();
+
+    /**
+     * Returns the value of the '<em><b>Parameters</b></em>' containment reference list.
+     * The list contents are of type {@link de.cau.cs.kieler.kexpressions.Parameter}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Parameters</em>' containment reference list.
+     * @see de.cau.cs.kieler.kexpressions.KExpressionsPackage#getValuedObject_Parameters()
+     * @model containment="true"
+     * @generated
+     */
+    EList<Parameter> getParameters();
 
 } // ValuedObject

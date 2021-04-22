@@ -47,6 +47,7 @@ class JavaCodeSerializeHRExtensions extends CCodeSerializeHRExtensions {
     
     new() {
         CODE_ANNOTATION = "Java"
+        assumeOnlyGlobalFunctions = false // Java has proper OO
     }
     
     override dispatch CharSequence serialize(ValueType valueType) {
@@ -94,13 +95,7 @@ class JavaCodeSerializeHRExtensions extends CCodeSerializeHRExtensions {
     }
     
     override addPlatformDependentParamsToMethodCall(ArrayList<Parameter> params, MethodDeclaration declaration, ReferenceCall referenceCall) {
-        if (declaration.hasSelfInParameter) {
-            params.add(0, createParameter =>[
-                accessType = ParameterAccessType.CALL_BY_REFERENCE
-                val ex = referenceCall.serializeVOR.toString
-                expression = ex.substring(0, ex.lastIndexOf(".")).asTextExpression
-            ])
-        }
+        // No special parameters neccessary
     }
     
     override def CharSequence serializeHROperatorExpressionEQ(OperatorExpression expression) {
