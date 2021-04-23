@@ -48,6 +48,7 @@ class JavaCodeSerializeHRExtensions extends CCodeSerializeHRExtensions {
     new() {
         CODE_ANNOTATION = "Java"
         assumeOnlyGlobalFunctions = false // Java has proper OO
+        complyWithGCCWall = false // Java does not use GCC
     }
     
     override dispatch CharSequence serialize(ValueType valueType) {

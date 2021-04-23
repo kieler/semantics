@@ -27,6 +27,7 @@ import de.cau.cs.kieler.kexpressions.FunctionCall
 import de.cau.cs.kieler.kexpressions.IntValue
 import de.cau.cs.kieler.kexpressions.MethodDeclaration
 import de.cau.cs.kieler.kexpressions.OperatorExpression
+import de.cau.cs.kieler.kexpressions.OperatorType
 import de.cau.cs.kieler.kexpressions.Parameter
 import de.cau.cs.kieler.kexpressions.ParameterAccessType
 import de.cau.cs.kieler.kexpressions.PrintCall
@@ -67,6 +68,7 @@ class CCodeSerializeHRExtensions extends CodeGeneratorSerializeHRExtensions {
     protected var CODE_ANNOTATION = "C"
     protected var CONDITIONAL_PLACEHOLDER = " : __CONDSELF__"
     public var assumeOnlyGlobalFunctions = true
+    public var complyWithGCCWall = true
     
     static val HOSTCODE_EVAL = AnnotationsRegistry.register("eval", AnnotationsType.USER, StringAnnotation,  TextExpression, 
         "Annotation that tells the hostcode text expression which parts should be evaluation to valued objects")
@@ -460,5 +462,19 @@ class CCodeSerializeHRExtensions extends CodeGeneratorSerializeHRExtensions {
         }
         sb.append(")") 
         return sb.toString      
-    }        
+    }
+    
+    override boolean requiresParenthesis(OperatorExpression expression, OperatorExpression parent) {
+        if (complyWithGCCWall) { // comply with -Wparentheses
+            val LOGICAL = #[OperatorType.LOGICAL_OR, OperatorType.LOGICAL_AND]
+            val myOperator = expression.operator
+            val parentOperator = parent.operator
+            if (myOperator !== parentOperator) {
+                if (LOGICAL.contains(myOperator) && LOGICAL.contains(parentOperator)) {
+                    return true
+                }
+            }
+        }
+        return super.requiresParenthesis(expression, parent)
+    }    
 }
