@@ -156,6 +156,7 @@ class Pre extends SCChartsProcessor implements Traceable {
             for(arrayIndex : arrayIndexIterator) {
                 // Assign register variable to valued object
                 val asmExpression = pre.subExpressions.head.copy as ValuedObjectReference
+                asmExpression.lowermostReference.indices.clear
                 asmExpression.lowermostReference.indices.addAll(arrayIndex.convert)
                 val regAssignment = regVariable.createAssignment(asmExpression)
                 regAssignment.indices.addAll(arrayIndex.convert)
