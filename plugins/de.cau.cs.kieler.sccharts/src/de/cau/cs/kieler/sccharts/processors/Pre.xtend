@@ -90,7 +90,7 @@ class Pre extends SCChartsProcessor implements Traceable {
         nameCache.clear
                 
         val targetRootState = rootState
-        val transformedVariables = <ValuedObject, ValuedObject>newHashMap
+        val transformedVariables = <List<ValuedObject>, ValuedObject>newHashMap
 
         // Find all pre statements
         val allPreExpressionsInnerFirst = new Stack<OperatorExpression>
@@ -112,28 +112,31 @@ class Pre extends SCChartsProcessor implements Traceable {
         targetRootState
     }
     
-    private def transform(OperatorExpression pre, State targetRootState, HashMap<ValuedObject, ValuedObject> transformedVariables) {
+    private def transform(OperatorExpression pre, State targetRootState, HashMap<List<ValuedObject>, ValuedObject> transformedVariables) {
         val valuedObjectRef = pre.valuedObjectReference?.lowermostReference
         if(valuedObjectRef !== null) {
+            val key = pre.valuedObjectReference.expressionKey
             val valuedObject = valuedObjectRef.valuedObject
-            if(valuedObject !== null && !transformedVariables.containsKey(valuedObject)) {
-                pre.transform(valuedObject, transformedVariables)
+            if(valuedObject !== null && !transformedVariables.containsKey(key)) {
+                transformedVariables.put(key, pre.transform(valuedObject, key))
             }
-            pre.replaceWithTransformedVariable(valuedObjectRef, transformedVariables)
+            pre.replaceWithTransformedVariable(valuedObjectRef, transformedVariables.get(key))
         }
     }
     
-    private def transform(OperatorExpression pre, ValuedObject valuedObject, HashMap<ValuedObject, ValuedObject> transformedVariables) {
+    private def transform(OperatorExpression pre, ValuedObject valuedObject, List<ValuedObject> key) {
         pre.setDefaultTrace // All following newly created objects are traced to this pre operator
 
         // Create a register variable
         val state = valuedObject.parentState
-        val regVariable = state.createPreVariable(valuedObject.registerVariableName, valuedObject)
+        val regName = GENERATED_PREFIX + "reg_" + key.map[name].join("_")
+        val regVariable = state.createPreVariable(regName, valuedObject)
         regVariable.initialValue = getNeutralElement(valuedObject)
         val arrayIndexIterator = valuedObject.cardinalities.indexIterable
-        
+                
         // Create a pre variable
-        val preVariable = state.createPreVariable(valuedObject.preVariableName, valuedObject)
+        val preName = GENERATED_PREFIX + "pre_" + key.map[name].join("_")
+        val preVariable = state.createPreVariable(preName, valuedObject)
         // This initial value is initialized immediately with the initial value of the register variable
         preVariable.initialValue = null
         
@@ -147,16 +150,16 @@ class Pre extends SCChartsProcessor implements Traceable {
             if (pre.subExpressions.length == 2) {
                 duringAction.trigger = pre.subExpressions.get(1)
             }
-            duringAction.addEffectBefore(regVariable.createAssignment(valuedObject.reference))
+            duringAction.addEffectBefore(regVariable.createAssignment(pre.subExpressions.head.copy))
             duringAction.addEffectBefore(preVariable.createAssignment(regVariable.reference))    
         } else {
             for(arrayIndex : arrayIndexIterator) {
                 // Assign register variable to valued object
-                val valuedObjectReference = valuedObject.reference
-                valuedObjectReference.indices.addAll(arrayIndex.convert)
-                val regAssignment = regVariable.createAssignment(valuedObjectReference)
+                val asmExpression = pre.subExpressions.head.copy as ValuedObjectReference
+                asmExpression.lowermostReference.indices.addAll(arrayIndex.convert)
+                val regAssignment = regVariable.createAssignment(asmExpression)
                 regAssignment.indices.addAll(arrayIndex.convert)
-                duringAction.addEffectBefore(regAssignment)
+                duringAction.addEffect(regAssignment)
                 // Assign pre variable to register variable
                 val regVariableReference = regVariable.reference
                 regVariableReference.indices.addAll(arrayIndex.convert)
@@ -171,12 +174,11 @@ class Pre extends SCChartsProcessor implements Traceable {
         }
 
         // Remember this pre variable for the original valued object
-        transformedVariables.put(valuedObject, preVariable)
+        return preVariable
     }
     
     private def ValuedObject createPreVariable(State state, String name, ValuedObject source) {
         val v = state.createValuedObject(name)
-        v.declaration2
         v.copyAttributes(source)
         v.declaration2.copyAttributes(source.declaration2)
         v.declaration2.input = false
@@ -233,21 +235,8 @@ class Pre extends SCChartsProcessor implements Traceable {
         }
     }
     
-    private def String getRegisterVariableName(ValuedObject valuedObject) {
-        return GENERATED_PREFIX+"reg_"+valuedObject.name
-    }
-    
-    private def String getPreVariableName(ValuedObject valuedObject) {
-        return GENERATED_PREFIX+"pre_"+valuedObject.name
-    }
-    
-    private def String getPreRegionName(ValuedObject valuedObject) {
-        return GENERATED_PREFIX+"update"+getPreVariableName(valuedObject)
-    }
-    
-    private def replaceWithTransformedVariable(OperatorExpression pre, ValuedObjectReference valuedObjectReference, HashMap<ValuedObject, ValuedObject> transformedVariables) {
+    private def replaceWithTransformedVariable(OperatorExpression pre, ValuedObjectReference valuedObjectReference, ValuedObject preVariable) {
         // Replace the pre expression in the parent container with the newly created pre variable for the valued object reference
-        val preVariable = transformedVariables.get(valuedObjectReference.valuedObject)
         if(preVariable !== null) {
             val container = pre.eContainer
             val replacementExpression = preVariable.reference
@@ -331,5 +320,16 @@ class Pre extends SCChartsProcessor implements Traceable {
         } catch (Exception e) {
             // Nobody cares
         }
+    }
+    
+    def List<ValuedObject> expressionKey(ValuedObjectReference vor) {
+        val key = newArrayList(vor.valuedObject)
+        if (vor.subReference !== null) {
+            key.addAll(vor.subReference.expressionKey)
+            if (!vor.indices.empty) {
+                throw new IllegalArgumentException("Cannot handle pre operator on arrays of classes")
+            }
+        }
+        return key
     }
 }
