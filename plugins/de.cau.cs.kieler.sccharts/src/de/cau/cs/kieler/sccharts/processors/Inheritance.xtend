@@ -385,7 +385,12 @@ class Inheritance extends SCChartsProcessor implements Traceable {
                     }
                 }
             }
+            
+            // clear generics
             state.genericParameterDeclarations.clear
+            
+            // clear override flags
+            state.declarations.filter(MethodDeclaration).forEach[override = false]
             
             // remove base states
             state.baseStateReferences.clear
