@@ -250,6 +250,7 @@ class MethodProcessor extends InplaceProcessor<SCGraphs> implements Traceable {
                     vor.valuedObject = call.valuedObject
                     vor.indices += call.indices.map[copy]
                     // remaining sub refs
+                    val tail = vor.subReference
                     var subVOR = call as ValuedObjectReference
                     var insertAt = vor
                     while (subVOR !== null && subVOR.subReference !== null) {
@@ -257,7 +258,7 @@ class MethodProcessor extends InplaceProcessor<SCGraphs> implements Traceable {
                         if (subVOR.subReference !== null) { // skip last because it is the method
                             val insert = subVOR.valuedObject.reference
                             insert.indices += subVOR.indices.map[copy]
-                            insert.subReference = vor.subReference
+                            insert.subReference = tail
                             insertAt.subReference = insert
                             insertAt = insert
                         } else {
@@ -350,7 +351,7 @@ class MethodProcessor extends InplaceProcessor<SCGraphs> implements Traceable {
                     returnVO.remove
                     voStore.remove(returnVO)
                     
-                    call.replace(returns.head.expression)
+                    call.replace(retAsm.expression)
                 } else {
                     call.replace(returnVO.reference)
                     voStore.update(returnVO, "method-inlining")
