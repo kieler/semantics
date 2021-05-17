@@ -26,3 +26,4 @@ Export-Package: de.cau.cs.kieler.sccharts.processors.verification,
  de.cau.cs.kieler.verification.processors,
  de.cau.cs.kieler.verification.processors.nuxmv,
  de.cau.cs.kieler.verification.processors.spin
+Automatic-Module-Name: de.cau.cs.kieler.verification

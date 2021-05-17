@@ -31,3 +31,4 @@ Require-Bundle: de.cau.cs.kieler.scg,
  org.eclipse.xtend.lib.macro,
  org.antlr.runtime;bundle-version="[3.2.0,3.2.1)",
  org.eclipse.xtext.util
+Automatic-Module-Name: de.cau.cs.kieler.scl

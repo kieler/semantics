@@ -20,4 +20,5 @@ Require-Bundle: org.junit,
 Export-Package: de.cau.cs.kieler.test.common.repository,
  de.cau.cs.kieler.test.common.runners,
  de.cau.cs.kieler.test.common.simulation
+Automatic-Module-Name: de.cau.cs.kieler.test.common
 

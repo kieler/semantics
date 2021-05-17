@@ -37,3 +37,4 @@ Export-Package: de.cau.cs.kieler.scg,
  de.cau.cs.kieler.scg.processors.synchronizer,
  de.cau.cs.kieler.scg.util
 Bundle-ActivationPolicy: lazy
+Automatic-Module-Name: de.cau.cs.kieler.scg

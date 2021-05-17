@@ -34,3 +34,4 @@ Export-Package: de.cau.cs.kieler.kivis,
  de.cau.cs.kieler.kivis.services,
  de.cau.cs.kieler.kivis.validation
 Import-Package: org.apache.log4j
+Automatic-Module-Name: de.cau.cs.kieler.kivis

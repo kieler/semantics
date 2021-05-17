@@ -19,4 +19,5 @@ Require-Bundle: org.eclipse.core.runtime,
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: de.cau.cs.kieler.core.product.CoreProductPlugin
+Automatic-Module-Name: de.cau.cs.kieler.core.product
 

@@ -47,3 +47,4 @@ Export-Package: de.cau.cs.kieler.lustre,
  de.cau.cs.kieler.lustre.scade.scoping,
  de.cau.cs.kieler.lustre.scade.scade
 Import-Package: org.apache.log4j
+Automatic-Module-Name: de.cau.cs.kieler.lustre

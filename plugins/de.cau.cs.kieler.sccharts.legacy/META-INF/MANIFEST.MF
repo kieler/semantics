@@ -98,4 +98,5 @@ Export-Package: de.cau.cs.kieler.sccharts.legacy,
  de.cau.cs.kieler.sccharts.legacy.text.serializer,
  de.cau.cs.kieler.sccharts.legacy.text.services,
  de.cau.cs.kieler.sccharts.legacy.text.validation
+Automatic-Module-Name: de.cau.cs.kieler.sccharts.legacy
 

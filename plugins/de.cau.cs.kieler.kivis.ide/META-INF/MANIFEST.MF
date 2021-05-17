@@ -26,3 +26,4 @@ Export-Package: de.cau.cs.kieler.kivis.ide,
  de.cau.cs.kieler.kivis.ide.contentassist.antlr,
  de.cau.cs.kieler.kivis.ide.contentassist.antlr.internal,
  de.cau.cs.kieler.kivis.ide.highlighting
+Automatic-Module-Name: de.cau.cs.kieler.kivis.ide
