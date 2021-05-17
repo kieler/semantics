@@ -10865,8 +10865,8 @@ public class CommandLine {
                     } else if (paramTypes[i] instanceof ParameterizedType) { // e.g. Optional<Integer>
                         ParameterizedType parameterizedParamType = (ParameterizedType) paramTypes[i];
                         Type raw = parameterizedParamType.getRawType();
-                        if (i == 1 && raw instanceof Class && CommandLine.isOptional((Class) raw)) { // #1108 and #1214
-                            result.add((Class) raw);
+                        if (i == 1 && raw instanceof Class && CommandLine.isOptional((Class<?>) raw)) { // #1108 and #1214
+                            result.add((Class<?>) raw);
                             Class<?>[] aux = extractTypeParameters(parameterizedParamType);
                             if (aux.length == 1) {
                                 result.add(aux[0]);
