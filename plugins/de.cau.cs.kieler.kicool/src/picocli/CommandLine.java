@@ -9552,7 +9552,7 @@ public class CommandLine {
                  * @see Option#mapFallbackValue()
                  * @see Parameters#mapFallbackValue()
                  * @since 4.6 */
-                public Builder mapFallbackValue(String fallbackValue) { this.mapFallbackValue = fallbackValue; return self(); }
+                public Builder<T> mapFallbackValue(String fallbackValue) { this.mapFallbackValue = fallbackValue; return self(); }
 
                 /** Sets the default value of this option or positional parameter to the specified value, and returns this builder.
                  * Before parsing the command line, the result of {@linkplain #splitRegex() splitting} and {@linkplain #converters() type converting}
@@ -14219,10 +14219,10 @@ public class CommandLine {
             if (value) { if (tracer.isInfo()) {tracer.info("%s has '%s' annotation: not validating required fields%n", p.toString(), attribute); }}
             return value;
         }
-        @SuppressWarnings("unchecked")
+        @SuppressWarnings({ "unchecked", "rawtypes" })
         private Collection<Object> createCollection(Class<?> collectionClass, Class<?>[] elementType) throws Exception {
             if (EnumSet.class.isAssignableFrom(collectionClass) && Enum.class.isAssignableFrom(elementType[0])) {
-                Object enumSet = EnumSet.noneOf((Class<Enum>) elementType[0]);
+                EnumSet enumSet = EnumSet.noneOf((Class<Enum>) elementType[0]);
                 return (Collection<Object>) enumSet;
             }
             // custom Collection implementation class must have default constructor
@@ -14261,7 +14261,7 @@ public class CommandLine {
 
         private ITypeConverter<Object> getEnumTypeConverter(final Class<?> type) {
             return new ITypeConverter<Object>() {
-                @SuppressWarnings("unchecked")
+                @SuppressWarnings({ "unchecked", "rawtypes" })
                 public Object convert(String value) throws Exception {
                     try { return Enum.valueOf((Class<Enum>) type, value); }
                     catch (IllegalArgumentException ex) {
