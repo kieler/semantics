@@ -170,6 +170,8 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
     static final String whileName = "while"
     /** Shown name prefix for while-body statements. */
     static final String whileBodyName = "while-body"
+    /** Shown name prefix for while condition. */
+    static final String whileCondName = "while-cond"
     /** Shown name prefix for switch statements. */
     static final String switchName = "switch"
     /** Shown name prefix for default case statements in switches. */
@@ -1285,14 +1287,42 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         whileRegion.insertHighlightAnnotations(whileStmt)
         whileRegion.label = whileName + ssaNameSeperator + localWhileCounter
         
+        
+        
+        
+        
+        
         // Create the condition expression and add it to the while state
-        val conditionalDecl = createVariableDeclaration(ValueType::BOOL)
-        whileRegion.declarations += conditionalDecl
-        val conditionalObj = conditionalDecl.createValuedObject(conditionalResultName)
-        conditionalObj.insertHighlightAnnotations(whileStmt.getCondition)
-        val conditionExpression = createKExpression(whileStmt.getCondition, whileState, whileRegion)
-        whileRegion.equations += createDataflowAssignment(conditionalObj, conditionExpression)
-                
+//        val conditionalDecl = createVariableDeclaration(ValueType::BOOL)
+//        whileRegion.declarations += conditionalDecl
+//        val conditionalObj = conditionalDecl.createValuedObject(conditionalResultName)
+//        conditionalObj.insertHighlightAnnotations(whileStmt.getCondition)
+//        val conditionExpression = createKExpression(whileStmt.getCondition, whileState, whileRegion)
+//        whileRegion.equations += createDataflowAssignment(conditionalObj, conditionExpression)
+               
+        // Create the cond state
+        val condState = createState(whileName + ssaNameSeperator + localWhileCounter + whileCondName)
+        val condRefDecl = createReferenceDeclaration
+        whileRegion.declarations += condRefDecl
+        condRefDecl.setReference(condState)
+        val condObj = condRefDecl.createValuedObject(whileName + ssaNameSeperator + localWhileCounter + whileCondName)
+        condObj.insertHighlightAnnotations(whileStmt.getCondition) 
+        
+        // inputs & outputs
+        setInputs(whileStmt.getCondition, whileState, condState, whileRegion, condObj)
+        setOutputs(whileStmt.getCondition, whileState, condState, whileRegion, condObj, false)
+        
+        // Create the region for the condition part
+        val condRegion = createDFRegionForNode(whileStmt.getCondition, condState, whileState, whileRegion, condObj)
+        condState.regions += condRegion
+        condRegion.label = whileCondName
+        
+        
+        
+        
+        
+        
+                        
         // Create the body state and according reference into the while dataflow region.
         val bodyState = createState(whileName + ssaNameSeperator + localWhileCounter + whileBodyName)
         val bodyRefDecl = createReferenceDeclaration
@@ -1319,6 +1349,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         
         // Determine which outputs have been set in their respective state
         val positiveOutputs = findOutputs(whileStmt.getBody, whileState, false)
+        var condOutputs = findOutputs(whileStmt.getCondition, whileState, false)
         val HashSet<String> allOutputs = new HashSet
         allOutputs.addAll(positiveOutputs)
         // For each output, find the output VO and connect them to a conditional
@@ -1327,6 +1358,16 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             var ValuedObject innerPositiveOutputVo
             if (positiveOutputs.contains(output)) {
                 innerPositiveOutputVo = bodyState.declarations.filter(VariableDeclaration)
+                    .filter[it.isOutput]
+                    .flatMap[it.valuedObjects]
+                    .filter[it.label == output]
+                    .head
+            }
+            
+            // Find the output VO for the else state
+            var ValuedObject innerNegativeOutputVo
+            if (condOutputs.contains(output)) {
+                innerNegativeOutputVo = condState.declarations.filter(VariableDeclaration)
                     .filter[it.isOutput]
                     .flatMap[it.valuedObjects]
                     .filter[it.label == output]
@@ -1359,6 +1400,32 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 whileRegion.equations += createDataflowAssignment(positiveOutputVo, source)
             }
             
+            var ValuedObject condOutputVo
+            if (innerNegativeOutputVo !== null) {
+                // Assign the then output to a new "else_[varName]" variable in the if region
+                // For that, create a new variable declaration
+                val variableDeclaration = createVariableDeclaration
+                variableDeclaration.type = innerNegativeOutputVo.type
+                whileRegion.declarations += variableDeclaration
+                // Retrieve the state's variable map
+                var Map<String, List<ValuedObject>> stateVariables = getStateVariables(condState)
+                val varName = whileCondName + ssaNameSeperator + localWhileCounter + output
+                val varList = <ValuedObject> newArrayList
+                // Reuse the vo variable, now pointing to a new VO in the if state
+                condOutputVo = variableDeclaration.createValuedObject(varName)
+                condOutputVo.label = varName
+                varList.add(condOutputVo)
+                stateVariables.put(varName, varList)
+                whileRegion.declarations += variableDeclaration
+                variableDeclaration.annotations += createTagAnnotation("Hide")
+                val innerNegativeOutputVo_ = innerNegativeOutputVo
+                // This assignment is of the form 'varName = elseObj.varName'
+                val source = condObj.reference => [
+                    subReference = innerNegativeOutputVo_.reference
+                ]
+                whileRegion.equations += createDataflowAssignment(condOutputVo, source)
+            }
+            
             // If the variable is not written to in the body, use the input VO as the output. 
             val whileOutputVo = whileState.declarations.filter(VariableDeclaration)
                     .filter[it.isInput]
@@ -1374,7 +1441,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             
             // Create a conditional operator with the positiveOutputVo and negativeOutputVo, as well as the
             // conditionalObj and assign it to the while state's output of that variable.
-            val conditionalExpression = createConditionalExpression(conditionalObj.reference,
+            val conditionalExpression = createConditionalExpression(condObj.reference,
                 positiveOutputVo.reference, negativeOutputVo.reference)
             
             val outputVO = whileState.findOutputVar(output)
@@ -1388,7 +1455,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
 //        linkOutputs(ifState, dRegion)
         
         // If there is some assignment to the hidden variable from a conditional expression, use it as the sub-reference
-        val subReference = (getStateVariables(whileState) + getStateVariables(bodyState))
+        val subReference = (getStateVariables(whileState) + getStateVariables(bodyState) + getStateVariables(condState))
             .filter[
                 key, value | key.equals(hiddenVariableName)
             ].values.head?.last?.reference
