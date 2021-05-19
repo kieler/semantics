@@ -15,6 +15,7 @@ package de.cau.cs.kieler.c.sccharts.processors
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+//import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
 import de.cau.cs.kieler.c.sccharts.extensions.CDTConvertExtensions
 import de.cau.cs.kieler.c.sccharts.extensions.HighlightingExtensions
 import de.cau.cs.kieler.c.sccharts.extensions.ValueExtensions
@@ -57,6 +58,7 @@ import java.util.HashMap
 import java.util.HashSet
 import java.util.List
 import java.util.Map
+import org.eclipse.cdt.core.CCorePlugin
 import org.eclipse.cdt.core.dom.ast.IASTArrayDeclarator
 import org.eclipse.cdt.core.dom.ast.IASTArraySubscriptExpression
 import org.eclipse.cdt.core.dom.ast.IASTBinaryExpression
@@ -66,6 +68,7 @@ import org.eclipse.cdt.core.dom.ast.IASTCastExpression
 import org.eclipse.cdt.core.dom.ast.IASTCompoundStatement
 import org.eclipse.cdt.core.dom.ast.IASTConditionalExpression
 import org.eclipse.cdt.core.dom.ast.IASTDeclarationStatement
+import org.eclipse.cdt.core.dom.ast.IASTDeclarator
 import org.eclipse.cdt.core.dom.ast.IASTDefaultStatement
 import org.eclipse.cdt.core.dom.ast.IASTDoStatement
 import org.eclipse.cdt.core.dom.ast.IASTEqualsInitializer
@@ -94,28 +97,22 @@ import org.eclipse.cdt.core.dom.ast.IASTTypeIdExpression
 import org.eclipse.cdt.core.dom.ast.IASTUnaryExpression
 import org.eclipse.cdt.core.dom.ast.IASTWhileStatement
 import org.eclipse.cdt.core.dom.ast.gnu.c.GCCLanguage
+import org.eclipse.cdt.core.index.IIndex
+import org.eclipse.cdt.core.model.CoreModel
+import org.eclipse.cdt.core.model.ICProject
+import org.eclipse.cdt.core.model.ITranslationUnit
 import org.eclipse.cdt.core.parser.DefaultLogService
 import org.eclipse.cdt.core.parser.FileContent
 import org.eclipse.cdt.core.parser.IParserLogService
 import org.eclipse.cdt.core.parser.IncludeFileContentProvider
-import org.eclipse.cdt.internal.core.dom.parser.ASTNode
-
-import static de.cau.cs.kieler.c.sccharts.processors.CDTToStringConverter.*
 import org.eclipse.cdt.core.parser.ScannerInfo
+import org.eclipse.cdt.internal.core.dom.parser.ASTNode
+import org.eclipse.cdt.internal.core.dom.parser.c.CFunction
 import org.eclipse.core.resources.IFile
 import org.eclipse.core.resources.ResourcesPlugin
 import org.eclipse.core.runtime.Path
-import org.eclipse.cdt.core.model.CoreModel
-import org.eclipse.cdt.core.model.ITranslationUnit
-import org.eclipse.ui.PlatformUI
-import org.eclipse.ui.IEditorPart
-import org.eclipse.cdt.ui.CDTUITools
-import org.eclipse.cdt.core.model.ICProject
-import org.eclipse.cdt.core.index.IIndex
-import org.eclipse.cdt.core.CCorePlugin
-import org.eclipse.cdt.core.dom.ast.IASTDeclarator
-import org.eclipse.cdt.core.dom.ast.IASTDeclaration
-import org.eclipse.cdt.internal.core.dom.parser.c.CFunction
+
+import static de.cau.cs.kieler.c.sccharts.processors.CDTToStringConverter.*
 
 /**
  * @author lan, nre
@@ -131,6 +128,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
     @Inject extension KExpressionsCreateExtensions
     @Inject extension KExpressionsDeclarationExtensions
     @Inject extension KExpressionsValuedObjectExtensions
+//    @Inject extension PragmaExtensions
     @Inject extension SCChartsControlflowRegionExtensions
     @Inject extension SCChartsCoreExtensions
     @Inject extension SCChartsDataflowRegionExtensions
@@ -145,6 +143,9 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
     static final String returnObjectName = " res"
     
     static final String hiddenVariableName = " cond_res"
+    
+    /** The variable name for the conditional expression result */
+    static final String conditionalResultName = " conditional"
     
     /** The seperator for valued object names and its further SSA objects. */
     static final String ssaNameSeperator = " "
@@ -313,6 +314,8 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         
         // Create SCCharts root elements
         val SCCharts rootSCChart = createSCChart
+        
+//        rootSCChart.pragmas.add(createStringPragma("skinpath", "dataflow"))
         
         // Start extraction for each defined function
         for (child : ast.children) {
@@ -700,7 +703,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
      * Extract the body of an if Statement
      */
     def void buildIf(IASTIfStatement ifStmt, State rootState, DataflowRegion dRegion) {
-        buildConditional(ifStmt, ifStmt.conditionExpression, ifStmt.thenClause, ifStmt.elseClause, rootState, dRegion)
+        buildConditionalDF(ifStmt, ifStmt.conditionExpression, ifStmt.thenClause, ifStmt.elseClause, rootState, dRegion)
     }
     
     /**
@@ -713,7 +716,208 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
     
     /**
      * Build a conditional expression or statement, as in a ternary conditional expression using ? and : or an if[else]
-     * construct.
+     * construct. This variant builds the conditional in a dataflow-alike fashion with seperate then and else dataflow
+     * regions connected via a conditional based on the condition.
+     */
+    private def ValuedObjectReference buildConditionalDF(IASTNode node, IASTExpression condition, IASTNode positive,
+        IASTNode negative, State rootState, DataflowRegion dRegion) {
+            
+        val localIfCounter = ifCounter
+        ifCounter++
+        
+        // Create the state to represent the if statement.
+        val ifState = createState(ifName + ssaNameSeperator + localIfCounter)
+        
+        // Create a reference for this if state in the containing dataflow-region.
+        val refDecl = createReferenceDeclaration
+        dRegion.declarations += refDecl
+        refDecl.setReference(ifState)
+        val ifObj = refDecl.createValuedObject(ifName + ssaNameSeperator + localIfCounter)
+        ifObj.insertHighlightAnnotations(node)
+        
+        // Set the in and outputs of the state
+        setInputs(node, rootState, ifState, dRegion, ifObj)
+        setOutputs(node, rootState, ifState, dRegion, ifObj)
+        
+        // Create the dataflow region for the if state
+        val ifRegion = ifState.createDataflowRegion("")
+        ifRegion.insertHighlightAnnotations(node)
+        ifRegion.label = ifName + ssaNameSeperator + localIfCounter
+        
+        // Create the condition expression and add it to the if state
+        val conditionalDecl = createVariableDeclaration(ValueType::BOOL)
+        ifRegion.declarations += conditionalDecl
+        val conditionalObj = conditionalDecl.createValuedObject(conditionalResultName)
+        conditionalObj.insertHighlightAnnotations(condition)
+        val conditionExpression = createKExpression(condition, ifState, ifRegion)
+        ifRegion.equations += createDataflowAssignment(conditionalObj, conditionExpression)
+        
+        // Create a then state and according reference into the if dataflow region.
+        val thenState = createState(ifName + ssaNameSeperator + localIfCounter + thenName)
+        val thenRefDecl = createReferenceDeclaration
+        ifRegion.declarations += thenRefDecl
+        thenRefDecl.setReference(thenState)
+        val thenObj = thenRefDecl.createValuedObject(ifName + ssaNameSeperator + localIfCounter + thenName)
+        thenObj.insertHighlightAnnotations(positive)
+        
+        // Set the inputs of the state
+        setInputs(positive, ifState, thenState, ifRegion, thenObj)
+        // Set the outputs of the then/else states to refer to, but do not add the equations for them yet, as we want to
+        // route them into a conditional.
+        setOutputs(positive, ifState, thenState, ifRegion, thenObj, false)
+        
+        // Create the region for the 'then' part
+        val thenRegion = createDFRegionForNode(positive, thenState, ifState, ifRegion, thenObj)
+        thenState.regions += thenRegion
+        thenRegion.label = thenName
+        // XXX Somehow link the return to the if output, not like this though:
+//        linkReturn(thenState, ifState, ifRegion, ifRegion, thenObj)
+        
+        // If an else is given the region is also created
+        var State elseState
+        var ValuedObject elseObj
+        if (negative !== null) {
+            // Create an else state and according reference into the if dataflow region.
+            elseState = createState(ifName + ssaNameSeperator + localIfCounter + elseName)
+            val elseRefDecl = createReferenceDeclaration
+            ifRegion.declarations += elseRefDecl
+            elseRefDecl.setReference(elseState)
+            elseObj = elseRefDecl.createValuedObject(ifName + ssaNameSeperator + localIfCounter + elseName)
+            elseObj.insertHighlightAnnotations(negative)
+            
+            // Set the in and outputs of the state
+            setInputs(negative, ifState, elseState, ifRegion, elseObj)
+            setOutputs(negative, ifState, elseState, ifRegion, elseObj, false)
+            
+            // Create the region for the 'else' part
+            val elseRegion = createDFRegionForNode(negative, elseState, ifState, ifRegion, thenObj)
+            elseState.regions += elseRegion
+            elseRegion.label = elseName
+        }
+        
+        // Create the conditional for each output of the then/else states.
+        
+        // Determine which outputs have been set in their respective state
+        val positiveOutputs = findOutputs(positive, ifState, false)
+        var negativeOutputs = negative !== null ? findOutputs(negative, ifState, false) : #{}
+        val HashSet<String> allOutputs = new HashSet
+        allOutputs.addAll(positiveOutputs)
+        allOutputs.addAll(negativeOutputs)
+        // For each output, find the output VO and connect them to a conditional
+        for (output : allOutputs) {
+            // Find the output VO for the then state
+            var ValuedObject innerPositiveOutputVo
+            if (positiveOutputs.contains(output)) {
+                innerPositiveOutputVo = thenState.declarations.filter(VariableDeclaration)
+                    .filter[it.isOutput]
+                    .flatMap[it.valuedObjects]
+                    .filter[it.label == output]
+                    .head
+            }
+            // Find the output VO for the else state
+            var ValuedObject innerNegativeOutputVo
+            if (negativeOutputs.contains(output)) {
+                innerNegativeOutputVo = elseState.declarations.filter(VariableDeclaration)
+                    .filter[it.isOutput]
+                    .flatMap[it.valuedObjects]
+                    .filter[it.label == output]
+                    .head
+            }
+            
+            var ValuedObject positiveOutputVo
+            if (innerPositiveOutputVo !== null) {
+                // Assign the then output to a new "then_[varName]" variable in the if region
+                // For that, create a new variable declaration
+                val variableDeclaration = createVariableDeclaration
+                variableDeclaration.type = innerPositiveOutputVo.type
+                ifRegion.declarations += variableDeclaration
+                // Retrieve the state's variable map
+                var Map<String, List<ValuedObject>> stateVariables = getStateVariables(thenState)
+                val varName = thenName + ssaNameSeperator + localIfCounter + output
+                val varList = <ValuedObject> newArrayList
+                // Reuse the vo variable, now pointing to a new VO in the if state
+                positiveOutputVo = variableDeclaration.createValuedObject(varName)
+                positiveOutputVo.label = varName
+                varList.add(positiveOutputVo)
+                stateVariables.put(varName, varList)
+                ifRegion.declarations += variableDeclaration
+                variableDeclaration.annotations += createTagAnnotation("Hide")
+                val innerPositiveOutputVo_ = innerPositiveOutputVo
+                // This assignment is of the form 'varName = thenObj.varName'
+                val source = thenObj.reference => [
+                    subReference = innerPositiveOutputVo_.reference
+                ]
+                ifRegion.equations += createDataflowAssignment(positiveOutputVo, source)
+            }
+            
+            var ValuedObject negativeOutputVo
+            if (innerNegativeOutputVo !== null) {
+                // Assign the then output to a new "else_[varName]" variable in the if region
+                // For that, create a new variable declaration
+                val variableDeclaration = createVariableDeclaration
+                variableDeclaration.type = innerNegativeOutputVo.type
+                ifRegion.declarations += variableDeclaration
+                // Retrieve the state's variable map
+                var Map<String, List<ValuedObject>> stateVariables = getStateVariables(elseState)
+                val varName = elseName + ssaNameSeperator + localIfCounter + output
+                val varList = <ValuedObject> newArrayList
+                // Reuse the vo variable, now pointing to a new VO in the if state
+                negativeOutputVo = variableDeclaration.createValuedObject(varName)
+                negativeOutputVo.label = varName
+                varList.add(negativeOutputVo)
+                stateVariables.put(varName, varList)
+                ifRegion.declarations += variableDeclaration
+                variableDeclaration.annotations += createTagAnnotation("Hide")
+                val innerNegativeOutputVo_ = innerNegativeOutputVo
+                // This assignment is of the form 'varName = elseObj.varName'
+                val source = elseObj.reference => [
+                    subReference = innerNegativeOutputVo_.reference
+                ]
+                ifRegion.equations += createDataflowAssignment(negativeOutputVo, source)
+            }
+            
+            // If the variable is not written to in the positive or negative case, use the input VO as the output. 
+            val ifOutputVo = ifState.declarations.filter(VariableDeclaration)
+                    .filter[it.isInput]
+                    .flatMap[it.valuedObjects]
+                    .filter[it.label == output]
+                    .head
+            if (positiveOutputVo === null) {
+                positiveOutputVo = ifOutputVo
+            }
+            if (negativeOutputVo === null) {
+                negativeOutputVo = ifOutputVo
+            }
+            
+            // Create a conditional operator with the positiveOutputVo and negativeOutputVo, as well as the
+            // conditionalObj and assign it to the if state's output of that variable.
+            val conditionalExpression = createConditionalExpression(conditionalObj.reference,
+                positiveOutputVo.reference, negativeOutputVo.reference)
+            
+            val outputVO = ifState.findOutputVar(output)
+        
+            // Create the assignment
+            ifRegion.equations += createDataflowAssignment(outputVO, conditionalExpression)
+        }
+        
+        linkReturn(ifState, rootState, ifRegion, dRegion, ifObj)
+        assignOutputs(ifState, ifObj, rootState, dRegion)
+//        linkOutputs(ifState, dRegion)
+        
+        // If there is some assignment to the hidden variable from a conditional expression, use it as the sub-reference
+        val subReference = (getStateVariables(ifState) + getStateVariables(thenState) + getStateVariables(elseState))
+            .filter[
+                key, value | key.equals(hiddenVariableName)
+            ].values.head?.last?.reference
+        return ifObj.reference => [
+            it.subReference = subReference
+        ]
+    }
+    
+    /**
+     * Build a conditional expression or statement, as in a ternary conditional expression using ? and : or an if[else]
+     * construct. This variant builds the conditional in a state machine-alike fashion with seperate then and else
+     * states.
      */
     private def ValuedObjectReference buildConditional(IASTNode node, IASTExpression condition, IASTNode positive,
         IASTNode negative, State rootState, DataflowRegion dRegion) {
@@ -1195,7 +1399,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         // Create an output declaration for each found output
         for (output : outputs) {
             // Get the respective valued object of the containing state
-            val outputVO = rootState.findValuedObjectByName(output, true, dRegion)
+            val outputVO = rootState.findValuedObjectByName(output, addAssignments, dRegion)
             outputVO.insertHighlightAnnotations(stmt)
             val outputRootDecl = outputVO.getVariableDeclaration
             val outputType = outputRootDecl.getType
