@@ -168,6 +168,8 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
     static final String forName = "for"
     /** Shown name prefix for while statements. */
     static final String whileName = "while"
+    /** Shown name prefix for while-body statements. */
+    static final String whileBodyName = "while-body"
     /** Shown name prefix for switch statements. */
     static final String switchName = "switch"
     /** Shown name prefix for default case statements in switches. */
@@ -1234,29 +1236,165 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
      */
     def void buildWhile(IASTWhileStatement whileStmt, State rootState, DataflowRegion dRegion) {
         // Create the state        
-        val whileState = createState(whileName + ssaNameSeperator + whileCounter)
+//        val whileState = createState(whileName + ssaNameSeperator + whileCounter)
+//        
+//        // Create the reference in the containing dataflow region
+//        val refDecl = createReferenceDeclaration
+//        dRegion.declarations += refDecl
+//        refDecl.setReference(whileState)
+//        val whileObj = refDecl.createValuedObject(whileName + ssaNameSeperator + whileCounter)        
+//        whileObj.insertHighlightAnnotations(whileStmt)
+//        
+//        // Set the in and outputs
+//        setInputs(whileStmt, rootState, whileState, dRegion, whileObj)
+//        setOutputs(whileStmt, rootState, whileState, dRegion, whileObj)
+//        
+//        // Create the condition expression label
+//        createKExpression(whileStmt.getCondition, whileState, dRegion)
+//        whileState.label = "while (" + exprToString(whileStmt.getCondition, sourceFile) + ")"
+//        whileCounter++
+//        
+//        // Translate the loop body
+//        val DataflowRegion whileDBodyRegion = createDFRegionForNode(whileStmt.getBody, whileState, rootState, dRegion, whileObj) 
+//        whileState.regions += whileDBodyRegion
+//        whileDBodyRegion.label = whileState.label
+        buildWhileDF (whileStmt, rootState,dRegion)
         
-        // Create the reference in the containing dataflow region
+    }
+    
+    def ValuedObjectReference buildWhileDF (IASTWhileStatement whileStmt, State rootState, DataflowRegion dRegion) {
+         val localWhileCounter = whileCounter
+         whileCounter++
+        
+        // Create the state to represent the while statement.
+        val whileState = createState(whileName + ssaNameSeperator + localWhileCounter)
+        
+        // Create a reference for this while state in the containing dataflow-region.
         val refDecl = createReferenceDeclaration
         dRegion.declarations += refDecl
         refDecl.setReference(whileState)
-        val whileObj = refDecl.createValuedObject(whileName + ssaNameSeperator + whileCounter)        
+        val whileObj = refDecl.createValuedObject(ifName + ssaNameSeperator + localWhileCounter)
         whileObj.insertHighlightAnnotations(whileStmt)
         
-        // Set the in and outputs
+        // Set the in and outputs of the state
         setInputs(whileStmt, rootState, whileState, dRegion, whileObj)
         setOutputs(whileStmt, rootState, whileState, dRegion, whileObj)
         
-        // Create the condition expression label
-        createKExpression(whileStmt.getCondition, whileState, dRegion)
-        whileState.label = "while (" + exprToString(whileStmt.getCondition, sourceFile) + ")"
-        whileCounter++
+        // Create the dataflow region for the while state
+        val whileRegion = whileState.createDataflowRegion("")
+        whileRegion.insertHighlightAnnotations(whileStmt)
+        whileRegion.label = whileName + ssaNameSeperator + localWhileCounter
         
-        // Translate the loop body
-        val DataflowRegion whileDBodyRegion = createDFRegionForNode(whileStmt.getBody, whileState, rootState, dRegion, whileObj) 
-        whileState.regions += whileDBodyRegion
-        whileDBodyRegion.label = whileState.label
+        // Create the condition expression and add it to the while state
+        val conditionalDecl = createVariableDeclaration(ValueType::BOOL)
+        whileRegion.declarations += conditionalDecl
+        val conditionalObj = conditionalDecl.createValuedObject(conditionalResultName)
+        conditionalObj.insertHighlightAnnotations(whileStmt.getCondition)
+        val conditionExpression = createKExpression(whileStmt.getCondition, whileState, whileRegion)
+        whileRegion.equations += createDataflowAssignment(conditionalObj, conditionExpression)
+                
+        // Create the body state and according reference into the while dataflow region.
+        val bodyState = createState(whileName + ssaNameSeperator + localWhileCounter + whileBodyName)
+        val bodyRefDecl = createReferenceDeclaration
+        whileRegion.declarations += bodyRefDecl
+        bodyRefDecl.setReference(bodyState)
+        val bodyObj = bodyRefDecl.createValuedObject(whileName + ssaNameSeperator + localWhileCounter + whileBodyName)
+        bodyObj.insertHighlightAnnotations(whileStmt.getBody)
         
+        
+        // Set the inputs of the state
+        setInputs(whileStmt.getBody, whileState, bodyState, whileRegion, bodyObj)
+        // Set the outputs of the body state to refer to, but do not add the equations for them yet, as we want to
+        // route them into a conditional.
+        setOutputs(whileStmt.getBody, whileState, bodyState, whileRegion, bodyObj, false)
+
+        // Create the region for the body part
+        val bodyRegion = createDFRegionForNode(whileStmt.getBody, bodyState, whileState, whileRegion, bodyObj)
+        bodyState.regions += bodyRegion
+        bodyRegion.label = whileBodyName
+        // XXX Somehow link the return to the while output, not like this though:
+//        linkReturn(thenState, ifState, ifRegion, ifRegion, thenObj)
+        
+        // Create the conditional for the output of the body state.
+        
+        // Determine which outputs have been set in their respective state
+        val positiveOutputs = findOutputs(whileStmt.getBody, whileState, false)
+        val HashSet<String> allOutputs = new HashSet
+        allOutputs.addAll(positiveOutputs)
+        // For each output, find the output VO and connect them to a conditional
+        for (output : allOutputs) {
+            // Find the output VO for the body state
+            var ValuedObject innerPositiveOutputVo
+            if (positiveOutputs.contains(output)) {
+                innerPositiveOutputVo = bodyState.declarations.filter(VariableDeclaration)
+                    .filter[it.isOutput]
+                    .flatMap[it.valuedObjects]
+                    .filter[it.label == output]
+                    .head
+            }
+            
+            var ValuedObject positiveOutputVo
+            if (innerPositiveOutputVo !== null) {
+                // Assign the body output to a new "while-body_[varName]" variable in the while region
+                // For that, create a new variable declaration
+                val variableDeclaration = createVariableDeclaration
+                variableDeclaration.type = innerPositiveOutputVo.type
+                whileRegion.declarations += variableDeclaration
+                // Retrieve the state's variable map
+                var Map<String, List<ValuedObject>> stateVariables = getStateVariables(bodyState)
+                val varName = whileBodyName + ssaNameSeperator + localWhileCounter + output
+                val varList = <ValuedObject> newArrayList
+                // Reuse the vo variable, now pointing to a new VO in the while state
+                positiveOutputVo = variableDeclaration.createValuedObject(varName)
+                positiveOutputVo.label = varName
+                varList.add(positiveOutputVo)
+                stateVariables.put(varName, varList)
+                whileRegion.declarations += variableDeclaration
+                variableDeclaration.annotations += createTagAnnotation("Hide")
+                val innerPositiveOutputVo_ = innerPositiveOutputVo
+                // This assignment is of the form 'varName = whileObj.varName'
+                val source = bodyObj.reference => [
+                    subReference = innerPositiveOutputVo_.reference
+                ]
+                whileRegion.equations += createDataflowAssignment(positiveOutputVo, source)
+            }
+            
+            // If the variable is not written to in the body, use the input VO as the output. 
+            val whileOutputVo = whileState.declarations.filter(VariableDeclaration)
+                    .filter[it.isInput]
+                    .flatMap[it.valuedObjects]
+                    .filter[it.label == output]
+                    .head
+            if (positiveOutputVo === null) {
+                positiveOutputVo = whileOutputVo
+            }
+            
+            // input VO
+            var ValuedObject negativeOutputVo = whileOutputVo
+            
+            // Create a conditional operator with the positiveOutputVo and negativeOutputVo, as well as the
+            // conditionalObj and assign it to the while state's output of that variable.
+            val conditionalExpression = createConditionalExpression(conditionalObj.reference,
+                positiveOutputVo.reference, negativeOutputVo.reference)
+            
+            val outputVO = whileState.findOutputVar(output)
+        
+            // Create the assignment
+            whileRegion.equations += createDataflowAssignment(outputVO, conditionalExpression)
+        }
+        
+        linkReturn(whileState, rootState, whileRegion, dRegion, whileObj)
+        assignOutputs(whileState, whileObj, rootState, dRegion)
+//        linkOutputs(ifState, dRegion)
+        
+        // If there is some assignment to the hidden variable from a conditional expression, use it as the sub-reference
+        val subReference = (getStateVariables(whileState) + getStateVariables(bodyState))
+            .filter[
+                key, value | key.equals(hiddenVariableName)
+            ].values.head?.last?.reference
+        return whileObj.reference => [
+            it.subReference = subReference
+        ]
     }
     
     /**
