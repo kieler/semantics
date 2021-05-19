@@ -209,6 +209,7 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
                     val properties = new KlighdSynthesisProperties()
                     properties.copyProperties(usedContext)
                     properties.setProperty(KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS, ScopeSynthesis.ID);
+                    properties.setProperty(SKINPATH, getSkinPath(usedContext))
                     LightDiagramServices.translateModel2(rootState, usedContext, properties).viewModel?.children.head
                 } else {
                     stateSynthesis.transform(rootState).head
