@@ -118,7 +118,7 @@ class Inheritance extends SCChartsProcessor implements Traceable {
                 
                 if (newDecl.access !== AccessModifier.PUBLIC) { // rename
                     for (vo : newDecl.valuedObjects) {
-                        vo.name = GENERATED_PREFIX + (baseDelc.eContainer as State).name + "_" + vo.name
+                        vo.name = (baseDelc.eContainer as State).name + "_" + vo.name
                     }
                     newDecl.access = AccessModifier.PUBLIC
                 }
