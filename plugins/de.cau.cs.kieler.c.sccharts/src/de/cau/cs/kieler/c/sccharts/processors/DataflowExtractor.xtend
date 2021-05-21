@@ -689,7 +689,8 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
      * Translate While statement
      */
     def dispatch void buildStatement(IASTWhileStatement stmt, State rootState, DataflowRegion dRegion) {
-        buildWhile(stmt, rootState, dRegion)
+//        buildWhile(stmt, rootState, dRegion)
+        buildWhileDF (stmt, rootState,dRegion)
     }
     
     /**
@@ -1322,34 +1323,33 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
      */
     def void buildWhile(IASTWhileStatement whileStmt, State rootState, DataflowRegion dRegion) {
         // Create the state        
-//        val whileState = createState(whileName + ssaNameSeperator + whileCounter)
-//        if (serializable) {
-//            rootSCChart.rootStates += whileState
-//        }
-//        
-//        // Create the reference in the containing dataflow region
-//        val refDecl = createReferenceDeclaration
-//        dRegion.declarations += refDecl
-//        refDecl.setReference(whileState)
-//        val whileObj = refDecl.createValuedObject(whileName + ssaNameSeperator + whileCounter)
-//        if (!serializable) {
-//            whileObj.insertHighlightAnnotations(whileStmt)
-//        }  
-//        
-//        // Set the in and outputs
-//        setInputs(whileStmt, rootState, whileState, dRegion, whileObj)
-//        setOutputs(whileStmt, rootState, whileState, dRegion, whileObj)
-//        
-//        // Create the condition expression label
-//        createKExpression(whileStmt.getCondition, whileState, dRegion)
-//        whileState.label = "while (" + exprToString(whileStmt.getCondition, sourceFile) + ")"
-//        whileCounter++
-//        
-//        // Translate the loop body
-//        val DataflowRegion whileDBodyRegion = createDFRegionForNode(whileStmt.getBody, whileState, rootState, dRegion, whileObj) 
-//        whileState.regions += whileDBodyRegion
-//        whileDBodyRegion.label = whileState.label
-        buildWhileDF (whileStmt, rootState,dRegion)
+        val whileState = createState(whileName + ssaNameSeperator + whileCounter)
+        if (serializable) {
+            rootSCChart.rootStates += whileState
+        }
+        
+        // Create the reference in the containing dataflow region
+        val refDecl = createReferenceDeclaration
+        dRegion.declarations += refDecl
+        refDecl.setReference(whileState)
+        val whileObj = refDecl.createValuedObject(whileName + ssaNameSeperator + whileCounter)
+        if (!serializable) {
+            whileObj.insertHighlightAnnotations(whileStmt)
+        }  
+        
+        // Set the in and outputs
+        setInputs(whileStmt, rootState, whileState, dRegion, whileObj)
+        setOutputs(whileStmt, rootState, whileState, dRegion, whileObj)
+        
+        // Create the condition expression label
+        createKExpression(whileStmt.getCondition, whileState, dRegion)
+        whileState.label = "while (" + exprToString(whileStmt.getCondition, sourceFile) + ")"
+        whileCounter++
+        
+        // Translate the loop body
+        val DataflowRegion whileDBodyRegion = createDFRegionForNode(whileStmt.getBody, whileState, rootState, dRegion, whileObj) 
+        whileState.regions += whileDBodyRegion
+        whileDBodyRegion.label = whileState.label
         
     }
     
@@ -1378,29 +1378,24 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         
         // Create the dataflow region for the while state
         val whileRegion = whileState.createDataflowRegion("")
-        whileRegion.insertHighlightAnnotations(whileStmt)
+        if (!serializable) {
+            whileRegion.insertHighlightAnnotations(whileStmt)
+        } 
         whileRegion.label = whileName + ssaNameSeperator + localWhileCounter
         
         
-        
-        
-        
-        
-        // Create the condition expression and add it to the while state
-//        val conditionalDecl = createVariableDeclaration(ValueType::BOOL)
-//        whileRegion.declarations += conditionalDecl
-//        val conditionalObj = conditionalDecl.createValuedObject(conditionalResultName)
-//        conditionalObj.insertHighlightAnnotations(whileStmt.getCondition)
-//        val conditionExpression = createKExpression(whileStmt.getCondition, whileState, whileRegion)
-//        whileRegion.equations += createDataflowAssignment(conditionalObj, conditionExpression)
-               
         // Create the cond state
         val condState = createState(whileName + ssaNameSeperator + localWhileCounter + whileCondName)
+        if (serializable) {
+            rootSCChart.rootStates += condState
+        }
         val condRefDecl = createReferenceDeclaration
         whileRegion.declarations += condRefDecl
         condRefDecl.setReference(condState)
         val condObj = condRefDecl.createValuedObject(conditionalResultName)
-        condObj.insertHighlightAnnotations(whileStmt.getCondition) 
+        if (!serializable) {
+            condObj.insertHighlightAnnotations(whileStmt.getCondition)
+        }
         
         // inputs & outputs
         setInputs(whileStmt.getCondition, whileState, condState, whileRegion, condObj)
@@ -1408,22 +1403,25 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         
         // Create the region for the condition part
         val condRegion = createDFRegionForNode(whileStmt.getCondition, condState, whileState, whileRegion, condObj)
+//        if (!serializable) {
+//            condRegion.insertHighlightAnnotations(whileStmt.getCondition)
+//        } 
         condState.regions += condRegion
         condRegion.label = whileCondName
         
         
-        
-        
-        
-        
-                        
         // Create the body state and according reference into the while dataflow region.
         val bodyState = createState(whileName + ssaNameSeperator + localWhileCounter + whileBodyName)
+        if (serializable) {
+            rootSCChart.rootStates += bodyState
+        }
         val bodyRefDecl = createReferenceDeclaration
         whileRegion.declarations += bodyRefDecl
         bodyRefDecl.setReference(bodyState)
         val bodyObj = bodyRefDecl.createValuedObject(whileName + ssaNameSeperator + localWhileCounter + whileBodyName)
-        bodyObj.insertHighlightAnnotations(whileStmt.getBody)
+        if (!serializable) {
+            bodyObj.insertHighlightAnnotations(whileStmt.getBody)
+        }        
         
         
         // Set the inputs of the state
@@ -1434,6 +1432,9 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
 
         // Create the region for the body part
         val bodyRegion = createDFRegionForNode(whileStmt.getBody, bodyState, whileState, whileRegion, bodyObj)
+//        if (!serializable) {
+//            bodyRegion.insertHighlightAnnotations(whileStmt.getBody)
+//        } 
         bodyState.regions += bodyRegion
         bodyRegion.label = whileBodyName
         // XXX Somehow link the return to the while output, not like this though:
@@ -1531,6 +1532,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             val outputVO = whileState.findOutputVar(output)
         
             // Create the assignment
+            whileRegion.equations += createDataflowAssignment(outputVO, whileOutputVo.reference)
             whileRegion.equations += createDataflowAssignment(outputVO, conditionalExpression)
         }
         
