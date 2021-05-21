@@ -136,19 +136,26 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
     @Inject extension SCChartsTransitionExtensions
     @Inject extension ValueExtensions
     
+    
+    /**
+     * If the model should be serializable. Could be read from a comment in the code, currently is just hardcoded though
+     */ // true, in a more complicated way to avoid warnings all over the place.
+    static final boolean serializable = true ? true : false
+    
+    /** The seperator for valued object names and its further SSA objects. */
+    static final String ssaNameSeperator = serializable ? "_" : " "
+    
     /**
      * The name of the valued objects for returns.
      * Starts with a whitespace prefix so that it is not possible to clash with real variable names.
      */
-    static final String returnObjectName = " res"
+    static final String returnObjectName = ssaNameSeperator + "res"
     
-    static final String hiddenVariableName = " cond_res"
+    static final String hiddenVariableName = ssaNameSeperator + "cond_res"
     
     /** The variable name for the conditional expression result */
-    static final String conditionalResultName = " conditional"
+    static final String conditionalResultName = ssaNameSeperator + "conditional"
     
-    /** The seperator for valued object names and its further SSA objects. */
-    static final String ssaNameSeperator = " "
     /** The valued object suffix for the input SSA object. */
     static final String inSuffix = ssaNameSeperator + "in"
     /** The valued object suffix for the output SSA object. */
@@ -208,6 +215,13 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
 
     /** The file contents, for referencing direct String representations. */
     var byte[] sourceFile
+    
+    
+    /** 
+     * The root SCCharts container of the model. Contains every function as a state, or every function and other
+     * constructs modeled as states if the {@code serializable} flag is set.
+     */
+    var SCCharts rootSCChart
 
     override String getId() {
         return "de.cau.cs.kieler.c.sccharts.dataflowExtractor"
@@ -317,7 +331,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         }
         
         // Create SCCharts root elements
-        val SCCharts rootSCChart = createSCChart
+        rootSCChart = createSCChart
         
 //        rootSCChart.pragmas.add(createStringPragma("skinpath", "dataflow"))
         
@@ -366,8 +380,10 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         functions.put(funcName, state)
         state.label = funcName
         
-        // Insert text highlighting annotations
-        state.insertHighlightAnnotations(func)
+        if (!serializable) {
+            // Insert text highlighting annotations
+            state.insertHighlightAnnotations(func)
+        }
         
         // Create a hashmap for the functions valued objects if needed
         val Map<String, List<ValuedObject>> stateVariables = getStateVariables(state)
@@ -398,7 +414,9 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                     // Create valued object for the input
                     val vo = decl.createValuedObject(varName + inSuffix)
                     vo.label = varName
-                    vo.insertHighlightAnnotations(par)
+                    if (!serializable) {
+                        vo.insertHighlightAnnotations(par)
+                    }
                     
                     // Attach the valued object to its list and the list to the map
                     varList.add(vo)
@@ -462,7 +480,9 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                         // Create valued object for the output.
                         val outputVo = outDecl.createValuedObject(varName + outSuffix)
                         outputVo.label = varName
-                        outputVo.insertHighlightAnnotations(par)
+                        if (!serializable) {
+                            outputVo.insertHighlightAnnotations(par)
+                        }
                         
                         // Attach the valued object to its list.
                         varList.add(outputVo)
@@ -494,6 +514,9 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         DataflowRegion dRegion) {
         // Create the state
         val state = createState(funcName)
+        if (serializable) {
+            rootSCChart.rootStates += state
+        }
         state.label = funcName
         val bodyRegion = state.createDataflowRegion(funcName)
         bodyRegion.label = funcName
@@ -546,7 +569,9 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             // Create valued object for the input
             val vo = declaration.createValuedObject(varName + inSuffix)
             vo.label = varName
-            vo.insertHighlightAnnotations(arg)
+            if (!serializable) {
+                vo.insertHighlightAnnotations(arg)
+            }
             
             if (needsOutput) {
                 // Create output declaration
@@ -557,7 +582,9 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 // Create valued object for the output.
                 val outputVo = outDecl.createValuedObject(varName + outSuffix)
                 outputVo.label = varName
-                outputVo.insertHighlightAnnotations(arg)
+                if (!serializable) {
+                    outputVo.insertHighlightAnnotations(arg)
+                }
             }
         }
         
@@ -577,7 +604,9 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
      */
     def DataflowRegion buildCompound(IASTCompoundStatement body, State bodyState, IASTStatement additionalDeclarations) {
         val dfRegion = createDataflowRegion("DF-" + bodyState.name)
-        dfRegion.insertHighlightAnnotations(body)
+        if (!serializable) {
+            dfRegion.insertHighlightAnnotations(body)
+        }
 
         addAdditionalDeclarations(additionalDeclarations, bodyState, dfRegion)
         
@@ -677,7 +706,9 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         val retKExpr = createKExpression(stmt.getReturnValue, rootState, dRegion)
         
         val retVO = rootState.findValuedObjectByName(returnObjectName, true, dRegion)
-        retVO.insertHighlightAnnotations(stmt)
+        if (!serializable) {
+            retVO.insertHighlightAnnotations(stmt)
+        }
         dRegion.equations += createDataflowAssignment(retVO, retKExpr)
     }
     
@@ -731,13 +762,18 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         
         // Create the state to represent the if statement.
         val ifState = createState(ifName + ssaNameSeperator + localIfCounter)
+        if (serializable) {
+            rootSCChart.rootStates += ifState
+        }
         
         // Create a reference for this if state in the containing dataflow-region.
         val refDecl = createReferenceDeclaration
         dRegion.declarations += refDecl
         refDecl.setReference(ifState)
         val ifObj = refDecl.createValuedObject(ifName + ssaNameSeperator + localIfCounter)
-        ifObj.insertHighlightAnnotations(node)
+        if (!serializable) {
+            ifObj.insertHighlightAnnotations(node)
+        }
         
         // Set the in and outputs of the state
         setInputs(node, rootState, ifState, dRegion, ifObj)
@@ -745,24 +781,33 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         
         // Create the dataflow region for the if state
         val ifRegion = ifState.createDataflowRegion("")
-        ifRegion.insertHighlightAnnotations(node)
+        if (!serializable) {
+            ifRegion.insertHighlightAnnotations(node)
+        }
         ifRegion.label = ifName + ssaNameSeperator + localIfCounter
         
         // Create the condition expression and add it to the if state
         val conditionalDecl = createVariableDeclaration(ValueType::BOOL)
         ifRegion.declarations += conditionalDecl
         val conditionalObj = conditionalDecl.createValuedObject(conditionalResultName)
-        conditionalObj.insertHighlightAnnotations(condition)
+        if (!serializable) {
+            conditionalObj.insertHighlightAnnotations(condition)
+        }
         val conditionExpression = createKExpression(condition, ifState, ifRegion)
         ifRegion.equations += createDataflowAssignment(conditionalObj, conditionExpression)
         
         // Create a then state and according reference into the if dataflow region.
         val thenState = createState(ifName + ssaNameSeperator + localIfCounter + thenName)
+        if (serializable) {
+            rootSCChart.rootStates += thenState
+        }
         val thenRefDecl = createReferenceDeclaration
         ifRegion.declarations += thenRefDecl
         thenRefDecl.setReference(thenState)
         val thenObj = thenRefDecl.createValuedObject(ifName + ssaNameSeperator + localIfCounter + thenName)
-        thenObj.insertHighlightAnnotations(positive)
+        if (!serializable) {
+            thenObj.insertHighlightAnnotations(positive)
+        }
         
         // Set the inputs of the state
         setInputs(positive, ifState, thenState, ifRegion, thenObj)
@@ -783,11 +828,16 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         if (negative !== null) {
             // Create an else state and according reference into the if dataflow region.
             elseState = createState(ifName + ssaNameSeperator + localIfCounter + elseName)
+            if (serializable) {
+                rootSCChart.rootStates += elseState
+            }
             val elseRefDecl = createReferenceDeclaration
             ifRegion.declarations += elseRefDecl
             elseRefDecl.setReference(elseState)
             elseObj = elseRefDecl.createValuedObject(ifName + ssaNameSeperator + localIfCounter + elseName)
-            elseObj.insertHighlightAnnotations(negative)
+            if (!serializable) {
+                elseObj.insertHighlightAnnotations(negative)
+            }
             
             // Set the in and outputs of the state
             setInputs(negative, ifState, elseState, ifRegion, elseObj)
@@ -903,10 +953,13 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             // Create the assignment
             ifRegion.equations += createDataflowAssignment(outputVO, conditionalExpression)
         }
+//        linkOutputs(thenState, ifRegion)
+//        if (elseState !== null) {
+//            linkOutputs(elseState, ifRegion)
+//        }
         
         linkReturn(ifState, rootState, ifRegion, dRegion, ifObj)
         assignOutputs(ifState, ifObj, rootState, dRegion)
-//        linkOutputs(ifState, dRegion)
         
         // If there is some assignment to the hidden variable from a conditional expression, use it as the sub-reference
         val subReference = (getStateVariables(ifState) + getStateVariables(thenState) + getStateVariables(elseState))
@@ -928,13 +981,18 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         
         // Create the state to represent the if statement.
         val ifState = createState(ifName + ssaNameSeperator + ifCounter)
+        if (serializable) {
+            rootSCChart.rootStates += ifState
+        }
         
         // Create a reference for this if state in the containing dataflow-region.
         val refDecl = createReferenceDeclaration
         dRegion.declarations += refDecl
         refDecl.setReference(ifState)
         val ifObj = refDecl.createValuedObject(ifName + ssaNameSeperator + ifCounter)
-        ifObj.insertHighlightAnnotations(node)
+        if (!serializable) {
+            ifObj.insertHighlightAnnotations(node)
+        }
         ifCounter++
         
         // Set the in and outputs of the state
@@ -944,7 +1002,9 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         // Create the controlflow region for the if state and the initial state
         val cRegion = ifState.createControlflowRegion("")
         val initState = cRegion.createState("")
-        initState.insertHighlightAnnotations(node)
+        if (!serializable) {
+            initState.insertHighlightAnnotations(node)
+        }
         initState.initial = true
         
         // Create the state for the then part
@@ -980,7 +1040,9 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         State parentState, DataflowRegion parentDRegion, ValuedObject parentReference, String name) {
         val newState = parentCRegion.createState(name)
         newState.label = name
-        newState.insertHighlightAnnotations(node)
+        if (!serializable) {
+            newState.insertHighlightAnnotations(node)
+        }
         // Set the in and outputs of the state
         setInputs(node, parentState, newState, parentDRegion, null, false)
         setOutputs(node, parentState, newState, parentDRegion, null, false)
@@ -1021,7 +1083,9 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             newRegion = buildCompound(node, currentState, additionalDeclarations)
         } else {
             newRegion = createDataflowRegion("DF-" + currentState.name)
-            newRegion.insertHighlightAnnotations(node)
+            if (!serializable) {
+                newRegion.insertHighlightAnnotations(node)
+            }
             
             addAdditionalDeclarations(additionalDeclarations, currentState, newRegion)
             
@@ -1051,7 +1115,9 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 varList.add(hiddenVO)
                 
                 getStateVariables(currentState).put(varName, varList)
-                hiddenVO.insertHighlightAnnotations(node)
+                if (!serializable) {
+                    hiddenVO.insertHighlightAnnotations(node)
+                }
                 newRegion.equations += createDataflowAssignment(hiddenVO, output)
             }
             
@@ -1113,13 +1179,18 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
     def void buildSwitch(IASTSwitchStatement swStmt, State rootState, DataflowRegion dRegion) {
         // Create the State representing the switch
         val swState = createState(switchName + ssaNameSeperator + swCounter)
+        if (serializable) {
+            rootSCChart.rootStates += swState
+        }
         
         // Create the reference for the containing dataflow region
         val refDecl = createReferenceDeclaration
         dRegion.declarations += refDecl
         refDecl.setReference(swState)
-        val swObj = refDecl.createValuedObject(switchName + ssaNameSeperator + swCounter)        
-        swObj.insertHighlightAnnotations(swStmt)
+        val swObj = refDecl.createValuedObject(switchName + ssaNameSeperator + swCounter)
+        if (!serializable) {
+            swObj.insertHighlightAnnotations(swStmt)
+        }        
         swCounter++
         
         // Set the In and Outputs
@@ -1128,7 +1199,9 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         
         // Create the controlflow region
         val cRegion = swState.createControlflowRegion("")
-        cRegion.insertHighlightAnnotations(swStmt.getBody)
+        if (!serializable) {
+            cRegion.insertHighlightAnnotations(swStmt.getBody)
+        }
         
         // Create the controller expression label
         swStmt.getControllerExpression.createKExpression(swState, dRegion)
@@ -1137,7 +1210,9 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         
         // Create the initial state
         val initState = cRegion.createState("")
-        initState.insertHighlightAnnotations(swStmt.getBody)
+        if (!serializable) {
+            initState.insertHighlightAnnotations(swStmt.getBody)
+        }
         initState.initial = true
         
         // Translate the switch body
@@ -1156,14 +1231,18 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 }
                 // Create the state
                 activeCase = cRegion.createState("")
-                activeCase.insertHighlightAnnotations(child)
+                if (!serializable) {
+                    activeCase.insertHighlightAnnotations(child)
+                }
                 
                 setInputs(swBody, rootState, activeCase, dRegion, null, false)
                 setOutputs(swBody, rootState, activeCase, dRegion, null, false)
                 // Create its dataflow region
                 activeDRegion = createDataflowRegion("")
                 activeCase.regions += activeDRegion
-                activeDRegion.insertHighlightAnnotations(child)
+                if (!serializable) {
+                    activeDRegion.insertHighlightAnnotations(child)
+                }
                 
                 // Create the transition from the previous case state to the new if needed
                 if (noBreakCase !== null) {
@@ -1205,13 +1284,18 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
     def void buildFor(IASTForStatement forStmt, State rootState, DataflowRegion dRegion) {
         // Create the state
         val forState = createState(forName + ssaNameSeperator + forCounter)
+        if (serializable) {
+            rootSCChart.rootStates += forState
+        }
         
         // Reference the state in the containing dataflow region
         val refDecl = createReferenceDeclaration
         dRegion.declarations += refDecl
         refDecl.setReference(forState)
-        val forObj = refDecl.createValuedObject(forName + ssaNameSeperator + forCounter)        
-        forObj.insertHighlightAnnotations(forStmt)
+        val forObj = refDecl.createValuedObject(forName + ssaNameSeperator + forCounter)
+        if (!serializable) {
+            forObj.insertHighlightAnnotations(forStmt)
+        }        
         
         // Set the in and outputs
         setInputs(forStmt, rootState, forState, dRegion, forObj)
@@ -1239,13 +1323,18 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
     def void buildWhile(IASTWhileStatement whileStmt, State rootState, DataflowRegion dRegion) {
         // Create the state        
 //        val whileState = createState(whileName + ssaNameSeperator + whileCounter)
+//        if (serializable) {
+//            rootSCChart.rootStates += whileState
+//        }
 //        
 //        // Create the reference in the containing dataflow region
 //        val refDecl = createReferenceDeclaration
 //        dRegion.declarations += refDecl
 //        refDecl.setReference(whileState)
-//        val whileObj = refDecl.createValuedObject(whileName + ssaNameSeperator + whileCounter)        
-//        whileObj.insertHighlightAnnotations(whileStmt)
+//        val whileObj = refDecl.createValuedObject(whileName + ssaNameSeperator + whileCounter)
+//        if (!serializable) {
+//            whileObj.insertHighlightAnnotations(whileStmt)
+//        }  
 //        
 //        // Set the in and outputs
 //        setInputs(whileStmt, rootState, whileState, dRegion, whileObj)
@@ -1270,13 +1359,18 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         
         // Create the state to represent the while statement.
         val whileState = createState(whileName + ssaNameSeperator + localWhileCounter)
+        if (serializable) {
+            rootSCChart.rootStates += whileState
+        }
         
         // Create a reference for this while state in the containing dataflow-region.
         val refDecl = createReferenceDeclaration
         dRegion.declarations += refDecl
         refDecl.setReference(whileState)
         val whileObj = refDecl.createValuedObject(ifName + ssaNameSeperator + localWhileCounter)
-        whileObj.insertHighlightAnnotations(whileStmt)
+        if (!serializable) {
+            whileObj.insertHighlightAnnotations(whileStmt)
+        } 
         
         // Set the in and outputs of the state
         setInputs(whileStmt, rootState, whileState, dRegion, whileObj)
@@ -1460,13 +1554,18 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
     def void buildDo(IASTDoStatement doStmt, State rootState, DataflowRegion dRegion) {
         // Create the state        
         val doState = createState(doName + ssaNameSeperator + doCounter)
+        if (serializable) {
+            rootSCChart.rootStates += doState
+        }
         
         // Create the reference in the containing dataflow region
         val refDecl = createReferenceDeclaration
         dRegion.declarations += refDecl
         refDecl.setReference(doState)
-        val doObj = refDecl.createValuedObject(doName + ssaNameSeperator + doCounter)        
-        doObj.insertHighlightAnnotations(doStmt)
+        val doObj = refDecl.createValuedObject(doName + ssaNameSeperator + doCounter)
+        if (!serializable) {
+            doObj.insertHighlightAnnotations(doStmt)
+        }        
         
         // Set the in and outputs
         setInputs(doStmt, rootState, doState, dRegion, doObj)
@@ -1513,7 +1612,9 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         // Create the declaration with the cdt type
         val variableDeclaration = createVariableDeclaration
         variableDeclaration.type = (declaration.getDeclSpecifier as IASTSimpleDeclSpecifier).type.cdtTypeConversion
-        variableDeclaration.insertHighlightAnnotations(declaration)
+        if (!serializable) {
+            variableDeclaration.insertHighlightAnnotations(declaration)
+        }
         
         // Retrieve the state's variable map
         var Map<String, List<ValuedObject>> stateVariables = getStateVariables(state)
@@ -1529,7 +1630,9 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             //Create the valued object
             val vo = variableDeclaration.createValuedObject(varName + ssaNameSeperator + "0")
             vo.label = varName
-            vo.insertHighlightAnnotations(decl)
+            if (!serializable) {
+                vo.insertHighlightAnnotations(decl)
+            }
             if (decl instanceof IASTArrayDeclarator) {
                 vo.cardinalities += decl.arrayModifiers.map[
                     val expr = it.constantExpression?.createKExpression(state, dRegion)
@@ -1595,7 +1698,9 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         for (output : outputs) {
             // Get the respective valued object of the containing state
             val outputVO = rootState.findValuedObjectByName(output, addAssignments, dRegion)
-            outputVO.insertHighlightAnnotations(stmt)
+            if (!serializable) {
+                outputVO.insertHighlightAnnotations(stmt)
+            }
             val outputRootDecl = outputVO.getVariableDeclaration
             val outputType = outputRootDecl.getType
             
@@ -1606,7 +1711,9 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             decl.output = true            
             val innerOutputVO = decl.createValuedObject(output + outSuffix)
             innerOutputVO.label = output
-            innerOutputVO.insertHighlightAnnotations(stmt)
+            if (!serializable) {
+                innerOutputVO.insertHighlightAnnotations(stmt)
+            }
             
             // Add the new create valued object to the ssa list and valued object list
             if (stateVariables.containsKey(output)) {
@@ -1791,7 +1898,9 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             decl.input = true            
             val innerInputVO = decl.createValuedObject(input + inSuffix)
             innerInputVO.label = input
-            innerInputVO.insertHighlightAnnotations(stmt)
+            if (!serializable) {
+                innerInputVO.insertHighlightAnnotations(stmt)
+            }
             
             // Add the new create valued object to the ssa list and valued object list
             if (stateVariables.containsKey(input)) {
@@ -1913,8 +2022,10 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 
                 // Create the valued object and add it to the variable list, before the outSuffix object
                 vo = varDecl.createValuedObject(varName)
-                if (OffsetAnno.length > 0) vo.annotations += OffsetAnno.head
-                if (LengthAnno.length > 0) vo.annotations += LengthAnno.head                
+                if (!serializable) {
+                    if (OffsetAnno.length > 0) vo.annotations += OffsetAnno.head
+                    if (LengthAnno.length > 0) vo.annotations += LengthAnno.head                
+                }
                 varList.add(0, vo) 
             }
         } 
@@ -2013,6 +2124,9 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                     
                     // Create a state to combine all returns
                     val returnState = createState(returnCombineName)
+                    if (serializable) {
+                        rootSCChart.rootStates += returnState
+                    }
                     returnState.createDataflowRegion(returnCombineName) => [
                         label = returnCombineName
                     ]
@@ -2061,7 +2175,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                         lastVO = varList.get(varList.length - 2)
                     }
                     // Copy the location information of the last ssa vo to the output vo
-                    if (outVO.annotations.length < 2) {
+                    if (!serializable && outVO.annotations.length < 2) {
                         outVO.annotations += createStringAnnotation("Offset", lastVO.getStringAnnotationValue("Offset"))
                         outVO.annotations += createStringAnnotation("Length", lastVO.getStringAnnotationValue("Length"))
                     }
@@ -2178,7 +2292,9 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             // Retrieve the assignment target
             val targetAndIndex = retrieveTargetAndIndexExpr(binExpr.getOperand1, funcState, dRegion)
             
-            targetAndIndex.target.insertHighlightAnnotations(binExpr)
+            if (!serializable) {
+                targetAndIndex.target.insertHighlightAnnotations(binExpr)
+            }
             ass = createDataflowAssignment(targetAndIndex.target, source)
             if (targetAndIndex.index !== null) {
                 ass.reference.indices += targetAndIndex.index
@@ -2310,7 +2426,9 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             // look for the target and add it to the dataflow region as an assignment.
             val targetAndIndex = retrieveTargetAndIndexExpr(expression.operand, funcState, dRegion)
             
-            targetAndIndex.target.insertHighlightAnnotations(expression)
+            if (!serializable) {
+                targetAndIndex.target.insertHighlightAnnotations(expression)
+            }
             val Assignment ass = createDataflowAssignment(targetAndIndex.target, source)
             if (targetAndIndex.index !== null) {
                 ass.reference.indices += targetAndIndex.index
@@ -2324,8 +2442,10 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         // Retrieve the respective variable VO                
         val opName = (expression.getOperand as IASTIdExpression).getName.toString
         val opVO = funcState.findValuedObjectByName(opName, true, dRegion)
-                
-        opVO.insertHighlightAnnotations(expression) 
+        
+        if (!serializable) {
+            opVO.insertHighlightAnnotations(expression) 
+        }
         // Create the Assignment        
         dRegion.equations += createDataflowAssignment(opVO, sourceExpression)
         
@@ -2356,7 +2476,9 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         
         // Create a valued object for the referenced state
         val refObj = refDecl.createValuedObject(refState.name)
-        refObj.insertHighlightAnnotations(expression)
+        if (!serializable) {
+            refObj.insertHighlightAnnotations(expression)
+        }
         
         // Create all assignments for the function call
         var index = 0
@@ -2573,6 +2695,9 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         }
         
         val sizeofState = createState(label)
+        if (serializable) {
+            rootSCChart.rootStates += sizeofState
+        }
         sizeofState.createDataflowRegion(label) => [
             it.label = label
         ]
