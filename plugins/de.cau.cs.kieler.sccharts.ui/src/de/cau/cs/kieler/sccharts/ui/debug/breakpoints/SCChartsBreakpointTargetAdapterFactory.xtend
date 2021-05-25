@@ -28,7 +28,7 @@ class SCChartsBreakpointTargetAdapterFactory implements IAdapterFactory {
     /** 
      * {@inheritDoc}
      */
-    @SuppressWarnings(#["rawtypes", "unchecked"]) 
+    @SuppressWarnings(#["unchecked"]) 
     override <T> T  getAdapter(Object adaptableObject, Class<T> adapterType) {
         if (adaptableObject instanceof XtextEditor) {
             val editorPart = adaptableObject as XtextEditor
