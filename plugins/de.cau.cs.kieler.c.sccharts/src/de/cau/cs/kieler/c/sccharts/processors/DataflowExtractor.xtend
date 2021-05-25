@@ -784,6 +784,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         
         // Create the condition expression and add it to the if state
         val conditionalDecl = createVariableDeclaration(ValueType::BOOL)
+        conditionalDecl.annotations += createTagAnnotation("Hide")
         ifRegion.declarations += conditionalDecl
         val conditionalObj = conditionalDecl.createValuedObject(conditionalResultName)
         if (!serializable) {
@@ -815,8 +816,6 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         val thenRegion = createDFRegionForNode(positive, thenState, ifState, ifRegion, thenObj)
         thenState.regions += thenRegion
         thenRegion.label = thenName
-        // XXX Somehow link the return to the if output, not like this though:
-//        linkReturn(thenState, ifState, ifRegion, ifRegion, thenObj)
         
         // If an else is given the region is also created
         var State elseState
@@ -840,7 +839,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             setOutputs(negative, ifState, elseState, ifRegion, elseObj, false)
             
             // Create the region for the 'else' part
-            val elseRegion = createDFRegionForNode(negative, elseState, ifState, ifRegion, thenObj)
+            val elseRegion = createDFRegionForNode(negative, elseState, ifState, ifRegion, elseObj)
             elseState.regions += elseRegion
             elseRegion.label = elseName
         }
@@ -848,8 +847,17 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         // Create the conditional for each output of the then/else states.
         
         // Determine which outputs have been set in their respective state
-        val positiveOutputs = findOutputs(positive, ifState, false)
-        var negativeOutputs = negative !== null ? findOutputs(negative, ifState, false) : #{}
+        var positiveOutputs = findOutputs(positive, ifState, false)
+        if (getStateVariables(thenState).containsKey(returnObjectName)) {
+            positiveOutputs += returnObjectName
+        }
+        var negativeOutputs = <String>newHashSet
+        if (negative !== null) {
+            negativeOutputs += findOutputs(negative, ifState, false)
+            if (getStateVariables(elseState).containsKey(returnObjectName)) {
+                negativeOutputs += returnObjectName
+            }
+        }
         val HashSet<String> allOutputs = new HashSet
         allOutputs.addAll(positiveOutputs)
         allOutputs.addAll(negativeOutputs)
@@ -890,7 +898,6 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 positiveOutputVo.label = varName
                 varList.add(positiveOutputVo)
                 stateVariables.put(varName, varList)
-                ifRegion.declarations += variableDeclaration
                 variableDeclaration.annotations += createTagAnnotation("Hide")
                 val innerPositiveOutputVo_ = innerPositiveOutputVo
                 // This assignment is of the form 'varName = thenObj.varName'
@@ -902,7 +909,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             
             var ValuedObject negativeOutputVo
             if (innerNegativeOutputVo !== null) {
-                // Assign the then output to a new "else_[varName]" variable in the if region
+                // Assign the else output to a new "else_[varName]" variable in the if region
                 // For that, create a new variable declaration
                 val variableDeclaration = createVariableDeclaration
                 variableDeclaration.type = innerNegativeOutputVo.type
@@ -916,7 +923,6 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 negativeOutputVo.label = varName
                 varList.add(negativeOutputVo)
                 stateVariables.put(varName, varList)
-                ifRegion.declarations += variableDeclaration
                 variableDeclaration.annotations += createTagAnnotation("Hide")
                 val innerNegativeOutputVo_ = innerNegativeOutputVo
                 // This assignment is of the form 'varName = elseObj.varName'
@@ -939,23 +945,29 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 negativeOutputVo = ifOutputVo
             }
             
-            // Create a conditional operator with the positiveOutputVo and negativeOutputVo, as well as the
-            // conditionalObj and assign it to the if state's output of that variable.
-            val conditionalExpression = createConditionalExpression(conditionalObj.reference,
-                positiveOutputVo.reference, negativeOutputVo.reference)
+            var OperatorExpression conditionalExpression
+            // If the positive or negative output VO is still null (i.e. we are in the return variable case),
+            // create a conditional expression with only one sub expression instead.
+            if (positiveOutputVo === null || negativeOutputVo === null) {
+                // TODO: This view is supposed for the positive case, but we also put the negative case without a
+                // inverter here. Maybe need to add inverter or re-skin the operator in that case.
+                val nonNullVo = positiveOutputVo === null ? negativeOutputVo : positiveOutputVo
+                conditionalExpression = createConditionalExpression(conditionalObj.reference, nonNullVo.reference)
+            } else {
+                // Create a conditional operator with the positiveOutputVo and negativeOutputVo, as well as the
+                // conditionalObj and assign it to the if state's output of that variable.
+                conditionalExpression = createConditionalExpression(conditionalObj.reference,
+                    positiveOutputVo.reference, negativeOutputVo.reference)
+            }
+            
             
             val outputVO = ifState.findOutputVar(output)
         
             // Create the assignment
             ifRegion.equations += createDataflowAssignment(outputVO, conditionalExpression)
         }
-//        linkOutputs(thenState, ifRegion)
-//        if (elseState !== null) {
-//            linkOutputs(elseState, ifRegion)
-//        }
         
         linkReturn(ifState, rootState, ifRegion, dRegion, ifObj)
-        assignOutputs(ifState, ifObj, rootState, dRegion)
         
         // If there is some assignment to the hidden variable from a conditional expression, use it as the sub-reference
         val subReference = (getStateVariables(ifState) + getStateVariables(thenState) + getStateVariables(elseState))
@@ -997,7 +1009,8 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         
         // Create the controlflow region for the if state and the initial state
         val cRegion = ifState.createControlflowRegion("")
-        val initState = cRegion.createState("")
+        val initState = cRegion.createState("init")
+        initState.label = ""
         if (!serializable) {
             initState.insertHighlightAnnotations(node)
         }
@@ -1159,9 +1172,9 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 vos.put(returnObjectName, returnObjects)
             }
             
-            val retVO = parentState.findValuedObjectByName(returnObjectName, true, currentRegion)
+            val retVO = parentState.findValuedObjectByName(returnObjectName, true, parentRegion)
             
-            // res_i = while_0.res_out
+            // res_i = parentState.res_out
             val source = parentReference.reference => [
                 subReference = returnedVO.reference
             ]
@@ -1812,7 +1825,8 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 varName = varName.substring(0, varName.length - outSuffix.length) + ssaNameSeperator + "0"
                 val type = varDecl.type
                 
-                // If the original variable declaration was attached to the state the new one should be attached to the dataflow region
+                // If the original variable declaration was attached to the state the new one should be attached to the
+                // dataflow region
                 if (!dRegion.declarations.contains(varDecl)) {
                     varDecl = createVariableDeclaration
                     varDecl.annotations += createTagAnnotation("Hide")
@@ -1826,7 +1840,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                     if (OffsetAnno.length > 0) vo.annotations += OffsetAnno.head
                     if (LengthAnno.length > 0) vo.annotations += LengthAnno.head                
                 }
-                varList.add(0, vo) 
+                varList.add(0, vo)
             }
         } 
         
@@ -2270,7 +2284,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         if (refDecl === null) {
             refDecl = createReferenceDeclaration
             refDecl.setReference(refState)
-            refDecl.annotations += createTagAnnotation("hide")
+            refDecl.annotations += createTagAnnotation("Hide")
             dRegion.declarations += refDecl
         }
         
