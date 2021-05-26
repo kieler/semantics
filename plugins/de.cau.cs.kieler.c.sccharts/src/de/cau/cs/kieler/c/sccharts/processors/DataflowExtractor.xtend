@@ -15,7 +15,7 @@ package de.cau.cs.kieler.c.sccharts.processors
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
-//import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
+import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
 import de.cau.cs.kieler.c.sccharts.extensions.CDTConvertExtensions
 import de.cau.cs.kieler.c.sccharts.extensions.HighlightingExtensions
 import de.cau.cs.kieler.c.sccharts.extensions.ValueExtensions
@@ -128,7 +128,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
     @Inject extension KExpressionsCreateExtensions
     @Inject extension KExpressionsDeclarationExtensions
     @Inject extension KExpressionsValuedObjectExtensions
-//    @Inject extension PragmaExtensions
+    @Inject extension PragmaExtensions
     @Inject extension SCChartsControlflowRegionExtensions
     @Inject extension SCChartsCoreExtensions
     @Inject extension SCChartsDataflowRegionExtensions
@@ -329,7 +329,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         // Create SCCharts root elements
         rootSCChart = createSCChart
         
-//        rootSCChart.pragmas.add(createStringPragma("skinpath", "dataflow"))
+        rootSCChart.pragmas.add(createStringPragma("skinpath", "dataflow"))
         
         // Start extraction for each defined function
         for (child : ast.children) {
