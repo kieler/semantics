@@ -113,6 +113,7 @@ import org.eclipse.core.resources.ResourcesPlugin
 import org.eclipse.core.runtime.Path
 
 import static de.cau.cs.kieler.c.sccharts.processors.CDTToStringConverter.*
+import de.cau.cs.kieler.sccharts.ui.synthesis.EquationSynthesis
 
 /**
  * @author lan, nre
@@ -689,7 +690,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
      * Translate While statement
      */
     def dispatch void buildStatement(IASTWhileStatement stmt, State rootState, DataflowRegion dRegion) {
-//        buildWhile(stmt, rootState, dRegion)
+//          buildWhile(stmt, rootState, dRegion)
         buildWhileDF (stmt, rootState,dRegion)
     }
     
@@ -1536,7 +1537,6 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             
             // input VO
             var ValuedObject negativeOutputVo = whileOutputVo
-            
             // Create a conditional operator with the positiveOutputVo and negativeOutputVo, as well as the
             // conditionalObj and assign it to the while state's output of that variable.
             val conditionalExpression = createConditionalExpression(condOutputVo.reference,
@@ -1545,7 +1545,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             val outputVO = whileState.findOutputVar(output)
         
             // Create the assignment
-            whileRegion.equations += createDataflowAssignment(outputVO, whileOutputVo.reference)
+            //whileRegion.equations += createDataflowAssignment(outputVO, whileOutputVo.reference)
             whileRegion.equations += createDataflowAssignment(outputVO, conditionalExpression)
         }
         
