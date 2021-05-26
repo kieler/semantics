@@ -1083,6 +1083,13 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                         }
                         return node
                     }
+                } else {
+                    // If there is a figure annotation but no model-relavite path can be found, try with a path relative
+                    // to this bundle.
+                    val node = KGTLoader.loadFromBundle(this, SCChartsUiModule.PLUGIN_ID, SKIN_BUNDLE_FOLDER + kgt)
+                    if (node !== null) {
+                        return node
+                    }
                 }
             }
         }
