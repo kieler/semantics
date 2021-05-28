@@ -177,9 +177,9 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
     /** Shown name prefix for while statements. */
     static final String whileName = "while"
     /** Shown name prefix for while-body statements. */
-    static final String whileBodyName = "while-body"
+    static final String whileBodyName = "while_body"
     /** Shown name prefix for while condition. */
-    static final String whileCondName = "while-cond"
+    static final String whileCondName = "while_cond"
     /** Shown name prefix for switch statements. */
     static final String switchName = "switch"
     /** Shown name prefix for default case statements in switches. */
@@ -1114,7 +1114,17 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 
                 // use this as the output of the state, declare that and add an equation to it.
                 val hiddenDecl = createVariableDeclaration
-                hiddenDecl.type = ValueType::INT
+                if (output.hasOperatorExpression(OperatorType.GEQ) || output.hasOperatorExpression(OperatorType.EQ) 
+                    || output.hasOperatorExpression(OperatorType.LEQ) || output.hasOperatorExpression(OperatorType.CONDITIONAL)
+                    || output.hasOperatorExpression(OperatorType.GT) || output.hasOperatorExpression(OperatorType.LT)
+                    || output.hasOperatorExpression(OperatorType.NE) || output.hasOperatorExpression(OperatorType.LOGICAL_AND)
+                  || output.hasOperatorExpression(OperatorType.LOGICAL_OR) || output.hasOperatorExpression(OperatorType.IMPLIES)
+                  || output.hasOperatorExpression(OperatorType.NOT) || output.hasOperatorExpression(OperatorType.NOR)
+                ) {
+                    hiddenDecl.type = ValueType::BOOL
+                } else {
+                    hiddenDecl.type = ValueType::INT
+                }
                 hiddenDecl.output = true  
                 currentState.declarations += hiddenDecl
                 
@@ -1381,7 +1391,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         val refDecl = createReferenceDeclaration
         dRegion.declarations += refDecl
         refDecl.setReference(whileState)
-        val whileObj = refDecl.createValuedObject(ifName + ssaNameSeperator + localWhileCounter)
+        val whileObj = refDecl.createValuedObject(whileName + ssaNameSeperator + localWhileCounter)
         if (!serializable) {
             whileObj.insertHighlightAnnotations(whileStmt)
         } 
@@ -1406,23 +1416,20 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         val condRefDecl = createReferenceDeclaration
         whileRegion.declarations += condRefDecl
         condRefDecl.setReference(condState)
-        val condObj = condRefDecl.createValuedObject(conditionalResultName)
+        val condObj = condRefDecl.createValuedObject(whileName + ssaNameSeperator + localWhileCounter + whileCondName)
         if (!serializable) {
             condObj.insertHighlightAnnotations(whileStmt.getCondition)
         }
-        
+
+                
         // inputs & outputs
         setInputs(whileStmt.getCondition, whileState, condState, whileRegion, condObj)
         setOutputs(whileStmt.getCondition, whileState, condState, whileRegion, condObj, false)
         
         // Create the region for the condition part
         val condRegion = createDFRegionForNode(whileStmt.getCondition, condState, whileState, whileRegion, condObj)
-//        if (!serializable) {
-//            condRegion.insertHighlightAnnotations(whileStmt.getCondition)
-//        } 
         condState.regions += condRegion
-        condRegion.label = whileCondName
-        
+        condRegion.label = whileName + ssaNameSeperator + localWhileCounter + whileCondName
         
         // Create the body state and according reference into the while dataflow region.
         val bodyState = createState(whileName + ssaNameSeperator + localWhileCounter + whileBodyName)
@@ -1446,14 +1453,8 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
 
         // Create the region for the body part
         val bodyRegion = createDFRegionForNode(whileStmt.getBody, bodyState, whileState, whileRegion, bodyObj)
-//        if (!serializable) {
-//            bodyRegion.insertHighlightAnnotations(whileStmt.getBody)
-//        } 
         bodyState.regions += bodyRegion
-        bodyRegion.label = whileBodyName
-        // XXX Somehow link the return to the while output, not like this though:
-//        linkReturn(thenState, ifState, ifRegion, ifRegion, thenObj)
-        
+        bodyRegion.label = whileName + ssaNameSeperator + localWhileCounter + whileBodyName
   
         // inlining the output of the condition
         var condOutput = condRegion.equations.get(0).reference.valuedObject

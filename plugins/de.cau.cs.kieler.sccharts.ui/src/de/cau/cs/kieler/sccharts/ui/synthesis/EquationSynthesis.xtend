@@ -126,8 +126,6 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         EquationSynthesis, "Combine all Data Access Nodes", false).setCategory(GeneralSynthesisOptions::DATAFLOW)
     public static val SynthesisOption SHOW_ARROWS = SynthesisOption.createCheckOption(EquationSynthesis,
         "Arrows", false).setCategory(GeneralSynthesisOptions::DATAFLOW)
-        
-    public static val PORT_ANNOTATION = "toPort"
 
     @Inject extension KNodeExtensions
     @Inject extension KEdgeExtensions
@@ -149,6 +147,8 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
     @Inject StateSynthesis stateSynthesis
 
     val HashMap<ReferenceDeclaration, KNode> referenceNodes = newHashMap
+    
+    protected static val PORT_ANNOTATION = "toPort"
 
     /** 
      * Prefix for the resource location when loading KGTs from the bundle 
