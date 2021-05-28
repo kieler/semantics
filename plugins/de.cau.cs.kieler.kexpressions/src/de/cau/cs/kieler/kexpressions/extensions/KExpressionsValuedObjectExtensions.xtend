@@ -1,6 +1,6 @@
 /*
  * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
- *
+ * 
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2015 by
@@ -40,45 +40,45 @@ import de.cau.cs.kieler.kexpressions.Schedulable
  * @kieler.rating 2015-08-19 proposed yellow
  */
 class KExpressionsValuedObjectExtensions {
-    
+
     @Inject
     extension KExpressionsDeclarationExtensions
-    
+
     @Inject
     extension EcoreUtilExtensions
-    
+
     def Declaration getDeclaration(ValuedObject valuedObject) {
         if (valuedObject.eContainer instanceof Declaration)
             return valuedObject.eContainer as Declaration
         else
             return null
     }
-    
+
     def VariableDeclaration getVariableDeclaration(ValuedObject valuedObject) {
         if (valuedObject.eContainer instanceof VariableDeclaration)
             return valuedObject.eContainer as VariableDeclaration
         else
             return null
-    }     
-    
+    }
+
     def ReferenceDeclaration getReferenceDeclaration(ValuedObject valuedObject) {
-        if (valuedObject.eContainer instanceof ReferenceDeclaration) 
+        if (valuedObject.eContainer instanceof ReferenceDeclaration)
             return valuedObject.eContainer as ReferenceDeclaration
         else
-            return null        
+            return null
     }
-    
+
     def ClassDeclaration getClassDeclaration(ValuedObject valuedObject) {
-        if (valuedObject.eContainer instanceof ClassDeclaration) 
+        if (valuedObject.eContainer instanceof ClassDeclaration)
             return valuedObject.eContainer as ClassDeclaration
         else
-            return null        
+            return null
     }
-    
+
     def asVariableDeclaration(EObject eObject) {
         eObject as VariableDeclaration
     }
-    
+
     def asReferenceDeclaration(EObject eObject) {
         eObject as ReferenceDeclaration
     }
@@ -86,7 +86,7 @@ class KExpressionsValuedObjectExtensions {
     def asScheduleDeclaration(EObject eObject) {
         eObject as ScheduleDeclaration
     }
-    
+
     // Create a ValuedObjectReference to a valuedObject
     def ValuedObjectReference reference(ValuedObject valuedObject) {
         KExpressionsFactory::eINSTANCE.createValuedObjectReference() => [
@@ -99,177 +99,175 @@ class KExpressionsValuedObjectExtensions {
             setValuedObject(valuedObject)
         ]
     }
-    
+
     def ScheduleObjectReference createScheduleReference(ValuedObject valuedObject, int priority) {
         KExpressionsFactory::eINSTANCE.createScheduleObjectReference() => [
             setValuedObject(valuedObject)
             setPriority(priority)
         ]
     }
-    
+
     def ValuedObject createScheduleTo(Schedulable from, Schedulable to, int fromPriority, int toPriority, String name) {
         val schedule = createValuedObject(name)
         from.schedule += createScheduleReference(schedule, fromPriority)
         to.schedule += createScheduleReference(schedule, toPriority)
         schedule
-    } 
-    
+    }
+
     def boolean isVariableReference(ValuedObject valuedObject) {
         valuedObject.declaration instanceof VariableDeclaration
-    }    
+    }
 
     def boolean isVariableReference(ValuedObjectReference valuedObjectReference) {
         valuedObjectReference.valuedObject.isVariableReference
-    }    
-    
+    }
+
     def boolean isModelReference(ValuedObject valuedObject) {
         valuedObject.declaration instanceof ReferenceDeclaration
     }
-    
+
     def boolean isModelReference(ValuedObjectReference valuedObjectReference) {
         valuedObjectReference.valuedObject.isModelReference
     }
-    
+
     def boolean isExternalReference(ValuedObject valuedObject) {
         valuedObject.isModelReference && !valuedObject.declaration.asReferenceDeclaration.extern.nullOrEmpty
     }
-    
+
     def boolean isExternalReference(ValuedObjectReference valuedObjectReference) {
         valuedObjectReference.valuedObject.isExternalReference
     }
-    
+
     def boolean isScheduleReference(ValuedObject valuedObject) {
         valuedObject.declaration instanceof ScheduleDeclaration
     }
-    
+
     def boolean isScheduleReference(ValuedObjectReference valuedObjectReference) {
         valuedObjectReference.valuedObject.isScheduleReference
     }
-    
+
     def isInputVariableReference(ValuedObjectReference vor) {
         vor.isVariableReference && vor.valuedObject.variableDeclaration.input
     }
-    
+
     def isOutputVariableReference(ValuedObjectReference vor) {
         vor.isVariableReference && vor.valuedObject.variableDeclaration.output
     }
-    
+
     def ValueType getType(ValuedObject valuedObject) {
-        if (valuedObject.isModelReference) return ValueType::REFERENCE;
-        if (valuedObject.isScheduleReference) return ValueType::SCHEDULE;
-        if (!valuedObject.isVariableReference) return null;
+        if(valuedObject.isModelReference) return ValueType::REFERENCE;
+        if(valuedObject.isScheduleReference) return ValueType::SCHEDULE;
+        if(!valuedObject.isVariableReference) return null;
         valuedObject.getVariableDeclaration.type
     }
-    
+
     def ImmutableList<ValuedObject> getValuedObjectsFromEObject(EObject eObject) {
-        ImmutableList.copyOf(<ValuedObject> newArrayList => [ list |
-            eObject.eContents.filter(Declaration).forEach[ list += valuedObjects ]
+        ImmutableList.copyOf(<ValuedObject>newArrayList => [ list |
+            eObject.eContents.filter(Declaration).forEach[list += valuedObjects]
         ])
-    }  
-    
+    }
+
     def ValuedObject removeValuedObjectFromDeclaration(ValuedObject valuedObject, Declaration declaration) {
         declaration.valuedObjects -= valuedObject
         valuedObject
-    }  
-    
+    }
+
     def boolean isInput(ValuedObject valuedObject) {
-        if (!valuedObject.isVariableReference) return false
+        if(!valuedObject.isVariableReference) return false
         valuedObject.variableDeclaration.isInput
     }
 
     def boolean isOutput(ValuedObject valuedObject) {
-        if (!valuedObject.isVariableReference) return false
+        if(!valuedObject.isVariableReference) return false
         valuedObject.variableDeclaration.isOutput
     }
-    
+
     def boolean isLocal(ValuedObject valuedObject) {
-        if (!valuedObject.isVariableReference) return false
+        if(!valuedObject.isVariableReference) return false
         !valuedObject.isInput && !valuedObject.isOutput
-    }    
+    }
 
     def boolean isStatic(ValuedObject valuedObject) {
-        if (!valuedObject.isVariableReference) return false
+        if(!valuedObject.isVariableReference) return false
         valuedObject.variableDeclaration.isStatic
     }
 
     def boolean isConst(ValuedObject valuedObject) {
-        if (!valuedObject.isVariableReference) return false
+        if(!valuedObject.isVariableReference) return false
         valuedObject.variableDeclaration.isConst
     }
 
     def boolean isExtern(ValuedObject valuedObject) {
-        if (!valuedObject.isVariableReference) return false
+        if(!valuedObject.isVariableReference) return false
         valuedObject.variableDeclaration.isExtern
     }
 
     def boolean isArray(ValuedObject valuedObject) {
         !valuedObject.cardinalities.nullOrEmpty
     }
-    
+
     def boolean isArrayReference(ValuedObjectReference valuedObjectReference) {
         !valuedObjectReference.indices.nullOrEmpty
     }
-    
-    def boolean isClassReference(ValuedObjectReference valuedObjectReference){
+
+    def boolean isClassReference(ValuedObjectReference valuedObjectReference) {
         valuedObjectReference.valuedObject.declaration instanceof ClassDeclaration
     }
-    
+
     def void applyIndices(ValuedObjectReference target, ValuedObjectReference source) {
         if (target !== null && source !== null && !source.indices.nullOrEmpty) {
             for (i : source.indices) {
                 target.indices.add(i.copy);
             }
-        }    
+        }
     }
-    
+
     def void applyCardinalities(ValuedObject target, ValuedObject source) {
         if (target !== null && source !== null && !source.cardinalities.nullOrEmpty) {
             for (card : source.cardinalities) {
                 target.cardinalities.add(card.copy);
             }
-        }    
+        }
     }
-    
+
     def boolean isSignal(ValuedObject valuedObject) {
-        if (!valuedObject.isVariableReference) return false
+        if(!valuedObject.isVariableReference) return false
         valuedObject.variableDeclaration.isSignal
-    }   
-    
+    }
+
     def boolean isPureSignal(ValuedObject valuedObject) {
         valuedObject.isSignal && valuedObject.type == ValueType::PURE
-    }    
+    }
 
     def boolean isValuedSignal(ValuedObject valuedObject) {
         valuedObject.variableDeclaration.isSignal && valuedObject.type != ValueType::PURE
-    }   
-    
+    }
+
     def boolean isInt(ValuedObject valuedObject) {
-        if (!valuedObject.isVariableReference) return false
+        if(!valuedObject.isVariableReference) return false
         valuedObject.variableDeclaration.type == ValueType.INT
     }
-    
+
     def boolean isBool(ValuedObject valuedObject) {
-        if (!valuedObject.isVariableReference) return false
+        if(!valuedObject.isVariableReference) return false
         valuedObject.variableDeclaration.type == ValueType.BOOL
     }
 
     def boolean isFloat(ValuedObject valuedObject) {
-        if (!valuedObject.isVariableReference) return false
+        if(!valuedObject.isVariableReference) return false
         valuedObject.variableDeclaration.type == ValueType.FLOAT
     }
 
     def boolean isString(ValuedObject valuedObject) {
-        if (!valuedObject.isVariableReference) return false
+        if(!valuedObject.isVariableReference) return false
         valuedObject.variableDeclaration.type == ValueType.STRING
     }
 
     def boolean isHost(ValuedObject valuedObject) {
-        if (!valuedObject.isVariableReference) return false
+        if(!valuedObject.isVariableReference) return false
         valuedObject.variableDeclaration.type == ValueType.HOST
     }
 
-    
-    
     def ValuedObject createValuedObject() {
         KExpressionsFactory::eINSTANCE.createValuedObject()
     }
@@ -279,26 +277,23 @@ class KExpressionsValuedObjectExtensions {
             setName(valuedObjectName)
         ]
     }
-    
+
     def ValuedObject createValuedObject(Declaration declaration, String valuedObjectName) {
         val vo = createValuedObject() => [
             setName(valuedObjectName)
         ]
         declaration.attach(vo)
         vo
-    }     
-    
-    
-    
+    }
+
     def Declaration attach(Declaration declaration, ValuedObject valuedObject) {
-        declaration => [ valuedObjects += valuedObject ]
-    } 
-    
+        declaration => [valuedObjects += valuedObject]
+    }
+
     def ValuedObject attachTo(ValuedObject valuedObject, Declaration declaration) {
-        valuedObject => [ declaration.valuedObjects += valuedObject ]
-    }         
-    
-    
+        valuedObject => [declaration.valuedObjects += valuedObject]
+    }
+
     def ValuedObject applyAttributes(ValuedObject valuedObject, ValuedObject valuedObjectWithAttributes) {
         if (valuedObjectWithAttributes.initialValue !== null) {
             valuedObject.setInitialValue(valuedObjectWithAttributes.initialValue.copy)
@@ -309,18 +304,18 @@ class KExpressionsValuedObjectExtensions {
         valuedObject.applyCardinalities(valuedObjectWithAttributes)
         valuedObject
     }
-    
+
     def List<ValuedObjectReference> getAllReferences(Expression expression) {
         val refs = <ValuedObjectReference>newArrayList
-    	if (expression !== null) {
-    	    if (expression instanceof ValuedObjectReference) { 
-    		  refs += expression
-    		}
+        if (expression !== null) {
+            if (expression instanceof ValuedObjectReference) {
+                refs += expression
+            }
             refs += expression.eAllContents.filter(ValuedObjectReference).toIterable
-    	}
+        }
         return refs
-    }    
-    
+    }
+
     def List<ScheduleObjectReference> getAllSchedulingReferences(Expression expression) {
         val refs = <ScheduleObjectReference>newArrayList
         if (expression !== null) {
@@ -331,22 +326,21 @@ class KExpressionsValuedObjectExtensions {
         }
         return refs
     }
-    
+
     def List<ValuedObjectReference> getAllReferenceFromEObject(EObject eObject) {
         if (eObject === null) {
-            return <ValuedObjectReference> newArrayList
-        }
-        else if (eObject instanceof Expression) {
+            return <ValuedObjectReference>newArrayList
+        } else if (eObject instanceof Expression) {
             return eObject.allReferences
         } else {
-            val l = <ValuedObjectReference> newArrayList
+            val l = <ValuedObjectReference>newArrayList
             for (e : eObject.eAllContents.toIterable.filter(ValuedObjectReference)) {
                 l += e
             }
             return l
         }
     }
-    
+
     def boolean hasOperatorExpression(Expression expression, OperatorType operatorType) {
         if (expression instanceof OperatorExpression) {
             if (expression.operator == operatorType) {
@@ -361,16 +355,32 @@ class KExpressionsValuedObjectExtensions {
         }
         return false
     }
-    
+
+    /**
+     * Checks whether a KExpression is evaluated to a Boolean based on its OperatorType.
+     */
+    public def boolean isBooleanOperatorExpression(Expression expression) {
+
+        return expression.hasOperatorExpression(OperatorType.GEQ) ||
+            expression.hasOperatorExpression(OperatorType.EQ) || expression.hasOperatorExpression(OperatorType.LEQ) ||
+            expression.hasOperatorExpression(OperatorType.CONDITIONAL) ||
+            expression.hasOperatorExpression(OperatorType.GT) || expression.hasOperatorExpression(OperatorType.LT) ||
+            expression.hasOperatorExpression(OperatorType.NE) ||
+            expression.hasOperatorExpression(OperatorType.LOGICAL_AND) ||
+            expression.hasOperatorExpression(OperatorType.LOGICAL_OR) ||
+            expression.hasOperatorExpression(OperatorType.IMPLIES) ||
+            expression.hasOperatorExpression(OperatorType.NOT) || expression.hasOperatorExpression(OperatorType.NOR)
+    }
+
     def ValuedObject removeFromContainmentAndCleanup(ValuedObject valuedObject) {
         val declaration = valuedObject.declaration
         valuedObject.remove
-        if (declaration.valuedObjects.nullOrEmpty) { 
+        if (declaration.valuedObjects.nullOrEmpty) {
             declaration.remove
         }
         valuedObject
     }
-    
+
     def Declaration getDeclarationOrCreate(ValuedObject valuedObject) {
         if (valuedObject.eContainer instanceof Declaration) {
             valuedObject.eContainer as Declaration
@@ -380,29 +390,28 @@ class KExpressionsValuedObjectExtensions {
             newDeclaration
         }
     }
-        
+
     def ValuedObject findValuedObjectByName(Declaration declaration, String name) {
-        declaration.valuedObjects.filter[ it.name.equals(name) ]?.head
+        declaration.valuedObjects.filter[it.name.equals(name)]?.head
     }
-   
+
     def List<OperatorExpression> getPreOperatorExpressions(OperatorExpression operatorExpression) {
         if (operatorExpression.operator == OperatorType.PRE) {
-            return <OperatorExpression> newLinkedList(operatorExpression)
+            return <OperatorExpression>newLinkedList(operatorExpression)
         } else {
-            val l = <OperatorExpression> newLinkedList
+            val l = <OperatorExpression>newLinkedList
             for (se : operatorExpression.subExpressions.filter(OperatorExpression)) {
                 l.addAll(se.getPreOperatorExpressions)
             }
             return l
         }
-    }    
-    
+    }
+
     def isSameValuedObjectInReference(Expression source, Expression target) {
-        source instanceof ValuedObjectReference &&
-            target instanceof ValuedObjectReference &&
+        source instanceof ValuedObjectReference && target instanceof ValuedObjectReference &&
             source.asValuedObjectReference.valuedObject == target.asValuedObjectReference.valuedObject
     }
-    
+
     def asValue(Expression expression) {
         expression as Value
     }
@@ -418,12 +427,12 @@ class KExpressionsValuedObjectExtensions {
     def asOperatorExpression(Expression expression) {
         expression as OperatorExpression
     }
-    
+
     def Iterable<Expression> getIndicesAndSubIndices(ValuedObjectReference vor) {
-        if (vor === null) return emptyList
-        return (vor.indices?:emptyList) + vor.subReference.indicesAndSubIndices
+        if(vor === null) return emptyList
+        return (vor.indices ?: emptyList) + vor.subReference.indicesAndSubIndices
     }
-    
+
     def ValuedObjectReference getLowermostReference(ValuedObjectReference vor) {
         var ref = vor
         while (ref.subReference !== null) {
@@ -431,11 +440,11 @@ class KExpressionsValuedObjectExtensions {
         }
         return ref
     }
-    
+
     def asValuedObjectFromReference(Expression expression) {
         expression.asValuedObjectReference.valuedObject
     }
-    
+
     def boolean isSubReference(ValuedObjectReference vor) {
         val container = vor.eContainer
         if (container instanceof ValuedObjectReference) {
@@ -443,7 +452,7 @@ class KExpressionsValuedObjectExtensions {
         }
         return false
     }
-    
+
     def void prependReferenceToReference(ValuedObjectReference vor, ValuedObject vo) {
         val newSub = vor.valuedObject.reference
         newSub.subReference = vor.subReference
@@ -451,5 +460,5 @@ class KExpressionsValuedObjectExtensions {
         vor.valuedObject = vo
         vor.subReference = newSub
     }
-    
+
 }

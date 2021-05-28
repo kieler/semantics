@@ -1114,13 +1114,8 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 
                 // use this as the output of the state, declare that and add an equation to it.
                 val hiddenDecl = createVariableDeclaration
-                if (output.hasOperatorExpression(OperatorType.GEQ) || output.hasOperatorExpression(OperatorType.EQ) 
-                    || output.hasOperatorExpression(OperatorType.LEQ) || output.hasOperatorExpression(OperatorType.CONDITIONAL)
-                    || output.hasOperatorExpression(OperatorType.GT) || output.hasOperatorExpression(OperatorType.LT)
-                    || output.hasOperatorExpression(OperatorType.NE) || output.hasOperatorExpression(OperatorType.LOGICAL_AND)
-                  || output.hasOperatorExpression(OperatorType.LOGICAL_OR) || output.hasOperatorExpression(OperatorType.IMPLIES)
-                  || output.hasOperatorExpression(OperatorType.NOT) || output.hasOperatorExpression(OperatorType.NOR)
-                ) {
+                
+                if (output.isBooleanOperatorExpression) {
                     hiddenDecl.type = ValueType::BOOL
                 } else {
                     hiddenDecl.type = ValueType::INT
@@ -1485,11 +1480,17 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         }
         
         // Determine which outputs have been set in their respective state
-        val positiveOutputs = findOutputs(whileStmt.getBody, whileState, false)
+        //val positiveOutputs = findOutputs(whileStmt.getBody, whileState, false)
         val HashSet<String> allOutputs = new HashSet
+        
+        var positiveOutputs = findOutputs(whileStmt.getBody, whileState, false)
+        if (getStateVariables(bodyState).containsKey(returnObjectName)) {
+            positiveOutputs += returnObjectName
+        }
+        
         allOutputs.addAll(positiveOutputs)
         // For each output, find the output VO and connect them to a conditional
-        for (output : allOutputs) {
+        for (output : allOutputs) { 
             // Find the output VO for the body state
             var ValuedObject innerPositiveOutputVo
             if (positiveOutputs.contains(output)) {
