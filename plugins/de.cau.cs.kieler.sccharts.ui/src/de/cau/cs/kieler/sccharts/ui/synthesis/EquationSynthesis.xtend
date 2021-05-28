@@ -126,6 +126,8 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         EquationSynthesis, "Combine all Data Access Nodes", false).setCategory(GeneralSynthesisOptions::DATAFLOW)
     public static val SynthesisOption SHOW_ARROWS = SynthesisOption.createCheckOption(EquationSynthesis,
         "Arrows", false).setCategory(GeneralSynthesisOptions::DATAFLOW)
+        
+    public static val PORT_ANNOTATION = "toPort"
 
     @Inject extension KNodeExtensions
     @Inject extension KEdgeExtensions
@@ -422,7 +424,12 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         }
         val sourcePort = source.findPortById(OUT_PORT)
         val target = assignment.reference.performTransformation(nodes, true)
-        val targetPort = target.findPortById(PORT0_IN_PREFIX)
+        var targetPortID = PORT0_IN_PREFIX
+        val anno = assignment.getAnnotation(PORT_ANNOTATION)
+        if (anno !== null) {
+            targetPortID = anno.asStringAnnotation.values.get(0)
+        }
+        val targetPort = target.findPortById(targetPortID)
         sourcePort.connectWith(targetPort, assignment.expression.serializeHR.toString)
         return nodes
     }
