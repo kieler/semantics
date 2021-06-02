@@ -188,6 +188,8 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
     static final String breakName = "break"
     /** Shown name for continue statements in loops. */
     static final String continueName = "continue"
+    /** Shown name for multiplexer. */
+    static final String multiplexerName = "multiplexer"
     
     /** Name for the return combine state. */
     static final String returnCombineName = " returnCombine"
@@ -690,7 +692,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
      * Translate While statement
      */
     def dispatch void buildStatement(IASTWhileStatement stmt, State rootState, DataflowRegion dRegion) {
-//          buildWhile(stmt, rootState, dRegion)
+//        buildWhile(stmt, rootState, dRegion)
         buildWhileDF (stmt, rootState,dRegion)
     }
     
@@ -1402,7 +1404,6 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         } 
         whileRegion.label = whileName + ssaNameSeperator + localWhileCounter
         
-        
         // Create the cond state
         val condState = createState(whileName + ssaNameSeperator + localWhileCounter + whileCondName)
         if (serializable) {
@@ -1416,7 +1417,6 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             condObj.insertHighlightAnnotations(whileStmt.getCondition)
         }
 
-                
         // inputs & outputs
         setInputs(whileStmt.getCondition, whileState, condState, whileRegion, condObj)
         setOutputs(whileStmt.getCondition, whileState, condState, whileRegion, condObj, false)
@@ -1480,7 +1480,6 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         }
         
         // Determine which outputs have been set in their respective state
-        //val positiveOutputs = findOutputs(whileStmt.getBody, whileState, false)
         val HashSet<String> allOutputs = new HashSet
         
         var positiveOutputs = findOutputs(whileStmt.getBody, whileState, false)
@@ -1490,6 +1489,8 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         
         allOutputs.addAll(positiveOutputs)
         // For each output, find the output VO and connect them to a conditional
+        var multInputs = new ArrayList
+        var multOutputs = new ArrayList
         for (output : allOutputs) { 
             // Find the output VO for the body state
             var ValuedObject innerPositiveOutputVo
@@ -1539,21 +1540,38 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             
             // input VO
             var ValuedObject negativeOutputVo = whileOutputVo
-            // Create a conditional operator with the positiveOutputVo and negativeOutputVo, as well as the
-            // conditionalObj and assign it to the while state's output of that variable.
-            val conditionalExpression = createConditionalExpression(condOutputVo.reference,
-                positiveOutputVo.reference, negativeOutputVo.reference)
             
-            val outputVO = whileState.findOutputVar(output)
-        
-            // Create the assignment
-            //whileRegion.equations += createDataflowAssignment(outputVO, whileOutputVo.reference)
-            whileRegion.equations += createDataflowAssignment(outputVO, conditionalExpression)
+            val outputVo = whileState.findOutputVar(output)
+            
+            multInputs.add(positiveOutputVo)
+            multInputs.add(negativeOutputVo)
+            multOutputs.add(outputVo)
+            
         }
+        
+        // Create the multiplexer state and according reference into the while dataflow region.
+        val multState = createState(multiplexerName)
+        multState.addStringAnnotation("figure", "BigMult.kgt")
+        if (serializable) {
+            rootSCChart.rootStates += multState
+        }
+        val multRefDecl = createReferenceDeclaration
+        whileRegion.declarations += multRefDecl
+        multRefDecl.setReference(multState)
+        val multObj = multRefDecl.createValuedObject(multiplexerName)
+        
+        setMultInput(multInputs, multState, whileRegion, multObj, false)
+        setMultInput(#[condOutputVo], multState, whileRegion, multObj, true)
+        
+        setMultOutputs(multOutputs, multState, whileRegion, multObj)
+
+        // Create the region for the body part
+        val multRegion = multState.createDataflowRegion("")
+        multState.regions += multRegion
+        multRegion.label = multiplexerName        
         
         linkReturn(whileState, rootState, whileRegion, dRegion, whileObj)
         assignOutputs(whileState, whileObj, rootState, dRegion)
-//        linkOutputs(ifState, dRegion)
         
         // If there is some assignment to the hidden variable from a conditional expression, use it as the sub-reference
         val subReference = (getStateVariables(whileState) + getStateVariables(bodyState) + getStateVariables(condState))
@@ -1563,6 +1581,87 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         return whileObj.reference => [
             it.subReference = subReference
         ]
+    }
+    
+    def setMultOutputs(ArrayList<ValuedObject> outputs, State newState, DataflowRegion dRegion, ValuedObject refObj) {
+        for (outputVO : outputs) {
+            // Retrieve the state's valued object map
+            var Map<String, List<ValuedObject>> stateVariables = getStateVariables(newState)
+            val outputRootDecl = outputVO.getVariableDeclaration
+            val outputType = outputRootDecl.getType
+                
+            // Create the input for the control statement state
+            val decl = createVariableDeclaration
+            newState.declarations += decl
+            decl.type = outputType
+            decl.output = true            
+            val innerOutputVO = decl.createValuedObject(outputVO.label + outSuffix)
+            innerOutputVO.label = outputVO.label
+            
+            // Add the new create valued object to the ssa list and valued object list
+            if (stateVariables.containsKey(outputVO.label)) {
+                var varList = stateVariables.get(outputVO.label)
+                varList.add(innerOutputVO)
+            } else {
+                var varList = <ValuedObject> newArrayList    
+                varList.add(innerOutputVO)
+                stateVariables.put(outputVO.label, varList)
+            }
+            
+            // Create the assignment
+            val target = outputVO
+            if (refObj === null) {
+                dRegion.equations += createDataflowAssignment(target, innerOutputVO.reference)
+            } else {
+                val source = refObj.reference => [
+                    subReference = innerOutputVO.reference
+                ]
+                dRegion.equations += createDataflowAssignment(target, source)
+            }
+            
+        }
+    }
+    
+    def setMultInput(List<ValuedObject> inputs, State newState, DataflowRegion dRegion, ValuedObject refObj, boolean cond) {
+        for (inputVO : inputs) {
+            // Retrieve the state's valued object map
+            var Map<String, List<ValuedObject>> stateVariables = getStateVariables(newState)
+            val inputRootDecl = inputVO.getVariableDeclaration
+            val inputType = inputRootDecl.getType
+                
+            // Create the input for the control statement state
+            val decl = createVariableDeclaration
+            newState.declarations += decl
+            decl.type = inputType
+            decl.input = true            
+            val innerInputVO = decl.createValuedObject(inputVO.label + inSuffix)
+            innerInputVO.label = inputVO.label
+            
+            // Add the new create valued object to the ssa list and valued object list
+            if (stateVariables.containsKey(inputVO.label)) {
+                var varList = stateVariables.get(inputVO.label)
+                varList.add(innerInputVO)
+            } else {
+                var varList = <ValuedObject> newArrayList    
+                varList.add(innerInputVO)
+                stateVariables.put(inputVO.label, varList)
+            }
+            
+                // Create the assignment
+            if (refObj === null) {
+                var eq = createDataflowAssignment(innerInputVO, inputVO.reference)
+                if(cond) {
+                    eq.addStringAnnotation("toPort", "in1")
+                }
+                dRegion.equations += eq
+            } else {
+                var eq = createDataflowAssignment(refObj, innerInputVO, inputVO.reference)
+                if(cond) {
+                    eq.addStringAnnotation("toPort", "in1")
+                }
+                dRegion.equations += eq
+            }
+        }
     }
     
     /**
