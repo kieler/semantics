@@ -96,8 +96,8 @@ class CDTConvertExtensions {
             case IASTUnaryExpression.op_prefixDecr: return OperatorType::POSTFIX_SUB  //--exp
             case IASTUnaryExpression.op_plus: return OperatorType::ADD  //+exp
             case IASTUnaryExpression.op_minus: return OperatorType::SUB  //-exp
-            case IASTUnaryExpression.op_star: return OperatorType::MULT  //*exp
-            case IASTUnaryExpression.op_amper: return OperatorType::BITWISE_AND  //&exp
+            case IASTUnaryExpression.op_star: return OperatorType::MULT  //*exp // TODO: replace the non-working unary ops with skinned states
+            case IASTUnaryExpression.op_amper: return OperatorType::BITWISE_NOT  //&exp
             case IASTUnaryExpression.op_tilde: return OperatorType::BITWISE_NOT  //~exp
             case IASTUnaryExpression.op_not: return OperatorType::NOT  //!exp
             case IASTUnaryExpression.op_sizeof: return null  //sizeof exp
