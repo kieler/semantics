@@ -237,14 +237,20 @@ def handleNestedJarsOnClasspath(dir, jars_dir):
     manifest = join(dir, join('META-INF', 'MANIFEST.MF'))
     if isfile(manifest):
         with open(manifest, 'r') as file:
-            text = file.read()
-            if 'Bundle-ClassPath:' in text:
-                classpath = re.findall(r'Bundle-ClassPath:([^:]+):?', text, re.MULTILINE)
-                if len(classpath) != 1:
-                    stop('[ERROR] Could not parse nested jars from MANIFEST.MF (unexpexted format)')
-                for cp in re.split(r',|\n|\r', classpath[0]):
+            lines = file.readlines()
+            classpath = None
+            for line in lines:
+                if 'Bundle-ClassPath:' in line: # start of classpath
+                    startCP = line[17:].strip()
+                    classpath = startCP if startCP else " " # assure truthy content if found
+                elif classpath and ':' in line: # end of classpath
+                    break
+                elif classpath: # continue classpath collection
+                    classpath += line.strip()
+            if classpath:
+                for cp in classpath.split(','):
                     cpFile = cp.strip()
-                    if cpFile != '.' and '.jar' in cpFile:
+                    if cpFile and cpFile != '.' and '.jar' in cpFile:
                         jarFile = join(dir, cpFile)
                         if isfile(jarFile):
                             print('Found nested jar on bundle class path: ', cpFile)
