@@ -146,7 +146,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
     @Inject extension TransitionStyles
     @Inject StateSynthesis stateSynthesis
 
-    val HashMap<ReferenceDeclaration, KNode> referenceNodes = newHashMap
+    val HashMap<State, KNode> referenceNodes = newHashMap
 
     /** 
      * Prefix for the resource location when loading KGTs from the bundle 
@@ -917,12 +917,13 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
 
         val declaration = voRef.valuedObject.referenceDeclaration
         if (AUTOMATIC_INLINE.booleanValue && declaration.reference !== null) {
-            if (referenceNodes.containsKey(declaration)) {
-                newNode = referenceNodes.get(declaration).copy
+            val state = declaration.reference as State
+            if (referenceNodes.containsKey(state)) {
+                newNode = referenceNodes.get(state).copy
             } else {
-                val state = declaration.reference as State
-                newNode = stateSynthesis.transform(state).head
-                referenceNodes.put(declaration, newNode.copy)
+                val referenceNodeSchema = stateSynthesis.transform(state).head
+                referenceNodes.put(state, referenceNodeSchema)
+                newNode = referenceNodeSchema.copy
             }
             if (node.getInputPortWithNumber(0) !== null) {
                 newNode.ports.add(node.getInputPortWithNumber(0).copy)
