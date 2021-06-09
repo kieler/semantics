@@ -86,6 +86,10 @@ import static de.cau.cs.kieler.sccharts.ide.synthesis.EquationSynthesisPropertie
 import static extension de.cau.cs.kieler.annotations.ide.klighd.CommonSynthesisUtil.*
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.sccharts.impl.StateImpl
+import de.cau.cs.kieler.klighd.kgraph.impl.KNodeImpl
+import de.cau.cs.kieler.klighd.kgraph.impl.KGraphFactoryImpl
+import de.cau.cs.kieler.klighd.krendering.impl.KPolylineImpl
 
 /**
  * @author ssm
@@ -310,6 +314,10 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         }
         nodes.addInstanceEdges.addSequentialEdges.simplifyAndCombine(rootNode)
         for (n : nodes) {
+            if (n.sourceElement instanceof ValuedObjectReference && (n.sourceElement as ValuedObjectReference).valuedObject.name.equals("multiplexer")) {
+                val nrInputPs = (n.ports.size -1) * (2/3.0)
+                n.height = (nrInputPs * rootNode.getProperty(LayeredOptions.SPACING_PORT_PORT)) as float
+            }
             n.addLayoutParam(CoreOptions.NODE_SIZE_MINIMUM, new KVector(0, 0))
             n.addLayoutParam(CoreOptions.PADDING, new ElkPadding(0, 0, 0, 0))
         }

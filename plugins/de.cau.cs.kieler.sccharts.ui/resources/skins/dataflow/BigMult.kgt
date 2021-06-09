@@ -6,16 +6,6 @@ knode BigMult {
 		styles: foreground = 150r
 		points: left, bottom; left, top; right, top 15%; right, bottom 15%; left, bottom
 	}
-    kport in4 {
-        size: width = 0 height = 0
-        properties:
-        org.eclipse.elk.port.side = WEST
-    }
-	kport in3 {
-		size: width = 0 height = 0
-		properties:
-		org.eclipse.elk.port.side = WEST
-	}
 	kport in2 {
 		size: width = 0 height = 0
 		properties:
@@ -38,11 +28,4 @@ knode BigMult {
 		org.eclipse.elk.port.borderOffset = -0.5
 		org.eclipse.elk.port.side = EAST
 	}	
-	kport out {
-		size: width = 0 height = 0
-		pos: x = 31
-		properties:
-		org.eclipse.elk.port.borderOffset = -0.5
-		org.eclipse.elk.port.side = EAST
-	}
 }
