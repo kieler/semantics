@@ -90,6 +90,7 @@ import de.cau.cs.kieler.sccharts.impl.StateImpl
 import de.cau.cs.kieler.klighd.kgraph.impl.KNodeImpl
 import de.cau.cs.kieler.klighd.kgraph.impl.KGraphFactoryImpl
 import de.cau.cs.kieler.klighd.krendering.impl.KPolylineImpl
+import java.util.ArrayList
 
 /**
  * @author ssm
@@ -150,7 +151,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
     @Inject extension TransitionStyles
     @Inject StateSynthesis stateSynthesis
 
-    val HashMap<ReferenceDeclaration, KNode> referenceNodes = newHashMap
+    val HashMap<State, KNode> referenceNodes = newHashMap
     
     protected static val PORT_ANNOTATION = "toPort"
 
@@ -317,12 +318,32 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
             if (n.sourceElement instanceof ValuedObjectReference && (n.sourceElement as ValuedObjectReference).valuedObject.name.equals("multiplexer")) {
                 val nrInputPs = (n.ports.size -1) * (2/3.0)
                 n.height = (nrInputPs * rootNode.getProperty(LayeredOptions.SPACING_PORT_PORT)) as float
+                sortPorts(n)
             }
             n.addLayoutParam(CoreOptions.NODE_SIZE_MINIMUM, new KVector(0, 0))
             n.addLayoutParam(CoreOptions.PADDING, new ElkPadding(0, 0, 0, 0))
         }
         currentRegions.pop
         return nodes.reWireInlining.addMissingReferenceInputs
+    }
+    
+    def sortPorts(KNode node) {
+        var grp1 = new ArrayList();
+        var grp2 = new ArrayList();
+        for (port : node.ports.filter [!labels.empty]) {
+            val name = port.labels.get(0).text
+            if (name.contains("_body_") || name.startsWith("then")) {
+                grp1.add(port);
+            } else if (!name.equals("_conditional") && !name.endsWith("_out")) {
+                grp2.add(port);
+            }
+        }
+        for (port : grp1) {
+            port.ypos = 0
+        }
+        for (port : grp2) {
+            port.ypos = 100
+        }
     }
 
     /**
@@ -932,12 +953,13 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
 
         val declaration = voRef.valuedObject.referenceDeclaration
         if (AUTOMATIC_INLINE.booleanValue && declaration.reference !== null) {
-            if (referenceNodes.containsKey(declaration)) {
-                newNode = referenceNodes.get(declaration).copy
+            val state = declaration.reference as State
+            if (referenceNodes.containsKey(state)) {
+                newNode = referenceNodes.get(state).copy
             } else {
-                val state = declaration.reference as State
-                newNode = stateSynthesis.transform(state).head
-                referenceNodes.put(declaration, newNode.copy)
+                val referenceNodeSchema = stateSynthesis.transform(state).head
+                referenceNodes.put(state, referenceNodeSchema)
+                newNode = referenceNodeSchema.copy
             }
             if (node.getInputPortWithNumber(0) !== null) {
                 newNode.ports.add(node.getInputPortWithNumber(0).copy)

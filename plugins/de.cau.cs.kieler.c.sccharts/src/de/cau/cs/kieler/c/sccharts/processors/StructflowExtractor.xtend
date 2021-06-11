@@ -92,6 +92,7 @@ class StructflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCChar
     
     public static val LOCAL_PREFIX = "local:"
     
+    var SCCharts rootSCChart
     var State baseState
     var String structName
     /** The AST node for all function definitions */
@@ -142,9 +143,9 @@ class StructflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCChar
         }
         
         // Create SCCharts root elements
-        val scc = createSCChart
+        rootSCChart = createSCChart
         baseState = createState
-        scc.rootStates += baseState
+        rootSCChart.rootStates += baseState
         
         // Find the marked comment        
         val comments = ast.getComments
@@ -152,7 +153,7 @@ class StructflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCChar
         if (idx < 0) {
             baseState.name = "No function marked for Extraction!\nPlace the comment \"//_EXTRACTOR_FUNCTION\" above the function to extract"
             baseState.label = baseState.name
-            return scc    
+            return rootSCChart    
         }
         val exComment = comments.get(idx)
         val mFunc = getCommentFollowingNode(ast, exComment) as IASTFunctionDefinition   
@@ -180,12 +181,12 @@ class StructflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCChar
         
         // Add all structflow function to the sccharts
         for (funcState : functionStates.values) {
-            scc.rootStates += funcState
+            rootSCChart.rootStates += funcState
         }
         
         // Translate the function body
         buildStructFlowForFunction(funcName)
-        return scc
+        return rootSCChart
         
     }
     
@@ -411,6 +412,7 @@ class StructflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCChar
             buildStatement(bStmt, forState, forDRegion)
         }
         forState.linkOutputs(forDRegion)
+        rootSCChart.rootStates += forState
     }
     
     // Build the respective state for a while statement
@@ -438,6 +440,7 @@ class StructflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCChar
             buildStatement(bStmt, wState, wDRegion)
         }
         wState.linkOutputs(wDRegion)
+        rootSCChart.rootStates += wState
     }
     
     // Build the state for a do statement
@@ -465,6 +468,7 @@ class StructflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCChar
            buildStatement(bStmt, doState, doDRegion)
         }
         doState.linkOutputs(doDRegion)
+        rootSCChart.rootStates += doState
     }
     
     // Translate an if statement
@@ -487,7 +491,7 @@ class StructflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCChar
         val ifCRegion = createControlflowRegion("")
         ifCRegion.insertHighlightAnnotations(stmt)
         ifState.regions += ifCRegion
-        val initState = ifCRegion.createState("")
+        val initState = ifCRegion.createState("init")
         initState.initial = true
         ifState.insertHighlightAnnotations(stmt)
         
@@ -524,6 +528,7 @@ class StructflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCChar
             }      
             ifState.linkOutputs(elseDRegion)
         }
+        rootSCChart.rootStates += ifState
     }
     
     // Translate a switch statement
@@ -605,6 +610,7 @@ class StructflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCChar
             
         }
         linkOutputs(swState, activeDRegion)
+        rootSCChart.rootStates += swState
     }
     
     // Create a variable declaration
@@ -1287,7 +1293,9 @@ class StructflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCChar
             state.declarations += inputDecl
             val inputVO = inputDecl.createValuedObject("")
         }
-        state
+        rootSCChart.rootStates += state
+        
+        return state
     }
   
 }
