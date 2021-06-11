@@ -3,7 +3,7 @@
  * 
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
- * Copyright 2015,2021 by
+ * Copyright 2019,2021 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -19,6 +19,7 @@ import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
 import de.cau.cs.kieler.c.sccharts.extensions.CDTConvertExtensions
 import de.cau.cs.kieler.c.sccharts.extensions.HighlightingExtensions
 import de.cau.cs.kieler.c.sccharts.extensions.ValueExtensions
+import de.cau.cs.kieler.c.sccharts.util.CProcessorUtils
 import de.cau.cs.kieler.kexpressions.BoolValue
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.FloatValue
@@ -54,7 +55,6 @@ import java.nio.file.Paths
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.ArrayList
-import java.util.HashMap
 import java.util.HashSet
 import java.util.List
 import java.util.Map
@@ -68,7 +68,6 @@ import org.eclipse.cdt.core.dom.ast.IASTCastExpression
 import org.eclipse.cdt.core.dom.ast.IASTCompoundStatement
 import org.eclipse.cdt.core.dom.ast.IASTConditionalExpression
 import org.eclipse.cdt.core.dom.ast.IASTDeclarationStatement
-import org.eclipse.cdt.core.dom.ast.IASTDeclarator
 import org.eclipse.cdt.core.dom.ast.IASTDefaultStatement
 import org.eclipse.cdt.core.dom.ast.IASTDoStatement
 import org.eclipse.cdt.core.dom.ast.IASTEqualsInitializer
@@ -83,6 +82,7 @@ import org.eclipse.cdt.core.dom.ast.IASTIfStatement
 import org.eclipse.cdt.core.dom.ast.IASTInitializer
 import org.eclipse.cdt.core.dom.ast.IASTInitializerList
 import org.eclipse.cdt.core.dom.ast.IASTLiteralExpression
+import org.eclipse.cdt.core.dom.ast.IASTName
 import org.eclipse.cdt.core.dom.ast.IASTNode
 import org.eclipse.cdt.core.dom.ast.IASTNode.CopyStyle
 import org.eclipse.cdt.core.dom.ast.IASTNullStatement
@@ -96,28 +96,21 @@ import org.eclipse.cdt.core.dom.ast.IASTTranslationUnit
 import org.eclipse.cdt.core.dom.ast.IASTTypeIdExpression
 import org.eclipse.cdt.core.dom.ast.IASTUnaryExpression
 import org.eclipse.cdt.core.dom.ast.IASTWhileStatement
-import org.eclipse.cdt.core.dom.ast.gnu.c.GCCLanguage
 import org.eclipse.cdt.core.index.IIndex
 import org.eclipse.cdt.core.model.CoreModel
 import org.eclipse.cdt.core.model.ICProject
 import org.eclipse.cdt.core.model.ITranslationUnit
-import org.eclipse.cdt.core.parser.DefaultLogService
-import org.eclipse.cdt.core.parser.FileContent
-import org.eclipse.cdt.core.parser.IParserLogService
-import org.eclipse.cdt.core.parser.IncludeFileContentProvider
-import org.eclipse.cdt.core.parser.ScannerInfo
 import org.eclipse.cdt.internal.core.dom.parser.ASTNode
-import org.eclipse.cdt.internal.core.dom.parser.c.CFunction
-import org.eclipse.core.resources.IFile
-import org.eclipse.core.resources.ResourcesPlugin
-import org.eclipse.core.runtime.Path
+import org.eclipse.core.resources.IResource
 
 import static de.cau.cs.kieler.c.sccharts.processors.CDTToStringConverter.*
 import de.cau.cs.kieler.sccharts.ui.synthesis.EquationSynthesis
 
 /**
- * @author lan, nre
+ * A Processor analyzing the data flow of functions within a single file of a C project and visualizing it as actor-
+ * based dataflow with {@link SCCharts}.
  * 
+ * @author lan, nre
  */
 
 @SuppressWarnings("all","unchecked")
@@ -182,6 +175,8 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
     static final String whileCondName = "while_cond"
     /** Shown name prefix for switch statements. */
     static final String switchName = "switch"
+    /** Shown name prefix for case statements. */
+    static final String caseName = "case"
     /** Shown name prefix for default case statements in switches. */
     static final String defaultCaseName = "default"
     /** Shown name for break statements in loops. */
@@ -196,13 +191,23 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
     /** Name for the sizeof state. */
     static final String sizeofName = " sizeof"
     
-    // TODO: not string, but some CFunction interface
-    var functions = <String, State> newHashMap
+    /** The index for the project the translated file is in, or null if none found. */
+    var IIndex index
+    /** 
+     * Mapping for a function-unique object to to map to the SCCharts state created for it.
+     * Either an {@link IIndexBinding} if an index for the project the translated file lies in could be created,
+     * or a String identifying the function's name otherwise, together with an int for the number of parameters.
+     */
+    var functions = <Object, Map<Integer, State>> newHashMap
     var ifCounter = 0;
     var swCounter = 0;
+    var caseCounter = 0;
     var forCounter = 0;
     var whileCounter = 0;
     var doCounter = 0;
+    var referenceCounter = 0;
+    var returnCombineCounter = 0;
+    var sizeofCounter = 0;
     
     val Map<State, Map<String, List<ValuedObject>>> valuedObjects = newHashMap
     
@@ -284,44 +289,33 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
     }    
 
     def SCCharts transform(CodeContainer codeContainer) {
-        
-        // Get the AST from the code container
         val infrastructure = ProjectInfrastructure.getProjectInfrastructure(environment)
+        var IASTTranslationUnit ast
         
-        val cFileName = infrastructure.modelFile.absolutePath
-        
-        val FileContent fileContent = FileContent.createForExternalFileLocation(cFileName)
-
-        val definedSymbols = new HashMap
-        val String[] includePaths = #[]
-        val ScannerInfo info = new ScannerInfo(definedSymbols, includePaths);
-        val IParserLogService log = new DefaultLogService();
-
-        val IncludeFileContentProvider emptyIncludes = IncludeFileContentProvider.getEmptyFilesProvider();
-
-        val int opts = 8;
-        val IASTTranslationUnit ast = 
-            GCCLanguage.getDefault().getASTTranslationUnit(fileContent, info, emptyIncludes, null, opts, log);
-        
-        
-        // TODO: get some other stuff from the container that may be relevant for us
-//        val IFile file = ResourcesPlugin.workspace.root.getFile(new Path(cFileName))
-        // Only works like this with a Eclipse workspace path.
+        // First, try to find the C/C++ project this file is defined in and create the AST and index from there.
         try {
-            val IFile file = ResourcesPlugin.workspace.root.getFile(new Path("C-Tutorial-Examples/084-user_defined_function.c"))
-            var ITranslationUnit tu = CoreModel.^default.create(file) as ITranslationUnit
-            println(tu)
-            println(tu.children)
             val ICProject[] allProjects = CoreModel.getDefault().getCModel().getCProjects();
-            val IIndex index = CCorePlugin.getIndexManager().getIndex(allProjects);
-        } catch (Exception e) {
-            e.printStackTrace
+            var IResource resource
+            var ICProject project
+            var boolean break = false
+            for (var int i = 0; i < allProjects.size && !break; i++) {
+                project = allProjects.get(i)
+                resource = CProcessorUtils.findFileInProject(infrastructure.modelFile, project)
+                if (resource !== null) {
+                    break = true
+                }
+            }
+            var ITranslationUnit tu = CoreModel.^default.create(resource) as ITranslationUnit
+            ast = tu.getAST
+            index = CCorePlugin.getIndexManager().getIndex(project);
+        } catch (Exception e) {/* Ignore. */}
+        
+        // If the previous method was not successful, build the AST only from the file without context and the index.
+        if (ast === null) {
+            ast = CProcessorUtils.findAstNoProject(environment)
         }
         
-//        val IEditorPart editor = PlatformUI.workbench.activeWorkbenchWindow.activePage.activeEditor
-//        tu = CDTUITools.getEditorInputCElement(editor.getEditorInput()) as ITranslationUnit
-        
-        
+        // If we still do not have an AST, abort.
         if (ast === null) {
             return null
         }
@@ -338,50 +332,58 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         
         rootSCChart.pragmas.add(createStringPragma("skinpath", "dataflow"))
         
-        // Start extraction for each defined function
-        for (child : ast.children) {
-            var IASTDeclarator[] declarators
-            if (child instanceof IASTFunctionDefinition) {
-                declarators = #[child.declarator]
-            }
-            if (child instanceof IASTSimpleDeclaration) {
-                declarators = child.declarators
-            }
-            for (declarator : declarators) {
-                // Put this in a processor and give the function definitions AND the AST to here.
-                val function = new CFunction(declarator)
-                println(function)
-            }
-            // TODO: this.
-            // CDT probably can do a lot more than just creating the AST for us, but also find function definitions
-            // and such. Try to use that instead of searching everything by hand.
-            // Extract a function skeleton with its in- and outputs for each function declaration
-            if (child instanceof IASTSimpleDeclaration) {
-                
-            }
-            // Function definitions fill the function skeletons created above or create them completely new.
-            if (child instanceof IASTFunctionDefinition) {
-                val state = buildFunction(child)
+        // Make sure to always have the read lock on the index here and releasing it eventually.
+        index?.acquireReadLock
+        try {
+            //Interesting index functions:
+            // findBinding(IName name) 
+            // findReferences(IBinding binding) 
+            // findDeclarations(IBinding binding)
+            // findDefinitions(IBinding binding)
+            
+            val functionDefinitions = ast.children.filter(IASTFunctionDefinition)
+            // Build a scaffold for referencing all defined states in this file for each defined function.
+            for (functionDefinition : functionDefinitions) {
+                val state = createFunctionScaffold(functionDefinition)
                 rootSCChart.rootStates += state
-            } 
-             
+            }
+            // Go through each function definition again and fill in the scaffolds now that all detailed functions are
+            // known.
+            for (functionDefinition : functionDefinitions) {
+                fillFunctionScaffold(functionDefinition)
+            }
+        } finally {
+            index?.releaseReadLock
         }
+        
         
         return rootSCChart
     }
-
+    
     /**
-     * The function used to create the state representing a function
+     * Creates an {@link SCCharts} {@link State} scaffold for the given function definition with all in- and outputs
+     * set, but a yet empty contained dataflow region. To fill that, call
+     * {@link #fillFunctionScaffold(IASTFunctionDefinition)} after scaffolding all functions that should be visualized.
      */
-    def State buildFunction(IASTFunctionDefinition func) {
+    def State createFunctionScaffold(IASTFunctionDefinition func) {
         // Determine function name
         val funcDeclarator = func.getDeclarator
-        val funcName = funcDeclarator.getName.toString
+        val funcName = funcDeclarator.getName
+        val uniqueFunctionIdentifier = CProcessorUtils.nameToIdentifier(funcName, index)
+        
+        // Determine the number of parameters.
+        var int params = 0;
+        if (funcDeclarator instanceof IASTStandardFunctionDeclarator) {
+            params = funcDeclarator.getParameters.size
+        }
         
         // Create the state
-        val State state = createState(funcName)
-        functions.put(funcName, state)
-        state.label = funcName
+        val State state = createState(funcName.toString + ssaNameSeperator + params)
+        state.label = funcName.toString
+        val map = <Integer, State> newHashMap
+        map.put(params, state)
+        functions.put(uniqueFunctionIdentifier, map)
+        state.label = funcName.toString
         
         if (!serializable) {
             // Insert text highlighting annotations
@@ -439,16 +441,12 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             }
         }
         
-        // Translate function body
-        val body = func.getBody
-        var DataflowRegion bodyRegion
-        if (body instanceof IASTCompoundStatement) {
-            bodyRegion = buildCompound(body, state)
-            state.regions += bodyRegion
-            bodyRegion.label = funcName
-        } else {
-            println("ERROR: Body of " + funcName + " is not a Compound Statement!")
-        }
+        // TODO: determine array/pointer function outputs.
+        // Easy approach (as done here): every array/pointer is written to and set as output.
+        // Medium approach: For each function, determine if the array/pointed variable is written to directly.
+        // Complex approach: same as medium, just also include analysis of renamed array/pointer variables and tracking it
+        // through function call hierarchies.  
+        
         
         // For each array/pointer parameter, determine if it has been written to in the function
         // by analyzing the valued objects for said parameter. If written to, add another output
@@ -463,40 +461,21 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                     // Determine parameter name
                     val varName = par.getDeclarator.getName.toString
                     val varList = stateVariables.get(varName)
+                    // Create output declaration                    
+                    val outDecl = createVariableDeclaration
+                    outDecl.type = type
+                    outDecl.output = true  
+                    state.declarations += outDecl
                     
-                    // Find declaration for this parameter in the body's region.
-                    val decl = bodyRegion.declarations.findFirst[ // The declaration...
-                        it.valuedObjects.findFirst[ // ... with a valued object ...
-                            it.name.startsWith(varName + ssaNameSeperator) // ... named "varName"
-                        ] !== null
-                    ]
-                    
-                    // If there is a declaration in the region, then it has been written to, so we need to create a new
-                    // output.
-                    if (decl !== null) {
-                        // Create output declaration                    
-                        val outDecl = createVariableDeclaration
-                        outDecl.type = type
-                        outDecl.output = true  
-                        state.declarations += outDecl
-                        
-                        // Create valued object for the output.
-                        val outputVo = outDecl.createValuedObject(varName + outSuffix)
-                        outputVo.label = varName
-                        if (!serializable) {
-                            outputVo.insertHighlightAnnotations(par)
-                        }
-                        
-                        // Attach the valued object to its list.
-                        varList.add(outputVo)
-                        
-                        // Add an assignment of the last VO to the output VO.
-                        val source = decl.valuedObjects.get(decl.valuedObjects.filter[ // The last VO with the variable's name
-                            it.name.startsWith(varName + ssaNameSeperator)
-                        ].size - 1)
-                        val target = outputVo
-                        bodyRegion.equations += createDataflowAssignment(target,  source.reference)
+                    // Create valued object for the output.
+                    val outputVo = outDecl.createValuedObject(varName + outSuffix)
+                    outputVo.label = varName
+                    if (!serializable) {
+                        outputVo.insertHighlightAnnotations(par)
                     }
+                    
+                    // Attach the valued object to its list.
+                    varList.add(outputVo)
                 }
             }
         }
@@ -504,8 +483,36 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         return state
     }
     
+    
     /**
-     * Create a state representation for a call of a not known function
+     * Fills a scaffolded {@link SCCharts} {@link State} for the given function definition and fills its contained
+     * dataflow region. The scaffolds for all references states need to be created first by
+     * {@link #createFunctionScaffold(IASTFunctionDefinition)}.
+     */
+    def void fillFunctionScaffold(IASTFunctionDefinition func) {
+        // Determine function name
+        val funcDeclarator = func.getDeclarator
+        val funcName = funcDeclarator.getName
+        val uniqueFunctionIdentifier = CProcessorUtils.nameToIdentifier(funcName, index)
+        
+        // Fetch the state
+        val state = functions.get(uniqueFunctionIdentifier).values.head
+        
+        // Translate function body
+        val body = func.getBody
+        var DataflowRegion bodyRegion
+        if (body instanceof IASTCompoundStatement) {
+            bodyRegion = buildCompound(body, state)
+            state.regions += bodyRegion
+            bodyRegion.label = funcName.toString
+        } else {
+            println("ERROR: Body of " + funcName.toString + " is not a Compound Statement!")
+        }
+    }
+    
+    /**
+     * Create a state representation for a call of an undefined function. The in- and outputs are either guessed by
+     * the function call or determined by looking for the function in the AST/index.
      * 
      * @param funcName The name this function state should have.
      * @param funcCall The AST function call expression of which to get the data from to create the state.
@@ -513,37 +520,43 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
      * @param dRegion The parent dataflow region that will be containing this state, for reference.
      * @return A new state for a function unknown in the AST.
      */
-    def State createUnknownFuncState(String funcName, IASTFunctionCallExpression funcCall, State parentState,
+    def State createUnknownFunctionScaffold(IASTName funcName, IASTFunctionCallExpression funcCall, State parentState,
         DataflowRegion dRegion) {
+        val params = funcCall.arguments.size
         // Create the state
-        val state = createState(funcName)
+        val state = createState(funcName.toString + ssaNameSeperator + params)
+        state.label = funcName.toString
+        state.annotations += createTagAnnotation("Hide")
         if (serializable) {
             rootSCChart.rootStates += state
         }
-        state.label = funcName
-        val bodyRegion = state.createDataflowRegion(funcName)
-        bodyRegion.label = funcName
+        state.label = funcName.toString
+        val bodyRegion = state.createDataflowRegion(funcName.toString)
+        bodyRegion.label = funcName.toString
         
         // Create an output
         val outputDecl = createVariableDeclaration
         outputDecl.output = true
+        outputDecl.type = ValueType::INT
         state.declarations += outputDecl
         val outputVO = outputDecl.createValuedObject(returnObjectName + outSuffix) 
         outputVO.label = returnObjectName
 
-        // For each array/pointer parameter, determine if it has been written to in the function
-        // by analyzing the valued objects for said parameter. If written to, add another output
-        // declaration with an assignment of the final value to that output declaration.
-        // Create inputs for the functions parameters
+        // Create inputs for the functions parameters.
+        // Additionally, for each array/pointer argument also add an output as the function could potentially write to
+        // it.
         val declaration = createVariableDeclaration
         declaration.input = true
+        declaration.type = ValueType::INT
         state.declarations += declaration
         for (arg : funcCall.arguments) {
             var needsOutput = true
-            // Determine parameter name
+            // Determine parameter name and label
             var String varName
+            var String varLabel
             if (arg instanceof IASTIdExpression) {
                 varName = arg.getName.toString
+                varLabel = varName
                 val parentDeclarations = dRegion.declarations.filter(VariableDeclaration)
                 val varName_ = varName
                 val inputVO = parentDeclarations.map[it.valuedObjects].flatten
@@ -555,12 +568,13 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 && (arg as IASTUnaryExpression).operator === IASTUnaryExpression.op_amper
                 && (arg as IASTUnaryExpression).operand instanceof IASTIdExpression) {
                 val idExpression = (arg as IASTUnaryExpression).operand as IASTIdExpression
-                val fullVariableName = idExpression.name.toString
-                varName = '&' + fullVariableName
+                varName = idExpression.name.toString
+                varLabel = '&' + varName
+                val varName_ = varName
                 val parentDeclarations = dRegion.declarations.filter(VariableDeclaration)
                     + parentState.declarations.filter(VariableDeclaration)
                 val inputVO = parentDeclarations.map[it.valuedObjects].flatten
-                    .findFirst[it.name.substring(0, it.name.indexOf(ssaNameSeperator)).equals(fullVariableName)]
+                    .findFirst[it.name.substring(0, it.name.indexOf(ssaNameSeperator)).equals(varName_)]
                 getStatePointers(state).put(arg as IASTUnaryExpression, inputVO)
                 needsOutput = true
             } else {
@@ -571,7 +585,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 
             // Create valued object for the input
             val vo = declaration.createValuedObject(varName + inSuffix)
-            vo.label = varName
+            vo.label = varLabel
             if (!serializable) {
                 vo.insertHighlightAnnotations(arg)
             }
@@ -580,6 +594,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 // Create output declaration
                 val outDecl = createVariableDeclaration
                 outDecl.output = true
+                outDecl.type = ValueType::INT
                 state.declarations += outDecl
                 
                 // Create valued object for the output.
@@ -590,6 +605,12 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 }
             }
         }
+        
+        // Remember this state scaffold in the map.
+        val identifier = CProcessorUtils.nameToIdentifier(funcName, index)
+        val map = functions.get(identifier) ?: <Integer, State>newHashMap
+        map.put(params, state)
+        functions.put(identifier, map)
         
         return state
     }
@@ -766,6 +787,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         
         // Create the state to represent the if statement.
         val ifState = createState(ifName + ssaNameSeperator + localIfCounter)
+        ifState.annotations += createTagAnnotation("Hide")
         if (serializable) {
             rootSCChart.rootStates += ifState
         }
@@ -803,6 +825,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         
         // Create a then state and according reference into the if dataflow region.
         val thenState = createState(ifName + ssaNameSeperator + localIfCounter + thenName)
+        thenState.annotations += createTagAnnotation("Hide")
         if (serializable) {
             rootSCChart.rootStates += thenState
         }
@@ -831,6 +854,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         if (negative !== null) {
             // Create an else state and according reference into the if dataflow region.
             elseState = createState(ifName + ssaNameSeperator + localIfCounter + elseName)
+            elseState.annotations += createTagAnnotation("Hide")
             if (serializable) {
                 rootSCChart.rootStates += elseState
             }
@@ -997,6 +1021,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         
         // Create the state to represent the if statement.
         val ifState = createState(ifName + ssaNameSeperator + ifCounter)
+        ifState.annotations += createTagAnnotation("Hide")
         if (serializable) {
             rootSCChart.rootStates += ifState
         }
@@ -1201,6 +1226,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
     def void buildSwitch(IASTSwitchStatement swStmt, State rootState, DataflowRegion dRegion) {
         // Create the State representing the switch
         val swState = createState(switchName + ssaNameSeperator + swCounter)
+        swState.annotations += createTagAnnotation("Hide")
         if (serializable) {
             rootSCChart.rootStates += swState
         }
@@ -1231,7 +1257,8 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         cRegion.label = "switch (" + controller + ")"       
         
         // Create the initial state
-        val initState = cRegion.createState("")
+        val initState = cRegion.createState("init")
+        initState.label = ""
         if (!serializable) {
             initState.insertHighlightAnnotations(swStmt.getBody)
         }
@@ -1252,7 +1279,8 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                     linkOutputs(swState, activeDRegion)
                 }
                 // Create the state
-                activeCase = cRegion.createState("")
+                activeCase = cRegion.createState(ssaNameSeperator + caseName + caseCounter++)
+                activeCase.label = ""
                 if (!serializable) {
                     activeCase.insertHighlightAnnotations(child)
                 }
@@ -1306,6 +1334,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
     def void buildFor(IASTForStatement forStmt, State rootState, DataflowRegion dRegion) {
         // Create the state
         val forState = createState(forName + ssaNameSeperator + forCounter)
+        forState.annotations += createTagAnnotation("Hide")
         if (serializable) {
             rootSCChart.rootStates += forState
         }
@@ -1345,6 +1374,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
     def void buildWhile(IASTWhileStatement whileStmt, State rootState, DataflowRegion dRegion) {
         // Create the state        
         val whileState = createState(whileName + ssaNameSeperator + whileCounter)
+        whileState.annotations += createTagAnnotation("Hide")
         if (serializable) {
             rootSCChart.rootStates += whileState
         }
@@ -1670,6 +1700,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
     def void buildDo(IASTDoStatement doStmt, State rootState, DataflowRegion dRegion) {
         // Create the state        
         val doState = createState(doName + ssaNameSeperator + doCounter)
+        doState.annotations += createTagAnnotation("Hide")
         if (serializable) {
             rootSCChart.rootStates += doState
         }
@@ -2077,10 +2108,12 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
     }
 
     /**
-     * Find the state for the given function name
+     * Find the state for the given function identifier.
+     * @param identifier The {@code IASTName} object from the AST identifying the function.
      */
-    def State findFunctionState(String funcName) {
-        return functions.get(funcName)
+    def State findFunctionState(IASTName identifier, int numParams) {
+        val mappingIdentifier = CProcessorUtils.nameToIdentifier(identifier, index)
+        return functions.get(mappingIdentifier)?.get(numParams)
     }
     
     /**
@@ -2092,10 +2125,10 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
      * @return The state for the function.
      */
     def State findFunctionState(IASTFunctionCallExpression expression, State state, DataflowRegion dRegion) {
-        val funcName = (expression.getFunctionNameExpression as IASTIdExpression).getName.toString
-        val existingFunction = findFunctionState(funcName)
+        val funcName = (expression.getFunctionNameExpression as IASTIdExpression).getName
+        val existingFunction = findFunctionState(funcName, expression.arguments.size)
         if(existingFunction === null) {
-            return createUnknownFuncState(funcName, expression, state, dRegion)
+            return createUnknownFunctionScaffold(funcName, expression, state, dRegion)
         }
         return existingFunction
     }
@@ -2240,7 +2273,9 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                     val allReturns = varList.filter[it !== outVO]
                     
                     // Create a state to combine all returns
-                    val returnState = createState(returnCombineName)
+                    val returnState = createState(returnCombineName + returnCombineCounter++)
+                    returnState.label = returnCombineName
+                    returnState.annotations += createTagAnnotation("Hide")
                     if (serializable) {
                         rootSCChart.rootStates += returnState
                     }
@@ -2592,7 +2627,8 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         }
         
         // Create a valued object for the referenced state
-        val refObj = refDecl.createValuedObject(refState.name)
+        val refObj = refDecl.createValuedObject(refState.name + ssaNameSeperator + referenceCounter)
+        refObj.label = refState.label
         if (!serializable) {
             refObj.insertHighlightAnnotations(expression)
         }
@@ -2650,6 +2686,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             index++
         }
         
+        referenceCounter++
         // Wire the sub-reference to the output VO of the reference state.
         return refObj.reference.outputReference(refState, returnObjectName + outSuffix) 
     }
@@ -2811,7 +2848,9 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             sizeofName
         }
         
-        val sizeofState = createState(label)
+        val sizeofState = createState(label + ssaNameSeperator + sizeofCounter++)
+        sizeofState.label = label
+        sizeofState.annotations += createTagAnnotation("Hide")
         if (serializable) {
             rootSCChart.rootStates += sizeofState
         }

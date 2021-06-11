@@ -188,7 +188,7 @@ final class CDTToStringConverter {
     
     /** Return the given node as a String from the given source file contents. */
     static def String stringContentFromNode(ASTNode node, byte[] sourceFileContents) {
-        return new String(sourceFileContents, node.offset, node.length, StandardCharsets.UTF_8)
+        return new String(sourceFileContents, node.fileLocation.nodeOffset, node.length, StandardCharsets.UTF_8)
     }
     
     /**
