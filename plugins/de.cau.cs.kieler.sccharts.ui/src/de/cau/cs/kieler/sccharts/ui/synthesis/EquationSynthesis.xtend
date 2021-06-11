@@ -332,6 +332,13 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         return nodes.reWireInlining.addMissingReferenceInputs
     }
     
+    /**
+     * Sorts the ports into two groups based on the {@code POS_TAG} and {@code NEG_TAG}.
+     * This is used for the custom multiplexers for assuring that variables that belong to a certain
+     * branch are grouped together.
+     * 
+     * @param node The {@code KNode} of which the ports should be sorted
+     */
     private def sortPorts(KNode node) {
         var grp1 = new ArrayList();
         var grp2 = new ArrayList();

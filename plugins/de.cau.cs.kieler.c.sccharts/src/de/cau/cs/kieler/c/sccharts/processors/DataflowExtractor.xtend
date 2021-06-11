@@ -191,11 +191,12 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
     /** Name for the sizeof state. */
     static final String sizeofName = " sizeof"
     
-    static final String posTag = "pos"
-    static final String negTag = "neg"
-    
-    /** Tag annotation string for multiplexers*/
+    /** Tag annotation string for custom multiplexers*/
     static final String multiplexerTag = "mult"
+    /** Tag annotation string of the port group for the negative case in custom multiplexers */
+    static final String posTag = "pos"
+    /** Tag annotation string of the port group for the negative case in custom multiplexers */
+    static final String negTag = "neg"
     
     /** The index for the project the translated file is in, or null if none found. */
     var IIndex index
@@ -899,6 +900,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         allOutputs.addAll(positiveOutputs)
         allOutputs.addAll(negativeOutputs)
         
+        // Lists for collecting inputs and outputs for the custom multiplexer
         var multInputs = new ArrayList
         var multOutputs = new ArrayList
         
@@ -980,6 +982,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 negativeOutputVo = ifOutputVo
             }
             
+            //Collect the outputVos in the multInputs list for the custom multiplexer
             if (positiveOutputVo === null) {
                 negativeOutputVo.addTagAnnotation(negTag);
                 multInputs.add(negativeOutputVo)
@@ -1409,9 +1412,9 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
     }
 
     /**
-     * Builds a SCCharts with an accompanying DataflowRegion for a while statement. 
-     * This variant also synthesizes the condition expression of the while statement as a Dataflow diagram.
-     * The body and the condition header receive their own state in a parent while state.
+     * Builds a state with an accompanying DataflowRegion for a while statement. 
+     * This variant also synthesizes the condition expression of the while statement as dataflow.
+     * The body and the condition header receive their own state in a parent whileState.
      * 
      * @param whileStmt While statement from the AST of the program
      * @param rootState rootState in which the whileState should be embedded
@@ -1645,6 +1648,14 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         multObj.addTagAnnotation(multiplexerTag)
     }
 
+    /**
+     * Sets the output of a custom multiplexer state. 
+     * 
+     * @param outputs The outs as ValuedObjects that leave  the multiplexer
+     * @param newState The state of the multiplexer.
+     * @param dRegion The parent DataflowRegion including the multiplexer's state.
+     * @param refObj the ReferenceDeclaration of the multiplexer
+     */  
     def setMultOutputs(ArrayList<ValuedObject> outputs, State newState, DataflowRegion dRegion, ValuedObject refObj) {
         for (outputVO : outputs) {
             // Retrieve the state's valued object map
@@ -1683,7 +1694,16 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
 
         }
     }
-
+    
+    /**
+     * Sets the inputs of a custom multiplexer state. 
+     * 
+     * @param inputs The inputs as ValuedObjects that are led into the multiplexer
+     * @param newState The state of the multiplexer.
+     * @param dRegion The parent DataflowRegion including the multiplexer's state.
+     * @param refObj the ReferenceDeclaration of the multiplexer
+     * @param cond Signifies whether the input should be interpreted as the condition
+     */   
     def setMultInput(List<ValuedObject> inputs, State newState, DataflowRegion dRegion, ValuedObject refObj,
         boolean cond) {
         for (inputVO : inputs) {
