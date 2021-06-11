@@ -91,6 +91,7 @@ import de.cau.cs.kieler.klighd.kgraph.impl.KNodeImpl
 import de.cau.cs.kieler.klighd.kgraph.impl.KGraphFactoryImpl
 import de.cau.cs.kieler.klighd.krendering.impl.KPolylineImpl
 import java.util.ArrayList
+import de.cau.cs.kieler.annotations.TagAnnotation
 
 /**
  * @author ssm
@@ -330,12 +331,15 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
     def sortPorts(KNode node) {
         var grp1 = new ArrayList();
         var grp2 = new ArrayList();
-        for (port : node.ports.filter [!labels.empty]) {
-            val name = port.labels.get(0).text
-            if (name.contains("_body_") || name.startsWith("then")) {
-                grp1.add(port);
-            } else if (!name.equals("_conditional") && !name.endsWith("_out")) {
-                grp2.add(port);
+        for (port : node.ports.filter [sourceElement !== null]) {
+            val VO = (port.sourceElement as ValuedObjectReference).valuedObject
+            if (!VO.annotations.empty) {
+                val tag = (VO.annotations.get(0) as TagAnnotation).name
+                if (tag.equals("pos")) {
+                    grp1.add(port)
+                } else if (tag.equals("neg")) {
+                    grp2.add(port)
+                }
             }
         }
         for (port : grp1) {
