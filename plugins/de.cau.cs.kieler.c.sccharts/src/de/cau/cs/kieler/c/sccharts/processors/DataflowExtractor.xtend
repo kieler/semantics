@@ -190,6 +190,9 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
     /** Name for the sizeof state. */
     static final String sizeofName = " sizeof"
     
+    /** Tag annotation string for multiplexers*/
+    static final String multiplexerTag = "mult"
+    
     /** The index for the project the translated file is in, or null if none found. */
     var IIndex index
     /** 
@@ -1623,6 +1626,9 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         val multRegion = multState.createDataflowRegion("")
         multState.regions += multRegion
         multRegion.label = multiplexerName
+        
+        //Add tag annotation so that the multiplexer is identifiable in EquationSynthesis in a clean way
+        multObj.addTagAnnotation(multiplexerTag)
     }
 
     def setMultOutputs(ArrayList<ValuedObject> outputs, State newState, DataflowRegion dRegion, ValuedObject refObj) {

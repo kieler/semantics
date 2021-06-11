@@ -91,6 +91,7 @@ import de.cau.cs.kieler.klighd.kgraph.impl.KNodeImpl
 import de.cau.cs.kieler.klighd.kgraph.impl.KGraphFactoryImpl
 import de.cau.cs.kieler.klighd.krendering.impl.KPolylineImpl
 import java.util.ArrayList
+import de.cau.cs.kieler.annotations.TagAnnotation
 
 /**
  * @author ssm
@@ -153,7 +154,11 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
 
     val HashMap<State, KNode> referenceNodes = newHashMap
     
+    /** Annotation value for the toPort annotation */
     protected static val PORT_ANNOTATION = "toPort"
+    
+    /** Tag annotation value for multiplexers*/
+    static val MULTIPLEXER_TAG = "mult"
 
     /** 
      * Prefix for the resource location when loading KGTs from the bundle 
@@ -315,7 +320,13 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         }
         nodes.addInstanceEdges.addSequentialEdges.simplifyAndCombine(rootNode)
         for (n : nodes) {
-            if (n.sourceElement instanceof ValuedObjectReference && (n.sourceElement as ValuedObjectReference).valuedObject.name.equals("multiplexer")) {
+            if (n.sourceElement instanceof ValuedObjectReference && (n.sourceElement 
+                as ValuedObjectReference).valuedObject.hasAnnotation(MULTIPLEXER_TAG)) {                
+                /*
+                 * Adds more vertical space for the ports of the custom Multiplexer. 
+                 * Each variable that is led into the multiplexer has a positive and a negative variant and one output.
+                 * Hence it's sufficient to examine the input ports since there are always more input ports.
+                 */
                 val nrInputPs = (n.ports.size -1) * (2/3.0)
                 n.height = (nrInputPs * rootNode.getProperty(LayeredOptions.SPACING_PORT_PORT)) as float
                 sortPorts(n)
