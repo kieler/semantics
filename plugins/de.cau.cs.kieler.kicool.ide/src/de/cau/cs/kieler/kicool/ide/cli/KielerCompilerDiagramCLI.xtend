@@ -51,7 +51,7 @@ class KielerCompilerDiagramCLI extends KielerCompilerCLI {
     @Option(names=#["-d", "--diagram"], description="the output will also saved as a diagram if possible.")
     protected boolean diagram
 
-    @Option(names=#["--diagram-format"], paramLabel = "FORMAT", description="the file format for the diagram image output. Default: png")
+    @Option(names=#["--diagram-format"], paramLabel = "FORMAT", description="the file format for the diagram image output. Accepted values: bmp, jpeg, png, svg. Default: png")
     protected ImageFormat format = ImageFormat.PNG
     
     @Option(names=#["--diagram-synthesis"], paramLabel = "ID", description="the id of the diagram synthesis that should be used. If no synthesis is specified or the synthesis cannot handle the model, try to use a compatible synthesis.")
@@ -82,7 +82,7 @@ class KielerCompilerDiagramCLI extends KielerCompilerCLI {
     }
 
     override protected saveModel(Object model, File dest, File source, CompilationContext cc) {
-        if (diagram) {
+        if (diagram || onlyDiagram) {
             if (!onlyDiagram) {
                 val success = super.saveModel(model, dest, source, cc)
                 if(!success) return false
