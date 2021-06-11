@@ -105,6 +105,7 @@ import org.eclipse.core.resources.IResource
 
 import static de.cau.cs.kieler.c.sccharts.processors.CDTToStringConverter.*
 import de.cau.cs.kieler.sccharts.ui.synthesis.EquationSynthesis
+import de.cau.cs.kieler.annotations.TagAnnotation
 
 /**
  * A Processor analyzing the data flow of functions within a single file of a C project and visualizing it as actor-
@@ -189,6 +190,9 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
     static final String returnCombineName = " returnCombine"
     /** Name for the sizeof state. */
     static final String sizeofName = " sizeof"
+    
+    static final String posTag = "pos"
+    static final String negTag = "neg"
     
     /** Tag annotation string for multiplexers*/
     static final String multiplexerTag = "mult"
@@ -894,6 +898,10 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         val HashSet<String> allOutputs = new HashSet
         allOutputs.addAll(positiveOutputs)
         allOutputs.addAll(negativeOutputs)
+        
+        var multInputs = new ArrayList
+        var multOutputs = new ArrayList
+        
         // For each output, find the output VO and connect them to a conditional
         for (output : allOutputs) {
             // Find the output VO for the then state
@@ -971,27 +979,27 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             if (negativeOutputVo === null) {
                 negativeOutputVo = ifOutputVo
             }
-
-            var OperatorExpression conditionalExpression
-            // If the positive or negative output VO is still null (i.e. we are in the return variable case),
-            // create a conditional expression with only one sub expression instead.
-            if (positiveOutputVo === null || negativeOutputVo === null) {
-                // TODO: This view is supposed for the positive case, but we also put the negative case without a
-                // inverter here. Maybe need to add inverter or re-skin the operator in that case.
-                val nonNullVo = positiveOutputVo === null ? negativeOutputVo : positiveOutputVo
-                conditionalExpression = createConditionalExpression(conditionalObj.reference, nonNullVo.reference)
+            
+            if (positiveOutputVo === null) {
+                negativeOutputVo.addTagAnnotation(negTag);
+                multInputs.add(negativeOutputVo)
+            } else if (negativeOutputVo === null) {
+                positiveOutputVo.addTagAnnotation(posTag)
+                multInputs.add(positiveOutputVo)
             } else {
-                // Create a conditional operator with the positiveOutputVo and negativeOutputVo, as well as the
-                // conditionalObj and assign it to the if state's output of that variable.
-                conditionalExpression = createConditionalExpression(conditionalObj.reference,
-                    positiveOutputVo.reference, negativeOutputVo.reference)
+                positiveOutputVo.addTagAnnotation(posTag)
+                negativeOutputVo.addTagAnnotation(negTag)
+                multInputs.add(positiveOutputVo)
+                multInputs.add(negativeOutputVo)
             }
 
             val outputVO = ifState.findOutputVar(output)
+            
+            multOutputs.add(outputVO)
 
-            // Create the assignment
-            ifRegion.equations += createDataflowAssignment(outputVO, conditionalExpression)
         }
+
+        createMultiplexer(ifRegion, conditionalObj, multInputs, multOutputs);
 
         linkReturn(ifState, rootState, ifRegion, dRegion, ifObj)
 
@@ -1415,6 +1423,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
 
         // Create the state to represent the while statement.
         val whileState = createState(whileName + ssaNameSeperator + localWhileCounter)
+        whileState.annotations += createTagAnnotation("Hide")
         if (serializable) {
             rootSCChart.rootStates += whileState
         }
@@ -1441,6 +1450,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
 
         // Create the cond state
         val condState = createState(whileName + ssaNameSeperator + localWhileCounter + whileCondName)
+        condState.annotations += createTagAnnotation("Hide")
         if (serializable) {
             rootSCChart.rootStates += condState
         }
@@ -1463,6 +1473,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
 
         // Create the body state and according reference into the while dataflow region.
         val bodyState = createState(whileName + ssaNameSeperator + localWhileCounter + whileBodyName)
+        bodyState.annotations += createTagAnnotation("Hide")
         if (serializable) {
             rootSCChart.rootStates += bodyState
         }
@@ -1573,6 +1584,8 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
 
             val outputVo = whileState.findOutputVar(output)
 
+            positiveOutputVo.addTagAnnotation(posTag)
+            negativeOutputVo.addTagAnnotation(negTag)
             multInputs.add(positiveOutputVo)
             multInputs.add(negativeOutputVo)
             multOutputs.add(outputVo)
@@ -1609,6 +1622,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         // Create the multiplexer state and according reference into the while dataflow region.
         val multState = createState(multiplexerName)
         multState.addStringAnnotation("figure", "BigMult.kgt")
+        multState.annotations += createTagAnnotation("Hide")
         if (serializable) {
             rootSCChart.rootStates += multState
         }
@@ -1684,6 +1698,9 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             decl.type = inputType
             decl.input = true
             val innerInputVO = decl.createValuedObject(inputVO.label + inSuffix)
+            if (!inputVO.annotations.empty) {
+                innerInputVO.addTagAnnotation((inputVO.annotations.get(0) as TagAnnotation).name)
+            }
             innerInputVO.label = inputVO.label
 
             // Add the new create valued object to the ssa list and valued object list

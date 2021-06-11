@@ -14,6 +14,7 @@ package de.cau.cs.kieler.sccharts.ui.synthesis
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.Annotatable
+import de.cau.cs.kieler.annotations.TagAnnotation
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kexpressions.FunctionCall
 import de.cau.cs.kieler.kexpressions.IgnoreValue
@@ -33,7 +34,6 @@ import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kexpressions.kext.DeclarationScope
 import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
 import de.cau.cs.kieler.kicool.ui.synthesis.KGTLoader
-import de.cau.cs.kieler.kicool.ui.synthesis.KiCoolSynthesis
 import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.kgraph.KIdentifier
 import de.cau.cs.kieler.klighd.kgraph.KNode
@@ -61,6 +61,7 @@ import de.cau.cs.kieler.sccharts.ui.SCChartsUiModule
 import de.cau.cs.kieler.sccharts.ui.synthesis.actions.ReferenceExpandAction
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.EquationStyles
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.TransitionStyles
+import java.util.ArrayList
 import java.util.EnumSet
 import java.util.HashMap
 import java.util.List
@@ -76,22 +77,13 @@ import org.eclipse.elk.core.options.PortConstraints
 import org.eclipse.elk.core.options.PortLabelPlacement
 import org.eclipse.elk.core.options.PortSide
 import org.eclipse.elk.core.options.SizeConstraint
-import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.EObject
-import org.eclipse.xtext.resource.XtextResource
-import org.eclipse.xtext.resource.XtextResourceSet
 
 import static de.cau.cs.kieler.sccharts.ide.synthesis.EquationSynthesisProperties.*
 
 import static extension de.cau.cs.kieler.annotations.ide.klighd.CommonSynthesisUtil.*
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.sccharts.impl.StateImpl
-import de.cau.cs.kieler.klighd.kgraph.impl.KNodeImpl
-import de.cau.cs.kieler.klighd.kgraph.impl.KGraphFactoryImpl
-import de.cau.cs.kieler.klighd.krendering.impl.KPolylineImpl
-import java.util.ArrayList
-import de.cau.cs.kieler.annotations.TagAnnotation
 
 /**
  * @author ssm
@@ -156,6 +148,8 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
     
     /** Annotation value for the toPort annotation */
     protected static val PORT_ANNOTATION = "toPort"
+    static final val POS_TAG = "pos"
+    static final val NEG_TAG = "neg"
     
     /** Tag annotation value for multiplexers*/
     static val MULTIPLEXER_TAG = "mult"
@@ -338,15 +332,15 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         return nodes.reWireInlining.addMissingReferenceInputs
     }
     
-    def sortPorts(KNode node) {
+    private def sortPorts(KNode node) {
         var grp1 = new ArrayList();
         var grp2 = new ArrayList();
-        for (port : node.ports.filter [!labels.empty]) {
-            val name = port.labels.get(0).text
-            if (name.contains("_body_") || name.startsWith("then")) {
-                grp1.add(port);
-            } else if (!name.equals("_conditional") && !name.endsWith("_out")) {
-                grp2.add(port);
+        for (port : node.ports.filter [sourceElement !== null]) {
+            val VO = (port.sourceElement as ValuedObjectReference).valuedObject
+            if (VO.hasAnnotation(POS_TAG)) {
+                grp1.add(port)
+            } else if (VO.hasAnnotation(NEG_TAG)) {
+                grp2.add(port)
             }
         }
         for (port : grp1) {
