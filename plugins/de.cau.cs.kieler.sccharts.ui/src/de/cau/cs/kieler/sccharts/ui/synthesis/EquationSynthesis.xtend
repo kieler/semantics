@@ -155,6 +155,8 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
     val HashMap<State, KNode> referenceNodes = newHashMap
     
     protected static val PORT_ANNOTATION = "toPort"
+    static final val POS_TAG = "pos"
+    static final val NEG_TAG = "neg"
 
     /** 
      * Prefix for the resource location when loading KGTs from the bundle 
@@ -328,16 +330,16 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         return nodes.reWireInlining.addMissingReferenceInputs
     }
     
-    def sortPorts(KNode node) {
+    private def sortPorts(KNode node) {
         var grp1 = new ArrayList();
         var grp2 = new ArrayList();
         for (port : node.ports.filter [sourceElement !== null]) {
             val VO = (port.sourceElement as ValuedObjectReference).valuedObject
             if (!VO.annotations.empty) {
                 val tag = (VO.annotations.get(0) as TagAnnotation).name
-                if (tag.equals("pos")) {
+                if (tag.equals(POS_TAG)) {
                     grp1.add(port)
-                } else if (tag.equals("neg")) {
+                } else if (tag.equals(NEG_TAG)) {
                     grp2.add(port)
                 }
             }
