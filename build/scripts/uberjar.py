@@ -269,7 +269,7 @@ def bundle(args, target_dir, merged, klighd):
 
     check_call([args.jar, 'cfe', jar, args.main, '.'], cwd=merged)
 
-    if klighd: # Include SWT
+    if klighd and not args.noswt: # Include SWT
         jars = {}
         for platform in klighd_swt.keys():
             pjar = jar[:-4] + '.' + platform + '.jar'
@@ -291,7 +291,7 @@ def create_standalone_scripts(args, jar, target_dir, klighd):
     print('-- Creating standalone scripts --')
     java9_options = ' --add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/jdk.internal.loader=ALL-UNNAMED'
 
-    if klighd:
+    if klighd and not args.noswt:
         jar_linux = jar['linux']
         jar_win = jar['win']
         jar_osx = jar['osx']
@@ -356,6 +356,7 @@ if __name__ == '__main__':
     argParser.add_argument('-s', dest='scripts', action='store_true', help='create platform specific standalone scripts of the jar')
     argParser.add_argument('-jar', default='jar', help='override jar command to adjust java version, e.g. /usr/lib/jvm/java-11-openjdk-amd64/bin/jar')
     argParser.add_argument('--java8', dest='java8', action='store_true', help='activate Java 8 support')
+    argParser.add_argument('--no-swt', dest='noswt', action='store_true', help='skips bundling platform specific SWT dependencies.')
     argParser.add_argument('--ignore-conflicts', dest='ignore_conflicts', action='store_true', help='prevents failing if merge fail due to a conflict.')
     argParser.add_argument('source', help='directory containing all plugins that should be bundled (self-contained update site)')
     argParser.add_argument('name', help='name of the generated executable jar/script')
