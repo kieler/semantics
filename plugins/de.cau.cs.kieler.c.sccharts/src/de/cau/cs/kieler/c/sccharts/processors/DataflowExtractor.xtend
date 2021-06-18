@@ -1550,51 +1550,23 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             whileRegion.equations += createDataflowAssignment(condOutputVo, source)
         }
 
-        // Determine which outputs have been set in their respective state
-        val HashSet<String> allOutputs = new HashSet
-
         var positiveOutputs = findOutputs(whileStmt.getBody, whileState, false)
         if (getStateVariables(bodyState).containsKey(returnObjectName)) {
             positiveOutputs += returnObjectName
         }
 
-        allOutputs.addAll(positiveOutputs)
         // For each output, find the output VO and connect them to a conditional
         var multInputs = new ArrayList
         var multOutputs = new ArrayList
-        for (output : allOutputs) {
+        for (output : positiveOutputs) {
             // Find the output VO for the body state
-            var ValuedObject innerPositiveOutputVo
-            if (positiveOutputs.contains(output)) {
-                innerPositiveOutputVo = bodyState.declarations.filter(VariableDeclaration).filter[it.isOutput].flatMap [
+            var ValuedObject innerOutputVo = bodyState.declarations.filter(VariableDeclaration).filter[it.isOutput].flatMap [
                     it.valuedObjects
                 ].filter[it.label == output].head
-            }
-
+            
             var ValuedObject positiveOutputVo
-            if (innerPositiveOutputVo !== null) {
-                // Assign the body output to a new "while-body_[varName]" variable in the while region
-                // For that, create a new variable declaration
-                val variableDeclaration = createVariableDeclaration
-                variableDeclaration.type = innerPositiveOutputVo.type
-                whileRegion.declarations += variableDeclaration
-                // Retrieve the state's variable map
-                var Map<String, List<ValuedObject>> stateVariables = getStateVariables(bodyState)
-                val varName = whileBodyName + ssaNameSeperator + localWhileCounter + output
-                val varList = <ValuedObject>newArrayList
-                // Reuse the vo variable, now pointing to a new VO in the while state
-                positiveOutputVo = variableDeclaration.createValuedObject(varName)
-                positiveOutputVo.label = varName
-                varList.add(positiveOutputVo)
-                stateVariables.put(varName, varList)
-                whileRegion.declarations += variableDeclaration
-                variableDeclaration.annotations += createTagAnnotation("Hide")
-                val innerPositiveOutputVo_ = innerPositiveOutputVo
-                // This assignment is of the form 'varName = whileObj.varName'
-                val source = bodyObj.reference => [
-                    subReference = innerPositiveOutputVo_.reference
-                ]
-                whileRegion.equations += createDataflowAssignment(positiveOutputVo, source)
+            if (innerOutputVo !== null) {
+                positiveOutputVo = createOutputVo(whileBodyName, localWhileCounter, bodyState, bodyObj, whileRegion, innerOutputVo)
             }
 
             // If the variable is not written to in the body, use the input VO as the output. 
