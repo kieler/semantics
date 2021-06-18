@@ -1085,7 +1085,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         val thenTransition = initState.createImmediateTransitionTo(thenState)
         thenTransition.trigger = (condition).createKExpression(ifState, dRegion)
         thenTransition.label = exprToString(condition, sourceFile)
-
+        val String = "ich bin eine doofe ide"
         // If an else is given the state is also created
         var State elseState
         if (negative !== null) {
@@ -1477,28 +1477,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         }
         whileRegion.label = whileName + ssaNameSeperator + localWhileCounter
 
-//        // Create the cond state
-//        val condState = createState(whileName + ssaNameSeperator + localWhileCounter + whileCondName)
-//        condState.annotations += createTagAnnotation("Hide")
-//        if (serializable) {
-//            rootSCChart.rootStates += condState
-//        }
-//        val condRefDecl = createReferenceDeclaration
-//        whileRegion.declarations += condRefDecl
-//        condRefDecl.setReference(condState)
-//        val condObj = condRefDecl.createValuedObject(whileName + ssaNameSeperator + localWhileCounter + whileCondName)
-//        if (!serializable) {
-//            condObj.insertHighlightAnnotations(whileStmt.getCondition)
-//        }
-//
-//        // inputs & outputs
-//        setInputs(whileStmt.getCondition, whileState, condState, whileRegion, condObj)
-//        setOutputs(whileStmt.getCondition, whileState, condState, whileRegion, condObj, false)
-//
-//        // Create the region for the condition part
-//        val condRegion = createDFRegionForNode(whileStmt.getCondition, condState, whileState, whileRegion, condObj)
-//        condState.regions += condRegion
-//        condRegion.label = whileName + ssaNameSeperator + localWhileCounter + whileCondName
+        // Create the cond state
         val condRes = addCondDF(localWhileCounter, whileStmt, whileState, whileRegion)
         val condRegion = condRes.key
         val condState = condRes.value.key
@@ -1530,40 +1509,8 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         bodyRegion.label = whileName + ssaNameSeperator + localWhileCounter + whileBodyName
 
         // inlining the output of the condition
-//        var condOutput = condRegion.equations.get(0).reference.valuedObject
-//        var ValuedObject condOutputVo
-//        if (condOutput !== null) {
-//            // Assign the cond output to a new variable in the while region
-//            // For that, create a new variable declaration
-//            val variableDeclaration = createVariableDeclaration
-//            variableDeclaration.type = condOutput.type
-//            whileRegion.declarations += variableDeclaration
-//            // Retrieve the state's variable map
-//            var Map<String, List<ValuedObject>> stateVariables = getStateVariables(condState)
-//            val varName = conditionalResultName
-//            val varList = <ValuedObject>newArrayList
-//            // Reuse the vo variable, now pointing to a new VO in the while state
-//            condOutputVo = variableDeclaration.createValuedObject(varName)
-//            condOutputVo.label = varName
-//            varList.add(condOutputVo)
-//            stateVariables.put(varName, varList)
-//            whileRegion.declarations += variableDeclaration
-//            variableDeclaration.annotations += createTagAnnotation("Hide")
-//            val innerNegativeOutputVo_ = condOutput
-//
-//            val source = condObj.reference => [
-//                subReference = innerNegativeOutputVo_.reference
-//            ]
-//            whileRegion.equations += createDataflowAssignment(condOutputVo, source)
-//        }
         var ValuedObject condOutputVo = findCondOutputVo(condRegion, condState, condObj, whileRegion)
-
-            val source = condObj.reference => [
-                subReference = innerNegativeOutputVo_.reference
-            ]
-            whileRegion.equations += createDataflowAssignment(condOutputVo, source)
-        }
-
+              
         var positiveOutputs = findOutputs(whileStmt.getBody, whileState, false)
         if (getStateVariables(bodyState).containsKey(returnObjectName)) {
             positiveOutputs += returnObjectName
@@ -1964,7 +1911,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
      * @param parentRegion Surrounding DataflowRegion of the parentState - The condition state is added to this DataflowRegion
      * @return The DataflowRegion, State and ValuedObject of the condition
      */
-    def private Pair<DataflowRegion, Pair<State, ValuedObject>> addCondDF(int localCounter, IASTStatement stmt,
+    def Pair<DataflowRegion, Pair<State, ValuedObject>> addCondDF(int localCounter, IASTStatement stmt,
         State parentState, DataflowRegion parentRegion) {
 
         var condName = ""
@@ -2020,7 +1967,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
      *@param parentRegion Region that includes the condState
      *@return the found OutputValuedObject of the condition
      */  
-    def private ValuedObject findCondOutputVo(DataflowRegion condRegion, State condState, ValuedObject condObj,
+    def ValuedObject findCondOutputVo(DataflowRegion condRegion, State condState, ValuedObject condObj,
         DataflowRegion parentRegion) {
 
         var condOutput = condRegion.equations.get(0).reference.valuedObject
