@@ -215,6 +215,9 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
     var referenceCounter = 0;
     var returnCombineCounter = 0;
     var sizeofCounter = 0;
+    var breakCounter = 0;
+    
+    var DataflowRegion lastWhileRegion = null
     
     val Map<State, Map<String, List<ValuedObject>>> valuedObjects = newHashMap
 
@@ -640,9 +643,16 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
 
         addAdditionalDeclarations(additionalDeclarations, bodyState, dfRegion)
 
+        if (bodyState.name.contains(whileName + ssaNameSeperator)) {
+            lastWhileRegion = dfRegion
+        }
+
         val statements = body.getStatements
         for (stmt : statements) {
             buildStatement(stmt, bodyState, dfRegion)
+            if (bodyState.name.contains(whileName + ssaNameSeperator)) {
+                lastWhileRegion = dfRegion
+            }
         }
         linkOutputs(bodyState, dfRegion)
 
@@ -719,8 +729,8 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
      * Translate While statement
      */
     def dispatch void buildStatement(IASTWhileStatement stmt, State rootState, DataflowRegion dRegion) {
-//        buildWhile(stmt, rootState, dRegion)
-        buildWhileDF(stmt, rootState, dRegion)
+        buildWhile(stmt, rootState, dRegion)
+//        buildWhileDF(stmt, rootState, dRegion)
     }
 
     /**
@@ -728,6 +738,13 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
      */
     def dispatch void buildStatement(IASTDoStatement stmt, State rootState, DataflowRegion dRegion) {
         buildDo(stmt, rootState, dRegion)
+    }
+    
+    /**
+     * Translate Return statement
+     */
+    def dispatch void buildStatement(IASTBreakStatement stmt, State rootState, DataflowRegion dRegion) {
+        buildBreak(stmt, rootState, dRegion)
     }
 
     /**
@@ -1586,11 +1603,16 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             var ValuedObject negativeOutputVo = whileOutputVo
 
             val outputVo = whileState.findOutputVar(output)
-
-            positiveOutputVo.addTagAnnotation(posTag)
-            negativeOutputVo.addTagAnnotation(negTag)
-            multInputs.add(positiveOutputVo)
-            multInputs.add(negativeOutputVo)
+            
+            if (positiveOutputVo !== null) {
+                positiveOutputVo.addTagAnnotation(posTag)
+                multInputs.add(positiveOutputVo)
+            }
+            if (negativeOutputVo !== null) {         
+                negativeOutputVo.addTagAnnotation(negTag)
+                multInputs.add(negativeOutputVo)
+            }
+            
             multOutputs.add(outputVo)
 
         }
@@ -1748,6 +1770,50 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 dRegion.equations += eq
             }
         }
+    }
+
+    /**
+     * Translate a Break statement 
+     */
+    def void buildBreak(IASTBreakStatement breakStmt, State rootState, DataflowRegion dRegion) {
+        val localBreakCounter = breakCounter
+        breakCounter++
+        
+        // Create the state
+        val breakState = createState(breakName + ssaNameSeperator + localBreakCounter)
+        breakState.annotations += createTagAnnotation("Hide")
+        breakState.annotations += createTagAnnotation("Break")
+        breakState.addStringAnnotation("figure", "Break.kgt")
+        if (serializable) {
+            rootSCChart.rootStates += breakState
+        }
+                
+        var State whileState = null
+        for (state : rootSCChart.rootStates) {
+            if (state.name.contains(whileName + ssaNameSeperator + (whileCounter-1))) {
+                whileState = state
+            }
+        }
+        
+        val breakRefDecl = createReferenceDeclaration
+        dRegion.declarations += breakRefDecl
+        breakRefDecl.setReference(breakState)
+        val breakObj = breakRefDecl.createValuedObject(breakName)
+        
+        var whileSt = breakStmt as IASTNode
+        while (!(whileSt instanceof IASTWhileStatement)) {
+            whileSt = whileSt.parent
+        }
+        var whileStmt = whileSt as IASTWhileStatement
+        
+        // Set the in and outputs
+        setInputs(whileStmt.getBody, whileState, breakState, lastWhileRegion, breakObj)
+        setOutputs(whileStmt.getBody, whileState, breakState, lastWhileRegion, breakObj)
+
+        // Create the region for the body part
+        val breakRegion = breakState.createDataflowRegion("")
+        breakState.regions += breakRegion
+        breakRegion.label = breakName
     }
 
     /**
