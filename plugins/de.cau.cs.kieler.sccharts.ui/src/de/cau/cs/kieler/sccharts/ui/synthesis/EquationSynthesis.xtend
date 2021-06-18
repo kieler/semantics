@@ -323,6 +323,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                  */
                 val nrInputPs = (n.ports.size -1) * (2/3.0)
                 n.height = (nrInputPs * rootNode.getProperty(LayeredOptions.SPACING_PORT_PORT)) as float
+                
                 sortPorts(n)
             }
             n.addLayoutParam(CoreOptions.NODE_SIZE_MINIMUM, new KVector(0, 0))
@@ -342,6 +343,10 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
     private def sortPorts(KNode node) {
         var grp1 = new ArrayList();
         var grp2 = new ArrayList();
+        var longestLabel1 = 0f
+        var longestLabel2 = 0f
+        
+        
         for (port : node.ports.filter [sourceElement !== null]) {
             val VO = (port.sourceElement as ValuedObjectReference).valuedObject
             if (VO.hasAnnotation(POS_TAG)) {
@@ -352,10 +357,20 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         }
         for (port : grp1) {
             port.ypos = 0
+            var labelWidth = port.labels.get(0).text.length
+            if (labelWidth > longestLabel1){
+                longestLabel1 = labelWidth
+            }
         }
         for (port : grp2) {
             port.ypos = 100
+            var labelWidth = port.labels.get(0).text.length
+            if (labelWidth > longestLabel2){
+                longestLabel2 = labelWidth
+            }
         }
+        
+        node.width = (longestLabel1 + longestLabel2) * PORT_LABEL_FONT_SIZE
     }
 
     /**
