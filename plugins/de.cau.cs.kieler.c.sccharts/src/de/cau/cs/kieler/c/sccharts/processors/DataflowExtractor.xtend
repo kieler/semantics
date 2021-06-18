@@ -220,7 +220,8 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
     var breakCounter = 0;
 
     var DataflowRegion lastWhileRegion = null
-
+    var breakFlag = false
+    
     val Map<State, Map<String, List<ValuedObject>>> valuedObjects = newHashMap
 
     /** All expressions that are pointers to some variable. */
@@ -653,6 +654,10 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 lastWhileRegion = dfRegion
             }
         }
+        if (breakFlag && bodyState.name.contains(whileName + ssaNameSeperator)) {
+            createBreakMultiplexer(bodyState, dfRegion)
+            breakFlag = false
+        }
         linkOutputs(bodyState, dfRegion)
 
         return dfRegion
@@ -743,6 +748,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
      * Translate Return statement
      */
     def dispatch void buildStatement(IASTBreakStatement stmt, State rootState, DataflowRegion dRegion) {
+        breakFlag = true
         buildBreak(stmt, rootState, dRegion)
     }
 
@@ -1397,7 +1403,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
     /**
      * Translate a while statement
      */
-    def void buildWhile(IASTWhileStatement whileStmt, State rootState, DataflowRegion dRegion) {
+    def buildWhile(IASTWhileStatement whileStmt, State rootState, DataflowRegion dRegion) {
         // Create the state        
         val whileState = createState(whileName + ssaNameSeperator + whileCounter)
         whileState.annotations += createTagAnnotation("Hide")
@@ -1552,51 +1558,29 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
 //        }
         var ValuedObject condOutputVo = findCondOutputVo(condRegion, condState, condObj, whileRegion)
 
-        // Determine which outputs have been set in their respective state
-        val HashSet<String> allOutputs = new HashSet
+            val source = condObj.reference => [
+                subReference = innerNegativeOutputVo_.reference
+            ]
+            whileRegion.equations += createDataflowAssignment(condOutputVo, source)
+        }
 
         var positiveOutputs = findOutputs(whileStmt.getBody, whileState, false)
         if (getStateVariables(bodyState).containsKey(returnObjectName)) {
             positiveOutputs += returnObjectName
         }
 
-        allOutputs.addAll(positiveOutputs)
         // For each output, find the output VO and connect them to a conditional
         var multInputs = new ArrayList
         var multOutputs = new ArrayList
-        for (output : allOutputs) {
+        for (output : positiveOutputs) {
             // Find the output VO for the body state
-            var ValuedObject innerPositiveOutputVo
-            if (positiveOutputs.contains(output)) {
-                innerPositiveOutputVo = bodyState.declarations.filter(VariableDeclaration).filter[it.isOutput].flatMap [
+            var ValuedObject innerOutputVo = bodyState.declarations.filter(VariableDeclaration).filter[it.isOutput].flatMap [
                     it.valuedObjects
                 ].filter[it.label == output].head
-            }
-
+            
             var ValuedObject positiveOutputVo
-            if (innerPositiveOutputVo !== null) {
-                // Assign the body output to a new "while-body_[varName]" variable in the while region
-                // For that, create a new variable declaration
-                val variableDeclaration = createVariableDeclaration
-                variableDeclaration.type = innerPositiveOutputVo.type
-                whileRegion.declarations += variableDeclaration
-                // Retrieve the state's variable map
-                var Map<String, List<ValuedObject>> stateVariables = getStateVariables(bodyState)
-                val varName = whileBodyName + ssaNameSeperator + localWhileCounter + output
-                val varList = <ValuedObject>newArrayList
-                // Reuse the vo variable, now pointing to a new VO in the while state
-                positiveOutputVo = variableDeclaration.createValuedObject(varName)
-                positiveOutputVo.label = varName
-                varList.add(positiveOutputVo)
-                stateVariables.put(varName, varList)
-                whileRegion.declarations += variableDeclaration
-                variableDeclaration.annotations += createTagAnnotation("Hide")
-                val innerPositiveOutputVo_ = innerPositiveOutputVo
-                // This assignment is of the form 'varName = whileObj.varName'
-                val source = bodyObj.reference => [
-                    subReference = innerPositiveOutputVo_.reference
-                ]
-                whileRegion.equations += createDataflowAssignment(positiveOutputVo, source)
+            if (innerOutputVo !== null) {
+                positiveOutputVo = createOutputVo(whileBodyName, localWhileCounter, bodyState, bodyObj, whileRegion, innerOutputVo)
             }
 
             // If the variable is not written to in the body, use the input VO as the output. 
@@ -1638,6 +1622,116 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         return whileObj.reference => [
             it.subReference = subReference
         ]
+    }
+    
+        
+    def createBreakMultiplexer(State whileState, DataflowRegion whileRegion) {
+        var t = whileRegion.declarations.get(1) as ReferenceDeclaration
+        var ifState = t.reference as State
+        var ifObj = t.valuedObjects.get(0)
+        var ifRegion = ifState.regions.get(0) as DataflowRegion
+        var t3 = ifRegion.declarations
+        var t4 = t3.get(0).valuedObjects.get(0)
+        
+        var breakRef = whileRegion.declarations.get(2) as ReferenceDeclaration
+        var breakState = breakRef.reference as State
+        var breakObj = breakRef.valuedObjects.get(0)
+        var breakVars = getStateVariables(breakState)
+        var breakOutputs = new ArrayList
+        for (varList : breakVars.values) {
+            val outVO = findOutputVar(varList)
+            if (outVO !== null) {
+                breakOutputs.add(outVO)
+            }
+        }
+        
+        var multInputs = new ArrayList
+        for (output : breakOutputs) {
+            var ValuedObject outputVo = createOutputVo(breakName, breakCounter-1, breakState, breakObj, whileRegion, output)
+            multInputs.add(outputVo)
+
+        }
+        
+        
+        
+//        var regionVars = whileRegion.declarations
+//        for (variable : regionVars) {
+//            if (variable instanceof VariableDeclaration) {
+//                var VOs = variable.valuedObjects
+//                var VO = VOs.get(VOs.length -2)
+//                VO.addTagAnnotation("neg")
+//                multInputs.add(VO)
+//            }
+//        }
+        
+        var whileVars = getStateVariables(whileState)
+        var multOutputs = new ArrayList
+        for (varList : whileVars.values) {
+            val outVO = findOutputVar(varList)
+            if (outVO !== null) {
+                multOutputs.add(outVO)
+            }
+        }
+        
+        
+        // inlining the output of the condition
+        var ValuedObject condOutput = t4
+        var ValuedObject condOutputVo
+        if (condOutput !== null) {
+            // Assign the cond output to a new variable in the while region
+            // For that, create a new variable declaration
+            val variableDeclaration = createVariableDeclaration
+            variableDeclaration.type = condOutput.type
+            whileRegion.declarations += variableDeclaration
+            // Retrieve the state's variable map
+            var Map<String, List<ValuedObject>> stateVariables = getStateVariables(ifState)
+            val varName = conditionalResultName
+            val varList = <ValuedObject>newArrayList
+            // Reuse the vo variable, now pointing to a new VO in the while state
+            condOutputVo = variableDeclaration.createValuedObject(varName)
+            condOutputVo.label = varName
+            varList.add(condOutputVo)
+            stateVariables.put(varName, varList)
+            whileRegion.declarations += variableDeclaration
+            variableDeclaration.annotations += createTagAnnotation("Hide")
+            val innerNegativeOutputVo_ = condOutput
+
+            val source = ifObj.reference => [
+                subReference = innerNegativeOutputVo_.reference
+            ]
+            whileRegion.equations += createDataflowAssignment(condOutputVo, source)
+        }
+        
+        createMultiplexer(whileRegion, condOutputVo, multInputs, multOutputs);
+        
+    }
+    
+    def createOutputVo(String name, int counter, State state, ValuedObject obj, DataflowRegion region, ValuedObject output) {
+        var ValuedObject outputVo
+        // Assign the break output to a new "break_[varName]" variable in the while region
+        // For that, create a new variable declaration
+        val variableDeclaration = createVariableDeclaration
+        variableDeclaration.type = output.type
+        region.declarations += variableDeclaration
+        // Retrieve the state's variable map
+        var Map<String, List<ValuedObject>> stateVariables = getStateVariables(state)
+        val varName = name + ssaNameSeperator + counter + output.label
+        val varList = <ValuedObject>newArrayList
+        // Reuse the vo variable, now pointing to a new VO in the while state
+        outputVo = variableDeclaration.createValuedObject(varName)
+        outputVo.label = varName
+        varList.add(outputVo)
+        stateVariables.put(varName, varList)
+        region.declarations += variableDeclaration
+        variableDeclaration.annotations += createTagAnnotation("Hide")
+        val innerPositiveOutputVo_ = output
+        // This assignment is of the form 'varName = breakObj.varName'
+        val source = obj.reference => [
+            subReference = innerPositiveOutputVo_.reference
+        ]
+        region.equations += createDataflowAssignment(outputVo, source)
+        
+        return outputVo
     }
 
     /**
@@ -1804,7 +1898,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         }
 
         val breakRefDecl = createReferenceDeclaration
-        dRegion.declarations += breakRefDecl
+        lastWhileRegion.declarations += breakRefDecl
         breakRefDecl.setReference(breakState)
         val breakObj = breakRefDecl.createValuedObject(breakName)
 
