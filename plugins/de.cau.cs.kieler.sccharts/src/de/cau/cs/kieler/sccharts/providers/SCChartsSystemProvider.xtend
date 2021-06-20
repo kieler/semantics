@@ -68,7 +68,8 @@ class SCChartsSystemProvider implements ISystemProvider {
             "system/de.cau.cs.kieler.c.sccharts.dataflow.kico",
             "system/de.cau.cs.kieler.sccharts.simulation.priority.java.legacy.kico",
             "system/de.cau.cs.kieler.sccharts.simulation.tts.priority.java.legacy.kico",
-            "system/de.cau.cs.kieler.sccharts.netlist.simulink.kico"
+            "system/de.cau.cs.kieler.sccharts.netlist.simulink.kico",
+            "system/de.cau.cs.kieler.sccharts.refcall.kico"
         ]
     }
     

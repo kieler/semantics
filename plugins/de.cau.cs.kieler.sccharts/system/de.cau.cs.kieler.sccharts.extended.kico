@@ -3,6 +3,7 @@ system de.cau.cs.kieler.sccharts.extended
 
 pre process silent de.cau.cs.kieler.sccharts.processors.staticAccess
 de.cau.cs.kieler.sccharts.processors.reference
+de.cau.cs.kieler.sccharts.processors.referenceCallPreprocessor
 post process silent de.cau.cs.kieler.kicool.deploy.variable.store.init
 de.cau.cs.kieler.sccharts.processors.regionactions
 de.cau.cs.kieler.sccharts.processors.codeEffects
