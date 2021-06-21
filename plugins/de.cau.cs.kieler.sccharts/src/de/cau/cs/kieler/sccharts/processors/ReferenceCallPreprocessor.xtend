@@ -18,6 +18,7 @@ import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.State
 import com.google.inject.Inject
 import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsClassExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsReferenceExtensions
@@ -35,6 +36,7 @@ import de.cau.cs.kieler.kicool.deploy.AdditionalResources.Type
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsDependencyExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsComplexCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.kexpressions.ValueType
 
 /**
  * @author glu
@@ -55,6 +57,7 @@ class ReferenceCallPreprocessor extends SCChartsProcessor implements Traceable {
     @Inject extension KEffectsDependencyExtensions
     @Inject extension KExpressionsComplexCreateExtensions
     @Inject extension KExpressionsCreateExtensions
+    @Inject extension SCChartsClassExtensions
     
     static final String REF_CALL_CLASS_SUFFIX = "Class"
     static final String REF_CALL_INSTANCE_SUFFIX = "_instance"
@@ -80,52 +83,112 @@ class ReferenceCallPreprocessor extends SCChartsProcessor implements Traceable {
         sccharts => [
             rootStates.forEach[ rootState |
                 rootState.allContainedStates.filter[isReferencing].toList().forEach [ ref |
-                    // build stub class placeholder
-                    val classDecl = createClassDeclaration() => [
-                        name = ref.name + REF_CALL_CLASS_SUFFIX
+                    // declare stub class placeholder
+                    val classDecl = createPolicyClassDeclaration() => [
+                        name = ref.reference.scope.name + REF_CALL_CLASS_SUFFIX
                         uniqueName
                         host = true
-                        it.createValuedObject(ref.name + REF_CALL_INSTANCE_SUFFIX) => [uniqueName]
+                        it.createValuedObject(it.name + REF_CALL_INSTANCE_SUFFIX) => [uniqueName]
                         ref.name = it.name + REF_CALL_STUB_SUFFIX
-                        val tickDecl = createMethodDeclaration => [
+                        // declare method placeholders
+                        var tickDecl = createMethodImplementationDeclaration => [
                             it.createValuedObject("tick")
                         ]
-                        val resetDecl = createMethodDeclaration => [
+                        var resetDecl = createMethodImplementationDeclaration => [
                             it.createValuedObject("reset")
                         ]
-                        val cpinDecl = createMethodDeclaration => [
+                        var cpinDecl = createMethodImplementationDeclaration => [
                             it.createValuedObject("copy_inputs")
                         ]
-                        val cpoutDecl = createMethodDeclaration => [
+                        var cpoutDecl = createMethodImplementationDeclaration => [
                             it.createValuedObject("copy_outputs")
+                        ]
+                        var termDecl = createMethodImplementationDeclaration => [
+                            it.createValuedObject("get_term")
+                            returnType = ValueType::BOOL
                         ]
                         declarations.add(tickDecl)
                         declarations.add(resetDecl)
                         declarations.add(cpinDecl)
                         declarations.add(cpoutDecl)
+                        declarations.add(termDecl)
                         rootState.declarations.add(it)
                     ]
-                    // remove original reference
+                    /* remove original reference
+                     * could also keep the reference in order to link later but naming-based solution is more general
+                     * => external modules
+                     */
                     ref.reference = null
-                    // tranform referencing state to superstate
+                    // tranform referencing state to superstate containing glue logic
                     ref.createControlflowRegion(ref.name) => [
                         var init = it.createInitialState("I")
                         var call = it.createState("C")
                         var term = it.createFinalState("T")
+                        /* get references to methods declared above
+                         * TODO find a more elegant solution
+                         */
+                        val tick_method = classDecl.declarations.findFirst[
+                            valuedObjects.head.name == "tick"
+                        ].valuedObjects.head
+                        val reset_method = classDecl.declarations.findFirst[
+                            valuedObjects.head.name == "reset"
+                        ].valuedObjects.head
+                        val cpin_method = classDecl.declarations.findFirst[
+                            valuedObjects.head.name == "copy_inputs"
+                        ].valuedObjects.head
+                        val cpout_method = classDecl.declarations.findFirst[
+                            valuedObjects.head.name == "copy_outputs"
+                        ].valuedObjects.head
+                        val term_method = classDecl.declarations.findFirst[
+                            valuedObjects.head.name == "get_term"
+                        ].valuedObjects.head
+                        
+                        /* on entry (without history) reset referenced model and call tick once */
                         init.createTransitionTo(call) => [
-                            delay = DelayType.IMMEDIATE
-                            label = "reset and call tick"
+                            delay = DelayType::IMMEDIATE
+                            effects.add(createReferenceCallEffect => [
+                                subReference = reset_method.reference
+                                valuedObject = classDecl.valuedObjects.head
+                            ])
+                            effects.add(createReferenceCallEffect => [
+                                subReference = cpin_method.reference
+                                valuedObject = classDecl.valuedObjects.head
+                            ])
+                            effects.add(createReferenceCallEffect => [
+                                subReference = tick_method.reference
+                                valuedObject = classDecl.valuedObjects.head
+                            ])
+                            effects.add(createReferenceCallEffect => [
+                                subReference = cpout_method.reference
+                                valuedObject = classDecl.valuedObjects.head
+                            ])
                         ]
-                        call.createTransitionTo(term) => [
-                            delay = DelayType.IMMEDIATE
-                            label = "terminate if referenced state terminates"
-                        ]
+                        
+                        /* self transition from call state to call state (if not terminated) */
                         call.createTransitionTo(call) => [
-                            label = "call tick"
+                            effects.add(createReferenceCallEffect => [
+                                subReference = cpin_method.reference
+                                valuedObject = classDecl.valuedObjects.head
+                            ])
+                            effects.add(createReferenceCallEffect => [
+                                subReference = tick_method.reference
+                                valuedObject = classDecl.valuedObjects.head
+                            ])
+                            effects.add(createReferenceCallEffect => [
+                                subReference = cpout_method.reference
+                                valuedObject = classDecl.valuedObjects.head
+                            ])
+                        ]
+                        
+                        /* if referenced model terminates, terminate immediately */
+                        call.createTransitionTo(term) => [
+                            delay = DelayType::IMMEDIATE
+                            trigger = createReferenceCall => [
+                                subReference = term_method.reference
+                                valuedObject = classDecl.valuedObjects.head
+                            ]
                         ]
                     ]
-                    
-                    
                 ]
             ]
         ]
