@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.kicool.ide.cli
+package de.cau.cs.kieler.kicool.ui.cli
 
 import de.cau.cs.kieler.kicool.cli.KielerCompilerCLI
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
@@ -22,7 +22,7 @@ import de.cau.cs.kieler.klighd.KlighdDataManager
 import de.cau.cs.kieler.klighd.LightDiagramServices
 import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.internal.ISynthesis
-import de.cau.cs.kieler.klighd.standalone.KlighdStandaloneSetup
+import de.cau.cs.kieler.klighd.standalone.ui.KlighdStandaloneUISetup
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties
 import java.io.File
 import java.util.Map
@@ -78,7 +78,7 @@ class KielerCompilerDiagramCLI extends KielerCompilerCLI {
     val KlighdDataManager kdm = KlighdDataManager.getInstance()
 
     new() {
-        KlighdStandaloneSetup.initialize
+        KlighdStandaloneUISetup.initialize
     }
 
     override protected saveModel(Object model, File dest, File source, CompilationContext cc) {

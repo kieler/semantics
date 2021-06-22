@@ -19,7 +19,7 @@
     <update.site.jars>${project.build.directory}/repository/plugins</update.site.jars>
     <python.script>${basedir}/../scripts/uberjar.py</python.script>
     <executableName>kieler-language-server</executableName>
-    <mainClass>de.cau.cs.kieler.language.server.LanguageServer</mainClass>
+    <mainClass>de.cau.cs.kieler.pragmatics.language.server.PragmaticsLanguageServer</mainClass>
     <python.script.output>${project.build.directory}/exe</python.script.output>
   </properties>
 
