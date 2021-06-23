@@ -10,6 +10,8 @@
       <unit id="org.eclipse.epp.mpc.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.equinox.executable.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.xpand.feature.group" version="0.0.0"/>
+      <unit id="org.eclipse.ui" version="0.0.0"/>
+      <unit id="org.eclipse.swt" version="0.0.0"/>
       <repository location="http://download.eclipse.org/releases/2021-03"/>
     </location>
     <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="false" type="InstallableUnit">
@@ -32,6 +34,7 @@
       <unit id="de.cau.cs.kieler.klighd.freehep.feature.feature.group" version="0.0.0"/>
       <unit id="de.cau.cs.kieler.klighd.ide.feature.feature.group" version="0.0.0"/>
       <unit id="de.cau.cs.kieler.klighd.lsp" version="0.0.0"/>
+      <unit id="de.cau.cs.kieler.klighd.standalone.mockup" version="0.0.0"/>
       <unit id="de.cau.cs.kieler.klighd.standalone.ui" version="0.0.0"/>
       <unit id="de.cau.cs.kieler.klighd.view.feature.feature.group" version="0.0.0"/>
       <unit id="de.cau.cs.kieler.klighd.ui.contrib3x" version="0.0.0"/>

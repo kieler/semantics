@@ -26,7 +26,7 @@
     <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
     
     <!-- Updatesite for product build -->
-    <kieler.semantics.updatesite>http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/semantics/</kieler.semantics.updatesite>
+    <kieler.semantics.updatesite>https://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/semantics-integration-new-features/</kieler.semantics.updatesite>
   </properties>
 
 
@@ -93,8 +93,7 @@
     <profile>
       <id>semantics.ls</id>
       <modules>
-        <module>../plugins</module>
-        <module>de.cau.cs.kieler.semantics.mockup.targetplatform</module>
+        <module>de.cau.cs.kieler.semantics.targetplatform</module>
         <module>de.cau.cs.kieler.language.server.cli</module>
       </modules>
     </profile>  
@@ -196,6 +195,14 @@
         <artifactId>target-platform-configuration</artifactId>
         <version>${tycho-version}</version>
         <configuration>      
+          <filter>
+            <excludes>
+              <exclude>
+                <type>eclipse-plugin</type>
+                <id>de.cau.cs.kieler.klighd.standalone.mockup</id>
+              </exclude>
+            </excludes>
+          </filter>
           <target>
             <artifact>
               <groupId>de.cau.cs.kieler</groupId>
