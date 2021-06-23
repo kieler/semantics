@@ -4,7 +4,6 @@
       Artificial Update site for the KIELER Language Server CLI.
    </description>
    <bundle id="de.cau.cs.kieler.graphs.klighd"/>
-   <bundle id="de.cau.cs.kieler.kivis.ide"/>
    <bundle id="de.cau.cs.kieler.klighd.ide"/>
    <bundle id="de.cau.cs.kieler.klighd.incremental"/>
    <bundle id="de.cau.cs.kieler.klighd.lsp"/>
