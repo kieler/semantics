@@ -14,6 +14,7 @@
 package de.cau.cs.kieler.c.sccharts.processors
 
 import com.google.inject.Inject
+import de.cau.cs.kieler.annotations.TagAnnotation
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
 import de.cau.cs.kieler.c.sccharts.extensions.CDTConvertExtensions
@@ -97,6 +98,7 @@ import org.eclipse.cdt.core.dom.ast.IASTTypeIdExpression
 import org.eclipse.cdt.core.dom.ast.IASTUnaryExpression
 import org.eclipse.cdt.core.dom.ast.IASTWhileStatement
 import org.eclipse.cdt.core.index.IIndex
+import org.eclipse.cdt.core.index.IIndexBinding
 import org.eclipse.cdt.core.model.CoreModel
 import org.eclipse.cdt.core.model.ICProject
 import org.eclipse.cdt.core.model.ITranslationUnit
@@ -104,8 +106,6 @@ import org.eclipse.cdt.internal.core.dom.parser.ASTNode
 import org.eclipse.core.resources.IResource
 
 import static de.cau.cs.kieler.c.sccharts.processors.CDTToStringConverter.*
-import de.cau.cs.kieler.sccharts.ui.synthesis.EquationSynthesis
-import de.cau.cs.kieler.annotations.TagAnnotation
 
 /**
  * A Processor analyzing the data flow of functions within a single file of a C project and visualizing it as actor-
@@ -1528,11 +1528,11 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         ]
     }
     
-        
+    
     def finalizeBreakMultiplexer(State whileState, DataflowRegion whileRegion) {
+        // get the if and brak states und reference declarations
         var ReferenceDeclaration ifRefDecl
         var State ifState
-        var ValuedObject ifObj
         
         var ReferenceDeclaration breakRefDecl
         var State breakState
@@ -1549,77 +1549,70 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 }
             }
         }
-        
-        ifObj = ifRefDecl.valuedObjects.get(0)
-        var ifRegion = ifState.regions.get(0) as DataflowRegion
-        var ifRegionDecl = ifRegion.declarations
-        var conditional = ifRegionDecl.get(0).valuedObjects.get(0)
-        
+
         
         var breakObj = breakRefDecl.valuedObjects.get(0)
-        var breakVars = getStateVariables(breakState)
-        var breakOutputs = new ArrayList
-        for (varList : breakVars.values) {
-            val outVO = findOutputVar(varList)
-            if (outVO !== null) {
-                breakOutputs.add(outVO)
-            }
-        }
         
-        var multInputs = new ArrayList
-        
+        // determine the inputs of the break state
+        var breakInputs = new ArrayList
         var regionVars = whileRegion.declarations
         for (variable : regionVars) {
             if (variable instanceof VariableDeclaration) {
                 var VOs = variable.valuedObjects
                 var VO = VOs.get(VOs.length -1)
                 VO.addTagAnnotation(negTag)
-                multInputs.add(VO)
+                breakInputs.add(VO)
             }
         }
         
+        // determine the outputs of the break state
         var whileVars = getStateVariables(whileState)
-        var multOutputs = new ArrayList
+        var breakOutputs = new ArrayList
         for (varList : whileVars.values) {
             val outVO = findOutputVar(varList)
             if (outVO !== null) {
-                multOutputs.add(outVO)
+                breakOutputs.add(outVO)
             }
         }
         
-        
-        // inlining the output of the condition
-        var ValuedObject condOutput = conditional
-        var ValuedObject condOutputVo
-        if (condOutput !== null) {
-            // Assign the cond output to a new variable in the while region
-            // For that, create a new variable declaration
-            val variableDeclaration = createVariableDeclaration
-            variableDeclaration.type = condOutput.type
-            whileRegion.declarations += variableDeclaration
-            // Retrieve the state's variable map
-            var Map<String, List<ValuedObject>> stateVariables = getStateVariables(ifState)
-            val varName = conditionalResultName
-            val varList = <ValuedObject>newArrayList
-            // Reuse the vo variable, now pointing to a new VO in the while state
-            condOutputVo = variableDeclaration.createValuedObject(varName)
-            condOutputVo.label = varName
-            varList.add(condOutputVo)
-            stateVariables.put(varName, varList)
-            whileRegion.declarations += variableDeclaration
-            variableDeclaration.annotations += createTagAnnotation("Hide")
-            val innerNegativeOutputVo_ = condOutput
-
-            val source = ifObj.reference => [
-                subReference = innerNegativeOutputVo_.reference
-            ]
-            whileRegion.equations += createDataflowAssignment(condOutputVo, source)
+        // get the local conditional vo in the if state    
+        var ifObj = ifRefDecl.valuedObjects.get(0)
+        var ifRegion = ifState.regions.get(0) as DataflowRegion
+        var ValuedObject condOutput
+        for (decl : ifRegion.declarations) {
+            if (decl instanceof VariableDeclaration) {
+                var vo = decl.valuedObjects.get(0)
+                if (vo.name.equals("_conditional")) {
+                    condOutput = vo
+                }
+            }
         }
         
-        setMultInput(multInputs, breakState, whileRegion, breakObj, false)
-        setMultInput(#[condOutputVo], breakState, whileRegion, breakObj, true)
+        // create condition output in the if state
+        val outputDecl = createVariableDeclaration
 
-        setMultOutputs(multOutputs, breakState, whileRegion, breakObj)
+        outputDecl.type = ValueType::BOOL
+        outputDecl.output = true
+        ifState.declarations += outputDecl
+
+        var varName = hiddenVariableName
+        val varList = <ValuedObject>newArrayList
+
+        val outputVO = outputDecl.createValuedObject(varName + outSuffix)
+        outputVO.label = varName
+
+        varList.add(outputVO)
+
+        getStateVariables(ifState).put(varName, varList)
+        ifRegion.equations += createDataflowAssignment(outputVO, condOutput.reference)
+        
+        // condition vo that can be used for the break state
+        var condOutputVo = createOutputVo(ifName, ifCounter, ifState, ifObj, whileRegion, outputVO)
+        
+        //set the inputs and outputs       
+        setMultInput(breakInputs, breakState, whileRegion, breakObj, false)
+        setMultInput(#[condOutputVo], breakState, whileRegion, breakObj, true)
+        setMultOutputs(breakOutputs, breakState, whileRegion, breakObj)
     }
     
     def createOutputVo(String name, int counter, State state, ValuedObject obj, DataflowRegion region, ValuedObject output) {
