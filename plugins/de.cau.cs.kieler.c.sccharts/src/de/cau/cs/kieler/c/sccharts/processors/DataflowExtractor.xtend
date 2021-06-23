@@ -841,20 +841,14 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         }
         ifRegion.label = ifName + ssaNameSeperator + localIfCounter
 
-        // Create the condition expression and add it to the if state
-        val conditionalDecl = createVariableDeclaration(ValueType::BOOL)
-        conditionalDecl.annotations += createTagAnnotation("Hide")
-        ifRegion.declarations += conditionalDecl
-        val conditionalObj = conditionalDecl.createValuedObject(conditionalResultName)
-        if (!serializable) {
-            conditionalObj.insertHighlightAnnotations(condition)
-        }
-        val conditionExpression = createKExpression(condition, ifState, ifRegion)
-        ifRegion.equations += createDataflowAssignment(conditionalObj, conditionExpression)
-//        val condRes = addCondDF(localIfCounter, node as IASTStatement, ifState, ifRegion)
-//        val condRegion = condRes.key
-//        // val condState = condRes.value.key
-//        val conditionalObj = condRes.value.value
+        // Create if state, its dataflow region, and conditional obj
+        val condRes = addConditionBox(localIfCounter, node as IASTStatement, ifState, ifRegion)
+        val condRegion = condRes.key
+        val condState = condRes.value.key
+        val conditionalObj = condRes.value.value
+        
+        // inlining the output of the condition
+        var ValuedObject condOutputVo = findCondOutputVo(condRegion, condState, conditionalObj, ifRegion)
 
         // Create a then state and according reference into the if dataflow region.
         val thenState = createState(ifName + ssaNameSeperator + localIfCounter + thenName)
@@ -884,6 +878,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         // If an else is given the region is also created
         var State elseState
         var ValuedObject elseObj
+        var DataflowRegion elseRegion
         if (negative !== null) {
             // Create an else state and according reference into the if dataflow region.
             elseState = createState(ifName + ssaNameSeperator + localIfCounter + elseName)
@@ -904,7 +899,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             setOutputs(negative, ifState, elseState, ifRegion, elseObj, false)
 
             // Create the region for the 'else' part
-            val elseRegion = createDFRegionForNode(negative, elseState, ifState, ifRegion, elseObj)
+            elseRegion = createDFRegionForNode(negative, elseState, ifState, ifRegion, elseObj)
             elseState.regions += elseRegion
             elseRegion.label = elseName
         }
@@ -948,53 +943,16 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             }
 
             var ValuedObject positiveOutputVo
-            if (innerPositiveOutputVo !== null) {
-                // Assign the then output to a new "then_[varName]" variable in the if region
-                // For that, create a new variable declaration
-                val variableDeclaration = createVariableDeclaration
-                variableDeclaration.type = innerPositiveOutputVo.type
-                ifRegion.declarations += variableDeclaration
-                // Retrieve the state's variable map
-                var Map<String, List<ValuedObject>> stateVariables = getStateVariables(thenState)
-                val varName = thenName + ssaNameSeperator + localIfCounter + output
-                val varList = <ValuedObject>newArrayList
-                // Reuse the vo variable, now pointing to a new VO in the if state
-                positiveOutputVo = variableDeclaration.createValuedObject(varName)
-                positiveOutputVo.label = varName
-                varList.add(positiveOutputVo)
-                stateVariables.put(varName, varList)
-                variableDeclaration.annotations += createTagAnnotation("Hide")
-                val innerPositiveOutputVo_ = innerPositiveOutputVo
-                // This assignment is of the form 'varName = thenObj.varName'
-                val source = thenObj.reference => [
-                    subReference = innerPositiveOutputVo_.reference
-                ]
-                ifRegion.equations += createDataflowAssignment(positiveOutputVo, source)
+            if (innerPositiveOutputVo !== null) { 
+                positiveOutputVo = createOutputVo(thenName, localIfCounter, thenState, thenObj, ifRegion, 
+                    innerPositiveOutputVo)
+                
             }
 
             var ValuedObject negativeOutputVo
             if (innerNegativeOutputVo !== null) {
-                // Assign the else output to a new "else_[varName]" variable in the if region
-                // For that, create a new variable declaration
-                val variableDeclaration = createVariableDeclaration
-                variableDeclaration.type = innerNegativeOutputVo.type
-                ifRegion.declarations += variableDeclaration
-                // Retrieve the state's variable map
-                var Map<String, List<ValuedObject>> stateVariables = getStateVariables(elseState)
-                val varName = elseName + ssaNameSeperator + localIfCounter + output
-                val varList = <ValuedObject>newArrayList
-                // Reuse the vo variable, now pointing to a new VO in the if state
-                negativeOutputVo = variableDeclaration.createValuedObject(varName)
-                negativeOutputVo.label = varName
-                varList.add(negativeOutputVo)
-                stateVariables.put(varName, varList)
-                variableDeclaration.annotations += createTagAnnotation("Hide")
-                val innerNegativeOutputVo_ = innerNegativeOutputVo
-                // This assignment is of the form 'varName = elseObj.varName'
-                val source = elseObj.reference => [
-                    subReference = innerNegativeOutputVo_.reference
-                ]
-                ifRegion.equations += createDataflowAssignment(negativeOutputVo, source)
+                negativeOutputVo = createOutputVo(elseName, localIfCounter, elseState, elseObj, ifRegion, 
+                    innerNegativeOutputVo)
             }
 
             // If the variable is not written to in the positive or negative case, use the input VO as the output. 
@@ -1028,7 +986,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
 
         }
 
-        createMultiplexer(ifRegion, conditionalObj, multInputs, multOutputs);
+        createMultiplexer(ifRegion, condOutputVo, multInputs, multOutputs);
 
         linkReturn(ifState, rootState, ifRegion, dRegion, ifObj)
 
@@ -1085,7 +1043,6 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         val thenTransition = initState.createImmediateTransitionTo(thenState)
         thenTransition.trigger = (condition).createKExpression(ifState, dRegion)
         thenTransition.label = exprToString(condition, sourceFile)
-        val String = "ich bin eine doofe ide"
         // If an else is given the state is also created
         var State elseState
         if (negative !== null) {
@@ -1478,7 +1435,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         whileRegion.label = whileName + ssaNameSeperator + localWhileCounter
 
         // Create the cond state
-        val condRes = addCondDF(localWhileCounter, whileStmt, whileState, whileRegion)
+        val condRes = addConditionBox(localWhileCounter, whileStmt, whileState, whileRegion)
         val condRegion = condRes.key
         val condState = condRes.value.key
         val condObj = condRes.value.value
@@ -1911,7 +1868,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
      * @param parentRegion Surrounding DataflowRegion of the parentState - The condition state is added to this DataflowRegion
      * @return The DataflowRegion, State and ValuedObject of the condition
      */
-    def Pair<DataflowRegion, Pair<State, ValuedObject>> addCondDF(int localCounter, IASTStatement stmt,
+    private def Pair<DataflowRegion, Pair<State, ValuedObject>> addConditionBox(int localCounter, IASTStatement stmt,
         State parentState, DataflowRegion parentRegion) {
 
         var condName = ""
