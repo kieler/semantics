@@ -4,7 +4,7 @@ Bundle-Name: Esterel IDE
 Bundle-SymbolicName: de.cau.cs.kieler.esterel.ide
 Bundle-Version: 1.2.0.qualifier
 Automatic-Module-Name: de.cau.cs.kieler.esterel.ide
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Require-Bundle: org.antlr.runtime;bundle-version="[3.2.0,3.2.1)",
  de.cau.cs.kieler.esterel,
  org.eclipse.xtext.ide;bundle-version="2.12.0",
