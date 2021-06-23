@@ -36,7 +36,7 @@ Require-Bundle: de.cau.cs.kieler.simulation;visibility:=reexport,
  org.eclipse.elk.core;bundle-version="0.4.0",
  de.cau.cs.kieler.simulation.ide,
  de.cau.cs.kieler.kicool.ide
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Bundle-ActivationPolicy: lazy
 Export-Package: de.cau.cs.kieler.simulation.ui,
  de.cau.cs.kieler.simulation.ui.internal,

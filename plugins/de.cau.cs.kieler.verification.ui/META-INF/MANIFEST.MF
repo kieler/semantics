@@ -23,6 +23,6 @@ Require-Bundle: org.eclipse.ui,
  de.cau.cs.kieler.klighd.ui,
  de.cau.cs.kieler.klighd.ui.view,
  de.cau.cs.kieler.simulation.ide
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Automatic-Module-Name: de.cau.cs.kieler.verification.ui
 Bundle-ActivationPolicy: lazy
