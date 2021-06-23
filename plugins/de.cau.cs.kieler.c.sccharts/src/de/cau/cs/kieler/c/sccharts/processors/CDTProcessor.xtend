@@ -1501,7 +1501,7 @@ class CDTProcessor extends ExogenousProcessor<IASTTranslationUnit, SCCharts> {
         return null
     }
 
-    def printASTNodes(Iterable<IASTNode> nodes, String indent) {
+    def void printASTNodes(Iterable<IASTNode> nodes, String indent) {
         if(nodes === null) return;
         for (node : nodes) {
             System.out.println(indent + node.toString)

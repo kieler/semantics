@@ -20,7 +20,8 @@ import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SchedulingBlock
 import java.util.HashMap
 import java.util.List
-import de.cau.cs.kieler.scg.Guard
+import de.cau.cs.kieler.scg.Guard 
+import org.eclipse.xtend.lib.annotations.Accessors;
 
 /**
  * The {@code SynchronizerData} class comprises members for the data mandatory to 
@@ -34,11 +35,11 @@ import de.cau.cs.kieler.scg.Guard
 
 class SynchronizerData {
     
-    @Property
+    @Accessors
     String synchronizerId
     
 	/** List of predecessors of the join node */
-	@Property
+    @Accessors
     List<SchedulingBlock> predecessors = <SchedulingBlock> newArrayList
     
     /** 
@@ -47,7 +48,7 @@ class SynchronizerData {
      * Therefore, additional needed ValuedObjects must be added to the SCG valuedObjects list. 
      * Any new created ValuedObject is stored in the valuedObjects list.
      */
-    @Property
+    @Accessors
     List<ValuedObject> valuedObjects = <ValuedObject> newArrayList
     
     /**
@@ -56,13 +57,13 @@ class SynchronizerData {
      */
     public var GuardExpression guardExpression = new GuardExpression
     
-    @Property
+    @Accessors
     HashMap<Node, ValuedObject> threadMapping = new HashMap<Node, ValuedObject>
     
-    @Property
+    @Accessors
     Join join
 
-    @Property
+    @Accessors
     Guard guard
     
     /**
