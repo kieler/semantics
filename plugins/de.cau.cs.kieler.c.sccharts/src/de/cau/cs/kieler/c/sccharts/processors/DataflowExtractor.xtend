@@ -655,7 +655,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             }
         }
         if (breakFlag && bodyState.name.contains(whileName + ssaNameSeperator)) {
-            createBreakMultiplexer(bodyState, dfRegion)
+            finalizeBreakMultiplexer(bodyState, dfRegion)
             breakFlag = false
         }
         linkOutputs(bodyState, dfRegion)
@@ -1529,17 +1529,34 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
     }
     
         
-    def createBreakMultiplexer(State whileState, DataflowRegion whileRegion) {
-        var t = whileRegion.declarations.get(1) as ReferenceDeclaration
-        var ifState = t.reference as State
-        var ifObj = t.valuedObjects.get(0)
-        var ifRegion = ifState.regions.get(0) as DataflowRegion
-        var t3 = ifRegion.declarations
-        var t4 = t3.get(0).valuedObjects.get(0)
+    def finalizeBreakMultiplexer(State whileState, DataflowRegion whileRegion) {
+        var ReferenceDeclaration ifRefDecl
+        var State ifState
+        var ValuedObject ifObj
         
-        var breakRef = whileRegion.declarations.get(2) as ReferenceDeclaration
-        var breakState = breakRef.reference as State
-        var breakObj = breakRef.valuedObjects.get(0)
+        var ReferenceDeclaration breakRefDecl
+        var State breakState
+        for (decl : whileRegion.declarations) {
+            if (decl instanceof ReferenceDeclaration) {
+                var state = decl.reference as State 
+                if (state.name.equals(ifName + ssaNameSeperator + (ifCounter-1))) {
+                    ifState = state
+                    ifRefDecl = decl
+                }
+                if (state.name.equals(breakName + ssaNameSeperator + (breakCounter-1))) {
+                    breakRefDecl = decl
+                    breakState = state
+                }
+            }
+        }
+        
+        ifObj = ifRefDecl.valuedObjects.get(0)
+        var ifRegion = ifState.regions.get(0) as DataflowRegion
+        var ifRegionDecl = ifRegion.declarations
+        var conditional = ifRegionDecl.get(0).valuedObjects.get(0)
+        
+        
+        var breakObj = breakRefDecl.valuedObjects.get(0)
         var breakVars = getStateVariables(breakState)
         var breakOutputs = new ArrayList
         for (varList : breakVars.values) {
@@ -1550,23 +1567,16 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         }
         
         var multInputs = new ArrayList
-        for (output : breakOutputs) {
-            var ValuedObject outputVo = createOutputVo(breakName, breakCounter-1, breakState, breakObj, whileRegion, output)
-            multInputs.add(outputVo)
-
+        
+        var regionVars = whileRegion.declarations
+        for (variable : regionVars) {
+            if (variable instanceof VariableDeclaration) {
+                var VOs = variable.valuedObjects
+                var VO = VOs.get(VOs.length -1)
+                VO.addTagAnnotation(negTag)
+                multInputs.add(VO)
+            }
         }
-        
-        
-        
-//        var regionVars = whileRegion.declarations
-//        for (variable : regionVars) {
-//            if (variable instanceof VariableDeclaration) {
-//                var VOs = variable.valuedObjects
-//                var VO = VOs.get(VOs.length -2)
-//                VO.addTagAnnotation("neg")
-//                multInputs.add(VO)
-//            }
-//        }
         
         var whileVars = getStateVariables(whileState)
         var multOutputs = new ArrayList
@@ -1579,7 +1589,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         
         
         // inlining the output of the condition
-        var ValuedObject condOutput = t4
+        var ValuedObject condOutput = conditional
         var ValuedObject condOutputVo
         if (condOutput !== null) {
             // Assign the cond output to a new variable in the while region
@@ -1606,13 +1616,15 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             whileRegion.equations += createDataflowAssignment(condOutputVo, source)
         }
         
-        createMultiplexer(whileRegion, condOutputVo, multInputs, multOutputs);
-        
+        setMultInput(multInputs, breakState, whileRegion, breakObj, false)
+        setMultInput(#[condOutputVo], breakState, whileRegion, breakObj, true)
+
+        setMultOutputs(multOutputs, breakState, whileRegion, breakObj)
     }
     
     def createOutputVo(String name, int counter, State state, ValuedObject obj, DataflowRegion region, ValuedObject output) {
         var ValuedObject outputVo
-        // Assign the break output to a new "break_[varName]" variable in the while region
+        // Assign the state output to a new "state_[varName]" variable in the region
         // For that, create a new variable declaration
         val variableDeclaration = createVariableDeclaration
         variableDeclaration.type = output.type
@@ -1621,7 +1633,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         var Map<String, List<ValuedObject>> stateVariables = getStateVariables(state)
         val varName = name + ssaNameSeperator + counter + output.label
         val varList = <ValuedObject>newArrayList
-        // Reuse the vo variable, now pointing to a new VO in the while state
+        // Reuse the vo variable, now pointing to a new VO in the state
         outputVo = variableDeclaration.createValuedObject(varName)
         outputVo.label = varName
         varList.add(outputVo)
@@ -1629,7 +1641,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         region.declarations += variableDeclaration
         variableDeclaration.annotations += createTagAnnotation("Hide")
         val innerPositiveOutputVo_ = output
-        // This assignment is of the form 'varName = breakObj.varName'
+        // This assignment is of the form 'varName = obj.varName'
         val source = obj.reference => [
             subReference = innerPositiveOutputVo_.reference
         ]
@@ -1814,7 +1826,6 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
 
         // Set the in and outputs
         setInputs(whileStmt.getBody, whileState, breakState, lastWhileRegion, breakObj)
-        setOutputs(whileStmt.getBody, whileState, breakState, lastWhileRegion, breakObj)
 
         // Create the region for the body part
         val breakRegion = breakState.createDataflowRegion("")
@@ -1954,6 +1965,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             parentRegion.equations += createDataflowAssignment(condOutputVo, source)
         }
         return condOutputVo
+        
     }
 
     /**
