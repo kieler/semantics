@@ -5,7 +5,7 @@ Bundle-SymbolicName: de.cau.cs.kieler.verification;singleton:=true
 Bundle-Version: 1.2.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.verification.VerificationPlugin
 Bundle-Vendor: Kiel University
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Bundle-ActivationPolicy: lazy
 Require-Bundle: com.google.guava,
  com.google.inject,

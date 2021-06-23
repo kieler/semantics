@@ -17,13 +17,14 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.xtext.ide,
  de.cau.cs.kieler.simulation.ide,
  de.cau.cs.kieler.simulation,
- javax.servlet;bundle-version="3.1.0",
  de.cau.cs.kieler.kicool,
- org.eclipse.jetty.servlet;bundle-version="9.4.18",
- de.cau.cs.kieler.language.server
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+ de.cau.cs.kieler.language.server,
+ org.eclipse.jetty.servlet;bundle-version="10.0.0"
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Export-Package: de.cau.cs.kieler.kivis.ide,
  de.cau.cs.kieler.kivis.ide.contentassist.antlr,
  de.cau.cs.kieler.kivis.ide.contentassist.antlr.internal,
  de.cau.cs.kieler.kivis.ide.highlighting
+Import-Package: javax.servlet;version="3.1.0",
+ javax.servlet.http;version="3.1.0"
 Automatic-Module-Name: de.cau.cs.kieler.kivis.ide

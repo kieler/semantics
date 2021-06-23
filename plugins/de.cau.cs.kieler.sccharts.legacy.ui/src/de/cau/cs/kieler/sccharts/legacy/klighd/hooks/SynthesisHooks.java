@@ -31,12 +31,12 @@ import de.cau.cs.kieler.klighd.kgraph.KEdge;
 import de.cau.cs.kieler.klighd.kgraph.KGraphElement;
 import de.cau.cs.kieler.klighd.kgraph.KNode;
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared;
+import de.cau.cs.kieler.sccharts.legacy.klighd.synthesis.SCChartsSynthesis;
 import de.cau.cs.kieler.sccharts.legacy.sccharts.Region;
 import de.cau.cs.kieler.sccharts.legacy.sccharts.Scope;
 import de.cau.cs.kieler.sccharts.legacy.sccharts.State;
 import de.cau.cs.kieler.sccharts.legacy.sccharts.Transition;
 import de.cau.cs.kieler.sccharts.legacy.text.ui.internal.SctActivator;
-import de.cau.cs.kieler.sccharts.legacy.klighd.synthesis.SCChartsSynthesis;
 
 /**
  * This class provides new instances of all available hooks for the {@link SCChartsSynthesis}.
@@ -47,7 +47,7 @@ import de.cau.cs.kieler.sccharts.legacy.klighd.synthesis.SCChartsSynthesis;
  *
  */
 @ViewSynthesisShared
-public class SynthesisHooks {
+public class SynthesisHooks implements ISynthesisHooks {
 
     /**
      * Enumeration for fast invocation of the correct hook method.
@@ -130,21 +130,19 @@ public class SynthesisHooks {
     // -- NON-STATIC --
 
     /** The instances of the hooks. */
-    private final ArrayList<SynthesisHook> hooks;
+    private final ArrayList<SynthesisHook> hooksOnDemand = new ArrayList();
 
-    /**
-     * Standard constructor.
-     * 
-     * @param injector
-     *            the injector used for the injection of this class.
-     */
-    @Inject
-    public SynthesisHooks(Injector injector) {
-        hooks = new ArrayList<SynthesisHook>(registeredHooks.size());
-        for (Class<? extends SynthesisHook> hookClass : registeredHooks) {
-            hooks.add(injector.getInstance(hookClass));
+    @Inject private Injector injector;
+
+    private java.util.List<SynthesisHook> getHooks() {
+        if (hooksOnDemand.isEmpty()) {
+            for (Class<? extends SynthesisHook> hook : registeredHooks) {
+                SynthesisHook hookInstance = (SynthesisHook) injector.getInstance(hook);
+                hooksOnDemand.add(hookInstance);
+            }
+            hooksOnDemand.sort(decendingHookPriority);
         }
-        hooks.sort(decendingHookPriority);
+        return hooksOnDemand;
     }
 
     /**
@@ -153,7 +151,7 @@ public class SynthesisHooks {
      * @return the hooks
      */
     public Iterable<SynthesisHook> getAllHooks() {
-        return Collections.unmodifiableList(hooks);
+        return Collections.unmodifiableList(getHooks());
     }
 
     /**
@@ -164,8 +162,9 @@ public class SynthesisHooks {
      * @param node
      *            the empty diagram root node
      */
+    @Override
     public void invokeStart(Scope scope, KNode node) {
-        for (SynthesisHook hook : hooks) {
+        for (SynthesisHook hook : getHooks()) {
             hook.start(scope, node);
         }
     }
@@ -178,8 +177,9 @@ public class SynthesisHooks {
      * @param node
      *            the diagram root node
      */
+    @Override
     public void invokeFinish(Scope scope, KNode node) {
-        for (SynthesisHook hook : hooks) {
+        for (SynthesisHook hook : getHooks()) {
             hook.finish(scope, node);
         }
     }
@@ -194,9 +194,10 @@ public class SynthesisHooks {
      * @param result
      *            the translated element
      */
+    @Override
     @SuppressWarnings("incomplete-switch")
     public void invokeHooks(Type type, EObject element, KGraphElement result) {
-        for (SynthesisHook hook : hooks) {
+        for (SynthesisHook hook : getHooks()) {
             switch (type) {
             case STATE:
                 hook.processState((State) element, (KNode) result);
