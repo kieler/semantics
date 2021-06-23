@@ -79,7 +79,7 @@
       </repositories>
       
       <modules>
-        <module>de.cau.cs.kieler.semantics.mockup.targetplatform</module>    
+        <module>de.cau.cs.kieler.semantics.targetplatform</module>    
         <module>../plugins/de.cau.cs.kieler.core.product</module>
         <module>../features/de.cau.cs.kieler.product.feature</module>
         <module>de.cau.cs.kieler.semantics.product.repository</module>
@@ -94,7 +94,7 @@
       <id>semantics.ls</id>
       <modules>
         <module>../plugins</module>
-        <module>de.cau.cs.kieler.semantics.targetplatform</module>
+        <module>de.cau.cs.kieler.semantics.mockup.targetplatform</module>
         <module>de.cau.cs.kieler.language.server.cli</module>
       </modules>
     </profile>  
