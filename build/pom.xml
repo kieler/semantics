@@ -201,7 +201,7 @@
               <id>de.cau.cs.kieler.klighd.standalone.mockup</id>
               <removeAll/>
             </filter>
-          <filters>
+          </filters>
           <target>
             <artifact>
               <groupId>de.cau.cs.kieler</groupId>
