@@ -39,7 +39,9 @@
       <activation>
         <activeByDefault>true</activeByDefault>
       </activation>
-
+      <properties>
+        <ignore-plugin>de.cau.cs.kieler.klighd.standalone.mockup<ignore-plugin>
+      </properties>
       <modules>
         <module>../plugins</module>
         <module>de.cau.cs.kieler.semantics.targetplatform</module>
@@ -53,6 +55,9 @@
     <profile>
       <id>semantics.test</id>
 
+      <properties>
+        <ignore-plugin>de.cau.cs.kieler.klighd.standalone.mockup<ignore-plugin>
+      </properties>
       <modules>
         <module>../plugins</module>
         <module>de.cau.cs.kieler.semantics.targetplatform</module>
@@ -70,6 +75,9 @@
     <profile>
       <id>semantics.product</id>
     
+      <properties>
+        <ignore-plugin>de.cau.cs.kieler.klighd.standalone.mockup<ignore-plugin>
+      </properties>
       <repositories>
         <repository>
           <id>p2.kieler-semantics</id>
@@ -86,13 +94,16 @@
         <module>de.cau.cs.kieler.sccharts.cli</module>
         <module>de.cau.cs.kieler.kicool.cli</module>
         <module>de.cau.cs.kieler.kicool.klighd.cli</module>
-        <module>de.cau.cs.kieler.language.server.cli</module>
       </modules>
     </profile>
 
     <profile>
       <id>semantics.ls</id>
+      <properties>
+        <ignore-plugin>xxx.yyy.zzz<ignore-plugin><!-- Non existent plugin -->
+      </properties>
       <modules>
+        <!-- <module>../plugins<module> removed pragmatic LS test -->
         <module>de.cau.cs.kieler.semantics.targetplatform</module>
         <module>de.cau.cs.kieler.language.server.cli</module>
       </modules>
@@ -198,7 +209,7 @@
           <filters>
             <filter>
               <type>eclipse-plugin</type>
-              <id>de.cau.cs.kieler.klighd.standalone.mockup</id>
+              <id>${ignore-plugin}</id>
               <removeAll/>
             </filter>
           </filters>
