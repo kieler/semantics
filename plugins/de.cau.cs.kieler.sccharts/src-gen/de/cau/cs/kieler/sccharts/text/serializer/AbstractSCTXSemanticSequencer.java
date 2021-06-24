@@ -64,6 +64,7 @@ import de.cau.cs.kieler.sccharts.DataflowRegion;
 import de.cau.cs.kieler.sccharts.DuringAction;
 import de.cau.cs.kieler.sccharts.EntryAction;
 import de.cau.cs.kieler.sccharts.ExitAction;
+import de.cau.cs.kieler.sccharts.OdeAction;
 import de.cau.cs.kieler.sccharts.PeriodAction;
 import de.cau.cs.kieler.sccharts.PolicyClassDeclaration;
 import de.cau.cs.kieler.sccharts.PolicyRegion;
@@ -1363,6 +1364,9 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 			case SCChartsPackage.EXIT_ACTION:
 				sequence_ExitAction(context, (ExitAction) semanticObject); 
 				return; 
+			case SCChartsPackage.ODE_ACTION:
+				sequence_OdeAction(context, (OdeAction) semanticObject); 
+				return; 
 			case SCChartsPackage.PERIOD_ACTION:
 				sequence_PeriodAction(context, (PeriodAction) semanticObject); 
 				return; 
@@ -1769,6 +1773,19 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	 *     )
 	 */
 	protected void sequence_KeywordMethodDeclarationWOSemicolon(ISerializationContext context, MethodImplementationDeclaration semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     LocalAction returns OdeAction
+	 *     OdeAction returns OdeAction
+	 *
+	 * Constraint:
+	 *     (annotations+=RestrictedTypeAnnotation* effects+=Effect label=STRING?)
+	 */
+	protected void sequence_OdeAction(ISerializationContext context, OdeAction semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
