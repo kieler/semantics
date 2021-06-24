@@ -194,15 +194,14 @@
         <groupId>org.eclipse.tycho</groupId>
         <artifactId>target-platform-configuration</artifactId>
         <version>${tycho-version}</version>
-        <configuration>      
-          <filter>
-            <excludes>
-              <exclude>
-                <type>eclipse-plugin</type>
-                <id>de.cau.cs.kieler.klighd.standalone.mockup</id>
-              </exclude>
-            </excludes>
-          </filter>
+        <configuration>
+          <filters>
+            <filter>
+              <type>eclipse-plugin</type>
+              <id>de.cau.cs.kieler.klighd.standalone.mockup</id>
+              <removeAll/>
+            </filter>
+          <filters>
           <target>
             <artifact>
               <groupId>de.cau.cs.kieler</groupId>
