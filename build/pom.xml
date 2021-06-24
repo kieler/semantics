@@ -40,7 +40,7 @@
         <activeByDefault>true</activeByDefault>
       </activation>
       <properties>
-        <ignore-plugin>de.cau.cs.kieler.klighd.standalone.mockup<ignore-plugin>
+        <ignore-plugin>de.cau.cs.kieler.klighd.standalone.mockup</ignore-plugin>
       </properties>
       <modules>
         <module>../plugins</module>
@@ -56,7 +56,7 @@
       <id>semantics.test</id>
 
       <properties>
-        <ignore-plugin>de.cau.cs.kieler.klighd.standalone.mockup<ignore-plugin>
+        <ignore-plugin>de.cau.cs.kieler.klighd.standalone.mockup</ignore-plugin>
       </properties>
       <modules>
         <module>../plugins</module>
@@ -76,7 +76,7 @@
       <id>semantics.product</id>
     
       <properties>
-        <ignore-plugin>de.cau.cs.kieler.klighd.standalone.mockup<ignore-plugin>
+        <ignore-plugin>de.cau.cs.kieler.klighd.standalone.mockup</ignore-plugin>
       </properties>
       <repositories>
         <repository>
@@ -100,7 +100,7 @@
     <profile>
       <id>semantics.ls</id>
       <properties>
-        <ignore-plugin>xxx.yyy.zzz<ignore-plugin><!-- Non existent plugin -->
+        <ignore-plugin>xxx.yyy.zzz</ignore-plugin><!-- Non existent plugin -->
       </properties>
       <modules>
         <!-- <module>../plugins<module> removed pragmatic LS test -->
