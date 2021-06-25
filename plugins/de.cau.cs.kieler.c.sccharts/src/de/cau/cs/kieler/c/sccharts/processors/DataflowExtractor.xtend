@@ -218,6 +218,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
     var returnCombineCounter = 0;
     var sizeofCounter = 0;
     var breakCounter = 0;
+    var multiplexerCounter = 0;
 
     var DataflowRegion lastWhileRegion = null
     var breakFlag = false
@@ -1657,7 +1658,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
     def createMultiplexer(DataflowRegion parentRegion, ValuedObject condOutputVo, ArrayList<ValuedObject> multInputs,
         ArrayList<ValuedObject> multOutputs) {
         // Create the multiplexer state and according reference into the while dataflow region.
-        val multState = createState(multiplexerName)
+        val multState = createState(multiplexerName + ssaNameSeperator + multiplexerCounter)
         multState.addStringAnnotation("figure", "BigMult.kgt")
         multState.annotations += createTagAnnotation("Hide")
 //        multState.annotations += createTagAnnotation(multiplexerTag)
@@ -1667,7 +1668,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         val multRefDecl = createReferenceDeclaration
         parentRegion.declarations += multRefDecl
         multRefDecl.setReference(multState)
-        val multObj = multRefDecl.createValuedObject(multiplexerName)
+        val multObj = multRefDecl.createValuedObject(multiplexerName + ssaNameSeperator + multiplexerCounter)
 
         setMultInput(multInputs, multState, parentRegion, multObj, false)
         setMultInput(#[condOutputVo], multState, parentRegion, multObj, true)
@@ -1675,12 +1676,13 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         setMultOutputs(multOutputs, multState, parentRegion, multObj)
 
         // Create the region for the body part
-        val multRegion = multState.createDataflowRegion(multiplexerName)
+        val multRegion = multState.createDataflowRegion(multiplexerName + ssaNameSeperator + multiplexerCounter)
         multState.regions += multRegion
-        multRegion.label = multiplexerName
+        multRegion.label = multiplexerName + ssaNameSeperator + multiplexerCounter
 
         // Add tag annotation so that the multiplexer is identifiable in EquationSynthesis in a clean way
         multObj.addTagAnnotation(multiplexerTag)
+        multiplexerCounter++
     }
 
     /**
@@ -1811,7 +1813,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         val breakRefDecl = createReferenceDeclaration
         lastWhileRegion.declarations += breakRefDecl
         breakRefDecl.setReference(breakState)
-        val breakObj = breakRefDecl.createValuedObject(breakName)
+        val breakObj = breakRefDecl.createValuedObject(breakName + ssaNameSeperator + localBreakCounter)
 
         var whileSt = breakStmt as IASTNode
         while (!(whileSt instanceof IASTWhileStatement)) {
@@ -1829,7 +1831,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         // Create the region for the body part
         val breakRegion = breakState.createDataflowRegion("")
         breakState.regions += breakRegion
-        breakRegion.label = breakName
+        breakRegion.label = breakName + ssaNameSeperator + localBreakCounter
     }
 
     /**
