@@ -5,7 +5,7 @@ Bundle-SymbolicName: de.cau.cs.kieler.overlord
 Bundle-Version: 1.2.0.qualifier
 Bundle-Vendor: Kiel University
 Automatic-Module-Name: de.cau.cs.kieler.overlord
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Require-Bundle: de.cau.cs.kieler.annotations,
  de.cau.cs.kieler.kexpressions,
  de.cau.cs.kieler.kicool,
