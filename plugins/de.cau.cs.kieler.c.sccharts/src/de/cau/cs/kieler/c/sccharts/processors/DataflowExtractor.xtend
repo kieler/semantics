@@ -1830,8 +1830,8 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         // Create the state
         val breakState = createState(breakName + ssaNameSeperator + localBreakCounter)
         breakState.annotations += createTagAnnotation("Hide")
-        breakState.annotations += createTagAnnotation(multiplexerTag)
-        breakState.addStringAnnotation("figure", "Break.kgt")
+//        breakState.annotations += createTagAnnotation(multiplexerTag)
+        breakState.addStringAnnotation("figure", "BigMult.kgt")
         if (serializable) {
             rootSCChart.rootStates += breakState
         }
@@ -1847,6 +1847,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         lastWhileRegion.declarations += breakRefDecl
         breakRefDecl.setReference(breakState)
         val breakObj = breakRefDecl.createValuedObject(breakName + ssaNameSeperator + localBreakCounter)
+        breakObj.annotations += createTagAnnotation(multiplexerTag)
 
         var whileSt = breakStmt as IASTNode
         while (!(whileSt instanceof IASTWhileStatement)) {
