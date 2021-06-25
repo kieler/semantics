@@ -24,7 +24,7 @@ Require-Bundle: org.eclipse.xtext.ui,
  org.eclipse.xtend.lib;bundle-version="2.14.0";resolution:=optional,
  de.cau.cs.kieler.esterel.ide
 Import-Package: org.apache.log4j
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Export-Package: de.cau.cs.kieler.esterel.ui.contentassist,
  de.cau.cs.kieler.esterel.ui.quickfix,
  de.cau.cs.kieler.esterel.ui.scest.contentassist,
