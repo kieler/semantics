@@ -1590,23 +1590,17 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         var breakObj = breakRefDecl.valuedObjects.get(0)
 
         // determine the inputs of the break state
-        var breakInputs = new ArrayList
-        var regionVars = whileRegion.declarations
-        for (variable : regionVars) {
-            if (variable instanceof VariableDeclaration) {
-                var VOs = variable.valuedObjects
-                var VO = VOs.get(VOs.length - 1)
-                VO.addTagAnnotation(negTag)
-                breakInputs.add(VO)
-            }
-        }
+        var Map<String, List<ValuedObject>> stateVariables = getStateVariables(breakState)
+        val vars = new ArrayList()
+        stateVariables.forEach[p1, p2| vars.add(p1)]
+        var breakInputs = vars.map[v | whileState.findValuedObjectByName(v,false, lastWhileRegion)].toList
 
         // determine the outputs of the break state
         var whileVars = getStateVariables(whileState)
         var breakOutputs = new ArrayList
         for (varList : whileVars.values) {
             val outVO = findOutputVar(varList)
-            if (outVO !== null) {
+            if (outVO !== null && vars.contains(outVO.label)) {
                 breakOutputs.add(outVO)
             }
         }
@@ -1646,8 +1640,8 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         var condOutputVo = createOutputVo(ifName, (ifCounter-1), ifState, ifObj, whileRegion, outputVO)
         
         //set the inputs and outputs       
-//        setMultInput(breakInputs, breakState, whileRegion, breakObj, false)
-        setInputs((stmt.parent as IASTWhileStatement).getBody, whileState, breakState, lastWhileRegion, breakObj)
+        setMultInput(breakInputs, breakState, whileRegion, breakObj, false)
+//        setInputs((stmt.parent as IASTWhileStatement).getBody, whileState, breakState, lastWhileRegion, breakObj)
         setMultInput(#[condOutputVo], breakState, whileRegion, breakObj, true)
         setMultOutputs(breakOutputs, breakState, whileRegion, breakObj)
     }
@@ -1868,7 +1862,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         breakRegion.label = breakName + ssaNameSeperator + localBreakCounter
         
         
-                var breakDependableVars = findBreakOutputs(whileStmt.getBody as IASTCompoundStatement,
+        var breakDependableVars = findBreakOutputs(whileStmt.getBody as IASTCompoundStatement,
         breakStmt.parent.parent as IASTIfStatement, whileState)  
         val st = whileState 
         var vars = breakDependableVars.map[s |findValuedObjectByName(st, s, false,lastWhileRegion)].toList
