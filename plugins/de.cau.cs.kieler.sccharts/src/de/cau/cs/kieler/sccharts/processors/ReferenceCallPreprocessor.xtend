@@ -3,7 +3,7 @@
  *
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
- * Copyright ${year} by
+ * Copyright 2021 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -29,15 +29,10 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
 import de.cau.cs.kieler.sccharts.DelayType
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCallExtensions
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
-import de.cau.cs.kieler.kexpressions.services.KExpressionsGrammarAccess.ExpressionElements
-import de.cau.cs.kieler.kexpressions.MethodDeclaration
-import de.cau.cs.kieler.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.kicool.deploy.AdditionalResources.Type
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsDependencyExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsComplexCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.ValueType
-import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.sccharts.PolicyClassDeclaration
 
 /**
@@ -48,22 +43,20 @@ class ReferenceCallPreprocessor extends SCChartsProcessor implements Traceable {
     
     @Inject extension SCChartsScopeExtensions
     @Inject extension SCChartsStateExtensions
-    @Inject extension SCChartsReferenceExtensions
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension SCChartsControlflowRegionExtensions
-    @Inject extension SCChartsInheritanceExtensions
-    @Inject extension KExpressionsDeclarationExtensions
     @Inject extension SCChartsTransitionExtensions
-    @Inject extension KExpressionsCallExtensions
     @Inject extension KEffectsExtensions
-    @Inject extension KEffectsDependencyExtensions
-    @Inject extension KExpressionsComplexCreateExtensions
     @Inject extension KExpressionsCreateExtensions
     @Inject extension SCChartsClassExtensions
     
-    static final String REF_CALL_CLASS_SUFFIX = "Class"
-    static final String REF_CALL_INSTANCE_SUFFIX = "_instance"
-    static final String REF_CALL_STUB_SUFFIX = "_stub"
+    val REF_CALL_INSTANCE_SUFFIX = "_instance"
+    val REF_CALL_TICK_METHOD_NAME = "tick"
+    val REF_CALL_RESET_METHOD_NAME = "reset"
+    val REF_CALL_CPIN_METHOD_NAME = "copy_inputs"
+    val REF_CALL_CPOUT_METHOD_NAME = "copy_outputs"
+    val REF_CALL_TERM_METHOD_NAME = "get_term"
+    
     
     //-------------------------------------------------------------------------
     //--                 K I C O      C O N F I G U R A T I O N              --
@@ -85,39 +78,36 @@ class ReferenceCallPreprocessor extends SCChartsProcessor implements Traceable {
         sccharts => [
             rootStates.forEach[ rootState |
                 rootState.allContainedStates.filter[isReferencing].toList().forEach [ ref |
-                    // declare stub class placeholder
                     val classDecl = createOrGetClassDeclaration(ref.reference.scope.name, rootState)
-                    val instance = classDecl.createValuedObject(classDecl.name + REF_CALL_INSTANCE_SUFFIX) => [uniqueName]
-                    /* remove original reference
-                     * could also keep the reference in order to link later but naming-based solution is more general
-                     * => external modules
+                    val instance = classDecl.createValuedObject(classDecl.name + REF_CALL_INSTANCE_SUFFIX).uniqueName
+                    /* Remove original reference.
+                     * Could also keep the reference in order to link later but naming-based solution is more general
+                     * => external modules.
                      */
                     ref.reference = null
-                    // tranform referencing state to superstate containing glue logic
+                    /* Tranform referencing state to superstate containing glue logic. */
                     ref.createControlflowRegion(ref.name) => [
                         var init = it.createInitialState("I")
                         var call = it.createState("C")
                         var term = it.createFinalState("T")
-                        /* get references to methods declared above
-                         * TODO find a more elegant solution
-                         */
+                        
                         val tick_method = classDecl.declarations.findFirst[
-                            valuedObjects.head.name == "tick"
+                            valuedObjects.head.name == REF_CALL_TICK_METHOD_NAME
                         ].valuedObjects.head
                         val reset_method = classDecl.declarations.findFirst[
-                            valuedObjects.head.name == "reset"
+                            valuedObjects.head.name == REF_CALL_RESET_METHOD_NAME
                         ].valuedObjects.head
                         val cpin_method = classDecl.declarations.findFirst[
-                            valuedObjects.head.name == "copy_inputs"
+                            valuedObjects.head.name == REF_CALL_CPIN_METHOD_NAME
                         ].valuedObjects.head
                         val cpout_method = classDecl.declarations.findFirst[
-                            valuedObjects.head.name == "copy_outputs"
+                            valuedObjects.head.name == REF_CALL_CPOUT_METHOD_NAME
                         ].valuedObjects.head
                         val term_method = classDecl.declarations.findFirst[
-                            valuedObjects.head.name == "get_term"
+                            valuedObjects.head.name == REF_CALL_TERM_METHOD_NAME
                         ].valuedObjects.head
                         
-                        /* on entry (without history) reset referenced model and call tick once */
+                        /* On entry (without history) reset referenced model and call tick once. */
                         init.createTransitionTo(call) => [
                             delay = DelayType::IMMEDIATE
                             effects.add(createReferenceCallEffect => [
@@ -138,7 +128,7 @@ class ReferenceCallPreprocessor extends SCChartsProcessor implements Traceable {
                             ])
                         ]
                         
-                        /* self transition from call state to call state (if not terminated) */
+                        /* Self transition from call state to call state (if not terminated). */
                         call.createTransitionTo(call) => [
                             effects.add(createReferenceCallEffect => [
                                 subReference = cpin_method.reference
@@ -154,7 +144,7 @@ class ReferenceCallPreprocessor extends SCChartsProcessor implements Traceable {
                             ])
                         ]
                         
-                        /* if referenced model terminates, terminate immediately */
+                        /* If referenced model terminates, terminate immediately. */
                         call.createTransitionTo(term) => [
                             delay = DelayType::IMMEDIATE
                             trigger = createReferenceCall => [
@@ -168,27 +158,28 @@ class ReferenceCallPreprocessor extends SCChartsProcessor implements Traceable {
         ]
     }
 
-    def PolicyClassDeclaration createOrGetClassDeclaration(String refName, State rootState) {
-        var decl = rootState.declarations.findFirst[PolicyClassDeclaration.isInstance(it) && (it as PolicyClassDeclaration).name == refName]
-        return decl !== null ? decl as PolicyClassDeclaration : createPolicyClassDeclaration => [
+    protected def PolicyClassDeclaration createOrGetClassDeclaration(String refName, State rootState) {
+        var maybeDecl = rootState.declarations.findFirst[
+            PolicyClassDeclaration.isInstance(it) && (it as PolicyClassDeclaration).name == refName
+        ]
+        val decl = maybeDecl !== null ? maybeDecl as PolicyClassDeclaration : createPolicyClassDeclaration => [
             name = refName
             host = true
-            // it.createValuedObject(it.name + REF_CALL_INSTANCE_SUFFIX) => [uniqueName]
-            // declare method placeholders
+            // Declare method placeholders.
             var tickDecl = createMethodImplementationDeclaration => [
-                it.createValuedObject("tick")
+                it.createValuedObject(REF_CALL_TICK_METHOD_NAME)
             ]
             var resetDecl = createMethodImplementationDeclaration => [
-                it.createValuedObject("reset")
+                it.createValuedObject(REF_CALL_RESET_METHOD_NAME)
             ]
             var cpinDecl = createMethodImplementationDeclaration => [
-                it.createValuedObject("copy_inputs")
+                it.createValuedObject(REF_CALL_CPIN_METHOD_NAME)
             ]
             var cpoutDecl = createMethodImplementationDeclaration => [
-                it.createValuedObject("copy_outputs")
+                it.createValuedObject(REF_CALL_CPOUT_METHOD_NAME)
             ]
             var termDecl = createMethodImplementationDeclaration => [
-                it.createValuedObject("get_term")
+                it.createValuedObject(REF_CALL_TERM_METHOD_NAME)
                 returnType = ValueType::BOOL
             ]
             declarations.add(tickDecl)
@@ -198,6 +189,7 @@ class ReferenceCallPreprocessor extends SCChartsProcessor implements Traceable {
             declarations.add(termDecl)
             rootState.declarations.add(it)
         ]
+        return decl
     }
 
 }
