@@ -1590,10 +1590,14 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         var breakObj = breakRefDecl.valuedObjects.get(0)
 
         // determine the inputs of the break state
-        var Map<String, List<ValuedObject>> stateVariables = getStateVariables(breakState)
         val vars = new ArrayList()
-        stateVariables.forEach[p1, p2| vars.add(p1)]
-        var breakInputs = vars.map[v | whileState.findValuedObjectByName(v,false, lastWhileRegion)].toList
+        getStateVariables(breakState).forEach[key, value| vars.add(key)]
+        var breakInputs = new ArrayList()
+        for (label : vars) {
+            var vo = whileState.findValuedObjectByName(label, false, lastWhileRegion)
+            vo.label = label
+            breakInputs.add(vo)
+        }
 
         // determine the outputs of the break state
         var whileVars = getStateVariables(whileState)
@@ -1641,7 +1645,6 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         
         //set the inputs and outputs       
         setMultInput(breakInputs, breakState, whileRegion, breakObj, false)
-//        setInputs((stmt.parent as IASTWhileStatement).getBody, whileState, breakState, lastWhileRegion, breakObj)
         setMultInput(#[condOutputVo], breakState, whileRegion, breakObj, true)
         setMultOutputs(breakOutputs, breakState, whileRegion, breakObj)
     }
@@ -1851,11 +1854,6 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         }
         var whileStmt = whileSt as IASTWhileStatement
 
-
-        // Set the in and outputs
-       // setInputs(whileStmt.getBody, whileState, breakState, lastWhileRegion, breakObj)
-        
-
         // Create the region for the body part
         val breakRegion = breakState.createDataflowRegion("")
         breakState.regions += breakRegion
@@ -1867,11 +1865,9 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         val st = whileState 
         var vars = breakDependableVars.map[s |findValuedObjectByName(st, s, false,lastWhileRegion)].toList
         setMultInput(vars, breakState, lastWhileRegion, breakObj, false)
-        var Map<String, List<ValuedObject>> stateVariables = getStateVariables(breakState)
-        stateVariables.forEach[p1, p2| p2.get(0).name = breakName + ssaNameSeperator + p2.get(0).name;
+        getStateVariables(breakState).forEach[p1, p2| p2.get(0).name = breakName + ssaNameSeperator + p2.get(0).name;
                                       p2.get(0).label = breakName + ssaNameSeperator + p2.get(0).label
         ]
-        //stateVariables.forEach[p1, p2| p2.get(0).label = breakName + ssaNameSeperator + p2.get(0).label]
         
     }
 
