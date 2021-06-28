@@ -65,7 +65,7 @@ class DataPool implements IKiCoolCloneable {
     
     def static JsonObject parseJSON(String string) {
         if (string.isJSON) {
-            (new JsonParser).parse(string) as JsonObject
+            JsonParser.parseString(string) as JsonObject
         }
     }
     
