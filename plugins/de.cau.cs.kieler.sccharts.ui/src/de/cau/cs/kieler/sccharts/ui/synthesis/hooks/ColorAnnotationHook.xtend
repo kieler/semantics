@@ -27,8 +27,6 @@ import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.sccharts.Scope
 
-import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
-
 /**
  * Removes model elements marked with the annotation hide.
  * 

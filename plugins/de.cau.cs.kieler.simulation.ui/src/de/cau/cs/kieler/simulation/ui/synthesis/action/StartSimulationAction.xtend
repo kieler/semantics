@@ -16,7 +16,6 @@ import de.cau.cs.kieler.klighd.IAction
 import de.cau.cs.kieler.simulation.SimulationContext
 import de.cau.cs.kieler.simulation.ui.SimulationUI
 import de.cau.cs.kieler.simulation.ui.view.pool.DataPoolView
-import org.eclipse.ui.PlatformUI
 
 /**
  * @author als

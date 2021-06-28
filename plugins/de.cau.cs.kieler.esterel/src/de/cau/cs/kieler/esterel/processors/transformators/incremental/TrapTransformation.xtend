@@ -12,22 +12,15 @@
  */
 package de.cau.cs.kieler.esterel.processors.transformators.incremental
 
-import java.util.Map
-import java.util.List
-import java.util.HashMap
-import java.util.LinkedList
 import com.google.inject.Inject
-import org.eclipse.emf.ecore.EObject
-import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
-import de.cau.cs.kieler.esterel.extensions.EsterelTransformationExtensions
-import de.cau.cs.kieler.esterel.EsterelProgram
 import de.cau.cs.kieler.esterel.EsterelParallel
 import de.cau.cs.kieler.esterel.Exit
 import de.cau.cs.kieler.esterel.Signal
 import de.cau.cs.kieler.esterel.Trap
-import de.cau.cs.kieler.esterel.TrapSignal
 import de.cau.cs.kieler.esterel.TrapExpression
 import de.cau.cs.kieler.esterel.TrapReference
+import de.cau.cs.kieler.esterel.TrapSignal
+import de.cau.cs.kieler.esterel.extensions.EsterelTransformationExtensions
 import de.cau.cs.kieler.kexpressions.CombineOperator
 import de.cau.cs.kieler.kexpressions.OperatorType
 import de.cau.cs.kieler.kexpressions.ValueType
@@ -37,8 +30,13 @@ import de.cau.cs.kieler.scl.Label
 import de.cau.cs.kieler.scl.Parallel
 import de.cau.cs.kieler.scl.Pause
 import de.cau.cs.kieler.scl.Statement
+import java.util.HashMap
+import java.util.LinkedList
+import java.util.List
+import java.util.Map
+import org.eclipse.emf.ecore.EObject
+
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.kicool.compilation.EObjectReferencePropertyData
 
 /**
  * @author mrb

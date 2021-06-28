@@ -25,7 +25,6 @@ import org.eclipse.xtext.xbase.lib.Functions.Function1
 import org.eclipse.xtext.xtext.generator.AbstractXtextGeneratorFragment
 import org.eclipse.xtext.xtext.generator.model.FileAccessFactory
 import org.eclipse.xtext.xtext.generator.util.BooleanGeneratorOption
-import de.cau.cs.kieler.annotations.services.AnnotationsGrammarAccess
 
 /**
  * This class is no longer in use.

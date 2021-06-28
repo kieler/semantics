@@ -13,21 +13,18 @@
 package de.cau.cs.kieler.sccharts.processors.statebased.codegen
 
 import com.google.inject.Inject
-
-import org.eclipse.xtend.lib.annotations.Accessors
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.kexpressions.BoolValue
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
-
-import static extension de.cau.cs.kieler.sccharts.processors.statebased.codegen.StatebasedCCodeGeneratorStructModule.*
-import static de.cau.cs.kieler.kicool.compilation.codegen.AbstractCodeGenerator.*
-import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.kexpressions.BoolValue
 import org.eclipse.emf.ecore.EObject
+import org.eclipse.xtend.lib.annotations.Accessors
+
+import static de.cau.cs.kieler.kicool.compilation.codegen.AbstractCodeGenerator.*
+import static de.cau.cs.kieler.sccharts.processors.statebased.codegen.StatebasedCCodeGeneratorStructModule.*
 
 /**
  * C Code Generator Logic Module

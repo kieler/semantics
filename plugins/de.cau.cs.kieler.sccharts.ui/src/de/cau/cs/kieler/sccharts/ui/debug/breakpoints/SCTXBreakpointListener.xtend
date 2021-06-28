@@ -12,13 +12,12 @@
  */
 package de.cau.cs.kieler.sccharts.ui.debug.breakpoints
 
+import de.cau.cs.kieler.sccharts.State
 import org.eclipse.core.resources.IMarkerDelta
 import org.eclipse.core.runtime.CoreException
 import org.eclipse.debug.core.IBreakpointListener
 import org.eclipse.debug.core.model.IBreakpoint
 import org.eclipse.debug.core.model.LineBreakpoint
-import de.cau.cs.kieler.sccharts.ui.debug.highlighting.DebugHighlighter
-import de.cau.cs.kieler.sccharts.State
 
 /** 
  * This class listens to adding breakpoints, changing them or removing them. According to the event

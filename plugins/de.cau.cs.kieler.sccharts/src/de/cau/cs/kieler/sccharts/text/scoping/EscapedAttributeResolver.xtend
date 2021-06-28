@@ -12,12 +12,8 @@
  */
 package de.cau.cs.kieler.sccharts.text.scoping
 
-import org.eclipse.xtext.util.SimpleAttributeResolver
 import org.eclipse.emf.ecore.EObject
-import org.eclipse.xtext.conversion.impl.IDValueConverter
-import com.google.inject.Inject
-import com.google.inject.Injector
-import com.google.inject.Guice
+import org.eclipse.xtext.util.SimpleAttributeResolver
 
 /**
  * @author ssm

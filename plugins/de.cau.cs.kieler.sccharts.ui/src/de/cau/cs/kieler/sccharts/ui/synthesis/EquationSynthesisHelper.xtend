@@ -24,7 +24,6 @@ import de.cau.cs.kieler.klighd.KlighdConstants
 import de.cau.cs.kieler.klighd.internal.util.KlighdInternalProperties
 import de.cau.cs.kieler.klighd.kgraph.KEdge
 import de.cau.cs.kieler.klighd.kgraph.KGraphElement
-import de.cau.cs.kieler.klighd.kgraph.KGraphFactory
 import de.cau.cs.kieler.klighd.kgraph.KIdentifier
 import de.cau.cs.kieler.klighd.kgraph.KLabel
 import de.cau.cs.kieler.klighd.kgraph.KLabeledGraphElement
@@ -45,9 +44,10 @@ import org.eclipse.elk.alg.layered.options.LayeredOptions
 import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.core.options.PortSide
 
+import static de.cau.cs.kieler.sccharts.ide.synthesis.EquationSynthesisProperties.*
+
 import static extension de.cau.cs.kieler.annotations.ide.klighd.CommonSynthesisUtil.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import static de.cau.cs.kieler.sccharts.ide.synthesis.EquationSynthesisProperties.*
 
 /**
  * @author kolja

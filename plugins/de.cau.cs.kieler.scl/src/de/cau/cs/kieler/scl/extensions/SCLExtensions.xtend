@@ -21,21 +21,21 @@ import de.cau.cs.kieler.scl.Conditional
 import de.cau.cs.kieler.scl.ElseScope
 import de.cau.cs.kieler.scl.Goto
 import de.cau.cs.kieler.scl.Label
+import de.cau.cs.kieler.scl.Module
 import de.cau.cs.kieler.scl.Parallel
 import de.cau.cs.kieler.scl.SCLFactory
-import de.cau.cs.kieler.scl.SCLProgram
 import de.cau.cs.kieler.scl.Scope
 import de.cau.cs.kieler.scl.ScopeStatement
 import de.cau.cs.kieler.scl.Statement
 import de.cau.cs.kieler.scl.StatementContainer
+import de.cau.cs.kieler.scl.Thread
 import java.util.LinkedList
 import org.eclipse.emf.common.util.EList
+import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.util.EcoreUtil
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.scl.Module
-import org.eclipse.emf.ecore.EObject
 
 /**
  * @author ssm, krat
@@ -224,7 +224,7 @@ class SCLExtensions {
                         replaceBy += label -> goto.target
                     }
                     continue = false;
-                } else if (parent instanceof de.cau.cs.kieler.scl.Thread) {
+                } else if (parent instanceof Thread) {
                     continue = false
                 } else if (parent instanceof Module) {
                     continue = false

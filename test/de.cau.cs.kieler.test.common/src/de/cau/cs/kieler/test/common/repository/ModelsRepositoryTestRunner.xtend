@@ -37,7 +37,7 @@ import org.junit.runners.model.InitializationError
 import org.junit.runners.model.Statement
 
 import static org.junit.Assert.*
-import static extension de.cau.cs.kieler.simulation.testing.TestModelDataUtil.*
+
 import static extension java.lang.Integer.*
 
 /**

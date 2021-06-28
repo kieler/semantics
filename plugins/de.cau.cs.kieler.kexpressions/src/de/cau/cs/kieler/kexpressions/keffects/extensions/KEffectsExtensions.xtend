@@ -13,19 +13,18 @@
  */
 package de.cau.cs.kieler.kexpressions.keffects.extensions
 
+import com.google.inject.Inject
+import de.cau.cs.kieler.kexpressions.CombineOperator
+import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsComplexCreateExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
-import de.cau.cs.kieler.kexpressions.keffects.KEffectsFactory
-import de.cau.cs.kieler.kexpressions.ValuedObject
-import de.cau.cs.kieler.kexpressions.Expression
-import de.cau.cs.kieler.kexpressions.keffects.HostcodeEffect
-import de.cau.cs.kieler.kexpressions.keffects.ReferenceCallEffect
-import com.google.inject.Inject
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsComplexCreateExtensions
-import de.cau.cs.kieler.kexpressions.CombineOperator
 import de.cau.cs.kieler.kexpressions.keffects.Emission
-import org.eclipse.emf.common.util.EList
+import de.cau.cs.kieler.kexpressions.keffects.HostcodeEffect
+import de.cau.cs.kieler.kexpressions.keffects.KEffectsFactory
+import de.cau.cs.kieler.kexpressions.keffects.ReferenceCallEffect
 import java.util.List
 
 /**

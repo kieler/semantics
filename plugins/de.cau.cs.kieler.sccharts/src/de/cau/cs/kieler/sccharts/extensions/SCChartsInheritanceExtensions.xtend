@@ -24,14 +24,13 @@ import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.SCChartsFactory
 import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.scl.MethodImplementationDeclaration
 import java.util.Collection
+import java.util.LinkedHashMap
 import java.util.List
 import java.util.Set
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtend.lib.annotations.Accessors
-import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor
-import de.cau.cs.kieler.scl.MethodImplementationDeclaration
-import java.util.LinkedHashMap
 
 import static extension java.lang.String.format
 

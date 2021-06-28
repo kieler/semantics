@@ -12,19 +12,27 @@
  */
 package de.cau.cs.kieler.sccharts.processors
 
+import com.google.common.collect.HashMultimap
+import com.google.common.collect.Multimap
 import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.kexpressions.AccessModifier
 import de.cau.cs.kieler.kexpressions.MethodDeclaration
+import de.cau.cs.kieler.kexpressions.PriorityProtocol
 import de.cau.cs.kieler.kexpressions.ReferenceCall
 import de.cau.cs.kieler.kexpressions.Schedulable
+import de.cau.cs.kieler.kexpressions.ScheduleDeclaration
 import de.cau.cs.kieler.kexpressions.ScheduleObjectReference
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.Effect
+import de.cau.cs.kieler.kexpressions.keffects.Emission
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.Action
 import de.cau.cs.kieler.sccharts.ControlflowRegion
+import de.cau.cs.kieler.sccharts.PolicyClassDeclaration
 import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
@@ -32,25 +40,12 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
+import java.util.HashMap
+import java.util.LinkedList
 import java.util.List
 import org.eclipse.emf.ecore.EObject
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.sccharts.PolicyClassDeclaration
-import java.lang.invoke.MethodHandles.Lookup
-import java.util.LinkedHashMap
-import com.google.common.collect.HashMultimap
-import com.google.common.collect.LinkedHashMultimap
-import de.cau.cs.kieler.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.kexpressions.keffects.Emission
-import com.google.common.collect.HashBiMap
-import de.cau.cs.kieler.kexpressions.PriorityProtocol
-import com.google.common.collect.Multimap
-import java.util.HashMap
-import java.util.LinkedList
-import com.google.common.collect.Sets
-import de.cau.cs.kieler.kexpressions.ScheduleDeclaration
-import de.cau.cs.kieler.kexpressions.AccessModifier
 
 /**
  * 

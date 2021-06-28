@@ -18,11 +18,9 @@ import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.kgraph.KEdge
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
-import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
-import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.SynthesisHook
 import de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.ControlflowRegionStyles
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.StateStyles

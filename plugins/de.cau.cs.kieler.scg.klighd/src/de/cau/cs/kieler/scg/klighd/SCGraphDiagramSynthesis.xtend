@@ -72,7 +72,6 @@ import javax.inject.Inject
 import org.eclipse.elk.alg.layered.options.LayeredOptions
 import org.eclipse.elk.alg.layered.options.LayeringStrategy
 import org.eclipse.elk.alg.layered.options.NodePlacementStrategy
-import org.eclipse.elk.alg.layered.options.OrderingStrategy
 import org.eclipse.elk.alg.layered.options.WrappingStrategy
 import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.core.options.Direction

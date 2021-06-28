@@ -19,7 +19,6 @@ import de.cau.cs.kieler.kicool.compilation.VariableStore
 import de.cau.cs.kieler.verification.VerificationProperty
 import de.cau.cs.kieler.verification.VerificationPropertyChanged
 import de.cau.cs.kieler.verification.VerificationPropertyStatus
-import de.cau.cs.kieler.verification.VerificationPropertyType
 import de.cau.cs.kieler.verification.processors.RunModelCheckerProcessorBase
 import java.io.File
 import org.eclipse.core.resources.IFile

@@ -20,7 +20,6 @@ import com.google.common.collect.Multimap
 import de.cau.cs.kieler.scg.BasicBlock
 import de.cau.cs.kieler.scg.Depth
 import de.cau.cs.kieler.scg.Entry
-import de.cau.cs.kieler.scg.Join
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.Surface

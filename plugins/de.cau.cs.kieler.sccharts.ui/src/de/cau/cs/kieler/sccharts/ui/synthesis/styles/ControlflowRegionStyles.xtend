@@ -16,9 +16,11 @@ package de.cau.cs.kieler.sccharts.ui.synthesis.styles
 import com.google.inject.Inject
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.KContainerRendering
+import de.cau.cs.kieler.klighd.krendering.KForeground
 import de.cau.cs.kieler.klighd.krendering.KRectangle
 import de.cau.cs.kieler.klighd.krendering.KRendering
 import de.cau.cs.kieler.klighd.krendering.KText
+import de.cau.cs.kieler.klighd.krendering.Underline
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
@@ -35,14 +37,9 @@ import org.eclipse.elk.graph.properties.Property
 
 import static de.cau.cs.kieler.sccharts.ui.synthesis.styles.ColorStore.Color.*
 
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import static extension de.cau.cs.kieler.klighd.microlayout.PlacementUtil.*
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
-import de.cau.cs.kieler.klighd.krendering.LineStyle
-import de.cau.cs.kieler.klighd.krendering.KColor
-import de.cau.cs.kieler.klighd.krendering.Underline
-import de.cau.cs.kieler.klighd.krendering.Colors
-import de.cau.cs.kieler.klighd.krendering.KForeground
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
 /**
  * Styles for {@link ControlflowRegion}.

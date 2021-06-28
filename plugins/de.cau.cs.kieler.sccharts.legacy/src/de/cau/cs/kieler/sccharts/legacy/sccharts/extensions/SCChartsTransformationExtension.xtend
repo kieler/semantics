@@ -18,14 +18,14 @@ import de.cau.cs.kieler.sccharts.legacy.kexpressions.Declaration
 import de.cau.cs.kieler.sccharts.legacy.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.sccharts.legacy.kexpressions.ValueType
 import de.cau.cs.kieler.sccharts.legacy.kexpressions.ValuedObject
-import de.cau.cs.kieler.sccharts.legacy.sccharts.Scope
-import org.eclipse.emf.ecore.EObject
-import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
-import de.cau.cs.kieler.sccharts.legacy.sccharts.ControlflowRegion
-import de.cau.cs.kieler.sccharts.legacy.sccharts.State
 import de.cau.cs.kieler.sccharts.legacy.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.sccharts.legacy.kexpressions.impl.ExpressionImpl
 import de.cau.cs.kieler.sccharts.legacy.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.sccharts.legacy.sccharts.ControlflowRegion
+import de.cau.cs.kieler.sccharts.legacy.sccharts.Scope
+import de.cau.cs.kieler.sccharts.legacy.sccharts.State
+import org.eclipse.emf.ecore.EObject
+
+import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 
 /**
  * SCCharts Transformation Extensions. Extension in order to improve readability of SCCharts extended

@@ -15,7 +15,6 @@ package de.cau.cs.kieler.kexpressions.text.test
  */
 
 import com.google.inject.Guice
-import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.Annotation
 import de.cau.cs.kieler.annotations.AnnotationsFactory
 import de.cau.cs.kieler.annotations.StringAnnotation

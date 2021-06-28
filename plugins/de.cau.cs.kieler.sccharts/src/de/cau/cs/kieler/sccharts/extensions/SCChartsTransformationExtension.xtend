@@ -18,17 +18,17 @@ import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObject
-import de.cau.cs.kieler.sccharts.Scope
-import org.eclipse.emf.ecore.EObject
-import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
-import de.cau.cs.kieler.sccharts.ControlflowRegion
-import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import java.util.LinkedList
+import de.cau.cs.kieler.sccharts.ControlflowRegion
+import de.cau.cs.kieler.sccharts.Scope
+import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
+import java.util.LinkedList
+import org.eclipse.emf.ecore.EObject
+
+import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 
 /**
  * SCCharts Transformation Extensions. Extension in order to improve readability of SCCharts extended

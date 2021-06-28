@@ -12,12 +12,11 @@
  */
 package de.cau.cs.kieler.sccharts.text.scoping
 
-import org.eclipse.xtext.scoping.Scopes
-import org.eclipse.xtext.util.SimpleAttributeResolver
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.naming.QualifiedName
 import org.eclipse.xtext.resource.IEObjectDescription
 import org.eclipse.xtext.scoping.IScope
+import org.eclipse.xtext.scoping.Scopes
 import org.eclipse.xtext.scoping.impl.SimpleScope
 
 /**

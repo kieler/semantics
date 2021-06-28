@@ -13,13 +13,11 @@
 package de.cau.cs.kieler.kexpressions.util
 
 import de.cau.cs.kieler.kexpressions.JsonObjectMember
+import de.cau.cs.kieler.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.kexpressions.Value
 import java.util.List
 import java.util.Map
-import java.util.Map.Entry
 import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor
-import org.eclipse.xtend.lib.annotations.Delegate
-import de.cau.cs.kieler.kexpressions.KExpressionsFactory
 
 /**
  * @author als
