@@ -816,17 +816,17 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
 
     // Apply conversion to integer values
     def dispatch Expression convertToSCGExpression(IntValue expression) {
-        createIntValue(new Integer(expression.value)).trace(expression)
+        createIntValue(Integer.valueOf(expression.value)).trace(expression)
     }
 
     // Apply conversion to float values
     def dispatch Expression convertToSCGExpression(FloatValue expression) {
-        createFloatValue(new Float(expression.value)).trace(expression)
+        createFloatValue(Float.valueOf(expression.value.floatValue())).trace(expression)
     }
 
     // Apply conversion to boolean values
     def dispatch Expression convertToSCGExpression(BoolValue expression) {
-        createBoolValue(new Boolean(expression.value)).trace(expression)
+        createBoolValue(Boolean.valueOf(expression.value)).trace(expression)
     }
 
     def dispatch Expression convertToSCGExpression(StringValue expression) {
