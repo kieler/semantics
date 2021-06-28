@@ -137,7 +137,7 @@ class SRTGStateSynthesis extends SRTGSubSynthesis<State, KNode> {
                         dummyEdge.addTransitionPolyline => [
                             lineWidth = 0
                         ]
-                        if (state.eContainer == null) {
+                        if (state.eContainer === null) {
                             dummyEdge.source = state.node                        
                         } else {
                             dummyEdge.source = state.eContainer.getNode("states")

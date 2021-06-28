@@ -81,7 +81,7 @@ class SynthesisAnnotationHook extends SynthesisHook {
     
     override processRegion(Region region, KNode node) {
         if (node.data.filter(KRendering).size > 1) {
-            for (anno : region.annotations.filter[ name != null ]) {
+            for (anno : region.annotations.filter[ name !== null ]) {
                 if (anno.name.equalsIgnoreCase(COLLAPSED_ANNOTATION)) {
                     node.setLayoutOption(KlighdProperties::EXPAND, false)
                 } else if (anno.name.equalsIgnoreCase(EXPAND_ANNOTATION)) {
@@ -160,7 +160,7 @@ class SynthesisAnnotationHook extends SynthesisHook {
                 usedContext.configureOption(option, value.parseBoolean)
             case option.isChoiceOption: {
                 val newValue = value.parseObject(option.values);
-                if (newValue != null) {
+                if (newValue !== null) {
                     usedContext.configureOption(option, newValue)
                 }
             }

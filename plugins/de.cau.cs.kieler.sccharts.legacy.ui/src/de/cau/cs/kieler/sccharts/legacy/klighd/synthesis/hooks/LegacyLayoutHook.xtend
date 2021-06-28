@@ -100,7 +100,7 @@ class LegacyLayoutHook extends SynthesisActionHook {
         // Find global direction annotation
         for (annotation : scope.getTypedAnnotations(LAYOUT_OPTIONS_ANNOTATION)) {
             val data = LAYOUT_OPTIONS_SERVICE.getOptionDataBySuffix(annotation.type ?: "")
-            if (data != null && data.id == CoreOptions.DIRECTION.id) {
+            if (data !== null && data.id == CoreOptions.DIRECTION.id) {
                 golbalDirection = data.parseValue(annotation.values?.head ?: "".toLowerCase) as Direction
             }
         }
@@ -108,7 +108,7 @@ class LegacyLayoutHook extends SynthesisActionHook {
         // Process hierarchy
         for (node : rootNode.eAllContentsOfType(KNode).toList) {
             val source = node.getProperty(KlighdInternalProperties.MODEL_ELEMEMT);
-            if (source != null) {
+            if (source !== null) {
                 val baseDepth = (node.parent ?: rootNode).getProperty(HV_DEPTH) ?: 0
                 if (source instanceof State) {
                     // Increase depth only after regions because states have no layouted children
@@ -122,7 +122,7 @@ class LegacyLayoutHook extends SynthesisActionHook {
                     node.setProperty(HV_DEPTH, baseDepth)
                     // Default layout direction for controlflow region
                     if (source instanceof ControlflowRegion) {
-                        if (golbalDirection != null) {
+                        if (golbalDirection !== null) {
                             node.setLayoutOption(CoreOptions.DIRECTION, golbalDirection)
                         }
                     }
@@ -153,7 +153,7 @@ class LegacyLayoutHook extends SynthesisActionHook {
 
     override processRegion(Region region, KNode node) {
         val regions = region.parentState?.regions
-        if (region != null) {
+        if (region !== null) {
             node.setLayoutOption(CoreOptions.PRIORITY, regions.size - regions.indexOf(region))
         }
     }
@@ -168,7 +168,7 @@ class LegacyLayoutHook extends SynthesisActionHook {
             val value = data?.parseValue(annotation.values?.head ?: "".toLowerCase)
 
             // Set layout option
-            if (data != null && value != null) {
+            if (data !== null && value !== null) {
                 element.setLayoutOption(data.id, value)
                 if (data.id == CoreOptions.DIRECTION.id && element instanceof KNode) {
                     element.setLayoutOption(BLOCK_ALTERNATIN_LAYOUT, true);
@@ -179,7 +179,7 @@ class LegacyLayoutHook extends SynthesisActionHook {
 
     private def processAlternatingLayoutAnnotation(KNode node, Scope scope) {
         val annotation = scope.annotations.findLast[isAlternatingLayoutAnnotation]
-        if (annotation != null) {
+        if (annotation !== null) {
             val isHV = annotation.name.equalsIgnoreCase(HV_ANNOTATION)
             val offset = node.getProperty(HV_DEPTH) ?: 0
             val workingset = newLinkedHashMap(new Pair(scope, node))
@@ -194,7 +194,7 @@ class LegacyLayoutHook extends SynthesisActionHook {
                 // Add child elements to processing queue
                 for (nextScope : subScope.eContents.filter(Scope)) {
                     val nextElement = subNode.children.findFirst[isAssociatedWith(nextScope)];
-                    if (nextElement != null && !nextScope.annotations.exists[isAlternatingLayoutAnnotation]) {
+                    if (nextElement !== null && !nextScope.annotations.exists[isAlternatingLayoutAnnotation]) {
                         workingset.put(nextScope, nextElement)
                     }
                 }

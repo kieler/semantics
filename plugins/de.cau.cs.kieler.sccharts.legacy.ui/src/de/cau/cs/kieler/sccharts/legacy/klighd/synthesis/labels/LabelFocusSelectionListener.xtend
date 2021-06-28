@@ -67,12 +67,12 @@ class LabelFocusSelectionListener implements ISelectionChangedListener {
         val focusedLabels = newHashSet()
         var focusRemoved = false
 
-        if (labelShortening != null && labelShortening != LabelShorteningStrategies.NO &&
+        if (labelShortening !== null && labelShortening != LabelShorteningStrategies.NO &&
             viewContext.inputModel instanceof Scope) {
             // Unfocus all focused labels
             for (WeakReference<KLabel> labelRef : viewContext.getProperty(FOCUSED_LABELS)) {
                 val label = labelRef.get()
-                if (label != null) {
+                if (label !== null) {
                     label.setProperty(KlighdOptions.LABELS_ELEMENT_IN_FOCUS, false)
                     focusRemoved = true
                 }

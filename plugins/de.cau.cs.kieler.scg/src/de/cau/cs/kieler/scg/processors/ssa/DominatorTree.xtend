@@ -135,7 +135,7 @@ class DominatorTree {
         // Second dominator clause  
         for ( i : 1..dfNum.size-1 ) {
             val bb = i.dfvertex
-            if (bb.samedom != null) {
+            if (bb.samedom !== null) {
                 idom.put(bb, bb.samedom.idom)
             }
         }
@@ -156,7 +156,7 @@ class DominatorTree {
     
     private def BasicBlock ancestorWithLowestSemi(BasicBlock bb) {
         val ancestorBB = bb.ancestor
-        if (ancestorBB.ancestor != null) {
+        if (ancestorBB.ancestor !== null) {
             val bestCandidate = ancestorBB.ancestorWithLowestSemi
             ancestor.put(bb, ancestorBB.ancestor)
             if (bestCandidate.semi.dfnum < bb.best.semi.dfnum) {
@@ -200,7 +200,7 @@ class DominatorTree {
     
     def isDominator(BasicBlock dominator, BasicBlock bb) {
         var ancestor = bb
-        while (ancestor != null) {
+        while (ancestor !== null) {
             if (ancestor == dominator) {
                 return true
             }

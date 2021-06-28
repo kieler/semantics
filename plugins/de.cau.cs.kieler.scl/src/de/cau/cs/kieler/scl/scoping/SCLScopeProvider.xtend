@@ -36,7 +36,7 @@ class SCLScopeProvider extends KExtScopeProvider {
     
     protected def IScope getScopeForLabel(Goto goto, EReference reference) {
         var EObject module = goto
-        while (module != null) {
+        while (module !== null) {
             if (module instanceof Module) {
                 return Scopes.scopeFor(module.eAllContents.filter(Label).toList)
             }
@@ -46,7 +46,7 @@ class SCLScopeProvider extends KExtScopeProvider {
 
     protected def IScope getScopeForModule(ModuleCall call, EReference reference) {
         var EObject program = call
-        while (program != null) {
+        while (program !== null) {
             if (program instanceof SCLProgram) {
                 return Scopes.scopeFor(program.modules)
             }

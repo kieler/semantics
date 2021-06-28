@@ -224,7 +224,7 @@ class ModelsRepositoryTestRunner extends Suite {
             if (ignoreRemainingTests) {
                 notifier.fireTestIgnored(this.describeChild(method))
             } else {
-                methodStopsExecution = method.getAnnotation(StopOnFailure) != null
+                methodStopsExecution = method.getAnnotation(StopOnFailure) !== null
                 super.runChild(method, notifier)
             }
         }

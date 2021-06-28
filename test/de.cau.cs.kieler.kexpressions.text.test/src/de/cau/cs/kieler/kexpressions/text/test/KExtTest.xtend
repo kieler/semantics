@@ -81,19 +81,19 @@ public class KExtTest {
     public def void serialize(EObject eObject, String expectedLine) {
         val entity = eObject as TestEntity
         var expected = expectedLine
-        if (entity.getExpression() != null && expected.startsWith(KEXT_EXPRESSION_KEYWORD)) {
+        if (entity.getExpression() !== null && expected.startsWith(KEXT_EXPRESSION_KEYWORD)) {
             expected = expected.substring(11); 
         }
         
         val serialized = SE.serialize(entity).toString();
         
         val StringAnnotation strictAnnotation = getAnnotation(entity, KEXT_STRICT_ANNOTATION);
-        if (strictAnnotation != null) {
+        if (strictAnnotation !== null) {
             if (strictAnnotation.getValues().size() > 0) {
                 expected = strictAnnotation.getValues().get(0);
             }
         } else {
-            if (entity.getEffect() != null) {
+            if (entity.getEffect() !== null) {
                 val effect = entity.getEffect();
                 if (effect instanceof Assignment) {
                     if (effect.getExpression() instanceof OperatorExpression) {
@@ -104,7 +104,7 @@ public class KExtTest {
                         expected = newExpected;
                     }
                 }
-            } else if (entity.getExpression() != null) {
+            } else if (entity.getExpression() !== null) {
                 if (entity.getExpression() instanceof AnnotatedExpression) {
                     if (entity.getExpression().getExpression() instanceof OperatorExpression) {
                         expected = "(" + expected + ")";
@@ -144,14 +144,14 @@ public class KExtTest {
     public def void serializeHumanReadable(EObject eObject, String expectedLine) {
         val entity = eObject as TestEntity;
         var expected = expectedLine
-        if (entity.getExpression() != null && expected.startsWith(KEXT_EXPRESSION_KEYWORD)) {
+        if (entity.getExpression() !== null && expected.startsWith(KEXT_EXPRESSION_KEYWORD)) {
                 expected = expected.substring(11); 
         }
         
         val serialized = SE.serializeHR(entity).toString();
         
         val StringAnnotation humanReadableAnnotation = getAnnotation(entity, KEXT_HUMANREADABLE_ANNOTATION);
-        if (humanReadableAnnotation != null) {
+        if (humanReadableAnnotation !== null) {
             expected = humanReadableAnnotation.getValues().get(0);
         }
         
@@ -169,7 +169,7 @@ public class KExtTest {
 	private def void validateAlias(TestEntity entity, String valuedObjectName, String aliasName) {
 		val VOs = <ValuedObject> newArrayList
 		
-		if (entity.effect != null) {
+		if (entity.effect !== null) {
 			val effect = entity.effect
 			if (effect instanceof Assignment) {
 				VOs += effect.expression.eAllContents.filter(ValuedObjectReference)
@@ -203,7 +203,7 @@ public class KExtTest {
 		for(valuedObject : VOs) {
 			val failedAlias = valuedObject.annotations.filter(StringAnnotation)
 				.filter[ name.equals(KEXT_ALIAS_ANNOTATION) ].filter[ values.empty || !values.head.equals(aliasName) ].head
-			if (failedAlias != null) {
+			if (failedAlias !== null) {
 				val checkAnnotation = getAnnotation(entity, KExtTestRunner.KEXT_CHECK_ANNOTATION);
 				failedAssertion("Alias check of check " + checkAnnotation.values.head + 
                     " expected \"" + aliasName + 
@@ -220,14 +220,14 @@ public class KExtTest {
     
     private def StringAnnotation getAnnotation(TestEntity entity, String name) {
         var Annotation annotation = null;
-    	if (entity.getEffect() != null) {
+    	if (entity.getEffect() !== null) {
     	    annotation = entity.getEffect().getAnnotation(name);
     	} else {
     	    annotation =  entity.getExpression().getAnnotation(name);
     	}
         if (annotation instanceof StringAnnotation) {
             return annotation as StringAnnotation; 
-        } else if (annotation != null) {
+        } else if (annotation !== null) {
             val StringAnnotation newStringAnnotation = AnnotationsFactory.eINSTANCE.createStringAnnotation();
             newStringAnnotation.setName(annotation.getName());
             return newStringAnnotation;
@@ -236,7 +236,7 @@ public class KExtTest {
     }
     
     private def Iterable<Annotation> getAnnotations(TestEntity entity) {
-    	if (entity.effect != null) {
+    	if (entity.effect !== null) {
     	    return entity.effect.annotations
     	} else {
     	    return entity.expression.annotations;

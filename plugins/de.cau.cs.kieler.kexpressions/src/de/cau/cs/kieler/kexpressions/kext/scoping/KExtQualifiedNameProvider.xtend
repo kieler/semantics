@@ -51,16 +51,16 @@ public class KExtQualifiedNameProvider extends DefaultDeclarativeQualifiedNamePr
 			override QualifiedName get() {
 				var EObject temp = obj;
 				val QualifiedName qualifiedNameFromDispatcher = qualifiedName.invoke(temp);
-				if (qualifiedNameFromDispatcher != null)
+				if (qualifiedNameFromDispatcher !== null)
 					return qualifiedNameFromDispatcher;
 				val name = getResolver().apply(temp);
 				if (Strings.isEmpty(name))
 					return null;
 				val QualifiedName qualifiedNameFromConverter = converter.toQualifiedName(name);
-				while (temp.eContainer() != null) {
+				while (temp.eContainer() !== null) {
 					temp = temp.eContainer();
 					val QualifiedName parentsQualifiedName = getFullyQualifiedName(temp);
-					if (parentsQualifiedName != null)
+					if (parentsQualifiedName !== null)
 						return parentsQualifiedName.append(qualifiedNameFromConverter);
 				}
 				return qualifiedNameFromConverter;

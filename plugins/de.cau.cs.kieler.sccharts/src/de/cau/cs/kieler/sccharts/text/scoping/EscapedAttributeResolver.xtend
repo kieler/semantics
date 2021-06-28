@@ -35,7 +35,7 @@ class EscapedAttributeResolver<K extends EObject, T extends String> extends Simp
     
     override T apply(K from) {
         val v = getValue(from) 
-        if (v != null && v.startsWith("^")) {
+        if (v !== null && v.startsWith("^")) {
             return converter(v) as T
         }
         return v 

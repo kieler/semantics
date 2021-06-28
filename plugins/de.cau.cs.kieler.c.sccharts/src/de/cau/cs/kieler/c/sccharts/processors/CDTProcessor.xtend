@@ -985,7 +985,7 @@ class CDTProcessor extends ExogenousProcessor<IASTTranslationUnit, SCCharts> {
         }
         
         // Check whether a else clause exists.
-        if (ifs.elseClause != null) {
+        if (ifs.elseClause !== null) {
             // Body of statements, if condition is not met.
             var State falseBody = null;
             
@@ -1037,7 +1037,7 @@ class CDTProcessor extends ExogenousProcessor<IASTTranslationUnit, SCCharts> {
         }
         
         // If needed, add an extra endState and transitions.
-        if (ifs.elseClause == null || needExtraEndState || extraEndStateOption) {
+        if (ifs.elseClause === null || needExtraEndState || extraEndStateOption) {
             // In case that trueBody and falseBody are both final, then we do not need an endState regardless.
             if (!bothBodiesFinal) {
                 // Final state of loop. It is reached when loop condition is not met anymore.
@@ -1490,7 +1490,7 @@ class CDTProcessor extends ExogenousProcessor<IASTTranslationUnit, SCCharts> {
 
     def ValuedObjectReference createVOReference(CASTIdExpression idExp) {
         val VO = VOSet.filter[name.equals(idExp.children.head.toString)].head
-        if (VO != null) {
+        if (VO !== null) {
             return VO.reference
         }
         return null

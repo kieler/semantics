@@ -64,13 +64,13 @@ class HideAnnotationHook extends SynthesisHook {
                 val parent = node.contentContainer;
                 if (!state.declarations.empty) {
                     val declarationsContainer = parent?.getProperty(StateStyles.DECLARATIONS_CONTAINER);
-                    if (declarationsContainer != null) {
+                    if (declarationsContainer !== null) {
                         for (declaration : state.declarations) {
                             if (declaration.hasHideAnnotation) {
                                 val declarationLabel = declarationsContainer.children.findFirst [
                                     isAssociatedWith(declaration)
                                 ];
-                                if (declarationLabel != null) {
+                                if (declarationLabel !== null) {
                                     declarationsContainer.children.remove(declarationLabel);
                                 }
                             }
@@ -80,13 +80,13 @@ class HideAnnotationHook extends SynthesisHook {
                 // Remove hidden actions
                 if (!state.actions.empty) {
                     val actionsContainer = parent?.getProperty(StateStyles.ACTIONS_CONTAINER);
-                    if (actionsContainer != null) {
+                    if (actionsContainer !== null) {
                         for (action : state.actions) {
                             if (action.hasHideAnnotation) {
                                 val actionLabel = actionsContainer.children.findFirst [
                                     isAssociatedWith(action)
                                 ];
-                                if (actionLabel != null) {
+                                if (actionLabel !== null) {
                                     actionsContainer.children.remove(actionLabel);
                                 }
                             }
@@ -100,7 +100,7 @@ class HideAnnotationHook extends SynthesisHook {
                             val regionNode = node.children.findFirst [
                                 isAssociatedWith(region)
                             ];
-                            if (regionNode != null) {
+                            if (regionNode !== null) {
                                 regionNode.parent = null;
                             }
                         }
@@ -115,13 +115,13 @@ class HideAnnotationHook extends SynthesisHook {
             // Remove hidden declarations
             val parent = node.regionExtendedContainer
             val declarationsContainer = parent?.getProperty(ControlflowRegionStyles.DECLARATIONS_CONTAINER);
-            if (declarationsContainer != null) {
+            if (declarationsContainer !== null) {
                 for (declaration : region.declarations) {
                     if (declaration.hasHideAnnotation) {
                         val declarationLabel = declarationsContainer.children.findFirst [
                             isAssociatedWith(declaration)
                         ];
-                        if (declarationLabel != null) {
+                        if (declarationLabel !== null) {
                             declarationsContainer.children.remove(declarationLabel);
                         }
                     }

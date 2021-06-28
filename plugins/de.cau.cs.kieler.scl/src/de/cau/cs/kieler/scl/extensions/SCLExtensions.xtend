@@ -187,7 +187,7 @@ class SCLExtensions {
             for (goto : parent.eAllContents.toList.filter(Goto)) {
                 var newLabel = replaceBy.findFirst[key == (goto as Goto).target]
 
-                if (newLabel != null) {
+                if (newLabel !== null) {
                     (goto as Goto).target = newLabel.value
                 }
             }
@@ -250,7 +250,7 @@ class SCLExtensions {
             // Replace goto targets
             for (goto : parent.eAllContents.toList.filter(typeof(Goto))) {
                 var newLabel = replaceBy.findFirst[key == (goto as Goto).target]
-                if (newLabel != null) {
+                if (newLabel !== null) {
                     (goto as Goto).target = newLabel.value
                 }
             }
@@ -324,7 +324,7 @@ class SCLExtensions {
                     names += valObj.name
 
                     // Add explicit assignment if initial value is given
-                    if (valObj.initialValue != null) {
+                    if (valObj.initialValue !== null) {
                         subScope.statements.add(0, sCLFactory.createAssignment => [
                             it.trace(valObj)
                             valuedObject = valObj
