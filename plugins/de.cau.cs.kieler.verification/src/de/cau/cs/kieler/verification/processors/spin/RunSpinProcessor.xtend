@@ -119,7 +119,7 @@ class RunSpinProcessor extends RunModelCheckerProcessorBase {
         val process = processBuilder.start
         process.waitForTermination([ return isCanceled() ])
         throwIfCanceled
-        val processOutput = Files.toString(javaioProcessOutputFile, Charsets.UTF_8)
+        val processOutput = Files.asCharSource(javaioProcessOutputFile, Charsets.UTF_8).read()
         val processOutputWithCommand = processBuilder.command.toString.replace("\n", "\\n") + "\n" + processOutput
         if(process.exitValue != 0) {
             throw new Exception("SPIN trail command terminated with non-zero exit code.")
