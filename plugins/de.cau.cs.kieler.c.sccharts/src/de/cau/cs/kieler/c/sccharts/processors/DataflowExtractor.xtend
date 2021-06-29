@@ -1798,6 +1798,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
     def setMultInput(List<ValuedObject> inputs, State newState, DataflowRegion dRegion, ValuedObject refObj,
         boolean cond) {
         for (inputVO : inputs) {
+            val label = inputVO.label !== null ? inputVO.label : inputVO.name.split("_").get(0)
             // Retrieve the state's valued object map
             var Map<String, List<ValuedObject>> stateVariables = getStateVariables(newState)
             val inputRootDecl = inputVO.getVariableDeclaration
@@ -1808,20 +1809,20 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             newState.declarations += decl
             decl.type = inputType
             decl.input = true
-            val innerInputVO = decl.createValuedObject(inputVO.label + inSuffix)
+            val innerInputVO = decl.createValuedObject(label + inSuffix)
             if (!inputVO.annotations.empty) {
                 innerInputVO.addTagAnnotation((inputVO.annotations.get(0) as TagAnnotation).name)
             }
             innerInputVO.label = inputVO.label
 
             // Add the new create valued object to the ssa list and valued object list
-            if (stateVariables.containsKey(inputVO.label)) {
-                var varList = stateVariables.get(inputVO.label)
+            if (stateVariables.containsKey(label)) {
+                var varList = stateVariables.get(label)
                 varList.add(innerInputVO)
             } else {
                 var varList = <ValuedObject>newArrayList
                 varList.add(innerInputVO)
-                stateVariables.put(inputVO.label, varList)
+                stateVariables.put(label, varList)
             }
 
             // Create the assignment
@@ -1857,36 +1858,39 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             rootSCChart.rootStates += breakState
         }
 
+        // determine the current while state and the corresponding stmt
         var State whileState = null
         for (state : rootSCChart.rootStates) {
             if (state.name.contains(whileName + ssaNameSeperator + (whileCounter - 1))) {
                 whileState = state
             }
         }
+        var stmt = breakStmt as IASTNode
+        while (!(stmt instanceof IASTWhileStatement)) {
+            stmt = stmt.parent
+        }
+        var whileStmt = stmt as IASTWhileStatement
 
+        // cerate break object
         val breakRefDecl = createReferenceDeclaration
         lastWhileRegion.declarations += breakRefDecl
         breakRefDecl.setReference(breakState)
         val breakObj = breakRefDecl.createValuedObject(breakName + ssaNameSeperator + localBreakCounter)
         breakObj.annotations += createTagAnnotation(multiplexerTag)
 
-        var whileSt = breakStmt as IASTNode
-        while (!(whileSt instanceof IASTWhileStatement)) {
-            whileSt = whileSt.parent
-        }
-        var whileStmt = whileSt as IASTWhileStatement
 
         // Create the region for the body part
         val breakRegion = breakState.createDataflowRegion("")
         breakState.regions += breakRegion
         breakRegion.label = breakName + ssaNameSeperator + localBreakCounter
         
-        
+        // set the first half of the inputs for the break state 
         var breakDependableVars = findBreakOutputs(whileStmt.getBody as IASTCompoundStatement,
         breakStmt.parent.parent as IASTIfStatement, whileState)  
         val st = whileState 
         var vars = breakDependableVars.map[s |findValuedObjectByName(st, s, false,lastWhileRegion)].toList
         setMultInput(vars, breakState, lastWhileRegion, breakObj, false)
+        // adjust name and albel of the state variables
         getStateVariables(breakState).forEach[p1, p2| p2.get(0).name = breakName + ssaNameSeperator + p2.get(0).name;
                                       p2.get(0).label = breakName + ssaNameSeperator + p2.get(0).label
         ]
