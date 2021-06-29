@@ -301,7 +301,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             var ITranslationUnit tu = CoreModel.^default.create(resource) as ITranslationUnit
             ast = tu.getAST
             index = CCorePlugin.getIndexManager().getIndex(project);
-        } catch (Exception e) {/* Ignore. */}
+        } catch (Throwable t) {/* Ignore. */}
         
         // If the previous method was not successful, build the AST only from the file without context and the index.
         if (ast === null) {
