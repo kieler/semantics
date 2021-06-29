@@ -1025,8 +1025,10 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             multOutputs.add(outputVO)
 
         }
-
-        createMultiplexer(ifRegion, condOutputVo, multInputs, multOutputs);
+        
+        if (!multInputs.empty) {
+            createMultiplexer(ifRegion, condOutputVo, multInputs, multOutputs);
+        }
 
         hierarchy.put(ifState, dRegion)
         hierarchy.put(condState, ifRegion)
