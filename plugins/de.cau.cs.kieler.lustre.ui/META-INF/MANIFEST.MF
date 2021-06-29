@@ -27,7 +27,7 @@ Require-Bundle: de.cau.cs.kieler.lustre,
  de.cau.cs.kieler.sccharts.ui;bundle-version="1.1.0",
  org.eclipse.elk.core;bundle-version="0.4.0"
 Import-Package: org.apache.log4j
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Export-Package: de.cau.cs.kieler.lustre.ui.internal,
  de.cau.cs.kieler.lustre.ui.quickfix,
  de.cau.cs.kieler.lustre.ui.contentassist,

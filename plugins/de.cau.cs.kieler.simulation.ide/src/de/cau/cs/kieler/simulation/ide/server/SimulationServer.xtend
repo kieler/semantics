@@ -17,7 +17,9 @@ import org.eclipse.core.runtime.IProgressMonitor
 import org.eclipse.core.runtime.Status
 import org.eclipse.core.runtime.jobs.Job
 import org.eclipse.jetty.server.Server
-import org.eclipse.jetty.servlet.ServletHandler
+import org.eclipse.jetty.servlet.ServletContextHandler
+import org.eclipse.jetty.servlet.ServletHolder
+import org.eclipse.jetty.websocket.server.config.JettyWebSocketServletContainerInitializer
 
 /**
  * @author als
@@ -33,16 +35,21 @@ class SimulationServer {
             monitor.subTask("Starting server")
             val server = new Server(PORT)
             server.stopAtShutdown = true
-            val handler = new ServletHandler()
-            val holder = handler.addServletWithMapping(SimulationServlet, "/simulation")
-            holder.servlet = new SimulationServlet // jetty seems to have problems instantiating servlets
+            
+            val ctx = new ServletContextHandler()
+            ctx.setContextPath("/");
+            
+            ctx.addServlet(new ServletHolder(new SimulationServlet()), "/simulation");
+            
             for (contribution : KielerServiceLoader.load(ISimulationServerContribution)) {
                 val entry = contribution.getServletWithMapping()
                 if (entry !== null) {
-                    handler.addServletWithMapping(entry.value, entry.key)
+                    ctx.addServlet(entry.value, entry.key)
                 }
             }
-            server.setHandler(handler);
+            
+            JettyWebSocketServletContainerInitializer.configure(ctx, null); // init websocket
+            server.setHandler(ctx);
             server.start()
 
             monitor.subTask("Server is running")

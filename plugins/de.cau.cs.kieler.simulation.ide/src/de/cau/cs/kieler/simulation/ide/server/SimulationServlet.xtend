@@ -14,22 +14,21 @@ package de.cau.cs.kieler.simulation.ide.server
 
 import org.eclipse.jetty.websocket.api.Session
 import org.eclipse.jetty.websocket.api.WebSocketAdapter
-import org.eclipse.jetty.websocket.servlet.WebSocketServlet
-import org.eclipse.jetty.websocket.servlet.WebSocketServletFactory
+import org.eclipse.jetty.websocket.api.WebSocketPolicy
+import org.eclipse.jetty.websocket.server.JettyWebSocketServlet
+import org.eclipse.jetty.websocket.server.JettyWebSocketServletFactory
 
 /**
  * @author als
  */
-class SimulationServlet extends WebSocketServlet {
+class SimulationServlet extends JettyWebSocketServlet {
     
-    static val MAX_MESSAGE_SIZE = 1 * 1024 * 1024 // 1MB
+    static val long MAX_MESSAGE_SIZE = 1 * 1024 * 1024 // 1MB
 
-    override configure(WebSocketServletFactory factory) {
+    override configure(JettyWebSocketServletFactory factory) {
         // configure socket
-        factory.policy.maxBinaryMessageSize = MAX_MESSAGE_SIZE
-        factory.policy.maxBinaryMessageBufferSize = MAX_MESSAGE_SIZE
-        factory.policy.maxTextMessageSize = MAX_MESSAGE_SIZE
-        factory.policy.maxTextMessageBufferSize = MAX_MESSAGE_SIZE
+        (factory as WebSocketPolicy).setMaxBinaryMessageSize(MAX_MESSAGE_SIZE)
+        (factory as WebSocketPolicy).setMaxTextMessageSize(MAX_MESSAGE_SIZE)
         // register SimulationSocket as the WebSocket to create on Upgrade
         factory.register(SimulationSocket)
     }
