@@ -984,14 +984,14 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
 
             var ValuedObject positiveOutputVo
             if (innerPositiveOutputVo !== null) {
-                positiveOutputVo = createOutputVo(thenName, localIfCounter, thenState, thenObj, ifRegion,
+                positiveOutputVo = createOutputVo(thenName, localIfCounter, ifState, thenObj, ifRegion,
                     innerPositiveOutputVo)
 
             }
 
             var ValuedObject negativeOutputVo
             if (innerNegativeOutputVo !== null) {
-                negativeOutputVo = createOutputVo(elseName, localIfCounter, elseState, elseObj, ifRegion,
+                negativeOutputVo = createOutputVo(elseName, localIfCounter, ifState, elseObj, ifRegion,
                     innerNegativeOutputVo)
             }
 
@@ -1473,6 +1473,8 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         if (!serializable) {
             whileObj.insertHighlightAnnotations(whileStmt)
         }
+        
+        stateObjects.put(whileState, whileObj)
 
         // Set the in and outputs of the state
         setInputs(whileStmt, rootState, whileState, dRegion, whileObj)
@@ -1510,6 +1512,8 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         // Set the outputs of the body state to refer to, but do not add the equations for them yet, as we want to
         // route them into a conditional.
         setOutputs(whileStmt.getBody, whileState, bodyState, whileRegion, bodyObj, false)
+        
+        stateObjects.put(bodyState, bodyObj)
 
         // Create the region for the body part
         val bodyRegion = createDFRegionForNode(whileStmt.getBody, bodyState, whileState, whileRegion, bodyObj)
@@ -1536,7 +1540,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
 
             var ValuedObject positiveOutputVo
             if (innerOutputVo !== null) {
-                positiveOutputVo = createOutputVo(whileBodyName, localWhileCounter, bodyState, bodyObj, whileRegion,
+                positiveOutputVo = createOutputVo(whileBodyName, localWhileCounter, whileState, bodyObj, whileRegion,
                     innerOutputVo)
             }
 
@@ -1581,95 +1585,113 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         ]
     }
 
-    def finalizeBreakMultiplexer(IASTCompoundStatement stmt, State whileState, DataflowRegion whileRegion) {
-        // get the break state and object
-        var ValuedObject breakObj
-        var State breakState
+    private def finalizeBreakMultiplexer(IASTCompoundStatement stmt, State whileState, DataflowRegion whileRegion) {
+        // collect all break states in the while loop
+        var List<State> breakStates = new ArrayList
         for (decl : whileRegion.declarations) {
             if (decl instanceof ReferenceDeclaration) {
                 var state = decl.reference as State
-                if (state.name.equals(breakName + ssaNameSeperator + (breakCounter - 1))) {
-                    breakState = state
-                    breakObj = stateObjects.get(breakState)
+                if (state.name.startsWith(breakName + ssaNameSeperator)) {
+                    breakStates.add(state)
                 }
             }
         }
+        breakStates.sortBy[state | state.name]
 
-        // determine the inputs of the break state
-        val vars = new ArrayList()
-        getStateVariables(breakState).forEach[key, value| vars.add(key)]
-        var breakInputs = new ArrayList()
-        for (label : vars) {
-            var vo = whileState.findValuedObjectByName(label, false, lastWhileRegion)
-            vo.label = label
-            breakInputs.add(vo)
-        }
+        // finalize every break state
+        for (var i = breakStates.length - 1; i >= 0; i--) {
+            var breakState = breakStates.get(i)
+            var breakObj = stateObjects.get(breakState)
 
-        // determine the outputs of the break state
-        var whileVars = getStateVariables(whileState)
-        var breakOutputs = new ArrayList
-        for (varList : whileVars.values) {
-            val outVO = findOutputVar(varList)
-            if (outVO !== null && vars.contains(outVO.label)) {
-                breakOutputs.add(outVO)
+            // determine the inputs of the break state
+            val vars = new ArrayList()
+            getStateVariables(breakState).forEach[key, value| vars.add(key)]
+            var breakInputs = new ArrayList()
+            for (label : vars) {
+                var vo = whileState.findValuedObjectByName(label, false, lastWhileRegion)
+                vo.label = label
+                breakInputs.add(vo)
             }
-        }
-
-        // determine the if state the break stmt is in
-        var State ifState
-        var localIfCounter = Integer.parseInt(breakState.getStringAnnotationValue(breakAnno))
-        for (state : rootSCChart.rootStates) {
-            if (state.name.equals(ifName + ssaNameSeperator + localIfCounter)) {
-                ifState = state
+    
+            // create output vars
+            var breakVars = getStateVariables(breakState)
+            for (input : breakInputs) {
+                val outputDecl = createVariableDeclaration
+                outputDecl.type = input.type
+                outputDecl.output = true
+    
+                breakState.declarations += outputDecl
+                val innerOutputVO = outputDecl.createValuedObject(input.label + outSuffix)
+                innerOutputVO.label = input.label
+    
+                // Add the new create valued object to the ssa list and valued object list
+                if (breakVars.containsKey(input.label)) {
+                    var varList = breakVars.get(input.label)
+                    varList.add(innerOutputVO)
+                } else {
+                    var varList = <ValuedObject>newArrayList
+                    varList.add(innerOutputVO)
+                    breakVars.put(input.label, varList)
+                }
+                createOutputVo(breakName, Integer.parseInt(breakState.name.substring(breakName.length+1)), whileState, breakObj, whileRegion, innerOutputVO)
             }
-        }
-        
-        // get the local conditional vo in the if state    
-        var ifRegion = ifState.regions.get(0) as DataflowRegion
-        var ValuedObject condOutput
-        for (decl : ifRegion.declarations) {
-            if (decl instanceof VariableDeclaration) {
-                var vo = decl.valuedObjects.get(0)
-                if (vo.name.equals(conditionalResultName)) {
-                    condOutput = vo
+    
+            // determine the if state the break stmt is in
+            var State ifState
+            var localIfCounter = Integer.parseInt(breakState.getStringAnnotationValue(breakAnno))
+            for (state : rootSCChart.rootStates) {
+                if (state.name.equals(ifName + ssaNameSeperator + localIfCounter)) {
+                    ifState = state
                 }
             }
-        }
+            
+            // get the local conditional vo in the if state    
+            var ifRegion = ifState.regions.get(0) as DataflowRegion
+            var ValuedObject condOutput
+            for (decl : ifRegion.declarations) {
+                if (decl instanceof VariableDeclaration) {
+                    var vo = decl.valuedObjects.get(0)
+                    if (vo.name.equals(conditionalResultName)) {
+                        condOutput = vo
+                    }
+                }
+            }
+            
+            // condition is passed to the while region in which the break state is
+            var parentRegion = ifRegion
+            while (parentRegion !== lastWhileRegion) {
+                var parentState = parentRegion.eContainer as State
+                
+                // create condition output in the parent state
+                val outputDecl = createVariableDeclaration
         
-        var parentRegion = ifRegion
-        while(parentRegion !== lastWhileRegion) {
-            var parentState = parentRegion.eContainer as State
-            
-            // create condition output in the parent state
-            val outputDecl = createVariableDeclaration
-    
-            outputDecl.type = ValueType::BOOL
-            outputDecl.output = true
-            parentState.declarations += outputDecl
-            
-            var varName = hiddenVariableName
-            val varList = <ValuedObject>newArrayList
-    
-            val outputVO = outputDecl.createValuedObject(varName + outSuffix)
-            outputVO.label = varName
-    
-            varList.add(outputVO)
-    
-            getStateVariables(parentState).put(varName, varList)
-            parentRegion.equations += createDataflowAssignment(outputVO, condOutput.reference)
-            
-            parentRegion = hierarchy.get(parentState)
-            val parentObj = stateObjects.get(parentState)
-            
-            // condition vo that can be used for the next state
-            condOutput = createOutputVo(ifName, localIfCounter, parentState, parentObj, parentRegion, outputVO)
-            
-        }
+                outputDecl.type = ValueType::BOOL
+                outputDecl.output = true
+                parentState.declarations += outputDecl
+                
+                var varName = hiddenVariableName
+                val varList = <ValuedObject>newArrayList
         
-        //set the inputs and outputs       
-        setMultInput(breakInputs, breakState, whileRegion, breakObj, false)
-        setMultInput(#[condOutput], breakState, whileRegion, breakObj, true)
-        setMultOutputs(breakOutputs, breakState, whileRegion, breakObj)
+                val outputVO = outputDecl.createValuedObject(varName + outSuffix)
+                outputVO.label = varName
+        
+                varList.add(outputVO)
+        
+                getStateVariables(parentState).put(varName, varList)
+                parentRegion.equations += createDataflowAssignment(outputVO, condOutput.reference)
+                
+                parentRegion = hierarchy.get(parentState)
+                val parentObj = stateObjects.get(parentState)
+                
+                // condition vo that can be used by the next state
+                condOutput = createOutputVo(ifName, localIfCounter, parentState, parentObj, parentRegion, outputVO)
+                
+            }
+            
+            // set the inputs   
+            setMultInput(breakInputs, breakState, whileRegion, breakObj, false)
+            setMultInput(#[condOutput], breakState, whileRegion, breakObj, true)
+        }
     }
 
     def createOutputVo(String name, int counter, State state, ValuedObject obj, DataflowRegion region,
@@ -1683,12 +1705,9 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         // Retrieve the state's variable map
         var Map<String, List<ValuedObject>> stateVariables = getStateVariables(state)
         val varName = name + ssaNameSeperator + counter + output.label
-        val varList = <ValuedObject>newArrayList
         // Reuse the vo variable, now pointing to a new VO in the state
         outputVo = variableDeclaration.createValuedObject(varName)
         outputVo.label = varName
-        varList.add(outputVo)
-        stateVariables.put(varName, varList)
         region.declarations += variableDeclaration
         variableDeclaration.annotations += createTagAnnotation("Hide")
         val innerPositiveOutputVo_ = output
@@ -1697,6 +1716,16 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             subReference = innerPositiveOutputVo_.reference
         ]
         region.equations += createDataflowAssignment(outputVo, source)
+        
+        // Add the new create valued object to the ssa list and valued object list
+        if (stateVariables.containsKey(output.label)) {
+            var varList = stateVariables.get(output.label)
+            varList.add(outputVo)
+        } else {
+            var varList = <ValuedObject>newArrayList
+            varList.add(outputVo)
+            stateVariables.put(output.label, varList)
+        }
 
         return outputVo
     }
