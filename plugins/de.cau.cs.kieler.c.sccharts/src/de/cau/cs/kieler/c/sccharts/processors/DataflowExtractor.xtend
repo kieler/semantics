@@ -678,29 +678,92 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         var breakFound = false
         var HashSet<String> outputs = new HashSet()
         for (stm : whileBody.statements) {
-            if (stm instanceof IASTIfStatement && ifStmt == stm && !breakFound) {
+            if (stm instanceof IASTIfStatement && !breakFound) {
+
+                if (containsSearchedIfStmt(stm as IASTIfStatement, ifStmt)) {
+                    breakFound = true
+                    outputs.addAll(breakDependableVarsInIfTree(ifStmt, parentState))          
+                }
                 
-//                var elseClause = ifStmt.elseClause              
-//                // If the else clause exists and the then contains the break - take else's vars                     
-//                if (elseClause !== null && (ifStmt.thenClause as IASTCompoundStatement)
-//                         .statements.exists[st| st instanceof IASTBreakStatement]) {
-//                    outputs.addAll(findOutputs(elseClause, parentState, true))
-//                }else{
-//                    
-//                    //Otherwise the break is in the else clause -> take then's vars
-//                    if(elseClause !==null){
-//                    outputs.addAll(findOutputs(ifStmt.thenClause, parentState, true))}
-//                }
-                
-                breakFound = true
-            }else{
-                if(breakFound){
-                outputs.addAll(findOutputs(stm, parentState, true))}
+            } else {
+                if (breakFound) {
+                    outputs.addAll(findOutputs(stm, parentState, true))
+                }
             }
 
         }
 
         return outputs
+    }
+    
+        /**
+     * Checks if the passed if statement is the searched if statement or if the latter 
+     *  is a parent of the passed if statement.
+     */
+    def Boolean containsSearchedIfStmt(IASTIfStatement outerIf, IASTIfStatement searchedIf) {
+
+        if (outerIf == searchedIf) {
+            return true;
+        }
+        var elseSize = 0
+        val thenStmnts = (outerIf.thenClause as IASTCompoundStatement).statements.toList
+        
+        var List<IASTStatement> elseStmnts
+        if (outerIf.elseClause !== null) {
+            elseStmnts = (outerIf.elseClause as IASTCompoundStatement).statements.toList
+            elseSize = elseStmnts.length
+        }
+        
+        val List<IASTStatement> allStmnts = newArrayList
+        if (outerIf.elseClause !== null) {
+            allStmnts.addAll(elseStmnts)
+        }
+        allStmnts.addAll(thenStmnts)
+        
+        for (s : allStmnts) {
+            if (s instanceof IASTIfStatement && containsSearchedIfStmt(s as IASTIfStatement, searchedIf)) {
+                return true;
+            }
+        }
+
+        return false;
+
+    }
+    
+    /**
+     * Walks upwards from a nested if statement including a break and collects the variables that depend on whether
+     * the break is taken or not taken.
+     */
+
+    def breakDependableVarsInIfTree(IASTIfStatement searchedIf, State parentState){
+        var HashSet<String> vars = <String>newHashSet
+        
+        var currentlySearchedIf = searchedIf
+        var parentClause = currentlySearchedIf.parent as IASTCompoundStatement
+        var ifFound = false
+        
+        while (parentClause.parent instanceof IASTIfStatement) {
+
+            for (s : parentClause.statements) {
+
+                // Look in the current level whether the searchedIf is present and add all variables to the result
+                // that are textually defined below it
+                if (!ifFound) {
+                    if (s == currentlySearchedIf) {
+                        ifFound = true
+                    }
+                } else {
+                    vars.addAll(findOutputs(s, parentState, true))
+                }
+
+            }
+            // Step one if level upwards
+            currentlySearchedIf = parentClause.parent as IASTIfStatement
+            parentClause = currentlySearchedIf.parent as IASTCompoundStatement
+            ifFound = false
+
+        }
+        return vars
     }
 
     /**
