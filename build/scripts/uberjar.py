@@ -269,7 +269,7 @@ def bundle(args, target_dir, merged, klighd):
 
     check_call([args.jar, 'cfe', jar, args.main, '.'], cwd=merged)
 
-    if klighd and not args.noswt: # Include SWT
+    if klighd and klighd_swt and not args.noswt: # Include SWT
         jars = {}
         for platform in klighd_swt.keys():
             pjar = jar[:-4] + '.' + platform + '.jar'
@@ -291,7 +291,7 @@ def create_standalone_scripts(args, jar, target_dir, klighd):
     print('-- Creating standalone scripts --')
     java9_options = ' --add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/jdk.internal.loader=ALL-UNNAMED'
 
-    if klighd and not args.noswt:
+    if klighd and klighd_swt and not args.noswt:
         jar_linux = jar['linux']
         jar_win = jar['win']
         jar_osx = jar['osx']
