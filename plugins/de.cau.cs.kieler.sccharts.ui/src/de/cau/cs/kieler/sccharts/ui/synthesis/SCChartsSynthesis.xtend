@@ -125,7 +125,8 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
             SHOW_METHOD_BODY,
             SHOW_COMMENTS,
             SHOW_USER_LABELS,
-            SHOW_CAUSAL_DATAFLOW
+            SHOW_CAUSAL_DATAFLOW,
+            TOPDOWN_LAYOUT
         )
 
         // Adaptive Zoom
@@ -167,6 +168,8 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
             } else sccharts
         
         val rootNode = createNode
+        
+        rootNode.setProperty(CoreOptions.TOPDOWN_LAYOUT, TOPDOWN_LAYOUT.booleanValue)
                 
         // If dot is used draw edges first to prevent overlapping with states when layout is bad
         usedContext.setProperty(KlighdProperties.EDGES_FIRST, !USE_KLAY.booleanValue)

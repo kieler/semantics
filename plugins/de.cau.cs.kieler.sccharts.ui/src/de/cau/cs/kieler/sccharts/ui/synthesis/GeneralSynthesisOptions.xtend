@@ -80,4 +80,8 @@ final class GeneralSynthesisOptions {
      * inherited declarations and regions synthesis option 
      */
     public static final SynthesisOption SHOW_CAUSAL_DATAFLOW = SynthesisOption.createCheckOption(GeneralSynthesisOptions, "Causal Dataflow",false).setCategory(DEBUGGING)
+    /**
+     * Topdown layout options
+     */
+    public static final SynthesisOption TOPDOWN_LAYOUT = SynthesisOption.createCheckOption(GeneralSynthesisOptions, "Top-down layout", false).setCategory(LAYOUT)
 }
