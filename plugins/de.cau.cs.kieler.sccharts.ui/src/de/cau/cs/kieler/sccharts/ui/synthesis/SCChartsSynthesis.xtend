@@ -55,6 +55,7 @@ import org.eclipse.elk.graph.properties.IProperty
 import org.eclipse.elk.graph.properties.Property
 
 import static de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions.*
+import org.eclipse.elk.core.options.TopDownLayoutConstraint
 
 /**
  * Main diagram synthesis for SCCharts.
@@ -126,7 +127,9 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
             SHOW_COMMENTS,
             SHOW_USER_LABELS,
             SHOW_CAUSAL_DATAFLOW,
-            TOPDOWN_LAYOUT
+            TOPDOWN_LAYOUT,
+            TOPDOWN_LAYOUT_TOGGLE,
+            TOPDOWN_LAYOUT_CONSTRAINT
         )
 
         // Adaptive Zoom
@@ -169,7 +172,15 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
         
         val rootNode = createNode
         
-        rootNode.setProperty(CoreOptions.TOPDOWN_LAYOUT, TOPDOWN_LAYOUT.booleanValue)
+        rootNode.setProperty(CoreOptions.TOPDOWN_LAYOUT, TOPDOWN_LAYOUT_TOGGLE.booleanValue)
+        switch(TOPDOWN_LAYOUT_CONSTRAINT.getObjectValue) {
+            case "Fix Width":
+                rootNode.setProperty(CoreOptions.TOPDOWN_LAYOUT_CONSTRAINT, TopDownLayoutConstraint.FIX_WIDTH)
+            case "Fix Height":
+                rootNode.setProperty(CoreOptions.TOPDOWN_LAYOUT_CONSTRAINT, TopDownLayoutConstraint.FIX_HEIGHT)
+            case "Optimized":
+                rootNode.setProperty(CoreOptions.TOPDOWN_LAYOUT_CONSTRAINT, TopDownLayoutConstraint.OPTIMIZED)
+        }
                 
         // If dot is used draw edges first to prevent overlapping with states when layout is bad
         usedContext.setProperty(KlighdProperties.EDGES_FIRST, !USE_KLAY.booleanValue)

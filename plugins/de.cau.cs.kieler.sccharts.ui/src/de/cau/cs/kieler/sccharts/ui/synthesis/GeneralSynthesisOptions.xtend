@@ -83,5 +83,7 @@ final class GeneralSynthesisOptions {
     /**
      * Topdown layout options
      */
-    public static final SynthesisOption TOPDOWN_LAYOUT = SynthesisOption.createCheckOption(GeneralSynthesisOptions, "Top-down layout", false).setCategory(LAYOUT)
+    public static final SynthesisOption TOPDOWN_LAYOUT = SynthesisOption.createCategory(GeneralSynthesisOptions, "Top-down layout", false).setCategory(LAYOUT)
+    public static final SynthesisOption TOPDOWN_LAYOUT_TOGGLE = SynthesisOption.createCheckOption(GeneralSynthesisOptions, "Top-down layout", false).setCategory(TOPDOWN_LAYOUT)
+    public static final SynthesisOption TOPDOWN_LAYOUT_CONSTRAINT = SynthesisOption.createChoiceOption("Constraint", #["Fix Width", "Fix Height", "Optimized"], "Fix Width").setCategory(TOPDOWN_LAYOUT)
 }
