@@ -72,7 +72,8 @@ class SCGProcessorProvider implements IProcessorProvider {
             de.cau.cs.kieler.scg.processors.optimizer.NotGOOptimizer,
             de.cau.cs.kieler.scg.processors.codegen.simulink.SimulinkProcessor,
             de.cau.cs.kieler.scg.processors.optimizer.SuperfluousThreadRemover,
-            de.cau.cs.kieler.scg.processors.optimizer.SuperfluousForkRemover
+            de.cau.cs.kieler.scg.processors.optimizer.SuperfluousForkRemover,
+            de.cau.cs.kieler.scg.processors.ReferenceCallProcessor
         ]
     }
     

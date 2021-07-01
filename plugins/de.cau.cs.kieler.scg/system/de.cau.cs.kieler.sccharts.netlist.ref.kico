@@ -10,4 +10,5 @@ post process de.cau.cs.kieler.scg.processors.str
 post process de.cau.cs.kieler.scg.processors.sfr
 post process de.cau.cs.kieler.scg.processors.threadAnalyzer
 system de.cau.cs.kieler.scg.netlist
+de.cau.cs.kieler.scg.processors.referenceCall
 de.cau.cs.kieler.scg.processors.codegen.c

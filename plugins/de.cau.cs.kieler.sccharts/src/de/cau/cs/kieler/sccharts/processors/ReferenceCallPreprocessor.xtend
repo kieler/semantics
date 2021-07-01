@@ -34,6 +34,7 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsComplexCreateExtensi
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.sccharts.PolicyClassDeclaration
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 
 /**
  * @author glu
@@ -49,8 +50,9 @@ class ReferenceCallPreprocessor extends SCChartsProcessor implements Traceable {
     @Inject extension KEffectsExtensions
     @Inject extension KExpressionsCreateExtensions
     @Inject extension SCChartsClassExtensions
+    @Inject extension AnnotationsExtensions
     
-    val REF_CALL_INSTANCE_SUFFIX = "_instance"
+    val REF_CALL_INSTANCE_SUFFIX = "_d"
     val REF_CALL_TICK_METHOD_NAME = "tick"
     val REF_CALL_RESET_METHOD_NAME = "reset"
     val REF_CALL_CPIN_METHOD_NAME = "copy_inputs"
@@ -79,12 +81,7 @@ class ReferenceCallPreprocessor extends SCChartsProcessor implements Traceable {
             rootStates.forEach[ rootState |
                 rootState.allContainedStates.filter[isReferencing].toList().forEach [ ref |
                     val classDecl = createOrGetClassDeclaration(ref.reference.scope.name, rootState)
-                    val instance = classDecl.createValuedObject(classDecl.name + REF_CALL_INSTANCE_SUFFIX).uniqueName
-                    /* Remove original reference.
-                     * Could also keep the reference in order to link later but naming-based solution is more general
-                     * => external modules.
-                     */
-                    ref.reference = null
+                    val instance = classDecl.createValuedObject(ref.name + REF_CALL_INSTANCE_SUFFIX).uniqueName
                     /* Tranform referencing state to superstate containing glue logic. */
                     ref.createControlflowRegion(ref.name) => [
                         var init = it.createInitialState("I")
@@ -153,13 +150,18 @@ class ReferenceCallPreprocessor extends SCChartsProcessor implements Traceable {
                             ]
                         ]
                     ]
+                    /* Remove original reference.
+                     * Could also keep the reference in order to link later but naming-based solution is more general
+                     * => external modules.
+                     */
+                    ref.reference = null
                 ]
             ]
         ]
     }
 
     protected def PolicyClassDeclaration createOrGetClassDeclaration(String refName, State rootState) {
-        var maybeDecl = rootState.declarations.findFirst[
+        val maybeDecl = rootState.declarations.findFirst[
             PolicyClassDeclaration.isInstance(it) && (it as PolicyClassDeclaration).name == refName
         ]
         val decl = maybeDecl !== null ? maybeDecl as PolicyClassDeclaration : createPolicyClassDeclaration => [
@@ -188,6 +190,7 @@ class ReferenceCallPreprocessor extends SCChartsProcessor implements Traceable {
             declarations.add(cpoutDecl)
             declarations.add(termDecl)
             rootState.declarations.add(it)
+            it.annotations.add(createTagAnnotation("Module"))
         ]
         return decl
     }
