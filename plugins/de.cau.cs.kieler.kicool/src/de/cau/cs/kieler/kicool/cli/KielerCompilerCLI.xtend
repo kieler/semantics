@@ -15,6 +15,7 @@ package de.cau.cs.kieler.kicool.cli
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
+import de.cau.cs.kieler.core.KielerVersion
 import de.cau.cs.kieler.core.model.ModelUtil
 import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.core.properties.Property
@@ -67,6 +68,9 @@ import static extension java.lang.String.format
 @Command(name = "kico")
 class KielerCompilerCLI implements Runnable, Observer {
 
+    @Option(names = #["--version"], description = "prints the version of this compiler.")
+    protected boolean version
+    
     @Option(names = #["-v", "--verbose"], description = "activates verbose output.")
     protected boolean verbose
     
@@ -178,11 +182,20 @@ class KielerCompilerCLI implements Runnable, Observer {
                 e.printStackTrace
             }
         }
+        
+        // Print version
+        if (version) {
+            println(KielerVersion.version)
+            System.exit(0)
+        }
+        
+        // Handle additional libraries
         if (externalJars !== null) {
             for (path : externalJars) {
                 addURLToClassLoader(new File(path).toURI().toURL())
             }
         }
+        
         try {
             // List systems if requested
             val exit = printList()
