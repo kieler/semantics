@@ -106,6 +106,7 @@ import org.eclipse.cdt.internal.core.dom.parser.ASTNode
 import org.eclipse.core.resources.IResource
 
 import static de.cau.cs.kieler.c.sccharts.processors.CDTToStringConverter.*
+import org.eclipse.cdt.core.dom.ast.IASTContinueStatement
 
 /**
  * A Processor analyzing the data flow of functions within a single file of a C project and visualizing it as actor-
@@ -220,6 +221,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
     var returnCombineCounter = 0;
     var sizeofCounter = 0;
     var breakCounter = 0;
+    var continueCounter = 0;
     var multiplexerCounter = 0;
 
     var DataflowRegion lastWhileRegion = null
@@ -660,7 +662,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             }
         }
         if (breakFlag && bodyState.name.contains(whileName + ssaNameSeperator)) {
-            finalizeBreakMultiplexer(body, bodyState, dfRegion)
+            finalizeBreakAndContinueMultiplexers(body, bodyState, dfRegion)
             breakFlag = false
         }
         linkOutputs(bodyState, dfRegion)
@@ -848,11 +850,20 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
     }
 
     /**
-     * Translate Return statement
+     * Translate a Break statement
      */
     def dispatch void buildStatement(IASTBreakStatement stmt, State rootState, DataflowRegion dRegion) {
         breakFlag = true
-        buildBreak(stmt, rootState, dRegion)
+        //buildBreak(stmt, rootState, dRegion)
+        buildBreakOrContinue(stmt, rootState, dRegion)
+    }
+    
+    /**
+     * Translate a Continue statement
+     */
+    def dispatch void buildStatement(IASTContinueStatement stmt, State rootState, DataflowRegion dRegion) {
+        breakFlag = true
+        buildBreakOrContinue(stmt, rootState, dRegion)
     }
 
     /**
@@ -1648,22 +1659,56 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         ]
     }
 
-    private def finalizeBreakMultiplexer(IASTCompoundStatement stmt, State whileState, DataflowRegion whileRegion) {
-        // collect all break states in the while loop
-        var List<State> breakStates = new ArrayList
-        for (decl : whileRegion.declarations) {
+   /**
+     * Finalizes already created break multiplexers in a specific while.
+     * This means for example that it adds inputs and outputs to them.
+     * 
+     *   @param stmt compound statement/do-block of the while 
+     *   @param whileState The state of the while
+     *   @param whileRegion The while state's dataflow region
+     */
+    private def finalizeBreakAndContinueMultiplexers(IASTCompoundStatement stmt, State whileState, DataflowRegion whileRegion) {
+        // collect all break and continue states in the while loop
+        var List<State> breakStates = collectStates(breakName, whileRegion)
+        var List<State> continueStates = collectStates(continueName, whileRegion)
+        
+        // finalize every break and continue state
+        finalize(breakStates, breakName, whileState, whileRegion)
+        finalize(continueStates, continueName, whileState, whileRegion)
+    }
+    
+    /**
+     * Collects all states from a DataflowRegion that have a name starting with a specific prefix.
+     * @param prefix The prefix that determines which states are meant to be collected.
+     * @param dataflowRegion The states are collected from this dataflow region.
+     */ 
+    private def List<State> collectStates(String prefix, DataflowRegion dataflowRegion){
+                var List<State> states = new ArrayList
+                for (decl : dataflowRegion.declarations) {
             if (decl instanceof ReferenceDeclaration) {
                 var state = decl.reference as State
-                if (state.name.startsWith(breakName + ssaNameSeperator)) {
-                    breakStates.add(state)
+                if (state.name.startsWith(prefix + ssaNameSeperator)) {
+                    states.add(state)
                 }
             }
         }
-        breakStates.sortBy[state | state.name]
-
-        // finalize every break state
-        for (var i = breakStates.length - 1; i >= 0; i--) {
-            var breakState = breakStates.get(i)
+        
+         states.sortBy[state | state.name]
+         return states
+    }
+    
+     /**
+     * Actual work logic of finalizeMultiplexers
+     * Finalizes already created break multiplexers in a specific while.
+     * This means for example that it adds inputs and outputs to them.
+     * 
+     *   @param stmt compound statement/do-block of the while 
+     *   @param whileState The state of the while
+     *   @param whileRegion The while state's dataflow region
+     */
+    private def void finalize(List<State>states, String name, State whileState, DataflowRegion whileRegion){
+                for (var i = states.length - 1; i >= 0; i--) {
+            var breakState = states.get(i)
             var breakObj = stateObjects.get(breakState)
 
             // determine the inputs of the break state
@@ -1697,7 +1742,9 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                     varList.add(innerOutputVO)
                     breakVars.put(input.label, varList)
                 }
-                createOutputVo(breakName, Integer.parseInt(breakState.name.substring(breakName.length+1)), whileState, breakObj, whileRegion, innerOutputVO)
+                createOutputVo(name, Integer.parseInt(breakState.name.substring(name.length+1)), whileState, 
+                    breakObj, whileRegion, innerOutputVO
+                )
             }
     
             // determine the if state the break stmt is in
@@ -2024,6 +2071,84 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         hierarchy.put(breakState, lastWhileRegion)
         stateObjects.put(breakState, breakObj)
         
+    }
+    /**
+     * Translates a break or continue statement depending on the passed statement.   
+     */
+    private def void buildBreakOrContinue(IASTStatement passedStmt, State rootState, DataflowRegion dRegion){
+        var localName = ""
+        var anno = ""
+        var localCounter = 0
+        
+        //Change stmt type dependant variables
+        switch(passedStmt){
+            IASTBreakStatement:{
+                localName = breakName
+                anno = breakAnno
+                localCounter = breakCounter
+                breakCounter++
+            }
+            IASTContinueStatement:{
+                localName = continueName
+                anno = breakAnno
+                localCounter = continueCounter
+                continueCounter++
+            }
+        }
+        
+        // Create the state
+        val newState = createState(localName + ssaNameSeperator + localCounter)
+        newState.annotations += createTagAnnotation("Hide")
+        newState.annotations += createStringAnnotation(anno, "" + (ifCounter-1))
+        newState.addStringAnnotation("figure", "BigMult.kgt")
+        if (serializable) {
+            rootSCChart.rootStates += newState
+        }
+
+        // determine the current while state and the corresponding stmt
+        var State whileState = null
+        for (state : rootSCChart.rootStates) {
+            if (state.name.contains(whileName + ssaNameSeperator + (whileCounter - 1))) {
+                whileState = state
+            }
+        }
+        
+        //Move upwards in the AST until finding the parent while statement
+        var stmt = passedStmt as IASTNode
+        while (!(stmt instanceof IASTWhileStatement)) {
+            stmt = stmt.parent
+        }
+        var whileStmt = stmt as IASTWhileStatement
+
+        // create ref decl and valued  object
+        val newRefDecl = createReferenceDeclaration
+        lastWhileRegion.declarations += newRefDecl
+        newRefDecl.setReference(newState)
+        val newObj = newRefDecl.createValuedObject(localName + ssaNameSeperator + localCounter)
+        newObj.annotations += createTagAnnotation(multiplexerTag)
+
+
+        // Create the region for the body part
+        val newRegion = newState.createDataflowRegion("")
+        newState.regions += newRegion
+        newRegion.label = localName + ssaNameSeperator + localCounter
+        
+        // set the first half of the inputs for the break state 
+        var breakDependableVars = findBreakOutputs(whileStmt.getBody as IASTCompoundStatement,
+        passedStmt.parent.parent as IASTIfStatement, whileState)  
+        val st = whileState 
+        var vars = breakDependableVars.map[s |findValuedObjectByName(st, s, false,lastWhileRegion)].toList
+        vars.forEach[v | v.addTagAnnotation(posTag)]
+        setMultInput(vars, newState, lastWhileRegion, newObj, false)
+        
+        // adjust name and label of the state variables
+        val name = localName
+        getStateVariables(newState).forEach[p1, p2| p2.get(0).name = name + ssaNameSeperator + p2.get(0).name;
+                                      p2.get(0).label = name + ssaNameSeperator + p2.get(0).label
+        ]
+        
+        hierarchy.put(newState, lastWhileRegion)
+        stateObjects.put(newState, newObj)
     }
 
     /**
