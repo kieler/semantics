@@ -62,30 +62,31 @@ class Ode extends SCChartsProcessor implements Traceable {
         
         for (odeAction : state.odeActions.toList) {
             for (odeAssignment : odeAction.effects.filter[it instanceof Assignment]) {
-                    val vo = getDT(targetRootRegion)
-                    
-                    val multExpression = createMultExpression => [subExpressions += (odeAssignment as Assignment).expression; subExpressions += vo.reference]
-                    val assignment = (odeAssignment as Assignment).valuedObject.createAssignment(multExpression, AssignOperator.ASSIGNADD)                       
-                    
-                    state.createImmediateDuringAction => [effects += assignment]
-                    
-                    state.actions.remove(odeAction)
-                    
+                val vo = getDT(targetRootRegion)
+
+                val multExpression = createMultExpression => [
+                    subExpressions += (odeAssignment as Assignment).expression;
+                    subExpressions += vo.reference
+                ]
+                val assignment = (odeAssignment as Assignment).valuedObject.createAssignment(multExpression,AssignOperator.ASSIGNADD)
+
+                state.createImmediateDuringAction => [effects += assignment]
+
+                state.actions.remove(odeAction)
+
             }
         }
         
     }
     
-    def ValuedObject getDT(State targetRootRegion) {
-        if (targetRootRegion.valuedObjectsList.exists[TimedAutomata.DELTA_T_NAME.equalsIgnoreCase(name)]) {
-            val vo = targetRootRegion.valuedObjectsList.findFirst[TimedAutomata.DELTA_T_NAME.equalsIgnoreCase(name)]
-            vo         
+    def ValuedObject getDT(State rootState) {
+        if (rootState.valuedObjectsList.exists[TimedAutomata.DELTA_T_NAME.equalsIgnoreCase(name)]) {
+            val vo = rootState.valuedObjectsList.findFirst[TimedAutomata.DELTA_T_NAME.equalsIgnoreCase(name)]
+            vo
         } else {
             environment.errors.add("The variable " + TimedAutomata.DELTA_T_NAME + " should already exist at this point")
             null
         }
-        
-    
     }
     
     def SCCharts transform(SCCharts sccharts) {
