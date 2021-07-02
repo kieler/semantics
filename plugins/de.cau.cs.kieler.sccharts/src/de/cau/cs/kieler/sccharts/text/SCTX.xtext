@@ -188,7 +188,7 @@ CounterVariable returns kexpressions::ValuedObject:
 // -------------- //
 	
 LocalAction returns sccharts::LocalAction:
-    EntryAction | DuringAction | ExitAction | SuspendAction | PeriodAction;    
+    EntryAction | DuringAction | ExitAction | SuspendAction | PeriodAction | OdeAction;
 
 EntryAction returns sccharts::EntryAction:
     {sccharts::EntryAction}
@@ -223,6 +223,12 @@ PeriodAction returns sccharts::PeriodAction:
     delay=DelayType? 'period' trigger=ValuedExpression
     ('label' label=STRING)?;
 
+OdeAction returns sccharts::OdeAction:
+    {sccharts::OdeAction}
+    annotations+=RestrictedTypeAnnotation*
+    'ode' effects+=Effect
+    ('label' label=STRING)?;
+    
 // ----- //
 //  SCL  // 
 // ----- //

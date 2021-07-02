@@ -217,6 +217,8 @@ public class SCTXParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getSuspendActionAccess().getGroup_6(), "rule__SuspendAction__Group_6__0");
 			builder.put(grammarAccess.getPeriodActionAccess().getGroup(), "rule__PeriodAction__Group__0");
 			builder.put(grammarAccess.getPeriodActionAccess().getGroup_5(), "rule__PeriodAction__Group_5__0");
+			builder.put(grammarAccess.getOdeActionAccess().getGroup(), "rule__OdeAction__Group__0");
+			builder.put(grammarAccess.getOdeActionAccess().getGroup_4(), "rule__OdeAction__Group_4__0");
 			builder.put(grammarAccess.getCodeEffectAccess().getGroup(), "rule__CodeEffect__Group__0");
 			builder.put(grammarAccess.getClassDeclarationWOSemicolonAccess().getGroup(), "rule__ClassDeclarationWOSemicolon__Group__0");
 			builder.put(grammarAccess.getClassDeclarationWOSemicolonAccess().getGroup_9_0(), "rule__ClassDeclarationWOSemicolon__Group_9_0__0");
@@ -667,6 +669,9 @@ public class SCTXParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getPeriodActionAccess().getDelayAssignment_2(), "rule__PeriodAction__DelayAssignment_2");
 			builder.put(grammarAccess.getPeriodActionAccess().getTriggerAssignment_4(), "rule__PeriodAction__TriggerAssignment_4");
 			builder.put(grammarAccess.getPeriodActionAccess().getLabelAssignment_5_1(), "rule__PeriodAction__LabelAssignment_5_1");
+			builder.put(grammarAccess.getOdeActionAccess().getAnnotationsAssignment_1(), "rule__OdeAction__AnnotationsAssignment_1");
+			builder.put(grammarAccess.getOdeActionAccess().getEffectsAssignment_3(), "rule__OdeAction__EffectsAssignment_3");
+			builder.put(grammarAccess.getOdeActionAccess().getLabelAssignment_4_1(), "rule__OdeAction__LabelAssignment_4_1");
 			builder.put(grammarAccess.getCodeEffectAccess().getAnnotationsAssignment_1(), "rule__CodeEffect__AnnotationsAssignment_1");
 			builder.put(grammarAccess.getCodeEffectAccess().getDeclarationsAssignment_3(), "rule__CodeEffect__DeclarationsAssignment_3");
 			builder.put(grammarAccess.getCodeEffectAccess().getStatementsAssignment_4(), "rule__CodeEffect__StatementsAssignment_4");
