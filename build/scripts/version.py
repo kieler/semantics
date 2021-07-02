@@ -89,7 +89,7 @@ def main(args):
 
     print '\n- Updating CLI products -'
     # check pom files
-    for cli in ['de.cau.cs.kieler.kicool.cli','de.cau.cs.kieler.sccharts.cli','de.cau.cs.kieler.language.server.cli']:
+    for cli in ['de.cau.cs.kieler.kicool.cli','de.cau.cs.kieler.kicool.klighd.cli','de.cau.cs.kieler.sccharts.cli','de.cau.cs.kieler.language.server.cli']:
         pom = join(args.path, 'build', cli, 'pom.xml')
         if not isfile(pom):
             print 'pom.xml does not exist: ' + pom
