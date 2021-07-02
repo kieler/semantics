@@ -80,13 +80,11 @@ class Ode extends SCChartsProcessor implements Traceable {
     }
     
     def ValuedObject getDT(State rootState) {
-        if (rootState.valuedObjectsList.exists[TimedAutomata.DELTA_T_NAME.equalsIgnoreCase(name)]) {
-            val vo = rootState.valuedObjectsList.findFirst[TimedAutomata.DELTA_T_NAME.equalsIgnoreCase(name)]
-            vo
-        } else {
-            environment.errors.add("The variable " + TimedAutomata.DELTA_T_NAME + " should already exist at this point")
-            null
+        val vo = TimedAutomata.findDeltaT(rootState)
+        if (vo === null) {
+            environment.errors.add("The variable " + TimedAutomata.DELTA_T_NAME + " should already exist at this point!")
         }
+        return vo
     }
     
     def SCCharts transform(SCCharts sccharts) {
