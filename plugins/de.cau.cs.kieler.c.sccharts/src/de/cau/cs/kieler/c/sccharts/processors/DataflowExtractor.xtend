@@ -196,12 +196,13 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
 
     /** Tag annotation string for custom multiplexers*/
     static final String multiplexerTag = "mult"
-    /** Tag annotation string of the port group for the negative case in custom multiplexers */
+    /** Tag annotation string of the port group for the positive case in custom multiplexers */
     static final String posTag = "pos"
     /** Tag annotation string of the port group for the negative case in custom multiplexers */
     static final String negTag = "neg"
     
-    static final String breakAnno = "ifCounter"
+    /** annotation for break/continue states that saves in which if stmt the break/continue is in */
+    static final String breakContinueAnno = "ifCounter"
 
     /** The index for the project the translated file is in, or null if none found. */
     var IIndex index
@@ -224,9 +225,14 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
     var continueCounter = 0;
     var multiplexerCounter = 0;
 
+    // needed to add break/continue states to the correct while state
     var DataflowRegion lastWhileRegion = null
-    var breakFlag = false
+    var breakContinueFlag = false
+    
+    /** parent region of a state */
     val Map<State, DataflowRegion> hierarchy = newHashMap
+    
+    /** the valued object of a state */
     val Map<State, ValuedObject> stateObjects = newHashMap
 
     val Map<State, Map<String, List<ValuedObject>>> valuedObjects = newHashMap
@@ -661,9 +667,9 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 lastWhileRegion = dfRegion
             }
         }
-        if (breakFlag && bodyState.name.contains(whileName + ssaNameSeperator)) {
-            finalizeBreakAndContinueMultiplexers(body, bodyState, dfRegion)
-            breakFlag = false
+        if (breakContinueFlag && bodyState.name.contains(whileName + ssaNameSeperator)) {
+            finalizeBreakAndContinueStates(body, bodyState, dfRegion)
+            breakContinueFlag = false
         }
         linkOutputs(bodyState, dfRegion)
 
@@ -674,62 +680,54 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
     /**
      * Searches the outputs that should be led into a break multiplexer 
      *  since they depend on whether a break is taken or not taken.
-     * */
-    def findBreakOutputs(IASTCompoundStatement whileBody, IASTIfStatement ifStmt, State parentState) {
-
+     * 
+     */
+    private def findBreakOutputs(IASTCompoundStatement whileBody, IASTIfStatement ifStmt, State parentState) {
         var breakFound = false
         var HashSet<String> outputs = new HashSet()
-        for (stm : whileBody.statements) {
-            if (stm instanceof IASTIfStatement && !breakFound) {
-
-                if (containsSearchedIfStmt(stm as IASTIfStatement, ifStmt)) {
+        for (stmt : whileBody.statements) {
+            if (stmt instanceof IASTIfStatement && !breakFound) {
+                if (containsSearchedIfStmt(stmt as IASTIfStatement, ifStmt)) {
                     breakFound = true
                     outputs.addAll(breakDependableVarsInIfTree(ifStmt, parentState))          
                 }
-                
             } else {
                 if (breakFound) {
-                    outputs.addAll(findOutputs(stm, parentState, true))
+                    outputs.addAll(findOutputs(stmt, parentState, true))
                 }
             }
-
         }
-
         return outputs
     }
     
-        /**
+    /**
      * Checks if the passed if statement is the searched if statement or if the latter 
      *  is a parent of the passed if statement.
      */
-    def Boolean containsSearchedIfStmt(IASTIfStatement outerIf, IASTIfStatement searchedIf) {
-
+    private def Boolean containsSearchedIfStmt(IASTIfStatement outerIf, IASTIfStatement searchedIf) {
         if (outerIf == searchedIf) {
             return true;
         }
-        var elseSize = 0
-        val thenStmnts = (outerIf.thenClause as IASTCompoundStatement).statements.toList
+        val thenStmts = (outerIf.thenClause as IASTCompoundStatement).statements.toList
         
-        var List<IASTStatement> elseStmnts
+        var List<IASTStatement> elseStmts
         if (outerIf.elseClause !== null) {
-            elseStmnts = (outerIf.elseClause as IASTCompoundStatement).statements.toList
-            elseSize = elseStmnts.length
+            elseStmts = (outerIf.elseClause as IASTCompoundStatement).statements.toList
         }
         
-        val List<IASTStatement> allStmnts = newArrayList
+        val List<IASTStatement> allStmts = newArrayList
         if (outerIf.elseClause !== null) {
-            allStmnts.addAll(elseStmnts)
+            allStmts.addAll(elseStmts)
         }
-        allStmnts.addAll(thenStmnts)
+        allStmts.addAll(thenStmts)
         
-        for (s : allStmnts) {
+        for (s : allStmts) {
             if (s instanceof IASTIfStatement && containsSearchedIfStmt(s as IASTIfStatement, searchedIf)) {
                 return true;
             }
         }
 
         return false;
-
     }
     
     /**
@@ -737,7 +735,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
      * the break is taken or not taken.
      */
 
-    def breakDependableVarsInIfTree(IASTIfStatement searchedIf, State parentState){
+    private def breakDependableVarsInIfTree(IASTIfStatement searchedIf, State parentState){
         var HashSet<String> vars = <String>newHashSet
         
         var currentlySearchedIf = searchedIf
@@ -745,9 +743,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         var ifFound = false
         
         while (parentClause.parent instanceof IASTIfStatement) {
-
             for (s : parentClause.statements) {
-
                 // Look in the current level whether the searchedIf is present and add all variables to the result
                 // that are textually defined below it
                 if (!ifFound) {
@@ -757,7 +753,6 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 } else {
                     vars.addAll(findOutputs(s, parentState, true))
                 }
-
             }
             // Step one if level upwards
             currentlySearchedIf = parentClause.parent as IASTIfStatement
@@ -853,17 +848,16 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
      * Translate a Break statement
      */
     def dispatch void buildStatement(IASTBreakStatement stmt, State rootState, DataflowRegion dRegion) {
-        breakFlag = true
-        //buildBreak(stmt, rootState, dRegion)
-        buildBreakOrContinue(stmt, rootState, dRegion)
+        breakContinueFlag = true
+        buildBreakOrContinue(stmt)
     }
     
     /**
      * Translate a Continue statement
      */
     def dispatch void buildStatement(IASTContinueStatement stmt, State rootState, DataflowRegion dRegion) {
-        breakFlag = true
-        buildBreakOrContinue(stmt, rootState, dRegion)
+        breakContinueFlag = true
+        buildBreakOrContinue(stmt)
     }
 
     /**
@@ -956,7 +950,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         ifRegion.label = ifName + ssaNameSeperator + localIfCounter
 
         // Create if state, its dataflow region, and conditional obj
-        val condRes = addConditionBox(localIfCounter, node as IASTStatement, ifState, ifRegion)
+        val condRes = createCondDF(localIfCounter, node as IASTStatement, ifState, ifRegion)
         val condRegion = condRes.key
         val condState = condRes.value.key
         val conditionalObj = condRes.value.value
@@ -1561,8 +1555,8 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         }
         whileRegion.label = whileName + ssaNameSeperator + localWhileCounter
 
-        // Create the cond state
-        val condRes = addConditionBox(localWhileCounter, whileStmt, whileState, whileRegion)
+        // Create the cond state, region, and object
+        val condRes = createCondDF(localWhileCounter, whileStmt, whileState, whileRegion)
         val condRegion = condRes.key
         val condState = condRes.value.key
         val condObj = condRes.value.value
@@ -1602,7 +1596,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             positiveOutputs += returnObjectName
         }
 
-        // For each output, find the output VO and connect them to a conditional
+        // For each output, find the output VO and collect them
         var multInputs = new ArrayList
         var multOutputs = new ArrayList
         for (output : positiveOutputs) {
@@ -1611,7 +1605,8 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 flatMap [
                     it.valuedObjects
                 ].filter[it.label == output].head
-
+            
+            // create corresponding output vo with "state_[varName]" as label
             var ValuedObject positiveOutputVo
             if (innerOutputVo !== null) {
                 positiveOutputVo = createOutputVo(whileBodyName, localWhileCounter, whileState, bodyObj, whileRegion,
@@ -1626,9 +1621,10 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 positiveOutputVo = whileOutputVo
             }
 
-            // input VO
+            // output VO for negative case
             var ValuedObject negativeOutputVo = whileOutputVo
-
+            
+            // find corresponding output vo of the while state
             val outputVo = whileState.findOutputVar(output)
 
             if (positiveOutputVo !== null) {
@@ -1639,11 +1635,10 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 negativeOutputVo.addTagAnnotation(negTag)
                 multInputs.add(negativeOutputVo)
             }
-
             multOutputs.add(outputVo)
-
         }
-
+        
+        // add a big multiplexer
         createMultiplexer(whileRegion, condOutputVo, multInputs, multOutputs);
 
         linkReturn(whileState, rootState, whileRegion, dRegion, whileObj)
@@ -1659,476 +1654,6 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         ]
     }
 
-   /**
-     * Finalizes already created break multiplexers in a specific while.
-     * This means for example that it adds inputs and outputs to them.
-     * 
-     *   @param stmt compound statement/do-block of the while 
-     *   @param whileState The state of the while
-     *   @param whileRegion The while state's dataflow region
-     */
-    private def finalizeBreakAndContinueMultiplexers(IASTCompoundStatement stmt, State whileState, DataflowRegion whileRegion) {
-        // collect all break and continue states in the while loop
-        var List<State> breakStates = collectStates(breakName, whileRegion)
-        var List<State> continueStates = collectStates(continueName, whileRegion)
-        
-        // finalize every break and continue state
-        finalize(breakStates, breakName, whileState, whileRegion)
-        finalize(continueStates, continueName, whileState, whileRegion)
-    }
-    
-    /**
-     * Collects all states from a DataflowRegion that have a name starting with a specific prefix.
-     * @param prefix The prefix that determines which states are meant to be collected.
-     * @param dataflowRegion The states are collected from this dataflow region.
-     */ 
-    private def List<State> collectStates(String prefix, DataflowRegion dataflowRegion){
-                var List<State> states = new ArrayList
-                for (decl : dataflowRegion.declarations) {
-            if (decl instanceof ReferenceDeclaration) {
-                var state = decl.reference as State
-                if (state.name.startsWith(prefix + ssaNameSeperator)) {
-                    states.add(state)
-                }
-            }
-        }
-        
-         states.sortBy[state | state.name]
-         return states
-    }
-    
-     /**
-     * Actual work logic of finalizeMultiplexers
-     * Finalizes already created break multiplexers in a specific while.
-     * This means for example that it adds inputs and outputs to them.
-     * 
-     *   @param stmt compound statement/do-block of the while 
-     *   @param whileState The state of the while
-     *   @param whileRegion The while state's dataflow region
-     */
-    private def void finalize(List<State>states, String name, State whileState, DataflowRegion whileRegion){
-                for (var i = states.length - 1; i >= 0; i--) {
-            var breakState = states.get(i)
-            var breakObj = stateObjects.get(breakState)
-
-            // determine the inputs of the break state
-            val vars = new ArrayList()
-            getStateVariables(breakState).forEach[key, value| vars.add(key)]
-            var breakInputs = new ArrayList()
-            for (label : vars) {
-                var vo = whileState.findValuedObjectByName(label, false, lastWhileRegion)
-                vo.label = label
-                vo.addTagAnnotation(negTag)
-                breakInputs.add(vo)
-            }
-    
-            // create output vars
-            var breakVars = getStateVariables(breakState)
-            for (input : breakInputs) {
-                val outputDecl = createVariableDeclaration
-                outputDecl.type = input.type
-                outputDecl.output = true
-    
-                breakState.declarations += outputDecl
-                val innerOutputVO = outputDecl.createValuedObject(input.label + outSuffix)
-                innerOutputVO.label = input.label
-    
-                // Add the new create valued object to the ssa list and valued object list
-                if (breakVars.containsKey(input.label)) {
-                    var varList = breakVars.get(input.label)
-                    varList.add(innerOutputVO)
-                } else {
-                    var varList = <ValuedObject>newArrayList
-                    varList.add(innerOutputVO)
-                    breakVars.put(input.label, varList)
-                }
-                createOutputVo(name, Integer.parseInt(breakState.name.substring(name.length+1)), whileState, 
-                    breakObj, whileRegion, innerOutputVO
-                )
-            }
-    
-            // determine the if state the break stmt is in
-            var State ifState
-            var localIfCounter = Integer.parseInt(breakState.getStringAnnotationValue(breakAnno))
-            for (state : rootSCChart.rootStates) {
-                if (state.name.equals(ifName + ssaNameSeperator + localIfCounter)) {
-                    ifState = state
-                }
-            }
-            
-            // condition is passed to the while region in which the break state is
-            // and all conditions on the way are collected
-            var List<ValuedObject> conditions = new ArrayList
-            var parentRegion = ifState.regions.get(0) as DataflowRegion
-            while (parentRegion !== lastWhileRegion) {
-                var parentState = parentRegion.eContainer as State
-                
-                if (parentState.name.startsWith(ifName + ssaNameSeperator)) {
-                    // get the local conditional vo in the if state
-                    for (decl : parentRegion.declarations) {
-                        if (decl instanceof VariableDeclaration) {
-                            var vo = decl.valuedObjects.get(0)
-                            if (vo.name.equals(conditionalResultName)) {
-                                conditions.add(vo)
-                            }
-                        }
-                    }
-                }
-                
-                var List<ValuedObject> condOutputs = new ArrayList
-                // for each condition an output vo must be created
-                for (var j = 0; j < conditions.length; j++) {
-                    val condOutput = conditions.get(j)
-                    // create condition output in the parent state
-                    val outputDecl = createVariableDeclaration
-            
-                    outputDecl.type = ValueType::BOOL
-                    outputDecl.output = true
-                    parentState.declarations += outputDecl
-                    
-                    var varName = hiddenVariableName + ssaNameSeperator + j
-                    val varList = <ValuedObject>newArrayList
-            
-                    val outputVO = outputDecl.createValuedObject(varName + outSuffix)
-                    outputVO.label = varName
-            
-                    varList.add(outputVO)
-            
-                    getStateVariables(parentState).put(varName, varList)
-                    parentRegion.equations += createDataflowAssignment(outputVO, condOutput.reference)
-                    
-                    val parentObj = stateObjects.get(parentState)
-                    
-                    var label = condOutput.label.startsWith(ifName + ssaNameSeperator) ? 
-                        condOutput.label.split("_").get(1) : parentRegion.label.split("_").get(1)
-                    // condition vo that can be used by the next state
-                    condOutputs.add(createOutputVo(ifName, Integer.parseInt(label), parentState, parentObj, 
-                        hierarchy.get(parentState), outputVO
-                    ))
-                }
-                parentRegion = hierarchy.get(parentState)
-                conditions = condOutputs
-            }
-            
-            // create local var for result auf "AND"
-            val label = hiddenVariableName
-            val decl = createVariableDeclaration
-            whileRegion.declarations += decl
-            decl.type = ValueType.BOOL
-            decl.annotations += createTagAnnotation("Hide")
-            val innerInputVO = decl.createValuedObject(label)
-            innerInputVO.label = label
-
-            // combine the conditions with an "AND" operator
-            val conds_ = conditions
-            var expr = createLogicalAndExpression() => [
-                        for (cond : conds_) {
-                            it.subExpressions += cond.reference
-                        }
-                    ]
-            
-            whileRegion.equations += createDataflowAssignment(innerInputVO, expr)
-            
-            // set the inputs of the break state  
-            setMultInput(breakInputs, breakState, whileRegion, breakObj, false)
-            setMultInput(#[innerInputVO], breakState, whileRegion, breakObj, true)
-        }
-    }
-
-    def createOutputVo(String name, int counter, State state, ValuedObject obj, DataflowRegion region,
-        ValuedObject output) {
-        var ValuedObject outputVo
-        // Assign the state output to a new "state_[varName]" variable in the region
-        // For that, create a new variable declaration
-        val variableDeclaration = createVariableDeclaration
-        variableDeclaration.type = output.type
-        region.declarations += variableDeclaration
-        // Retrieve the state's variable map
-        var Map<String, List<ValuedObject>> stateVariables = getStateVariables(state)
-        val varName = name + ssaNameSeperator + counter + output.label
-        // Reuse the vo variable, now pointing to a new VO in the state
-        outputVo = variableDeclaration.createValuedObject(varName)
-        outputVo.label = varName
-        region.declarations += variableDeclaration
-        variableDeclaration.annotations += createTagAnnotation("Hide")
-        val innerPositiveOutputVo_ = output
-        // This assignment is of the form 'varName = obj.varName'
-        val source = obj.reference => [
-            subReference = innerPositiveOutputVo_.reference
-        ]
-        region.equations += createDataflowAssignment(outputVo, source)
-        
-        // Add the new create valued object to the ssa list and valued object list
-        if (stateVariables.containsKey(output.label)) {
-            var varList = stateVariables.get(output.label)
-            varList.add(outputVo)
-        } else {
-            var varList = <ValuedObject>newArrayList
-            varList.add(outputVo)
-            stateVariables.put(output.label, varList)
-        }
-
-        return outputVo
-    }
-
-    /**
-     * Creates a multiplexer state based on an referenced SCCharts state that merges the outputs of (two) inner states
-     * based on a condition. The edge to the conditional input is laid out at the south of the multiplexer.
-     * 
-     * @param parentRegion Region of the parent state that includes the Multiplexer
-     * @param condOutputVo ValuedObject of the output representing the condition "choosing" the input branch 
-     * @param multInputs Inputs of the multiplexer
-     * @param multOutputs Outputs of the multiplexer
-     * 
-     */
-    def createMultiplexer(DataflowRegion parentRegion, ValuedObject condOutputVo, ArrayList<ValuedObject> multInputs,
-        ArrayList<ValuedObject> multOutputs) {
-        // Create the multiplexer state and according reference into the while dataflow region.
-        val multState = createState(multiplexerName + ssaNameSeperator + multiplexerCounter)
-        multState.addStringAnnotation("figure", "BigMult.kgt")
-        multState.annotations += createTagAnnotation("Hide")
-//        multState.annotations += createTagAnnotation(multiplexerTag)
-        if (serializable) {
-            rootSCChart.rootStates += multState
-        }
-        val multRefDecl = createReferenceDeclaration
-        parentRegion.declarations += multRefDecl
-        multRefDecl.setReference(multState)
-        val multObj = multRefDecl.createValuedObject(multiplexerName + ssaNameSeperator + multiplexerCounter)
-
-        setMultInput(multInputs, multState, parentRegion, multObj, false)
-        setMultInput(#[condOutputVo], multState, parentRegion, multObj, true)
-
-        setMultOutputs(multOutputs, multState, parentRegion, multObj)
-
-        // Create the region for the body part
-        val multRegion = multState.createDataflowRegion(multiplexerName + ssaNameSeperator + multiplexerCounter)
-        multState.regions += multRegion
-        multRegion.label = " "
-
-        // Add tag annotation so that the multiplexer is identifiable in EquationSynthesis in a clean way
-        multObj.addTagAnnotation(multiplexerTag)
-        multiplexerCounter++
-    }
-
-    /**
-     * Sets the output of a custom multiplexer state. 
-     * 
-     * @param outputs The outs as ValuedObjects that leave  the multiplexer
-     * @param newState The state of the multiplexer.
-     * @param dRegion The parent DataflowRegion including the multiplexer's state.
-     * @param refObj the ReferenceDeclaration of the multiplexer
-     */
-    def setMultOutputs(ArrayList<ValuedObject> outputs, State newState, DataflowRegion dRegion, ValuedObject refObj) {
-        for (outputVO : outputs) {
-            // Retrieve the state's valued object map
-            var Map<String, List<ValuedObject>> stateVariables = getStateVariables(newState)
-            val outputRootDecl = outputVO.getVariableDeclaration
-            val outputType = outputRootDecl.getType
-
-            // Create the input for the control statement state
-            val decl = createVariableDeclaration
-            newState.declarations += decl
-            decl.type = outputType
-            decl.output = true
-            val innerOutputVO = decl.createValuedObject(outputVO.label + outSuffix)
-            innerOutputVO.label = outputVO.label
-
-            // Add the new create valued object to the ssa list and valued object list
-            if (stateVariables.containsKey(outputVO.label)) {
-                var varList = stateVariables.get(outputVO.label)
-                varList.add(innerOutputVO)
-            } else {
-                var varList = <ValuedObject>newArrayList
-                varList.add(innerOutputVO)
-                stateVariables.put(outputVO.label, varList)
-            }
-
-            // Create the assignment
-            val target = outputVO
-            if (refObj === null) {
-                dRegion.equations += createDataflowAssignment(target, innerOutputVO.reference)
-            } else {
-                val source = refObj.reference => [
-                    subReference = innerOutputVO.reference
-                ]
-                dRegion.equations += createDataflowAssignment(target, source)
-            }
-
-        }
-    }
-
-    /**
-     * Sets the inputs of a custom multiplexer state. 
-     * 
-     * @param inputs The inputs as ValuedObjects that are led into the multiplexer
-     * @param newState The state of the multiplexer.
-     * @param dRegion The parent DataflowRegion including the multiplexer's state.
-     * @param refObj the ReferenceDeclaration of the multiplexer
-     * @param cond Signifies whether the input should be interpreted as the condition
-     */
-    def setMultInput(List<ValuedObject> inputs, State newState, DataflowRegion dRegion, ValuedObject refObj,
-        boolean cond) {
-        for (inputVO : inputs) {
-            val label = inputVO.label !== null ? inputVO.label : inputVO.name.split("_").get(0)
-            // Retrieve the state's valued object map
-            var Map<String, List<ValuedObject>> stateVariables = getStateVariables(newState)
-            val inputRootDecl = inputVO.getVariableDeclaration
-            val inputType = inputRootDecl.getType
-
-            // Create the input for the control statement state
-            val decl = createVariableDeclaration
-            newState.declarations += decl
-            decl.type = inputType
-            decl.input = true
-            val innerInputVO = decl.createValuedObject(label + inSuffix)
-            if (!inputVO.annotations.empty) {
-                innerInputVO.addTagAnnotation((inputVO.annotations.get(0) as TagAnnotation).name)
-            }
-            innerInputVO.label = label
-
-            // Add the new create valued object to the ssa list and valued object list
-            if (stateVariables.containsKey(label)) {
-                var varList = stateVariables.get(label)
-                varList.add(innerInputVO)
-            } else {
-                var varList = <ValuedObject>newArrayList
-                varList.add(innerInputVO)
-                stateVariables.put(label, varList)
-            }
-
-            // Create the assignment
-            if (refObj === null) {
-                var eq = createDataflowAssignment(innerInputVO, inputVO.reference)
-                if (cond) {
-                    eq.addStringAnnotation("toPort", "in1")
-                }
-                dRegion.equations += eq
-            } else {
-                var eq = createDataflowAssignment(refObj, innerInputVO, inputVO.reference)
-                if (cond) {
-                    eq.addStringAnnotation("toPort", "in1")
-                }
-                dRegion.equations += eq
-            }
-        }
-    }
-   
-    /**
-     * Translates a break or continue statement depending on the passed statement.   
-     */
-    private def void buildBreakOrContinue(IASTStatement passedStmt, State rootState, DataflowRegion dRegion){
-        var localName = ""
-        var anno = ""
-        var localCounter = 0
-        
-        //Change stmt type dependant variables
-        switch(passedStmt){
-            IASTBreakStatement:{
-                localName = breakName
-                anno = breakAnno
-                localCounter = breakCounter
-                breakCounter++
-            }
-            IASTContinueStatement:{
-                localName = continueName
-                anno = breakAnno
-                localCounter = continueCounter
-                continueCounter++
-            }
-        }
-        
-        // Create the state
-        val newState = createState(localName + ssaNameSeperator + localCounter)
-        newState.annotations += createTagAnnotation("Hide")
-        newState.annotations += createStringAnnotation(anno, "" + (ifCounter-1))
-        newState.addStringAnnotation("figure", "BigMult.kgt")
-        if (serializable) {
-            rootSCChart.rootStates += newState
-        }
-
-        // determine the current while state and the corresponding stmt
-        var State whileState = null
-        for (state : rootSCChart.rootStates) {
-            if (state.name.contains(whileName + ssaNameSeperator + (whileCounter - 1))) {
-                whileState = state
-            }
-        }
-        
-        //Move upwards in the AST until finding the parent while statement
-        var stmt = passedStmt as IASTNode
-        while (!(stmt instanceof IASTWhileStatement)) {
-            stmt = stmt.parent
-        }
-        var whileStmt = stmt as IASTWhileStatement
-
-        // create ref decl and valued  object
-        val newRefDecl = createReferenceDeclaration
-        lastWhileRegion.declarations += newRefDecl
-        newRefDecl.setReference(newState)
-        val newObj = newRefDecl.createValuedObject(localName + ssaNameSeperator + localCounter)
-        newObj.annotations += createTagAnnotation(multiplexerTag)
-
-
-        // Create the region for the body part
-        val newRegion = newState.createDataflowRegion("")
-        newState.regions += newRegion
-        newRegion.label = localName + ssaNameSeperator + localCounter
-        
-        // set the first half of the inputs for the break state 
-        var breakDependableVars = findBreakOutputs(whileStmt.getBody as IASTCompoundStatement,
-        passedStmt.parent.parent as IASTIfStatement, whileState)  
-        val st = whileState 
-        var vars = breakDependableVars.map[s |findValuedObjectByName(st, s, false,lastWhileRegion)].toList
-        vars.forEach[v | v.addTagAnnotation(posTag)]
-        setMultInput(vars, newState, lastWhileRegion, newObj, false)
-        
-        // adjust name and label of the state variables
-        val name = localName
-        getStateVariables(newState).forEach[p1, p2| p2.get(0).name = name + ssaNameSeperator + p2.get(0).name;
-                                      p2.get(0).label = name + ssaNameSeperator + p2.get(0).label
-        ]
-        
-        hierarchy.put(newState, lastWhileRegion)
-        stateObjects.put(newState, newObj)
-    }
-
-    /**
-     * Translate a Do statement
-     */
-    def void buildDo(IASTDoStatement doStmt, State rootState, DataflowRegion dRegion) {
-        // Create the state        
-        val doState = createState(doName + ssaNameSeperator + doCounter)
-        doState.annotations += createTagAnnotation("Hide")
-        if (serializable) {
-            rootSCChart.rootStates += doState
-        }
-
-        // Create the reference in the containing dataflow region
-        val refDecl = createReferenceDeclaration
-        dRegion.declarations += refDecl
-        refDecl.setReference(doState)
-        val doObj = refDecl.createValuedObject(doName + ssaNameSeperator + doCounter)
-        if (!serializable) {
-            doObj.insertHighlightAnnotations(doStmt)
-        }
-
-        // Set the in and outputs
-        setInputs(doStmt, rootState, doState, dRegion, doObj)
-        setOutputs(doStmt, rootState, doState, dRegion, doObj)
-
-        // Create the condition expression label
-        createKExpression(doStmt.getCondition, doState, dRegion)
-        doState.label = "do ... while (" + exprToString(doStmt.getCondition, sourceFile) + ")"
-        doCounter++
-
-        // Translate the body
-        val doDBodyRegion = createDFRegionForNode(doStmt.getBody, doState, rootState, dRegion, doObj)
-        doState.regions += doDBodyRegion
-        doDBodyRegion.label = doState.label
-
-    }
-
     /**
      * Adds a Condition State with an accompanying DataflowRegion to the surrounding parentRegion.
      * The content of the DataflowRegion is determined by the passed statement.
@@ -2136,10 +1661,10 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
      * @param localCounter Counter of the surrounding statement type
      * @param stmt Statement including the condition expression
      * @param parentState Surrounding State that is meant to get an inner condition state
-     * @param parentRegion Surrounding DataflowRegion of the parentState - The condition state is added to this DataflowRegion
+     * @param parentRegion Surrounding DFRegion of the parentState - The condition state is added to this DFRegion
      * @return The DataflowRegion, State and ValuedObject of the condition
      */
-    private def Pair<DataflowRegion, Pair<State, ValuedObject>> addConditionBox(int localCounter, IASTStatement stmt,
+    private def Pair<DataflowRegion, Pair<State, ValuedObject>> createCondDF(int localCounter, IASTStatement stmt,
         State parentState, DataflowRegion parentRegion) {
 
         var condName = ""
@@ -2181,7 +1706,6 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         condRegion.label = condName
 
         return condRegion -> (condState -> condObj)
-
     }
 
     /**
@@ -2194,10 +1718,10 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
      * @param parentRegion Region that includes the condState
      * @return the found OutputValuedObject of the condition
      */
-    def ValuedObject findCondOutputVo(DataflowRegion condRegion, State condState, ValuedObject condObj,
+    private def ValuedObject findCondOutputVo(DataflowRegion condRegion, State condState, ValuedObject condObj,
         DataflowRegion parentRegion) {
 
-        var condOutput = condRegion.equations.get(0).reference.valuedObject
+        val condOutput = condRegion.equations.get(0).reference.valuedObject
         var ValuedObject condOutputVo
         if (condOutput !== null) {
             // Assign the cond output to a new variable in the while region
@@ -2224,6 +1748,482 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             parentRegion.equations += createDataflowAssignment(condOutputVo, source)
         }
         return condOutputVo
+    }
+
+    /**
+     * Assigns the given vo {@code output} to a new "state_[varName]" variable in {@code region}.
+     * 
+     * @param name Name of the {@code state}
+     * @param counter The counter of {@code state}
+     * @param state The state the created variable should be in
+     * @param obj The object for the {@code state}
+     * @param region The region of {@code state}
+     * @param output The vo for which the new vo should be created
+     *
+     */
+    private def createOutputVo(String name, int counter, State state, ValuedObject obj, DataflowRegion region,
+        ValuedObject output) {
+        var ValuedObject outputVo
+        // Assign the state output to a new "state_[varName]" variable in the region
+        // For that, create a new variable declaration
+        val variableDeclaration = createVariableDeclaration
+        variableDeclaration.type = output.type
+        region.declarations += variableDeclaration
+        // Retrieve the state's variable map
+        val Map<String, List<ValuedObject>> stateVariables = getStateVariables(state)
+        val varName = name + ssaNameSeperator + counter + output.label
+        // Reuse the vo variable, now pointing to a new VO in the state
+        outputVo = variableDeclaration.createValuedObject(varName)
+        outputVo.label = varName
+        region.declarations += variableDeclaration
+        variableDeclaration.annotations += createTagAnnotation("Hide")
+        val innerPositiveOutputVo_ = output
+        // This assignment is of the form 'varName = obj.varName'
+        val source = obj.reference => [
+            subReference = innerPositiveOutputVo_.reference
+        ]
+        region.equations += createDataflowAssignment(outputVo, source)
+        
+        // Add the new create valued object to the ssa list and valued object list
+        if (stateVariables.containsKey(output.label)) {
+            var varList = stateVariables.get(output.label)
+            varList.add(outputVo)
+        } else {
+            var varList = <ValuedObject>newArrayList
+            varList.add(outputVo)
+            stateVariables.put(output.label, varList)
+        }
+
+        return outputVo
+    }
+
+    /**
+     * Creates a multiplexer state based on an referenced SCCharts state that merges the outputs of (two) inner states
+     * based on a condition. The edge to the conditional input is laid out at the south of the multiplexer.
+     * 
+     * @param parentRegion Region of the parent state that includes the Multiplexer
+     * @param condOutputVo ValuedObject of the output representing the condition "choosing" the input branch 
+     * @param multInputs Inputs of the multiplexer
+     * @param multOutputs Outputs of the multiplexer
+     * 
+     */
+    private def createMultiplexer(DataflowRegion parentRegion, ValuedObject condOutputVo, 
+        ArrayList<ValuedObject> multInputs, ArrayList<ValuedObject> multOutputs
+    ) {
+        // Create the multiplexer state and according reference into the while dataflow region.
+        val multState = createState(multiplexerName + ssaNameSeperator + multiplexerCounter)
+        multState.addStringAnnotation("figure", "BigMult.kgt")
+        multState.annotations += createTagAnnotation("Hide")
+        if (serializable) {
+            rootSCChart.rootStates += multState
+        }
+        val multRefDecl = createReferenceDeclaration
+        parentRegion.declarations += multRefDecl
+        multRefDecl.setReference(multState)
+        val multObj = multRefDecl.createValuedObject(multiplexerName + ssaNameSeperator + multiplexerCounter)
+
+        // set in and outputs opf the multiplexer
+        setMultInput(multInputs, multState, parentRegion, multObj, false)
+        setMultInput(#[condOutputVo], multState, parentRegion, multObj, true)
+        setMultOutputs(multOutputs, multState, parentRegion, multObj)
+
+        // Create the region for the body part
+        val multRegion = multState.createDataflowRegion(multiplexerName + ssaNameSeperator + multiplexerCounter)
+        multState.regions += multRegion
+        multRegion.label = " "
+
+        // Add tag annotation so that the multiplexer is identifiable in EquationSynthesis in a clean way
+        multObj.addTagAnnotation(multiplexerTag)
+        multiplexerCounter++
+    }
+
+    /**
+     * Sets the output of a custom multiplexer state. 
+     * 
+     * @param outputs The outs as ValuedObjects that leave  the multiplexer
+     * @param newState The state of the multiplexer.
+     * @param dRegion The parent DataflowRegion including the multiplexer's state.
+     * @param refObj the ReferenceDeclaration of the multiplexer
+     */
+    private def setMultOutputs(ArrayList<ValuedObject> outputs, State newState, DataflowRegion dRegion, 
+        ValuedObject refObj
+    ) {
+        // Retrieve the state's valued object map
+        val Map<String, List<ValuedObject>> stateVariables = getStateVariables(newState)
+        for (outputVO : outputs) {
+            // create output vo
+            val innerOutputVO = createVar(outputVO, newState, stateVariables, outSuffix)
+            // Create the assignment
+            val target = outputVO
+            if (refObj === null) {
+                dRegion.equations += createDataflowAssignment(target, innerOutputVO.reference)
+            } else {
+                val source = refObj.reference => [
+                    subReference = innerOutputVO.reference
+                ]
+                dRegion.equations += createDataflowAssignment(target, source)
+            }
+        }
+    }
+
+    /**
+     * Sets the inputs of a custom multiplexer state. 
+     * 
+     * @param inputs The inputs as ValuedObjects that are led into the multiplexer
+     * @param newState The state of the multiplexer.
+     * @param dRegion The parent DataflowRegion including the multiplexer's state.
+     * @param refObj the ReferenceDeclaration of the multiplexer
+     * @param cond Signifies whether the input should be interpreted as the condition
+     */
+    private def setMultInput(List<ValuedObject> inputs, State newState, DataflowRegion dRegion, ValuedObject refObj,
+        boolean cond) {
+        // Retrieve the state's valued object map
+        val Map<String, List<ValuedObject>> stateVariables = getStateVariables(newState)
+        for (inputVO : inputs) {
+            // label should not be null
+            val label = inputVO.label !== null ? inputVO.label : inputVO.name.split("_").get(0)
+            inputVO.label = label
+            
+            // create input vo
+            val innerInputVO = createVar(inputVO, newState, stateVariables, inSuffix)
+
+            // Create the assignment
+            if (refObj === null) {
+                val eq = createDataflowAssignment(innerInputVO, inputVO.reference)
+                if (cond) {
+                    eq.addStringAnnotation("toPort", "in1")
+                }
+                dRegion.equations += eq
+            } else {
+                val eq = createDataflowAssignment(refObj, innerInputVO, inputVO.reference)
+                if (cond) {
+                    eq.addStringAnnotation("toPort", "in1")
+                }
+                dRegion.equations += eq
+            }
+        }
+    }
+       
+    /** Creates in the given {@code state} an output variable for {@code vo} and updates {@code stateVars}.
+     * 
+     * @param vo The valued object for which an var should be created
+     * @param state The state that should contain the output 
+     * @param stateVars Variables of {@code state}
+     * @param suffix Suffix for the variable label
+     */
+    private def createVar(ValuedObject vo, State state, Map<String, List<ValuedObject>> stateVars, String suffix) {
+        val outputDecl = createVariableDeclaration
+        outputDecl.type = vo.type
+        outputDecl.output = true
+
+        state.declarations += outputDecl
+        val varVO = outputDecl.createValuedObject(vo.label + suffix)
+        varVO.label = vo.label
+        
+        if (!vo.annotations.empty) {
+            varVO.addTagAnnotation((vo.annotations.get(0) as TagAnnotation).name)
+        }
+
+        // Add the new create valued object to the ssa list and valued object list
+        if (stateVars.containsKey(vo.label)) {
+            var varList = stateVars.get(vo.label)
+            varList.add(varVO)
+        } else {
+            var varList = <ValuedObject>newArrayList
+            varList.add(varVO)
+            stateVars.put(vo.label, varList)
+        }
+        return varVO
+    }
+   
+    /**
+     * Translates a break or continue statement depending on the passed statement.  
+     *
+     * @param passedStmt Determines whether a break or continue stmt should be trasnlated
+     * 
+     */
+    def void buildBreakOrContinue(IASTStatement passedStmt){
+        var localName = ""
+        var anno = ""
+        var localCounter = 0
+        
+        // Change stmt type dependant variables
+        switch(passedStmt){
+            IASTBreakStatement:{
+                localName = breakName
+                anno = de.cau.cs.kieler.c.sccharts.processors.DataflowExtractor.breakContinueAnno
+                localCounter = breakCounter
+                breakCounter++
+            }
+            IASTContinueStatement:{
+                localName = continueName
+                anno = de.cau.cs.kieler.c.sccharts.processors.DataflowExtractor.breakContinueAnno
+                localCounter = continueCounter
+                continueCounter++
+            }
+        }
+        
+        // Create the state
+        val newState = createState(localName + ssaNameSeperator + localCounter)
+        newState.annotations += createTagAnnotation("Hide")
+        newState.annotations += createStringAnnotation(anno, "" + (ifCounter-1))
+        newState.addStringAnnotation("figure", "BigMult.kgt")
+        if (serializable) {
+            rootSCChart.rootStates += newState
+        }
+
+        // determine the current while state
+        var State whileState = null
+        for (state : rootSCChart.rootStates) {
+            if (state.name.contains(whileName + ssaNameSeperator + (whileCounter - 1))) {
+                whileState = state
+            }
+        }
+        
+        // Move upwards in the AST until finding the parent while statement
+        var stmt = passedStmt as IASTNode
+        while (!(stmt instanceof IASTWhileStatement)) {
+            stmt = stmt.parent
+        }
+        var whileStmt = stmt as IASTWhileStatement
+
+        // create ref decl and valued  object
+        val newRefDecl = createReferenceDeclaration
+        lastWhileRegion.declarations += newRefDecl
+        newRefDecl.setReference(newState)
+        val newObj = newRefDecl.createValuedObject(localName + ssaNameSeperator + localCounter)
+        newObj.annotations += createTagAnnotation(multiplexerTag)
+
+        // Create the region for the body part
+        val newRegion = newState.createDataflowRegion("")
+        newState.regions += newRegion
+        newRegion.label = localName + ssaNameSeperator + localCounter
+        
+        // set the first half of the inputs for the break state 
+        var breakDependableVars = findBreakOutputs(whileStmt.getBody as IASTCompoundStatement,
+        passedStmt.parent.parent as IASTIfStatement, whileState)  
+        val st = whileState 
+        var vars = breakDependableVars.map[s |findValuedObjectByName(st, s, false,lastWhileRegion)].toList
+        vars.forEach[v | v.addTagAnnotation(posTag)]
+        setMultInput(vars, newState, lastWhileRegion, newObj, false)
+        
+        // adjust name and label of the state variables
+        val name = localName
+        getStateVariables(newState).forEach[p1, p2| p2.get(0).name = name + ssaNameSeperator + p2.get(0).name;
+                                      p2.get(0).label = name + ssaNameSeperator + p2.get(0).label
+        ]
+        
+        hierarchy.put(newState, lastWhileRegion)
+        stateObjects.put(newState, newObj)
+    }
+
+   /**
+     * Finalizes already created break/continue states in a specific while.
+     * This means for example that it adds inputs and outputs to them.
+     * 
+     *   @param stmt compound statement/do-block of the while 
+     *   @param whileState The state of the while
+     *   @param whileRegion The while state's dataflow region
+     */
+    private def finalizeBreakAndContinueStates(IASTCompoundStatement stmt, State whileState, 
+        DataflowRegion whileRegion
+    ) {
+        // collect all break and continue states in the while loop
+        val List<State> breakStates = collectStates(breakName, whileRegion)
+        val List<State> continueStates = collectStates(continueName, whileRegion)
+        
+        // finalize every break and continue state
+        finalize(breakStates, breakName, whileState, whileRegion)
+        finalize(continueStates, continueName, whileState, whileRegion)
+    }
+    
+    /**
+     * Collects all states from a DataflowRegion that have a name starting with a specific prefix.
+     * @param prefix The prefix that determines which states are meant to be collected.
+     * @param dataflowRegion The states are collected from this dataflow region.
+     */ 
+    private def List<State> collectStates(String prefix, DataflowRegion dataflowRegion){
+        var List<State> states = new ArrayList
+        for (decl : dataflowRegion.declarations) {
+            if (decl instanceof ReferenceDeclaration) {
+                val state = decl.reference as State
+                if (state.name.startsWith(prefix + ssaNameSeperator)) {
+                    states.add(state)
+                }
+            }
+        }
+        
+         states.sortBy[state | state.name]
+         return states
+    }
+    
+     /**
+     * Actual work logic of finalizeBreakAndContinue.
+     * Finalizes already created break/continue states in a specific while.
+     * This means for example that it adds inputs and outputs to them.
+     * 
+     *   @param stmt compound statement/do-block of the while 
+     *   @param whileState The state of the while
+     *   @param whileRegion The while state's dataflow region
+     */
+    private def void finalize(List<State>states, String name, State whileState, DataflowRegion whileRegion){
+        for (var i = states.length - 1; i >= 0; i--) {
+            val breakState = states.get(i)
+            val breakObj = stateObjects.get(breakState)
+
+            // determine the inputs of the break state
+            val vars = new ArrayList()
+            getStateVariables(breakState).forEach[key, value| vars.add(key)]
+            var breakInputs = new ArrayList()
+            for (label : vars) {
+                var vo = whileState.findValuedObjectByName(label, false, lastWhileRegion)
+                vo.label = label
+                vo.addTagAnnotation(negTag)
+                breakInputs.add(vo)
+            }
+    
+            // create output vars
+            val breakVars = getStateVariables(breakState)
+            for (input : breakInputs) {
+                val innerOutputVO = createVar(input, breakState, breakVars, outSuffix)
+                createOutputVo(name, Integer.parseInt(breakState.name.substring(name.length+1)), whileState, 
+                    breakObj, whileRegion, innerOutputVO
+                )
+            }
+    
+            // determine the if state the break stmt is in
+            var State ifState
+            val localIfCounter = Integer.parseInt(breakState.getStringAnnotationValue(
+                de.cau.cs.kieler.c.sccharts.processors.DataflowExtractor.breakContinueAnno
+            ))
+            for (state : rootSCChart.rootStates) {
+                if (state.name.equals(ifName + ssaNameSeperator + localIfCounter)) {
+                    ifState = state
+                }
+            }
+            
+            // condition is passed to the while region in which the break state is
+            // and all conditions on the way are collected
+            val conditions = collectAndPassThroughConds(ifState)
+            
+            // create local var for result auf "AND"
+            val label = hiddenVariableName
+            val decl = createVariableDeclaration
+            whileRegion.declarations += decl
+            decl.type = ValueType.BOOL
+            decl.annotations += createTagAnnotation("Hide")
+            val innerInputVO = decl.createValuedObject(label)
+            innerInputVO.label = label
+
+            // combine the conditions with an "AND" operator
+            val expr = createLogicalAndExpression() => [
+                        for (cond : conditions) {
+                            it.subExpressions += cond.reference
+                        }
+                    ]
+            
+            whileRegion.equations += createDataflowAssignment(innerInputVO, expr)
+            
+            // set the inputs of the break state  
+            setMultInput(breakInputs, breakState, whileRegion, breakObj, false)
+            setMultInput(#[innerInputVO], breakState, whileRegion, breakObj, true)
+        }
+    }
+    
+    /**
+     * Collects if-conditions and passes them through to the embedding while state.
+     * 
+     * @param startState The state in which should be started
+     */
+    private def collectAndPassThroughConds(State startState) {
+        var List<ValuedObject> conditions = new ArrayList
+        var parentRegion = startState.regions.get(0) as DataflowRegion
+        while (parentRegion !== lastWhileRegion) {
+            val parentState = parentRegion.eContainer as State
+            
+            // checks if another if state is is reached
+            if (parentState.name.startsWith(ifName + ssaNameSeperator)) {
+                // get the local conditional vo in the if state
+                for (decl : parentRegion.declarations) {
+                    if (decl instanceof VariableDeclaration) {
+                        val vo = decl.valuedObjects.get(0)
+                        if (vo.name.equals(conditionalResultName)) {
+                            conditions.add(vo)
+                        }
+                    }
+                }
+            }
+            
+            // for each condition an output vo must be created
+            val List<ValuedObject> condOutputs = new ArrayList
+            for (var j = 0; j < conditions.length; j++) {
+                val condOutput = conditions.get(j)
+                // create condition output in the parent state
+                val outputDecl = createVariableDeclaration
+        
+                outputDecl.type = ValueType::BOOL
+                outputDecl.output = true
+                parentState.declarations += outputDecl
+                
+                val varName = hiddenVariableName + ssaNameSeperator + j
+                val varList = <ValuedObject>newArrayList
+        
+                val outputVO = outputDecl.createValuedObject(varName + outSuffix)
+                outputVO.label = varName
+        
+                varList.add(outputVO)
+        
+                getStateVariables(parentState).put(varName, varList)
+                parentRegion.equations += createDataflowAssignment(outputVO, condOutput.reference)
+                
+                val parentObj = stateObjects.get(parentState)
+                
+                val label = condOutput.label.startsWith(ifName + ssaNameSeperator) ? 
+                    condOutput.label.split("_").get(1) : parentRegion.label.split("_").get(1)
+                // condition vo that can be used by the next state
+                condOutputs.add(createOutputVo(ifName, Integer.parseInt(label), parentState, parentObj, 
+                    hierarchy.get(parentState), outputVO
+                ))
+            }
+            parentRegion = hierarchy.get(parentState)
+            conditions = condOutputs
+        }
+        return conditions
+    }
+
+    /**
+     * Translate a Do statement
+     */
+    def void buildDo(IASTDoStatement doStmt, State rootState, DataflowRegion dRegion) {
+        // Create the state        
+        val doState = createState(doName + ssaNameSeperator + doCounter)
+        doState.annotations += createTagAnnotation("Hide")
+        if (serializable) {
+            rootSCChart.rootStates += doState
+        }
+
+        // Create the reference in the containing dataflow region
+        val refDecl = createReferenceDeclaration
+        dRegion.declarations += refDecl
+        refDecl.setReference(doState)
+        val doObj = refDecl.createValuedObject(doName + ssaNameSeperator + doCounter)
+        if (!serializable) {
+            doObj.insertHighlightAnnotations(doStmt)
+        }
+
+        // Set the in and outputs
+        setInputs(doStmt, rootState, doState, dRegion, doObj)
+        setOutputs(doStmt, rootState, doState, dRegion, doObj)
+
+        // Create the condition expression label
+        createKExpression(doStmt.getCondition, doState, dRegion)
+        doState.label = "do ... while (" + exprToString(doStmt.getCondition, sourceFile) + ")"
+        doCounter++
+
+        // Translate the body
+        val doDBodyRegion = createDFRegionForNode(doStmt.getBody, doState, rootState, dRegion, doObj)
+        doState.regions += doDBodyRegion
+        doDBodyRegion.label = doState.label
 
     }
 
