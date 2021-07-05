@@ -2106,27 +2106,32 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             // and all conditions on the way are collected
             val conditions = collectAndPassThroughConds(ifState)
             
-            // create local var for result auf "AND"
-            val label = hiddenVariableName
-            val decl = createVariableDeclaration
-            whileRegion.declarations += decl
-            decl.type = ValueType.BOOL
-            decl.annotations += createTagAnnotation("Hide")
-            val innerInputVO = decl.createValuedObject(label)
-            innerInputVO.label = label
-
-            // combine the conditions with an "AND" operator
-            val expr = createLogicalAndExpression() => [
-                        for (cond : conditions) {
-                            it.subExpressions += cond.reference
-                        }
-                    ]
+            var ValuedObject condInput = conditions.get(0)
             
-            whileRegion.equations += createDataflowAssignment(innerInputVO, expr)
+            // if there is more than one condition they are connected with an "AND" operator
+            if (conditions.size > 1) {
+                // create local var for result auf "AND"
+                val label = hiddenVariableName
+                val decl = createVariableDeclaration
+                whileRegion.declarations += decl
+                decl.type = ValueType.BOOL
+                decl.annotations += createTagAnnotation("Hide")
+                condInput = decl.createValuedObject(label)
+                condInput.label = label
+    
+                // combine the conditions with an "AND" operator
+                val expr = createLogicalAndExpression() => [
+                            for (cond : conditions) {
+                                it.subExpressions += cond.reference
+                            }
+                        ]
+                
+                whileRegion.equations += createDataflowAssignment(condInput, expr)
+            }
             
             // set the inputs of the break state  
             setMultInput(breakInputs, breakState, whileRegion, breakObj, false)
-            setMultInput(#[innerInputVO], breakState, whileRegion, breakObj, true)
+            setMultInput(#[condInput], breakState, whileRegion, breakObj, true)
         }
     }
     
