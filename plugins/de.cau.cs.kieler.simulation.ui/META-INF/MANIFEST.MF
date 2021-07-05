@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: KIELER Simulation UI
 Bundle-SymbolicName: de.cau.cs.kieler.simulation.ui;singleton:=true
-Bundle-Version: 1.2.0.qualifier
+Bundle-Version: 1.3.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.simulation.ui.SimulationUIPlugin
 Bundle-Vendor: Kiel University
 Eclipse-UI: True

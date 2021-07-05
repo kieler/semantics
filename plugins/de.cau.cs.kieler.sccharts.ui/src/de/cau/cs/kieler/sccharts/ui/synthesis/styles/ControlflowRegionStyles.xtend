@@ -17,6 +17,7 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.KContainerRendering
 import de.cau.cs.kieler.klighd.krendering.KForeground
+import de.cau.cs.kieler.klighd.krendering.KGridPlacement
 import de.cau.cs.kieler.klighd.krendering.KRectangle
 import de.cau.cs.kieler.klighd.krendering.KRendering
 import de.cau.cs.kieler.klighd.krendering.KText
@@ -158,13 +159,23 @@ class ControlflowRegionStyles {
                     fontSize = 10;
                     selectionTextUnderline = Underline.NONE // prevents default selection style
                     val size = estimateTextSize;
-                    setPointPlacementData(LEFT, 14, 0, TOP, 1, 0, H_LEFT, V_TOP, 0, 0, size.width, size.height)
+                    setPointPlacementData(LEFT, 14, 0, TOP, 1, 0, H_LEFT, V_TOP, 0, 0, size.width + 5, size.height)
                 ]
             } else {
                 container.addKeywordLabel(label, 0) => [
                     foreground = REGION_LABEL.color
                     fontSize = 10
                     setPointPlacementData(LEFT, 14, 0, TOP, 1, 0, H_LEFT, V_TOP, 0, 0, 0, 0)
+                    (children.last as KContainerRendering) => [ // Just for spacing at the end
+                        val grid = it?.getChildPlacement()
+                        if (grid instanceof KGridPlacement) {
+                            grid.numColumns = grid.numColumns + 1
+                            addRectangle => [
+                                setGridPlacementData(5,5)
+                                invisible = true
+                            ]
+                        }
+                    ]
                     eAllContents.filter(KText).forEach[
                         suppressSelectability
                         selectionTextUnderline = Underline.NONE // prevents default selection style

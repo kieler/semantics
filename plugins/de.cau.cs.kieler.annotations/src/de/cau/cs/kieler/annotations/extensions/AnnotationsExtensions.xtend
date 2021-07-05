@@ -37,6 +37,10 @@ class AnnotationsExtensions {
         ]
     } 
     
+    def Iterable<StringAnnotation> getStringAnnotations(Annotatable annotatable, String name) {
+        return annotatable.getAnnotations(name).filter(StringAnnotation)
+    }
+    
 	def String getStringAnnotationValue(Annotatable annotatable, String name) {
 		val annotation = annotatable.getAnnotation(name)
 		if (annotation !== null)

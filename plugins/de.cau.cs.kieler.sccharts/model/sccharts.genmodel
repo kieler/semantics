@@ -116,5 +116,6 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference sccharts.ecore#//BaseStateReference/genericParameters"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference sccharts.ecore#//BaseStateReference/parameters"/>
     </genClasses>
+    <genClasses ecoreClass="sccharts.ecore#//OdeAction"/>
   </genPackages>
 </genmodel:GenModel>
