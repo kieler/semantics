@@ -129,7 +129,8 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
             SHOW_CAUSAL_DATAFLOW,
             TOPDOWN_LAYOUT,
             TOPDOWN_LAYOUT_TOGGLE,
-            TOPDOWN_LAYOUT_CONSTRAINT
+            TOPDOWN_LAYOUT_CONSTRAINT,
+            AUTOMATIC_DIRECTION
         )
 
         // Adaptive Zoom
@@ -180,7 +181,10 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
                 rootNode.setProperty(CoreOptions.TOPDOWN_LAYOUT_CONSTRAINT, TopDownLayoutConstraint.FIX_HEIGHT)
             case "Optimized":
                 rootNode.setProperty(CoreOptions.TOPDOWN_LAYOUT_CONSTRAINT, TopDownLayoutConstraint.OPTIMIZED)
+            case "Square":
+                rootNode.setProperty(CoreOptions.TOPDOWN_LAYOUT_CONSTRAINT, TopDownLayoutConstraint.SQUARE)
         }
+        rootNode.setProperty(CoreOptions.AUTOMATIC_DIRECTION, AUTOMATIC_DIRECTION.booleanValue)
                 
         // If dot is used draw edges first to prevent overlapping with states when layout is bad
         usedContext.setProperty(KlighdProperties.EDGES_FIRST, !USE_KLAY.booleanValue)
