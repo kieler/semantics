@@ -70,7 +70,7 @@ class ReferenceCallProcessor extends InplaceProcessor<SCGraphs> implements Trace
     def transform(SCGraph scg) {
         val moduleClasses = scg.getModuleClasses
 
-        val assignments = scg.nodes.filter(Assignment)
+        val assignments = scg.nodes.immutableCopy.filter(Assignment)
         val refCalls = assignments.map[expression].filter(ReferenceCall)
         refCalls.forEach [ ref |
 
@@ -108,14 +108,15 @@ class ReferenceCallProcessor extends InplaceProcessor<SCGraphs> implements Trace
                         newAssignments += newAsmt
                     }
                     // place new assignments in the scg
-//                        scg.nodes.addAll(newAssignments)
+                    scg.nodes.addAll(newAssignments)
                     newAssignments.take(newAssignments.length - 1).indexed.forEach [
                         val index = key
                         val assignment = value
                         assignment.next = assignment.createControlFlow => [target = newAssignments.get(index + 1)]
                     ]
                     newAssignments.last.next = nextCF
-//                        originalAsmt.incomingLinks.forEach[target = newAssignments.head]
+                        originalAsmt.incomingLinks.immutableCopy.forEach[target = newAssignments.head]
+                    scg.nodes.remove(originalAsmt)
                 } else {
                     environment.warnings.add(
                         "Unknown method call" + ref.subReference.valuedObject.name + "in module stub state"
