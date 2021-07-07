@@ -105,6 +105,7 @@ class ReferenceCallProcessor extends InplaceProcessor<SCGraphs> implements Trace
                             newAsmt.expression = toExp.copy
                             newAsmt.reference = fromExp.asValuedObjectReference
                         }
+                        newAssignments += newAsmt
                     }
                     // place new assignments in the scg
 //                        scg.nodes.addAll(newAssignments)
