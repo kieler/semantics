@@ -130,7 +130,9 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
             TOPDOWN_LAYOUT,
             TOPDOWN_LAYOUT_TOGGLE,
             TOPDOWN_LAYOUT_CONSTRAINT,
-            AUTOMATIC_DIRECTION
+            AUTOMATIC_DIRECTION,
+            NODE_SIZE_CONSTRAINT,
+            DYNAMIC_NODE_SIZE_CONSTRAINT
         )
 
         // Adaptive Zoom
