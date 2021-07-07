@@ -12,29 +12,29 @@
  */
 package de.cau.cs.kieler.sccharts.processors
 
-import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
+import com.google.inject.Inject
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.kexpressions.Parameter
+import de.cau.cs.kieler.kexpressions.ValueType
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
+import de.cau.cs.kieler.kicool.kitt.tracing.internal.TracingEcoreUtilExtensions
+import de.cau.cs.kieler.sccharts.DelayType
+import de.cau.cs.kieler.sccharts.PolicyClassDeclaration
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.State
-import com.google.inject.Inject
-import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsClassExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsReferenceExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsInheritanceExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsReferenceExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
-import de.cau.cs.kieler.sccharts.DelayType
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCallExtensions
-import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
-import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsDependencyExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsComplexCreateExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
-import de.cau.cs.kieler.kexpressions.ValueType
-import de.cau.cs.kieler.sccharts.PolicyClassDeclaration
-import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import java.util.List
+import de.cau.cs.kieler.scg.processors.ReferenceCallProcessor
 
 /**
  * @author glu
@@ -51,13 +51,16 @@ class ReferenceCallPreprocessor extends SCChartsProcessor implements Traceable {
     @Inject extension KExpressionsCreateExtensions
     @Inject extension SCChartsClassExtensions
     @Inject extension AnnotationsExtensions
+    @Inject extension SCChartsReferenceExtensions
+    @Inject extension TracingEcoreUtilExtensions
     
     val REF_CALL_INSTANCE_SUFFIX = "_d"
-    val REF_CALL_TICK_METHOD_NAME = "tick"
-    val REF_CALL_RESET_METHOD_NAME = "reset"
-    val REF_CALL_CPIN_METHOD_NAME = "copy_inputs"
-    val REF_CALL_CPOUT_METHOD_NAME = "copy_outputs"
-    val REF_CALL_TERM_METHOD_NAME = "get_term"
+    val REF_CALL_TICK_METHOD_NAME = ReferenceCallProcessor.REF_CALL_TICK_METHOD_NAME
+    val REF_CALL_RESET_METHOD_NAME = ReferenceCallProcessor.REF_CALL_RESET_METHOD_NAME
+    val REF_CALL_CPIN_METHOD_NAME = ReferenceCallProcessor.REF_CALL_CPIN_METHOD_NAME
+    val REF_CALL_CPOUT_METHOD_NAME = ReferenceCallProcessor.REF_CALL_CPOUT_METHOD_NAME
+    val REF_CALL_TERM_METHOD_NAME = ReferenceCallProcessor.REF_CALL_TERM_METHOD_NAME
+    val REF_CALL_TAG_ANNOTATION = ReferenceCallProcessor.REF_CALL_TAG_ANNOTATION
     
     
     //-------------------------------------------------------------------------
@@ -80,7 +83,7 @@ class ReferenceCallPreprocessor extends SCChartsProcessor implements Traceable {
         sccharts => [
             rootStates.forEach[ rootState |
                 rootState.allContainedStates.filter[isReferencing].toList().forEach [ ref |
-                    val classDecl = createOrGetClassDeclaration(ref.reference.scope.name, rootState)
+                    val classDecl = createOrGetClassDeclaration(ref)
                     val instance = classDecl.createValuedObject(ref.name + REF_CALL_INSTANCE_SUFFIX).uniqueName
                     /* Tranform referencing state to superstate containing glue logic. */
                     ref.createControlflowRegion(ref.name) => [
@@ -114,6 +117,7 @@ class ReferenceCallPreprocessor extends SCChartsProcessor implements Traceable {
                             effects.add(createReferenceCallEffect => [
                                 subReference = cpin_method.reference
                                 valuedObject = instance
+                                parameters.addAll(paramsFromBindings(ref, instance))
                             ])
                             effects.add(createReferenceCallEffect => [
                                 subReference = tick_method.reference
@@ -122,6 +126,7 @@ class ReferenceCallPreprocessor extends SCChartsProcessor implements Traceable {
                             effects.add(createReferenceCallEffect => [
                                 subReference = cpout_method.reference
                                 valuedObject = instance
+                                parameters.addAll(paramsFromBindings(ref, instance))
                             ])
                         ]
                         
@@ -130,6 +135,7 @@ class ReferenceCallPreprocessor extends SCChartsProcessor implements Traceable {
                             effects.add(createReferenceCallEffect => [
                                 subReference = cpin_method.reference
                                 valuedObject = instance
+                                parameters.addAll(paramsFromBindings(ref, instance))
                             ])
                             effects.add(createReferenceCallEffect => [
                                 subReference = tick_method.reference
@@ -138,6 +144,7 @@ class ReferenceCallPreprocessor extends SCChartsProcessor implements Traceable {
                             effects.add(createReferenceCallEffect => [
                                 subReference = cpout_method.reference
                                 valuedObject = instance
+                                parameters.addAll(paramsFromBindings(ref, instance))
                             ])
                         ]
                         
@@ -147,6 +154,7 @@ class ReferenceCallPreprocessor extends SCChartsProcessor implements Traceable {
                             trigger = createReferenceCall => [
                                 subReference = term_method.reference
                                 valuedObject = instance
+                                
                             ]
                         ]
                     ]
@@ -160,12 +168,10 @@ class ReferenceCallPreprocessor extends SCChartsProcessor implements Traceable {
         ]
     }
 
-    protected def PolicyClassDeclaration createOrGetClassDeclaration(String refName, State rootState) {
-        val maybeDecl = rootState.declarations.findFirst[
-            PolicyClassDeclaration.isInstance(it) && (it as PolicyClassDeclaration).name == refName
-        ]
+    protected def PolicyClassDeclaration createOrGetClassDeclaration(State ref) {
+        val maybeDecl = ref.getClassDeclaration
         val decl = maybeDecl !== null ? maybeDecl as PolicyClassDeclaration : createPolicyClassDeclaration => [
-            name = refName
+            name = ref.reference.scope.name
             host = true
             // Declare method placeholders.
             var tickDecl = createMethodImplementationDeclaration => [
@@ -189,10 +195,46 @@ class ReferenceCallPreprocessor extends SCChartsProcessor implements Traceable {
             declarations.add(cpinDecl)
             declarations.add(cpoutDecl)
             declarations.add(termDecl)
-            rootState.declarations.add(it)
-            it.annotations.add(createTagAnnotation("Module"))
+            
+            // Declare interface variables
+            declarations.addAll(ref.reference.scope.declarations.filter(VariableDeclaration).map[copy])
+            
+            ref.getRootState.declarations.add(it)
+            // Tag as module class
+            it.annotations.add(createTagAnnotation(REF_CALL_TAG_ANNOTATION))
         ]
         return decl
+    }
+    
+    protected def PolicyClassDeclaration getClassDeclaration(State ref) {
+        val decls = ref.getRootState.declarations.filter(PolicyClassDeclaration)
+        val result = decls.filter[name == ref.reference.scope.name]
+        return result.head
+    }
+    
+    protected def List<Parameter> paramsFromBindings(State ref, ValuedObject instance) {
+        val bindings = ref.createBindings
+        val parameters = <Parameter> newArrayList
+        for (binding: bindings) {
+            parameters.add(createParameter => [
+                // TODO guard against complex source expressions => undefined behavior
+                expression = binding.sourceExpression.copy
+            ])
+            parameters.add(createParameter => [
+                val vo = ref.getClassDeclaration.getVarVOByName(binding.targetValuedObject.name)
+                expression = instance.reference => [subReference = vo.reference]
+            ])
+        }
+
+        return parameters
+    }
+    
+    protected def ValuedObject getVarVOByName(PolicyClassDeclaration classDef, String varName) {
+        val classDefs = classDef.declarations.filter(VariableDeclaration)
+        val vos = classDefs.map[valuedObjects].flatten
+        val filteredvos = vos.filter[name == varName]
+        val result = filteredvos.head
+        return result
     }
 
 }
