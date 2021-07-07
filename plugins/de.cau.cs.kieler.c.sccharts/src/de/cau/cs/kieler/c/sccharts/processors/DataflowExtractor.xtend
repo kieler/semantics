@@ -1951,7 +1951,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
     /**
      * Translates a break or continue statement depending on the passed statement.  
      *
-     * @param passedStmt Determines whether a break or continue stmt should be trasnlated
+     * @param passedStmt Determines whether a break or continue stmt should be translated
      * 
      */
     def void buildBreakOrContinue(IASTStatement passedStmt, State parentState, DataflowRegion parentRegion){
@@ -2231,32 +2231,42 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             val List<ValuedObject> condOutputs = new ArrayList
             for (var j = 0; j < conditions.length; j++) {
                 val condOutput = conditions.get(j)
-                // create condition output in the parent state
-                val outputDecl = createVariableDeclaration
-        
-                outputDecl.type = ValueType::BOOL
-                outputDecl.output = true
-                parentState.declarations += outputDecl
-                
-                val varName = hiddenVariableName + ssaNameSeperator + j
-                val varList = <ValuedObject>newArrayList
-        
-                val outputVO = outputDecl.createValuedObject(varName + outSuffix)
-                outputVO.label = varName
-        
-                varList.add(outputVO)
-        
-                getStateVariables(parentState).put(varName, varList)
-                parentRegion.equations += createDataflowAssignment(outputVO, condOutput.reference)
-                
-                val parentObj = stateObjects.get(parentState)
-                
                 val label = condOutput.label.startsWith(ifName + ssaNameSeperator) ? 
-                    condOutput.label.split(ssaNameSeperator).get(1) : parentRegion.label.split(ssaNameSeperator).get(1)
-                // condition vo that can be used by the next state
-                condOutputs.add(createOutputVo(ifName, Integer.parseInt(label), parentState, parentObj, 
-                    hierarchy.get(parentState), outputVO
-                ))
+                    condOutput.label : parentState.name + hiddenVariableName
+                val vL = getStateVariables(parentState).get(label)
+                
+                // if an output already exists for the condition this output can be used, 
+                // otherwise a new output must be created
+                if (vL !== null) {
+                    condOutputs.add(vL.get(vL.length-1))
+                } else {                
+                    // create condition output in the parent state
+                    val outputDecl = createVariableDeclaration
+            
+                    outputDecl.type = ValueType::BOOL
+                    outputDecl.output = true
+                    parentState.declarations += outputDecl
+                    
+                    val varName = label
+                    val varList = <ValuedObject>newArrayList
+            
+                    val outputVO = outputDecl.createValuedObject(varName + outSuffix)
+                    outputVO.label = varName
+            
+                    varList.add(outputVO)
+            
+                    getStateVariables(parentState).put(varName, varList)
+                    parentRegion.equations += createDataflowAssignment(outputVO, condOutput.reference)
+                    
+                    val parentObj = stateObjects.get(parentState)
+                    val pS = parentRegion.eContainer as State
+                    
+                    
+                    // condition vo that can be used by the next state
+                    condOutputs.add(createOutputVo(null, 0, pS, parentObj, 
+                        hierarchy.get(parentState), outputVO
+                    ))
+                }
             }
             parentRegion = hierarchy.get(parentState)
             conditions = condOutputs
