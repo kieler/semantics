@@ -187,6 +187,7 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
                 rootNode.setProperty(CoreOptions.TOPDOWN_LAYOUT_CONSTRAINT, TopDownLayoutConstraint.SQUARE)
         }
         rootNode.setProperty(CoreOptions.AUTOMATIC_DIRECTION, AUTOMATIC_DIRECTION.booleanValue)
+        rootNode.setProperty(CoreOptions.DYNAMIC_NODE_SIZE_CONSTRAINT, DYNAMIC_NODE_SIZE_CONSTRAINT.booleanValue)
                 
         // If dot is used draw edges first to prevent overlapping with states when layout is bad
         usedContext.setProperty(KlighdProperties.EDGES_FIRST, !USE_KLAY.booleanValue)
