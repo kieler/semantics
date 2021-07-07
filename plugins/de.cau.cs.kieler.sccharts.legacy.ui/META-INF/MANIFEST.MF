@@ -18,7 +18,7 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.elk.alg.layered;bundle-version="0.2.1",
  org.eclipse.elk.core;bundle-version="0.2.1",
  de.cau.cs.kieler.kicool.ui
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Bundle-ActivationPolicy: lazy
 Export-Package: de.cau.cs.kieler.sccharts.legacy.annotations.ui.contentassist,
  de.cau.cs.kieler.sccharts.legacy.annotations.ui.quickfix,

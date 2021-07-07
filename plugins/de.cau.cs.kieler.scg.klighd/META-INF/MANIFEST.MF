@@ -5,8 +5,8 @@ Bundle-SymbolicName: de.cau.cs.kieler.scg.klighd;singleton:=true
 Bundle-Version: 1.2.0.qualifier
 Bundle-Vendor: Kiel University
 Eclipse-UI: True
-Require-Bundle: org.eclipse.elk.core,
- org.eclipse.elk.alg.layered,
+Require-Bundle: org.eclipse.elk.core;bundle-version="0.7.1",
+ org.eclipse.elk.alg.layered;bundle-version="0.7.1",
  de.cau.cs.kieler.klighd.krendering.extensions,
  de.cau.cs.kieler.klighd,
  de.cau.cs.kieler.scg,
@@ -22,7 +22,7 @@ Require-Bundle: org.eclipse.elk.core,
  de.cau.cs.kieler.simulation.ide,
  de.cau.cs.kieler.simulation.ui,
  de.cau.cs.kieler.annotations.ide
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Export-Package: de.cau.cs.kieler.scg.klighd
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: de.cau.cs.kieler.scg.klighd.SCGUIModule
