@@ -237,12 +237,20 @@ def handleNestedJarsOnClasspath(dir, jars_dir):
     manifest = join(dir, join('META-INF', 'MANIFEST.MF'))
     if isfile(manifest):
         with open(manifest, 'r') as file:
-            text = file.read()
-            if 'Bundle-ClassPath:' in text:
-                classpath = re.findall(r'Bundle-ClassPath:([^:]+)\s\S+:', text, re.MULTILINE)[0]
-                classpath = re.sub(r'\s', '', classpath)
-                if classpath != '.':
-                    for cpFile in classpath.split(','):
+            lines = file.readlines()
+            classpath = None
+            for line in lines:
+                if 'Bundle-ClassPath:' in line: # start of classpath
+                    startCP = line[17:].strip()
+                    classpath = startCP if startCP else " " # assure truthy content if found
+                elif classpath and ':' in line: # end of classpath
+                    break
+                elif classpath: # continue classpath collection
+                    classpath += line.strip()
+            if classpath:
+                for cp in classpath.split(','):
+                    cpFile = cp.strip()
+                    if cpFile and cpFile != '.' and '.jar' in cpFile:
                         jarFile = join(dir, cpFile)
                         if isfile(jarFile):
                             print('Found nested jar on bundle class path: ', cpFile)
@@ -261,7 +269,7 @@ def bundle(args, target_dir, merged, klighd):
 
     check_call([args.jar, 'cfe', jar, args.main, '.'], cwd=merged)
 
-    if klighd: # Include SWT
+    if klighd and not args.noswt: # Include SWT
         jars = {}
         for platform in klighd_swt.keys():
             pjar = jar[:-4] + '.' + platform + '.jar'
@@ -283,7 +291,7 @@ def create_standalone_scripts(args, jar, target_dir, klighd):
     print('-- Creating standalone scripts --')
     java9_options = ' --add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/jdk.internal.loader=ALL-UNNAMED'
 
-    if klighd:
+    if klighd and not args.noswt:
         jar_linux = jar['linux']
         jar_win = jar['win']
         jar_osx = jar['osx']
@@ -348,6 +356,7 @@ if __name__ == '__main__':
     argParser.add_argument('-s', dest='scripts', action='store_true', help='create platform specific standalone scripts of the jar')
     argParser.add_argument('-jar', default='jar', help='override jar command to adjust java version, e.g. /usr/lib/jvm/java-11-openjdk-amd64/bin/jar')
     argParser.add_argument('--java8', dest='java8', action='store_true', help='activate Java 8 support')
+    argParser.add_argument('--no-swt', dest='noswt', action='store_true', help='skips bundling platform specific SWT dependencies.')
     argParser.add_argument('--ignore-conflicts', dest='ignore_conflicts', action='store_true', help='prevents failing if merge fail due to a conflict.')
     argParser.add_argument('source', help='directory containing all plugins that should be bundled (self-contained update site)')
     argParser.add_argument('name', help='name of the generated executable jar/script')

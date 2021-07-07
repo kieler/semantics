@@ -142,19 +142,19 @@ class Abort extends SCChartsProcessor implements Traceable {
         // a termination is mixed with WEAK aborts
         // if a termination is mixed with strong aborts it does not matter because we do not
         // have a last wish to consider!
+        // als: But it does (KISEMA-1610)!
         val singleTermination = targetState.outgoingTransitions.filter [e|
             e.isTermination && e.implicitlyImmediate && e.trigger === null
         ].size == 1 && targetState.outgoingTransitions.filter[e|e.isTermination].size == 1
-        val noWeakAborts = targetState.outgoingTransitions.filter[e|e.isWeakAbort].size == 0
+        val noWeakAborts = !targetState.outgoingTransitions.exists[isWeakAbort]
+        val noMixedStrongAborts = !targetState.outgoingTransitions.exists[isStrongAbort && implicitlyImmediate] || !targetState.outgoingTransitions.exists[isStrongAbort && !implicitlyImmediate]
         
         // TEST: TerminationImmediateAndAbort
         val delayedStrongAbortButImmediateTermination =
         (targetState.outgoingTransitions.filter[e|e.isStrongAbort && !e.implicitlyImmediate].size > 0) 
         && (targetState.canImmediateTerminate)
         
-        // val strongAborts = targetState.outgoingTransitions.filter[e|e.typeStrongAbort].size > 0
-        // noStrongMixedAborts
-        if ((!(singleTermination && noWeakAborts)) || delayedStrongAbortButImmediateTermination) { // }||(singleTermination && strongAborts)) {
+        if ((!(singleTermination && noWeakAborts && noMixedStrongAborts)) || delayedStrongAbortButImmediateTermination) { // }||(singleTermination && strongAborts)) {
             // optimization: If this termination is the only outgoing then do not transform terminations first
             targetState.transformTermination(rootState)
         }

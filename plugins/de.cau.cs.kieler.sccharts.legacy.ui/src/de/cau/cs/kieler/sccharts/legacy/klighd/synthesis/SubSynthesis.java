@@ -25,6 +25,7 @@ import de.cau.cs.kieler.klighd.SynthesisOption;
 import de.cau.cs.kieler.klighd.ViewContext;
 import de.cau.cs.kieler.klighd.kgraph.KGraphElement;
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared;
+import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis;
 import de.cau.cs.kieler.sccharts.legacy.klighd.hooks.SynthesisHooks;
 import de.cau.cs.kieler.sccharts.legacy.klighd.hooks.SynthesisHooks.Type;
 
@@ -44,7 +45,7 @@ public abstract class SubSynthesis<I extends EObject, O extends KGraphElement> {
     private SynthesisHooks hooks;
 
     @Inject
-    private SCChartsSynthesis parent;
+    private AbstractDiagramSynthesis<?> parent;
 
     /** The input type this synthesis handles */
     private final Type hookType;
