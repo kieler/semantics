@@ -849,7 +849,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
      */
     def dispatch void buildStatement(IASTBreakStatement stmt, State rootState, DataflowRegion dRegion) {
         breakContinueFlag = true
-        buildBreakOrContinue(stmt)
+        buildBreakOrContinue(stmt, rootState, dRegion)
     }
     
     /**
@@ -857,7 +857,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
      */
     def dispatch void buildStatement(IASTContinueStatement stmt, State rootState, DataflowRegion dRegion) {
         breakContinueFlag = true
-        buildBreakOrContinue(stmt)
+        buildBreakOrContinue(stmt, rootState, dRegion)
     }
 
     /**
@@ -937,6 +937,9 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         if (!serializable) {
             ifObj.insertHighlightAnnotations(node)
         }
+        
+        hierarchy.put(ifState, dRegion)
+        stateObjects.put(ifState, ifObj)
 
         // Set the in and outputs of the state
         setInputs(node, rootState, ifState, dRegion, ifObj)
@@ -955,6 +958,8 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         val condState = condRes.value.key
         val conditionalObj = condRes.value.value
         
+        hierarchy.put(condState, ifRegion)
+        
         // inlining the output of the condition
         var ValuedObject condOutputVo = findCondOutputVo(condRegion, condState, conditionalObj, ifRegion)
 
@@ -971,6 +976,9 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         if (!serializable) {
             thenObj.insertHighlightAnnotations(positive)
         }
+        
+        hierarchy.put(thenState, ifRegion)
+        stateObjects.put(thenState, thenObj)
         
         // Set the inputs of the state
         setInputs(positive, ifState, thenState, ifRegion, thenObj)
@@ -1001,6 +1009,9 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             if (!serializable) {
                 elseObj.insertHighlightAnnotations(negative)
             }
+
+            hierarchy.put(elseState, ifRegion)
+            stateObjects.put(elseState, elseObj)
 
             // Set the in and outputs of the state
             setInputs(negative, ifState, elseState, ifRegion, elseObj)
@@ -1097,15 +1108,6 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         if (!multInputs.empty) {
             createMultiplexer(ifRegion, condOutputVo, multInputs, multOutputs);
         }
-
-        hierarchy.put(ifState, dRegion)
-        hierarchy.put(condState, ifRegion)
-        hierarchy.put(thenState, ifRegion)
-        hierarchy.put(elseState, ifRegion)
-        
-        stateObjects.put(ifState, ifObj)
-        stateObjects.put(thenState, thenObj)
-        stateObjects.put(elseState, elseObj)
 
         linkReturn(ifState, rootState, ifRegion, dRegion, ifObj)
 
@@ -1753,10 +1755,11 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
     /**
      * Assigns the given vo {@code output} to a new "state_[varName]" variable in {@code region}.
      * 
-     * @param name Name of the {@code state}
+     * @param name Name of the {@code state}, used for the variable name. If null only the label of {@code output} is 
+     *          used
      * @param counter The counter of {@code state}
      * @param state The state the created variable should be in
-     * @param obj The object for the {@code state}
+     * @param obj The object of the state the vo {@code output} is in
      * @param region The region of {@code state}
      * @param output The vo for which the new vo should be created
      *
@@ -1771,7 +1774,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         region.declarations += variableDeclaration
         // Retrieve the state's variable map
         val Map<String, List<ValuedObject>> stateVariables = getStateVariables(state)
-        val varName = name + ssaNameSeperator + counter + output.label
+        val varName = name !== null ? name + ssaNameSeperator + counter + output.label : output.label
         // Reuse the vo variable, now pointing to a new VO in the state
         outputVo = variableDeclaration.createValuedObject(varName)
         outputVo.label = varName
@@ -1852,7 +1855,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         val Map<String, List<ValuedObject>> stateVariables = getStateVariables(newState)
         for (outputVO : outputs) {
             // create output vo
-            val innerOutputVO = createVar(outputVO, newState, stateVariables, outSuffix)
+            val innerOutputVO = createVar(outputVO, newState, stateVariables, outSuffix, "")
             // Create the assignment
             val target = outputVO
             if (refObj === null) {
@@ -1881,11 +1884,11 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         val Map<String, List<ValuedObject>> stateVariables = getStateVariables(newState)
         for (inputVO : inputs) {
             // label should not be null
-            val label = inputVO.label !== null ? inputVO.label : inputVO.name.split("_").get(0)
+            val label = inputVO.label !== null ? inputVO.label : inputVO.name.split(ssaNameSeperator).get(0)
             inputVO.label = label
             
             // create input vo
-            val innerInputVO = createVar(inputVO, newState, stateVariables, inSuffix)
+            val innerInputVO = createVar(inputVO, newState, stateVariables, inSuffix, "")
 
             // Create the assignment
             if (refObj === null) {
@@ -1911,27 +1914,36 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
      * @param stateVars Variables of {@code state}
      * @param suffix Suffix for the variable label
      */
-    private def createVar(ValuedObject vo, State state, Map<String, List<ValuedObject>> stateVars, String suffix) {
-        val outputDecl = createVariableDeclaration
-        outputDecl.type = vo.type
-        outputDecl.output = true
+    private def createVar(ValuedObject vo, State state, Map<String, List<ValuedObject>> stateVars, String suffix, String l) {
+        val decl = createVariableDeclaration
+        decl.type = vo.type
+        
+        switch (suffix) {
+            case outSuffix: decl.output = true
+            case inSuffix: decl.input = true
+        }
 
-        state.declarations += outputDecl
-        val varVO = outputDecl.createValuedObject(vo.label + suffix)
-        varVO.label = vo.label
+        var label = ""
+        if (!l.equals("")) {
+            label = l + ssaNameSeperator
+        }
+        label = vo.label !== null ? label + vo.label : label + vo.name.split(ssaNameSeperator).get(0)
+        state.declarations += decl
+        val varVO = decl.createValuedObject(label + suffix)
+        varVO.label = label
         
         if (!vo.annotations.empty) {
             varVO.addTagAnnotation((vo.annotations.get(0) as TagAnnotation).name)
         }
 
         // Add the new create valued object to the ssa list and valued object list
-        if (stateVars.containsKey(vo.label)) {
-            var varList = stateVars.get(vo.label)
+        if (stateVars.containsKey(label)) {
+            var varList = stateVars.get(label)
             varList.add(varVO)
         } else {
             var varList = <ValuedObject>newArrayList
             varList.add(varVO)
-            stateVars.put(vo.label, varList)
+            stateVars.put(label, varList)
         }
         return varVO
     }
@@ -1942,7 +1954,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
      * @param passedStmt Determines whether a break or continue stmt should be trasnlated
      * 
      */
-    def void buildBreakOrContinue(IASTStatement passedStmt){
+    def void buildBreakOrContinue(IASTStatement passedStmt, State parentState, DataflowRegion parentRegion){
         var localName = ""
         var anno = ""
         var localCounter = 0
@@ -1999,13 +2011,67 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         newState.regions += newRegion
         newRegion.label = localName + ssaNameSeperator + localCounter
         
-        // set the first half of the inputs for the break state 
+        // determine the variables which values depend on the break stmt
         var breakDependableVars = findBreakOutputs(whileStmt.getBody as IASTCompoundStatement,
         passedStmt.parent.parent as IASTIfStatement, whileState)  
-        val st = whileState 
-        var vars = breakDependableVars.map[s |findValuedObjectByName(st, s, false,lastWhileRegion)].toList
-        vars.forEach[v | v.addTagAnnotation(posTag)]
-        setMultInput(vars, newState, lastWhileRegion, newObj, false)
+        
+        // search for the latest valued object for each of the breakDependableVar
+        val List<ValuedObject> vars = new ArrayList
+        for (depVar : breakDependableVars) {
+            var ValuedObject vo = null
+            var region = parentRegion
+            var state = parentState
+            // input does not count as the latest vo unless it is in the surrounding while state
+            while (vo === null || (vo.name.contains(inSuffix) && !state.name.startsWith(whileName + ssaNameSeperator))) {
+                region = hierarchy.get(state)
+                val name = region.label !== null && !region.label.equals("") ? region.label : region.name.split("-").get(1)
+                state = rootSCChart.rootStates.filter[s | s.name.equals(name)].head
+                vo = findValuedObjectByName(state, depVar, false, region)
+            }
+            vars.add(vo)
+        }
+        
+        // if the vos are not in the surrounding while state (in which the break state is) they must be passed to it
+        val List<ValuedObject> inputs = new ArrayList
+        for (v : vars) {
+            var vo = v
+            if (v.eContainer.eContainer instanceof DataflowRegion){
+                // create output variable for the region
+                var pR = v.eContainer.eContainer as DataflowRegion
+                val regName = pR.label !== null && !pR.label.equals("") ? pR.label : pR.name.split("-").get(1)
+                var pS = rootSCChart.rootStates.filter[s | s.name.equals(regName)].head
+                vo = createVar(v, pS, getStateVariables(pS), outSuffix, localName + "Var" + ssaNameSeperator + localCounter)
+                var obj = stateObjects.get(pS)
+                
+                // Create the assignment
+                pR.equations += createDataflowAssignment(vo, v.reference)
+                
+                // update parents
+                pR = hierarchy.get(vo.eContainer.eContainer as State)
+                val name = pR.label !== null && !pR.label.equals("") ? pR.label : pR.name.split("-").get(1)
+                pS = rootSCChart.rootStates.filter[s | s.name.equals(name)].head
+
+                vo = createOutputVo(null, localCounter, pS, obj, pR, vo)
+                
+                // repeat until while state is reached
+                while (!pS.name.startsWith(whileName + ssaNameSeperator)) {
+                    val vo2 = createVar(vo, pS, getStateVariables(pS), outSuffix, "")
+                    pR.equations += createDataflowAssignment(vo2, vo.reference)
+                    
+                    pR = hierarchy.get(vo2.eContainer.eContainer as State)
+                    val rN = pR.label !== null && !pR.label.equals("") ? pR.label : pR.name.split("-").get(1)
+                    
+                    obj = stateObjects.get(pS)
+                    pS = rootSCChart.rootStates.filter[s | s.name.equals(rN)].head
+                    vo = createOutputVo(null, localCounter, pS, obj, pR, vo)
+                }
+            }
+            inputs.add(vo)
+        }
+        
+        // set tag annotation and input
+        inputs.forEach[v | v.addTagAnnotation(posTag)]
+        setMultInput(inputs, newState, lastWhileRegion, newObj, false)
         
         // adjust name and label of the state variables
         val name = localName
@@ -2073,7 +2139,9 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
 
             // determine the inputs of the break state
             val vars = new ArrayList()
-            getStateVariables(breakState).forEach[key, value| vars.add(key)]
+            getStateVariables(breakState).forEach[key, value| val labels = key.split(ssaNameSeperator); 
+                vars.add(labels.get(labels.length -1))
+            ]
             var breakInputs = new ArrayList()
             for (label : vars) {
                 var vo = whileState.findValuedObjectByName(label, false, lastWhileRegion)
@@ -2085,7 +2153,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             // create output vars
             val breakVars = getStateVariables(breakState)
             for (input : breakInputs) {
-                val innerOutputVO = createVar(input, breakState, breakVars, outSuffix)
+                val innerOutputVO = createVar(input, breakState, breakVars, outSuffix, "")
                 createOutputVo(name, Integer.parseInt(breakState.name.substring(name.length+1)), whileState, 
                     breakObj, whileRegion, innerOutputVO
                 )
@@ -2184,7 +2252,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 val parentObj = stateObjects.get(parentState)
                 
                 val label = condOutput.label.startsWith(ifName + ssaNameSeperator) ? 
-                    condOutput.label.split("_").get(1) : parentRegion.label.split("_").get(1)
+                    condOutput.label.split(ssaNameSeperator).get(1) : parentRegion.label.split(ssaNameSeperator).get(1)
                 // condition vo that can be used by the next state
                 condOutputs.add(createOutputVo(ifName, Integer.parseInt(label), parentState, parentObj, 
                     hierarchy.get(parentState), outputVO
@@ -2644,6 +2712,9 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         // Retrieve the last valued object of the variables list
         var ValuedObject vo
         val varList = getStateVariables(state).get(name)
+        if (varList === null) {
+            return null
+        }
         vo = varList.get(varList.length - 1)
         var varName = vo.getName()
 
