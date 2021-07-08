@@ -29,6 +29,7 @@ import de.cau.cs.kieler.scg.SCGraphs
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import java.util.List
 import de.cau.cs.kieler.scg.ScgFactory
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
 
 /**
  * @author glu
@@ -115,7 +116,7 @@ class ReferenceCallProcessor extends InplaceProcessor<SCGraphs> implements Trace
                         assignment.next = assignment.createControlFlow => [target = newAssignments.get(index + 1)]
                     ]
                     newAssignments.last.next = nextCF
-                        originalAsmt.incomingLinks.immutableCopy.forEach[target = newAssignments.head]
+                    originalAsmt.incomingLinks.immutableCopy.forEach[target = newAssignments.head]
                     scg.nodes.remove(originalAsmt)
                 } else {
                     environment.warnings.add(
@@ -131,8 +132,10 @@ class ReferenceCallProcessor extends InplaceProcessor<SCGraphs> implements Trace
         ]
         termCalls.forEach [ termCall |
             val cond = termCall.eContainer as Conditional
-            // evil stuff TODO exorcise demons
-            cond.condition = createTextExpression("d->" + termCall.valuedObject.name + "._TERM")
+            val instance = termCall.valuedObject
+            val subref = (termCall.valuedObject.eContainer as ClassDeclaration).declarations.filter(
+                VariableDeclaration).map[valuedObjects].flatten.findFirst[name == "_TERM"].reference
+            cond.condition = instance.reference => [subReference = subref]
         ]
 
         moduleClasses.forEach[name = "TickData" + name]
