@@ -31,7 +31,11 @@ import de.cau.cs.kieler.scl.MethodImplementationDeclaration
 import de.cau.cs.kieler.scl.SCLFactory
 import de.cau.cs.kieler.scl.processors.transformators.SCLToSCGTransformation
 import java.lang.reflect.Method
+import java.util.EnumSet
 import java.util.List
+import org.eclipse.elk.core.options.ContentAlignment
+import org.eclipse.elk.core.options.CoreOptions
+import org.eclipse.elk.core.options.SizeConstraint
 import org.eclipse.elk.graph.properties.MapPropertyHolder
 
 import static extension de.cau.cs.kieler.annotations.ide.klighd.CommonSynthesisUtil.*
@@ -132,7 +136,9 @@ class MethodSynthesis extends SubSynthesis<MethodImplementationDeclaration, KNod
         node.children += diagram.children
         node.properties.addAll(diagram.properties)
 //        node.addLayoutParam(CoreOptions.PADDING, new ElkPadding(10, -10, 0, -10))
-            
+
+        node.setLayoutOption(CoreOptions::CONTENT_ALIGNMENT, ContentAlignment.topCenter())
+        node.setLayoutOption(CoreOptions::NODE_SIZE_CONSTRAINTS, EnumSet.of(SizeConstraint.MINIMUM_SIZE))
         
         return newArrayList(node)
     }

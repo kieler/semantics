@@ -51,6 +51,7 @@ import de.cau.cs.kieler.scl.extensions.SCLSerializeExtensions
 import java.util.List
 
 import static de.cau.cs.kieler.sccharts.PreemptionType.*
+import de.cau.cs.kieler.sccharts.OdeAction
 
 /**
  * @author ssm
@@ -126,6 +127,7 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
             SuspendAction case action.isWeak: "weak suspend"
             SuspendAction: "suspend"
             PeriodAction: "period"
+            OdeAction: "ode"
             default: ""
         })
 
