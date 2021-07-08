@@ -130,7 +130,7 @@ public class SynthesisHooks implements ISynthesisHooks {
     // -- NON-STATIC --
 
     /** The instances of the hooks. */
-    private final ArrayList<SynthesisHook> hooksOnDemand = new ArrayList();
+    private final ArrayList<SynthesisHook> hooksOnDemand = new ArrayList<>();
 
     @Inject private Injector injector;
 

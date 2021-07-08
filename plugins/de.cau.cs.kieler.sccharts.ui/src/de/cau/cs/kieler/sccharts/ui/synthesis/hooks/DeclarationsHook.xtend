@@ -18,14 +18,11 @@ import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.KContainerRendering
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
-import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.ControlflowRegionStyles
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.StateStyles
-import org.eclipse.elk.graph.properties.IProperty
-import org.eclipse.elk.graph.properties.Property
 
 /**
  * Shows or hides state declarations.

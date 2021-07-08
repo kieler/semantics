@@ -14,25 +14,18 @@
 package de.cau.cs.kieler.sccharts.ui.synthesis.styles
 
 import com.google.inject.Inject
+import de.cau.cs.kieler.klighd.kgraph.KEdge
 import de.cau.cs.kieler.klighd.kgraph.KNode
-import de.cau.cs.kieler.klighd.krendering.KContainerRendering
-import de.cau.cs.kieler.klighd.krendering.KRectangle
+import de.cau.cs.kieler.klighd.krendering.KPolyline
 import de.cau.cs.kieler.klighd.krendering.KRoundedRectangle
 import de.cau.cs.kieler.klighd.krendering.KText
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
-import java.util.List
-import org.eclipse.elk.graph.properties.IProperty
-import org.eclipse.elk.graph.properties.Property
 
 import static de.cau.cs.kieler.sccharts.ui.synthesis.styles.ColorStore.Color.*
-
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.klighd.krendering.KPolyline
-import de.cau.cs.kieler.klighd.kgraph.KEdge
-import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
 
 /**
  * Styles for {@link State}.

@@ -25,13 +25,13 @@ import de.cau.cs.kieler.kicool.classes.SourceTargetPair
 import de.cau.cs.kieler.kicool.compilation.Processor
 import de.cau.cs.kieler.kicool.kitt.tracing.internal.TracingIntegration
 import java.io.Closeable
-import java.io.IOException
 import java.net.URL
 import java.util.HashMap
 import java.util.List
 import java.util.Map
 import org.eclipse.emf.common.EMFPlugin
 import org.eclipse.emf.common.util.URI
+import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.diagnostics.Severity
 import org.eclipse.xtext.resource.XtextResourceSet
 import org.eclipse.xtext.util.CancelIndicator
@@ -41,7 +41,6 @@ import org.eclipse.xtext.validation.IResourceValidator
 import static com.google.common.base.Preconditions.*
 
 import static extension java.lang.String.format
-import org.eclipse.emf.ecore.resource.Resource
 
 /**
  * Main class for the registration of systems and processors.

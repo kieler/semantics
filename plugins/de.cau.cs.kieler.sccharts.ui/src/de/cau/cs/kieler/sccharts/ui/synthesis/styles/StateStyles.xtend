@@ -380,7 +380,7 @@ class StateStyles {
      */
     def getContentContainer(KNode node) {
         var KContainerRendering figure = node.getKContainerRendering;
-        while (figure != null) {
+        while (figure !== null) {
             if (figure.getProperty(IS_CONTENT_CONTAINER)) {
                 return figure;
             } else {
@@ -397,7 +397,7 @@ class StateStyles {
     private def getActionsContainer(KNode node) {
         val content = node.contentContainer;
         var container = content.getProperty(ACTIONS_CONTAINER);
-        if (container == null) {
+        if (container === null) {
             container = content.addInvisibleContainer;
             content.setProperty(ACTIONS_CONTAINER, container);
         }
@@ -411,7 +411,7 @@ class StateStyles {
     private def getDeclarationsContainer(KNode node) {
         val content = node.contentContainer;
         var container = content.getProperty(DECLARATIONS_CONTAINER);
-        if (container == null) {
+        if (container === null) {
             container = content.addInvisibleContainer;
             content.setProperty(DECLARATIONS_CONTAINER, container);
         }

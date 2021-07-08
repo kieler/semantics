@@ -13,12 +13,9 @@
 package de.cau.cs.kieler.kicool.ui.synthesis.actions
 
 import de.cau.cs.kieler.klighd.IAction
-
 import de.cau.cs.kieler.klighd.kgraph.KNode
-import org.eclipse.emf.ecore.EObject
-import de.cau.cs.kieler.klighd.kgraph.KIdentifier
-import de.cau.cs.kieler.kicool.ui.synthesis.updates.ProcessorDataManager
 import de.cau.cs.kieler.klighd.krendering.KContainerRendering
+import org.eclipse.emf.ecore.EObject
 
 /**
  * Class that redirects select actions to the processor body node.

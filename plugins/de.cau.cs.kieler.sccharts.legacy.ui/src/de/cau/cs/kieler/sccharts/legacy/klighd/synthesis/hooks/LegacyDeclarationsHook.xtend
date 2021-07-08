@@ -75,7 +75,7 @@ class LegacyDeclarationsHook extends SynthesisActionHook {
             val container = node.contentContainer;
             val declarations = container?.getProperty(StateStyles.DECLARATIONS_CONTAINER);
 
-            if (declarations != null) {
+            if (declarations !== null) {
                 val idx = container.children.indexOf(declarations)
                 declarations.setProperty(INDEX, idx);
                 container.children.remove(declarations);
@@ -90,7 +90,7 @@ class LegacyDeclarationsHook extends SynthesisActionHook {
             val declarations = parent?.getProperty(ControlflowRegionStyles.DECLARATIONS_CONTAINER);
             val container = parent?.children?.filter(KContainerRendering)?.head;
             // Hide declarations
-            if (declarations != null && container != null) {
+            if (declarations !== null && container !== null) {
                 val idx = container.children.indexOf(declarations)
                 declarations.setProperty(INDEX, idx);
                 container.children.remove(declarations);
@@ -120,7 +120,7 @@ class LegacyDeclarationsHook extends SynthesisActionHook {
                         declarations = container?.getProperty(StateStyles.DECLARATIONS_CONTAINER);
                     }
                     // Show or hide declarations
-                    if (declarations != null) {
+                    if (declarations !== null) {
                         if (SHOW_DECLARATIONS.booleanValue && !scope.declarations.empty) {
                             // Insert actions in correct position
                             val pos = declarations.getProperty(INDEX);

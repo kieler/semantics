@@ -48,7 +48,7 @@ class PrioStatementsActions implements IAction {
         val viewContext = context.contextViewer.viewContext
         val rootNode = context.KNode
         for(port : rootNode.eAllContentsOfType(KPort).toIterable) {
-            if(port.KContainerRendering != null 
+            if(port.KContainerRendering !== null 
                 && port.KContainerRendering.getProperty(SCGraphDiagramSynthesis.PRIO_STATEMENTS_PROPERTY)) {
               if(SHOW_PRIO_STATEMENTS.booleanValue(viewContext)) {
                   port.setSize(50,20)
@@ -81,7 +81,7 @@ class PrioStatementsActions implements IAction {
     def booleanValue(SynthesisOption option, ViewContext viewContext) {
         val value = viewContext.getOptionValue(option)
         
-        if(value == null) {
+        if(value === null) {
             return false
         } else if (value instanceof Boolean) {
             return value as Boolean;

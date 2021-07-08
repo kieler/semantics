@@ -27,7 +27,7 @@ class ExtendedIDValueConverter extends AbstractValueConverter<String> {
     @Inject extension IDValueConverter delegate
     
     override String toValue(String string, INode node) {
-        if (string == null) return null;
+        if (string === null) return null;
         
         return string.split("\\.").map[delegate.toValue(it, node)].join(".").split("-").map[delegate.toValue(it, node)].join("-")
     }

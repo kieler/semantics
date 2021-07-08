@@ -15,12 +15,10 @@ package de.cau.cs.kieler.sccharts.processors.scg
 import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.TagAnnotation
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
 import de.cau.cs.kieler.annotations.registry.AnnotationsType
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.processors.AbortRegion

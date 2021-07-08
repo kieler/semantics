@@ -22,7 +22,6 @@ import com.google.gson.JsonPrimitive
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.kexpressions.OperatorType
-import de.cau.cs.kieler.kexpressions.Value
 import de.cau.cs.kieler.kicool.classes.IKiCoolCloneable
 import de.cau.cs.kieler.kicool.compilation.VariableInformation
 import de.cau.cs.kieler.kicool.compilation.VariableStore
@@ -66,7 +65,7 @@ class DataPool implements IKiCoolCloneable {
     
     def static JsonObject parseJSON(String string) {
         if (string.isJSON) {
-            (new JsonParser).parse(string) as JsonObject
+            JsonParser.parseString(string) as JsonObject
         }
     }
     

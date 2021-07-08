@@ -18,19 +18,14 @@ import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import de.cau.cs.kieler.klighd.util.KlighdProperties
+import de.cau.cs.kieler.sccharts.legacy.klighd.SCChartsDiagramProperties
+import de.cau.cs.kieler.sccharts.legacy.klighd.hooks.SynthesisHooks
 import de.cau.cs.kieler.sccharts.legacy.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.legacy.sccharts.Scope
 import de.cau.cs.kieler.sccharts.legacy.sccharts.State
-import de.cau.cs.kieler.sccharts.legacy.klighd.SCChartsDiagramProperties
-import de.cau.cs.kieler.sccharts.legacy.klighd.hooks.SynthesisHooks
 import java.util.LinkedHashSet
-import java.util.List
-import java.util.logging.Logger
-import org.eclipse.elk.core.options.Direction
-import org.eclipse.elk.graph.properties.IProperty
 
 import static de.cau.cs.kieler.sccharts.legacy.klighd.synthesis.GeneralSynthesisOptions.*
-import org.eclipse.elk.core.options.CoreOptions
 
 /**
  * Main diagram synthesis for SCCharts.

@@ -35,3 +35,4 @@ Export-Package: de.cau.cs.kieler.lustre.ui.internal,
  de.cau.cs.kieler.lustre.ui.scade.quickfix
 Bundle-Activator: de.cau.cs.kieler.lustre.ui.DelegateActivator
 Bundle-ActivationPolicy: lazy
+Automatic-Module-Name: de.cau.cs.kieler.lustre.ui

@@ -3,14 +3,7 @@
  */
 package de.cau.cs.kieler.lustre.ui.quickfix
 
-import de.cau.cs.kieler.lustre.validation.LustreValidator
-import org.eclipse.emf.ecore.EObject
-import org.eclipse.xtext.ui.editor.model.edit.IModificationContext
-import org.eclipse.xtext.ui.editor.model.edit.ISemanticModification
 import org.eclipse.xtext.ui.editor.quickfix.DefaultQuickfixProvider
-import org.eclipse.xtext.ui.editor.quickfix.Fix
-import org.eclipse.xtext.ui.editor.quickfix.IssueResolutionAcceptor
-import org.eclipse.xtext.validation.Issue
 
 /**
  * Custom quickfixes.

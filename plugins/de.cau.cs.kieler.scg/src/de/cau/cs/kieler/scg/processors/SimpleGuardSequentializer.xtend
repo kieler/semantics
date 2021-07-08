@@ -16,9 +16,14 @@ package de.cau.cs.kieler.scg.processors
 import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.StringAnnotation
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
+import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kexpressions.keffects.ControlDependency
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.kicool.compilation.Processor
 import de.cau.cs.kieler.kicool.compilation.ProcessorType
+import de.cau.cs.kieler.kicool.compilation.VariableStore
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Entry
@@ -33,17 +38,11 @@ import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
 import de.cau.cs.kieler.scg.extensions.SCGDependencyExtensions
+import de.cau.cs.kieler.scg.extensions.SCGMethodExtensions
+import java.util.Map
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
-import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
-import de.cau.cs.kieler.kicool.compilation.VariableStore
-import de.cau.cs.kieler.kexpressions.keffects.ControlDependency
-import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
-import java.util.Map
-import de.cau.cs.kieler.scg.extensions.SCGMethodExtensions
-import de.cau.cs.kieler.kexpressions.ValuedObject
 
 /** 
  * @author ssm

@@ -28,3 +28,4 @@ Export-Package: de.cau.cs.kieler.scl.ui,
  de.cau.cs.kieler.scl.ui.synthesis
 Bundle-Activator: de.cau.cs.kieler.scl.ui.internal.SCLActivator
 Import-Package: org.apache.log4j
+Automatic-Module-Name: de.cau.cs.kieler.scl.ui

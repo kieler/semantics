@@ -3,12 +3,10 @@
  */
 package de.cau.cs.kieler.sccharts.ui.text
 
-import de.cau.cs.kieler.sccharts.ui.text.quickfix.SCTXQuickfixProvider
 import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor
 import org.eclipse.xtext.ide.editor.syntaxcoloring.ISemanticHighlightingCalculator
 import org.eclipse.xtext.ui.editor.DirtyStateEditorSupport
 import org.eclipse.xtext.ui.editor.IXtextEditorCallback
-import org.eclipse.xtext.ui.editor.quickfix.IssueResolutionProvider
 import org.eclipse.xtext.ui.editor.syntaxcoloring.DefaultHighlightingConfiguration
 
 /**

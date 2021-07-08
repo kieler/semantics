@@ -18,17 +18,16 @@ import de.cau.cs.kieler.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import javax.inject.Inject
-import org.eclipse.xtext.RuleCall
+import org.eclipse.xtext.CrossReference
 import org.eclipse.xtext.linking.LinkingScopeProviderBinding
 import org.eclipse.xtext.linking.impl.LinkingHelper
 import org.eclipse.xtext.naming.IQualifiedNameConverter
+import org.eclipse.xtext.nodemodel.INode
 import org.eclipse.xtext.nodemodel.impl.CompositeNodeWithSemanticElement
 import org.eclipse.xtext.parser.IParseResult
 import org.eclipse.xtext.scoping.IScopeProvider
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.replace
-import org.eclipse.xtext.CrossReference
-import org.eclipse.xtext.nodemodel.INode
 
 /**
  * @author als

@@ -52,3 +52,4 @@ Export-Package: de.cau.cs.kieler.esterel,
  de.cau.cs.kieler.esterel.validation
 Import-Package: org.apache.commons.logging,
  org.apache.log4j
+Automatic-Module-Name: de.cau.cs.kieler.esterel

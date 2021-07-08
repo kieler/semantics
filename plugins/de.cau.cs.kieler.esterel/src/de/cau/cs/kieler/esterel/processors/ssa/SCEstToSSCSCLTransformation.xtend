@@ -23,6 +23,7 @@ import de.cau.cs.kieler.esterel.EsterelParallel
 import de.cau.cs.kieler.esterel.EsterelProgram
 import de.cau.cs.kieler.esterel.Exit
 import de.cau.cs.kieler.esterel.LocalSignalDeclaration
+import de.cau.cs.kieler.esterel.LocalVariableDeclaration
 import de.cau.cs.kieler.esterel.Loop
 import de.cau.cs.kieler.esterel.Nothing
 import de.cau.cs.kieler.esterel.Present
@@ -34,17 +35,19 @@ import de.cau.cs.kieler.esterel.extensions.EsterelExtensions
 import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.OperatorExpression
+import de.cau.cs.kieler.kexpressions.OperatorType
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.kicool.compilation.Processor
 import de.cau.cs.kieler.kicool.compilation.ProcessorType
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
-import de.cau.cs.kieler.scg.processors.ssa.SSATransformationExtensions
+import de.cau.cs.kieler.scg.processors.ssa.SSACoreExtensions
 import de.cau.cs.kieler.scl.Assignment
 import de.cau.cs.kieler.scl.Goto
 import de.cau.cs.kieler.scl.Label
@@ -55,14 +58,8 @@ import de.cau.cs.kieler.scl.SCLProgram
 import de.cau.cs.kieler.scl.Scope
 import de.cau.cs.kieler.scl.Thread
 import java.util.List
-import de.cau.cs.kieler.scl.Statement
-import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
-import de.cau.cs.kieler.scg.processors.ssa.SSACoreExtensions
-import de.cau.cs.kieler.kexpressions.OperatorType
-import de.cau.cs.kieler.esterel.LocalVariableDeclaration
-import de.cau.cs.kieler.kexpressions.BoolValue
 
 /**
  * This class contains methods to transform an Kernel SC Esterel program to SCL using signal notation.

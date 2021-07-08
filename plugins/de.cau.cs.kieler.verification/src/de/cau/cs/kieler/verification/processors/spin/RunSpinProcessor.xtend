@@ -19,7 +19,6 @@ import de.cau.cs.kieler.kicool.compilation.VariableStore
 import de.cau.cs.kieler.verification.VerificationProperty
 import de.cau.cs.kieler.verification.VerificationPropertyChanged
 import de.cau.cs.kieler.verification.VerificationPropertyStatus
-import de.cau.cs.kieler.verification.VerificationPropertyType
 import de.cau.cs.kieler.verification.processors.RunModelCheckerProcessorBase
 import java.io.File
 import org.eclipse.core.resources.IFile
@@ -120,7 +119,7 @@ class RunSpinProcessor extends RunModelCheckerProcessorBase {
         val process = processBuilder.start
         process.waitForTermination([ return isCanceled() ])
         throwIfCanceled
-        val processOutput = Files.toString(javaioProcessOutputFile, Charsets.UTF_8)
+        val processOutput = Files.asCharSource(javaioProcessOutputFile, Charsets.UTF_8).read()
         val processOutputWithCommand = processBuilder.command.toString.replace("\n", "\\n") + "\n" + processOutput
         if(process.exitValue != 0) {
             throw new Exception("SPIN trail command terminated with non-zero exit code.")
