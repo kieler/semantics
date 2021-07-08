@@ -89,4 +89,8 @@ final class GeneralSynthesisOptions {
     public static final SynthesisOption AUTOMATIC_DIRECTION = SynthesisOption.createCheckOption(GeneralSynthesisOptions, "Automatic direction", false).setCategory(TOPDOWN_LAYOUT)
     public static final SynthesisOption NODE_SIZE_CONSTRAINT = SynthesisOption.createRangeOption("Node Size Constraint",1.0, 500, 34).setCategory(TOPDOWN_LAYOUT)
     public static final SynthesisOption DYNAMIC_NODE_SIZE_CONSTRAINT = SynthesisOption.createCheckOption(GeneralSynthesisOptions, "Dynamic node size constraint", false).setCategory(TOPDOWN_LAYOUT)
+    /**
+     * Layout engine options
+     */
+    public static final SynthesisOption LAYOUT_ENGINE = SynthesisOption.createChoiceOption("Layout Engine", #["Recursive", "Top-down"], "Recursive").setCategory(TOPDOWN_LAYOUT)
 }

@@ -56,6 +56,7 @@ import org.eclipse.elk.graph.properties.Property
 
 import static de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions.*
 import org.eclipse.elk.core.options.TopDownLayoutConstraint
+import org.eclipse.elk.core.GraphLayoutEngines
 
 /**
  * Main diagram synthesis for SCCharts.
@@ -128,6 +129,7 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
             SHOW_USER_LABELS,
             SHOW_CAUSAL_DATAFLOW,
             TOPDOWN_LAYOUT,
+            LAYOUT_ENGINE,
             TOPDOWN_LAYOUT_TOGGLE,
             TOPDOWN_LAYOUT_CONSTRAINT,
             AUTOMATIC_DIRECTION,
@@ -174,6 +176,13 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
             } else sccharts
         
         val rootNode = createNode
+        
+        switch(LAYOUT_ENGINE.getObjectValue) {
+            case "Recursive":
+                rootNode.setProperty(CoreOptions.LAYOUT_ENGINE, GraphLayoutEngines.RECURSIVE_GRAPH_LAYOUT_ENGINE)
+            case "Top-down":
+                rootNode.setProperty(CoreOptions.LAYOUT_ENGINE, GraphLayoutEngines.TOPDOWN_GRAPH_LAYOUT_ENGINE)    
+        }
         
         rootNode.setProperty(CoreOptions.TOPDOWN_LAYOUT, TOPDOWN_LAYOUT_TOGGLE.booleanValue)
         switch(TOPDOWN_LAYOUT_CONSTRAINT.getObjectValue) {
