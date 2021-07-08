@@ -160,6 +160,7 @@ class ControlflowRegionStyles {
                     selectionTextUnderline = Underline.NONE // prevents default selection style
                     val size = estimateTextSize;
                     setPointPlacementData(LEFT, 14, 0, TOP, 1, 0, H_LEFT, V_TOP, 0, 0, size.width + 5, size.height)
+                    setProperty(KlighdProperties.IS_NODE_TITLE, true)
                 ]
             } else {
                 container.addKeywordLabel(label, 0) => [
@@ -182,6 +183,7 @@ class ControlflowRegionStyles {
                         if (!styles.exists[it instanceof KForeground]) {
                             foreground = REGION_LABEL.color
                         }
+                        setProperty(KlighdProperties.IS_NODE_TITLE, true)
                     ]
                 ]
             }
