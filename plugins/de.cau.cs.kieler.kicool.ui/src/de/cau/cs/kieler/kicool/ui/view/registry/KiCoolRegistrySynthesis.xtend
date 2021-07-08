@@ -203,7 +203,7 @@ class KiCoolRegistrySynthesis extends AbstractDiagramSynthesis<KiCoolRegistrySum
                 suppressSelectability
             ]            
             
-            processorConnections.put(p, new Integer(0))
+            processorConnections.put(p, Integer.valueOf(0))
             
             result += node
         }

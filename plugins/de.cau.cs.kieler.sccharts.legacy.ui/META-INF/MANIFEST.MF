@@ -45,3 +45,4 @@ Export-Package: de.cau.cs.kieler.sccharts.legacy.annotations.ui.contentassist,
  de.cau.cs.kieler.sccharts.legacy.text.actions.ui.contentassist.antlr,
  de.cau.cs.kieler.sccharts.legacy.text.actions.ui.contentassist.antlr.internal
 Import-Package: org.apache.log4j
+Automatic-Module-Name: de.cau.cs.kieler.sccharts.legacy.ui

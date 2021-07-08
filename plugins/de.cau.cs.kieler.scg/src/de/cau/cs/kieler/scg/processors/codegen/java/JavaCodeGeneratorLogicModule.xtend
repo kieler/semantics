@@ -14,14 +14,12 @@ package de.cau.cs.kieler.scg.processors.codegen.java
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.OperatorExpression
+import de.cau.cs.kieler.kexpressions.ValueType
+import de.cau.cs.kieler.kicool.compilation.VariableStore
+import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
+import de.cau.cs.kieler.scg.extensions.SCGMethodExtensions
 import de.cau.cs.kieler.scg.processors.codegen.c.CCodeGeneratorLogicModule
 import de.cau.cs.kieler.scg.processors.codegen.c.CCodeSerializeHRExtensions
-import de.cau.cs.kieler.kicool.compilation.VariableStore
-import de.cau.cs.kieler.kexpressions.ValueType
-import de.cau.cs.kieler.scg.extensions.SCGMethodExtensions
-import de.cau.cs.kieler.kexpressions.VariableDeclaration
-import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
-import de.cau.cs.kieler.scg.Node
 
 /**
  * Java Code Generator Logic Module

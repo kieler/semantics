@@ -30,3 +30,4 @@ Export-Package: de.cau.cs.kieler.annotations.ui,
  de.cau.cs.kieler.annotations.ui.outline,
  de.cau.cs.kieler.annotations.ui.quickfix
 Bundle-Activator: de.cau.cs.kieler.annotations.ui.internal.AnnotationsActivator
+Automatic-Module-Name: de.cau.cs.kieler.annotations.ui

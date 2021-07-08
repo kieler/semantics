@@ -38,7 +38,7 @@ class PostUpdateDoubleCollector {
         try {
             val v = processor.environment.getProperty(key)
             var double value = v.doubleValue
-            processorMap.put(processor, new Double(value))
+            processorMap.put(processor, Double.valueOf(value))
             if (value > maxValue) maxValue = value
         } catch(Exception e) {
         }

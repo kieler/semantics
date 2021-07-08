@@ -28,4 +28,5 @@ Export-Package: de.cau.cs.kieler.sccharts.test,
  de.cau.cs.kieler.sccharts.test.structure,
  de.cau.cs.kieler.sccharts.test.compiler,
  de.cau.cs.kieler.sccharts.test.synthesis
+Automatic-Module-Name: de.cau.cs.kieler.sccharts.test
 

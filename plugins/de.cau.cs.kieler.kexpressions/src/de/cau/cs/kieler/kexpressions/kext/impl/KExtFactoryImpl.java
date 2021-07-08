@@ -5,7 +5,6 @@ package de.cau.cs.kieler.kexpressions.kext.impl;
 import de.cau.cs.kieler.kexpressions.kext.*;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 

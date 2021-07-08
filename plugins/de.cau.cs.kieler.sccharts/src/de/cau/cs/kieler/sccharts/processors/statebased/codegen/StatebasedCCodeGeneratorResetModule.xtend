@@ -15,9 +15,9 @@ package de.cau.cs.kieler.sccharts.processors.statebased.codegen
 import com.google.inject.Inject
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
-import static extension de.cau.cs.kieler.sccharts.processors.statebased.codegen.StatebasedCCodeGeneratorStructModule.*
-import de.cau.cs.kieler.sccharts.State
 import org.eclipse.xtend.lib.annotations.Accessors
+
+import static de.cau.cs.kieler.sccharts.processors.statebased.codegen.StatebasedCCodeGeneratorStructModule.*
 
 /**
  * C Code Generator Reset Module

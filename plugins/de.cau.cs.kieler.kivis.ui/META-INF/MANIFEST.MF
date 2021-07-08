@@ -29,3 +29,4 @@ Export-Package: de.cau.cs.kieler.kivis.ui.contentassist,
 Import-Package: org.apache.log4j
 Bundle-Activator: de.cau.cs.kieler.kivis.ui.internal.KiVisActivator
 Bundle-ClassPath: .,lib/org.apache.batik.swing_1.6.0.v201011041432.jar
+Automatic-Module-Name: de.cau.cs.kieler.kivis.ui

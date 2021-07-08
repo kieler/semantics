@@ -12,19 +12,9 @@
  */
 package de.cau.cs.kieler.kicool.ui.synthesis.actions
 
-import de.cau.cs.kieler.kicool.compilation.CodeContainer
-import de.cau.cs.kieler.kicool.compilation.CompilationContext
-import de.cau.cs.kieler.kicool.compilation.Processor
-import de.cau.cs.kieler.kicool.environments.MessageObjectReferences
-import de.cau.cs.kieler.kicool.ide.klighd.models.CodePlaceHolder
 import de.cau.cs.kieler.kicool.ui.klighd.KiCoModelViewNotifier
-import de.cau.cs.kieler.kicool.ui.synthesis.Container
-import de.cau.cs.kieler.kicool.ui.view.CompilerView
 import de.cau.cs.kieler.kicool.ui.synthesis.styles.ProcessorStyles
 import de.cau.cs.kieler.klighd.IAction
-import de.cau.cs.kieler.klighd.kgraph.KIdentifier
-import de.cau.cs.kieler.klighd.kgraph.KNode
-import org.eclipse.ui.IEditorPart
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.KRendering
 import org.eclipse.xtend.lib.annotations.Accessors

@@ -4,19 +4,18 @@
 package de.cau.cs.kieler.lustre.formatting2;
 
 import com.google.inject.Inject
+import de.cau.cs.kieler.kexpressions.keffects.Emission
+import de.cau.cs.kieler.lustre.lustre.AState
+import de.cau.cs.kieler.lustre.lustre.ATransition
+import de.cau.cs.kieler.lustre.lustre.AnAction
+import de.cau.cs.kieler.lustre.lustre.Assertion
+import de.cau.cs.kieler.lustre.lustre.Automaton
+import de.cau.cs.kieler.lustre.lustre.Equation
 import de.cau.cs.kieler.lustre.lustre.LustreProgram
-import de.cau.cs.kieler.lustre.lustre.LustreVariableDeclaration
 import de.cau.cs.kieler.lustre.lustre.NodeDeclaration
 import de.cau.cs.kieler.lustre.services.LustreGrammarAccess
 import org.eclipse.xtext.formatting2.AbstractFormatter2
 import org.eclipse.xtext.formatting2.IFormattableDocument
-import de.cau.cs.kieler.lustre.lustre.Equation
-import de.cau.cs.kieler.kexpressions.keffects.Emission
-import de.cau.cs.kieler.lustre.lustre.Assertion
-import de.cau.cs.kieler.lustre.lustre.Automaton
-import de.cau.cs.kieler.lustre.lustre.AState
-import de.cau.cs.kieler.lustre.lustre.ATransition
-import de.cau.cs.kieler.lustre.lustre.AnAction
 
 class LustreFormatter extends AbstractFormatter2 {
     

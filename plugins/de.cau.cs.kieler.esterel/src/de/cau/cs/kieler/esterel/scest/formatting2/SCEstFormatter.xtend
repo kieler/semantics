@@ -5,7 +5,6 @@ package de.cau.cs.kieler.esterel.scest.formatting2;
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.Annotation
-import de.cau.cs.kieler.esterel.EsterelDeclaration
 import de.cau.cs.kieler.esterel.EsterelProgram
 import de.cau.cs.kieler.esterel.Set
 import de.cau.cs.kieler.esterel.UnEmit
@@ -14,11 +13,11 @@ import de.cau.cs.kieler.esterel.scest.services.SCEstGrammarAccess
 import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.scl.Assignment
 import de.cau.cs.kieler.scl.Module
-import de.cau.cs.kieler.scl.Thread
-import de.cau.cs.kieler.scl.Statement
-import org.eclipse.xtext.formatting2.IFormattableDocument
-import de.cau.cs.kieler.scl.Pause
 import de.cau.cs.kieler.scl.Parallel
+import de.cau.cs.kieler.scl.Pause
+import de.cau.cs.kieler.scl.Statement
+import de.cau.cs.kieler.scl.Thread
+import org.eclipse.xtext.formatting2.IFormattableDocument
 
 class SCEstFormatter extends EsterelFormatter {
 	

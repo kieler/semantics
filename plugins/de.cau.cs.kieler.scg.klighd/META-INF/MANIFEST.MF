@@ -26,3 +26,4 @@ Bundle-RequiredExecutionEnvironment: JavaSE-11
 Export-Package: de.cau.cs.kieler.scg.klighd
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: de.cau.cs.kieler.scg.klighd.SCGUIModule
+Automatic-Module-Name: de.cau.cs.kieler.scg.klighd

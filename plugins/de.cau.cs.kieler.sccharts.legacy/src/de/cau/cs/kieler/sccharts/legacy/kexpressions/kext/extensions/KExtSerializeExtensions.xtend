@@ -26,7 +26,7 @@ import de.cau.cs.kieler.sccharts.legacy.kexpressions.keffects.extensions.KEffect
 class KExtSerializeExtensions extends KEffectsSerializeHRExtensions {
     
     def dispatch CharSequence serialize(TestEntity entity) {
-        if (entity.effect != null) {
+        if (entity.effect !== null) {
         	return entity.effect.serialize
         } else {
         	return entity.expression.serialize
@@ -38,7 +38,7 @@ class KExtSerializeExtensions extends KEffectsSerializeHRExtensions {
     }
     
     def dispatch CharSequence serializeHR(TestEntity entity) {
-        if (entity.effect != null) {
+        if (entity.effect !== null) {
             return entity.effect.serializeHR
         } else {
             return entity.expression.serializeHR

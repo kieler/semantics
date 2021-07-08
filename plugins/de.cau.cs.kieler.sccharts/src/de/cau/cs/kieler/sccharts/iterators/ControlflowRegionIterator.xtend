@@ -17,7 +17,6 @@ import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
 import java.util.Iterator
-import java.util.List
 import org.eclipse.emf.common.util.AbstractTreeIterator
 
 import static extension com.google.common.collect.Iterators.concat

@@ -4,15 +4,7 @@
 package de.cau.cs.kieler.scl.serializer
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.scl.Conditional
-import de.cau.cs.kieler.scl.ElseScope
-import de.cau.cs.kieler.scl.Goto
-import de.cau.cs.kieler.scl.Label
-import de.cau.cs.kieler.scl.Module
-import de.cau.cs.kieler.scl.Parallel
-import de.cau.cs.kieler.scl.Pause
-import de.cau.cs.kieler.scl.SCLProgram
-import de.cau.cs.kieler.scl.ScopeStatement
+import de.cau.cs.kieler.scl.Thread
 import de.cau.cs.kieler.scl.services.SCLGrammarAccess
 import org.eclipse.xtext.serializer.ISerializationContext
 
@@ -28,7 +20,7 @@ class SCLSemanticSequencer extends AbstractSCLSemanticSequencer {
      * Constraint:
      *     ((annotations+=Annotation* declarations+=Declaration* statements+=Statement*) | statements+=Statement+)?
      */
-    override sequence_Thread(ISerializationContext context, de.cau.cs.kieler.scl.Thread semanticObject) {
+    override sequence_Thread(ISerializationContext context, Thread semanticObject) {
         val feeder = createSequencerFeeder(semanticObject, createNodeProvider(semanticObject))
         val g = grammarAccess.threadAccess
         

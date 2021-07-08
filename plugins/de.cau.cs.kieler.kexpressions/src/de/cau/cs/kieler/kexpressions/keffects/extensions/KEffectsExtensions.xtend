@@ -13,19 +13,18 @@
  */
 package de.cau.cs.kieler.kexpressions.keffects.extensions
 
+import com.google.inject.Inject
+import de.cau.cs.kieler.kexpressions.CombineOperator
+import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsComplexCreateExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
-import de.cau.cs.kieler.kexpressions.keffects.KEffectsFactory
-import de.cau.cs.kieler.kexpressions.ValuedObject
-import de.cau.cs.kieler.kexpressions.Expression
-import de.cau.cs.kieler.kexpressions.keffects.HostcodeEffect
-import de.cau.cs.kieler.kexpressions.keffects.ReferenceCallEffect
-import com.google.inject.Inject
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsComplexCreateExtensions
-import de.cau.cs.kieler.kexpressions.CombineOperator
 import de.cau.cs.kieler.kexpressions.keffects.Emission
-import org.eclipse.emf.common.util.EList
+import de.cau.cs.kieler.kexpressions.keffects.HostcodeEffect
+import de.cau.cs.kieler.kexpressions.keffects.KEffectsFactory
+import de.cau.cs.kieler.kexpressions.keffects.ReferenceCallEffect
 import java.util.List
 
 /**
@@ -124,7 +123,7 @@ class KEffectsExtensions {
     }
     
     def Assignment setValuedObject(Assignment assignment, ValuedObject valuedObject) {
-        if (assignment.reference == null) {
+        if (assignment.reference === null) {
             assignment.reference = valuedObject.reference
         } else {
             assignment.reference.valuedObject = valuedObject
@@ -181,7 +180,7 @@ class KEffectsExtensions {
     }
     
     def Emission setValuedObject(Emission emission, ValuedObject valuedObject) {
-        if (emission.reference == null) {
+        if (emission.reference === null) {
             emission.reference = valuedObject.reference
         } else {
             emission.reference.valuedObject = valuedObject
@@ -190,7 +189,7 @@ class KEffectsExtensions {
     }
     
     def ValuedObject getValuedObject(Emission emission) {
-        if (emission.reference == null) null else emission.reference.valuedObject
+        if (emission.reference === null) null else emission.reference.valuedObject
     }    
 
 }

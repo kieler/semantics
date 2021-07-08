@@ -269,12 +269,12 @@ class EsterelScopeProvider extends SCLScopeProvider {
             }
         };
         var EObject current = context;
-        while (scope == null && current != null) {
+        while (scope === null && current !== null) {
             scope = dispatcher.invoke(current, reference);
             current = current.eContainer();
         }
         current = context;
-        while (scope == null && current != null) {
+        while (scope === null && current !== null) {
             scope = dispatcher.invoke(current, reference.getEReferenceType());
             current = current.eContainer();
         }
@@ -293,7 +293,7 @@ class EsterelScopeProvider extends SCLScopeProvider {
         };
         var EObject current = context;
         var IScope scope = null;
-        while (scope == null && current != null) {
+        while (scope === null && current !== null) {
             scope = dispatcher.invoke(current, reference);
             current = current.eContainer();
         }

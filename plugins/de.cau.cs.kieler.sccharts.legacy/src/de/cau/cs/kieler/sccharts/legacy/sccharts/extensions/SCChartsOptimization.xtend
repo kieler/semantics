@@ -48,7 +48,7 @@ class SCChartsOptimization {
             val transition = state.outgoingTransitions.get(0)
             val targetState = transition.targetState
             if (transition.immediate2) {
-                if (transition.trigger == null && transition.effects.nullOrEmpty) {
+                if (transition.trigger === null && transition.effects.nullOrEmpty) {
                     targetState.trace(transition) //KITT: Redirect tracing relations before removing
                     targetState.incomingTransitions.remove(transition)
                     state.outgoingTransitions.remove(transition)
@@ -84,7 +84,7 @@ class SCChartsOptimization {
             val transition1 = state.outgoingTransitions.get(0)
             val transition2 = state.outgoingTransitions.get(1)
             val targetState2 = transition1.targetState
-            if ((transition1.immediate2) && (transition1.trigger == null)) {
+            if ((transition1.immediate2) && (transition1.trigger === null)) {
                 transition1.trace(transition2) //KITT: Redirect tracing relations before removing
                 targetState2.incomingTransitions.remove(transition2)
                 state.outgoingTransitions.remove(transition2)

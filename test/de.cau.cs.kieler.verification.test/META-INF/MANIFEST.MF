@@ -20,4 +20,5 @@ Require-Bundle: org.eclipse.core.runtime,
  de.cau.cs.kieler.verification
 Bundle-RequiredExecutionEnvironment: JavaSE-11
 Bundle-ActivationPolicy: lazy
+Automatic-Module-Name: de.cau.cs.kieler.verification.test
 

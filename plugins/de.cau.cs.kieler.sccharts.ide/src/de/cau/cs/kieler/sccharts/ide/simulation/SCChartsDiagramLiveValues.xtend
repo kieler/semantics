@@ -12,29 +12,28 @@
  */
 package de.cau.cs.kieler.sccharts.ide.simulation
 
+import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.klighd.LightDiagramLayoutConfig
+import de.cau.cs.kieler.klighd.ZoomStyle
 import de.cau.cs.kieler.klighd.kgraph.KEdge
-import de.cau.cs.kieler.sccharts.SCCharts
-import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions
-import de.cau.cs.kieler.klighd.krendering.KText
-import de.cau.cs.kieler.klighd.krendering.KRectangle
-import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.kexpressions.ValuedObject
-import de.cau.cs.kieler.sccharts.text.SCTXStandaloneSetup
-import de.cau.cs.kieler.sccharts.DataflowRegion
-import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.KPolygon
-import de.cau.cs.kieler.klighd.ZoomStyle
-import de.cau.cs.kieler.simulation.SimulationContext
+import de.cau.cs.kieler.klighd.krendering.KRectangle
+import de.cau.cs.kieler.klighd.krendering.KText
+import de.cau.cs.kieler.sccharts.DataflowRegion
+import de.cau.cs.kieler.sccharts.SCCharts
+import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions
 import de.cau.cs.kieler.simulation.DataPool
+import de.cau.cs.kieler.simulation.SimulationContext
 import de.cau.cs.kieler.simulation.ide.visualization.AbstractDiagramHighlighter
 
 import static de.cau.cs.kieler.sccharts.ide.synthesis.EquationSynthesisProperties.*
-import com.google.inject.Inject
 
 /**
  * FIXME This class is instantiated via bundle start!

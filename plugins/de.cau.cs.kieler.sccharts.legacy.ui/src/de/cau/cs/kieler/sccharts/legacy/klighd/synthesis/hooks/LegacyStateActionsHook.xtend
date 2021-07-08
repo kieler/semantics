@@ -74,7 +74,7 @@ class LegacyStateActionsHook extends SynthesisActionHook {
             val container = node.contentContainer
             val actions = container?.getProperty(StateStyles::ACTIONS_CONTAINER)
 
-            if (actions != null) {
+            if (actions !== null) {
                 // Break Effect chains
                 if (LINEBREAKS_IN_EFFECTS.booleanValue) {
                     for (actionContainer : actions.children.filter(KRectangle).map[children.filter(KRectangle).head].filterNull) {
@@ -118,7 +118,7 @@ class LegacyStateActionsHook extends SynthesisActionHook {
                 val actions = container?.getProperty(StateStyles::ACTIONS_CONTAINER)
 
                 // Show or hide actions
-                if (actions != null) {
+                if (actions !== null) {
                     if (SHOW_STATE_ACTIONS.booleanValue && !state.localActions.empty) {
                         // Insert actions in correct position
                         val pos = actions.getProperty(INDEX)

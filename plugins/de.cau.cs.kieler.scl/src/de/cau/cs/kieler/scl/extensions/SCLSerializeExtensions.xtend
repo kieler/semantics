@@ -12,13 +12,8 @@
  */
 package de.cau.cs.kieler.scl.extensions
 
-import de.cau.cs.kieler.annotations.NamedObject
 import de.cau.cs.kieler.kexpressions.AccessModifier
-import de.cau.cs.kieler.kexpressions.CombineOperator
 import de.cau.cs.kieler.kexpressions.Declaration
-import de.cau.cs.kieler.kexpressions.GenericParameterDeclaration
-import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
-import de.cau.cs.kieler.kexpressions.ScheduleDeclaration
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsSerializeHRExtensions

@@ -9,7 +9,6 @@ import de.cau.cs.kieler.annotations.Pragma
 import de.cau.cs.kieler.annotations.services.AnnotationsGrammarAccess
 import org.eclipse.xtext.formatting2.AbstractFormatter2
 import org.eclipse.xtext.formatting2.IFormattableDocument
-import de.cau.cs.kieler.annotations.StringAnnotation
 
 class AnnotationsFormatter extends AbstractFormatter2 {
 	

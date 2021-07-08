@@ -5,7 +5,6 @@ package de.cau.cs.kieler.scl.impl;
 import de.cau.cs.kieler.annotations.AnnotationsPackage;
 import de.cau.cs.kieler.annotations.Nameable;
 import de.cau.cs.kieler.annotations.NamedObject;
-import de.cau.cs.kieler.scl.Module;
 import de.cau.cs.kieler.scl.SCLPackage;
 
 import org.eclipse.emf.common.notify.Notification;

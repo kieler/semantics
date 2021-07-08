@@ -32,7 +32,6 @@ import de.cau.cs.kieler.sccharts.ui.synthesis.styles.DataflowRegionStyles
 import org.eclipse.elk.alg.layered.options.GreedySwitchType
 import org.eclipse.elk.alg.layered.options.LayeredOptions
 import org.eclipse.elk.alg.layered.options.NodePlacementStrategy
-import org.eclipse.elk.alg.layered.options.OrderingStrategy
 import org.eclipse.elk.core.math.ElkPadding
 import org.eclipse.elk.core.options.ContentAlignment
 import org.eclipse.elk.core.options.CoreOptions
