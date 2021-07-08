@@ -2,7 +2,6 @@
  */
 package de.cau.cs.kieler.esterel;
 
-import de.cau.cs.kieler.kexpressions.Expression;
 import de.cau.cs.kieler.kexpressions.ValueType;
 import de.cau.cs.kieler.kexpressions.ValuedObject;
 

@@ -3,32 +3,31 @@
  */
 package de.cau.cs.kieler.esterel.scest.scoping;
 
+import de.cau.cs.kieler.esterel.EsterelVariableDeclaration
+import de.cau.cs.kieler.esterel.LocalVariableDeclaration
+import de.cau.cs.kieler.esterel.SignalReference
+import de.cau.cs.kieler.esterel.SignalRenaming
+import de.cau.cs.kieler.esterel.TrapExpression
+import de.cau.cs.kieler.esterel.TrapReference
+import de.cau.cs.kieler.esterel.VariableReference
 import de.cau.cs.kieler.esterel.scoping.EsterelScopeProvider
+import de.cau.cs.kieler.kexpressions.OperatorExpression
+import de.cau.cs.kieler.kexpressions.OperatorType
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.scl.Module
+import de.cau.cs.kieler.scl.Scope
 import java.util.ArrayList
+import java.util.List
+import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EReference
+import org.eclipse.xtext.naming.QualifiedName
+import org.eclipse.xtext.resource.EObjectDescription
 import org.eclipse.xtext.resource.IEObjectDescription
 import org.eclipse.xtext.scoping.IScope
 import org.eclipse.xtext.scoping.impl.SimpleScope
 
 import static de.cau.cs.kieler.esterel.scoping.EsterelScopeProviderUtil.*
-import org.eclipse.emf.ecore.EObject
-import de.cau.cs.kieler.esterel.SignalReference
-import de.cau.cs.kieler.kexpressions.OperatorExpression
-import de.cau.cs.kieler.kexpressions.OperatorType
-import de.cau.cs.kieler.esterel.SignalRenaming
-import de.cau.cs.kieler.esterel.TrapReference
-import de.cau.cs.kieler.esterel.TrapExpression
-import de.cau.cs.kieler.esterel.VariableReference
-import java.util.List
-import de.cau.cs.kieler.scl.Scope
-import org.eclipse.xtend.expression.Variable
-import org.eclipse.xtext.resource.EObjectDescription
-import org.eclipse.xtext.naming.QualifiedName
-import de.cau.cs.kieler.scl.Module
-import de.cau.cs.kieler.esterel.LocalVariableDeclaration
-import de.cau.cs.kieler.esterel.EsterelVariableDeclaration
-import de.cau.cs.kieler.kexpressions.VariableDeclaration
 
 /**
  * This class contains custom scoping description.

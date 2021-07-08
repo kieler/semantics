@@ -12,10 +12,8 @@
  */
 package de.cau.cs.kieler.kicool.processors.metrics
 
-import de.cau.cs.kieler.kicool.compilation.EndogenousProcessor
-import de.cau.cs.kieler.kicool.compilation.CodeContainer
-import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.kicool.deploy.Logger
+import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.kicool.processors.analyzers.LinesOfCodeCounter
 
 /**

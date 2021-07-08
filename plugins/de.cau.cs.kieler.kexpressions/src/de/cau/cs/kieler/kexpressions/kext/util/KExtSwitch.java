@@ -8,7 +8,6 @@ import de.cau.cs.kieler.annotations.NamedObject;
 import de.cau.cs.kieler.kexpressions.Declaration;
 import de.cau.cs.kieler.kexpressions.Referenceable;
 import de.cau.cs.kieler.kexpressions.VariableDeclaration;
-import de.cau.cs.kieler.kexpressions.keffects.Link;
 import de.cau.cs.kieler.kexpressions.kext.*;
 
 import org.eclipse.emf.ecore.EObject;

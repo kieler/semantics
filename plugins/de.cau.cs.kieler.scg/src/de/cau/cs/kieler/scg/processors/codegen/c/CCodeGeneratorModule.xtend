@@ -109,7 +109,7 @@ class CCodeGeneratorModule extends SCGCodeGeneratorModule {
 
         hFile.pragmaOnceStart(hDefine)
         hFile.addHeader
-        hFile.hostcodeAdditions
+        hFile.hostcodeHeaderAdditions
         cFile.addHeader
         cFile.hostcodeAdditions
         cFile.append("#include \"" + hFilename + "\"\n\n")
@@ -185,11 +185,11 @@ class CCodeGeneratorModule extends SCGCodeGeneratorModule {
             sb.append("#include " + include + "\n")
         }
         
-        val hostcodePragmas = SCGraphs.getStringPragmas(HOSTCODE_HEADER)
+        val hostcodePragmas = SCGraphs.getStringPragmas(HOSTCODE) + SCGraphs.getStringPragmas(HOSTCODE_HEADER)
         for (pragma : hostcodePragmas) {
             sb.append(pragma.values.head + "\n")
         }
-        val hostcodeAnnotations = scg.getStringAnnotations(HOSTCODE_HEADER)
+        val hostcodeAnnotations = scg.getStringAnnotations(HOSTCODE) + scg.getStringAnnotations(HOSTCODE_HEADER)
         for (anno : hostcodeAnnotations) {
             sb.append(anno.values.head + "\n")
         }

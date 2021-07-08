@@ -53,7 +53,7 @@ class SctSemanticSequencer extends AbstractSctSemanticSequencer {
         if (transition.delay > 1) {
             feeder.accept(tg.delayINTTerminalRuleCall_7_1_0_0, transition.delay)
         }
-        if (transition.trigger != null) {
+        if (transition.trigger !== null) {
              feeder.accept(tg.triggerBoolExpressionParserRuleCall_7_1_1_0, transition.trigger)
         }
         for (idxEffect : transition.effects.indexed) {

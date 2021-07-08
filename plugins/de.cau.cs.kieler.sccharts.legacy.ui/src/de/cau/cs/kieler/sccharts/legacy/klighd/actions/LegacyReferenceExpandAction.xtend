@@ -37,7 +37,7 @@ class LegacyReferenceExpandAction extends CollapseExpandAction {
             val modelElement = context.getDomainElement(context.KNode);
             if (modelElement instanceof State) {
                 val state = modelElement as State;
-                if (state.referencedScope != null) {
+                if (state.referencedScope !== null) {
                     val diagram = LightDiagramServices.translateModel(
                         state.referencedScope,
                         context.viewContext

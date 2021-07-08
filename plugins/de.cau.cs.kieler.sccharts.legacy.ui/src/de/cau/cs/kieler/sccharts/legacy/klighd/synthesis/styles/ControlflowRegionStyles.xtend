@@ -150,7 +150,7 @@ class ControlflowRegionStyles {
      */
     private def KNode getContainerNode(KRendering rendering) {
         var container = rendering.eContainer
-        while (container != null) {
+        while (container !== null) {
             if (container instanceof KNode) {
                 return container
             }

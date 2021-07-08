@@ -39,7 +39,7 @@ class Register {
         
         if (class === null) return
         
-        val instance = class.newInstance as Processor<?, ?>
+        val instance = class.getConstructor().newInstance as Processor<?, ?>
         KiCoolRegistration.addProcessor(instance)
     }
     

@@ -2,7 +2,6 @@
  */
 package de.cau.cs.kieler.sccharts.legacy.kexpressions.kext.util;
 
-import de.cau.cs.kieler.sccharts.legacy.annotations.Annotatable;
 
 import de.cau.cs.kieler.sccharts.legacy.kexpressions.kext.*;
 

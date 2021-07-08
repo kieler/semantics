@@ -46,7 +46,7 @@ class TransitionLabelSerializer {
             }
             
             // Trigger
-            if (transition.trigger != null) {
+            if (transition.trigger !== null) {
                 if (transition.triggerDelay > 1) {
                     part.append(transition.triggerDelay).append(" ");
                 }

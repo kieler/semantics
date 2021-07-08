@@ -133,15 +133,7 @@ class SimpleGuardExpressions extends InplaceProcessor<SCGraphs> implements Trace
     protected def SCGraph process(SCGraph scg) {
         val voStore = VariableStore.getVariableStore(environment)
         
-        /**
-         * Since we want to build a new SCG, we cannot use the SCG copy extensions because it would 
-         * preserve all previous (node) data.
-         * Therefore, we only copy the interface and extend the declaration by the guards of the 
-         * basic blocks.
-         */
-        scg => [
-            annotations += createStringAnnotation(ANNOTATION_GUARDCREATOR, "")
-        ]
+        scg.addTagAnnotation(ANNOTATION_GUARDCREATOR)
 
         //        schizoDeclaration = createDeclaration=>[ setType(ValueType::BOOL) ]
         val predecessorList = <Predecessor>newArrayList

@@ -13,8 +13,6 @@
  */
 package de.cau.cs.kieler.scg.klighd.analyzer
 
-import de.cau.cs.kieler.scg.klighd.SCGraphDiagramSynthesis
-
 /**
  * The IAnalyzerVisualization interface provides an interface for the visualization of a particular analyzer.
  * Add an analyzer visualization class for your analyzer in the de.cau.cs.kieler.scg.klighd.analyzer package 

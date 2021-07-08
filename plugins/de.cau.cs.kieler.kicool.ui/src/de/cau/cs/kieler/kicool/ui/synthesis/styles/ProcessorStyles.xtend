@@ -18,6 +18,7 @@ import com.google.inject.Inject
 import com.google.inject.Injector
 import com.google.inject.Module
 import com.google.inject.Scopes
+import de.cau.cs.kieler.kicool.ui.KiCoolUiModule
 import de.cau.cs.kieler.kicool.ui.synthesis.KNodeProperties
 import de.cau.cs.kieler.kicool.ui.synthesis.ProcessorSynthesis
 import de.cau.cs.kieler.kicool.ui.synthesis.actions.IntermediateData
@@ -30,17 +31,17 @@ import de.cau.cs.kieler.klighd.krendering.Colors
 import de.cau.cs.kieler.klighd.krendering.HorizontalAlignment
 import de.cau.cs.kieler.klighd.krendering.KBackground
 import de.cau.cs.kieler.klighd.krendering.KContainerRendering
+import de.cau.cs.kieler.klighd.krendering.KDecoratorPlacementData
 import de.cau.cs.kieler.klighd.krendering.KGridPlacement
-import de.cau.cs.kieler.klighd.krendering.KPolygon
-import de.cau.cs.kieler.klighd.krendering.KPolyline
+import de.cau.cs.kieler.klighd.krendering.KImage
 import de.cau.cs.kieler.klighd.krendering.KRendering
 import de.cau.cs.kieler.klighd.krendering.KRenderingFactory
 import de.cau.cs.kieler.klighd.krendering.KText
-import de.cau.cs.kieler.klighd.krendering.LineCap
-import de.cau.cs.kieler.klighd.krendering.LineJoin
 import de.cau.cs.kieler.klighd.krendering.Trigger
+import de.cau.cs.kieler.klighd.krendering.Underline
 import de.cau.cs.kieler.klighd.krendering.VerticalAlignment
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
+import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KPolylineExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
@@ -55,12 +56,6 @@ import static de.cau.cs.kieler.kicool.ui.synthesis.styles.ColorStore.Color.*
 
 import static extension de.cau.cs.kieler.kicool.ui.synthesis.styles.ColorStore.*
 import static extension de.cau.cs.kieler.klighd.microlayout.PlacementUtil.*
-import de.cau.cs.kieler.klighd.krendering.KDecoratorPlacementData
-import de.cau.cs.kieler.klighd.krendering.Underline
-import org.eclipse.core.internal.resources.AliasManager.AddToCollectionDoit
-import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensions
-import de.cau.cs.kieler.kicool.ui.KiCoolUiModule
-import de.cau.cs.kieler.klighd.krendering.KImage
 
 /**
  * User-defined KiCool synthesis styles

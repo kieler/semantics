@@ -446,29 +446,29 @@ class KExpressionsExtensionOLD {
     }
 
     def dispatch equals2(ValuedObjectReference expression1, ValuedObjectReference expression2) {
-        if (expression1 == null && expression2 == null) {
+        if (expression1 === null && expression2 === null) {
             return true
-        } else if (expression1 != null && expression2 == null) {
+        } else if (expression1 !== null && expression2 === null) {
             return false
-        } else if (expression1 == null && expression2 != null) {
+        } else if (expression1 === null && expression2 !== null) {
             return false
         }
         return expression1.valuedObject == expression2.valuedObject
     }
 
     def dispatch equals2(TextExpression expression1, TextExpression expression2) {
-        if (expression1 == null && expression2 == null) {
+        if (expression1 === null && expression2 === null) {
             return true
-        } else if (expression1 != null && expression2 == null) {
+        } else if (expression1 !== null && expression2 === null) {
             return false
-        } else if (expression1 == null && expression2 != null) {
+        } else if (expression1 === null && expression2 !== null) {
             return false
         }
         return expression1.text.equals(expression2.text)
     }
 
     def dispatch equals2(Expression expression1, Expression expression2) {
-        if (expression1 == null && expression2 == null) {
+        if (expression1 === null && expression2 === null) {
             return true
         }
         return false
@@ -517,7 +517,7 @@ class KExpressionsExtensionOLD {
 
     // Trim an AND/OR Expression if it contains only a single sub expression.
     def dispatch Expression trim(OperatorExpression operatorExpression) {
-        if (operatorExpression == null || operatorExpression.subExpressions.nullOrEmpty) {
+        if (operatorExpression === null || operatorExpression.subExpressions.nullOrEmpty) {
             return operatorExpression
         }
         if (operatorExpression.subExpressions.size == 1 &&
@@ -525,7 +525,7 @@ class KExpressionsExtensionOLD {
 
             // if there is just one sub expression, we do not need an AND/OR!
             val innerExpression = operatorExpression.subExpressions.get(0);
-            if (innerExpression != null) {
+            if (innerExpression !== null) {
                 return innerExpression.trim
             }
             return innerExpression
@@ -554,7 +554,7 @@ class KExpressionsExtensionOLD {
     }
 
     def OperatorExpression fixForOperatorExpressionLists(OperatorExpression operatorExpression) {
-        if (operatorExpression == null || operatorExpression.subExpressions.nullOrEmpty ||
+        if (operatorExpression === null || operatorExpression.subExpressions.nullOrEmpty ||
             operatorExpression.subExpressions.size <= 2) {
 
             // In this case we do not need the fix
@@ -596,7 +596,7 @@ class KExpressionsExtensionOLD {
     }
 
     def Expression fixHostCodeInOperatorExpression(OperatorExpression expression) {
-        if (expression == null || expression.subExpressions.nullOrEmpty) {
+        if (expression === null || expression.subExpressions.nullOrEmpty) {
             return expression
         }
         val oeCopy = expression.nontracingCopy
@@ -669,7 +669,7 @@ class KExpressionsExtensionOLD {
     // Create an AND Expression add expressionFirst and expressionSecond as a sub expression. 
     // If expressionFirst is null, just return expressionSecond.
     def Expression and2(Expression expressionFirst, Expression expressionSecond) {
-        if (expressionFirst == null) {
+        if (expressionFirst === null) {
             return expressionSecond
         }
         val andExpression = createAndExpression()
@@ -703,7 +703,7 @@ class KExpressionsExtensionOLD {
     // Create an OR Expression add expressionFirst or expressionSecond as a sub expression.
     // If expressionFirst is null, just return expressionSecond.    
     def Expression or2(Expression expressionFirst, Expression expressionSecond) {
-        if (expressionFirst == null) {
+        if (expressionFirst === null) {
             return expressionSecond
         }
         val orExpression = createOrExpression()
@@ -749,7 +749,7 @@ class KExpressionsExtensionOLD {
 
     // Create an ADD Expression and add expression as a sub expression.
     def Expression add(Expression expressionFirst, Expression expressionSecond) {
-        if (expressionFirst == null) {
+        if (expressionFirst === null) {
             return expressionSecond
         }
         val addExpression = createAddExpression()
@@ -774,7 +774,7 @@ class KExpressionsExtensionOLD {
 
     // Create an SUB Expression and add expression as a sub expression.
     def Expression sub(Expression expressionFirst, Expression expressionSecond) {
-        if (expressionFirst == null) {
+        if (expressionFirst === null) {
             return expressionSecond
         }
         val subExpression = createSubExpression()
@@ -863,7 +863,7 @@ class KExpressionsExtensionOLD {
             valuedObject.setExtern(valuedObjectWithAttributes.isExtern)
         }
  
-        if (valuedObjectWithAttributes.initialValue != null) {
+        if (valuedObjectWithAttributes.initialValue !== null) {
             valuedObject.setInitialValue(valuedObjectWithAttributes.initialValue.copy)
         }
 
@@ -871,7 +871,7 @@ class KExpressionsExtensionOLD {
             valuedObject.setType(valuedObjectWithAttributes.type);
         }
 
-        if (valuedObjectWithAttributes.combineOperator != null) {
+        if (valuedObjectWithAttributes.combineOperator !== null) {
             valuedObject.setCombineOperator(valuedObjectWithAttributes.combineOperator)
             if (!valuedObjectWithAttributes.cardinalities.nullOrEmpty) {
                 for (card : valuedObjectWithAttributes.cardinalities) {

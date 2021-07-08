@@ -115,13 +115,13 @@ class EnvironmentPropertyHolder extends MapPropertyHolder {
             target.propertyMap.put(k, v.copy)
         } else {
             if (v instanceof Integer) {
-                target.propertyMap.put(k, new Integer(v))
+                target.propertyMap.put(k, Integer.valueOf(v))
             } else if (v instanceof Boolean) {
-                target.propertyMap.put(k, new Boolean(v))
+                target.propertyMap.put(k, Boolean.valueOf(v))
             } else if (v instanceof Double) {
-                target.propertyMap.put(k, new Double(v))
+                target.propertyMap.put(k, Double.valueOf(v))
             } else if (v instanceof Long) {
-                target.propertyMap.put(k, new Long(v))
+                target.propertyMap.put(k, Long.valueOf(v))
             } else if (v instanceof String) {
                 target.propertyMap.put(k, new String(v))
             } else if (v instanceof IKiCoolCloneable) {

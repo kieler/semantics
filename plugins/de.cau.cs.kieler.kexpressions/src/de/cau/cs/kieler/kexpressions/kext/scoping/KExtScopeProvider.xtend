@@ -146,7 +146,7 @@ import org.eclipse.xtext.xbase.lib.Functions.Function1
 	protected def IScope getScopeHierarchical(EObject context, EReference reference) {
 		val candidates = <ValuedObject> newArrayList
 		var declarationScope = context.nextDeclarationScope
-		while (declarationScope != null) {
+		while (declarationScope !== null) {
 			for(declaration : declarationScope.declarations) {
 				for(VO : declaration.valuedObjects) {
 					candidates += VO
@@ -161,7 +161,7 @@ import org.eclipse.xtext.xbase.lib.Functions.Function1
 	
 	protected def DeclarationScope getNextDeclarationScope(EObject eObject) {
 		var eO = eObject
-		while(eO != null) {
+		while(eO !== null) {
 			eO = eO.eContainer
 			if (eO instanceof DeclarationScope) return eO 
 		}

@@ -19,19 +19,18 @@ import de.cau.cs.kieler.kexpressions.FloatValue
 import de.cau.cs.kieler.kexpressions.IntValue
 import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.OperatorType
+import de.cau.cs.kieler.kexpressions.ReferenceCall
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.lustre.lustre.Automaton
 import de.cau.cs.kieler.lustre.lustre.Equation
+import de.cau.cs.kieler.lustre.lustre.LustreVariableDeclaration
 import java.util.HashSet
 import java.util.List
 import java.util.Set
-import de.cau.cs.kieler.lustre.lustre.LustreVariableDeclaration
-import de.cau.cs.kieler.kexpressions.VariableDeclaration
-import de.cau.cs.kieler.kexpressions.ReferenceCall
-import de.cau.cs.kieler.lustre.lustre.NodeDeclaration
 
 /**
  * @author lgr

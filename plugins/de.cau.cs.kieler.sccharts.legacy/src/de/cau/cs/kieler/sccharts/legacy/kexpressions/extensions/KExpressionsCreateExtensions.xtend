@@ -72,7 +72,7 @@ class KExpressionsCreateExtensions {
     }
     
     protected def OperatorExpression safeAddToSubExpression(OperatorExpression operatorExpression, Expression expression) {
-        if (expression != null) 
+        if (expression !== null) 
             operatorExpression.subExpressions += expression
         operatorExpression
     }
