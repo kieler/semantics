@@ -143,21 +143,16 @@ class SimpleGuardTransformation extends Processor<SCGraphs, SCGraphs> implements
          * basic blocks.
          */
         newSCG => [
+            scg.copyAnnotations(it, SCGAnnotations.TRANSFORMATION_INDICATORS)
             addTagAnnotation(SCGAnnotations.ANNOTATION_GUARDED)
             label = scg.label
-            scg.copyAnnotations(it, <String> newHashSet("main", "voLink"))
+            name = scg.name
         ]
         
         val use_sc_plus_semantics = environment.getProperty(BasicBlockTransformation.USE_SC_PLUS_SEMANTICS)
         
-//        creationalTransformation(scg,newSCG)
-//        scg.setDefaultTrace
         newSCG.trace(scg)
-        
-        val hostcodeAnnotations = scg.getAnnotations(SCGAnnotations.ANNOTATION_HOSTCODE)
-        hostcodeAnnotations.forEach[
-            newSCG.createStringAnnotation(SCGAnnotations.ANNOTATION_HOSTCODE, (it as StringAnnotation).values.head)
-        ]
+
         val valuedObjectMap = scg.copyDeclarations(newSCG, SCGMap)
         valuedObjectMap.entrySet.forEach[globalVOMap.put(key, value.head)]
         val schedulingBlockCache = scg.createSchedulingBlockCache

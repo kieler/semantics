@@ -108,18 +108,13 @@ class SimpleGuardSequentializer extends Processor<SCGraphs, SCGraphs> implements
          * basic blocks.
          */
          newSCG => [
+            scg.copyAnnotations(it, SCGAnnotations.TRANSFORMATION_INDICATORS)
         	addTagAnnotation(SCGAnnotations.ANNOTATION_SEQUENTIALIZED)
         	label = scg.label
         	name = scg.name
-            scg.copyAnnotations(it, <String> newHashSet("main", "voLink"))
         ]
-//        scg.setDefaultTrace
         newSCG.trace(scg)
-        
-        val hostcodeAnnotations = scg.getAnnotations(ANNOTATION_HOSTCODE)
-        hostcodeAnnotations.forEach[
-            newSCG.createStringAnnotation(ANNOTATION_HOSTCODE, (it as StringAnnotation).values.head)
-        ]
+
         val valuedObjectMap = scg.copyDeclarations(newSCG, SCGMap)
         valuedObjectMap.entrySet.forEach[globalVOMap.put(key, value.head)]
                 

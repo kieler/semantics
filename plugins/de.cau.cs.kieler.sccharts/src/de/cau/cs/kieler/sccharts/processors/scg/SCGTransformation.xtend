@@ -261,6 +261,9 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
 
         sCGraph.trace(rootState)
         
+        // Copy annotations
+        sCGraph.annotations += rootState.annotations.map[copy]
+        
         // Handle declarations
         val declMapping = newLinkedHashMap
         val voMapping = newLinkedHashMap
@@ -285,11 +288,6 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
             // Fix VO association in VariableStore
             val info = voStore.getInfo(key)
             if (info !== null) info.valuedObject = value
-        ]        
-
-        val hostcodeAnnotations = rootState.getAnnotations(ANNOTATION_HOSTCODE)
-        hostcodeAnnotations.forEach [
-            sCGraph.createStringAnnotation(ANNOTATION_HOSTCODE, (it as StringAnnotation).values.head)
         ]
 
         // Include top most level of hierarchy 
