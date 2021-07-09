@@ -157,7 +157,7 @@ class ReferenceCallPreprocessor extends SCChartsProcessor implements Traceable {
 
                         /* If referenced model terminates, terminate immediately. */
                         call.createTransitionTo(term) => [
-                            delay = DelayType::IMMEDIATE
+                            delay = DelayType::IMMEDIATE // TODO read 'delayed' annnotation
                             trigger = createReferenceCall => [
                                 subReference = term_method.reference
                                 valuedObject = instance
@@ -184,6 +184,15 @@ class ReferenceCallPreprocessor extends SCChartsProcessor implements Traceable {
                 : createPolicyClassDeclaration => [
                 name = ref.reference.scope.name
                 host = true
+                
+                // Declare interface variables
+                declarations.addAll(ref.reference.scope.declarations.filter(VariableDeclaration).map[
+                    copy => [
+                        input = false
+                        output =  false
+                    ]
+                ])
+                
                 // Declare method placeholders.
                 var tickDecl = createMethodImplementationDeclaration => [
                     it.createValuedObject(REF_CALL_TICK_METHOD_NAME)
@@ -191,11 +200,13 @@ class ReferenceCallPreprocessor extends SCChartsProcessor implements Traceable {
                 var resetDecl = createMethodImplementationDeclaration => [
                     it.createValuedObject(REF_CALL_RESET_METHOD_NAME)
                 ]
-                var cpinDecl = createMethodImplementationDeclaration => [
-                    it.createValuedObject(REF_CALL_CPIN_METHOD_NAME)
+                var cpinDecl = createMethodImplementationDeclaration => [ d |
+                    d.createValuedObject(REF_CALL_CPIN_METHOD_NAME)
+                    d.parameterDeclarations.addAll(it.declarations.filter(VariableDeclaration).unroll)
                 ]
-                var cpoutDecl = createMethodImplementationDeclaration => [
-                    it.createValuedObject(REF_CALL_CPOUT_METHOD_NAME)
+                var cpoutDecl = createMethodImplementationDeclaration => [ d |
+                    d.createValuedObject(REF_CALL_CPOUT_METHOD_NAME)
+                    d.parameterDeclarations.addAll(it.declarations.filter(VariableDeclaration).unroll)
                 ]
                 var termDecl = createMethodImplementationDeclaration => [
                     it.createValuedObject(REF_CALL_TERM_METHOD_NAME)
@@ -207,13 +218,8 @@ class ReferenceCallPreprocessor extends SCChartsProcessor implements Traceable {
                 declarations.add(cpoutDecl)
                 declarations.add(termDecl)
 
-                // Declare interface variables
-                declarations.addAll(ref.reference.scope.declarations.filter(VariableDeclaration).map[
-                    copy => [
-                        input = false
-                        output =  false
-                    ]
-                ])
+                
+                // Declare _TERM member
                 declarations.add(createVariableDeclaration => [
                     type = ValueType::BOOL
                     valuedObjects.add(createValuedObject("_TERM"))
@@ -223,7 +229,7 @@ class ReferenceCallPreprocessor extends SCChartsProcessor implements Traceable {
 
                 // Add #include hostcode annotation
                 ref.getRootState.annotations.add(
-                    createStringAnnotation("hostcode", "#include \"" + ref.reference.scope.name + ".h\""))
+                    createStringAnnotation("hostcode-c-header", "#include \"" + ref.reference.scope.name + ".h\""))
 
                 // Tag as module class
                 it.annotations.add(createTagAnnotation(REF_CALL_TAG_ANNOTATION))
@@ -240,17 +246,16 @@ class ReferenceCallPreprocessor extends SCChartsProcessor implements Traceable {
     protected def List<Parameter> paramsFromBindings(State ref, ValuedObject instance) {
         val bindings = ref.createBindings
         val parameters = <Parameter>newArrayList
-        for (binding : bindings) { /* TODO change  */
+        val classVarVOs = ref.classDeclaration.declarations.filter(VariableDeclaration).map[valuedObjects].flatten.toList
+        for (binding : bindings.sortBy[ b |
+            classVarVOs.indexOf(classVarVOs.findFirst[name == b.targetValuedObject.name])
+        ]) {
             parameters.add(createParameter => [
                 // TODO guard against complex source expressions => undefined behavior
                 expression = binding.sourceExpression.copy
             ])
-            parameters.add(createParameter => [
-                val vo = ref.getClassDeclaration.getVarVOByName(binding.targetValuedObject.name)
-                expression = instance.reference => [subReference = vo.reference]
-            ])
         }
-
+    
         return parameters
     }
 
@@ -260,6 +265,17 @@ class ReferenceCallPreprocessor extends SCChartsProcessor implements Traceable {
         val filteredvos = vos.filter[name == varName]
         val result = filteredvos.head
         return result
+    }
+    
+    protected def Iterable<VariableDeclaration> unroll(Iterable<VariableDeclaration> decls) {
+        decls.map[ d | 
+            d.valuedObjects.map[ v | 
+                d.copy => [
+                    valuedObjects.clear
+                    valuedObjects.add(v.copy) 
+                ]
+            ]
+        ].flatten
     }
 
 }

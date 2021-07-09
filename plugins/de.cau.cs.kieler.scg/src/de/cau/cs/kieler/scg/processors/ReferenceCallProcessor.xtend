@@ -30,6 +30,7 @@ import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import java.util.List
 import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.kexpressions.MethodDeclaration
 
 /**
  * @author glu
@@ -95,15 +96,17 @@ class ReferenceCallProcessor extends InplaceProcessor<SCGraphs> implements Trace
                     val nextCF = originalAsmt.next
                     val newAssignments = <Assignment>newLinkedList
                     val params = ref.parameters
+                    val method = ref.subReference.valuedObject.eContainer as MethodDeclaration
+                    val toParams = method.parameterDeclarations.map[valuedObjects].flatten.toList
                     while (!params.empty) {
                         val newAsmt = ScgFactory::eINSTANCE.createAssignment
                         val fromExp = params.remove(0).expression
-                        val toExp = params.remove(0).expression
+                        val toExp = toParams.remove(0)
                         if (ref.subReference.valuedObject.name == REF_CALL_CPIN_METHOD_NAME) {
                             newAsmt.expression = fromExp.copy
-                            newAsmt.reference = toExp.asValuedObjectReference
+                            newAsmt.reference = ref.valuedObject.reference => [subReference = toExp.reference]
                         } else {
-                            newAsmt.expression = toExp.copy
+                            newAsmt.expression = ref.valuedObject.reference => [subReference = toExp.reference]
                             newAsmt.reference = fromExp.asValuedObjectReference
                         }
                         newAssignments += newAsmt
