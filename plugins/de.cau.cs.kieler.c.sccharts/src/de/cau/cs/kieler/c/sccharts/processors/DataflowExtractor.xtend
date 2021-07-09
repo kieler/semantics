@@ -1543,6 +1543,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             whileObj.insertHighlightAnnotations(whileStmt)
         }
         
+        hierarchy.put(whileState, dRegion)
         stateObjects.put(whileState, whileObj)
 
         // Set the in and outputs of the state
@@ -1561,6 +1562,9 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         val condRegion = condRes.key
         val condState = condRes.value.key
         val condObj = condRes.value.value
+        
+        hierarchy.put(condState, whileRegion)
+        stateObjects.put(condState, condObj)
 
         // Create the body state and according reference into the while dataflow region.
         val bodyState = createState(whileName + ssaNameSeperator + localWhileCounter + whileBodyName)
@@ -1582,6 +1586,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         // route them into a conditional.
         setOutputs(whileStmt.getBody, whileState, bodyState, whileRegion, bodyObj, false)
         
+        hierarchy.put(bodyState, whileRegion)
         stateObjects.put(bodyState, bodyObj)
 
         // Create the region for the body part
@@ -2021,12 +2026,25 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             var region = parentRegion
             var state = parentState
             // input does not count as the latest vo unless it is in the surrounding while state
-            while (vo === null || (vo.name.contains(inSuffix) && !state.name.startsWith(whileName + ssaNameSeperator))) {
+            while (vo === null || (vo.name.contains(inSuffix) && 
+                !state.name.startsWith(whileName + ssaNameSeperator)
+            )) {
                 region = hierarchy.get(state)
-                val name = region.label !== null && !region.label.equals("") ? region.label : region.name.split("-").get(1)
+                val name = region.label !== null && !region.label.equals("") ? region.label : 
+                    region.name.split("-").get(1)
                 state = rootSCChart.rootStates.filter[s | s.name.equals(name)].head
                 vo = findValuedObjectByName(state, depVar, false, region)
             }
+            
+            // if the latest vo is in the while body, the correct instance of the vo must be taken
+            // (otherwise the output of an if-state, that changes the variable after the break-stmt, is taken)
+            if (state.name.startsWith(whileName + ssaNameSeperator)) {
+                val varList = getStateVariables(state).get(depVar)
+                if (varList !== null && varList.length >= 3) {
+                    vo = varList.get(varList.length - 3)
+                }
+            }
+            
             vars.add(vo)
         }
         
@@ -2034,12 +2052,17 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         val List<ValuedObject> inputs = new ArrayList
         for (v : vars) {
             var vo = v
-            if (v.eContainer.eContainer instanceof DataflowRegion){
+            val cont = v.eContainer.eContainer
+            if (cont instanceof DataflowRegion && 
+                !(cont as DataflowRegion).name.contains(whileName + ssaNameSeperator)
+            ){
                 // create output variable for the region
-                var pR = v.eContainer.eContainer as DataflowRegion
+                var pR = cont as DataflowRegion
                 val regName = pR.label !== null && !pR.label.equals("") ? pR.label : pR.name.split("-").get(1)
                 var pS = rootSCChart.rootStates.filter[s | s.name.equals(regName)].head
-                vo = createVar(v, pS, getStateVariables(pS), outSuffix, localName + "Var" + ssaNameSeperator + localCounter)
+                vo = createVar(v, pS, getStateVariables(pS), outSuffix, localName + "Var" + ssaNameSeperator 
+                    + localCounter
+                )
                 var obj = stateObjects.get(pS)
                 
                 // Create the assignment
