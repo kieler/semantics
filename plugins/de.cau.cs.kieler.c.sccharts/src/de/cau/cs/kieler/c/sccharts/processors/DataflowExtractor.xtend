@@ -1484,6 +1484,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         // Create the state        
         val whileState = createState(whileName + ssaNameSeperator + whileCounter)
         whileState.annotations += createTagAnnotation("Hide")
+        hierarchy.put(whileState, dRegion)
         if (serializable) {
             rootSCChart.rootStates += whileState
         }
@@ -1530,6 +1531,8 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         // Create the state to represent the while statement.
         val whileState = createState(whileName + ssaNameSeperator + localWhileCounter)
         whileState.annotations += createTagAnnotation("Hide")
+        hierarchy.put(whileState, dRegion)
+        
         if (serializable) {
             rootSCChart.rootStates += whileState
         }
@@ -1561,10 +1564,14 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         val condRegion = condRes.key
         val condState = condRes.value.key
         val condObj = condRes.value.value
+        
+        hierarchy.put(condState, whileRegion)
 
         // Create the body state and according reference into the while dataflow region.
         val bodyState = createState(whileName + ssaNameSeperator + localWhileCounter + whileBodyName)
         bodyState.annotations += createTagAnnotation("Hide")
+        hierarchy.put(bodyState, whileRegion)
+        
         if (serializable) {
             rootSCChart.rootStates += bodyState
         }
@@ -2047,21 +2054,22 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 
                 // update parents
                 pR = hierarchy.get(vo.eContainer.eContainer as State)
+                
                 val name = pR.label !== null && !pR.label.equals("") ? pR.label : pR.name.split("-").get(1)
-                pS = rootSCChart.rootStates.filter[s | s.name.equals(name)].head
+                pS = rootSCChart.rootStates.filter[s|s.name.equals(name)].head
 
                 vo = createOutputVo(null, localCounter, pS, obj, pR, vo)
-                
+
                 // repeat until while state is reached
                 while (!pS.name.startsWith(whileName + ssaNameSeperator)) {
                     val vo2 = createVar(vo, pS, getStateVariables(pS), outSuffix, "")
                     pR.equations += createDataflowAssignment(vo2, vo.reference)
-                    
+
                     pR = hierarchy.get(vo2.eContainer.eContainer as State)
                     val rN = pR.label !== null && !pR.label.equals("") ? pR.label : pR.name.split("-").get(1)
-                    
+
                     obj = stateObjects.get(pS)
-                    pS = rootSCChart.rootStates.filter[s | s.name.equals(rN)].head
+                    pS = rootSCChart.rootStates.filter[s|s.name.equals(rN)].head
                     vo = createOutputVo(null, localCounter, pS, obj, pR, vo)
                 }
             }
@@ -3307,7 +3315,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                     kExpression = expr.arrayExpression.createKExpression(funcState, dRegion)
                 }
                 (kExpression as ValuedObjectReference).indices += indexExpression
-            }
+            }   
             // For a function call create a reference an return the functions output VO reference
             IASTFunctionCallExpression: {
                 // Create the Reference
