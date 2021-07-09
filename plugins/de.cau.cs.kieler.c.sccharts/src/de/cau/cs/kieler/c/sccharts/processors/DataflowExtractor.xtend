@@ -234,6 +234,9 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
     
     /** the valued object of a state */
     val Map<State, ValuedObject> stateObjects = newHashMap
+    
+    /** the valued objects of the local vars that are used for the break/continue states */
+    val Map<ValuedObject, ValuedObject> breakContinueVars = newHashMap
 
     val Map<State, Map<String, List<ValuedObject>>> valuedObjects = newHashMap
 
@@ -2058,7 +2061,10 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         for (v : vars) {
             var vo = v
             val cont = v.eContainer.eContainer
-            if (cont instanceof DataflowRegion && 
+            if (breakContinueVars.containsKey(v)) {
+                // the while state already contains a vo for this var
+                vo = breakContinueVars.get(v)
+            } else if (cont instanceof DataflowRegion && 
                 !(cont as DataflowRegion).name.contains(whileName + ssaNameSeperator)
             ){
                 // create output variable for the region
@@ -2094,6 +2100,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                     vo = createOutputVo(null, localCounter, pS, obj, pR, outputVar)
                 }
             }
+            breakContinueVars.put(v, vo)
             inputs.add(vo)
         }
         
