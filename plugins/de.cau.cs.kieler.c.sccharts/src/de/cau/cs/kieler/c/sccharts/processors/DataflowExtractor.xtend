@@ -2083,15 +2083,15 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
 
                 // repeat until while state is reached
                 while (!pS.name.startsWith(whileName + ssaNameSeperator)) {
-                    val vo2 = createVar(vo, pS, getStateVariables(pS), outSuffix, "")
-                    pR.equations += createDataflowAssignment(vo2, vo.reference)
+                    val outputVar = createVar(vo, pS, getStateVariables(pS), outSuffix, "")
+                    pR.equations += createDataflowAssignment(outputVar, vo.reference)
 
-                    pR = hierarchy.get(vo2.eContainer.eContainer as State)
+                    pR = hierarchy.get(outputVar.eContainer.eContainer as State)
                     val rN = pR.label !== null && !pR.label.equals("") ? pR.label : pR.name.split("-").get(1)
 
                     obj = stateObjects.get(pS)
                     pS = rootSCChart.rootStates.filter[s|s.name.equals(rN)].head
-                    vo = createOutputVo(null, localCounter, pS, obj, pR, vo)
+                    vo = createOutputVo(null, localCounter, pS, obj, pR, outputVar)
                 }
             }
             inputs.add(vo)
