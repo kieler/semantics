@@ -1836,6 +1836,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         parentRegion.declarations += multRefDecl
         multRefDecl.setReference(multState)
         val multObj = multRefDecl.createValuedObject(multiplexerName + ssaNameSeperator + multiplexerCounter)
+        multObj.label = ""
 
         // set in and outputs opf the multiplexer
         setMultInput(multInputs, multState, parentRegion, multObj, false)
@@ -1845,7 +1846,6 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         // Create the region for the body part
         val multRegion = multState.createDataflowRegion(multiplexerName + ssaNameSeperator + multiplexerCounter)
         multState.regions += multRegion
-        multRegion.label = " "
 
         // Add tag annotation so that the multiplexer is identifiable in EquationSynthesis in a clean way
         multObj.addTagAnnotation(multiplexerTag)
@@ -2017,6 +2017,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         newRefDecl.setReference(newState)
         val newObj = newRefDecl.createValuedObject(localName + ssaNameSeperator + localCounter)
         newObj.annotations += createTagAnnotation(multiplexerTag)
+        newObj.label = ""
 
         // Create the region for the body part
         val newRegion = newState.createDataflowRegion("")
