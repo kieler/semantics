@@ -14,6 +14,7 @@ package de.cau.cs.kieler.simulation.processor
 
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
+import de.cau.cs.kieler.kicool.compilation.VariableInformation
 import de.cau.cs.kieler.kicool.compilation.VariableStore
 import de.cau.cs.kieler.kicool.deploy.processor.AbstractTemplateGeneratorProcessor
 
@@ -47,6 +48,7 @@ class JavaTickTimeTemplateGenerator extends AbstractTemplateGeneratorProcessor<O
         store.add("#ticktime", "ticktime") => [
             externalName = "_ticktime"
             type = ValueType.INT
+            codeAssociation += VariableInformation.WILDCARD_CODE_ASSOCITAION
         ]
         
         val cc = new CodeContainer

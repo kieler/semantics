@@ -20,6 +20,7 @@ import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
 import de.cau.cs.kieler.annotations.registry.PragmaRegistry
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
+import de.cau.cs.kieler.kicool.compilation.VariableStore
 import de.cau.cs.kieler.scg.processors.codegen.c.CCodeGenerator
 import de.cau.cs.kieler.scg.processors.codegen.c.CCodeGeneratorModule
 
@@ -89,10 +90,12 @@ class JavaCodeGeneratorModule extends CCodeGeneratorModule {
         naming.put(LOGIC, logic.getName)
         naming.put(TICKDATA, struct.getName)
 
-        codeContainer.addJavaCode(cFilename, cFile.toString) => [
+        val javaCode = codeContainer.addJavaCode(cFilename, cFile.toString) => [
             it.naming.putAll(this.naming)   
             modelName = if (moduleObject instanceof Nameable) moduleObject.name else "_default"
-        ]        
+        ]
+        // associate variables the code file
+        VariableStore.get(processorInstance.environment).associateCode(scg, javaCode)     
     }    
     
     override void addHeader(StringBuilder sb) {

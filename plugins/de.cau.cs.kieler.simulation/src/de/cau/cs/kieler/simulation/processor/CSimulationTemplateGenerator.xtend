@@ -16,12 +16,14 @@ import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.kicool.compilation.CCodeFile
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
+import de.cau.cs.kieler.kicool.compilation.CodeFile
 import de.cau.cs.kieler.kicool.compilation.VariableInformation
 import de.cau.cs.kieler.kicool.compilation.VariableStore
 import de.cau.cs.kieler.kicool.compilation.codegen.CodeGeneratorNames
 import de.cau.cs.kieler.kicool.deploy.CommonTemplateVariables
 import de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure
 import de.cau.cs.kieler.kicool.deploy.processor.TemplateEngine
+import de.cau.cs.kieler.simulation.internal.SimulationVariableStore
 
 import static de.cau.cs.kieler.kicool.deploy.TemplatePosition.*
 
@@ -39,6 +41,8 @@ class CSimulationTemplateGenerator extends AbstractSimulationTemplateGenerator {
 
     public static val IProperty<Integer> MESSAGE_BUFFER_SIZE = 
         new Property<Integer>("de.cau.cs.kieler.simulation.c.buffer.size", 2048)
+    
+    var VariableStore store
 
     override getId() {
         "de.cau.cs.kieler.simulation.c.template"
@@ -54,9 +58,10 @@ class CSimulationTemplateGenerator extends AbstractSimulationTemplateGenerator {
         val generalTemplateEnvironment = environment.getProperty(TemplateEngine.GENRAL_ENVIRONMENT)?:newHashMap
         environment.setProperty(TemplateEngine.GENRAL_ENVIRONMENT, generalTemplateEnvironment)
         
+        var CodeFile structFile = null
         if (infra.sourceCode !== null) {
             val structFiles = infra.sourceCode.files.filter(CCodeFile).filter[!library && !naming.empty].toList
-            var structFile = structFiles.findFirst[header]
+            structFile = structFiles.findFirst[header]
             if (structFile === null) {
                 structFile = structFiles.head
             }
@@ -71,7 +76,7 @@ class CSimulationTemplateGenerator extends AbstractSimulationTemplateGenerator {
         // Generate template
         logger.println("Generating simulation code")
         
-        val store = VariableStore.getVariableStore(environment)
+        store = VariableStore.getVariableStore(environment).getFilteredCopy(structFile)
         if (store.ambiguous) {
             environment.warnings.add("VariableStore contains ambiguous information for variables.")
             logger.println("WARNING:VariableStore contains ambiguous information for variables. Only first match will be used!")
@@ -170,7 +175,7 @@ class CSimulationTemplateGenerator extends AbstractSimulationTemplateGenerator {
                         cJSON_AddItemToObject(interface, "«v.key»", info);
                     «ENDFOR»
                     
-                    cJSON_AddItemToObject(root, "#interface", interface);
+                    cJSON_AddItemToObject(root, "«SimulationVariableStore.INTERFACE_KEY»", interface);
                 }
             
                 // Get JSON object as string
@@ -194,6 +199,10 @@ class CSimulationTemplateGenerator extends AbstractSimulationTemplateGenerator {
         environment.addMacroInjection(INIT, "simulation_init")
         environment.addMacroInjection(INPUT, "simulation_in")
         environment.addMacroInjection(OUTPUT, "simulation_out")
+        
+        // Mark all variables as part of communation interface
+        // This need to be done after #interface was generated to prevent redundant properties
+        store.orderedVariables.dropHostTypes.dropBlacklisted.forEach[value.properties.add(SimulationVariableStore.INTERFACE_KEY)]
         
         return cc
     }
@@ -291,7 +300,6 @@ class CSimulationTemplateGenerator extends AbstractSimulationTemplateGenerator {
     }
     
     def serializeMember(Pair<String, VariableInformation> variable, String accessPrefix, String item, int depth) {
-        val store = VariableStore.getVariableStore(environment)
         val members = store.orderedVariables.filter[variable.value.containerName.equals(value.encapsulatedIn)]
         return '''
             «FOR member : members»

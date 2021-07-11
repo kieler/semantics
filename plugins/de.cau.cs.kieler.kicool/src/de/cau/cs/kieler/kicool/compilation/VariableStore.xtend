@@ -13,6 +13,7 @@
 package de.cau.cs.kieler.kicool.compilation
 
 import com.google.common.collect.HashMultimap
+import com.google.common.collect.Multimap
 import com.google.common.collect.Sets
 import de.cau.cs.kieler.annotations.Annotation
 import de.cau.cs.kieler.annotations.StringAnnotation
@@ -27,11 +28,13 @@ import de.cau.cs.kieler.kicool.classes.IKiCoolCloneable
 import de.cau.cs.kieler.kicool.environments.Environment
 import java.util.Comparator
 import java.util.List
+import java.util.Map
 import java.util.Set
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.util.EcoreUtil.Copier
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.xtend.lib.annotations.ToString
+import org.eclipse.xtext.xbase.lib.Functions.Function1
 
 import static de.cau.cs.kieler.kexpressions.KExpressionsPackage.*
 
@@ -119,7 +122,14 @@ class VariableStore implements IKiCoolCloneable {
     }
 
     @Accessors
-    val variables = HashMultimap.<String, VariableInformation>create
+    val Multimap<String, VariableInformation> variables 
+    
+    new() {
+        this(HashMultimap.<String, VariableInformation>create)
+    }
+    private new(Multimap<String, VariableInformation> variables) {
+        this.variables = variables
+    }
     
     static def getVariableStore(Environment env) {
         var store = env?.getProperty(STORE)
@@ -135,10 +145,18 @@ class VariableStore implements IKiCoolCloneable {
         getVariableStore(env)
     }
     
+    // -- global init --
     def initialize(EObject root) {
         for (decl : root.eAllContents.filter(VariableDeclaration).toIterable) {
             for (vo : decl.valuedObjects) {
                 update(vo)
+            }
+        }
+    }
+    def associateCode(EObject root, CodeFile ...code) {
+        for (decl : root.eAllContents.filter(VariableDeclaration).toIterable) {
+            for (vo : decl.valuedObjects) {
+                getInfo(vo)?.codeAssociation?.addAll(code)
             }
         }
     }
@@ -304,7 +322,6 @@ class VariableStore implements IKiCoolCloneable {
         return info
     }
     
-    
     // Cloneable
     override isMutable() {
         true
@@ -341,6 +358,28 @@ class VariableStore implements IKiCoolCloneable {
         return variables.entries.map[new Pair(key, value)].sortWith(VARIABLE_ORDER)
     }
     
+    // Filtered copy
+    /**
+     * Returns a new variable store that is a view on this original but filtered by the given predicate.
+     * Important: This view is not backed by the original list of variables and does not support edititng. 
+     */
+    def getFilteredCopy(Function1<Map.Entry<String, VariableInformation>, Boolean> predicate) {
+        val filtered = HashMultimap.<String, VariableInformation>create
+        variables.entries.filter(predicate).forEach[filtered.put(key, value)]
+        return new VariableStore(filtered)
+    }
+    def getFilteredCopy(CodeFile code) {
+        if (code !== null) {
+            return getFilteredCopy[value.codeAssociation.contains(code) || value.codeAssociation.contains(VariableInformation.WILDCARD_CODE_ASSOCITAION)]
+        }
+        return new VariableStore(variables)
+    }
+    def getFilteredCopy(String property) {
+        if (!property.nullOrEmpty) {
+            return getFilteredCopy[value.properties.contains(property)]
+        }
+        return new VariableStore(variables)
+    }
 }
 
 @ToString
@@ -382,9 +421,14 @@ class VariableInformation {
     @Accessors
     var String encapsulatedIn
     
-    /** name of this container for encapsulation */
+    /** Name of this container for encapsulation */
     @Accessors
     var String containerName
+    
+    /** Associtated code that uses this variable */
+    @Accessors
+    val Set<CodeFile> codeAssociation = newHashSet
+    public static val WILDCARD_CODE_ASSOCITAION = new CodeFile("WILDCARD", "For internal use only (no real code file)")
     
     override VariableInformation clone() {
         val clone = new VariableInformation
@@ -396,6 +440,7 @@ class VariableInformation {
         clone.properties.addAll(properties)
         clone.encapsulatedIn = encapsulatedIn
         clone.containerName = containerName
+        clone.codeAssociation.addAll(codeAssociation)
         annotations.forEach[ clone.annotations += it.copy ]
         return clone
     }

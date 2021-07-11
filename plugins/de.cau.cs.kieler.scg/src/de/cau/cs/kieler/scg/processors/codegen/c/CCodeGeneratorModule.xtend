@@ -20,6 +20,7 @@ import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
 import de.cau.cs.kieler.annotations.registry.PragmaRegistry
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
+import de.cau.cs.kieler.kicool.compilation.VariableStore
 import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.scg.codegen.SCGCodeGeneratorModule
 import org.eclipse.xtend.lib.annotations.Accessors
@@ -122,14 +123,16 @@ class CCodeGeneratorModule extends SCGCodeGeneratorModule {
         naming.put(LOGIC, logic.getName)
         naming.put(TICKDATA, struct.getName)
         
-        codeContainer.addCCode(cFilename, cFile.toString) => [
+        val cCode = codeContainer.addCCode(cFilename, cFile.toString) => [
             it.naming.putAll(this.naming)
-            modelName = if (moduleObject instanceof Nameable) moduleObject.name else "_default"   
+            modelName = if (moduleObject instanceof Nameable) moduleObject.name else "_default"
         ]        
-        codeContainer.addCHeader(hFilename, hFile.toString) => [
+        val hCode = codeContainer.addCHeader(hFilename, hFile.toString) => [
             it.naming.putAll(this.naming)   
             modelName = if (moduleObject instanceof Nameable) moduleObject.name else "_default"
         ]
+        // associate variables with the code files
+        VariableStore.get(processorInstance.environment).associateCode(scg, cCode, hCode)
     } 
     
     protected def generateWriteCodeModules(StringBuilder hFile, StringBuilder cFile) {

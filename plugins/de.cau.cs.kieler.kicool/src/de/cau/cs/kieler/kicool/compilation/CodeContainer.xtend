@@ -142,6 +142,11 @@ class CodeFile {
             return null
         }
     }
+    
+    override toString() {
+        return this.class.simpleName + ": " + fileName
+    }
+    
 }
 
 class CCodeFile extends CodeFile {

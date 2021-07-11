@@ -23,6 +23,8 @@ import de.cau.cs.kieler.kicool.compilation.VariableStore
  */
 class SimulationVariableStore extends VariableStore {
     
+    public static val INTERFACE_KEY = "#interface"
+    
     new(JsonObject json) {
         this(json, null)
     }    
@@ -32,7 +34,7 @@ class SimulationVariableStore extends VariableStore {
     new(JsonObject json, VariableStore store) {
         var jsonInit = false
         if (json !== null) {
-            val interface = json.get("#interface")
+            val interface = json.get(INTERFACE_KEY)
             if (interface instanceof JsonObject) {
                 for (entry : interface.entrySet) {
                     val content = entry.value
@@ -68,10 +70,15 @@ class SimulationVariableStore extends VariableStore {
                 }
             } else {
                 // Take all from VarStore
-                if (store.ambiguous) {
+                val interfaceStore = if (store.variables.values.exists[properties.contains(INTERFACE_KEY)]) { // was processed by simulation template
+                    store.getFilteredCopy(INTERFACE_KEY)
+                } else { // fallback: take all
+                    store
+                }
+                if (interfaceStore.ambiguous) {
                     throw new IllegalArgumentException("Cannot initialize using an ambiguous VariableStore.")
                 } else {
-                    this.copyFrom(store)
+                    this.copyFrom(interfaceStore)
                 }
             }
         }

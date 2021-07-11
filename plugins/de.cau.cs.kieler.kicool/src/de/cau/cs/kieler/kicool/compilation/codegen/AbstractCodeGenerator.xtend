@@ -60,7 +60,8 @@ abstract class AbstractCodeGenerator<T, E> extends Processor<T, CodeContainer> {
     public static val PRAGMA_CODE_NAMING_MAGIC_PREFIX = "prefix"
     public static val PRAGMA_CODE_NAMING_MAGIC_SUFFIX = "suffix"
     
-    @Accessors(PUBLIC_GETTER) val moduleMap = <E, CodeGeneratorModule<T, E>> newHashMap
+    // Must be a linked map in order to preserve model order!!
+    @Accessors(PUBLIC_GETTER) val moduleMap = <E, CodeGeneratorModule<T, E>> newLinkedHashMap 
     
     override getType() {
         ProcessorType.EXOGENOUS_TRANSFORMATOR

@@ -22,6 +22,7 @@ import de.cau.cs.kieler.kicool.compilation.codegen.CodeGeneratorNames
 import de.cau.cs.kieler.kicool.deploy.CommonTemplateVariables
 import de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure
 import de.cau.cs.kieler.kicool.deploy.processor.TemplateEngine
+import de.cau.cs.kieler.simulation.internal.SimulationVariableStore
 
 import static de.cau.cs.kieler.kicool.deploy.TemplatePosition.*
 
@@ -37,6 +38,8 @@ class JavaSimulationTemplateGenerator extends AbstractSimulationTemplateGenerato
     public static val IProperty<String> STRUCT_ACCESS = 
         new Property<String>("de.cau.cs.kieler.simulation.java.struct.access", ".")
     
+    var VariableStore store
+    
     override getId() {
         "de.cau.cs.kieler.simulation.java.template"
     }
@@ -51,8 +54,9 @@ class JavaSimulationTemplateGenerator extends AbstractSimulationTemplateGenerato
         val generalTemplateEnvironment = environment.getProperty(TemplateEngine.GENRAL_ENVIRONMENT)?:newHashMap
         environment.setProperty(TemplateEngine.GENRAL_ENVIRONMENT, generalTemplateEnvironment)
         
+        var JavaCodeFile javaClassFile
         if (infra.sourceCode !== null) {
-            val javaClassFile = infra.sourceCode.files.filter(JavaCodeFile).filter[!library].head
+            javaClassFile = infra.sourceCode.files.filter(JavaCodeFile).filter[!library].head
             if (javaClassFile !== null && !javaClassFile.className.nullOrEmpty) {
                 generalTemplateEnvironment.put(CommonTemplateVariables.MODEL_DATA_TYPE, javaClassFile.className)
                 generalTemplateEnvironment.put(CommonTemplateVariables.MODEL_DATA_FILE, javaClassFile.fileName)
@@ -64,7 +68,7 @@ class JavaSimulationTemplateGenerator extends AbstractSimulationTemplateGenerato
         // Generate template
         logger.println("Generating simulation code")
         
-        val store = VariableStore.getVariableStore(environment)
+        store = VariableStore.getVariableStore(environment).getFilteredCopy(javaClassFile)
         if (store.ambiguous) {
             environment.warnings.add("VariableStore contains ambiguous information for variables.")
             logger.println("WARNING:VariableStore contains ambiguous information for variables. Only first match will be used!")
@@ -139,6 +143,10 @@ class JavaSimulationTemplateGenerator extends AbstractSimulationTemplateGenerato
         environment.addMacroInjection(INIT, "simulation_out")
         environment.addMacroInjection(INPUT, "simulation_in")
         environment.addMacroInjection(OUTPUT, "simulation_out")
+                
+        // Mark all variables as part of communation interface
+        // This need to be done after #interface was generated to prevent redundant properties
+        store.orderedVariables.dropHostTypes.dropBlacklisted.forEach[value.properties.add(SimulationVariableStore.INTERFACE_KEY)]
         
         return cc
     }

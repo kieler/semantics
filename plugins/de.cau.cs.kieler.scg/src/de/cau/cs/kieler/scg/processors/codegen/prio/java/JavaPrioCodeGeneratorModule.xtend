@@ -20,6 +20,7 @@ import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
 import de.cau.cs.kieler.annotations.registry.PragmaRegistry
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
+import de.cau.cs.kieler.kicool.compilation.VariableStore
 import de.cau.cs.kieler.scg.processors.codegen.java.JavaCodeGeneratorModule
 import de.cau.cs.kieler.scg.processors.codegen.prio.c.CPrioCodeGeneratorModule
 import org.eclipse.emf.common.util.URI
@@ -94,10 +95,12 @@ class JavaPrioCodeGeneratorModule extends CPrioCodeGeneratorModule {
         naming.put(LOGIC, logic.getName)
         naming.put(TICKDATA, struct.getName)
         
-        codeContainer.addJavaCode(classFilename, classFile.toString) => [
+        val javaCode = codeContainer.addJavaCode(classFilename, classFile.toString) => [
             it.naming.putAll(this.naming)
             modelName = if (moduleObject instanceof Nameable) moduleObject.name else "_default"   
         ]
+        // associate variables with the code file
+        VariableStore.get(processorInstance.environment).associateCode(scg, javaCode)     
         
         codeContainer.addProxyJavaFile(URI.createPlatformPluginURI("/de.cau.cs.kieler.scg/resources/sj/SJLProgramForPriorities.java", true)) => [
             library = true

@@ -16,6 +16,7 @@ import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
+import de.cau.cs.kieler.kicool.compilation.VariableInformation
 import de.cau.cs.kieler.kicool.compilation.VariableStore
 import de.cau.cs.kieler.kicool.deploy.processor.AbstractTemplateGeneratorProcessor
 
@@ -56,6 +57,7 @@ class CTickTimeTemplateGenerator extends AbstractTemplateGeneratorProcessor<Obje
         store.add("#ticktime", "ticktime") => [
             externalName = "_ticktime"
             type = ValueType.FLOAT
+            codeAssociation += VariableInformation.WILDCARD_CODE_ASSOCITAION
         ]
         
         val cc = new CodeContainer
