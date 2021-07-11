@@ -14,11 +14,13 @@ package de.cau.cs.kieler.cli.test
 
 import de.cau.cs.kieler.core.Platform
 import java.io.File
+import java.nio.file.Files
 import org.junit.BeforeClass
 import org.junit.Test
 
 import static org.junit.Assert.*
-import java.nio.file.Files
+
+import static extension java.lang.String.format
 
 /** 
  * @author als
@@ -188,7 +190,11 @@ class SCChartsCLITest extends AbstractCLITest {
         // check results
         assertExists(new File(wd, "code/ABO.c"))
         assertExists(new File(wd, "code/ABO.h"))
-        assertExists(new File(wd, "kieler-gen/abo.sctx/29_de.cau.cs.kieler.sccharts.processors.triggerEffect/abo.sctx"))
-        assertExists(new File(wd, "kieler-gen/abo.sctx/31_de.cau.cs.kieler.sccharts.scg.processors.SCG/abo.scg"))
+        
+        // check intermediates results
+        val intermediates = new File(wd, "kieler-gen/abo.sctx")
+        assertTrue("Expected intermediate results folder %s does not exist.".format(intermediates), intermediates.isDirectory)
+        assertExists(new File(intermediates, intermediates.list.findFirst[it.endsWith("de.cau.cs.kieler.sccharts.processors.triggerEffect")] + "/abo.sctx"))
+        assertExists(new File(intermediates, intermediates.list.findFirst[it.endsWith("de.cau.cs.kieler.sccharts.scg.processors.SCG")] + "/abo.scg"))
     }
 }
