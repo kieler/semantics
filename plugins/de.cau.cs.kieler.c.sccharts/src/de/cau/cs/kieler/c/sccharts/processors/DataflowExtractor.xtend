@@ -68,6 +68,7 @@ import org.eclipse.cdt.core.dom.ast.IASTCaseStatement
 import org.eclipse.cdt.core.dom.ast.IASTCastExpression
 import org.eclipse.cdt.core.dom.ast.IASTCompoundStatement
 import org.eclipse.cdt.core.dom.ast.IASTConditionalExpression
+import org.eclipse.cdt.core.dom.ast.IASTContinueStatement
 import org.eclipse.cdt.core.dom.ast.IASTDeclarationStatement
 import org.eclipse.cdt.core.dom.ast.IASTDefaultStatement
 import org.eclipse.cdt.core.dom.ast.IASTDoStatement
@@ -106,7 +107,6 @@ import org.eclipse.cdt.internal.core.dom.parser.ASTNode
 import org.eclipse.core.resources.IResource
 
 import static de.cau.cs.kieler.c.sccharts.processors.CDTToStringConverter.*
-import org.eclipse.cdt.core.dom.ast.IASTContinueStatement
 
 /**
  * A Processor analyzing the data flow of functions within a single file of a C project and visualizing it as actor-
@@ -244,7 +244,9 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
     val Map<State, Map<IASTExpression, ValuedObject>> pointers = newHashMap
 
     /** All variables that are pointers to another variable. */
-    val Map<State, Map<ValuedObject, ValuedObject>> pointerVariables = newHashMap
+    val Map<State, Map<String, ValuedObject>> pointerVariables = newHashMap
+    
+    val String addressOp = "~"
 
     val voWrittenIdxs = <ValuedObject, List<Expression>>newHashMap
 
@@ -297,6 +299,17 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         } else {
             statePointers = newHashMap
             pointers.put(state, statePointers)
+        }
+        return statePointers
+    }
+    
+    def getStateVarPointers(State state) {
+        var Map<String, ValuedObject> statePointers = null
+        if (pointerVariables.containsKey(state)) {
+            statePointers = pointerVariables.get(state)
+        } else {
+            statePointers = newHashMap
+            pointerVariables.put(state, statePointers)
         }
         return statePointers
     }
@@ -1975,13 +1988,13 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         switch(passedStmt){
             IASTBreakStatement:{
                 localName = breakName
-                anno = de.cau.cs.kieler.c.sccharts.processors.DataflowExtractor.breakContinueAnno
+                anno = DataflowExtractor.breakContinueAnno
                 localCounter = breakCounter
                 breakCounter++
             }
             IASTContinueStatement:{
                 localName = continueName
-                anno = de.cau.cs.kieler.c.sccharts.processors.DataflowExtractor.breakContinueAnno
+                anno = DataflowExtractor.breakContinueAnno
                 localCounter = continueCounter
                 continueCounter++
             }
@@ -2198,7 +2211,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             // determine the if state the break stmt is in
             var State ifState
             val localIfCounter = Integer.parseInt(breakState.getStringAnnotationValue(
-                de.cau.cs.kieler.c.sccharts.processors.DataflowExtractor.breakContinueAnno
+                DataflowExtractor.breakContinueAnno
             ))
             for (state : rootSCChart.rootStates) {
                 if (state.name.equals(ifName + ssaNameSeperator + localIfCounter)) {
@@ -2434,6 +2447,15 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             } else {
                 // Simply translate the expression
                 initExpr = createKExpression(initializer.children.head, state, dRegion)
+            }
+            
+            // TODO: pointer WIP
+            var  statePointers = getStateVarPointers(state)
+            if (initExpr instanceof OperatorExpression && 
+                (initExpr as OperatorExpression).operator.literal.equals(addressOp)
+            ) {
+                val ref = (initExpr as OperatorExpression).subExpressions.get(0) as ValuedObjectReference
+                statePointers.put(vo.name.split(ssaNameSeperator).get(0), ref.valuedObject)
             }
             dRegion.equations += createDataflowAssignment(vo, initExpr)
         }
@@ -3063,6 +3085,20 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
 
             // Retrieve the assignment target
             val targetAndIndex = retrieveTargetAndIndexExpr(binExpr.getOperand1, funcState, dRegion)
+            
+            // TODO: pointer WIP
+            var Map<String, ValuedObject> statePointers = getStateVarPointers(funcState)
+            // update pointer map if target is a pointer
+            if (binExpr.getOperand1 instanceof IASTUnaryExpression) {
+                statePointers.put(targetAndIndex.target.name.split(ssaNameSeperator).get(0), null)
+                // if source is "&exp" update pointer ref to the corresponding vo
+                if (source instanceof OperatorExpression && 
+                    (source as OperatorExpression).operator.literal.equals(addressOp)
+                ){
+                    statePointers.put(targetAndIndex.target.name.split(ssaNameSeperator).get(0), 
+                        ((source as OperatorExpression).subExpressions.get(0) as ValuedObjectReference).valuedObject)
+                }
+            }
 
             if (!serializable) {
                 targetAndIndex.target.insertHighlightAnnotations(binExpr)
@@ -3090,6 +3126,13 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             result.target = funcState.findValuedObjectByName(exprToString(targetExpr.arrayExpression, sourceFile),
                 arrayIndex, true, dRegion)
             result.index = targetExpr.argument.createKExpression(funcState, dRegion)
+        } else if (targetExpr instanceof IASTUnaryExpression) {
+            // TODO: pointer WIP
+            val op = targetExpr.operand
+            val name = (op as IASTIdExpression).getName.toString
+            val list = pointerVariables.get(funcState)
+            val vo = list.get(name)
+            result.target = vo
         } else {
             println("DataflowExtractor: Unsupported assignment target detected!" + targetExpr.expressionType)
         }
