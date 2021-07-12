@@ -22,6 +22,7 @@ import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.kext.extensions.ValuedObjectMapping
 import de.cau.cs.kieler.kicool.compilation.Processor
 import de.cau.cs.kieler.kicool.compilation.ProcessorType
+import de.cau.cs.kieler.kicool.compilation.VariableStore
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.SCCharts
@@ -111,8 +112,15 @@ class SCG2SCCProcessor extends Processor<SCGraphs, SCCharts> implements Traceabl
     }
         
     protected def State transform(SCGraph scg) {
+        val voStore = VariableStore.get(environment)
         val rootState = createState(scg.name)
         val valuedObjectMap = scg.copyScopeDeclarations(rootState)
+        valuedObjectMap.entrySet.forEach[
+            value.head.trace(key)
+            // Fix VO association in VariableStore
+            val info = voStore.getInfo(key)
+            if (info !== null) info.valuedObject = value.head
+        ]
         
         val nodeList = <Pair<Node, Transition>> newLinkedList => [ add(new Pair(scg.nodes.head, null)) ]
         val scopeStack = <Scope> newLinkedList => [ add(rootState) ]
