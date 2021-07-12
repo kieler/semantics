@@ -68,7 +68,11 @@ class JavaSimulationTemplateGenerator extends AbstractSimulationTemplateGenerato
         // Generate template
         logger.println("Generating simulation code")
         
-        store = VariableStore.getVariableStore(environment).getFilteredCopy(javaClassFile)
+        store = VariableStore.getVariableStore(environment)
+        if (store.variables.values.exists[!codeAssociation.empty]) {
+            // if code associations exist, use them to filter variables
+            store = store.getFilteredCopy(javaClassFile)
+        }
         if (store.ambiguous) {
             environment.warnings.add("VariableStore contains ambiguous information for variables.")
             logger.println("WARNING:VariableStore contains ambiguous information for variables. Only first match will be used!")

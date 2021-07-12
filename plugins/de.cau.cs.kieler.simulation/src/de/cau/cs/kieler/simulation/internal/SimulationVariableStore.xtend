@@ -70,7 +70,8 @@ class SimulationVariableStore extends VariableStore {
                 }
             } else {
                 // Take all from VarStore
-                val interfaceStore = if (store.variables.values.exists[properties.contains(INTERFACE_KEY)]) { // was processed by simulation template
+                val interfaceStore = if (store.variables.values.exists[properties.contains(INTERFACE_KEY)]) {
+                    // if property exists (processed by simulation template), use it to determine actual interface variables
                     store.getFilteredCopy(INTERFACE_KEY)
                 } else { // fallback: take all
                     store
