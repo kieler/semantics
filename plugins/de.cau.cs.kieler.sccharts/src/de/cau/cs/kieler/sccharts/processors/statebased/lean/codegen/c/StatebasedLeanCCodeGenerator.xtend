@@ -21,8 +21,10 @@ import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
 import de.cau.cs.kieler.kicool.compilation.ExogenousProcessor
+import de.cau.cs.kieler.kicool.compilation.VariableStore
 import de.cau.cs.kieler.kicool.compilation.codegen.CodeGeneratorNames
 import de.cau.cs.kieler.sccharts.SCCharts
+import de.cau.cs.kieler.sccharts.processors.statebased.codegen.StatebasedCCodeSerializeHRExtensions
 import java.util.Map
 import org.eclipse.xtend.lib.annotations.Accessors
 
@@ -30,7 +32,6 @@ import static de.cau.cs.kieler.kicool.compilation.codegen.AbstractCodeGenerator.
 import static de.cau.cs.kieler.kicool.compilation.codegen.CodeGeneratorNames.*
 
 import static extension de.cau.cs.kieler.sccharts.processors.statebased.lean.codegen.AbstractStatebasedLeanTemplate.hostcodeSafeName
-import de.cau.cs.kieler.sccharts.processors.statebased.codegen.StatebasedCCodeSerializeHRExtensions
 
 /**
  * C Code Generator for the Statebased code generation using templates.
@@ -102,8 +103,13 @@ class StatebasedLeanCCodeGenerator extends ExogenousProcessor<SCCharts, CodeCont
         naming.put(LOGIC, environment.getProperty(LOGIC_FUNCTION_NAME))
         naming.put(TICKDATA, environment.getProperty(TICKDATA_STRUCT_NAME))   
         
-        codeContainer.addCCode(cFilename, cFile.toString).naming.putAll(naming)       
-        codeContainer.addCHeader(hFilename, hFile.toString).naming.putAll(naming)
+        val cCode = codeContainer.addCCode(cFilename, cFile.toString)
+        cCode.naming.putAll(naming)       
+        val hCode = codeContainer.addCHeader(hFilename, hFile.toString)
+        hCode.naming.putAll(naming)
+                    
+        // associate variables with the code files
+        VariableStore.get(environment).associateCode(scc.rootStates.head, cCode, hCode)
         
         environment.setProperty(new Property<String>("de.cau.cs.kieler.simulation.c.struct.access"), ".iface.")
     }

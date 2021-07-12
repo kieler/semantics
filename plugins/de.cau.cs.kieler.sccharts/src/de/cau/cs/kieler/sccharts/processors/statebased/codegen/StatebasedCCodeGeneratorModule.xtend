@@ -12,22 +12,24 @@
  */
 package de.cau.cs.kieler.sccharts.processors.statebased.codegen
 
-import org.eclipse.xtend.lib.annotations.Accessors
-import de.cau.cs.kieler.kicool.compilation.CodeContainer
-import com.google.inject.Injector
 import com.google.inject.Inject
-import de.cau.cs.kieler.annotations.registry.PragmaRegistry
+import com.google.inject.Injector
+import de.cau.cs.kieler.annotations.Nameable
 import de.cau.cs.kieler.annotations.StringPragma
-import de.cau.cs.kieler.kicool.compilation.codegen.AbstractCodeGenerator
 import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
-import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
-import de.cau.cs.kieler.sccharts.Region
+import de.cau.cs.kieler.annotations.registry.PragmaRegistry
 import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.core.properties.Property
+import de.cau.cs.kieler.kicool.compilation.CodeContainer
+import de.cau.cs.kieler.kicool.compilation.VariableStore
+import de.cau.cs.kieler.kicool.compilation.codegen.AbstractCodeGenerator
+import de.cau.cs.kieler.sccharts.Region
+import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
+import org.eclipse.xtend.lib.annotations.Accessors
+
 import static de.cau.cs.kieler.kicool.compilation.codegen.AbstractCodeGenerator.*
 import static de.cau.cs.kieler.kicool.compilation.codegen.CodeGeneratorNames.*
-import de.cau.cs.kieler.annotations.Nameable
 
 /**
  * Root C Code Generator Module
@@ -140,17 +142,20 @@ class StatebasedCCodeGeneratorModule extends SCChartsCodeGeneratorModule {
         naming.put(LOGIC, logic.getName)
         naming.put(TICKDATA, struct.getName)
         
-        codeContainer.addCCode(cFilename, cFile.toString) => [
+        val cCode =codeContainer.addCCode(cFilename, cFile.toString) => [
             it.naming.putAll(this.naming)
             modelName = if (moduleObject instanceof Nameable) moduleObject.name else "_default"   
         ]       
-        codeContainer.addCHeader(hFilename, hFile.toString) => [
+        val hCode = codeContainer.addCHeader(hFilename, hFile.toString) => [
             it.naming.putAll(this.naming)
             modelName = if (moduleObject instanceof Nameable) moduleObject.name else "_default"
         ]
         
         processorInstance.environment.setProperty(SIMULTATION_C_STRUCT_ACCESS, 
             "." + (struct as StatebasedCCodeGeneratorStructModule).getRegionIfaceName + ".")
+            
+        // associate variables with the code files
+        VariableStore.get(processorInstance.environment).associateCode(rootState, cCode, hCode)
     }    
     
     /**

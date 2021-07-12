@@ -9,6 +9,7 @@ import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
 import de.cau.cs.kieler.kicool.compilation.ExogenousProcessor
 import de.cau.cs.kieler.kicool.compilation.JavaCodeFile
+import de.cau.cs.kieler.kicool.compilation.VariableStore
 import de.cau.cs.kieler.kicool.compilation.codegen.CodeGeneratorNames
 import de.cau.cs.kieler.sccharts.SCCharts
 import java.util.Map
@@ -77,7 +78,11 @@ class StatebasedLeanJavaCodeGenerator extends ExogenousProcessor<SCCharts, CodeC
         naming.put(LOGIC, environment.getProperty(LOGIC_FUNCTION_NAME))
         naming.put(TICKDATA, environment.getProperty(TICKDATA_STRUCT_NAME))   
 
-        codeContainer.addJavaCode(javaFilename, javaFile.toString).naming.putAll(naming)
+        val javaCode = codeContainer.addJavaCode(javaFilename, javaFile.toString)
+        javaCode.naming.putAll(naming)
+                    
+        // associate variables with the code files
+        VariableStore.get(environment).associateCode(scc.rootStates.head, javaCode)
 
         if (template.needsContextInterface) {
           val contextFilename = codeFilename + CONTEXT_SUFFIX + JAVA_EXTENSION
