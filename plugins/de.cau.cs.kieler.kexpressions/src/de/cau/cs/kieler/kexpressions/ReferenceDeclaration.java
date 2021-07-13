@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.kexpressions.ReferenceDeclaration#getReference <em>Reference</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.ReferenceDeclaration#getReferenceContainer <em>Reference Container</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.ReferenceDeclaration#getParameters <em>Parameters</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.ReferenceDeclaration#getExtern <em>Extern</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.ReferenceDeclaration#getGenericParameters <em>Generic Parameters</em>}</li>
@@ -51,6 +52,28 @@ public interface ReferenceDeclaration extends Declaration {
      * @generated
      */
     void setReference(EObject value);
+
+    /**
+     * Returns the value of the '<em><b>Reference Container</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Reference Container</em>' reference.
+     * @see #setReferenceContainer(EObject)
+     * @see de.cau.cs.kieler.kexpressions.KExpressionsPackage#getReferenceDeclaration_ReferenceContainer()
+     * @model
+     * @generated
+     */
+    EObject getReferenceContainer();
+
+    /**
+     * Sets the value of the '{@link de.cau.cs.kieler.kexpressions.ReferenceDeclaration#getReferenceContainer <em>Reference Container</em>}' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Reference Container</em>' reference.
+     * @see #getReferenceContainer()
+     * @generated
+     */
+    void setReferenceContainer(EObject value);
 
     /**
      * Returns the value of the '<em><b>Parameters</b></em>' containment reference list.

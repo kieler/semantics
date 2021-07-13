@@ -58,6 +58,7 @@ class VariableStore implements IKiCoolCloneable {
     public static val CONST = "const"
     public static val EXTERN = "extern"
     public static val RESET = "reset" // Code generators will reset this variable explicitly.
+    public static val ENUM = "enum"
         
     public static val DECL_FLAGS = #{
         VARIABLE_DECLARATION__INPUT -> INPUT,
@@ -188,10 +189,11 @@ class VariableStore implements IKiCoolCloneable {
                     info.properties += flags.value
                 }
             }
+            
+            info.type = decl.type
             if (!decl.hostType.nullOrEmpty) {
                 info.typeName = decl.hostType
             } else {
-                info.type = decl.type
                 info.typeName = decl.type.literal
             }
             

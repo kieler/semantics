@@ -49,6 +49,7 @@ import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
 import de.cau.cs.kieler.kexpressions.keffects.RandomizeCallEffect
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.kext.extensions.KExtEnumExtensions
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.codegen.CodeGeneratorSerializeHRExtensions
 import de.cau.cs.kieler.scg.extensions.SCGMethodExtensions
@@ -68,6 +69,7 @@ class CCodeSerializeHRExtensions extends CodeGeneratorSerializeHRExtensions {
     protected var CODE_ANNOTATION = "C"
     protected var CONDITIONAL_PLACEHOLDER = " : __CONDSELF__"
     public var assumeOnlyGlobalFunctions = true
+    public var globalEnumNamespace = true
     public var complyWithGCCWall = true
     
     static val HOSTCODE_EVAL = AnnotationsRegistry.register("eval", AnnotationsType.USER, StringAnnotation,  TextExpression, 
@@ -78,6 +80,7 @@ class CCodeSerializeHRExtensions extends CodeGeneratorSerializeHRExtensions {
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KExpressionsCreateExtensions
     @Inject extension KExtDeclarationExtensions
+    @Inject extension KExtEnumExtensions
     @Inject extension KExpressionsTypeExtensions
     @Inject extension KExpressionsCallExtensions
     @Inject extension SCGMethodExtensions
@@ -110,6 +113,9 @@ class CCodeSerializeHRExtensions extends CodeGeneratorSerializeHRExtensions {
     }    
     
     override dispatch CharSequence serialize(ValuedObjectReference valuedObjectReference) {
+        if (globalEnumNamespace && valuedObjectReference.lowermostReference.isEnumValue) {
+            return valuedObjectReference.lowermostReference.valuedObject.name
+        }
         var vo = valuedObjectReference.valuedObject.name
         if (!(valuedObjectReference.valuedObject.isLocalVariable || valuedObjectReference.valuedObject.isSelfVO)) {
             vo = valuedObjectPrefix + vo
@@ -128,6 +134,9 @@ class CCodeSerializeHRExtensions extends CodeGeneratorSerializeHRExtensions {
     }    
     
     override dispatch CharSequence serializeHR(ValuedObjectReference valuedObjectReference) {
+        if (globalEnumNamespace && valuedObjectReference.lowermostReference.isEnumValue) {
+            return valuedObjectReference.lowermostReference.valuedObject.name
+        }
         var vo = valuedObjectReference.valuedObject.name
         if (!(valuedObjectReference.valuedObject.isLocalVariable || valuedObjectReference.valuedObject.isSelfVO)) {
             vo = valuedObjectPrefix + vo

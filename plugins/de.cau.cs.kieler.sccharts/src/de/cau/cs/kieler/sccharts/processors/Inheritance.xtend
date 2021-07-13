@@ -113,21 +113,21 @@ class Inheritance extends SCChartsProcessor implements Traceable {
             val methodReplacements = state.getMethodInheritanceInfos // must be analyzed before state declarations are changed
             
             val newDecls = newArrayList
-            for (baseDelc : allBaseStates.map[declarations].flatten.filter[!implicitlyBoundInSuperState.contains(it)]) {
-                var newDecl = baseDelc.copy
+            for (baseDecl : allBaseStates.map[declarations].flatten.filter[!implicitlyBoundInSuperState.contains(it)]) {
+                var newDecl = baseDecl.copy
                 
                 if (newDecl.access !== AccessModifier.PUBLIC) { // rename
                     for (vo : newDecl.valuedObjects) {
-                        vo.name = (baseDelc.eContainer as State).name + "_" + vo.name
+                        vo.name = (baseDecl.eContainer as State).name + "_" + vo.name
                     }
                     newDecl.access = AccessModifier.PUBLIC
                 }
                 
-                for (baseVoIdx : baseDelc.valuedObjects.indexed) {
+                for (baseVoIdx : baseDecl.valuedObjects.indexed) {
                     val baseVO = baseVoIdx.value
                     val newVO = newDecl.valuedObjects.get(baseVoIdx.key)
                     if (newDecl instanceof MethodDeclaration) {
-                        methods.put(baseDelc, newDecl)
+                        methods.put(baseDecl, newDecl)
                         replacements.put(baseVO, newVO)
                         voStore.update(newVO, "inherited")
                     } else if (voNames.containsKey(newVO.name)) {
@@ -142,7 +142,10 @@ class Inheritance extends SCChartsProcessor implements Traceable {
                 }
                 newDecl.valuedObjects.removeIf[voNames.get(it.name).size > 1]
                 if (!newDecl.valuedObjects.empty) {
-                    newDecls += newDecl 
+                    newDecls += newDecl
+                    if (baseDecl.isEnum) {
+                        Enum.markCopyForConsolidation(newDecl, baseDecl)
+                    }
                 }
             }
             state.declarations.addAll(0, newDecls)

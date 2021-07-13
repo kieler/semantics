@@ -20,6 +20,7 @@ import de.cau.cs.kieler.kexpressions.TextExpression
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
@@ -42,6 +43,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
 class JavaCodeGeneratorStructModule extends CCodeGeneratorStructModule {
     
     @Inject extension KExpressionsValuedObjectExtensions
+    @Inject extension KExpressionsDeclarationExtensions
     @Inject extension SCGMethodExtensions
     @Inject extension SCGControlFlowExtensions
     @Inject extension AnnotationsExtensions
@@ -104,7 +106,7 @@ class JavaCodeGeneratorStructModule extends CCodeGeneratorStructModule {
     }
     
     override void generateDeclarations(List<Declaration> declarations, int depth, extension CCodeSerializeHRExtensions serializer) {
-        for (declaration : declarations.filter(VariableDeclaration)) {
+        for (declaration : declarations.filter(VariableDeclaration).filter[!it.isEnum]) {
             for (valuedObject : declaration.valuedObjects) {
                 indent(depth+1)
                 if (!valuedObject.localVariable) code.append("public ")
@@ -130,7 +132,7 @@ class JavaCodeGeneratorStructModule extends CCodeGeneratorStructModule {
     }
     
     protected def void generateClassDeclarations(List<Declaration> declarations, int depth, extension CCodeSerializeHRExtensions serializer) {
-        for (declaration : declarations.filter(ClassDeclaration)) {
+        for (declaration : declarations.filter(ClassDeclaration).filter[!it.isEnum]) {
             if (!declaration.host) {
                 hasClasses = true
                 indent(depth+1)
@@ -210,13 +212,11 @@ class JavaCodeGeneratorStructModule extends CCodeGeneratorStructModule {
         if (!additionalCode.nullOrEmpty) {
             code.append("  " + additionalCode)
         }
-        
         for (declaration : declarations.filter(VariableDeclaration)) {
-            val isClass = declaration instanceof ClassDeclaration
             for (valuedObject : declaration.valuedObjects) {
                 if (valuedObject.isArray) {
                     valuedObject.createArrayForCardinalityIndex(0, serializer)
-                } else if (isClass && !valuedObject.hasAnnotation("skipClassInit")) {
+                } else if (declaration.isClass && !valuedObject.hasAnnotation("skipClassInit")) {
                     indent(depth+2)
                     if (valuedObject.initialValue instanceof TextExpression) {
                         code.append(valuedObject.name + " = " + (valuedObject.initialValue as TextExpression).text + ";\n")

@@ -68,6 +68,7 @@ import de.cau.cs.kieler.scl.Return
 import java.util.Set
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
+import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 import static extension java.lang.String.format
 
 /**
@@ -107,6 +108,8 @@ class Reference extends SCChartsProcessor implements Traceable {
     
     protected var Dataflow dataflowProcessor = null
     protected var Inheritance inheritanceProcessor = null
+    protected var StaticAccess staticAccessProcessor = null
+    protected var Enum enumProcessor = null
     
     protected val replacedWithLiterals = <ValuedObject> newHashSet
     
@@ -124,6 +127,10 @@ class Reference extends SCChartsProcessor implements Traceable {
         dataflowProcessor?.setEnvironment(sourceEnvironment, environment)
         inheritanceProcessor = KiCoolRegistration.getProcessorInstance(Inheritance.ID) as Inheritance
         inheritanceProcessor?.setEnvironment(sourceEnvironment, environment)
+        staticAccessProcessor = KiCoolRegistration.getProcessorInstance(StaticAccess.ID) as StaticAccess
+        staticAccessProcessor?.setEnvironment(sourceEnvironment, environment)
+        enumProcessor = KiCoolRegistration.getProcessorInstance(Enum.ID) as Enum
+        enumProcessor?.setEnvironment(sourceEnvironment, environment)
         
         val model = getModel
         
@@ -136,6 +143,7 @@ class Reference extends SCChartsProcessor implements Traceable {
         
         for(rootState : rootStateList) {
             rootState.expandRoot(null, true)
+            enumProcessor?.consolidateEnumDeclarations(rootState)
         }
         
         if (environment.getProperty(EXPAND_REFERENCED_STATES)) {
@@ -200,6 +208,8 @@ class Reference extends SCChartsProcessor implements Traceable {
             }
         }
         
+        staticAccessProcessor?.handleStaticAccesses(rootState)
+        
         if (validate && !rootState.validate) {
             throw new IllegalStateException("References objects are not contained in the resource!")
         }
@@ -223,7 +233,7 @@ class Reference extends SCChartsProcessor implements Traceable {
                 (it as State).final = scopeWithReference.final
             }
             for (annotation : scopeWithReference.annotations) {
-                 annotations += annotation.copy
+                 it.annotations += annotation.copy
             }
         ]
         
@@ -784,7 +794,9 @@ class Reference extends SCChartsProcessor implements Traceable {
             for (ref : refs) {
                 var refTarget = ref.reference
                 if (refTarget instanceof State) {
-                    val newState = refTarget.copy as State
+                    val tracedCopy = refTarget.tracedCopyAndReturnCopier
+                    val newState = tracedCopy.key
+                    val copier = tracedCopy.value
                     
                     // Generics binding
                     // Using head VO is ok because of previous separating
@@ -801,6 +813,16 @@ class Reference extends SCChartsProcessor implements Traceable {
                         } else {
                             // TODO: target indices not supported yet
                             replacements.push(binding.targetValuedObject, binding.sourceExpression)
+                        }
+                    }
+                    
+                    // Handle enums
+                    for (entry : copier.entrySet) {
+                        val orig = entry.key
+                        if (orig instanceof Declaration) {
+                            if (orig.isEnum) {
+                                Enum.markCopyForConsolidation(entry.value as Declaration, orig)
+                            }
                         }
                     }
                     

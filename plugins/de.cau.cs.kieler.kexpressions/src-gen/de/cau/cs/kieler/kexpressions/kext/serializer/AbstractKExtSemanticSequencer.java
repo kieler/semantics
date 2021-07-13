@@ -1160,7 +1160,11 @@ public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequ
 				}
 				else break;
 			case KExpressionsPackage.VARIABLE_DECLARATION:
-				if (rule == grammarAccess.getDeclarationWOSemicolonRule()
+				if (rule == grammarAccess.getEnumMemberDeclarationRule()) {
+					sequence_EnumMemberDeclaration(context, (VariableDeclaration) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getDeclarationWOSemicolonRule()
 						|| rule == grammarAccess.getVariableDeclarationWOSemicolonRule()
 						|| rule == grammarAccess.getDeclarationOrMethodWOSemicolonRule()) {
 					sequence_VariableDeclarationWOSemicolon(context, (VariableDeclaration) semanticObject); 
@@ -1255,15 +1259,29 @@ public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequ
 				else break;
 			case KExtPackage.CLASS_DECLARATION:
 				if (rule == grammarAccess.getDeclarationWOSemicolonRule()
-						|| rule == grammarAccess.getClassDeclarationWOSemicolonRule()
-						|| rule == grammarAccess.getDeclarationOrMethodWOSemicolonRule()) {
+						|| rule == grammarAccess.getClassDeclarationWOSemicolonRule()) {
 					sequence_ClassDeclarationWOSemicolon(context, (ClassDeclaration) semanticObject); 
 					return; 
 				}
+				else if (rule == grammarAccess.getDeclarationOrMethodWOSemicolonRule()) {
+					sequence_ClassDeclarationWOSemicolon_EnumDeclarationWOSemicolon(context, (ClassDeclaration) semanticObject); 
+					return; 
+				}
 				else if (rule == grammarAccess.getDeclarationRule()
-						|| rule == grammarAccess.getClassDeclarationRule()
-						|| rule == grammarAccess.getDeclarationOrMethodRule()) {
+						|| rule == grammarAccess.getClassDeclarationRule()) {
 					sequence_ClassDeclaration(context, (ClassDeclaration) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getDeclarationOrMethodRule()) {
+					sequence_ClassDeclaration_EnumDeclaration(context, (ClassDeclaration) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getEnumDeclarationWOSemicolonRule()) {
+					sequence_EnumDeclarationWOSemicolon(context, (ClassDeclaration) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getEnumDeclarationRule()) {
+					sequence_EnumDeclaration(context, (ClassDeclaration) semanticObject); 
 					return; 
 				}
 				else break;
@@ -1316,7 +1334,6 @@ public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequ
 	 * Contexts:
 	 *     DeclarationWOSemicolon returns ClassDeclaration
 	 *     ClassDeclarationWOSemicolon returns ClassDeclaration
-	 *     DeclarationOrMethodWOSemicolon returns ClassDeclaration
 	 *
 	 * Constraint:
 	 *     (
@@ -1343,9 +1360,47 @@ public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequ
 	
 	/**
 	 * Contexts:
+	 *     DeclarationOrMethodWOSemicolon returns ClassDeclaration
+	 *
+	 * Constraint:
+	 *     (
+	 *         (
+	 *             annotations+=Annotation* 
+	 *             access=AccessModifier? 
+	 *             const?='const'? 
+	 *             input?='input'? 
+	 *             output?='output'? 
+	 *             global?='global'? 
+	 *             static?='static'? 
+	 *             host?='host'? 
+	 *             (
+	 *                 (type=ClassType name=EString? declarations+=DeclarationOrMethodWOSemicolon*) | 
+	 *                 (type=StructType name=EString? declarations+=DeclarationWOSemicolon*)
+	 *             ) 
+	 *             (valuedObjects+=ValuedObject valuedObjects+=ValuedObject*)? 
+	 *             annotations+=CommentAnnotatonSL?
+	 *         ) | 
+	 *         (
+	 *             annotations+=Annotation* 
+	 *             access=AccessModifier? 
+	 *             host?='host'? 
+	 *             type=EnumType 
+	 *             valuedObjects+=SimpleValuedObject 
+	 *             hostType=STRING? 
+	 *             declarations+=EnumMemberDeclaration 
+	 *             annotations+=CommentAnnotatonSL?
+	 *         )
+	 *     )
+	 */
+	protected void sequence_ClassDeclarationWOSemicolon_EnumDeclarationWOSemicolon(ISerializationContext context, ClassDeclaration semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     Declaration returns ClassDeclaration
 	 *     ClassDeclaration returns ClassDeclaration
-	 *     DeclarationOrMethod returns ClassDeclaration
 	 *
 	 * Constraint:
 	 *     (
@@ -1363,6 +1418,96 @@ public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequ
 	 *     )
 	 */
 	protected void sequence_ClassDeclaration(ISerializationContext context, ClassDeclaration semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     DeclarationOrMethod returns ClassDeclaration
+	 *
+	 * Constraint:
+	 *     (
+	 *         (
+	 *             annotations+=Annotation* 
+	 *             access=AccessModifier? 
+	 *             const?='const'? 
+	 *             input?='input'? 
+	 *             output?='output'? 
+	 *             global?='global'? 
+	 *             static?='static'? 
+	 *             host?='host'? 
+	 *             ((type=ClassType name=EString? declarations+=DeclarationOrMethod*) | (type=StructType name=EString? declarations+=Declaration*)) 
+	 *             (valuedObjects+=ValuedObject valuedObjects+=ValuedObject*)? 
+	 *             annotations+=CommentAnnotatonSL?
+	 *         ) | 
+	 *         (
+	 *             annotations+=Annotation* 
+	 *             access=AccessModifier? 
+	 *             host?='host'? 
+	 *             type=EnumType 
+	 *             valuedObjects+=SimpleValuedObject 
+	 *             hostType=STRING? 
+	 *             declarations+=EnumMemberDeclaration 
+	 *             annotations+=CommentAnnotatonSL?
+	 *         )
+	 *     )
+	 */
+	protected void sequence_ClassDeclaration_EnumDeclaration(ISerializationContext context, ClassDeclaration semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     EnumDeclarationWOSemicolon returns ClassDeclaration
+	 *
+	 * Constraint:
+	 *     (
+	 *         annotations+=Annotation* 
+	 *         access=AccessModifier? 
+	 *         host?='host'? 
+	 *         type=EnumType 
+	 *         valuedObjects+=SimpleValuedObject 
+	 *         hostType=STRING? 
+	 *         declarations+=EnumMemberDeclaration 
+	 *         annotations+=CommentAnnotatonSL?
+	 *     )
+	 */
+	protected void sequence_EnumDeclarationWOSemicolon(ISerializationContext context, ClassDeclaration semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     EnumDeclaration returns ClassDeclaration
+	 *
+	 * Constraint:
+	 *     (
+	 *         annotations+=Annotation* 
+	 *         access=AccessModifier? 
+	 *         host?='host'? 
+	 *         type=EnumType 
+	 *         valuedObjects+=SimpleValuedObject 
+	 *         hostType=STRING? 
+	 *         declarations+=EnumMemberDeclaration 
+	 *         annotations+=CommentAnnotatonSL?
+	 *     )
+	 */
+	protected void sequence_EnumDeclaration(ISerializationContext context, ClassDeclaration semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     EnumMemberDeclaration returns VariableDeclaration
+	 *
+	 * Constraint:
+	 *     (annotations+=Annotation* valuedObjects+=SimpleValuedObject valuedObjects+=SimpleValuedObject* annotations+=CommentAnnotatonSL?)
+	 */
+	protected void sequence_EnumMemberDeclaration(ISerializationContext context, VariableDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -1524,11 +1669,15 @@ public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequ
 	 *         annotations+=Annotation* 
 	 *         access=AccessModifier? 
 	 *         (
-	 *             (reference=[NamedObject|NamespaceID] (genericParameters+=GenericParameter genericParameters+=GenericParameter*)?) | 
-	 *             (extern+=ExternString extern+=ExternString*)
+	 *             (
+	 *                 referenceContainer=[NamedObject|PrimeID]? 
+	 *                 reference=[NamedObject|PrimeID] 
+	 *                 (genericParameters+=GenericParameter genericParameters+=GenericParameter*)? 
+	 *                 valuedObjects+=ReferenceValuedObject 
+	 *                 valuedObjects+=ReferenceValuedObject*
+	 *             ) | 
+	 *             (extern+=ExternString extern+=ExternString* valuedObjects+=ValuedObject valuedObjects+=ValuedObject*)
 	 *         ) 
-	 *         valuedObjects+=ReferenceValuedObject 
-	 *         valuedObjects+=ReferenceValuedObject* 
 	 *         annotations+=CommentAnnotatonSL?
 	 *     )
 	 */
@@ -1548,11 +1697,15 @@ public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequ
 	 *         annotations+=Annotation* 
 	 *         access=AccessModifier? 
 	 *         (
-	 *             (reference=[NamedObject|NamespaceID] (genericParameters+=GenericParameter genericParameters+=GenericParameter*)?) | 
-	 *             (extern+=ExternString extern+=ExternString*)
+	 *             (
+	 *                 referenceContainer=[NamedObject|PrimeID]? 
+	 *                 reference=[NamedObject|PrimeID] 
+	 *                 (genericParameters+=GenericParameter genericParameters+=GenericParameter*)? 
+	 *                 valuedObjects+=ReferenceValuedObject 
+	 *                 valuedObjects+=ReferenceValuedObject*
+	 *             ) | 
+	 *             (extern+=ExternString extern+=ExternString* valuedObjects+=ValuedObject valuedObjects+=ValuedObject*)
 	 *         ) 
-	 *         valuedObjects+=ReferenceValuedObject 
-	 *         valuedObjects+=ReferenceValuedObject* 
 	 *         annotations+=CommentAnnotatonSL?
 	 *     )
 	 */
@@ -1572,6 +1725,7 @@ public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequ
 	 *         cardinalities+=Expression* 
 	 *         (genericParameters+=GenericParameter genericParameters+=GenericParameter*)? 
 	 *         (parameters+=Parameter parameters+=Parameter*)? 
+	 *         initialValue=Expression? 
 	 *         label=STRING?
 	 *     )
 	 */

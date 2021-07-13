@@ -47,6 +47,7 @@ class JavaCodeSerializeHRExtensions extends CCodeSerializeHRExtensions {
     
     new() {
         CODE_ANNOTATION = "Java"
+        globalEnumNamespace = false // Java has proper enums
         assumeOnlyGlobalFunctions = false // Java has proper OO
         complyWithGCCWall = false // Java does not use GCC
     }

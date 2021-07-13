@@ -1207,7 +1207,11 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 				}
 				else break;
 			case KExpressionsPackage.VARIABLE_DECLARATION:
-				if (rule == grammarAccess.getLoopDeclarationRule()) {
+				if (rule == grammarAccess.getEnumMemberDeclarationRule()) {
+					sequence_EnumMemberDeclaration(context, (VariableDeclaration) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getLoopDeclarationRule()) {
 					sequence_LoopDeclaration(context, (VariableDeclaration) semanticObject); 
 					return; 
 				}
@@ -1310,8 +1314,27 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 				}
 				else break;
 			case KExtPackage.CLASS_DECLARATION:
-				sequence_ClassDeclaration(context, (ClassDeclaration) semanticObject); 
-				return; 
+				if (rule == grammarAccess.getDeclarationRule()
+						|| rule == grammarAccess.getKExtDeclarationRule()
+						|| rule == grammarAccess.getClassDeclarationRule()) {
+					sequence_ClassDeclaration(context, (ClassDeclaration) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getDeclarationOrMethodRule()) {
+					sequence_ClassDeclaration_EnumDeclaration(context, (ClassDeclaration) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getDeclarationOrMethodWithKeywordWOSemicolonRule()
+						|| rule == grammarAccess.getDeclarationOrMethodWOSemicolonRule()
+						|| rule == grammarAccess.getEnumDeclarationWOSemicolonRule()) {
+					sequence_EnumDeclarationWOSemicolon(context, (ClassDeclaration) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getEnumDeclarationRule()) {
+					sequence_EnumDeclaration(context, (ClassDeclaration) semanticObject); 
+					return; 
+				}
+				else break;
 			case KExtPackage.KEXT_SCOPE:
 				if (rule == grammarAccess.getRootScopeRule()) {
 					sequence_RootScope(context, (KExtScope) semanticObject); 
@@ -1838,22 +1861,30 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	 *             annotations+=Annotation* 
 	 *             access=AccessModifier? 
 	 *             (
-	 *                 (reference=[NamedObject|NamespaceID] (genericParameters+=GenericParameter genericParameters+=GenericParameter*)?) | 
-	 *                 (extern+=ExternString extern+=ExternString*)
+	 *                 (
+	 *                     referenceContainer=[NamedObject|PrimeID]? 
+	 *                     reference=[NamedObject|PrimeID] 
+	 *                     (genericParameters+=GenericParameter genericParameters+=GenericParameter*)? 
+	 *                     valuedObjects+=ReferenceValuedObject 
+	 *                     valuedObjects+=ReferenceValuedObject*
+	 *                 ) | 
+	 *                 (extern+=ExternString extern+=ExternString* valuedObjects+=ValuedObject valuedObjects+=ValuedObject*)
 	 *             ) 
-	 *             valuedObjects+=ReferenceValuedObject 
-	 *             valuedObjects+=ReferenceValuedObject* 
 	 *             annotations+=CommentAnnotatonSL?
 	 *         ) | 
 	 *         (
 	 *             annotations+=Annotation* 
 	 *             access=AccessModifier? 
 	 *             (
-	 *                 (reference=[NamedObject|NamespaceID] (genericParameters+=GenericParameter genericParameters+=GenericParameter*)?) | 
-	 *                 (extern+=ExternString extern+=ExternString*)
+	 *                 (
+	 *                     referenceContainer=[NamedObject|PrimeID]? 
+	 *                     reference=[NamedObject|PrimeID] 
+	 *                     (genericParameters+=GenericParameter genericParameters+=GenericParameter*)? 
+	 *                     valuedObjects+=ReferenceValuedObject 
+	 *                     valuedObjects+=ReferenceValuedObject*
+	 *                 ) | 
+	 *                 (extern+=ExternString extern+=ExternString* valuedObjects+=ValuedObject valuedObjects+=ValuedObject*)
 	 *             ) 
-	 *             valuedObjects+=ReferenceValuedObject 
-	 *             valuedObjects+=ReferenceValuedObject* 
 	 *             annotations+=CommentAnnotatonSL?
 	 *         )
 	 *     )
@@ -1874,6 +1905,7 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	 *         cardinalities+=Expression* 
 	 *         (genericParameters+=GenericParameter genericParameters+=GenericParameter*)? 
 	 *         (parameters+=ScopeParameter parameters+=ScopeParameter*)? 
+	 *         initialValue=Expression? 
 	 *         label=STRING?
 	 *     )
 	 */

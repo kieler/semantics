@@ -17,7 +17,7 @@ import de.cau.cs.kieler.kicool.registration.IProcessorProvider
 /**
  * Provider to make processors available to KiCool.
  * 
- * @author Wechselberg
+ * @author Wechselberg, als
  */
 class SCChartsProcessorProvider implements IProcessorProvider {
     
@@ -49,6 +49,7 @@ class SCChartsProcessorProvider implements IProcessorProvider {
             de.cau.cs.kieler.sccharts.processors.Deferred,
             de.cau.cs.kieler.sccharts.processors.CountDelay,
             de.cau.cs.kieler.sccharts.processors.Const,
+            de.cau.cs.kieler.sccharts.processors.Enum,
             de.cau.cs.kieler.sccharts.processors.Reference,
             de.cau.cs.kieler.sccharts.processors.For,
             de.cau.cs.kieler.sccharts.processors.TakenTransitionSignaling,
