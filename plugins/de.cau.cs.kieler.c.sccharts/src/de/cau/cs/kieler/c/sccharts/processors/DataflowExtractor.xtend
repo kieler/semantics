@@ -492,7 +492,8 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             for (par : parameters) {
                 val isArray = par.getDeclSpecifier instanceof IASTSimpleDeclSpecifier &&
                     par.declarator instanceof IASTArrayDeclarator
-                if (isArray) {
+                val isPointer = par.declarator.pointerOperators !== null && !par.declarator.pointerOperators.isEmpty
+                if (isArray || isPointer) {
                     val type = (outputDeclSpecifier as IASTSimpleDeclSpecifier).type.cdtTypeConversion
                     // Determine parameter name
                     val varName = par.getDeclarator.getName.toString
@@ -3097,8 +3098,8 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 statePointers.put(targetAndIndex.target.name.split(ssaNameSeperator).get(0), null)
             }
             // if source is "&exp" update pointer ref to the corresponding vo
-            if (source instanceof OperatorExpression && 
-                (source as OperatorExpression).operator.literal.equals(addressOp)
+            if (sourceExpr instanceof IASTUnaryExpression && 
+                (sourceExpr as IASTUnaryExpression).operator === IASTUnaryExpression.op_amper
             ){
                 statePointers.put(targetAndIndex.target.name.split(ssaNameSeperator).get(0), 
                     ((source as OperatorExpression).subExpressions.get(0) as ValuedObjectReference).valuedObject)
@@ -3134,9 +3135,13 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             // TODO: pointer WIP
             val op = targetExpr.operand
             val name = (op as IASTIdExpression).getName.toString
-            val list = pointerVariables.get(funcState)
-            val vo = list.get(name)
-            result.target = vo
+            val map = getStateVarPointers(funcState)
+            val vo = map.get(name)
+            if (vo === null) {
+                result.target = funcState.findValuedObjectByName(name, true, dRegion)
+            } else {
+                result.target = vo
+            }
         } else {
             println("DataflowExtractor: Unsupported assignment target detected!" + targetExpr.expressionType)
         }
@@ -3337,8 +3342,18 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 dRegion.equations += assignment
             }
             // If the argument is some pointer, the output of the function has to be assigned to
-            // the variable that pointer points to.
-            val argumentPointer = getStatePointers(state).get(argument) ?: getStatePointers(refState).get(argument)
+            // the variable that pointer points to
+            val indirectPointer = argument instanceof IASTUnaryExpression 
+                && (argument as IASTUnaryExpression).operator === IASTUnaryExpression.op_amper
+            
+            var argumentPointer = argument instanceof IASTIdExpression ? 
+                getStateVarPointers(state).get((argument as IASTIdExpression).name.toString) : null
+                
+            if (indirectPointer) {
+                val name = ((argument as IASTUnaryExpression).operand as IASTIdExpression).name.toString
+                argumentPointer = findValuedObjectByName(state, name, true, dRegion)
+            }
+                
             if (argumentPointer !== null && outputVO !== null) {
                 val variableVOName = argumentPointer.name
                 val outputToVO = findValuedObjectByName(state,
