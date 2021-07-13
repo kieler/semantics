@@ -14,6 +14,7 @@ package de.cau.cs.kieler.scg.processors.codegen.java
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
 import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.MethodDeclaration
 import de.cau.cs.kieler.kexpressions.TextExpression
@@ -47,6 +48,7 @@ class JavaCodeGeneratorStructModule extends CCodeGeneratorStructModule {
     @Inject extension SCGMethodExtensions
     @Inject extension SCGControlFlowExtensions
     @Inject extension AnnotationsExtensions
+    @Inject extension PragmaExtensions
     @Accessors @Inject JavaCodeSerializeHRExtensions javaSerializer
     @Accessors var JavaCodeGeneratorLogicModule logic
     
@@ -84,6 +86,8 @@ class JavaCodeGeneratorStructModule extends CCodeGeneratorStructModule {
         scg.declarations.generateDeclarations(0, serializer)
         
         code.globalObjectAdditions(serializer)
+        
+        code.hostcodeInnerClassAdditions
         
         addRootConstructor()  
         
@@ -290,5 +294,22 @@ class JavaCodeGeneratorStructModule extends CCodeGeneratorStructModule {
         }
         
     }  
-        
+    
+    /**
+     * Adds hostcode additions for header. These can come from internal sources like the serialization, 
+     * but also from the model via hostcode pragmas.
+     */
+    protected def void hostcodeInnerClassAdditions(StringBuilder sb) {
+        val hostcodePragmas = SCGraphs.getStringPragmas(JavaCodeGeneratorModule.HOSTCODE_JAVA_INNER)
+        for (pragma : hostcodePragmas) {
+            sb.append(pragma.values.head + "\n")
+        }
+        val hostcodeAnnotations = scg.getStringAnnotations(JavaCodeGeneratorModule.HOSTCODE_JAVA_INNER)
+        for (anno : hostcodeAnnotations) {
+            sb.append(anno.values.head + "\n")
+        }
+        if (hostcodePragmas.size > 0 || hostcodeAnnotations.size > 0) {
+            sb.append("\n")
+        }
+    }
 }
