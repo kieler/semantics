@@ -3091,15 +3091,17 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             // TODO: pointer WIP
             var Map<String, ValuedObject> statePointers = getStateVarPointers(funcState)
             // update pointer map if target is a pointer
-            if (binExpr.getOperand1 instanceof IASTUnaryExpression) {
+            if (binExpr.getOperand1 instanceof IASTIdExpression 
+                && statePointers.containsKey((binExpr.getOperand1 as IASTIdExpression).getName.toString)
+            ) {
                 statePointers.put(targetAndIndex.target.name.split(ssaNameSeperator).get(0), null)
-                // if source is "&exp" update pointer ref to the corresponding vo
-                if (source instanceof OperatorExpression && 
-                    (source as OperatorExpression).operator.literal.equals(addressOp)
-                ){
-                    statePointers.put(targetAndIndex.target.name.split(ssaNameSeperator).get(0), 
-                        ((source as OperatorExpression).subExpressions.get(0) as ValuedObjectReference).valuedObject)
-                }
+            }
+            // if source is "&exp" update pointer ref to the corresponding vo
+            if (source instanceof OperatorExpression && 
+                (source as OperatorExpression).operator.literal.equals(addressOp)
+            ){
+                statePointers.put(targetAndIndex.target.name.split(ssaNameSeperator).get(0), 
+                    ((source as OperatorExpression).subExpressions.get(0) as ValuedObjectReference).valuedObject)
             }
 
             if (!serializable) {
