@@ -14,8 +14,10 @@ package de.cau.cs.kieler.scg.processors
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.kexpressions.MethodDeclaration
 import de.cau.cs.kieler.kexpressions.ParameterAccessType
 import de.cau.cs.kieler.kexpressions.ReferenceCall
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
@@ -26,11 +28,11 @@ import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.SCGraphs
+import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import java.util.List
-import de.cau.cs.kieler.scg.ScgFactory
-import de.cau.cs.kieler.kexpressions.VariableDeclaration
-import de.cau.cs.kieler.kexpressions.MethodDeclaration
+import de.cau.cs.kieler.core.properties.IProperty
+import de.cau.cs.kieler.core.properties.Property
 
 /**
  * @author glu
@@ -50,6 +52,9 @@ class ReferenceCallProcessor extends InplaceProcessor<SCGraphs> implements Trace
     public static val REF_CALL_CPOUT_METHOD_NAME = "copy_outputs"
     public static val REF_CALL_TERM_METHOD_NAME = "get_term"
     public static val REF_CALL_TAG_ANNOTATION = "Module"
+
+    public static val IProperty<Boolean> JAVA_CLASS_NAME = new Property<Boolean>(
+        "de.cau.cs.kieler.scg.processors.referenceCall.javaClassNames", false)
 
     override getId() {
         "de.cau.cs.kieler.scg.processors.referenceCall"
@@ -81,15 +86,21 @@ class ReferenceCallProcessor extends InplaceProcessor<SCGraphs> implements Trace
                 val decl = cont as ClassDeclaration
                 if (ref.subReference.valuedObject.name == REF_CALL_TICK_METHOD_NAME ||
                     ref.subReference.valuedObject.name == REF_CALL_RESET_METHOD_NAME) {
-                    (ref.eContainer as Assignment).expression = createFunctionCall => [
-                        functionName = ref.subReference.valuedObject.name + decl.name
-                        it.parameters.add(createParameter => [
-                            it.accessType = ParameterAccessType::CALL_BY_REFERENCE
-                            it.expression = (createValuedObject => [
-                                name = ref.valuedObject.name
-                            ]).reference
-                        ])
-                    ]
+                    if (!environment.getProperty(JAVA_CLASS_NAME)) {
+                        (ref.eContainer as Assignment).expression = createFunctionCall => [
+                            functionName = ref.subReference.valuedObject.name + decl.name
+                            it.parameters.add(createParameter => [
+                                it.accessType = ParameterAccessType::CALL_BY_REFERENCE
+                                it.expression = (createValuedObject => [
+                                    name = ref.valuedObject.name
+                                ]).reference
+                            ])
+                        ]
+                    } else {
+                        ref.subReference.valuedObject => [
+                            name = name + decl.name
+                        ]
+                    }
                 } else if (ref.subReference.valuedObject.name == REF_CALL_CPIN_METHOD_NAME ||
                     ref.subReference.valuedObject.name == REF_CALL_CPOUT_METHOD_NAME) {
                     val originalAsmt = ref.eContainer as Assignment
@@ -123,7 +134,7 @@ class ReferenceCallProcessor extends InplaceProcessor<SCGraphs> implements Trace
                     scg.nodes.remove(originalAsmt)
                 } else {
                     environment.warnings.add(
-                        "Unknown method call" + ref.subReference.valuedObject.name + "in module stub state"
+                        "Unknown method call " + ref.subReference.valuedObject.name + " in module stub state"
                     )
                 }
             }
@@ -140,8 +151,9 @@ class ReferenceCallProcessor extends InplaceProcessor<SCGraphs> implements Trace
                 VariableDeclaration).map[valuedObjects].flatten.findFirst[name == "_TERM"].reference
             cond.condition = instance.reference => [subReference = subref]
         ]
-
-        moduleClasses.forEach[name = "TickData" + name]
+        if (!environment.getProperty(JAVA_CLASS_NAME)) {
+            moduleClasses.forEach[name = "TickData" + name]
+        }
     }
 
     protected def List<ClassDeclaration> getModuleClasses(SCGraph scg) {
