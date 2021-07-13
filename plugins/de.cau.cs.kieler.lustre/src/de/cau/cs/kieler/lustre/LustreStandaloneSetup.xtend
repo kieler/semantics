@@ -16,7 +16,6 @@ import com.google.inject.Injector
 import de.cau.cs.kieler.core.services.KielerLanguage
 import de.cau.cs.kieler.lustre.lustre.LustrePackage
 import de.cau.cs.kieler.lustre.lustre.LustreProgram
-import de.cau.cs.kieler.lustre.scade.scade.ScadePackage
 
 /**
  * Initialization support for running Xtext languages without Equinox extension registry.

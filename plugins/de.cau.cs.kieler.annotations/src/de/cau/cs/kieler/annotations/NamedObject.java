@@ -13,7 +13,6 @@
  */
 package de.cau.cs.kieler.annotations;
 
-import org.eclipse.emf.ecore.EObject;
 
 
 /**

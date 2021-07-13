@@ -13,16 +13,13 @@
  */
 package de.cau.cs.kieler.scg.klighd
 
-import de.cau.cs.kieler.kexpressions.keffects.Dependency
-import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.scg.klighd.actions.NodePriorityActions
 import de.cau.cs.kieler.scg.klighd.actions.OptNodePrioActions
 import de.cau.cs.kieler.scg.klighd.actions.PrioStatementsActions
 import de.cau.cs.kieler.scg.klighd.actions.SCCActions
 import de.cau.cs.kieler.scg.klighd.actions.ThreadPriorityActions
-import org.eclipse.elk.graph.properties.Property
 
-import static extension de.cau.cs.kieler.klighd.SynthesisOption.*
+import static de.cau.cs.kieler.klighd.SynthesisOption.*
 
 /** 
  * @author als

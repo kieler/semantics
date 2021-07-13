@@ -10,10 +10,9 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.simulation.ui.synthesis
+package de.cau.cs.kieler.simulation.ide.synthesis
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.kicool.ui.KiCoolUiModule
 import de.cau.cs.kieler.klighd.ide.model.MessageModel
 import de.cau.cs.kieler.klighd.ide.syntheses.MessageModelSynthesis
 import de.cau.cs.kieler.klighd.kgraph.KNode
@@ -24,8 +23,6 @@ import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import de.cau.cs.kieler.simulation.SimulationContext
-import de.cau.cs.kieler.simulation.ui.synthesis.action.AddCoSimulationAction
-import de.cau.cs.kieler.simulation.ui.synthesis.action.StartSimulationAction
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 
@@ -47,26 +44,29 @@ class SimulationContextSynthesis extends AbstractDiagramSynthesis<SimulationCont
 
     // -------------------------------------------------------------------------
     // Constants
-    public static val String ID = "de.cau.cs.kieler.simulation.ui.synthesis.SimulationContext";
+    public static val String ID = "de.cau.cs.kieler.simulation.ide.synthesis.SimulationContext";
+    public static val String ICON_PLUGIN_ID = "de.cau.cs.kieler.simulation.ide";
+    public static val String StartSimulationAction_ID = "de.cau.cs.kieler.simulation.ui.synthesis.action.StartSimulationAction";
+    public static val String AddCoSimulationAction_ID = "de.cau.cs.kieler.simulation.ui.synthesis.action.AddCoSimulationAction";
 
     // -------------------------------------------------------------------------
     // Synthesis
     override KNode transform(SimulationContext model) {
         // create basic representation with message model synthesis
         val message = "[Co-simulation]"
-        val rootNode = (new MessageModel("Simulation", message, KiCoolUiModule.PLUGIN_ID, "icons/play-button.png", 150)).transform
+        val rootNode = (new MessageModel("Simulation", message, ICON_PLUGIN_ID, "icons/play-button.png", 150)).transform
         // Add action
         if (rootNode !== null && !rootNode.children.empty) {
             rootNode.eAllContents.filter(KNode).forEach[it.suppressSelectability]
             val icon = rootNode.eAllContents.filter(KImage).head
             if (icon !== null) {
-                icon.addSingleClickAction(StartSimulationAction.ID)
-                icon.addDoubleClickAction(StartSimulationAction.ID)
+                icon.addSingleClickAction(StartSimulationAction_ID)
+                icon.addDoubleClickAction(StartSimulationAction_ID)
             }
             val button = rootNode.eAllContents.filter(KText).filter[message.equals(text)].head
             button.foreground = Colors.BLUE
-            button.addSingleClickAction(AddCoSimulationAction.ID)
-            button.addDoubleClickAction(AddCoSimulationAction.ID)
+            button.addSingleClickAction(AddCoSimulationAction_ID)
+            button.addDoubleClickAction(AddCoSimulationAction_ID)
         }
         return rootNode;
     }

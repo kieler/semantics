@@ -190,6 +190,7 @@ class VariableStore implements IKiCoolCloneable {
                 }
             }
             
+            // type
             info.type = decl.type
             if (!decl.hostType.nullOrEmpty) {
                 info.typeName = decl.hostType

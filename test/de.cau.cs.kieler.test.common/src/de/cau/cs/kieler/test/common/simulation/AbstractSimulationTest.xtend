@@ -15,6 +15,7 @@ package de.cau.cs.kieler.test.common.simulation
 import com.google.common.io.Files
 import com.google.inject.Injector
 import de.cau.cs.kieler.core.Platform
+import de.cau.cs.kieler.core.properties.IPropertyHolder
 import de.cau.cs.kieler.kicool.compilation.CompilationContext
 import de.cau.cs.kieler.kicool.compilation.Compile
 import de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure
@@ -31,8 +32,6 @@ import org.eclipse.emf.ecore.EObject
 import org.junit.runner.RunWith
 
 import static org.junit.Assert.*
-import de.cau.cs.kieler.core.properties.MapPropertyHolder
-import de.cau.cs.kieler.core.properties.IPropertyHolder
 
 /**
  * @author aas, als

@@ -67,6 +67,7 @@ class SCTXHighlighting implements IHighlighting {
         "nondeterministic",
         "none",
         "null",
+        "ode",
         "once",
         "output",
         "override",

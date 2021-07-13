@@ -28,12 +28,12 @@ import de.cau.cs.kieler.simulation.events.SimulationEvent
 import de.cau.cs.kieler.simulation.ide.CentralSimulation
 import de.cau.cs.kieler.simulation.ide.server.SimulationServer
 import de.cau.cs.kieler.simulation.ui.SimulationUI
-import java.io.File
+import java.io.ByteArrayOutputStream
 import java.net.URL
 import java.nio.charset.StandardCharsets
-import java.nio.file.Files
 import org.eclipse.core.runtime.IProgressMonitor
 import org.eclipse.core.runtime.Status
+import org.eclipse.emf.common.util.URI
 import org.eclipse.jface.action.Action
 import org.eclipse.jface.action.IAction
 import org.eclipse.jface.resource.JFaceResources
@@ -49,14 +49,11 @@ import org.eclipse.swt.widgets.Composite
 import org.eclipse.swt.widgets.Label
 import org.eclipse.swt.widgets.Text
 import org.eclipse.ui.IWorkbenchPart
-import org.eclipse.ui.internal.browser.WebBrowserUIPlugin
+import org.eclipse.ui.PlatformUI
 import org.eclipse.ui.internal.browser.WebBrowserUtil
 import org.eclipse.ui.part.ViewPart
 import org.eclipse.ui.progress.UIJob
 import org.eclipse.xtend.lib.annotations.Accessors
-import org.eclipse.ui.PlatformUI
-import org.eclipse.emf.common.util.URI
-import java.io.ByteArrayOutputStream
 
 /**
  * The KiVis View.
@@ -128,8 +125,6 @@ class KiVisDataView extends ViewPart implements ISimulationListener {
      */
     static class ActionIndicatorFunction extends BrowserFunction {
         
-        val parser = new JsonParser
-
         new(Browser browser) {
             super(browser, KiVisConstants.ACTION_SETTER_CALLBACK);
         }
@@ -138,7 +133,7 @@ class KiVisDataView extends ViewPart implements ISimulationListener {
             val variable = if(arguments.length >= 1) arguments.get(0)
             val JsonElement value = if(arguments.length >= 2) {
                 try {
-                    parser.parse(arguments.get(1) as String)
+                    JsonParser.parseString(arguments.get(1) as String)
                 } catch (Exception e) {
                     JsonNull.INSTANCE
                 }

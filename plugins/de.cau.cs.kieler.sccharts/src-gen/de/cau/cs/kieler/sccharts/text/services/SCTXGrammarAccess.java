@@ -1938,15 +1938,16 @@ public class SCTXGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		private final RuleCall cExitActionParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
 		private final RuleCall cSuspendActionParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
 		private final RuleCall cPeriodActionParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
+		private final RuleCall cOdeActionParserRuleCall_5 = (RuleCall)cAlternatives.eContents().get(5);
 		
 		//// -------------- //
 		////  Action Rules  //
 		//// -------------- //
 		//LocalAction returns sccharts::LocalAction:
-		//    EntryAction | DuringAction | ExitAction | SuspendAction | PeriodAction;
+		//    EntryAction | DuringAction | ExitAction | SuspendAction | PeriodAction | OdeAction;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//EntryAction | DuringAction | ExitAction | SuspendAction | PeriodAction
+		//EntryAction | DuringAction | ExitAction | SuspendAction | PeriodAction | OdeAction
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
 		//EntryAction
@@ -1963,6 +1964,9 @@ public class SCTXGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		
 		//PeriodAction
 		public RuleCall getPeriodActionParserRuleCall_4() { return cPeriodActionParserRuleCall_4; }
+		
+		//OdeAction
+		public RuleCall getOdeActionParserRuleCall_5() { return cOdeActionParserRuleCall_5; }
 	}
 	public class EntryActionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.sccharts.text.SCTX.EntryAction");
@@ -2510,6 +2514,63 @@ public class SCTXGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		
 		//STRING
 		public RuleCall getLabelSTRINGTerminalRuleCall_5_1_0() { return cLabelSTRINGTerminalRuleCall_5_1_0; }
+	}
+	public class OdeActionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.sccharts.text.SCTX.OdeAction");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cOdeActionAction_0 = (Action)cGroup.eContents().get(0);
+		private final Assignment cAnnotationsAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cAnnotationsRestrictedTypeAnnotationParserRuleCall_1_0 = (RuleCall)cAnnotationsAssignment_1.eContents().get(0);
+		private final Keyword cOdeKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Assignment cEffectsAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cEffectsEffectParserRuleCall_3_0 = (RuleCall)cEffectsAssignment_3.eContents().get(0);
+		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
+		private final Keyword cLabelKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
+		private final Assignment cLabelAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
+		private final RuleCall cLabelSTRINGTerminalRuleCall_4_1_0 = (RuleCall)cLabelAssignment_4_1.eContents().get(0);
+		
+		//OdeAction returns sccharts::OdeAction:
+		//    {sccharts::OdeAction}
+		//    annotations+=RestrictedTypeAnnotation*
+		//    'ode' effects+=Effect
+		//    ('label' label=STRING)?;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//{sccharts::OdeAction}
+		//annotations+=RestrictedTypeAnnotation*
+		//'ode' effects+=Effect
+		//('label' label=STRING)?
+		public Group getGroup() { return cGroup; }
+		
+		//{sccharts::OdeAction}
+		public Action getOdeActionAction_0() { return cOdeActionAction_0; }
+		
+		//annotations+=RestrictedTypeAnnotation*
+		public Assignment getAnnotationsAssignment_1() { return cAnnotationsAssignment_1; }
+		
+		//RestrictedTypeAnnotation
+		public RuleCall getAnnotationsRestrictedTypeAnnotationParserRuleCall_1_0() { return cAnnotationsRestrictedTypeAnnotationParserRuleCall_1_0; }
+		
+		//'ode'
+		public Keyword getOdeKeyword_2() { return cOdeKeyword_2; }
+		
+		//effects+=Effect
+		public Assignment getEffectsAssignment_3() { return cEffectsAssignment_3; }
+		
+		//Effect
+		public RuleCall getEffectsEffectParserRuleCall_3_0() { return cEffectsEffectParserRuleCall_3_0; }
+		
+		//('label' label=STRING)?
+		public Group getGroup_4() { return cGroup_4; }
+		
+		//'label'
+		public Keyword getLabelKeyword_4_0() { return cLabelKeyword_4_0; }
+		
+		//label=STRING
+		public Assignment getLabelAssignment_4_1() { return cLabelAssignment_4_1; }
+		
+		//STRING
+		public RuleCall getLabelSTRINGTerminalRuleCall_4_1_0() { return cLabelSTRINGTerminalRuleCall_4_1_0; }
 	}
 	public class DeclarationElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.sccharts.text.SCTX.Declaration");
@@ -3884,6 +3945,7 @@ public class SCTXGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 	private final ExitActionElements pExitAction;
 	private final SuspendActionElements pSuspendAction;
 	private final PeriodActionElements pPeriodAction;
+	private final OdeActionElements pOdeAction;
 	private final DeclarationElements pDeclaration;
 	private final StatementElements pStatement;
 	private final EffectElements pEffect;
@@ -3953,6 +4015,7 @@ public class SCTXGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		this.pExitAction = new ExitActionElements();
 		this.pSuspendAction = new SuspendActionElements();
 		this.pPeriodAction = new PeriodActionElements();
+		this.pOdeAction = new OdeActionElements();
 		this.pDeclaration = new DeclarationElements();
 		this.pStatement = new StatementElements();
 		this.pEffect = new EffectElements();
@@ -4295,7 +4358,7 @@ public class SCTXGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 	////  Action Rules  //
 	//// -------------- //
 	//LocalAction returns sccharts::LocalAction:
-	//    EntryAction | DuringAction | ExitAction | SuspendAction | PeriodAction;
+	//    EntryAction | DuringAction | ExitAction | SuspendAction | PeriodAction | OdeAction;
 	public LocalActionElements getLocalActionAccess() {
 		return pLocalAction;
 	}
@@ -4370,6 +4433,19 @@ public class SCTXGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 	
 	public ParserRule getPeriodActionRule() {
 		return getPeriodActionAccess().getRule();
+	}
+	
+	//OdeAction returns sccharts::OdeAction:
+	//    {sccharts::OdeAction}
+	//    annotations+=RestrictedTypeAnnotation*
+	//    'ode' effects+=Effect
+	//    ('label' label=STRING)?;
+	public OdeActionElements getOdeActionAccess() {
+		return pOdeAction;
+	}
+	
+	public ParserRule getOdeActionRule() {
+		return getOdeActionAccess().getRule();
 	}
 	
 	//// ----- //

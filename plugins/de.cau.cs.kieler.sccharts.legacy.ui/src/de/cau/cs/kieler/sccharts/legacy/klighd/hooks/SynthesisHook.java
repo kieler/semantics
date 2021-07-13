@@ -28,11 +28,12 @@ import de.cau.cs.kieler.klighd.kgraph.KEdge;
 import de.cau.cs.kieler.klighd.kgraph.KGraphElement;
 import de.cau.cs.kieler.klighd.kgraph.KNode;
 import de.cau.cs.kieler.klighd.krendering.KRendering;
+import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis;
+import de.cau.cs.kieler.sccharts.legacy.klighd.synthesis.SCChartsSynthesis;
 import de.cau.cs.kieler.sccharts.legacy.sccharts.Region;
 import de.cau.cs.kieler.sccharts.legacy.sccharts.Scope;
 import de.cau.cs.kieler.sccharts.legacy.sccharts.State;
 import de.cau.cs.kieler.sccharts.legacy.sccharts.Transition;
-import de.cau.cs.kieler.sccharts.legacy.klighd.synthesis.SCChartsSynthesis;
 
 /**
  * This class allows hooking into the {@link SCChartsSynthesis}. Before and after each main
@@ -47,7 +48,7 @@ import de.cau.cs.kieler.sccharts.legacy.klighd.synthesis.SCChartsSynthesis;
 public abstract class SynthesisHook {
 
     @Inject
-    private SCChartsSynthesis parent;
+    private AbstractDiagramSynthesis<?> parent;
 
     /**
      * The {@link SynthesisOption} this hook contributes to the synthesis.

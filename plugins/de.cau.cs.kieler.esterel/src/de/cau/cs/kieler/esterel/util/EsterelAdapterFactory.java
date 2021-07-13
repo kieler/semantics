@@ -18,7 +18,6 @@ import de.cau.cs.kieler.kexpressions.ValuedObjectReference;
 
 import de.cau.cs.kieler.kexpressions.kext.DeclarationScope;
 
-import de.cau.cs.kieler.scl.Module;
 import de.cau.cs.kieler.scl.Scope;
 import de.cau.cs.kieler.scl.SequencePart;
 import de.cau.cs.kieler.scl.Statement;

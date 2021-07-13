@@ -2850,6 +2850,18 @@ ruleLocalAction returns [EObject current=null]
 			$current = $this_PeriodAction_4.current;
 			afterParserOrEnumRuleCall();
 		}
+		    |
+		{
+			/* */
+		}
+		{
+			newCompositeNode(grammarAccess.getLocalActionAccess().getOdeActionParserRuleCall_5());
+		}
+		this_OdeAction_5=ruleOdeAction
+		{
+			$current = $this_OdeAction_5.current;
+			afterParserOrEnumRuleCall();
+		}
 	)
 ;
 
@@ -3735,6 +3747,101 @@ rulePeriodAction returns [EObject current=null]
 							$current,
 							"label",
 							lv_label_6_0,
+							"de.cau.cs.kieler.annotations.Annotations.STRING");
+					}
+				)
+			)
+		)?
+	)
+;
+
+// Entry rule entryRuleOdeAction
+entryRuleOdeAction returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getOdeActionRule()); }
+	iv_ruleOdeAction=ruleOdeAction
+	{ $current=$iv_ruleOdeAction.current; }
+	EOF;
+
+// Rule OdeAction
+ruleOdeAction returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		(
+			{
+				/* */
+			}
+			{
+				$current = forceCreateModelElement(
+					grammarAccess.getOdeActionAccess().getOdeActionAction_0(),
+					$current);
+			}
+		)
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getOdeActionAccess().getAnnotationsRestrictedTypeAnnotationParserRuleCall_1_0());
+				}
+				lv_annotations_1_0=ruleRestrictedTypeAnnotation
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getOdeActionRule());
+					}
+					add(
+						$current,
+						"annotations",
+						lv_annotations_1_0,
+						"de.cau.cs.kieler.annotations.Annotations.RestrictedTypeAnnotation");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)*
+		otherlv_2='ode'
+		{
+			newLeafNode(otherlv_2, grammarAccess.getOdeActionAccess().getOdeKeyword_2());
+		}
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getOdeActionAccess().getEffectsEffectParserRuleCall_3_0());
+				}
+				lv_effects_3_0=ruleEffect
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getOdeActionRule());
+					}
+					add(
+						$current,
+						"effects",
+						lv_effects_3_0,
+						"de.cau.cs.kieler.sccharts.text.SCTX.Effect");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)
+		(
+			otherlv_4='label'
+			{
+				newLeafNode(otherlv_4, grammarAccess.getOdeActionAccess().getLabelKeyword_4_0());
+			}
+			(
+				(
+					lv_label_5_0=RULE_STRING
+					{
+						newLeafNode(lv_label_5_0, grammarAccess.getOdeActionAccess().getLabelSTRINGTerminalRuleCall_4_1_0());
+					}
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getOdeActionRule());
+						}
+						setWithLastConsumed(
+							$current,
+							"label",
+							lv_label_5_0,
 							"de.cau.cs.kieler.annotations.Annotations.STRING");
 					}
 				)

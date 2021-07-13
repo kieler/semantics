@@ -12,24 +12,21 @@
  */
 package de.cau.cs.kieler.esterel.processors.transformators.incremental
 
-import java.util.List
-import java.util.LinkedList
 import com.google.inject.Inject
-import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
-import de.cau.cs.kieler.esterel.extensions.EsterelTransformationExtensions
-import de.cau.cs.kieler.esterel.EsterelProgram
 import de.cau.cs.kieler.esterel.Abort
 import de.cau.cs.kieler.esterel.EsterelParallel
+import de.cau.cs.kieler.esterel.extensions.EsterelTransformationExtensions
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObject
-import de.cau.cs.kieler.scl.Label
 import de.cau.cs.kieler.scl.Conditional
+import de.cau.cs.kieler.scl.Label
+import de.cau.cs.kieler.scl.Parallel
 import de.cau.cs.kieler.scl.Pause
 import de.cau.cs.kieler.scl.Statement
-import de.cau.cs.kieler.scl.Parallel
+import java.util.LinkedList
+import java.util.List
+
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.kicool.compilation.EObjectReferencePropertyData
-import org.eclipse.emf.ecore.EObject
 
 /**
  * @author mrb

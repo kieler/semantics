@@ -16,7 +16,6 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.esterel.EsterelProgram
 import java.io.IOException
 import org.eclipse.emf.ecore.EObject
-import org.eclipse.emf.ecore.util.EcoreUtil
 import org.eclipse.xtext.resource.SaveOptions
 import org.eclipse.xtext.serializer.impl.Serializer
 

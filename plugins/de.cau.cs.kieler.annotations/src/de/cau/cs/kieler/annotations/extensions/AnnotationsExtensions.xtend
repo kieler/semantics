@@ -4,15 +4,15 @@ import de.cau.cs.kieler.annotations.Annotatable
 import de.cau.cs.kieler.annotations.Annotation
 import de.cau.cs.kieler.annotations.AnnotationsFactory
 import de.cau.cs.kieler.annotations.CommentAnnotation
+import de.cau.cs.kieler.annotations.IntAnnotation
 import de.cau.cs.kieler.annotations.StringAnnotation
+import de.cau.cs.kieler.annotations.TagAnnotation
 import de.cau.cs.kieler.annotations.TypedStringAnnotation
-import java.util.Set
+import java.util.Collection
+import java.util.List
+import org.eclipse.emf.ecore.EObject
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import org.eclipse.emf.ecore.EObject
-import de.cau.cs.kieler.annotations.TagAnnotation
-import de.cau.cs.kieler.annotations.IntAnnotation
-import java.util.List
 
 /**
  * Annotations extensions
@@ -36,6 +36,10 @@ class AnnotationsExtensions {
             it.name !== null && it.name.equals(name)
         ]
     } 
+    
+    def Iterable<StringAnnotation> getStringAnnotations(Annotatable annotatable, String name) {
+        return annotatable.getAnnotations(name).filter(StringAnnotation)
+    }
     
 	def String getStringAnnotationValue(Annotatable annotatable, String name) {
 		val annotation = annotatable.getAnnotation(name)
@@ -98,8 +102,8 @@ class AnnotationsExtensions {
 	    ]
 	}
 
-    def copyAnnotations(Annotatable source, Annotatable target, Set<String> filter) {
-        source.annotations.filter[ filter.contains(it.name) ].forEach[
+    def copyAnnotations(Annotatable source, Annotatable target, Collection<String> blacklist) {
+        source.annotations.filter[ !blacklist.contains(it.name) ].forEach[
             target.annotations += it.copy
         ]
     }

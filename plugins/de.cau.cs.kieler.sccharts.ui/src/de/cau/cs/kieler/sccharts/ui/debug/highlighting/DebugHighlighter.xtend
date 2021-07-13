@@ -12,23 +12,22 @@
  */
 package de.cau.cs.kieler.sccharts.ui.debug.highlighting
 
-import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.Transition
-import de.cau.cs.kieler.klighd.krendering.KRenderingFactory
-import de.cau.cs.kieler.simulation.ide.visualization.Highlighting
-import de.cau.cs.kieler.sccharts.ui.debug.view.DebugDiagramView
-import de.cau.cs.kieler.klighd.krendering.Colors
-import com.google.inject.Inject
-import de.cau.cs.kieler.klighd.krendering.KEllipse
 import com.google.inject.Guice
+import com.google.inject.Inject
+import de.cau.cs.kieler.klighd.kgraph.KNode
+import de.cau.cs.kieler.klighd.krendering.Colors
+import de.cau.cs.kieler.klighd.krendering.KContainerRendering
+import de.cau.cs.kieler.klighd.krendering.KEllipse
+import de.cau.cs.kieler.klighd.krendering.KForeground
+import de.cau.cs.kieler.klighd.krendering.KRectangle
+import de.cau.cs.kieler.klighd.krendering.KRenderingFactory
 import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
-import org.eclipse.emf.ecore.util.EcoreUtil
+import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.sccharts.Transition
+import de.cau.cs.kieler.sccharts.ui.debug.view.DebugDiagramView
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.StateStyles
-import de.cau.cs.kieler.klighd.kgraph.KNode
-import de.cau.cs.kieler.klighd.krendering.KContainerRendering
-import de.cau.cs.kieler.klighd.krendering.KRectangle
-import de.cau.cs.kieler.klighd.krendering.KForeground
+import org.eclipse.emf.ecore.util.EcoreUtil
 
 /**
  * This class is responsible for processing the highlightings for a set model.

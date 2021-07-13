@@ -12,10 +12,9 @@
  */
 package de.cau.cs.kieler.scg.processors.optimizer
 
-import java.util.HashMap
 import de.cau.cs.kieler.kexpressions.ValuedObject
+import java.util.HashMap
 import java.util.Stack
-import de.cau.cs.kieler.kexpressions.Expression
 
 /**
  * Class for handling valued object replacements in referenced SCCharts and bindings.

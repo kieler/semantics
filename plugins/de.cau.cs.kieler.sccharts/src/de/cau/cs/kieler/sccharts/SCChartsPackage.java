@@ -2515,6 +2515,115 @@ public interface SCChartsPackage extends EPackage {
     int BASE_STATE_REFERENCE_FEATURE_COUNT = 3;
 
     /**
+     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.OdeActionImpl <em>Ode Action</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.sccharts.impl.OdeActionImpl
+     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getOdeAction()
+     * @generated
+     */
+    int ODE_ACTION = 20;
+
+    /**
+     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ODE_ACTION__ANNOTATIONS = LOCAL_ACTION__ANNOTATIONS;
+
+    /**
+     * The feature id for the '<em><b>Outgoing Links</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ODE_ACTION__OUTGOING_LINKS = LOCAL_ACTION__OUTGOING_LINKS;
+
+    /**
+     * The feature id for the '<em><b>Incoming Links</b></em>' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ODE_ACTION__INCOMING_LINKS = LOCAL_ACTION__INCOMING_LINKS;
+
+    /**
+     * The feature id for the '<em><b>Effects</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ODE_ACTION__EFFECTS = LOCAL_ACTION__EFFECTS;
+
+    /**
+     * The feature id for the '<em><b>Trigger</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ODE_ACTION__TRIGGER = LOCAL_ACTION__TRIGGER;
+
+    /**
+     * The feature id for the '<em><b>Trigger Delay</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ODE_ACTION__TRIGGER_DELAY = LOCAL_ACTION__TRIGGER_DELAY;
+
+    /**
+     * The feature id for the '<em><b>Trigger Probability</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ODE_ACTION__TRIGGER_PROBABILITY = LOCAL_ACTION__TRIGGER_PROBABILITY;
+
+    /**
+     * The feature id for the '<em><b>Label</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ODE_ACTION__LABEL = LOCAL_ACTION__LABEL;
+
+    /**
+     * The feature id for the '<em><b>Delay</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ODE_ACTION__DELAY = LOCAL_ACTION__DELAY;
+
+    /**
+     * The feature id for the '<em><b>Nondeterministic</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ODE_ACTION__NONDETERMINISTIC = LOCAL_ACTION__NONDETERMINISTIC;
+
+    /**
+     * The number of structural features of the '<em>Ode Action</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ODE_ACTION_FEATURE_COUNT = LOCAL_ACTION_FEATURE_COUNT + 0;
+
+    /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.PreemptionType <em>Preemption Type</em>}' enum.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2522,7 +2631,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getPreemptionType()
      * @generated
      */
-    int PREEMPTION_TYPE = 20;
+    int PREEMPTION_TYPE = 21;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.HistoryType <em>History Type</em>}' enum.
@@ -2532,7 +2641,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getHistoryType()
      * @generated
      */
-    int HISTORY_TYPE = 21;
+    int HISTORY_TYPE = 22;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.DelayType <em>Delay Type</em>}' enum.
@@ -2542,7 +2651,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getDelayType()
      * @generated
      */
-    int DELAY_TYPE = 22;
+    int DELAY_TYPE = 23;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.DeferredType <em>Deferred Type</em>}' enum.
@@ -2552,7 +2661,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getDeferredType()
      * @generated
      */
-    int DEFERRED_TYPE = 23;
+    int DEFERRED_TYPE = 24;
 
 
     /**
@@ -3295,6 +3404,16 @@ public interface SCChartsPackage extends EPackage {
     EReference getBaseStateReference_Parameters();
 
     /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.OdeAction <em>Ode Action</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Ode Action</em>'.
+     * @see de.cau.cs.kieler.sccharts.OdeAction
+     * @generated
+     */
+    EClass getOdeAction();
+
+    /**
      * Returns the meta object for enum '{@link de.cau.cs.kieler.sccharts.PreemptionType <em>Preemption Type</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -3947,6 +4066,16 @@ public interface SCChartsPackage extends EPackage {
          * @generated
          */
         EReference BASE_STATE_REFERENCE__PARAMETERS = eINSTANCE.getBaseStateReference_Parameters();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.OdeActionImpl <em>Ode Action</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.sccharts.impl.OdeActionImpl
+         * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getOdeAction()
+         * @generated
+         */
+        EClass ODE_ACTION = eINSTANCE.getOdeAction();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.PreemptionType <em>Preemption Type</em>}' enum.

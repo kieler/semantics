@@ -4,12 +4,16 @@
 package de.cau.cs.kieler.scl.validation
 
 import com.google.inject.Inject
+import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
+import de.cau.cs.kieler.kexpressions.StaticAccessExpression
 import de.cau.cs.kieler.kexpressions.TextExpression
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
+import de.cau.cs.kieler.kexpressions.kext.extensions.KExtEnumExtensions
 import de.cau.cs.kieler.scl.Conditional
 import de.cau.cs.kieler.scl.Label
 import de.cau.cs.kieler.scl.MethodImplementationDeclaration
@@ -22,12 +26,6 @@ import de.cau.cs.kieler.scl.Statement
 import org.eclipse.xtext.Keyword
 import org.eclipse.xtext.validation.Check
 import org.eclipse.xtext.validation.CheckType
-import de.cau.cs.kieler.kexpressions.AccessModifier
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
-import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
-import de.cau.cs.kieler.kexpressions.kext.extensions.KExtEnumExtensions
-import de.cau.cs.kieler.kexpressions.OperatorExpression
-import de.cau.cs.kieler.kexpressions.StaticAccessExpression
 
 //import org.eclipse.xtext.validation.Check
 

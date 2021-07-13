@@ -14,16 +14,17 @@ package de.cau.cs.kieler.scg.processors.codegen.java
 
 import com.google.inject.Inject
 import com.google.inject.Injector
+import de.cau.cs.kieler.annotations.Nameable
+import de.cau.cs.kieler.annotations.StringPragma
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
+import de.cau.cs.kieler.annotations.registry.PragmaRegistry
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
 import de.cau.cs.kieler.scg.processors.codegen.c.CCodeGenerator
 import de.cau.cs.kieler.scg.processors.codegen.c.CCodeGeneratorModule
-import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
-import de.cau.cs.kieler.annotations.StringPragma
-import de.cau.cs.kieler.annotations.registry.PragmaRegistry
 
 import static de.cau.cs.kieler.kicool.compilation.codegen.AbstractCodeGenerator.*
 import static de.cau.cs.kieler.kicool.compilation.codegen.CodeGeneratorNames.*
-import de.cau.cs.kieler.annotations.Nameable
 
 /**
  * Root C Code Generator Module
@@ -38,6 +39,7 @@ import de.cau.cs.kieler.annotations.Nameable
 class JavaCodeGeneratorModule extends CCodeGeneratorModule {
     
     @Inject extension PragmaExtensions
+    @Inject extension AnnotationsExtensions
     @Inject extension JavaCodeSerializeHRExtensions
     
     @Inject Injector injector
@@ -113,7 +115,11 @@ class JavaCodeGeneratorModule extends CCodeGeneratorModule {
         for (pragma : hostcodePragmas) {
             sb.append(pragma.values.head + "\n")
         }
-        if (hostcodePragmas.size > 0 || includes.size > 0) {
+        val hostcodeAnnotations = scg.getStringAnnotations(HOSTCODE) + scg.getStringAnnotations(HOSTCODE_JAVA)
+        for (anno : hostcodeAnnotations) {
+            sb.append(anno.values.head + "\n")
+        }
+        if (hostcodePragmas.size > 0 || hostcodeAnnotations.size > 0 || includes.size > 0) {
             sb.append("\n")
         }
     }  
@@ -122,6 +128,10 @@ class JavaCodeGeneratorModule extends CCodeGeneratorModule {
         val packagePragma = SCGraphs.getStringPragmas(PACKAGE)
         if (packagePragma.size > 0) {
             sb.append("package ").append(packagePragma.head.values.head).append(";\n\n")
+        }
+        val packageAnnotations = scg.getStringAnnotations(PACKAGE)
+        if (packageAnnotations.size > 0) {
+            sb.append("package ").append(packageAnnotations.head.values.head).append(";\n\n")
         }
     }
 }
