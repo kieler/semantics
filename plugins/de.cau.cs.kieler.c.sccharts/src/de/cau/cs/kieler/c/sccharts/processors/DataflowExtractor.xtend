@@ -494,7 +494,8 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                     par.declarator instanceof IASTArrayDeclarator
                 val isPointer = par.declarator.pointerOperators !== null && !par.declarator.pointerOperators.isEmpty
                 if (isArray || isPointer) {
-                    val type = (outputDeclSpecifier as IASTSimpleDeclSpecifier).type.cdtTypeConversion
+                    val type = isArray ? (outputDeclSpecifier as IASTSimpleDeclSpecifier).type.cdtTypeConversion
+                        : (par.declSpecifier as IASTSimpleDeclSpecifier).type.cdtTypeConversion
                     // Determine parameter name
                     val varName = par.getDeclarator.getName.toString
                     val varList = stateVariables.get(varName)
