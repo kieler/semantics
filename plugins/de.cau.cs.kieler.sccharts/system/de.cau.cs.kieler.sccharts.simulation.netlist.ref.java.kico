@@ -1,0 +1,5 @@
+developer system de.cau.cs.kieler.sccharts.^simulation.netlist.references.java
+    label "Netlist-based Simulation (Java, No-TTS) References"
+
+system de.cau.cs.kieler.sccharts.netlist.references.java
+system de.cau.cs.kieler.^simulation.java
