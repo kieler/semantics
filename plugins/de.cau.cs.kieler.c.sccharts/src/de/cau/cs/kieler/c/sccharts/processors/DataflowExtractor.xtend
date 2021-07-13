@@ -3081,6 +3081,8 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 source = createValue(sourceExpr)
             } else if (sourceExpr instanceof IASTConditionalExpression) {
                 source = createKExpression(sourceExpr, funcState, dRegion)
+            } else if (sourceExpr instanceof IASTArraySubscriptExpression) {
+                source = createKExpression(sourceExpr, funcState, dRegion)
             }
 
             // Retrieve the assignment target
