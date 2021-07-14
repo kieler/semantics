@@ -5530,6 +5530,79 @@ ruleReferenceValuedObject returns [EObject current=null]
 	)
 ;
 
+// Entry rule entryRuleStaticAccessExpression
+entryRuleStaticAccessExpression returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getStaticAccessExpressionRule()); }
+	iv_ruleStaticAccessExpression=ruleStaticAccessExpression
+	{ $current=$iv_ruleStaticAccessExpression.current; }
+	EOF;
+
+// Rule StaticAccessExpression
+ruleStaticAccessExpression returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		otherlv_0='scchart'
+		{
+			newLeafNode(otherlv_0, grammarAccess.getStaticAccessExpressionAccess().getScchartKeyword_0());
+		}
+		otherlv_1='('
+		{
+			newLeafNode(otherlv_1, grammarAccess.getStaticAccessExpressionAccess().getLeftParenthesisKeyword_1());
+		}
+		(
+			(
+				{
+					/* */
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getStaticAccessExpressionRule());
+					}
+				}
+				{
+					newCompositeNode(grammarAccess.getStaticAccessExpressionAccess().getTargetNamedObjectCrossReference_2_0());
+				}
+				rulePrimeID
+				{
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)
+		otherlv_3=')'
+		{
+			newLeafNode(otherlv_3, grammarAccess.getStaticAccessExpressionAccess().getRightParenthesisKeyword_3());
+		}
+		otherlv_4='.'
+		{
+			newLeafNode(otherlv_4, grammarAccess.getStaticAccessExpressionAccess().getFullStopKeyword_4());
+		}
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getStaticAccessExpressionAccess().getSubReferenceValuedObjectReferenceParserRuleCall_5_0());
+				}
+				lv_subReference_5_0=ruleValuedObjectReference
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getStaticAccessExpressionRule());
+					}
+					set(
+						$current,
+						"subReference",
+						lv_subReference_5_0,
+						"de.cau.cs.kieler.kexpressions.KExpressions.ValuedObjectReference");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)
+	)
+;
+
 // Entry rule entryRuleModule
 entryRuleModule returns [EObject current=null]:
 	{ newCompositeNode(grammarAccess.getModuleRule()); }
@@ -16034,79 +16107,6 @@ ruleValuedObjectTestExpression returns [EObject current=null]
 			$current = $this_ValuedObjectReference_7.current;
 			afterParserOrEnumRuleCall();
 		}
-	)
-;
-
-// Entry rule entryRuleStaticAccessExpression
-entryRuleStaticAccessExpression returns [EObject current=null]:
-	{ newCompositeNode(grammarAccess.getStaticAccessExpressionRule()); }
-	iv_ruleStaticAccessExpression=ruleStaticAccessExpression
-	{ $current=$iv_ruleStaticAccessExpression.current; }
-	EOF;
-
-// Rule StaticAccessExpression
-ruleStaticAccessExpression returns [EObject current=null]
-@init {
-	enterRule();
-}
-@after {
-	leaveRule();
-}:
-	(
-		otherlv_0='static'
-		{
-			newLeafNode(otherlv_0, grammarAccess.getStaticAccessExpressionAccess().getStaticKeyword_0());
-		}
-		otherlv_1='('
-		{
-			newLeafNode(otherlv_1, grammarAccess.getStaticAccessExpressionAccess().getLeftParenthesisKeyword_1());
-		}
-		(
-			(
-				{
-					/* */
-				}
-				{
-					if ($current==null) {
-						$current = createModelElement(grammarAccess.getStaticAccessExpressionRule());
-					}
-				}
-				{
-					newCompositeNode(grammarAccess.getStaticAccessExpressionAccess().getTargetNamedObjectCrossReference_2_0());
-				}
-				rulePrimeID
-				{
-					afterParserOrEnumRuleCall();
-				}
-			)
-		)
-		otherlv_3=')'
-		{
-			newLeafNode(otherlv_3, grammarAccess.getStaticAccessExpressionAccess().getRightParenthesisKeyword_3());
-		}
-		otherlv_4='.'
-		{
-			newLeafNode(otherlv_4, grammarAccess.getStaticAccessExpressionAccess().getFullStopKeyword_4());
-		}
-		(
-			(
-				{
-					newCompositeNode(grammarAccess.getStaticAccessExpressionAccess().getSubReferenceValuedObjectReferenceParserRuleCall_5_0());
-				}
-				lv_subReference_5_0=ruleValuedObjectReference
-				{
-					if ($current==null) {
-						$current = createModelElementForParent(grammarAccess.getStaticAccessExpressionRule());
-					}
-					set(
-						$current,
-						"subReference",
-						lv_subReference_5_0,
-						"de.cau.cs.kieler.kexpressions.KExpressions.ValuedObjectReference");
-					afterParserOrEnumRuleCall();
-				}
-			)
-		)
 	)
 ;
 

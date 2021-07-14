@@ -245,6 +245,7 @@ public class SCTXParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getReferenceValuedObjectAccess().getGroup_4_0_2(), "rule__ReferenceValuedObject__Group_4_0_2__0");
 			builder.put(grammarAccess.getReferenceValuedObjectAccess().getGroup_5(), "rule__ReferenceValuedObject__Group_5__0");
 			builder.put(grammarAccess.getReferenceValuedObjectAccess().getGroup_6(), "rule__ReferenceValuedObject__Group_6__0");
+			builder.put(grammarAccess.getStaticAccessExpressionAccess().getGroup(), "rule__StaticAccessExpression__Group__0");
 			builder.put(grammarAccess.getSCLProgramAccess().getGroup(), "rule__SCLProgram__Group__0");
 			builder.put(grammarAccess.getModuleAccess().getGroup(), "rule__Module__Group__0");
 			builder.put(grammarAccess.getPauseAccess().getGroup(), "rule__Pause__Group__0");
@@ -483,7 +484,6 @@ public class SCTXParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getBoolScheduleExpressionAccess().getGroup_1(), "rule__BoolScheduleExpression__Group_1__0");
 			builder.put(grammarAccess.getValuedObjectTestExpressionAccess().getGroup_0(), "rule__ValuedObjectTestExpression__Group_0__0");
 			builder.put(grammarAccess.getValuedObjectTestExpressionAccess().getGroup_0_4(), "rule__ValuedObjectTestExpression__Group_0_4__0");
-			builder.put(grammarAccess.getStaticAccessExpressionAccess().getGroup(), "rule__StaticAccessExpression__Group__0");
 			builder.put(grammarAccess.getPrimeIDAccess().getGroup(), "rule__PrimeID__Group__0");
 			builder.put(grammarAccess.getValuedObjectReferenceAccess().getGroup(), "rule__ValuedObjectReference__Group__0");
 			builder.put(grammarAccess.getValuedObjectReferenceAccess().getGroup_1(), "rule__ValuedObjectReference__Group_1__0");
@@ -738,6 +738,8 @@ public class SCTXParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getReferenceValuedObjectAccess().getParametersAssignment_4_0_2_1(), "rule__ReferenceValuedObject__ParametersAssignment_4_0_2_1");
 			builder.put(grammarAccess.getReferenceValuedObjectAccess().getInitialValueAssignment_5_1(), "rule__ReferenceValuedObject__InitialValueAssignment_5_1");
 			builder.put(grammarAccess.getReferenceValuedObjectAccess().getLabelAssignment_6_1(), "rule__ReferenceValuedObject__LabelAssignment_6_1");
+			builder.put(grammarAccess.getStaticAccessExpressionAccess().getTargetAssignment_2(), "rule__StaticAccessExpression__TargetAssignment_2");
+			builder.put(grammarAccess.getStaticAccessExpressionAccess().getSubReferenceAssignment_5(), "rule__StaticAccessExpression__SubReferenceAssignment_5");
 			builder.put(grammarAccess.getSCLProgramAccess().getPragmasAssignment_0(), "rule__SCLProgram__PragmasAssignment_0");
 			builder.put(grammarAccess.getSCLProgramAccess().getModulesAssignment_1(), "rule__SCLProgram__ModulesAssignment_1");
 			builder.put(grammarAccess.getModuleAccess().getAnnotationsAssignment_0(), "rule__Module__AnnotationsAssignment_0");
@@ -1125,8 +1127,6 @@ public class SCTXParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getValuedObjectTestExpressionAccess().getOperatorAssignment_0_1(), "rule__ValuedObjectTestExpression__OperatorAssignment_0_1");
 			builder.put(grammarAccess.getValuedObjectTestExpressionAccess().getSubExpressionsAssignment_0_3(), "rule__ValuedObjectTestExpression__SubExpressionsAssignment_0_3");
 			builder.put(grammarAccess.getValuedObjectTestExpressionAccess().getSubExpressionsAssignment_0_4_1(), "rule__ValuedObjectTestExpression__SubExpressionsAssignment_0_4_1");
-			builder.put(grammarAccess.getStaticAccessExpressionAccess().getTargetAssignment_2(), "rule__StaticAccessExpression__TargetAssignment_2");
-			builder.put(grammarAccess.getStaticAccessExpressionAccess().getSubReferenceAssignment_5(), "rule__StaticAccessExpression__SubReferenceAssignment_5");
 			builder.put(grammarAccess.getValuedObjectReferenceAccess().getValuedObjectAssignment_0(), "rule__ValuedObjectReference__ValuedObjectAssignment_0");
 			builder.put(grammarAccess.getValuedObjectReferenceAccess().getIndicesAssignment_1_1(), "rule__ValuedObjectReference__IndicesAssignment_1_1");
 			builder.put(grammarAccess.getValuedObjectReferenceAccess().getSubReferenceAssignment_2_1(), "rule__ValuedObjectReference__SubReferenceAssignment_2_1");

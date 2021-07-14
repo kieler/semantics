@@ -2791,11 +2791,10 @@ public class InternalSCTXLexer extends Lexer {
         try {
             int _type = T__142;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalSCTX.g:136:8: ( 'static' )
-            // InternalSCTX.g:136:10: 'static'
+            // InternalSCTX.g:136:8: ( '\\'' )
+            // InternalSCTX.g:136:10: '\\''
             {
-            match("static"); 
-
+            match('\''); 
 
             }
 
@@ -2812,10 +2811,11 @@ public class InternalSCTXLexer extends Lexer {
         try {
             int _type = T__143;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalSCTX.g:137:8: ( '\\'' )
-            // InternalSCTX.g:137:10: '\\''
+            // InternalSCTX.g:137:8: ( 'random' )
+            // InternalSCTX.g:137:10: 'random'
             {
-            match('\''); 
+            match("random"); 
+
 
             }
 
@@ -2832,11 +2832,10 @@ public class InternalSCTXLexer extends Lexer {
         try {
             int _type = T__144;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalSCTX.g:138:8: ( 'random' )
-            // InternalSCTX.g:138:10: 'random'
+            // InternalSCTX.g:138:8: ( '_' )
+            // InternalSCTX.g:138:10: '_'
             {
-            match("random"); 
-
+            match('_'); 
 
             }
 
@@ -2853,10 +2852,11 @@ public class InternalSCTXLexer extends Lexer {
         try {
             int _type = T__145;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalSCTX.g:139:8: ( '_' )
-            // InternalSCTX.g:139:10: '_'
+            // InternalSCTX.g:139:8: ( 'null' )
+            // InternalSCTX.g:139:10: 'null'
             {
-            match('_'); 
+            match("null"); 
+
 
             }
 
@@ -2873,11 +2873,10 @@ public class InternalSCTXLexer extends Lexer {
         try {
             int _type = T__146;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalSCTX.g:140:8: ( 'null' )
-            // InternalSCTX.g:140:10: 'null'
+            // InternalSCTX.g:140:8: ( '#' )
+            // InternalSCTX.g:140:10: '#'
             {
-            match("null"); 
-
+            match('#'); 
 
             }
 
@@ -2894,10 +2893,10 @@ public class InternalSCTXLexer extends Lexer {
         try {
             int _type = T__147;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalSCTX.g:141:8: ( '#' )
-            // InternalSCTX.g:141:10: '#'
+            // InternalSCTX.g:141:8: ( '@' )
+            // InternalSCTX.g:141:10: '@'
             {
-            match('#'); 
+            match('@'); 
 
             }
 
@@ -2914,10 +2913,11 @@ public class InternalSCTXLexer extends Lexer {
         try {
             int _type = T__148;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalSCTX.g:142:8: ( '@' )
-            // InternalSCTX.g:142:10: '@'
+            // InternalSCTX.g:142:8: ( 'initial' )
+            // InternalSCTX.g:142:10: 'initial'
             {
-            match('@'); 
+            match("initial"); 
+
 
             }
 
@@ -2934,10 +2934,10 @@ public class InternalSCTXLexer extends Lexer {
         try {
             int _type = T__149;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalSCTX.g:143:8: ( 'initial' )
-            // InternalSCTX.g:143:10: 'initial'
+            // InternalSCTX.g:143:8: ( 'final' )
+            // InternalSCTX.g:143:10: 'final'
             {
-            match("initial"); 
+            match("final"); 
 
 
             }
@@ -2955,10 +2955,10 @@ public class InternalSCTXLexer extends Lexer {
         try {
             int _type = T__150;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalSCTX.g:144:8: ( 'final' )
-            // InternalSCTX.g:144:10: 'final'
+            // InternalSCTX.g:144:8: ( 'violation' )
+            // InternalSCTX.g:144:10: 'violation'
             {
-            match("final"); 
+            match("violation"); 
 
 
             }
@@ -2976,10 +2976,10 @@ public class InternalSCTXLexer extends Lexer {
         try {
             int _type = T__151;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalSCTX.g:145:8: ( 'violation' )
-            // InternalSCTX.g:145:10: 'violation'
+            // InternalSCTX.g:145:8: ( 'connector' )
+            // InternalSCTX.g:145:10: 'connector'
             {
-            match("violation"); 
+            match("connector"); 
 
 
             }
@@ -2997,10 +2997,10 @@ public class InternalSCTXLexer extends Lexer {
         try {
             int _type = T__152;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalSCTX.g:146:8: ( 'connector' )
-            // InternalSCTX.g:146:10: 'connector'
+            // InternalSCTX.g:146:8: ( 'super.' )
+            // InternalSCTX.g:146:10: 'super.'
             {
-            match("connector"); 
+            match("super."); 
 
 
             }
@@ -3018,10 +3018,10 @@ public class InternalSCTXLexer extends Lexer {
         try {
             int _type = T__153;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalSCTX.g:147:8: ( 'super.' )
-            // InternalSCTX.g:147:10: 'super.'
+            // InternalSCTX.g:147:8: ( 'nondeterministic' )
+            // InternalSCTX.g:147:10: 'nondeterministic'
             {
-            match("super."); 
+            match("nondeterministic"); 
 
 
             }
@@ -3039,10 +3039,10 @@ public class InternalSCTXLexer extends Lexer {
         try {
             int _type = T__154;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalSCTX.g:148:8: ( 'nondeterministic' )
-            // InternalSCTX.g:148:10: 'nondeterministic'
+            // InternalSCTX.g:148:8: ( 'override' )
+            // InternalSCTX.g:148:10: 'override'
             {
-            match("nondeterministic"); 
+            match("override"); 
 
 
             }
@@ -3060,10 +3060,10 @@ public class InternalSCTXLexer extends Lexer {
         try {
             int _type = T__155;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalSCTX.g:149:8: ( 'override' )
-            // InternalSCTX.g:149:10: 'override'
+            // InternalSCTX.g:149:8: ( 'seq' )
+            // InternalSCTX.g:149:10: 'seq'
             {
-            match("override"); 
+            match("seq"); 
 
 
             }
@@ -3081,10 +3081,10 @@ public class InternalSCTXLexer extends Lexer {
         try {
             int _type = T__156;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalSCTX.g:150:8: ( 'seq' )
-            // InternalSCTX.g:150:10: 'seq'
+            // InternalSCTX.g:150:8: ( 'once' )
+            // InternalSCTX.g:150:10: 'once'
             {
-            match("seq"); 
+            match("once"); 
 
 
             }
@@ -3102,10 +3102,10 @@ public class InternalSCTXLexer extends Lexer {
         try {
             int _type = T__157;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalSCTX.g:151:8: ( 'once' )
-            // InternalSCTX.g:151:10: 'once'
+            // InternalSCTX.g:151:8: ( 'const' )
+            // InternalSCTX.g:151:10: 'const'
             {
-            match("once"); 
+            match("const"); 
 
 
             }
@@ -3123,10 +3123,10 @@ public class InternalSCTXLexer extends Lexer {
         try {
             int _type = T__158;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalSCTX.g:152:8: ( 'const' )
-            // InternalSCTX.g:152:10: 'const'
+            // InternalSCTX.g:152:8: ( 'input' )
+            // InternalSCTX.g:152:10: 'input'
             {
-            match("const"); 
+            match("input"); 
 
 
             }
@@ -3144,10 +3144,10 @@ public class InternalSCTXLexer extends Lexer {
         try {
             int _type = T__159;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalSCTX.g:153:8: ( 'input' )
-            // InternalSCTX.g:153:10: 'input'
+            // InternalSCTX.g:153:8: ( 'output' )
+            // InternalSCTX.g:153:10: 'output'
             {
-            match("input"); 
+            match("output"); 
 
 
             }
@@ -3165,10 +3165,10 @@ public class InternalSCTXLexer extends Lexer {
         try {
             int _type = T__160;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalSCTX.g:154:8: ( 'output' )
-            // InternalSCTX.g:154:10: 'output'
+            // InternalSCTX.g:154:8: ( 'static' )
+            // InternalSCTX.g:154:10: 'static'
             {
-            match("output"); 
+            match("static"); 
 
 
             }
@@ -5600,7 +5600,7 @@ public class InternalSCTXLexer extends Lexer {
     static final String DFA28_maxS =
         "\1\uffff\1\165\1\uffff\1\172\1\174\3\75\1\76\3\75\1\157\1\75\1\76\1\uffff\1\157\1\165\2\157\1\170\1\51\2\uffff\1\157\1\165\1\163\1\150\1\156\1\165\1\163\1\145\1\157\1\75\1\157\1\165\4\uffff\1\162\2\uffff\1\162\1\141\1\uffff\1\166\1\uffff\1\172\2\uffff\1\uffff\1\146\1\uffff\4\uffff\1\157\2\162\1\154\31\uffff\2\uffff\1\uffff\1\154\1\151\1\157\1\75\2\uffff\1\76\3\uffff\1\171\1\157\1\162\1\156\1\154\1\142\1\162\1\141\1\157\1\163\1\161\1\147\2\163\1\157\1\156\1\165\1\164\1\163\4\uffff\1\172\2\157\1\164\1\151\1\157\1\141\1\151\1\144\1\154\1\172\1\164\1\162\1\160\1\164\2\172\1\164\1\156\1\157\2\uffff\1\156\1\170\1\164\1\144\1\156\1\154\4\uffff\1\172\1\165\2\uffff\1\172\1\142\1\uffff\2\145\1\143\1\164\6\uffff\1\146\3\uffff\1\172\1\164\1\166\1\145\1\154\2\151\4\uffff\1\172\1\144\1\154\2\uffff\1\75\2\uffff\1\172\1\141\1\172\1\141\1\163\1\171\1\165\1\164\1\154\1\150\1\145\2\160\1\145\1\172\1\156\2\164\1\163\1\143\1\163\2\155\1\162\1\145\1\164\1\162\1\145\1\157\1\uffff\1\142\1\162\1\157\2\156\1\153\1\154\1\145\1\141\1\145\1\160\1\uffff\1\141\1\151\1\145\1\157\1\172\1\164\1\165\2\uffff\1\145\1\151\1\165\1\172\1\144\1\154\2\172\1\150\1\165\1\145\1\154\1\uffff\1\145\2\uffff\1\145\1\172\1\162\1\145\1\160\1\uffff\1\145\1\141\1\164\1\172\1\151\1\157\1\143\1\uffff\1\172\1\141\3\uffff\1\164\1\uffff\1\154\1\145\1\172\1\143\2\156\1\151\1\154\1\141\1\144\2\145\1\162\1\uffff\1\141\1\172\1\157\1\163\1\153\1\154\1\145\1\164\1\165\1\151\1\172\1\171\1\162\1\172\1\145\2\172\1\141\1\164\4\172\1\145\1\146\1\171\1\162\1\40\1\146\1\156\1\144\1\162\1\uffff\1\151\2\164\1\157\1\162\1\uffff\1\157\1\172\4\uffff\1\157\1\154\1\172\1\145\2\172\1\154\1\uffff\1\162\1\172\1\165\1\143\1\164\1\172\1\uffff\1\143\1\144\1\171\1\uffff\1\164\3\172\1\uffff\1\164\2\147\1\172\1\143\1\157\1\162\1\165\1\172\1\156\1\56\1\154\1\uffff\1\162\2\172\1\151\1\143\1\172\1\164\1\156\1\uffff\1\172\1\144\1\156\1\uffff\1\163\2\uffff\1\154\1\172\4\uffff\1\172\1\151\1\145\1\162\1\uffff\1\154\1\147\1\151\1\164\1\141\2\172\2\156\1\155\1\uffff\1\144\1\145\1\uffff\1\164\2\uffff\1\172\1\151\1\uffff\2\164\1\145\1\uffff\3\172\1\151\2\uffff\3\172\1\uffff\1\172\1\167\1\164\1\154\1\uffff\1\144\1\uffff\1\172\1\171\2\uffff\1\143\1\164\1\uffff\1\151\1\145\1\uffff\1\163\1\172\1\163\1\172\2\uffff\1\156\1\144\1\145\1\157\1\172\1\141\1\172\1\154\2\uffff\5\172\1\145\1\uffff\1\144\1\172\1\145\1\172\3\uffff\1\157\4\uffff\1\40\1\172\1\145\1\172\1\uffff\1\172\1\164\1\157\1\156\2\172\1\uffff\1\151\1\uffff\1\145\1\172\1\144\1\167\1\uffff\1\164\1\uffff\1\172\2\uffff\1\172\3\uffff\1\162\1\145\1\uffff\1\144\1\uffff\1\156\2\uffff\1\172\2\uffff\1\151\1\162\1\147\2\uffff\1\157\1\144\1\uffff\2\172\1\145\1\uffff\1\145\1\155\3\172\1\uffff\1\156\2\172\1\156\1\172\2\uffff\2\172\1\151\3\uffff\1\147\2\uffff\1\172\3\uffff\1\156\1\172\1\uffff\1\151\1\uffff\1\163\1\164\1\151\1\143\1\172\1\uffff";
     static final String DFA28_acceptS =
-        "\2\uffff\1\2\14\uffff\1\22\6\uffff\1\33\1\34\14\uffff\1\123\1\124\1\125\1\133\1\uffff\1\135\1\136\2\uffff\1\145\1\uffff\1\177\1\uffff\1\u0083\1\u0084\3\uffff\2\u009b\1\u009c\1\u009d\4\uffff\1\u009b\1\2\1\73\1\3\1\15\1\72\1\4\1\16\1\71\1\5\1\110\1\120\1\6\1\64\1\101\1\7\1\23\1\65\1\102\1\10\1\66\1\11\1\70\1\12\1\67\2\uffff\1\13\4\uffff\1\105\1\104\1\uffff\1\107\1\106\1\22\23\uffff\1\32\1\132\1\33\1\34\24\uffff\1\103\1\63\6\uffff\1\123\1\124\1\125\1\133\2\uffff\1\135\1\136\2\uffff\1\145\4\uffff\1\177\1\u0081\1\u0083\1\u0084\1\u0092\1\u0097\1\uffff\1\u0098\1\u009a\1\u009c\7\uffff\1\u0093\1\u0094\1\u0095\1\u0096\3\uffff\1\74\1\17\1\uffff\1\75\1\20\35\uffff\1\35\13\uffff\1\141\7\uffff\1\130\1\137\14\uffff\1\134\1\uffff\1\140\1\150\5\uffff\1\1\7\uffff\1\14\2\uffff\1\76\1\21\1\24\1\uffff\1\144\15\uffff\1\u008c\40\uffff\1\55\5\uffff\1\170\2\uffff\1\77\1\113\1\100\1\112\7\uffff\1\155\6\uffff\1\53\3\uffff\1\117\4\uffff\1\25\14\uffff\1\26\10\uffff\1\31\3\uffff\1\152\1\uffff\1\163\1\161\2\uffff\1\45\1\37\1\167\1\40\4\uffff\1\52\12\uffff\1\54\2\uffff\1\111\1\uffff\1\u0082\1\u0099\2\uffff\1\u008d\3\uffff\1\174\4\uffff\1\56\1\u0086\3\uffff\1\127\4\uffff\1\165\1\uffff\1\u0089\2\uffff\1\30\1\60\2\uffff\1\u008e\2\uffff\1\147\4\uffff\1\36\1\164\10\uffff\1\u008f\1\46\6\uffff\1\142\4\uffff\1\114\1\154\1\156\1\uffff\1\27\1\41\1\57\1\176\4\uffff\1\u0091\6\uffff\1\171\1\uffff\1\172\4\uffff\1\151\1\uffff\1\121\1\uffff\1\143\1\162\1\uffff\1\u0080\1\157\1\160\2\uffff\1\u0090\1\uffff\1\116\1\uffff\1\47\1\122\1\uffff\1\153\1\50\3\uffff\1\173\1\126\2\uffff\1\43\3\uffff\1\u0085\5\uffff\1\131\5\uffff\1\51\1\146\3\uffff\1\u008b\1\115\1\u0087\1\uffff\1\u0088\1\62\1\uffff\1\42\1\44\1\175\2\uffff\1\166\1\uffff\1\61\5\uffff\1\u008a";
+        "\2\uffff\1\2\14\uffff\1\22\6\uffff\1\33\1\34\14\uffff\1\123\1\124\1\125\1\133\1\uffff\1\135\1\136\2\uffff\1\145\1\uffff\1\176\1\uffff\1\u0082\1\u0083\3\uffff\2\u009b\1\u009c\1\u009d\4\uffff\1\u009b\1\2\1\73\1\3\1\15\1\72\1\4\1\16\1\71\1\5\1\110\1\120\1\6\1\64\1\101\1\7\1\23\1\65\1\102\1\10\1\66\1\11\1\70\1\12\1\67\2\uffff\1\13\4\uffff\1\105\1\104\1\uffff\1\107\1\106\1\22\23\uffff\1\32\1\132\1\33\1\34\24\uffff\1\103\1\63\6\uffff\1\123\1\124\1\125\1\133\2\uffff\1\135\1\136\2\uffff\1\145\4\uffff\1\176\1\u0080\1\u0082\1\u0083\1\u0092\1\u0097\1\uffff\1\u0098\1\u009a\1\u009c\7\uffff\1\u0093\1\u0094\1\u0095\1\u0096\3\uffff\1\74\1\17\1\uffff\1\75\1\20\35\uffff\1\35\13\uffff\1\141\7\uffff\1\130\1\137\14\uffff\1\134\1\uffff\1\140\1\150\5\uffff\1\1\7\uffff\1\14\2\uffff\1\76\1\21\1\24\1\uffff\1\144\15\uffff\1\u008b\40\uffff\1\55\5\uffff\1\170\2\uffff\1\77\1\113\1\100\1\112\7\uffff\1\155\6\uffff\1\53\3\uffff\1\117\4\uffff\1\25\14\uffff\1\26\10\uffff\1\31\3\uffff\1\152\1\uffff\1\163\1\161\2\uffff\1\45\1\37\1\167\1\40\4\uffff\1\52\12\uffff\1\54\2\uffff\1\111\1\uffff\1\u0081\1\u0099\2\uffff\1\u008c\3\uffff\1\174\4\uffff\1\56\1\u0085\3\uffff\1\127\4\uffff\1\165\1\uffff\1\u0088\2\uffff\1\30\1\60\2\uffff\1\u008d\2\uffff\1\147\4\uffff\1\36\1\164\10\uffff\1\u008e\1\46\6\uffff\1\142\4\uffff\1\114\1\154\1\156\1\uffff\1\27\1\41\1\57\1\u0090\4\uffff\1\u0091\6\uffff\1\171\1\uffff\1\172\4\uffff\1\151\1\uffff\1\121\1\uffff\1\143\1\162\1\uffff\1\177\1\157\1\160\2\uffff\1\u008f\1\uffff\1\116\1\uffff\1\47\1\122\1\uffff\1\153\1\50\3\uffff\1\173\1\126\2\uffff\1\43\3\uffff\1\u0084\5\uffff\1\131\5\uffff\1\51\1\146\3\uffff\1\u008a\1\115\1\u0086\1\uffff\1\u0087\1\62\1\uffff\1\42\1\44\1\175\2\uffff\1\166\1\uffff\1\61\5\uffff\1\u0089";
     static final String DFA28_specialS =
         "\1\1\62\uffff\1\4\1\uffff\1\0\41\uffff\1\2\1\3\u01eb\uffff}>";
     static final String[] DFA28_transitionS = {

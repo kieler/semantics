@@ -344,6 +344,12 @@ ReferenceValuedObject returns kexpressions::ValuedObject:
     (('(' parameters += ScopeParameter (',' parameters += ScopeParameter)* ')') | '()')? // This is the important difference to the original definition!
     ('=' initialValue=Expression)?
     ('label' label=STRING)?;
+    
+@Override
+StaticAccessExpression returns kexpressions::StaticAccessExpression:
+    // Adjusted keyword!
+    'scchart' '(' target=[annotations::NamedObject|PrimeID] ')'
+    '.' subReference=ValuedObjectReference; 
 
 // ------------ //
 //  Enum Rules  // 
