@@ -316,7 +316,7 @@ PolicyTransition returns sccharts::Transition:
     ('label' label=STRING)?;
     
 DeclarationOrMethodWithKeywordWOSemicolon returns kexpressions::Declaration:
-    DeclarationWOSemicolon | KeywordMethodDeclarationWOSemicolon
+    DeclarationWOSemicolon | KeywordMethodDeclarationWOSemicolon | EnumDeclarationWOSemicolon
 ;
 
 KeywordMethodDeclarationWOSemicolon returns kexpressions::MethodDeclaration:
@@ -341,8 +341,15 @@ ReferenceValuedObject returns kexpressions::ValuedObject:
     name=PrimeID
     ('[' cardinalities+=Expression ']')*
     ('<' genericParameters += GenericParameter (',' genericParameters += GenericParameter)* '>')?
-    (('(' parameters += ScopeParameter (',' parameters += ScopeParameter)* ')') | '()')?
+    (('(' parameters += ScopeParameter (',' parameters += ScopeParameter)* ')') | '()')? // This is the important difference to the original definition!
+    ('=' initialValue=Expression)?
     ('label' label=STRING)?;
+    
+@Override
+StaticAccessExpression returns kexpressions::StaticAccessExpression:
+    // Adjusted keyword!
+    'scchart' '(' target=[annotations::NamedObject|PrimeID] ')'
+    '.' subReference=ValuedObjectReference; 
 
 // ------------ //
 //  Enum Rules  // 

@@ -35,6 +35,7 @@ class SCTXHighlighting implements IHighlighting {
         "else",
         "end",
         "entry",
+        "enum",
         "exit",
         "expression",
         "extends",

@@ -7,6 +7,7 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.NamedObject
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kexpressions.AccessModifier
+import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.GenericParameterDeclaration
 import de.cau.cs.kieler.kexpressions.GenericTypeReference
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage
@@ -20,6 +21,7 @@ import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsGenericParameterExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
 import de.cau.cs.kieler.kexpressions.kext.DeclarationScope
 import de.cau.cs.kieler.kexpressions.kext.scoping.KExtScopeProvider
 import de.cau.cs.kieler.sccharts.BaseStateReference
@@ -170,15 +172,33 @@ class SCTXScopeProvider extends KExtScopeProvider {
     }
     
     override IScope getScopeForReferenceDeclaration(EObject context, EReference reference) {
-        if (reference == KExpressionsPackage.Literals.REFERENCE_DECLARATION__REFERENCE) {
+        if (reference == KExpressionsPackage.Literals.REFERENCE_DECLARATION__REFERENCE || reference == KExpressionsPackage.Literals.REFERENCE_DECLARATION__REFERENCE_CONTAINER) {
             val declaration = context
             if (declaration instanceof ReferenceDeclaration) {
                 val candidates = <NamedObject>newLinkedList
-                var rootState = declaration.nextScope?.rootState
-                if (rootState !== null && !rootState.genericParameterDeclarations.nullOrEmpty) {
-                    candidates += (rootState as State).genericTypeParameters
+                val rootState = declaration.nextScope?.rootState
+                val rootStates = declaration.eResource.allAvailableRootStates
+                
+                if (reference == KExpressionsPackage.Literals.REFERENCE_DECLARATION__REFERENCE) {
+                    val refContainer = declaration.referenceContainer
+                    if (refContainer !== null) {
+                        if (refContainer instanceof DeclarationScope) {
+                            candidates += refContainer.declarations.filter(ClassDeclaration).map[(it.isEnum ? valuedObjects.head : it) as NamedObject]
+                        }
+                    } else {
+                        candidates += rootStates
+                        candidates += rootState.declarations.filter(ClassDeclaration).map[(it.isEnum ? valuedObjects.head : it) as NamedObject]
+                        if (!rootState.baseStateReferences.nullOrEmpty) {
+                            candidates += rootState.getAllVisibleInheritedDeclarations.filter(ClassDeclaration).map[(it.isEnum ? valuedObjects.head : it) as NamedObject]
+                        }
+                        if (rootState !== null && !rootState.genericParameterDeclarations.nullOrEmpty) {
+                            candidates += (rootState as State).genericTypeParameters
+                        }
+                    }
+                } else if (reference == KExpressionsPackage.Literals.REFERENCE_DECLARATION__REFERENCE_CONTAINER) {
+                    candidates += rootStates
                 }
-                candidates += declaration.eResource.allAvailableRootStates
+                
                 return SCTXScopes.scopeFor(candidates)
             }
         } 
@@ -229,7 +249,7 @@ class SCTXScopeProvider extends KExtScopeProvider {
             val target = (contextContainer as StaticAccessExpression).target
             // The context is a subreference of static access!
             if (target instanceof DeclarationScope) {
-                return Scopes.scopeFor(target.declarations.map[valuedObjects].flatten)
+                return Scopes.scopeFor(target.declarations.filter[allowsGlobalAccess].map[valuedObjects].flatten)
             } else {
                 return IScope.NULLSCOPE
             }
@@ -323,6 +343,17 @@ class SCTXScopeProvider extends KExtScopeProvider {
         } else {
             return super.getScopeForReferencedType(reference, context, adjustedPredicate)
         }
+    }
+    
+    private def boolean allowsGlobalAccess(Declaration decl) {
+        if (decl instanceof VariableDeclaration) {
+            if (!decl.input && (decl.access === null || decl.access === AccessModifier.PUBLIC)) {
+                if (decl.const || decl instanceof ClassDeclaration) {
+                    return true
+                }
+            }
+        }
+        return false
     }
 
 }
