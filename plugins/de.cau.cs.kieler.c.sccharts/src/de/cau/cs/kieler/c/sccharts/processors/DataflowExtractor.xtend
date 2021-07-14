@@ -224,6 +224,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
     var breakCounter = 0;
     var continueCounter = 0;
     var multiplexerCounter = 0;
+    var breakCondsCounter = 0;
 
     // needed to add break/continue states to the correct while state
     var DataflowRegion lastWhileRegion = null
@@ -2215,7 +2216,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             // if there is more than one condition they are connected with an "AND" operator
             if (conditions.size > 1) {
                 // create local var for result auf "AND"
-                val label = hiddenVariableName
+                val label = hiddenVariableName + breakCondsCounter
                 val decl = createVariableDeclaration
                 whileRegion.declarations += decl
                 decl.type = ValueType.BOOL
@@ -2231,6 +2232,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                         ]
                 
                 whileRegion.equations += createDataflowAssignment(condInput, expr)
+                breakCondsCounter++
             }
             
             // set the inputs of the break state  
