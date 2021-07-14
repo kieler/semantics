@@ -489,11 +489,13 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         // declaration with an assignment of the final value to that output declaration.
         if (funcDeclarator instanceof IASTStandardFunctionDeclarator) {
             val parameters = funcDeclarator.getParameters
+            val changedPointers = findPointerOutputs(func.body)
             for (par : parameters) {
+                val parName = par.getDeclarator.getName.toString
                 val isArray = par.getDeclSpecifier instanceof IASTSimpleDeclSpecifier &&
                     par.declarator instanceof IASTArrayDeclarator
                 val isPointer = par.declarator.pointerOperators !== null && !par.declarator.pointerOperators.isEmpty
-                if (isArray || isPointer) {
+                if (isArray || (isPointer && changedPointers.contains(parName))) {
                     val type = isArray ? (outputDeclSpecifier as IASTSimpleDeclSpecifier).type.cdtTypeConversion
                         : (par.declSpecifier as IASTSimpleDeclSpecifier).type.cdtTypeConversion
                     // Determine parameter name
@@ -2649,6 +2651,36 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         }
         return outputs
     }
+
+/**
+     * Find the pointers that are written to from the given control statement.
+     * 
+     * @param stmt The control statement
+     */
+    def HashSet<String> findPointerOutputs(IASTNode stmt) {
+        var outputs = <String>newHashSet
+
+        switch (stmt) {
+            IASTExpressionStatement: {
+                if (stmt.expression instanceof IASTBinaryExpression 
+                    && (stmt.expression as IASTBinaryExpression).operand1 instanceof IASTUnaryExpression
+                ){
+                    val leftSide = (stmt.expression as IASTBinaryExpression).operand1 as IASTUnaryExpression
+                    if (leftSide.operator === IASTUnaryExpression.op_star) {
+                        outputs += (leftSide.operand as IASTIdExpression).name.toString
+                    }
+                }
+            }
+            default: {
+                // Check every child for other statements.
+                for (child : stmt.children) {
+                    outputs += findPointerOutputs(child)
+                }
+            }
+        }
+        return outputs
+    }
+
 
     /**
      * Connect the Inputs of the given control statement to their respective valued objects of the containing state
