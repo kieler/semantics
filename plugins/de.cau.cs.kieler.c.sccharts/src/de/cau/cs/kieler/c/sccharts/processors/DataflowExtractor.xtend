@@ -107,8 +107,6 @@ import org.eclipse.cdt.internal.core.dom.parser.ASTNode
 import org.eclipse.core.resources.IResource
 
 import static de.cau.cs.kieler.c.sccharts.processors.CDTToStringConverter.*
-import de.cau.cs.kieler.sccharts.extensions.SCChartsInheritanceExtensions
-import de.cau.cs.kieler.kexpressions.AccessModifier
 
 /**
  * A Processor analyzing the data flow of functions within a single file of a C project and visualizing it as actor-
@@ -131,7 +129,6 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
     @Inject extension SCChartsDataflowRegionExtensions
     @Inject extension SCChartsStateExtensions
     @Inject extension SCChartsTransitionExtensions
-    @Inject extension SCChartsInheritanceExtensions
     @Inject extension ValueExtensions
 
     /**
@@ -164,7 +161,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
     /** Shown name prefix for if statements. */
     static final String ifName = "if"
     /**Shown name prefix for conditions of if statements. */
-    static final String ifCondName = "if_cond"
+    static final String ifCondName = "cond"
     /** Shown name prefix for then statements. */
     static final String thenName = "then"
     /** Shown name prefix for else statements. */
@@ -176,9 +173,9 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
     /** Shown name prefix for while statements. */
     static final String whileName = "while"
     /** Shown name prefix for while-body statements. */
-    static final String whileBodyName = "while_body"
+    static final String whileBodyName = "body"
     /** Shown name prefix for while condition. */
-    static final String whileCondName = "while_cond"
+    static final String whileCondName = "cond"
     /** Shown name prefix for switch statements. */
     static final String switchName = "switch"
     /** Shown name prefix for case statements. */
@@ -227,6 +224,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
     var breakCounter = 0;
     var continueCounter = 0;
     var multiplexerCounter = 0;
+    var breakCondsCounter = 0;
 
     // needed to add break/continue states to the correct while state
     var DataflowRegion lastWhileRegion = null
@@ -2235,7 +2233,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             // if there is more than one condition they are connected with an "AND" operator
             if (conditions.size > 1) {
                 // create local var for result auf "AND"
-                val label = hiddenVariableName
+                val label = hiddenVariableName + breakCondsCounter
                 val decl = createVariableDeclaration
                 whileRegion.declarations += decl
                 decl.type = ValueType.BOOL
@@ -2251,6 +2249,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                         ]
                 
                 whileRegion.equations += createDataflowAssignment(condInput, expr)
+                breakCondsCounter++
             }
             
             // set the inputs of the break state  
