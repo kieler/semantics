@@ -1686,7 +1686,9 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         var IASTExpression condExpr = null
         switch stmt {
             case stmt instanceof IASTWhileStatement: {
-                condName = whileName + ssaNameSeperator + localCounter + whileCondName
+//                condName = whileName + ssaNameSeperator + localCounter + whileCondName
+                condName = whileName + ssaNameSeperator + localCounter + "cond: " 
+                    + exprToString((stmt as IASTWhileStatement).getCondition, sourceFile)
                 condExpr = (stmt as IASTWhileStatement).getCondition
 
             }
