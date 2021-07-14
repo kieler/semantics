@@ -107,6 +107,8 @@ import org.eclipse.cdt.internal.core.dom.parser.ASTNode
 import org.eclipse.core.resources.IResource
 
 import static de.cau.cs.kieler.c.sccharts.processors.CDTToStringConverter.*
+import de.cau.cs.kieler.sccharts.extensions.SCChartsInheritanceExtensions
+import de.cau.cs.kieler.kexpressions.AccessModifier
 
 /**
  * A Processor analyzing the data flow of functions within a single file of a C project and visualizing it as actor-
@@ -129,6 +131,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
     @Inject extension SCChartsDataflowRegionExtensions
     @Inject extension SCChartsStateExtensions
     @Inject extension SCChartsTransitionExtensions
+    @Inject extension SCChartsInheritanceExtensions
     @Inject extension ValueExtensions
 
     /**
@@ -3288,7 +3291,6 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
     def ValuedObjectReference createFunctionCall(IASTFunctionCallExpression expression, State state,
         DataflowRegion dRegion) {
         val refState = findFunctionState(expression, state, dRegion)
-
         // Find an existing reference to this state the reference
         var ReferenceDeclaration refDecl = dRegion.declarations.filter(ReferenceDeclaration).findFirst [
             it.reference === refState
