@@ -68,6 +68,7 @@ import org.eclipse.cdt.core.dom.ast.IASTCaseStatement
 import org.eclipse.cdt.core.dom.ast.IASTCastExpression
 import org.eclipse.cdt.core.dom.ast.IASTCompoundStatement
 import org.eclipse.cdt.core.dom.ast.IASTConditionalExpression
+import org.eclipse.cdt.core.dom.ast.IASTContinueStatement
 import org.eclipse.cdt.core.dom.ast.IASTDeclarationStatement
 import org.eclipse.cdt.core.dom.ast.IASTDefaultStatement
 import org.eclipse.cdt.core.dom.ast.IASTDoStatement
@@ -77,6 +78,7 @@ import org.eclipse.cdt.core.dom.ast.IASTExpressionStatement
 import org.eclipse.cdt.core.dom.ast.IASTFieldReference
 import org.eclipse.cdt.core.dom.ast.IASTForStatement
 import org.eclipse.cdt.core.dom.ast.IASTFunctionCallExpression
+import org.eclipse.cdt.core.dom.ast.IASTFunctionDeclarator
 import org.eclipse.cdt.core.dom.ast.IASTFunctionDefinition
 import org.eclipse.cdt.core.dom.ast.IASTIdExpression
 import org.eclipse.cdt.core.dom.ast.IASTIfStatement
@@ -106,7 +108,6 @@ import org.eclipse.cdt.internal.core.dom.parser.ASTNode
 import org.eclipse.core.resources.IResource
 
 import static de.cau.cs.kieler.c.sccharts.processors.CDTToStringConverter.*
-import org.eclipse.cdt.core.dom.ast.IASTContinueStatement
 
 /**
  * A Processor analyzing the data flow of functions within a single file of a C project and visualizing it as actor-
@@ -246,6 +247,8 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
 
     /** All variables that are pointers to another variable. */
     val Map<State, Map<ValuedObject, ValuedObject>> pointerVariables = newHashMap
+    
+    val Map<String, IASTEqualsInitializer> globalVars = newHashMap
 
     val voWrittenIdxs = <ValuedObject, List<Expression>>newHashMap
 
@@ -364,6 +367,18 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         // Make sure to always have the read lock on the index here and releasing it eventually.
         index?.acquireReadLock
         try {
+            // collect definitions of global variables
+            val varDefs = ast.children.filter(IASTSimpleDeclaration)
+            for (vDef : varDefs) {
+                val type = (vDef.declSpecifier as IASTSimpleDeclSpecifier).type
+                // exclude function definitions
+                if (!(vDef.declarators.get(0) instanceof IASTFunctionDeclarator)) {
+                    val name = vDef.declarators.get(0).name.toString
+                    val initializer = vDef.declarators.get(0).initializer as IASTEqualsInitializer
+                    globalVars.put(name, initializer)
+                }
+            }
+            
             // Interesting index functions:
             // findBinding(IName name) 
             // findReferences(IBinding binding) 
@@ -455,6 +470,9 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 }
             }
         }
+        
+        // add used global variables as input
+        addGlobalVarAsInput(findGlobalVars(func.body), state)
 
         // Determine function output
         val outputDeclSpecifier = func.getDeclSpecifier
@@ -506,6 +524,85 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
 
         return state
     }
+    
+    /**
+     * Searches the given statement {@code stmt} for usages of global variables.
+     * @param stmt The statement that should be searched.
+     */
+    private def HashSet<String> findGlobalVars(IASTNode stmt) {
+        var inputs = <String>newHashSet
+        // Add a found non local variable use
+        if (stmt instanceof IASTIdExpression) {
+            val varName = stmt.getName.toString
+            if(globalVars.containsKey(varName)) inputs += varName
+        // Consider only variables that are not target of an assignment    
+        } else if (stmt instanceof IASTBinaryExpression) {
+            val operator = stmt.getOperator
+            if ((operator >= IASTBinaryExpression.op_assign) && (operator <= IASTBinaryExpression.op_binaryOrAssign)) {
+                inputs = findGlobalVars(stmt.getOperand2)
+                // If operand1 is an array, we consider it to be "read" as well.
+                if (stmt.operand1 instanceof IASTArraySubscriptExpression) {
+                    inputs += findGlobalVars(stmt.getOperand1)
+                }
+            } else {
+                inputs = findGlobalVars(stmt.getOperand1)
+                inputs += findGlobalVars(stmt.getOperand2)
+            }
+        // Consider only arguments of a function call    
+        } else if (stmt instanceof IASTFunctionCallExpression) {
+            val arguments = stmt.getArguments
+            for (argument : arguments) {
+                inputs += findGlobalVars(argument)
+            }
+        // Test all children of other statements    
+        } else {
+            for (child : stmt.children) {
+                inputs += findGlobalVars(child)
+            }
+        }
+        return inputs
+    }
+    
+    /**
+     * Creates for each name of the set {@code names} an input variable in the given {@code state}
+     * 
+     * @param names The names of the variables that should be create
+     * @param state The state for which input variables should be created.
+     */
+    private def addGlobalVarAsInput(HashSet<String> names, State state) {
+        val Map<ValueType, VariableDeclaration> declarations = newHashMap
+        for (varName : names) {
+            val initClause = globalVars.get(varName).initializerClause
+            val value = createValue(initClause as IASTLiteralExpression)
+            var ValueType inputType
+            // determine type
+            switch (value) {
+                case value instanceof IntValue: inputType = ValueType.INT
+                case value instanceof FloatValue: inputType = ValueType.FLOAT
+                case value instanceof BoolValue: inputType = ValueType.BOOL
+                case value instanceof StringValue: inputType = ValueType.STRING
+                default: println("ERROR: Type of global variable " + varName + " is not supported!")
+            }
+            // create variable declaration
+            if (!declarations.containsKey(inputType)) {
+                val newDecl = createVariableDeclaration
+                state.declarations += newDecl
+                newDecl.type = inputType
+                newDecl.input = true
+                declarations.put(inputType, newDecl)
+            }
+            
+            // create the vo and add it to the stateVariables list
+            val decl = declarations.get(inputType)
+            val vo = decl.createValuedObject(varName + inSuffix)
+            vo.label = varName
+    
+            val Map<String, List<ValuedObject>> stateVariables = getStateVariables(state)
+            val varList = <ValuedObject>newArrayList
+            varList.add(vo)
+            stateVariables.put(varName, varList)
+        }
+    }
 
     /**
      * Fills a scaffolded {@link SCCharts} {@link State} for the given function definition and fills its contained
@@ -513,6 +610,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
      * {@link #createFunctionScaffold(IASTFunctionDefinition)}.
      */
     def void fillFunctionScaffold(IASTFunctionDefinition func) {
+        
         // Determine function name
         val funcDeclarator = func.getDeclarator
         val funcName = funcDeclarator.getName
@@ -532,7 +630,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             println("ERROR: Body of " + funcName.toString + " is not a Compound Statement!")
         }
     }
-
+    
     /**
      * Create a state representation for a call of an undefined function. The in- and outputs are either guessed by
      * the function call or determined by looking for the function in the AST/index.
@@ -1978,13 +2076,13 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         switch(passedStmt){
             IASTBreakStatement:{
                 localName = breakName
-                anno = de.cau.cs.kieler.c.sccharts.processors.DataflowExtractor.breakContinueAnno
+                anno = DataflowExtractor.breakContinueAnno
                 localCounter = breakCounter
                 breakCounter++
             }
             IASTContinueStatement:{
                 localName = continueName
-                anno = de.cau.cs.kieler.c.sccharts.processors.DataflowExtractor.breakContinueAnno
+                anno = DataflowExtractor.breakContinueAnno
                 localCounter = continueCounter
                 continueCounter++
             }
@@ -2201,7 +2299,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             // determine the if state the break stmt is in
             var State ifState
             val localIfCounter = Integer.parseInt(breakState.getStringAnnotationValue(
-                de.cau.cs.kieler.c.sccharts.processors.DataflowExtractor.breakContinueAnno
+                DataflowExtractor.breakContinueAnno
             ))
             for (state : rootSCChart.rootStates) {
                 if (state.name.equals(ifName + ssaNameSeperator + localIfCounter)) {
