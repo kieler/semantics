@@ -2480,7 +2480,8 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 for (name : fields) {
                     dummyArrayDeclarator.addArrayModifier(
                         defaultCNodeFactory.newArrayModifier(defaultCNodeFactory.newLiteralExpression(3, "\"" + name +"\"")))
-                }      
+                }
+                //TODO: Nested Structs, structs as fields
                 vo.cardinalities += dummyArrayDeclarator.arrayModifiers.map [
                     val litExp = it.constantExpression as IASTLiteralExpression
                     val expr = createKExpression(litExp, state, dRegion)
@@ -3187,9 +3188,19 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             }
             IASTArraySubscriptExpression: {
                 val arrayIndex = targetExpr.argument.createKExpression(funcState, dRegion)
-                result.target = funcState.findValuedObjectByName(exprToString(targetExpr.arrayExpression, sourceFile),
-                    arrayIndex, true, dRegion)
-                result.index = targetExpr.argument.createKExpression(funcState, dRegion)
+                val targetArrayExpr = targetExpr.arrayExpression
+                
+                if (!(targetArrayExpr instanceof IASTIdExpression)) {
+                    val res = retrieveTargetAndIndexExpr(targetArrayExpr, funcState, dRegion)
+                    //TODO: This is just a temporary workaround it does not correctly visualize arrays as fields yet
+                    result.target = res.target
+                    result.index = res.index
+                } else {
+
+                    result.target = funcState.findValuedObjectByName(
+                        exprToString(targetExpr.arrayExpression, sourceFile), arrayIndex, true, dRegion)
+                    result.index = targetExpr.argument.createKExpression(funcState, dRegion)
+                }
             }
             IASTFieldReference: {
                 /*
@@ -3197,13 +3208,16 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                  * Force the array visualization to take a string as index.
                  */
                 val fieldName = targetExpr.fieldName.toString
+                //TODO: probably problem cause for some instances
                 val ownerName = (targetExpr.fieldOwner as IASTIdExpression).name.toString
-                //TODO: Add dummy index so that findValuedObject doesn't create too many variants of the "array"
-                val arrayRepresentant = funcState.findValuedObjectByName(ownerName, true, dRegion)
+                val artificialIndexExpr = ASTNodeFactoryFactory.defaultCNodeFactory
+                                                               .newLiteralExpression(3, "\"" + fieldName +
+                                                                            "\"").createKExpression(funcState, dRegion)
+                
+                val arrayRepresentant = funcState.findValuedObjectByName(ownerName, artificialIndexExpr, true, dRegion)
 
                 result.target = arrayRepresentant
-                result.index = ASTNodeFactoryFactory.defaultCNodeFactory.newLiteralExpression(3, "\"" + fieldName +
-                    "\"").createKExpression(funcState, dRegion)
+                result.index = artificialIndexExpr
             }
             default: {
                 println("DataflowExtractor: Unsupported assignment target detected!" + targetExpr.expressionType)
