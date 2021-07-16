@@ -107,6 +107,15 @@ import org.eclipse.core.resources.IResource
 
 import static de.cau.cs.kieler.c.sccharts.processors.CDTToStringConverter.*
 import org.eclipse.cdt.core.dom.ast.IASTContinueStatement
+import de.cau.cs.kieler.sccharts.extensions.SCChartsInheritanceExtensions
+import de.cau.cs.kieler.kexpressions.AccessModifier
+import org.eclipse.cdt.core.dom.ast.IASTCompositeTypeSpecifier
+import org.eclipse.cdt.internal.core.dom.parser.c.CASTCompositeTypeSpecifier
+import org.eclipse.cdt.core.dom.ast.IASTDeclarator
+import org.eclipse.cdt.core.dom.ast.IASTElaboratedTypeSpecifier
+import org.eclipse.cdt.internal.core.dom.parser.c.CASTArrayDeclarator
+import org.eclipse.cdt.internal.core.dom.parser.c.CASTName
+import org.eclipse.cdt.core.dom.ast.ASTNodeFactoryFactory
 
 /**
  * A Processor analyzing the data flow of functions within a single file of a C project and visualizing it as actor-
@@ -245,7 +254,12 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
     val Map<State, Map<IASTExpression, ValuedObject>> pointers = newHashMap
 
     /** All variables that are pointers to another variable. */
-    val Map<State, Map<ValuedObject, ValuedObject>> pointerVariables = newHashMap
+    val Map<State, Map<String, ValuedObject>> pointerVariables = newHashMap
+    
+    val String addressOp = "~"
+    
+    /** Maps struct names to its attribute names.  */
+    val Map<String, List<String>> structFields = newHashMap
 
     val voWrittenIdxs = <ValuedObject, List<Expression>>newHashMap
 
@@ -364,6 +378,13 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         // Make sure to always have the read lock on the index here and releasing it eventually.
         index?.acquireReadLock
         try {
+            
+            
+         
+            val structDefs = ast.children.filter(IASTSimpleDeclaration)
+                                         .filter([s | s.declSpecifier instanceof IASTCompositeTypeSpecifier]).toList
+            
+            retrieveStructFieldNames(structDefs)
             // Interesting index functions:
             // findBinding(IName name) 
             // findReferences(IBinding binding) 
@@ -386,6 +407,8 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
 
         return rootSCChart
     }
+
+
 
     /**
      * Creates an {@link SCCharts} {@link State} scaffold for the given function definition with all in- and outputs
@@ -637,6 +660,25 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         functions.put(identifier, map)
 
         return state
+    }
+    
+    /**
+     * Extracts the name of a struct definition and of its fields and puts them in the structFields map.
+     * 
+     * @param structDefs SimpleDeclarations that declare a struct
+     */
+    def void retrieveStructFieldNames(List<IASTSimpleDeclaration> structDefs) {
+        for (structDef : structDefs) {
+            val structD = structDef.declSpecifier as IASTCompositeTypeSpecifier
+
+            val List<String> fieldNames = new ArrayList()
+            for (d : structD.getDeclarations(true)) {
+                val fieldName = ((d as IASTSimpleDeclaration).declarators.get(0) as IASTDeclarator).name.toString
+                fieldNames.add(fieldName)
+            }
+            
+            structFields.put(structD.name.toString, fieldNames)
+        }
     }
 
     /**
@@ -2378,7 +2420,17 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
 
         // Create the declaration with the cdt type
         val variableDeclaration = createVariableDeclaration
-        variableDeclaration.type = (declaration.getDeclSpecifier as IASTSimpleDeclSpecifier).type.cdtTypeConversion
+        val isStructDeclaration= (declaration.getDeclSpecifier instanceof IASTElaboratedTypeSpecifier)
+        var List<String> fields = newArrayList()
+        
+        if (!isStructDeclaration) {
+            variableDeclaration.type = (declaration.getDeclSpecifier as IASTSimpleDeclSpecifier).type.cdtTypeConversion
+        }else{
+           // The specifiers of struct declarations can't be cast to an IASTSimpleDeclSpecifier       
+           variableDeclaration.type = null
+           val structName = (declaration.getDeclSpecifier as IASTElaboratedTypeSpecifier).name.toString
+           fields = structFields.get(structName)
+        }
         if (!serializable) {
             variableDeclaration.insertHighlightAnnotations(declaration)
         }
@@ -2400,6 +2452,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             if (!serializable) {
                 vo.insertHighlightAnnotations(decl)
             }
+            
             if (decl instanceof IASTArrayDeclarator) {
                 vo.cardinalities += decl.arrayModifiers.map [
                     val expr = it.constantExpression?.createKExpression(state, dRegion)
@@ -2412,6 +2465,37 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                         return createIntValue(1)
                     }
                 ]
+            }
+            
+            if (isStructDeclaration) {
+                // Structs shall be visualized and handled as arrays
+                // We explicitly create arrays for structs, because arrays are passable in sccharts - structs are not
+       
+                val defaultCNodeFactory = ASTNodeFactoryFactory.defaultCNodeFactory
+                
+                val dummyArrayDeclarator = defaultCNodeFactory
+                                           .newArrayDeclarator(defaultCNodeFactory.newName("dummy_array"))
+                
+                
+                for (name : fields) {
+                    dummyArrayDeclarator.addArrayModifier(
+                        defaultCNodeFactory.newArrayModifier(defaultCNodeFactory.newLiteralExpression(3, "\"" + name +"\"")))
+                }      
+                vo.cardinalities += dummyArrayDeclarator.arrayModifiers.map [
+                    val litExp = it.constantExpression as IASTLiteralExpression
+                    val expr = createKExpression(litExp, state, dRegion)
+                    if (expr !== null) {
+                        return expr
+                    } else {
+                        // For declarations such as 'char string[] = "foo"' there is no constant expression,
+                        // so just add some cardinality to the array, that SCChart does not really matter about anyways
+                        // for the visual representation.
+                        val s = "\"" + (it.constantExpression as IASTLiteralExpression).value.toString +"\""                      
+                        return createStringValue(s)
+                        
+                    }
+                ]
+                vo.addTagAnnotation("struct")
             }
 
             // Add the valued object and the ssa list to the respective elements    
@@ -2804,7 +2888,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 varList.add(0, vo)
             }
         }
-
+        //TODO: Fix that too many array variants are created for structs
         // For Arrays only create a new VO if is written to for a first time or after a read, or if the specific index
         // has been written to before to still preserve SSA (at least for constant expressions), but connect what
         // belongs together.
@@ -3063,6 +3147,10 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 source = createValue(sourceExpr)
             } else if (sourceExpr instanceof IASTConditionalExpression) {
                 source = createKExpression(sourceExpr, funcState, dRegion)
+            } else if (sourceExpr instanceof IASTArraySubscriptExpression) {
+                source = createKExpression(sourceExpr, funcState, dRegion)
+            }else if(sourceExpr instanceof IASTFieldReference){
+                source = createKExpression(sourceExpr, funcState, dRegion)    
             }
 
             // Retrieve the assignment target
@@ -3083,20 +3171,46 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
     /**
      * Retrieve the target valued object for the given target expression for the given function state and dataflow
      * region, as well as the index if the target is an array.
+     * 
+     * @param targetExpr the expression of the target
+     * @param funcState the function's state in which the expression was called
+     * @param dRegion the dataflow region of the function's state
+     * @returns the requested target as a {@code ValuedObjectAndExpression}
      */
     def ValuedObjectAndExpression retrieveTargetAndIndexExpr(IASTExpression targetExpr, State funcState,
         DataflowRegion dRegion) {
         val ValuedObjectAndExpression result = new ValuedObjectAndExpression
-        if (targetExpr instanceof IASTIdExpression) {
-            result.target = funcState.findValuedObjectByName(targetExpr.getName.toString, true, dRegion)
-        } else if (targetExpr instanceof IASTArraySubscriptExpression) {
-            val arrayIndex = targetExpr.argument.createKExpression(funcState, dRegion)
-            result.target = funcState.findValuedObjectByName(exprToString(targetExpr.arrayExpression, sourceFile),
-                arrayIndex, true, dRegion)
-            result.index = targetExpr.argument.createKExpression(funcState, dRegion)
-        } else {
-            println("DataflowExtractor: Unsupported assignment target detected!" + targetExpr.expressionType)
+        
+        switch (targetExpr) {
+            IASTIdExpression: {
+                result.target = funcState.findValuedObjectByName(targetExpr.getName.toString, true, dRegion)
+            }
+            IASTArraySubscriptExpression: {
+                val arrayIndex = targetExpr.argument.createKExpression(funcState, dRegion)
+                result.target = funcState.findValuedObjectByName(exprToString(targetExpr.arrayExpression, sourceFile),
+                    arrayIndex, true, dRegion)
+                result.index = targetExpr.argument.createKExpression(funcState, dRegion)
+            }
+            IASTFieldReference: {
+                /*
+                 * Lookup the array that represents the struct. 
+                 * Force the array visualization to take a string as index.
+                 */
+                val fieldName = targetExpr.fieldName.toString
+                val ownerName = (targetExpr.fieldOwner as IASTIdExpression).name.toString
+                //TODO: Add dummy index so that findValuedObject doesn't create too many variants of the "array"
+                val arrayRepresentant = funcState.findValuedObjectByName(ownerName, true, dRegion)
+
+                result.target = arrayRepresentant
+                result.index = ASTNodeFactoryFactory.defaultCNodeFactory.newLiteralExpression(3, "\"" + fieldName +
+                    "\"").createKExpression(funcState, dRegion)
+            }
+            default: {
+                println("DataflowExtractor: Unsupported assignment target detected!" + targetExpr.expressionType)
+
+            }
         }
+        
         return result
     }
 
