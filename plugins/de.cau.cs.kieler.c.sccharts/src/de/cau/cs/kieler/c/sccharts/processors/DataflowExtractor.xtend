@@ -108,6 +108,8 @@ import org.eclipse.cdt.internal.core.dom.parser.ASTNode
 import org.eclipse.core.resources.IResource
 
 import static de.cau.cs.kieler.c.sccharts.processors.CDTToStringConverter.*
+import java.util.Set
+import org.eclipse.cdt.core.dom.ast.IASTDeclSpecifier
 
 /**
  * A Processor analyzing the data flow of functions within a single file of a C project and visualizing it as actor-
@@ -248,7 +250,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
     /** All variables that are pointers to another variable. */
     val Map<State, Map<ValuedObject, ValuedObject>> pointerVariables = newHashMap
     
-    val Map<String, IASTEqualsInitializer> globalVars = newHashMap
+    val Map<String, IASTDeclSpecifier> globalVars = newHashMap
 
     val voWrittenIdxs = <ValuedObject, List<Expression>>newHashMap
 
@@ -370,12 +372,10 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             // collect definitions of global variables
             val varDefs = ast.children.filter(IASTSimpleDeclaration)
             for (vDef : varDefs) {
-                val type = (vDef.declSpecifier as IASTSimpleDeclSpecifier).type
                 // exclude function definitions
                 if (!(vDef.declarators.get(0) instanceof IASTFunctionDeclarator)) {
                     val name = vDef.declarators.get(0).name.toString
-                    val initializer = vDef.declarators.get(0).initializer as IASTEqualsInitializer
-                    globalVars.put(name, initializer)
+                    globalVars.put(name, vDef.declSpecifier)
                 }
             }
             
@@ -471,8 +471,10 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             }
         }
         
-        // add used global variables as input
-        addGlobalVarAsInput(findGlobalVars(func.body), state)
+        // add used global variables as input and where necessary as output
+        val Set<String> writtenTo = newHashSet
+        addGlobalVarAsInput(findGlobalVars(func.body, writtenTo), state)
+        addGlobalVarAsOutput(writtenTo, state)
 
         // Determine function output
         val outputDeclSpecifier = func.getDeclSpecifier
@@ -484,7 +486,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 stateVariables.put(returnObjectName, varList)
             }
         }
-
+        
         // TODO: determine array/pointer function outputs.
         // Easy approach (as done here): every array/pointer is written to and set as output.
         // Medium approach: For each function, determine if the array/pointed variable is written to directly.
@@ -524,12 +526,14 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
 
         return state
     }
+
     
     /**
      * Searches the given statement {@code stmt} for usages of global variables.
      * @param stmt The statement that should be searched.
+     * @param writtenTo Global variables that are written to in {@code stmt} are added to this set.
      */
-    private def HashSet<String> findGlobalVars(IASTNode stmt) {
+    private def HashSet<String> findGlobalVars(IASTNode stmt, Set<String> writtenTo) {
         var inputs = <String>newHashSet
         // Add a found non local variable use
         if (stmt instanceof IASTIdExpression) {
@@ -539,25 +543,30 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         } else if (stmt instanceof IASTBinaryExpression) {
             val operator = stmt.getOperator
             if ((operator >= IASTBinaryExpression.op_assign) && (operator <= IASTBinaryExpression.op_binaryOrAssign)) {
-                inputs = findGlobalVars(stmt.getOperand2)
+                inputs = findGlobalVars(stmt.getOperand2, writtenTo)
                 // If operand1 is an array, we consider it to be "read" as well.
                 if (stmt.operand1 instanceof IASTArraySubscriptExpression) {
-                    inputs += findGlobalVars(stmt.getOperand1)
+                    inputs += findGlobalVars(stmt.getOperand1, writtenTo)
+                }
+                // update writtenTo set
+                if (stmt.operand1 instanceof IASTIdExpression) {
+                    val varName = (stmt.operand1 as IASTIdExpression).name.toString
+                    if(globalVars.containsKey(varName)) writtenTo += varName
                 }
             } else {
-                inputs = findGlobalVars(stmt.getOperand1)
-                inputs += findGlobalVars(stmt.getOperand2)
+                inputs = findGlobalVars(stmt.getOperand1, writtenTo)
+                inputs += findGlobalVars(stmt.getOperand2, writtenTo)
             }
         // Consider only arguments of a function call    
         } else if (stmt instanceof IASTFunctionCallExpression) {
             val arguments = stmt.getArguments
             for (argument : arguments) {
-                inputs += findGlobalVars(argument)
+                inputs += findGlobalVars(argument, writtenTo)
             }
         // Test all children of other statements    
         } else {
             for (child : stmt.children) {
-                inputs += findGlobalVars(child)
+                inputs += findGlobalVars(child, writtenTo)
             }
         }
         return inputs
@@ -572,35 +581,48 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
     private def addGlobalVarAsInput(HashSet<String> names, State state) {
         val Map<ValueType, VariableDeclaration> declarations = newHashMap
         for (varName : names) {
-            val initClause = globalVars.get(varName).initializerClause
-            val value = createValue(initClause as IASTLiteralExpression)
-            var ValueType inputType
-            // determine type
-            switch (value) {
-                case value instanceof IntValue: inputType = ValueType.INT
-                case value instanceof FloatValue: inputType = ValueType.FLOAT
-                case value instanceof BoolValue: inputType = ValueType.BOOL
-                case value instanceof StringValue: inputType = ValueType.STRING
-                default: println("ERROR: Type of global variable " + varName + " is not supported!")
-            }
+            val declSpec = globalVars.get(varName)
+            // TODO: for arrays the declSpec is not a simpleDeclSpecifier
+            val type = (declSpec as IASTSimpleDeclSpecifier).type.cdtTypeConversion
             // create variable declaration
-            if (!declarations.containsKey(inputType)) {
+            if (!declarations.containsKey(type)) {
                 val newDecl = createVariableDeclaration
                 state.declarations += newDecl
-                newDecl.type = inputType
+                newDecl.type = type
                 newDecl.input = true
-                declarations.put(inputType, newDecl)
+                declarations.put(type, newDecl)
             }
             
             // create the vo and add it to the stateVariables list
-            val decl = declarations.get(inputType)
+            val decl = declarations.get(type)
             val vo = decl.createValuedObject(varName + inSuffix)
             vo.label = varName
     
-            val Map<String, List<ValuedObject>> stateVariables = getStateVariables(state)
+            val stateVariables = getStateVariables(state)
             val varList = <ValuedObject>newArrayList
             varList.add(vo)
             stateVariables.put(varName, varList)
+        }
+    }
+    
+        
+    def addGlobalVarAsOutput(Set<String> varNames, State state) {
+        for (gV : varNames) {
+            val declSpec = globalVars.get(gV)
+            // TODO: for arrays the declSpec is not a simpleDeclSpecifier
+            val type = (declSpec as IASTSimpleDeclSpecifier).type.cdtTypeConversion
+            
+            val outDecl = createVariableDeclaration
+            outDecl.type = type
+            outDecl.output = true
+            state.declarations += outDecl
+            
+            val vo = outDecl.createValuedObject(gV + outSuffix)
+            vo.label = gV
+            
+            val stateVariables = getStateVariables(state)
+            val varList = stateVariables.get(gV)
+            varList.add(vo)
         }
     }
 
