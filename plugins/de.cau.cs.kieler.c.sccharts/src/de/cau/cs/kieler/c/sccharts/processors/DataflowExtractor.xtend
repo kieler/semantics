@@ -838,6 +838,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
      * @return a reference to the expression value, if applicable, {@code null} otherwise.
      */
     def ValuedObjectReference createExpression(IASTExpression expression, State rootState, DataflowRegion dRegion) {
+        //TODO: FieldReference Support for R-values!
         // Translate binary and unary expressions
         if (expression instanceof IASTBinaryExpression) {
             createBinaryAssignment(expression, rootState, dRegion)
@@ -2425,10 +2426,15 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         
         if (!isStructDeclaration) {
             variableDeclaration.type = (declaration.getDeclSpecifier as IASTSimpleDeclSpecifier).type.cdtTypeConversion
+            print("")
         }else{
            // The specifiers of struct declarations can't be cast to an IASTSimpleDeclSpecifier       
-           variableDeclaration.type = null
            val structName = (declaration.getDeclSpecifier as IASTElaboratedTypeSpecifier).name.toString
+           
+           // Uses Host Type for setting the struct type since our structs are represented as array-like valued objects
+           variableDeclaration.type = ValueType.HOST
+           variableDeclaration.hostType = "struct " + structName
+           
            fields = structFields.get(structName)
         }
         if (!serializable) {
@@ -2889,7 +2895,6 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 varList.add(0, vo)
             }
         }
-        //TODO: Fix that too many array variants are created for structs
         // For Arrays only create a new VO if is written to for a first time or after a read, or if the specific index
         // has been written to before to still preserve SSA (at least for constant expressions), but connect what
         // belongs together.
