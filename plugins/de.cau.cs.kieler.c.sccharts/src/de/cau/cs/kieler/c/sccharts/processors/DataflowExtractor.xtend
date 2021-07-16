@@ -472,9 +472,10 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         }
         
         // add used global variables as input and where necessary as output
-        val Set<String> writtenTo = newHashSet
-        addGlobalVarAsInput(findGlobalVars(func.body, writtenTo), state)
-        addGlobalVarAsOutput(writtenTo, state)
+        val inputs = findInputs(func.body, state).filter[v | globalVars.containsKey(v)].toSet()
+        val outputs = findOutputs(func.body, state, true).filter[v | globalVars.containsKey(v)].toSet()
+        addGlobalVarAsInput(inputs, state)
+        addGlobalVarAsOutput(outputs, state)
 
         // Determine function output
         val outputDeclSpecifier = func.getDeclSpecifier
@@ -527,58 +528,13 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         return state
     }
 
-    
-    /**
-     * Searches the given statement {@code stmt} for usages of global variables.
-     * @param stmt The statement that should be searched.
-     * @param writtenTo Global variables that are written to in {@code stmt} are added to this set.
-     */
-    private def HashSet<String> findGlobalVars(IASTNode stmt, Set<String> writtenTo) {
-        var inputs = <String>newHashSet
-        // Add a found non local variable use
-        if (stmt instanceof IASTIdExpression) {
-            val varName = stmt.getName.toString
-            if(globalVars.containsKey(varName)) inputs += varName
-        // Consider only variables that are not target of an assignment    
-        } else if (stmt instanceof IASTBinaryExpression) {
-            val operator = stmt.getOperator
-            if ((operator >= IASTBinaryExpression.op_assign) && (operator <= IASTBinaryExpression.op_binaryOrAssign)) {
-                inputs = findGlobalVars(stmt.getOperand2, writtenTo)
-                // If operand1 is an array, we consider it to be "read" as well.
-                if (stmt.operand1 instanceof IASTArraySubscriptExpression) {
-                    inputs += findGlobalVars(stmt.getOperand1, writtenTo)
-                }
-                // update writtenTo set
-                if (stmt.operand1 instanceof IASTIdExpression) {
-                    val varName = (stmt.operand1 as IASTIdExpression).name.toString
-                    if(globalVars.containsKey(varName)) writtenTo += varName
-                }
-            } else {
-                inputs = findGlobalVars(stmt.getOperand1, writtenTo)
-                inputs += findGlobalVars(stmt.getOperand2, writtenTo)
-            }
-        // Consider only arguments of a function call    
-        } else if (stmt instanceof IASTFunctionCallExpression) {
-            val arguments = stmt.getArguments
-            for (argument : arguments) {
-                inputs += findGlobalVars(argument, writtenTo)
-            }
-        // Test all children of other statements    
-        } else {
-            for (child : stmt.children) {
-                inputs += findGlobalVars(child, writtenTo)
-            }
-        }
-        return inputs
-    }
-    
     /**
      * Creates for each name of the set {@code names} an input variable in the given {@code state}
      * 
      * @param names The names of the variables that should be create
      * @param state The state for which input variables should be created.
      */
-    private def addGlobalVarAsInput(HashSet<String> names, State state) {
+    private def addGlobalVarAsInput(Set<String> names, State state) {
         val Map<ValueType, VariableDeclaration> declarations = newHashMap
         for (varName : names) {
             val declSpec = globalVars.get(varName)
@@ -2701,6 +2657,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             IASTIdExpression case checkId: {
                 val varName = (stmt as IASTIdExpression).getName.toString
                 if(getStateVariables(parentState).containsKey(varName)) outputs += varName
+                if(globalVars.containsKey(varName)) outputs += varName
             }
             IASTBinaryExpression: {
                 // Consider non-local variables that are target of an assignment.
@@ -2716,6 +2673,21 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                     // Also consider the source of the expression, as assignments may be nested in other expressions,
                     // such as in 'var1 = var2 = 0' or 'callFunc(var1 = 0)'.
                     outputs += findOutputs(stmt.operand2, parentState, false)
+                }
+            }
+            IASTFunctionCallExpression: {
+                // consider global vars output by the function
+                val uniqueFunctionIdentifier = CProcessorUtils.nameToIdentifier(
+                    (stmt.functionNameExpression as IASTIdExpression).name, index)
+                val state = functions.get(uniqueFunctionIdentifier).values.head
+                val gVars = getStateVariables(state)
+                for (gV : gVars.keySet) {
+                    if (globalVars.containsKey(gV) && !gVars.get(gV).filter[v | v.isOutput].isEmpty) outputs += gV
+                }
+
+                // Check every child for other statements.
+                for (child : stmt.children) {
+                    outputs += findOutputs(child, parentState, false)
                 }
             }
             IASTUnaryExpression: {
@@ -2820,6 +2792,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         if (stmt instanceof IASTIdExpression) {
             val varName = stmt.getName.toString
             if(getStateVariables(parentState).containsKey(varName)) inputs += varName
+            if(globalVars.containsKey(varName)) inputs += varName
         // Consider only variables that are not target of an assignment    
         } else if (stmt instanceof IASTBinaryExpression) {
             val operator = stmt.getOperator
@@ -2838,6 +2811,14 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             val arguments = stmt.getArguments
             for (argument : arguments) {
                 inputs += findInputs(argument, parentState)
+            }
+            // consider global vars used by the function
+            val uniqueFunctionIdentifier = CProcessorUtils.nameToIdentifier(
+                (stmt.functionNameExpression as IASTIdExpression).name, index)
+            val state = functions.get(uniqueFunctionIdentifier).values.head
+            val gVars = getStateVariables(state)
+            for (gV : gVars.keySet) {
+                if (globalVars.containsKey(gV)) inputs += gV
             }
         // Test all children of other statements    
         } else {
@@ -3381,6 +3362,35 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
 
         // Create all assignments for the function call
         var index = 0
+        
+        // assignements for input global vars
+        val stateDecls = refState.declarations.filter(VariableDeclaration)
+        val inputGVs = stateDecls.filter[it.isInput].map[it.valuedObjects].flatten
+        val outputGVs = stateDecls.filter[it.isOutput].map[it.valuedObjects].
+            flatten.filter [
+                it.name != returnObjectName + outSuffix
+            ]
+        for (gV : inputGVs) {
+            if (globalVars.containsKey(gV.label)){
+                val argExpr = findValuedObjectByName(state, gV.label, false, dRegion)
+                dRegion.equations += createDataflowAssignment(refObj, gV, argExpr.reference)
+            }
+        }
+        
+        // assignments for output global vars
+        for (gV : outputGVs) {
+            val target = state.findValuedObjectByName(gV.label, true, dRegion)
+            if (refObj === null) {
+                dRegion.equations += createDataflowAssignment(target, gV.reference)
+            } else {
+                val source = refObj.reference => [
+                    subReference = gV.reference
+                ]
+                dRegion.equations += createDataflowAssignment(target, source)
+            }
+        }
+        
+        
         for (argument : expression.arguments) {
             // Create the assignments from the function inputs to inputs of the referenced state.
             val argExpr = argument.createKExpression(state, dRegion)
