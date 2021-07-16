@@ -2679,10 +2679,12 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 // consider global vars output by the function
                 val uniqueFunctionIdentifier = CProcessorUtils.nameToIdentifier(
                     (stmt.functionNameExpression as IASTIdExpression).name, index)
-                val state = functions.get(uniqueFunctionIdentifier).values.head
-                val gVars = getStateVariables(state)
-                for (gV : gVars.keySet) {
-                    if (globalVars.containsKey(gV) && !gVars.get(gV).filter[v | v.isOutput].isEmpty) outputs += gV
+                if (functions.get(uniqueFunctionIdentifier) !== null) {
+                    val state = functions.get(uniqueFunctionIdentifier).values.head
+                    val gVars = getStateVariables(state)
+                    for (gV : gVars.keySet) {
+                        if (globalVars.containsKey(gV) && !gVars.get(gV).filter[v | v.isOutput].isEmpty) outputs += gV
+                    }
                 }
 
                 // Check every child for other statements.
@@ -2815,10 +2817,12 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             // consider global vars used by the function
             val uniqueFunctionIdentifier = CProcessorUtils.nameToIdentifier(
                 (stmt.functionNameExpression as IASTIdExpression).name, index)
-            val state = functions.get(uniqueFunctionIdentifier).values.head
-            val gVars = getStateVariables(state)
-            for (gV : gVars.keySet) {
-                if (globalVars.containsKey(gV)) inputs += gV
+            if (functions.get(uniqueFunctionIdentifier) !== null) {
+                val state = functions.get(uniqueFunctionIdentifier).values.head
+                val gVars = getStateVariables(state)
+                for (gV : gVars.keySet) {
+                    if (globalVars.containsKey(gV)) inputs += gV
+                }
             }
         // Test all children of other statements    
         } else {
