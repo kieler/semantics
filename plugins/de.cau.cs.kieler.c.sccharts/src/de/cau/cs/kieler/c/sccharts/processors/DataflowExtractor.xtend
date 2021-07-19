@@ -490,7 +490,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         // declaration with an assignment of the final value to that output declaration.
         if (funcDeclarator instanceof IASTStandardFunctionDeclarator) {
             val parameters = funcDeclarator.getParameters
-            val changedPointers = findPointerOutputs(func.body)
+            val changedPointers = findOutputs(func.body, state, true)
             for (par : parameters) {
                 val parName = par.getDeclarator.getName.toString
                 val isArray = par.getDeclSpecifier instanceof IASTSimpleDeclSpecifier &&
@@ -2605,6 +2605,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             IASTIdExpression case checkId: {
                 val varName = (stmt as IASTIdExpression).getName.toString
                 if(getStateVariables(parentState).containsKey(varName)) outputs += varName
+                else if (getStateVarPointers(parentState).containsKey(varName)) outputs += varName
             }
             IASTBinaryExpression: {
                 // Consider non-local variables that are target of an assignment.
@@ -2616,7 +2617,11 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                         outputs += findOutputs(op1, parentState, true)
                     } else if (op1 instanceof IASTArraySubscriptExpression) {
                         outputs += findOutputs(op1.arrayExpression, parentState, true)
+                    } else if (op1 instanceof IASTUnaryExpression &&
+                        (op1 as IASTUnaryExpression).operator === IASTUnaryExpression.op_star) {
+                            outputs += findOutputs((op1 as IASTUnaryExpression).operand, parentState, true)
                     }
+                    
                     // Also consider the source of the expression, as assignments may be nested in other expressions,
                     // such as in 'var1 = var2 = 0' or 'callFunc(var1 = 0)'.
                     outputs += findOutputs(stmt.operand2, parentState, false)
@@ -2653,36 +2658,6 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         }
         return outputs
     }
-
-/**
-     * Find the pointers that are written to from the given control statement.
-     * 
-     * @param stmt The control statement
-     */
-    def HashSet<String> findPointerOutputs(IASTNode stmt) {
-        var outputs = <String>newHashSet
-
-        switch (stmt) {
-            IASTExpressionStatement: {
-                if (stmt.expression instanceof IASTBinaryExpression 
-                    && (stmt.expression as IASTBinaryExpression).operand1 instanceof IASTUnaryExpression
-                ){
-                    val leftSide = (stmt.expression as IASTBinaryExpression).operand1 as IASTUnaryExpression
-                    if (leftSide.operator === IASTUnaryExpression.op_star) {
-                        outputs += (leftSide.operand as IASTIdExpression).name.toString
-                    }
-                }
-            }
-            default: {
-                // Check every child for other statements.
-                for (child : stmt.children) {
-                    outputs += findPointerOutputs(child)
-                }
-            }
-        }
-        return outputs
-    }
-
 
     /**
      * Connect the Inputs of the given control statement to their respective valued objects of the containing state
