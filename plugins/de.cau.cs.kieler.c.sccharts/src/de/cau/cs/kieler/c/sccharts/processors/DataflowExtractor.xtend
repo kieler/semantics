@@ -838,7 +838,6 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
      * @return a reference to the expression value, if applicable, {@code null} otherwise.
      */
     def ValuedObjectReference createExpression(IASTExpression expression, State rootState, DataflowRegion dRegion) {
-        //TODO: FieldReference Support for R-values!
         // Translate binary and unary expressions
         if (expression instanceof IASTBinaryExpression) {
             createBinaryAssignment(expression, rootState, dRegion)
@@ -2485,7 +2484,8 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 
                 for (name : fields) {
                     dummyArrayDeclarator.addArrayModifier(
-                        defaultCNodeFactory.newArrayModifier(defaultCNodeFactory.newLiteralExpression(3, "\"" + name +"\"")))
+                        defaultCNodeFactory.newArrayModifier(
+                            defaultCNodeFactory.newLiteralExpression(3, "\"" + name + "\"")))
                 }
                 //TODO: Nested Structs, structs as fields
                 vo.cardinalities += dummyArrayDeclarator.arrayModifiers.map [
@@ -3213,7 +3213,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                  * Force the array visualization to take a string as index.
                  */
                 val fieldName = targetExpr.fieldName.toString
-                //TODO: probably problem cause for some instances
+                //TODO: probably problem cause for some instances - maybe handle the other case as an error or exception
                 val ownerName = (targetExpr.fieldOwner as IASTIdExpression).name.toString
                 val artificialIndexExpr = ASTNodeFactoryFactory.defaultCNodeFactory
                                                                .newLiteralExpression(3, "\"" + fieldName +
@@ -3465,9 +3465,14 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 kExpression = opValObj.reference
             }
             IASTFieldReference: {
-                var opValObj = funcState.findValuedObjectByName((expr as IASTFieldReference).getFieldName.toString,
-                    false, dRegion)
+                // Lookup the array that represents the struct owning the field
+                var opValObj = funcState.findValuedObjectByName(
+                    ((expr as IASTFieldReference).fieldOwner as IASTIdExpression).name.toString, false, dRegion)
+                
+                // Use the fieldname as a pseudo index so that it appears as label in the diagram
                 kExpression = opValObj.reference
+                val indexLabelExpr = createStringValue(expr.fieldName.toString)
+                (kExpression as ValuedObjectReference).indices += indexLabelExpr           
             }
             // For an array, just use the array expression (and leave out the subscript for now).
             IASTArraySubscriptExpression: {
