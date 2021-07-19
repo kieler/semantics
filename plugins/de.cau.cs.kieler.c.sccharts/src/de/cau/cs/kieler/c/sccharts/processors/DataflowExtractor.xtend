@@ -252,6 +252,10 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
     
     val Map<String, IASTDeclSpecifier> globalVars = newHashMap
 
+    /** the function identifiers to which the state has a dependency regarding global variables 
+     * that is not resolved yet. */
+    val Map<State, List<Object>> unresolvedFuncDependencies = newHashMap
+
     val voWrittenIdxs = <ValuedObject, List<Expression>>newHashMap
 
     var ValueType currentReturnType = null
@@ -306,7 +310,24 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         }
         return statePointers
     }
-
+    
+    /**
+     * Getter to access the function dependencies list.
+     * 
+     * @param the scoping state containing the functions.
+     * @return the unresolved function dependencies for the given state
+     */
+    def getUnresFuncDeps(State state) {
+        var List<Object> deps = null
+        if (unresolvedFuncDependencies.containsKey(state)) {
+            deps = unresolvedFuncDependencies.get(state)
+        } else {
+            deps = newArrayList
+            unresolvedFuncDependencies.put(state, deps)
+        }
+        return deps
+    }
+    
     override void process() {
         val dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss.SSS")
         var now = LocalDateTime.now
@@ -390,6 +411,13 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 val state = createFunctionScaffold(functionDefinition)
                 rootSCChart.rootStates += state
             }
+            
+            // resolve unresolved function dependencies regarding global variables
+            val Set<State> resStates = newHashSet
+            for (state : unresolvedFuncDependencies.keySet) {
+                resolveGlobalVars(state, resStates)
+            }
+            
             // Go through each function definition again and fill in the scaffolds now that all detailed functions are
             // known.
             for (functionDefinition : functionDefinitions) {
@@ -400,6 +428,40 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         }
 
         return rootSCChart
+    }
+    
+    /**
+     * Resolves the dependencies of the given {@code state} regarding global variables. 
+     * @param state The state for which the dependencies should be resolved.
+     * @param resStates Set that contains the states for which no dependencies are left
+     */
+    private def void resolveGlobalVars(State state, Set<State> resStates) {
+        if (!resStates.contains(state)) {
+            val depStates = unresolvedFuncDependencies.get(state)
+            val inputs = <String>newHashSet
+            val outputs = <String>newHashSet
+            for (uniqueFunctionIdentifier : depStates) {
+                val depState = functions.get(uniqueFunctionIdentifier).values.head
+                // if the depend state has itself dependencies, these must be resolved first
+                if (unresolvedFuncDependencies.containsKey(depState)) {
+                    resolveGlobalVars(depState, resStates)
+                }
+                // check the stateVariables for global variables
+                val stateVars = getStateVariables(depState)
+                for (sVar : stateVars.keySet) {
+                    if (globalVars.containsKey(sVar)) {
+                        inputs += sVar
+                        if (!stateVars.get(sVar).filter[it.isOutput].isEmpty) outputs += sVar
+                    }
+                }
+                    
+            }
+            // add the global variables to the current state
+            addGlobalVarsAsInput(inputs, state)
+            addGlobalVarsAsOutput(outputs, state)
+            
+            resStates.add(state)
+        }
     }
 
     /**
@@ -474,8 +536,8 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         // add used global variables as input and where necessary as output
         val inputs = findInputs(func.body, state).filter[v | globalVars.containsKey(v)].toSet()
         val outputs = findOutputs(func.body, state, true).filter[v | globalVars.containsKey(v)].toSet()
-        addGlobalVarAsInput(inputs, state)
-        addGlobalVarAsOutput(outputs, state)
+        addGlobalVarsAsInput(inputs, state)
+        addGlobalVarsAsOutput(outputs, state)
 
         // Determine function output
         val outputDeclSpecifier = func.getDeclSpecifier
@@ -534,51 +596,62 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
      * @param names The names of the variables that should be create
      * @param state The state for which input variables should be created.
      */
-    private def addGlobalVarAsInput(Set<String> names, State state) {
+    private def addGlobalVarsAsInput(Set<String> names, State state) {
         val Map<ValueType, VariableDeclaration> declarations = newHashMap
         for (varName : names) {
-            val declSpec = globalVars.get(varName)
-            // TODO: for arrays the declSpec is not a simpleDeclSpecifier
-            val type = (declSpec as IASTSimpleDeclSpecifier).type.cdtTypeConversion
-            // create variable declaration
-            if (!declarations.containsKey(type)) {
-                val newDecl = createVariableDeclaration
-                state.declarations += newDecl
-                newDecl.type = type
-                newDecl.input = true
-                declarations.put(type, newDecl)
+            // prevent the case that global variables are created several times
+            if (!getStateVariables(state).containsKey(varName)) {
+                val declSpec = globalVars.get(varName)
+                // TODO: for arrays the declSpec is not a simpleDeclSpecifier
+                val type = (declSpec as IASTSimpleDeclSpecifier).type.cdtTypeConversion
+                // create variable declaration
+                if (!declarations.containsKey(type)) {
+                    val newDecl = createVariableDeclaration
+                    state.declarations += newDecl
+                    newDecl.type = type
+                    newDecl.input = true
+                    declarations.put(type, newDecl)
+                }
+                
+                // create the vo and add it to the stateVariables list
+                val decl = declarations.get(type)
+                val vo = decl.createValuedObject(varName + inSuffix)
+                vo.label = varName
+        
+                val stateVariables = getStateVariables(state)
+                val varList = <ValuedObject>newArrayList
+                varList.add(vo)
+                stateVariables.put(varName, varList)
             }
-            
-            // create the vo and add it to the stateVariables list
-            val decl = declarations.get(type)
-            val vo = decl.createValuedObject(varName + inSuffix)
-            vo.label = varName
-    
-            val stateVariables = getStateVariables(state)
-            val varList = <ValuedObject>newArrayList
-            varList.add(vo)
-            stateVariables.put(varName, varList)
         }
     }
     
-        
-    def addGlobalVarAsOutput(Set<String> varNames, State state) {
-        for (gV : varNames) {
-            val declSpec = globalVars.get(gV)
-            // TODO: for arrays the declSpec is not a simpleDeclSpecifier
-            val type = (declSpec as IASTSimpleDeclSpecifier).type.cdtTypeConversion
-            
-            val outDecl = createVariableDeclaration
-            outDecl.type = type
-            outDecl.output = true
-            state.declarations += outDecl
-            
-            val vo = outDecl.createValuedObject(gV + outSuffix)
-            vo.label = gV
-            
-            val stateVariables = getStateVariables(state)
-            val varList = stateVariables.get(gV)
-            varList.add(vo)
+    /**
+     * Creates for each name of the set {@code names} an output variable in the given {@code state}
+     * 
+     * @param names The names of the variables that should be create
+     * @param state The state for which output variables should be created.
+     */
+    private def addGlobalVarsAsOutput(Set<String> names, State state) {
+        for (varName : names) {
+            // prevent the case that global variables are created several times
+            if (!getStateVariables(state).containsKey(varName)) {
+                val declSpec = globalVars.get(varName)
+                // TODO: for arrays the declSpec is not a simpleDeclSpecifier
+                val type = (declSpec as IASTSimpleDeclSpecifier).type.cdtTypeConversion
+                
+                val outDecl = createVariableDeclaration
+                outDecl.type = type
+                outDecl.output = true
+                state.declarations += outDecl
+                
+                val vo = outDecl.createValuedObject(varName + outSuffix)
+                vo.label = varName
+                
+                val stateVariables = getStateVariables(state)
+                val varList = stateVariables.get(varName)
+                varList.add(vo)
+            }
         }
     }
 
@@ -2683,7 +2756,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                     val state = functions.get(uniqueFunctionIdentifier).values.head
                     val gVars = getStateVariables(state)
                     for (gV : gVars.keySet) {
-                        if (globalVars.containsKey(gV) && !gVars.get(gV).filter[v | v.isOutput].isEmpty) outputs += gV
+                        if (globalVars.containsKey(gV) && !gVars.get(gV).filter[it.isOutput].isEmpty) outputs += gV
                     }
                 }
 
@@ -2823,6 +2896,8 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 for (gV : gVars.keySet) {
                     if (globalVars.containsKey(gV)) inputs += gV
                 }
+            } else {
+                getUnresFuncDeps(parentState).add(uniqueFunctionIdentifier)
             }
         // Test all children of other statements    
         } else {
