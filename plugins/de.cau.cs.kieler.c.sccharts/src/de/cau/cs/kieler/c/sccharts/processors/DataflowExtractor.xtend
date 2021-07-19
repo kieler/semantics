@@ -814,17 +814,22 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
      */
     def ValuedObjectReference createExpression(IASTExpression expression, State rootState, DataflowRegion dRegion) {
         // Translate binary and unary expressions
-        if (expression instanceof IASTBinaryExpression) {
-            createBinaryAssignment(expression, rootState, dRegion)
-            return null
-        } else if (expression instanceof IASTUnaryExpression) {
-            createUnaryAssignment(expression, rootState, dRegion)
-            return null
-        // Create a function call by referencing the function state    
-        } else if (expression instanceof IASTFunctionCallExpression) {
-            return createFunctionCall(expression, rootState, dRegion)
-        } else if (expression instanceof IASTConditionalExpression) {
-            return createConditionalExpression(expression, rootState, dRegion)
+        switch (expression) {
+            IASTBinaryExpression: {
+                createBinaryAssignment(expression, rootState, dRegion)
+                return null
+            }
+            IASTUnaryExpression: {
+                createUnaryAssignment(expression, rootState, dRegion)
+                return null  
+            }
+            // Create a function call by referencing the function state  
+            IASTFunctionCallExpression: {
+                return createFunctionCall(expression, rootState, dRegion)
+            }
+            IASTConditionalExpression: {
+                return createConditionalExpression(expression, rootState, dRegion)
+            }
         }
     }
 
@@ -1700,15 +1705,18 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         State parentState, DataflowRegion parentRegion) {
 
         var condName = ""
+        var condLabel = ""
         var IASTExpression condExpr = null
         switch stmt {
-            case stmt instanceof IASTWhileStatement: {
+            IASTWhileStatement: {
                 condName = whileName + ssaNameSeperator + localCounter + whileCondName
+                condLabel = whileName + ssaNameSeperator + localCounter + "cond: " 
+                    + exprToString((stmt as IASTWhileStatement).getCondition, sourceFile)
                 condExpr = (stmt as IASTWhileStatement).getCondition
-
             }
-            case stmt instanceof IASTIfStatement: {
+            IASTIfStatement: {
                 condName = ifName + ssaNameSeperator + localCounter + ifCondName
+                condLabel = condName
                 condExpr = (stmt as IASTIfStatement).conditionExpression
             }
             default:
@@ -1735,7 +1743,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         // Create the region for the condition part
         val condRegion = createDFRegionForNode(condExpr, condState, parentState, parentRegion, condObj)
         condState.regions += condRegion
-        condRegion.label = condName
+        condRegion.label = condLabel
 
         return condRegion -> (condState -> condObj)
     }
@@ -2726,32 +2734,38 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
     def HashSet<String> findInputs(IASTNode stmt, State parentState) {
         var inputs = <String>newHashSet
         // Add a found non local variable use
-        if (stmt instanceof IASTIdExpression) {
-            val varName = stmt.getName.toString
-            if(getStateVariables(parentState).containsKey(varName)) inputs += varName
-        // Consider only variables that are not target of an assignment    
-        } else if (stmt instanceof IASTBinaryExpression) {
-            val operator = stmt.getOperator
-            if ((operator >= IASTBinaryExpression.op_assign) && (operator <= IASTBinaryExpression.op_binaryOrAssign)) {
-                inputs = findInputs(stmt.getOperand2, parentState)
-                // If operand1 is an array, we consider it to be "read" as well.
-                if (stmt.operand1 instanceof IASTArraySubscriptExpression) {
-                    inputs += findInputs(stmt.getOperand1, parentState)
+        switch (stmt) {
+            IASTIdExpression: {
+                val varName = (stmt as IASTIdExpression).getName.toString
+                if(getStateVariables(parentState).containsKey(varName)) inputs += varName
+            }
+            // Consider only variables that are not target of an assignment    
+            IASTBinaryExpression: {
+                val operator = (stmt as IASTBinaryExpression).getOperator
+                if ((operator >= IASTBinaryExpression.op_assign) &&
+                    (operator <= IASTBinaryExpression.op_binaryOrAssign)) {
+                    inputs = findInputs(stmt.getOperand2, parentState)
+                    // If operand1 is an array, we consider it to be "read" as well.
+                    if (stmt.operand1 instanceof IASTArraySubscriptExpression) {
+                        inputs += findInputs(stmt.getOperand1, parentState)
+                    }
+                } else {
+                    inputs = findInputs(stmt.getOperand1, parentState)
+                    inputs += findInputs(stmt.getOperand2, parentState)
                 }
-            } else {
-                inputs = findInputs(stmt.getOperand1, parentState)
-                inputs += findInputs(stmt.getOperand2, parentState)
             }
-        // Consider only arguments of a function call    
-        } else if (stmt instanceof IASTFunctionCallExpression) {
-            val arguments = stmt.getArguments
-            for (argument : arguments) {
-                inputs += findInputs(argument, parentState)
+            // Consider only arguments of a function call    
+            IASTFunctionCallExpression: {
+                val arguments = (stmt as IASTFunctionCallExpression).getArguments
+                for (argument : arguments) {
+                    inputs += findInputs(argument, parentState)
+                }
             }
-        // Test all children of other statements    
-        } else {
-            for (child : stmt.children) {
-                inputs += findInputs(child, parentState)
+            // Test all children of other statements    
+            default: {
+                for (child : stmt.children) {
+                    inputs += findInputs(child, parentState)
+                }
             }
         }
         return inputs
@@ -3074,26 +3088,34 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         if (operator == IASTBinaryExpression.op_assign) {
             var sourceExpr = binExpr.children.get(1)
             var Expression source = null
-            // If source expression is a variable read retrieve the respective VO
-            if (sourceExpr instanceof IASTIdExpression) {
-                source = funcState.findValuedObjectByName((sourceExpr as IASTIdExpression).getName.toString, false,
-                    dRegion).reference
-            // Translate the expression that is meant to be assigned
-            } else if (sourceExpr instanceof IASTBinaryExpression) {
+            switch (sourceExpr) {
+                // If source expression is a variable read retrieve the respective VO
+                IASTIdExpression: {
+                    source = funcState.findValuedObjectByName((sourceExpr as IASTIdExpression).getName.toString, false,
+                        dRegion).reference
+                }
+                // Translate the expression that is meant to be assigned
+                IASTBinaryExpression: {
+                    source = createKExpression(sourceExpr, funcState, dRegion)
+                }
+                IASTUnaryExpression: {
+                    source = createKExpression(sourceExpr, funcState, dRegion)
+                }
+                // Translate a function call that will be assigned
+                IASTFunctionCallExpression: {
+                    // Create the function reference
+                    source = createFunctionCall(sourceExpr, funcState, dRegion)
+                }
+                // Create a value expression for a literal    
+                IASTLiteralExpression: {
+                    source = createValue(sourceExpr)
+                }
+                IASTConditionalExpression: {
+                    source = createKExpression(sourceExpr, funcState, dRegion)
+                }
+                IASTArraySubscriptExpression: {
                 source = createKExpression(sourceExpr, funcState, dRegion)
-            } else if (sourceExpr instanceof IASTUnaryExpression) {
-                source = createKExpression(sourceExpr, funcState, dRegion)
-            // Translate a function call that will be assigned
-            } else if (sourceExpr instanceof IASTFunctionCallExpression) {
-                // Create the function reference
-                source = createFunctionCall(sourceExpr, funcState, dRegion)
-            // Create a value expression for a literal    
-            } else if (sourceExpr instanceof IASTLiteralExpression) {
-                source = createValue(sourceExpr)
-            } else if (sourceExpr instanceof IASTConditionalExpression) {
-                source = createKExpression(sourceExpr, funcState, dRegion)
-            } else if (sourceExpr instanceof IASTArraySubscriptExpression) {
-                source = createKExpression(sourceExpr, funcState, dRegion)
+                }
             }
 
             // Retrieve the assignment target
@@ -3134,26 +3156,31 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
     def ValuedObjectAndExpression retrieveTargetAndIndexExpr(IASTExpression targetExpr, State funcState,
         DataflowRegion dRegion) {
         val ValuedObjectAndExpression result = new ValuedObjectAndExpression
-        if (targetExpr instanceof IASTIdExpression) {
-            result.target = funcState.findValuedObjectByName(targetExpr.getName.toString, true, dRegion)
-        } else if (targetExpr instanceof IASTArraySubscriptExpression) {
-            val arrayIndex = targetExpr.argument.createKExpression(funcState, dRegion)
-            result.target = funcState.findValuedObjectByName(exprToString(targetExpr.arrayExpression, sourceFile),
-                arrayIndex, true, dRegion)
-            result.index = targetExpr.argument.createKExpression(funcState, dRegion)
-        } else if (targetExpr instanceof IASTUnaryExpression) {
-            // TODO: pointer WIP
-            val op = targetExpr.operand
-            val name = (op as IASTIdExpression).getName.toString
-            val map = getStateVarPointers(funcState)
-            val vo = map.get(name)
-            if (vo === null) {
-                result.target = funcState.findValuedObjectByName(name, true, dRegion)
-            } else {
-                result.target = vo
+        switch (targetExpr) {
+            IASTIdExpression: {
+                result.target = funcState.findValuedObjectByName(targetExpr.getName.toString, true, dRegion)
             }
-        } else {
-            println("DataflowExtractor: Unsupported assignment target detected!" + targetExpr.expressionType)
+            IASTArraySubscriptExpression: {
+                val arrayIndex = targetExpr.argument.createKExpression(funcState, dRegion)
+                result.target = funcState.findValuedObjectByName(exprToString(targetExpr.arrayExpression, sourceFile),
+                    arrayIndex, true, dRegion)
+                result.index = targetExpr.argument.createKExpression(funcState, dRegion)
+            }
+            IASTUnaryExpression: {
+                // TODO: pointer WIP
+                val op = targetExpr.operand
+                val name = (op as IASTIdExpression).getName.toString
+                val map = getStateVarPointers(funcState)
+                val vo = map.get(name)
+                if (vo === null) {
+                    result.target = funcState.findValuedObjectByName(name, true, dRegion)
+                } else {
+                    result.target = vo
+                }
+            }
+            default: {
+                println("DataflowExtractor: Unsupported assignment target detected!" + targetExpr.expressionType)
+            }
         }
         return result
     }
