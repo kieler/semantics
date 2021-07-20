@@ -2603,11 +2603,20 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
 
         // Retrieve the state valued object map
         var Map<String, List<ValuedObject>> stateVariables = getStateVariables(newState)
+        var stateVarPointers = getStateVarPointers(rootState)
 
         // Create an output declaration for each found output
         for (output : outputs) {
             // Get the respective valued object of the containing state
-            val outputVO = rootState.findValuedObjectByName(output, addAssignments, dRegion)
+            val vo = stateVarPointers.get(output)
+            var String label
+            // consider pointer variables
+            if (vo === null) {
+                label = output
+            } else {
+                label = vo.label !== null ? vo.label : vo.name.split(ssaNameSeperator).get(0)
+            }
+            val outputVO = rootState.findValuedObjectByName(label, addAssignments, dRegion)
             if (!serializable) {
                 outputVO.insertHighlightAnnotations(stmt)
             }
