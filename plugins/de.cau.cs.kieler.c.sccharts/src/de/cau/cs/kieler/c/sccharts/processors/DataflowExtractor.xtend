@@ -2553,11 +2553,11 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 initExpr = createKExpression(initializer.children.head, state, dRegion)
             }
             
-            // TODO: pointer WIP
-            var  statePointers = getStateVarPointers(state)
+            var statePointers = getStateVarPointers(state)
             if (initExpr instanceof OperatorExpression && 
                 (initExpr as OperatorExpression).operator.literal.equals(addressOp)
             ) {
+                // initExpr is of the form "&expr"
                 val ref = (initExpr as OperatorExpression).subExpressions.get(0) as ValuedObjectReference
                 statePointers.put(vo.name.split(ssaNameSeperator).get(0), ref.valuedObject)
             }
@@ -3213,9 +3213,8 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             // Retrieve the assignment target
             val targetAndIndex = retrieveTargetAndIndexExpr(binExpr.getOperand1, funcState, dRegion)
             
-            // TODO: pointer WIP
             var Map<String, ValuedObject> statePointers = getStateVarPointers(funcState)
-            // update pointer map if target is a pointer
+            // reset pointer map if target is a pointer
             if (binExpr.getOperand1 instanceof IASTIdExpression 
                 && statePointers.containsKey((binExpr.getOperand1 as IASTIdExpression).getName.toString)
             ) {
@@ -3297,7 +3296,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 result.index = artificialIndexExpr
             }
             IASTUnaryExpression: {
-                // TODO: pointer WIP
+                // target is of the form "*pointer"
                 val op = targetExpr.operand
                 val name = (op as IASTIdExpression).getName.toString
                 val map = getStateVarPointers(funcState)
