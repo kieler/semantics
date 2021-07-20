@@ -3281,7 +3281,12 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                  */
                 val fieldName = targetExpr.fieldName.toString
                 //TODO: probably problem cause for some instances - maybe handle the other case as an error or exception
-                val ownerName = (targetExpr.fieldOwner as IASTIdExpression).name.toString
+                var ownerName = (targetExpr.fieldOwner as IASTIdExpression).name.toString
+                val statePointerVars = getStateVarPointers(funcState) 
+                if (statePointerVars.containsKey(ownerName)) {
+                    val ref = statePointerVars.get(ownerName)
+                    ownerName = ref.label !== null ? ref.label : ref.name.split(ssaNameSeperator).get(0)
+                }
                 val artificialIndexExpr = ASTNodeFactoryFactory.defaultCNodeFactory
                                                                .newLiteralExpression(3, "\"" + fieldName +
                                                                             "\"").createKExpression(funcState, dRegion)
@@ -3555,6 +3560,14 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 // Lookup the array that represents the struct owning the field
                 var opValObj = funcState.findValuedObjectByName(
                     ((expr as IASTFieldReference).fieldOwner as IASTIdExpression).name.toString, false, dRegion)
+                    
+                // if expr is of the form "pointer -> field", get the struct the pointer points to
+                val label = opValObj.label !== null
+                        ? opValObj.label
+                        : opValObj.name.split(ssaNameSeperator).get(0)
+                if (getStateVarPointers(funcState).containsKey(label)) {
+                    opValObj = getStateVarPointers(funcState).get(label)
+                }
                 
                 // Use the fieldname as a pseudo index so that it appears as label in the diagram
                 kExpression = opValObj.reference
