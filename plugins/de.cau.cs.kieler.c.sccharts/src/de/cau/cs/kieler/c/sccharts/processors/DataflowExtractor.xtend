@@ -487,6 +487,28 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                     // Attach the valued object to its list and the list to the map
                     varList.add(vo)
                     stateVariables.put(varName, varList)
+                } else if (declSpecifier instanceof IASTElaboratedTypeSpecifier) {
+                    // par is a pointer to a struct
+                    
+                    val structName = declSpecifier.name.toString
+                    val varName = par.getDeclarator.getName.toString
+                    val variableDeclaration = createVariableDeclaration
+                    state.declarations += variableDeclaration
+
+                    // Uses Host Type for setting the struct type since our structs are represented as array-like valued objects
+                    variableDeclaration.type = ValueType.HOST
+                    variableDeclaration.hostType = "struct " + structName
+                    variableDeclaration.input = true
+
+                    val fields = structFields.get(structName)
+
+                    val vo = variableDeclaration.createValuedObject(varName + inSuffix)
+                    vo.cardinalities += createIntValue(fields.size)
+                    vo.addTagAnnotation("struct")
+
+                    val varList = <ValuedObject>newArrayList
+                    varList.add(vo)
+                    stateVariables.put(varName, varList)
                 }
             }
         }
@@ -518,15 +540,24 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 val isArray = par.getDeclSpecifier instanceof IASTSimpleDeclSpecifier &&
                     par.declarator instanceof IASTArrayDeclarator
                 val isPointer = par.declarator.pointerOperators !== null && !par.declarator.pointerOperators.isEmpty
+                val isStructPointer = par.declSpecifier instanceof IASTElaboratedTypeSpecifier
                 if (isArray || (isPointer && changedPointers.contains(parName))) {
-                    val type = isArray ? (outputDeclSpecifier as IASTSimpleDeclSpecifier).type.cdtTypeConversion
-                        : (par.declSpecifier as IASTSimpleDeclSpecifier).type.cdtTypeConversion
                     // Determine parameter name
                     val varName = par.getDeclarator.getName.toString
                     val varList = stateVariables.get(varName)
                     // Create output declaration                    
                     val outDecl = createVariableDeclaration
-                    outDecl.type = type
+                    // determine type
+                    if (isArray) {
+                        outDecl.type = (outputDeclSpecifier as IASTSimpleDeclSpecifier).type.cdtTypeConversion
+                    } else if (isStructPointer) {
+                        val structName = (par.declSpecifier as IASTElaboratedTypeSpecifier).name.toString
+                        outDecl.type = ValueType.HOST
+                        outDecl.hostType = "struct " + structName
+                    } else {
+                        outDecl.type = (par.declSpecifier as IASTSimpleDeclSpecifier).type.cdtTypeConversion
+                    }
+                    
                     outDecl.output = true
                     state.declarations += outDecl
 
@@ -2708,6 +2739,8 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                     } else if (op1 instanceof IASTUnaryExpression &&
                         (op1 as IASTUnaryExpression).operator === IASTUnaryExpression.op_star) {
                             outputs += findOutputs((op1 as IASTUnaryExpression).operand, parentState, true)
+                    } else if (op1 instanceof IASTFieldReference) {
+                        outputs += findOutputs((op1 as IASTFieldReference).getFieldOwner, parentState, true)
                     }
                     
                     // Also consider the source of the expression, as assignments may be nested in other expressions,
@@ -2971,10 +3004,14 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
 
             // Make sure the declaration is attached to the dataflow region
             val type = varDecl.type
+            val hostType = varDecl.hostType
             if (!dRegion.declarations.contains(varDecl)) {
                 varDecl = createVariableDeclaration
                 varDecl.annotations += createTagAnnotation("Hide")
                 varDecl.type = type
+                if (type === ValueType.HOST) {
+                    varDecl.hostType = hostType
+                }
                 dRegion.declarations += varDecl
             }
 
