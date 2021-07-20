@@ -260,7 +260,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
     val String addressOp = "~"
     
     /** Maps struct names to its attribute names.  */
-    val Map<String, List<String>> structFields = newHashMap
+    val Map<String, List< Pair<String, IASTSimpleDeclaration> > > structFields = newHashMap
 
     val voWrittenIdxs = <ValuedObject, List<Expression>>newHashMap
 
@@ -717,14 +717,34 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
     def void retrieveStructFieldNames(List<IASTSimpleDeclaration> structDefs) {
         for (structDef : structDefs) {
             val structD = structDef.declSpecifier as IASTCompositeTypeSpecifier
+            val structName = structD.name.toString
 
-            val List<String> fieldNames = new ArrayList()
+            val List<Pair<String, IASTSimpleDeclaration>> fieldNames = new ArrayList()
             for (d : structD.getDeclarations(true)) {
-                val fieldName = ((d as IASTSimpleDeclaration).declarators.get(0) as IASTDeclarator).name.toString
-                fieldNames.add(fieldName)
+                val simpleD = d as IASTSimpleDeclaration
+                val fieldName = (simpleD.declarators.get(0) as IASTDeclarator).name.toString()
+    
+                
+                val declSpecifier = simpleD.declSpecifier
+                var IASTSimpleDeclaration resDec = null;
+                switch (declSpecifier) {
+                    IASTSimpleDeclSpecifier: {
+
+                        val isArray = simpleD.declarators.exists[declarator|declarator instanceof IASTArrayDeclarator]
+                        if (isArray) {
+                            resDec = simpleD
+                        }
+                    }
+                    IASTElaboratedTypeSpecifier: {
+                        resDec = simpleD
+                    }
+
+                }
+                
+                fieldNames.add(fieldName -> resDec)
             }
             
-            structFields.put(structD.name.toString, fieldNames)
+            structFields.put(structName, fieldNames)
         }
     }
 
@@ -2473,21 +2493,21 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
 
         // Create the declaration with the cdt type
         val variableDeclaration = createVariableDeclaration
-        val isStructDeclaration= (declaration.getDeclSpecifier instanceof IASTElaboratedTypeSpecifier)
-        var List<String> fields = newArrayList()
-        
+        val isStructDeclaration = (declaration.getDeclSpecifier instanceof IASTElaboratedTypeSpecifier)
+        var List<Pair<String, IASTSimpleDeclaration>> fields = newArrayList()
+
         if (!isStructDeclaration) {
             variableDeclaration.type = (declaration.getDeclSpecifier as IASTSimpleDeclSpecifier).type.cdtTypeConversion
             print("")
-        }else{
-           // The specifiers of struct declarations can't be cast to an IASTSimpleDeclSpecifier       
-           val structName = (declaration.getDeclSpecifier as IASTElaboratedTypeSpecifier).name.toString
-           
-           // Uses Host Type for setting the struct type since our structs are represented as array-like valued objects
-           variableDeclaration.type = ValueType.HOST
-           variableDeclaration.hostType = "struct " + structName
-           
-           fields = structFields.get(structName)
+        } else {
+            // The specifiers of struct declarations can't be cast to an IASTSimpleDeclSpecifier       
+            val structName = (declaration.getDeclSpecifier as IASTElaboratedTypeSpecifier).name.toString
+
+            // Uses Host Type for setting the struct type since our structs are represented as array-like valued objects
+            variableDeclaration.type = ValueType.HOST
+            variableDeclaration.hostType = "struct " + structName
+
+            fields = structFields.get(structName)
         }
         if (!serializable) {
             variableDeclaration.insertHighlightAnnotations(declaration)
@@ -2510,7 +2530,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             if (!serializable) {
                 vo.insertHighlightAnnotations(decl)
             }
-            
+
             if (decl instanceof IASTArrayDeclarator) {
                 vo.cardinalities += decl.arrayModifiers.map [
                     val expr = it.constantExpression?.createKExpression(state, dRegion)
@@ -2524,27 +2544,48 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                     }
                 ]
             }
-            
-            if (isStructDeclaration) {
-                // Structs shall be visualized and handled as arrays
-                // We explicitly create arrays for structs, because arrays are passable in sccharts - structs are not
-       
-                val defaultCNodeFactory = ASTNodeFactoryFactory.defaultCNodeFactory
-                
-                val dummyArrayDeclarator = defaultCNodeFactory
-                                           .newArrayDeclarator(defaultCNodeFactory.newName("dummy_array"))
-                
-                dummyArrayDeclarator.addArrayModifier(
-                    defaultCNodeFactory.newArrayModifier(defaultCNodeFactory.newLiteralExpression(0, "" + fields.size))
-                )
 
-                //TODO: Nested Structs, structs as fields - idea create hidden arrays for this
-                vo.cardinalities += dummyArrayDeclarator.arrayModifiers.map [
-                    val litExp = it.constantExpression as IASTLiteralExpression
-                    val expr = createKExpression(litExp, state, dRegion) 
-                    return expr
-                ]
+            if (isStructDeclaration) {
+                // Structs shall be visualized and handled as arrays 
+                // -> something is handled as array when cardinalities is set
+                // We explicitly create arrays for structs, because arrays are passable in sccharts - structs are not
+                // TODO: Nested Structs, structs as fields - idea create hidden arrays for this
+                vo.cardinalities += createIntValue(fields.size)
                 vo.addTagAnnotation("struct")
+
+                // Declare array for the fields that are structs or arrays
+                for (f : fields) {
+                    val fieldDeclaration = f.value
+
+                    // fieldDeclaration is only set in the map when the field is an array or struct
+                    if (fieldDeclaration !== null) {
+                        val varDec = fieldDeclaration.addDeclaration(state, dRegion)
+
+                        val decVo = varDec.valuedObjects.get(0)
+                        var oldDecLabel = decVo.label
+                        var newLabel = varName + "." + oldDecLabel
+
+                        var oldDecName = decVo.name
+                        var newName = varName + "." + oldDecName
+                        decVo.name = newName
+                        decVo.label = newLabel
+                        
+
+                        val vList = stateVariables.get(oldDecLabel)
+
+                        /*Delete the old key to prevent clashes 
+                         * with vars that should choose a name that is equal to the field's name
+                         * Put the same varList with the newName as key.
+                         */
+                        stateVariables.remove(oldDecLabel)
+                        stateVariables.put(newLabel, vList)
+                        
+                        // The field data structures should be hidden since they are not visible outside of the struct
+                        varDec.annotations += createTagAnnotation("Hide")                        
+                        dRegion.declarations.add(varDec)
+                    }
+                }
+
             }
 
             // Add the valued object and the ssa list to the respective elements    
@@ -2623,16 +2664,29 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             val outputRootDecl = outputVO.getVariableDeclaration
             val outputType = outputRootDecl.getType
 
+
             // Create a declaration and valued object for the output 
             val decl = createVariableDeclaration
             newState.declarations += decl
             decl.type = outputType
             decl.output = true
+            
+            // Structs use host types for a correct type label
+            if (outputType === ValueType.HOST) {
+                decl.hostType = outputRootDecl.hostType
+            }
+   
             val innerOutputVO = decl.createValuedObject(output + outSuffix)
             innerOutputVO.label = output
             if (!serializable) {
                 innerOutputVO.insertHighlightAnnotations(stmt)
             }
+
+            // structs that are handled as arrays and arrays have a cardinality (in fact this makes them to arrays)
+            if (outputVO.cardinalities !== null) {
+                innerOutputVO.cardinalities.addAll(outputVO.cardinalities)
+            }
+            
 
             // Add the new create valued object to the ssa list and valued object list
             if (stateVariables.containsKey(output)) {
@@ -2822,9 +2876,20 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             val decl = createVariableDeclaration
             newState.declarations += decl
             decl.type = inputType
+            
+            // Structs use host types for a correct type label
+            if(inputType === ValueType.HOST){
+                decl.hostType = inputRootDecl.hostType
+            }
             decl.input = true
             val innerInputVO = decl.createValuedObject(input + inSuffix)
             innerInputVO.label = input
+            
+            // structs that are handled as arrays and arrays have a cardinality (in fact this makes them to arrays)
+            if(inputVO.cardinalities !== null){
+                innerInputVO.cardinalities.addAll(inputVO.cardinalities)
+            }
+            
             if (!serializable) {
                 innerInputVO.insertHighlightAnnotations(stmt)
             }
