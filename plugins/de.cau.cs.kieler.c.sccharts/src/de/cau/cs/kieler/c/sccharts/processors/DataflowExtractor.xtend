@@ -2503,26 +2503,15 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 val dummyArrayDeclarator = defaultCNodeFactory
                                            .newArrayDeclarator(defaultCNodeFactory.newName("dummy_array"))
                 
-                
-                for (name : fields) {
-                    dummyArrayDeclarator.addArrayModifier(
-                        defaultCNodeFactory.newArrayModifier(
-                            defaultCNodeFactory.newLiteralExpression(3, "\"" + name + "\"")))
-                }
-                //TODO: Nested Structs, structs as fields
+                dummyArrayDeclarator.addArrayModifier(
+                    defaultCNodeFactory.newArrayModifier(defaultCNodeFactory.newLiteralExpression(0, "" + fields.size))
+                )
+
+                //TODO: Nested Structs, structs as fields - idea create hidden arrays for this
                 vo.cardinalities += dummyArrayDeclarator.arrayModifiers.map [
                     val litExp = it.constantExpression as IASTLiteralExpression
-                    val expr = createKExpression(litExp, state, dRegion)
-                    if (expr !== null) {
-                        return expr
-                    } else {
-                        // For declarations such as 'char string[] = "foo"' there is no constant expression,
-                        // so just add some cardinality to the array, that SCChart does not really matter about anyways
-                        // for the visual representation.
-                        val s = "\"" + (it.constantExpression as IASTLiteralExpression).value.toString +"\""                      
-                        return createStringValue(s)
-                        
-                    }
+                    val expr = createKExpression(litExp, state, dRegion) 
+                    return expr
                 ]
                 vo.addTagAnnotation("struct")
             }
@@ -2538,6 +2527,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         }
         return variableDeclaration
     }
+
 
     /**
      * Add an initialization assignment to the given valued object
