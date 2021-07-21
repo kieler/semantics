@@ -36,6 +36,10 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
 import java.util.List
 import de.cau.cs.kieler.scg.processors.ReferenceCallProcessor
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
+import org.eclipse.xtext.xbase.lib.Functions.Function1
+import de.cau.cs.kieler.kexpressions.kext.extensions.Binding
+import de.cau.cs.kieler.sccharts.ControlflowRegion
+import de.cau.cs.kieler.scl.MethodImplementationDeclaration
 
 /**
  * @author glu
@@ -56,8 +60,9 @@ class ReferenceCallPreprocessor extends SCChartsProcessor implements Traceable {
     @Inject extension TracingEcoreUtilExtensions
     @Inject extension KExpressionsDeclarationExtensions
 
-    val REF_CALL_INSTANCE_SUFFIX = "_d"
+    val REF_CALL_INSTANCE_PREFIX = "_"
     val REF_CALL_EXT_SCC_ANNOTATION = "header"
+    val REF_CALL_NON_INSTANTANEOUS_ANNOTATION = "isDelayed"
     val REF_CALL_TICK_METHOD_NAME = ReferenceCallProcessor.REF_CALL_TICK_METHOD_NAME
     val REF_CALL_RESET_METHOD_NAME = ReferenceCallProcessor.REF_CALL_RESET_METHOD_NAME
     val REF_CALL_CPIN_METHOD_NAME = ReferenceCallProcessor.REF_CALL_CPIN_METHOD_NAME
@@ -89,110 +94,203 @@ class ReferenceCallPreprocessor extends SCChartsProcessor implements Traceable {
                     if (!rootStates.exists[name == ref.reference.target.name]) {
                         rootStates.add((ref.reference.target as State).copy => [ref.reference.target = it])
                     }
-                    /* Get stub class and create instance */
-                    val classDecl = createOrGetClassDeclaration(ref)
-                    val instance = classDecl.createValuedObject(ref.name + REF_CALL_INSTANCE_SUFFIX).uniqueName
-                    /* Tranform referencing state to superstate containing glue logic. */
-                    ref.createControlflowRegion(ref.name) => [
-                        var init = it.createInitialState("I")
-                        var call = it.createState("C")
-                        var term = it.createFinalState("T")
-
-                        val tick_method = classDecl.declarations.findFirst [
-                            valuedObjects.head.name == REF_CALL_TICK_METHOD_NAME
-                        ].valuedObjects.head
-                        val reset_method = classDecl.declarations.findFirst [
-                            valuedObjects.head.name == REF_CALL_RESET_METHOD_NAME
-                        ].valuedObjects.head
-                        val cpin_method = classDecl.declarations.findFirst [
-                            valuedObjects.head.name == REF_CALL_CPIN_METHOD_NAME
-                        ].valuedObjects.head
-                        val cpout_method = classDecl.declarations.findFirst [
-                            valuedObjects.head.name == REF_CALL_CPOUT_METHOD_NAME
-                        ].valuedObjects.head
-                        val term_method = classDecl.declarations.findFirst [
-                            valuedObjects.head.name == REF_CALL_TERM_METHOD_NAME
-                        ].valuedObjects.head
-
-                        /* On entry (without history) reset referenced model and call tick once. */
-                        init.createTransitionTo(call) => [
-                            delay = DelayType::IMMEDIATE
-                            effects.add(createReferenceCallEffect => [
-                                subReference = reset_method.reference
-                                valuedObject = instance
-                            ])
-                            effects.add(createReferenceCallEffect => [
-                                subReference = cpin_method.reference
-                                valuedObject = instance
-                                parameters.addAll(paramsFromBindings(ref, instance))
-                            ])
-                            effects.add(createReferenceCallEffect => [
-                                subReference = tick_method.reference
-                                valuedObject = instance
-                            ])
-                            effects.add(createReferenceCallEffect => [
-                                subReference = cpout_method.reference
-                                valuedObject = instance
-                                parameters.addAll(paramsFromBindings(ref, instance))
-                            ])
-                        ]
-
-                        /* Self transition from call state to call state (if not terminated). */
-                        call.createTransitionTo(call) => [
-                            effects.add(createReferenceCallEffect => [
-                                subReference = cpin_method.reference
-                                valuedObject = instance
-                                parameters.addAll(paramsFromBindings(ref, instance))
-                            ])
-                            effects.add(createReferenceCallEffect => [
-                                subReference = tick_method.reference
-                                valuedObject = instance
-                            ])
-                            effects.add(createReferenceCallEffect => [
-                                subReference = cpout_method.reference
-                                valuedObject = instance
-                                parameters.addAll(paramsFromBindings(ref, instance))
-                            ])
-                        ]
-
-                        /* If referenced model terminates, terminate immediately. */
-                        call.createTransitionTo(term) => [
-                            delay = DelayType::IMMEDIATE // TODO read 'delayed' annnotation
-                            trigger = createReferenceCall => [
-                                subReference = term_method.reference
-                                valuedObject = instance
-
-                            ]
-                        ]
-                    ]
+                    /* Get proxy class and create instance */
+                    val proxyClass = createOrGetProxyClass(ref)
+                    val instance = proxyClass.createValuedObject(REF_CALL_INSTANCE_PREFIX + ref.name).uniqueName
+                    /* Tranform referencing state to proxy superstate containing glue logic. */
+                    ref.createProxyState(proxyClass, instance,
+                        ref.reference.scope.hasAnnotation(REF_CALL_NON_INSTANTANEOUS_ANNOTATION))
                     /* Remove original reference.
                      * Could also keep the reference in order to link later but naming-based solution is more general
                      * => external modules.
                      */
                     ref.reference = null
                 ]
+                rootState.declarations.filter(PolicyClassDeclaration).filter[hasAnnotation(REF_CALL_TAG_ANNOTATION)].
+                    forEach[cleanupDeclarations]
             ]
-        /* Remove SCCharts declared as header files */
-        rootStates.removeAll(rootStates.filter[hasAnnotation(REF_CALL_EXT_SCC_ANNOTATION)].toList)
+
+            /* Remove SCCharts declared as header files */
+            rootStates.removeAll(rootStates.filter[hasAnnotation(REF_CALL_EXT_SCC_ANNOTATION)].toList)
         ]
     }
 
-    protected def PolicyClassDeclaration createOrGetClassDeclaration(State ref) {
+    protected def createProxyState(State ref, PolicyClassDeclaration proxyClass, ValuedObject instance,
+        boolean delayed) {
+        val region = ref.createControlflowRegion(ref.name)
+        if (delayed) {
+            region.createDelayedTransitions(ref, proxyClass, instance)
+        } else {
+            region.createInstantaneousTransitions(ref, proxyClass, instance)
+        }
+    }
+
+    protected def createDelayedTransitions(ControlflowRegion region, State ref, PolicyClassDeclaration proxyClass,
+        ValuedObject instance) {
+        val init = region.createInitialState("I")
+        val call = region.createState("C")
+        val term = region.createFinalState("T")
+        val conn = region.createState("connector") => [
+            connector = true
+        ]
+
+        val tick_method = proxyClass.declarations.findFirst [
+            valuedObjects.head.name == REF_CALL_TICK_METHOD_NAME
+        ].valuedObjects.head
+        val reset_method = proxyClass.declarations.findFirst [
+            valuedObjects.head.name == REF_CALL_RESET_METHOD_NAME
+        ].valuedObjects.head
+        val cpin_method = proxyClass.declarations.findFirst [
+            valuedObjects.head.name == REF_CALL_CPIN_METHOD_NAME
+        ].valuedObjects.head
+        val cpout_method = proxyClass.declarations.findFirst [
+            valuedObjects.head.name == REF_CALL_CPOUT_METHOD_NAME
+        ].valuedObjects.head
+        val term_method = proxyClass.declarations.findFirst [
+            valuedObjects.head.name == REF_CALL_TERM_METHOD_NAME
+        ].valuedObjects.head
+
+        init.createTransitionTo(call) => [
+            delay = DelayType::IMMEDIATE
+            label = "reset; initial tick"
+
+            effects.add(createReferenceCallEffect => [
+                subReference = reset_method.reference
+                valuedObject = instance
+            ])
+            effects.add(createReferenceCallEffect => [
+                subReference = cpin_method.reference
+                valuedObject = instance
+                parameters.addAll(inputParamsFromBindings(ref, instance))
+            ])
+            effects.add(createReferenceCallEffect => [
+                subReference = tick_method.reference
+                valuedObject = instance
+            ])
+            effects.add(createReferenceCallEffect => [
+                subReference = cpout_method.reference
+                valuedObject = instance
+                parameters.addAll(outputParamsFromBindings(ref, instance))
+            ])
+        ]
+
+        call.createTransitionTo(conn) => [
+            label = "tick"
+
+            effects.add(createReferenceCallEffect => [
+                subReference = cpin_method.reference
+                valuedObject = instance
+                parameters.addAll(inputParamsFromBindings(ref, instance))
+            ])
+            effects.add(createReferenceCallEffect => [
+                subReference = tick_method.reference
+                valuedObject = instance
+            ])
+            effects.add(createReferenceCallEffect => [
+                subReference = cpout_method.reference
+                valuedObject = instance
+                parameters.addAll(outputParamsFromBindings(ref, instance))
+            ])
+        ]
+
+        conn.createTransitionTo(term) => [
+            label = "terminate?"
+            delay = DelayType::IMMEDIATE
+
+            trigger = createReferenceCall => [
+                subReference = term_method.reference
+                valuedObject = instance
+
+            ]
+        ]
+
+        conn.createTransitionTo(call) => [delay = DelayType::IMMEDIATE]
+    }
+
+    protected def createInstantaneousTransitions(ControlflowRegion region, State ref, PolicyClassDeclaration proxyClass,
+        ValuedObject instance) {
+        val init = region.createInitialState("I")
+        val call = region.createState("C")
+        val dely = region.createState("D")
+        val term = region.createFinalState("T")
+        val conn = region.createState("connector") => [
+            connector = true
+        ]
+
+        val tick_method = proxyClass.declarations.findFirst [
+            valuedObjects.head.name == REF_CALL_TICK_METHOD_NAME
+        ].valuedObjects.head
+        val reset_method = proxyClass.declarations.findFirst [
+            valuedObjects.head.name == REF_CALL_RESET_METHOD_NAME
+        ].valuedObjects.head
+        val cpin_method = proxyClass.declarations.findFirst [
+            valuedObjects.head.name == REF_CALL_CPIN_METHOD_NAME
+        ].valuedObjects.head
+        val cpout_method = proxyClass.declarations.findFirst [
+            valuedObjects.head.name == REF_CALL_CPOUT_METHOD_NAME
+        ].valuedObjects.head
+        val term_method = proxyClass.declarations.findFirst [
+            valuedObjects.head.name == REF_CALL_TERM_METHOD_NAME
+        ].valuedObjects.head
+
+        init.createTransitionTo(call) => [
+            delay = DelayType::IMMEDIATE
+            label = "reset"
+
+            effects.add(createReferenceCallEffect => [
+                subReference = reset_method.reference
+                valuedObject = instance
+            ])
+        ]
+
+        call.createTransitionTo(conn) => [
+            delay = DelayType::IMMEDIATE
+            label = "tick"
+
+            effects.add(createReferenceCallEffect => [
+                subReference = cpin_method.reference
+                valuedObject = instance
+                parameters.addAll(inputParamsFromBindings(ref, instance))
+            ])
+            effects.add(createReferenceCallEffect => [
+                subReference = tick_method.reference
+                valuedObject = instance
+            ])
+            effects.add(createReferenceCallEffect => [
+                subReference = cpout_method.reference
+                valuedObject = instance
+                parameters.addAll(outputParamsFromBindings(ref, instance))
+            ])
+        ]
+
+        conn.createTransitionTo(term) => [
+            delay = DelayType::IMMEDIATE
+            label = "terminate?"
+
+            trigger = createReferenceCall => [
+                subReference = term_method.reference
+                valuedObject = instance
+
+            ]
+        ]
+
+        conn.createTransitionTo(dely) => [delay = DelayType::IMMEDIATE]
+
+        dely.createTransitionTo(call)
+    }
+
+    protected def PolicyClassDeclaration createOrGetProxyClass(State ref) {
         val maybeDecl = ref.getClassDeclaration
         val decl = maybeDecl !== null
                 ? maybeDecl as PolicyClassDeclaration
                 : createPolicyClassDeclaration => [
                 name = ref.reference.scope.name
                 host = true
-                
+
                 // Declare interface variables
-                declarations.addAll(ref.reference.scope.declarations.filter(VariableDeclaration).map[
-                    copy => [
-                        input = false
-                        output =  false
-                    ]
-                ])
-                
+                // TODO remove input/output labels later?
+                declarations.addAll(ref.reference.scope.declarations.filter(VariableDeclaration).map[copy])
+
                 // Declare method placeholders.
                 var tickDecl = createMethodImplementationDeclaration => [
                     it.createValuedObject(REF_CALL_TICK_METHOD_NAME)
@@ -202,11 +300,11 @@ class ReferenceCallPreprocessor extends SCChartsProcessor implements Traceable {
                 ]
                 var cpinDecl = createMethodImplementationDeclaration => [ d |
                     d.createValuedObject(REF_CALL_CPIN_METHOD_NAME)
-                    d.parameterDeclarations.addAll(it.declarations.filter(VariableDeclaration).unroll)
+                    d.parameterDeclarations.addAll(it.declarations.filter(VariableDeclaration).filter[input].unroll)
                 ]
                 var cpoutDecl = createMethodImplementationDeclaration => [ d |
                     d.createValuedObject(REF_CALL_CPOUT_METHOD_NAME)
-                    d.parameterDeclarations.addAll(it.declarations.filter(VariableDeclaration).unroll)
+                    d.parameterDeclarations.addAll(it.declarations.filter(VariableDeclaration).filter[output].unroll)
                 ]
                 var termDecl = createMethodImplementationDeclaration => [
                     it.createValuedObject(REF_CALL_TERM_METHOD_NAME)
@@ -218,7 +316,6 @@ class ReferenceCallPreprocessor extends SCChartsProcessor implements Traceable {
                 declarations.add(cpoutDecl)
                 declarations.add(termDecl)
 
-                
                 // Declare _TERM member
                 declarations.add(createVariableDeclaration => [
                     type = ValueType::BOOL
@@ -243,11 +340,13 @@ class ReferenceCallPreprocessor extends SCChartsProcessor implements Traceable {
         return result.head
     }
 
-    protected def List<Parameter> paramsFromBindings(State ref, ValuedObject instance) {
+    protected def List<Parameter> filteredParamsFromBindings(State ref, ValuedObject instance,
+        Function1<Binding, Boolean> predicate) {
         val bindings = ref.createBindings
         val parameters = <Parameter>newArrayList
-        val classVarVOs = ref.classDeclaration.declarations.filter(VariableDeclaration).map[valuedObjects].flatten.toList
-        for (binding : bindings.sortBy[ b |
+        val classVarVOs = ref.classDeclaration.declarations.filter(VariableDeclaration).map[valuedObjects].flatten.
+            toList
+        for (binding : bindings.filter(predicate).sortBy [ b |
             classVarVOs.indexOf(classVarVOs.findFirst[name == b.targetValuedObject.name])
         ]) {
             parameters.add(createParameter => [
@@ -255,8 +354,24 @@ class ReferenceCallPreprocessor extends SCChartsProcessor implements Traceable {
                 expression = binding.sourceExpression.copy
             ])
         }
-    
+
         return parameters
+    }
+
+    protected def boolean input(Binding binding) {
+        return binding.targetValuedObject.input
+    }
+
+    protected def boolean output(Binding binding) {
+        return binding.targetValuedObject.output
+    }
+
+    protected def List<Parameter> inputParamsFromBindings(State ref, ValuedObject instance) {
+        return ref.filteredParamsFromBindings(instance, [input])
+    }
+
+    protected def List<Parameter> outputParamsFromBindings(State ref, ValuedObject instance) {
+        return ref.filteredParamsFromBindings(instance, [output])
     }
 
     protected def ValuedObject getVarVOByName(PolicyClassDeclaration classDef, String varName) {
@@ -266,16 +381,29 @@ class ReferenceCallPreprocessor extends SCChartsProcessor implements Traceable {
         val result = filteredvos.head
         return result
     }
-    
+
     protected def Iterable<VariableDeclaration> unroll(Iterable<VariableDeclaration> decls) {
-        decls.map[ d | 
-            d.valuedObjects.map[ v | 
+        decls.map [ d |
+            d.valuedObjects.map [ v |
                 d.copy => [
                     valuedObjects.clear
-                    valuedObjects.add(v.copy) 
+                    valuedObjects.add(v.copy)
                 ]
             ]
         ].flatten
+    }
+
+    protected def cleanupDeclarations(PolicyClassDeclaration proxyClass) {
+        proxyClass.declarations.filter(VariableDeclaration).forEach [
+            input = false
+            output = false
+        ]
+        proxyClass.declarations.filter(MethodImplementationDeclaration).map[parameterDeclarations].flatten.forEach [
+            (it as VariableDeclaration) => [
+                input = false
+                output = false
+            ]
+        ]
     }
 
 }

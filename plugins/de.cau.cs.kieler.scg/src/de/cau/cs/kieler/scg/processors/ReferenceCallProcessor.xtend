@@ -122,16 +122,23 @@ class ReferenceCallProcessor extends InplaceProcessor<SCGraphs> implements Trace
                         }
                         newAssignments += newAsmt
                     }
-                    // place new assignments in the scg
-                    scg.nodes.addAll(newAssignments)
-                    newAssignments.take(newAssignments.length - 1).indexed.forEach [
-                        val index = key
-                        val assignment = value
-                        assignment.next = assignment.createControlFlow => [target = newAssignments.get(index + 1)]
-                    ]
-                    newAssignments.last.next = nextCF
-                    originalAsmt.incomingLinks.immutableCopy.forEach[target = newAssignments.head]
-                    scg.nodes.remove(originalAsmt)
+                    if (!newAssignments.empty) {
+                        // place new assignments in the scg
+                        scg.nodes.addAll(newAssignments)
+                        newAssignments.take(newAssignments.length - 1).indexed.forEach [
+                            val index = key
+                            val assignment = value
+                            assignment.next = assignment.createControlFlow => [target = newAssignments.get(index + 1)]
+                        ]
+                        newAssignments.last.next = nextCF
+                        originalAsmt.incomingLinks.immutableCopy.forEach[target = newAssignments.head]
+                        scg.nodes.remove(originalAsmt)
+                    } else { // newAssignments is empty => no values to copy
+                        // skip assignment node entirely
+                        originalAsmt.incomingLinks.immutableCopy.forEach[target = nextCF.target]
+                        scg.nodes.remove(originalAsmt)
+                        scg.nodes.remove(nextCF)
+                    }
                 } else {
                     environment.warnings.add(
                         "Unknown method call " + ref.subReference.valuedObject.name + " in module stub state"
@@ -139,7 +146,7 @@ class ReferenceCallProcessor extends InplaceProcessor<SCGraphs> implements Trace
                 }
             }
         ]
-
+        // handle calls to get_term()
         val termCalls = scg.nodes.filter(Conditional).map[condition].filter(ReferenceCall).filter [
             moduleClasses.contains(valuedObject.eContainer) &&
                 subReference.valuedObject.name == REF_CALL_TERM_METHOD_NAME
