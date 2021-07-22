@@ -117,6 +117,7 @@ import org.eclipse.cdt.core.dom.ast.IASTElaboratedTypeSpecifier
 import org.eclipse.cdt.internal.core.dom.parser.c.CASTArrayDeclarator
 import org.eclipse.cdt.internal.core.dom.parser.c.CASTName
 import org.eclipse.cdt.core.dom.ast.ASTNodeFactoryFactory
+import org.eclipse.emf.common.util.EList
 
 /**
  * A Processor analyzing the data flow of functions within a single file of a C project and visualizing it as actor-
@@ -1861,6 +1862,10 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             val variableDeclaration = createVariableDeclaration
             variableDeclaration.type = condOutput.type
             parentRegion.declarations += variableDeclaration
+
+            if (variableDeclaration.type === ValueType.HOST) {
+                variableDeclaration.hostType = condOutput.variableDeclaration.hostType
+            }
             // Retrieve the state's variable map
             var Map<String, List<ValuedObject>> stateVariables = getStateVariables(condState)
             val varName = conditionalResultName
@@ -1901,6 +1906,10 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         // For that, create a new variable declaration
         val variableDeclaration = createVariableDeclaration
         variableDeclaration.type = output.type
+        if(variableDeclaration.type == ValueType.HOST){
+            variableDeclaration.hostType = output.variableDeclaration.hostType
+        }
+        
         region.declarations += variableDeclaration
         // Retrieve the state's variable map
         val Map<String, List<ValuedObject>> stateVariables = getStateVariables(state)
@@ -2047,6 +2056,10 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
     private def createVar(ValuedObject vo, State state, Map<String, List<ValuedObject>> stateVars, String suffix, String l) {
         val decl = createVariableDeclaration
         decl.type = vo.type
+        
+        if(decl.type == ValueType.HOST){
+            decl.hostType = vo.variableDeclaration.hostType
+        }
         
         switch (suffix) {
             case outSuffix: decl.output = true
@@ -3015,6 +3028,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 var varDecl = vo.getVariableDeclaration
                 varName = varName.substring(0, varName.length - outSuffix.length) + ssaNameSeperator + "0"
                 val type = varDecl.type
+                val hostType = varDecl.hostType
 
                 // If the original variable declaration was attached to the state the new one should be attached to the
                 // dataflow region
@@ -3022,6 +3036,11 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                     varDecl = createVariableDeclaration
                     varDecl.annotations += createTagAnnotation("Hide")
                     varDecl.type = type
+
+                    if (type === ValueType.HOST) {
+                        varDecl.hostType = hostType
+                    }
+                    
                     dRegion.declarations += varDecl
                 }
 
@@ -3039,9 +3058,10 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         // belongs together.
         val boolean isArray = index !== null
         var boolean newArrayVONeeded = false
+        var EList<Expression> cards;
         if (isArray) {
             var alreadyWrittenIdxs = voWrittenIdxs.get(vo)
-
+            cards = vo.cardinalities
             if (writing) {
                 if (alreadyWrittenIdxs === null || alreadyWrittenIdxs.empty) {
                     // A first write to an array needs a new VO.
@@ -3102,6 +3122,9 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 val writtenIdxs = newArrayList
                 writtenIdxs.add(index)
                 voWrittenIdxs.put(vo, writtenIdxs)
+                
+                //take the cardinalities from the old vo
+                vo.cardinalities.addAll(cards)
             }
         }
         return vo
@@ -3151,6 +3174,11 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                         val newDecl = createVariableDeclaration
                         newDecl.type = inputVO.variableDeclaration.type
                         newDecl.input = true
+                        
+                        if (newDecl.type === ValueType.HOST) {
+                            newDecl.hostType = inputVO.variableDeclaration.hostType
+                        }
+                        
                         returnState.declarations += newDecl
                         val innerInputVO = newDecl.createValuedObject(inputVO.name)
                         innerInputVO.label = inputVO.name
@@ -3165,6 +3193,10 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                     val outDecl = createVariableDeclaration
                     outDecl.type = outVO.type
                     outDecl.output = true
+                    
+                    if (outVO.type === ValueType.HOST) {
+                        outDecl.hostType = outVO.variableDeclaration.hostType
+                    }
                     returnState.declarations += outDecl
                     val innerOutputVO = outDecl.createValuedObject(outVO.name)
                     innerOutputVO.label = returnObjectName
