@@ -2842,9 +2842,52 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 if (operator === IASTUnaryExpression.op_amper && stmt.operand instanceof IASTIdExpression) {
                     val idExpression = stmt.operand as IASTIdExpression
                     val varName = idExpression.name.toString
-                    outputs += varName
+                    if (getStateVarPointers(parentState).containsKey(varName)) outputs += varName
                 }
 
+            }
+            // Consider pointer arguments of a function call that get changed in the function
+            IASTFunctionCallExpression: {
+                val uniqueFunctionIdentifier = CProcessorUtils.nameToIdentifier(
+                    ((stmt as IASTFunctionCallExpression).functionNameExpression as IASTIdExpression).name, index)
+                val funcState = functions.get(uniqueFunctionIdentifier).values.head
+                val arguments = (stmt as IASTFunctionCallExpression).arguments
+                var index = 0
+                for (argument : arguments) {
+                    // find the corresponding output vo in the called function
+                    val stateDeclarations = funcState.declarations.filter(VariableDeclaration)
+                    val inputVOs = stateDeclarations.filter[it.isInput].map[it.valuedObjects].flatten
+                    val outputVOs = stateDeclarations.filter[it.isOutput].map[it.valuedObjects].flatten.filter [
+                        it.name != returnObjectName + outSuffix
+                    ]
+                    val inputVO = inputVOs.get(index)
+                    val outputVO = outputVOs.findFirst [
+                        it.name.substring(0, it.name.length - outSuffix.length).equals(
+                            inputVO.name.substring(0, inputVO.name.length - inSuffix.length))
+                    ]
+                    // there should only be an output vo if the argument is a (indirect) pointer
+                    if (outputVO !== null) {
+                        switch (argument) {
+                            IASTIdExpression: {
+                                // argument is a pointer
+                                // TODO: wenn der pointer nur in dem aktuellen state definiert ist, 
+                                // muss der name des vo wo der pointer hinzeigt hinzugefügt werden, statt dem pointer namen
+                                outputs += (argument as IASTIdExpression).name.toString
+                            }
+                            IASTUnaryExpression: {
+                                // argument is of the form "&var"
+                                if (argument.operator === IASTUnaryExpression.op_amper &&
+                                    argument.operand instanceof IASTIdExpression) {
+                                    val idExpression = argument.operand as IASTIdExpression
+                                    val varName = idExpression.name.toString
+                                    outputs += varName
+                                }
+                            }
+                        }
+
+                    }
+                    index++;
+                }
             }
             default: {
                 // Check every child for other statements.
