@@ -2822,7 +2822,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 val operator = stmt.getOperator
                 if ((operator >= IASTBinaryExpression.op_assign) &&
                     (operator <= IASTBinaryExpression.op_binaryOrAssign)) {
-                    val op1 = stmt.getOperand1
+                    var op1 = stmt.getOperand1
                     
                     // update pointer map
                     val op2 = stmt.getOperand2
@@ -2833,7 +2833,11 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                         pointer.put(pointerName,
                             ((op2 as IASTUnaryExpression).operand as IASTIdExpression).getName.toString)
                     }
-                    
+                    // if expr is in brackets, get the expr out of it
+                    if (op1 instanceof IASTUnaryExpression &&
+                        (op1 as IASTUnaryExpression).operator === IASTUnaryExpression.op_bracketedPrimary) {
+                            op1 = (op1 as IASTUnaryExpression).operand
+                    } 
                     if (op1 instanceof IASTIdExpression) {
                         outputs += findOutputs(op1, parentState, pointer, true)
                     } else if (op1 instanceof IASTArraySubscriptExpression) {
@@ -2868,37 +2872,39 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             IASTFunctionCallExpression: {
                 val uniqueFunctionIdentifier = CProcessorUtils.nameToIdentifier(
                     ((stmt as IASTFunctionCallExpression).functionNameExpression as IASTIdExpression).name, index)
-                val funcState = functions.get(uniqueFunctionIdentifier).values.head
-                val arguments = (stmt as IASTFunctionCallExpression).arguments
-                var index = 0
-                for (argument : arguments) {
-                    // find the corresponding output vo in the called function
-                    val stateDeclarations = funcState.declarations.filter(VariableDeclaration)
-                    val inputVOs = stateDeclarations.filter[it.isInput].map[it.valuedObjects].flatten
-                    val outputVOs = stateDeclarations.filter[it.isOutput].map[it.valuedObjects].flatten.filter [
-                        it.name != returnObjectName + outSuffix
-                    ]
-                    val inputVO = inputVOs.get(index)
-                    val outputVO = outputVOs.findFirst [
-                        it.name.substring(0, it.name.length - outSuffix.length).equals(
-                            inputVO.name.substring(0, inputVO.name.length - inSuffix.length))
-                    ]
-                    // there should only be an output vo if the argument is a (indirect) pointer
-                    if (outputVO !== null) {
-                        switch (argument) {
-                            IASTIdExpression: {
-                                // argument is a pointer
-                                outputs += findOutputs(argument, parentState, pointer, true)
-                            }
-                            IASTUnaryExpression: {
-                                // argument is of the form "&var"
-                                if (argument.operator === IASTUnaryExpression.op_amper) {
-                                    outputs += findOutputs(argument.operand, parentState, pointer, true)
+                if (functions.containsKey(uniqueFunctionIdentifier)) {
+                    val funcState = functions.get(uniqueFunctionIdentifier).values.head
+                    val arguments = (stmt as IASTFunctionCallExpression).arguments
+                    var index = 0
+                    for (argument : arguments) {
+                        // find the corresponding output vo in the called function
+                        val stateDeclarations = funcState.declarations.filter(VariableDeclaration)
+                        val inputVOs = stateDeclarations.filter[it.isInput].map[it.valuedObjects].flatten
+                        val outputVOs = stateDeclarations.filter[it.isOutput].map[it.valuedObjects].flatten.filter [
+                            it.name != returnObjectName + outSuffix
+                        ]
+                        val inputVO = inputVOs.get(index)
+                        val outputVO = outputVOs.findFirst [
+                            it.name.substring(0, it.name.length - outSuffix.length).equals(
+                                inputVO.name.substring(0, inputVO.name.length - inSuffix.length))
+                        ]
+                        // there should only be an output vo if the argument is a (indirect) pointer
+                        if (outputVO !== null) {
+                            switch (argument) {
+                                IASTIdExpression: {
+                                    // argument is a pointer
+                                    outputs += findOutputs(argument, parentState, pointer, true)
+                                }
+                                IASTUnaryExpression: {
+                                    // argument is of the form "&var"
+                                    if (argument.operator === IASTUnaryExpression.op_amper) {
+                                        outputs += findOutputs(argument.operand, parentState, pointer, true)
+                                    }
                                 }
                             }
                         }
+                        index++;
                     }
-                    index++;
                 }
             }
             default: {
@@ -3491,6 +3497,10 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 result.index = artificialIndexExpr
             }
             IASTUnaryExpression: {
+                if (targetExpr.operator === IASTUnaryExpression.op_bracketedPrimary) {
+                    val res = retrieveTargetAndIndexExpr(targetExpr.operand, funcState, dRegion)
+                    return res
+                }
                 // target is of the form "*pointer"
                 val op = targetExpr.operand
                 val name = (op as IASTIdExpression).getName.toString
