@@ -212,7 +212,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
     static final String posTag = "pos"
     /** Tag annotation string of the port group for the negative case in custom multiplexers */
     static final String negTag = "neg"
-    
+
     /** annotation for break/continue states that saves in which if stmt the break/continue is in */
     static final String breakContinueAnno = "ifCounter"
 
@@ -241,13 +241,13 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
     // needed to add break/continue states to the correct while state
     var DataflowRegion lastWhileRegion = null
     var breakContinueFlag = false
-    
+
     /** parent region of a state */
     val Map<State, DataflowRegion> hierarchy = newHashMap
-    
+
     /** the valued object of a state */
     val Map<State, ValuedObject> stateObjects = newHashMap
-    
+
     /** the valued objects of the local vars that are used for the break/continue states */
     val Map<ValuedObject, ValuedObject> breakContinueVars = newHashMap
 
@@ -258,11 +258,11 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
 
     /** All variables that are pointers to another variable. */
     val Map<State, Map<String, ValuedObject>> pointerVariables = newHashMap
-    
+
     val String addressOp = "~"
-    
+
     /** Maps struct names to its attribute names.  */
-    val Map<String, List< Pair<String, IASTSimpleDeclaration> > > structFields = newHashMap
+    val Map<String, List<Pair<String, IASTSimpleDeclaration>>> structFields = newHashMap
 
     val voWrittenIdxs = <ValuedObject, List<Expression>>newHashMap
 
@@ -318,7 +318,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         }
         return statePointers
     }
-    
+
     def getStateVarPointers(State state) {
         var Map<String, ValuedObject> statePointers = null
         if (pointerVariables.containsKey(state)) {
@@ -365,8 +365,9 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             var ITranslationUnit tu = CoreModel.^default.create(resource) as ITranslationUnit
             ast = tu.getAST
             index = CCorePlugin.getIndexManager().getIndex(project);
-        } catch (Throwable t) {/* Ignore. */}
-        
+        } catch (Throwable t) { /* Ignore. */
+        }
+
         // If the previous method was not successful, build the AST only from the file without context and the index.
         if (ast === null) {
             ast = CProcessorUtils.findAstNoProject(environment)
@@ -392,12 +393,11 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         // Make sure to always have the read lock on the index here and releasing it eventually.
         index?.acquireReadLock
         try {
-            
-            
-         
-            val structDefs = ast.children.filter(IASTSimpleDeclaration)
-                                         .filter([s | s.declSpecifier instanceof IASTCompositeTypeSpecifier]).toList
-            
+
+            val structDefs = ast.children.filter(IASTSimpleDeclaration).filter([ s |
+                s.declSpecifier instanceof IASTCompositeTypeSpecifier
+            ]).toList
+
             retrieveStructFieldNames(structDefs)
             // Interesting index functions:
             // findBinding(IName name) 
@@ -421,8 +421,6 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
 
         return rootSCChart
     }
-
-
 
     /**
      * Creates an {@link SCCharts} {@link State} scaffold for the given function definition with all in- and outputs
@@ -491,7 +489,6 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                     stateVariables.put(varName, varList)
                 } else if (declSpecifier instanceof IASTElaboratedTypeSpecifier) {
                     // par is a pointer to a struct
-                    
                     val structName = declSpecifier.name.toString
                     val varName = par.getDeclarator.getName.toString
                     val variableDeclaration = createVariableDeclaration
@@ -560,7 +557,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                     } else {
                         outDecl.type = (par.declSpecifier as IASTSimpleDeclSpecifier).type.cdtTypeConversion
                     }
-                    
+
                     outDecl.output = true
                     state.declarations += outDecl
 
@@ -711,9 +708,10 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
 
         return state
     }
-    
+
     /**
      * Extracts the name of a struct definition and of its fields and puts them in the structFields map.
+     * Additionally, it creates hidden arrays for fields that are structs or arrays.
      * 
      * @param structDefs SimpleDeclarations that declare a struct
      */
@@ -724,10 +722,14 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
 
             val List<Pair<String, IASTSimpleDeclaration>> fieldNames = new ArrayList()
             for (d : structD.getDeclarations(true)) {
+                if (!(d instanceof IASTSimpleDeclaration)) {
+                    throw new IllegalArgumentException("One declaration in the struct " + structName +
+                        " in structDefs is not of type IASTSimpleDeclaration. Instead it's of type: " +
+                        d.class.toString)
+                }
                 val simpleD = d as IASTSimpleDeclaration
                 val fieldName = (simpleD.declarators.get(0) as IASTDeclarator).name.toString()
-    
-                
+
                 val declSpecifier = simpleD.declSpecifier
                 var IASTSimpleDeclaration resDec = null;
                 switch (declSpecifier) {
@@ -741,12 +743,11 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                     IASTElaboratedTypeSpecifier: {
                         resDec = simpleD
                     }
-
                 }
-                
+
                 fieldNames.add(fieldName -> resDec)
             }
-            
+
             structFields.put(structName, fieldNames)
         }
     }
@@ -791,7 +792,6 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         return dfRegion
     }
 
-
     /**
      * Searches the outputs that should be led into a break multiplexer 
      *  since they depend on whether a break is taken or not taken.
@@ -804,7 +804,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             if (stmt instanceof IASTIfStatement && !breakFound) {
                 if (containsSearchedIfStmt(stmt as IASTIfStatement, ifStmt)) {
                     breakFound = true
-                    outputs.addAll(breakDependableVarsInIfTree(ifStmt, parentState))          
+                    outputs.addAll(breakDependableVarsInIfTree(ifStmt, parentState))
                 }
             } else {
                 if (breakFound) {
@@ -815,7 +815,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         }
         return outputs
     }
-    
+
     /**
      * Checks if the passed if statement is the searched if statement or if the latter 
      *  is a parent of the passed if statement.
@@ -825,18 +825,18 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             return true;
         }
         val thenStmts = (outerIf.thenClause as IASTCompoundStatement).statements.toList
-        
+
         var List<IASTStatement> elseStmts
         if (outerIf.elseClause !== null) {
             elseStmts = (outerIf.elseClause as IASTCompoundStatement).statements.toList
         }
-        
+
         val List<IASTStatement> allStmts = newArrayList
         if (outerIf.elseClause !== null) {
             allStmts.addAll(elseStmts)
         }
         allStmts.addAll(thenStmts)
-        
+
         for (s : allStmts) {
             if (s instanceof IASTIfStatement && containsSearchedIfStmt(s as IASTIfStatement, searchedIf)) {
                 return true;
@@ -845,19 +845,18 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
 
         return false;
     }
-    
+
     /**
      * Walks upwards from a nested if statement including a break and collects the variables that depend on whether
      * the break is taken or not taken.
      */
-
-    private def breakDependableVarsInIfTree(IASTIfStatement searchedIf, State parentState){
+    private def breakDependableVarsInIfTree(IASTIfStatement searchedIf, State parentState) {
         var HashSet<String> vars = <String>newHashSet
-        
+
         var currentlySearchedIf = searchedIf
         var parentClause = currentlySearchedIf.parent as IASTCompoundStatement
         var ifFound = false
-        
+
         while (parentClause.parent instanceof IASTIfStatement) {
             for (s : parentClause.statements) {
                 // Look in the current level whether the searchedIf is present and add all variables to the result
@@ -918,7 +917,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             }
             IASTUnaryExpression: {
                 createUnaryAssignment(expression, rootState, dRegion)
-                return null  
+                return null
             }
             // Create a function call by referencing the function state  
             IASTFunctionCallExpression: {
@@ -973,7 +972,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         breakContinueFlag = true
         buildBreakOrContinue(stmt, rootState, dRegion)
     }
-    
+
     /**
      * Translate a Continue statement
      */
@@ -1050,7 +1049,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         if (serializable) {
             rootSCChart.rootStates += ifState
         }
-        
+
         // Create a reference for this if state in the containing dataflow-region.
         val refDecl = createReferenceDeclaration
         dRegion.declarations += refDecl
@@ -1059,7 +1058,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         if (!serializable) {
             ifObj.insertHighlightAnnotations(node)
         }
-        
+
         hierarchy.put(ifState, dRegion)
         stateObjects.put(ifState, ifObj)
 
@@ -1079,9 +1078,9 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         val condRegion = condRes.key
         val condState = condRes.value.key
         val conditionalObj = condRes.value.value
-        
+
         hierarchy.put(condState, ifRegion)
-        
+
         // inlining the output of the condition
         var ValuedObject condOutputVo = findCondOutputVo(condRegion, condState, conditionalObj, ifRegion)
 
@@ -1098,10 +1097,10 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         if (!serializable) {
             thenObj.insertHighlightAnnotations(positive)
         }
-        
+
         hierarchy.put(thenState, ifRegion)
         stateObjects.put(thenState, thenObj)
-        
+
         // Set the inputs of the state
         setInputs(positive, ifState, thenState, ifRegion, thenObj)
         // Set the outputs of the then/else states to refer to, but do not add the equations for them yet, as we want to
@@ -1228,7 +1227,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             multOutputs.add(outputVO)
 
         }
-        
+
         if (!multInputs.empty) {
             createMultiplexer(ifRegion, condOutputVo, multInputs, multOutputs);
         }
@@ -1657,7 +1656,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         val whileState = createState(whileName + ssaNameSeperator + localWhileCounter)
         whileState.annotations += createTagAnnotation("Hide")
         hierarchy.put(whileState, dRegion)
-        
+
         if (serializable) {
             rootSCChart.rootStates += whileState
         }
@@ -1670,7 +1669,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         if (!serializable) {
             whileObj.insertHighlightAnnotations(whileStmt)
         }
-        
+
         hierarchy.put(whileState, dRegion)
         stateObjects.put(whileState, whileObj)
 
@@ -1690,7 +1689,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         val condRegion = condRes.key
         val condState = condRes.value.key
         val condObj = condRes.value.value
-        
+
         hierarchy.put(condState, whileRegion)
         stateObjects.put(condState, condObj)
 
@@ -1698,7 +1697,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         val bodyState = createState(whileName + ssaNameSeperator + localWhileCounter + whileBodyName)
         bodyState.annotations += createTagAnnotation("Hide")
         hierarchy.put(bodyState, whileRegion)
-        
+
         if (serializable) {
             rootSCChart.rootStates += bodyState
         }
@@ -1715,7 +1714,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         // Set the outputs of the body state to refer to, but do not add the equations for them yet, as we want to
         // route them into a conditional.
         setOutputs(whileStmt.getBody, whileState, bodyState, whileRegion, bodyObj, false)
-        
+
         hierarchy.put(bodyState, whileRegion)
         stateObjects.put(bodyState, bodyObj)
 
@@ -1742,7 +1741,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 flatMap [
                     it.valuedObjects
                 ].filter[it.label == output].head
-            
+
             // create corresponding output vo with "state_[varName]" as label
             var ValuedObject positiveOutputVo
             if (innerOutputVo !== null) {
@@ -1760,7 +1759,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
 
             // output VO for negative case
             var ValuedObject negativeOutputVo = whileOutputVo
-            
+
             // find corresponding output vo of the while state
             val outputVo = whileState.findOutputVar(output)
 
@@ -1774,7 +1773,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             }
             multOutputs.add(outputVo)
         }
-        
+
         // add a big multiplexer
         createMultiplexer(whileRegion, condOutputVo, multInputs, multOutputs);
 
@@ -1810,8 +1809,8 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         switch stmt {
             IASTWhileStatement: {
                 condName = whileName + ssaNameSeperator + localCounter + whileCondName
-                condLabel = whileName + ssaNameSeperator + localCounter + "cond: " 
-                    + exprToString((stmt as IASTWhileStatement).getCondition, sourceFile)
+                condLabel = whileName + ssaNameSeperator + localCounter + "cond: " +
+                    exprToString((stmt as IASTWhileStatement).getCondition, sourceFile)
                 condExpr = (stmt as IASTWhileStatement).getCondition
             }
             IASTIfStatement: {
@@ -1904,7 +1903,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
      * @param obj The object of the state the vo {@code output} is in
      * @param region The region of {@code state}
      * @param output The vo for which the new vo should be created
-     *
+     * 
      */
     private def createOutputVo(String name, int counter, State state, ValuedObject obj, DataflowRegion region,
         ValuedObject output) {
@@ -1913,10 +1912,10 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         // For that, create a new variable declaration
         val variableDeclaration = createVariableDeclaration
         variableDeclaration.type = output.type
-        if(variableDeclaration.type == ValueType.HOST){
+        if (variableDeclaration.type == ValueType.HOST) {
             variableDeclaration.hostType = output.variableDeclaration.hostType
         }
-        
+
         region.declarations += variableDeclaration
         // Retrieve the state's variable map
         val Map<String, List<ValuedObject>> stateVariables = getStateVariables(state)
@@ -1932,7 +1931,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             subReference = innerPositiveOutputVo_.reference
         ]
         region.equations += createDataflowAssignment(outputVo, source)
-        
+
         // Add the new create valued object to the ssa list and valued object list
         if (stateVariables.containsKey(output.label)) {
             var varList = stateVariables.get(output.label)
@@ -1956,8 +1955,11 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
      * @param multOutputs Outputs of the multiplexer
      * 
      */
-    private def createMultiplexer(DataflowRegion parentRegion, ValuedObject condOutputVo, 
-        ArrayList<ValuedObject> multInputs, ArrayList<ValuedObject> multOutputs
+    private def createMultiplexer(
+        DataflowRegion parentRegion,
+        ValuedObject condOutputVo,
+        ArrayList<ValuedObject> multInputs,
+        ArrayList<ValuedObject> multOutputs
     ) {
         // Create the multiplexer state and according reference into the while dataflow region.
         val multState = createState(multiplexerName + ssaNameSeperator + multiplexerCounter)
@@ -1994,7 +1996,10 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
      * @param dRegion The parent DataflowRegion including the multiplexer's state.
      * @param refObj the ReferenceDeclaration of the multiplexer
      */
-    private def setMultOutputs(ArrayList<ValuedObject> outputs, State newState, DataflowRegion dRegion, 
+    private def setMultOutputs(
+        ArrayList<ValuedObject> outputs,
+        State newState,
+        DataflowRegion dRegion,
         ValuedObject refObj
     ) {
         // Retrieve the state's valued object map
@@ -2032,7 +2037,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             // label should not be null
             val label = inputVO.label !== null ? inputVO.label : inputVO.name.split(ssaNameSeperator).get(0)
             inputVO.label = label
-            
+
             // create input vo
             val innerInputVO = createVar(inputVO, newState, stateVariables, inSuffix, "")
 
@@ -2052,7 +2057,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             }
         }
     }
-       
+
     /** Creates in the given {@code state} an output variable for {@code vo} and updates {@code stateVars}.
      * 
      * @param vo The valued object for which an var should be created
@@ -2060,14 +2065,15 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
      * @param stateVars Variables of {@code state}
      * @param suffix Suffix for the variable label
      */
-    private def createVar(ValuedObject vo, State state, Map<String, List<ValuedObject>> stateVars, String suffix, String l) {
+    private def createVar(ValuedObject vo, State state, Map<String, List<ValuedObject>> stateVars, String suffix,
+        String l) {
         val decl = createVariableDeclaration
         decl.type = vo.type
-        
-        if(decl.type == ValueType.HOST){
+
+        if (decl.type == ValueType.HOST) {
             decl.hostType = vo.variableDeclaration.hostType
         }
-        
+
         switch (suffix) {
             case outSuffix: decl.output = true
             case inSuffix: decl.input = true
@@ -2081,7 +2087,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         state.declarations += decl
         val varVO = decl.createValuedObject(label + suffix)
         varVO.label = label
-        
+
         if (!vo.annotations.empty) {
             varVO.addTagAnnotation((vo.annotations.get(0) as TagAnnotation).name)
         }
@@ -2097,38 +2103,38 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         }
         return varVO
     }
-   
+
     /**
      * Translates a break or continue statement depending on the passed statement.  
-     *
+     * 
      * @param passedStmt Determines whether a break or continue stmt should be translated
      * 
      */
-    def void buildBreakOrContinue(IASTStatement passedStmt, State parentState, DataflowRegion parentRegion){
+    def void buildBreakOrContinue(IASTStatement passedStmt, State parentState, DataflowRegion parentRegion) {
         var localName = ""
         var anno = ""
         var localCounter = 0
-        
+
         // Change stmt type dependant variables
-        switch(passedStmt){
-            IASTBreakStatement:{
+        switch (passedStmt) {
+            IASTBreakStatement: {
                 localName = breakName
                 anno = DataflowExtractor.breakContinueAnno
                 localCounter = breakCounter
                 breakCounter++
             }
-            IASTContinueStatement:{
+            IASTContinueStatement: {
                 localName = continueName
                 anno = DataflowExtractor.breakContinueAnno
                 localCounter = continueCounter
                 continueCounter++
             }
         }
-        
+
         // Create the state
         val newState = createState(localName + ssaNameSeperator + localCounter)
         newState.annotations += createTagAnnotation("Hide")
-        newState.annotations += createStringAnnotation(anno, "" + (ifCounter-1))
+        newState.annotations += createStringAnnotation(anno, "" + (ifCounter - 1))
         newState.addStringAnnotation("figure", "BigMult.kgt")
         if (serializable) {
             rootSCChart.rootStates += newState
@@ -2141,7 +2147,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 whileState = state
             }
         }
-        
+
         // Move upwards in the AST until finding the parent while statement
         var stmt = passedStmt as IASTNode
         while (!(stmt instanceof IASTWhileStatement)) {
@@ -2161,11 +2167,11 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         val newRegion = newState.createDataflowRegion("")
         newState.regions += newRegion
         newRegion.label = localName + ssaNameSeperator + localCounter
-        
+
         // determine the variables which values depend on the break stmt
         var breakDependableVars = findBreakOutputs(whileStmt.getBody as IASTCompoundStatement,
-        passedStmt.parent.parent as IASTIfStatement, whileState)  
-        
+            passedStmt.parent.parent as IASTIfStatement, whileState)
+
         // search for the latest valued object for each of the breakDependableVar
         val List<ValuedObject> vars = new ArrayList
         for (depVar : breakDependableVars) {
@@ -2173,16 +2179,16 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             var region = parentRegion
             var state = parentState
             // input does not count as the latest vo unless it is in the surrounding while state
-            while (vo === null || (vo.name.contains(inSuffix) && 
-                !state.name.startsWith(whileName + ssaNameSeperator)
+            while (vo === null || (vo.name.contains(inSuffix) && !state.name.startsWith(whileName + ssaNameSeperator)
             )) {
                 region = hierarchy.get(state)
-                val name = region.label !== null && !region.label.equals("") ? region.label : 
-                    region.name.split("-").get(1)
-                state = rootSCChart.rootStates.filter[s | s.name.equals(name)].head
+                val name = region.label !== null && !region.label.equals("")
+                        ? region.label
+                        : region.name.split("-").get(1)
+                state = rootSCChart.rootStates.filter[s|s.name.equals(name)].head
                 vo = findValuedObjectByName(state, depVar, false, region)
             }
-            
+
             // if the latest vo is in the while body, the correct instance of the vo must be taken
             // (otherwise the output of an if-state, that changes the variable after the break-stmt, is taken)
             if (state.name.startsWith(whileName + ssaNameSeperator)) {
@@ -2191,10 +2197,10 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                     vo = varList.get(varList.length - 3)
                 }
             }
-            
+
             vars.add(vo)
         }
-        
+
         // if the vos are not in the surrounding while state (in which the break state is) they must be passed to it
         val List<ValuedObject> inputs = new ArrayList
         for (v : vars) {
@@ -2203,24 +2209,27 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             if (breakContinueVars.containsKey(v)) {
                 // the while state already contains a vo for this var
                 vo = breakContinueVars.get(v)
-            } else if (cont instanceof DataflowRegion && 
-                !(cont as DataflowRegion).name.contains(whileName + ssaNameSeperator)
-            ){
+            } else if (cont instanceof DataflowRegion &&
+                !(cont as DataflowRegion).name.contains(whileName + ssaNameSeperator)) {
                 // create output variable for the region
                 var pR = cont as DataflowRegion
                 val regName = pR.label !== null && !pR.label.equals("") ? pR.label : pR.name.split("-").get(1)
-                var pS = rootSCChart.rootStates.filter[s | s.name.equals(regName)].head
-                vo = createVar(v, pS, getStateVariables(pS), outSuffix, localName + "Var" + ssaNameSeperator 
-                    + localCounter
+                var pS = rootSCChart.rootStates.filter[s|s.name.equals(regName)].head
+                vo = createVar(
+                    v,
+                    pS,
+                    getStateVariables(pS),
+                    outSuffix,
+                    localName + "Var" + ssaNameSeperator + localCounter
                 )
                 var obj = stateObjects.get(pS)
-                
+
                 // Create the assignment
                 pR.equations += createDataflowAssignment(vo, v.reference)
-                
+
                 // update parents
                 pR = hierarchy.get(vo.eContainer.eContainer as State)
-                
+
                 val name = pR.label !== null && !pR.label.equals("") ? pR.label : pR.name.split("-").get(1)
                 pS = rootSCChart.rootStates.filter[s|s.name.equals(name)].head
 
@@ -2242,22 +2251,23 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             breakContinueVars.put(v, vo)
             inputs.add(vo)
         }
-        
+
         // set tag annotation and input
-        inputs.forEach[v | v.addTagAnnotation(posTag)]
+        inputs.forEach[v|v.addTagAnnotation(posTag)]
         setMultInput(inputs, newState, lastWhileRegion, newObj, false)
-        
+
         // adjust name and label of the state variables
         val name = localName
-        getStateVariables(newState).forEach[p1, p2| p2.get(0).name = name + ssaNameSeperator + p2.get(0).name;
-                                      p2.get(0).label = name + ssaNameSeperator + p2.get(0).label
+        getStateVariables(newState).forEach [ p1, p2 |
+            p2.get(0).name = name + ssaNameSeperator + p2.get(0).name;
+            p2.get(0).label = name + ssaNameSeperator + p2.get(0).label
         ]
-        
+
         hierarchy.put(newState, lastWhileRegion)
         stateObjects.put(newState, newObj)
     }
 
-   /**
+    /**
      * Finalizes already created break/continue states in a specific while.
      * This means for example that it adds inputs and outputs to them.
      * 
@@ -2265,24 +2275,26 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
      *   @param whileState The state of the while
      *   @param whileRegion The while state's dataflow region
      */
-    private def finalizeBreakAndContinueStates(IASTCompoundStatement stmt, State whileState, 
+    private def finalizeBreakAndContinueStates(
+        IASTCompoundStatement stmt,
+        State whileState,
         DataflowRegion whileRegion
     ) {
         // collect all break and continue states in the while loop
         val List<State> breakStates = collectStates(breakName, whileRegion)
         val List<State> continueStates = collectStates(continueName, whileRegion)
-        
+
         // finalize every break and continue state
         finalize(breakStates, breakName, whileState, whileRegion)
         finalize(continueStates, continueName, whileState, whileRegion)
     }
-    
+
     /**
      * Collects all states from a DataflowRegion that have a name starting with a specific prefix.
      * @param prefix The prefix that determines which states are meant to be collected.
      * @param dataflowRegion The states are collected from this dataflow region.
-     */ 
-    private def List<State> collectStates(String prefix, DataflowRegion dataflowRegion){
+     */
+    private def List<State> collectStates(String prefix, DataflowRegion dataflowRegion) {
         var List<State> states = new ArrayList
         for (decl : dataflowRegion.declarations) {
             if (decl instanceof ReferenceDeclaration) {
@@ -2292,12 +2304,12 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 }
             }
         }
-        
-         states.sortBy[state | state.name]
-         return states
+
+        states.sortBy[state|state.name]
+        return states
     }
-    
-     /**
+
+    /**
      * Actual work logic of finalizeBreakAndContinue.
      * Finalizes already created break/continue states in a specific while.
      * This means for example that it adds inputs and outputs to them.
@@ -2306,15 +2318,16 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
      *   @param whileState The state of the while
      *   @param whileRegion The while state's dataflow region
      */
-    private def void finalize(List<State>states, String name, State whileState, DataflowRegion whileRegion){
+    private def void finalize(List<State> states, String name, State whileState, DataflowRegion whileRegion) {
         for (var i = states.length - 1; i >= 0; i--) {
             val breakState = states.get(i)
             val breakObj = stateObjects.get(breakState)
 
             // determine the inputs of the break state
             val vars = new ArrayList()
-            getStateVariables(breakState).forEach[key, value| val labels = key.split(ssaNameSeperator); 
-                vars.add(labels.get(labels.length -1))
+            getStateVariables(breakState).forEach [ key, value |
+                val labels = key.split(ssaNameSeperator);
+                vars.add(labels.get(labels.length - 1))
             ]
             var breakInputs = new ArrayList()
             for (label : vars) {
@@ -2323,16 +2336,21 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 vo.addTagAnnotation(negTag)
                 breakInputs.add(vo)
             }
-    
+
             // create output vars
             val breakVars = getStateVariables(breakState)
             for (input : breakInputs) {
                 val innerOutputVO = createVar(input, breakState, breakVars, outSuffix, "")
-                createOutputVo(name, Integer.parseInt(breakState.name.substring(name.length+1)), whileState, 
-                    breakObj, whileRegion, innerOutputVO
+                createOutputVo(
+                    name,
+                    Integer.parseInt(breakState.name.substring(name.length + 1)),
+                    whileState,
+                    breakObj,
+                    whileRegion,
+                    innerOutputVO
                 )
             }
-    
+
             // determine the if state the break stmt is in
             var State ifState
             val localIfCounter = Integer.parseInt(breakState.getStringAnnotationValue(
@@ -2343,13 +2361,13 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                     ifState = state
                 }
             }
-            
+
             // condition is passed to the while region in which the break state is
             // and all conditions on the way are collected
             val conditions = collectAndPassThroughConds(ifState)
-            
+
             var ValuedObject condInput = conditions.get(0)
-            
+
             // if there is more than one condition they are connected with an "AND" operator
             if (conditions.size > 1) {
                 // create local var for result auf "AND"
@@ -2360,24 +2378,24 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 decl.annotations += createTagAnnotation("Hide")
                 condInput = decl.createValuedObject(label)
                 condInput.label = label
-    
+
                 // combine the conditions with an "AND" operator
                 val expr = createLogicalAndExpression() => [
-                            for (cond : conditions) {
-                                it.subExpressions += cond.reference
-                            }
-                        ]
-                
+                    for (cond : conditions) {
+                        it.subExpressions += cond.reference
+                    }
+                ]
+
                 whileRegion.equations += createDataflowAssignment(condInput, expr)
                 breakCondsCounter++
             }
-            
+
             // set the inputs of the break state  
             setMultInput(breakInputs, breakState, whileRegion, breakObj, false)
             setMultInput(#[condInput], breakState, whileRegion, breakObj, true)
         }
     }
-    
+
     /**
      * Collects if-conditions and passes them through to the embedding while state.
      * 
@@ -2388,7 +2406,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         var parentRegion = startState.regions.get(0) as DataflowRegion
         while (parentRegion !== lastWhileRegion) {
             val parentState = parentRegion.eContainer as State
-            
+
             // checks if another if state is is reached
             if (parentState.name.startsWith(ifName + ssaNameSeperator)) {
                 // get the local conditional vo in the if state
@@ -2401,45 +2419,50 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                     }
                 }
             }
-            
+
             // for each condition an output vo must be created
             val List<ValuedObject> condOutputs = new ArrayList
             for (var j = 0; j < conditions.length; j++) {
                 val condOutput = conditions.get(j)
-                val label = condOutput.label.startsWith(ifName + ssaNameSeperator) ? 
-                    condOutput.label : parentState.name + hiddenVariableName
+                val label = condOutput.label.startsWith(ifName + ssaNameSeperator)
+                        ? condOutput.label
+                        : parentState.name + hiddenVariableName
                 val vL = getStateVariables(parentState).get(label)
-                
+
                 // if an output already exists for the condition this output can be used, 
                 // otherwise a new output must be created
                 if (vL !== null) {
-                    condOutputs.add(vL.get(vL.length-1))
-                } else {                
+                    condOutputs.add(vL.get(vL.length - 1))
+                } else {
                     // create condition output in the parent state
                     val outputDecl = createVariableDeclaration
-            
+
                     outputDecl.type = ValueType::BOOL
                     outputDecl.output = true
                     parentState.declarations += outputDecl
-                    
+
                     val varName = label
                     val varList = <ValuedObject>newArrayList
-            
+
                     val outputVO = outputDecl.createValuedObject(varName + outSuffix)
                     outputVO.label = varName
-            
+
                     varList.add(outputVO)
-            
+
                     getStateVariables(parentState).put(varName, varList)
                     parentRegion.equations += createDataflowAssignment(outputVO, condOutput.reference)
-                    
+
                     val parentObj = stateObjects.get(parentState)
                     val pS = parentRegion.eContainer as State
-                    
-                    
+
                     // condition vo that can be used by the next state
-                    condOutputs.add(createOutputVo(null, 0, pS, parentObj, 
-                        hierarchy.get(parentState), outputVO
+                    condOutputs.add(createOutputVo(
+                        null,
+                        0,
+                        pS,
+                        parentObj,
+                        hierarchy.get(parentState),
+                        outputVO
                     ))
                 }
             }
@@ -2589,7 +2612,6 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                         var newName = varName + "." + oldDecName
                         decVo.name = newName
                         decVo.label = newLabel
-                        
 
                         val vList = stateVariables.get(oldDecLabel)
 
@@ -2599,9 +2621,9 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                          */
                         stateVariables.remove(oldDecLabel)
                         stateVariables.put(newLabel, vList)
-                        
+
                         // The field data structures should be hidden since they are not visible outside of the struct
-                        varDec.annotations += createTagAnnotation("Hide")                        
+                        varDec.annotations += createTagAnnotation("Hide")
                         dRegion.declarations.add(varDec)
                     }
                 }
@@ -2620,7 +2642,6 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         return variableDeclaration
     }
 
-
     /**
      * Add an initialization assignment to the given valued object
      */
@@ -2634,11 +2655,10 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 // Simply translate the expression
                 initExpr = createKExpression(initializer.children.head, state, dRegion)
             }
-            
+
             var statePointers = getStateVarPointers(state)
-            if (initExpr instanceof OperatorExpression && 
-                (initExpr as OperatorExpression).operator.literal.equals(addressOp)
-            ) {
+            if (initExpr instanceof OperatorExpression &&
+                (initExpr as OperatorExpression).operator.literal.equals(addressOp)) {
                 // initExpr is of the form "&expr"
                 val ref = (initExpr as OperatorExpression).subExpressions.get(0) as ValuedObjectReference
                 statePointers.put(vo.name.split(ssaNameSeperator).get(0), ref.valuedObject)
@@ -2685,18 +2705,17 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             val outputRootDecl = outputVO.getVariableDeclaration
             val outputType = outputRootDecl.getType
 
-
             // Create a declaration and valued object for the output 
             val decl = createVariableDeclaration
             newState.declarations += decl
             decl.type = outputType
             decl.output = true
-            
+
             // Structs use host types for a correct type label
             if (outputType === ValueType.HOST) {
                 decl.hostType = outputRootDecl.hostType
             }
-   
+
             val innerOutputVO = decl.createValuedObject(output + outSuffix)
             innerOutputVO.label = output
             if (!serializable) {
@@ -2707,7 +2726,6 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             if (outputVO.cardinalities !== null) {
                 innerOutputVO.cardinalities.addAll(outputVO.cardinalities)
             }
-            
 
             // Add the new create valued object to the ssa list and valued object list
             if (stateVariables.containsKey(output)) {
@@ -2853,7 +2871,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                     } else if (op1 instanceof IASTFieldReference) {
                         outputs += findOutputs((op1 as IASTFieldReference).getFieldOwner, parentState, pointer, true)
                     }
-                    
+
                     // Also consider the source of the expression, as assignments may be nested in other expressions,
                     // such as in 'var1 = var2 = 0' or 'callFunc(var1 = 0)'.
                     outputs += findOutputs(stmt.operand2, parentState, pointer, false)
@@ -2962,20 +2980,20 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             val decl = createVariableDeclaration
             newState.declarations += decl
             decl.type = inputType
-            
+
             // Structs use host types for a correct type label
-            if(inputType === ValueType.HOST){
+            if (inputType === ValueType.HOST) {
                 decl.hostType = inputRootDecl.hostType
             }
             decl.input = true
             val innerInputVO = decl.createValuedObject(input + inSuffix)
             innerInputVO.label = input
-            
+
             // structs that are handled as arrays and arrays have a cardinality (in fact this makes them to arrays)
-            if(inputVO.cardinalities !== null){
+            if (inputVO.cardinalities !== null) {
                 innerInputVO.cardinalities.addAll(inputVO.cardinalities)
             }
-            
+
             if (!serializable) {
                 innerInputVO.insertHighlightAnnotations(stmt)
             }
@@ -3113,7 +3131,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                     if (type === ValueType.HOST) {
                         varDecl.hostType = hostType
                     }
-                    
+
                     dRegion.declarations += varDecl
                 }
 
@@ -3182,8 +3200,15 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 dRegion.declarations += varDecl
             }
 
+            val oldAnnotations = vo.annotations
             // Create the valued object
             vo = varDecl.createValuedObject(newName)
+
+            // TODO: Doesn't work yet
+            if (oldAnnotations !== null) {
+                vo.annotations.addAll(oldAnnotations)
+            }
+
             if (hasOut) {
                 varList.add(varList.length - 1, vo)
             } else {
@@ -3195,8 +3220,8 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 val writtenIdxs = newArrayList
                 writtenIdxs.add(index)
                 voWrittenIdxs.put(vo, writtenIdxs)
-                
-                //take the cardinalities from the old vo
+
+                // take the cardinalities from the old vo
                 vo.cardinalities.addAll(cards)
             }
         }
@@ -3247,11 +3272,11 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                         val newDecl = createVariableDeclaration
                         newDecl.type = inputVO.variableDeclaration.type
                         newDecl.input = true
-                        
+
                         if (newDecl.type === ValueType.HOST) {
                             newDecl.hostType = inputVO.variableDeclaration.hostType
                         }
-                        
+
                         returnState.declarations += newDecl
                         val innerInputVO = newDecl.createValuedObject(inputVO.name)
                         innerInputVO.label = inputVO.name
@@ -3266,7 +3291,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                     val outDecl = createVariableDeclaration
                     outDecl.type = outVO.type
                     outDecl.output = true
-                    
+
                     if (outVO.type === ValueType.HOST) {
                         outDecl.hostType = outVO.variableDeclaration.hostType
                     }
@@ -3409,7 +3434,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                     source = createKExpression(sourceExpr, funcState, dRegion)
                 }
                 IASTArraySubscriptExpression: {
-                source = createKExpression(sourceExpr, funcState, dRegion)
+                    source = createKExpression(sourceExpr, funcState, dRegion)
                 }
                 IASTFieldReference: {
                     source = createKExpression(sourceExpr, funcState, dRegion)
@@ -3418,19 +3443,17 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
 
             // Retrieve the assignment target
             val targetAndIndex = retrieveTargetAndIndexExpr(binExpr.getOperand1, funcState, dRegion)
-            
+
             var Map<String, ValuedObject> statePointers = getStateVarPointers(funcState)
             // reset pointer map if target is a pointer
-            if (binExpr.getOperand1 instanceof IASTIdExpression 
-                && statePointers.containsKey((binExpr.getOperand1 as IASTIdExpression).getName.toString)
-            ) {
+            if (binExpr.getOperand1 instanceof IASTIdExpression &&
+                statePointers.containsKey((binExpr.getOperand1 as IASTIdExpression).getName.toString)) {
                 statePointers.put(targetAndIndex.target.name.split(ssaNameSeperator).get(0), null)
             }
             // if source is "&exp" update pointer ref to the corresponding vo
-            if (sourceExpr instanceof IASTUnaryExpression && 
-                (sourceExpr as IASTUnaryExpression).operator === IASTUnaryExpression.op_amper
-            ){
-                statePointers.put(targetAndIndex.target.name.split(ssaNameSeperator).get(0), 
+            if (sourceExpr instanceof IASTUnaryExpression &&
+                (sourceExpr as IASTUnaryExpression).operator === IASTUnaryExpression.op_amper) {
+                statePointers.put(targetAndIndex.target.name.split(ssaNameSeperator).get(0),
                     ((source as OperatorExpression).subExpressions.get(0) as ValuedObjectReference).valuedObject)
             }
 
@@ -3439,7 +3462,11 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             }
             ass = createDataflowAssignment(targetAndIndex.target, source)
             if (targetAndIndex.index !== null) {
-                ass.reference.indices += targetAndIndex.index
+                if (targetAndIndex.indices !== null) {
+                    ass.reference.indices.addAll(targetAndIndex.indices)
+                } else {
+                    ass.reference.indices += targetAndIndex.index
+                }
             }
         }
         assignments.add(ass)
@@ -3458,25 +3485,60 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
     def ValuedObjectAndExpression retrieveTargetAndIndexExpr(IASTExpression targetExpr, State funcState,
         DataflowRegion dRegion) {
         val ValuedObjectAndExpression result = new ValuedObjectAndExpression
-        
+
         switch (targetExpr) {
             IASTIdExpression: {
                 result.target = funcState.findValuedObjectByName(targetExpr.getName.toString, true, dRegion)
             }
             IASTArraySubscriptExpression: {
-                val arrayIndex = targetExpr.argument.createKExpression(funcState, dRegion)
+                val firstArrayIndex = targetExpr.argument.createKExpression(funcState, dRegion)
                 val targetArrayExpr = targetExpr.arrayExpression
-                
-                if (!(targetArrayExpr instanceof IASTIdExpression)) {
-                    val res = retrieveTargetAndIndexExpr(targetArrayExpr, funcState, dRegion)
-                    //TODO: This is just a temporary workaround it does not correctly visualize arrays as fields yet
-                    result.target = res.target
-                    result.index = res.index
-                } else {
+                val List<Expression> indexExpressions = newArrayList()
+                indexExpressions.add(firstArrayIndex)
 
-                    result.target = funcState.findValuedObjectByName(
-                        exprToString(targetExpr.arrayExpression, sourceFile), arrayIndex, true, dRegion)
-                    result.index = targetExpr.argument.createKExpression(funcState, dRegion)
+
+                // walk from right to left through the subscript expression to get the identifier and collect the indices
+                var currentArrayExpr = getArrayIdentifier(targetExpr, indexExpressions, funcState, dRegion)
+                
+                // String as Expression that later serves as marker to know which indices have already been accessed
+                var indexString = arrayIndicesToString(indexExpressions)
+                
+                switch (currentArrayExpr) {
+                    IASTIdExpression: {
+                        val expr = indexString.length > 1 ? createStringValue(indexString) : firstArrayIndex
+
+                        result.target = funcState.findValuedObjectByName(
+                            exprToString(currentArrayExpr, sourceFile), expr, true, dRegion)
+
+                        result.index = firstArrayIndex
+
+                        result.indices = indexExpressions
+
+                    }
+                    IASTFieldReference: {
+                        // The identifier of the array is a struct's field
+                        val castArrayExpr = currentArrayExpr
+                        val fieldName = castArrayExpr.fieldName.toString
+
+                        val indexAsExpr = indexString !== ""
+                                ? createStringValue(fieldName + "|" + indexString)
+                                : firstArrayIndex
+
+                        result.target = funcState.findValuedObjectByName(
+                            (castArrayExpr.fieldOwner as IASTIdExpression).name.toString, indexAsExpr, true, dRegion)
+
+                        result.index = firstArrayIndex
+                        
+                        indexExpressions.add(0, createStringValue(fieldName))
+                        result.indices = indexExpressions
+                    }
+                    default: {
+                        // Try to solve it recursively somehow
+                        print("Probably not supported targetExpression. It has the type: " + targetExpr.class.toString)
+                        val res = retrieveTargetAndIndexExpr(targetArrayExpr, funcState, dRegion)
+                        result.target = res.target
+                        result.index = res.index
+                    }
                 }
             }
             IASTFieldReference: {
@@ -3485,17 +3547,16 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                  * Force the array visualization to take a string as index.
                  */
                 val fieldName = targetExpr.fieldName.toString
-                //TODO: probably problem cause for some instances - maybe handle the other case as an error or exception
+                // TODO: probably problem cause for some instances - maybe handle the other case as an error or exception
                 var ownerName = (targetExpr.fieldOwner as IASTIdExpression).name.toString
-                val statePointerVars = getStateVarPointers(funcState) 
+                val statePointerVars = getStateVarPointers(funcState)
                 if (statePointerVars.containsKey(ownerName)) {
                     val ref = statePointerVars.get(ownerName)
                     ownerName = ref.label !== null ? ref.label : ref.name.split(ssaNameSeperator).get(0)
                 }
-                val artificialIndexExpr = ASTNodeFactoryFactory.defaultCNodeFactory
-                                                               .newLiteralExpression(3, "\"" + fieldName +
-                                                                            "\"").createKExpression(funcState, dRegion)
-                
+                val artificialIndexExpr = ASTNodeFactoryFactory.defaultCNodeFactory.newLiteralExpression(3,
+                    "\"" + fieldName + "\"").createKExpression(funcState, dRegion)
+
                 val arrayRepresentant = funcState.findValuedObjectByName(ownerName, artificialIndexExpr, true, dRegion)
 
                 result.target = arrayRepresentant
@@ -3521,7 +3582,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 println("DataflowExtractor: Unsupported assignment target detected!" + targetExpr.expressionType)
             }
         }
-        
+
         return result
     }
 
@@ -3531,6 +3592,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
     private static class ValuedObjectAndExpression {
         public ValuedObject target
         public Expression index
+        public List<Expression> indices
     }
 
     /**
@@ -3719,17 +3781,18 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             }
             // If the argument is some pointer, the output of the function has to be assigned to
             // the variable that pointer points to
-            val indirectPointer = argument instanceof IASTUnaryExpression 
-                && (argument as IASTUnaryExpression).operator === IASTUnaryExpression.op_amper
-            
-            var argumentPointer = argument instanceof IASTIdExpression ? 
-                getStateVarPointers(state).get((argument as IASTIdExpression).name.toString) : null
-                
+            val indirectPointer = argument instanceof IASTUnaryExpression &&
+                (argument as IASTUnaryExpression).operator === IASTUnaryExpression.op_amper
+
+            var argumentPointer = argument instanceof IASTIdExpression
+                    ? getStateVarPointers(state).get((argument as IASTIdExpression).name.toString)
+                    : null
+
             if (indirectPointer) {
                 val name = ((argument as IASTUnaryExpression).operand as IASTIdExpression).name.toString
                 argumentPointer = findValuedObjectByName(state, name, true, dRegion)
             }
-                
+
             if (argumentPointer !== null && outputVO !== null) {
                 val variableVOName = argumentPointer.name
                 val outputToVO = findValuedObjectByName(state,
@@ -3765,37 +3828,66 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                     dRegion)
                 kExpression = opValObj.reference
             }
+            // TODO: Arrays in Structs break things. Maintenance required
             IASTFieldReference: {
                 // Lookup the array that represents the struct owning the field
                 var opValObj = funcState.findValuedObjectByName(
                     ((expr as IASTFieldReference).fieldOwner as IASTIdExpression).name.toString, false, dRegion)
-                    
+
                 // if expr is of the form "pointer -> field", get the struct the pointer points to
-                val label = opValObj.label !== null
-                        ? opValObj.label
-                        : opValObj.name.split(ssaNameSeperator).get(0)
+                val label = opValObj.label !== null ? opValObj.label : opValObj.name.split(ssaNameSeperator).get(0)
                 if (getStateVarPointers(funcState).containsKey(label)) {
                     opValObj = getStateVarPointers(funcState).get(label)
                 }
-                
+
                 // Use the fieldname as a pseudo index so that it appears as label in the diagram
                 kExpression = opValObj.reference
                 val indexLabelExpr = createStringValue(expr.fieldName.toString)
-                (kExpression as ValuedObjectReference).indices += indexLabelExpr           
+                (kExpression as ValuedObjectReference).indices += indexLabelExpr
             }
             // For an array, just use the array expression (and leave out the subscript for now).
             IASTArraySubscriptExpression: {
-                val indexExpression = expr.argument.createKExpression(funcState, dRegion)
-                if (expr.arrayExpression instanceof IASTIdExpression) {
-                    var opValObj = funcState.findValuedObjectByName(
-                        (expr.arrayExpression as IASTIdExpression).getName.toString, indexExpression, false, dRegion)
-                    kExpression = opValObj.reference
-                } else {
-                    println("Unsupported ast node to create an expression: " + expr.arrayExpression.class)
-                    kExpression = expr.arrayExpression.createKExpression(funcState, dRegion)
+                val List<Expression> indexExpressions = newArrayList()
+                var indexExpression = expr.argument.createKExpression(funcState, dRegion)
+                indexExpressions.add(indexExpression)
+                
+                val indexString = arrayIndicesToString(indexExpressions)
+
+                // For multidimensional arrays walk through the tree of SubscriptExpressions and store all subscripts
+                var currentArrayExpr = getArrayIdentifier(expr, indexExpressions, funcState, dRegion)
+                
+                switch (currentArrayExpr) {
+                    IASTIdExpression: {
+                        val Expression indexAsExpr = indexString.length > 1 ? createStringValue(indexString) : indexExpression
+                        var opValObj = funcState.findValuedObjectByName(
+                            (currentArrayExpr as IASTIdExpression).getName.toString, indexAsExpr, false, dRegion)
+                        kExpression = opValObj.reference
+                    }
+                    IASTFieldReference: {
+                        // The array is a field of a struct so lookup the hidden array under structDeclName.fieldName
+                        val castArrayExpr = currentArrayExpr
+
+                        val fieldName = castArrayExpr.fieldName.toString
+
+                        val indexAsExpr = indexString.length > 1 ? createStringValue(fieldName + "|" +
+                                indexString) : indexExpression
+                        
+                        //adds the field's name as an index so that it ends up in the visualization
+                        indexExpressions.add(0, createStringValue(fieldName))
+                        indexExpression = createStringValue(fieldName)
+
+                        var opValObj = funcState.findValuedObjectByName(
+                            (castArrayExpr.fieldOwner as IASTIdExpression).name.toString, indexAsExpr, false, dRegion)
+                        kExpression = opValObj.reference
+
+                    }
+                    default: {
+                        println("Unsupported ast node to create an expression: " + expr.arrayExpression.class)
+                        kExpression = expr.arrayExpression.createKExpression(funcState, dRegion)
+                    }
                 }
-                (kExpression as ValuedObjectReference).indices += indexExpression
-            }   
+                (kExpression as ValuedObjectReference).indices.addAll(indexExpressions)
+            }
             // For a function call create a reference an return the functions output VO reference
             IASTFunctionCallExpression: {
                 // Create the Reference
@@ -3844,6 +3936,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         }
         return kExpression
     }
+
 
     /**
      * Translate a bianryExpression
@@ -3979,6 +4072,43 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 name == objectName
             ].head.reference
         ]
+    }
+    
+    /**
+     *  For multidimensional arrays walk from right to left through the subscript expression to get the identifier and collect the indices
+     * @param outermostArraySubscriptExpression The complete SubscriptExpression from AST
+     * @param indexExpressions List for collecting the indices
+     * @param funcState State of the function
+     * @param dRegion DatafloRegion of the function state
+     * @return the array identifier
+     */
+    def private IASTExpression getArrayIdentifier(IASTArraySubscriptExpression outermostArraySubscriptExpression,
+        List<Expression> indexExpressions, State funcState, DataflowRegion dRegion) {
+        var IASTExpression currentArrayExpr = outermostArraySubscriptExpression.arrayExpression
+        while (currentArrayExpr instanceof IASTArraySubscriptExpression) {
+            var exprAsSubscript = currentArrayExpr
+            val currentIndexExpr = exprAsSubscript.argument.createKExpression(funcState, dRegion)
+            indexExpressions.add(currentIndexExpr)
+            currentArrayExpr = exprAsSubscript.arrayExpression as IASTExpression
+
+        }
+        return currentArrayExpr
+    }
+    
+    /**
+     * Forms a string separted with "|" out of the indices of an array and returns it.
+     * @param indexExpressions the indices of the array as expressions
+     * @return the indices as string or an empty string
+     */
+    def private String arrayIndicesToString(List<Expression> indexExpressions) {
+        var indexString = ""
+
+        for (index : indexExpressions) {
+            val sep = (indexString !== "") ? "|" : ""
+            indexString += sep + index.toString
+        }
+
+        return indexString
     }
 
 }
