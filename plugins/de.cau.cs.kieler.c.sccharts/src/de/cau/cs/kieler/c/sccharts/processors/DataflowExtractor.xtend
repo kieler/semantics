@@ -2837,7 +2837,12 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                     if (op1 instanceof IASTUnaryExpression &&
                         (op1 as IASTUnaryExpression).operator === IASTUnaryExpression.op_bracketedPrimary) {
                             op1 = (op1 as IASTUnaryExpression).operand
-                    } 
+                    // if expr is an array in a struct, get the fieldreference
+                    } else if (op1 instanceof IASTArraySubscriptExpression &&
+                        (op1 as IASTArraySubscriptExpression).arrayExpression instanceof IASTFieldReference) {
+                        op1 = (op1 as IASTArraySubscriptExpression).arrayExpression
+                    }
+                    // determine outputs
                     if (op1 instanceof IASTIdExpression) {
                         outputs += findOutputs(op1, parentState, pointer, true)
                     } else if (op1 instanceof IASTArraySubscriptExpression) {
