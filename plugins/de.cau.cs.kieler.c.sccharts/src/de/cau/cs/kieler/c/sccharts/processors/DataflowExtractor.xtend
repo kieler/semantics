@@ -421,7 +421,9 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         index?.acquireReadLock
         try {
             // collect definitions of global variables
-            val varDefs = ast.children.filter(IASTSimpleDeclaration)
+            val varDefs = ast.children.filter(IASTSimpleDeclaration).filter([
+                it.declSpecifier instanceof IASTSimpleDeclSpecifier
+            ])
             for (vDef : varDefs) {
                 // exclude function definitions
                 if (!(vDef.declarators.get(0) instanceof IASTFunctionDeclarator)) {
@@ -3929,11 +3931,12 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         
         // assignements for input global vars
         val stateDecls = refState.declarations.filter(VariableDeclaration)
-        val inputGVs = stateDecls.filter[it.isInput].map[it.valuedObjects].flatten
-        val outputGVs = stateDecls.filter[it.isOutput].map[it.valuedObjects].
-            flatten.filter [
-                it.name != returnObjectName + outSuffix
-            ]
+        val inputGVs = stateDecls.filter[it.isInput].map[it.valuedObjects].flatten.filter [
+            globalVars.containsKey(it.label)
+        ]
+        val outputGVs = stateDecls.filter[it.isOutput].map[it.valuedObjects].flatten.filter [
+            it.name != returnObjectName + outSuffix && globalVars.containsKey(it.label)
+        ]
         for (gV : inputGVs) {
             if (globalVars.containsKey(gV.label)){
                 val argExpr = findValuedObjectByName(state, gV.label, false, dRegion)
