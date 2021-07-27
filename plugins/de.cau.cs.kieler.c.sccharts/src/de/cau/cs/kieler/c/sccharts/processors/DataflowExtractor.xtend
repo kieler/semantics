@@ -422,13 +422,17 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         try {
             // collect definitions of global variables
             val varDefs = ast.children.filter(IASTSimpleDeclaration).filter([
-                it.declSpecifier instanceof IASTSimpleDeclSpecifier
+                it.declSpecifier instanceof IASTSimpleDeclSpecifier ||
+                    it.declSpecifier instanceof IASTElaboratedTypeSpecifier ||
+                    it.declSpecifier instanceof IASTCompositeTypeSpecifier
             ])
             for (vDef : varDefs) {
-                // exclude function definitions
-                if (!(vDef.declarators.get(0) instanceof IASTFunctionDeclarator)) {
-                    val name = vDef.declarators.get(0).name.toString
-                    globalVars.put(name, vDef.declSpecifier)
+                for (decl : vDef.declarators) {
+                    // exclude function definitions
+                    if (!(vDef.declarators.get(0) instanceof IASTFunctionDeclarator)) {
+                        val name = decl.name.toString
+                        globalVars.put(name, vDef.declSpecifier)
+                    }
                 }
             }
             
@@ -436,7 +440,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             val structDefs = ast.children.filter(IASTSimpleDeclaration).filter([ s |
                 s.declSpecifier instanceof IASTCompositeTypeSpecifier
             ]).toList
-
+            
             retrieveStructFieldNames(structDefs)
             // Interesting index functions:
             // findBinding(IName name) 
@@ -596,6 +600,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         val inputs = findInputs(func.body, state).filter[v | globalVars.containsKey(v)].toSet()
         val Map<String, String> pointers = newHashMap
         val outputs = findOutputs(func.body, state, pointers, true).filter[v | globalVars.containsKey(v)].toSet()
+        inputs.addAll(outputs)
         addGlobalVarsAsInput(inputs, state)
         addGlobalVarsAsOutput(outputs, state)
 
@@ -672,23 +677,53 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
      */
     private def addGlobalVarsAsInput(Set<String> names, State state) {
         val Map<ValueType, VariableDeclaration> declarations = newHashMap
+        val Map<String, VariableDeclaration> hostDeclarations = newHashMap
         for (varName : names) {
             // prevent the case that global variables are created several times
-            if (!getStateVariables(state).containsKey(varName)) {
+            if (!getStateVariables(state).containsKey(varName) || getStateVariables(state).get(varName).filter [
+                it.isInput
+            ].isEmpty) {
                 val declSpec = globalVars.get(varName)
-                // TODO: for arrays the declSpec is not a simpleDeclSpecifier
-                val type = (declSpec as IASTSimpleDeclSpecifier).type.cdtTypeConversion
+                var ValueType type
+                var String hostType
+                switch (declSpec) {
+                    IASTSimpleDeclSpecifier: {
+                        // primitive type, pointer or array
+                        type = declSpec.type.cdtTypeConversion
+                    }
+                    IASTElaboratedTypeSpecifier: {
+                        // struct
+                        hostType = "struct " + declSpec.name.toString
+                        type = ValueType.HOST
+                    }
+                    IASTCompositeTypeSpecifier: {
+                        // struct
+                        hostType = "struct " + declSpec.name.toString
+                        type = ValueType.HOST
+                    }
+                    default: {
+                        type = ValueType.INT
+                        println(type + " is not supported as global variable. Default type INT is used.")
+                    }
+                }
                 // create variable declaration
-                if (!declarations.containsKey(type)) {
+                if (!declarations.containsKey(type) && type !== ValueType.HOST) {
                     val newDecl = createVariableDeclaration
                     state.declarations += newDecl
                     newDecl.type = type
                     newDecl.input = true
                     declarations.put(type, newDecl)
+                } else if (type === ValueType.HOST) {
+                    val newDecl = createVariableDeclaration
+                    state.declarations += newDecl
+                    newDecl.type = type
+                    newDecl.hostType = hostType
+                    newDecl.input = true
+                    hostDeclarations.put(hostType, newDecl)
                 }
                 
                 // create the vo and add it to the stateVariables list
-                val decl = declarations.get(type)
+                val decl = declarations.get(type) ?: hostDeclarations.get(hostType)
                 val vo = decl.createValuedObject(varName + inSuffix)
                 vo.label = varName
         
@@ -709,13 +744,34 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
     private def addGlobalVarsAsOutput(Set<String> names, State state) {
         for (varName : names) {
             // prevent the case that global variables are created several times
-            if (!getStateVariables(state).containsKey(varName)) {
+            if (getStateVariables(state).get(varName).filter[it.isOutput].isEmpty) {
                 val declSpec = globalVars.get(varName)
-                // TODO: for arrays the declSpec is not a simpleDeclSpecifier
-                val type = (declSpec as IASTSimpleDeclSpecifier).type.cdtTypeConversion
+                var ValueType type
+                var String hostType
+                switch (declSpec) {
+                    IASTSimpleDeclSpecifier: {
+                        // primitive type, pointer or array
+                        type = declSpec.type.cdtTypeConversion
+                    }
+                    IASTElaboratedTypeSpecifier: {
+                        // struct
+                        hostType = "struct " + declSpec.name.toString
+                        type = ValueType.HOST
+                    }
+                    IASTCompositeTypeSpecifier: {
+                        // struct
+                        hostType = "struct " + declSpec.name.toString
+                        type = ValueType.HOST
+                    }
+                    default: {
+                        type = ValueType.INT
+                        println(type + " is not supported as global variable. Default type INT is used.")
+                    }
+                }                
                 
                 val outDecl = createVariableDeclaration
                 outDecl.type = type
+                outDecl.hostType = hostType
                 outDecl.output = true
                 state.declarations += outDecl
                 
