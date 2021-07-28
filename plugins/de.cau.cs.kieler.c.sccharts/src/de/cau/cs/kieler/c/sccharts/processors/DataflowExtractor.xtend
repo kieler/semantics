@@ -3676,22 +3676,44 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
      * the expressions.
      */
     def boolean expressionEquals(Expression expression1, Expression expression2) {
-        if (expression1 instanceof BoolValue && expression2 instanceof BoolValue) {
-            return (expression1 as BoolValue).value.equals((expression2 as BoolValue).value)
+        
+       if(expression1.class !== expression2.class){
+           return false
+       }
+       
+       switch(expression1){
+            BoolValue:
+                return expression1.value.equals((expression2 as BoolValue).value)
+            FloatValue:
+                return expression1.value.equals((expression2 as FloatValue).value)
+            IntValue:
+                return expression1.value.equals((expression2 as IntValue).value)
+            StringValue:
+                return expression1.value.equals((expression2 as StringValue).value)
+            OperatorExpression: {                
+                //Operator Expressions are equal if they have the same operator and the lists of arguments are equal.
+                val exp2 = expression2 as OperatorExpression
+                if (expression1.operator !== exp2.operator) {
+                    return false
+                }
+                return expressionListsEquals(expression1.subExpressions, exp2.subExpressions)
+            }
+            ValuedObjectReference:{
+                // For the moment two ValuedObjectReferences aka variables are considered equal if their name is equal.
+                // FindValuedObjectByName  gives a variable a new name if there was a write. Ergo equal name -> equal content
+                val vo1 = expression1.valuedObject
+                val vo2 = (expression2 as ValuedObjectReference).valuedObject
+                
+                return vo1.name.toString.equals(vo2.name.toString)
+            }
         }
-        if (expression1 instanceof FloatValue && expression2 instanceof FloatValue) {
-            return (expression1 as FloatValue).value.equals((expression2 as FloatValue).value)
-        }
-        if (expression1 instanceof IntValue && expression2 instanceof IntValue) {
-            return (expression1 as IntValue).value.equals((expression2 as IntValue).value)
-        }
-        if (expression1 instanceof StringValue && expression2 instanceof StringValue) {
-            return (expression1 as StringValue).value.equals((expression2 as StringValue).value)
-        }
-        // TODO: expressions such as "n" should also be considered equal. Maybe need to consider if the variables have
-        // been modified in between.
+        //TODO: Thinking about when function calls are equal is missing, but that's a more touchy case.
+        print("The method expressionEquals tried to check the equality 
+               of two instances of an not supported expression type. 
+               The result is false as a default in this case. The type was: " + expression1.class + ". \n")
         return false
     }
+    
 
     /**
      * Create a list of assignments for the given binary expression.
