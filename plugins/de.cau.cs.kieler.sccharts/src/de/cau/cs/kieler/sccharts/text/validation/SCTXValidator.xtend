@@ -13,7 +13,6 @@ import de.cau.cs.kieler.annotations.TypedStringAnnotation
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
 import de.cau.cs.kieler.annotations.registry.PragmaRegistry
-import de.cau.cs.kieler.kexpressions.AccessModifier
 import de.cau.cs.kieler.kexpressions.CombineOperator
 import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage
@@ -27,6 +26,7 @@ import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.VectorValue
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsAccessVisibilityExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
@@ -86,6 +86,7 @@ class SCTXValidator extends AbstractSCTXValidator {
     @Inject extension SCChartsScopeExtensions
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KExpressionsDeclarationExtensions
+    @Inject extension KExpressionsAccessVisibilityExtensions
     @Inject extension KEffectsExtensions
     @Inject extension AnnotationsExtensions
     
@@ -183,7 +184,7 @@ class SCTXValidator extends AbstractSCTXValidator {
         if (!state.baseStateReferences.nullOrEmpty) {
             val voNames = HashMultimap.<String, BaseStateReference>create
             for (base : state.allInheritedStateReferencesHierachically) {
-                base.target.declarations.excludeMethods.filter[access !== AccessModifier.PRIVATE].map[valuedObjects].flatten.forEach[voNames.put(name, base)]
+                base.target.declarations.excludeMethods.filter[!isPrivate].map[valuedObjects].flatten.forEach[voNames.put(name, base)]
             }
             val voClashes = voNames.keySet.filter[voNames.get(it).size > 1].toSet
             if (!voClashes.empty) {

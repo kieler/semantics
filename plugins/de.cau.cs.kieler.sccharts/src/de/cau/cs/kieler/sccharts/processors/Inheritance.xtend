@@ -26,6 +26,7 @@ import de.cau.cs.kieler.kexpressions.ValueTypeReference
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsAccessVisibilityExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCompareExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsGenericParameterExtensions
@@ -61,6 +62,7 @@ class Inheritance extends SCChartsProcessor implements Traceable {
     @Inject extension SCChartsScopeExtensions
     @Inject extension KExpressionsGenericParameterExtensions
     @Inject extension KExpressionsCompareExtensions
+    @Inject extension KExpressionsAccessVisibilityExtensions
     
     public static val GENERATED_PREFIX = "_"
     
@@ -116,11 +118,11 @@ class Inheritance extends SCChartsProcessor implements Traceable {
             for (baseDecl : allBaseStates.map[declarations].flatten.filter[!implicitlyBoundInSuperState.contains(it)]) {
                 var newDecl = baseDecl.copy
                 
-                if (newDecl.access !== AccessModifier.PUBLIC) { // rename
+                if (!newDecl.isPublic) { // rename
                     for (vo : newDecl.valuedObjects) {
                         vo.name = (baseDecl.eContainer as State).name + "_" + vo.name
                     }
-                    newDecl.access = AccessModifier.PUBLIC
+                    newDecl.access = AccessModifier.PUBLIC // TODO undef
                 }
                 
                 for (baseVoIdx : baseDecl.valuedObjects.indexed) {

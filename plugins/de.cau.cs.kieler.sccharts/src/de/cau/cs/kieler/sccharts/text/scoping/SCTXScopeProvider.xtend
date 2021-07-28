@@ -6,7 +6,6 @@ package de.cau.cs.kieler.sccharts.text.scoping
 import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.NamedObject
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.kexpressions.AccessModifier
 import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.GenericParameterDeclaration
 import de.cau.cs.kieler.kexpressions.GenericTypeReference
@@ -18,6 +17,7 @@ import de.cau.cs.kieler.kexpressions.StaticAccessExpression
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsAccessVisibilityExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsGenericParameterExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
@@ -62,6 +62,7 @@ class SCTXScopeProvider extends KExtScopeProvider {
     @Inject extension KExpressionsDeclarationExtensions
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KExpressionsGenericParameterExtensions
+    @Inject extension KExpressionsAccessVisibilityExtensions
     
     @Inject SCTXQualifiedNameProvider nameProvider
 
@@ -327,7 +328,7 @@ class SCTXScopeProvider extends KExtScopeProvider {
             region = region.eContainer
         }
         
-        val adjustedPredicate = if (region instanceof DataflowRegion) predicate else [VariableDeclaration vd | vd.access == AccessModifier.PUBLIC]
+        val adjustedPredicate = if (region instanceof DataflowRegion) predicate else [VariableDeclaration vd | vd.isPublic]
         
         if (reference instanceof State) {
             val additionalCandidates = newArrayList
@@ -347,7 +348,7 @@ class SCTXScopeProvider extends KExtScopeProvider {
     
     private def boolean allowsGlobalAccess(Declaration decl) {
         if (decl instanceof VariableDeclaration) {
-            if (!decl.input && (decl.access === null || decl.access === AccessModifier.PUBLIC)) {
+            if (!decl.input && decl.isPublic) {
                 if (decl.const || decl instanceof ClassDeclaration) {
                     return true
                 }

@@ -26,6 +26,7 @@ import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsAccessVisibilityExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsGenericParameterExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsTypeExtensions
@@ -59,6 +60,7 @@ class SCChartsReferenceExtensions extends KExtReferenceExtensions {
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KExpressionsGenericParameterExtensions
     @Inject extension KExpressionsTypeExtensions
+    @Inject extension KExpressionsAccessVisibilityExtensions
     @Inject extension SCChartsScopeExtensions
     @Inject extension SCChartsSerializeHRExtensions
     @Inject extension SCChartsInheritanceExtensions
@@ -191,7 +193,7 @@ class SCChartsReferenceExtensions extends KExtReferenceExtensions {
                     
                     if (parentVONameMap.containsKey(vo.name)) {
                         binding.sourceExpression = parentVONameMap.get(vo.name).reference
-                    } else if (vo.declaration.access !== AccessModifier.PUBLIC) {
+                    } else if (!vo.declaration.isPublic) {
                         val privateName = "_" + (vo.declaration.eContainer as Scope).name + "_" + vo.name // FIXME this should be solved via an annotation on the renamed variable
                         if (parentVONameMap.containsKey(privateName)) {
                             binding.sourceExpression = parentVONameMap.get(privateName).reference
