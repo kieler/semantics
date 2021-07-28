@@ -119,6 +119,9 @@ import org.eclipse.cdt.internal.core.dom.parser.c.CASTName
 import org.eclipse.cdt.core.dom.ast.ASTNodeFactoryFactory
 import org.eclipse.emf.common.util.EList
 import org.eclipse.cdt.core.dom.ast.IASTPointer
+import java.util.Set
+import de.cau.cs.kieler.kexpressions.Value
+import de.cau.cs.kieler.kexpressions.impl.OperatorExpressionImpl
 
 /**
  * A Processor analyzing the data flow of functions within a single file of a C project and visualizing it as actor-
@@ -264,7 +267,11 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
     /** Maps struct names to its attribute names.  */
     val Map<String, List<Pair<String, IASTSimpleDeclaration>>> structFields = newHashMap
 
-    val voWrittenIdxs = <ValuedObject, List<Expression>>newHashMap
+    /**Maps the valuedObject of an array to the set of written indices. The indices of each write a stored in a list. */
+    val voWrittenIdxs = <ValuedObject, Set<List<Expression>>>newHashMap
+    
+    /**Maps the valuedObject of an array to the set of read indices. The indices of each read a stored in a list. */
+    val voReadIndices = <ValuedObject, Set<List<Expression>>>newHashMap
 
     var ValueType currentReturnType = null
 
@@ -3091,7 +3098,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
     /**
      * Find the valued object of the given state by its variables name and creates a new valued object if needed
      */
-    def ValuedObject findValuedObjectByName(State state, String name, Expression index, boolean writing,
+    def ValuedObject findValuedObjectByName(State state, String name, List<Expression> index, boolean writing,
         Region dRegion) {
         // Retrieve the last valued object of the variables list
         var ValuedObject vo
@@ -3152,23 +3159,75 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         var EList<Expression> cards;
         if (isArray) {
             var alreadyWrittenIdxs = voWrittenIdxs.get(vo)
+            var alreadyReadIndices = voReadIndices.get(vo)
+
+            
             cards = vo.cardinalities
             if (writing) {
-                if (alreadyWrittenIdxs === null || alreadyWrittenIdxs.empty) {
-                    // A first write to an array needs a new VO.
-                    alreadyWrittenIdxs = newArrayList
-                    voWrittenIdxs.put(vo, alreadyWrittenIdxs)
-                    newArrayVONeeded = true
-                } else if (alreadyWrittenIdxs.exists[it.expressionEquals(index)]) {
-                    // Any subsequent write to that array only needs a new VO if it is on a different array index.
-                    newArrayVONeeded = true
-                } else {
-                    alreadyWrittenIdxs.add(index)
+                /*
+                 * TODO: Reading from Arrays. You want to read from the last variant(vo) in which the index was used for writing.
+                 * Or the first array variant
+                 */
+                 
+                                
+                switch (alreadyWrittenIdxs) {
+                    case alreadyWrittenIdxs === null: {
+                        alreadyWrittenIdxs = newHashSet
+                        voWrittenIdxs.put(vo, alreadyWrittenIdxs)
+                        newArrayVONeeded = true
+
+                    }
+                    case alreadyWrittenIdxs.empty: {
+
+                        newArrayVONeeded = true
+                    } 
+                    case alreadyWrittenIdxs.exists[expressionListsEquals(it, index)] || (alreadyReadIndices !== null
+                        ? alreadyReadIndices.exists [expressionListsEquals(it, index)]
+                        : false): {
+                        // Any subsequent write to that array only needs a new VO if it is on a different array index.
+                        newArrayVONeeded = true
+                    }
+                    default:
+                        alreadyWrittenIdxs.add(index)
                 }
-            } else if (alreadyWrittenIdxs !== null) {
-                // If this is a read to an array that has been written to before, clear the alreadyWrittenIdxs, so that
-                // a new VO will be created on the next write to it.
-                alreadyWrittenIdxs.clear
+                
+
+                
+//                if (alreadyWrittenIdxs === null || alreadyWrittenIdxs.empty) {
+//                    // A first write to an array needs a new VO.
+//                    alreadyWrittenIdxs = newArrayList
+//                    voWrittenIdxs.put(vo, alreadyWrittenIdxs)
+//                    newArrayVONeeded = true
+//                } else if (alreadyWrittenIdxs.exists[it.expressionEquals(index)]) {
+//                    // Any subsequent write to that array only needs a new VO if it is on a different array index.
+//                    newArrayVONeeded = true
+//                } else {
+//                    alreadyWrittenIdxs.add(index)
+//                }
+                
+            } else {
+                // Branch for accessing/reading an array
+                                
+                switch(alreadyReadIndices){
+                    case alreadyReadIndices === null :{
+                        alreadyReadIndices = newHashSet
+                        alreadyReadIndices.add(index)
+                        voReadIndices.put(vo, alreadyReadIndices)
+                    }
+                    case alreadyReadIndices.empty || !alreadyReadIndices.exists[expressionListsEquals(it, index)] :{
+                        alreadyReadIndices.add(index)
+                        voReadIndices.put(vo, alreadyReadIndices)
+                    }
+                }
+                
+
+//                if (alreadyWrittenIdxs !== null) {
+//
+//                    // If this is a read to an array that has been written to before, clear the alreadyWrittenIdxs, so that
+//                    // a new VO will be created on the next write to it.
+//                    alreadyWrittenIdxs.clear
+//                }
+
             }
         }
 
@@ -3217,7 +3276,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
 
             // If the vo is for an array, note which index has been used now.
             if (isArray && writing) {
-                val writtenIdxs = newArrayList
+                val writtenIdxs = newHashSet
                 writtenIdxs.add(index)
                 voWrittenIdxs.put(vo, writtenIdxs)
 
@@ -3493,22 +3552,17 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             IASTArraySubscriptExpression: {
                 val firstArrayIndex = targetExpr.argument.createKExpression(funcState, dRegion)
                 val targetArrayExpr = targetExpr.arrayExpression
-                val List<Expression> indexExpressions = newArrayList()
-                indexExpressions.add(firstArrayIndex)
-
+                val indexExpressions = newArrayList(firstArrayIndex)
 
                 // walk from right to left through the subscript expression to get the identifier and collect the indices
                 var currentArrayExpr = getArrayIdentifier(targetExpr, indexExpressions, funcState, dRegion)
                 
-                // String as Expression that later serves as marker to know which indices have already been accessed
-                var indexString = arrayIndicesToString(indexExpressions)
                 
                 switch (currentArrayExpr) {
                     IASTIdExpression: {
-                        val expr = indexString.length > 1 ? createStringValue(indexString) : firstArrayIndex
 
                         result.target = funcState.findValuedObjectByName(
-                            exprToString(currentArrayExpr, sourceFile), expr, true, dRegion)
+                            exprToString(currentArrayExpr, sourceFile), indexExpressions, true, dRegion)
 
                         result.index = firstArrayIndex
 
@@ -3519,17 +3573,13 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                         // The identifier of the array is a struct's field
                         val castArrayExpr = currentArrayExpr
                         val fieldName = castArrayExpr.fieldName.toString
-
-                        val indexAsExpr = indexString !== ""
-                                ? createStringValue(fieldName + "|" + indexString)
-                                : firstArrayIndex
-
+                        indexExpressions.add(0, createStringValue(fieldName))
+                        
                         result.target = funcState.findValuedObjectByName(
-                            (castArrayExpr.fieldOwner as IASTIdExpression).name.toString, indexAsExpr, true, dRegion)
+                            (castArrayExpr.fieldOwner as IASTIdExpression).name.toString, indexExpressions, true, dRegion)
 
                         result.index = firstArrayIndex
                         
-                        indexExpressions.add(0, createStringValue(fieldName))
                         result.indices = indexExpressions
                     }
                     default: {
@@ -3557,7 +3607,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 val artificialIndexExpr = ASTNodeFactoryFactory.defaultCNodeFactory.newLiteralExpression(3,
                     "\"" + fieldName + "\"").createKExpression(funcState, dRegion)
 
-                val arrayRepresentant = funcState.findValuedObjectByName(ownerName, artificialIndexExpr, true, dRegion)
+                val arrayRepresentant = funcState.findValuedObjectByName(ownerName, newArrayList(artificialIndexExpr), true, dRegion)
 
                 result.target = arrayRepresentant
                 result.index = artificialIndexExpr
@@ -3847,37 +3897,29 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             }
             // For an array, just use the array expression (and leave out the subscript for now).
             IASTArraySubscriptExpression: {
-                val List<Expression> indexExpressions = newArrayList()
+                               
                 var indexExpression = expr.argument.createKExpression(funcState, dRegion)
-                indexExpressions.add(indexExpression)
+                val List<Expression> indexExpressions = newArrayList(indexExpression)
                 
-                val indexString = arrayIndicesToString(indexExpressions)
-
                 // For multidimensional arrays walk through the tree of SubscriptExpressions and store all subscripts
                 var currentArrayExpr = getArrayIdentifier(expr, indexExpressions, funcState, dRegion)
                 
                 switch (currentArrayExpr) {
                     IASTIdExpression: {
-                        val Expression indexAsExpr = indexString.length > 1 ? createStringValue(indexString) : indexExpression
                         var opValObj = funcState.findValuedObjectByName(
-                            (currentArrayExpr as IASTIdExpression).getName.toString, indexAsExpr, false, dRegion)
+                            (currentArrayExpr as IASTIdExpression).getName.toString, indexExpressions, false, dRegion)
                         kExpression = opValObj.reference
                     }
                     IASTFieldReference: {
                         // The array is a field of a struct so lookup the hidden array under structDeclName.fieldName
-                        val castArrayExpr = currentArrayExpr
 
-                        val fieldName = castArrayExpr.fieldName.toString
-
-                        val indexAsExpr = indexString.length > 1 ? createStringValue(fieldName + "|" +
-                                indexString) : indexExpression
+                        val fieldName = currentArrayExpr.fieldName.toString
                         
                         //adds the field's name as an index so that it ends up in the visualization
                         indexExpressions.add(0, createStringValue(fieldName))
-                        indexExpression = createStringValue(fieldName)
 
                         var opValObj = funcState.findValuedObjectByName(
-                            (castArrayExpr.fieldOwner as IASTIdExpression).name.toString, indexAsExpr, false, dRegion)
+                            (currentArrayExpr.fieldOwner as IASTIdExpression).name.toString, indexExpressions, false, dRegion)
                         kExpression = opValObj.reference
 
                     }
@@ -4096,19 +4138,28 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
     }
     
     /**
-     * Forms a string separted with "|" out of the indices of an array and returns it.
-     * @param indexExpressions the indices of the array as expressions
-     * @return the indices as string or an empty string
-     */
-    def private String arrayIndicesToString(List<Expression> indexExpressions) {
-        var indexString = ""
-
-        for (index : indexExpressions) {
-            val sep = (indexString !== "") ? "|" : ""
-            indexString += sep + index.toString
+     * Checks whther two lists of expressions are pairwise equal by using expressionEquals.
+     
+     
+      */
+    def expressionListsEquals(List<Expression> l0, List<Expression> l1) {
+        val l0Length = l0.length
+        val l1Length = l1.length
+        
+        if(l0Length != l1Length){
+            return false
         }
-
-        return indexString
+        
+        for(var int i = 0; i< l0Length; i++){
+            val e0 = l0.get(i)
+            val e1 = l1.get(i)
+            val equal = e0.expressionEquals(e1)
+            if(!equal){
+                return false
+            }
+        }
+        return true      
     }
+    
 
 }
