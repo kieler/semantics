@@ -95,6 +95,7 @@ public class ExitImpl extends NodeImpl implements Exit {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Entry getEntry() {
         if (entry != null && entry.eIsProxy()) {
             InternalEObject oldEntry = (InternalEObject)entry;
@@ -136,6 +137,7 @@ public class ExitImpl extends NodeImpl implements Exit {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setEntry(Entry newEntry) {
         if (newEntry != entry) {
             NotificationChain msgs = null;
@@ -155,6 +157,7 @@ public class ExitImpl extends NodeImpl implements Exit {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ControlFlow getNext() {
         return next;
     }
@@ -179,6 +182,7 @@ public class ExitImpl extends NodeImpl implements Exit {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setNext(ControlFlow newNext) {
         if (newNext != next) {
             NotificationChain msgs = null;
@@ -198,6 +202,7 @@ public class ExitImpl extends NodeImpl implements Exit {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isFinal() {
         return final_;
     }
@@ -207,6 +212,7 @@ public class ExitImpl extends NodeImpl implements Exit {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setFinal(boolean newFinal) {
         boolean oldFinal = final_;
         final_ = newFinal;

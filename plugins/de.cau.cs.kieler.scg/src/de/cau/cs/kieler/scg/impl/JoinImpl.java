@@ -95,6 +95,7 @@ public class JoinImpl extends NodeImpl implements Join {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Fork getFork() {
         if (fork != null && fork.eIsProxy()) {
             InternalEObject oldFork = (InternalEObject)fork;
@@ -136,6 +137,7 @@ public class JoinImpl extends NodeImpl implements Join {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setFork(Fork newFork) {
         if (newFork != fork) {
             NotificationChain msgs = null;
@@ -155,6 +157,7 @@ public class JoinImpl extends NodeImpl implements Join {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ControlFlow getNext() {
         return next;
     }
@@ -179,6 +182,7 @@ public class JoinImpl extends NodeImpl implements Join {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setNext(ControlFlow newNext) {
         if (newNext != next) {
             NotificationChain msgs = null;
@@ -198,6 +202,7 @@ public class JoinImpl extends NodeImpl implements Join {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isAny() {
         return any;
     }
@@ -207,6 +212,7 @@ public class JoinImpl extends NodeImpl implements Join {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setAny(boolean newAny) {
         boolean oldAny = any;
         any = newAny;

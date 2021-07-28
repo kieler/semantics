@@ -86,6 +86,7 @@ public class EntryImpl extends NodeImpl implements Entry {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Exit getExit() {
         if (exit != null && exit.eIsProxy()) {
             InternalEObject oldExit = (InternalEObject)exit;
@@ -127,6 +128,7 @@ public class EntryImpl extends NodeImpl implements Entry {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setExit(Exit newExit) {
         if (newExit != exit) {
             NotificationChain msgs = null;
@@ -146,6 +148,7 @@ public class EntryImpl extends NodeImpl implements Entry {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ControlFlow getNext() {
         return next;
     }
@@ -170,6 +173,7 @@ public class EntryImpl extends NodeImpl implements Entry {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setNext(ControlFlow newNext) {
         if (newNext != next) {
             NotificationChain msgs = null;
@@ -189,6 +193,7 @@ public class EntryImpl extends NodeImpl implements Entry {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public SCGraph getResetSCG() {
         return resetSCG;
     }
@@ -213,6 +218,7 @@ public class EntryImpl extends NodeImpl implements Entry {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setResetSCG(SCGraph newResetSCG) {
         if (newResetSCG != resetSCG) {
             NotificationChain msgs = null;

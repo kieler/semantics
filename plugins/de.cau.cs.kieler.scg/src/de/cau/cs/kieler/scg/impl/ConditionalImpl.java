@@ -85,6 +85,7 @@ public class ConditionalImpl extends NodeImpl implements Conditional {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ControlFlow getThen() {
         return then;
     }
@@ -109,6 +110,7 @@ public class ConditionalImpl extends NodeImpl implements Conditional {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setThen(ControlFlow newThen) {
         if (newThen != then) {
             NotificationChain msgs = null;
@@ -128,6 +130,7 @@ public class ConditionalImpl extends NodeImpl implements Conditional {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ControlFlow getElse() {
         return else_;
     }
@@ -152,6 +155,7 @@ public class ConditionalImpl extends NodeImpl implements Conditional {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setElse(ControlFlow newElse) {
         if (newElse != else_) {
             NotificationChain msgs = null;
@@ -171,6 +175,7 @@ public class ConditionalImpl extends NodeImpl implements Conditional {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Expression getCondition() {
         return condition;
     }
@@ -195,6 +200,7 @@ public class ConditionalImpl extends NodeImpl implements Conditional {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setCondition(Expression newCondition) {
         if (newCondition != condition) {
             NotificationChain msgs = null;

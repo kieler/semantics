@@ -258,6 +258,7 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<SchedulingBlock> getSchedulingBlocks() {
         if (schedulingBlocks == null) {
             schedulingBlocks = new EObjectContainmentEList<SchedulingBlock>(SchedulingBlock.class, this, ScgPackage.BASIC_BLOCK__SCHEDULING_BLOCKS);
@@ -270,6 +271,7 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Predecessor> getPredecessors() {
         if (predecessors == null) {
             predecessors = new EObjectContainmentEList<Predecessor>(Predecessor.class, this, ScgPackage.BASIC_BLOCK__PREDECESSORS);
@@ -282,6 +284,7 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Entry getThreadEntry() {
         if (threadEntry != null && threadEntry.eIsProxy()) {
             InternalEObject oldThreadEntry = (InternalEObject)threadEntry;
@@ -308,6 +311,7 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setThreadEntry(Entry newThreadEntry) {
         Entry oldThreadEntry = threadEntry;
         threadEntry = newThreadEntry;
@@ -320,6 +324,7 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isGoBlock() {
         return goBlock;
     }
@@ -329,6 +334,7 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setGoBlock(boolean newGoBlock) {
         boolean oldGoBlock = goBlock;
         goBlock = newGoBlock;
@@ -341,6 +347,7 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isDepthBlock() {
         return depthBlock;
     }
@@ -350,6 +357,7 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setDepthBlock(boolean newDepthBlock) {
         boolean oldDepthBlock = depthBlock;
         depthBlock = newDepthBlock;
@@ -362,6 +370,7 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isSynchronizerBlock() {
         return synchronizerBlock;
     }
@@ -371,6 +380,7 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setSynchronizerBlock(boolean newSynchronizerBlock) {
         boolean oldSynchronizerBlock = synchronizerBlock;
         synchronizerBlock = newSynchronizerBlock;
@@ -383,7 +393,8 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public boolean isEntryBlock() {
+	@Override
+    public boolean isEntryBlock() {
         return entryBlock;
     }
 
@@ -392,7 +403,8 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public void setEntryBlock(boolean newEntryBlock) {
+	@Override
+    public void setEntryBlock(boolean newEntryBlock) {
         boolean oldEntryBlock = entryBlock;
         entryBlock = newEntryBlock;
         if (eNotificationRequired())
@@ -404,6 +416,7 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isDeadBlock() {
         return deadBlock;
     }
@@ -413,6 +426,7 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setDeadBlock(boolean newDeadBlock) {
         boolean oldDeadBlock = deadBlock;
         deadBlock = newDeadBlock;
@@ -425,6 +439,7 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isTermBlock() {
         return termBlock;
     }
@@ -434,6 +449,7 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setTermBlock(boolean newTermBlock) {
         boolean oldTermBlock = termBlock;
         termBlock = newTermBlock;
@@ -446,6 +462,7 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ValuedObject getPreGuard() {
         if (preGuard != null && preGuard.eIsProxy()) {
             InternalEObject oldPreGuard = (InternalEObject)preGuard;
@@ -472,6 +489,7 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setPreGuard(ValuedObject newPreGuard) {
         ValuedObject oldPreGuard = preGuard;
         preGuard = newPreGuard;
@@ -484,6 +502,7 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isFinalBlock() {
         return finalBlock;
     }
@@ -493,6 +512,7 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setFinalBlock(boolean newFinalBlock) {
         boolean oldFinalBlock = finalBlock;
         finalBlock = newFinalBlock;
