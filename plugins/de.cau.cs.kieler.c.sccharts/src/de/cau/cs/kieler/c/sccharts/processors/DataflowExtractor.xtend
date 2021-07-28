@@ -490,20 +490,22 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             val inputs = <String>newHashSet
             val outputs = <String>newHashSet
             for (uniqueFunctionIdentifier : depStates) {
-                val depState = functions.get(uniqueFunctionIdentifier).values.head
-                // if the depend state has itself dependencies, these must be resolved first
-                if (unresolvedFuncDependencies.containsKey(depState)) {
-                    resolveGlobalVars(depState, resStates)
-                }
-                // check the stateVariables for global variables
-                val stateVars = getStateVariables(depState)
-                for (sVar : stateVars.keySet) {
-                    if (globalVars.containsKey(sVar)) {
-                        inputs += sVar
-                        if (!stateVars.get(sVar).filter[it.isOutput].isEmpty) outputs += sVar
+                // function must be in scope
+                if (functions.containsKey(uniqueFunctionIdentifier)) {
+                    val depState = functions.get(uniqueFunctionIdentifier).values.head
+                    // if the depend state has itself dependencies, these must be resolved first
+                    if (unresolvedFuncDependencies.containsKey(depState)) {
+                        resolveGlobalVars(depState, resStates)
+                    }
+                    // check the stateVariables for global variables
+                    val stateVars = getStateVariables(depState)
+                    for (sVar : stateVars.keySet) {
+                        if (globalVars.containsKey(sVar)) {
+                            inputs += sVar
+                            if(!stateVars.get(sVar).filter[it.isOutput].isEmpty) outputs += sVar
+                        }
                     }
                 }
-                    
             }
             // add the global variables to the current state
             addGlobalVarsAsInput(inputs, state)
