@@ -345,8 +345,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         var grp2 = new ArrayList();
         var longestLabel1 = 0f
         var longestLabel2 = 0f
-        
-        
+            
         for (port : node.ports.filter [sourceElement !== null]) {
             val VO = (port.sourceElement as ValuedObjectReference).valuedObject
             if (VO.hasAnnotation(POS_TAG)) {
@@ -1104,9 +1103,16 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                 if (!node.ports.exists [
                     sourceElement !== null && (sourceElement as ValuedObjectReference).valuedObject == input
                 ]) {
-                    node.getInputPortWithNumber(node.incomingEdges.filter[!isInstance && !isSequential].size +
-                        node.ports.filter[it.edges.empty].size, true).setLabel(input.serializeHR.toString, true).
-                        associateWith(input)
+                    if (node.sourceElement instanceof ValuedObjectReference &&
+                        (node.sourceElement as ValuedObjectReference).valuedObject.hasAnnotation(MULTIPLEXER_TAG) &&
+                        input.name.startsWith("_cond")) {
+                        // condition input should be associated with the port "in1" in all multiplexers
+                        node.getInputPortWithNumber(1).setLabel(input.serializeHR.toString, true).associateWith(input)
+                    } else {
+                        node.getInputPortWithNumber(node.incomingEdges.filter[!isInstance && !isSequential].size +
+                            node.ports.filter[it.edges.empty].size, true).setLabel(input.serializeHR.toString, true).
+                            associateWith(input)
+                    }
                 }
             ]
         ]

@@ -78,6 +78,7 @@ import org.eclipse.cdt.core.dom.ast.IASTExpressionStatement
 import org.eclipse.cdt.core.dom.ast.IASTFieldReference
 import org.eclipse.cdt.core.dom.ast.IASTForStatement
 import org.eclipse.cdt.core.dom.ast.IASTFunctionCallExpression
+import org.eclipse.cdt.core.dom.ast.IASTFunctionDeclarator
 import org.eclipse.cdt.core.dom.ast.IASTFunctionDefinition
 import org.eclipse.cdt.core.dom.ast.IASTIdExpression
 import org.eclipse.cdt.core.dom.ast.IASTIfStatement
@@ -107,6 +108,8 @@ import org.eclipse.cdt.internal.core.dom.parser.ASTNode
 import org.eclipse.core.resources.IResource
 
 import static de.cau.cs.kieler.c.sccharts.processors.CDTToStringConverter.*
+import java.util.Set
+import org.eclipse.cdt.core.dom.ast.IASTDeclSpecifier
 import org.eclipse.cdt.core.dom.ast.IASTContinueStatement
 import de.cau.cs.kieler.sccharts.extensions.SCChartsInheritanceExtensions
 import de.cau.cs.kieler.kexpressions.AccessModifier
@@ -261,11 +264,17 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
 
     /** All variables that are pointers to another variable. */
     val Map<State, Map<String, ValuedObject>> pointerVariables = newHashMap
+    
+    val Map<String, IASTDeclSpecifier> globalVars = newHashMap
 
     val String addressOp = "~"
 
     /** Maps struct names to its attribute names.  */
     val Map<String, List<Pair<String, IASTSimpleDeclaration>>> structFields = newHashMap
+
+    /** the function identifiers to which the state has a dependency regarding global variables 
+     * that is not resolved yet. */
+    val Map<State, List<Object>> unresolvedFuncDependencies = newHashMap
 
     /**Maps the valuedObject of an array to the set of written indices. The indices of each write a stored in a list. */
     val voWrittenIdxs = <ValuedObject, Set<List<Expression>>>newHashMap
@@ -337,6 +346,24 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         return statePointers
     }
 
+    
+    /**
+     * Getter to access the function dependencies list.
+     * 
+     * @param the scoping state containing the functions.
+     * @return the unresolved function dependencies for the given state
+     */
+    def getUnresFuncDeps(State state) {
+        var List<Object> deps = null
+        if (unresolvedFuncDependencies.containsKey(state)) {
+            deps = unresolvedFuncDependencies.get(state)
+        } else {
+            deps = newArrayList
+            unresolvedFuncDependencies.put(state, deps)
+        }
+        return deps
+    }
+    
     override void process() {
         val dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss.SSS")
         var now = LocalDateTime.now
@@ -400,11 +427,27 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         // Make sure to always have the read lock on the index here and releasing it eventually.
         index?.acquireReadLock
         try {
-
+            // collect definitions of global variables
+            val varDefs = ast.children.filter(IASTSimpleDeclaration).filter([
+                it.declSpecifier instanceof IASTSimpleDeclSpecifier ||
+                    it.declSpecifier instanceof IASTElaboratedTypeSpecifier ||
+                    it.declSpecifier instanceof IASTCompositeTypeSpecifier
+            ])
+            for (vDef : varDefs) {
+                for (decl : vDef.declarators) {
+                    // exclude function definitions
+                    if (!(vDef.declarators.get(0) instanceof IASTFunctionDeclarator)) {
+                        val name = decl.name.toString
+                        globalVars.put(name, vDef.declSpecifier)
+                    }
+                }
+            }
+            
+            // collect struct definitions
             val structDefs = ast.children.filter(IASTSimpleDeclaration).filter([ s |
                 s.declSpecifier instanceof IASTCompositeTypeSpecifier
             ]).toList
-
+            
             retrieveStructFieldNames(structDefs)
             // Interesting index functions:
             // findBinding(IName name) 
@@ -417,6 +460,13 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 val state = createFunctionScaffold(functionDefinition)
                 rootSCChart.rootStates += state
             }
+            
+            // resolve unresolved function dependencies regarding global variables
+            val Set<State> resStates = newHashSet
+            for (state : unresolvedFuncDependencies.keySet) {
+                resolveGlobalVars(state, resStates)
+            }
+            
             // Go through each function definition again and fill in the scaffolds now that all detailed functions are
             // known.
             for (functionDefinition : functionDefinitions) {
@@ -427,6 +477,40 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         }
 
         return rootSCChart
+    }
+    
+    /**
+     * Resolves the dependencies of the given {@code state} regarding global variables. 
+     * @param state The state for which the dependencies should be resolved.
+     * @param resStates Set that contains the states for which no dependencies are left
+     */
+    private def void resolveGlobalVars(State state, Set<State> resStates) {
+        if (!resStates.contains(state)) {
+            val depStates = unresolvedFuncDependencies.get(state)
+            val inputs = <String>newHashSet
+            val outputs = <String>newHashSet
+            for (uniqueFunctionIdentifier : depStates) {
+                val depState = functions.get(uniqueFunctionIdentifier).values.head
+                // if the depend state has itself dependencies, these must be resolved first
+                if (unresolvedFuncDependencies.containsKey(depState)) {
+                    resolveGlobalVars(depState, resStates)
+                }
+                // check the stateVariables for global variables
+                val stateVars = getStateVariables(depState)
+                for (sVar : stateVars.keySet) {
+                    if (globalVars.containsKey(sVar)) {
+                        inputs += sVar
+                        if (!stateVars.get(sVar).filter[it.isOutput].isEmpty) outputs += sVar
+                    }
+                }
+                    
+            }
+            // add the global variables to the current state
+            addGlobalVarsAsInput(inputs, state)
+            addGlobalVarsAsOutput(outputs, state)
+            
+            resStates.add(state)
+        }
     }
 
     /**
@@ -518,6 +602,14 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 }
             }
         }
+        
+        // add used global variables as input and where necessary as output
+        val inputs = findInputs(func.body, state).filter[v | globalVars.containsKey(v)].toSet()
+        val Map<String, String> pointers = newHashMap
+        val outputs = findOutputs(func.body, state, pointers, true).filter[v | globalVars.containsKey(v)].toSet()
+        inputs.addAll(outputs)
+        addGlobalVarsAsInput(inputs, state)
+        addGlobalVarsAsOutput(outputs, state)
 
         // Determine function output
         val outputDeclSpecifier = func.getDeclSpecifier
@@ -529,7 +621,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 stateVariables.put(returnObjectName, varList)
             }
         }
-
+        
         // TODO: determine array/pointer function outputs.
         // Easy approach (as done here): every array/pointer is written to and set as output.
         // Medium approach: For each function, determine if the array/pointed variable is written to directly.
@@ -585,11 +677,128 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
     }
 
     /**
+     * Creates for each name of the set {@code names} an input variable in the given {@code state}
+     * 
+     * @param names The names of the variables that should be create
+     * @param state The state for which input variables should be created.
+     */
+    private def addGlobalVarsAsInput(Set<String> names, State state) {
+        val Map<ValueType, VariableDeclaration> declarations = newHashMap
+        val Map<String, VariableDeclaration> hostDeclarations = newHashMap
+        for (varName : names) {
+            // prevent the case that global variables are created several times
+            if (!getStateVariables(state).containsKey(varName) || getStateVariables(state).get(varName).filter [
+                it.isInput
+            ].isEmpty) {
+                val declSpec = globalVars.get(varName)
+                var ValueType type
+                var String hostType
+                switch (declSpec) {
+                    IASTSimpleDeclSpecifier: {
+                        // primitive type, pointer or array
+                        type = declSpec.type.cdtTypeConversion
+                    }
+                    IASTElaboratedTypeSpecifier: {
+                        // struct
+                        hostType = "struct " + declSpec.name.toString
+                        type = ValueType.HOST
+                    }
+                    IASTCompositeTypeSpecifier: {
+                        // struct
+                        hostType = "struct " + declSpec.name.toString
+                        type = ValueType.HOST
+                    }
+                    default: {
+                        type = ValueType.INT
+                        println(type + " is not supported as global variable. Default type INT is used.")
+                    }
+                }
+                // create variable declaration
+                if (!declarations.containsKey(type) && type !== ValueType.HOST) {
+                    val newDecl = createVariableDeclaration
+                    state.declarations += newDecl
+                    newDecl.type = type
+                    newDecl.input = true
+                    declarations.put(type, newDecl)
+                } else if (type === ValueType.HOST) {
+                    val newDecl = createVariableDeclaration
+                    state.declarations += newDecl
+                    newDecl.type = type
+                    newDecl.hostType = hostType
+                    newDecl.input = true
+                    hostDeclarations.put(hostType, newDecl)
+                }
+                
+                // create the vo and add it to the stateVariables list
+                val decl = declarations.get(type) ?: hostDeclarations.get(hostType)
+                val vo = decl.createValuedObject(varName + inSuffix)
+                vo.label = varName
+        
+                val stateVariables = getStateVariables(state)
+                val varList = <ValuedObject>newArrayList
+                varList.add(vo)
+                stateVariables.put(varName, varList)
+            }
+        }
+    }
+    
+    /**
+     * Creates for each name of the set {@code names} an output variable in the given {@code state}
+     * 
+     * @param names The names of the variables that should be create
+     * @param state The state for which output variables should be created.
+     */
+    private def addGlobalVarsAsOutput(Set<String> names, State state) {
+        for (varName : names) {
+            // prevent the case that global variables are created several times
+            if (getStateVariables(state).get(varName).filter[it.isOutput].isEmpty) {
+                val declSpec = globalVars.get(varName)
+                var ValueType type
+                var String hostType
+                switch (declSpec) {
+                    IASTSimpleDeclSpecifier: {
+                        // primitive type, pointer or array
+                        type = declSpec.type.cdtTypeConversion
+                    }
+                    IASTElaboratedTypeSpecifier: {
+                        // struct
+                        hostType = "struct " + declSpec.name.toString
+                        type = ValueType.HOST
+                    }
+                    IASTCompositeTypeSpecifier: {
+                        // struct
+                        hostType = "struct " + declSpec.name.toString
+                        type = ValueType.HOST
+                    }
+                    default: {
+                        type = ValueType.INT
+                        println(type + " is not supported as global variable. Default type INT is used.")
+                    }
+                }                
+                
+                val outDecl = createVariableDeclaration
+                outDecl.type = type
+                outDecl.hostType = hostType
+                outDecl.output = true
+                state.declarations += outDecl
+                
+                val vo = outDecl.createValuedObject(varName + outSuffix)
+                vo.label = varName
+                
+                val stateVariables = getStateVariables(state)
+                val varList = stateVariables.get(varName)
+                varList.add(vo)
+            }
+        }
+    }
+
+    /**
      * Fills a scaffolded {@link SCCharts} {@link State} for the given function definition and fills its contained
      * dataflow region. The scaffolds for all references states need to be created first by
      * {@link #createFunctionScaffold(IASTFunctionDefinition)}.
      */
     def void fillFunctionScaffold(IASTFunctionDefinition func) {
+        
         // Determine function name
         val funcDeclarator = func.getDeclarator
         val funcName = funcDeclarator.getName
@@ -609,7 +818,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             println("ERROR: Body of " + funcName.toString + " is not a Compound Statement!")
         }
     }
-
+    
     /**
      * Create a state representation for a call of an undefined function. The in- and outputs are either guessed by
      * the function call or determined by looking for the function in the AST/index.
@@ -2840,7 +3049,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                     // pointer was declared in the current state, so the variable that it points to is the output
                     varName = pointer.get(varName)
                     if(getStateVariables(parentState).containsKey(varName)) outputs += varName
-                }
+                } else if(globalVars.containsKey(varName)) outputs += varName
             }
             IASTBinaryExpression: {
                 // Consider non-local variables that are target of an assignment.
@@ -2898,12 +3107,19 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                     }
                 }
             }
-            // Consider pointer arguments of a function call that get changed in the function
             IASTFunctionCallExpression: {
                 val uniqueFunctionIdentifier = CProcessorUtils.nameToIdentifier(
                     ((stmt as IASTFunctionCallExpression).functionNameExpression as IASTIdExpression).name, index)
                 if (functions.containsKey(uniqueFunctionIdentifier)) {
                     val funcState = functions.get(uniqueFunctionIdentifier).values.head
+                    
+                    // consider global vars output by the function
+                    val gVars = getStateVariables(funcState)
+                    for (gV : gVars.keySet) {
+                        if(globalVars.containsKey(gV) && !gVars.get(gV).filter[it.isOutput].isEmpty) outputs += gV
+                    }
+                    
+                    // Consider pointer arguments of a function call that get changed in the function
                     val arguments = (stmt as IASTFunctionCallExpression).arguments
                     var index = 0
                     for (argument : arguments) {
@@ -2935,6 +3151,11 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                         }
                         index++;
                     }
+                }
+                
+                // Check every child for other statements.
+                for (child : stmt.children) {
+                    outputs += findOutputs(child, parentState, pointer, false)
                 }
             }
             default: {
@@ -3035,7 +3256,11 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         switch (stmt) {
             IASTIdExpression: {
                 val varName = (stmt as IASTIdExpression).getName.toString
-                if(getStateVariables(parentState).containsKey(varName)) inputs += varName
+                if (getStateVariables(parentState).containsKey(varName)) {
+                    inputs += varName
+                } else if (globalVars.containsKey(varName)) {
+                    inputs += varName
+                }
             }
             // Consider only variables that are not target of an assignment    
             IASTBinaryExpression: {
@@ -3058,9 +3283,21 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 for (argument : arguments) {
                     inputs += findInputs(argument, parentState)
                 }
+                // consider global vars used by the function
+                val uniqueFunctionIdentifier = CProcessorUtils.nameToIdentifier(
+                    (stmt.functionNameExpression as IASTIdExpression).name, index)
+                if (functions.get(uniqueFunctionIdentifier) !== null) {
+                    val state = functions.get(uniqueFunctionIdentifier).values.head
+                    val gVars = getStateVariables(state)
+                    for (gV : gVars.keySet) {
+                        if(globalVars.containsKey(gV)) inputs += gV
+                    }
+                } else {
+                    getUnresFuncDeps(parentState).add(uniqueFunctionIdentifier)
+                }
             }
-            // Test all children of other statements    
             default: {
+                // Test all children of other statements   
                 for (child : stmt.children) {
                     inputs += findInputs(child, parentState)
                 }
@@ -3797,6 +4034,36 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
 
         // Create all assignments for the function call
         var index = 0
+        
+        // assignements for input global vars
+        val stateDecls = refState.declarations.filter(VariableDeclaration)
+        val inputGVs = stateDecls.filter[it.isInput].map[it.valuedObjects].flatten.filter [
+            globalVars.containsKey(it.label)
+        ]
+        val outputGVs = stateDecls.filter[it.isOutput].map[it.valuedObjects].flatten.filter [
+            it.name != returnObjectName + outSuffix && globalVars.containsKey(it.label)
+        ]
+        for (gV : inputGVs) {
+            if (globalVars.containsKey(gV.label)){
+                val argExpr = findValuedObjectByName(state, gV.label, false, dRegion)
+                dRegion.equations += createDataflowAssignment(refObj, gV, argExpr.reference)
+            }
+        }
+        
+        // assignments for output global vars
+        for (gV : outputGVs) {
+            val target = state.findValuedObjectByName(gV.label, true, dRegion)
+            if (refObj === null) {
+                dRegion.equations += createDataflowAssignment(target, gV.reference)
+            } else {
+                val source = refObj.reference => [
+                    subReference = gV.reference
+                ]
+                dRegion.equations += createDataflowAssignment(target, source)
+            }
+        }
+        
+        
         for (argument : expression.arguments) {
             // Create the assignments from the function inputs to inputs of the referenced state.
             val argExpr = argument.createKExpression(state, dRegion)
