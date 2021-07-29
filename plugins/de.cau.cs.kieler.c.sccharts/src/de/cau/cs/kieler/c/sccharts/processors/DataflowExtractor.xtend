@@ -3461,14 +3461,15 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 // In many cases, that's not the newest variant of the array.
                 //TODO: Not working quite right
                 
-                var searchedVo = varList.reverseView.findFirst[candVo | val readIndices = voReadIndices.get(candVo)
-                    readIndices !== null && readIndices.exists[expressionListsEquals(it, index)]
+                var searchedVo = varList.reverseView.findFirst[candVo | val writtenIndices = voWrittenIdxs.get(candVo)
+                    writtenIndices !== null && writtenIndices.exists[expressionListsEquals(it, index)]
                 ]
                 if(searchedVo !== null){
                     alreadyReadIndices = voReadIndices.get(searchedVo)
                     vo = searchedVo
                }else{
                    vo = varList.get(0)
+                   alreadyReadIndices= voReadIndices.get(vo)
                }
                  
                    
