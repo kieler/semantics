@@ -46,6 +46,9 @@ State returns sccharts::State:
 	    'is' reference = ScopeCall
 	    ('schedule' schedule+=ScheduleObjectReference+)?
 	)|(
+	    'calls' reference = ModuleScopeCall
+        ('schedule' schedule+=ScheduleObjectReference+)?
+    )|(
 	    ('extends' baseStateReferences += BaseStateReference (',' baseStateReferences += BaseStateReference)*)?
 	    ('schedule' schedule+=ScheduleObjectReference+)?
 	   '{'
@@ -61,11 +64,15 @@ ImplicitState returns sccharts::State:
     {sccharts::State}
     (regions+=Region+);
 
-	
 ScopeCall returns sccharts::ScopeCall:
     super?='super.'?
     target = [annotations::NamedObject|ID]
     ('<' genericParameters += GenericParameter (',' genericParameters += GenericParameter)* '>')?
+    (('(' parameters += ScopeParameter (',' parameters += ScopeParameter)* ')') | '()')?;
+
+ModuleScopeCall returns sccharts::ScopeCall:
+    {sccharts::ModuleScopeCall}
+    target = [annotations::NamedObject|ID]
     (('(' parameters += ScopeParameter (',' parameters += ScopeParameter)* ')') | '()')?;
     
 ScopeParameter returns kexpressions::Parameter:
@@ -129,8 +136,7 @@ ControlflowRegion returns sccharts::ControlflowRegion:
     )?
     'region' name=ExtendedID? label=STRING?
     ((
-        'is'
-        reference = ScopeCall
+        'is' reference = ScopeCall
         ('for' counterVariable=CounterVariable ':' forStart=IntOrReference ('to' forEnd=IntOrReference)?)?
         ('schedule' schedule+=ScheduleObjectReference+)?
     )|(

@@ -36,7 +36,9 @@ import de.cau.cs.kieler.kexpressions.kext.extensions.BindingType
 import de.cau.cs.kieler.kexpressions.kext.extensions.KExtReferenceExtensions
 import de.cau.cs.kieler.kexpressions.kext.extensions.Replacements
 import de.cau.cs.kieler.sccharts.BaseStateReference
+import de.cau.cs.kieler.sccharts.ModuleScopeCall
 import de.cau.cs.kieler.sccharts.Scope
+import de.cau.cs.kieler.sccharts.ScopeCall
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.processors.Reference
 import java.util.List
@@ -477,5 +479,19 @@ class SCChartsReferenceExtensions extends KExtReferenceExtensions {
             }
         }
         return false
+    }
+    
+    def isModuleCall(ScopeCall sc) {
+        return sc instanceof ModuleScopeCall
+    }
+    def isModuleCallReference(Scope scope) {
+        return scope.isReferencing && scope.reference.isModuleCall
+    }
+    
+    def isModuleExpansion(ScopeCall sc) {
+        return !sc.isModuleCall
+    }
+    def isModuleExpansionReference(Scope scope) {
+        return scope.isReferencing && scope.reference.isModuleExpansion
     }
 }

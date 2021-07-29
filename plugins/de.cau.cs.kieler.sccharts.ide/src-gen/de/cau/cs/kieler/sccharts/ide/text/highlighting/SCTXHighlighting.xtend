@@ -20,6 +20,7 @@ class SCTXHighlighting implements IHighlighting {
         "abort",
         "auto",
         "bool",
+        "calls",
         "class",
         "clock",
         "combine",

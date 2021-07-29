@@ -64,6 +64,7 @@ import de.cau.cs.kieler.sccharts.DataflowRegion;
 import de.cau.cs.kieler.sccharts.DuringAction;
 import de.cau.cs.kieler.sccharts.EntryAction;
 import de.cau.cs.kieler.sccharts.ExitAction;
+import de.cau.cs.kieler.sccharts.ModuleScopeCall;
 import de.cau.cs.kieler.sccharts.OdeAction;
 import de.cau.cs.kieler.sccharts.PeriodAction;
 import de.cau.cs.kieler.sccharts.PolicyClassDeclaration;
@@ -1387,6 +1388,9 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 			case SCChartsPackage.EXIT_ACTION:
 				sequence_ExitAction(context, (ExitAction) semanticObject); 
 				return; 
+			case SCChartsPackage.MODULE_SCOPE_CALL:
+				sequence_ModuleScopeCall(context, (ModuleScopeCall) semanticObject); 
+				return; 
 			case SCChartsPackage.ODE_ACTION:
 				sequence_OdeAction(context, (OdeAction) semanticObject); 
 				return; 
@@ -1814,6 +1818,18 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	
 	/**
 	 * Contexts:
+	 *     ModuleScopeCall returns ModuleScopeCall
+	 *
+	 * Constraint:
+	 *     (target=[NamedObject|ID] (parameters+=ScopeParameter parameters+=ScopeParameter*)?)
+	 */
+	protected void sequence_ModuleScopeCall(ISerializationContext context, ModuleScopeCall semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     LocalAction returns OdeAction
 	 *     OdeAction returns OdeAction
 	 *
@@ -2057,6 +2073,7 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	 *         label=STRING? 
 	 *         (
 	 *             (reference=ScopeCall schedule+=ScheduleObjectReference*) | 
+	 *             (reference=ModuleScopeCall schedule+=ScheduleObjectReference*) | 
 	 *             (
 	 *                 (baseStateReferences+=BaseStateReference baseStateReferences+=BaseStateReference*)? 
 	 *                 schedule+=ScheduleObjectReference* 
