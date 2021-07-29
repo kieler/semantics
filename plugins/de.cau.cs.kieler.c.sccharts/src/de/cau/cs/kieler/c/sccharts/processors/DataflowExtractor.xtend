@@ -2322,7 +2322,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         val varVO = decl.createValuedObject(label + suffix)
         varVO.label = label
 
-        if (!vo.annotations.empty) {
+        if (!vo.annotations.empty && !suffix.equals(outSuffix)) {
             varVO.addTagAnnotation((vo.annotations.get(0) as TagAnnotation).name)
         }
 
@@ -2583,6 +2583,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             for (label : vars) {
                 var vo = parentState.findValuedObjectByName(label, false, parentRegion)
                 vo.label = label
+                vo.removeAnnotations(posTag)
                 vo.addTagAnnotation(negTag)
                 breakInputs.add(vo)
             }
