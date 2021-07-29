@@ -3664,6 +3664,10 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         // Only if the binary expression is an assignment some work is needed
         if (operator == IASTBinaryExpression.op_assign) {
             var sourceExpr = binExpr.children.get(1)
+            // TODO: cast could be visualized
+            if (sourceExpr instanceof IASTCastExpression) {
+                sourceExpr = sourceExpr.operand
+            }
             var Expression source = null
             switch (sourceExpr) {
                 // If source expression is a variable read retrieve the respective VO
