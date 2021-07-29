@@ -88,11 +88,19 @@ class ReferenceCallPreprocessor extends SCChartsProcessor implements Traceable {
     // -------------------------------------------------------------------------
     def SCCharts transform(SCCharts sccharts) {
         sccharts => [
-            rootStates.immutableCopy.forEach [ rootState |
-                rootState.allContainedStates.filter[isReferencing].toList().forEach [ ref |
+            rootStates.immutableCopy.forEach [ rootState | rootState.transformRootState(rootStates) ]
+            /* Remove SCCharts declared as header files */
+            rootStates.removeAll(rootStates.filter[hasAnnotation(REF_CALL_EXT_SCC_ANNOTATION)].toList)
+        ]
+    }
+    
+    protected def void transformRootState(State rootState, List<State> rootStates) {
+        rootState.allContainedStates.filter[isReferencing].toList().forEach [ ref |
                     /* Copy into model if imported. */
                     if (!rootStates.exists[name == ref.reference.target.name]) {
-                        rootStates.add((ref.reference.target as State).copy => [ref.reference.target = it])
+                        val newRootState = (ref.reference.target as State).copy => [ref.reference.target = it]
+                        rootStates.add(newRootState)
+                        newRootState.transformRootState(rootStates)
                     }
                     /* Get proxy class and create instance */
                     val proxyClass = createOrGetProxyClass(ref)
@@ -108,11 +116,6 @@ class ReferenceCallPreprocessor extends SCChartsProcessor implements Traceable {
                 ]
                 rootState.declarations.filter(PolicyClassDeclaration).filter[hasAnnotation(REF_CALL_TAG_ANNOTATION)].
                     forEach[cleanupDeclarations]
-            ]
-
-            /* Remove SCCharts declared as header files */
-            rootStates.removeAll(rootStates.filter[hasAnnotation(REF_CALL_EXT_SCC_ANNOTATION)].toList)
-        ]
     }
 
     protected def createProxyState(State ref, PolicyClassDeclaration proxyClass, ValuedObject instance,
