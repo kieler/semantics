@@ -269,6 +269,9 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
     /** All variables that are pointers to another variable. */
     val Map<State, Map<String, ValuedObject>> pointerVariables = newHashMap
     
+    /** All pointers that are parameters of the state. */
+    val Map<State, List<String>> parameterPointers = newHashMap
+    
     val Map<String, IASTDeclSpecifier> globalVars = newHashMap
 
     val String addressOp = "~"
@@ -640,11 +643,13 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             val parameters = funcDeclarator.getParameters
             val Map<String, String> ps = newHashMap
             val changedPointers = findOutputs(func.body, state, ps, true)
+            val List<String> pointerList = newArrayList
             for (par : parameters) {
                 val parName = par.getDeclarator.getName.toString
                 val isArray = par.getDeclSpecifier instanceof IASTSimpleDeclSpecifier &&
                     par.declarator instanceof IASTArrayDeclarator
                 val isPointer = par.declarator.pointerOperators !== null && !par.declarator.pointerOperators.isEmpty
+                if (isPointer) pointerList.add(parName)
                 val isStructPointer = par.declSpecifier instanceof IASTElaboratedTypeSpecifier
                 if (isArray || (isPointer && changedPointers.contains(parName))) {
                     // Determine parameter name
@@ -677,6 +682,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                     varList.add(outputVo)
                 }
             }
+            parameterPointers.put(state, pointerList)
         }
 
         return state
@@ -1209,8 +1215,8 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
      * Translate Return statement
      */
     def dispatch void buildStatement(IASTReturnStatement stmt, State rootState, DataflowRegion dRegion) {
-        val retKExpr = createKExpression(stmt.getReturnValue, rootState, dRegion)
-        if (retKExpr !== null) {
+        if (stmt.getReturnValue !== null) {
+            val retKExpr = createKExpression(stmt.getReturnValue, rootState, dRegion)
             val retVO = rootState.findValuedObjectByName(returnObjectName, true, dRegion)
             if (!serializable) {
                 retVO.insertHighlightAnnotations(stmt)
@@ -2396,7 +2402,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         newState.regions += newRegion
         newRegion.label = localName + ssaNameSeperator + localCounter
 
-        // determine the variables which values depend on the break stmt and the state
+        // determine the state and the variables which values depend on the stmt
         var Set<String> breakDependableVars
         var State topState
         switch (topStmt) {
@@ -2407,16 +2413,20 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                         topState = state
                     }
                 }
+                // determine variables
                 breakDependableVars = findBreakOutputs(topStmt.getBody as IASTCompoundStatement,
                     passedStmt.parent.parent as IASTIfStatement, topState)
             }
             IASTFunctionDefinition: {
+                // determine function state
                 val uniqueFunctionIdentifier = CProcessorUtils.nameToIdentifier(
                     (stmt as IASTFunctionDefinition).declarator.name, index)
                 if (functions.containsKey(uniqueFunctionIdentifier)) {
                     topState = functions.get(uniqueFunctionIdentifier).values.head
+                    val pointerPars = parameterPointers.get(topState) ?: newArrayList
+                    // only pointers that are parameters of the funciton must be considered
                     breakDependableVars = findBreakOutputs(topStmt.getBody as IASTCompoundStatement,
-                        passedStmt.parent.parent as IASTIfStatement, topState)
+                        passedStmt.parent.parent as IASTIfStatement, topState).filter[pointerPars.contains(it)].toSet
                 }
             }
         }
@@ -3026,7 +3036,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
      * @return If a return statement was found.
      */
     def boolean findReturn(IASTNode statement) {
-        if (statement instanceof IASTReturnStatement) {
+        if (statement instanceof IASTReturnStatement && (statement as IASTReturnStatement).returnValue !== null) {
             return true
         } else {
             for (child : statement.children) {
