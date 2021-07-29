@@ -90,7 +90,12 @@ class StructuralDepthJoinProcessor extends InplaceProcessor<SCGraphs> {
         val warningProperty = environment.getProperty(LoopAnalyzerV2.WARNING_ON_INSTANTANEOUS_LOOP)
         environment.setProperty(LoopAnalyzerV2.WARNING_ON_INSTANTANEOUS_LOOP, false)
         for (scg : getModel.scgs.ignoreMethods) {
-            while (scg.processModel(threadData, loopData)) {
+            // Workaround for the the loop analyzer not recognizing different SCGs in one model.
+            // All nodes belonging to other SCGs are removed. 
+            // This fix can be removed, if the analyzer becomes smart enough to only retrieve the correct nodes.
+            val scgLoopData = loopData.cloneObject as LoopData
+            scgLoopData.criticalNodes.removeIf[ !scg.nodes.contains(it) ]
+            while (scg.processModel(threadData, scgLoopData)) {
                 executeCoProcessor(loopAnalyzer, false)
                 snapshot
             }
