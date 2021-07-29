@@ -180,12 +180,17 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
         } else {        
             val writeVOI = new ValuedObjectIdentifier(assignment)
             
+            // Register parent VOR as reader is subRerence is present
+            if (assignment.reference.subReference !== null) {
+                assignment.processExpressionReader(assignment.reference, forkStack, valuedObjectAccessors)
+            }
+            
             // If a writer was detected, remove previously registered read accesses,
             // because the access is recognized as write and we don't want another write-read
             // dependency to be created.
             for (readAccess : valuedObjectAccessors.getAccesses(writeVOI).filter[ node == assignment ].toList) {
                 valuedObjectAccessors.removeAccess(writeVOI, readAccess)
-            }        
+            }
             
             for(index : assignment.indicesAndSubIndices) {
                 val indexReaderVOIs = assignment.processExpressionReader(index, forkStack, valuedObjectAccessors)
@@ -230,7 +235,7 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
                     priority = sched.priority    
                 }
                 
-                val writeAccess = new ValuedObjectAccess(assignment, assignment.association, schedule, scheduleObject, priority, forkStack, writeVOI.isSpecificIdentifier)
+                val writeAccess = new ValuedObjectAccess(assignment, assignment.association, schedule, scheduleObject, priority, forkStack, writeVOI.isArraySpecificIdentifier)
                 writeAccess.isWriteAccess = true
                 valuedObjectAccessors.addAccess(writeVOI, writeAccess)
             }
@@ -328,7 +333,7 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
                     priority = sched.priority    
                 }
                 
-                val readAccess = new ValuedObjectAccess(node, node.association, schedule, scheduleObject, priority, forkStack, readVOI.isSpecificIdentifier)
+                val readAccess = new ValuedObjectAccess(node, node.association, schedule, scheduleObject, priority, forkStack, readVOI.isArraySpecificIdentifier)
                 valuedObjectAccessors.addAccess(readVOI, readAccess)
             } 
         }
@@ -343,14 +348,14 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
 
         // First, process the specific accesses, because they must also be checked against the generic accesses of 
         // the same valued object. The ValuedObjectIdentifier can retrieve the corresponding generic identifier.        
-        for (valuedObjectIdentifier : valuedObjects.filter[ isSpecificIdentifier ]) {
+        for (valuedObjectIdentifier : valuedObjects.filter[ isArraySpecificIdentifier ]) {
             val accesses = valuedObjectAccessors.map.get(valuedObjectIdentifier)
             valuedObjectIdentifier.processDependencies(accesses, true)
              
             additionalAccesses.putAll(valuedObjectIdentifier.genericIdentifier, accesses);
-        }    
+        }
         
-        for (valuedObjectIdentifier : valuedObjects.filter[ !isSpecificIdentifier ]) {
+        for (valuedObjectIdentifier : valuedObjects.filter[ !isArraySpecificIdentifier ]) {
             val accesses = valuedObjectAccessors.map.get(valuedObjectIdentifier)
             val specificAccesses = additionalAccesses.get(valuedObjectIdentifier)
             specificAccesses.addAll(accesses)

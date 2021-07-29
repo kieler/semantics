@@ -39,57 +39,49 @@ class ValuedObjectIdentifier {
     
     @Accessors ValuedObject valuedObject
     @Accessors List<Expression> indices
+    @Accessors ValuedObjectIdentifier parentVOI
     
     static val KExpressionsCompareExtensions compare = new KExpressionsCompareExtensions
     static val KExpressionsValuedObjectExtensions vos = new KExpressionsValuedObjectExtensions
     
     new(Assignment assignment) {
-        var ref = assignment.reference
+        var ref = vos.getLowermostReference(assignment.reference)
         this.valuedObject = ref.valuedObject
-        // Include members
-        while (ref.subReference !== null) {
-            ref = ref.subReference
-            this.valuedObject = ref.valuedObject
+        this.indices = ref.indices.immutableCopy.removeDynamicIndices
+        // If is member of class, register parent
+        if (vos.isSubReference(ref)) {
+            parentVOI = new ValuedObjectIdentifier(ref.eContainer as ValuedObjectReference)
         }
-        this.indices = vos.getIndicesAndSubIndices(assignment.reference).toList.removeDynamicIndices
     }
     
     new(ValuedObjectReference valuedObjectReference) {
         this.valuedObject = valuedObjectReference.valuedObject
         this.indices = valuedObjectReference.indices.immutableCopy.removeDynamicIndices
-        // Consiter enclosing arrays of classes
-        if (valuedObjectReference.eContainer instanceof ValuedObjectReference) {
-            var subReference = valuedObjectReference
-            var superReference = valuedObjectReference.eContainer as ValuedObjectReference
-            while (superReference !== null && superReference.subReference == subReference) {
-                if (this.indices === null) this.indices = newArrayList
-                this.indices.addAll(0, superReference.indices)
-                subReference = superReference
-                if (superReference.eContainer instanceof ValuedObjectReference) {
-                    superReference = superReference.eContainer as ValuedObjectReference
-                } else {
-                    superReference = null
-                }
-            }
-            this.indices = this.indices.removeDynamicIndices
+        // If is member of class, register parent
+        if (vos.isSubReference(valuedObjectReference)) {
+            parentVOI = new ValuedObjectIdentifier(valuedObjectReference.eContainer as ValuedObjectReference)
         }
     }
     
     new(ValuedObject valuedObjecT) {
         this.valuedObject = valuedObject
         this.indices = null
+        this.parentVOI = null
     }
     
     protected new() {}
     
-    def getGenericIdentifier() {
-        new ValuedObjectIdentifier => [
+    def ValuedObjectIdentifier getGenericIdentifier() {
+        return new ValuedObjectIdentifier => [
             it.valuedObject = this.valuedObject
             it.indices = null
+            if (this.parentVOI !== null) {
+                it.parentVOI = this.parentVOI.genericIdentifier
+            }
         ]
     }
     
-    def isSpecificIdentifier() {
+    def isArraySpecificIdentifier() {
         indices !== null
     }
     
@@ -126,6 +118,11 @@ class ValuedObjectIdentifier {
     override boolean equals(Object object) {
         if (object instanceof ValuedObjectIdentifier) {
             if (this.valuedObject != object.valuedObject) return false
+            if (this.parentVOI !== null) {
+                if (!this.parentVOI.equals(object.parentVOI)) {
+                    return false
+                }
+            }
             if (this.indices === null) {
                 if (object.indices === null) return true else return false
             } else {
@@ -167,6 +164,12 @@ class ValuedObjectIdentifier {
                 result.append(serializer.serialize(index).toString)
                 result.append("]")
             }
+        }
+        if (parentVOI !== null) {
+            result.append(".")
+            result.append("parent: {")
+            result.append(parentVOI.toString)
+            result.append("}")
         }
         return result.toString();
     }
