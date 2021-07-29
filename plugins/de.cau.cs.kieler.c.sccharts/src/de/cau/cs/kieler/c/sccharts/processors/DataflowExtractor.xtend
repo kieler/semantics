@@ -104,27 +104,17 @@ import org.eclipse.cdt.core.index.IIndexBinding
 import org.eclipse.cdt.core.model.CoreModel
 import org.eclipse.cdt.core.model.ICProject
 import org.eclipse.cdt.core.model.ITranslationUnit
-import org.eclipse.cdt.internal.core.dom.parser.ASTNode
 import org.eclipse.core.resources.IResource
-
 import static de.cau.cs.kieler.c.sccharts.processors.CDTToStringConverter.*
 import java.util.Set
 import org.eclipse.cdt.core.dom.ast.IASTDeclSpecifier
-import org.eclipse.cdt.core.dom.ast.IASTContinueStatement
-import de.cau.cs.kieler.sccharts.extensions.SCChartsInheritanceExtensions
-import de.cau.cs.kieler.kexpressions.AccessModifier
 import org.eclipse.cdt.core.dom.ast.IASTCompositeTypeSpecifier
-import org.eclipse.cdt.internal.core.dom.parser.c.CASTCompositeTypeSpecifier
 import org.eclipse.cdt.core.dom.ast.IASTDeclarator
 import org.eclipse.cdt.core.dom.ast.IASTElaboratedTypeSpecifier
-import org.eclipse.cdt.internal.core.dom.parser.c.CASTArrayDeclarator
-import org.eclipse.cdt.internal.core.dom.parser.c.CASTName
 import org.eclipse.cdt.core.dom.ast.ASTNodeFactoryFactory
 import org.eclipse.emf.common.util.EList
 import org.eclipse.cdt.core.dom.ast.IASTPointer
-import java.util.Set
-import de.cau.cs.kieler.kexpressions.Value
-import de.cau.cs.kieler.kexpressions.impl.OperatorExpressionImpl
+import org.eclipse.cdt.internal.core.dom.parser.ASTNode
 
 /**
  * A Processor analyzing the data flow of functions within a single file of a C project and visualizing it as actor-
@@ -455,7 +445,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 s.declSpecifier instanceof IASTCompositeTypeSpecifier
             ]).toList
             
-            retrieveStructFieldNames(structDefs)
+            //retrieveStructFieldNames(structDefs)
             // Interesting index functions:
             // findBinding(IName name) 
             // findReferences(IBinding binding) 
@@ -599,10 +589,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                     variableDeclaration.hostType = "struct " + structName
                     variableDeclaration.input = true
 
-                    val fields = structFields.get(structName)
-
                     val vo = variableDeclaration.createValuedObject(varName + inSuffix)
-                    vo.cardinalities += createIntValue(fields.size)
                     vo.addTagAnnotation("struct")
 
                     val varList = <ValuedObject>newArrayList
@@ -935,49 +922,6 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         functions.put(identifier, map)
 
         return state
-    }
-
-    /**
-     * Extracts the name of a struct definition and of its fields and puts them in the structFields map.
-     * Additionally, it creates hidden arrays for fields that are structs or arrays.
-     * 
-     * @param structDefs SimpleDeclarations that declare a struct
-     */
-    def void retrieveStructFieldNames(List<IASTSimpleDeclaration> structDefs) {
-        for (structDef : structDefs) {
-            val structD = structDef.declSpecifier as IASTCompositeTypeSpecifier
-            val structName = structD.name.toString
-
-            val List<Pair<String, IASTSimpleDeclaration>> fieldNames = new ArrayList()
-            for (d : structD.getDeclarations(true)) {
-                if (!(d instanceof IASTSimpleDeclaration)) {
-                    throw new IllegalArgumentException("One declaration in the struct " + structName +
-                        " in structDefs is not of type IASTSimpleDeclaration. Instead it's of type: " +
-                        d.class.toString)
-                }
-                val simpleD = d as IASTSimpleDeclaration
-                val fieldName = (simpleD.declarators.get(0) as IASTDeclarator).name.toString()
-
-                val declSpecifier = simpleD.declSpecifier
-                var IASTSimpleDeclaration resDec = null;
-                switch (declSpecifier) {
-                    IASTSimpleDeclSpecifier: {
-
-                        val isArray = simpleD.declarators.exists[declarator|declarator instanceof IASTArrayDeclarator]
-                        if (isArray) {
-                            resDec = simpleD
-                        }
-                    }
-                    IASTElaboratedTypeSpecifier: {
-                        resDec = simpleD
-                    }
-                }
-
-                fieldNames.add(fieldName -> resDec)
-            }
-
-            structFields.put(structName, fieldNames)
-        }
     }
 
     /**
@@ -2789,7 +2733,6 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             variableDeclaration.type = ValueType.HOST
             variableDeclaration.hostType = "struct " + structName
 
-            fields = structFields.get(structName)
         }
         if (!serializable) {
             variableDeclaration.insertHighlightAnnotations(declaration)
@@ -2831,42 +2774,8 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 // Structs shall be visualized and handled as arrays 
                 // -> something is handled as array when cardinalities is set
                 // We explicitly create arrays for structs, because arrays are passable in sccharts - structs are not
-                // TODO: Nested Structs, structs as fields - idea create hidden arrays for this
                 vo.cardinalities += createIntValue(fields.size)
                 vo.addTagAnnotation("struct")
-
-                // Declare array for the fields that are structs or arrays
-                for (f : fields) {
-                    val fieldDeclaration = f.value
-
-                    // fieldDeclaration is only set in the map when the field is an array or struct
-                    if (fieldDeclaration !== null) {
-                        val varDec = fieldDeclaration.addDeclaration(state, dRegion)
-
-                        val decVo = varDec.valuedObjects.get(0)
-                        var oldDecLabel = decVo.label
-                        var newLabel = varName + "." + oldDecLabel
-
-                        var oldDecName = decVo.name
-                        var newName = varName + "." + oldDecName
-                        decVo.name = newName
-                        decVo.label = newLabel
-
-                        val vList = stateVariables.get(oldDecLabel)
-
-                        /*Delete the old key to prevent clashes 
-                         * with vars that should choose a name that is equal to the field's name
-                         * Put the same varList with the newName as key.
-                         */
-                        stateVariables.remove(oldDecLabel)
-                        stateVariables.put(newLabel, vList)
-
-                        // The field data structures should be hidden since they are not visible outside of the struct
-                        varDec.annotations += createTagAnnotation("Hide")
-                        dRegion.declarations.add(varDec)
-                    }
-                }
-
             }
 
             // Add the valued object and the ssa list to the respective elements    
@@ -3451,19 +3360,6 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                         alreadyWrittenIdxs.add(index)
                 }
                 
-
-                
-//                if (alreadyWrittenIdxs === null || alreadyWrittenIdxs.empty) {
-//                    // A first write to an array needs a new VO.
-//                    alreadyWrittenIdxs = newArrayList
-//                    voWrittenIdxs.put(vo, alreadyWrittenIdxs)
-//                    newArrayVONeeded = true
-//                } else if (alreadyWrittenIdxs.exists[it.expressionEquals(index)]) {
-//                    // Any subsequent write to that array only needs a new VO if it is on a different array index.
-//                    newArrayVONeeded = true
-//                } else {
-//                    alreadyWrittenIdxs.add(index)
-//                }
                 
             } else {
                 // Branch for accessing/reading an array
@@ -3494,15 +3390,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                         alreadyReadIndices.add(index)
                         voReadIndices.put(vo, alreadyReadIndices)
                     }
-                }
-                
-
-//                if (alreadyWrittenIdxs !== null) {
-//
-//                    // If this is a read to an array that has been written to before, clear the alreadyWrittenIdxs, so that
-//                    // a new VO will be created on the next write to it.
-//                    alreadyWrittenIdxs.clear
-//                }
+                }               
 
             }
         }
