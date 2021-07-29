@@ -1222,10 +1222,11 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 retVO.insertHighlightAnnotations(stmt)
             }
             dRegion.equations += createDataflowAssignment(retVO, retKExpr)
-        } else {
-            // it is a return stmt in a void method
-            buildBreakOrContinue(stmt, rootState, dRegion)
+
         }
+        // we need a multiplexer for the pointer parameters that are changed after the return
+        // (if the return is not in a if-stmt, then there is no code after the return or it is unreachable and therefore we need no multiplexer)
+        if(stmt.parent.parent instanceof IASTIfStatement) buildBreakOrContinue(stmt, rootState, dRegion)
     }
 
     /**
@@ -2389,22 +2390,10 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         }
         var topStmt = stmt instanceof IASTWhileStatement? stmt as IASTWhileStatement: stmt as IASTFunctionDefinition
 
-        // create ref decl and valued  object
-        val newRefDecl = createReferenceDeclaration
-        lastRegion.declarations += newRefDecl
-        newRefDecl.setReference(newState)
-        val newObj = newRefDecl.createValuedObject(localName + ssaNameSeperator + localCounter)
-        newObj.annotations += createTagAnnotation(multiplexerTag)
-        newObj.label = ""
-
-        // Create the region for the body part
-        val newRegion = newState.createDataflowRegion("")
-        newState.regions += newRegion
-        newRegion.label = localName + ssaNameSeperator + localCounter
-
         // determine the state and the variables which values depend on the stmt
         var Set<String> breakDependableVars
         var State topState
+        var addState = true
         switch (topStmt) {
             IASTWhileStatement: {
                 // determine the current while state
@@ -2427,95 +2416,112 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                     // only pointers that are parameters of the funciton must be considered
                     breakDependableVars = findBreakOutputs(topStmt.getBody as IASTCompoundStatement,
                         passedStmt.parent.parent as IASTIfStatement, topState).filter[pointerPars.contains(it)].toSet
+                    val isVoidReturn = topState.declarations.findFirst [it.valuedObjects.findFirst[it.name.startsWith(returnObjectName)] !== null] === null
+                    // empty return multiplexer should only be shown when it is a return in a void method
+                    addState = !breakDependableVars.isEmpty || isVoidReturn
                 }
             }
         }
-        // search for the latest valued object for each of the breakDependableVar
-        val List<ValuedObject> vars = new ArrayList
-        for (depVar : breakDependableVars) {
-            var ValuedObject vo = null
-            var region = parentRegion
-            var state = parentState
-            // input does not count as the latest vo unless it is in the surrounding while/function state
-            while (vo === null || (vo.name.contains(inSuffix) && !state.equals(topState))) {
-                region = hierarchy.get(state)
-                val name = region.label !== null && !region.label.equals("")
-                        ? region.label
-                        : region.name.split("-").get(1)
-                state = rootSCChart.rootStates.filter[s|s.name.equals(name)].head
-                vo = findValuedObjectByName(state, depVar, false, region)
-            }
 
-            // if the latest vo is in the while/func body, the correct instance of the vo must be taken
-            // (otherwise the output of an if-state, that changes the variable after the break-stmt, is taken)
-            if (state.name.startsWith(whileName + ssaNameSeperator)) {
-                val varList = getStateVariables(state).get(depVar)
-                if (varList !== null && varList.length >= 3) {
-                    vo = varList.get(varList.length - 3)
+        if (addState) {
+            // create ref decl and valued  object
+            val newRefDecl = createReferenceDeclaration
+            lastRegion.declarations += newRefDecl
+            newRefDecl.setReference(newState)
+            val newObj = newRefDecl.createValuedObject(localName + ssaNameSeperator + localCounter)
+            newObj.annotations += createTagAnnotation(multiplexerTag)
+            newObj.label = ""
+
+            // Create the region for the body part
+            val newRegion = newState.createDataflowRegion("")
+            newState.regions += newRegion
+            newRegion.label = localName + ssaNameSeperator + localCounter
+
+            // search for the latest valued object for each of the breakDependableVar
+            val List<ValuedObject> vars = new ArrayList
+            for (depVar : breakDependableVars) {
+                var ValuedObject vo = null
+                var region = parentRegion
+                var state = parentState
+                // input does not count as the latest vo unless it is in the surrounding while/function state
+                while (vo === null || (vo.name.contains(inSuffix) && !state.equals(topState))) {
+                    region = hierarchy.get(state)
+                    val name = region.label !== null && !region.label.equals("") ? region.label : region.name.
+                            split("-").get(1)
+                    state = rootSCChart.rootStates.filter[s|s.name.equals(name)].head
+                    vo = findValuedObjectByName(state, depVar, false, region)
                 }
-            }
 
-            vars.add(vo)
-        }
-
-        // if the vos are not in the surrounding while/func state (in which the break/continue/return state is) they must be passed to it
-        val List<ValuedObject> inputs = new ArrayList
-        for (v : vars) {
-            var vo = v
-            val cont = v.eContainer.eContainer
-            if (breakContinueVars.containsKey(v)) {
-                // the while/func state already contains a vo for this var
-                vo = breakContinueVars.get(v)
-            } else if (cont instanceof DataflowRegion && !cont.equals(lastRegion)) {
-                // create output variable for the region
-                var pR = cont as DataflowRegion
-                val regName = pR.label !== null && !pR.label.equals("") ? pR.label : pR.name.split("-").get(1)
-                var pS = rootSCChart.rootStates.filter[s|s.name.equals(regName)].head
-                vo = createVar(v, pS, getStateVariables(pS), outSuffix,
-                    localName + "Var" + ssaNameSeperator + localCounter)
-                var obj = stateObjects.get(pS)
-
-                // Create the assignment
-                pR.equations += createDataflowAssignment(vo, v.reference)
-
-                // update parents
-                pR = hierarchy.get(vo.eContainer.eContainer as State)
-
-                val name = pR.label !== null && !pR.label.equals("") ? pR.label : pR.name.split("-").get(1)
-                pS = rootSCChart.rootStates.filter[s|s.name.equals(name)].head
-
-                vo = createOutputVo(null, localCounter, pS, obj, pR, vo)
-
-                // repeat until while/func state is reached
-                while (!pS.equals(topState)) {
-                    val outputVar = createVar(vo, pS, getStateVariables(pS), outSuffix, "")
-                    pR.equations += createDataflowAssignment(outputVar, vo.reference)
-
-                    pR = hierarchy.get(outputVar.eContainer.eContainer as State)
-                    val rN = pR.label !== null && !pR.label.equals("") ? pR.label : pR.name.split("-").get(1)
-
-                    obj = stateObjects.get(pS)
-                    pS = rootSCChart.rootStates.filter[s|s.name.equals(rN)].head
-                    vo = createOutputVo(null, localCounter, pS, obj, pR, outputVar)
+                // if the latest vo is in the while/func body, the correct instance of the vo must be taken
+                // (otherwise the output of an if-state, that changes the variable after the break-stmt, is taken)
+                if (state.name.startsWith(whileName + ssaNameSeperator)) {
+                    val varList = getStateVariables(state).get(depVar)
+                    if (varList !== null && varList.length >= 3) {
+                        vo = varList.get(varList.length - 3)
+                    }
                 }
+                vars.add(vo)
             }
-            breakContinueVars.put(v, vo)
-            inputs.add(vo)
+
+            // if the vos are not in the surrounding while/func state (in which the break/continue/return state is) they must be passed to it
+            val List<ValuedObject> inputs = new ArrayList
+            for (v : vars) {
+                var vo = v
+                val cont = v.eContainer.eContainer
+                if (breakContinueVars.containsKey(v)) {
+                    // the while/func state already contains a vo for this var
+                    vo = breakContinueVars.get(v)
+                } else if (cont instanceof DataflowRegion && !cont.equals(lastRegion)) {
+                    // create output variable for the region
+                    var pR = cont as DataflowRegion
+                    val regName = pR.label !== null && !pR.label.equals("") ? pR.label : pR.name.split("-").get(1)
+                    var pS = rootSCChart.rootStates.filter[s|s.name.equals(regName)].head
+                    vo = createVar(v, pS, getStateVariables(pS), outSuffix,
+                        localName + "Var" + ssaNameSeperator + localCounter)
+                    var obj = stateObjects.get(pS)
+
+                    // Create the assignment
+                    pR.equations += createDataflowAssignment(vo, v.reference)
+
+                    // update parents
+                    pR = hierarchy.get(vo.eContainer.eContainer as State)
+
+                    val name = pR.label !== null && !pR.label.equals("") ? pR.label : pR.name.split("-").get(1)
+                    pS = rootSCChart.rootStates.filter[s|s.name.equals(name)].head
+
+                    vo = createOutputVo(null, localCounter, pS, obj, pR, vo)
+
+                    // repeat until while/func state is reached
+                    while (!pS.equals(topState)) {
+                        val outputVar = createVar(vo, pS, getStateVariables(pS), outSuffix, "")
+                        pR.equations += createDataflowAssignment(outputVar, vo.reference)
+
+                        pR = hierarchy.get(outputVar.eContainer.eContainer as State)
+                        val rN = pR.label !== null && !pR.label.equals("") ? pR.label : pR.name.split("-").get(1)
+
+                        obj = stateObjects.get(pS)
+                        pS = rootSCChart.rootStates.filter[s|s.name.equals(rN)].head
+                        vo = createOutputVo(null, localCounter, pS, obj, pR, outputVar)
+                    }
+                }
+                breakContinueVars.put(v, vo)
+                inputs.add(vo)
+            }
+
+            // set tag annotation and input
+            inputs.forEach[v|v.addTagAnnotation(posTag)]
+            setMultInput(inputs, newState, lastRegion, newObj, false)
+
+            // adjust name and label of the state variables
+            val name = localName
+            getStateVariables(newState).forEach [ p1, p2 |
+                p2.get(0).name = name + ssaNameSeperator + p2.get(0).name;
+                p2.get(0).label = name + ssaNameSeperator + p2.get(0).label
+            ]
+
+            hierarchy.put(newState, lastRegion)
+            stateObjects.put(newState, newObj)
         }
-
-        // set tag annotation and input
-        inputs.forEach[v|v.addTagAnnotation(posTag)]
-        setMultInput(inputs, newState, lastRegion, newObj, false)
-
-        // adjust name and label of the state variables
-        val name = localName
-        getStateVariables(newState).forEach [ p1, p2 |
-            p2.get(0).name = name + ssaNameSeperator + p2.get(0).name;
-            p2.get(0).label = name + ssaNameSeperator + p2.get(0).label
-        ]
-
-        hierarchy.put(newState, lastRegion)
-        stateObjects.put(newState, newObj)
     }
 
     /**
