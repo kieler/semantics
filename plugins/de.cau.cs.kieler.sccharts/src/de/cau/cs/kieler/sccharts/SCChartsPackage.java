@@ -2624,6 +2624,70 @@ public interface SCChartsPackage extends EPackage {
     int ODE_ACTION_FEATURE_COUNT = LOCAL_ACTION_FEATURE_COUNT + 0;
 
     /**
+     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.ModuleScopeCallImpl <em>Module Scope Call</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.sccharts.impl.ModuleScopeCallImpl
+     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getModuleScopeCall()
+     * @generated
+     */
+    int MODULE_SCOPE_CALL = 21;
+
+    /**
+     * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MODULE_SCOPE_CALL__SCHEDULE = SCOPE_CALL__SCHEDULE;
+
+    /**
+     * The feature id for the '<em><b>Parameters</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MODULE_SCOPE_CALL__PARAMETERS = SCOPE_CALL__PARAMETERS;
+
+    /**
+     * The feature id for the '<em><b>Target</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MODULE_SCOPE_CALL__TARGET = SCOPE_CALL__TARGET;
+
+    /**
+     * The feature id for the '<em><b>Super</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MODULE_SCOPE_CALL__SUPER = SCOPE_CALL__SUPER;
+
+    /**
+     * The feature id for the '<em><b>Generic Parameters</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MODULE_SCOPE_CALL__GENERIC_PARAMETERS = SCOPE_CALL__GENERIC_PARAMETERS;
+
+    /**
+     * The number of structural features of the '<em>Module Scope Call</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MODULE_SCOPE_CALL_FEATURE_COUNT = SCOPE_CALL_FEATURE_COUNT + 0;
+
+    /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.PreemptionType <em>Preemption Type</em>}' enum.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2631,7 +2695,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getPreemptionType()
      * @generated
      */
-    int PREEMPTION_TYPE = 21;
+    int PREEMPTION_TYPE = 22;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.HistoryType <em>History Type</em>}' enum.
@@ -2641,7 +2705,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getHistoryType()
      * @generated
      */
-    int HISTORY_TYPE = 22;
+    int HISTORY_TYPE = 23;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.DelayType <em>Delay Type</em>}' enum.
@@ -2651,7 +2715,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getDelayType()
      * @generated
      */
-    int DELAY_TYPE = 23;
+    int DELAY_TYPE = 24;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.DeferredType <em>Deferred Type</em>}' enum.
@@ -2661,7 +2725,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getDeferredType()
      * @generated
      */
-    int DEFERRED_TYPE = 24;
+    int DEFERRED_TYPE = 25;
 
 
     /**
@@ -3414,6 +3478,16 @@ public interface SCChartsPackage extends EPackage {
     EClass getOdeAction();
 
     /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.ModuleScopeCall <em>Module Scope Call</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Module Scope Call</em>'.
+     * @see de.cau.cs.kieler.sccharts.ModuleScopeCall
+     * @generated
+     */
+    EClass getModuleScopeCall();
+
+    /**
      * Returns the meta object for enum '{@link de.cau.cs.kieler.sccharts.PreemptionType <em>Preemption Type</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -4076,6 +4150,16 @@ public interface SCChartsPackage extends EPackage {
          * @generated
          */
         EClass ODE_ACTION = eINSTANCE.getOdeAction();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.ModuleScopeCallImpl <em>Module Scope Call</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.sccharts.impl.ModuleScopeCallImpl
+         * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getModuleScopeCall()
+         * @generated
+         */
+        EClass MODULE_SCOPE_CALL = eINSTANCE.getModuleScopeCall();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.PreemptionType <em>Preemption Type</em>}' enum.

@@ -53,6 +53,7 @@ import static de.cau.cs.kieler.sccharts.ui.synthesis.styles.ColorStore.Color.*
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.klighd.util.KlighdProperties
 
 /**
  * Styles for {@link State}.
@@ -232,6 +233,7 @@ class StateStyles {
             fontSize = stateLabelTextSize
             suppressSelectability
             selectionTextUnderline = Underline.NONE // prevents default selection style
+            setProperty(KlighdProperties.IS_NODE_TITLE, true)
         ]
     }
 
@@ -247,6 +249,7 @@ class StateStyles {
                 fontSize = stateLabelTextSize
                 suppressSelectability
                 selectionTextUnderline = Underline.NONE // prevents default selection style
+                setProperty(KlighdProperties.IS_NODE_TITLE, true)
             ]
 
             children.head => [

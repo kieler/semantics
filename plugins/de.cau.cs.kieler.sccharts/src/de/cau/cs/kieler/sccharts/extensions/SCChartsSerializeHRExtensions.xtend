@@ -28,11 +28,13 @@ import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsGenericParameterExtensions
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kexpressions.keffects.Emission
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsSerializeHRExtensions
 import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
+import de.cau.cs.kieler.kexpressions.kext.extensions.KExtEnumExtensions
 import de.cau.cs.kieler.sccharts.Action
 import de.cau.cs.kieler.sccharts.CodeEffect
 import de.cau.cs.kieler.sccharts.DelayType
@@ -55,15 +57,14 @@ import de.cau.cs.kieler.sccharts.OdeAction
 
 /**
  * @author ssm
- *
- * @kieler.design 2014-09-04 proposed ssm
- * @kieler.rating 2014-09-04 proposed yellow
  */
 class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
     
     @Inject
     var SCLSerializeExtensions sclSerializer
     @Inject extension KExpressionsGenericParameterExtensions
+    @Inject extension KExpressionsDeclarationExtensions
+    @Inject extension KExtEnumExtensions
     
     def dispatch CharSequence serialize(Transition transition) {
         transition.serialize(false);
@@ -221,10 +222,19 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
         } else if (declaration instanceof ReferenceDeclaration) {
             if (declaration.extern.nullOrEmpty) {
                 components.addKeyword("ref")
+                
+                var containerPrefix = ""
+                if (declaration.referenceContainer !== null) {
+                    if (declaration.referenceContainer instanceof NamedObject) {
+                        containerPrefix += (declaration.referenceContainer as NamedObject).name + "."
+                    } else {
+                        containerPrefix += declaration.referenceContainer.class.name + "."
+                    }
+                }
                 if (declaration.reference instanceof NamedObject) {
-                    components.addHighlight((declaration.reference as NamedObject).name)
+                    components.addHighlight(containerPrefix + (declaration.reference as NamedObject).name)
                 } else {
-                    components.addHighlight(declaration.reference.class.name)
+                    components.addHighlight(containerPrefix + declaration.reference.class.name)
                 }
             } else {
                 components.addKeyword("extern")
@@ -254,6 +264,8 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
         if (declaration instanceof ClassDeclaration) {
             if (!declaration.name.nullOrEmpty) {
                 components.addText(declaration.name)
+            } else if (declaration.isEnum) {
+                components.addText(declaration.enumVO?.name)
             }
             components.addText("{")
             components.addContentPlaceholder
@@ -261,32 +273,34 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
         }
 
         // Content
-        val voIter = declaration.valuedObjects.iterator;
-        while (voIter.hasNext) {
-            val vo = voIter.next;
-            components.addText(if (hr) {
-                vo.serializeHR
-            } else {
-                vo.serialize
-            })
-            if (vo.initialValue !== null) {
-                components.addText("=");
+        if (!declaration.isEnum) {
+            val voIter = declaration.valuedObjects.iterator;
+            while (voIter.hasNext) {
+                val vo = voIter.next;
                 components.addText(if (hr) {
-                    vo.initialValue.serializeHR;
+                    vo.serializeHR
                 } else {
-                    vo.initialValue.serialize;
+                    vo.serialize
                 })
-            }
-            if (vo.combineOperator !== null && vo.combineOperator != CombineOperator.NONE) {
-                components.addKeyword("combine");
-                components.addText(if (hr) {
-                    vo.combineOperator.serializeHR;
-                } else {
-                    vo.combineOperator.serialize;
-                })
-            }
-            if (voIter.hasNext) {
-                components.addText(",");
+                if (vo.initialValue !== null) {
+                    components.addText("=");
+                    components.addText(if (hr) {
+                        vo.initialValue.serializeHR;
+                    } else {
+                        vo.initialValue.serialize;
+                    })
+                }
+                if (vo.combineOperator !== null && vo.combineOperator != CombineOperator.NONE) {
+                    components.addKeyword("combine");
+                    components.addText(if (hr) {
+                        vo.combineOperator.serializeHR;
+                    } else {
+                        vo.combineOperator.serialize;
+                    })
+                }
+                if (voIter.hasNext) {
+                    components.addText(",");
+                }
             }
         }
         

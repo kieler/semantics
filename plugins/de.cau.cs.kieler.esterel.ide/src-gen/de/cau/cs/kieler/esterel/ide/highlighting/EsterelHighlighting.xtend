@@ -37,6 +37,7 @@ class EsterelHighlighting implements IHighlighting {
         "elsif",
         "emit",
         "end",
+        "enum",
         "every",
         "exec",
         "exit",

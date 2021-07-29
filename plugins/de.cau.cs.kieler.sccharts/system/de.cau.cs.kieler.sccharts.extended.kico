@@ -1,7 +1,6 @@
 system de.cau.cs.kieler.sccharts.extended 
 	label "Extended SCCharts"
 
-pre process silent de.cau.cs.kieler.sccharts.processors.staticAccess
 de.cau.cs.kieler.sccharts.processors.reference
 de.cau.cs.kieler.sccharts.processors.referenceCallPreprocessor
 post process silent de.cau.cs.kieler.kicool.deploy.variable.store.init
@@ -9,6 +8,7 @@ de.cau.cs.kieler.sccharts.processors.regionactions
 de.cau.cs.kieler.sccharts.processors.codeEffects
 de.cau.cs.kieler.sccharts.processors.for
 de.cau.cs.kieler.sccharts.processors.prTransitions
+pre process de.cau.cs.kieler.sccharts.processors.^enum
 de.cau.cs.kieler.sccharts.processors.^const
 pre process de.cau.cs.kieler.sccharts.processors.period
 de.cau.cs.kieler.sccharts.processors.timedautomata

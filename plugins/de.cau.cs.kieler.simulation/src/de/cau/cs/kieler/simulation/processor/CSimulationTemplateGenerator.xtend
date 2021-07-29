@@ -41,7 +41,10 @@ class CSimulationTemplateGenerator extends AbstractSimulationTemplateGenerator {
 
     public static val IProperty<Integer> MESSAGE_BUFFER_SIZE = 
         new Property<Integer>("de.cau.cs.kieler.simulation.c.buffer.size", 2048)
-    
+        
+    protected var nestedObjectCounter = 0 
+    protected var nestedArrayCounter = 0
+
     var VariableStore store
 
     override getId() {
@@ -224,14 +227,14 @@ class CSimulationTemplateGenerator extends AbstractSimulationTemplateGenerator {
         val info = variable.value
         if (info.array) {
             if (info.isExternal) throw new UnsupportedOperationException("Cannot handle external array variables.")
-            val arrayVar = array?:'''array_«depth»'''
+            val arrayVar = array?:'''array_«nestedArrayCounter++»'''
             return '''
                 «IF clazz === null»cJSON *«ENDIF»«arrayVar» = cJSON_CreateArray();
                 «variable.serializeArray(accessPrefix, 0, arrayVar, depth)»
                 cJSON_AddItemToObject(«json», "«varName»", «arrayVar»);
             '''
         } else if (info.container) {
-            val clazzVar = clazz?:'''obj_«depth»'''
+            val clazzVar = clazz?:'''obj_«nestedObjectCounter++»'''
             return '''
                 «IF clazz === null»cJSON *«ENDIF»«clazzVar» = cJSON_CreateObject();
                 cJSON_AddItemToObject(«json», "«varName»", «clazzVar»);

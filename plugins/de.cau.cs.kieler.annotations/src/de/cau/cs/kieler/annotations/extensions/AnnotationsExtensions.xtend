@@ -88,6 +88,13 @@ class AnnotationsExtensions {
             it.name = name
         ]
     }
+    
+    def Annotation createReferenceAnnotation(String name, EObject target) {
+        AnnotationsFactory::eINSTANCE.createReferenceAnnotation => [
+            it.name = name
+            it.object = target
+        ]
+    }
 
 	def void copyAnnotations(Annotatable source, Annotatable target) {
 	    source.annotations.forEach[

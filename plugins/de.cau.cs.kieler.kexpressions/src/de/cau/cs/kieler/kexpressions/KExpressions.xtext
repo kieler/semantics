@@ -544,6 +544,9 @@ enum StructType returns ValueType:
     
 enum ClassType returns ValueType:
     CLASS="class";
+    
+enum EnumType returns ValueType:
+    ENUM="enum";
 
 enum CombineOperator returns CombineOperator:
 	NONE="none" | ADD="+" | MULT="*" | MAX="max" |

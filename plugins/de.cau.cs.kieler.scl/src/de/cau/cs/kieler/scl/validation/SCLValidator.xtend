@@ -3,11 +3,17 @@
  */
 package de.cau.cs.kieler.scl.validation
 
+import com.google.inject.Inject
+import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
+import de.cau.cs.kieler.kexpressions.StaticAccessExpression
 import de.cau.cs.kieler.kexpressions.TextExpression
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
+import de.cau.cs.kieler.kexpressions.kext.extensions.KExtEnumExtensions
 import de.cau.cs.kieler.scl.Conditional
 import de.cau.cs.kieler.scl.Label
 import de.cau.cs.kieler.scl.MethodImplementationDeclaration
@@ -42,18 +48,85 @@ class SCLValidator extends AbstractSCLValidator {
     static val String CLASS_NO_NAME = "A class/struct must have a unique name."
     static val String CLASS_NO_VO = "A class/struct should have at least one variable defined (Type definitions are not supported)."
     static val String CLASS_INIT = "Composed types (class/struct) cannot be initialized. Please initialize each field individually."
+    
+    static val String ENUM_INIT = "An enum typed variable can only be initialized with a value of the correct enum type."
+    static val String ENUM_ASSIGN = "Cannot assign enum value of an incompatible type."
+    
+    @Inject extension KExpressionsDeclarationExtensions
+    @Inject extension KExpressionsValuedObjectExtensions
+    @Inject extension KExtEnumExtensions
+
+    @Check
+    def checkEnumTypeCompatibility(ReferenceDeclaration decl) {
+        if (decl?.isEnumRef) {
+            val enumType = decl.referencedEnum
+            for (vo : decl.valuedObjects) {
+                if (vo.initialValue !== null && !(vo.initialValue instanceof TextExpression)) {
+                    val ini = vo.initialValue
+                    val enumVal = if (ini instanceof ValuedObjectReference) {
+                        ini.lowermostReference
+                    } else if (ini instanceof StaticAccessExpression) {
+                        ini.subReference.lowermostReference
+                    }
+                    if (enumVal !== null) {
+                        if (!enumVal.isEnumValue || enumVal.valuedObject.declaration.enclosingClass !== enumType) {
+                            error(ENUM_INIT, vo.initialValue, null, -1) 
+                        }
+                    } else {
+                        error(ENUM_INIT, vo.initialValue, null, -1) 
+                    }
+                }
+            }
+        }
+    }
+
+    @Check
+    def checkEnumTypeCompatibility(Assignment asm) {
+        if (asm?.reference?.lowermostReference?.isEnumRef) {
+            val targetType = asm?.reference?.lowermostReference?.valuedObject?.declaration?.referencedEnum
+            val exp = asm.expression
+            val enumVal = if (exp instanceof ValuedObjectReference) {
+                exp.lowermostReference
+            } else if (exp instanceof StaticAccessExpression) {
+                exp.subReference.lowermostReference
+            }
+            if (enumVal !== null) {
+                if (!enumVal.isEnumValue || enumVal.valuedObject.declaration.enclosingClass !== targetType) {
+                    error(ENUM_ASSIGN, exp, null, -1) 
+                }
+            } else {
+                error(ENUM_ASSIGN, exp, null, -1) 
+            }
+        }
+    }
 
     @Check
     def checkClassDeclaration(ClassDeclaration decl) {
-        if (decl.name.nullOrEmpty) {
-            error(CLASS_NO_NAME, decl, null, -1)
+        if (decl.type === ValueType.STRUCT || decl.type === ValueType.CLASS) {
+            if (decl.name.nullOrEmpty) {
+                error(CLASS_NO_NAME, decl, null, -1)
+            }
+            if (decl.valuedObjects.nullOrEmpty) {
+                warning(CLASS_NO_VO, decl, null, -1)
+            } else {
+                for (vo : decl.valuedObjects) {
+                    if (vo.initialValue !== null && !(vo.initialValue instanceof TextExpression)) {
+                        error(CLASS_INIT, vo.initialValue, null, -1)
+                    }
+                }
+            }
         }
-        if (decl.valuedObjects.nullOrEmpty) {
-            warning(CLASS_NO_VO, decl, null, -1)
-        } else {
-            for (vo : decl.valuedObjects) {
-                if (vo.initialValue !== null && !(vo.initialValue instanceof TextExpression)) {
-                    error(CLASS_INIT, vo.initialValue, null, -1)
+    }
+    
+    @Check
+    def checkClassReferenceDeclaration(ReferenceDeclaration decl) {
+        val rDecl = decl.reference
+        if (rDecl instanceof ClassDeclaration) {
+            if (rDecl.type === ValueType.STRUCT || rDecl.type === ValueType.CLASS) {
+                for (vo : decl.valuedObjects) {
+                    if (vo.initialValue !== null && !(vo.initialValue instanceof TextExpression)) {
+                        error(CLASS_INIT, vo.initialValue, null, -1)
+                    }
                 }
             }
         }
@@ -63,8 +136,16 @@ class SCLValidator extends AbstractSCLValidator {
     def checkClassReference(ValuedObjectReference ref) {
         val decl = ref.valuedObject?.eContainer
         if (decl instanceof ClassDeclaration) {
-            if (ref.subReference === null && !(ref.eContainer instanceof ValuedObjectReference)) {
+            if (decl.isClass && ref.subReference === null && !(ref.eContainer instanceof ValuedObjectReference)) {
                 error(NO_REFERENCE_TO_CLASS, ref, null, -1)
+            }
+        }
+        if (decl instanceof ReferenceDeclaration) {
+            val rDecl = decl.reference
+            if (rDecl instanceof ClassDeclaration) {
+                if (rDecl.isClass && ref.subReference === null && !(ref.eContainer instanceof ValuedObjectReference)) {
+                    error(NO_REFERENCE_TO_CLASS, ref, null, -1)
+                }
             }
         }
     }
@@ -73,8 +154,16 @@ class SCLValidator extends AbstractSCLValidator {
     def void checkReferenceAssignment(Assignment asm) {
         val decl = asm.reference?.valuedObject?.eContainer
         if (decl instanceof ClassDeclaration) {
-            if (asm.reference.subReference === null && !(asm.expression instanceof TextExpression)) {
+            if (decl.isClass && asm.reference.subReference === null && !(asm.expression instanceof TextExpression)) {
                 error(NO_ASSIGNMENTS_TO_CLASS, asm.reference, null, -1)
+            }
+        }
+        if (decl instanceof ReferenceDeclaration) {
+            val rDecl = decl.reference
+            if (rDecl instanceof ClassDeclaration) {
+                if (rDecl.isClass && asm.reference.subReference === null && !(asm.expression instanceof TextExpression)) {
+                    error(NO_REFERENCE_TO_CLASS, asm.reference, null, -1)
+                }
             }
         }
     }

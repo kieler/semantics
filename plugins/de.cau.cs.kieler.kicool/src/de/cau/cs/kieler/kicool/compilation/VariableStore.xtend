@@ -61,6 +61,7 @@ class VariableStore implements IKiCoolCloneable {
     public static val CONST = "const"
     public static val EXTERN = "extern"
     public static val RESET = "reset" // Code generators will reset this variable explicitly.
+    public static val ENUM = "enum"
         
     public static val DECL_FLAGS = #{
         VARIABLE_DECLARATION__INPUT -> INPUT,
