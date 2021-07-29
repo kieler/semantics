@@ -33,6 +33,7 @@ import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import java.util.List
 import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.core.properties.Property
+import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
 
 /**
  * @author glu
@@ -119,6 +120,11 @@ class ReferenceCallProcessor extends InplaceProcessor<SCGraphs> implements Trace
                         } else {
                             newAsmt.expression = ref.valuedObject.reference => [subReference = toExp.reference]
                             newAsmt.reference = fromExp.asValuedObjectReference
+                            // signal workaround
+                            // if the interface variable is a signal, use relative write to enable more flexible scheduling
+                            if (toExp.variableDeclaration.signal) {
+                                newAsmt.operator = AssignOperator::ASSIGNOR
+                            }
                         }
                         newAssignments += newAsmt
                     }
