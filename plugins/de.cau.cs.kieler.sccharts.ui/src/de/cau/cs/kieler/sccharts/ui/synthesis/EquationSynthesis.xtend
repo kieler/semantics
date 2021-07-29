@@ -1105,7 +1105,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                 ]) {
                     if (node.sourceElement instanceof ValuedObjectReference &&
                         (node.sourceElement as ValuedObjectReference).valuedObject.hasAnnotation(MULTIPLEXER_TAG) &&
-                        input.name.startsWith("_cond")) {
+                        (input.name.startsWith("_conditional")|| input.name.contains("_cond_res"))) {
                         // condition input should be associated with the port "in1" in all multiplexers
                         node.getInputPortWithNumber(1).setLabel(input.serializeHR.toString, true).associateWith(input)
                     } else {
