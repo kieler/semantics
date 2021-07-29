@@ -3473,7 +3473,23 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 
             } else {
                 // Branch for accessing/reading an array
-                                
+                
+                // We want to read from newest variant of the array in which the index was changed!
+                // In many cases, that's not the newest variant of the array.
+                //TODO: Not working quite right
+                
+                var searchedVo = varList.reverseView.findFirst[candVo | val writtenIndices = voWrittenIdxs.get(candVo)
+                    writtenIndices !== null && writtenIndices.exists[expressionListsEquals(it, index)]
+                ]
+                if(searchedVo !== null){
+                    alreadyReadIndices = voReadIndices.get(searchedVo)
+                    vo = searchedVo
+               }else{
+                   vo = varList.get(0)
+                   alreadyReadIndices= voReadIndices.get(vo)
+               }
+                 
+                   
                 switch(alreadyReadIndices){
                     case alreadyReadIndices === null :{
                         alreadyReadIndices = newHashSet
@@ -3701,8 +3717,14 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
     }
 
     /**
-     * Returns true if the expressions definitely contain the same value. Currently only considers constant values as
-     * the expressions.
+     * Returns true if the expressions definitely contain the same value. 
+     * Currently, works with {@code Values}, {@code OperatorExpressions}, and {@code ValuedObjectReferences}.
+     * The latter are considered equal, if they have the same name. 
+     * This approach is chosen because {@code FindValuedObjectByName} gives a variable a new name 
+     * if it was affected by a write. 
+     * 
+     * @param expression1 
+     * @param expression2
      */
     def boolean expressionEquals(Expression expression1, Expression expression2) {
         
@@ -3736,7 +3758,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 return vo1.name.toString.equals(vo2.name.toString)
             }
         }
-        //TODO: Thinking about when function calls are equal is missing, but that's a more touchy case.
+        //TODO: Thinking about when function calls are equal is missing, but that's a more complex case.
         print("The method expressionEquals tried to check the equality 
                of two instances of an not supported expression type. 
                The result is false as a default in this case. The type was: " + expression1.class + ". \n")
