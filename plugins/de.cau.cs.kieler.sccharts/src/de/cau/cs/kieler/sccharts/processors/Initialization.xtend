@@ -15,9 +15,16 @@ package de.cau.cs.kieler.sccharts.processors
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.core.properties.IProperty
+import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.kexpressions.IntValue
+import de.cau.cs.kieler.kexpressions.OperatorType
 import de.cau.cs.kieler.kexpressions.TextExpression
+import de.cau.cs.kieler.kexpressions.Value
+import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsAccessVisibilityExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
@@ -61,11 +68,15 @@ class Initialization extends SCChartsProcessor implements Traceable {
         setModel(model.transform)
     }
 
+    def SCCharts transform(SCCharts sccharts) {
+        sccharts => [ rootStates.forEach[ transform ] ]
+    }
 
     //-------------------------------------------------------------------------
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KExpressionsCreateExtensions
-    @Inject extension KExpressionsDeclarationExtensions  
+    @Inject extension KExpressionsDeclarationExtensions 
+    @Inject extension KExpressionsAccessVisibilityExtensions
     @Inject extension KEffectsExtensions
     @Inject extension KExtDeclarationExtensions
     @Inject extension SCChartsScopeExtensions
@@ -74,6 +85,9 @@ class Initialization extends SCChartsProcessor implements Traceable {
     
     // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_"
+    
+    public static val IProperty<Boolean> EXPLICIT_IMPLICIT_INIT = 
+        new Property<Boolean>("de.cau.cs.kieler.sccharts.processors.initialization.implicit", true)
 
     //-------------------------------------------------------------------------
     //--                       I N I T I A L I Z A T I O N                   --
@@ -83,7 +97,10 @@ class Initialization extends SCChartsProcessor implements Traceable {
     def State transform(State rootState) {
         // Traverse all states
         for (scope : rootState.getAllScopes.toList) {
-            scope.transformInitialization(rootState);
+            if (getProperty(EXPLICIT_IMPLICIT_INIT)) {
+                scope.implicitInitialization()
+            }
+            scope.transformInitialization(rootState)
         }
         rootState
     }
@@ -94,7 +111,7 @@ class Initialization extends SCChartsProcessor implements Traceable {
         // Find VO that need to be initialized
         for (decl : scope.declarations) {
             if (decl instanceof ClassDeclaration) {
-                if (decl.host) {
+                if (decl.host) {    
                     val vos = decl.valuedObjects.filter[initialValue instanceof TextExpression]
                     if (!vos.empty) {
                         initVOs += vos.map[newArrayList(it)]
@@ -109,15 +126,11 @@ class Initialization extends SCChartsProcessor implements Traceable {
                             val oldPaths = paths
                             paths = newArrayList
                             for (parentVO : parent.valuedObjects) {
-//                                if (parentVO.cardinalities.nullOrEmpty) {
-                                    for (oldPath : oldPaths) {
-                                        val newPath = newArrayList(parentVO)
-                                        newPath.addAll(oldPath)
-                                        paths += newPath
-                                    }
-//                                } else {
-//                                    environment.errors.add("Cannot initialize members of class/sturct types. Feature is currently not supported, please initialize manually.")
-//                                }
+                                for (oldPath : oldPaths) {
+                                    val newPath = newArrayList(parentVO)
+                                    newPath.addAll(oldPath)
+                                    paths += newPath
+                                }
                             }
                             if (parent == decl) {
                                 parent = null
@@ -210,9 +223,51 @@ class Initialization extends SCChartsProcessor implements Traceable {
         // Clear initial values AFTER all assignments are created because some nested VOs might need
         initVOs.map[last].forEach[initialValue = null]
     }
-
-    def SCCharts transform(SCCharts sccharts) {
-        sccharts => [ rootStates.forEach[ transform ] ]
+    
+    def void implicitInitialization(Scope scope) {
+        val decls = newLinkedList
+        decls += scope.declarations.filter(VariableDeclaration)
+        while (!decls.empty) {
+            val decl = decls.pop
+            if (decl instanceof ClassDeclaration) {
+                if (!decl.isEnum) {
+                    decls += decl.declarations.filter(VariableDeclaration)
+                }
+            } else {
+                for (vo : decl.valuedObjects) {
+                    if (vo.initialValue === null) {
+                        val init = decl.type.initialValue
+                        if (init !== null) {
+                            vo.initialValue = init
+                            if (!vo.cardinalities.empty) {
+                                for (c : vo.cardinalities.reverseView) {
+                                    if (c instanceof IntValue) {
+                                        vo.initialValue = createOperatorExpression(OperatorType.MULT) => [
+                                            subExpressions += createVectorValue => [
+                                                values += vo.initialValue
+                                            ]
+                                            subExpressions += c.copy
+                                        ]
+                                    } else {
+                                        environment.errors.add("Cannot initialize array with non integer cardinality: " + vo.name)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    def Value initialValue(ValueType type) {
+        return switch(type) {
+            case BOOL : { createBoolValue(false) }
+            case INT, case UNSIGNED : { createIntValue(0) }
+            case FLOAT, case DOUBLE : { createFloatValue(0) }
+            case STRING : { createStringValue("") }
+            default: { null }
+        }
     }
 
 }
