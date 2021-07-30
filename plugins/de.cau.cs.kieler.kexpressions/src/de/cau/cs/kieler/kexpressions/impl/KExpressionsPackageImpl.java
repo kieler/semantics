@@ -1982,9 +1982,10 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         addEEnumLiteral(parameterAccessTypeEEnum, ParameterAccessType.PURE_OUTPUT);
 
         initEEnum(accessModifierEEnum, AccessModifier.class, "AccessModifier");
-        addEEnumLiteral(accessModifierEEnum, AccessModifier.PUBLIC);
-        addEEnumLiteral(accessModifierEEnum, AccessModifier.PROTECTED);
+        addEEnumLiteral(accessModifierEEnum, AccessModifier.UNDEF);
         addEEnumLiteral(accessModifierEEnum, AccessModifier.PRIVATE);
+        addEEnumLiteral(accessModifierEEnum, AccessModifier.PROTECTED);
+        addEEnumLiteral(accessModifierEEnum, AccessModifier.PUBLIC);
 
         // Create resource
         createResource(eNS_URI);

@@ -12,21 +12,33 @@
  */
 package de.cau.cs.kieler.kexpressions.extensions
 
+import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.AccessModifier
 import de.cau.cs.kieler.kexpressions.Declaration
+import de.cau.cs.kieler.kexpressions.MethodDeclaration
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
 
 /**
  * @author als
  */
 class KExpressionsAccessVisibilityExtensions {
     
+    @Inject extension KExpressionsDeclarationExtensions
+    
     def boolean isPublic(Declaration d) {
-        if (d.access === null) { // undef/default
-            if (d instanceof VariableDeclaration) {
-                return d.input || d.output
-            }
-            return false
+        if (d.hasUndefinedAccess) {
+            return true
+//            if (d instanceof VariableDeclaration) {
+//                return d.input || d.output
+//            }
+//            if (d instanceof MethodDeclaration) {
+//                return true
+//            }
+//            if (d instanceof ClassDeclaration) {
+//                return d.isEnum || d.isStruct
+//            }
+//            return false
         }
         return d.access === AccessModifier.PUBLIC
     }
@@ -37,5 +49,9 @@ class KExpressionsAccessVisibilityExtensions {
     
     def boolean isPrivate(Declaration d) {
         return d.access === AccessModifier.PRIVATE || (!d.isPublic && !d.isProtected)
+    }
+    
+    def boolean hasUndefinedAccess(Declaration d) {
+        return d.access === null || d.access === AccessModifier.UNDEF
     }
 }

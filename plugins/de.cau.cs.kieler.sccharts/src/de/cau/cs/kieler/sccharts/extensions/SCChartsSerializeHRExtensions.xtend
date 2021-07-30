@@ -333,6 +333,7 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
                 case PRIVATE: "public"
                 case PROTECTED: "protected"
                 case PUBLIC: "private"
+                default: ""
             })
         }
         

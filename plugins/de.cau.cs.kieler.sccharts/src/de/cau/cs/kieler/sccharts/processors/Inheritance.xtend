@@ -122,7 +122,7 @@ class Inheritance extends SCChartsProcessor implements Traceable {
                     for (vo : newDecl.valuedObjects) {
                         vo.name = (baseDecl.eContainer as State).name + "_" + vo.name
                     }
-                    newDecl.access = AccessModifier.PUBLIC // TODO undef
+                    newDecl.access = AccessModifier.UNDEF
                 }
                 
                 for (baseVoIdx : baseDecl.valuedObjects.indexed) {

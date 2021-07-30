@@ -402,9 +402,10 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="code" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="AccessModifier">
-    <eLiterals name="PUBLIC"/>
-    <eLiterals name="PROTECTED" value="1"/>
-    <eLiterals name="PRIVATE" value="2"/>
+    <eLiterals name="UNDEF" literal="UNDEF"/>
+    <eLiterals name="PRIVATE" value="1"/>
+    <eLiterals name="PROTECTED" value="2"/>
+    <eLiterals name="PUBLIC" value="3"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="StaticAccessExpression" eSuperTypes="#//Expression">
     <eStructuralFeatures xsi:type="ecore:EReference" name="subReference" eType="#//ValuedObjectReference"
