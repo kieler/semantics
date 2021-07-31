@@ -155,7 +155,7 @@ class ReferenceCallPreprocessor extends SCChartsProcessor implements Traceable {
 
         init.createTransitionTo(call) => [
             delay = DelayType::IMMEDIATE
-            label = "reset; initial tick"
+//            label = "reset; initial tick"
 
             effects.add(createReferenceCallEffect => [
                 subReference = reset_method.reference
@@ -178,7 +178,7 @@ class ReferenceCallPreprocessor extends SCChartsProcessor implements Traceable {
         ]
 
         call.createTransitionTo(conn) => [
-            label = "tick"
+//            label = "tick"
 
             effects.add(createReferenceCallEffect => [
                 subReference = cpin_method.reference
@@ -197,7 +197,7 @@ class ReferenceCallPreprocessor extends SCChartsProcessor implements Traceable {
         ]
 
         conn.createTransitionTo(term) => [
-            label = "terminate?"
+//            label = "terminate?"
             delay = DelayType::IMMEDIATE
 
             trigger = createReferenceCall => [
@@ -238,7 +238,7 @@ class ReferenceCallPreprocessor extends SCChartsProcessor implements Traceable {
 
         init.createTransitionTo(call) => [
             delay = DelayType::IMMEDIATE
-            label = "reset"
+//            label = "reset"
 
             effects.add(createReferenceCallEffect => [
                 subReference = reset_method.reference
@@ -248,7 +248,7 @@ class ReferenceCallPreprocessor extends SCChartsProcessor implements Traceable {
 
         call.createTransitionTo(conn) => [
             delay = DelayType::IMMEDIATE
-            label = "tick"
+//            label = "tick"
 
             effects.add(createReferenceCallEffect => [
                 subReference = cpin_method.reference
@@ -268,7 +268,7 @@ class ReferenceCallPreprocessor extends SCChartsProcessor implements Traceable {
 
         conn.createTransitionTo(term) => [
             delay = DelayType::IMMEDIATE
-            label = "terminate?"
+//            label = "terminate?"
 
             trigger = createReferenceCall => [
                 subReference = term_method.reference
@@ -291,8 +291,7 @@ class ReferenceCallPreprocessor extends SCChartsProcessor implements Traceable {
                 host = true
 
                 // Declare interface variables
-                // TODO remove input/output labels later?
-                declarations.addAll(ref.reference.scope.declarations.filter(VariableDeclaration).map[copy])
+                declarations.addAll(ref.reference.scope.declarations.filter(VariableDeclaration).filter[input || output].map[copy])
 
                 // Declare method placeholders.
                 var tickDecl = createMethodImplementationDeclaration => [
