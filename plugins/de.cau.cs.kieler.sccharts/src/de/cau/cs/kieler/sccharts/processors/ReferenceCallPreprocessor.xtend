@@ -19,10 +19,13 @@ import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.kexpressions.kext.extensions.Binding
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.kicool.kitt.tracing.internal.TracingEcoreUtilExtensions
+import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.DelayType
 import de.cau.cs.kieler.sccharts.PolicyClassDeclaration
 import de.cau.cs.kieler.sccharts.SCCharts
@@ -33,13 +36,10 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsReferenceExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
-import java.util.List
 import de.cau.cs.kieler.scg.processors.ReferenceCallProcessor
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
-import org.eclipse.xtext.xbase.lib.Functions.Function1
-import de.cau.cs.kieler.kexpressions.kext.extensions.Binding
-import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.scl.MethodImplementationDeclaration
+import java.util.List
+import org.eclipse.xtext.xbase.lib.Functions.Function1
 
 /**
  * @author glu
@@ -47,18 +47,18 @@ import de.cau.cs.kieler.scl.MethodImplementationDeclaration
  */
 class ReferenceCallPreprocessor extends SCChartsProcessor implements Traceable {
 
-    @Inject extension SCChartsScopeExtensions
-    @Inject extension SCChartsStateExtensions
-    @Inject extension KExpressionsValuedObjectExtensions
-    @Inject extension SCChartsControlflowRegionExtensions
-    @Inject extension SCChartsTransitionExtensions
+    @Inject extension AnnotationsExtensions
     @Inject extension KEffectsExtensions
     @Inject extension KExpressionsCreateExtensions
-    @Inject extension SCChartsClassExtensions
-    @Inject extension AnnotationsExtensions
-    @Inject extension SCChartsReferenceExtensions
-    @Inject extension TracingEcoreUtilExtensions
     @Inject extension KExpressionsDeclarationExtensions
+    @Inject extension KExpressionsValuedObjectExtensions
+    @Inject extension SCChartsClassExtensions
+    @Inject extension SCChartsControlflowRegionExtensions
+    @Inject extension SCChartsReferenceExtensions
+    @Inject extension SCChartsScopeExtensions
+    @Inject extension SCChartsStateExtensions
+    @Inject extension SCChartsTransitionExtensions
+    @Inject extension TracingEcoreUtilExtensions
 
     val REF_CALL_INSTANCE_PREFIX = "_"
     val REF_CALL_EXT_SCC_ANNOTATION = "header"
