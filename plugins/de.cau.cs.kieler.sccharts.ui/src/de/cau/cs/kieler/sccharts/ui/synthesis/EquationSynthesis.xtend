@@ -1103,6 +1103,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                 if (!node.ports.exists [
                     sourceElement !== null && (sourceElement as ValuedObjectReference).valuedObject == input
                 ]) {
+                    // TODO: the port "n1" in the multiplexers should already have the "conditional" input as source element
                     if (node.sourceElement instanceof ValuedObjectReference &&
                         (node.sourceElement as ValuedObjectReference).valuedObject.hasAnnotation(MULTIPLEXER_TAG) &&
                         (input.name.startsWith("_conditional")|| input.name.contains("_cond_res"))) {
