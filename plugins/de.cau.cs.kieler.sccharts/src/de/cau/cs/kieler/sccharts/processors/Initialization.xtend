@@ -96,6 +96,9 @@ class Initialization extends SCChartsProcessor implements Traceable {
     
     public static val IProperty<Boolean> EXPLICIT_IMPLICIT_INIT = 
         new Property<Boolean>("de.cau.cs.kieler.sccharts.processors.initialization.implicit", true)
+    public static val IProperty<Boolean> EXPLICIT_IMPLICIT_INIT_GENERATED = 
+        new Property<Boolean>("de.cau.cs.kieler.sccharts.processors.initialization.implicit.generated", false)
+
     //-------------------------------------------------------------------------
     //--                       I N I T I A L I Z A T I O N                   --
     //-------------------------------------------------------------------------
@@ -123,7 +126,7 @@ class Initialization extends SCChartsProcessor implements Traceable {
                 }
             } else {
                 for (vo : decl.valuedObjects) {
-                    if (vo.initialValue === null) {
+                    if (vo.initialValue === null && (!vo.name.startsWith(GENERATED_PREFIX) || getProperty(EXPLICIT_IMPLICIT_INIT_GENERATED))) {
                         val init = decl.type.initialValue
                         if (init !== null) {
                             vo.initialValue = init
