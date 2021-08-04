@@ -17,18 +17,18 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
+import de.cau.cs.kieler.scg.Depth
+import de.cau.cs.kieler.scg.Entry
+import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraphs
-import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
-import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
-import java.util.Set
-import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Surface
-import de.cau.cs.kieler.scg.Exit
-import de.cau.cs.kieler.scg.Depth
+import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.SCGDependencyExtensions
 import de.cau.cs.kieler.scg.extensions.SCGMethodExtensions
-import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
+import java.util.Set
+
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
 /** 
  * @author ssm

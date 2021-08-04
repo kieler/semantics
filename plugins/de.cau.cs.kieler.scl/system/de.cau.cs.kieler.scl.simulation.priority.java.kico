@@ -3,4 +3,4 @@ developer system de.cau.cs.kieler.scl.^simulation.priority.java
 
 de.cau.cs.kieler.kicool.deploy.variable.store.init
 system de.cau.cs.kieler.scl.priority.java
-system de.cau.cs.kieler.^simulation.priority.java
+system de.cau.cs.kieler.^simulation.java

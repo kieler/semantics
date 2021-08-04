@@ -70,6 +70,13 @@ class CentralSimulation {
     }
     
     static def startSimulation(SimulationContext context) {
+        prepareSimulation(context)
+        
+        currentSimulation.start(true)
+    }
+    
+    static def prepareSimulation(SimulationContext context) {
+        
         stopAndRemoveSimulation
         
         currentSimulation = context
@@ -83,8 +90,6 @@ class CentralSimulation {
             // Prepare context
             provider.prepareNewSimulation(currentSimulation)
         }
-        
-        currentSimulation.start(true)
     }
     
     static def compileAndStartSimulation(String system, Object model) {

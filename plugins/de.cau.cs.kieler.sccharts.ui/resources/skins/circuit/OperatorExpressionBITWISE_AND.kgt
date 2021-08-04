@@ -1,5 +1,5 @@
 knode and2 {
-	properties: de.cau.cs.kieler.portConstraints = FIXED_ORDER
+	properties: org.eclipse.elk.portConstraints = FIXED_ORDER
 	size: width = 32 height = 25
 	krectangle{
 		styles: invisible= true
@@ -12,17 +12,17 @@ knode and2 {
 	}
   kport in1 {
     size: width = 0 height = 0
-    properties: de.cau.cs.kieler.portSide = WEST
+    properties: org.eclipse.elk.port.side = WEST
   }
   kport in0 {
     size: width = 0 height = 0
-    properties: de.cau.cs.kieler.portSide = WEST
+    properties: org.eclipse.elk.port.side = WEST
   }
  
   kport out {
     size: width = 0 height = 0
     pos:  x = 31
     properties: org.eclipse.elk.port.borderOffset = -0.5
-                de.cau.cs.kieler.portSide = EAST
+                org.eclipse.elk.port.side = EAST
   }
 }

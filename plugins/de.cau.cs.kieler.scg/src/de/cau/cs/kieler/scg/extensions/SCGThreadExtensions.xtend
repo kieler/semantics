@@ -562,17 +562,6 @@ class SCGThreadExtensions {
         return returnList
     }
 
-    def Node getThreadEntryNode(Node node) {
-//        if (node instanceof Exit) return (node as Exit).entry
-        val fork = node.getAncestorFork
-        if(fork === null) return null
-
-        for (ent : fork.allNext.map[target].filter(typeof(Entry))) {
-            if(ent.threadNodes.contains(node)) return ent;
-        }
-        null
-    }
-
     def Map<Entry, ThreadPathType> getThreadControlFlowTypes(Entry source) {
         val tempThreadTypes = <Node, ThreadPathType>newHashMap => []
         val next = <Node>newLinkedList

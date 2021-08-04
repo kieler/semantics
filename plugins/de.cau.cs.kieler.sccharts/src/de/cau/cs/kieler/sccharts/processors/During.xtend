@@ -14,8 +14,9 @@
 package de.cau.cs.kieler.sccharts.processors
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
+import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
+import de.cau.cs.kieler.sccharts.PreemptionType
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
@@ -24,11 +25,9 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
+
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.sccharts.DuringAction
-import de.cau.cs.kieler.core.properties.Property
-import de.cau.cs.kieler.sccharts.PreemptionType
 
 /**
  * SCCharts During Transformation.

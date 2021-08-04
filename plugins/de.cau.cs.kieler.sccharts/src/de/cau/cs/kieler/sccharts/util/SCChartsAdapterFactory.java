@@ -175,6 +175,18 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
                 return createDataflowAssignmentAdapter();
             }
             @Override
+            public Adapter caseBaseStateReference(BaseStateReference object) {
+                return createBaseStateReferenceAdapter();
+            }
+            @Override
+            public Adapter caseOdeAction(OdeAction object) {
+                return createOdeActionAdapter();
+            }
+            @Override
+            public Adapter caseModuleScopeCall(ModuleScopeCall object) {
+                return createModuleScopeCallAdapter();
+            }
+            @Override
             public Adapter casePragmatable(Pragmatable object) {
                 return createPragmatableAdapter();
             }
@@ -577,6 +589,48 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createDataflowAssignmentAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.BaseStateReference <em>Base State Reference</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.sccharts.BaseStateReference
+     * @generated
+     */
+    public Adapter createBaseStateReferenceAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.OdeAction <em>Ode Action</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.sccharts.OdeAction
+     * @generated
+     */
+    public Adapter createOdeActionAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.ModuleScopeCall <em>Module Scope Call</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.sccharts.ModuleScopeCall
+     * @generated
+     */
+    public Adapter createModuleScopeCallAdapter() {
         return null;
     }
 

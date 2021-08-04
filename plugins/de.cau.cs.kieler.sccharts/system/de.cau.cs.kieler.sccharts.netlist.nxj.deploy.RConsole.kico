@@ -1,4 +1,4 @@
-public system de.cau.cs.kieler.sccharts.netlist.nxj.deploy.rconsole
+system de.cau.cs.kieler.sccharts.netlist.nxj.deploy.rconsole
     label "Netlist-based Deployment (NXJ) via RConsole"
 
 system de.cau.cs.kieler.sccharts.netlist.java

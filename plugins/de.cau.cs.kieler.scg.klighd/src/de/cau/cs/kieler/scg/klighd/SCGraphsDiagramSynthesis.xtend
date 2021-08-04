@@ -13,6 +13,7 @@
  */
 package de.cau.cs.kieler.scg.klighd
 
+import de.cau.cs.kieler.kicool.ide.klighd.KiCoDiagramViewProperties
 import de.cau.cs.kieler.klighd.ViewContext
 import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
@@ -48,20 +49,26 @@ class SCGraphsDiagramSynthesis extends AbstractDiagramSynthesis<SCGraphs> {
 	override transform(SCGraphs model) {
 	    val node = createNode
 	    
+        // Start the synthesis.
+        val timestamp = System.currentTimeMillis
+        
 	    for(scg : model.scgs) {
 	       node.children += scgSynthesisDelegate.transform(scg) => [
 	           addRectangle => [invisible = true]
 	       ]
 	    }
 	    
+        // Report duration
+        usedContext?.setProperty(KiCoDiagramViewProperties.SYNTHESIS_TIME, System.currentTimeMillis - timestamp)
+	    
 	    node
 	}
 	
-    override public getDisplayedSynthesisOptions() {
+    override getDisplayedSynthesisOptions() {
         return scgSynthesisDelegate.displayedSynthesisOptions
     }
 
-    override public getDisplayedLayoutOptions() {
+    override getDisplayedLayoutOptions() {
         return scgSynthesisDelegate.displayedLayoutOptions
     }
 	

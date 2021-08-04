@@ -12,18 +12,19 @@
  */
 package de.cau.cs.kieler.sccharts.processors.statebased
 
-import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
-import de.cau.cs.kieler.sccharts.SCCharts
 import com.google.inject.Inject
-import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
-import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
 import de.cau.cs.kieler.kicool.environments.AnnotationModel
+import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.ControlflowRegion
-import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
-import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
+import de.cau.cs.kieler.sccharts.SCCharts
+import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
+import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
+import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
 import org.eclipse.emf.ecore.EObject
+
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
 /**
  * @author ssm

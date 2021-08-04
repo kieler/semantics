@@ -13,41 +13,32 @@
 package de.cau.cs.kieler.kicool.ui.view.registry
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.kicool.compilation.CodeContainer
-import de.cau.cs.kieler.kicool.ui.klighd.models.CodePlaceHolder
-import de.cau.cs.kieler.klighd.LightDiagramServices
-import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
-import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
-import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
-import de.cau.cs.kieler.klighd.SynthesisOption
-import de.cau.cs.kieler.kicool.ui.klighd.syntheses.CodePlaceHolderSynthesis
-import de.cau.cs.kieler.klighd.kgraph.KNode
-import java.util.Collection
-import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
-import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
-import de.cau.cs.kieler.klighd.krendering.extensions.KColorExtensions
-import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensions
-import de.cau.cs.kieler.kicool.compilation.Processor
-import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
-import org.eclipse.elk.core.options.CoreOptions
-import org.eclipse.elk.alg.layered.options.LayeredOptions
-import org.eclipse.elk.core.options.EdgeRouting
-import de.cau.cs.kieler.klighd.krendering.extensions.KPolylineExtensions
 import de.cau.cs.kieler.kicool.ProcessorReference
 import de.cau.cs.kieler.kicool.ProcessorSystem
-import de.cau.cs.kieler.klighd.krendering.extensions.KPortExtensions
-import org.eclipse.elk.core.options.Direction
+import de.cau.cs.kieler.klighd.SynthesisOption
+import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.Trigger
+import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
+import de.cau.cs.kieler.klighd.krendering.extensions.KColorExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KPolylineExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KPortExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
+import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
+import java.util.Collection
+import org.eclipse.elk.alg.layered.options.FixedAlignment
+import org.eclipse.elk.alg.layered.options.LayerConstraint
+import org.eclipse.elk.alg.layered.options.LayeredOptions
+import org.eclipse.elk.alg.layered.options.LayeringStrategy
+import org.eclipse.elk.alg.layered.options.NodePlacementStrategy
+import org.eclipse.elk.core.math.ElkPadding
+import org.eclipse.elk.core.options.CoreOptions
+import org.eclipse.elk.core.options.Direction
+import org.eclipse.elk.core.options.EdgeRouting
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
-import org.eclipse.elk.alg.layered.options.LayerConstraint
-import org.eclipse.elk.alg.layered.options.NodePlacementStrategy
-import org.eclipse.elk.alg.layered.options.FixedAlignment
-import org.eclipse.elk.core.math.ElkPadding
-import org.eclipse.elk.alg.layered.options.LayeringStrategy
-import org.eclipse.elk.alg.layered.options.WrappingStrategy
-import org.eclipse.elk.alg.layered.options.GraphCompactionStrategy
-import org.eclipse.elk.alg.layered.options.ConstraintCalculationStrategy
 
 /**
  * @author ssm
@@ -57,7 +48,7 @@ import org.eclipse.elk.alg.layered.options.ConstraintCalculationStrategy
 @ViewSynthesisShared
 class KiCoolRegistrySynthesis extends AbstractDiagramSynthesis<KiCoolRegistrySummary> {
 
-    @Inject extension KNodeExtensionsReplacement
+    @Inject extension KNodeExtensions
     @Inject extension KEdgeExtensions
     @Inject extension KPortExtensions
     @Inject extension KRenderingExtensions
@@ -115,7 +106,7 @@ class KiCoolRegistrySynthesis extends AbstractDiagramSynthesis<KiCoolRegistrySum
         rootNode.setLayoutOption(LayeredOptions::SPACING_EDGE_NODE, 80d)
         rootNode.setLayoutOption(LayeredOptions::SPACING_EDGE_EDGE, 10d)
         
-        rootNode.setLayoutOption(CoreOptions::ALGORITHM, "org.eclipse.elk.layered");
+        rootNode.setLayoutOption(CoreOptions::ALGORITHM, LayeredOptions.ALGORITHM_ID);
         rootNode.setLayoutOption(CoreOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
         if (USE_LEFT_TO_RIGHT.booleanValue) rootNode.setLayoutOption(CoreOptions::DIRECTION, Direction::RIGHT);
         rootNode.setLayoutOption(LayeredOptions::NODE_PLACEMENT_STRATEGY, NodePlacementStrategy::NETWORK_SIMPLEX)
@@ -216,7 +207,7 @@ class KiCoolRegistrySynthesis extends AbstractDiagramSynthesis<KiCoolRegistrySum
                 suppressSelectability
             ]            
             
-            processorConnections.put(p, new Integer(0))
+            processorConnections.put(p, Integer.valueOf(0))
             
             result += node
         }

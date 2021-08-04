@@ -15,6 +15,7 @@ package de.cau.cs.kieler.test.common.simulation
 import com.google.common.io.Files
 import com.google.inject.Injector
 import de.cau.cs.kieler.core.Platform
+import de.cau.cs.kieler.core.properties.IPropertyHolder
 import de.cau.cs.kieler.kicool.compilation.CompilationContext
 import de.cau.cs.kieler.kicool.compilation.Compile
 import de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure
@@ -58,11 +59,19 @@ abstract class AbstractSimulationTest<T extends EObject> extends AbstractXTextMo
      * Starts a simulation test of the model and the model data.
      */
     protected def void startSimulationTest(String system, EObject model, TestModelData modelData, String testID) {
+        startSimulationTest(system, model, modelData, testID, null)
+    }
+    
+    /**
+     * Starts a simulation test of the model and the model data with an additinal environment configuration.
+     */
+    protected def void startSimulationTest(String system, EObject model, TestModelData modelData, String testID, IPropertyHolder properties ) {
         val ccontext = Compile.createCompilationContext(system, model)
         ccontext.startEnvironment.setProperty(Environment.INPLACE, true)
         ccontext.startEnvironment.setProperty(ProjectInfrastructure.TEMPORARY_PROJECT_NAME, 
             (if (!Platform.isWindows) this.class.simpleName + "-" else "") + testID
         )
+        if (properties !== null) ccontext.startEnvironment.copyProperties(properties)
         val simContext = ccontext.createSimulationContext
         simContext.runSimulationTraces(modelData)
     }

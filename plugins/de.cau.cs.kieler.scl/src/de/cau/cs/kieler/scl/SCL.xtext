@@ -149,6 +149,7 @@ Thread returns Thread:
 
 Parallel returns Parallel:
     'fork'
+    //(forkType=ForkType)?
     (
         threads += Thread
         (
@@ -157,8 +158,12 @@ Parallel returns Parallel:
         )*
     )
     'join'
+    //joinAny?='any'
     semicolon?=';'?
 ;
+
+//enum ForkType returns ForkType:
+//    SEQUENTIAL = 'seq' | SEQUENTIAL_PREEMPTIVE = 'seq-abort';
 
 ScopeStatement returns ScopeStatement:
     {ScopeStatement}

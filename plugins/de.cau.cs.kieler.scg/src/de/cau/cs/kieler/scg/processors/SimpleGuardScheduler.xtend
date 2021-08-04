@@ -51,7 +51,7 @@ class SimpleGuardScheduler extends InplaceProcessor<SCGraphs> implements Traceab
     }
     
     override getName() {
-        "Scheduler V2"
+        "Scheduler"
     }
     
     override process() {
@@ -96,14 +96,14 @@ class SimpleGuardScheduler extends InplaceProcessor<SCGraphs> implements Traceab
     	// ASC schedulability output
     	if (schedule.size < estimatedScheduleSize) {
     	    environment.errors.add("The SCG is NOT asc-schedulable!")
-    		System.out.println("The SCG is NOT asc-schedulable!")
+    		//System.out.println("The SCG is NOT asc-schedulable!")
     		if (unschedulableNodes.size > 0) {
     		    if (annotationModelCreatorDelegate !== null) {
     		      annotationModelCreatorDelegate.create(unschedulableNodes, environment)
     		    }
     		}
     	} else {
-    		System.out.println("The SCG is asc-schedulable.")
+    		//System.out.println("The SCG is asc-schedulable.")
     	}
     }
     

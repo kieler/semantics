@@ -37,6 +37,7 @@ public abstract class AbstractScadeEquationsSyntacticSequencer extends AbstractS
 	protected AbstractElementAlias match_NodeDeclaration___FullStopKeyword_12_0_or_SemicolonKeyword_12_1__q;
 	protected AbstractElementAlias match_RandomCall_LeftParenthesisRightParenthesisKeyword_2_q;
 	protected AbstractElementAlias match_RandomizeCall_LeftParenthesisRightParenthesisKeyword_2_q;
+	protected AbstractElementAlias match_ReferenceValuedObject_LeftParenthesisRightParenthesisKeyword_5_1_q;
 	protected AbstractElementAlias match_TypeDeclaration_SemicolonKeyword_2_1_2_4_q;
 	
 	@Inject
@@ -57,6 +58,7 @@ public abstract class AbstractScadeEquationsSyntacticSequencer extends AbstractS
 		match_NodeDeclaration___FullStopKeyword_12_0_or_SemicolonKeyword_12_1__q = new AlternativeAlias(false, true, new TokenAlias(false, false, grammarAccess.getNodeDeclarationAccess().getFullStopKeyword_12_0()), new TokenAlias(false, false, grammarAccess.getNodeDeclarationAccess().getSemicolonKeyword_12_1()));
 		match_RandomCall_LeftParenthesisRightParenthesisKeyword_2_q = new TokenAlias(false, true, grammarAccess.getRandomCallAccess().getLeftParenthesisRightParenthesisKeyword_2());
 		match_RandomizeCall_LeftParenthesisRightParenthesisKeyword_2_q = new TokenAlias(false, true, grammarAccess.getRandomizeCallAccess().getLeftParenthesisRightParenthesisKeyword_2());
+		match_ReferenceValuedObject_LeftParenthesisRightParenthesisKeyword_5_1_q = new TokenAlias(false, true, grammarAccess.getReferenceValuedObjectAccess().getLeftParenthesisRightParenthesisKeyword_5_1());
 		match_TypeDeclaration_SemicolonKeyword_2_1_2_4_q = new TokenAlias(false, true, grammarAccess.getTypeDeclarationAccess().getSemicolonKeyword_2_1_2_4());
 	}
 	
@@ -102,6 +104,8 @@ public abstract class AbstractScadeEquationsSyntacticSequencer extends AbstractS
 				emit_RandomCall_LeftParenthesisRightParenthesisKeyword_2_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_RandomizeCall_LeftParenthesisRightParenthesisKeyword_2_q.equals(syntax))
 				emit_RandomizeCall_LeftParenthesisRightParenthesisKeyword_2_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_ReferenceValuedObject_LeftParenthesisRightParenthesisKeyword_5_1_q.equals(syntax))
+				emit_ReferenceValuedObject_LeftParenthesisRightParenthesisKeyword_5_1_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_TypeDeclaration_SemicolonKeyword_2_1_2_4_q.equals(syntax))
 				emit_TypeDeclaration_SemicolonKeyword_2_1_2_4_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else acceptNodes(getLastNavigableState(), syntaxNodes);
@@ -367,6 +371,25 @@ public abstract class AbstractScadeEquationsSyntacticSequencer extends AbstractS
 	 *     (rule start) 'randomize' (ambiguity) (rule start)
 	 */
 	protected void emit_RandomizeCall_LeftParenthesisRightParenthesisKeyword_2_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     '()'?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     cardinalities+=Expression ']' (ambiguity) '=' initialValue=Expression
+	 *     cardinalities+=Expression ']' (ambiguity) 'label' label=STRING
+	 *     cardinalities+=Expression ']' (ambiguity) (rule end)
+	 *     genericParameters+=GenericParameter '>' (ambiguity) '=' initialValue=Expression
+	 *     genericParameters+=GenericParameter '>' (ambiguity) 'label' label=STRING
+	 *     genericParameters+=GenericParameter '>' (ambiguity) (rule end)
+	 *     name=PrimeID (ambiguity) '=' initialValue=Expression
+	 *     name=PrimeID (ambiguity) 'label' label=STRING
+	 *     name=PrimeID (ambiguity) (rule end)
+	 */
+	protected void emit_ReferenceValuedObject_LeftParenthesisRightParenthesisKeyword_5_1_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	

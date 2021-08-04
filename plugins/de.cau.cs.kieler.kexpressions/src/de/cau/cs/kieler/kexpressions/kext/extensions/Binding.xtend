@@ -29,7 +29,7 @@ class Binding {
     @Accessors var ValuedObject targetValuedObject = null
     @Accessors var List<Expression> targetIndices = null
     @Accessors var BindingType type = BindingType.EXPLICIT
-    @Accessors var List<String> errorMessages = <String> newLinkedList
+    @Accessors val List<String> errorMessages = <String> newLinkedList
     
     def addErrorMessage(String message) {
         errorMessages += message
@@ -37,5 +37,15 @@ class Binding {
     
     def int errors() {
         errorMessages.size
-    } 
+    }
+    
+    override toString() {
+        return "Binding (%s): %s -> %s %s".format(
+            type.name,
+            targetValuedObject?.name,
+            sourceExpression?.toString,
+            errorMessages.join(",")
+        )
+    }
+    
 }

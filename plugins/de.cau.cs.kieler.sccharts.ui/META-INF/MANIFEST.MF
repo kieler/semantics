@@ -2,8 +2,8 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: SCCharts UI
 Bundle-SymbolicName: de.cau.cs.kieler.sccharts.ui;singleton:=true
-Bundle-Version: 1.1.0.qualifier
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-Version: 1.3.0.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Eclipse-UI: True
 Require-Bundle: de.cau.cs.kieler.klighd,
  org.eclipse.xtend.lib;bundle-version="2.3.0",
@@ -33,11 +33,15 @@ Require-Bundle: de.cau.cs.kieler.klighd,
  de.cau.cs.kieler.simulation.ui,
  com.google.gson;bundle-version="2.7.0",
  org.eclipse.ui.ide;bundle-version="3.14.0",
+ de.cau.cs.kieler.simulation.ide,
  de.cau.cs.kieler.scl.ui,
- de.cau.cs.kieler.klighd.ui.view,
+ de.cau.cs.kieler.klighd.ide,
  org.eclipse.jdt.debug;bundle-version="3.13.100",
  org.eclipse.jdt.ui;bundle-version="3.19.0",
- org.eclipse.jdt.core;bundle-version="3.19.0"
+ org.eclipse.jdt.core;bundle-version="3.19.0",
+ de.cau.cs.kieler.kicool.ide,
+ de.cau.cs.kieler.annotations.ide,
+ org.eclipse.elk.core.service
 Bundle-Vendor: Kiel University
 Bundle-ActivationPolicy: lazy
 Export-Package: de.cau.cs.kieler.sccharts.ui,
@@ -58,3 +62,4 @@ Export-Package: de.cau.cs.kieler.sccharts.ui,
  de.cau.cs.kieler.sccharts.ui.text.sctgenerator.extensions
 Import-Package: org.apache.log4j
 Bundle-Activator: de.cau.cs.kieler.sccharts.ui.SCChartsUiModule
+Automatic-Module-Name: de.cau.cs.kieler.sccharts.ui

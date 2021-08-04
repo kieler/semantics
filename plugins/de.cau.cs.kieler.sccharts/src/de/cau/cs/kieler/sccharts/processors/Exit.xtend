@@ -198,6 +198,14 @@ class Exit extends SCChartsProcessor implements Traceable {
 
         val exitRegion = firstState.parentRegion
         val lastExitAction = exitActions.last
+        
+        // Introduce connector is first exit action has a trigger and source state need to terminate (KISEMA-1592)
+        if (firstState.controlflowRegionsContainStates && exitActions.head?.trigger !== null) {
+            val connector = exitRegion.createState(GENERATED_PREFIX + "C").uniqueName.setTypeConnector
+            firstState.createImmediateTransitionTo(connector).setTypeTermination
+            firstState = connector
+        }
+        
         for (exitAction : exitActions) {
             var connector = lastState
             if (exitAction != lastExitAction) {

@@ -387,7 +387,7 @@ class StatebasedLeanJavaTemplate extends AbstractStatebasedLeanTemplate {
             }
         } else {
             if (transition.immediate) {
-                if(transition.trigger !== null) condition = transition.trigger.serializeHR else condition = "1"
+                if(transition.trigger !== null) condition = transition.trigger.serializeHR else condition = "true"
             } else {
                 if (transition.trigger === null)
                     condition = "context.delayedEnabled"

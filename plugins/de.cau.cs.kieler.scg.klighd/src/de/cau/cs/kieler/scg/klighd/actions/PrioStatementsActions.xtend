@@ -22,6 +22,7 @@ import de.cau.cs.kieler.klighd.krendering.KRoundedRectangle
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.scg.klighd.SCGraphDiagramSynthesis
 
+import static de.cau.cs.kieler.scg.klighd.SCGraphSynthesisOptions.*
 import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
 
 /**
@@ -37,9 +38,9 @@ class PrioStatementsActions implements IAction {
     extension KRenderingExtensions
 //    @Inject
 //    extension KPortExtensions
-    
-    public static final SynthesisOption SHOW_PRIO_STATEMENTS = SynthesisOption::createCheckOption("Priority Statements", 
-        true).setUpdateAction(PRIO_STATEMENTS_ID);
+
+    public static final SynthesisOption SHOW_PRIO_STATEMENTS = SynthesisOption::createCheckOption(PrioStatementsActions, "Priority Statements", 
+        true).setUpdateAction(PRIO_STATEMENTS_ID).setCategory(PRIO);
     
     
         
@@ -47,7 +48,7 @@ class PrioStatementsActions implements IAction {
         val viewContext = context.contextViewer.viewContext
         val rootNode = context.KNode
         for(port : rootNode.eAllContentsOfType(KPort).toIterable) {
-            if(port.KContainerRendering != null 
+            if(port.KContainerRendering !== null 
                 && port.KContainerRendering.getProperty(SCGraphDiagramSynthesis.PRIO_STATEMENTS_PROPERTY)) {
               if(SHOW_PRIO_STATEMENTS.booleanValue(viewContext)) {
                   port.setSize(50,20)
@@ -80,7 +81,7 @@ class PrioStatementsActions implements IAction {
     def booleanValue(SynthesisOption option, ViewContext viewContext) {
         val value = viewContext.getOptionValue(option)
         
-        if(value == null) {
+        if(value === null) {
             return false
         } else if (value instanceof Boolean) {
             return value as Boolean;

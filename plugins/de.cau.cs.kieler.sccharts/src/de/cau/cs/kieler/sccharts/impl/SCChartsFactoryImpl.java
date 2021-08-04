@@ -33,12 +33,12 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
 public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory {
     /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	public static final String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\r\n\r\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\r\n\r\nCopyright 2013 by\r\n+ Kiel University\r\n  + Department of Computer Science\r\n    + Real-Time and Embedded Systems Group\r\n\r\nThis code is provided under the terms of the Eclipse Public License (EPL).\r\nSee the file epl-v10.html for the license text.";
+    public static final String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\r\n\r\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\r\n\r\nCopyright 2013 by\r\n+ Kiel University\r\n  + Department of Computer Science\r\n    + Real-Time and Embedded Systems Group\r\n\r\nThis code is provided under the terms of the Eclipse Public License (EPL).\r\nSee the file epl-v10.html for the license text.";
 
-				/**
+    /**
      * Creates the default factory implementation.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -90,6 +90,9 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
             case SCChartsPackage.POLICY_REGION: return createPolicyRegion();
             case SCChartsPackage.CODE_EFFECT: return createCodeEffect();
             case SCChartsPackage.DATAFLOW_ASSIGNMENT: return createDataflowAssignment();
+            case SCChartsPackage.BASE_STATE_REFERENCE: return createBaseStateReference();
+            case SCChartsPackage.ODE_ACTION: return createOdeAction();
+            case SCChartsPackage.MODULE_SCOPE_CALL: return createModuleScopeCall();
             default:
                 throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
         }
@@ -135,6 +138,28 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
             default:
                 throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
         }
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public SCCharts createSCCharts() {
+        SCChartsImpl scCharts = new SCChartsImpl();
+        return scCharts;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public ScopeCall createScopeCall() {
+        ScopeCallImpl scopeCall = new ScopeCallImpl();
+        return scopeCall;
     }
 
     /**
@@ -285,6 +310,39 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
+    public BaseStateReference createBaseStateReference() {
+        BaseStateReferenceImpl baseStateReference = new BaseStateReferenceImpl();
+        return baseStateReference;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public OdeAction createOdeAction() {
+        OdeActionImpl odeAction = new OdeActionImpl();
+        return odeAction;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public ModuleScopeCall createModuleScopeCall() {
+        ModuleScopeCallImpl moduleScopeCall = new ModuleScopeCallImpl();
+        return moduleScopeCall;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public PreemptionType createPreemptionTypeFromString(EDataType eDataType, String initialValue) {
         PreemptionType result = PreemptionType.get(initialValue);
         if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
@@ -301,28 +359,6 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
     }
 
     /**
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     */
-	@Override
-    public SCCharts createSCCharts() {
-        SCChartsImpl scCharts = new SCChartsImpl();
-        return scCharts;
-    }
-
-				/**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public ScopeCall createScopeCall() {
-        ScopeCallImpl scopeCall = new ScopeCallImpl();
-        return scopeCall;
-    }
-
-                /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated

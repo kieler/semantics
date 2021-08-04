@@ -22,6 +22,7 @@ import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import javax.inject.Inject
 import de.cau.cs.kieler.klighd.kgraph.util.KGraphUtil
+import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensions
 
 /**
  * KRendering Utility class for KLighD visualization.
@@ -33,17 +34,12 @@ import de.cau.cs.kieler.klighd.kgraph.util.KGraphUtil
  */
 class SCGraphShapes {
     
-    @Inject
-    extension KRenderingExtensions
-    
-    @Inject
-    extension KColorExtensions
-	
-    @Inject
-    extension KNodeExtensions
+    @Inject extension KRenderingExtensions
+    @Inject extension KColorExtensions
+    @Inject extension KNodeExtensions
+    @Inject extension KContainerRenderingExtensions
 	
 
-	
 	def KNode createRoundedRectangulareNode(Object o) {
 		val node = o.node;
 		val rect = KRenderingFactory::eINSTANCE.createKRoundedRectangle;
@@ -96,6 +92,7 @@ class SCGraphShapes {
             it.points += createKPosition(LEFT,  0, 0.0f, TOP,  0, 1.0f);
             it.points += createKPosition(LEFT,  0, 0.5f, TOP,  0, 0);
             it.background = "white".color
+            addText("").setAreaPlacementData.from(LEFT, 0, 0, TOP, 4, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0)
          ];
     }	
 
@@ -106,6 +103,7 @@ class SCGraphShapes {
             it.points += createKPosition(LEFT,  0, 1.0f, TOP,  0, 1.0f);
             it.points += createKPosition(LEFT,  0, 0.0f, TOP,  0, 0.5f);
             it.background = "white".color
+            addText("").setAreaPlacementData.from(LEFT, 2, 0, TOP, 0, 0).to(RIGHT, 0, 0, BOTTOM, 2, 0)
          ];
     }   
 
@@ -116,6 +114,7 @@ class SCGraphShapes {
             it.points += createKPosition(LEFT,  0, 0.0f, TOP,  0, 0f);
             it.points += createKPosition(LEFT,  0, 0.5f, TOP,  0, 1.0f);
             it.background = "white".color
+            addText("").setAreaPlacementData.from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 0, 0, BOTTOM, 10, 0)
         ];
     }   
 
@@ -126,6 +125,7 @@ class SCGraphShapes {
             it.points += createKPosition(LEFT,  0, 0.0f, TOP,  0, 1.0f);
             it.points += createKPosition(LEFT,  0, 0.0f, TOP,  0, 0.0f);
             it.background = "white".color
+            addText("").setAreaPlacementData.from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 0, 0, BOTTOM, 4, 0)
         ];
     }   
 
@@ -137,6 +137,11 @@ class SCGraphShapes {
             it.points += createKPosition(LEFT,  0, 0f, TOP,  0, 0.5f);
             it.points += createKPosition(LEFT,  0, 0.5f, TOP,  0, 0f);
             it.background = "white".color
+            it.addText("").setAreaPlacementData.
+            from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 1, 0, BOTTOM, 1, 0) => [
+                it.background = "white".color
+                it.background.alpha = 196
+            ]
         ];
     }   
 
@@ -149,6 +154,7 @@ class SCGraphShapes {
             it.points += createKPosition(LEFT,  0, 0.0f, TOP,  0, 0.33f);
             it.points += createKPosition(LEFT,  0, 0.5f, TOP,  0, 0);
             it.background = "white".color
+            addText("")
         ];
     }   
 
@@ -161,31 +167,34 @@ class SCGraphShapes {
             it.points += createKPosition(LEFT,  0, 0.0f, TOP,  0, 0.5f);
             it.points += createKPosition(LEFT,  0, 0.25f, TOP,  0, 0);
             it.background = "white".color
+            addText("").setAreaPlacementData.from(LEFT, 10, 0, TOP, 0, 0).to(RIGHT, 0, 0, BOTTOM, 3, 0)
         ];
     }   
 
     def KPolygon createDepthShape(KPolygon poly) {
         poly => [
-            it.points += createKPosition(LEFT,  0, 0.5f, TOP,  0, 1.0f);
-            it.points += createKPosition(LEFT,  0, 1.0f, TOP,  0, 0.66f);
-            it.points += createKPosition(LEFT,  0, 1.0f, TOP,  0, 0.0f);
-            it.points += createKPosition(LEFT,  0, 0.0f, TOP,  0, 0.0f);
-            it.points += createKPosition(LEFT,  0, 0.0f, TOP,  0, 0.66f);
-            it.points += createKPosition(LEFT,  0, 0.5f, TOP,  0, 1.0f);
+            it.points += createKPosition(LEFT, 0, 0.5f, TOP, 0, 1.0f);
+            it.points += createKPosition(LEFT, 0, 1.0f, TOP, 0, 0.66f);
+            it.points += createKPosition(LEFT, 0, 1.0f, TOP, 0, 0.0f);
+            it.points += createKPosition(LEFT, 0, 0.0f, TOP, 0, 0.0f);
+            it.points += createKPosition(LEFT, 0, 0.0f, TOP, 0, 0.66f);
+            it.points += createKPosition(LEFT, 0, 0.5f, TOP, 0, 1.0f);
             it.background = "white".color
-         ];
+            addText("").setAreaPlacementData.from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 0, 0, BOTTOM, 4, 0)
+        ];
     }   
 
     def KPolygon createDepthLandscapeShape(KPolygon poly) {
         poly => [
-            it.points += createKPosition(LEFT,  0, 0.0f, TOP,  0, 0.0f);
-            it.points += createKPosition(LEFT,  0, 0.75f, TOP,  0, 0.0f);
-            it.points += createKPosition(LEFT,  0, 1.0f, TOP,  0, 0.5f);
-            it.points += createKPosition(LEFT,  0, 0.75f, TOP,  0, 1.0f);
-            it.points += createKPosition(LEFT,  0, 0.0f, TOP,  0, 1.0f);
-            it.points += createKPosition(LEFT,  0, 0.0f, TOP,  0, 0.0f);
+            it.points += createKPosition(LEFT, 0, 0.0f, TOP, 0, 0.0f);
+            it.points += createKPosition(LEFT, 0, 0.75f, TOP, 0, 0.0f);
+            it.points += createKPosition(LEFT, 0, 1.0f, TOP, 0, 0.5f);
+            it.points += createKPosition(LEFT, 0, 0.75f, TOP, 0, 1.0f);
+            it.points += createKPosition(LEFT, 0, 0.0f, TOP, 0, 1.0f);
+            it.points += createKPosition(LEFT, 0, 0.0f, TOP, 0, 0.0f);
             it.background = "white".color
-         ];
+            addText("").setAreaPlacementData.from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 10, 0, BOTTOM, 2, 0)
+        ];
     }   
 
 	

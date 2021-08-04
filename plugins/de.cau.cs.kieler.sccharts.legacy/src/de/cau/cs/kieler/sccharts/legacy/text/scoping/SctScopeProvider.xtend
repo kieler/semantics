@@ -69,9 +69,9 @@ class SctScopeProvider extends AbstractDeclarativeScopeProvider {
     public def IScope scope_referenceNode_referencedScope(EObject context, EReference reference) {
         val superScope = super.getScope(context.eContainer, reference)
         val res = context.eResource
-        if (res != null) {
+        if (res !== null) {
             val resSet = res.resourceSet
-            if (resSet != null) {
+            if (resSet !== null) {
                 val rIterable = <Scope>newArrayList
                 for (r : resSet.resources) {
                     val contentList = r.contents.filter(e|e instanceof State).toList
@@ -187,9 +187,9 @@ class SctScopeProvider extends AbstractDeclarativeScopeProvider {
     public def IScope scope_Scope_referencedScope(EObject context, EReference reference) {
         val superScope = super.getScope(context.eContainer, reference)
         val res = context.eResource
-        if (res != null) {
+        if (res !== null) {
             val resSet = res.resourceSet
-            if (resSet != null) {
+            if (resSet !== null) {
                 val rIterable = <Scope>newArrayList
                 for (r : resSet.resources) {
                     val contentList = r.contents.filter(e|e instanceof State).toList
@@ -267,9 +267,9 @@ class SctScopeProvider extends AbstractDeclarativeScopeProvider {
         }
         
         var IScope scope = polymorphicFindScopeForReferenceName(context, reference);
-        if (scope == null) {
+        if (scope === null) {
             scope = polymorphicFindScopeForClassName(context, reference);
-            if (scope == null) {
+            if (scope === null) {
                 scope = delegateGetScope(context, reference);
 //                println("CTX: " + context.toString + " || REF: " + reference.toString)
             }
@@ -302,8 +302,8 @@ class SctScopeProvider extends AbstractDeclarativeScopeProvider {
     
      protected def IScope getScopeForReferencedDeclarationFromAssignment(EObject context, EReference reference) {
         if (context instanceof Assignment) {
-            if (context.valuedObject != null) {
-                if (context.valuedObject.eContainer != null) {
+            if (context.valuedObject !== null) {
+                if (context.valuedObject.eContainer !== null) {
                 }
             }
         }
@@ -312,8 +312,8 @@ class SctScopeProvider extends AbstractDeclarativeScopeProvider {
     
     protected def IScope getScopeForReferencedDeclarationFromSubReference(EObject context, EReference reference) {
         if (context instanceof ValuedObjectReference) {
-            if (context.valuedObject != null) {
-                if (context.eContainer != null) {
+            if (context.valuedObject !== null) {
+                if (context.eContainer !== null) {
                     var parentVO = context as ValuedObjectReference
                     while(parentVO.eContainer instanceof ValuedObjectReference) {
                         parentVO = parentVO.eContainer as ValuedObjectReference
@@ -331,7 +331,7 @@ class SctScopeProvider extends AbstractDeclarativeScopeProvider {
     protected def IScope getScopeHierarchical(EObject context, EReference reference) {
         val candidates = <ValuedObject> newArrayList
         var declarationScope = context.nextDeclarationScope
-        while (declarationScope != null) {
+        while (declarationScope !== null) {
             for(declaration : declarationScope.declarations) {
                 for(VO : declaration.valuedObjects) {
                     candidates += VO
@@ -345,7 +345,7 @@ class SctScopeProvider extends AbstractDeclarativeScopeProvider {
     
     protected def Scope getNextDeclarationScope(EObject eObject) {
         var eO = eObject
-        while(eO != null) {
+        while(eO !== null) {
             eO = eO.eContainer
             if (eO instanceof Scope) return eO 
         }

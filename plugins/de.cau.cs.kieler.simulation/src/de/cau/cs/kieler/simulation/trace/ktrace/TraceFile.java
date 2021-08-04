@@ -5,7 +5,6 @@ package de.cau.cs.kieler.simulation.trace.ktrace;
 import de.cau.cs.kieler.annotations.Pragmatable;
 
 import de.cau.cs.kieler.kexpressions.ValuedObject;
-import de.cau.cs.kieler.kexpressions.kext.DeclarationScope;
 import org.eclipse.emf.common.util.EList;
 
 /**

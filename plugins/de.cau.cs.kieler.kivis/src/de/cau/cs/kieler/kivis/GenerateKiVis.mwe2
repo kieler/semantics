@@ -80,6 +80,7 @@ Workflow {
             fragment = ui.quickfix.QuickfixProviderFragment2 {}
             fragment = ui.contentAssist.ContentAssistFragment2 {}
             fragment = ui.refactoring.RefactorElementNameFragment2 {}
+            fragment = de.cau.cs.kieler.core.ls.GenerateKeywordsFragment {}
    
         }
     }

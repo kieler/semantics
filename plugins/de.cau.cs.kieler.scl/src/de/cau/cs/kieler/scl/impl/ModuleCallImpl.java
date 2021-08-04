@@ -9,7 +9,6 @@ import de.cau.cs.kieler.annotations.AnnotationsPackage;
 import de.cau.cs.kieler.kexpressions.Parameter;
 import de.cau.cs.kieler.kexpressions.ScheduleObjectReference;
 
-import de.cau.cs.kieler.scl.Module;
 import de.cau.cs.kieler.scl.ModuleCall;
 import de.cau.cs.kieler.scl.SCLPackage;
 import de.cau.cs.kieler.scl.SequencePart;

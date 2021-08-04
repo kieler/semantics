@@ -20,9 +20,12 @@ import de.cau.cs.kieler.annotations.StringPragma
 import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
 import de.cau.cs.kieler.annotations.registry.PragmaRegistry
 import de.cau.cs.kieler.kexpressions.keffects.converter.KEffectsEmissionReferenceCallConverter
+import de.cau.cs.kieler.kexpressions.kext.converter.KExtGenericParamterConverter
+import de.cau.cs.kieler.sccharts.BaseStateReference
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
+import de.cau.cs.kieler.scl.validation.InternalSyntaxValidation
 import java.io.File
 import java.io.IOException
 import java.io.OutputStream
@@ -43,7 +46,6 @@ import static org.eclipse.emf.common.util.URI.*
 
 import static extension com.google.common.collect.Sets.*
 import static extension de.cau.cs.kieler.core.uri.URIUtils.*
-import de.cau.cs.kieler.scl.validation.InternalSyntaxValidation
 
 /**
  * A customized {@link LazyLinkingResource}. Modifies the parsed model and fixes some runtime bugs.
@@ -57,6 +59,7 @@ public class SCTXResource extends LazyLinkingResource {
 
     @Inject extension PragmaExtensions
     @Inject extension KEffectsEmissionReferenceCallConverter
+    @Inject extension KExtGenericParamterConverter
     @Inject extension InternalSyntaxValidation
     
     public static val FILE_EXTENSION = "sctx"
@@ -136,15 +139,23 @@ public class SCTXResource extends LazyLinkingResource {
         
         // Fix Emission vs. ReferenceCallEffect uncertainty.
         parseResult.fixEmissionReferenceCallEffectDuality
-
-        super.updateInternalState(parseResult);
+        
+        // Fix Type vs. VOReference uncertainty in Generic Parameter.
+        parseResult.fixValuedObjectReferenceDetectionInGenericParamter
+        
+        super.updateInternalState(parseResult)
+        
+        if (parseResult.rootASTElement !== null && parseResult.rootASTElement.eAllContents.exists[it instanceof BaseStateReference]) {
+            // Fix again to catch inherited VORs
+            parseResult.fixEmissionReferenceCallEffectDuality
+        }
 
         // ssm + als magic to correct broken bidirectional references that were created by the xtext linking process.
         // Depending on the grammar and when using eOpposites, the opposite lists of the transitions sometimes include
         // the same reference more than once. Furthermore, removing one of these also automatically removes the opposite,
         // because these are managed by emf. Hence, we have to remember the target state, remove all references, and then
         // set the target state again.
-        if (parseResult.rootASTElement !== null) {  
+        if (parseResult.rootASTElement !== null) {
             val states = parseResult.rootASTElement.eAllContents.filter(State).filter[ incomingTransitions.toSet.size < incomingTransitions.size ].toIterable
             for (state : states) {
                 val dups = <Transition, State> newHashMap

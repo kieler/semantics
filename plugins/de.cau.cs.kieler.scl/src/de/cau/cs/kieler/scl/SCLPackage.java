@@ -10,6 +10,7 @@ import de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
@@ -604,13 +605,31 @@ public interface SCLPackage extends EPackage {
     int PARALLEL__THREADS = STATEMENT_FEATURE_COUNT + 0;
 
     /**
+     * The feature id for the '<em><b>Join Any</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int PARALLEL__JOIN_ANY = STATEMENT_FEATURE_COUNT + 1;
+
+    /**
+     * The feature id for the '<em><b>Fork Type</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int PARALLEL__FORK_TYPE = STATEMENT_FEATURE_COUNT + 2;
+
+    /**
      * The number of structural features of the '<em>Parallel</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int PARALLEL_FEATURE_COUNT = STATEMENT_FEATURE_COUNT + 1;
+    int PARALLEL_FEATURE_COUNT = STATEMENT_FEATURE_COUNT + 3;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.scl.impl.ModuleCallImpl <em>Module Call</em>}' class.
@@ -956,6 +975,15 @@ public interface SCLPackage extends EPackage {
     int METHOD_IMPLEMENTATION_DECLARATION__SCHEDULE = KExpressionsPackage.METHOD_DECLARATION__SCHEDULE;
 
     /**
+     * The feature id for the '<em><b>Override</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int METHOD_IMPLEMENTATION_DECLARATION__OVERRIDE = KExpressionsPackage.METHOD_DECLARATION__OVERRIDE;
+
+    /**
      * The feature id for the '<em><b>Return Type</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1091,6 +1119,17 @@ public interface SCLPackage extends EPackage {
      * @ordered
      */
     int LOOP_FEATURE_COUNT = STATEMENT_FEATURE_COUNT + 6;
+
+
+    /**
+     * The meta object id for the '{@link de.cau.cs.kieler.scl.ForkType <em>Fork Type</em>}' enum.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.scl.ForkType
+     * @see de.cau.cs.kieler.scl.impl.SCLPackageImpl#getForkType()
+     * @generated
+     */
+    int FORK_TYPE = 19;
 
 
     /**
@@ -1270,6 +1309,28 @@ public interface SCLPackage extends EPackage {
     EReference getParallel_Threads();
 
     /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.scl.Parallel#isJoinAny <em>Join Any</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Join Any</em>'.
+     * @see de.cau.cs.kieler.scl.Parallel#isJoinAny()
+     * @see #getParallel()
+     * @generated
+     */
+    EAttribute getParallel_JoinAny();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.scl.Parallel#getForkType <em>Fork Type</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Fork Type</em>'.
+     * @see de.cau.cs.kieler.scl.Parallel#getForkType()
+     * @see #getParallel()
+     * @generated
+     */
+    EAttribute getParallel_ForkType();
+
+    /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.scl.ModuleCall <em>Module Call</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1425,6 +1486,16 @@ public interface SCLPackage extends EPackage {
      * @generated
      */
     EReference getLoop_Afterthought();
+
+    /**
+     * Returns the meta object for enum '{@link de.cau.cs.kieler.scl.ForkType <em>Fork Type</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for enum '<em>Fork Type</em>'.
+     * @see de.cau.cs.kieler.scl.ForkType
+     * @generated
+     */
+    EEnum getForkType();
 
     /**
      * Returns the factory that creates the instances of the model.
@@ -1607,6 +1678,22 @@ public interface SCLPackage extends EPackage {
         EReference PARALLEL__THREADS = eINSTANCE.getParallel_Threads();
 
         /**
+         * The meta object literal for the '<em><b>Join Any</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute PARALLEL__JOIN_ANY = eINSTANCE.getParallel_JoinAny();
+
+        /**
+         * The meta object literal for the '<em><b>Fork Type</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute PARALLEL__FORK_TYPE = eINSTANCE.getParallel_ForkType();
+
+        /**
          * The meta object literal for the '{@link de.cau.cs.kieler.scl.impl.ModuleCallImpl <em>Module Call</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -1741,6 +1828,16 @@ public interface SCLPackage extends EPackage {
          * @generated
          */
         EReference LOOP__AFTERTHOUGHT = eINSTANCE.getLoop_Afterthought();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.scl.ForkType <em>Fork Type</em>}' enum.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.scl.ForkType
+         * @see de.cau.cs.kieler.scl.impl.SCLPackageImpl#getForkType()
+         * @generated
+         */
+        EEnum FORK_TYPE = eINSTANCE.getForkType();
 
     }
 

@@ -4,30 +4,40 @@
 package de.cau.cs.kieler.sccharts.text.validation
 
 import com.google.common.collect.HashMultimap
+import com.google.common.collect.Iterables
 import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.Annotation
 import de.cau.cs.kieler.annotations.AnnotationsPackage
 import de.cau.cs.kieler.annotations.StringPragma
 import de.cau.cs.kieler.annotations.TypedStringAnnotation
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
 import de.cau.cs.kieler.annotations.registry.PragmaRegistry
 import de.cau.cs.kieler.kexpressions.AccessModifier
 import de.cau.cs.kieler.kexpressions.CombineOperator
 import de.cau.cs.kieler.kexpressions.Declaration
+import de.cau.cs.kieler.kexpressions.KExpressionsPackage
+import de.cau.cs.kieler.kexpressions.MethodDeclaration
 import de.cau.cs.kieler.kexpressions.OperatorExpression
+import de.cau.cs.kieler.kexpressions.OperatorType
 import de.cau.cs.kieler.kexpressions.ReferenceCall
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
+import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.VectorValue
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kexpressions.keffects.Emission
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.kexpressions.kext.KExtPackage
 import de.cau.cs.kieler.kexpressions.kext.extensions.BindingType
+import de.cau.cs.kieler.kexpressions.kext.extensions.Replacements
 import de.cau.cs.kieler.sccharts.Action
+import de.cau.cs.kieler.sccharts.BaseStateReference
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.DataflowRegion
 import de.cau.cs.kieler.sccharts.DuringAction
@@ -43,22 +53,20 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsFixExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsInheritanceExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsReferenceExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
 import de.cau.cs.kieler.sccharts.processors.For
 import de.cau.cs.kieler.sccharts.text.SCTXResource
 import java.util.Map
 import java.util.Set
+import org.eclipse.elk.core.data.LayoutMetaDataService
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.validation.AbstractDeclarativeValidator
 import org.eclipse.xtext.validation.Check
 import org.eclipse.xtext.validation.CheckType
 
 import static extension java.lang.String.*
-import org.eclipse.elk.core.data.LayoutMetaDataService
-import de.cau.cs.kieler.kexpressions.OperatorType
-
-//import org.eclipse.xtext.validation.Check
 
 /**
  * This class contains custom validation rules. 
@@ -75,8 +83,11 @@ class SCTXValidator extends AbstractSCTXValidator {
     @Inject extension SCChartsTransitionExtensions
     @Inject extension SCChartsStateExtensions
     @Inject extension SCChartsInheritanceExtensions
+    @Inject extension SCChartsScopeExtensions
     @Inject extension KExpressionsValuedObjectExtensions
+    @Inject extension KExpressionsDeclarationExtensions
     @Inject extension KEffectsExtensions
+    @Inject extension AnnotationsExtensions
     
     /** Service class for accessing layout options by name */
     private static final LayoutMetaDataService LAYOUT_OPTIONS_SERVICE = LayoutMetaDataService.getInstance();
@@ -92,13 +103,12 @@ class SCTXValidator extends AbstractSCTXValidator {
     static val String DUPLICATE_REGION = "There are multiple regions with the same name.";
     static val String DUPLICATE_ROOTSTATE = "There are multiple root states with the same name.";
     
+    static val String SIGNAL_EMISSION_IN_TRIGGER = "Valued emission cannot be used in triggers. Use val() to check the value of a valued signal.";
     static val String NON_SIGNAL_EMISSION = "Non-signals should not be used in an emission.";
+    static val String NO_VALUED_INPUT_SIGNAL_EMISSION = "Valued input signals currently do not support emission (overwriting).";
     static val String NON_VARIABLE_ASSIGNMENT = "Non-variables cannot be used in an assignment.";
     static val String STATIC_VARIABLE_WITHOUT_INITIALIZATION = "Static variables should be initialized.";
-    //TODO (KISEMA-1071) Remove this message when there is a transformation that handles valued signals without combine operator.
-    static val String VALUED_SIGNAL_NEED_COMBINE = "Valued signals must have a combine function.";
     static val String MINMAX_COMBINE = "Min or max combine operators are currently not supported.";
-    static val String NOCOMBINE = "A valued signal should have a combine function, otherwise any emits cannot be scheduled.";
     
     static val String STRONG_ABORT_WITH_LOW_PRIORITY = "Causality problem!\nStrong abort transitions must have a higher priority than weak abort or termination transitions.";
     static val String ABORT_WITHOUT_TRIGGER = "Abort transitions should have a trigger.";
@@ -158,9 +168,9 @@ class SCTXValidator extends AbstractSCTXValidator {
      */
     @Check
     def void checkInheritanceHierarchy(de.cau.cs.kieler.sccharts.State state) {
-        if (!state.baseStates.nullOrEmpty) {
+        if (!state.baseStateReferences.nullOrEmpty) {
             for (cycle : state.hierarchyCycles.entries) {
-                warning(INHERITANCE_CYCLE + cycle.key.name, state, SCChartsPackage.eINSTANCE.state_BaseStates, cycle.value)
+                error(INHERITANCE_CYCLE + cycle.key.name, state, SCChartsPackage.eINSTANCE.state_BaseStateReferences, cycle.value)
             }
         }
     }
@@ -170,29 +180,29 @@ class SCTXValidator extends AbstractSCTXValidator {
      */
     @Check
     def void checkInheritedVONameClash(de.cau.cs.kieler.sccharts.State state) {
-        if (!state.baseStates.nullOrEmpty) {
-            val names = HashMultimap.<String, de.cau.cs.kieler.sccharts.State>create
-            for (base : state.allInheritedStates) {
-                base.declarations.filter[access !== AccessModifier.PRIVATE].map[valuedObjects].flatten.forEach[names.put(it.name, base)]
+        if (!state.baseStateReferences.nullOrEmpty) {
+            val voNames = HashMultimap.<String, BaseStateReference>create
+            for (base : state.allInheritedStateReferencesHierachically) {
+                base.target.declarations.excludeMethods.filter[access !== AccessModifier.PRIVATE].map[valuedObjects].flatten.forEach[voNames.put(name, base)]
             }
-            val clashes = names.keySet.filter[names.get(it).size > 1].toSet
-            if (!clashes.empty) {
-                val indirectClashes = state.baseStates.indexed.toMap([key], [value.allVisibleInheritedDeclarations.map[valuedObjects].flatten.map[name].toSet])
-                for (clash : clashes) {
-                    val states = names.get(clash)
+            val voClashes = voNames.keySet.filter[voNames.get(it).size > 1].toSet
+            if (!voClashes.empty) {
+                val indirectClashes = state.baseStateReferences.indexed.toMap([key], [value.target !== null ? value.target.allVisibleInheritedDeclarations.excludeMethods.map[valuedObjects].flatten.map[name].toSet : emptySet])
+                for (clash : voClashes) {
+                    val stateRefs = voNames.get(clash)
                     val marked = newHashSet
-                    for (s : states) {
-                        if (state.baseStates.contains(s)) {
-                            if (!marked.contains(s)) {
-                                marked += s
-                                warning(INHERITANCE_VO_NAME_CLASH.format(clash, states.map[name].join(", ")), state, SCChartsPackage.eINSTANCE.state_BaseStates, state.baseStates.indexOf(s))
+                    for (ref : stateRefs) {
+                        if (state.baseStateReferences.contains(ref)) {
+                            if (!marked.contains(ref)) {
+                                marked += ref
+                                error(INHERITANCE_VO_NAME_CLASH.format(clash, stateRefs.map[target.name].join(", ")), ref, SCChartsPackage.eINSTANCE.state_BaseStateReferences, state.baseStateReferences.toList.indexOf(ref))
                             }
                         } else { // indirect
                             for (match : indirectClashes.entrySet.filter[value.contains(clash)]) {
-                                val markState = state.baseStates.get(match.key)
-                                if (!marked.contains(markState)) {
+                                val markState = state.baseStateReferences.get(match.key)
+                                if (markState !== null && !marked.contains(markState)) {
                                     marked += markState
-                                    warning(INHERITANCE_VO_NAME_CLASH.format(clash, states.map[name].join(", ")), state, SCChartsPackage.eINSTANCE.state_BaseStates, match.key)
+                                    error(INHERITANCE_VO_NAME_CLASH.format(clash, stateRefs.map[target.name].join(", ")), state, SCChartsPackage.eINSTANCE.state_BaseStateReferences, match.key)
                                 }
                             }
                         }
@@ -207,7 +217,7 @@ class SCTXValidator extends AbstractSCTXValidator {
      */
     @Check
     def void checkInheritedRegionNameClash(de.cau.cs.kieler.sccharts.State state) {
-        if (!state.baseStates.nullOrEmpty) {
+        if (!state.baseStateReferences.nullOrEmpty) {
             val names = HashMultimap.<String, de.cau.cs.kieler.sccharts.State>create
             for (region : state.allVisibleInheritedRegions) {
                 if (!region.name.nullOrEmpty) {
@@ -216,7 +226,7 @@ class SCTXValidator extends AbstractSCTXValidator {
             }
             val clashes = names.keySet.filter[names.get(it).size > 1].toSet
             if (!clashes.empty) {
-                val indirectClashes = state.baseStates.indexed.toMap([key], [value.allVisibleInheritedRegions.map[name].toSet])
+                val indirectClashes = state.baseStates.indexed.toMap([key], [value !== null ? value.allVisibleInheritedRegions.map[name].toSet : emptySet])
                 for (clash : clashes) {
                     val states = names.get(clash)
                     val marked = newHashSet
@@ -224,14 +234,14 @@ class SCTXValidator extends AbstractSCTXValidator {
                         if (state.baseStates.contains(s)) {
                             if (!marked.contains(s)) {
                                 marked += s
-                                warning(INHERITANCE_REGION_NAME_CLASH.format(clash, states.map[name].join(", ")), state, SCChartsPackage.eINSTANCE.state_BaseStates, state.baseStates.indexOf(s))
+                                error(INHERITANCE_REGION_NAME_CLASH.format(clash, states.map[name].join(", ")), state, SCChartsPackage.eINSTANCE.state_BaseStateReferences, state.baseStates.toList.indexOf(s))
                             }
                         } else { // indirect
                             for (match : indirectClashes.entrySet.filter[value.contains(clash)]) {
                                 val markState = state.baseStates.get(match.key)
-                                if (!marked.contains(markState)) {
+                                if (markState !== null && !marked.contains(markState)) {
                                     marked += markState
-                                    warning(INHERITANCE_REGION_NAME_CLASH.format(clash, states.map[name].join(", ")), state, SCChartsPackage.eINSTANCE.state_BaseStates, match.key)
+                                    error(INHERITANCE_REGION_NAME_CLASH.format(clash, states.map[name].join(", ")), state, SCChartsPackage.eINSTANCE.state_BaseStateReferences, match.key)
                                 }
                             }
                         }
@@ -246,12 +256,12 @@ class SCTXValidator extends AbstractSCTXValidator {
      */
     @Check
     def void checkInheritedVONameReuse(de.cau.cs.kieler.sccharts.State state) {
-        if (!state.baseStates.nullOrEmpty) {
-            val voNames = state.allVisibleInheritedDeclarations.map[valuedObjects].flatten.map[name].toSet
-            for (decl : state.declarations) {
+        if (!state.baseStateReferences.nullOrEmpty) {
+            val voNames = state.allVisibleInheritedDeclarations.excludeMethods.map[valuedObjects].flatten.map[name].toSet
+            for (decl : state.declarations.excludeMethods) {
                 for (vo : decl.valuedObjects) {
                     if (voNames.contains(vo.name)) {
-                        warning(INHERITANCE_VO_NAME_REUSE, vo, null)
+                        error(INHERITANCE_VO_NAME_REUSE, vo, null)
                     }
                 }
             }
@@ -265,20 +275,40 @@ class SCTXValidator extends AbstractSCTXValidator {
     def void checkRegionOverride(Region region) {
         if (region.override) {
             if (region.name.nullOrEmpty) {
-                warning(REGION_OVERRIDE_ANONYMOUS, region, SCChartsPackage.eINSTANCE.region_Override)
+                error(REGION_OVERRIDE_ANONYMOUS, region, SCChartsPackage.eINSTANCE.region_Override)
             } else {
                 val inheritedRegions = region.parentState.getAllVisibleInheritedRegions(false)
                 if (!inheritedRegions.exists[region.name.equals(name)]) {
-                    warning(REGION_OVERRIDE_SUPERFLOUSE, region, SCChartsPackage.eINSTANCE.region_Override)
+                    error(REGION_OVERRIDE_SUPERFLOUSE, region, SCChartsPackage.eINSTANCE.region_Override)
                 }
             }
-        } else if (!region.parentState.baseStates.nullOrEmpty && !region.name.nullOrEmpty) {
+        } else if (!region.parentState.baseStateReferences.nullOrEmpty && !region.name.nullOrEmpty) {
             val inheritedRegions = region.parentState.getAllVisibleInheritedRegions(true)
             if (inheritedRegions.exists[region.name.equals(name)]) {
-                warning(REGION_OVERRIDE_MISSING, region, AnnotationsPackage.eINSTANCE.namedObject_Name, -1)
+                error(REGION_OVERRIDE_MISSING, region, AnnotationsPackage.eINSTANCE.namedObject_Name, -1)
             }
         }
-    }    
+    }
+    
+    @Check
+    def void checkMethods(de.cau.cs.kieler.sccharts.State state) {
+        val methodInfos = state.getMethodInheritanceInfos
+        val inherited = state.baseStateReferences.indexed.toMap([key], [
+            value?.target !== null ?
+                Iterables.concat(value.target.declarations, value.target.allInheritedDeclarations).filter(MethodDeclaration).toSet
+                : emptySet
+        ])
+        for (info : methodInfos.filter[!errors.empty]) {
+            if (info.inherited) {
+                val source = inherited.entrySet.findFirst[value.contains(info.decl)]?.key?:-1
+                if (source >= 0) {
+                    error(info.errors.join("\n"), state, SCChartsPackage.eINSTANCE.state_BaseStateReferences, source)
+                }
+            } else {
+                error(info.errors.join("\n"), info.decl, null)
+            }
+        }
+    }
     
     /**
      * Checks if given layout annotation uses an existing unique layout option id (suffix).
@@ -287,6 +317,26 @@ class SCTXValidator extends AbstractSCTXValidator {
     def void checkRegionActions(Action action) {
         if (action.eContainer instanceof ControlflowRegion && (action.eContainer as ControlflowRegion).states.exists[final]) {
             warning(REGION_ACTION_EXPERIMENTAL, action, null);
+        }
+    }
+    
+    @Check
+    def void checkBaseStateBindings(BaseStateReference ref) {
+        val state = ref.eContainer as de.cau.cs.kieler.sccharts.State
+        if (!state.rootState) {
+            val bindings = ref.createBindings(new Replacements)
+            var errorMessages = newArrayList
+            for (binding : bindings) {
+                if (binding.errors > 0) {
+                    errorMessages += binding.errorMessages
+                }
+            }
+            
+            if (!errorMessages.empty) {
+                error("The binding of inherited variables is erroneous!\n" + errorMessages.join("\n"),
+                    state, SCChartsPackage.eINSTANCE.state_BaseStateReferences,
+                    state.baseStateReferences.indexOf(ref) );
+            }
         }
     }
 
@@ -423,6 +473,43 @@ class SCTXValidator extends AbstractSCTXValidator {
                 warning(NON_SIGNAL_EMISSION, emission, null, -1);
             }
         } 
+    }
+    
+    /**
+     * Discourage emissions of valued input signals
+     */
+    @Check
+    def void checkValuedInputSignalEmissions(Emission emission) {
+        if (emission.valuedObject !== null && emission.valuedObject.variableDeclaration !== null) {
+            val decl = emission.valuedObject.variableDeclaration
+            if (decl.signal && decl.input && decl.type !== ValueType.PURE) {
+                warning(NO_VALUED_INPUT_SIGNAL_EMISSION, null, -1);
+            }
+        }
+    }
+    
+    /**
+     * ReferenceCalls in triggers allow some kind of emission in trigger that must be discouraged. 
+     */
+    @Check
+    def void checkNoBooleanEmissions(ReferenceCall call) {
+        if (call.valuedObject !== null && call.valuedObject.isSignal) {
+            var EObject obj = call
+            var container = call.eContainer
+            while (container !== null && !(container instanceof Transition)) {
+                if (container instanceof Scope) {
+                    container = null
+                } else {
+                    obj = container
+                    container = obj.eContainer
+                }
+            }
+            if (container instanceof Transition) {
+                if (container.trigger === obj) {
+                    error(SIGNAL_EMISSION_IN_TRIGGER, call, null, -1);
+                }
+            }         
+        }
     }
     
     /**
@@ -579,23 +666,6 @@ class SCTXValidator extends AbstractSCTXValidator {
     }
 
     /**
-     * Check if valued signal has a combine functions
-     *
-     * @param valuedObject the valuedObject
-     */
-    @Check
-    public def void checkCombineFunction(ValuedObject valuedObject) {
-        // Check if actually a valued signal
-        if(valuedObject.isSignal && !valuedObject.isPureSignal) {
-            // Check if there is a combine operator
-            if(valuedObject.combineOperator === null) {
-                warning(NOCOMBINE, valuedObject, null)
-            }
-        }
-    } 
-
-
-    /**
      * Check if max or min is used which is currently not supported
      *
      * @param valuedObject the valuedObject
@@ -748,23 +818,6 @@ class SCTXValidator extends AbstractSCTXValidator {
     } 
     
     /**
-     * Checks if the given valued signal has a combination function.
-     * This check can be removed if there is a transformation
-     * that handles valued signals without combination dfunction (see KISEMA-1071).   
-     */
-    // TODO: (KISEMA-1071) Remove this check when there is a transformation that handles valued signals without combination function.
-    @Check
-    public def void checkValuedSignalHasCombinationFunction(ValuedObject valuedObject) {
-        // Check if actually a valued signal
-        if(valuedObject.isSignal && !valuedObject.isPureSignal) {
-            // Check if there is a combine operator
-            if(valuedObject.combineOperator === null || valuedObject.combineOperator.equals(CombineOperator.NONE)) {
-                warning(VALUED_SIGNAL_NEED_COMBINE, valuedObject, null)
-            }
-        }
-    } 
-    
-    /**
      * Checks that static variables are initialized.
      * If it is not initialized the static modifier is useless from a modeling perspective.   
      */
@@ -811,17 +864,20 @@ class SCTXValidator extends AbstractSCTXValidator {
                 error(ASSIGNMENT_TO_CONST, assignment, null, -1);
             }
         }
-    }    
+    }
     
     @Check
     def void checkScopeCall(ScopeCall scopeCall) {
         if (scopeCall.eContainer instanceof Scope) {
+            if (scopeCall.^super) {
+                return // No binding -> no checks
+            }
             val bindings = scopeCall.eContainer.asScope.createBindings
-            var errorMessage = ""
+            var errorMessages = newArrayList
             var implicitMessage = ""
             for (binding : bindings) {
                 if (binding.errors > 0) {
-                    errorMessage = binding.errorMessages.join("\n")
+                    errorMessages += binding.errorMessages
                 }
                 if (binding.type == BindingType.IMPLICIT) {
                     implicitMessage += binding.targetValuedObject.name + ", "
@@ -829,15 +885,15 @@ class SCTXValidator extends AbstractSCTXValidator {
                 }
             }
             
-            if (errorMessage != "") {
-                error("The referencing binding is erroneous!\n" + errorMessage,
+            if (!errorMessages.empty) {
+                error("The referencing binding is erroneous!\n" + errorMessages.join("\n"),
                     scopeCall, 
-                    SCChartsPackage.eINSTANCE.scopeCall_Scope, 
-                    "The referencing binding is erroneous!\n" + errorMessage);
+                    SCChartsPackage.eINSTANCE.scopeCall_Target, 
+                    "The referencing binding is erroneous!\n" + errorMessages.join("\n"));
             } else if (implicitMessage != "" && scopeCall.eContainer instanceof de.cau.cs.kieler.sccharts.State) {
                 warning("Valued Objects are bound implicitly!\n" + implicitMessage,
                     scopeCall, 
-                    SCChartsPackage.eINSTANCE.scopeCall_Scope, 
+                    SCChartsPackage.eINSTANCE.scopeCall_Target, 
                     "Valued Objects are bound implicitly!\n" + implicitMessage);
             }
         }
@@ -845,15 +901,90 @@ class SCTXValidator extends AbstractSCTXValidator {
     
     @Check
     def void checkReferencingStateFinalState(de.cau.cs.kieler.sccharts.State state) {
-        if (state.reference === null) return;
-        if (state.reference.scope === null) return;
+        if (!state.isReferencing) return;
         if (state.terminationTransitions.empty) return;
+        
+        val scope = state.reference.resolveReferencedScope
             
-        if (!state.reference.scope.asState.mayTerminate) {
+        if (scope !== null && !scope.asState.mayTerminate) {
             warning("The referenced SCChart does not terminate, but you are using a termination to proceed.",
                 state.reference,
-                SCChartsPackage.eINSTANCE.scopeCall_Scope);
+                SCChartsPackage.eINSTANCE.scopeCall_Target);
         }            
+    }
+    
+    
+    @Check
+    def void checkReferenceDeclarationBindings(ReferenceDeclaration decl) {
+        if (decl.reference instanceof Scope) {
+            for (vo : decl.valuedObjects) {
+                if (vo.initialValue !== null) {
+                    error("Valued objects of referenced SCCharts cannot be initialized manually.", vo.initialValue, null, -1)
+                }
+            }
+        }
+        
+        if (decl.hasAnnotation("noBindingCheck")) {
+            return
+        }
+        
+        val parent = decl.nextScope
+        val dfVOs = newHashSet
+        if (parent instanceof de.cau.cs.kieler.sccharts.State) {
+            for (vo : decl.valuedObjects) {
+                if (parent.regions.filter(DataflowRegion).exists[eAllContents.filter(ValuedObjectReference).exists[valuedObject === vo]]) {
+                    dfVOs += vo // Do not check those instanciated by dataflow regions
+                }
+            }
+        } else if (parent instanceof DataflowRegion) {
+            for (vo : decl.valuedObjects) {
+                if (parent.eAllContents.filter(ValuedObjectReference).exists[valuedObject === vo]) {
+                    dfVOs += vo // Do not check those instanciated by dataflow regions
+                }
+            }
+        }
+        
+        if (dfVOs.size === decl.valuedObjects.size) {
+            return
+        } else if (!dfVOs.empty) {
+            warning("This reference declaration contains some valued objects that are used in dataflow regions and some not. This might cause problems since reference valued objects not used in dataflow will be instaciated as class instances.",
+                parent, KExtPackage.eINSTANCE.declarationScope_Declarations, parent.declarations.indexOf(decl))
+        }
+        
+        if (!dfVOs.empty || (decl.valuedObjects.size > 1 && decl.valuedObjects.exists[!parameters.empty || !genericParameters.empty])) {
+            // Check each VO
+            for (vo : decl.valuedObjects.filter[!dfVOs.contains(it)]) {
+                val bindings = vo.createBindings(new Replacements)
+                var errorMessages = newArrayList
+                for (binding : bindings) {
+                    if (binding.errors > 0) {
+                        errorMessages += binding.errorMessages
+                    }
+                }
+                
+                if (!errorMessages.empty) {
+                    error("The referencing binding is erroneous!\n" + errorMessages.join("\n"),
+                        decl, 
+                        KExpressionsPackage.eINSTANCE.declaration_ValuedObjects,
+                        decl.valuedObjects.indexOf(vo));
+                }
+            }
+        } else {
+            // One check for all
+            val bindings = decl.valuedObjects?.head?.createBindings(new Replacements)
+            var errorMessages = newArrayList
+            for (binding : bindings) {
+                if (binding.errors > 0) {
+                    errorMessages += binding.errorMessages
+                }
+            }
+            
+            if (!errorMessages.empty) {
+                error("The referencing binding is erroneous!\n" + errorMessages.join("\n"),
+                    decl, 
+                    KExpressionsPackage.eINSTANCE.referenceDeclaration_Reference);
+            }
+        }
     }
     
     @Check
@@ -950,7 +1081,7 @@ class SCTXValidator extends AbstractSCTXValidator {
 
 
     @Check
-    def void checkCountDelayBeforeSubExpressionWarning(de.cau.cs.kieler.sccharts.Action action) {
+    def void checkCountDelayBeforeSubExpressionWarning(Action action) {
         if (action.triggerDelay > 1) {
             if (action.trigger instanceof OperatorExpression) {
                 if ((action.trigger as OperatorExpression).hasLeftUnarySubExpression) {

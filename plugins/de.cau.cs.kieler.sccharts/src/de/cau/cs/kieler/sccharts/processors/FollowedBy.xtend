@@ -55,7 +55,7 @@ class FollowedBy extends SCChartsProcessor implements Traceable {
     }
 
     override getName() {
-        "Followed By Operator"
+        "Followed By"
     }
 
     override process() {

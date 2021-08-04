@@ -65,7 +65,7 @@ class EnvironmentSynthesis extends AbstractDiagramSynthesis<EnvironmentPair> {
     static val VALUE_STRING_MAX_LENGTH = 64
     
     // Options
-    public static val SynthesisOption SHORTEN_VALUES = SynthesisOption::createCheckOption("Shorten Values", true)
+    public static val SynthesisOption SHORTEN_VALUES = SynthesisOption::createCheckOption(EnvironmentSynthesis, "Shorten Values", true)
         
     // Sidebar
     override getDisplayedSynthesisOptions() {

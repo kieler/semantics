@@ -7,7 +7,6 @@ import de.cau.cs.kieler.annotations.Nameable;
 import de.cau.cs.kieler.annotations.NamedObject;
 import de.cau.cs.kieler.annotations.Pragmatable;
 
-import de.cau.cs.kieler.kexpressions.kext.DeclarationScope;
 import de.cau.cs.kieler.simulation.trace.ktrace.*;
 
 import org.eclipse.emf.ecore.EObject;

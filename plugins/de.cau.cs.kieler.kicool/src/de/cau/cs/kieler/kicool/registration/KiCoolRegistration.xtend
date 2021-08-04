@@ -25,13 +25,13 @@ import de.cau.cs.kieler.kicool.classes.SourceTargetPair
 import de.cau.cs.kieler.kicool.compilation.Processor
 import de.cau.cs.kieler.kicool.kitt.tracing.internal.TracingIntegration
 import java.io.Closeable
-import java.io.IOException
 import java.net.URL
 import java.util.HashMap
 import java.util.List
 import java.util.Map
 import org.eclipse.emf.common.EMFPlugin
 import org.eclipse.emf.common.util.URI
+import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.diagnostics.Severity
 import org.eclipse.xtext.resource.XtextResourceSet
 import org.eclipse.xtext.util.CancelIndicator
@@ -144,42 +144,46 @@ class KiCoolRegistration {
         	// Do stuff for each system in the current provider
             provider.systems.forEach[ system |
             	// Check if we run in eclipse or as a standalone application
-            	val resource = if (EMFPlugin.IS_ECLIPSE_RUNNING) {
-            		// Just let eclipse platform handle the loading of files
-					val uri = URI.createPlatformPluginURI("/%s/%s".format(provider.bundleId, system), false)
-		        	resourceSet.getResource(uri, true)
-            	} else {
-            		// Ensure that the package has been registered im EMF
-            		KiCoolPackage.eINSTANCE.eClass
-            		val URL url = provider.class.classLoader.getResource(system)
-            		val stream = url.openStream
-            		closeables += stream
-//            	    val stream = if (url.protocol == 'jar') {
-//            	    	// Fetch data from inside the jar file
-//                    	val file = new JarFile(url.file.substring(0, url.file.indexOf('!')).replaceFirst('^file:', ''))
-//                    	// Mark the file for later closing
-//        	            closeables += file
-//        	            // Create the needed Stream from inside the jar
-//        	            new ByteArrayInputStream(ByteStreams.toByteArray(file.getInputStream(file.getEntry(system))))
-//                	} else {
-//                		// Access the file directly, given the url
-//                    	try {
-//                    		// Check if we already have some file system as a handler
-//	                        FileSystems.getFileSystem(url.toURI);
-//                    	} catch ( FileSystemNotFoundException e ) {
-//                    		// If no file system ready, create a new one, but mark for closure later
-//                        	closeables += FileSystems.newFileSystem(url.toURI, emptyMap)
-//	                    } catch ( Throwable t) {
-//    	                    // do nothing; chsch: on osx I get an IllegalArgumentException if the path is unequal to '/'
-//        	            }
-//        	            // Create the stream from the file system
-//            	        new ByteArrayInputStream(Files.readAllBytes(Paths.get(url.toURI)))
-//					}
-					val uri = URI.createURI(system)
-					val res = resourceSet.createResource(uri)
-					res.load(stream, emptyMap)
-					res
-            	}
+            	var Resource resource = null
+            	try {
+                	if (EMFPlugin.IS_ECLIPSE_RUNNING) {
+                		// Just let eclipse platform handle the loading of files
+    					val uri = URI.createPlatformPluginURI("/%s/%s".format(provider.bundleId, system), false)
+    		        	resource = resourceSet.getResource(uri, true)
+                	} else {
+                		// Ensure that the package has been registered im EMF
+                		KiCoolPackage.eINSTANCE.eClass
+                		val URL url = provider.class.classLoader.getResource(system)
+                		val stream = url.openStream
+                		closeables += stream
+    //            	    val stream = if (url.protocol == 'jar') {
+    //            	    	// Fetch data from inside the jar file
+    //                    	val file = new JarFile(url.file.substring(0, url.file.indexOf('!')).replaceFirst('^file:', ''))
+    //                    	// Mark the file for later closing
+    //        	            closeables += file
+    //        	            // Create the needed Stream from inside the jar
+    //        	            new ByteArrayInputStream(ByteStreams.toByteArray(file.getInputStream(file.getEntry(system))))
+    //                	} else {
+    //                		// Access the file directly, given the url
+    //                    	try {
+    //                    		// Check if we already have some file system as a handler
+    //	                        FileSystems.getFileSystem(url.toURI);
+    //                    	} catch ( FileSystemNotFoundException e ) {
+    //                    		// If no file system ready, create a new one, but mark for closure later
+    //                        	closeables += FileSystems.newFileSystem(url.toURI, emptyMap)
+    //	                    } catch ( Throwable t) {
+    //    	                    // do nothing; chsch: on osx I get an IllegalArgumentException if the path is unequal to '/'
+    //        	            }
+    //        	            // Create the stream from the file system
+    //            	        new ByteArrayInputStream(Files.readAllBytes(Paths.get(url.toURI)))
+    //					}
+    					val uri = URI.createURI(system)
+    					resource = resourceSet.createResource(uri)
+    					resource.load(stream, emptyMap)
+                	}
+                } catch (Exception e) {
+                    e.printStackTrace
+                }
 
 		        if (resource !== null && resource.getContents() !== null && resource.getContents().size() > 0) {
 		            val validatorResults = kicoolXtextInjector.getInstance(IResourceValidator).validate(resource, CheckMode.ALL, CancelIndicator.NullImpl).filter[severity === Severity.ERROR].toList
@@ -191,9 +195,8 @@ class KiCoolRegistration {
 	                modelsMap.put(system, model) 
 	                modelsIdMap.put(model.id, model)
 		        } else {
-			        throw new IOException("Could not load resource '" + system + "'!" + if (resource !== null && !resource.errors.nullOrEmpty) " Errors: " + resource.errors.map[toString].join(", ") else "");
+		            java.lang.System.err.println("KiCool ERROR: Could not load resource '" + system + "'!" + if (resource !== null && !resource.errors.nullOrEmpty) " Errors: " + resource.errors.map[toString].join(", ") else "");
 		        }
-
             ]
         ]
         

@@ -31,6 +31,7 @@ public abstract class AbstractKExtSyntacticSequencer extends AbstractSyntacticSe
 	protected AbstractElementAlias match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_1_0__p;
 	protected AbstractElementAlias match_RandomCall_LeftParenthesisRightParenthesisKeyword_2_q;
 	protected AbstractElementAlias match_RandomizeCall_LeftParenthesisRightParenthesisKeyword_2_q;
+	protected AbstractElementAlias match_ReferenceValuedObject_LeftParenthesisRightParenthesisKeyword_5_1_q;
 	
 	@Inject
 	protected void init(IGrammarAccess access) {
@@ -44,6 +45,7 @@ public abstract class AbstractKExtSyntacticSequencer extends AbstractSyntacticSe
 		match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_1_0__p = new GroupAlias(true, false, new TokenAlias(true, true, grammarAccess.getAtomicValuedExpressionAccess().getLeftParenthesisKeyword_4_0()), new TokenAlias(false, false, grammarAccess.getAtomicExpressionAccess().getLeftParenthesisKeyword_1_0()));
 		match_RandomCall_LeftParenthesisRightParenthesisKeyword_2_q = new TokenAlias(false, true, grammarAccess.getRandomCallAccess().getLeftParenthesisRightParenthesisKeyword_2());
 		match_RandomizeCall_LeftParenthesisRightParenthesisKeyword_2_q = new TokenAlias(false, true, grammarAccess.getRandomizeCallAccess().getLeftParenthesisRightParenthesisKeyword_2());
+		match_ReferenceValuedObject_LeftParenthesisRightParenthesisKeyword_5_1_q = new TokenAlias(false, true, grammarAccess.getReferenceValuedObjectAccess().getLeftParenthesisRightParenthesisKeyword_5_1());
 	}
 	
 	@Override
@@ -76,6 +78,8 @@ public abstract class AbstractKExtSyntacticSequencer extends AbstractSyntacticSe
 				emit_RandomCall_LeftParenthesisRightParenthesisKeyword_2_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_RandomizeCall_LeftParenthesisRightParenthesisKeyword_2_q.equals(syntax))
 				emit_RandomizeCall_LeftParenthesisRightParenthesisKeyword_2_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_ReferenceValuedObject_LeftParenthesisRightParenthesisKeyword_5_1_q.equals(syntax))
+				emit_ReferenceValuedObject_LeftParenthesisRightParenthesisKeyword_5_1_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else acceptNodes(getLastNavigableState(), syntaxNodes);
 		}
 	}
@@ -88,6 +92,7 @@ public abstract class AbstractKExtSyntacticSequencer extends AbstractSyntacticSe
 	 *     (rule start) (ambiguity) 'extern' functionName=ID
 	 *     (rule start) (ambiguity) 'random' (rule start)
 	 *     (rule start) (ambiguity) 'randomize' (rule start)
+	 *     (rule start) (ambiguity) 'static' '(' target=[NamedObject|PrimeID]
 	 *     (rule start) (ambiguity) annotations+=Annotation
 	 *     (rule start) (ambiguity) operator=PreOperator
 	 *     (rule start) (ambiguity) operator=ValOperator
@@ -138,6 +143,7 @@ public abstract class AbstractKExtSyntacticSequencer extends AbstractSyntacticSe
 	 *     (rule start) (ambiguity) 'random' (rule start)
 	 *     (rule start) (ambiguity) 'randomize' 'schedule' schedule+=ScheduleObjectReference
 	 *     (rule start) (ambiguity) 'randomize' (rule start)
+	 *     (rule start) (ambiguity) 'static' '(' target=[NamedObject|PrimeID]
 	 *     (rule start) (ambiguity) '{' values+=VectorValueMember
 	 *     (rule start) (ambiguity) annotations+=Annotation
 	 *     (rule start) (ambiguity) operator=PreOperator
@@ -217,6 +223,25 @@ public abstract class AbstractKExtSyntacticSequencer extends AbstractSyntacticSe
 	 *     (rule start) 'randomize' (ambiguity) (rule start)
 	 */
 	protected void emit_RandomizeCall_LeftParenthesisRightParenthesisKeyword_2_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     '()'?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     cardinalities+=Expression ']' (ambiguity) '=' initialValue=Expression
+	 *     cardinalities+=Expression ']' (ambiguity) 'label' label=STRING
+	 *     cardinalities+=Expression ']' (ambiguity) (rule end)
+	 *     genericParameters+=GenericParameter '>' (ambiguity) '=' initialValue=Expression
+	 *     genericParameters+=GenericParameter '>' (ambiguity) 'label' label=STRING
+	 *     genericParameters+=GenericParameter '>' (ambiguity) (rule end)
+	 *     name=PrimeID (ambiguity) '=' initialValue=Expression
+	 *     name=PrimeID (ambiguity) 'label' label=STRING
+	 *     name=PrimeID (ambiguity) (rule end)
+	 */
+	protected void emit_ReferenceValuedObject_LeftParenthesisRightParenthesisKeyword_5_1_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	

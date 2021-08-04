@@ -20,7 +20,7 @@ import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties
 import de.cau.cs.kieler.klighd.krendering.SimpleUpdateStrategy
 import de.cau.cs.kieler.klighd.LightDiagramServices
 import de.cau.cs.kieler.kicool.ui.synthesis.updates.MessageObjectReferencesManager
-import de.cau.cs.kieler.kicool.ui.klighd.KiCoDiagramViewProperties
+import de.cau.cs.kieler.kicool.ide.klighd.KiCoDiagramViewProperties
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 
 /**

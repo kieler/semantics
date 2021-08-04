@@ -59,6 +59,7 @@ class LabelPlacementSideHook extends SynthesisHook {
     
     /** The synthesis option to switch between different side selection strategies. */
     public static final SynthesisOption LABEL_SIDE_SELECTION_STRATEGY = SynthesisOption.createChoiceOption(
+        LabelPlacementSideHook,
         "Label Side",
         newLinkedList(
             STRATEGY_CONSISTENT,

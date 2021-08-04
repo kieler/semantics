@@ -17,6 +17,7 @@
 package de.cau.cs.kieler.circuit.impl;
 
 import de.cau.cs.kieler.annotations.AnnotationsPackage;
+import de.cau.cs.kieler.annotations.Nameable;
 import de.cau.cs.kieler.annotations.NamedObject;
 import de.cau.cs.kieler.circuit.Actor;
 import de.cau.cs.kieler.circuit.CircuitPackage;
@@ -149,7 +150,8 @@ public class ActorImpl extends LinkableImpl implements Actor {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public String getName() {
+	@Override
+    public String getName() {
         return name;
     }
 
@@ -158,7 +160,8 @@ public class ActorImpl extends LinkableImpl implements Actor {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public void setName(String newName) {
+	@Override
+    public void setName(String newName) {
         String oldName = name;
         name = newName;
         if (eNotificationRequired())
@@ -170,7 +173,8 @@ public class ActorImpl extends LinkableImpl implements Actor {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EList<Actor> getInnerActors() {
+	@Override
+    public EList<Actor> getInnerActors() {
         if (innerActors == null) {
             innerActors = new EObjectContainmentEList<Actor>(Actor.class, this, CircuitPackage.ACTOR__INNER_ACTORS);
         }
@@ -182,7 +186,8 @@ public class ActorImpl extends LinkableImpl implements Actor {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EList<Link> getInnerLinks() {
+	@Override
+    public EList<Link> getInnerLinks() {
         if (innerLinks == null) {
             innerLinks = new EObjectContainmentEList<Link>(Link.class, this, CircuitPackage.ACTOR__INNER_LINKS);
         }
@@ -194,7 +199,8 @@ public class ActorImpl extends LinkableImpl implements Actor {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EList<Port> getPorts() {
+	@Override
+    public EList<Port> getPorts() {
         if (ports == null) {
             ports = new EObjectContainmentEList<Port>(Port.class, this, CircuitPackage.ACTOR__PORTS);
         }
@@ -206,7 +212,8 @@ public class ActorImpl extends LinkableImpl implements Actor {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public String getType() {
+	@Override
+    public String getType() {
         return type;
     }
 
@@ -215,7 +222,8 @@ public class ActorImpl extends LinkableImpl implements Actor {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public void setType(String newType) {
+	@Override
+    public void setType(String newType) {
         String oldType = type;
         type = newType;
         if (eNotificationRequired())
@@ -349,6 +357,11 @@ public class ActorImpl extends LinkableImpl implements Actor {
      */
 	@Override
 	public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
+        if (baseClass == Nameable.class) {
+            switch (derivedFeatureID) {
+                default: return -1;
+            }
+        }
         if (baseClass == NamedObject.class) {
             switch (derivedFeatureID) {
                 case CircuitPackage.ACTOR__NAME: return AnnotationsPackage.NAMED_OBJECT__NAME;
@@ -365,6 +378,11 @@ public class ActorImpl extends LinkableImpl implements Actor {
      */
 	@Override
 	public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
+        if (baseClass == Nameable.class) {
+            switch (baseFeatureID) {
+                default: return -1;
+            }
+        }
         if (baseClass == NamedObject.class) {
             switch (baseFeatureID) {
                 case AnnotationsPackage.NAMED_OBJECT__NAME: return CircuitPackage.ACTOR__NAME;
@@ -383,7 +401,7 @@ public class ActorImpl extends LinkableImpl implements Actor {
 	public String toString() {
         if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
+        StringBuilder result = new StringBuilder(super.toString());
         result.append(" (name: ");
         result.append(name);
         result.append(", type: ");

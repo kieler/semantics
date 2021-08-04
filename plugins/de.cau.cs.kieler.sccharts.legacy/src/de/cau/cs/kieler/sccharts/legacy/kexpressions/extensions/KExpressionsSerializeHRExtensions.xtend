@@ -55,7 +55,7 @@ class KExpressionsSerializeHRExtensions extends KExpressionsSerializeExtensions 
     }    
 
     def dispatch CharSequence serializeHR(ValuedObjectReference valuedObjectReference) {
-        if (valuedObjectReference.valuedObject == null) {
+        if (valuedObjectReference.valuedObject === null) {
             System.err.println("Valued object reference is null! Cannot serialize: " + valuedObjectReference)
             return ""
         }
@@ -154,7 +154,7 @@ class KExpressionsSerializeHRExtensions extends KExpressionsSerializeExtensions 
 			return result
 		}
 		
-		if (expression.eContainer != null && expression.eContainer instanceof OperatorExpression) {
+		if (expression.eContainer !== null && expression.eContainer instanceof OperatorExpression) {
 			val myPrecedence = expression.operator.precedence
 			val parentPrecedence = (expression.eContainer as OperatorExpression).operator.precedence
 			if (myPrecedence >= parentPrecedence) {

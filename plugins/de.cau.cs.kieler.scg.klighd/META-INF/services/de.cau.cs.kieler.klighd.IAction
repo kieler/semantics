@@ -1,0 +1,5 @@
+de.cau.cs.kieler.scg.klighd.actions.NodePriorityActions
+de.cau.cs.kieler.scg.klighd.actions.SCCActions
+de.cau.cs.kieler.scg.klighd.actions.OptNodePrioActions
+de.cau.cs.kieler.scg.klighd.actions.ThreadPriorityActions
+de.cau.cs.kieler.scg.klighd.actions.PrioStatementsActions

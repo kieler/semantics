@@ -2,7 +2,6 @@
  */
 package de.cau.cs.kieler.esterel;
 
-import org.eclipse.emf.common.util.EList;
 
 /**
  * <!-- begin-user-doc -->

@@ -103,10 +103,8 @@ class StatebasedJavaCodeSerializeHRExtensions extends StatebasedCCodeSerializeHR
         return "random.setSeed(System.currentTimeMillis())"
     }  
     
-    override def CharSequence serializeHROperatorExpressionEQ(OperatorExpression expression) {
-        if (expression.subExpressions.forall[
-            hasString
-        ]) {
+    override CharSequence serializeHROperatorExpressionEQ(OperatorExpression expression) {
+        if (expression.subExpressions.forall[hasString]) {
             return "(" + combineOperatorsHR(expression.subExpressions.iterator, ").equals( ") + " )"
         }
         combineOperatorsHR(expression.subExpressions.iterator, " == ")

@@ -311,6 +311,7 @@ AtomicExpression returns Expression:
     | RandomCall
     | RandomizeCall
     | ValuedObjectTestExpression // Last to allow detection of calls
+    | StaticAccessExpression
     | TextExpression;
 
 // Atomic Valued Expression Rule
@@ -338,6 +339,12 @@ BoolScheduleExpression returns Expression:
 ValuedObjectTestExpression returns Expression:
 	{OperatorExpression} operator=(PreOperator|ValOperator)  '('subExpressions+=ValuedObjectTestExpression (',' subExpressions+=ValuedObjectReference)? ')'
 	| ValuedObjectReference;
+
+// Accesses a arbitrary target in a static way (needs to be adjusted in the scoper of the deriving language)
+// Example: static(Constants).MAX
+StaticAccessExpression returns StaticAccessExpression:
+    'static' '(' target=[annotations::NamedObject|PrimeID] ')'
+    '.' subReference=ValuedObjectReference; 
 
 // ID with primes
 PrimeID returns ecore::EString:
@@ -399,7 +406,7 @@ PrintCall returns PrintCall:
         ('(' parameters += Parameter (',' parameters += Parameter)* ')' )
     | 
         '()'
-    );      
+    );         
 
 // Parameter Rule
 // The parameter rule is used by the function call rule. Every expression may be a paramter.
@@ -537,6 +544,9 @@ enum StructType returns ValueType:
     
 enum ClassType returns ValueType:
     CLASS="class";
+    
+enum EnumType returns ValueType:
+    ENUM="enum";
 
 enum CombineOperator returns CombineOperator:
 	NONE="none" | ADD="+" | MULT="*" | MAX="max" |

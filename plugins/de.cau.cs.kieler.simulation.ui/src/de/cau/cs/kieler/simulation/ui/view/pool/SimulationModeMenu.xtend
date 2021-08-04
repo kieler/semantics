@@ -33,7 +33,6 @@ import org.eclipse.swt.widgets.Composite
 import org.eclipse.swt.widgets.Spinner
 import org.eclipse.swt.widgets.Text
 import org.eclipse.xtend.lib.annotations.Accessors
-import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor
 
 /**
  * @author als
@@ -189,11 +188,14 @@ class SimulationModeMenu implements SelectionListener {
     
 }
 
-@FinalFieldsConstructor
 class DynamicInfoLabelUpdater extends Thread {
     
     static val long SLEEP = TimedSimulationModeCountDown.SLEEP_MSEC
     val SimulationModeMenu menu
+    
+    new(SimulationModeMenu menu) {
+        this.menu = menu
+    }
     
     override run() {
         name = this.class.simpleName

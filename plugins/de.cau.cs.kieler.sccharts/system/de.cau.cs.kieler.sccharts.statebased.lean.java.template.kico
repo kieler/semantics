@@ -1,4 +1,4 @@
-system de.cau.cs.kieler.sccharts.statebased.lean.java.template.kico
+system de.cau.cs.kieler.sccharts.statebased.lean.java.template
   label "State-based Compilation (Java) lean-mode (Template)"
     start config {
       "de.cau.cs.kieler.sccharts.complexFinalState.createFinalRegions":true,

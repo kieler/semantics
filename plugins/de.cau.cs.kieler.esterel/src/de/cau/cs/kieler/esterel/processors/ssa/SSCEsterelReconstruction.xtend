@@ -173,7 +173,7 @@ class SSCEsterelReconstruction extends Processor<SCGraphs, EsterelProgram> imple
                 for (sig : decl.valuedObjects.filter(Signal)) {
                     // FIXME Input Output split
                     val ssaDecl = mapping.get(sig).filter(ValuedObject).findFirst[(eContainer as Declaration).isSSA]?.eContainer as Declaration
-                    if (ssaDecl != null) {
+                    if (ssaDecl !== null) {
                         for (vo : ssaDecl.valuedObjects) {
                             ssaVersions += createSignal => [
                                 name = vo.name
@@ -264,7 +264,7 @@ class SSCEsterelReconstruction extends Processor<SCGraphs, EsterelProgram> imple
         if (asm.expression instanceof BoolValue) {
             return createEmit => [
                 signal = signalVOmap.inverse.get(asm.valuedObject)
-                if (signal == null) {
+                if (signal === null) {
                     throw new IllegalArgumentException("Missing signal tracing")
                 }
             ]
@@ -273,7 +273,7 @@ class SSCEsterelReconstruction extends Processor<SCGraphs, EsterelProgram> imple
                 expression = asm.expression.translateExpr
                 statements += createEmit => [
                     signal = signalVOmap.inverse.get(asm.valuedObject)
-                    if (signal == null) {
+                    if (signal === null) {
                         throw new IllegalArgumentException("Missing signal tracing")
                     }
                 ]
@@ -331,7 +331,7 @@ class SSCEsterelReconstruction extends Processor<SCGraphs, EsterelProgram> imple
         for (localSignal : lsig.valuedObjects.filter(Signal).toList) {
             val ssaDelc = mapping.get(localSignal).filter(Declaration).filter[isSSA].head
             val singleVO = mapping.get(localSignal).filter(ValuedObject).filter[!it.declaration.isSSA].head
-            if (ssaDelc != null) {
+            if (ssaDelc !== null) {
                 for (vo : ssaDelc.valuedObjects) {
                     lsig.valuedObjects.add(lsig.valuedObjects.indexOf(localSignal), createSignal => [
                         name = vo.name.replace(singleVO.name, localSignal.name)
@@ -352,7 +352,7 @@ class SSCEsterelReconstruction extends Processor<SCGraphs, EsterelProgram> imple
         if (asm !== null) {
             return emit => [
                 signal = signalVOmap.inverse.get(asm.valuedObject)
-                if (signal == null) {
+                if (signal === null) {
                     throw new IllegalArgumentException("Missing signal tracing")
                 }
             ]

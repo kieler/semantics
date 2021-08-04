@@ -14,13 +14,13 @@ package de.cau.cs.kieler.kicool.ui.synthesis
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
-import de.cau.cs.kieler.kicool.ui.klighd.models.CodePlaceHolder
+import de.cau.cs.kieler.kicool.ide.klighd.models.CodePlaceHolder
+import de.cau.cs.kieler.kicool.ui.klighd.syntheses.CodePlaceHolderSynthesis
 import de.cau.cs.kieler.klighd.LightDiagramServices
+import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
-import de.cau.cs.kieler.klighd.SynthesisOption
-import de.cau.cs.kieler.kicool.ui.klighd.syntheses.CodePlaceHolderSynthesis
 
 /**
  * Generic synthesis for strings.
@@ -35,7 +35,7 @@ class CodeContainerSynthesis extends AbstractDiagramSynthesis<CodeContainer> {
 
     @Inject extension KNodeExtensions
     
-    public static val SynthesisOption SHOW_LIBS = SynthesisOption::createCheckOption("Library files", true)
+    public static val SynthesisOption SHOW_LIBS = SynthesisOption::createCheckOption(CodeContainerSynthesis, "Library files", true)
     
     override getDisplayedSynthesisOptions() {
         #[

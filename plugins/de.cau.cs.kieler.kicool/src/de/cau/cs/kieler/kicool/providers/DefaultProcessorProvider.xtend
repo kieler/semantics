@@ -39,11 +39,13 @@ class DefaultProcessorProvider implements IProcessorProvider {
             de.cau.cs.kieler.kicool.deploy.processor.NXJCompiler,
             de.cau.cs.kieler.kicool.deploy.processor.MacroAnnotations,
             de.cau.cs.kieler.kicool.deploy.processor.ModelIncludes,
-            de.cau.cs.kieler.kicool.deploy.processor.CodeContainerProcessor,
+            de.cau.cs.kieler.kicool.deploy.processor.CodeContainerLoader,
             de.cau.cs.kieler.kicool.processors.Snapshot,
             de.cau.cs.kieler.kicool.processors.ast.GCCAST,
             de.cau.cs.kieler.kicool.processors.ast.GCCAST2KAST,
-            de.cau.cs.kieler.kicool.processors.EnvironmentConfigurationReader
+            de.cau.cs.kieler.kicool.processors.EnvironmentConfigurationReader,
+            de.cau.cs.kieler.kicool.processors.analyzers.LinesOfCodeCounter,
+            de.cau.cs.kieler.kicool.processors.analyzers.ObjectCounter
         ]
     }
     

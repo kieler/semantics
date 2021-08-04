@@ -22,7 +22,7 @@ class KiCoolUiModule extends AbstractKiCoolUiModule {
     public static final String SOURCE_MODEL_ID = "de.cau.cs.kieler.kico.klighd.sourceModel";    
     
     public static final String RESOURCE_PATH = "resources/";
-    public static final String ICON_PATH = RESOURCE_PATH + "icons/";
+    public static final String ICON_PATH = "icons/";
     
     static def ImageDescriptor getImageDescriptor(String path) {
         return AbstractUIPlugin.imageDescriptorFromPlugin(PLUGIN_ID, path);

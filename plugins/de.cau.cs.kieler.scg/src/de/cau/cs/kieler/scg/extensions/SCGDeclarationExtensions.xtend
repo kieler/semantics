@@ -17,12 +17,9 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.scg.SCGraph
-import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
-import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
-import de.cau.cs.kieler.scg.SchedulingBlock
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
@@ -31,11 +28,10 @@ import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.scg.SchedulingBlock
+import java.util.Map
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
-import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
-import java.util.Map
 
 /**
  * The SCG Extensions are a collection of common methods for SCG queries and manipulation.
@@ -222,16 +218,13 @@ class SCGDeclarationExtensions {
     	// Use the ecore utils to copy the expression. 
         val newExpression = expression.copy
         
-        if (newExpression instanceof ValuedObjectReference) {
-	        // If it is a single object reference, simply replace the reference with the object of the target SCG.
-            (newExpression as ValuedObjectReference).valuedObject = 
-                (expression as ValuedObjectReference).valuedObject.getValuedObjectCopy(map)                    
-        } else {
-        	// Otherwise, query all references in the expression and replace the object with the new copy
-        	// in the target SCG.
-        	if (newExpression !== null)
-                newExpression.eAllContents.filter(typeof(ValuedObjectReference)).
-            	   forEach[ valuedObject = valuedObject.getValuedObjectCopy(map) ]        
+        if (newExpression !== null) {
+            val vors = newArrayList()
+            if (newExpression instanceof ValuedObjectReference) {
+                vors += newExpression
+            }
+            vors += newExpression.eAllContents.filter(ValuedObjectReference).toIterable
+            vors.forEach[ valuedObject = valuedObject.getValuedObjectCopy(map) ]
         }
         
         // Return the new expression.

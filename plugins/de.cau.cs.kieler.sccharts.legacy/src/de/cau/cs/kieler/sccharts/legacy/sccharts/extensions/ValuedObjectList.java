@@ -17,11 +17,8 @@ import java.util.ArrayList;
 
 import org.eclipse.emf.ecore.EObject;
 
-import de.cau.cs.kieler.sccharts.legacy.kexpressions.extensions.KExpressionsExtensionOLD;
-import de.cau.cs.kieler.sccharts.legacy.kexpressions.Declaration;
 import de.cau.cs.kieler.sccharts.legacy.kexpressions.ValuedObject;
 import de.cau.cs.kieler.sccharts.legacy.sccharts.Scope;
-import de.cau.cs.kieler.sccharts.legacy.sccharts.extensions.SCChartsTransformationExtension;
 
 /**
  * ValuedObjectList is a specific list. If you add ValuedObjects to this list their TypeGroup will

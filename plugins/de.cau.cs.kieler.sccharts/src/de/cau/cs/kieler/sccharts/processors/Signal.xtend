@@ -36,7 +36,7 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
-import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
+import de.cau.cs.kieler.scl.MethodImplementationDeclaration
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
@@ -159,69 +159,83 @@ class Signal extends SCChartsProcessor implements Traceable {
             if (!signal.pureSignal) {
                 val valueDecl = createVariableDeclaration(signal.type)
                 val valueVariable = state.createValuedObject(signal.name + variableValueExtension, valueDecl)
-                val currentValueVariable = state.createValuedObject(signal.name + variableCurrentValueExtension, createVariableDeclaration(signal.type))
-                
                 // Copy type and input/output attributes from the original signal
-                currentValueVariable.applyAttributes(signal)
                 valueDecl.setInput(signal.isInput)
                 valueDecl.setOutput(signal.isOutput)
                 valueVariable.applyAttributes(signal)
-
+                valueVariable.combineOperator = null
                 voStore.update(valueVariable, SCCHARTS_GENERATED, "signal-value", variableValueExtension)
-                voStore.update(currentValueVariable, SCCHARTS_GENERATED, "signal-value", variableCurrentValueExtension)
                 
-                // Add an immediate during action that updates the value (in case of an emission)
-                // to the current value
-                if(arrayIndexIterator === null) {
-                    val updateDuringAction = state.createImmediateDuringAction
-                    updateDuringAction.createAssignment(valueVariable, currentValueVariable.reference)
-                    updateDuringAction.setTrigger(presentVariable.reference)
-                } else {
-                    for(arrayIndex : arrayIndexIterator) {
+                val supportsWriting = !signal.isInput
+                var ValuedObject currentValueVariable
+                
+                if (supportsWriting) { // only add curval mechanics if signal might be emitted
+                    currentValueVariable = state.createValuedObject(signal.name + variableCurrentValueExtension, createVariableDeclaration(signal.type))
+                    currentValueVariable.applyAttributes(signal)
+                    currentValueVariable.combineOperator = null
+                    voStore.update(currentValueVariable, SCCHARTS_GENERATED, "signal-value", variableCurrentValueExtension)
+                    
+                    // Add an immediate during action that updates the value (in case of an emission)
+                    // to the current value
+                    if(arrayIndexIterator === null) {
                         val updateDuringAction = state.createImmediateDuringAction
-                        val currentValueWithIndex = currentValueVariable.reference.copy
-                        currentValueWithIndex.indices.addAll(arrayIndex.convert)
-                        val assignment = updateDuringAction.createAssignment(valueVariable, currentValueWithIndex)
-                        assignment.indices.addAll(arrayIndex.convert)
-                        val trigger = presentVariable.reference.copy
-                        trigger.indices.addAll(arrayIndex.convert)
-                        updateDuringAction.setTrigger(trigger)
+                        updateDuringAction.createAssignment(valueVariable, currentValueVariable.reference)
+                        updateDuringAction.setTrigger(presentVariable.reference)
+                    } else {
+                        for(arrayIndex : arrayIndexIterator) {
+                            val updateDuringAction = state.createImmediateDuringAction
+                            val currentValueWithIndex = currentValueVariable.reference.copy
+                            currentValueWithIndex.indices.addAll(arrayIndex.convert)
+                            val assignment = updateDuringAction.createAssignment(valueVariable, currentValueWithIndex)
+                            assignment.indices.addAll(arrayIndex.convert)
+                            val trigger = presentVariable.reference.copy
+                            trigger.indices.addAll(arrayIndex.convert)
+                            updateDuringAction.setTrigger(trigger)
+                        }
+                    } 
+                    
+                    // Add an immediate during action that resets the current value
+                    // in each tick to the neutral element of the type w.r.t. combination function
+                    // but only if there is an combine function to prevent ww conflits if only non-concurrent emission exists
+                    // and to prevent a requirement for a combine function in general (KISEMA-1071)
+                    if (signal.combineOperator !== null && signal.combineOperator !== CombineOperator.NONE) {
+                        val resetDuringAction = state.createImmediateDuringAction
+                        resetDuringAction.setImmediate(true)
+                        if(arrayIndexIterator === null) {
+                            resetDuringAction.createAssignment(currentValueVariable, signal.neutralElement)
+                        } else {
+                            for(arrayIndex : arrayIndexIterator) {
+                                val assignment = resetDuringAction.createAssignment(currentValueVariable, signal.neutralElement)
+                                assignment.indices.addAll(arrayIndex.convert)
+                            }
+                        }
                     }
-                } 
-                
-                // Add an immediate during action that resets the current value
-                // in each tick to the neutral element of the type w.r.t. combination function
-                val resetDuringAction = state.createImmediateDuringAction
-                resetDuringAction.setImmediate(true)
-                if(arrayIndexIterator === null) {
-                    resetDuringAction.createAssignment(currentValueVariable, signal.neutralElement)
-                } else {
-                    for(arrayIndex : arrayIndexIterator) {
-                        val assignment = resetDuringAction.createAssignment(currentValueVariable, signal.neutralElement)
-                        assignment.indices.addAll(arrayIndex.convert)
-                    }
-                } 
-
-                val allActions = state.eAllContents.filter(typeof(Action)).toList
-                for (Action action : allActions) {
-
-                    // Wherever an emission is, create a new assignment right behind
-                    val allSignalEmissions = action.getAllContainedEmissions.filter[e|e.valuedObject == signal].toList
-                    for (Emission signalEmission : allSignalEmissions.immutableCopy) {
-                        if (signalEmission.newValue !== null) {
-
-                            // Assign the emitted valued and combine!
-                            val variableAssignment = currentValueVariable.createAssignment(signalEmission.newValue, combineOperator)
-                            variableAssignment.reference.applyIndices(signalEmission.reference)
-                            
-                            // Put it in right order
-                            val index = action.effects.indexOf(signalEmission);
-                            action.effects.add(index, variableAssignment);
+                }
+    
+                val allActionsAndMethods = state.eAllContents.filter[it instanceof Action || it instanceof MethodImplementationDeclaration].toList
+                for (actionOrMethod : allActionsAndMethods) {
+                    if (actionOrMethod instanceof Action) {
+                        val action = actionOrMethod
+                        if (supportsWriting) {
+                            // Wherever an emission is, create a new assignment right behind
+                            val allSignalEmissions = action.getAllContainedEmissions.filter[e|e.valuedObject == signal].toList
+                            for (Emission signalEmission : allSignalEmissions.immutableCopy) {
+                                if (signalEmission.newValue !== null) {
+        
+                                    // Assign the emitted valued and combine!
+                                    val variableAssignment = currentValueVariable.createAssignment(signalEmission.newValue, combineOperator)
+                                    variableAssignment.reference.applyIndices(signalEmission.reference)
+                                    
+                                    // Put it in right order
+                                    val index = action.effects.indexOf(signalEmission);
+                                    action.effects.add(index, variableAssignment);
+                                }
+                            }
                         }
                     }
 
                     // Wherever an val test is, put the valueVariable there instead
-                    val allSignalValTests = action.eAllContents.filter(typeof(OperatorExpression)).filter(
+                    val allSignalValTests = actionOrMethod.eAllContents.filter(typeof(OperatorExpression)).filter(
                         e |
                             e.operator == OperatorType::VAL &&
                                 e.subExpressions.get(0) instanceof ValuedObjectReference &&
@@ -234,9 +248,6 @@ class Signal extends SCChartsProcessor implements Traceable {
                         signalTest.replace(signalRef);
                     }
                 }
-                
-                currentValueVariable.combineOperator = null
-                valueVariable.combineOperator = null
             } // ValuedObject
         
             // Change signal to variable

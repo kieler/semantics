@@ -14,7 +14,6 @@ package de.cau.cs.kieler.simulation.ui.view.pool
 
 import com.google.gson.JsonElement
 import com.google.gson.JsonParseException
-import com.google.gson.JsonParser
 import de.cau.cs.kieler.simulation.DataPoolEntry
 import de.cau.cs.kieler.simulation.ui.SimulationUIPlugin
 import org.eclipse.core.runtime.IStatus
@@ -26,6 +25,8 @@ import org.eclipse.jface.viewers.TableViewer
 import org.eclipse.jface.viewers.TextCellEditor
 import org.eclipse.ui.statushandlers.StatusManager
 
+import static extension com.google.gson.JsonParser.parseString
+
 /**
  * Editing support for Variables and NDimensionalArrayElements.
  * Depending on the type of the value of the variable, a cell editor is choosen.
@@ -34,8 +35,6 @@ import org.eclipse.ui.statushandlers.StatusManager
  *
  */
 class ValueColumnEditingSupport extends EditingSupport implements ICellEditorValidator {
-    
-    extension JsonParser = new JsonParser
     
     /**
      * The viewer
@@ -137,7 +136,7 @@ class ValueColumnEditingSupport extends EditingSupport implements ICellEditorVal
     private def parseAndStoreValue(DataPoolEntry entry, Object value) {
         var JsonElement json
         try {
-            json = value.toString.parse
+            json = value.toString.parseString
         } catch (Exception e) {
             StatusManager.getManager().handle(new Status(IStatus.ERROR,
                 SimulationUIPlugin.PLUGIN_ID, "Error parsing user value.\nInvalid JSON.", e), StatusManager.SHOW)
@@ -150,7 +149,7 @@ class ValueColumnEditingSupport extends EditingSupport implements ICellEditorVal
     override isValid(Object value) {
         if (value !== null) {
             try {
-                value.toString.parse
+                value.toString.parseString
             } catch (JsonParseException e) {
                 return e.message
             }

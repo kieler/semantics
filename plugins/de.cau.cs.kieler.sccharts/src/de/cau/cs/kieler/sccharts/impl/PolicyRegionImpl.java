@@ -15,6 +15,7 @@ package de.cau.cs.kieler.sccharts.impl;
 
 import de.cau.cs.kieler.sccharts.PolicyRegion;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
+
 import org.eclipse.emf.ecore.EClass;
 
 /**

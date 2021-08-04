@@ -15,9 +15,10 @@ package de.cau.cs.kieler.sccharts.ui.synthesis
 import com.google.common.collect.HashMultimap
 import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
+import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kicool.compilation.Compile
-import de.cau.cs.kieler.kicool.ui.klighd.KiCoDiagramViewProperties
+import de.cau.cs.kieler.kicool.ide.klighd.KiCoDiagramViewProperties
 import de.cau.cs.kieler.klighd.LightDiagramServices
 import de.cau.cs.kieler.klighd.ViewContext
 import de.cau.cs.kieler.klighd.internal.util.SourceModelTrackingAdapter
@@ -34,15 +35,22 @@ import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.sccharts.extensions.SCChartsInheritanceExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions
 import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.SynthesisHooks
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.TransitionStyles
 import java.util.HashMap
 import java.util.LinkedHashSet
+import java.util.List
 import org.eclipse.elk.alg.force.options.StressOptions
+import org.eclipse.elk.alg.layered.InteractiveLayeredGraphVisitor
 import org.eclipse.elk.alg.layered.options.LayeredOptions
+import org.eclipse.elk.alg.rectpacking.InteractiveRectPackingGraphVisitor
 import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.core.options.Direction
+import org.eclipse.elk.core.service.util.CompoundGraphElementVisitor
+import org.eclipse.elk.core.util.IGraphElementVisitor
 import org.eclipse.elk.graph.properties.IProperty
 import org.eclipse.elk.graph.properties.Property
 
@@ -62,6 +70,8 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
     @Inject extension KEdgeExtensions
     @Inject extension KRenderingExtensions
     @Inject extension SCChartsSerializeHRExtensions
+    @Inject extension SCChartsInheritanceExtensions
+    @Inject extension SCChartsScopeExtensions
     @Inject extension PragmaExtensions
     @Inject extension TransitionStyles
     @Inject extension KPolylineExtensions
@@ -90,7 +100,7 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
     
     static val PRAGMA_HIDE_IMPORTED_SCCHARTS = "HideImportedSCCharts"
           
-    val ID = "de.cau.cs.kieler.sccharts.ui.synthesis.SCChartsSynthesis"
+    public static val ID = "de.cau.cs.kieler.sccharts.ui.synthesis.SCChartsSynthesis"
     
     override getDisplayedActions() {
         return newLinkedList => [ list |
@@ -110,6 +120,7 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
             SHOW_ALL_SCCHARTS,
             SHOW_INHERITANCE,
             SHOW_INHERITANCE_EDGES,
+            SHOW_AGGREGATION_EDGES,
             SHOW_BINDINGS,
             SHOW_METHOD_BODY,
             SHOW_COMMENTS,
@@ -234,6 +245,46 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
                     }
                 }
             }
+            if (SHOW_AGGREGATION_EDGES.booleanValue) {
+                rootNode.setLayoutOption(CoreOptions::DIRECTION, Direction.UP)
+                rootNode.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 20.0)
+                rootNode.setLayoutOption(LayeredOptions::SPACING_EDGE_NODE_BETWEEN_LAYERS, 28.0)
+                rootNode.setLayoutOption(LayeredOptions::SPACING_NODE_NODE_BETWEEN_LAYERS, 28.0)
+                for(state : rootStates) {
+                    val aggregation = newHashSet
+                    for (ref : state.declarations.filter(ReferenceDeclaration)) {
+                        if (ref.reference instanceof State) {
+                            aggregation += ref.reference as State
+                        }
+                    }
+                    for (inner : state.allScopes.toIterable) {
+                        if (inner !== state) {
+                            if (inner instanceof State) {
+                                if (!inner.baseStateReferences.nullOrEmpty) {
+                                    aggregation += inner.baseStates
+                                }
+                                if (inner.isReferencing && inner.reference.target instanceof State) {
+                                    aggregation += inner.reference.target as State
+                                }
+                            }
+                            for (ref : state.declarations.filter(ReferenceDeclaration)) {
+                                if (ref.reference instanceof State) {
+                                    aggregation += ref.reference as State
+                                }
+                            }
+                        }
+                    }
+                    for (agg : aggregation) {
+                        val edge = createEdge
+                        edge.source = rootStateNodes.get(state)
+                        edge.target = rootStateNodes.get(agg)
+                        edge.addPolyline => [
+                            lineWidth = 1
+                            addAggregationArrowDecorator
+                        ]
+                    }
+                }
+            }
         } else {
             hooks.invokeStart(scc.rootStates.head, rootNode)
             rootNode.children += stateSynthesis.transform(scc.rootStates.head)
@@ -252,10 +303,8 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
             rootNode.eAllContents.filter(KText).forEach[ fontName = pragmaFont.values.head ]
         }
         
-        // Log elapsed time
-//        println(
-//            "SCCharts synthesis transformed model " + (scc.rootStates.head.label ?: scc.hash) + " in " +
-//                ((System.currentTimeMillis - startTime) as float / 1000) + "s.")
+        // Report elapsed time
+        usedContext?.setProperty(KiCoDiagramViewProperties.SYNTHESIS_TIME, System.currentTimeMillis - startTime)
 		
         return rootNode
     }
@@ -297,6 +346,18 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
     def void setSkinPath(String sp, ViewContext context) {
         val rootNode = context.viewModel
         rootNode.setProperty(SKINPATH, sp) 
+    }
+    
+    override List<? extends IGraphElementVisitor> getAdditionalLayoutConfigs(KNode viewModel) {
+        val List<IGraphElementVisitor> additionalLayoutRuns = newArrayList
+        // Add interactive Layout run.
+        if ((!viewModel.getChildren().isEmpty() && viewModel.getChildren().get(0)
+                        .getProperty(CoreOptions.INTERACTIVE_LAYOUT))) {
+            additionalLayoutRuns.add(new CompoundGraphElementVisitor(
+                    new InteractiveRectPackingGraphVisitor(),
+                    new InteractiveLayeredGraphVisitor()));
+        }
+        return additionalLayoutRuns;
     }
    
 }

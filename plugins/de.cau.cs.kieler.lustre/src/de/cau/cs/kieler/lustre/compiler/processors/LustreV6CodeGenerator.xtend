@@ -182,15 +182,27 @@ class LustreV6CodeGenerator extends AbstractSystemCompilerProcessor<LustreProgra
             // Create model for sh file
             model = new CodeContainer
             for (targetCode : targetCodes) {
-                if (targetCode.name.endsWith(".c") || targetCode.name.endsWith(".h")) {
+                if (targetCode.name.endsWith(".c")) {
                     targetModel.addProxyCCodeFile(targetCode) => [
                         naming.put(CodeGeneratorNames.TICKDATA, modelName)
                     ]
+                    val header = new File(targetCode.parentFile, targetCode.name.replace(".c",".h"))
+                    if (header.isFile) {
+                        targetModel.addProxyCCodeFile(header)
+                    }
                 } else if (targetCode.name.endsWith(".sh")) {
                     targetModel.addProxy(targetCode)
                 }            
                 infra.sourceCodeFiles += targetCode
             }
+            // Lustre utility files
+            for (util : #["lustre_consts.h","lustre_consts.c","lustre_types.h"]) {
+                val file = new File(infra.generatedCodeFolder, util)
+                if (file.isFile) {
+                    targetModel.addProxyCCodeFile(file)
+                }
+            }
+            
             infra.sourceCode = targetModel
         }
 

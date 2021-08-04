@@ -137,7 +137,7 @@ Default commands:
     }
     
     private def String nullToEmpty(String s) {
-        return if(s == null) { "" } else { s }
+        return if(s === null) { "" } else { s }
     }
     
 }

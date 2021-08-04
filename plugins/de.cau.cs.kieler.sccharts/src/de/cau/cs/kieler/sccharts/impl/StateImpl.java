@@ -13,11 +13,13 @@
  */
 package de.cau.cs.kieler.sccharts.impl;
 
+import de.cau.cs.kieler.sccharts.BaseStateReference;
 import de.cau.cs.kieler.sccharts.ControlflowRegion;
 import de.cau.cs.kieler.sccharts.Region;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
 import de.cau.cs.kieler.sccharts.State;
 import de.cau.cs.kieler.sccharts.Transition;
+
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -29,8 +31,9 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
-import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -51,7 +54,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.StateImpl#isConnector <em>Connector</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.StateImpl#getOutgoingTransitions <em>Outgoing Transitions</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.StateImpl#getIncomingTransitions <em>Incoming Transitions</em>}</li>
- *   <li>{@link de.cau.cs.kieler.sccharts.impl.StateImpl#getBaseStates <em>Base States</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.impl.StateImpl#getBaseStateReferences <em>Base State References</em>}</li>
  * </ul>
  *
  * @generated
@@ -59,20 +62,20 @@ import org.eclipse.emf.ecore.util.InternalEList;
 public class StateImpl extends ScopeImpl implements State {
     /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	public static final String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\r\n\r\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\r\n\r\nCopyright 2013 by\r\n+ Kiel University\r\n  + Department of Computer Science\r\n    + Real-Time and Embedded Systems Group\r\n\r\nThis code is provided under the terms of the Eclipse Public License (EPL).\r\nSee the file epl-v10.html for the license text.";
+    public static final String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\r\n\r\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\r\n\r\nCopyright 2013 by\r\n+ Kiel University\r\n  + Department of Computer Science\r\n    + Real-Time and Embedded Systems Group\r\n\r\nThis code is provided under the terms of the Eclipse Public License (EPL).\r\nSee the file epl-v10.html for the license text.";
 
-				/**
+    /**
      * The cached value of the '{@link #getRegions() <em>Regions</em>}' containment reference list.
      * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @see #getRegions()
      * @generated
      * @ordered
      */
-   protected EList<Region> regions;
+    protected EList<Region> regions;
 
     /**
      * The default value of the '{@link #isInitial() <em>Initial</em>}' attribute.
@@ -137,32 +140,32 @@ public class StateImpl extends ScopeImpl implements State {
     /**
      * The default value of the '{@link #isConnector() <em>Connector</em>}' attribute.
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @see #isConnector()
      * @generated
      * @ordered
      */
-	protected static final boolean CONNECTOR_EDEFAULT = false;
+    protected static final boolean CONNECTOR_EDEFAULT = false;
 
     /**
      * The cached value of the '{@link #isConnector() <em>Connector</em>}' attribute.
      * <!-- begin-user-doc -->
- * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @see #isConnector()
      * @generated
      * @ordered
      */
-protected boolean connector = CONNECTOR_EDEFAULT;
+    protected boolean connector = CONNECTOR_EDEFAULT;
 
     /**
      * The cached value of the '{@link #getOutgoingTransitions() <em>Outgoing Transitions</em>}' containment reference list.
      * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @see #getOutgoingTransitions()
      * @generated
      * @ordered
      */
-   protected EList<Transition> outgoingTransitions;
+    protected EList<Transition> outgoingTransitions;
 
     /**
      * The cached value of the '{@link #getIncomingTransitions() <em>Incoming Transitions</em>}' reference list.
@@ -175,14 +178,14 @@ protected boolean connector = CONNECTOR_EDEFAULT;
     protected EList<Transition> incomingTransitions;
 
     /**
-     * The cached value of the '{@link #getBaseStates() <em>Base States</em>}' reference list.
+     * The cached value of the '{@link #getBaseStateReferences() <em>Base State References</em>}' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getBaseStates()
+     * @see #getBaseStateReferences()
      * @generated
      * @ordered
      */
-    protected EList<State> baseStates;
+    protected EList<BaseStateReference> baseStateReferences;
 
     /**
      * <!-- begin-user-doc -->
@@ -201,19 +204,6 @@ protected boolean connector = CONNECTOR_EDEFAULT;
     @Override
     protected EClass eStaticClass() {
         return SCChartsPackage.Literals.STATE;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public EList<Region> getRegions() {
-        if (regions == null) {
-            regions = new EObjectContainmentWithInverseEList<Region>(Region.class, this, SCChartsPackage.STATE__REGIONS, SCChartsPackage.REGION__PARENT_STATE);
-        }
-        return regions;
     }
 
     /**
@@ -257,6 +247,19 @@ protected boolean connector = CONNECTOR_EDEFAULT;
         }
         else if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.STATE__PARENT_REGION, newParentRegion, newParentRegion));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EList<Region> getRegions() {
+        if (regions == null) {
+            regions = new EObjectContainmentWithInverseEList<Region>(Region.class, this, SCChartsPackage.STATE__REGIONS, SCChartsPackage.REGION__PARENT_STATE);
+        }
+        return regions;
     }
 
     /**
@@ -330,20 +333,20 @@ protected boolean connector = CONNECTOR_EDEFAULT;
 
     /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	@Override
+    @Override
     public boolean isConnector() {
         return connector;
     }
 
-				/**
+    /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	@Override
+    @Override
     public void setConnector(boolean newConnector) {
         boolean oldConnector = connector;
         connector = newConnector;
@@ -351,7 +354,7 @@ protected boolean connector = CONNECTOR_EDEFAULT;
             eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.STATE__CONNECTOR, oldConnector, connector));
     }
 
-				/**
+    /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -377,20 +380,20 @@ protected boolean connector = CONNECTOR_EDEFAULT;
         return incomingTransitions;
     }
 
-                /**
+    /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
     @Override
-    public EList<State> getBaseStates() {
-        if (baseStates == null) {
-            baseStates = new EObjectResolvingEList<State>(State.class, this, SCChartsPackage.STATE__BASE_STATES);
+    public EList<BaseStateReference> getBaseStateReferences() {
+        if (baseStateReferences == null) {
+            baseStateReferences = new EObjectContainmentEList<BaseStateReference>(BaseStateReference.class, this, SCChartsPackage.STATE__BASE_STATE_REFERENCES);
         }
-        return baseStates;
+        return baseStateReferences;
     }
 
-                /**
+    /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -429,6 +432,8 @@ protected boolean connector = CONNECTOR_EDEFAULT;
                 return ((InternalEList<?>)getOutgoingTransitions()).basicRemove(otherEnd, msgs);
             case SCChartsPackage.STATE__INCOMING_TRANSITIONS:
                 return ((InternalEList<?>)getIncomingTransitions()).basicRemove(otherEnd, msgs);
+            case SCChartsPackage.STATE__BASE_STATE_REFERENCES:
+                return ((InternalEList<?>)getBaseStateReferences()).basicRemove(otherEnd, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
@@ -471,8 +476,8 @@ protected boolean connector = CONNECTOR_EDEFAULT;
                 return getOutgoingTransitions();
             case SCChartsPackage.STATE__INCOMING_TRANSITIONS:
                 return getIncomingTransitions();
-            case SCChartsPackage.STATE__BASE_STATES:
-                return getBaseStates();
+            case SCChartsPackage.STATE__BASE_STATE_REFERENCES:
+                return getBaseStateReferences();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -513,9 +518,9 @@ protected boolean connector = CONNECTOR_EDEFAULT;
                 getIncomingTransitions().clear();
                 getIncomingTransitions().addAll((Collection<? extends Transition>)newValue);
                 return;
-            case SCChartsPackage.STATE__BASE_STATES:
-                getBaseStates().clear();
-                getBaseStates().addAll((Collection<? extends State>)newValue);
+            case SCChartsPackage.STATE__BASE_STATE_REFERENCES:
+                getBaseStateReferences().clear();
+                getBaseStateReferences().addAll((Collection<? extends BaseStateReference>)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -553,8 +558,8 @@ protected boolean connector = CONNECTOR_EDEFAULT;
             case SCChartsPackage.STATE__INCOMING_TRANSITIONS:
                 getIncomingTransitions().clear();
                 return;
-            case SCChartsPackage.STATE__BASE_STATES:
-                getBaseStates().clear();
+            case SCChartsPackage.STATE__BASE_STATE_REFERENCES:
+                getBaseStateReferences().clear();
                 return;
         }
         super.eUnset(featureID);
@@ -584,8 +589,8 @@ protected boolean connector = CONNECTOR_EDEFAULT;
                 return outgoingTransitions != null && !outgoingTransitions.isEmpty();
             case SCChartsPackage.STATE__INCOMING_TRANSITIONS:
                 return incomingTransitions != null && !incomingTransitions.isEmpty();
-            case SCChartsPackage.STATE__BASE_STATES:
-                return baseStates != null && !baseStates.isEmpty();
+            case SCChartsPackage.STATE__BASE_STATE_REFERENCES:
+                return baseStateReferences != null && !baseStateReferences.isEmpty();
         }
         return super.eIsSet(featureID);
     }

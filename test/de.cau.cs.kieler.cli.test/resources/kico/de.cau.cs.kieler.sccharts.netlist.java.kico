@@ -3,6 +3,8 @@ public system de.cau.cs.kieler.sccharts.netlist.java
 
 system de.cau.cs.kieler.sccharts.extended.core
 de.cau.cs.kieler.sccharts.scg.processors.SCG
+post process de.cau.cs.kieler.scg.processors.str
+post process de.cau.cs.kieler.scg.processors.sfr
 post process de.cau.cs.kieler.scg.processors.methods
 post process de.cau.cs.kieler.scg.processors.threadAnalyzer
 system de.cau.cs.kieler.scg.netlist

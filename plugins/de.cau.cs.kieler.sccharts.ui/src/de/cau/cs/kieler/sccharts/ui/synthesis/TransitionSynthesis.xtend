@@ -22,6 +22,8 @@ import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.klighd.kgraph.KEdge
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
+import de.cau.cs.kieler.sccharts.DeferredType
 import de.cau.cs.kieler.sccharts.HistoryType
 import de.cau.cs.kieler.sccharts.PolicyClassDeclaration
 import de.cau.cs.kieler.sccharts.Transition
@@ -36,7 +38,6 @@ import static de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions.*
 import static de.cau.cs.kieler.sccharts.ui.synthesis.styles.ColorStore.Color.*
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
-import de.cau.cs.kieler.sccharts.DeferredType
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions
 
 /**
@@ -56,7 +57,7 @@ class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
      */ 
     public static val IMMEDIATE_TRANSITION_DIRECTION_THRESHOLD = 6
 
-    @Inject extension KNodeExtensionsReplacement
+    @Inject extension KNodeExtensions
     @Inject extension KEdgeExtensions
     @Inject extension AnnotationsExtensions
     @Inject extension SCChartsTransitionExtensions

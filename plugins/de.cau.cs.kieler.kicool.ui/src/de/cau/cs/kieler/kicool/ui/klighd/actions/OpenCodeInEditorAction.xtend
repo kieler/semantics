@@ -13,14 +13,14 @@
  */
 package de.cau.cs.kieler.kicool.ui.klighd.actions
 
+import de.cau.cs.kieler.kicool.ide.klighd.models.CodePlaceHolder
+import de.cau.cs.kieler.kicool.ui.klighd.editor.StringBasedEditorInput
+import de.cau.cs.kieler.klighd.IAction
+import org.eclipse.ui.IFileEditorInput
 import org.eclipse.ui.IStorageEditorInput
 import org.eclipse.ui.IWorkbenchPage
 import org.eclipse.ui.IWorkbenchWindow
 import org.eclipse.ui.PartInitException
-import de.cau.cs.kieler.kicool.ui.klighd.editor.StringBasedEditorInput
-import de.cau.cs.kieler.kicool.ui.klighd.models.CodePlaceHolder
-import de.cau.cs.kieler.klighd.IAction
-import org.eclipse.ui.IFileEditorInput
 
 /** 
  * Action to open a Editor containing content of {@link CodePlaceHolder}.

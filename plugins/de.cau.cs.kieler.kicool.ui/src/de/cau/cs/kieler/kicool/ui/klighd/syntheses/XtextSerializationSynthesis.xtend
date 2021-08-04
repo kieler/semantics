@@ -14,17 +14,17 @@
 package de.cau.cs.kieler.kicool.ui.klighd.syntheses
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.kicool.ui.klighd.models.CodePlaceHolder
+import de.cau.cs.kieler.kicool.ide.klighd.models.CodePlaceHolder
+import de.cau.cs.kieler.kicool.registration.ModelInformation
 import de.cau.cs.kieler.klighd.LightDiagramServices
+import de.cau.cs.kieler.klighd.ide.model.MessageModel
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
-import de.cau.cs.kieler.klighd.ui.view.model.MessageModel
 import java.io.ByteArrayOutputStream
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.resource.IResourceServiceProvider
 import org.eclipse.xtext.resource.XtextResourceSet
-import de.cau.cs.kieler.kicool.registration.ModelInformation
 
 /**
  * Diagram synthesis for Ecore models based on a XText grammar.
@@ -75,9 +75,9 @@ class XtextSerializationSynthesis extends AbstractDiagramSynthesis<EObject> {
                     "No serialization available. Maybe the model is not based on a XText grammar"), usedContext);
         } else {
             var title = "Unknown Resource";
-            if (usedContext.sourceWorkbenchPart != null) {
+            if (usedContext.sourceWorkbenchPart !== null) {
                 title = usedContext.sourceWorkbenchPart.title;
-            } else if (model.eResource != null && model.eResource.getURI != null) {
+            } else if (model.eResource !== null && model.eResource.getURI !== null) {
                 title = model.eResource.getURI.lastSegment;
             }
             val resourceExtension = ModelInformation.getResourceExtension(model);

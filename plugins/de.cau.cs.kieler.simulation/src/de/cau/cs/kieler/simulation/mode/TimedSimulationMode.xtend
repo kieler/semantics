@@ -15,7 +15,6 @@ package de.cau.cs.kieler.simulation.mode
 import com.google.common.base.Stopwatch
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicLong
-import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor
 
 /**
  * 
@@ -45,11 +44,14 @@ abstract class TimedSimulationMode extends SimulationMode {
 
 }
 
-@FinalFieldsConstructor
 class TimedSimulationModeCountDown extends Thread {
     
     public static val long SLEEP_MSEC = 50
     val TimedSimulationMode mode
+    
+    new(TimedSimulationMode mode) {
+        this.mode = mode
+    }
     
     override run() {
         name = this.class.simpleName

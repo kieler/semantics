@@ -1,6 +1,8 @@
 package de.cau.cs.kieler.sccharts.ui.debug
 
 import de.cau.cs.kieler.sccharts.text.SCTXStandaloneSetup
+import java.io.BufferedReader
+import java.io.InputStreamReader
 import java.util.List
 import org.eclipse.core.commands.AbstractHandler
 import org.eclipse.core.commands.ExecutionEvent
@@ -11,25 +13,18 @@ import org.eclipse.core.resources.IProject
 import org.eclipse.core.resources.IResource
 import org.eclipse.core.runtime.IProgressMonitor
 import org.eclipse.core.runtime.Status
-import org.eclipse.core.runtime.jobs.Job
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.resource.Resource
+import org.eclipse.jface.dialogs.MessageDialog
 import org.eclipse.jface.viewers.IStructuredSelection
+import org.eclipse.ui.PlatformUI
 import org.eclipse.ui.handlers.HandlerUtil
+import org.eclipse.ui.progress.UIJob
 import org.eclipse.ui.statushandlers.StatusManager
 import org.eclipse.xtext.resource.XtextResource
 import org.eclipse.xtext.resource.XtextResourceSet
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import java.nio.charset.Charset
-import java.nio.charset.StandardCharsets
-import org.eclipse.jface.dialogs.MessageDialog
-import org.eclipse.ui.PlatformUI
-import java.io.BufferedReader
-import java.io.FileInputStream
-import java.io.InputStreamReader
-import org.eclipse.swt.widgets.Display
-import org.eclipse.ui.progress.UIJob
 
 class ReserializeCommand extends AbstractHandler {
     
