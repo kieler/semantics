@@ -6206,7 +6206,7 @@ public class InternalKExtParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleEnumMemberDeclaration"
-    // InternalKExt.g:2231:1: ruleEnumMemberDeclaration returns [EObject current=null] : ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_valuedObjects_1_0= ruleSimpleValuedObject ) ) (otherlv_2= ',' ( (lv_valuedObjects_3_0= ruleSimpleValuedObject ) ) )* ( (lv_annotations_4_0= ruleCommentAnnotatonSL ) )? ) ;
+    // InternalKExt.g:2231:1: ruleEnumMemberDeclaration returns [EObject current=null] : ( ( (lv_annotations_0_0= ruleQuotedStringAnnotation ) )* ( (lv_valuedObjects_1_0= ruleSimpleValuedObject ) ) (otherlv_2= ',' ( (lv_valuedObjects_3_0= ruleSimpleValuedObject ) ) )* ( (lv_annotations_4_0= ruleCommentAnnotatonSL ) )? ) ;
     public final EObject ruleEnumMemberDeclaration() throws RecognitionException {
         EObject current = null;
 
@@ -6224,13 +6224,13 @@ public class InternalKExtParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalKExt.g:2237:2: ( ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_valuedObjects_1_0= ruleSimpleValuedObject ) ) (otherlv_2= ',' ( (lv_valuedObjects_3_0= ruleSimpleValuedObject ) ) )* ( (lv_annotations_4_0= ruleCommentAnnotatonSL ) )? ) )
-            // InternalKExt.g:2238:2: ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_valuedObjects_1_0= ruleSimpleValuedObject ) ) (otherlv_2= ',' ( (lv_valuedObjects_3_0= ruleSimpleValuedObject ) ) )* ( (lv_annotations_4_0= ruleCommentAnnotatonSL ) )? )
+            // InternalKExt.g:2237:2: ( ( ( (lv_annotations_0_0= ruleQuotedStringAnnotation ) )* ( (lv_valuedObjects_1_0= ruleSimpleValuedObject ) ) (otherlv_2= ',' ( (lv_valuedObjects_3_0= ruleSimpleValuedObject ) ) )* ( (lv_annotations_4_0= ruleCommentAnnotatonSL ) )? ) )
+            // InternalKExt.g:2238:2: ( ( (lv_annotations_0_0= ruleQuotedStringAnnotation ) )* ( (lv_valuedObjects_1_0= ruleSimpleValuedObject ) ) (otherlv_2= ',' ( (lv_valuedObjects_3_0= ruleSimpleValuedObject ) ) )* ( (lv_annotations_4_0= ruleCommentAnnotatonSL ) )? )
             {
-            // InternalKExt.g:2238:2: ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_valuedObjects_1_0= ruleSimpleValuedObject ) ) (otherlv_2= ',' ( (lv_valuedObjects_3_0= ruleSimpleValuedObject ) ) )* ( (lv_annotations_4_0= ruleCommentAnnotatonSL ) )? )
-            // InternalKExt.g:2239:3: ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_valuedObjects_1_0= ruleSimpleValuedObject ) ) (otherlv_2= ',' ( (lv_valuedObjects_3_0= ruleSimpleValuedObject ) ) )* ( (lv_annotations_4_0= ruleCommentAnnotatonSL ) )?
+            // InternalKExt.g:2238:2: ( ( (lv_annotations_0_0= ruleQuotedStringAnnotation ) )* ( (lv_valuedObjects_1_0= ruleSimpleValuedObject ) ) (otherlv_2= ',' ( (lv_valuedObjects_3_0= ruleSimpleValuedObject ) ) )* ( (lv_annotations_4_0= ruleCommentAnnotatonSL ) )? )
+            // InternalKExt.g:2239:3: ( (lv_annotations_0_0= ruleQuotedStringAnnotation ) )* ( (lv_valuedObjects_1_0= ruleSimpleValuedObject ) ) (otherlv_2= ',' ( (lv_valuedObjects_3_0= ruleSimpleValuedObject ) ) )* ( (lv_annotations_4_0= ruleCommentAnnotatonSL ) )?
             {
-            // InternalKExt.g:2239:3: ( (lv_annotations_0_0= ruleAnnotation ) )*
+            // InternalKExt.g:2239:3: ( (lv_annotations_0_0= ruleQuotedStringAnnotation ) )*
             loop75:
             do {
                 int alt75=2;
@@ -6264,18 +6264,18 @@ public class InternalKExtParser extends AbstractInternalAntlrParser {
 
                 switch (alt75) {
             	case 1 :
-            	    // InternalKExt.g:2240:4: (lv_annotations_0_0= ruleAnnotation )
+            	    // InternalKExt.g:2240:4: (lv_annotations_0_0= ruleQuotedStringAnnotation )
             	    {
-            	    // InternalKExt.g:2240:4: (lv_annotations_0_0= ruleAnnotation )
-            	    // InternalKExt.g:2241:5: lv_annotations_0_0= ruleAnnotation
+            	    // InternalKExt.g:2240:4: (lv_annotations_0_0= ruleQuotedStringAnnotation )
+            	    // InternalKExt.g:2241:5: lv_annotations_0_0= ruleQuotedStringAnnotation
             	    {
             	    if ( state.backtracking==0 ) {
 
-            	      					newCompositeNode(grammarAccess.getEnumMemberDeclarationAccess().getAnnotationsAnnotationParserRuleCall_0_0());
+            	      					newCompositeNode(grammarAccess.getEnumMemberDeclarationAccess().getAnnotationsQuotedStringAnnotationParserRuleCall_0_0());
             	      				
             	    }
             	    pushFollow(FollowSets000.FOLLOW_29);
-            	    lv_annotations_0_0=ruleAnnotation();
+            	    lv_annotations_0_0=ruleQuotedStringAnnotation();
 
             	    state._fsp--;
             	    if (state.failed) return current;
@@ -6288,7 +6288,7 @@ public class InternalKExtParser extends AbstractInternalAntlrParser {
             	      						current,
             	      						"annotations",
             	      						lv_annotations_0_0,
-            	      						"de.cau.cs.kieler.kexpressions.KExpressions.Annotation");
+            	      						"de.cau.cs.kieler.kexpressions.KExpressions.QuotedStringAnnotation");
             	      					afterParserOrEnumRuleCall();
             	      				
             	    }
@@ -36349,19 +36349,19 @@ public class InternalKExtParser extends AbstractInternalAntlrParser {
         EObject lv_annotations_0_0 = null;
 
 
-        // InternalKExt.g:2240:4: ( (lv_annotations_0_0= ruleAnnotation ) )
-        // InternalKExt.g:2240:4: (lv_annotations_0_0= ruleAnnotation )
+        // InternalKExt.g:2240:4: ( (lv_annotations_0_0= ruleQuotedStringAnnotation ) )
+        // InternalKExt.g:2240:4: (lv_annotations_0_0= ruleQuotedStringAnnotation )
         {
-        // InternalKExt.g:2240:4: (lv_annotations_0_0= ruleAnnotation )
-        // InternalKExt.g:2241:5: lv_annotations_0_0= ruleAnnotation
+        // InternalKExt.g:2240:4: (lv_annotations_0_0= ruleQuotedStringAnnotation )
+        // InternalKExt.g:2241:5: lv_annotations_0_0= ruleQuotedStringAnnotation
         {
         if ( state.backtracking==0 ) {
 
-          					newCompositeNode(grammarAccess.getEnumMemberDeclarationAccess().getAnnotationsAnnotationParserRuleCall_0_0());
+          					newCompositeNode(grammarAccess.getEnumMemberDeclarationAccess().getAnnotationsQuotedStringAnnotationParserRuleCall_0_0());
           				
         }
         pushFollow(FollowSets000.FOLLOW_2);
-        lv_annotations_0_0=ruleAnnotation();
+        lv_annotations_0_0=ruleQuotedStringAnnotation();
 
         state._fsp--;
         if (state.failed) return ;
@@ -42243,11 +42243,11 @@ public class InternalKExtParser extends AbstractInternalAntlrParser {
             return "10557:2: (this_QuotedStringAnnotation_0= superQuotedStringAnnotation | this_JsonAnnotation_1= ruleJsonAnnotation )";
         }
     }
-    static final String dfa_160s = "\3\uffff\1\11\4\uffff\1\17\2\uffff\2\11\2\uffff\1\22\1\7\1\17\2\uffff\1\22\1\uffff\1\22\1\uffff\1\22\1\uffff";
-    static final String dfa_161s = "\1\12\1\uffff\4\4\1\7\1\uffff\1\4\2\uffff\4\4\1\0\2\4\1\uffff\6\4\1\0";
-    static final String dfa_162s = "\1\105\1\uffff\1\4\1\156\1\4\1\10\1\7\1\uffff\1\156\2\uffff\2\156\1\4\1\105\1\0\2\156\1\uffff\1\4\1\156\1\4\1\156\1\4\1\156\1\0";
-    static final String dfa_163s = "\1\uffff\1\1\5\uffff\1\2\1\uffff\1\4\1\3\7\uffff\1\2\7\uffff";
-    static final String dfa_164s = "\31\uffff\1\0}>";
+    static final String dfa_160s = "\3\uffff\1\11\4\uffff\1\7\2\uffff\2\11\1\uffff\1\7\1\uffff\1\7\1\uffff\1\7\1\uffff\1\7\1\uffff";
+    static final String dfa_161s = "\1\12\1\uffff\4\4\1\7\1\uffff\1\4\2\uffff\12\4\1\0";
+    static final String dfa_162s = "\1\105\1\uffff\1\4\1\156\1\4\1\10\1\7\1\uffff\1\156\2\uffff\2\156\1\4\1\156\1\4\1\156\1\4\1\156\1\4\1\156\1\0";
+    static final String dfa_163s = "\1\uffff\1\1\5\uffff\1\2\1\uffff\1\4\1\3\13\uffff";
+    static final String dfa_164s = "\25\uffff\1\0}>";
     static final String[] dfa_165s = {
             "\1\1\72\uffff\1\2",
             "",
@@ -42257,23 +42257,19 @@ public class InternalKExtParser extends AbstractInternalAntlrParser {
             "\1\13\2\uffff\2\7",
             "\1\14",
             "",
-            "\1\7\1\uffff\1\7\3\uffff\1\7\1\11\7\uffff\1\11\10\7\1\16\1\11\1\7\1\11\1\uffff\1\11\2\7\1\15\2\uffff\1\7\1\11\1\uffff\1\11\2\uffff\2\7\11\uffff\1\7\7\uffff\1\11\3\uffff\2\7\2\uffff\17\11\11\uffff\10\7\3\uffff\4\7",
+            "\1\7\1\uffff\1\7\3\uffff\1\7\11\uffff\11\7\1\uffff\1\7\1\11\1\uffff\1\11\2\7\1\15\2\uffff\1\7\1\11\1\uffff\1\11\2\uffff\2\7\11\uffff\1\7\7\uffff\1\11\3\uffff\2\7\2\uffff\17\11\11\uffff\10\7\3\uffff\4\7",
             "",
             "",
             "\1\10\1\7\1\11\3\7\1\11\11\uffff\10\11\2\uffff\1\11\3\uffff\2\11\1\4\2\uffff\1\11\1\12\4\uffff\2\11\11\uffff\1\5\13\uffff\1\6\1\11\32\uffff\10\11\3\uffff\4\11",
             "\1\10\1\7\1\11\3\7\1\11\11\uffff\10\11\2\uffff\1\11\3\uffff\2\11\3\uffff\1\11\1\12\4\uffff\2\11\11\uffff\1\7\14\uffff\1\11\32\uffff\10\11\3\uffff\4\11",
+            "\1\16",
+            "\1\7\1\uffff\1\7\3\uffff\1\7\11\uffff\11\7\1\uffff\1\7\1\11\1\uffff\1\11\2\7\1\17\2\uffff\1\7\1\11\1\uffff\1\11\2\uffff\2\7\11\uffff\1\7\7\uffff\1\11\3\uffff\2\7\2\uffff\17\11\11\uffff\10\7\3\uffff\4\7",
             "\1\20",
-            "\1\21\1\7\1\uffff\3\7\1\11\55\uffff\1\7\14\uffff\1\11",
-            "\1\uffff",
+            "\1\7\1\uffff\1\7\3\uffff\1\7\11\uffff\11\7\1\uffff\1\7\1\11\1\uffff\1\11\2\7\1\21\2\uffff\1\7\1\11\1\uffff\1\11\2\uffff\2\7\11\uffff\1\7\7\uffff\1\11\3\uffff\2\7\2\uffff\17\11\11\uffff\10\7\3\uffff\4\7",
+            "\1\22",
             "\1\7\1\uffff\1\7\3\uffff\1\7\11\uffff\11\7\1\uffff\1\7\1\11\1\uffff\1\11\2\7\1\23\2\uffff\1\7\1\11\1\uffff\1\11\2\uffff\2\7\11\uffff\1\7\7\uffff\1\11\3\uffff\2\7\2\uffff\17\11\11\uffff\10\7\3\uffff\4\7",
-            "\1\7\1\uffff\1\7\3\uffff\1\7\1\11\7\uffff\1\11\10\7\1\16\1\11\1\7\3\uffff\3\7\2\uffff\1\7\5\uffff\2\7\11\uffff\1\7\7\uffff\1\11\3\uffff\2\7\32\uffff\10\7\3\uffff\4\7",
-            "",
             "\1\24",
-            "\1\22\1\uffff\1\22\3\uffff\1\22\11\uffff\11\22\1\uffff\1\22\1\11\1\uffff\1\11\2\22\1\25\2\uffff\1\22\1\11\1\uffff\1\11\2\uffff\2\22\11\uffff\1\22\7\uffff\1\11\3\uffff\2\22\2\uffff\17\11\11\uffff\10\22\3\uffff\4\22",
-            "\1\26",
-            "\1\22\1\uffff\1\22\3\uffff\1\22\11\uffff\11\22\1\uffff\1\22\1\11\1\uffff\1\11\2\22\1\27\2\uffff\1\22\1\11\1\uffff\1\11\2\uffff\2\22\11\uffff\1\22\7\uffff\1\11\3\uffff\2\22\2\uffff\17\11\11\uffff\10\22\3\uffff\4\22",
-            "\1\30",
-            "\1\22\1\uffff\1\22\3\uffff\1\22\11\uffff\11\22\1\uffff\1\22\1\11\1\uffff\1\11\2\22\1\31\2\uffff\1\22\1\11\1\uffff\1\11\2\uffff\2\22\11\uffff\1\22\7\uffff\1\11\3\uffff\2\22\2\uffff\17\11\11\uffff\10\22\3\uffff\4\22",
+            "\1\7\1\uffff\1\7\3\uffff\1\7\11\uffff\11\7\1\uffff\1\7\1\11\1\uffff\1\11\2\7\1\25\2\uffff\1\7\1\11\1\uffff\1\11\2\uffff\2\7\11\uffff\1\7\7\uffff\1\11\3\uffff\2\7\2\uffff\17\11\11\uffff\10\7\3\uffff\4\7",
             "\1\uffff"
     };
     static final short[] dfa_160 = DFA.unpackEncodedString(dfa_160s);
@@ -42288,7 +42284,7 @@ public class InternalKExtParser extends AbstractInternalAntlrParser {
         public DFA255(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 255;
-            this.eot = dfa_28;
+            this.eot = dfa_146;
             this.eof = dfa_160;
             this.min = dfa_161;
             this.max = dfa_162;
@@ -42304,18 +42300,18 @@ public class InternalKExtParser extends AbstractInternalAntlrParser {
         	int _s = s;
             switch ( s ) {
                     case 0 : 
-                        int LA255_25 = input.LA(1);
+                        int LA255_21 = input.LA(1);
 
                          
-                        int index255_25 = input.index();
+                        int index255_21 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred298_InternalKExt()) ) {s = 18;}
+                        if ( (synpred298_InternalKExt()) ) {s = 7;}
 
                         else if ( (true) ) {s = 9;}
 
                          
-                        input.seek(index255_25);
+                        input.seek(index255_21);
                         if ( s>=0 ) return s;
                         break;
             }

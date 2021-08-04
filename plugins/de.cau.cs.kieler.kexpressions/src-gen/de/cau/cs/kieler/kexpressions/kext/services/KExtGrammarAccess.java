@@ -1416,7 +1416,7 @@ public class KExtGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.kext.KExt.EnumMemberDeclaration");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cAnnotationsAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final RuleCall cAnnotationsAnnotationParserRuleCall_0_0 = (RuleCall)cAnnotationsAssignment_0.eContents().get(0);
+		private final RuleCall cAnnotationsQuotedStringAnnotationParserRuleCall_0_0 = (RuleCall)cAnnotationsAssignment_0.eContents().get(0);
 		private final Assignment cValuedObjectsAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cValuedObjectsSimpleValuedObjectParserRuleCall_1_0 = (RuleCall)cValuedObjectsAssignment_1.eContents().get(0);
 		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
@@ -1427,22 +1427,22 @@ public class KExtGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		private final RuleCall cAnnotationsCommentAnnotatonSLParserRuleCall_3_0 = (RuleCall)cAnnotationsAssignment_3.eContents().get(0);
 		
 		//EnumMemberDeclaration returns kexpressions::VariableDeclaration:
-		//    annotations+=Annotation*
+		//    annotations+=QuotedStringAnnotation*
 		//    valuedObjects+=SimpleValuedObject (',' valuedObjects+=SimpleValuedObject)*
 		//    annotations+=CommentAnnotatonSL?
 		//;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//annotations+=Annotation*
+		//annotations+=QuotedStringAnnotation*
 		//valuedObjects+=SimpleValuedObject (',' valuedObjects+=SimpleValuedObject)*
 		//annotations+=CommentAnnotatonSL?
 		public Group getGroup() { return cGroup; }
 		
-		//annotations+=Annotation*
+		//annotations+=QuotedStringAnnotation*
 		public Assignment getAnnotationsAssignment_0() { return cAnnotationsAssignment_0; }
 		
-		//Annotation
-		public RuleCall getAnnotationsAnnotationParserRuleCall_0_0() { return cAnnotationsAnnotationParserRuleCall_0_0; }
+		//QuotedStringAnnotation
+		public RuleCall getAnnotationsQuotedStringAnnotationParserRuleCall_0_0() { return cAnnotationsQuotedStringAnnotationParserRuleCall_0_0; }
 		
 		//valuedObjects+=SimpleValuedObject
 		public Assignment getValuedObjectsAssignment_1() { return cValuedObjectsAssignment_1; }
@@ -3853,7 +3853,7 @@ public class KExtGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 	}
 	
 	//EnumMemberDeclaration returns kexpressions::VariableDeclaration:
-	//    annotations+=Annotation*
+	//    annotations+=QuotedStringAnnotation*
 	//    valuedObjects+=SimpleValuedObject (',' valuedObjects+=SimpleValuedObject)*
 	//    annotations+=CommentAnnotatonSL?
 	//;
