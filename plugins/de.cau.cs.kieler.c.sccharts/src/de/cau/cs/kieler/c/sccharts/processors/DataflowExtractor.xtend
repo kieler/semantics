@@ -3793,6 +3793,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 result.target = funcState.findValuedObjectByName(targetExpr.getName.toString, true, dRegion)
             }
             IASTArraySubscriptExpression: {
+                // The target is an array accessed by a subscript expression
                 val firstArrayIndex = targetExpr.argument.createKExpression(funcState, dRegion)
                 val targetArrayExpr = targetExpr.arrayExpression
                 val indexExpressions = newArrayList(firstArrayIndex)
@@ -3835,25 +3836,28 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 }
             }
             IASTFieldReference: {
+                // Write on a field of a struct/union
                 /*
                  * Lookup the array that represents the struct. 
                  * Force the array visualization to take a string as index.
                  */
                 val fieldName = targetExpr.fieldName.toString
-                // TODO: probably problem cause for some instances - maybe handle the other case as an error or exception
-                var ownerName = (targetExpr.fieldOwner as IASTIdExpression).name.toString
+                
+                val List<Expression> indexExpressions = newArrayList()
+                val owner = getFieldIdentifier(targetExpr,indexExpressions, funcState, dRegion)
+                var ownerName = (owner as IASTIdExpression).name.toString
                 val statePointerVars = getStateVarPointers(funcState)
                 if (statePointerVars.containsKey(ownerName)) {
                     val ref = statePointerVars.get(ownerName)
                     ownerName = ref.label !== null ? ref.label : ref.name.split(ssaNameSeperator).get(0)
                 }
-                val artificialIndexExpr = ASTNodeFactoryFactory.defaultCNodeFactory.newLiteralExpression(3,
-                    "\"" + fieldName + "\"").createKExpression(funcState, dRegion)
+                val artificialIndexExpr = createIndexForFieldAccess(fieldName, funcState, dRegion)
 
                 val arrayRepresentant = funcState.findValuedObjectByName(ownerName, newArrayList(artificialIndexExpr), true, dRegion)
 
                 result.target = arrayRepresentant
                 result.index = artificialIndexExpr
+                result.indices = indexExpressions.reverse
             }
             IASTUnaryExpression: {
                 if (targetExpr.operator === IASTUnaryExpression.op_bracketedPrimary) {
@@ -4150,9 +4154,13 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 kExpression = opValObj.reference
             }
             IASTFieldReference: {
+                // TODO: Probably for EquationSynthesis: Wrong label in operation
+                
                 // Lookup the array that represents the struct owning the field
-                var opValObj = funcState.findValuedObjectByName(
-                    ((expr as IASTFieldReference).fieldOwner as IASTIdExpression).name.toString, false, dRegion)
+                val List<Expression> indexExpressions = newArrayList()
+                val owner = getFieldIdentifier(expr, indexExpressions, funcState, dRegion)
+                var opValObj = funcState.findValuedObjectByName((owner as IASTIdExpression).name.toString, 
+                    false, dRegion)
 
                 // if expr is of the form "pointer -> field", get the struct the pointer points to
                 val label = opValObj.label !== null ? opValObj.label : opValObj.name.split(ssaNameSeperator).get(0)
@@ -4161,9 +4169,8 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 }
 
                 // Use the fieldname as a pseudo index so that it appears as label in the diagram
-                kExpression = opValObj.reference
-                val indexLabelExpr = createStringValue(expr.fieldName.toString)
-                (kExpression as ValuedObjectReference).indices += indexLabelExpr
+                kExpression = opValObj.reference;
+                (kExpression as ValuedObjectReference).indices += indexExpressions.reverse
             }
             // For an array, just use the array expression (and leave out the subscript for now).
             IASTArraySubscriptExpression: {
@@ -4390,7 +4397,8 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
     }
     
     /**
-     *  For multidimensional arrays walk from right to left through the subscript expression to get the identifier and collect the indices
+     *  For multidimensional arrays walk from right to left through the subscript 
+     *  expression to get the identifier and collect the indices
      * @param outermostArraySubscriptExpression The complete SubscriptExpression from AST
      * @param indexExpressions List for collecting the indices
      * @param funcState State of the function
@@ -4411,27 +4419,54 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
     }
     
     /**
-     * Checks whther two lists of expressions are pairwise equal by using expressionEquals.
-     
-     
-      */
+     * Walks from right to left through the fields of a field reference. Stores the fieldnames 
+     * as expressions and returns the identifier of the struct.
+     * @param outermostFieldRef The complete FieldReference from AST
+     * @param indexExpressions List for collecting the indices
+     * @param funcState State of the function
+     * @param dRegion DatafloRegion of the function state
+     * @return the struct identifier
+     */
+    def private IASTExpression getFieldIdentifier(IASTFieldReference outermostFieldRef,
+        List<Expression> indexExpressions, State funcState, DataflowRegion dRegion) {
+
+        var String currentFieldName = outermostFieldRef.fieldName.toString
+        var IASTExpression currentOwner = outermostFieldRef.fieldOwner
+        var currentIndexExpr = createIndexForFieldAccess(currentFieldName, funcState, dRegion)
+        indexExpressions.add(currentIndexExpr)
+
+        while (currentOwner instanceof IASTFieldReference) {
+            currentFieldName = currentOwner.fieldName.toString
+            currentOwner = currentOwner.fieldOwner
+            currentIndexExpr = createIndexForFieldAccess(currentFieldName, funcState, dRegion)
+            indexExpressions.add(currentIndexExpr)
+        }
+        return currentOwner
+    }
+    
+    
+    /**
+     * Checks whether two lists of expressions are pairwise equal by using expressionEquals.
+     *    @param l0 first list of expressions
+     *    @param l1 second list of expressions
+     */
     def expressionListsEquals(List<Expression> l0, List<Expression> l1) {
         val l0Length = l0.length
         val l1Length = l1.length
-        
-        if(l0Length != l1Length){
+
+        if (l0Length != l1Length) {
             return false
         }
-        
-        for(var int i = 0; i< l0Length; i++){
+
+        for (var int i = 0; i < l0Length; i++) {
             val e0 = l0.get(i)
             val e1 = l1.get(i)
             val equal = e0.expressionEquals(e1)
-            if(!equal){
+            if (!equal) {
                 return false
             }
         }
-        return true      
+        return true
     }
     
     def private addEquation(DataflowRegion dRegion, ValuedObject vo, Expression expr) {
@@ -4448,6 +4483,19 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         } else {
             println("equation translation failed for expression: " + expr)
         }
+    }
+    
+    /**
+     * Creates an {@code LiteralExpression} containing the name of a field in quotes that can be used as an 
+     *     index in the array access representing the field access
+     *    @param fieldName the name of the field that is meant to be accessed
+     *    @param funcState state of the function
+     *    @param dRegion dataflow region contained in {@code funcState}
+     */
+    def private Expression createIndexForFieldAccess(String fieldName, State funcState, DataflowRegion dRegion) {
+        // using this short function hides the usage of the ASTNodeFactoryFactory
+        ASTNodeFactoryFactory.defaultCNodeFactory.newLiteralExpression(3, "\"" + fieldName + "\"").
+            createKExpression(funcState, dRegion)
     }
 
 }
