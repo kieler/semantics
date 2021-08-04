@@ -15,21 +15,25 @@ package de.cau.cs.kieler.sccharts.ui.synthesis
 import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.Annotatable
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.kexpressions.FunctionCall
 import de.cau.cs.kieler.kexpressions.IgnoreValue
+import de.cau.cs.kieler.kexpressions.IntValue
 import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.OperatorType
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
+import de.cau.cs.kieler.kexpressions.StaticAccessExpression
 import de.cau.cs.kieler.kexpressions.Value
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.VectorValue
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kexpressions.kext.DeclarationScope
 import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
-import de.cau.cs.kieler.kicool.ui.synthesis.KiCoolSynthesis
+import de.cau.cs.kieler.kicool.ui.synthesis.KGTLoader
 import de.cau.cs.kieler.klighd.SynthesisOption
-import de.cau.cs.kieler.klighd.kgraph.KGraphFactory
 import de.cau.cs.kieler.klighd.kgraph.KIdentifier
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.kgraph.KPort
@@ -43,6 +47,8 @@ import de.cau.cs.kieler.klighd.krendering.LineStyle
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KLabelExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KPortExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.sccharts.DataflowRegion
@@ -50,8 +56,10 @@ import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsDataflowRegionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsReferenceExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions
+import de.cau.cs.kieler.sccharts.ui.SCChartsUiModule
 import de.cau.cs.kieler.sccharts.ui.synthesis.actions.ReferenceExpandAction
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.EquationStyles
+import de.cau.cs.kieler.sccharts.ui.synthesis.styles.TransitionStyles
 import java.util.EnumSet
 import java.util.HashMap
 import java.util.List
@@ -67,20 +75,13 @@ import org.eclipse.elk.core.options.PortConstraints
 import org.eclipse.elk.core.options.PortLabelPlacement
 import org.eclipse.elk.core.options.PortSide
 import org.eclipse.elk.core.options.SizeConstraint
-import org.eclipse.elk.graph.properties.IProperty
-import org.eclipse.elk.graph.properties.Property
-import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.EObject
-import org.eclipse.xtext.resource.XtextResource
-import org.eclipse.xtext.resource.XtextResourceSet
 
+import static de.cau.cs.kieler.sccharts.ide.synthesis.EquationSynthesisProperties.*
+
+import static extension de.cau.cs.kieler.annotations.ide.klighd.CommonSynthesisUtil.*
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
-import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
-import de.cau.cs.kieler.kexpressions.IntValue
-import de.cau.cs.kieler.kexpressions.FunctionCall
-import de.cau.cs.kieler.sccharts.ui.synthesis.styles.TransitionStyles
 import de.cau.cs.kieler.klighd.kgraph.KLabel
 
 /**
@@ -92,60 +93,41 @@ import de.cau.cs.kieler.klighd.kgraph.KLabel
 @ViewSynthesisShared
 class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
 
-    public static val SynthesisOption AUTOMATIC_INLINE = SynthesisOption.createCheckOption("Automatic inline", false).
-        setCategory(GeneralSynthesisOptions::DATAFLOW)
-    public static val SynthesisOption SEPARATED_ASSIGNMENTS = SynthesisOption.createCheckOption("Separated Assignments",
-        false).setCategory(GeneralSynthesisOptions::DATAFLOW)
+    public static val SynthesisOption AUTOMATIC_INLINE = SynthesisOption.createCheckOption(
+        EquationSynthesis, "Automatic inline", false). setCategory(GeneralSynthesisOptions::DATAFLOW)
+    public static val SynthesisOption SEPARATED_ASSIGNMENTS = SynthesisOption.createCheckOption(
+        EquationSynthesis, "Separated Assignments", false).setCategory(GeneralSynthesisOptions::DATAFLOW)
     public static val SynthesisOption ALIGN_INPUTS_OUTPUTS = SynthesisOption.createCheckOption(
-        "Inputs/Outputs Alignment", true).setCategory(GeneralSynthesisOptions::DATAFLOW)
-    public static val SynthesisOption ALIGN_CONSTANTS = SynthesisOption.createCheckOption("Constant Alignment", false).
-        setCategory(GeneralSynthesisOptions::DATAFLOW)
-    public static val SynthesisOption SHOW_WIRE_LABELS = SynthesisOption.createCheckOption("Wire Labels", true).
-        setCategory(GeneralSynthesisOptions::DATAFLOW)
+        EquationSynthesis, "Inputs/Outputs Alignment", true).setCategory(GeneralSynthesisOptions::DATAFLOW)
+    public static val SynthesisOption ALIGN_CONSTANTS = SynthesisOption.createCheckOption(
+        EquationSynthesis, "Constant Alignment", false).setCategory(GeneralSynthesisOptions::DATAFLOW)
+    public static val SynthesisOption SHOW_WIRE_LABELS = SynthesisOption.createCheckOption(
+        EquationSynthesis, "Wire Labels", true).setCategory(GeneralSynthesisOptions::DATAFLOW)
     public static val SynthesisOption SHOW_EXPRESSION_PORT_LABELS = SynthesisOption.createCheckOption(
-        "Expression Port Labels", false).setCategory(GeneralSynthesisOptions::DATAFLOW)
+        EquationSynthesis, "Expression Port Labels", false).setCategory(GeneralSynthesisOptions::DATAFLOW)
     public static val SynthesisOption SHOW_REFERENCED_PORT_LABELS = SynthesisOption.createCheckOption(
-        "Referenced Port Labels", true).setCategory(GeneralSynthesisOptions::DATAFLOW)
+        EquationSynthesis, "Referenced Port Labels", true).setCategory(GeneralSynthesisOptions::DATAFLOW)
     public static val SynthesisOption REFERENCED_PORT_LABELS_OUTSIDE = SynthesisOption.createCheckOption(
-        "Outside Referenced Port Labels", false).setCategory(GeneralSynthesisOptions::DATAFLOW)
+        EquationSynthesis, "Outside Referenced Port Labels", false).setCategory(GeneralSynthesisOptions::DATAFLOW)
     public static val SynthesisOption ALL_SEQUENTIAL_CONSTRAINTS = SynthesisOption.createCheckOption(
-        "All Sequential Constraints", false).setCategory(GeneralSynthesisOptions::DATAFLOW)
+        EquationSynthesis, "All Sequential Constraints", false).setCategory(GeneralSynthesisOptions::DATAFLOW)
     public static val SynthesisOption SEQUENTIAL_CONSTRAINTS = SynthesisOption.createCheckOption(
-        "Sequential Constraints", true).setCategory(GeneralSynthesisOptions::DATAFLOW)
+        EquationSynthesis, "Sequential Constraints", true).setCategory(GeneralSynthesisOptions::DATAFLOW)
     public static val SynthesisOption INSTANCE_CONSTRAINTS = SynthesisOption.createCheckOption(
-        "Connect Instances", true).setCategory(GeneralSynthesisOptions::DATAFLOW)
-    public static val SynthesisOption SHOW_LOCALS = SynthesisOption.createCheckOption("Local Variables", true).
-        setCategory(GeneralSynthesisOptions::DATAFLOW)
-    public static val SynthesisOption SHOW_UNUSED = SynthesisOption.createCheckOption("Unused Variables", true).
-        setCategory(GeneralSynthesisOptions::DATAFLOW)
-    public static val SynthesisOption PRE_CICLES = SynthesisOption.createCheckOption("Allow Pre Cicles", false).
-        setCategory(GeneralSynthesisOptions::DATAFLOW)
+        EquationSynthesis, "Connect Instances", true).setCategory(GeneralSynthesisOptions::DATAFLOW)
+    public static val SynthesisOption SHOW_LOCALS = SynthesisOption.createCheckOption(
+        EquationSynthesis, "Local Variables", true).setCategory(GeneralSynthesisOptions::DATAFLOW)
+    public static val SynthesisOption PRE_CICLES = SynthesisOption.createCheckOption(EquationSynthesis,
+        "Allow Pre Cicles", false).setCategory(GeneralSynthesisOptions::DATAFLOW)
     public static val SynthesisOption COMBINE_ALL_DATA_ACCESS = SynthesisOption.createCheckOption(
-        "Combine all Data Access Nodes", false).setCategory(GeneralSynthesisOptions::DATAFLOW)
-    public static val SynthesisOption SHOW_ARROWS = SynthesisOption.createCheckOption("Arrows", false).setCategory(
-        GeneralSynthesisOptions::DATAFLOW)
+        EquationSynthesis, "Combine all Data Access Nodes", false).setCategory(GeneralSynthesisOptions::DATAFLOW)
+    public static val SynthesisOption SHOW_ARROWS = SynthesisOption.createCheckOption(EquationSynthesis,
+        "Arrows", false).setCategory(GeneralSynthesisOptions::DATAFLOW)
 
-    public static final IProperty<Boolean> INLINED_REFERENCE = new Property<Boolean>(
-        "de.cau.cs.kieler.sccharts.ui.synthesis.dataflow.inlinedReference", false);
-    public static final IProperty<Boolean> INPUT_FLAG = new Property<Boolean>(
-        "de.cau.cs.kieler.sccharts.ui.synthesis.dataflow.inputFlag", false);
-    public static final IProperty<Boolean> OUTPUT_FLAG = new Property<Boolean>(
-        "de.cau.cs.kieler.sccharts.ui.synthesis.dataflow.outputFlag", false);
-    public static final IProperty<Boolean> DATA_ARRAY_FLAG = new Property<Boolean>(
-        "de.cau.cs.kieler.sccharts.ui.synthesis.dataflow.dataArrayFlag", false);
-    public static final IProperty<Boolean> DATA_ACCESS_FLAG = new Property<Boolean>(
-        "de.cau.cs.kieler.sccharts.ui.synthesis.dataflow.dataAccessFlag", false);
-    public static final IProperty<Boolean> REFERENCE_NODE = new Property<Boolean>(
-        "de.cau.cs.kieler.sccharts.ui.synthesis.dataflow.referenceNode", false);
-    public static final IProperty<Boolean> SEQUENTIAL_EDGE = new Property<Boolean>(
-        "de.cau.cs.kieler.sccharts.ui.synthesis.dataflow.sequential", false);
-    public static final IProperty<Boolean> INSTANCE_EDGE = new Property<Boolean>(
-        "de.cau.cs.kieler.sccharts.ui.synthesis.dataflow.instance", false);
-
-    @Inject extension KNodeExtensionsReplacement
+    @Inject extension KNodeExtensions
     @Inject extension KEdgeExtensions
     @Inject extension KLabelExtensions
-    @Inject extension KPortExtensionsReplacement
+    @Inject extension KPortExtensions
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KExpressionsCreateExtensions
     @Inject extension SCChartsSerializeHRExtensions
@@ -163,6 +145,11 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
 
     val HashMap<ReferenceDeclaration, KNode> referenceNodes = newHashMap
 
+    /** 
+     * Prefix for the resource location when loading KGTs from the bundle 
+     */
+    static val SKIN_BUNDLE_FOLDER = "resources/skins/"
+    static val SKIN_PREFIX_DEFAULT = "default/"
     static val ANNOTATION_FIGURE = "figure"
 
     static val PORT_LABEL_FONT_SIZE = 5
@@ -185,52 +172,80 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
     protected static val INSTANCE_OUT_PORT = "out_inst"
 
     protected val defaultFigures = #{
+        OperatorType.NOT.getName ->
+            #["OperatorExpressionNOT.kgt", "OperatorExpressionUnary.kgt", "OperatorExpression.kgt"],
+        OperatorType.EQ.getName ->
+            #["OperatorExpressionEQ.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
+        OperatorType.LT.getName ->
+            #["OperatorExpressionLT.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
+        OperatorType.LEQ.getName ->
+            #["OperatorExpressionLEQ.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
+        OperatorType.LOGICAL_AND.getName -> #["OperatorExpressionLOGICAL_AND.kgt", "OperatorExpression.kgt"],
+        OperatorType.LOGICAL_OR.getName -> #["OperatorExpressionLOGICAL_OR.kgt", "OperatorExpression.kgt"],
+        OperatorType.ADD.getName ->
+            #["OperatorExpressionADD.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
+        OperatorType.SUB.getName ->
+            #["OperatorExpressionSUB.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
+        OperatorType.MULT.getName ->
+            #["OperatorExpressionMULT.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
+        OperatorType.DIV.getName ->
+            #["OperatorExpressionDIV.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
+        OperatorType.GEQ.getName ->
+            #["OperatorExpressionGEQ.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
+        OperatorType.PRE.getName ->
+            #["OperatorExpressionPRE.kgt", "OperatorExpressionUnary.kgt", "OperatorExpression.kgt"],
+        OperatorType.GT.getName ->
+            #["OperatorExpressionGT.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
+        OperatorType.MOD.getName ->
+            #["OperatorExpressionMOD.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
+        OperatorType.NE.getName ->
+            #["OperatorExpressionNE.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
+        OperatorType.VAL.getName ->
+            #["OperatorExpressionVAL.kgt", "OperatorExpressionUnary.kgt", "OperatorExpression.kgt"],
+        OperatorType.BITWISE_AND.getName ->
+            #["OperatorExpressionBITWISE_AND.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
+        OperatorType.BITWISE_OR.getName ->
+            #["OperatorExpressionBITWISE_OR.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
+        OperatorType.POSTFIX_ADD.getName ->
+            #["OperatorExpressionPOSTFIX_ADD.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
+        OperatorType.POSTFIX_SUB.getName ->
+            #["OperatorExpressionPOSTFIX_SUB.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
+        OperatorType.SHIFT_LEFT.getName ->
+            #["OperatorExpressionSHIFT_LEFT.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
+        OperatorType.SHIFT_RIGHT.getName ->
+            #["OperatorExpressionSHIFT_RIGHT.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
+        OperatorType.SHIFT_RIGHT_UNSIGNED.getName ->
+            #["OperatorExpressionSHIFT_RIGHT_UNSIGNED.kgt", "OperatorExpressionArithmetical.kgt",
+                "OperatorExpression.kgt"],
+        OperatorType.BITWISE_XOR.getName ->
+            #["OperatorExpressionBITWISE_XOR.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
+        OperatorType.BITWISE_NOT.getName ->
+            #["OperatorExpressionBITWISE_NOT.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
+        OperatorType.CONDITIONAL.getName -> #["OperatorExpressionCONDITIONAL.kgt", "OperatorExpression.kgt"],
+        OperatorType.FBY.getName -> #["OperatorExpressionFBY.kgt", "OperatorExpression.kgt"],
+        OperatorType.CURRENT.getName -> #["OperatorExpressionCURRENT.kgt", "OperatorExpression.kgt"],
+        OperatorType.WHEN.getName -> #["OperatorExpressionWHEN.kgt", "OperatorExpression.kgt"],
+        OperatorType.INIT.getName -> #["OperatorExpressionINIT.kgt", "OperatorExpression.kgt"],
+        OperatorType.ATMOSTONEOF.getName -> #["OperatorExpressionATMOSTONEOF.kgt", "OperatorExpression.kgt"],
+        OperatorType.NOR.getName -> #["OperatorExpressionNOR.kgt", "OperatorExpression.kgt"],
+        OperatorType.IMPLIES.getName -> #["OperatorExpressionIMPLIES.kgt", "OperatorExpression.kgt"],
+        OperatorType.SFBY.getName -> #["OperatorExpressionSFBY.kgt", "OperatorExpression.kgt"],
+        OperatorType.LAST.getName -> #["OperatorExpressionLAST.kgt", "OperatorExpression.kgt"],
         "CLASS_INPUT" -> #["InputClass.kgt", "Class.kgt"],
         "CLASS_OUTPUT" -> #["InputClass.kgt", "Class.kgt"],
         "ARRAY_INPUT" -> #["InputArray.kgt", "Array.kgt"],
         "ARRAY_OUTPUT" -> #["InputArray.kgt", "Array.kgt"],
         "OPERATOR" -> #["OperatorExpression.kgt"],
         "FUNCTION" -> #["FunktionExpression.kgt", "OperatorExpression.kgt"],
-        "PRE" -> #["OperatorExpressionPRE.kgt", "OperatorExpressionUnary.kgt", "OperatorExpression.kgt"],
-        "NOT" -> #["OperatorExpressionNOT.kgt", "OperatorExpressionUnary.kgt", "OperatorExpression.kgt"],
-        "EQ" -> #["OperatorExpressionEQ.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
-        "LT" -> #["OperatorExpressionLT.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
-        "LEQ" -> #["OperatorExpressionLEQ.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
-        "LOGICAL_AND" -> #["OperatorExpressionLOGICAL_AND.kgt", "OperatorExpression.kgt"],
-        "LOGICAL_OR" -> #["OperatorExpressionLOGICAL_OR.kgt", "OperatorExpression.kgt"],
-        "ADD" -> #["OperatorExpressionADD.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
         "UNARY_SUB" -> #["OperatorExpressionUnarySUB.kgt", "OperatorExpressionUnary.kgt", "OperatorExpression.kgt"],
         "ARITHMETICAL_SUB" ->
             #["OperatorExpressionArithmeticalSUB.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
-        "VAL" -> #["OperatorExpressionVAL.kgt", "OperatorExpressionUnary.kgt", "OperatorExpression.kgt"],
-        "NE" -> #["OperatorExpressionNE.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
         "CONDITIONAL_UPDATE" -> #["OperatorExpressionUPDATE2.kgt", "OperatorExpression.kgt"],
-        "CONDITIONAL" -> #["OperatorExpressionCONDITIONAL.kgt", "OperatorExpression.kgt"],
-        "INIT" -> #["OperatorExpressionINIT.kgt", "OperatorExpression.kgt"],
-        "FBY" -> #["OperatorExpressionFBY.kgt", "OperatorExpression.kgt"],
-        "MULT" -> #["OperatorExpressionMULT.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
-        "DIV" -> #["OperatorExpressionDIV.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
-        "SHIFT_LEFT" ->
-            #["OperatorExpressionSHIFT_LEFT.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
-        "SHIFT_RIGHT" ->
-            #["OperatorExpressionSHIFT_RIGHT.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
-        "SHIFT_RIGHT_UNSIGNED" -> #["OperatorExpressionSHIFT_RIGHT_UNSIGNED.kgt", "OperatorExpressionArithmetical.kgt",
-            "OperatorExpression.kgt"],
-        "MOD" -> #["OperatorExpressionMOD.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
-        "GEQ" -> #["OperatorExpressionGEQ.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
-        "GT" -> #["OperatorExpressionGT.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
         "INPUT" -> #["Input.kgt", "OperatorExpression.kgt"],
         "OUTPUT" -> #["Output.kgt", "OperatorExpression.kgt"],
         "INPUT_OUTPUT" -> #["InputOutput.kgt", "OperatorExpression.kgt"],
         "LOCAL" -> #["Local.kgt", "OperatorExpression.kgt"],
-        "EXTERNAL_FUNCTION" -> #["OperatorExpressionUnary.kgt", "OperatorExpression.kgt"],
-        "BITWISE_AND" ->
-            #["OperatorExpresOperatorExpressionLOGICAL_AND.kgtsionBITWISE_AND.kgt",
-                "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
-        "BITWISE_OR" ->
-            #["OperatorExpressionBITWISE_OR.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
-        "BITWISE_XOR" ->
-            #["OperatorExpressionBITWISE_XOR.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"]
+        "EXTERNAL_FUNCTION" -> #["OperatorExpressionUnary.kgt", "OperatorExpression.kgt"]
     }
     
     override getDisplayedSynthesisOptions() {
@@ -240,7 +255,6 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
             SEQUENTIAL_CONSTRAINTS,
             INSTANCE_CONSTRAINTS,
             SHOW_LOCALS,
-            SHOW_UNUSED,
             PRE_CICLES,
             COMBINE_ALL_DATA_ACCESS,
             AUTOMATIC_INLINE,
@@ -265,7 +279,6 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         sequentials.clear
         alignInputOutputs = ALIGN_INPUTS_OUTPUTS.booleanValue
         showLocals = SHOW_LOCALS.booleanValue
-        showUnused = SHOW_UNUSED.booleanValue
         preCicles = PRE_CICLES.booleanValue
         showWireLabels = SHOW_WIRE_LABELS.booleanValue
         combineAllDataAccessNodes = COMBINE_ALL_DATA_ACCESS.booleanValue
@@ -579,6 +592,28 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         nodes += node
         return node
     }
+    
+    /**
+     * creates an equation tree graph from an expression and returns the root node of the tree
+     * create an input node for constant values
+     * @param e The StaticAccessExpression to which the tree should be generated
+     * @param nodes All created nodes are added to this list
+     * @param output Will be ignored in this case
+     */
+    private def dispatch KNode performTransformation(StaticAccessExpression e, List<KNode> nodes, boolean output) {
+        val node = e.createKGTNode("INPUT", "")
+        val text = e.serializeHR.toString
+        node.addNodeLabelWithPadding(text, INPUT_OUTPUT_TEXT_SIZE, PADDING_INPUT_LEFT, PADDING_INPUT_RIGHT)
+        node.setProperty(INPUT_FLAG, true)
+
+        if (ALIGN_CONSTANTS.booleanValue) {
+            node.addLayoutParam(LayeredOptions::LAYERING_LAYER_CONSTRAINT, LayerConstraint::FIRST)
+            node.addLayoutParam(CoreOptions::ALIGNMENT, Alignment.LEFT)
+        }
+        node.associateWith(e)
+        nodes += node
+        return node
+    }
 
     /**
      * creates an equation tree graph from an expression and returns the root node of the tree
@@ -700,18 +735,18 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                     var sourcePort = source.findPortById(INSTANCE_OUT_PORT)
                     if (sourcePort === null) {
                         sourcePort = createPort => [
-                            data += KGraphFactory.eINSTANCE.createKIdentifier()
-                            setId(INSTANCE_OUT_PORT);
+                            KID = INSTANCE_OUT_PORT
                             setProperty(CoreOptions::PORT_SIDE, PortSide.EAST)
+                            setPortSize(0, 0)
                         ]
                         source.ports.add(sourcePort)
                     }
                     var targetPort = target.findPortById(INSTANCE_IN_PORT)
                     if (targetPort === null) {
                         targetPort = createPort => [
-                            data += KGraphFactory.eINSTANCE.createKIdentifier()
-                            setId(INSTANCE_IN_PORT);
+                            KID = INSTANCE_IN_PORT
                             setProperty(CoreOptions::PORT_SIDE, PortSide.WEST)
+                            setPortSize(0, 0)
                         ]
                         target.ports.add(targetPort)
                     }
@@ -797,18 +832,18 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         var sourcePort = before.findPortById(SEQUENTIAL_OUT_PORT)
         if (sourcePort === null) {
             sourcePort = createPort => [
-                data += KGraphFactory.eINSTANCE.createKIdentifier()
-                setId(SEQUENTIAL_OUT_PORT);
+                KID = SEQUENTIAL_OUT_PORT
                 setProperty(CoreOptions::PORT_SIDE, PortSide.EAST)
+                setPortSize(0, 0)
             ]
             before.ports.add(sourcePort)
         }
         var targetPort = after.findPortById(SEQUENTIAL_IN_PORT)
         if (targetPort === null) {
             targetPort = createPort => [
-                data += KGraphFactory.eINSTANCE.createKIdentifier()
-                setId(SEQUENTIAL_IN_PORT);
+                KID = SEQUENTIAL_IN_PORT
                 setProperty(CoreOptions::PORT_SIDE, PortSide.WEST)
+                setPortSize(0, 0)
             ]
             after.ports.add(targetPort)
         }
@@ -845,7 +880,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
 
         node.setLayoutOption(LayeredOptions::NODE_PLACEMENT_STRATEGY, NodePlacementStrategy.SIMPLE)
         node.setLayoutOption(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_ORDER)
-        node.setLayoutOption(CoreOptions.PORT_LABELS_PLACEMENT, PortLabelPlacement.INSIDE)
+        node.setLayoutOption(CoreOptions.PORT_LABELS_PLACEMENT, EnumSet.of(PortLabelPlacement.INSIDE))
         node.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 10d); // 10.5 // 8f
         node.setLayoutOption(CoreOptions::PADDING, new ElkPadding(4d));
         node.addLayoutParam(KlighdProperties::EXPAND, false)
@@ -1015,36 +1050,22 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
     /**
      * create a single node from a kgt file
      */
-    private def KNode createKGTNode(
-        EObject createExtensionObject,
-        String figureId,
-        String label
-    ) {
-        if (createExtensionObject instanceof Annotatable) {
-            var annotationObject = createExtensionObject as Annotatable
-            if (annotationObject.hasAnnotation(ANNOTATION_FIGURE)) {
+    private def KNode createKGTNode(EObject obj, String figureId, String label) {
+        if (obj instanceof Annotatable) {
+            if (obj.hasAnnotation(ANNOTATION_FIGURE)) {
                 val path = getSkinPath(usedContext)
-                val kgt = path +
-                    if(!path.endsWith("/")) "/" + annotationObject.getStringAnnotationValue(ANNOTATION_FIGURE)
-                val sl = createExtensionObject.eResource?.URI?.segmentsList
-                if (sl !== null) {
-                    val nsl = sl.take(sl.length - 1).drop(1)
-                    val newURI = URI.createPlatformResourceURI(nsl.join("/") + "/" + kgt, false)
-
-                    val newResourceSet = KiCoolSynthesis.KGTInjector.getInstance(XtextResourceSet)
-                    newResourceSet.addLoadOption(XtextResource.OPTION_RESOLVE_ALL, Boolean.FALSE)
-                    val res = newResourceSet.createResource(newURI)
-
-                    try {
-                        res.load(newResourceSet.loadOptions)
-                        val node = (res.getContents().get(0) as KNode).children.head
+                val kgt = path + if(!path.empty && !path.endsWith("/")) "/" + obj.getStringAnnotationValue(ANNOTATION_FIGURE)
+                val uri = KGTLoader.createModelRelativeURI(obj, kgt)
+                if (uri !== null) {
+                    val node = KGTLoader.loadKGT(uri)
+                    if (node !== null) {
                         var List<ValuedObject> valuedObjects = null
-                        if (createExtensionObject instanceof DeclarationScope) {
-                            valuedObjects = createExtensionObject.asDeclarationScope.valuedObjects.filter [
+                        if (obj instanceof DeclarationScope) {
+                            valuedObjects = obj.asDeclarationScope.valuedObjects.filter [
                                 input || output
                             ].toList
-                        } else if (createExtensionObject instanceof ReferenceDeclaration) {
-                            valuedObjects = (createExtensionObject as ReferenceDeclaration).reference.
+                        } else if (obj instanceof ReferenceDeclaration) {
+                            valuedObjects = (obj as ReferenceDeclaration).reference.
                                 asDeclarationScope.valuedObjects.filter [
                                     input || output
                                 ].toList
@@ -1053,70 +1074,64 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                             for (p : node.eAllContents.filter(KPort).toList) {
                                 val id = p.data.filter(KIdentifier).head
                                 val v = valuedObjects.filter[it.name.equals(id.id)].head
-
+    
                                 p.associateWith(v)
-                                node.addPort(v, p)
+                                p.registerExistingPort(node, v)
                             }
                         }
                         return node
-                    } catch (Exception e) {
-                        e.printStackTrace()
                     }
                 }
             }
         }
         var showLabel = false
         // check if a figure file in the skin folder exists
-        if (createExtensionObject.eResource !== null && createExtensionObject.eResource.URI !== null) {
-            val sl = createExtensionObject.eResource.URI.segmentsList
-            val nsl = sl.take(sl.length - 1).drop(1)
-            val path = nsl.join("/") + "/" + getSkinPath(usedContext)
-            for (figure : defaultFigures.get(figureId)) {
-                val kgt = path + if(!path.endsWith("/")) "/" + figure
-                val newURI = URI.createPlatformResourceURI(kgt, false)
-                val newResourceSet = KiCoolSynthesis.KGTInjector.getInstance(XtextResourceSet)
-                newResourceSet.addLoadOption(XtextResource.OPTION_RESOLVE_ALL, Boolean.FALSE)
-                val res = newResourceSet.createResource(newURI)
-                try {
-                    res.load(newResourceSet.loadOptions)
-                    val node = (res.getContents().get(0) as KNode).children.head
-                    if (!label.nullOrEmpty && showLabel) {
-                        node.addNodeLabel(label, INPUT_OUTPUT_TEXT_SIZE)
+        if (obj.eResource !== null && obj.eResource.URI !== null) {
+            var path = getSkinPath(usedContext)
+            if (!path.nullOrEmpty) {
+                path += if(!path.empty && !path.endsWith("/")) "/"
+                for (figure : defaultFigures.get(figureId) ?: #[]) {
+                    val uri = KGTLoader.createModelRelativeURI(obj, path + figure)
+                    if (uri !== null) {
+                        val node = KGTLoader.loadKGT(uri)
+                        if (node !== null) {
+                            if (!label.nullOrEmpty && showLabel) {
+                                node.addNodeLabel(label, INPUT_OUTPUT_TEXT_SIZE)
+                            }
+                            return node
+                        }
                     }
-                    return node
-                } catch (Exception _) {
-                    showLabel = true
                 }
             }
+            showLabel = true
         }
         // check if the skin folder in inside of the plugin
-        val oldSkinPrefix = skinPrefix
-        skinPrefix = getSkinPath(usedContext)
-        skinPrefix += if(!skinPrefix.endsWith("/")) "/"
+        var skinPrefix = getSkinPath(usedContext)
+        skinPrefix += if(!skinPrefix.empty && !skinPrefix.endsWith("/")) "/"
         showLabel = false
-        for (figure : defaultFigures.get(figureId)) {
-            if (doesKGTExist(figure)) {
-                val node = getKGTFromBundle(figure)
-                skinPrefix = oldSkinPrefix
+        for (figure : defaultFigures.get(figureId) ?: #[]) {
+            val node = KGTLoader.loadFromBundle(this, SCChartsUiModule.PLUGIN_ID, SKIN_BUNDLE_FOLDER + skinPrefix + figure)
+            if (node !== null) {
                 if (!label.nullOrEmpty && showLabel) {
                     node.addNodeLabel(label, INPUT_OUTPUT_TEXT_SIZE)
                 }
                 return node
-            } else
+            } else {
                 showLabel = true
+            }
         }
-        skinPrefix = oldSkinPrefix
         showLabel = false
         // fall back to default figures
-        for (figure : defaultFigures.get(figureId)) {
-            if (doesKGTExist(figure)) {
-                val node = getKGTFromBundle(figure)
+        for (figure : defaultFigures.get(figureId) ?: #[]) {
+            val node = KGTLoader.loadFromBundle(this, SCChartsUiModule.PLUGIN_ID, SKIN_BUNDLE_FOLDER + SKIN_PREFIX_DEFAULT + figure)
+            if (node !== null) {
                 if (!label.nullOrEmpty && showLabel) {
                     node.addNodeLabel(label, INPUT_OUTPUT_TEXT_SIZE)
                 }
                 return node
-            } else
+            } else {
                 showLabel = true
+            }
         }
         throw new IllegalArgumentException("Resource not found")
     }

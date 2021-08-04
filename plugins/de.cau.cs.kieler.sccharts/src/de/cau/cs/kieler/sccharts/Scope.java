@@ -14,10 +14,13 @@
 package de.cau.cs.kieler.sccharts;
 
 import de.cau.cs.kieler.annotations.Annotatable;
-
 import de.cau.cs.kieler.annotations.NamedObject;
+
+import de.cau.cs.kieler.kexpressions.GenericParameterDeclaration;
 import de.cau.cs.kieler.kexpressions.Schedulable;
+
 import de.cau.cs.kieler.kexpressions.keffects.Linkable;
+
 import de.cau.cs.kieler.kexpressions.kext.DeclarationScope;
 
 import org.eclipse.emf.common.util.EList;
@@ -52,6 +55,7 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link de.cau.cs.kieler.sccharts.Scope#getLabel <em>Label</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.Scope#getActions <em>Actions</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.Scope#getReference <em>Reference</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.Scope#getGenericParameterDeclarations <em>Generic Parameter Declarations</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getScope()
@@ -69,10 +73,6 @@ public interface Scope extends Annotatable, DeclarationScope, NamedObject, Sched
     /**
      * Returns the value of the '<em><b>Label</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Label</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Label</em>' attribute.
      * @see #setLabel(String)
@@ -96,10 +96,6 @@ public interface Scope extends Annotatable, DeclarationScope, NamedObject, Sched
      * Returns the value of the '<em><b>Actions</b></em>' containment reference list.
      * The list contents are of type {@link de.cau.cs.kieler.sccharts.LocalAction}.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Actions</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Actions</em>' containment reference list.
      * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getScope_Actions()
@@ -111,10 +107,6 @@ public interface Scope extends Annotatable, DeclarationScope, NamedObject, Sched
     /**
      * Returns the value of the '<em><b>Reference</b></em>' containment reference.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Reference</em>' reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Reference</em>' containment reference.
      * @see #setReference(ScopeCall)
@@ -133,5 +125,17 @@ public interface Scope extends Annotatable, DeclarationScope, NamedObject, Sched
      * @generated
      */
     void setReference(ScopeCall value);
+
+    /**
+     * Returns the value of the '<em><b>Generic Parameter Declarations</b></em>' containment reference list.
+     * The list contents are of type {@link de.cau.cs.kieler.kexpressions.GenericParameterDeclaration}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Generic Parameter Declarations</em>' containment reference list.
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getScope_GenericParameterDeclarations()
+     * @model containment="true"
+     * @generated
+     */
+    EList<GenericParameterDeclaration> getGenericParameterDeclarations();
 
 } // Scope

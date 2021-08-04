@@ -15,10 +15,9 @@ package de.cau.cs.kieler.scg.processors.analyzer
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.scg.Entry
-import de.cau.cs.kieler.scg.Join
+import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import java.util.List
-import de.cau.cs.kieler.scg.SCGraph
 
 /** 
 /** 

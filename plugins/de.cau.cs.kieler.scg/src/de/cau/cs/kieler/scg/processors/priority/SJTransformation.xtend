@@ -16,12 +16,17 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.AnnotationsFactory
 import de.cau.cs.kieler.annotations.IntAnnotation
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.kexpressions.Declaration
+import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
 import de.cau.cs.kieler.kicool.compilation.Processor
 import de.cau.cs.kieler.kicool.compilation.ProcessorType
+import de.cau.cs.kieler.kicool.compilation.codegen.CodeGeneratorNames
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.ControlFlow
@@ -41,16 +46,11 @@ import java.util.ArrayList
 import java.util.HashMap
 import java.util.HashSet
 import java.util.LinkedList
+import java.util.List
 import java.util.Stack
-import de.cau.cs.kieler.kexpressions.ValueType
+
 import static de.cau.cs.kieler.kicool.compilation.codegen.AbstractCodeGenerator.*
 import static de.cau.cs.kieler.kicool.compilation.codegen.CodeGeneratorNames.*
-import de.cau.cs.kieler.kicool.compilation.codegen.CodeGeneratorNames
-import java.util.List
-import de.cau.cs.kieler.kexpressions.Declaration
-import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.kicool.compilation.VariableStore
 
 /**
  * Class to perform the transformation of an SCG to Java Code using the priority based compilation approach

@@ -1,24 +1,24 @@
 knode operator {
-    size: width = 20 height = 20
+    size: width = 20 height = 35
     
     properties:
     org.eclipse.elk.portLabels.placement = INSIDE
     org.eclipse.elk.portConstraints = FIXED_POS
 
   kpolygon {
-    points: right, top;
-                    left, top;
+    points: right, top 25%;
+                    left, top 25%;
                     left,bottom 0%;  
-                    right,bottom 33%    
+                    right,bottom 25%    
         styles: lineStyle = solid
               foreground = 190r, 190g, 190b 
             background = 248r, 249g, 253b, 255a -> 205r, 220g, 243b, 243a (90)
   }
 
   kport in1 {
-    pos: x = -20 y = 9
-    size: width = 2 height = 2
-    properties: de.cau.cs.kieler.portSide = WEST
+    pos: x = -2 y = 18
+    size: width = 0 height = 0
+    properties: org.eclipse.elk.port.side = WEST
     
     klabel "" { 
         ktext {
@@ -28,16 +28,16 @@ knode operator {
   }
   
   kport in0 {
-    pos: x = 9 y = 25
-    size: width = 2 height = 2
-    properties: de.cau.cs.kieler.portSide = SOUTH
-                            org.eclipse.elk.port.borderOffset = -3.75
-                            org.eclipse.elk.layered.northOrSouthPort = false
+    pos: x = 10 y = 15
+    size: width = 0 height = 0
+    properties: org.eclipse.elk.port.side = SOUTH
+                            org.eclipse.elk.port.borderOffset = -5.25
+                            org.eclipse.elk.layered.allowNonFlowPortsToSwitchSides = false
     
     klabel "set" {
-        pos: x = 0 y = -2
+        pos: x = 0 y = -2 
         ktext {
-            styles: fontSize = 3pt
+            styles: fontSize = 5pt
 //          rotation = 270
 
         }
@@ -45,8 +45,8 @@ knode operator {
   }
   
   kport out {
-        pos: x = 14.5 y = 9
-    size: width = 2 height = 2
+        pos: x = 14.5 y = 18
+    size: width = 0 height = 0
     properties:
     org.eclipse.elk.port.side = EAST
     

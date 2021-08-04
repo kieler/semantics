@@ -12,17 +12,19 @@
  */
 package de.cau.cs.kieler.scg.processors.codegen.c
 
-import de.cau.cs.kieler.scg.SCGraphs
-import de.cau.cs.kieler.scg.SCGraph
 import com.google.inject.Inject
 import com.google.inject.Injector
+import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
 import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.core.properties.Property
-import de.cau.cs.kieler.kicool.compilation.codegen.CodeGeneratorModule
+import de.cau.cs.kieler.kexpressions.MethodDeclaration
+import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
 import de.cau.cs.kieler.kicool.compilation.codegen.AbstractCodeGenerator
-import java.util.Map
-import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
+import de.cau.cs.kieler.kicool.compilation.codegen.CodeGeneratorModule
+import de.cau.cs.kieler.scg.SCGraph
+import de.cau.cs.kieler.scg.SCGraphs
 import de.cau.cs.kieler.scg.extensions.SCGMethodExtensions
+import java.util.Map
 
 /**
  * C Code Processor
@@ -68,10 +70,50 @@ class CCodeGenerator extends AbstractCodeGenerator<SCGraphs, SCGraph> {
         if (rootModel.hasPragma("debug")) {
             environment.setProperty(DEBUG_COMMENTS, true)
         }
+        rootModel.fixClassNameClashes
     }
     
     override createCodeGeneratorModule() {
         return injector.getInstance(CCodeGeneratorModule)
+    }
+    
+    protected def fixClassNameClashes(SCGraphs rootModel) {
+        for (scg : rootModel.scgs.ignoreMethods) {
+            val classDecls = scg.eAllContents.filter(ClassDeclaration).filter[!host].toList
+            // hierachical names
+            for (decl : classDecls) {
+                var parent = decl.eContainer
+                while (parent instanceof ClassDeclaration) {
+                    decl.name = parent.name + "_" + decl.name
+                    parent = parent.eContainer
+                }
+                decl.name = scg.name + "_" + decl.name
+            }
+            // Fix clashes
+            val names = newHashSet
+            for (decl : classDecls) {
+                if (names.contains(decl.name)) {
+                    var idx = 1
+                    while (names.contains(decl.name + idx)) {
+                        idx++
+                    }
+                    decl.name = decl.name + idx
+                    names += decl.name
+                } else {
+                    names += decl.name
+                }
+            }
+            // Fix method names
+            for (decl : classDecls) {
+                for (m : decl.declarations.filter(MethodDeclaration)) {
+                    m.valuedObjects.head.name = decl.name + "_" + m.valuedObjects.head.name
+                }
+            }
+            // Fix root method names
+            for (m : scg.declarations.filter(MethodDeclaration)) {
+                m.valuedObjects.head.name = scg.name + "_" + m.valuedObjects.head.name
+            }
+        }
     }
 
 }

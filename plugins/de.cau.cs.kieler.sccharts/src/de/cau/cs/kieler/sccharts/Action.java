@@ -18,8 +18,8 @@ import de.cau.cs.kieler.annotations.Annotatable;
 import de.cau.cs.kieler.kexpressions.Expression;
 
 import de.cau.cs.kieler.kexpressions.keffects.Effect;
-
 import de.cau.cs.kieler.kexpressions.keffects.Linkable;
+
 import org.eclipse.emf.common.util.EList;
 
 /**
@@ -74,10 +74,6 @@ public interface Action extends Annotatable, Linkable {
      * Returns the value of the '<em><b>Effects</b></em>' containment reference list.
      * The list contents are of type {@link de.cau.cs.kieler.kexpressions.keffects.Effect}.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Effects</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Effects</em>' containment reference list.
      * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getAction_Effects()
@@ -89,10 +85,6 @@ public interface Action extends Annotatable, Linkable {
     /**
      * Returns the value of the '<em><b>Trigger</b></em>' containment reference.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Trigger</em>' containment reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Trigger</em>' containment reference.
      * @see #setTrigger(Expression)
@@ -116,10 +108,6 @@ public interface Action extends Annotatable, Linkable {
      * Returns the value of the '<em><b>Trigger Delay</b></em>' attribute.
      * The default value is <code>"1"</code>.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Trigger Delay</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Trigger Delay</em>' attribute.
      * @see #setTriggerDelay(int)
@@ -142,10 +130,6 @@ public interface Action extends Annotatable, Linkable {
     /**
      * Returns the value of the '<em><b>Trigger Probability</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Trigger Probability</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Trigger Probability</em>' attribute.
      * @see #setTriggerProbability(double)
@@ -168,10 +152,6 @@ public interface Action extends Annotatable, Linkable {
     /**
      * Returns the value of the '<em><b>Label</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Label</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Label</em>' attribute.
      * @see #setLabel(String)
@@ -196,10 +176,6 @@ public interface Action extends Annotatable, Linkable {
      * The default value is <code>"UNDEFINED"</code>.
      * The literals are from the enumeration {@link de.cau.cs.kieler.sccharts.DelayType}.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Delay</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Delay</em>' attribute.
      * @see de.cau.cs.kieler.sccharts.DelayType
@@ -224,10 +200,6 @@ public interface Action extends Annotatable, Linkable {
     /**
      * Returns the value of the '<em><b>Nondeterministic</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Nondeterministic</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Nondeterministic</em>' attribute.
      * @see #setNondeterministic(boolean)

@@ -14,12 +14,9 @@ package de.cau.cs.kieler.simulation.internal.processor
 
 import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.core.properties.Property
-import de.cau.cs.kieler.simulation.trace.ktrace.Trace
 import de.cau.cs.kieler.simulation.SimulationContext
-import de.cau.cs.kieler.simulation.events.SimulationEvent
 import de.cau.cs.kieler.simulation.trace.TraceDataProvider
-import de.cau.cs.kieler.simulation.events.SimulationControlEvent
-import de.cau.cs.kieler.simulation.events.ISimulationListener
+import de.cau.cs.kieler.simulation.trace.ktrace.Trace
 
 /**
  * @author als

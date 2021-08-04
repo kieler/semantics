@@ -12,37 +12,46 @@
  */
 package de.cau.cs.kieler.kicool.ui.synthesis
 
+import com.google.inject.Binder
+import com.google.inject.Guice
 import com.google.inject.Inject
+import com.google.inject.Injector
+import com.google.inject.Module
+import com.google.inject.Scopes
 import de.cau.cs.kieler.kicool.ProcessorAlternativeGroup
+import de.cau.cs.kieler.kicool.ProcessorEntry
 import de.cau.cs.kieler.kicool.ProcessorGroup
+import de.cau.cs.kieler.kicool.ProcessorReference
 import de.cau.cs.kieler.kicool.ProcessorSystem
 import de.cau.cs.kieler.kicool.System
+import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
+import de.cau.cs.kieler.kicool.ui.synthesis.styles.ProcessorStyles
+import de.cau.cs.kieler.klighd.kgraph.KEdge
+import de.cau.cs.kieler.klighd.kgraph.KGraphFactory
+import de.cau.cs.kieler.klighd.kgraph.KNode
+import de.cau.cs.kieler.klighd.krendering.KRoundedRectangle
+import de.cau.cs.kieler.klighd.krendering.KText
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KPortExtensions
+import de.cau.cs.kieler.klighd.util.KlighdProperties
 import java.util.List
+import org.eclipse.elk.alg.layered.options.LayeredOptions
+import org.eclipse.elk.core.math.ElkPadding
+import org.eclipse.elk.core.options.CoreOptions
+import org.eclipse.elk.core.options.PortConstraints
+import org.eclipse.elk.core.options.PortSide
+import org.eclipse.elk.graph.properties.Property
 import org.eclipse.emf.common.util.URI
+import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.xtext.resource.IResourceServiceProvider
 import org.eclipse.xtext.resource.XtextResource
 import org.eclipse.xtext.resource.XtextResourceSet
+
+import static extension de.cau.cs.kieler.annotations.ide.klighd.CommonSynthesisUtil.*
 import static extension de.cau.cs.kieler.kicool.ui.synthesis.updates.ProcessorDataManager.*
-import de.cau.cs.kieler.kicool.ui.KiCoolUiModule
-import de.cau.cs.kieler.klighd.kgraph.KNode
-import de.cau.cs.kieler.klighd.kgraph.KIdentifier
-import de.cau.cs.kieler.klighd.krendering.KRoundedRectangle
-import de.cau.cs.kieler.klighd.krendering.KText
-import de.cau.cs.kieler.klighd.util.KlighdProperties
-import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
 import static extension de.cau.cs.kieler.kicool.util.KiCoolUtils.uniqueProcessorId
-import static de.cau.cs.kieler.kicool.ui.synthesis.styles.ColorStore.Color.*
-import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
-import static extension de.cau.cs.kieler.kicool.ui.synthesis.styles.ColorStore.*
-import static extension org.eclipse.xtext.EcoreUtil2.* 
-import de.cau.cs.kieler.kicool.ProcessorReference
-import de.cau.cs.kieler.kicool.ProcessorEntry
-import de.cau.cs.kieler.klighd.kgraph.KEdge
-import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensions
-import de.cau.cs.kieler.klighd.krendering.KRenderingFactory
 
 /**
  * Main diagram synthesis for processors in KiCool.
@@ -53,43 +62,82 @@ import de.cau.cs.kieler.klighd.krendering.KRenderingFactory
  */
 @ViewSynthesisShared
 class ProcessorSynthesis {
-    
-    extension KRenderingFactory = KRenderingFactory::eINSTANCE
+   
+    @Inject Injector injector
+    @Inject extension ProcessorStyles
     @Inject extension KNodeExtensions
-    @Inject extension KEdgeExtensions 
-    @Inject extension KRenderingExtensions  
-    @Inject extension KContainerRenderingExtensions    
-    @Inject extension ProcessorStyles 
+    @Inject extension KEdgeExtensions
+    @Inject extension KPortExtensions
     @Inject IResourceServiceProvider.Registry regXtext;
     
-    public static val GROUP_NODE = new org.eclipse.elk.graph.properties.Property("de.cau.cs.kieler.kicool.ui.synthesis.groupNode", false)
-    static val PROCESSOR_KGT = "processor.kgt"
-    static val PROCESSOR_GROUP_KGT = "processor_group.kgt"
-    static val COMPATIBILITY_ERROR_ICON = "lightning.png"
-    static val COLLAPSED_ID = "collapsed"
-    static val EXPANDED_ID = "expanded" 
+    public static val GROUP_NODE = new Property("de.cau.cs.kieler.kicool.ui.synthesis.groupNode", false)
+    public static val COLLAPSED_ID = "collapsed"
+    public static val EXPANDED_ID = "expanded" 
     
-    private def setId(KNode node, String id) {
-        node.getData(KIdentifier).id = id
-        node
+    @Accessors var boolean onOffButtons = false
+    @Accessors var double defaultProcessGroupAspectRatio = 2.0
+    
+    new(){
+        if (injector === null) {
+            Guice.createInjector(new Module() {
+                // This Module is created to satisfy ViewSynthesisShared scope of used synthesis-extensions
+                override configure(Binder binder) {
+                    binder.bindScope(ViewSynthesisShared, Scopes.SINGLETON);
+                }
+            }).injectMembers(this)
+        }
     }
     
     def KNode processorNode() {
-        KiCoolSynthesis.getKGTFromBundle(KiCoolUiModule.BUNDLE_ID, PROCESSOR_KGT)
+        createNode => [
+            setDefaultProcessorSize()
+            setProperty(CoreOptions::PADDING, new ElkPadding(4d))
+            data += KGraphFactory.eINSTANCE.createKIdentifier
+            addProcessorFigure(onOffButtons)
+            
+            // Attention: in other place the code always assumes fist port is incoming and last is outgoing
+            setProperty(CoreOptions::PORT_CONSTRAINTS, PortConstraints.FIXED_SIDE)
+            val in = createPort()
+            in.setProperty(CoreOptions::PORT_SIDE, PortSide.WEST)
+            ports += in
+            val out = createPort()
+            out.setProperty(CoreOptions::PORT_SIDE, PortSide.EAST)
+            ports += out
+        ]
+    }
+    
+    def KNode groupNode(){
+        createNode => [
+            setDefaultProcessorSize()
+            KiCoolSynthesis.configureBasicLayout(it)
+            setProperty(LayeredOptions::ASPECT_RATIO, defaultProcessGroupAspectRatio)
+            setProperty(CoreOptions::PADDING, new ElkPadding(0.0))
+            setProperty(KlighdProperties::EXPAND, false)
+            data += KGraphFactory.eINSTANCE.createKIdentifier
+            addGroupFigure
+            
+            // Attention: in other place the code always assumes fist port is incoming and last is outgoing
+            setProperty(CoreOptions::PORT_CONSTRAINTS, PortConstraints.FIXED_SIDE)
+            val in = createPort()
+            in.setProperty(CoreOptions::PORT_SIDE, PortSide.WEST)
+            ports += in
+            val out = createPort()
+            out.setProperty(CoreOptions::PORT_SIDE, PortSide.EAST)
+            ports += out
+        ]
     }
 
     dispatch def List<KNode> transform(ProcessorReference processorReference) {
         val processorNode = processorNode
         val nodeId = processorReference.uniqueProcessorId
-//        println(nodeId)
-        processorNode.setId(nodeId)
+        processorNode.KID = nodeId
         processorReference.populateProcessorData(processorNode)        
-        
+        processorNode.adjustSize
         newArrayList(processorNode)
     }
     
     dispatch def List<KNode> transform(ProcessorGroup processorGroup) {
-        val groupNode = KiCoolSynthesis.getKGTFromBundle(KiCoolUiModule.BUNDLE_ID, PROCESSOR_GROUP_KGT)
+        val groupNode = groupNode()
         groupNode.setProperty(GROUP_NODE, true)
         
         val collapsedRendering = groupNode.eContents.filter(KRoundedRectangle).filter[ COLLAPSED_ID.equals(id) ].head
@@ -97,6 +145,7 @@ class ProcessorSynthesis {
         
         var label = processorGroup.label
         if (processorGroup.eContainer instanceof System) label = (processorGroup.eContainer as System).label
+        groupNode.KID = label
         collapsedRendering.eContents.filter(KText).head.text = label
         expandedRendering.eContents.filter(KText).head.text = label        
         
@@ -114,12 +163,10 @@ class ProcessorSynthesis {
                 for(lastNode : lastNodes) {
                     val edge = createEdge 
                     edge.source = lastNode
+                    edge.sourcePort = lastNode.ports.last // Assuming the last port is right
                     edge.target = node
-                    edge.addRoundedBendsPolyline(2.55f) => [
-                        foreground = ACTIVE_ENVIRONMENT.color
-                        lineWidth = 0.5f
-                        addOwnHeadArrowDecorator
-                    ]
+                    edge.targetPort = node.ports.head // Assuming the first port is left
+                    edge.addConnectionFigure()
                     edges += edge
                 }
             }
@@ -136,16 +183,7 @@ class ProcessorSynthesis {
                             node.setCompatibilityError
                         }
                         for (edge : edges) {
-                            edge.getContainer.addImage(KiCoolUiModule.BUNDLE_ID, KiCoolUiModule.ICON_PATH + COMPATIBILITY_ERROR_ICON) => [
-                                placementData = createKDecoratorPlacementData => [
-                                    rotateWithLine = false
-                                    relative = 0.5f
-                                    width = 6
-                                    height = 10
-                                    setXOffset = -2
-                                    setYOffset = -5
-                                ]              
-                            ]                            
+                            edge.getContainer.addIncompatibilityEdgeDecorator                         
                         }
                     }
                 }
@@ -173,7 +211,6 @@ class ProcessorSynthesis {
         if (processorAlternativeGroup.processors.filter(ProcessorGroup).filter[ processors.size == 1].size == 
             processorAlternativeGroup.processors.size
         ) {
-            
             processorAlternativeGroup.processors.filter(ProcessorGroup).forEach[
                 alternativeGroupNodes += it.processors.head.transform
             ]

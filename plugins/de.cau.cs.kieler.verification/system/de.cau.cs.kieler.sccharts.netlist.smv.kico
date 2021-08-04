@@ -1,4 +1,4 @@
-public system de.cau.cs.kieler.sccharts.netlist.smv
+system de.cau.cs.kieler.sccharts.netlist.smv
 	label "SCCharts to SMV (netlist ssa)"
 
 // Get verification properties from model, if none yet
@@ -6,6 +6,8 @@ de.cau.cs.kieler.sccharts.processors.verification.SCChartsVerificationPropertyAn
 
 system de.cau.cs.kieler.sccharts.extended.core
 de.cau.cs.kieler.sccharts.scg.processors.SCG
+post process de.cau.cs.kieler.scg.processors.str
+post process de.cau.cs.kieler.scg.processors.sfr
 post process silent de.cau.cs.kieler.scg.processors.threadAnalyzer
 
 // sequentialize scg

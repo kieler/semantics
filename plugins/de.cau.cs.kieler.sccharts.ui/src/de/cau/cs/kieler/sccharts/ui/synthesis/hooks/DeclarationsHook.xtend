@@ -18,14 +18,11 @@ import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.KContainerRendering
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
-import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.ControlflowRegionStyles
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.StateStyles
-import org.eclipse.elk.graph.properties.IProperty
-import org.eclipse.elk.graph.properties.Property
 
 /**
  * Shows or hides state declarations.
@@ -44,7 +41,7 @@ class DeclarationsHook extends SynthesisHook {
     /** Action ID */
     public static final String ID = "de.cau.cs.kieler.sccharts.ui.synthesis.hooks.DeclarationsHook";
     /** The related synthesis option */
-    public static final SynthesisOption SHOW_DECLARATIONS = SynthesisOption.createCheckOption("Declarations", true).
+    public static final SynthesisOption SHOW_DECLARATIONS = SynthesisOption.createCheckOption(DeclarationsHook, "Declarations", true).
         setCategory(GeneralSynthesisOptions::APPEARANCE)
 
     override getDisplayedSynthesisOptions() {

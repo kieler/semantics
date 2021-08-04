@@ -87,9 +87,9 @@ class TracingTreeDiagramSynthesis extends AbstractDiagramSynthesis<ModelWrapper>
 
     // -------------------------------------------------------------------------
     // Display options
-    public static val SynthesisOption SHOW_SHADOW = SynthesisOption.createCheckOption("Shadows", true);
-    public static val SynthesisOption SHOW_MODELS = SynthesisOption.createCheckOption("Model visualization", true);
-    public static val SynthesisOption SHOW_ATTRIBUTES = SynthesisOption.createCheckOption("EObject attributes", false);
+    public static val SynthesisOption SHOW_SHADOW = SynthesisOption.createCheckOption(TracingTreeDiagramSynthesis, "Shadows", true);
+    public static val SynthesisOption SHOW_MODELS = SynthesisOption.createCheckOption(TracingTreeDiagramSynthesis, "Model visualization", true);
+    public static val SynthesisOption SHOW_ATTRIBUTES = SynthesisOption.createCheckOption(TracingTreeDiagramSynthesis, "EObject attributes", false);
 
     override public getDisplayedSynthesisOptions() {
         val options = newLinkedList(SHOW_SHADOW, SHOW_MODELS, SHOW_ATTRIBUTES)
@@ -144,14 +144,14 @@ class TracingTreeDiagramSynthesis extends AbstractDiagramSynthesis<ModelWrapper>
     private def KNode create node : createNode() transformModelWrapperAsChildNode(ModelWrapper model, KNode root) {
         node.associateWith(model);
 
-        node.setLayoutOption(KlighdProperties::EXPAND, model.sourceTransformation == null || model.targetTransformations.empty);
+        node.setLayoutOption(KlighdProperties::EXPAND, model.sourceTransformation === null || model.targetTransformations.empty);
 
         //Expanded Rectangle
         node.createFigure() => [
             it.setProperty(KlighdProperties::EXPANDED_RENDERING, true);
             it.setGridPlacement(1);
             //add textual name of model type, transient models will be shown italic
-            if (model.modelTypeID != null && !model.modelTypeID.empty) {
+            if (model.modelTypeID !== null && !model.modelTypeID.empty) {
                 it.addText(model.modelTypeID).associateWith(model) => [
                     it.fontSize = 11;
                     it.setFontItalic(model.transient);
@@ -182,7 +182,7 @@ class TracingTreeDiagramSynthesis extends AbstractDiagramSynthesis<ModelWrapper>
             it.setProperty(KlighdProperties::COLLAPSED_RENDERING, true);
             it.setGridPlacement(1);
             //add textual name of model type, transient models will be shown italic
-            if (model.modelTypeID != null && !model.modelTypeID.empty) {
+            if (model.modelTypeID !== null && !model.modelTypeID.empty) {
                 it.addText(model.modelTypeID).associateWith(model) => [
                     it.fontSize = 11;
                     it.setFontItalic(model.transient);
@@ -202,7 +202,7 @@ class TracingTreeDiagramSynthesis extends AbstractDiagramSynthesis<ModelWrapper>
 
         //Create subdiagram from referenced model synthesis or fallback to component synthesis
         var KNode subDiagramNode = null;
-        if (!model.transient && SHOW_MODELS.booleanValue && model.rootObject.EObject != null) {
+        if (!model.transient && SHOW_MODELS.booleanValue && model.rootObject.EObject !== null) {
             try {
                 val properties = new KlighdSynthesisProperties();
                 properties.setProperty(KlighdSynthesisProperties.REQUESTED_UPDATE_STRATEGY, SimpleUpdateStrategy.ID);
@@ -212,7 +212,7 @@ class TracingTreeDiagramSynthesis extends AbstractDiagramSynthesis<ModelWrapper>
                 //fallback
             }
         }
-        if (subDiagramNode == null) { //component synthesis
+        if (subDiagramNode === null) { //component synthesis
             subDiagramNode = createNode();
             subDiagramNode.children += model.modelObjects.map [
                 it.translateEObjectWrapper;
@@ -244,7 +244,7 @@ class TracingTreeDiagramSynthesis extends AbstractDiagramSynthesis<ModelWrapper>
         figure.setGridPlacement(1);
 
         //if EObjectWrapper has a referenced eObject resolve and take its name or use standard display name of object
-        val name = if (object.EObject == null) {
+        val name = if (object.EObject === null) {
                 object.displayName;
             } else {
                 object.EObject.eClass.name;
@@ -259,7 +259,7 @@ class TracingTreeDiagramSynthesis extends AbstractDiagramSynthesis<ModelWrapper>
         ];
 
         //if EObjectWrapper has a referenced eObject and attributes should be displayed list all attributes
-        if (SHOW_ATTRIBUTES.booleanValue && object.EObject != null) {
+        if (SHOW_ATTRIBUTES.booleanValue && object.EObject !== null) {
             object.EObject.eClass.EAllAttributes.filterNull.forEach [ //get all attributes
                 figure.addText(it.name + ": " + String::valueOf(object.EObject.eGet(it))) => [ //add a text with name and value of the attribute
                     it.fontSize = 9;

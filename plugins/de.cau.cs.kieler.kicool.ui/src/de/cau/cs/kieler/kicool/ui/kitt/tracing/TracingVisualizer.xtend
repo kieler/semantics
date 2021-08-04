@@ -15,8 +15,7 @@ package de.cau.cs.kieler.kicool.ui.kitt.tracing
 
 import com.google.common.base.Predicates
 import com.google.inject.Inject
-import de.cau.cs.kieler.kicool.ui.kitt.tracing.TracingSynthesisOptions
-import de.cau.cs.kieler.kicool.ui.kitt.tracing.TracingVisualizationProperties
+import de.cau.cs.kieler.kicool.ide.klighd.KiCoDiagramViewProperties
 import de.cau.cs.kieler.kicool.kitt.tracing.Tracing
 import de.cau.cs.kieler.kicool.kitt.tracing.TracingTreeExtensions
 import de.cau.cs.kieler.kicool.kitt.tracing.internal.TracingMapping
@@ -47,7 +46,6 @@ import org.eclipse.elk.core.util.Pair
 import org.eclipse.emf.ecore.EObject
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
-import de.cau.cs.kieler.kicool.ui.klighd.KiCoDiagramViewProperties
 
 /**
  * Adds tracing edges from mappings to a diagram.
@@ -77,7 +75,7 @@ class TracingVisualizer {
 
     /** Checks if tracing information exists for the given model */
     def boolean hasTracingInformation(Object model, KNode diagram, ViewContext viewContext) {
-        if (model instanceof EObject && (viewContext.tracing != null || model instanceof ModelWrapper)) {
+        if (model instanceof EObject && (viewContext.tracing !== null || model instanceof ModelWrapper)) {
 
             //If model is traced model directly
             return true;
@@ -87,7 +85,7 @@ class TracingVisualizer {
             return diagram.KNodeIterator.
                 filter [
                     it.getProperty(TracingVisualizationProperties.TRACED_MODEL_ROOT_NODE)
-                ].exists[viewContext.tracing != null || model instanceof ModelWrapper];
+                ].exists[viewContext.tracing !== null || model instanceof ModelWrapper];
         }
     }
 
@@ -153,17 +151,17 @@ class TracingVisualizer {
 
         //Show selected edges marked as TRACING_EDGE
         val HashSet<Object> visibleEdgesModelOrigin = newHashSet(); //Set of all origins of tracing edges which are selected or related to these
-        if (selection != null && !selection.empty) {
+        if (selection !== null && !selection.empty) {
             val selectedSourceElements = newHashSet;
 
             //Get the stored equivalence class element
             val equivalenceClasses = viewContext.getProperty(InternalTracingProperties.DIAGRAM_EQUIVALENCE_CLASSES);
             for (EObject obj : selection) {
                 val source = viewContext.getSourceElement(obj);
-                if (source != null) {
+                if (source !== null) {
                     selectedSourceElements.add(source);
                 }
-                if (equivalenceClasses != null) {
+                if (equivalenceClasses !== null) {
                     val boo = equivalenceClasses.getOrigins(obj);
                     selectedSourceElements.addAll(boo);
                 }
@@ -189,7 +187,7 @@ class TracingVisualizer {
                         val parents = new FunctionalTreeIterator(eow, false,
                             [
                                 val elem = it as EObjectWrapper;
-                                if (elem.model.sourceTransformation != null) {
+                                if (elem.model.sourceTransformation !== null) {
                                     elem.parents(elem.model.sourceTransformation).iterator;
                                 } else {
                                     emptyList.iterator;
@@ -207,7 +205,7 @@ class TracingVisualizer {
                 ]
             } else { //In case of displaying a chain
                 val mapping = viewContext.getProperty(InternalTracingProperties.MAPPING);
-                if (mapping != null) {
+                if (mapping !== null) {
                     val selectedSourceElementsList = selectedSourceElements.toList;
                     var children = selectedSourceElementsList; //first add already selected elements
                     while (!children.empty && visibleEdgesModelOrigin.addAll(children)) { //continue if derived elements exist and are new (changing the set)
@@ -254,14 +252,14 @@ class TracingVisualizer {
     /** Returns a map with all visible traced model in the diagram and their representing knodes */
     def getTracedModelMap(KNode diagram, ViewContext viewContext) {
         val tracing = viewContext.tracing
-        if (tracing != null) {
+        if (tracing !== null) {
             return diagram.KNodeIterator.filter [
                 val node = it as KNode;
                 node.getProperty(TracingVisualizationProperties.TRACED_MODEL_ROOT_NODE) &&
                     viewContext.viewer.isExpanded(node);
             ].map[it as KNode].fold(newHashMap()) [ map, node |
                 val model = viewContext.getSourceElement(node);
-                if (model != null && tracing.tracingChain.models.contains(model)) {
+                if (model !== null && tracing.tracingChain.models.contains(model)) {
                     map.put(model, node);
                 }
                 return map;
@@ -297,13 +295,13 @@ class TracingVisualizer {
 
             //get all traced models contained in this model
             val tracing = viewContext.tracing;
-            if (tracing != null) {
+            if (tracing !== null) {
                 val tracedModelMap = getTracedModelMap(diagram, viewContext);
                 if (!tracedModelMap.empty) {
                     val traceMap = new TracingMapping(null);
                     val equivalenceClasses = new TracingMapping(null);
                     val chain = tracing.tracingChain;
-                    if (chain != null && !chain.models.empty) {
+                    if (chain !== null && !chain.models.empty) {
 
                         //Iterate over all step in the chain apply mappings
                         val chainIter = chain.models.listIterator;
@@ -357,7 +355,7 @@ class TracingVisualizer {
 
     /** Adds tracing edges for given source target mapping in a TracingTree */
     private def addTracingTreeEdges(ModelWrapper source, ModelWrapper target, ViewContext viewContext) {
-        if (source != null && target != null) {
+        if (source !== null && target !== null) {
             val mapping = source.joinWrapperMappings(target);
             var Map<EObjectWrapper, EObject> _sourceInstanceMap = null;
             var Map<EObjectWrapper, EObject> _targetInstanceMap = null;
@@ -367,22 +365,22 @@ class TracingVisualizer {
             val targetModelRootNode = viewContext.getTargetElements(target).findFirst[
                 it instanceof KNode &&
                     (it as KNode).getProperty(TracingVisualizationProperties.TRACED_MODEL_ROOT_NODE)] as KNode;
-            if (!source.transient && sourceModelRootNode != null && source.rootObject.getEObject != null) {
+            if (!source.transient && sourceModelRootNode !== null && source.rootObject.getEObject !== null) {
                 _sourceInstanceMap = source.modelInstanceMapping(source.rootObject.getEObject);
             }
-            if (!target.transient && targetModelRootNode != null && target.rootObject.getEObject != null) {
+            if (!target.transient && targetModelRootNode !== null && target.rootObject.getEObject !== null) {
                 _targetInstanceMap = target.modelInstanceMapping(target.rootObject.getEObject);
             }
             val sourceInstanceMap = _sourceInstanceMap;
             val targetInstanceMap = _targetInstanceMap;
-            if (mapping != null && !mapping.empty) {
+            if (mapping !== null && !mapping.empty) {
                 mapping.entries.forEach [ entry |
-                    val key = if (sourceInstanceMap != null) {
+                    val key = if (sourceInstanceMap !== null) {
                             sourceInstanceMap.get(entry.key);
                         } else {
                             entry.key;
                         }
-                    val value = if (targetInstanceMap != null) {
+                    val value = if (targetInstanceMap !== null) {
                             targetInstanceMap.get(entry.value);
                         } else {
                             entry.value;
@@ -432,7 +430,7 @@ class TracingVisualizer {
             val maxDepth = viewContext.getProperty(TracingVisualizationProperties.VISUALIZATION_EQUIVALENCE_CLASS_DEPTH);
             var depth = 0;
             var next = (modelElement as EObject)
-            while (elements.empty && next != null && depth < maxDepth) {
+            while (elements.empty && next !== null && depth < maxDepth) {
                 next = next.eContainer;
                 elements = viewContext.getTargetElements(next);
             }
@@ -443,7 +441,7 @@ class TracingVisualizer {
 
     /** Create a single tracing edge and adds it to the diagram hidden */
     private def createTracingEdge(EObject source, EObject target, Pair<Object, Object> origin, KNode attachNode) {
-        if (source != null && target != null && origin != null && attachNode != null) {
+        if (source !== null && target !== null && origin !== null && attachNode !== null) {
             val edge = createEdge;
             edge.setProperty(CoreOptions.NO_LAYOUT, true);
             edge.setProperty(InternalTracingProperties.TRACING_EDGE, origin);
@@ -474,6 +472,6 @@ class TracingVisualizer {
 
     /** Checks if given edge is a tracing edge */
     private def isTracingEdge(KEdge edge) {
-        return edge.getProperty(InternalTracingProperties.TRACING_EDGE) != null;
+        return edge.getProperty(InternalTracingProperties.TRACING_EDGE) !== null;
     }
 }

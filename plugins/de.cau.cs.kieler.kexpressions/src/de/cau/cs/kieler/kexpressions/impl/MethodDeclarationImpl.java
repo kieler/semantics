@@ -33,6 +33,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.kexpressions.impl.MethodDeclarationImpl#getSchedule <em>Schedule</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.impl.MethodDeclarationImpl#isOverride <em>Override</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.impl.MethodDeclarationImpl#getReturnType <em>Return Type</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.impl.MethodDeclarationImpl#getParameterDeclarations <em>Parameter Declarations</em>}</li>
  * </ul>
@@ -49,6 +50,26 @@ public class MethodDeclarationImpl extends DeclarationImpl implements MethodDecl
      * @ordered
      */
     protected EList<ScheduleObjectReference> schedule;
+
+    /**
+     * The default value of the '{@link #isOverride() <em>Override</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isOverride()
+     * @generated
+     * @ordered
+     */
+    protected static final boolean OVERRIDE_EDEFAULT = false;
+
+    /**
+     * The cached value of the '{@link #isOverride() <em>Override</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isOverride()
+     * @generated
+     * @ordered
+     */
+    protected boolean override = OVERRIDE_EDEFAULT;
 
     /**
      * The default value of the '{@link #getReturnType() <em>Return Type</em>}' attribute.
@@ -118,6 +139,29 @@ public class MethodDeclarationImpl extends DeclarationImpl implements MethodDecl
      * @generated
      */
     @Override
+    public boolean isOverride() {
+        return override;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public void setOverride(boolean newOverride) {
+        boolean oldOverride = override;
+        override = newOverride;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, KExpressionsPackage.METHOD_DECLARATION__OVERRIDE, oldOverride, override));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public ValueType getReturnType() {
         return returnType;
     }
@@ -174,6 +218,8 @@ public class MethodDeclarationImpl extends DeclarationImpl implements MethodDecl
         switch (featureID) {
             case KExpressionsPackage.METHOD_DECLARATION__SCHEDULE:
                 return getSchedule();
+            case KExpressionsPackage.METHOD_DECLARATION__OVERRIDE:
+                return isOverride();
             case KExpressionsPackage.METHOD_DECLARATION__RETURN_TYPE:
                 return getReturnType();
             case KExpressionsPackage.METHOD_DECLARATION__PARAMETER_DECLARATIONS:
@@ -194,6 +240,9 @@ public class MethodDeclarationImpl extends DeclarationImpl implements MethodDecl
             case KExpressionsPackage.METHOD_DECLARATION__SCHEDULE:
                 getSchedule().clear();
                 getSchedule().addAll((Collection<? extends ScheduleObjectReference>)newValue);
+                return;
+            case KExpressionsPackage.METHOD_DECLARATION__OVERRIDE:
+                setOverride((Boolean)newValue);
                 return;
             case KExpressionsPackage.METHOD_DECLARATION__RETURN_TYPE:
                 setReturnType((ValueType)newValue);
@@ -217,6 +266,9 @@ public class MethodDeclarationImpl extends DeclarationImpl implements MethodDecl
             case KExpressionsPackage.METHOD_DECLARATION__SCHEDULE:
                 getSchedule().clear();
                 return;
+            case KExpressionsPackage.METHOD_DECLARATION__OVERRIDE:
+                setOverride(OVERRIDE_EDEFAULT);
+                return;
             case KExpressionsPackage.METHOD_DECLARATION__RETURN_TYPE:
                 setReturnType(RETURN_TYPE_EDEFAULT);
                 return;
@@ -237,6 +289,8 @@ public class MethodDeclarationImpl extends DeclarationImpl implements MethodDecl
         switch (featureID) {
             case KExpressionsPackage.METHOD_DECLARATION__SCHEDULE:
                 return schedule != null && !schedule.isEmpty();
+            case KExpressionsPackage.METHOD_DECLARATION__OVERRIDE:
+                return override != OVERRIDE_EDEFAULT;
             case KExpressionsPackage.METHOD_DECLARATION__RETURN_TYPE:
                 return returnType != RETURN_TYPE_EDEFAULT;
             case KExpressionsPackage.METHOD_DECLARATION__PARAMETER_DECLARATIONS:
@@ -287,7 +341,9 @@ public class MethodDeclarationImpl extends DeclarationImpl implements MethodDecl
         if (eIsProxy()) return super.toString();
 
         StringBuilder result = new StringBuilder(super.toString());
-        result.append(" (returnType: ");
+        result.append(" (override: ");
+        result.append(override);
+        result.append(", returnType: ");
         result.append(returnType);
         result.append(')');
         return result.toString();

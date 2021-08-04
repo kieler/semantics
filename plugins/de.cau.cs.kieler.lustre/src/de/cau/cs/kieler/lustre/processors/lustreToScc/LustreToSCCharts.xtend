@@ -14,8 +14,6 @@ package de.cau.cs.kieler.lustre.processors.lustreToScc
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.AnnotationsFactory
-import de.cau.cs.kieler.core.properties.IProperty
-import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kexpressions.keffects.Effect

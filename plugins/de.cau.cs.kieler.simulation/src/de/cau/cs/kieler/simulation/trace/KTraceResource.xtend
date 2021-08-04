@@ -41,7 +41,9 @@ class KTraceResource extends LazyLinkingResource {
             val voName = node.text.trim
             
             if (!voMap.containsKey(voName)) {
-                voMap.put(voName, createValuedObject => [name = voName])
+                // Label will always hold the un-escaped name if a keyword is used
+                // name must match real value for the linker to work correctly
+                voMap.put(voName, createValuedObject => [name = voName; label = voName.startsWith("^") ? voName.substring(1) : voName])
             }
             
             switch(elem) {

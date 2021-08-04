@@ -23,8 +23,8 @@ knode operator {
   }
 
   kport in1 {
-    size: width = 2 height = 2
-    properties: de.cau.cs.kieler.portSide = WEST
+    size: width = 0 height = 0
+    properties: org.eclipse.elk.port.side = WEST
         
     klabel "" { 
         ktext {
@@ -34,8 +34,8 @@ knode operator {
   }
   
   kport in2 {
-    size: width = 2 height = 2
-    properties: de.cau.cs.kieler.portSide = SOUTH
+    size: width = 0 height = 0
+    properties: org.eclipse.elk.port.side = SOUTH
     
     klabel "var" { 
         ktext {
@@ -51,10 +51,10 @@ knode operator {
     
   kport in0 {
     pos: x = 6 y = 25
-    size: width = 2 height = 2
-    properties: de.cau.cs.kieler.portSide = NORTH
+    size: width = 0 height = 0
+    properties: org.eclipse.elk.port.side = NORTH
                 org.eclipse.elk.port.borderOffset = 0.0
-                org.eclipse.elk.layered.northOrSouthPort = false
+                org.eclipse.elk.layered.allowNonFlowPortsToSwitchSides = false
     
     klabel "set" {
         ktext {

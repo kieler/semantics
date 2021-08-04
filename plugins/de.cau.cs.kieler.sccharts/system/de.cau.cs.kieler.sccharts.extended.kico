@@ -7,6 +7,7 @@ de.cau.cs.kieler.sccharts.processors.for
 de.cau.cs.kieler.sccharts.processors.regionactions
 de.cau.cs.kieler.sccharts.processors.codeEffects
 de.cau.cs.kieler.sccharts.processors.prTransitions
+pre process de.cau.cs.kieler.sccharts.processors.^enum
 de.cau.cs.kieler.sccharts.processors.^const
 pre process de.cau.cs.kieler.sccharts.processors.period
 de.cau.cs.kieler.sccharts.processors.timedautomata
@@ -28,6 +29,7 @@ de.cau.cs.kieler.sccharts.processors.history
 ]
 	
 [ label "Statecharts"
+	pre process de.cau.cs.kieler.sccharts.processors.ode
 	de.cau.cs.kieler.sccharts.processors.duringAction
 	pre process de.cau.cs.kieler.sccharts.processors.finalRegion
 	de.cau.cs.kieler.sccharts.processors.complexFinalState
@@ -37,6 +39,7 @@ de.cau.cs.kieler.sccharts.processors.history
 	de.cau.cs.kieler.sccharts.processors.entryAction config {
 	  "de.cau.cs.kieler.sccharts.entry.preemptionType": "weak"
 	}
+	pre process silent de.cau.cs.kieler.sccharts.processors.abortRegions
 	de.cau.cs.kieler.sccharts.processors.abort
 	de.cau.cs.kieler.sccharts.processors.exitAction config {
       "de.cau.cs.kieler.sccharts.exit.preemptionType": "strong"

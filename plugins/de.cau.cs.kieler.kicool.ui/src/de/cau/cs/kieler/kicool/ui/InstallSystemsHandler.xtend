@@ -12,35 +12,36 @@
  */
 package de.cau.cs.kieler.kicool.ui
 
+import de.cau.cs.kieler.kicool.KiCoolStandaloneSetup
+import de.cau.cs.kieler.kicool.System
+import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
+import de.cau.cs.kieler.kicool.ui.view.CompilerView
+import java.io.BufferedWriter
+import java.io.File
+import java.io.FileWriter
+import java.util.Comparator
+import java.util.LinkedList
 import org.eclipse.core.commands.AbstractHandler
 import org.eclipse.core.commands.ExecutionEvent
 import org.eclipse.core.commands.ExecutionException
-import org.eclipse.ui.dialogs.FilteredItemsSelectionDialog
-import org.eclipse.swt.widgets.Control
-import org.eclipse.swt.widgets.Composite
-import org.eclipse.core.runtime.IProgressMonitor
-import org.eclipse.core.runtime.CoreException
-import org.eclipse.xtext.ui.internal.Activator
-import java.util.Comparator
-import org.eclipse.core.runtime.IStatus
-import org.eclipse.core.runtime.Status
-import org.eclipse.swt.widgets.Shell
-import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
-import de.cau.cs.kieler.kicool.System
-import java.util.LinkedList
-import org.eclipse.jface.viewers.StructuredSelection
-import org.eclipse.ui.handlers.HandlerUtil;
-import org.eclipse.jface.viewers.IStructuredSelection
 import org.eclipse.core.resources.IProject
 import org.eclipse.core.resources.IResource
-import org.eclipse.jface.viewers.ISelection
-import de.cau.cs.kieler.kicool.KiCoolStandaloneSetup
-import org.eclipse.xtext.serializer.ISerializer
-import java.io.File
+import org.eclipse.core.runtime.CoreException
+import org.eclipse.core.runtime.IProgressMonitor
+import org.eclipse.core.runtime.IStatus
+import org.eclipse.core.runtime.Status
 import org.eclipse.jface.dialogs.MessageDialog
-import java.io.BufferedWriter
-import java.io.FileWriter
-import de.cau.cs.kieler.kicool.ui.view.CompilerView
+import org.eclipse.jface.viewers.ISelection
+import org.eclipse.jface.viewers.IStructuredSelection
+import org.eclipse.jface.viewers.StructuredSelection
+import org.eclipse.swt.widgets.Composite
+import org.eclipse.swt.widgets.Control
+import org.eclipse.swt.widgets.Shell
+import org.eclipse.ui.dialogs.FilteredItemsSelectionDialog
+import org.eclipse.ui.dialogs.FilteredItemsSelectionDialog.ItemsFilter
+import org.eclipse.ui.handlers.HandlerUtil
+import org.eclipse.xtext.serializer.ISerializer
+import org.eclipse.xtext.ui.internal.Activator
 
 /**
  * @author kolja

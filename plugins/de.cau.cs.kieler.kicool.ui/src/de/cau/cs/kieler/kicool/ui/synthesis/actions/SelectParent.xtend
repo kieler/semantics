@@ -13,12 +13,9 @@
 package de.cau.cs.kieler.kicool.ui.synthesis.actions
 
 import de.cau.cs.kieler.klighd.IAction
-
 import de.cau.cs.kieler.klighd.kgraph.KNode
-import org.eclipse.emf.ecore.EObject
-import de.cau.cs.kieler.klighd.kgraph.KIdentifier
-import de.cau.cs.kieler.kicool.ui.synthesis.updates.ProcessorDataManager
 import de.cau.cs.kieler.klighd.krendering.KContainerRendering
+import org.eclipse.emf.ecore.EObject
 
 /**
  * Class that redirects select actions to the processor body node.
@@ -33,25 +30,22 @@ class SelectParent implements IAction {
     public static val ID = "de.cau.cs.kieler.kicool.ui.synthesis.actions.selectParent"
     
     override execute(ActionContext context) {
-        var EObject node = context.KNode
+        var EObject node = context.KGraphElement
         while (node !== null) {
             node = node.eContainer            
             
             if (node instanceof KNode) {
-                 val id = node.getData(KIdentifier)
-                 if (id !== null && id.id == ProcessorDataManager.NODE_PROCESSOR_BODY) {
-                    context.getActiveViewer.resetSelectionTo(node)
-                    
-                    val delegateContext = new ActionContext(
-                        context.activeViewer,
-                        context.trigger,
-                        node, 
-                        node.data.filter(KContainerRendering).head    
-                    )
-                    (new SelectIntermediateAction).execute(delegateContext)
-                    
-                    return ActionResult.createResult(false).dontAnimateLayout()
-                 }    
+                context.getActiveViewer.resetSelectionTo(node)
+                
+                val delegateContext = new ActionContext(
+                    context.activeViewer,
+                    context.trigger,
+                    node, 
+                    node.data.filter(KContainerRendering).head    
+                )
+                (new SelectIntermediateAction).execute(delegateContext)
+                
+                return ActionResult.createResult(false).dontAnimateLayout()
             }
         }
                 

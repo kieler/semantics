@@ -3,16 +3,19 @@
  */
 package de.cau.cs.kieler.kexpressions.kext.validation
 
+import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.StringAnnotation
 import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.IntValue
-import de.cau.cs.kieler.kexpressions.OperatorExpression
-import de.cau.cs.kieler.kexpressions.OperatorType
+import de.cau.cs.kieler.kexpressions.StaticAccessExpression
 import de.cau.cs.kieler.kexpressions.Value
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.kexpressions.VectorValue
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kexpressions.kext.AnnotatedExpression
 import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
@@ -20,8 +23,6 @@ import de.cau.cs.kieler.kexpressions.kext.Kext
 import de.cau.cs.kieler.kexpressions.kext.TestEntity
 import org.eclipse.xtext.EcoreUtil2
 import org.eclipse.xtext.validation.Check
-import de.cau.cs.kieler.kexpressions.TextExpression
-import de.cau.cs.kieler.kexpressions.VectorValue
 
 //import org.eclipse.xtext.validation.Check
 
@@ -31,6 +32,9 @@ import de.cau.cs.kieler.kexpressions.VectorValue
  * See https://www.eclipse.org/Xtext/documentation/303_runtime_concepts.html#validation
  */
 class KExtValidator extends AbstractKExtValidator {
+    
+    @Inject extension KExpressionsValuedObjectExtensions
+    @Inject extension KExpressionsDeclarationExtensions
 
     public static val CHECK_ANNOTATION_NAME = "check"
     public static val CHECKALIAS_ANNOTATION_NAME = "aliasCheck"
@@ -91,10 +95,19 @@ class KExtValidator extends AbstractKExtValidator {
                 var ok = false
                 if (card instanceof IntValue) ok = true
                 if (card instanceof ValuedObjectReference) {
-                    val refVO = card.valuedObject
-                    val refDecl = refVO.eContainer as VariableDeclaration
-                    if (refDecl.const && refDecl.type == ValueType.INT) {
+                    val refVO = card.lowermostReference.valuedObject
+                    val refDecl = refVO.variableDeclaration
+                    if (refDecl !== null && refDecl.const && refDecl.type == ValueType.INT) {
                         if (refVO.initialValue !== null && refVO.initialValue instanceof IntValue) ok = true
+                    }
+                }
+                if (card instanceof StaticAccessExpression) {
+                    val refVO = card.subReference?.lowermostReference?.valuedObject
+                    if (refVO !== null) {
+                        val refDecl = refVO.variableDeclaration
+                        if (refDecl !== null && refDecl.const && refDecl.type == ValueType.INT) {
+                            if (refVO.initialValue !== null && refVO.initialValue instanceof IntValue) ok = true
+                        }
                     }
                 }
                 
@@ -136,8 +149,9 @@ class KExtValidator extends AbstractKExtValidator {
     @Check
     def void checkPureSignal(VariableDeclaration declaration) {
         if (declaration.type == ValueType.PURE && (!declaration.signal)) {
-            error("Pure types are only allowed if used in combination with signals.",
-                declaration, null, -1)
+            if (!(declaration.eContainer instanceof ClassDeclaration) || !(declaration.eContainer as ClassDeclaration).isEnum) {
+                error("Pure types are only allowed if used in combination with signals.", declaration, null, -1)
+            }
         }
     }
 

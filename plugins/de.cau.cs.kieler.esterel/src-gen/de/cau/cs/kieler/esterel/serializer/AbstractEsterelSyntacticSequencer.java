@@ -62,6 +62,7 @@ public abstract class AbstractEsterelSyntacticSequencer extends AbstractSyntacti
 	protected AbstractElementAlias match_Procedure_LeftParenthesisRightParenthesisKeyword_2_1_or___LeftParenthesisKeyword_2_0_0_RightParenthesisKeyword_2_0_2__;
 	protected AbstractElementAlias match_RandomCall_LeftParenthesisRightParenthesisKeyword_2_q;
 	protected AbstractElementAlias match_RandomizeCall_LeftParenthesisRightParenthesisKeyword_2_q;
+	protected AbstractElementAlias match_ReferenceValuedObject_LeftParenthesisRightParenthesisKeyword_5_1_q;
 	protected AbstractElementAlias match_Repeat_RepeatKeyword_7_q;
 	protected AbstractElementAlias match_SignalAtomicExpression_LeftParenthesisKeyword_0_0_a;
 	protected AbstractElementAlias match_SignalAtomicExpression_LeftParenthesisKeyword_0_0_p;
@@ -113,6 +114,7 @@ public abstract class AbstractEsterelSyntacticSequencer extends AbstractSyntacti
 		match_Procedure_LeftParenthesisRightParenthesisKeyword_2_1_or___LeftParenthesisKeyword_2_0_0_RightParenthesisKeyword_2_0_2__ = new AlternativeAlias(false, false, new GroupAlias(false, false, new TokenAlias(false, false, grammarAccess.getProcedureAccess().getLeftParenthesisKeyword_2_0_0()), new TokenAlias(false, false, grammarAccess.getProcedureAccess().getRightParenthesisKeyword_2_0_2())), new TokenAlias(false, false, grammarAccess.getProcedureAccess().getLeftParenthesisRightParenthesisKeyword_2_1()));
 		match_RandomCall_LeftParenthesisRightParenthesisKeyword_2_q = new TokenAlias(false, true, grammarAccess.getRandomCallAccess().getLeftParenthesisRightParenthesisKeyword_2());
 		match_RandomizeCall_LeftParenthesisRightParenthesisKeyword_2_q = new TokenAlias(false, true, grammarAccess.getRandomizeCallAccess().getLeftParenthesisRightParenthesisKeyword_2());
+		match_ReferenceValuedObject_LeftParenthesisRightParenthesisKeyword_5_1_q = new TokenAlias(false, true, grammarAccess.getReferenceValuedObjectAccess().getLeftParenthesisRightParenthesisKeyword_5_1());
 		match_Repeat_RepeatKeyword_7_q = new TokenAlias(false, true, grammarAccess.getRepeatAccess().getRepeatKeyword_7());
 		match_SignalAtomicExpression_LeftParenthesisKeyword_0_0_a = new TokenAlias(true, true, grammarAccess.getSignalAtomicExpressionAccess().getLeftParenthesisKeyword_0_0());
 		match_SignalAtomicExpression_LeftParenthesisKeyword_0_0_p = new TokenAlias(true, false, grammarAccess.getSignalAtomicExpressionAccess().getLeftParenthesisKeyword_0_0());
@@ -214,6 +216,8 @@ public abstract class AbstractEsterelSyntacticSequencer extends AbstractSyntacti
 				emit_RandomCall_LeftParenthesisRightParenthesisKeyword_2_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_RandomizeCall_LeftParenthesisRightParenthesisKeyword_2_q.equals(syntax))
 				emit_RandomizeCall_LeftParenthesisRightParenthesisKeyword_2_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_ReferenceValuedObject_LeftParenthesisRightParenthesisKeyword_5_1_q.equals(syntax))
+				emit_ReferenceValuedObject_LeftParenthesisRightParenthesisKeyword_5_1_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_Repeat_RepeatKeyword_7_q.equals(syntax))
 				emit_Repeat_RepeatKeyword_7_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_SignalAtomicExpression_LeftParenthesisKeyword_0_0_a.equals(syntax))
@@ -794,6 +798,25 @@ public abstract class AbstractEsterelSyntacticSequencer extends AbstractSyntacti
 	 *     (rule start) 'randomize' (ambiguity) (rule start)
 	 */
 	protected void emit_RandomizeCall_LeftParenthesisRightParenthesisKeyword_2_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     '()'?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     cardinalities+=Expression ']' (ambiguity) '=' initialValue=Expression
+	 *     cardinalities+=Expression ']' (ambiguity) 'label' label=STRING
+	 *     cardinalities+=Expression ']' (ambiguity) (rule end)
+	 *     genericParameters+=GenericParameter '>' (ambiguity) '=' initialValue=Expression
+	 *     genericParameters+=GenericParameter '>' (ambiguity) 'label' label=STRING
+	 *     genericParameters+=GenericParameter '>' (ambiguity) (rule end)
+	 *     name=PrimeID (ambiguity) '=' initialValue=Expression
+	 *     name=PrimeID (ambiguity) 'label' label=STRING
+	 *     name=PrimeID (ambiguity) (rule end)
+	 */
+	protected void emit_ReferenceValuedObject_LeftParenthesisRightParenthesisKeyword_5_1_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	

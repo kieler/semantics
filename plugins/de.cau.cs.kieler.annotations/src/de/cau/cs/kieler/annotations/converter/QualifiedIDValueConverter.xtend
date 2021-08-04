@@ -27,7 +27,7 @@ class QualifiedIDValueConverter extends AbstractValueConverter<String> {
     @Inject extension IDValueConverter delegate
     
     override String toValue(String string, INode node) {
-        if (string == null) return null;
+        if (string === null) return null;
         // UnEscape each ID with the converter for identifiers
         return string.split("\\.").map[delegate.toValue(it, node)].join(".")
     }

@@ -27,6 +27,7 @@ import de.cau.cs.kieler.scg.Entry;
 import de.cau.cs.kieler.scg.Exit;
 import de.cau.cs.kieler.scg.ExpressionDependency;
 import de.cau.cs.kieler.scg.Fork;
+import de.cau.cs.kieler.scg.ForkType;
 import de.cau.cs.kieler.scg.Guard;
 import de.cau.cs.kieler.scg.GuardDependency;
 import de.cau.cs.kieler.scg.Join;
@@ -186,6 +187,13 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
      * @generated
      */
     private EClass tickBoundaryDependencyEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EEnum forkTypeEEnum = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -486,6 +494,15 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 
 	/**
      * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getFork_Type() {
+        return (EAttribute)forkEClass.getEStructuralFeatures().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
      */
@@ -512,6 +529,15 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
     }
 
 	/**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getJoin_Any() {
+        return (EAttribute)joinEClass.getEStructuralFeatures().get(2);
+    }
+
+    /**
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
@@ -819,6 +845,15 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 
     /**
      * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EEnum getForkType() {
+        return forkTypeEEnum;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
      */
@@ -894,10 +929,12 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
         forkEClass = createEClass(FORK);
         createEReference(forkEClass, FORK__JOIN);
         createEReference(forkEClass, FORK__NEXT);
+        createEAttribute(forkEClass, FORK__TYPE);
 
         joinEClass = createEClass(JOIN);
         createEReference(joinEClass, JOIN__FORK);
         createEReference(joinEClass, JOIN__NEXT);
+        createEAttribute(joinEClass, JOIN__ANY);
 
         entryEClass = createEClass(ENTRY);
         createEReference(entryEClass, ENTRY__EXIT);
@@ -946,6 +983,7 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
         tickBoundaryDependencyEClass = createEClass(TICK_BOUNDARY_DEPENDENCY);
 
         // Create enums
+        forkTypeEEnum = createEEnum(FORK_TYPE);
         branchTypeEEnum = createEEnum(BRANCH_TYPE);
     }
 
@@ -1039,10 +1077,12 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
         initEClass(forkEClass, Fork.class, "Fork", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getFork_Join(), this.getJoin(), this.getJoin_Fork(), "join", null, 1, 1, Fork.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getFork_Next(), this.getControlFlow(), null, "next", null, 1, -1, Fork.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getFork_Type(), this.getForkType(), "type", "PARALLEL", 1, 1, Fork.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(joinEClass, Join.class, "Join", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getJoin_Fork(), this.getFork(), this.getFork_Join(), "fork", null, 1, 1, Join.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getJoin_Next(), this.getControlFlow(), null, "next", null, 0, 1, Join.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getJoin_Any(), ecorePackage.getEBoolean(), "any", null, 0, 1, Join.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(entryEClass, Entry.class, "Entry", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getEntry_Exit(), this.getExit(), this.getExit_Entry(), "exit", null, 1, 1, Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1091,6 +1131,11 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
         initEClass(tickBoundaryDependencyEClass, TickBoundaryDependency.class, "TickBoundaryDependency", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
         // Initialize enums and add enum literals
+        initEEnum(forkTypeEEnum, ForkType.class, "ForkType");
+        addEEnumLiteral(forkTypeEEnum, ForkType.PARALLEL);
+        addEEnumLiteral(forkTypeEEnum, ForkType.SEQUENTIAL);
+        addEEnumLiteral(forkTypeEEnum, ForkType.SEQUENTIAL_PREEMPTIVE);
+
         initEEnum(branchTypeEEnum, BranchType.class, "BranchType");
         addEEnumLiteral(branchTypeEEnum, BranchType.NORMAL);
         addEEnumLiteral(branchTypeEEnum, BranchType.TRUEBRANCH);

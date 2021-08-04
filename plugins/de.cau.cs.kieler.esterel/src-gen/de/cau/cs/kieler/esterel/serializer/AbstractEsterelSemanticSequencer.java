@@ -86,6 +86,8 @@ import de.cau.cs.kieler.kexpressions.BoolValue;
 import de.cau.cs.kieler.kexpressions.ExternString;
 import de.cau.cs.kieler.kexpressions.FloatValue;
 import de.cau.cs.kieler.kexpressions.FunctionCall;
+import de.cau.cs.kieler.kexpressions.GenericParameterDeclaration;
+import de.cau.cs.kieler.kexpressions.GenericTypeReference;
 import de.cau.cs.kieler.kexpressions.IgnoreValue;
 import de.cau.cs.kieler.kexpressions.IntValue;
 import de.cau.cs.kieler.kexpressions.JsonAnnotation;
@@ -103,8 +105,10 @@ import de.cau.cs.kieler.kexpressions.ReferenceCall;
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration;
 import de.cau.cs.kieler.kexpressions.ScheduleDeclaration;
 import de.cau.cs.kieler.kexpressions.ScheduleObjectReference;
+import de.cau.cs.kieler.kexpressions.StaticAccessExpression;
 import de.cau.cs.kieler.kexpressions.StringValue;
 import de.cau.cs.kieler.kexpressions.TextExpression;
+import de.cau.cs.kieler.kexpressions.ValueTypeReference;
 import de.cau.cs.kieler.kexpressions.ValuedObject;
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference;
 import de.cau.cs.kieler.kexpressions.VariableDeclaration;
@@ -856,6 +860,19 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 			case KExpressionsPackage.FUNCTION_CALL:
 				sequence_FunctionCall(context, (FunctionCall) semanticObject); 
 				return; 
+			case KExpressionsPackage.GENERIC_PARAMETER_DECLARATION:
+				sequence_GenericParameterDeclaration(context, (GenericParameterDeclaration) semanticObject); 
+				return; 
+			case KExpressionsPackage.GENERIC_TYPE_REFERENCE:
+				if (rule == grammarAccess.getGenericParameter_GenericTypeReference_ParameterizedRule()) {
+					sequence_GenericParameter_GenericTypeReference_Parameterized(context, (GenericTypeReference) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getGenericTypeReferenceRule()) {
+					sequence_GenericTypeReference(context, (GenericTypeReference) semanticObject); 
+					return; 
+				}
+				else break;
 			case KExpressionsPackage.IGNORE_VALUE:
 				sequence_IgnoreValue(context, (IgnoreValue) semanticObject); 
 				return; 
@@ -1106,7 +1123,11 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 				}
 				else break;
 			case KExpressionsPackage.PARAMETER:
-				if (rule == grammarAccess.getModuleCallParameterRule()) {
+				if (rule == grammarAccess.getGenericParameterRule()) {
+					sequence_GenericParameter(context, (de.cau.cs.kieler.kexpressions.Parameter) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getModuleCallParameterRule()) {
 					sequence_ModuleCallParameter(context, (de.cau.cs.kieler.kexpressions.Parameter) semanticObject); 
 					return; 
 				}
@@ -1157,6 +1178,9 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 				else break;
 			case KExpressionsPackage.SCHEDULE_OBJECT_REFERENCE:
 				sequence_ScheduleObjectReference(context, (ScheduleObjectReference) semanticObject); 
+				return; 
+			case KExpressionsPackage.STATIC_ACCESS_EXPRESSION:
+				sequence_StaticAccessExpression(context, (StaticAccessExpression) semanticObject); 
 				return; 
 			case KExpressionsPackage.STRING_VALUE:
 				sequence_StringValue(context, (StringValue) semanticObject); 
@@ -1233,8 +1257,15 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 					return; 
 				}
 				else break;
+			case KExpressionsPackage.VALUE_TYPE_REFERENCE:
+				sequence_ValueTypeReference(context, (ValueTypeReference) semanticObject); 
+				return; 
 			case KExpressionsPackage.VALUED_OBJECT:
-				if (rule == grammarAccess.getSimpleValuedObjectRule()) {
+				if (rule == grammarAccess.getReferenceValuedObjectRule()) {
+					sequence_ReferenceValuedObject(context, (ValuedObject) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getSimpleValuedObjectRule()) {
 					sequence_SimpleValuedObject(context, (ValuedObject) semanticObject); 
 					return; 
 				}
@@ -1246,6 +1277,14 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 			case KExpressionsPackage.VALUED_OBJECT_REFERENCE:
 				if (rule == grammarAccess.getBoolScheduleExpressionRule()) {
 					sequence_BoolScheduleExpression_ValuedObjectReference(context, (ValuedObjectReference) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getGenericParameter_ValuedObjectReference_ArrayRule()) {
+					sequence_GenericParameter_ValuedObjectReference_Array(context, (ValuedObjectReference) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getGenericParameter_ValuedObjectReference_SubRule()) {
+					sequence_GenericParameter_ValuedObjectReference_Sub(context, (ValuedObjectReference) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getAtomicExpressionRule()
@@ -1318,7 +1357,11 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 				}
 				else break;
 			case KExpressionsPackage.VARIABLE_DECLARATION:
-				if (rule == grammarAccess.getLoopDeclarationRule()) {
+				if (rule == grammarAccess.getEnumMemberDeclarationRule()) {
+					sequence_EnumMemberDeclaration(context, (VariableDeclaration) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getLoopDeclarationRule()) {
 					sequence_LoopDeclaration(context, (VariableDeclaration) semanticObject); 
 					return; 
 				}
@@ -1353,15 +1396,29 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 				else break;
 			case KExtPackage.CLASS_DECLARATION:
 				if (rule == grammarAccess.getDeclarationWOSemicolonRule()
-						|| rule == grammarAccess.getClassDeclarationWOSemicolonRule()
-						|| rule == grammarAccess.getDeclarationOrMethodWOSemicolonRule()) {
+						|| rule == grammarAccess.getClassDeclarationWOSemicolonRule()) {
 					sequence_ClassDeclarationWOSemicolon(context, (ClassDeclaration) semanticObject); 
 					return; 
 				}
+				else if (rule == grammarAccess.getDeclarationOrMethodWOSemicolonRule()) {
+					sequence_ClassDeclarationWOSemicolon_EnumDeclarationWOSemicolon(context, (ClassDeclaration) semanticObject); 
+					return; 
+				}
 				else if (rule == grammarAccess.getDeclarationRule()
-						|| rule == grammarAccess.getClassDeclarationRule()
-						|| rule == grammarAccess.getDeclarationOrMethodRule()) {
+						|| rule == grammarAccess.getClassDeclarationRule()) {
 					sequence_ClassDeclaration(context, (ClassDeclaration) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getDeclarationOrMethodRule()) {
+					sequence_ClassDeclaration_EnumDeclaration(context, (ClassDeclaration) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getEnumDeclarationWOSemicolonRule()) {
+					sequence_EnumDeclarationWOSemicolon(context, (ClassDeclaration) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getEnumDeclarationRule()) {
+					sequence_EnumDeclaration(context, (ClassDeclaration) semanticObject); 
 					return; 
 				}
 				else break;

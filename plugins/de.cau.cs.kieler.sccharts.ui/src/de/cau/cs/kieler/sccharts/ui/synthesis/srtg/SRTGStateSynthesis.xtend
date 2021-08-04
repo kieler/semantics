@@ -27,6 +27,7 @@ import org.eclipse.elk.alg.layered.options.LayeredOptions
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import org.eclipse.elk.core.math.ElkPadding
+import org.eclipse.elk.core.options.BoxLayouterOptions
 
 /**
  * Transforms {@link State} into {@link KNode} diagram elements.
@@ -64,7 +65,7 @@ class SRTGStateSynthesis extends SRTGSubSynthesis<State, KNode> {
         val node = state.createNode().associateWith(state);
         val result = <KNode> newArrayList(node)
 
-        node.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.box");
+        node.addLayoutParam(CoreOptions::ALGORITHM, BoxLayouterOptions.ALGORITHM_ID);
         node.setLayoutOption(CoreOptions::EXPAND_NODES, true);
         node.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 10d); //10.5 // 8f
         node.setLayoutOption(CoreOptions::PADDING, new ElkPadding(2d));
@@ -136,7 +137,7 @@ class SRTGStateSynthesis extends SRTGSubSynthesis<State, KNode> {
                         dummyEdge.addTransitionPolyline => [
                             lineWidth = 0
                         ]
-                        if (state.eContainer == null) {
+                        if (state.eContainer === null) {
                             dummyEdge.source = state.node                        
                         } else {
                             dummyEdge.source = state.eContainer.getNode("states")

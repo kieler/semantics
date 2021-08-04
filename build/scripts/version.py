@@ -89,13 +89,29 @@ def main(args):
 
     print '\n- Updating CLI products -'
     # check pom files
-    for cli in ['de.cau.cs.kieler.kicool.cli','de.cau.cs.kieler.sccharts.cli']:
+    for cli in ['de.cau.cs.kieler.kicool.cli','de.cau.cs.kieler.kicool.klighd.cli','de.cau.cs.kieler.sccharts.cli','de.cau.cs.kieler.language.server.cli']:
         pom = join(args.path, 'build', cli, 'pom.xml')
         if not isfile(pom):
             print 'pom.xml does not exist: ' + pom
             pause(args)
         else:
             setPomVersion(join(args.path, 'build'), cli, args)
+
+    print '\n- Updating runtime version file -'
+    file = join(args.path, 'plugins/de.cau.cs.kieler.core/kieler.version')
+    if not isfile(file):
+        print 'Kieler version file does not exist: ' + file
+        pause(args)
+    else:
+        content = []
+        with open(file, 'r') as f:
+            content = f.readlines()
+        if content:
+            content[0] = args.version
+        else:
+            content = [args.version]
+        with open(file, 'w') as f:
+            f.write('\n'.join(content))
 
     print '\n= Finished Version Update ='
 

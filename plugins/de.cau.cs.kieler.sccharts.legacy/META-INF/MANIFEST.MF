@@ -2,11 +2,11 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Legacy SCCharts
 Bundle-SymbolicName: de.cau.cs.kieler.sccharts.legacy;singleton:=true
-Bundle-Version: 1.1.0.qualifier
+Bundle-Version: 1.3.0.qualifier
 Bundle-ClassPath: .
 Bundle-Vendor: Kiel University
 Bundle-Localization: plugin
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Eclipse-UI: True
 Require-Bundle: com.google.guava,
  org.eclipse.xtext.xbase.lib,
@@ -98,4 +98,5 @@ Export-Package: de.cau.cs.kieler.sccharts.legacy,
  de.cau.cs.kieler.sccharts.legacy.text.serializer,
  de.cau.cs.kieler.sccharts.legacy.text.services,
  de.cau.cs.kieler.sccharts.legacy.text.validation
+Automatic-Module-Name: de.cau.cs.kieler.sccharts.legacy
 

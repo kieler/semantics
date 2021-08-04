@@ -14,18 +14,16 @@ package de.cau.cs.kieler.simulation.trace
 
 import de.cau.cs.kieler.core.model.ModelUtil
 import de.cau.cs.kieler.kexpressions.KExpressionsFactory
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCompareExtensions
+import de.cau.cs.kieler.kexpressions.keffects.Assignment
+import de.cau.cs.kieler.kexpressions.keffects.Emission
+import de.cau.cs.kieler.kexpressions.keffects.KEffectsFactory
 import de.cau.cs.kieler.simulation.SimulationContext
 import de.cau.cs.kieler.simulation.trace.ktrace.KTraceFactory
 import de.cau.cs.kieler.simulation.trace.ktrace.TraceFile
 import java.io.File
 import org.eclipse.emf.common.util.URI
 import org.eclipse.xtext.resource.XtextResourceSet
-import de.cau.cs.kieler.kexpressions.keffects.KEffectsFactory
-import de.cau.cs.kieler.simulation.trace.ktrace.Tick
-import de.cau.cs.kieler.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.kexpressions.keffects.Emission
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCompareExtensions
-import de.cau.cs.kieler.kexpressions.keffects.Assignment
 
 /**
  * @author als
@@ -33,6 +31,8 @@ import de.cau.cs.kieler.kexpressions.keffects.Assignment
  * @kieler.rating proposed yellow
  */
 class TraceFileUtil {
+    
+    public static val KEYWORDS = #["reset", "pause", "goto"]
     
     static extension KTraceFactory = KTraceFactory.eINSTANCE
     static extension KExpressionsFactory = KExpressionsFactory.eINSTANCE
@@ -133,6 +133,13 @@ class TraceFileUtil {
                         if (entry.isInput && entry.isOutput) throw new Exception("InputOutput Variables are not supported")
                     }
                 }
+            }
+        }
+        
+        // escape keywords
+        for (variable : traceFile.aggregatedValuedObjects) {
+            if (KEYWORDS.contains(variable.name)) {
+                variable.name = "^" + variable.name // escape
             }
         }
         

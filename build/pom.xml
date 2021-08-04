@@ -9,9 +9,8 @@
 
   <!-- Define a few properties used throughout all build profiles. -->
   <properties>
-    <tycho-version>1.6.0</tycho-version>
-    <xtend-version>2.21.0</xtend-version>
-    <targetJdk>1.8</targetJdk>
+    <tycho-version>2.3.0</tycho-version>
+    <xtend-version>2.25.0</xtend-version>
   
     <!-- Non-breakable space, as normal spaces are trimmed. -->
     <sourceFeatureLabelSuffix>&#xA0;(Sources)</sourceFeatureLabelSuffix>
@@ -55,6 +54,8 @@
         <module>../test</module>
         <module>de.cau.cs.kieler.sccharts.cli</module>
         <module>de.cau.cs.kieler.kicool.cli</module>
+        <module>de.cau.cs.kieler.kicool.klighd.cli</module>
+        <module>de.cau.cs.kieler.language.server.cli</module>
         <module>../test/de.cau.cs.kieler.cli.test</module>
       </modules>
     </profile>
@@ -77,8 +78,19 @@
         <module>../plugins/de.cau.cs.kieler.core.product</module>
         <module>../features/de.cau.cs.kieler.product.feature</module>
         <module>de.cau.cs.kieler.semantics.product.repository</module>
-        <module>de.cau.cs.kieler.kicool.cli</module>
         <module>de.cau.cs.kieler.sccharts.cli</module>
+        <module>de.cau.cs.kieler.kicool.cli</module>
+        <module>de.cau.cs.kieler.kicool.klighd.cli</module>
+        <module>de.cau.cs.kieler.language.server.cli</module>
+      </modules>
+    </profile>
+
+    <profile>
+      <id>semantics.ls</id>
+      <modules>
+        <module>../plugins</module>
+        <module>de.cau.cs.kieler.semantics.targetplatform</module>
+        <module>de.cau.cs.kieler.language.server.cli</module>
       </modules>
     </profile>  
   
@@ -251,7 +263,7 @@
           </dependencies>
           <configuration>
             <outputDirectory>${basedir}/xtend-gen</outputDirectory>
-            <javaSourceVersion>1.8</javaSourceVersion>
+            <javaSourceVersion>11</javaSourceVersion>
           </configuration>
         </plugin>
         <!-- add src-gen and xtend-gen to source-directories -->

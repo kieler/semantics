@@ -13,9 +13,6 @@ import de.cau.cs.kieler.annotations.NamedObject;
 import de.cau.cs.kieler.annotations.Pragma;
 import de.cau.cs.kieler.kexpressions.*;
 
-import java.util.List;
-
-import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.Switch;
@@ -255,11 +252,27 @@ public class KExpressionsSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case KExpressionsPackage.SCHEDULE_DECLARATION: {
-                ScheduleDeclaration scheduleDeclaration = (ScheduleDeclaration)theEObject;
-                T result = caseScheduleDeclaration(scheduleDeclaration);
-                if (result == null) result = caseDeclaration(scheduleDeclaration);
-                if (result == null) result = caseAnnotatable(scheduleDeclaration);
+            case KExpressionsPackage.GENERIC_PARAMETER_DECLARATION: {
+                GenericParameterDeclaration genericParameterDeclaration = (GenericParameterDeclaration)theEObject;
+                T result = caseGenericParameterDeclaration(genericParameterDeclaration);
+                if (result == null) result = caseDeclaration(genericParameterDeclaration);
+                if (result == null) result = caseAnnotatable(genericParameterDeclaration);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case KExpressionsPackage.GENERIC_TYPE_REFERENCE: {
+                GenericTypeReference genericTypeReference = (GenericTypeReference)theEObject;
+                T result = caseGenericTypeReference(genericTypeReference);
+                if (result == null) result = caseExpression(genericTypeReference);
+                if (result == null) result = caseSchedulable(genericTypeReference);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case KExpressionsPackage.VALUE_TYPE_REFERENCE: {
+                ValueTypeReference valueTypeReference = (ValueTypeReference)theEObject;
+                T result = caseValueTypeReference(valueTypeReference);
+                if (result == null) result = caseExpression(valueTypeReference);
+                if (result == null) result = caseSchedulable(valueTypeReference);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -269,6 +282,14 @@ public class KExpressionsSwitch<T> extends Switch<T> {
                 if (result == null) result = caseDeclaration(methodDeclaration);
                 if (result == null) result = caseSchedulable(methodDeclaration);
                 if (result == null) result = caseAnnotatable(methodDeclaration);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case KExpressionsPackage.SCHEDULE_DECLARATION: {
+                ScheduleDeclaration scheduleDeclaration = (ScheduleDeclaration)theEObject;
+                T result = caseScheduleDeclaration(scheduleDeclaration);
+                if (result == null) result = caseDeclaration(scheduleDeclaration);
+                if (result == null) result = caseAnnotatable(scheduleDeclaration);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -357,6 +378,14 @@ public class KExpressionsSwitch<T> extends Switch<T> {
                 ExternString externString = (ExternString)theEObject;
                 T result = caseExternString(externString);
                 if (result == null) result = caseAnnotatable(externString);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case KExpressionsPackage.STATIC_ACCESS_EXPRESSION: {
+                StaticAccessExpression staticAccessExpression = (StaticAccessExpression)theEObject;
+                T result = caseStaticAccessExpression(staticAccessExpression);
+                if (result == null) result = caseExpression(staticAccessExpression);
+                if (result == null) result = caseSchedulable(staticAccessExpression);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -545,6 +574,51 @@ public class KExpressionsSwitch<T> extends Switch<T> {
     }
 
     /**
+     * Returns the result of interpreting the object as an instance of '<em>Generic Parameter Declaration</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Generic Parameter Declaration</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseGenericParameterDeclaration(GenericParameterDeclaration object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Generic Type Reference</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Generic Type Reference</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseGenericTypeReference(GenericTypeReference object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Value Type Reference</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Value Type Reference</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseValueTypeReference(ValueTypeReference object) {
+        return null;
+    }
+
+    /**
      * Returns the result of interpreting the object as an instance of '<em>Schedule Declaration</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
@@ -691,6 +765,21 @@ public class KExpressionsSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseExternString(ExternString object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Static Access Expression</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Static Access Expression</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseStaticAccessExpression(StaticAccessExpression object) {
         return null;
     }
 

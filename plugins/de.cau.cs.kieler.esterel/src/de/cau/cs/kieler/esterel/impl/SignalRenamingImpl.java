@@ -3,7 +3,6 @@
 package de.cau.cs.kieler.esterel.impl;
 
 import de.cau.cs.kieler.esterel.EsterelPackage;
-import de.cau.cs.kieler.esterel.Signal;
 import de.cau.cs.kieler.esterel.SignalRenaming;
 
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference;

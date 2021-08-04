@@ -43,7 +43,7 @@ class HideEntryKeywordHook extends SynthesisHook {
     public static final String HIDE_ANNOTATION_KEYWORD = "CbasedSCChart";
     
     /** The related synthesis option */
-    public static final SynthesisOption HIDE_ENTRY = SynthesisOption.createCheckOption("Hidden Entry Keyword",
+    public static final SynthesisOption HIDE_ENTRY = SynthesisOption.createCheckOption(HideEntryKeywordHook, "Hidden Entry Keyword",
         true).setCategory(GeneralSynthesisOptions::APPEARANCE);
 
     override getDisplayedSynthesisOptions() {
@@ -58,16 +58,16 @@ class HideEntryKeywordHook extends SynthesisHook {
                 // Remove entry actions
                 val parent = node.contentContainer;
                 val actionsContainer = parent?.getProperty(StateStyles.ACTIONS_CONTAINER);
-                if (actionsContainer != null) {
+                if (actionsContainer !== null) {
                     for (action : state.actions) {
                         val actionLabel = actionsContainer.children.findFirst [
                             isAssociatedWith(action)
                         ] as KContainerRendering
-                        if (actionLabel != null) {
+                        if (actionLabel !== null) {
                             val componentContainer = actionLabel.children.head as KContainerRendering
                             componentContainer.children.remove(componentContainer.children.head)
                             val text = componentContainer.children.head as KText
-                            if (text != null && text.text.startsWith("/")) {
+                            if (text !== null && text.text.startsWith("/")) {
                                 text.text = text.text.substring(2)
                             }
                         }

@@ -120,7 +120,7 @@ public class TracingVisualizationUpdateStrategy implements IUpdateStrategy {
                         // changed
                         visualizeTracing(
                                 enabledContextViewer.get(change.getViewer().getContextViewer()),
-                                viewContext.getViewModel(), viewContext, new ArrayList(0), true);
+                                viewContext.getViewModel(), viewContext, new ArrayList<>(0), true);
                     }
                 }
             }
@@ -223,12 +223,12 @@ public class TracingVisualizationUpdateStrategy implements IUpdateStrategy {
             } else {
                 contextViewer.removeSelectionChangedListener(selectionListener);
             }
-            viewContext.getViewer().addViewChangedListener(collapseExpandListener,
+            viewContext.getViewer().addViewChangeListener(collapseExpandListener,
                     ViewChangeType.COLLAPSE, ViewChangeType.EXPAND);
         } else {
             // disable visualization
             contextViewer.removeSelectionChangedListener(selectionListener);
-            viewContext.getViewer().removeViewChangedEventListener(collapseExpandListener);
+            viewContext.getViewer().removeViewChangeListener(collapseExpandListener);
             enabledContextViewer.put(contextViewer, TracingMode.NO_TRACING);
             visualizeTracing(TracingMode.NO_TRACING, viewModel, viewContext, null, false);
         }

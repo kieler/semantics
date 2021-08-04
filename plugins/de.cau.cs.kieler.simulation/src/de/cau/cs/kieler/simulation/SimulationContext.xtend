@@ -77,8 +77,8 @@ class SimulationContext extends CompilationContext implements SimulationControls
     }
     new(CompilationContext parentContext, Environment parentEnvironment) {
         this()
-        startEnvironment.setProperty(Environment.PRECEEDING_COMPILATION_CONTEXT, parentContext)
         startEnvironment.copyProperties(parentEnvironment)
+        startEnvironment.setProperty(Environment.PRECEEDING_COMPILATION_CONTEXT, parentContext)
         setUpSystem()
     }
     

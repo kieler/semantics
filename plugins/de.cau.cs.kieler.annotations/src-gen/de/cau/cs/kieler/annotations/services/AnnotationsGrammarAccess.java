@@ -16,11 +16,11 @@ import org.eclipse.xtext.ParserRule;
 import org.eclipse.xtext.RuleCall;
 import org.eclipse.xtext.TerminalRule;
 import org.eclipse.xtext.common.services.TerminalsGrammarAccess;
-import org.eclipse.xtext.service.AbstractElementFinder.AbstractGrammarElementFinder;
+import org.eclipse.xtext.service.AbstractElementFinder;
 import org.eclipse.xtext.service.GrammarProvider;
 
 @Singleton
-public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
+public class AnnotationsGrammarAccess extends AbstractElementFinder.AbstractGrammarElementFinder {
 	
 	public class AnnotationElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.annotations.Annotations.Annotation");
@@ -32,18 +32,25 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		
 		///**
 		// * @author ssm
-		// * @kieler.design 2015-08-21 proposed 
+		// * @kieler.design 2015-08-21 proposed
 		// * @kieler.rating 2015-08-21 proposed yellow
-		// */ // ------------------ //
-		////  Annotation Rules  // 
+		// */
+		//// ------------------ //
+		////  Annotation Rules  //
 		//// ------------------ //
 		//// General rule for annotations
-		//// The different annotation sub rules are tested in order. Hence, order matters! 
-		//Annotation:
-		//	CommentAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation | TagAnnotation;
+		//// The different annotation sub rules are tested in order. Hence, order matters!
+		//Annotation returns Annotation:
+		//    CommentAnnotation |
+		//    KeyStringValueAnnotation |
+		//    TypedKeyStringValueAnnotation |
+		//    TagAnnotation;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//CommentAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation | TagAnnotation
+		//CommentAnnotation |
+		//KeyStringValueAnnotation |
+		//TypedKeyStringValueAnnotation |
+		//TagAnnotation
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
 		//CommentAnnotation
@@ -65,12 +72,14 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cPragmaTagParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		
 		//// General rule for pragmas
-		//// We only have string and tag pragmas.    
-		//Pragma:
-		//	StringPragma | PragmaTag;
+		//// We only have string and tag pragmas.
+		//Pragma returns Pragma:
+		//    StringPragma |
+		//    PragmaTag;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//StringPragma | PragmaTag
+		//StringPragma |
+		//PragmaTag
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
 		//StringPragma
@@ -90,11 +99,15 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		//// Valued annotations must have a value. For instance, tag annotations are not allowed.
 		//// Derived grammars may use this rule if the general annotation rules compromises the grammar
 		//// due to ambiguities.
-		//ValuedAnnotation Annotation:
-		//	CommentAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation;
+		//ValuedAnnotation returns Annotation:
+		//    CommentAnnotation |
+		//    KeyStringValueAnnotation |
+		//    TypedKeyStringValueAnnotation;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//CommentAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation
+		//CommentAnnotation |
+		//KeyStringValueAnnotation |
+		//TypedKeyStringValueAnnotation
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
 		//CommentAnnotation
@@ -115,13 +128,19 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cTagAnnotationParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
 		
 		//// Restricted Type Annotation Rule
-		//// The restricted type annotation rule does not allow typed string annotations. 
-		//// You can use this rule in derived grammars if you don't want to permit typed strings. 
-		//RestrictedTypeAnnotation Annotation:
-		//	CommentAnnotation | RestrictedKeyStringValueAnnotation | RestrictedTypedKeyStringValueAnnotation | TagAnnotation;
+		//// The restricted type annotation rule does not allow typed string annotations.
+		//// You can use this rule in derived grammars if you don't want to permit typed strings.
+		//RestrictedTypeAnnotation returns Annotation:
+		//    CommentAnnotation |
+		//    RestrictedKeyStringValueAnnotation |
+		//    RestrictedTypedKeyStringValueAnnotation |
+		//    TagAnnotation;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//CommentAnnotation | RestrictedKeyStringValueAnnotation | RestrictedTypedKeyStringValueAnnotation | TagAnnotation
+		//CommentAnnotation |
+		//RestrictedKeyStringValueAnnotation |
+		//RestrictedTypedKeyStringValueAnnotation |
+		//TagAnnotation
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
 		//CommentAnnotation
@@ -145,15 +164,21 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cTagAnnotationParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
 		
 		//// Quoted String Annotation Rule
-		//// The quoted string annotation rules uses quoted key string annotations. You can use this rule in 
-		//// derived grammars if you don't want to permit unquoted strings. 
+		//// The quoted string annotation rules uses quoted key string annotations. You can use this rule in
+		//// derived grammars if you don't want to permit unquoted strings.
 		//// (If you are looking for an example, the keffects grammar uses this rule for their emission
-		//// rule and to avoid grammar ambiguities.)  
-		//QuotedStringAnnotation Annotation:
-		//	CommentAnnotation | QuotedKeyStringValueAnnotation | QuotedTypedKeyStringValueAnnotation | TagAnnotation;
+		//// rule and to avoid grammar ambiguities.)
+		//QuotedStringAnnotation returns Annotation:
+		//    CommentAnnotation |
+		//    QuotedKeyStringValueAnnotation |
+		//    QuotedTypedKeyStringValueAnnotation |
+		//    TagAnnotation;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//CommentAnnotation | QuotedKeyStringValueAnnotation | QuotedTypedKeyStringValueAnnotation | TagAnnotation
+		//CommentAnnotation |
+		//QuotedKeyStringValueAnnotation |
+		//QuotedTypedKeyStringValueAnnotation |
+		//TagAnnotation
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
 		//CommentAnnotation
@@ -175,11 +200,11 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//// CommentAnnotation
 		//// e.g.: /** semantic comment */
-		//CommentAnnotation:
-		//	values+=COMMENT_ANNOTATION;
+		//CommentAnnotation returns CommentAnnotation:
+		//    values += COMMENT_ANNOTATION;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//values+=COMMENT_ANNOTATION
+		//values += COMMENT_ANNOTATION
 		public Assignment getValuesAssignment() { return cValuesAssignment; }
 		
 		//COMMENT_ANNOTATION
@@ -190,11 +215,11 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cValuesAssignment = (Assignment)rule.eContents().get(1);
 		private final RuleCall cValuesSL_COMMENT_ANNOTATIONTerminalRuleCall_0 = (RuleCall)cValuesAssignment.eContents().get(0);
 		
-		//CommentAnnotatonSL CommentAnnotation:
-		//	values+=SL_COMMENT_ANNOTATION;
+		//CommentAnnotatonSL returns CommentAnnotation:
+		//    values += SL_COMMENT_ANNOTATION;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//values+=SL_COMMENT_ANNOTATION
+		//values += SL_COMMENT_ANNOTATION
 		public Assignment getValuesAssignment() { return cValuesAssignment; }
 		
 		//SL_COMMENT_ANNOTATION
@@ -209,8 +234,8 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//// TagAnnotation
 		//// e.g.: @HVlayout
-		//TagAnnotation:
-		//	'@' name=ExtendedID;
+		//TagAnnotation returns TagAnnotation:
+		//    '@' name=ExtendedID;
 		@Override public ParserRule getRule() { return rule; }
 		
 		//'@' name=ExtendedID
@@ -232,8 +257,8 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cNameExtendedIDParserRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
 		
-		//PragmaTag Pragma:
-		//	'#' name=ExtendedID;
+		//PragmaTag returns Pragma:
+		//    '#' name=ExtendedID;
 		@Override public ParserRule getRule() { return rule; }
 		
 		//'#' name=ExtendedID
@@ -263,12 +288,12 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//// KeyStringValueAnnotation
 		//// e.g.: @layouter dot
-		//// You may separate different values via comma.   
-		//KeyStringValueAnnotation StringAnnotation:
-		//	'@' name=ExtendedID values+=EStringAllTypes (',' values+=EStringAllTypes)*;
+		//// You may separate different values via comma.
+		//KeyStringValueAnnotation returns StringAnnotation:
+		//    '@' name=ExtendedID values += EStringAllTypes (',' values += EStringAllTypes)*;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'@' name=ExtendedID values+=EStringAllTypes (',' values+=EStringAllTypes)*
+		//'@' name=ExtendedID values += EStringAllTypes (',' values += EStringAllTypes)*
 		public Group getGroup() { return cGroup; }
 		
 		//'@'
@@ -280,19 +305,19 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		//ExtendedID
 		public RuleCall getNameExtendedIDParserRuleCall_1_0() { return cNameExtendedIDParserRuleCall_1_0; }
 		
-		//values+=EStringAllTypes
+		//values += EStringAllTypes
 		public Assignment getValuesAssignment_2() { return cValuesAssignment_2; }
 		
 		//EStringAllTypes
 		public RuleCall getValuesEStringAllTypesParserRuleCall_2_0() { return cValuesEStringAllTypesParserRuleCall_2_0; }
 		
-		//(',' values+=EStringAllTypes)*
+		//(',' values += EStringAllTypes)*
 		public Group getGroup_3() { return cGroup_3; }
 		
 		//','
 		public Keyword getCommaKeyword_3_0() { return cCommaKeyword_3_0; }
 		
-		//values+=EStringAllTypes
+		//values += EStringAllTypes
 		public Assignment getValuesAssignment_3_1() { return cValuesAssignment_3_1; }
 		
 		//EStringAllTypes
@@ -311,11 +336,11 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cValuesAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
 		private final RuleCall cValuesEStringBooleanParserRuleCall_3_1_0 = (RuleCall)cValuesAssignment_3_1.eContents().get(0);
 		
-		//RestrictedKeyStringValueAnnotation StringAnnotation:
-		//	'@' name=ExtendedID values+=EStringBoolean (',' values+=EStringBoolean)*;
+		//RestrictedKeyStringValueAnnotation returns StringAnnotation:
+		//    '@' name=ExtendedID values += EStringBoolean (',' values += EStringBoolean)*;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'@' name=ExtendedID values+=EStringBoolean (',' values+=EStringBoolean)*
+		//'@' name=ExtendedID values += EStringBoolean (',' values += EStringBoolean)*
 		public Group getGroup() { return cGroup; }
 		
 		//'@'
@@ -327,19 +352,19 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		//ExtendedID
 		public RuleCall getNameExtendedIDParserRuleCall_1_0() { return cNameExtendedIDParserRuleCall_1_0; }
 		
-		//values+=EStringBoolean
+		//values += EStringBoolean
 		public Assignment getValuesAssignment_2() { return cValuesAssignment_2; }
 		
 		//EStringBoolean
 		public RuleCall getValuesEStringBooleanParserRuleCall_2_0() { return cValuesEStringBooleanParserRuleCall_2_0; }
 		
-		//(',' values+=EStringBoolean)*
+		//(',' values += EStringBoolean)*
 		public Group getGroup_3() { return cGroup_3; }
 		
 		//','
 		public Keyword getCommaKeyword_3_0() { return cCommaKeyword_3_0; }
 		
-		//values+=EStringBoolean
+		//values += EStringBoolean
 		public Assignment getValuesAssignment_3_1() { return cValuesAssignment_3_1; }
 		
 		//EStringBoolean
@@ -358,11 +383,11 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cValuesAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
 		private final RuleCall cValuesEStringAllTypesParserRuleCall_3_1_0 = (RuleCall)cValuesAssignment_3_1.eContents().get(0);
 		
-		//StringPragma:
-		//	'#' name=ExtendedID values+=EStringAllTypes (',' values+=EStringAllTypes)*;
+		//StringPragma returns StringPragma:
+		//    '#' name=ExtendedID values += EStringAllTypes (',' values += EStringAllTypes)*;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'#' name=ExtendedID values+=EStringAllTypes (',' values+=EStringAllTypes)*
+		//'#' name=ExtendedID values += EStringAllTypes (',' values += EStringAllTypes)*
 		public Group getGroup() { return cGroup; }
 		
 		//'#'
@@ -374,19 +399,19 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		//ExtendedID
 		public RuleCall getNameExtendedIDParserRuleCall_1_0() { return cNameExtendedIDParserRuleCall_1_0; }
 		
-		//values+=EStringAllTypes
+		//values += EStringAllTypes
 		public Assignment getValuesAssignment_2() { return cValuesAssignment_2; }
 		
 		//EStringAllTypes
 		public RuleCall getValuesEStringAllTypesParserRuleCall_2_0() { return cValuesEStringAllTypesParserRuleCall_2_0; }
 		
-		//(',' values+=EStringAllTypes)*
+		//(',' values += EStringAllTypes)*
 		public Group getGroup_3() { return cGroup_3; }
 		
 		//','
 		public Keyword getCommaKeyword_3_0() { return cCommaKeyword_3_0; }
 		
-		//values+=EStringAllTypes
+		//values += EStringAllTypes
 		public Assignment getValuesAssignment_3_1() { return cValuesAssignment_3_1; }
 		
 		//EStringAllTypes
@@ -411,11 +436,11 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//// TypedKeyStringValueAnnotation
 		//// e.g.: @position[de.cau.cs.kieler.core.math.KVector] "(3,2)"
-		//TypedKeyStringValueAnnotation TypedStringAnnotation:
-		//	'@' name=ExtendedID '[' type=ExtendedID ']' values+=EStringAllTypes (',' values+=EStringAllTypes)*;
+		//TypedKeyStringValueAnnotation returns TypedStringAnnotation:
+		//    '@' name=ExtendedID '[' type=ExtendedID ']' values += EStringAllTypes (',' values += EStringAllTypes)*;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'@' name=ExtendedID '[' type=ExtendedID ']' values+=EStringAllTypes (',' values+=EStringAllTypes)*
+		//'@' name=ExtendedID '[' type=ExtendedID ']' values += EStringAllTypes (',' values += EStringAllTypes)*
 		public Group getGroup() { return cGroup; }
 		
 		//'@'
@@ -439,19 +464,19 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		//']'
 		public Keyword getRightSquareBracketKeyword_4() { return cRightSquareBracketKeyword_4; }
 		
-		//values+=EStringAllTypes
+		//values += EStringAllTypes
 		public Assignment getValuesAssignment_5() { return cValuesAssignment_5; }
 		
 		//EStringAllTypes
 		public RuleCall getValuesEStringAllTypesParserRuleCall_5_0() { return cValuesEStringAllTypesParserRuleCall_5_0; }
 		
-		//(',' values+=EStringAllTypes)*
+		//(',' values += EStringAllTypes)*
 		public Group getGroup_6() { return cGroup_6; }
 		
 		//','
 		public Keyword getCommaKeyword_6_0() { return cCommaKeyword_6_0; }
 		
-		//values+=EStringAllTypes
+		//values += EStringAllTypes
 		public Assignment getValuesAssignment_6_1() { return cValuesAssignment_6_1; }
 		
 		//EStringAllTypes
@@ -474,11 +499,11 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cValuesAssignment_6_1 = (Assignment)cGroup_6.eContents().get(1);
 		private final RuleCall cValuesEStringBooleanParserRuleCall_6_1_0 = (RuleCall)cValuesAssignment_6_1.eContents().get(0);
 		
-		//RestrictedTypedKeyStringValueAnnotation TypedStringAnnotation:
-		//	'@' name=ExtendedID '[' type=ExtendedID ']' values+=EStringBoolean (',' values+=EStringBoolean)*;
+		//RestrictedTypedKeyStringValueAnnotation returns TypedStringAnnotation:
+		//    '@' name=ExtendedID '[' type=ExtendedID ']' values += EStringBoolean (',' values += EStringBoolean)*;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'@' name=ExtendedID '[' type=ExtendedID ']' values+=EStringBoolean (',' values+=EStringBoolean)*
+		//'@' name=ExtendedID '[' type=ExtendedID ']' values += EStringBoolean (',' values += EStringBoolean)*
 		public Group getGroup() { return cGroup; }
 		
 		//'@'
@@ -502,19 +527,19 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		//']'
 		public Keyword getRightSquareBracketKeyword_4() { return cRightSquareBracketKeyword_4; }
 		
-		//values+=EStringBoolean
+		//values += EStringBoolean
 		public Assignment getValuesAssignment_5() { return cValuesAssignment_5; }
 		
 		//EStringBoolean
 		public RuleCall getValuesEStringBooleanParserRuleCall_5_0() { return cValuesEStringBooleanParserRuleCall_5_0; }
 		
-		//(',' values+=EStringBoolean)*
+		//(',' values += EStringBoolean)*
 		public Group getGroup_6() { return cGroup_6; }
 		
 		//','
 		public Keyword getCommaKeyword_6_0() { return cCommaKeyword_6_0; }
 		
-		//values+=EStringBoolean
+		//values += EStringBoolean
 		public Assignment getValuesAssignment_6_1() { return cValuesAssignment_6_1; }
 		
 		//EStringBoolean
@@ -535,12 +560,12 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//// QuotedKeyStringValueAnnotation
 		//// The quoted key string value annotation is a replacement derived grammars may use
-		//// if they want to disallow quote-less strings in a key string annotation. 
-		//QuotedKeyStringValueAnnotation StringAnnotation:
-		//	'@' name=ExtendedID values+=STRING (',' values+=STRING)*;
+		//// if they want to disallow quote-less strings in a key string annotation.
+		//QuotedKeyStringValueAnnotation returns StringAnnotation:
+		//    '@' name=ExtendedID values += STRING (',' values += STRING)*;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'@' name=ExtendedID values+=STRING (',' values+=STRING)*
+		//'@' name=ExtendedID values += STRING (',' values += STRING)*
 		public Group getGroup() { return cGroup; }
 		
 		//'@'
@@ -552,19 +577,19 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		//ExtendedID
 		public RuleCall getNameExtendedIDParserRuleCall_1_0() { return cNameExtendedIDParserRuleCall_1_0; }
 		
-		//values+=STRING
+		//values += STRING
 		public Assignment getValuesAssignment_2() { return cValuesAssignment_2; }
 		
 		//STRING
 		public RuleCall getValuesSTRINGTerminalRuleCall_2_0() { return cValuesSTRINGTerminalRuleCall_2_0; }
 		
-		//(',' values+=STRING)*
+		//(',' values += STRING)*
 		public Group getGroup_3() { return cGroup_3; }
 		
 		//','
 		public Keyword getCommaKeyword_3_0() { return cCommaKeyword_3_0; }
 		
-		//values+=STRING
+		//values += STRING
 		public Assignment getValuesAssignment_3_1() { return cValuesAssignment_3_1; }
 		
 		//STRING
@@ -589,12 +614,12 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//// QuotedTypedKeyStringValueAnnotation
 		//// The quoted typed key string value annotation is a replacement derived grammars may use
-		//// if they want to disallow quote-less strings in a key string annotation. 
-		//QuotedTypedKeyStringValueAnnotation TypedStringAnnotation:
-		//	'@' name=ExtendedID '[' type=ExtendedID ']' values+=STRING (',' values+=STRING)*;
+		//// if they want to disallow quote-less strings in a key string annotation.
+		//QuotedTypedKeyStringValueAnnotation returns TypedStringAnnotation:
+		//    '@' name=ExtendedID '[' type=ExtendedID ']' values += STRING (',' values += STRING)*;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'@' name=ExtendedID '[' type=ExtendedID ']' values+=STRING (',' values+=STRING)*
+		//'@' name=ExtendedID '[' type=ExtendedID ']' values += STRING (',' values += STRING)*
 		public Group getGroup() { return cGroup; }
 		
 		//'@'
@@ -618,19 +643,19 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		//']'
 		public Keyword getRightSquareBracketKeyword_4() { return cRightSquareBracketKeyword_4; }
 		
-		//values+=STRING
+		//values += STRING
 		public Assignment getValuesAssignment_5() { return cValuesAssignment_5; }
 		
 		//STRING
 		public RuleCall getValuesSTRINGTerminalRuleCall_5_0() { return cValuesSTRINGTerminalRuleCall_5_0; }
 		
-		//(',' values+=STRING)*
+		//(',' values += STRING)*
 		public Group getGroup_6() { return cGroup_6; }
 		
 		//','
 		public Keyword getCommaKeyword_6_0() { return cCommaKeyword_6_0; }
 		
-		//values+=STRING
+		//values += STRING
 		public Assignment getValuesAssignment_6_1() { return cValuesAssignment_6_1; }
 		
 		//STRING
@@ -645,8 +670,8 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		//// EString
 		//// Allow strings without quotes if they don't contain spaces.
 		//// For quoteless strings the ExtendedID rule is used.
-		//EString:
-		//	STRING | ExtendedID;
+		//EString returns ecore::EString:
+		//    STRING | ExtendedID;
 		@Override public ParserRule getRule() { return rule; }
 		
 		//STRING | ExtendedID
@@ -665,8 +690,8 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cExtendedIDParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		private final RuleCall cBOOLEANTerminalRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
 		
-		//EStringBoolean:
-		//	STRING | ExtendedID | BOOLEAN;
+		//EStringBoolean returns ecore::EString:
+		//    STRING | ExtendedID | BOOLEAN;
 		@Override public ParserRule getRule() { return rule; }
 		
 		//STRING | ExtendedID | BOOLEAN
@@ -690,8 +715,8 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cIntegerParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
 		private final RuleCall cFloategerParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
 		
-		//EStringAllTypes:
-		//	STRING | ExtendedID | BOOLEAN | Integer | Floateger;
+		//EStringAllTypes returns ecore::EString:
+		//    STRING | ExtendedID | BOOLEAN | Integer | Floateger;
 		@Override public ParserRule getRule() { return rule; }
 		
 		//STRING | ExtendedID | BOOLEAN | Integer | Floateger
@@ -728,20 +753,20 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		//// ExtendedID
 		//// ExtendedID extends the ID rule provided by the terminals grammar.
 		//// An ID may have dot separated parts and may close with a number separated by a hash mark.
-		//ExtendedID:
-		//	ID (('.' | '-') ID)* ('#' INT)?;
+		//ExtendedID returns ecore::EString:
+		//  ID (('.'|'-') ID)* (('#') INT)?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//ID (('.' | '-') ID)* ('#' INT)?
+		//ID (('.'|'-') ID)* (('#') INT)?
 		public Group getGroup() { return cGroup; }
 		
 		//ID
 		public RuleCall getIDTerminalRuleCall_0() { return cIDTerminalRuleCall_0; }
 		
-		//(('.' | '-') ID)*
+		//(('.'|'-') ID)*
 		public Group getGroup_1() { return cGroup_1; }
 		
-		//('.' | '-')
+		//('.'|'-')
 		public Alternatives getAlternatives_1_0() { return cAlternatives_1_0; }
 		
 		//'.'
@@ -753,10 +778,10 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getIDTerminalRuleCall_1_1() { return cIDTerminalRuleCall_1_1; }
 		
-		//('#' INT)?
+		//(('#') INT)?
 		public Group getGroup_2() { return cGroup_2; }
 		
-		//'#'
+		//('#')
 		public Keyword getNumberSignKeyword_2_0() { return cNumberSignKeyword_2_0; }
 		
 		//INT
@@ -770,8 +795,8 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cFullStopKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
 		private final RuleCall cIDTerminalRuleCall_1_1 = (RuleCall)cGroup_1.eContents().get(1);
 		
-		//QualifiedID:
-		//	ID ("." ID)*;
+		//QualifiedID returns ecore::EString:
+		//  ID ("." ID)*;
 		@Override public ParserRule getRule() { return rule; }
 		
 		//ID ("." ID)*
@@ -797,8 +822,8 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//// Integer
 		//// The integer rule extends the EInt terminal by an optional sign for negative numbers.
-		//Integer ecore::EInt:
-		//	'-'? INT;
+		//Integer returns ecore::EInt:
+		//    '-'? INT;
 		@Override public ParserRule getRule() { return rule; }
 		
 		//'-'? INT
@@ -818,8 +843,8 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//// Floateger
 		//// The floateger rule extends the EFloat terminal by an optional sign for negative numbers.
-		//Floateger ecore::EDouble:
-		//	'-'? FLOAT;
+		//Floateger returns ecore::EDouble:
+		//    '-'? FLOAT;
 		@Override public ParserRule getRule() { return rule; }
 		
 		//'-'? FLOAT
@@ -940,15 +965,19 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	
 	///**
 	// * @author ssm
-	// * @kieler.design 2015-08-21 proposed 
+	// * @kieler.design 2015-08-21 proposed
 	// * @kieler.rating 2015-08-21 proposed yellow
-	// */ // ------------------ //
-	////  Annotation Rules  // 
+	// */
+	//// ------------------ //
+	////  Annotation Rules  //
 	//// ------------------ //
 	//// General rule for annotations
-	//// The different annotation sub rules are tested in order. Hence, order matters! 
-	//Annotation:
-	//	CommentAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation | TagAnnotation;
+	//// The different annotation sub rules are tested in order. Hence, order matters!
+	//Annotation returns Annotation:
+	//    CommentAnnotation |
+	//    KeyStringValueAnnotation |
+	//    TypedKeyStringValueAnnotation |
+	//    TagAnnotation;
 	public AnnotationElements getAnnotationAccess() {
 		return pAnnotation;
 	}
@@ -958,9 +987,10 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//// General rule for pragmas
-	//// We only have string and tag pragmas.    
-	//Pragma:
-	//	StringPragma | PragmaTag;
+	//// We only have string and tag pragmas.
+	//Pragma returns Pragma:
+	//    StringPragma |
+	//    PragmaTag;
 	public PragmaElements getPragmaAccess() {
 		return pPragma;
 	}
@@ -973,8 +1003,10 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	//// Valued annotations must have a value. For instance, tag annotations are not allowed.
 	//// Derived grammars may use this rule if the general annotation rules compromises the grammar
 	//// due to ambiguities.
-	//ValuedAnnotation Annotation:
-	//	CommentAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation;
+	//ValuedAnnotation returns Annotation:
+	//    CommentAnnotation |
+	//    KeyStringValueAnnotation |
+	//    TypedKeyStringValueAnnotation;
 	public ValuedAnnotationElements getValuedAnnotationAccess() {
 		return pValuedAnnotation;
 	}
@@ -984,10 +1016,13 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//// Restricted Type Annotation Rule
-	//// The restricted type annotation rule does not allow typed string annotations. 
-	//// You can use this rule in derived grammars if you don't want to permit typed strings. 
-	//RestrictedTypeAnnotation Annotation:
-	//	CommentAnnotation | RestrictedKeyStringValueAnnotation | RestrictedTypedKeyStringValueAnnotation | TagAnnotation;
+	//// The restricted type annotation rule does not allow typed string annotations.
+	//// You can use this rule in derived grammars if you don't want to permit typed strings.
+	//RestrictedTypeAnnotation returns Annotation:
+	//    CommentAnnotation |
+	//    RestrictedKeyStringValueAnnotation |
+	//    RestrictedTypedKeyStringValueAnnotation |
+	//    TagAnnotation;
 	public RestrictedTypeAnnotationElements getRestrictedTypeAnnotationAccess() {
 		return pRestrictedTypeAnnotation;
 	}
@@ -997,12 +1032,15 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//// Quoted String Annotation Rule
-	//// The quoted string annotation rules uses quoted key string annotations. You can use this rule in 
-	//// derived grammars if you don't want to permit unquoted strings. 
+	//// The quoted string annotation rules uses quoted key string annotations. You can use this rule in
+	//// derived grammars if you don't want to permit unquoted strings.
 	//// (If you are looking for an example, the keffects grammar uses this rule for their emission
-	//// rule and to avoid grammar ambiguities.)  
-	//QuotedStringAnnotation Annotation:
-	//	CommentAnnotation | QuotedKeyStringValueAnnotation | QuotedTypedKeyStringValueAnnotation | TagAnnotation;
+	//// rule and to avoid grammar ambiguities.)
+	//QuotedStringAnnotation returns Annotation:
+	//    CommentAnnotation |
+	//    QuotedKeyStringValueAnnotation |
+	//    QuotedTypedKeyStringValueAnnotation |
+	//    TagAnnotation;
 	public QuotedStringAnnotationElements getQuotedStringAnnotationAccess() {
 		return pQuotedStringAnnotation;
 	}
@@ -1013,8 +1051,8 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//// CommentAnnotation
 	//// e.g.: /** semantic comment */
-	//CommentAnnotation:
-	//	values+=COMMENT_ANNOTATION;
+	//CommentAnnotation returns CommentAnnotation:
+	//    values += COMMENT_ANNOTATION;
 	public CommentAnnotationElements getCommentAnnotationAccess() {
 		return pCommentAnnotation;
 	}
@@ -1023,8 +1061,8 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		return getCommentAnnotationAccess().getRule();
 	}
 	
-	//CommentAnnotatonSL CommentAnnotation:
-	//	values+=SL_COMMENT_ANNOTATION;
+	//CommentAnnotatonSL returns CommentAnnotation:
+	//    values += SL_COMMENT_ANNOTATION;
 	public CommentAnnotatonSLElements getCommentAnnotatonSLAccess() {
 		return pCommentAnnotatonSL;
 	}
@@ -1035,8 +1073,8 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//// TagAnnotation
 	//// e.g.: @HVlayout
-	//TagAnnotation:
-	//	'@' name=ExtendedID;
+	//TagAnnotation returns TagAnnotation:
+	//    '@' name=ExtendedID;
 	public TagAnnotationElements getTagAnnotationAccess() {
 		return pTagAnnotation;
 	}
@@ -1045,8 +1083,8 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		return getTagAnnotationAccess().getRule();
 	}
 	
-	//PragmaTag Pragma:
-	//	'#' name=ExtendedID;
+	//PragmaTag returns Pragma:
+	//    '#' name=ExtendedID;
 	public PragmaTagElements getPragmaTagAccess() {
 		return pPragmaTag;
 	}
@@ -1057,9 +1095,9 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//// KeyStringValueAnnotation
 	//// e.g.: @layouter dot
-	//// You may separate different values via comma.   
-	//KeyStringValueAnnotation StringAnnotation:
-	//	'@' name=ExtendedID values+=EStringAllTypes (',' values+=EStringAllTypes)*;
+	//// You may separate different values via comma.
+	//KeyStringValueAnnotation returns StringAnnotation:
+	//    '@' name=ExtendedID values += EStringAllTypes (',' values += EStringAllTypes)*;
 	public KeyStringValueAnnotationElements getKeyStringValueAnnotationAccess() {
 		return pKeyStringValueAnnotation;
 	}
@@ -1068,8 +1106,8 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		return getKeyStringValueAnnotationAccess().getRule();
 	}
 	
-	//RestrictedKeyStringValueAnnotation StringAnnotation:
-	//	'@' name=ExtendedID values+=EStringBoolean (',' values+=EStringBoolean)*;
+	//RestrictedKeyStringValueAnnotation returns StringAnnotation:
+	//    '@' name=ExtendedID values += EStringBoolean (',' values += EStringBoolean)*;
 	public RestrictedKeyStringValueAnnotationElements getRestrictedKeyStringValueAnnotationAccess() {
 		return pRestrictedKeyStringValueAnnotation;
 	}
@@ -1078,8 +1116,8 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		return getRestrictedKeyStringValueAnnotationAccess().getRule();
 	}
 	
-	//StringPragma:
-	//	'#' name=ExtendedID values+=EStringAllTypes (',' values+=EStringAllTypes)*;
+	//StringPragma returns StringPragma:
+	//    '#' name=ExtendedID values += EStringAllTypes (',' values += EStringAllTypes)*;
 	public StringPragmaElements getStringPragmaAccess() {
 		return pStringPragma;
 	}
@@ -1090,8 +1128,8 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//// TypedKeyStringValueAnnotation
 	//// e.g.: @position[de.cau.cs.kieler.core.math.KVector] "(3,2)"
-	//TypedKeyStringValueAnnotation TypedStringAnnotation:
-	//	'@' name=ExtendedID '[' type=ExtendedID ']' values+=EStringAllTypes (',' values+=EStringAllTypes)*;
+	//TypedKeyStringValueAnnotation returns TypedStringAnnotation:
+	//    '@' name=ExtendedID '[' type=ExtendedID ']' values += EStringAllTypes (',' values += EStringAllTypes)*;
 	public TypedKeyStringValueAnnotationElements getTypedKeyStringValueAnnotationAccess() {
 		return pTypedKeyStringValueAnnotation;
 	}
@@ -1100,8 +1138,8 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		return getTypedKeyStringValueAnnotationAccess().getRule();
 	}
 	
-	//RestrictedTypedKeyStringValueAnnotation TypedStringAnnotation:
-	//	'@' name=ExtendedID '[' type=ExtendedID ']' values+=EStringBoolean (',' values+=EStringBoolean)*;
+	//RestrictedTypedKeyStringValueAnnotation returns TypedStringAnnotation:
+	//    '@' name=ExtendedID '[' type=ExtendedID ']' values += EStringBoolean (',' values += EStringBoolean)*;
 	public RestrictedTypedKeyStringValueAnnotationElements getRestrictedTypedKeyStringValueAnnotationAccess() {
 		return pRestrictedTypedKeyStringValueAnnotation;
 	}
@@ -1112,9 +1150,9 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//// QuotedKeyStringValueAnnotation
 	//// The quoted key string value annotation is a replacement derived grammars may use
-	//// if they want to disallow quote-less strings in a key string annotation. 
-	//QuotedKeyStringValueAnnotation StringAnnotation:
-	//	'@' name=ExtendedID values+=STRING (',' values+=STRING)*;
+	//// if they want to disallow quote-less strings in a key string annotation.
+	//QuotedKeyStringValueAnnotation returns StringAnnotation:
+	//    '@' name=ExtendedID values += STRING (',' values += STRING)*;
 	public QuotedKeyStringValueAnnotationElements getQuotedKeyStringValueAnnotationAccess() {
 		return pQuotedKeyStringValueAnnotation;
 	}
@@ -1125,9 +1163,9 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//// QuotedTypedKeyStringValueAnnotation
 	//// The quoted typed key string value annotation is a replacement derived grammars may use
-	//// if they want to disallow quote-less strings in a key string annotation. 
-	//QuotedTypedKeyStringValueAnnotation TypedStringAnnotation:
-	//	'@' name=ExtendedID '[' type=ExtendedID ']' values+=STRING (',' values+=STRING)*;
+	//// if they want to disallow quote-less strings in a key string annotation.
+	//QuotedTypedKeyStringValueAnnotation returns TypedStringAnnotation:
+	//    '@' name=ExtendedID '[' type=ExtendedID ']' values += STRING (',' values += STRING)*;
 	public QuotedTypedKeyStringValueAnnotationElements getQuotedTypedKeyStringValueAnnotationAccess() {
 		return pQuotedTypedKeyStringValueAnnotation;
 	}
@@ -1139,8 +1177,8 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	//// EString
 	//// Allow strings without quotes if they don't contain spaces.
 	//// For quoteless strings the ExtendedID rule is used.
-	//EString:
-	//	STRING | ExtendedID;
+	//EString returns ecore::EString:
+	//    STRING | ExtendedID;
 	public EStringElements getEStringAccess() {
 		return pEString;
 	}
@@ -1149,8 +1187,8 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		return getEStringAccess().getRule();
 	}
 	
-	//EStringBoolean:
-	//	STRING | ExtendedID | BOOLEAN;
+	//EStringBoolean returns ecore::EString:
+	//    STRING | ExtendedID | BOOLEAN;
 	public EStringBooleanElements getEStringBooleanAccess() {
 		return pEStringBoolean;
 	}
@@ -1159,8 +1197,8 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		return getEStringBooleanAccess().getRule();
 	}
 	
-	//EStringAllTypes:
-	//	STRING | ExtendedID | BOOLEAN | Integer | Floateger;
+	//EStringAllTypes returns ecore::EString:
+	//    STRING | ExtendedID | BOOLEAN | Integer | Floateger;
 	public EStringAllTypesElements getEStringAllTypesAccess() {
 		return pEStringAllTypes;
 	}
@@ -1172,8 +1210,8 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	//// ExtendedID
 	//// ExtendedID extends the ID rule provided by the terminals grammar.
 	//// An ID may have dot separated parts and may close with a number separated by a hash mark.
-	//ExtendedID:
-	//	ID (('.' | '-') ID)* ('#' INT)?;
+	//ExtendedID returns ecore::EString:
+	//  ID (('.'|'-') ID)* (('#') INT)?;
 	public ExtendedIDElements getExtendedIDAccess() {
 		return pExtendedID;
 	}
@@ -1182,8 +1220,8 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		return getExtendedIDAccess().getRule();
 	}
 	
-	//QualifiedID:
-	//	ID ("." ID)*;
+	//QualifiedID returns ecore::EString:
+	//  ID ("." ID)*;
 	public QualifiedIDElements getQualifiedIDAccess() {
 		return pQualifiedID;
 	}
@@ -1194,8 +1232,8 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//// Integer
 	//// The integer rule extends the EInt terminal by an optional sign for negative numbers.
-	//Integer ecore::EInt:
-	//	'-'? INT;
+	//Integer returns ecore::EInt:
+	//    '-'? INT;
 	public IntegerElements getIntegerAccess() {
 		return pInteger;
 	}
@@ -1206,8 +1244,8 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//// Floateger
 	//// The floateger rule extends the EFloat terminal by an optional sign for negative numbers.
-	//Floateger ecore::EDouble:
-	//	'-'? FLOAT;
+	//Floateger returns ecore::EDouble:
+	//    '-'? FLOAT;
 	public FloategerElements getFloategerAccess() {
 		return pFloateger;
 	}
@@ -1216,79 +1254,95 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		return getFloategerAccess().getRule();
 	}
 	
-	//terminal COMMENT_ANNOTATION:
-	//	'/**'->'*/';
+	//// ---------------------- //
+	////  Annotation Terminals  //
+	//// ---------------------- //
+	//// Comment Annotation Terminal
+	//// Custom terminal rule introducing semantic comments.
+	//terminal COMMENT_ANNOTATION returns ecore::EString:
+	//    '/**' -> '*/';
 	public TerminalRule getCOMMENT_ANNOTATIONRule() {
 		return tCOMMENT_ANNOTATION;
 	}
 	
+	//// Multiline Comment Terminal
+	//// Modified version of Terminals.ML_COMMENT as
+	//// COMMENT_ANNOTATION is not recognized correctly with original one.
 	//@Override
-	//terminal ML_COMMENT:
-	//	'/*' !'*'->'*/';
+	//terminal ML_COMMENT returns ecore::EString:
+	//    '/*'!'*' -> '*/';
 	public TerminalRule getML_COMMENTRule() {
 		return tML_COMMENT;
 	}
 	
-	//terminal SL_COMMENT_ANNOTATION:
-	//	'//*' !('\n' | '\r')* ('\r'? '\n')?;
+	//terminal SL_COMMENT_ANNOTATION returns ecore::EString:
+	//    '//*' !('\n'|'\r')* ('\r'? '\n')?;
 	public TerminalRule getSL_COMMENT_ANNOTATIONRule() {
 		return tSL_COMMENT_ANNOTATION;
 	}
 	
 	//@Override
 	//terminal SL_COMMENT:
-	//	'//' !'*' !('\n' | '\r')* ('\r'? '\n')?;
+	//    '//' !'*' !('\n'|'\r')* ('\r'? '\n')?;
 	public TerminalRule getSL_COMMENTRule() {
 		return tSL_COMMENT;
 	}
 	
-	//terminal fragment NUMBER:
-	//	'0'..'9';
+	//// Number Terminal
+	//terminal fragment NUMBER :
+	//    '0'..'9';
 	public TerminalRule getNUMBERRule() {
 		return tNUMBER;
 	}
 	
+	//// Integer Terminal
+	//// An INT is a list of numbers.
 	//@Override
 	//terminal INT returns ecore::EInt:
-	//	NUMBER+;
+	//    NUMBER+;
 	public TerminalRule getINTRule() {
 		return tINT;
 	}
 	
+	//// Float Terminal (internal precision: double!)
+	//// Make sure the Float rule does not shadow the INT rule
 	//terminal FLOAT returns ecore::EDouble:
-	//	NUMBER+ ('.' NUMBER*) (("e" | "E") ("+" | "-")? NUMBER+)? 'f'? | NUMBER+ 'f';
+	//    NUMBER+ ('.' NUMBER*) (("e"|"E") ("+"|"-")? NUMBER+)? 'f'? |
+	//    NUMBER+ 'f';
 	public TerminalRule getFLOATRule() {
 		return tFLOAT;
 	}
 	
-	//terminal BOOLEAN returns ecore::EBooleanObject:
-	//	'true' | 'false';
+	//// Boolean Terminal
+	//// Introduce boolean values.
+	//terminal BOOLEAN returns ecore::EBooleanObject :
+	//    'true' | 'false';
 	public TerminalRule getBOOLEANRule() {
 		return tBOOLEAN;
 	}
 	
+	//// String Terminal
+	//// Custom terminal rule for strings, only use double quotes.
 	//@Override
-	//terminal STRING:
-	//	'"' ('\\' ('b' | 't' | 'n' | 'f' | 'r' | '"' | "'" | '\\') | !('\\' | '"'))* '"';
+	//terminal STRING returns ecore::EString:
+	//    '"' ( '\\' ('b'|'t'|'n'|'f'|'r'|'"'|"'"|'\\') | !('\\'|'"') )* '"';
 	public TerminalRule getSTRINGRule() {
 		return tSTRING;
 	}
 	
 	//@Override
 	//terminal ID:
-	//	'^'? (('_'? 'a'..'z' | '_'? 'A'..'Z') | '_' '0'..'9' | '__') ('a'..'z' | 'A'..'Z' | '_' | '0'..'9')*;
+	//    '^'?(('_'?'a'..'z'|'_'?'A'..'Z')|'_''0'..'9'|'__') ('a'..'z'|'A'..'Z'|'_'|'0'..'9')*;
 	public TerminalRule getIDRule() {
 		return tID;
 	}
 	
-	//terminal WS:
-	//	' ' | '\t' | '\r' | '\n'+;
+	//terminal WS         : (' '|'\t'|'\r'|'\n')+;
 	public TerminalRule getWSRule() {
 		return gaTerminals.getWSRule();
 	}
 	
-	//terminal ANY_OTHER:
-	//	.;
+	//terminal ANY_OTHER: .;
 	public TerminalRule getANY_OTHERRule() {
 		return gaTerminals.getANY_OTHERRule();
 	}

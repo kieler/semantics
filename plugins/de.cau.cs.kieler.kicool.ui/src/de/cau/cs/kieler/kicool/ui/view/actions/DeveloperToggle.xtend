@@ -50,7 +50,6 @@ class DeveloperToggle extends AbstractAction {
         isChecked = action.isChecked
         separator.visible = action.isChecked
         toolBar.find(openSystemAction.action.id).visible = action.isChecked
-        toolBar.find(view.flattenSystemViewToggle.action.id).visible = action.isChecked
         view.viewSite.actionBars.updateActionBars
     }
     
@@ -62,7 +61,6 @@ class DeveloperToggle extends AbstractAction {
         
         toolBar.add(separator)
         toolBar.add(openSystemAction.action)
-        toolBar.add(view.flattenSystemViewToggle.action)
         
         invoke
     }

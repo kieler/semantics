@@ -45,12 +45,20 @@
         eOpposite="#//Join/fork"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="next" lowerBound="1" upperBound="-1"
         eType="#//ControlFlow" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" lowerBound="1" eType="#//ForkType"
+        defaultValueLiteral="PARALLEL"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="ForkType">
+    <eLiterals name="PARALLEL"/>
+    <eLiterals name="SEQUENTIAL" value="1"/>
+    <eLiterals name="SEQUENTIAL_PREEMPTIVE" value="2"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Join" eSuperTypes="#//Node">
     <eStructuralFeatures xsi:type="ecore:EReference" name="fork" lowerBound="1" eType="#//Fork"
         eOpposite="#//Fork/join"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="next" eType="#//ControlFlow"
         containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="any" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Entry" eSuperTypes="#//Node">
     <eStructuralFeatures xsi:type="ecore:EReference" name="exit" lowerBound="1" eType="#//Exit"

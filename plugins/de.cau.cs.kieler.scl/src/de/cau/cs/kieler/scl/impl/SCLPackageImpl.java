@@ -13,6 +13,7 @@ import de.cau.cs.kieler.kexpressions.kext.KExtPackage;
 import de.cau.cs.kieler.scl.Assignment;
 import de.cau.cs.kieler.scl.Conditional;
 import de.cau.cs.kieler.scl.ElseScope;
+import de.cau.cs.kieler.scl.ForkType;
 import de.cau.cs.kieler.scl.Goto;
 import de.cau.cs.kieler.scl.Label;
 import de.cau.cs.kieler.scl.Loop;
@@ -32,6 +33,7 @@ import de.cau.cs.kieler.scl.StatementContainer;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
@@ -176,6 +178,13 @@ public class SCLPackageImpl extends EPackageImpl implements SCLPackage {
      * @generated
      */
     private EClass loopEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EEnum forkTypeEEnum = null;
 
     /**
      * Creates an instance of the model <b>Package</b>, registered with
@@ -420,6 +429,26 @@ public class SCLPackageImpl extends EPackageImpl implements SCLPackage {
      * @generated
      */
     @Override
+    public EAttribute getParallel_JoinAny() {
+        return (EAttribute)parallelEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EAttribute getParallel_ForkType() {
+        return (EAttribute)parallelEClass.getEStructuralFeatures().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public EClass getModuleCall() {
         return moduleCallEClass;
     }
@@ -570,6 +599,16 @@ public class SCLPackageImpl extends EPackageImpl implements SCLPackage {
      * @generated
      */
     @Override
+    public EEnum getForkType() {
+        return forkTypeEEnum;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public SCLFactory getSCLFactory() {
         return (SCLFactory)getEFactoryInstance();
     }
@@ -620,6 +659,8 @@ public class SCLPackageImpl extends EPackageImpl implements SCLPackage {
 
         parallelEClass = createEClass(PARALLEL);
         createEReference(parallelEClass, PARALLEL__THREADS);
+        createEAttribute(parallelEClass, PARALLEL__JOIN_ANY);
+        createEAttribute(parallelEClass, PARALLEL__FORK_TYPE);
 
         moduleCallEClass = createEClass(MODULE_CALL);
         createEReference(moduleCallEClass, MODULE_CALL__MODULE);
@@ -643,6 +684,9 @@ public class SCLPackageImpl extends EPackageImpl implements SCLPackage {
         createEReference(loopEClass, LOOP__INITIALIZATION_DECLARATION);
         createEReference(loopEClass, LOOP__CONDITION);
         createEReference(loopEClass, LOOP__AFTERTHOUGHT);
+
+        // Create enums
+        forkTypeEEnum = createEEnum(FORK_TYPE);
     }
 
     /**
@@ -739,6 +783,8 @@ public class SCLPackageImpl extends EPackageImpl implements SCLPackage {
 
         initEClass(parallelEClass, Parallel.class, "Parallel", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getParallel_Threads(), this.getThread(), null, "threads", null, 0, -1, Parallel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getParallel_JoinAny(), ecorePackage.getEBoolean(), "joinAny", null, 0, 1, Parallel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getParallel_ForkType(), this.getForkType(), "forkType", "PARALLEL", 1, 1, Parallel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(moduleCallEClass, ModuleCall.class, "ModuleCall", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getModuleCall_Module(), this.getModule(), null, "module", null, 1, 1, ModuleCall.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -762,6 +808,12 @@ public class SCLPackageImpl extends EPackageImpl implements SCLPackage {
         initEReference(getLoop_InitializationDeclaration(), theKExpressionsPackage.getVariableDeclaration(), null, "initializationDeclaration", null, 0, 1, Loop.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getLoop_Condition(), theKExpressionsPackage.getExpression(), null, "condition", null, 0, 1, Loop.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getLoop_Afterthought(), theKEffectsPackage.getAssignment(), null, "afterthought", null, 0, 1, Loop.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        // Initialize enums and add enum literals
+        initEEnum(forkTypeEEnum, ForkType.class, "ForkType");
+        addEEnumLiteral(forkTypeEEnum, ForkType.PARALLEL);
+        addEEnumLiteral(forkTypeEEnum, ForkType.SEQUENTIAL);
+        addEEnumLiteral(forkTypeEEnum, ForkType.SEQUENTIAL_PREEMPTIVE);
 
         // Create resource
         createResource(eNS_URI);

@@ -15,6 +15,7 @@ package de.cau.cs.kieler.kicool.cli
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
+import de.cau.cs.kieler.core.KielerVersion
 import de.cau.cs.kieler.core.model.ModelUtil
 import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.core.properties.Property
@@ -22,6 +23,7 @@ import de.cau.cs.kieler.core.services.KielerLanguage
 import de.cau.cs.kieler.kexpressions.kext.KExtStandaloneParser
 import de.cau.cs.kieler.kicool.KiCoolStandaloneSetup
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
+import de.cau.cs.kieler.kicool.compilation.CompilationContext
 import de.cau.cs.kieler.kicool.compilation.Compile
 import de.cau.cs.kieler.kicool.compilation.ExecutableContainer
 import de.cau.cs.kieler.kicool.compilation.ExecutableContainerWrapper
@@ -66,20 +68,23 @@ import static extension java.lang.String.format
 @Command(name = "kico")
 class KielerCompilerCLI implements Runnable, Observer {
 
+    @Option(names = #["--version"], description = "prints the version of this compiler.")
+    protected boolean version
+    
     @Option(names = #["-v", "--verbose"], description = "activates verbose output.")
-    protected boolean verbose;
+    protected boolean verbose
     
     @Option(names = #["-w", "--warn"], description = "activates warning output for parser and compiler.")
-    protected boolean warn;
+    protected boolean warn
 
     @Option(names = #["-t", "--try-all"], description = "prevents the compiler from stopping at the first error when compiling multiple source files.")
-    protected boolean tryall;
+    protected boolean tryall
     
     @Option(names = #["-e", "--external", "--class-path"], paramLabel = "FILE", description = "one or multiple .jar files where the compiler searches for additional processors and compilation systems.")
     protected List<String> externalJars
     
     @Option(names = #["-s", "--system"], paramLabel = "SYSTEM-ID/FILE", description = "the ID of the compilation system or local .kico-file. (default: ${DEFAULT-VALUE})")
-    protected String systemId = "de.cau.cs.kieler.kicool.identity";
+    protected String systemId = "de.cau.cs.kieler.kicool.identity"
     
     @Option(names = #["-i", "--intermediates"], description = "deactivates inplace compilation and saves all intermediate models. (default: ${DEFAULT-VALUE})")
     protected boolean intermediates = false
@@ -91,28 +96,28 @@ class KielerCompilerCLI implements Runnable, Observer {
     protected Map<String, String> properties
     
     @Option(names = #["-f", "--filter"], paramLabel = "PATTERN", description = "the glob pattern for filtering input files. (default: ${DEFAULT-VALUE})")
-    protected String filter = "*.*";
+    protected String filter = "*.*"
     
     @Option(names = #["-o", "--output"], paramLabel = "FILE/DIRECTORY", description = "the output file or directory (for multiple source files) where the compilation result(s) should be saved. By default the result will be save alongside the source file with a deduced or default name, this might lead to overwrites if compiling multiple source files in the same directory.")
-    protected File output;
+    protected File output
     
     @Option(names = #["-g", "--generated-code"], paramLabel = "DIRECTORY", description = "directory where the intermediate results and other generated files of the compilation can be stored. By default the files will be saved in a 'kieler-gen' folder alongside the source file, this might lead to overwrites if compiling multiple source files in the same directory.")
-    protected File genCodeDir;
+    protected File genCodeDir
     
     @Option(names = #["--no-output"], description = "deactivates saving the final compilation result. (default: ${DEFAULT-VALUE})")
     protected boolean noOutput = false
     
     @Parameters(description = "the files and/or directories to process.")
-    protected List<File> files;
+    protected List<File> files
     
     @Option(names = #["--list-systems"], description = "lists common compilation systems.")
-    protected boolean listSystems;
+    protected boolean listSystems
     
     @Option(names = #["--list-all-systems"], description = "lists all available compilation systems, including internal and developer-only systems.")
-    protected boolean listAllSystems;
+    protected boolean listAllSystems
     
     @Option(names = #["-h", "--help"], usageHelp = true, description = "displays this help message.")
-    protected boolean help;
+    protected boolean help
     
     protected static val LAZY_PREFIX = "de.cau.cs.kieler"
     protected static val IProperty<File> SOURCE_FILE = new Property<File>("de.cau.cs.kieler.kicool.cli.source.file")
@@ -135,7 +140,7 @@ class KielerCompilerCLI implements Runnable, Observer {
         if (config !== null) {
             try {
                 val content = new String(Files.readAllBytes(config.toPath))
-                val json = (new JsonParser).parse(content) as JsonObject
+                val json = JsonParser.parseString(content) as JsonObject
                 // Additional command arguments
                 val jsonArgs = <String>newArrayList
                 for (entry : json.entrySet.filter[key.startsWith("--") && value.isJsonPrimitive && value.asJsonPrimitive.isString]) {
@@ -177,35 +182,24 @@ class KielerCompilerCLI implements Runnable, Observer {
                 e.printStackTrace
             }
         }
+        
+        // Print version
+        if (version) {
+            println(KielerVersion.version)
+            System.exit(0)
+        }
+        
+        // Handle additional libraries
         if (externalJars !== null) {
             for (path : externalJars) {
                 addURLToClassLoader(new File(path).toURI().toURL())
             }
         }
+        
         try {
-            // List all systems
-            val availableSystems = availableSystemsMap
-            if (listSystems || listAllSystems) {
-                if (listAllSystems) {
-                    println("All available compilation systems:")
-                } else {
-                    println("Compilation systems:")
-                }
-               
-                val languages = availableInputLanguagesMap
-                for (entry : availableSystems.entrySet.filter[listAllSystems ? true : it.value.public].sortBy[key]) {
-                    val input = KiCoolUtils.findInputClass(entry.value)
-                    val lang = languages.values.findFirst[supportedModels.contains(input)]
-                    if (lang !== null) {
-                        println("  %s - [%s] - %s".format(entry.key, lang.supportedResourceExtensions.join(", ")["*." + it], entry.value.label))
-                    } else if (input !== null && ("Object".equals(input.simpleName) || "EObject".equals(input.simpleName))) {
-                        println("  %s - [*.*] - %s".format(entry.key, entry.value.label))
-                    } else {
-                        println("  %s - %s".format(entry.key, entry.value.label))
-                    }
-                }
-                System.exit(0)
-            }
+            // List systems if requested
+            val exit = printList()
+            if (exit) System.exit(0)
             
             // Collect files
             val folderMatcher = FileSystems.getDefault().getPathMatcher("glob:**/" + filter)
@@ -240,6 +234,7 @@ class KielerCompilerCLI implements Runnable, Observer {
             
             
             // Find system
+            val availableSystems = availableSystemsMap
             val lazyId = (systemId !== null && systemId.startsWith(".")) ? LAZY_PREFIX + systemId : systemId
             var system = if (availableSystems.containsKey(lazyId)) {
                 availableSystems.get(lazyId)
@@ -389,7 +384,7 @@ class KielerCompilerCLI implements Runnable, Observer {
                             output
                         }
                         
-                        if (!cc.result.model.saveModel(dest, file)) {
+                        if (!cc.result.model.saveModel(dest, file, cc)) {
                             if (tryall) {
                                 error = true
                             } else {
@@ -435,7 +430,6 @@ class KielerCompilerCLI implements Runnable, Observer {
                         println(error.message)
                         if (error.exception !== null) error.exception.printStackTrace
                     }
-                    if (!tryall) System.exit(-1)
                 }
                 if (warn && env.warnings !== null && !env.warnings.empty) {
                     for (warning : env.warnings.get(Environment.REPORT_ROOT)) {
@@ -473,8 +467,12 @@ class KielerCompilerCLI implements Runnable, Observer {
                 if (verbose) {
                     println("Processing time: %.2fms".format(env.getProperty(Environment.TRANSFORMATION_TIME).doubleValue / 1000_000))
                 }
+                if (!tryall && env.errors !== null && !env.errors.empty) {
+                    println("Compilation failed.")
+                    System.exit(-1)
+                }
                 if (intermediates) {
-                    if (!env.model.saveModel(processorDir, env.getProperty(SOURCE_FILE))) {
+                    if (!env.model.saveModel(processorDir, env.getProperty(SOURCE_FILE), event.compilationContext)) {
                         println("Could not save intermediate result processor %s (%s)".format(event.processorInstance.name, event.processorInstance.id))
                     }
                 }
@@ -508,7 +506,32 @@ class KielerCompilerCLI implements Runnable, Observer {
         return null
     }
     
-    protected def saveModel(Object model, File dest, File source) {
+    protected def boolean printList() {
+        if (listSystems || listAllSystems) {
+            if (listAllSystems) {
+                println("All available compilation systems:")
+            } else {
+                println("Compilation systems:")
+            }
+           
+            val languages = availableInputLanguagesMap
+            for (entry : availableSystemsMap.entrySet.filter[listAllSystems ? true : it.value.public].sortBy[key]) {
+                val input = KiCoolUtils.findInputClass(entry.value)
+                val lang = languages.values.findFirst[supportedModels.contains(input)]
+                if (lang !== null) {
+                    println("  %s - [%s] - %s".format(entry.key, lang.supportedResourceExtensions.join(", ")["*." + it], entry.value.label))
+                } else if (input !== null && ("Object".equals(input.simpleName) || "EObject".equals(input.simpleName))) {
+                    println("  %s - [*.*] - %s".format(entry.key, entry.value.label))
+                } else {
+                    println("  %s - %s".format(entry.key, entry.value.label))
+                }
+            }
+            return true
+        }
+        return false
+    }
+    
+    protected def saveModel(Object model, File dest, File source, CompilationContext cc) {
         try {
             val name = (source.name.contains(".")) ? source.name.substring(0, source.name.indexOf(".")) : source.name + ".result"
             if (model instanceof CodeContainer) { // special handling because it may save multiple files
@@ -530,10 +553,10 @@ class KielerCompilerCLI implements Runnable, Observer {
                     if (verbose) println("Writing to %s".format(dest))
                     Files.write(dest.toPath, model.head.code.getBytes())
                 } else {
-                    for (cc : model.files) {
-                        val target = new File(dest, cc.fileName)
+                    for (f : model.files) {
+                        val target = new File(dest, f.fileName)
                         if (verbose) println("Writing to %s".format(target))
-                        Files.write(target.toPath, cc.code.getBytes())
+                        Files.write(target.toPath, f.code.getBytes())
                     }
                 }
             } else {
@@ -549,12 +572,15 @@ class KielerCompilerCLI implements Runnable, Observer {
                         if (ext !== null) {
                             val target = new File(dest, name + "." + ext.key)
                             if (target.absoluteFile.equals(source.absoluteFile)) {
-                                println("Cannot override source file with compilation result (%s)".format(target))
-                                return false
-                            } else {
-                                if (verbose) println("Writing to %s".format(target))
-                                ModelUtil.saveModel(model, target.URI, ext.value)
+                                if (output === null) {
+                                    println("Results were not saved since source and target destination are identical (%s). To enable destructive updates set output destination explicitly.".format(target))
+                                    return false
+                                } else if (verbose) {
+                                    println("Performing destructive source file update.")
+                                }
                             }
+                            if (verbose) println("Writing to %s".format(target))
+                            ModelUtil.saveModel(model, target.URI, ext.value)
                         } else {
                             val target = new File(dest, name + ".unknown")
                             if (verbose) println("Writing to %s".format(target))
@@ -580,6 +606,14 @@ class KielerCompilerCLI implements Runnable, Observer {
                         Files.write(dest.toPath, model.toString.getBytes())
                     } else {
                         val target = new File(dest, name + ".txt")
+                        if (target.absoluteFile.equals(source.absoluteFile)) {
+                            if (output === null) {
+                                println("Results were not saved since source and target destination are identical (%s). To enable destructive updates set output destination explicitly.".format(target))
+                                return false
+                            } else if (verbose) {
+                                println("Performing destructive source file update.")
+                            }
+                        }
                         if (verbose) println("Writing to %s".format(target))
                         Files.write(target.toPath, model.toString.getBytes())
                     }

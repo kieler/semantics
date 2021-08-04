@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <description name="KIELER Compiler CLI">
+      Artificial Update site for the KIELER Compiler and Diagrams CLI.
+   </description>
+   <bundle id="de.cau.cs.kieler.esterel"/>
+   <bundle id="de.cau.cs.kieler.esterel.compiler"/>
+   <bundle id="de.cau.cs.kieler.esterel.ide"/>
+   <bundle id="de.cau.cs.kieler.kicool"/>
+   <bundle id="de.cau.cs.kieler.kicool.ide"/>
+   <bundle id="de.cau.cs.kieler.kicool.ui"/> <!-- REMOVE after full deeclipsefication -->
+   <bundle id="de.cau.cs.kieler.kivis"/>
+   <bundle id="de.cau.cs.kieler.lustre"/>
+   <bundle id="de.cau.cs.kieler.lustre.compiler"/>
+   <bundle id="de.cau.cs.kieler.lustre.ide"/>
+   <bundle id="de.cau.cs.kieler.sccharts"/>
+   <bundle id="de.cau.cs.kieler.sccharts.ide"/>
+   <bundle id="de.cau.cs.kieler.sccharts.ui"/> <!-- REMOVE after full deeclipsefication -->
+   <bundle id="de.cau.cs.kieler.scg"/>
+   <bundle id="de.cau.cs.kieler.scg.klighd"/>
+   <bundle id="de.cau.cs.kieler.scl"/>
+   <bundle id="de.cau.cs.kieler.simulation"/>
+   <bundle id="de.cau.cs.kieler.verification"/>
+   <bundle id="de.cau.cs.kieler.graphs.klighd"/>
+   <bundle id="de.cau.cs.kieler.klighd.piccolo.freehep"/>
+   <bundle id="de.cau.cs.kieler.klighd.piccolo"/>
+   <bundle id="org.eclipse.elk.alg.layered"/>
+   <bundle id="org.eclipse.elk.alg.mrtree"/>
+   <bundle id="org.eclipse.elk.alg.radial"/>
+   <bundle id="org.eclipse.elk.alg.rectpacking"/>
+</site>

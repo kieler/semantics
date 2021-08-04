@@ -14,15 +14,19 @@
 package de.cau.cs.kieler.scg.processors.optimizer
 
 import com.google.inject.Inject
+import de.cau.cs.kieler.core.properties.IProperty
+import de.cau.cs.kieler.core.properties.Property
+import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
+import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.scg.ControlFlow
 import de.cau.cs.kieler.scg.Entry
-import de.cau.cs.kieler.scg.SCGraph
-import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
-
-import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.scg.Exit
+import de.cau.cs.kieler.scg.SCGraph
+import de.cau.cs.kieler.scg.SCGraphs
+import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
+
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
 /**
  * 
@@ -30,14 +34,28 @@ import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
  * It should run before the SuperfluousForkRemover to facilitate its optimization. 
  * 
  * @author ssm
- * @kieler.design 2017-05-15 proposed 
- * @kieler.rating 2017-05-15 proposed yellow
  *
  */
-class SuperfluousThreadRemover {
+class SuperfluousThreadRemover extends InplaceProcessor<SCGraphs> implements Traceable {
+    
+    public static val IProperty<Boolean> ENABLE_STR = new Property<Boolean>("de.cau.cs.kieler.sccharts.scg.str", true);
 
     @Inject extension SCGCoreExtensions
     @Inject extension SCGControlFlowExtensions
+
+    override getId() {
+        "de.cau.cs.kieler.scg.processors.str"
+    }
+    
+    override getName() {
+        "Superfluous Thread Remover"
+    }
+    
+    override process() {
+        if (environment.getProperty(ENABLE_STR)) {
+            model.scgs.forEach[optimize]
+        }
+    }
 
     def optimize(SCGraph scg) {
         

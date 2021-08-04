@@ -15,6 +15,7 @@ package de.cau.cs.kieler.sccharts.ui.synthesis
 import com.google.inject.Inject
 import de.cau.cs.kieler.klighd.internal.util.SourceModelTrackingAdapter
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
+import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.sccharts.ControlflowRegion
@@ -22,7 +23,6 @@ import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.SynthesisHooks
 import java.util.LinkedHashSet
-import org.eclipse.xtend.lib.annotations.Accessors
 
 import static de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions.*
 
@@ -37,7 +37,7 @@ import static de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions.*
 @ViewSynthesisShared
 class ScopeSynthesis extends AbstractDiagramSynthesis<Scope> {
 
-    @Inject extension KNodeExtensionsReplacement
+    @Inject extension KNodeExtensions
     @Inject StateSynthesis stateSynthesis
     @Inject DataflowRegionSynthesis dataflowSynthesis  
         

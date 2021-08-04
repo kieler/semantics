@@ -154,11 +154,11 @@ class DataView extends ViewPart implements ISimulationListener {
             
             override drop(DropTargetEvent event) {
                 if (event.data instanceof String) {
-                    dataPool = SimulationUI.currentSimulation.dataPool
+                    dataPool = CentralSimulation.currentSimulation.dataPool
                     for (varName : (event.data as String).split(",")) {
                         createDataObserver(dataPool, varName, parent)
                     }
-                    updateValues(SimulationUI.currentSimulation)
+                    updateValues(CentralSimulation.currentSimulation)
                 }
             }
             

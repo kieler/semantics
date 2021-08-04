@@ -29,7 +29,6 @@ import de.cau.cs.kieler.scg.SCGraph
 import org.eclipse.emf.ecore.EObject
 
 import static de.cau.cs.kieler.annotations.registry.AnnotationsRegistry.*
-import java.beans.MethodDescriptor
 
 /** 
  * @author ssm
@@ -39,8 +38,7 @@ import java.beans.MethodDescriptor
  */
 
 class SCGAnnotations {
-    
-                
+           
     public static val String ANNOTATION_NAME = 
         register("module.name", AnnotationsType.SYSTEM, StringAnnotation, SCGraph, 
             "Stores the mane of the module this SCG is created from.");
@@ -54,8 +52,12 @@ class SCGAnnotations {
             "Marks a sequential assignment as being responsible for a conditional expression.")
 
     public static val ANNOTATION_SEQUENTIALIZED = 
-        register("sequentialized", AnnotationsType.SYSTEM, StringAnnotation, SCGraph, 
+        register("sequentialized", AnnotationsType.SYSTEM, TagAnnotation, SCGraph, 
             "Marks an SCG as being processed by the sequentializer.")
+             
+    public static val ANNOTATION_GUARDED = 
+        register("guarded", AnnotationsType.SYSTEM, TagAnnotation, SCGraph, 
+            "Marks an SCG as being transformed into an guard SCG.")
              
     public static val ANNOTATION_HOSTCODE = 
         register("hostcode", AnnotationsType.USER, StringAnnotation, SCGraph,
@@ -65,6 +67,10 @@ class SCGAnnotations {
         register("cfPathType", AnnotationsType.SYSTEM, StringAnnotation, Entry, 
             "Annotation that determines the control flow type of a thread.")
 
+    public static val ANNOTATION_CONTROLFLOWTHREADPATHTYPE_PREEMPTION = 
+        register("cfPathTypeByPreemtion", AnnotationsType.SYSTEM, StringAnnotation, Entry, 
+            "Annotation that has a comment about alteration of the control flow type of a thread.")
+            
     public static val ANNOTATION_IGNORETHREAD = 
         register("ignoreThread", AnnotationsType.USER, Annotation, Entry, 
             "Orders the synchronizer to ignore a specific thread.")
@@ -128,4 +134,6 @@ class SCGAnnotations {
     public static val ANNOTATION_LOOP = 
         register("loop", AnnotationsType.SYSTEM, StringAnnotation, Node, 
             "Marks a node as a result of a for/while loop.")
+            
+    public static val TRANSFORMATION_INDICATORS = #[ANNOTATION_GUARDED, ANNOTATION_SEQUENTIALIZED]
 }

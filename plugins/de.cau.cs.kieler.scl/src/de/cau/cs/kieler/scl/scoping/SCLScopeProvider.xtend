@@ -3,23 +3,19 @@
  */
 package de.cau.cs.kieler.scl.scoping
 
+import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.kext.scoping.KExtScopeProvider
 import de.cau.cs.kieler.scl.Goto
 import de.cau.cs.kieler.scl.Label
+import de.cau.cs.kieler.scl.Loop
+import de.cau.cs.kieler.scl.MethodImplementationDeclaration
 import de.cau.cs.kieler.scl.Module
 import de.cau.cs.kieler.scl.ModuleCall
 import de.cau.cs.kieler.scl.SCLProgram
-import java.util.Collections
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EReference
-import org.eclipse.xtext.naming.QualifiedName
-import org.eclipse.xtext.resource.EObjectDescription
-import org.eclipse.xtext.resource.IEObjectDescription
 import org.eclipse.xtext.scoping.IScope
 import org.eclipse.xtext.scoping.Scopes
-import de.cau.cs.kieler.kexpressions.ValuedObject
-import de.cau.cs.kieler.scl.Loop
-import de.cau.cs.kieler.scl.MethodImplementationDeclaration
 
 /**
  * This class contains custom scoping description.
@@ -40,7 +36,7 @@ class SCLScopeProvider extends KExtScopeProvider {
     
     protected def IScope getScopeForLabel(Goto goto, EReference reference) {
         var EObject module = goto
-        while (module != null) {
+        while (module !== null) {
             if (module instanceof Module) {
                 return Scopes.scopeFor(module.eAllContents.filter(Label).toList)
             }
@@ -50,7 +46,7 @@ class SCLScopeProvider extends KExtScopeProvider {
 
     protected def IScope getScopeForModule(ModuleCall call, EReference reference) {
         var EObject program = call
-        while (program != null) {
+        while (program !== null) {
             if (program instanceof SCLProgram) {
                 return Scopes.scopeFor(program.modules)
             }

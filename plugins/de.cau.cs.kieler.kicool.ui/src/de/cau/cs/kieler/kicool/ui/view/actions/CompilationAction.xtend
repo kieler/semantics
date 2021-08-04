@@ -63,7 +63,8 @@ class CompilationAction {
             model = CompilationActionSimSalabim.SIM_MODEL
         }
         
-        val cc = Compile.createCompilationContext(view.editPartSystemManager.activeSystem, model)
+        val system = view.editPartSystemManager.activeSystem
+        val cc = Compile.createCompilationContext(system, model)
         cc.inputEditor = editor
         
         if (view.compileInplaceToggle.checked) {
@@ -91,13 +92,16 @@ class CompilationAction {
     
     protected def void deactiveDisabledProcessors(CompilationContext cc) {
         for (proc : ToggleProcessorOnOffAction.deactivatedProcessors.keySet) {
-            val unit = cc.processorMap.get(proc)
-            if (unit !== null) {
-                val toggle = ToggleProcessorOnOffAction.deactivatedProcessors.get(proc)
-                switch(toggle) {
-                    case ON: {}
-                    case OFF: unit.sourceEnvironment.setProperty(Environment.ENABLED, false)
-                    case HALT: unit.environment.setProperty(Environment.CANCEL_COMPILATION, true) 
+            val key = cc.systemMap.entrySet.filter[value == proc].head?.key
+            if (key !== null) {
+                val unit = cc.processorMap.get(key)
+                if (unit !== null) {
+                    val toggle = ToggleProcessorOnOffAction.deactivatedProcessors.get(proc)
+                    switch(toggle) {
+                        case ON: {}
+                        case OFF: unit.sourceEnvironment.setProperty(Environment.ENABLED, false)
+                        case HALT: unit.environment.setProperty(Environment.CANCEL_COMPILATION, true) 
+                    }
                 }
             }
         }

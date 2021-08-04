@@ -48,7 +48,7 @@ import java.util.Deque
 import java.util.List
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
-import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
 /**
  * @author ssm

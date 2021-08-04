@@ -144,7 +144,7 @@ ClassDeclaration returns kext::ClassDeclaration:
 ;
 
 DeclarationOrMethod returns kexpressions::Declaration:
-    Declaration | MethodDeclaration
+    Declaration | EnumDeclaration | MethodDeclaration
 ;
 
 ClassDeclarationWOSemicolon returns kext::ClassDeclaration:
@@ -175,7 +175,43 @@ ClassDeclarationWOSemicolon returns kext::ClassDeclaration:
 ;
 
 DeclarationOrMethodWOSemicolon returns kexpressions::Declaration:
-    DeclarationWOSemicolon | MethodDeclarationWOSemicolon
+    DeclarationWOSemicolon | EnumDeclarationWOSemicolon | MethodDeclarationWOSemicolon
+;
+
+EnumDeclaration returns kext::ClassDeclaration:
+    {kext::ClassDeclaration}
+    annotations+=Annotation*
+    access=AccessModifier?
+    host?='host'?
+    type = EnumType
+    valuedObjects+=SimpleValuedObject
+    (hostType=STRING)?
+    '{'
+        declarations+=EnumMemberDeclaration
+        ';'
+    '}'
+    ';'
+    annotations+=CommentAnnotatonSL?
+;
+
+EnumMemberDeclaration returns kexpressions::VariableDeclaration:
+    annotations+=Annotation*
+    valuedObjects+=SimpleValuedObject (',' valuedObjects+=SimpleValuedObject)*
+    annotations+=CommentAnnotatonSL?
+;
+
+EnumDeclarationWOSemicolon returns kext::ClassDeclaration:
+    {kext::ClassDeclaration}
+    annotations+=Annotation*
+    access=AccessModifier?
+    host?='host'?
+    type = EnumType
+    valuedObjects+=SimpleValuedObject
+    (hostType = STRING)?
+    '{'
+        declarations+=EnumMemberDeclaration
+    '}'
+    annotations+=CommentAnnotatonSL?
 ;
 
 MethodDeclaration returns kexpressions::MethodDeclaration:
@@ -200,36 +236,102 @@ MethodDeclarationWOSemicolon returns kexpressions::MethodDeclaration:
     ('schedule' schedule+=ScheduleObjectReference+)?
     annotations+=CommentAnnotatonSL?
 ;
-
-NamespaceID returns ecore::EString:
-  ExtendedID (':' PrimeID)*;    
     
 ReferenceDeclaration returns kexpressions::ReferenceDeclaration:
     annotations+=Annotation*
     access=AccessModifier?
     ((
-        'ref' reference = [annotations::NamedObject|NamespaceID]
+        'ref'
+        (referenceContainer = [annotations::NamedObject|PrimeID] '.')?
+        reference = [annotations::NamedObject|PrimeID]
+        ('<' genericParameters += GenericParameter (',' genericParameters += GenericParameter)* '>')?
+        valuedObjects+=ReferenceValuedObject (',' valuedObjects+=ReferenceValuedObject)*
     ) | (
         'extern' extern += ExternString (',' extern += ExternString)*
+        valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
     ))
-    valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
+    ';'
     annotations+=CommentAnnotatonSL?;
     
 ReferenceDeclarationWOSemicolon returns kexpressions::ReferenceDeclaration:
     annotations+=Annotation*
     access=AccessModifier?
     ((
-        'ref' reference = [annotations::NamedObject|NamespaceID]
+        'ref'
+        (referenceContainer = [annotations::NamedObject|PrimeID] '.')?
+        reference = [annotations::NamedObject|PrimeID]
+        ('<' genericParameters += GenericParameter (',' genericParameters += GenericParameter)* '>')?
+        valuedObjects+=ReferenceValuedObject (',' valuedObjects+=ReferenceValuedObject)*
     ) | (
         'extern' extern += ExternString (',' extern += ExternString)*
+        valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
     ))
-    valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
     annotations+=CommentAnnotatonSL?;
     
 ExternString returns kexpressions::ExternString:
     annotations+=TagAnnotation*
     code = STRING
 ;
+
+
+// ---
+//  Generics
+// ---
+
+GenericParameterDeclaration returns kexpressions::GenericParameterDeclaration:
+    annotations+=QuotedStringAnnotation*
+    valuedObjects+=SimpleValuedObject
+    (
+        ('is' valueType = ValueType)
+        |
+        ('is' (reference?='ref')? type = [annotations::NamedObject|PrimeID])
+    )?
+;
+
+GenericParameter returns kexpressions::Parameter:
+    // Both VOReference and GenericTypeReference will always match for simple names (PrimeID).
+    // Here GenericTypeReference has precedence and has to cover certain
+    // references to VOs. This needs to be specifically handled in the scoper and in the resource
+    // by using the KExtGenericParamterConverter.
+    // Furthermore, optional parts may cause VORs accepted by GTRs even if there is an array
+    // index or sub reference specified, this is why there are special non-optional rules.
+    expression = (ValueTypeReference 
+                 | AnyValue
+                 | GenericParameter_GenericTypeReference_Parameterized
+                 | GenericParameter_ValuedObjectReference_Array
+                 | GenericParameter_ValuedObjectReference_Sub
+                 | GenericTypeReference
+                 | ValuedObjectReference)
+;
+
+ValueTypeReference returns kexpressions::ValueTypeReference:
+    valueType = ValueType
+;
+
+GenericTypeReference returns kexpressions::GenericTypeReference:
+    type = [annotations::NamedObject|PrimeID]
+    ('<' genericParameters += GenericParameter (',' genericParameters += GenericParameter)* '>')?
+;
+
+// Special rules for GenericParameter parsing
+GenericParameter_GenericTypeReference_Parameterized returns kexpressions::GenericTypeReference:
+    type = [annotations::NamedObject|PrimeID]
+    '<' genericParameters += GenericParameter (',' genericParameters += GenericParameter)* '>' // mandatory
+;
+GenericParameter_ValuedObjectReference_Array returns kexpressions::ValuedObjectReference:
+    valuedObject=[kexpressions::ValuedObject|PrimeID]
+    ('[' indices+=Expression ']')+ // mandatory
+    ('.' subReference=ValuedObjectReference)?
+;
+GenericParameter_ValuedObjectReference_Sub returns kexpressions::ValuedObjectReference:
+    valuedObject=[kexpressions::ValuedObject|PrimeID]
+    ('[' indices+=Expression ']')*
+    ('.' subReference=ValuedObjectReference) // mandatory
+;
+
+// ---
+//  Scheduling Directives 
+// ---
     
 ScheduleDeclaration returns kexpressions::ScheduleDeclaration:
     annotations += Annotation*
@@ -266,8 +368,21 @@ ValuedObject returns kexpressions::ValuedObject:
     )?
     ('label' label=STRING)?;
     
+ReferenceValuedObject returns kexpressions::ValuedObject:
+    {kexpressions::ValuedObject}
+    annotations+=QuotedStringAnnotation*
+    name=PrimeID
+    ('[' cardinalities+=Expression ']')*
+    ('<' genericParameters += GenericParameter (',' genericParameters += GenericParameter)* '>')?
+    (('(' parameters += Parameter (',' parameters += Parameter)* ')') | '()')?
+    ('=' initialValue=Expression)?
+    ('label' label=STRING)?;
+    
 SimpleValuedObject returns kexpressions::ValuedObject:
     annotations+=QuotedStringAnnotation*
     name=PrimeID;
+    
+NamespaceID returns ecore::EString:
+  ExtendedID (':' PrimeID)*; 
       
     

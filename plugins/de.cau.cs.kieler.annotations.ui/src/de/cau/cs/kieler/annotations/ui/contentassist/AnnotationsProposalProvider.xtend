@@ -57,7 +57,7 @@ class AnnotationsProposalProvider extends AbstractAnnotationsProposalProvider {
      */
     private def String getAssignedFeature(RuleCall call) {
         val ass = GrammarUtil.containingAssignment(call);
-        if (ass != null) {
+        if (ass !== null) {
                 var result = ass.getFeature();
                 if (result.equals(result.toLowerCase()))
                         result = Strings.toFirstUpper(result);
@@ -74,7 +74,7 @@ class AnnotationsProposalProvider extends AbstractAnnotationsProposalProvider {
             ICompletionProposalAcceptor acceptor, RuleCall ruleCall, String feature, float i) {
         val proposalText = getValueConverter().toString(i, ruleCall.getRule().getName());
         var displayText = proposalText + " - " + ruleCall.getRule().getName();
-        if (feature != null)
+        if (feature !== null)
             displayText = proposalText + " - " + feature;
         val proposal = createCompletionProposal(proposalText, displayText, null,
                 context);

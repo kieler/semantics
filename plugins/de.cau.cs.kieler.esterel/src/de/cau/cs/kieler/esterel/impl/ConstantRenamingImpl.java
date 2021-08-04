@@ -7,7 +7,6 @@ import de.cau.cs.kieler.esterel.ConstantRenaming;
 import de.cau.cs.kieler.esterel.EsterelPackage;
 
 import de.cau.cs.kieler.kexpressions.Expression;
-import de.cau.cs.kieler.kexpressions.Value;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;

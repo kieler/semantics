@@ -114,10 +114,10 @@ class KExpressionsValuedObjectExtensions {
     
     
     def ValuedObject applyAttributes(ValuedObject valuedObject, ValuedObject valuedObjectWithAttributes) {
-        if (valuedObjectWithAttributes.initialValue != null) {
+        if (valuedObjectWithAttributes.initialValue !== null) {
             valuedObject.setInitialValue(valuedObjectWithAttributes.initialValue.copy)
         }
-        if (valuedObjectWithAttributes.combineOperator != null) {
+        if (valuedObjectWithAttributes.combineOperator !== null) {
             valuedObject.setCombineOperator(valuedObjectWithAttributes.combineOperator)
         }
         if (!valuedObjectWithAttributes.cardinalities.nullOrEmpty) {
@@ -130,7 +130,7 @@ class KExpressionsValuedObjectExtensions {
     
     def List<ValuedObjectReference> getAllReferences(Expression expression) {
         <ValuedObjectReference> newArrayList => [
-        	if (expression == null) {
+        	if (expression === null) {
         	} else if (expression instanceof ValuedObjectReference) { 
         		it += expression
         	} else { 

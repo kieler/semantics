@@ -16,6 +16,7 @@ import com.google.inject.Inject
 import com.google.inject.Injector
 import de.cau.cs.kieler.annotations.Nameable
 import de.cau.cs.kieler.annotations.StringPragma
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
 import de.cau.cs.kieler.annotations.registry.PragmaRegistry
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
@@ -40,6 +41,7 @@ import static de.cau.cs.kieler.kicool.compilation.codegen.CodeGeneratorNames.*
 class JavaPrioCodeGeneratorModule extends CPrioCodeGeneratorModule {
     
     @Inject extension PragmaExtensions
+    @Inject extension AnnotationsExtensions
     @Inject Injector injector
     @Inject extension JavaPrioCodeSerializeHRExtensions
     
@@ -121,7 +123,11 @@ class JavaPrioCodeGeneratorModule extends CPrioCodeGeneratorModule {
         for (pragma : hostcodePragmas) {
             sb.append(pragma.values.head + "\n")
         }
-        if (hostcodePragmas.size > 0 || includes.size > 0) {
+        val hostcodeAnnotations = scg.getStringAnnotations(HOSTCODE) + scg.getStringAnnotations(JavaCodeGeneratorModule.HOSTCODE_JAVA)
+        for (anno : hostcodeAnnotations) {
+            sb.append(anno.values.head + "\n")
+        }
+        if (hostcodePragmas.size > 0 || hostcodeAnnotations.size > 0 || includes.size > 0) {
             sb.append("\n")
         }
     }      

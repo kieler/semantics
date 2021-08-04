@@ -12,7 +12,7 @@
  */
 package de.cau.cs.kieler.sccharts.ui.debug.highlighting
 
-import de.cau.cs.kieler.simulation.ui.visualization.Highlighting
+import de.cau.cs.kieler.simulation.ide.visualization.Highlighting
 import de.cau.cs.kieler.klighd.kgraph.KLabeledGraphElement
 import de.cau.cs.kieler.klighd.krendering.KForeground
 import org.eclipse.emf.ecore.EObject

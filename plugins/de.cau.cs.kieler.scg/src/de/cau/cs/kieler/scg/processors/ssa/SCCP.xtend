@@ -359,9 +359,9 @@ class SCCP extends InplaceProcessor<SCGraphs> implements Traceable {
             val replacement = if (parEvalAssinments.containsKey(n)) {
                 parEvalAssinments.get(n)
             } else if (n instanceof Assignment) {
-                parEvalEngine.evaluate(n.expression)
+                parEvalEngine.evaluateAndReplace(n.expression)
             } else if (n instanceof Conditional) {
-                parEvalEngine.evaluate(n.condition)
+                parEvalEngine.evaluateAndReplace(n.condition)
             }
             if (replacement !== null) {
                 if (n instanceof Assignment) {
@@ -638,7 +638,7 @@ class SCCP extends InplaceProcessor<SCGraphs> implements Traceable {
     
     protected def dispatch void handleNode(Conditional cond) {
         superfluousConditionals.remove(cond)
-        val parEvalResult = parEvalEngine.evaluate(cond.condition)
+        val parEvalResult = parEvalEngine.evaluateAndReplace(cond.condition)
         parEvalConditionals.put(cond, parEvalResult)
         if (parEvalResult instanceof Value) { // Can be evaluated
             val branch = PartialExpressionEvaluator.isThruthy(parEvalResult)
@@ -685,7 +685,7 @@ class SCCP extends InplaceProcessor<SCGraphs> implements Traceable {
     }
     
     protected def void evaluateAssignment(Assignment asm){
-        val parEvalResult = parEvalEngine.evaluate(asm.expression)
+        val parEvalResult = parEvalEngine.evaluateAndReplace(asm.expression)
         parEvalAssinments.put(asm, parEvalResult)
         if (parEvalResult instanceof Value) { // Can be evaluated
             asm.valuedObject.raiseConstant(parEvalResult)

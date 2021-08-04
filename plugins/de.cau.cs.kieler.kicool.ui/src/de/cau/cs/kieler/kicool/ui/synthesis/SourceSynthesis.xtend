@@ -12,11 +12,14 @@
  */
 package de.cau.cs.kieler.kicool.ui.synthesis
 
-import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
-import de.cau.cs.kieler.kicool.ui.KiCoolUiModule
 import com.google.inject.Inject
-import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
+import de.cau.cs.kieler.kicool.ui.synthesis.styles.ProcessorStyles
 import de.cau.cs.kieler.klighd.kgraph.KNode
+import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
+import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
+
+import static extension de.cau.cs.kieler.annotations.ide.klighd.CommonSynthesisUtil.setKID
 
 /**
  * Main diagram synthesis for the source in KiCool.
@@ -29,19 +32,27 @@ import de.cau.cs.kieler.klighd.kgraph.KNode
 class SourceSynthesis {
     
     @Inject extension KEdgeExtensions 
-    @Inject extension ProcessorStyles    
+    @Inject extension ProcessorStyles  
+    @Inject extension KNodeExtensions
     
     static val SOURCE_KGT = "source.kgt"
     
     def KNode sourceNode() {
-        KiCoolSynthesis.getKGTFromBundle(KiCoolUiModule.BUNDLE_ID, SOURCE_KGT)
+        createNode => [
+            setDefaultProcessorSize()
+            width = height // make it round
+            setProperty(KNodeProperties.SOURCE_NODE, true)
+            KID = "source"
+            addSourceRendering()
+        ]
     }
     
     def sourceConnect(KNode source, KNode target) {
         val edge = createEdge 
         edge.source = source
         edge.target = target
-        edge.addPolyline(0.5f).addOwnHeadArrowDecorator
+        edge.targetPort = target.ports.head // Assuming the first port is left
+        edge.addConnectionFigure()
         
         edge        
     }

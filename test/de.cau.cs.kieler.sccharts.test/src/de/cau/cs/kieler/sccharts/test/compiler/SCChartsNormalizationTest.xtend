@@ -36,6 +36,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 import static org.junit.Assert.*
+import static org.junit.Assume.*
 
 import static extension java.lang.String.format
 import static extension java.lang.Boolean.parseBoolean
@@ -121,6 +122,8 @@ class SCChartsNormalizationTest extends AbstractXTextModelRepositoryTest<SCChart
     
     @Test(timeout=60000)
     def void testSerializability(SCCharts scc, TestModelData modelData) {
+        assumeFalse(modelData.modelProperties.contains("must-fail"))
+        
         val result = scc.compile
         
         // Check all intermediate results

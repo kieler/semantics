@@ -14,21 +14,18 @@ package de.cau.cs.kieler.sccharts.ui.synthesis.hooks
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.Annotatable
+import de.cau.cs.kieler.annotations.StringAnnotation
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.klighd.kgraph.KNode
-import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
-import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.SynthesisHook
-
-import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
-import de.cau.cs.kieler.sccharts.Scope
-import de.cau.cs.kieler.sccharts.ui.synthesis.KNodeExtensionsReplacement
-import de.cau.cs.kieler.klighd.krendering.KContainerRendering
-import de.cau.cs.kieler.klighd.krendering.KColoring
 import de.cau.cs.kieler.klighd.krendering.KBackground
 import de.cau.cs.kieler.klighd.krendering.KColor
+import de.cau.cs.kieler.klighd.krendering.KColoring
+import de.cau.cs.kieler.klighd.krendering.KContainerRendering
 import de.cau.cs.kieler.klighd.krendering.KForeground
-import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.annotations.StringAnnotation
 import de.cau.cs.kieler.klighd.krendering.KRenderingUtil
+import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
+import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
+import de.cau.cs.kieler.sccharts.Scope
 
 /**
  * Removes model elements marked with the annotation hide.
@@ -42,7 +39,7 @@ import de.cau.cs.kieler.klighd.krendering.KRenderingUtil
 class ColorAnnotationHook extends SynthesisHook {
 
     @Inject extension AnnotationsExtensions
-    @Inject extension KNodeExtensionsReplacement
+    @Inject extension KNodeExtensions
 
     /** Keyword for the hide annotation */
     public static final String BACKGROUND_ANNOTATION_KEYWORD = "background"
@@ -52,7 +49,7 @@ class ColorAnnotationHook extends SynthesisHook {
 
     override void finish(Scope scope, KNode node) {
         val relevantObjects = scope.eAllContents.filter(Annotatable).filter[ annotations.exists[
-                name != null && (
+                name !== null && (
                     name.equalsIgnoreCase(BACKGROUND_ANNOTATION_KEYWORD) ||
                     name.equalsIgnoreCase(BACKGROUND_TARGET_ANNOTATION_KEYWORD) ||
                     name.equalsIgnoreCase(FOREGROUND_ANNOTATION_KEYWORD) ||
@@ -62,7 +59,7 @@ class ColorAnnotationHook extends SynthesisHook {
         ].toIterable
         
         for (object : relevantObjects) {
-            if (object.nodeExists) {
+            if (nodeExists(object)) {
                 val kNode = object.node
                 val rendering = kNode.getContainer
                 
@@ -71,18 +68,18 @@ class ColorAnnotationHook extends SynthesisHook {
                 val foreground = object.getAnnotation(FOREGROUND_ANNOTATION_KEYWORD)
                 val alpha = object.getAnnotation(ALPHA_ANNOTATION_KEYWORD)
                 
-                if (background != null) {
-                    val backgroundTargetColor = if (backgroundTarget != null) 
+                if (background !== null) {
+                    val backgroundTargetColor = if (backgroundTarget !== null) 
                         (backgroundTarget as StringAnnotation).createColor
                         else (background as StringAnnotation).createColor
                     rendering.setBackgroundColor((background as StringAnnotation).createColor, backgroundTargetColor)
                 }
                 
-                if (foreground != null) {
+                if (foreground !== null) {
                     rendering.setForegroundColor((foreground as StringAnnotation).createColor)
                 }
                 
-                if (alpha != null) {
+                if (alpha !== null) {
                     rendering.setAlpha(Integer.parseInt((alpha as StringAnnotation).values.head))
                 }                
             }

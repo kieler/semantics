@@ -28,10 +28,16 @@ import de.cau.cs.kieler.klighd.krendering.KRenderingFactory;
 public class ColorStore {
 
     public enum Color {
-        PROCESSORGROUP_FOREGROUND(Colors.BLACK),
-        PROCESSORGROUP_BACKGROUND(Colors.WHITE),
+        PROCESSOR_FOREGROUND(Colors.GRAY),
+        PROCESSOR_BACKGROUND(205, 220, 222),
+        PROCESSOR_BACKGROUND_TARGET(224, 225, 234),
+        
+        PROCESSORGROUP_FOREGROUND(Colors.GRAY),
+        PROCESSORGROUP_BACKGROUND(Colors.GRAY),
+        PROCESSORGROUP_BACKGROUND_TARGET(Colors.GRAY_75),
         
         KEYWORD(115, 0, 65),
+        SELECTION(74, 144, 217),
         
         BUSY_FOREGROUND(200, 200, 200),
         BUSY_BACKGROUND(255, 222, 222),

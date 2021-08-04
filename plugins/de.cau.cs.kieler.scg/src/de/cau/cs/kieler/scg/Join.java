@@ -13,9 +13,6 @@
  */
 package de.cau.cs.kieler.scg;
 
-import de.cau.cs.kieler.scg.Node;
-
-
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Join</b></em>'.
@@ -27,6 +24,7 @@ import de.cau.cs.kieler.scg.Node;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scg.Join#getFork <em>Fork</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.Join#getNext <em>Next</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scg.Join#isAny <em>Any</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.scg.ScgPackage#getJoin()
@@ -87,5 +85,27 @@ public interface Join extends Node {
      * @generated
      */
     void setNext(ControlFlow value);
+
+    /**
+     * Returns the value of the '<em><b>Any</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Any</em>' attribute.
+     * @see #setAny(boolean)
+     * @see de.cau.cs.kieler.scg.ScgPackage#getJoin_Any()
+     * @model
+     * @generated
+     */
+    boolean isAny();
+
+    /**
+     * Sets the value of the '{@link de.cau.cs.kieler.scg.Join#isAny <em>Any</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Any</em>' attribute.
+     * @see #isAny()
+     * @generated
+     */
+    void setAny(boolean value);
 
 } // Join

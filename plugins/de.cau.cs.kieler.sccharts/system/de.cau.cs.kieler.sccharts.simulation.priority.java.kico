@@ -2,4 +2,4 @@ developer system de.cau.cs.kieler.sccharts.^simulation.priority.java
     label "Priority-based Simulation (Java, No-TTS)"
 
 system de.cau.cs.kieler.sccharts.priority.java
-system de.cau.cs.kieler.^simulation.priority.java
+system de.cau.cs.kieler.^simulation.java

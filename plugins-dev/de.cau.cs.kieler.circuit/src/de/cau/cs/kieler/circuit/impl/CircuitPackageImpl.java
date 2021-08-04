@@ -93,7 +93,7 @@ public class CircuitPackageImpl extends EPackageImpl implements CircuitPackage {
 
 	/**
      * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-     * 
+     *
      * <p>This method is used to initialize {@link CircuitPackage#eINSTANCE} when that field is accessed.
      * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
      * <!-- begin-user-doc -->
@@ -107,7 +107,8 @@ public class CircuitPackageImpl extends EPackageImpl implements CircuitPackage {
         if (isInited) return (CircuitPackage)EPackage.Registry.INSTANCE.getEPackage(CircuitPackage.eNS_URI);
 
         // Obtain or create and register package
-        CircuitPackageImpl theCircuitPackage = (CircuitPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof CircuitPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new CircuitPackageImpl());
+        Object registeredCircuitPackage = EPackage.Registry.INSTANCE.get(eNS_URI);
+        CircuitPackageImpl theCircuitPackage = registeredCircuitPackage instanceof CircuitPackageImpl ? (CircuitPackageImpl)registeredCircuitPackage : new CircuitPackageImpl();
 
         isInited = true;
 
@@ -123,7 +124,6 @@ public class CircuitPackageImpl extends EPackageImpl implements CircuitPackage {
         // Mark meta-data to indicate it can't be changed
         theCircuitPackage.freeze();
 
-  
         // Update the registry and return the package
         EPackage.Registry.INSTANCE.put(CircuitPackage.eNS_URI, theCircuitPackage);
         return theCircuitPackage;
@@ -134,7 +134,8 @@ public class CircuitPackageImpl extends EPackageImpl implements CircuitPackage {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EClass getActor() {
+	@Override
+    public EClass getActor() {
         return actorEClass;
     }
 
@@ -143,7 +144,8 @@ public class CircuitPackageImpl extends EPackageImpl implements CircuitPackage {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EReference getActor_InnerActors() {
+	@Override
+    public EReference getActor_InnerActors() {
         return (EReference)actorEClass.getEStructuralFeatures().get(0);
     }
 
@@ -152,7 +154,8 @@ public class CircuitPackageImpl extends EPackageImpl implements CircuitPackage {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EReference getActor_InnerLinks() {
+	@Override
+    public EReference getActor_InnerLinks() {
         return (EReference)actorEClass.getEStructuralFeatures().get(1);
     }
 
@@ -161,7 +164,8 @@ public class CircuitPackageImpl extends EPackageImpl implements CircuitPackage {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EReference getActor_Ports() {
+	@Override
+    public EReference getActor_Ports() {
         return (EReference)actorEClass.getEStructuralFeatures().get(3);
     }
 
@@ -170,7 +174,8 @@ public class CircuitPackageImpl extends EPackageImpl implements CircuitPackage {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EAttribute getActor_Type() {
+	@Override
+    public EAttribute getActor_Type() {
         return (EAttribute)actorEClass.getEStructuralFeatures().get(2);
     }
 
@@ -179,7 +184,8 @@ public class CircuitPackageImpl extends EPackageImpl implements CircuitPackage {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EClass getLink() {
+	@Override
+    public EClass getLink() {
         return linkEClass;
     }
 
@@ -188,7 +194,8 @@ public class CircuitPackageImpl extends EPackageImpl implements CircuitPackage {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EReference getLink_Source() {
+	@Override
+    public EReference getLink_Source() {
         return (EReference)linkEClass.getEStructuralFeatures().get(0);
     }
 
@@ -197,7 +204,8 @@ public class CircuitPackageImpl extends EPackageImpl implements CircuitPackage {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EReference getLink_Target() {
+	@Override
+    public EReference getLink_Target() {
         return (EReference)linkEClass.getEStructuralFeatures().get(1);
     }
 
@@ -206,7 +214,8 @@ public class CircuitPackageImpl extends EPackageImpl implements CircuitPackage {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EClass getPort() {
+	@Override
+    public EClass getPort() {
         return portEClass;
     }
 
@@ -215,7 +224,8 @@ public class CircuitPackageImpl extends EPackageImpl implements CircuitPackage {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EAttribute getPort_Type() {
+	@Override
+    public EAttribute getPort_Type() {
         return (EAttribute)portEClass.getEStructuralFeatures().get(0);
     }
 
@@ -224,7 +234,8 @@ public class CircuitPackageImpl extends EPackageImpl implements CircuitPackage {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EClass getLinkable() {
+	@Override
+    public EClass getLinkable() {
         return linkableEClass;
     }
 
@@ -233,7 +244,8 @@ public class CircuitPackageImpl extends EPackageImpl implements CircuitPackage {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EReference getLinkable_IncomingLinks() {
+	@Override
+    public EReference getLinkable_IncomingLinks() {
         return (EReference)linkableEClass.getEStructuralFeatures().get(0);
     }
 
@@ -242,7 +254,8 @@ public class CircuitPackageImpl extends EPackageImpl implements CircuitPackage {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EReference getLinkable_OutgoingLinks() {
+	@Override
+    public EReference getLinkable_OutgoingLinks() {
         return (EReference)linkableEClass.getEStructuralFeatures().get(1);
     }
 
@@ -251,7 +264,8 @@ public class CircuitPackageImpl extends EPackageImpl implements CircuitPackage {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public CircuitFactory getCircuitFactory() {
+	@Override
+    public CircuitFactory getCircuitFactory() {
         return (CircuitFactory)getEFactoryInstance();
     }
 

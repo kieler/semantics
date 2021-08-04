@@ -15,10 +15,16 @@ package de.cau.cs.kieler.scg.processors
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.core.properties.IProperty
+import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.keffects.DataDependency
+import de.cau.cs.kieler.kexpressions.keffects.Dependency
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
+import de.cau.cs.kieler.kicool.compilation.VariableStore
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.scg.BasicBlock
 import de.cau.cs.kieler.scg.BranchType
@@ -39,19 +45,12 @@ import de.cau.cs.kieler.scg.SchedulingBlock
 import de.cau.cs.kieler.scg.Surface
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
+import de.cau.cs.kieler.scg.extensions.SCGMethodExtensions
 import de.cau.cs.kieler.scg.extensions.UnsupportedSCGException
-import de.cau.cs.kieler.scg.processors.SCGFeatures
 import java.util.HashMap
 import java.util.List
-import de.cau.cs.kieler.core.properties.IProperty
-import de.cau.cs.kieler.core.properties.Property
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
-import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
-import de.cau.cs.kieler.kexpressions.keffects.Dependency
-import de.cau.cs.kieler.kexpressions.keffects.DataDependency
-import de.cau.cs.kieler.kicool.compilation.VariableStore
-import de.cau.cs.kieler.scg.extensions.SCGMethodExtensions
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -143,8 +142,8 @@ class BasicBlockTransformation extends InplaceProcessor<SCGraphs> implements Tra
             if (bb.goBlock) {
                 bb.deadBlock = false
             } else {
-                if (bb.synchronizerBlock) {
-                    bb.deadBlock = bb.predecessors.map[basicBlock].filter[deadBlock&&!finalBlock].size > 0
+                if (bb.synchronizerBlock && !bb.schedulingBlocks.head.nodes.head.asJoin.any) {
+                    bb.deadBlock = bb.predecessors.map[basicBlock].filter[deadBlock && !finalBlock].size > 0
                 } else if (bb.depthBlock) {
                     bb.deadBlock = basicBlockGuardCache.get(bb.preGuard).deadBlock
                 } else {
@@ -175,8 +174,6 @@ class BasicBlockTransformation extends InplaceProcessor<SCGraphs> implements Tra
         
         val voStore = VariableStore.get(environment)
         basicBlockGuardCache.keySet.forEach[voStore.update(it, "guard")]
-        
-        scg.createStringAnnotation(SCGFeatures.BASICBLOCK_ID, SCGFeatures.BASICBLOCK_NAME)
         
         // Return the SCG with basic block data.
         scg

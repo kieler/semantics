@@ -21,7 +21,6 @@ import de.cau.cs.kieler.esterel.EsterelThread
 import de.cau.cs.kieler.esterel.IfTest
 import de.cau.cs.kieler.esterel.Present
 import de.cau.cs.kieler.esterel.TickReference
-import de.cau.cs.kieler.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.scl.Statement
 import de.cau.cs.kieler.scl.StatementContainer
 import java.util.List

@@ -18,10 +18,13 @@ import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kexpressions.BoolValue
 import de.cau.cs.kieler.kexpressions.FloatValue
 import de.cau.cs.kieler.kexpressions.IntValue
+import de.cau.cs.kieler.kexpressions.KExpressionsPackage
 import de.cau.cs.kieler.kexpressions.TextExpression
 import de.cau.cs.kieler.kexpressions.Value
+import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.kexpressions.VectorValue
 import de.cau.cs.kieler.kexpressions.eval.PartialExpressionEvaluator
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
@@ -35,9 +38,7 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
-import de.cau.cs.kieler.kexpressions.KExpressionsPackage
-import de.cau.cs.kieler.kexpressions.ValuedObject
-import de.cau.cs.kieler.kexpressions.VectorValue
+import static extension java.lang.String.*
 
 /**
  * SCCharts Const Transformation.
@@ -51,8 +52,10 @@ class Const extends SCChartsProcessor implements Traceable {
     // -------------------------------------------------------------------------
     // --                 K I C O      C O N F I G U R A T I O N              --
     // -------------------------------------------------------------------------
+    public static val ID = "de.cau.cs.kieler.sccharts.processors.const"
+    
     override getId() {
-        "de.cau.cs.kieler.sccharts.processors.const"
+        ID
     }
 
     override getName() {
@@ -66,7 +69,6 @@ class Const extends SCChartsProcessor implements Traceable {
 
     extension PartialExpressionEvaluator par = new PartialExpressionEvaluator() => [ 
         compute = true
-        inplace = true
     ]
 
     // -------------------------------------------------------------------------
@@ -169,13 +171,12 @@ class Const extends SCChartsProcessor implements Traceable {
         val constObjects = scope.valuedObjects.filter[isConst && initialValue !== null].toList
         
         for (vo : constObjects) {
-            vo.initialValue.replace(vo.initialValue.evaluate)
+            vo.initialValue.evaluateAndReplace
             if (vo.initialValue instanceof Value) {
                 par.values.put(vo, vo.initialValue as Value)
             } 
         }
     }
-    
 
     def SCCharts transform(SCCharts sccharts) {
         sccharts => [ rootStates.forEach[ transform ] ]

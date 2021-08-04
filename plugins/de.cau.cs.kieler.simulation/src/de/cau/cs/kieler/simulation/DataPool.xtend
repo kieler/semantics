@@ -22,7 +22,6 @@ import com.google.gson.JsonPrimitive
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.kexpressions.OperatorType
-import de.cau.cs.kieler.kexpressions.Value
 import de.cau.cs.kieler.kicool.classes.IKiCoolCloneable
 import de.cau.cs.kieler.kicool.compilation.VariableInformation
 import de.cau.cs.kieler.kicool.compilation.VariableStore
@@ -43,8 +42,9 @@ class DataPool implements IKiCoolCloneable {
     @Accessors
     val outputs = <Simulatable, DataPool>newHashMap
     
-    package var JsonObject pool = new JsonObject
-    package val Map<String, DataPoolEntry> entryCache = newHashMap
+    @Accessors(PUBLIC_GETTER)
+    var JsonObject pool = new JsonObject
+    val Map<String, DataPoolEntry> entryCache = newHashMap
         
     // -----------------------------------------
     
@@ -65,7 +65,7 @@ class DataPool implements IKiCoolCloneable {
     
     def static JsonObject parseJSON(String string) {
         if (string.isJSON) {
-            (new JsonParser).parse(string) as JsonObject
+            JsonParser.parseString(string) as JsonObject
         }
     }
     
@@ -94,6 +94,18 @@ class DataPool implements IKiCoolCloneable {
         merge(output)
     }
     
+    def JsonObject getInput() {
+        val input = new JsonObject
+        val infos = entries
+        for (entry : pool.entrySet) {
+            val dataPoolEntry = infos.get(entry.key)
+            if (dataPoolEntry !== null && dataPoolEntry.input) {
+                input.add(entry.key, entry.value)
+            }
+        }
+        return input
+    }
+    
     def JsonObject getInput(Simulatable sim) {
         val input = new JsonObject
         val infos = entries
@@ -104,6 +116,18 @@ class DataPool implements IKiCoolCloneable {
             }
         }
         return input
+    }
+    
+    def JsonObject getOutput() {
+        val output = new JsonObject
+        val infos = entries
+        for (entry : pool.entrySet) {
+            val dataPoolEntry = infos.get(entry.key)
+            if (dataPoolEntry !== null && dataPoolEntry.output) {
+                output.add(entry.key, entry.value)
+            }
+        }
+        return output
     }
     
     def merge(DataPool otherPool) {
@@ -333,6 +357,7 @@ class DataPoolEntry {
                 JsonObject: throw new UnsupportedOperationException("Unexpected DataPoolEntry type")
                 JsonPrimitive: {
                     switch (info.inferType) {
+                        case PURE,
                         case BOOL: {
                             val boo = if (valueElem.isNumber) {
                                 valueElem.asNumber.floatValue != 0

@@ -13,14 +13,11 @@
  */
 package de.cau.cs.kieler.sccharts.processors.scg
 
-import com.google.inject.Guice
 import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.StringAnnotation
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
 import de.cau.cs.kieler.annotations.extensions.UniqueNameCache
-import de.cau.cs.kieler.core.properties.IProperty
-import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.kexpressions.BoolValue
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.FloatValue
@@ -80,8 +77,6 @@ import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.SCGraphs
 import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.scg.Surface
-import de.cau.cs.kieler.scg.processors.optimizer.SuperfluousForkRemover
-import de.cau.cs.kieler.scg.processors.optimizer.SuperfluousThreadRemover
 import de.cau.cs.kieler.scl.MethodImplementationDeclaration
 import de.cau.cs.kieler.scl.processors.transformators.SCLToSCGTransformation
 import java.util.HashMap
@@ -99,10 +94,6 @@ import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTraci
  * @kieler.rating 2013-09-05 proposed yellow
  */
 class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceable {
-    
-    // Property to disable SuperflousForkRemover because KiCo has no proper support for processors
-    public static val IProperty<Boolean> ENABLE_SFR = new Property<Boolean>("de.cau.cs.kieler.sccharts.scg.sfr", true);
-    public static val IProperty<Boolean> ENABLE_STR = new Property<Boolean>("de.cau.cs.kieler.sccharts.scg.str", true);
 
     @Inject extension KExpressionsCreateExtensions
     @Inject extension KExpressionsDeclarationExtensions
@@ -118,8 +109,6 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
     private var SCLToSCGTransformation methodProcessor;
 
     public static val PREFIX_REFERENCE_VALUED_OBJECT_NAME = "_r"
-    public static val PREFIX_REFERENCE_RESET_VALUED_OBJECT_NAME = "_rst"
-    public static val PREFIX_REFERENCE_TERM_VALUED_OBJECT_NAME = "_term"
     
     protected static val ANNOTATION_IGNORETHREAD = "ignore"
     
@@ -252,25 +241,8 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
     def ValuedObject getSCGValuedObject(ValuedObject valuedObjectSCChart) {
         valuedObjectSSChart2SCG.get(valuedObjectSCChart)
     }
-
-
-
-    def SCGraph transform(EObject eObject) {
-        return switch (eObject) {
-            SCGraph: return eObject.processSCG
-            State: eObject.transformSCG
-            SCCharts: eObject.rootStates.head.transformSCG
-        }
-    }
-
-    def SCGraph processSCG(SCGraph scg) {
-        val SuperfluousForkRemover superfluousForkRemover = Guice.createInjector().getInstance(
-            typeof(SuperfluousForkRemover))
-        val newSCG = superfluousForkRemover.optimize(scg)
-        newSCG
-    }
     
-    def SCGraph transformSCG(State rootState) {
+    def SCGraph transform(State rootState) {
         val voStore = VariableStore.get(environment)
         val scopeList = rootState.eAllContents.filter(Scope).toList
         val stateList = scopeList.filter(State).toList
@@ -283,6 +255,9 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
         val sCGraph = SCC2SCGMap.get(rootState)
 
         sCGraph.trace(rootState)
+        
+        // Copy annotations
+        sCGraph.annotations += rootState.annotations.map[copy]
         
         // Handle declarations
         val declMapping = newLinkedHashMap
@@ -308,11 +283,6 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
             // Fix VO association in VariableStore
             val info = voStore.getInfo(key)
             if (info !== null) info.valuedObject = value
-        ]        
-
-        val hostcodeAnnotations = rootState.getAnnotations(ANNOTATION_HOSTCODE)
-        hostcodeAnnotations.forEach [
-            sCGraph.createStringAnnotation(ANNOTATION_HOSTCODE, (it as StringAnnotation).values.head)
         ]
 
         // Include top most level of hierarchy 
@@ -348,19 +318,8 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
 
         // Fix superfluous exit nodes
         sCGraph.trimExitNodes.trimConditioanlNodes
-
-        // Remove superfluous fork constructs 
-        var scg = sCGraph
-        if (environment.getProperty(ENABLE_STR)) {
-            val superfluousThreadRemover = Guice.createInjector().getInstance(SuperfluousThreadRemover)
-            scg = superfluousThreadRemover.optimize(scg)
-        }
-        if (environment.getProperty(ENABLE_SFR)) {
-            val superfluousForkRemover = Guice.createInjector().getInstance(SuperfluousForkRemover)
-            scg = superfluousForkRemover.optimize(scg)
-        }
         
-        scg
+        return sCGraph
     }
 
     // -------------------------------------------------------------------------   
@@ -530,7 +489,10 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
     def void transformSCGGenerateNodes(ControlflowRegion region, SCGraph sCGraph) {
         val entry = sCGraph.addEntry.trace(region, region.parentState)
         if (region.hasAnnotation(ANNOTATION_IGNORETHREAD)) {
-              entry.createStringAnnotation(ANNOTATION_IGNORETHREAD, "")
+            entry.createStringAnnotation(ANNOTATION_IGNORETHREAD, "")
+        }
+        if (region.abort) { // Mark for later processing
+            entry.addTagAnnotation(SCGAbortRegionProcessor.ANNOTATION_ABORT)
         }
 //        val exit = sCGraph.addExit.trace(region, region.parentState)
         val exit = sCGraph.addExit
@@ -573,32 +535,23 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
             assignment.name = state.name
 
             if (state.isReferencing) {
-                val referenceDeclaration = createReferenceDeclaration => [
-                    reference = SCC2SCGMap.get(state.reference.scope)
-                    sCGraph.declarations += it    
-                ]
-                // todo: add state label to reference call for different instances
-                val referenceCall = createReferenceCall.trace(state) => [ rc |
-                    val VOR = createValuedObject(PREFIX_REFERENCE_VALUED_OBJECT_NAME + state.reference.scope.name + state.name.toFirstUpper) => [
-                        referenceDeclaration.valuedObjects += it
+                if (state.isReferencingScope) {
+                    val referenceDeclaration = createReferenceDeclaration => [
+                        reference = SCC2SCGMap.get(state.reference.scope)
+                        sCGraph.declarations += it    
                     ]
-                    rc.valuedObject = VOR
-                    state.reference.parameters.forEach[ rc.parameters += it.convertToSCGParameter ]
-                ]
-                
-                val referenceResetCall = createReferenceCall.trace(state) => [ rc |
-                    val VOR = createValuedObject(PREFIX_REFERENCE_RESET_VALUED_OBJECT_NAME + state.reference.scope.name + state.name.toFirstUpper) => [
-                        referenceDeclaration.valuedObjects += it
-                    ]
-                    rc.valuedObject = VOR
-//                    state.reference.parameters.forEach[ rc.parameters += it.convertToSCGParameter ]
-                ]
-                
-                val callAssignment = sCGraph.addAssignment => [ expression = referenceCall ]
-                val controlFlow = callAssignment.createControlFlow.trace(state)
-                assignment.next = controlFlow
-                
-                assignment.expression = referenceResetCall
+                    val referenceCall = createReferenceCall.trace(state) => [ rc |
+                        val VOR = createValuedObject(PREFIX_REFERENCE_VALUED_OBJECT_NAME + state.reference.scope.name) => [
+                            referenceDeclaration.valuedObjects += it
+                        ]
+                        rc.valuedObject = VOR
+                        state.reference.parameters.forEach[ rc.parameters += it.convertToSCGParameter ]
+                    ]    
+                    
+                    assignment.expression = referenceCall
+                } else {
+                    throw new IllegalArgumentException("SCG transformation does not support references to generic types.")
+                }
             } else {
     		    // Assertion: A SCG normalized SCChart should have just ONE assignment per transition
     		    val effect = transition.effects.get(0) as Effect
@@ -733,31 +686,12 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
             // of the single immediate assignment transition outgoing  from
             // the current state
             val assignment = state.mappedAssignment
-            var aNext = assignment
-
-            if (assignment.isReferencing) {
-                aNext = assignment.next.target as Assignment            
-            }
-            
             val transition = state.outgoingTransitions.get(0)
             val targetState = transition.targetState
             val otherNode = targetState.mappedNode
             if (otherNode !== null) {
                 val controlFlow = otherNode.createControlFlow.trace(transition)
-                aNext.setNext(controlFlow)
-            }
-            
-            if (assignment.isReferencing) {
-                val termConditional = sCGraph.addConditional
-                termConditional.setCondition((aNext.expression as ReferenceCall).valuedObject.reference)
-                termConditional.then = aNext.next
-                aNext.next = termConditional.createControlFlow
-                
-                val surface = sCGraph.addSurface.trace(state)
-                val depth = sCGraph.addDepth.trace(state)
-                surface.setDepth(depth)
-                termConditional.^else = surface.createControlFlow
-                depth.next = aNext.createControlFlow                
+                assignment.setNext(controlFlow)
             }
         } else if (stateTypeCache.get(state).contains(PatternType::CONDITIONAL)) {
 
@@ -890,17 +824,17 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
 
     // Apply conversion to integer values
     def dispatch Expression convertToSCGExpression(IntValue expression) {
-        createIntValue(new Integer(expression.value)).trace(expression)
+        createIntValue(Integer.valueOf(expression.value)).trace(expression)
     }
 
     // Apply conversion to float values
     def dispatch Expression convertToSCGExpression(FloatValue expression) {
-        createFloatValue(new Float(expression.value)).trace(expression)
+        createFloatValue(Float.valueOf(expression.value.floatValue())).trace(expression)
     }
 
     // Apply conversion to boolean values
     def dispatch Expression convertToSCGExpression(BoolValue expression) {
-        createBoolValue(new Boolean(expression.value)).trace(expression)
+        createBoolValue(Boolean.valueOf(expression.value)).trace(expression)
     }
 
     def dispatch Expression convertToSCGExpression(StringValue expression) {
@@ -975,10 +909,6 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
             dest.subReference = ref
             dest.subReference.handleSubReferences(src.subReference)
         }
-    }
-    
-    private def boolean isReferencing(Assignment assignment) {
-        return assignment.expression instanceof ReferenceCall
     }
     
 // -------------------------------------------------------------------------   

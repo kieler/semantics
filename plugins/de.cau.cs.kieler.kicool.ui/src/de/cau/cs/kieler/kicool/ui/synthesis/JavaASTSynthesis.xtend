@@ -13,41 +13,27 @@
 package de.cau.cs.kieler.kicool.ui.synthesis
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.kicool.compilation.CodeContainer
-import de.cau.cs.kieler.kicool.ui.klighd.models.CodePlaceHolder
-import de.cau.cs.kieler.klighd.LightDiagramServices
-import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
-import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
-import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import de.cau.cs.kieler.klighd.SynthesisOption
-import de.cau.cs.kieler.kicool.ui.klighd.syntheses.CodePlaceHolderSynthesis
 import de.cau.cs.kieler.klighd.kgraph.KNode
-import java.util.Collection
-import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
-import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
+import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.krendering.extensions.KColorExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensions
-import de.cau.cs.kieler.kicool.compilation.Processor
 import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
-import org.eclipse.elk.core.options.CoreOptions
-import org.eclipse.elk.alg.layered.options.LayeredOptions
-import org.eclipse.elk.core.options.EdgeRouting
+import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KPolylineExtensions
-import de.cau.cs.kieler.kicool.ProcessorReference
-import de.cau.cs.kieler.kicool.ProcessorSystem
-import de.cau.cs.kieler.klighd.krendering.extensions.KPortExtensions
-import org.eclipse.elk.core.options.Direction
-import de.cau.cs.kieler.klighd.krendering.Trigger
-
-import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
-import org.eclipse.elk.alg.layered.options.LayerConstraint
-import de.cau.cs.kieler.kicool.ui.view.registry.KNodeExtensionsReplacement
+import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
+import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import java.util.List
 import java.util.regex.Pattern
-import org.eclipse.jdt.core.dom.CompilationUnit
+import org.eclipse.elk.alg.layered.options.LayeredOptions
+import org.eclipse.elk.core.options.CoreOptions
+import org.eclipse.elk.core.options.Direction
+import org.eclipse.elk.core.options.EdgeRouting
 import org.eclipse.jdt.core.dom.ASTNode
-import org.eclipse.jdt.core.dom.ASTVisitor
+import org.eclipse.jdt.core.dom.CompilationUnit
 import org.eclipse.jdt.core.dom.StructuralPropertyDescriptor
+
+import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 
 /**
  * @author ssm
@@ -57,16 +43,16 @@ import org.eclipse.jdt.core.dom.StructuralPropertyDescriptor
 @ViewSynthesisShared
 class JavaASTSynthesis extends AbstractDiagramSynthesis<CompilationUnit> {
 
-    @Inject extension KNodeExtensionsReplacement
+    @Inject extension KNodeExtensions
     @Inject extension KEdgeExtensions
     @Inject extension KRenderingExtensions
     @Inject extension KContainerRenderingExtensions
     @Inject extension KPolylineExtensions
     @Inject extension KColorExtensions
 
-    public static val SynthesisOption SHOW_FULLY_QUALIFIED_NAMES = SynthesisOption::createCheckOption(
+    public static val SynthesisOption SHOW_FULLY_QUALIFIED_NAMES = SynthesisOption::createCheckOption(JavaASTSynthesis,
         "Show Fully Qualified Names", false)
-    public static val SynthesisOption SHOW_HUMAN_READABLE_NAMES = SynthesisOption::createCheckOption(
+    public static val SynthesisOption SHOW_HUMAN_READABLE_NAMES = SynthesisOption::createCheckOption(JavaASTSynthesis,
         "Show Human Readable Names", true)
 
     val processorConnections = <String, Integer>newHashMap

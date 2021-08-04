@@ -12,9 +12,20 @@
  */
 package de.cau.cs.kieler.scg.processors.priority
 
+import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.AnnotationsFactory
 import de.cau.cs.kieler.annotations.IntAnnotation
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.kexpressions.Declaration
+import de.cau.cs.kieler.kexpressions.ValueType
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
+import de.cau.cs.kieler.kicool.compilation.CodeContainer
+import de.cau.cs.kieler.kicool.compilation.Processor
+import de.cau.cs.kieler.kicool.compilation.ProcessorType
+import de.cau.cs.kieler.kicool.compilation.codegen.CodeGeneratorNames
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.ControlFlow
@@ -25,33 +36,20 @@ import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.Join
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
+import de.cau.cs.kieler.scg.SCGraphs
 import de.cau.cs.kieler.scg.Surface
+import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
+import de.cau.cs.kieler.scg.processors.SCGAnnotations
+import de.cau.cs.kieler.scg.processors.codegen.c.CCodeSerializeHRExtensions
 import java.util.ArrayList
 import java.util.HashMap
 import java.util.HashSet
+import java.util.List
 import java.util.Stack
-
-import de.cau.cs.kieler.kicool.compilation.Processor
-import de.cau.cs.kieler.scg.SCGraphs
-import de.cau.cs.kieler.kicool.compilation.CodeContainer
-import de.cau.cs.kieler.kicool.compilation.ProcessorType
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
-import de.cau.cs.kieler.scg.processors.SCGAnnotations
-import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
-import de.cau.cs.kieler.scg.processors.codegen.c.CCodeSerializeHRExtensions
-import de.cau.cs.kieler.kexpressions.ValueType
 
 import static de.cau.cs.kieler.kicool.compilation.codegen.AbstractCodeGenerator.*
 import static de.cau.cs.kieler.kicool.compilation.codegen.CodeGeneratorNames.*
-import de.cau.cs.kieler.kicool.compilation.codegen.CodeGeneratorNames
-import de.cau.cs.kieler.kexpressions.Declaration
-import java.util.List
-import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
-import de.cau.cs.kieler.kexpressions.VariableDeclaration
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.kicool.compilation.VariableStore
-import com.google.inject.Inject
 
 /**
  * Class to perform the transformation of an SCG to C code in the priority based compilation chain.

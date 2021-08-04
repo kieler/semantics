@@ -12,17 +12,15 @@
  */
 package de.cau.cs.kieler.sccharts.ui.synthesis.hooks
 
-import de.cau.cs.kieler.sccharts.ui.synthesis.styles.StateStyles
-import de.cau.cs.kieler.sccharts.ui.synthesis.styles.ControlflowRegionStyles
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.klighd.SynthesisOption
-import de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions
-import javax.inject.Inject
-import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.sccharts.Region
-import de.cau.cs.kieler.klighd.krendering.KContainerRendering
-import de.cau.cs.kieler.kexpressions.impl.VariableDeclarationImpl
-import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions
+import de.cau.cs.kieler.sccharts.ui.synthesis.styles.ControlflowRegionStyles
+import de.cau.cs.kieler.sccharts.ui.synthesis.styles.StateStyles
+import javax.inject.Inject
 
 /**
  * @author kolja
@@ -35,7 +33,7 @@ class LocalDeclarationsHook extends SynthesisHook {
     /** Action ID */
     public static final String ID = "de.cau.cs.kieler.sccharts.ui.synthesis.hooks.DeclarationsHook";
     /** The related synthesis option */
-    public static final SynthesisOption SHOW_LOCAL_DECLARATIONS = SynthesisOption.createCheckOption(
+    public static final SynthesisOption SHOW_LOCAL_DECLARATIONS = SynthesisOption.createCheckOption(LocalDeclarationsHook,
         "Local Declarations", true).setCategory(GeneralSynthesisOptions::APPEARANCE)
 
     override getDisplayedSynthesisOptions() {

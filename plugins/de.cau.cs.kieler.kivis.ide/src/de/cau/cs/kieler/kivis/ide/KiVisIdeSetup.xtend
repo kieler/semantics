@@ -4,6 +4,7 @@
 package de.cau.cs.kieler.kivis.ide
 
 import com.google.inject.Guice
+import de.cau.cs.kieler.core.ls.ILSSetup
 import de.cau.cs.kieler.kivis.KiVisRuntimeModule
 import de.cau.cs.kieler.kivis.KiVisStandaloneSetup
 import org.eclipse.xtext.util.Modules2
@@ -11,10 +12,14 @@ import org.eclipse.xtext.util.Modules2
 /**
  * Initialization support for running Xtext languages as language servers.
  */
-class KiVisIdeSetup extends KiVisStandaloneSetup {
+class KiVisIdeSetup extends KiVisStandaloneSetup implements ILSSetup {
 
 	override createInjector() {
 		Guice.createInjector(Modules2.mixin(new KiVisRuntimeModule, new KiVisIdeModule))
 	}
+
+    override doLSSetup() {
+        return KiVisIdeSetup.doSetup
+    }
 	
 }

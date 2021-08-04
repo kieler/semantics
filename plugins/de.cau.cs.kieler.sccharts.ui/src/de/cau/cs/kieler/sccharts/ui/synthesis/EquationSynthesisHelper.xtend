@@ -14,8 +14,13 @@ package de.cau.cs.kieler.sccharts.ui.synthesis
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.OperatorExpression
+import de.cau.cs.kieler.kexpressions.OperatorType
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.eval.PartialExpressionEvaluator
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCompareExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.klighd.KlighdConstants
 import de.cau.cs.kieler.klighd.internal.util.KlighdInternalProperties
 import de.cau.cs.kieler.klighd.kgraph.KEdge
 import de.cau.cs.kieler.klighd.kgraph.KGraphElement
@@ -24,29 +29,25 @@ import de.cau.cs.kieler.klighd.kgraph.KLabel
 import de.cau.cs.kieler.klighd.kgraph.KLabeledGraphElement
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.kgraph.KPort
+import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
+import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KLabelExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KPortExtensions
+import de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses
+import de.cau.cs.kieler.sccharts.DataflowRegion
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions
+import de.cau.cs.kieler.sccharts.ui.synthesis.styles.EquationStyles
+import de.cau.cs.kieler.sccharts.ui.synthesis.styles.TransitionStyles
+import java.util.Comparator
 import java.util.List
+import org.eclipse.elk.alg.layered.options.LayeredOptions
 import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.core.options.PortSide
 
+import static de.cau.cs.kieler.sccharts.ide.synthesis.EquationSynthesisProperties.*
+
+import static extension de.cau.cs.kieler.annotations.ide.klighd.CommonSynthesisUtil.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.kexpressions.OperatorExpression
-import de.cau.cs.kieler.kexpressions.OperatorType
-import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
-import org.eclipse.elk.alg.layered.options.LayeredOptions
-import de.cau.cs.kieler.klighd.KlighdConstants
-import de.cau.cs.kieler.sccharts.ui.synthesis.styles.EquationStyles
-import de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses
-import de.cau.cs.kieler.klighd.krendering.extensions.KLabelExtensions
-import de.cau.cs.kieler.sccharts.DataflowRegion
-import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
-import java.util.Comparator
-import de.cau.cs.kieler.kexpressions.eval.PartialExpressionEvaluator
-import de.cau.cs.kieler.kexpressions.Value
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.sccharts.ui.synthesis.styles.TransitionStyles
-import de.cau.cs.kieler.klighd.krendering.extensions.KPortExtensions
-import de.cau.cs.kieler.klighd.kgraph.KGraphFactory
 
 /**
  * @author kolja
@@ -121,11 +122,6 @@ class EquationSynthesisHelper {
         node.eContents?.filter(KIdentifier)?.head?.id
     }
 
-    protected def setId(KLabeledGraphElement node, String id) {
-        node.getData(KIdentifier).id = id
-        node
-    }
-
     protected def KLabel getLabel(KNode node) {
         node.eContents.filter(KLabel).head
     }
@@ -144,15 +140,15 @@ class EquationSynthesisHelper {
     }
 
     protected def isInput(KNode node) {
-        node.getProperty(EquationSynthesis.INPUT_FLAG) as boolean
+        node.getProperty(INPUT_FLAG) as boolean
     }
 
     protected def isOutput(KNode node) {
-        node.getProperty(EquationSynthesis.OUTPUT_FLAG) as boolean
+        node.getProperty(OUTPUT_FLAG) as boolean
     }
 
     protected def isReference(KNode node) {
-        return node.getProperty(EquationSynthesis.REFERENCE_NODE) as boolean
+        return node.getProperty(REFERENCE_NODE) as boolean
     }
 
     /**
@@ -195,15 +191,15 @@ class EquationSynthesisHelper {
     }
 
     protected def isSequential(KEdge edge) {
-        edge.getProperty(EquationSynthesis.SEQUENTIAL_EDGE) as boolean
+        edge.getProperty(SEQUENTIAL_EDGE) as boolean
     }
 
     protected def isInstance(KEdge edge) {
-        edge.getProperty(EquationSynthesis.INSTANCE_EDGE) as boolean
+        edge.getProperty(INSTANCE_EDGE) as boolean
     }
 
     protected def isDataAccess(KNode node) {
-        node.getProperty(EquationSynthesis.DATA_ACCESS_FLAG) as boolean
+        node.getProperty(DATA_ACCESS_FLAG) as boolean
     }
 
     protected def getSourceElement(KGraphElement node) {
@@ -309,10 +305,8 @@ class EquationSynthesisHelper {
 
         if (maxPort === null && create) {
             val port = createPort => [
-                data += KGraphFactory.eINSTANCE.createKIdentifier => [
-                    id = "in0"
-                ]
-                it.setPortSize(2, 2)
+                it.KID = "in0"
+                it.setPortSize(0, 0)
                 it.addLayoutParam(CoreOptions::PORT_SIDE, PortSide::WEST);
                 it.labels += createLabel => [
                     it.text = ""
@@ -320,14 +314,14 @@ class EquationSynthesisHelper {
             ]
             node.ports += port
             return port
-        } else if (maxPort == null) {
+        } else if (maxPort === null) {
             return null
         }
 
         var KPort result = null
         for (pi : (maxIndex + 1) .. number) {
             result = maxPort.copy
-            result.id = (EquationSynthesis.PORT_IN_PREFIX + pi)
+            result.KID = (EquationSynthesis.PORT_IN_PREFIX + pi)
             node.ports.add(0, result)
         }
         return result
@@ -346,8 +340,8 @@ class EquationSynthesisHelper {
         edge.sourcePort = source
         edge.target = target.node
         edge.targetPort = target
-        if (source.node.hasProperty(EquationSynthesis.DATA_ARRAY_FLAG) ||
-            target.node.hasProperty(EquationSynthesis.DATA_ARRAY_FLAG)) {
+        if (source.node.hasProperty(DATA_ARRAY_FLAG) ||
+            target.node.hasProperty(DATA_ARRAY_FLAG)) {
             edge.addWireBusFigure
         } else {
             edge.addWireFigure
