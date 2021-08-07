@@ -87,6 +87,7 @@ import static de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions.*
 
 import static extension de.cau.cs.kieler.annotations.ide.klighd.CommonSynthesisUtil.*
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
+import de.cau.cs.kieler.sccharts.extensions.SCChartsReferenceExtensions
 
 /**
  * Transforms {@link State} into {@link KNode} diagram elements.
@@ -116,6 +117,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
     @Inject extension SCChartsCoreExtensions
     @Inject extension SCChartsScopeExtensions
     @Inject extension SCChartsInheritanceExtensions
+    @Inject extension SCChartsReferenceExtensions
     @Inject extension SCChartsTransitionExtensions
     @Inject extension SCChartsSearchExtensions
     @Inject extension TransitionSynthesis
@@ -208,7 +210,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
                         label += state.genericParameterDeclarations.serializeGenericParametersHighlighted
                     }
                     if (state.reference !== null) {
-                        label += new Pair("@", TextFormat.KEYWORD)
+                        label += new Pair(state.isModuleCallReference ? "calls" : "@", TextFormat.KEYWORD)
                         if (state.isReferencing) {
                             label += new Pair(state.reference.target.name, TextFormat.TEXT)
                         } else {
