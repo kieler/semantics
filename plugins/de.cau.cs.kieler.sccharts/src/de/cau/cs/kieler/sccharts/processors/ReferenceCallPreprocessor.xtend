@@ -69,7 +69,7 @@ class ReferenceCallPreprocessor extends SCChartsProcessor implements Traceable {
     val REF_CALL_CPOUT_METHOD_NAME = ReferenceCallProcessor.REF_CALL_CPOUT_METHOD_NAME
     val REF_CALL_TERM_METHOD_NAME = ReferenceCallProcessor.REF_CALL_TERM_METHOD_NAME
     val REF_CALL_TAG_ANNOTATION = ReferenceCallProcessor.REF_CALL_TAG_ANNOTATION
-
+    
     // -------------------------------------------------------------------------
     // --                 K I C O      C O N F I G U R A T I O N              --
     // -------------------------------------------------------------------------
@@ -88,34 +88,36 @@ class ReferenceCallPreprocessor extends SCChartsProcessor implements Traceable {
     // -------------------------------------------------------------------------
     def SCCharts transform(SCCharts sccharts) {
         sccharts => [
-            rootStates.immutableCopy.forEach [ rootState | rootState.transformRootState(rootStates) ]
+            rootStates.immutableCopy.forEach [ transformRootState ]
             /* Remove SCCharts declared as header files */
             rootStates.removeAll(rootStates.filter[hasAnnotation(REF_CALL_EXT_SCC_ANNOTATION)].toList)
         ]
     }
     
-    protected def void transformRootState(State rootState, List<State> rootStates) {
-        rootState.allContainedStates.filter[isReferencing].toList().forEach [ ref |
-                    /* Copy into model if imported. */
-                    if (!rootStates.exists[name == ref.reference.target.name]) {
-                        val newRootState = (ref.reference.target as State).copy => [ref.reference.target = it]
-                        rootStates.add(newRootState)
-                        newRootState.transformRootState(rootStates)
-                    }
-                    /* Get proxy class and create instance */
-                    val proxyClass = createOrGetProxyClass(ref)
-                    val instance = proxyClass.createValuedObject(REF_CALL_INSTANCE_PREFIX + ref.name).uniqueName
-                    /* Tranform referencing state to proxy superstate containing glue logic. */
-                    ref.createProxyState(proxyClass, instance,
-                        ref.reference.scope.hasAnnotation(REF_CALL_NON_INSTANTANEOUS_ANNOTATION))
-                    /* Remove original reference.
-                     * Could also keep the reference in order to link later but naming-based solution is more general
-                     * => external modules.
-                     */
-                    ref.reference = null
-                ]
-                rootState.declarations.filter(PolicyClassDeclaration).filter[hasAnnotation(REF_CALL_TAG_ANNOTATION)].
-                    forEach[cleanupDeclarations]
+    protected def void transformRootState(State rootState) {
+        rootState.allContainedStates.filter[isReferencing && isModuleCallReference].toList().forEach [ ref |
+            /* Copy into model if imported. */
+            if (!model.rootStates.exists[name == ref.reference.target.name]) {
+                val newRootState = (ref.reference.target as State).copy => [ref.reference.target = it]
+                model.rootStates.add(newRootState)
+                newRootState.transformRootState
+            } else {          
+            }
+            /* Get proxy class and create instance */
+            val proxyClass = createOrGetProxyClass(ref)
+            val instance = proxyClass.createValuedObject(REF_CALL_INSTANCE_PREFIX + ref.name).uniqueName
+            /* Tranform referencing state to proxy superstate containing glue logic. */
+            ref.createProxyState(proxyClass, instance,
+                ref.reference.scope.hasAnnotation(REF_CALL_NON_INSTANTANEOUS_ANNOTATION))
+            /* Remove original reference.
+             * Could also keep the reference in order to link later but naming-based solution is more general
+             * => external modules.
+             */
+            ref.reference = null
+        ]
+        rootState.declarations.filter(PolicyClassDeclaration).filter[hasAnnotation(REF_CALL_TAG_ANNOTATION)].forEach [
+            cleanupDeclarations
+        ]
     }
 
     protected def createProxyState(State ref, PolicyClassDeclaration proxyClass, ValuedObject instance,
@@ -155,7 +157,6 @@ class ReferenceCallPreprocessor extends SCChartsProcessor implements Traceable {
 
         init.createTransitionTo(call) => [
             delay = DelayType::IMMEDIATE
-//            label = "reset; initial tick"
 
             effects.add(createReferenceCallEffect => [
                 subReference = reset_method.reference
@@ -178,7 +179,6 @@ class ReferenceCallPreprocessor extends SCChartsProcessor implements Traceable {
         ]
 
         call.createTransitionTo(conn) => [
-//            label = "tick"
 
             effects.add(createReferenceCallEffect => [
                 subReference = cpin_method.reference
@@ -197,7 +197,6 @@ class ReferenceCallPreprocessor extends SCChartsProcessor implements Traceable {
         ]
 
         conn.createTransitionTo(term) => [
-//            label = "terminate?"
             delay = DelayType::IMMEDIATE
 
             trigger = createReferenceCall => [
@@ -238,7 +237,6 @@ class ReferenceCallPreprocessor extends SCChartsProcessor implements Traceable {
 
         init.createTransitionTo(call) => [
             delay = DelayType::IMMEDIATE
-//            label = "reset"
 
             effects.add(createReferenceCallEffect => [
                 subReference = reset_method.reference
@@ -248,7 +246,6 @@ class ReferenceCallPreprocessor extends SCChartsProcessor implements Traceable {
 
         call.createTransitionTo(conn) => [
             delay = DelayType::IMMEDIATE
-//            label = "tick"
 
             effects.add(createReferenceCallEffect => [
                 subReference = cpin_method.reference
@@ -268,7 +265,6 @@ class ReferenceCallPreprocessor extends SCChartsProcessor implements Traceable {
 
         conn.createTransitionTo(term) => [
             delay = DelayType::IMMEDIATE
-//            label = "terminate?"
 
             trigger = createReferenceCall => [
                 subReference = term_method.reference
