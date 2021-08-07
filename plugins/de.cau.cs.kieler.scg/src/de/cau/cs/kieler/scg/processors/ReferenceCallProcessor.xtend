@@ -34,6 +34,7 @@ import java.util.List
 import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
+import de.cau.cs.kieler.kexpressions.OperatorExpression
 
 /**
  * @author glu
@@ -57,6 +58,8 @@ class ReferenceCallProcessor extends InplaceProcessor<SCGraphs> implements Trace
     public static val IProperty<Boolean> JAVA_CLASS_NAME = new Property<Boolean>(
         "de.cau.cs.kieler.scg.processors.referenceCall.javaClassNames", false)
 
+    protected var List<ClassDeclaration> moduleClasses
+
     override getId() {
         "de.cau.cs.kieler.scg.processors.referenceCall"
     }
@@ -76,7 +79,7 @@ class ReferenceCallProcessor extends InplaceProcessor<SCGraphs> implements Trace
     }
 
     def transform(SCGraph scg) {
-        val moduleClasses = scg.getModuleClasses
+        moduleClasses = scg.getModuleClasses
 
         val assignments = scg.nodes.immutableCopy.filter(Assignment)
         val refCalls = assignments.map[expression].filter(ReferenceCall)
@@ -140,7 +143,7 @@ class ReferenceCallProcessor extends InplaceProcessor<SCGraphs> implements Trace
                         originalAsmt.incomingLinks.immutableCopy.forEach[target = newAssignments.head]
                         scg.nodes.remove(originalAsmt)
                     } else { // newAssignments is empty => no values to copy
-                        // skip assignment node entirely
+                    // skip assignment node entirely
                         originalAsmt.incomingLinks.immutableCopy.forEach[target = nextCF.target]
                         scg.nodes.remove(originalAsmt)
                         scg.nodes.remove(nextCF)
@@ -164,9 +167,35 @@ class ReferenceCallProcessor extends InplaceProcessor<SCGraphs> implements Trace
                 VariableDeclaration).map[valuedObjects].flatten.findFirst[name == "_TERM"].reference
             cond.condition = instance.reference => [subReference = subref]
         ]
+
+        // handle calls to get_term() within operator expressions
+        val opExpressions = scg.nodes.filter(Conditional).map[condition].filter(OperatorExpression)
+        opExpressions.forEach [
+            handleOperatorExpression
+        ]
+
         if (!environment.getProperty(JAVA_CLASS_NAME)) {
             moduleClasses.forEach[name = "TickData" + name]
         }
+    }
+
+    protected def void handleOperatorExpression(OperatorExpression expression) {
+        expression.subExpressions.indexed.forEach [ indexExp |
+            val index = indexExp.key
+            val subExp = indexExp.value
+            if (OperatorExpression.isInstance(subExp)) {
+                (subExp as OperatorExpression).handleOperatorExpression
+            } else if (ReferenceCall.isInstance(subExp)) {
+                val refCall = subExp as ReferenceCall
+                if (moduleClasses.contains(refCall.valuedObject.eContainer) &&
+                    refCall.subReference.valuedObject.name == REF_CALL_TERM_METHOD_NAME) {
+                    val instance = refCall.valuedObject
+                    val subref = (refCall.valuedObject.eContainer as ClassDeclaration).declarations.filter(
+                        VariableDeclaration).map[valuedObjects].flatten.findFirst[name == "_TERM"].reference
+                    expression.subExpressions.set(index, instance.reference => [subReference = subref])
+                }
+            }
+        ]
     }
 
     protected def List<ClassDeclaration> getModuleClasses(SCGraph scg) {
