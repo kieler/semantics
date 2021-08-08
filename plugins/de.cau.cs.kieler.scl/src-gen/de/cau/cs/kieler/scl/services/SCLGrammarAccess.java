@@ -2967,7 +2967,7 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	}
 	
 	//EnumMemberDeclaration returns kexpressions::VariableDeclaration:
-	//    annotations+=Annotation*
+	//    annotations+=QuotedStringAnnotation*
 	//    valuedObjects+=SimpleValuedObject (',' valuedObjects+=SimpleValuedObject)*
 	//    annotations+=CommentAnnotatonSL?
 	//;

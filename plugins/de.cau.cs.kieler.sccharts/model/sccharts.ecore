@@ -216,4 +216,5 @@
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="OdeAction" eSuperTypes="#//LocalAction"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ModuleScopeCall" eSuperTypes="#//ScopeCall"/>
 </ecore:EPackage>

@@ -193,6 +193,15 @@ public interface SCChartsFactory extends EFactory {
     OdeAction createOdeAction();
 
     /**
+     * Returns a new object of class '<em>Module Scope Call</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Module Scope Call</em>'.
+     * @generated
+     */
+    ModuleScopeCall createModuleScopeCall();
+
+    /**
      * Returns the package supported by this factory.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

@@ -5357,9 +5357,9 @@ ruleEnumMemberDeclaration returns [EObject current=null]
 		(
 			(
 				{
-					newCompositeNode(grammarAccess.getEnumMemberDeclarationAccess().getAnnotationsAnnotationParserRuleCall_0_0());
+					newCompositeNode(grammarAccess.getEnumMemberDeclarationAccess().getAnnotationsQuotedStringAnnotationParserRuleCall_0_0());
 				}
-				lv_annotations_0_0=ruleAnnotation
+				lv_annotations_0_0=ruleQuotedStringAnnotation
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getEnumMemberDeclarationRule());
@@ -5368,7 +5368,7 @@ ruleEnumMemberDeclaration returns [EObject current=null]
 						$current,
 						"annotations",
 						lv_annotations_0_0,
-						"de.cau.cs.kieler.kexpressions.KExpressions.Annotation");
+						"de.cau.cs.kieler.kexpressions.KExpressions.QuotedStringAnnotation");
 					afterParserOrEnumRuleCall();
 				}
 			)

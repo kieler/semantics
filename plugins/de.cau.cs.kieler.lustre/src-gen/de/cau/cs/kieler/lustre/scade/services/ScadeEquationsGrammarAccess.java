@@ -1621,7 +1621,7 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	}
 	
 	//EnumMemberDeclaration returns kexpressions::VariableDeclaration:
-	//    annotations+=Annotation*
+	//    annotations+=QuotedStringAnnotation*
 	//    valuedObjects+=SimpleValuedObject (',' valuedObjects+=SimpleValuedObject)*
 	//    annotations+=CommentAnnotatonSL?
 	//;

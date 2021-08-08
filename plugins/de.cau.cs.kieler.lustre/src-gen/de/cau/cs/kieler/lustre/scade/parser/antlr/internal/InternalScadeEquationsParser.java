@@ -19004,7 +19004,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleEnumMemberDeclaration"
-    // InternalScadeEquations.g:6949:1: ruleEnumMemberDeclaration returns [EObject current=null] : ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_valuedObjects_1_0= ruleSimpleValuedObject ) ) (otherlv_2= ',' ( (lv_valuedObjects_3_0= ruleSimpleValuedObject ) ) )* ( (lv_annotations_4_0= ruleCommentAnnotatonSL ) )? ) ;
+    // InternalScadeEquations.g:6949:1: ruleEnumMemberDeclaration returns [EObject current=null] : ( ( (lv_annotations_0_0= ruleQuotedStringAnnotation ) )* ( (lv_valuedObjects_1_0= ruleSimpleValuedObject ) ) (otherlv_2= ',' ( (lv_valuedObjects_3_0= ruleSimpleValuedObject ) ) )* ( (lv_annotations_4_0= ruleCommentAnnotatonSL ) )? ) ;
     public final EObject ruleEnumMemberDeclaration() throws RecognitionException {
         EObject current = null;
 
@@ -19022,13 +19022,13 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalScadeEquations.g:6955:2: ( ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_valuedObjects_1_0= ruleSimpleValuedObject ) ) (otherlv_2= ',' ( (lv_valuedObjects_3_0= ruleSimpleValuedObject ) ) )* ( (lv_annotations_4_0= ruleCommentAnnotatonSL ) )? ) )
-            // InternalScadeEquations.g:6956:2: ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_valuedObjects_1_0= ruleSimpleValuedObject ) ) (otherlv_2= ',' ( (lv_valuedObjects_3_0= ruleSimpleValuedObject ) ) )* ( (lv_annotations_4_0= ruleCommentAnnotatonSL ) )? )
+            // InternalScadeEquations.g:6955:2: ( ( ( (lv_annotations_0_0= ruleQuotedStringAnnotation ) )* ( (lv_valuedObjects_1_0= ruleSimpleValuedObject ) ) (otherlv_2= ',' ( (lv_valuedObjects_3_0= ruleSimpleValuedObject ) ) )* ( (lv_annotations_4_0= ruleCommentAnnotatonSL ) )? ) )
+            // InternalScadeEquations.g:6956:2: ( ( (lv_annotations_0_0= ruleQuotedStringAnnotation ) )* ( (lv_valuedObjects_1_0= ruleSimpleValuedObject ) ) (otherlv_2= ',' ( (lv_valuedObjects_3_0= ruleSimpleValuedObject ) ) )* ( (lv_annotations_4_0= ruleCommentAnnotatonSL ) )? )
             {
-            // InternalScadeEquations.g:6956:2: ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_valuedObjects_1_0= ruleSimpleValuedObject ) ) (otherlv_2= ',' ( (lv_valuedObjects_3_0= ruleSimpleValuedObject ) ) )* ( (lv_annotations_4_0= ruleCommentAnnotatonSL ) )? )
-            // InternalScadeEquations.g:6957:3: ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_valuedObjects_1_0= ruleSimpleValuedObject ) ) (otherlv_2= ',' ( (lv_valuedObjects_3_0= ruleSimpleValuedObject ) ) )* ( (lv_annotations_4_0= ruleCommentAnnotatonSL ) )?
+            // InternalScadeEquations.g:6956:2: ( ( (lv_annotations_0_0= ruleQuotedStringAnnotation ) )* ( (lv_valuedObjects_1_0= ruleSimpleValuedObject ) ) (otherlv_2= ',' ( (lv_valuedObjects_3_0= ruleSimpleValuedObject ) ) )* ( (lv_annotations_4_0= ruleCommentAnnotatonSL ) )? )
+            // InternalScadeEquations.g:6957:3: ( (lv_annotations_0_0= ruleQuotedStringAnnotation ) )* ( (lv_valuedObjects_1_0= ruleSimpleValuedObject ) ) (otherlv_2= ',' ( (lv_valuedObjects_3_0= ruleSimpleValuedObject ) ) )* ( (lv_annotations_4_0= ruleCommentAnnotatonSL ) )?
             {
-            // InternalScadeEquations.g:6957:3: ( (lv_annotations_0_0= ruleAnnotation ) )*
+            // InternalScadeEquations.g:6957:3: ( (lv_annotations_0_0= ruleQuotedStringAnnotation ) )*
             loop165:
             do {
                 int alt165=2;
@@ -19062,18 +19062,18 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
 
                 switch (alt165) {
             	case 1 :
-            	    // InternalScadeEquations.g:6958:4: (lv_annotations_0_0= ruleAnnotation )
+            	    // InternalScadeEquations.g:6958:4: (lv_annotations_0_0= ruleQuotedStringAnnotation )
             	    {
-            	    // InternalScadeEquations.g:6958:4: (lv_annotations_0_0= ruleAnnotation )
-            	    // InternalScadeEquations.g:6959:5: lv_annotations_0_0= ruleAnnotation
+            	    // InternalScadeEquations.g:6958:4: (lv_annotations_0_0= ruleQuotedStringAnnotation )
+            	    // InternalScadeEquations.g:6959:5: lv_annotations_0_0= ruleQuotedStringAnnotation
             	    {
             	    if ( state.backtracking==0 ) {
 
-            	      					newCompositeNode(grammarAccess.getEnumMemberDeclarationAccess().getAnnotationsAnnotationParserRuleCall_0_0());
+            	      					newCompositeNode(grammarAccess.getEnumMemberDeclarationAccess().getAnnotationsQuotedStringAnnotationParserRuleCall_0_0());
             	      				
             	    }
             	    pushFollow(FollowSets000.FOLLOW_90);
-            	    lv_annotations_0_0=ruleAnnotation();
+            	    lv_annotations_0_0=ruleQuotedStringAnnotation();
 
             	    state._fsp--;
             	    if (state.failed) return current;
@@ -19086,7 +19086,7 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             	      						current,
             	      						"annotations",
             	      						lv_annotations_0_0,
-            	      						"de.cau.cs.kieler.kexpressions.KExpressions.Annotation");
+            	      						"de.cau.cs.kieler.kexpressions.KExpressions.QuotedStringAnnotation");
             	      					afterParserOrEnumRuleCall();
             	      				
             	    }
@@ -44095,19 +44095,19 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         EObject lv_annotations_0_0 = null;
 
 
-        // InternalScadeEquations.g:6958:4: ( (lv_annotations_0_0= ruleAnnotation ) )
-        // InternalScadeEquations.g:6958:4: (lv_annotations_0_0= ruleAnnotation )
+        // InternalScadeEquations.g:6958:4: ( (lv_annotations_0_0= ruleQuotedStringAnnotation ) )
+        // InternalScadeEquations.g:6958:4: (lv_annotations_0_0= ruleQuotedStringAnnotation )
         {
-        // InternalScadeEquations.g:6958:4: (lv_annotations_0_0= ruleAnnotation )
-        // InternalScadeEquations.g:6959:5: lv_annotations_0_0= ruleAnnotation
+        // InternalScadeEquations.g:6958:4: (lv_annotations_0_0= ruleQuotedStringAnnotation )
+        // InternalScadeEquations.g:6959:5: lv_annotations_0_0= ruleQuotedStringAnnotation
         {
         if ( state.backtracking==0 ) {
 
-          					newCompositeNode(grammarAccess.getEnumMemberDeclarationAccess().getAnnotationsAnnotationParserRuleCall_0_0());
+          					newCompositeNode(grammarAccess.getEnumMemberDeclarationAccess().getAnnotationsQuotedStringAnnotationParserRuleCall_0_0());
           				
         }
         pushFollow(FollowSets000.FOLLOW_2);
-        lv_annotations_0_0=ruleAnnotation();
+        lv_annotations_0_0=ruleQuotedStringAnnotation();
 
         state._fsp--;
         if (state.failed) return ;
@@ -49071,12 +49071,13 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             return "13195:2: (this_QuotedStringAnnotation_0= superQuotedStringAnnotation | this_JsonAnnotation_1= ruleJsonAnnotation )";
         }
     }
-    static final String dfa_157s = "\3\uffff\1\11\4\uffff\1\17\2\uffff\2\11\2\uffff\1\22\1\7\1\17\2\uffff\1\22\1\uffff\1\22\1\uffff\1\22\1\uffff";
-    static final String dfa_158s = "\1\12\1\uffff\4\4\1\7\1\uffff\1\4\2\uffff\4\4\1\0\2\4\1\uffff\6\4\1\0";
-    static final String dfa_159s = "\1\132\1\uffff\1\4\1\172\1\4\1\10\1\7\1\uffff\1\172\2\uffff\2\172\1\4\1\132\1\0\2\172\1\uffff\1\4\1\172\1\4\1\172\1\4\1\172\1\0";
-    static final String dfa_160s = "\1\uffff\1\1\5\uffff\1\2\1\uffff\1\4\1\3\7\uffff\1\2\7\uffff";
-    static final String dfa_161s = "\31\uffff\1\0}>";
-    static final String[] dfa_162s = {
+    static final String dfa_157s = "\26\uffff";
+    static final String dfa_158s = "\3\uffff\1\11\4\uffff\1\7\2\uffff\2\11\1\uffff\1\7\1\uffff\1\7\1\uffff\1\7\1\uffff\1\7\1\uffff";
+    static final String dfa_159s = "\1\12\1\uffff\4\4\1\7\1\uffff\1\4\2\uffff\12\4\1\0";
+    static final String dfa_160s = "\1\132\1\uffff\1\4\1\172\1\4\1\10\1\7\1\uffff\1\172\2\uffff\2\172\1\4\1\172\1\4\1\172\1\4\1\172\1\4\1\172\1\0";
+    static final String dfa_161s = "\1\uffff\1\1\5\uffff\1\2\1\uffff\1\4\1\3\13\uffff";
+    static final String dfa_162s = "\25\uffff\1\0}>";
+    static final String[] dfa_163s = {
             "\1\1\117\uffff\1\2",
             "",
             "\1\3",
@@ -49085,44 +49086,42 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             "\1\13\2\uffff\2\7",
             "\1\14",
             "",
-            "\1\7\1\uffff\1\7\3\uffff\1\7\1\11\5\uffff\1\11\1\16\1\uffff\2\11\1\uffff\1\11\1\uffff\1\7\2\uffff\1\11\4\uffff\1\7\3\uffff\1\15\31\uffff\12\7\2\uffff\1\11\3\uffff\2\7\4\uffff\1\7\1\11\2\uffff\6\7\11\uffff\2\11\6\uffff\2\7\3\uffff\6\7",
+            "\1\7\1\uffff\1\7\3\uffff\1\7\6\uffff\1\11\1\7\2\uffff\1\11\3\uffff\1\7\2\uffff\1\11\4\uffff\1\7\3\uffff\1\15\31\uffff\12\7\2\uffff\1\11\3\uffff\2\7\4\uffff\1\7\1\11\2\uffff\6\7\11\uffff\2\11\6\uffff\2\7\3\uffff\6\7",
             "",
             "",
             "\1\10\1\7\1\11\3\7\1\11\16\uffff\1\11\7\uffff\1\11\3\uffff\1\4\31\uffff\12\11\2\uffff\1\12\3\uffff\2\11\4\uffff\1\5\3\uffff\1\6\5\11\21\uffff\2\11\3\uffff\6\11",
             "\1\10\1\7\1\11\3\7\1\11\16\uffff\1\11\7\uffff\1\11\35\uffff\12\11\2\uffff\1\12\3\uffff\2\11\4\uffff\1\7\4\uffff\5\11\21\uffff\2\11\3\uffff\6\11",
+            "\1\16",
+            "\1\7\1\uffff\1\7\3\uffff\1\7\6\uffff\1\11\1\7\2\uffff\1\11\3\uffff\1\7\2\uffff\1\11\4\uffff\1\7\3\uffff\1\17\31\uffff\12\7\2\uffff\1\11\3\uffff\2\7\4\uffff\1\7\1\11\2\uffff\6\7\11\uffff\2\11\6\uffff\2\7\3\uffff\6\7",
             "\1\20",
-            "\1\21\1\7\1\uffff\3\7\1\11\112\uffff\1\7\4\uffff\1\11",
-            "\1\uffff",
+            "\1\7\1\uffff\1\7\3\uffff\1\7\6\uffff\1\11\1\7\2\uffff\1\11\3\uffff\1\7\2\uffff\1\11\4\uffff\1\7\3\uffff\1\21\31\uffff\12\7\2\uffff\1\11\3\uffff\2\7\4\uffff\1\7\1\11\2\uffff\6\7\11\uffff\2\11\6\uffff\2\7\3\uffff\6\7",
+            "\1\22",
             "\1\7\1\uffff\1\7\3\uffff\1\7\6\uffff\1\11\1\7\2\uffff\1\11\3\uffff\1\7\2\uffff\1\11\4\uffff\1\7\3\uffff\1\23\31\uffff\12\7\2\uffff\1\11\3\uffff\2\7\4\uffff\1\7\1\11\2\uffff\6\7\11\uffff\2\11\6\uffff\2\7\3\uffff\6\7",
-            "\1\7\1\uffff\1\7\3\uffff\1\7\1\11\6\uffff\1\16\1\uffff\1\11\2\uffff\1\11\1\uffff\1\7\7\uffff\1\7\3\uffff\1\7\31\uffff\12\7\6\uffff\2\7\4\uffff\1\7\1\11\2\uffff\6\7\21\uffff\2\7\3\uffff\6\7",
-            "",
             "\1\24",
-            "\1\22\1\uffff\1\22\3\uffff\1\22\6\uffff\1\11\1\22\2\uffff\1\11\3\uffff\1\22\2\uffff\1\11\4\uffff\1\22\3\uffff\1\25\31\uffff\12\22\2\uffff\1\11\3\uffff\2\22\4\uffff\1\22\1\11\2\uffff\6\22\11\uffff\2\11\6\uffff\2\22\3\uffff\6\22",
-            "\1\26",
-            "\1\22\1\uffff\1\22\3\uffff\1\22\6\uffff\1\11\1\22\2\uffff\1\11\3\uffff\1\22\2\uffff\1\11\4\uffff\1\22\3\uffff\1\27\31\uffff\12\22\2\uffff\1\11\3\uffff\2\22\4\uffff\1\22\1\11\2\uffff\6\22\11\uffff\2\11\6\uffff\2\22\3\uffff\6\22",
-            "\1\30",
-            "\1\22\1\uffff\1\22\3\uffff\1\22\6\uffff\1\11\1\22\2\uffff\1\11\3\uffff\1\22\2\uffff\1\11\4\uffff\1\22\3\uffff\1\31\31\uffff\12\22\2\uffff\1\11\3\uffff\2\22\4\uffff\1\22\1\11\2\uffff\6\22\11\uffff\2\11\6\uffff\2\22\3\uffff\6\22",
+            "\1\7\1\uffff\1\7\3\uffff\1\7\6\uffff\1\11\1\7\2\uffff\1\11\3\uffff\1\7\2\uffff\1\11\4\uffff\1\7\3\uffff\1\25\31\uffff\12\7\2\uffff\1\11\3\uffff\2\7\4\uffff\1\7\1\11\2\uffff\6\7\11\uffff\2\11\6\uffff\2\7\3\uffff\6\7",
             "\1\uffff"
     };
+
     static final short[] dfa_157 = DFA.unpackEncodedString(dfa_157s);
-    static final char[] dfa_158 = DFA.unpackEncodedStringToUnsignedChars(dfa_158s);
+    static final short[] dfa_158 = DFA.unpackEncodedString(dfa_158s);
     static final char[] dfa_159 = DFA.unpackEncodedStringToUnsignedChars(dfa_159s);
-    static final short[] dfa_160 = DFA.unpackEncodedString(dfa_160s);
+    static final char[] dfa_160 = DFA.unpackEncodedStringToUnsignedChars(dfa_160s);
     static final short[] dfa_161 = DFA.unpackEncodedString(dfa_161s);
-    static final short[][] dfa_162 = unpackEncodedStringArray(dfa_162s);
+    static final short[] dfa_162 = DFA.unpackEncodedString(dfa_162s);
+    static final short[][] dfa_163 = unpackEncodedStringArray(dfa_163s);
 
     class DFA312 extends DFA {
 
         public DFA312(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 312;
-            this.eot = dfa_68;
-            this.eof = dfa_157;
-            this.min = dfa_158;
-            this.max = dfa_159;
-            this.accept = dfa_160;
-            this.special = dfa_161;
-            this.transition = dfa_162;
+            this.eot = dfa_157;
+            this.eof = dfa_158;
+            this.min = dfa_159;
+            this.max = dfa_160;
+            this.accept = dfa_161;
+            this.special = dfa_162;
+            this.transition = dfa_163;
         }
         public String getDescription() {
             return "13237:2: (this_CommentAnnotation_0= ruleCommentAnnotation | this_KeyStringValueAnnotation_1= ruleKeyStringValueAnnotation | this_TypedKeyStringValueAnnotation_2= ruleTypedKeyStringValueAnnotation | this_TagAnnotation_3= ruleTagAnnotation )";
@@ -49132,18 +49131,18 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
         	int _s = s;
             switch ( s ) {
                     case 0 : 
-                        int LA312_25 = input.LA(1);
+                        int LA312_21 = input.LA(1);
 
                          
-                        int index312_25 = input.index();
+                        int index312_21 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred363_InternalScadeEquations()) ) {s = 18;}
+                        if ( (synpred363_InternalScadeEquations()) ) {s = 7;}
 
                         else if ( (true) ) {s = 9;}
 
                          
-                        input.seek(index312_25);
+                        input.seek(index312_21);
                         if ( s>=0 ) return s;
                         break;
             }
@@ -49154,11 +49153,11 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             throw nvae;
         }
     }
-    static final String dfa_163s = "\2\uffff\1\6\5\uffff\2\6";
-    static final String dfa_164s = "\1\131\4\4\1\7\2\uffff\2\4";
-    static final String dfa_165s = "\1\131\1\4\1\131\1\4\1\10\1\7\2\uffff\1\131\1\125";
-    static final String dfa_166s = "\6\uffff\1\2\1\1\2\uffff";
-    static final String[] dfa_167s = {
+    static final String dfa_164s = "\2\uffff\1\6\5\uffff\2\6";
+    static final String dfa_165s = "\1\131\4\4\1\7\2\uffff\2\4";
+    static final String dfa_166s = "\1\131\1\4\1\131\1\4\1\10\1\7\2\uffff\1\131\1\125";
+    static final String dfa_167s = "\6\uffff\1\2\1\1\2\uffff";
+    static final String[] dfa_168s = {
             "\1\1",
             "\1\2",
             "\2\7\1\uffff\3\7\33\uffff\1\3\57\uffff\1\4\3\uffff\1\5",
@@ -49170,11 +49169,11 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             "\2\7\1\uffff\3\7\33\uffff\1\3\57\uffff\1\4\3\uffff\1\5",
             "\2\7\1\uffff\3\7\113\uffff\1\7"
     };
-    static final short[] dfa_163 = DFA.unpackEncodedString(dfa_163s);
-    static final char[] dfa_164 = DFA.unpackEncodedStringToUnsignedChars(dfa_164s);
+    static final short[] dfa_164 = DFA.unpackEncodedString(dfa_164s);
     static final char[] dfa_165 = DFA.unpackEncodedStringToUnsignedChars(dfa_165s);
-    static final short[] dfa_166 = DFA.unpackEncodedString(dfa_166s);
-    static final short[][] dfa_167 = unpackEncodedStringArray(dfa_167s);
+    static final char[] dfa_166 = DFA.unpackEncodedStringToUnsignedChars(dfa_166s);
+    static final short[] dfa_167 = DFA.unpackEncodedString(dfa_167s);
+    static final short[][] dfa_168 = unpackEncodedStringArray(dfa_168s);
 
     class DFA313 extends DFA {
 
@@ -49182,23 +49181,23 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             this.recognizer = recognizer;
             this.decisionNumber = 313;
             this.eot = dfa_49;
-            this.eof = dfa_163;
-            this.min = dfa_164;
-            this.max = dfa_165;
-            this.accept = dfa_166;
+            this.eof = dfa_164;
+            this.min = dfa_165;
+            this.max = dfa_166;
+            this.accept = dfa_167;
             this.special = dfa_153;
-            this.transition = dfa_167;
+            this.transition = dfa_168;
         }
         public String getDescription() {
             return "13303:2: (this_StringPragma_0= ruleStringPragma | this_PragmaTag_1= rulePragmaTag )";
         }
     }
-    static final String dfa_168s = "\13\uffff";
-    static final String dfa_169s = "\1\12\1\uffff\4\4\1\7\2\uffff\2\4";
-    static final String dfa_170s = "\1\132\1\uffff\1\4\1\131\1\4\1\10\1\7\2\uffff\1\131\1\125";
-    static final String dfa_171s = "\1\uffff\1\1\5\uffff\1\3\1\2\2\uffff";
-    static final String dfa_172s = "\13\uffff}>";
-    static final String[] dfa_173s = {
+    static final String dfa_169s = "\13\uffff";
+    static final String dfa_170s = "\1\12\1\uffff\4\4\1\7\2\uffff\2\4";
+    static final String dfa_171s = "\1\132\1\uffff\1\4\1\131\1\4\1\10\1\7\2\uffff\1\131\1\125";
+    static final String dfa_172s = "\1\uffff\1\1\5\uffff\1\3\1\2\2\uffff";
+    static final String dfa_173s = "\13\uffff}>";
+    static final String[] dfa_174s = {
             "\1\1\117\uffff\1\2",
             "",
             "\1\3",
@@ -49212,37 +49211,37 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             "\2\10\1\uffff\3\10\101\uffff\1\7\11\uffff\1\10"
     };
 
-    static final short[] dfa_168 = DFA.unpackEncodedString(dfa_168s);
-    static final char[] dfa_169 = DFA.unpackEncodedStringToUnsignedChars(dfa_169s);
+    static final short[] dfa_169 = DFA.unpackEncodedString(dfa_169s);
     static final char[] dfa_170 = DFA.unpackEncodedStringToUnsignedChars(dfa_170s);
-    static final short[] dfa_171 = DFA.unpackEncodedString(dfa_171s);
+    static final char[] dfa_171 = DFA.unpackEncodedStringToUnsignedChars(dfa_171s);
     static final short[] dfa_172 = DFA.unpackEncodedString(dfa_172s);
-    static final short[][] dfa_173 = unpackEncodedStringArray(dfa_173s);
+    static final short[] dfa_173 = DFA.unpackEncodedString(dfa_173s);
+    static final short[][] dfa_174 = unpackEncodedStringArray(dfa_174s);
 
     class DFA314 extends DFA {
 
         public DFA314(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 314;
-            this.eot = dfa_168;
-            this.eof = dfa_168;
-            this.min = dfa_169;
-            this.max = dfa_170;
-            this.accept = dfa_171;
-            this.special = dfa_172;
-            this.transition = dfa_173;
+            this.eot = dfa_169;
+            this.eof = dfa_169;
+            this.min = dfa_170;
+            this.max = dfa_171;
+            this.accept = dfa_172;
+            this.special = dfa_173;
+            this.transition = dfa_174;
         }
         public String getDescription() {
             return "13345:2: (this_CommentAnnotation_0= ruleCommentAnnotation | this_KeyStringValueAnnotation_1= ruleKeyStringValueAnnotation | this_TypedKeyStringValueAnnotation_2= ruleTypedKeyStringValueAnnotation )";
         }
     }
-    static final String dfa_174s = "\14\uffff";
-    static final String dfa_175s = "\3\uffff\1\10\6\uffff\2\10";
-    static final String dfa_176s = "\1\12\1\uffff\4\4\1\7\3\uffff\2\4";
-    static final String dfa_177s = "\1\132\1\uffff\1\4\1\132\2\4\1\7\3\uffff\2\132";
-    static final String dfa_178s = "\1\uffff\1\1\5\uffff\1\2\1\4\1\3\2\uffff";
-    static final String dfa_179s = "\14\uffff}>";
-    static final String[] dfa_180s = {
+    static final String dfa_175s = "\14\uffff";
+    static final String dfa_176s = "\3\uffff\1\10\6\uffff\2\10";
+    static final String dfa_177s = "\1\12\1\uffff\4\4\1\7\3\uffff\2\4";
+    static final String dfa_178s = "\1\132\1\uffff\1\4\1\132\2\4\1\7\3\uffff\2\132";
+    static final String dfa_179s = "\1\uffff\1\1\5\uffff\1\2\1\4\1\3\2\uffff";
+    static final String dfa_180s = "\14\uffff}>";
+    static final String[] dfa_181s = {
             "\1\1\117\uffff\1\2",
             "",
             "\1\3",
@@ -49257,26 +49256,26 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             "\1\10\1\7\4\uffff\1\10\100\uffff\1\11\16\uffff\1\10"
     };
 
-    static final short[] dfa_174 = DFA.unpackEncodedString(dfa_174s);
     static final short[] dfa_175 = DFA.unpackEncodedString(dfa_175s);
-    static final char[] dfa_176 = DFA.unpackEncodedStringToUnsignedChars(dfa_176s);
+    static final short[] dfa_176 = DFA.unpackEncodedString(dfa_176s);
     static final char[] dfa_177 = DFA.unpackEncodedStringToUnsignedChars(dfa_177s);
-    static final short[] dfa_178 = DFA.unpackEncodedString(dfa_178s);
+    static final char[] dfa_178 = DFA.unpackEncodedStringToUnsignedChars(dfa_178s);
     static final short[] dfa_179 = DFA.unpackEncodedString(dfa_179s);
-    static final short[][] dfa_180 = unpackEncodedStringArray(dfa_180s);
+    static final short[] dfa_180 = DFA.unpackEncodedString(dfa_180s);
+    static final short[][] dfa_181 = unpackEncodedStringArray(dfa_181s);
 
     class DFA315 extends DFA {
 
         public DFA315(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 315;
-            this.eot = dfa_174;
-            this.eof = dfa_175;
-            this.min = dfa_176;
-            this.max = dfa_177;
-            this.accept = dfa_178;
-            this.special = dfa_179;
-            this.transition = dfa_180;
+            this.eot = dfa_175;
+            this.eof = dfa_176;
+            this.min = dfa_177;
+            this.max = dfa_178;
+            this.accept = dfa_179;
+            this.special = dfa_180;
+            this.transition = dfa_181;
         }
         public String getDescription() {
             return "13399:2: (this_CommentAnnotation_0= ruleCommentAnnotation | this_QuotedKeyStringValueAnnotation_1= ruleQuotedKeyStringValueAnnotation | this_QuotedTypedKeyStringValueAnnotation_2= ruleQuotedTypedKeyStringValueAnnotation | this_TagAnnotation_3= ruleTagAnnotation )";

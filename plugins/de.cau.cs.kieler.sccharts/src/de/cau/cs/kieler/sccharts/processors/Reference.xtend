@@ -179,7 +179,7 @@ class Reference extends SCChartsProcessor implements Traceable {
         
         // Handle references
         if (environment.getProperty(EXPAND_REFERENCED_STATES)) {
-            val statesWithReferences = rootState.allContainedStates.filter[isReferencing].toList
+            val statesWithReferences = rootState.allContainedStates.filter[isReferencing && isModuleExpansionReference].toList
             val regionsWithReferences = rootState.allContainedRegions.filter[isReferencing].toList
             
             for (state : statesWithReferences) {
@@ -197,7 +197,7 @@ class Reference extends SCChartsProcessor implements Traceable {
             rootState.handleSCChartsDatatype(replacements)
             
             if (environment.getProperty(EXPAND_REFERENCED_STATES)) {
-                val statesWithReferences2 = rootState.getAllContainedStates.filter[isReferencing].toList
+                val statesWithReferences2 = rootState.getAllContainedStates.filter[isReferencing && isModuleExpansionReference].toList
                 val regionsWithReferences2 = rootState.allContainedRegions.filter[isReferencing].toList
                 for (state : statesWithReferences2) {
                     state.expandReferencedScope(new Replacements(replacements))
@@ -320,7 +320,7 @@ class Reference extends SCChartsProcessor implements Traceable {
             val processState = if (newScope instanceof Region) newScope.eContainer as State else newScope as State
             // Optimize this.
             dataflowProcessor.processState(processState)
-            val statesWithReferences = processState.getAllContainedStates.filter[isReferencing].toList
+            val statesWithReferences = processState.getAllContainedStates.filter[isReferencing && isModuleExpansionReference].toList
             for (state : statesWithReferences) {
                 state.expandReferencedScope(new Replacements)
             }
