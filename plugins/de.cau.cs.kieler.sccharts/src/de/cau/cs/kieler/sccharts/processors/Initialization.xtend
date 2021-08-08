@@ -121,10 +121,10 @@ class Initialization extends SCChartsProcessor implements Traceable {
         while (!decls.empty) {
             val decl = decls.pop
             if (decl instanceof ClassDeclaration) {
-                if (!decl.isEnum) {
+                if (!decl.isEnum && !decl.host) {
                     decls += decl.declarations.filter(VariableDeclaration)
                 }
-            } else {
+            } else if (!decl.input) { // only initialize outputs and local variables
                 for (vo : decl.valuedObjects) {
                     if (vo.initialValue === null && (!vo.name.startsWith(GENERATED_PREFIX) || getProperty(EXPLICIT_IMPLICIT_INIT_GENERATED))) {
                         val init = decl.type.initialValue
@@ -193,7 +193,7 @@ class Initialization extends SCChartsProcessor implements Traceable {
         // Find VO that need to be initialized
         for (decl : scope.declarations) {
             if (decl instanceof ClassDeclaration) {
-                if (decl.host) {    
+                if (decl.host) {
                     val vos = decl.valuedObjects.filter[initialValue instanceof TextExpression]
                     if (!vos.empty) {
                         vos.forEach[
