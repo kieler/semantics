@@ -17,6 +17,7 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.core.properties.Property
+import de.cau.cs.kieler.kexpressions.AccessModifier
 import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.GenericTypeReference
@@ -843,6 +844,9 @@ class Reference extends SCChartsProcessor implements Traceable {
                     
                     // Remove the input/output declarations from the new class. They should be bound beforehand.
                     classDecl.declarations.removeIf[ if (it instanceof VariableDeclaration) { input || output } else false ]
+                    // All declarations will be public to enable access by regions that are moved outside the class
+                    classDecl.declarations.forEach[ access = AccessModifier.PUBLIC ]
+                    // Clear parameters
                     classDecl.valuedObjects.forEach[ parameters.clear; genericParameters.clear ]
                     
                     val classVOs = classDecl.innerValuedObjects.toSet
