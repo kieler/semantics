@@ -117,6 +117,10 @@ import org.eclipse.emf.common.util.EList
 
 import static de.cau.cs.kieler.c.sccharts.processors.CDTToStringConverter.*
 import com.sun.jdi.InvocationException
+import org.eclipse.cdt.internal.core.dom.parser.c.CASTDesignatedInitializer
+import org.eclipse.cdt.core.dom.ast.c.ICASTDesignatedInitializer
+import org.eclipse.cdt.core.dom.ast.c.ICASTFieldDesignator
+import org.eclipse.cdt.core.dom.ast.c.ICASTArrayDesignator
 
 /**
  * A Processor analyzing the data flow of functions within a single file of a C project and visualizing it as actor-
@@ -2741,7 +2745,6 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
 
         // Create the declaration with the cdt type
         val variableDeclaration = createVariableDeclaration
-        var List<Pair<String, IASTSimpleDeclaration>> fields = newArrayList()
 
         switch (declaration.getDeclSpecifier) {
             IASTNamedTypeSpecifier: {
@@ -2806,7 +2809,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 // Structs shall be visualized and handled as arrays 
                 // -> something is handled as array when cardinalities is set
                 // We explicitly create arrays for structs, because arrays are passable in sccharts - structs are not
-                vo.cardinalities += createIntValue(fields.size)
+                vo.cardinalities += createIntValue(0)
                 vo.addTagAnnotation("struct")
             }
 
@@ -2828,12 +2831,28 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
     def void initializeValuedObject(ValuedObject vo, IASTInitializer initializer, State state, DataflowRegion dRegion) {
         if (initializer instanceof IASTEqualsInitializer) {
             var Expression initExpr
+            var isStruct = false
+            
             if (initializer.children.head instanceof IASTFunctionCallExpression) {
                 val expression = initializer.children.head as IASTFunctionCallExpression
                 initExpr = createFunctionCall(expression, state, dRegion)
             } else {
                 // Simply translate the expression
-                initExpr = createKExpression(initializer.children.head, state, dRegion)
+                val initHead = initializer.children.head 
+                
+                if(initHead instanceof IASTInitializerList){
+                    if(initHead.getSize > 0 && initHead.clauses.get(0) instanceof ICASTDesignatedInitializer){
+                        // Case for designated init for structs
+                        processDesignatedInitializers(initHead, vo, state, dRegion, newArrayList())
+                        isStruct = true
+                        
+                    }else{
+                        initExpr = createKExpression(initializer.children.head, state, dRegion)
+                    }
+                }else{
+                    initExpr = createKExpression(initializer.children.head, state, dRegion)
+                }
+            
             }
 
             var statePointers = getStateVarPointers(state)
@@ -2843,7 +2862,73 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 val ref = (initExpr as OperatorExpression).subExpressions.get(0) as ValuedObjectReference
                 statePointers.put(vo.name.split(ssaNameSeperator).get(0), ref.valuedObject)
             }
-            addEquation(dRegion, vo, initExpr)
+            
+            if (!isStruct) {
+                addEquation(dRegion, vo, initExpr)
+            }
+        }
+    }
+    /**
+     * Processes the designated initializers of a struct (e.g struct Point p1 = {.y = 0, .z = 1, .x = 2}) 
+     *  and adds the resulting equations to a dataflow region.
+     * 
+     * @param initializers The IntializerList containing the DesignatedInitializers
+     * @param vo the ValuedObject that is meant to be initialized
+     * @param state the state of the dataflow region
+     * @param dRegion the dataflow region to which the assignments of the initialization are added
+     * @param alreadyPassedIndices shared indices for recursive calls of processDesignatedInitializers 
+     *            - should be an empty list for the first call
+     */
+    def void processDesignatedInitializers(IASTInitializerList initializers, ValuedObject vo, State state,
+        DataflowRegion dRegion, List<Expression> alreadyPassedIndices) {
+
+        for (clause : initializers.clauses) {
+            var el = clause as ICASTDesignatedInitializer
+
+            val List<Expression> indices = newArrayList()
+            val fieldDesignators = el.designators
+            var isArrayField = false
+            
+            for (designator : fieldDesignators) {
+                // There are more than one designator for nested field accesses and fields that are structs
+                // Just add them behind each other to the indices list -> both cases are visualized as n-d arrays
+                switch (designator) {
+                    ICASTFieldDesignator: {
+                        indices += createStringValue(designator.name.toString)
+                    }
+                    ICASTArrayDesignator: {
+                        indices += designator.subscriptExpression.createKExpression(state, dRegion)
+                        isArrayField = true
+                    }
+                }
+
+            }
+
+            val operand = el.getOperand()
+            var Expression initVal
+            if (!(operand instanceof IASTInitializerList) || isArrayField) {
+                initVal = createKExpression(operand, state, dRegion)
+                val assignment = createDataflowAssignment(vo, initVal)
+
+                // If the indices are not copied and are reused for a future assignment, they are deleted from the indices
+                // Ergo each assignment gets its own copies of shared indices..
+                val List<Expression> ownCopies = newArrayList()
+                for (e : alreadyPassedIndices) {
+                    ownCopies += e.copyEObjectAndReturnCopier.key
+                }
+                assignment.reference.indices += ownCopies
+
+                assignment.reference.indices += indices
+
+                dRegion.equations += assignment
+
+            } else {
+                
+                // Resurcive call if a field is again initialized via designated initialization
+                alreadyPassedIndices += indices
+                processDesignatedInitializers(operand as IASTInitializerList, vo, state, dRegion, alreadyPassedIndices)
+            }
+
         }
     }
 
@@ -4236,7 +4321,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             IASTExpressionStatement: {
                 kExpression = expr.getExpression.createKExpression(funcState, dRegion)
             }
-            IASTInitializerList: {
+            IASTInitializerList: {               
                 kExpression = createVectorValue => [
                     values += expr.clauses.map[it.createKExpression(funcState, dRegion)]
                 ]
@@ -4493,7 +4578,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
      *    @param dRegion dataflow region contained in {@code funcState}
      */
     def private Expression createIndexForFieldAccess(String fieldName, State funcState, DataflowRegion dRegion) {
-        // using this short function hides the usage of the ASTNodeFactoryFactory
+        // Using this short function hides the usage of the ASTNodeFactoryFactory.
         ASTNodeFactoryFactory.defaultCNodeFactory.newLiteralExpression(3, "\"" + fieldName + "\"").
             createKExpression(funcState, dRegion)
     }
