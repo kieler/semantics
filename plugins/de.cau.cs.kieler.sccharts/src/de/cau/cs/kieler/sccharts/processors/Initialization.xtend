@@ -195,11 +195,9 @@ class Initialization extends SCChartsProcessor implements Traceable {
             if (decl instanceof ClassDeclaration) {
                 if (decl.host) {
                     val vos = decl.valuedObjects.filter[initialValue instanceof TextExpression]
-                    if (!vos.empty) {
-                        vos.forEach[
-                            initVOs.put(it, null)
-                            it.addTagAnnotation("skipClassInit") // FIXME magic keyword affects code generation
-                        ]
+                    for (vo : vos) {
+                        initVOs.put(vo, null)
+                        vo.addTagAnnotation("skipClassInit") // FIXME magic keyword affects code generation
                     }
                 } else if (decl.isStruct) {
                     val allMembers = newArrayList
@@ -242,7 +240,7 @@ class Initialization extends SCChartsProcessor implements Traceable {
     private def createInitializations(ValuedObject vo, List<List<ValuedObject>> members) {
         val inits = <Effect>newArrayList
     	if (members === null) {
-    	    if (vo.declaration.isClass) {
+    	    if (vo.declaration.isClass && !(vo.declaration as ClassDeclaration).host) {
     	        val classDecl = vo.declaration as ClassDeclaration
     	        val init = classDecl.getOrCreateInitMethod
     	        if (vo.cardinalities.empty) {
