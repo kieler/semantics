@@ -893,7 +893,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 val parentDeclarations = dRegion.declarations.filter(VariableDeclaration)
                 val varName_ = varName
                 val inputVO = parentDeclarations.map[it.valuedObjects].flatten.findFirst [
-                    it.name.substring(0, it.name.indexOf(ssaNameSeperator)).equals(varName_)
+                    it.name.substring(0, it.name.lastIndexOf(ssaNameSeperator)).equals(varName_)
                 ]
                 if (inputVO === null || inputVO.cardinalities.empty) {
                     needsOutput = false
@@ -908,7 +908,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 val parentDeclarations = dRegion.declarations.filter(VariableDeclaration) +
                     parentState.declarations.filter(VariableDeclaration)
                 val inputVO = parentDeclarations.map[it.valuedObjects].flatten.findFirst [
-                    it.name.substring(0, it.name.indexOf(ssaNameSeperator)).equals(varName_)
+                    it.name.substring(0, it.name.lastIndexOf(ssaNameSeperator)).equals(varName_)
                 ]
                 getStatePointers(state).put(arg as IASTUnaryExpression, inputVO)
                 needsOutput = true
@@ -1766,7 +1766,8 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         if (!(swBody.children.last instanceof IASTBreakStatement)) {
             assignOutputs(swState, swObj, rootState, dRegion)
         }
-        linkReturn(activeCase, rootState, activeDRegion, dRegion, swObj)
+        // TODO: activeCase is always null, this cant work this way
+//        linkReturn(activeCase, rootState, activeDRegion, dRegion, swObj)
         assignOutputs(swState, swObj, rootState, dRegion)
     }
 
@@ -2069,8 +2070,8 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
      */
     private def ValuedObject findCondOutputVo(DataflowRegion condRegion, State condState, ValuedObject condObj,
         DataflowRegion parentRegion) {
-
-        val condOutput = condRegion.equations.get(0).reference.valuedObject
+        val condOutput = condState.declarations.filter(VariableDeclaration).filter[it.isOutput].map[it.valuedObjects].
+            flatten.head
         var ValuedObject condOutputVo
         if (condOutput !== null) {
             // Assign the cond output to a new variable in the while region
@@ -2165,12 +2166,8 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
      * @param multOutputs Outputs of the multiplexer
      * 
      */
-    private def createMultiplexer(
-        DataflowRegion parentRegion,
-        ValuedObject condOutputVo,
-        ArrayList<ValuedObject> multInputs,
-        ArrayList<ValuedObject> multOutputs
-    ) {
+    private def createMultiplexer(DataflowRegion parentRegion, ValuedObject condOutputVo,
+        ArrayList<ValuedObject> multInputs, ArrayList<ValuedObject> multOutputs) {
         // Create the multiplexer state and according reference into the while dataflow region.
         val multState = createState(multiplexerName + ssaNameSeperator + multiplexerCounter)
         multState.addStringAnnotation("figure", "BigMult.kgt")
@@ -2248,7 +2245,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             val innerInputVO = createVar(inputVO, newState, stateVariables, inSuffix, "")
 
             // Create the assignment
-            if (refObj === null) {
+            if (refObj === null && inputVO !== null) {
                 val eq = createDataflowAssignment(innerInputVO, inputVO.reference)
                 if (cond) {
                     eq.addStringAnnotation("toPort", "in1")
@@ -2915,20 +2912,21 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             var Expression initVal
             if (!(operand instanceof IASTInitializerList) || isArrayField) {
                 initVal = createKExpression(operand, state, dRegion)
-                val assignment = createDataflowAssignment(vo, initVal)
+                if (isCorrectExpr(initVal)) {
+                    val assignment = createDataflowAssignment(vo, initVal)
 
-                // If the indices are not copied and are reused for a future assignment, they are deleted from the indices
-                // Ergo each assignment gets its own copies of shared indices..
-                val List<Expression> ownCopies = newArrayList()
-                for (e : alreadyPassedIndices) {
-                    ownCopies += e.copyEObjectAndReturnCopier.key
+                    // If the indices are not copied and are reused for a future assignment, they are deleted from the indices
+                    // Ergo each assignment gets its own copies of shared indices..
+                    val List<Expression> ownCopies = newArrayList()
+                    for (e : alreadyPassedIndices) {
+                        ownCopies += e.copyEObjectAndReturnCopier.key
+                    }
+                    assignment.reference.indices += ownCopies
+
+                    assignment.reference.indices += indices
+
+                    dRegion.equations += assignment
                 }
-                assignment.reference.indices += ownCopies
-
-                assignment.reference.indices += indices
-
-                dRegion.equations += assignment
-
             } else {
                 
                 // Resurcive call if a field is again initialized via designated initialization
@@ -2971,55 +2969,59 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 label = vo.label !== null ? vo.label : vo.name.split(ssaNameSeperator).get(0)
             }
             val outputVO = rootState.findValuedObjectByName(label, addAssignments, dRegion)
-            if (!serializable) {
-                outputVO.insertHighlightAnnotations(stmt)
-            }
-            val outputRootDecl = outputVO.getVariableDeclaration
-            val outputType = outputRootDecl.getType
-
-            // Create a declaration and valued object for the output 
-            val decl = createVariableDeclaration
-            newState.declarations += decl
-            decl.type = outputType
-            decl.output = true
-
-            // Structs use host types for a correct type label
-            if (outputType === ValueType.HOST) {
-                decl.hostType = outputRootDecl.hostType
-            }
-
-            val innerOutputVO = decl.createValuedObject(output + outSuffix)
-            innerOutputVO.label = output
-            if (!serializable) {
-                innerOutputVO.insertHighlightAnnotations(stmt)
-            }
-
-            // structs that are handled as arrays and arrays have a cardinality (in fact this makes them to arrays)
-            if (outputVO.cardinalities !== null) {
-                innerOutputVO.cardinalities.addAll(outputVO.cardinalities)
-            }
-
-            // Add the new create valued object to the ssa list and valued object list
-            if (stateVariables.containsKey(output)) {
-                var varList = stateVariables.get(output)
-                varList.add(innerOutputVO)
-            } else {
-                var varList = <ValuedObject>newArrayList
-                varList.add(innerOutputVO)
-                stateVariables.put(output, varList)
-            }
-
-            if (addAssignments) {
-                // Create the assignment
-                val target = outputVO
-                if (refObj === null) {
-                    addEquation(dRegion, target, innerOutputVO.reference)
-                } else {
-                    val source = refObj.reference => [
-                        subReference = innerOutputVO.reference
-                    ]
-                    addEquation(dRegion, target, source)
+            if (outputVO !== null) {
+                if (!serializable) {
+                    outputVO.insertHighlightAnnotations(stmt)
                 }
+                val outputRootDecl = outputVO.getVariableDeclaration
+                val outputType = outputRootDecl.getType
+
+                // Create a declaration and valued object for the output 
+                val decl = createVariableDeclaration
+                newState.declarations += decl
+                decl.type = outputType
+                decl.output = true
+
+                // Structs use host types for a correct type label
+                if (outputType === ValueType.HOST) {
+                    decl.hostType = outputRootDecl.hostType
+                }
+
+                val innerOutputVO = decl.createValuedObject(output + outSuffix)
+                innerOutputVO.label = output
+                if (!serializable) {
+                    innerOutputVO.insertHighlightAnnotations(stmt)
+                }
+
+                // structs that are handled as arrays and arrays have a cardinality (in fact this makes them to arrays)
+                if (outputVO.cardinalities !== null) {
+                    innerOutputVO.cardinalities.addAll(outputVO.cardinalities)
+                }
+
+                // Add the new create valued object to the ssa list and valued object list
+                if (stateVariables.containsKey(output)) {
+                    var varList = stateVariables.get(output)
+                    varList.add(innerOutputVO)
+                } else {
+                    var varList = <ValuedObject>newArrayList
+                    varList.add(innerOutputVO)
+                    stateVariables.put(output, varList)
+                }
+
+                if (addAssignments) {
+                    // Create the assignment
+                    val target = outputVO
+                    if (refObj === null) {
+                        addEquation(dRegion, target, innerOutputVO.reference)
+                    } else {
+                        val source = refObj.reference => [
+                            subReference = innerOutputVO.reference
+                        ]
+                        addEquation(dRegion, target, source)
+                    }
+                }
+            } else {
+                println("output could not be resolved: " + output + ". In the new state: " + newState.name)
             }
         }
 
@@ -3208,10 +3210,26 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                                                 outputs += findOutputs(argument.operand, parentState, pointer, true)
                                             }
                                         }
+                                        //TODO: argument could be of the form "&struct -> field" (IASTFieldReference)
                                     }
                                 }
                             }
                             index++;
+                        }
+                    } else {
+                        // function is unkown, so we assume that arguments of the form "&expr" get changed in the function
+                        val arguments = (stmt as IASTFunctionCallExpression).arguments
+                        for (argument : arguments) {
+                            if (argument instanceof IASTUnaryExpression &&
+                                (argument as IASTUnaryExpression).operator === IASTUnaryExpression.op_amper) {
+                                // argument is of the form "&expr"
+                                if ((argument as IASTUnaryExpression).operand instanceof IASTIdExpression) {
+                                outputs += ((argument as IASTUnaryExpression).operand as IASTIdExpression).name.toString
+                                } else {
+                                    //TODO: argument is of the form "&struct -> field"
+                                    println("arguments of the type \"&struct->field\" are not supported yet")
+                                }
+                            }
                         }
                     }
 
@@ -3268,48 +3286,52 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         for (input : inputs) {
             // Retrieve the respective valued object of the containing state 
             var inputVO = rootState.findValuedObjectByName(input, false, dRegion)
-            val inputRootDecl = inputVO.getVariableDeclaration
-            val inputType = inputRootDecl.getType
+            if (inputVO !== null) {
+                val inputRootDecl = inputVO.getVariableDeclaration
+                val inputType = inputRootDecl.getType
 
-            // Create the input for the control statement state
-            val decl = createVariableDeclaration
-            newState.declarations += decl
-            decl.type = inputType
+                // Create the input for the control statement state
+                val decl = createVariableDeclaration
+                newState.declarations += decl
+                decl.type = inputType
 
-            // Structs use host types for a correct type label
-            if (inputType === ValueType.HOST) {
-                decl.hostType = inputRootDecl.hostType
-            }
-            decl.input = true
-            val innerInputVO = decl.createValuedObject(input + inSuffix)
-            innerInputVO.label = input
-
-            // structs that are handled as arrays and arrays have a cardinality (in fact this makes them to arrays)
-            if (inputVO.cardinalities !== null) {
-                innerInputVO.cardinalities.addAll(inputVO.cardinalities)
-            }
-
-            if (!serializable) {
-                innerInputVO.insertHighlightAnnotations(stmt)
-            }
-
-            // Add the new create valued object to the ssa list and valued object list
-            if (stateVariables.containsKey(input)) {
-                var varList = stateVariables.get(input)
-                varList.add(innerInputVO)
-            } else {
-                var varList = <ValuedObject>newArrayList
-                varList.add(innerInputVO)
-                stateVariables.put(input, varList)
-            }
-
-            if (addAssigments) {
-                // Create the assignment
-                if (refObj === null) {
-                    addEquation(dRegion, innerInputVO, inputVO.reference)
-                } else {
-                    addEquation(dRegion,refObj, innerInputVO, inputVO.reference)
+                // Structs use host types for a correct type label
+                if (inputType === ValueType.HOST) {
+                    decl.hostType = inputRootDecl.hostType
                 }
+                decl.input = true
+                val innerInputVO = decl.createValuedObject(input + inSuffix)
+                innerInputVO.label = input
+
+                // structs that are handled as arrays and arrays have a cardinality (in fact this makes them to arrays)
+                if (inputVO.cardinalities !== null) {
+                    innerInputVO.cardinalities.addAll(inputVO.cardinalities)
+                }
+
+                if (!serializable) {
+                    innerInputVO.insertHighlightAnnotations(stmt)
+                }
+
+                // Add the new create valued object to the ssa list and valued object list
+                if (stateVariables.containsKey(input)) {
+                    var varList = stateVariables.get(input)
+                    varList.add(innerInputVO)
+                } else {
+                    var varList = <ValuedObject>newArrayList
+                    varList.add(innerInputVO)
+                    stateVariables.put(input, varList)
+                }
+
+                if (addAssigments) {
+                    // Create the assignment
+                    if (refObj === null) {
+                        addEquation(dRegion, innerInputVO, inputVO.reference)
+                    } else {
+                        addEquation(dRegion, refObj, innerInputVO, inputVO.reference)
+                    }
+                }
+            } else {
+                println("input could not be resolved: " + input + ". In the new state: " + newState.name)
             }
         }
     }
@@ -3854,16 +3876,20 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             if (!serializable) {
                 targetAndIndex.target.insertHighlightAnnotations(binExpr)
             }
-            ass = createDataflowAssignment(targetAndIndex.target, source)
-            if (targetAndIndex.index !== null) {
-                if (targetAndIndex.indices !== null) {
-                    ass.reference.indices.addAll(targetAndIndex.indices)
-                } else {
-                    ass.reference.indices += targetAndIndex.index
+            if (isCorrectExpr(source)) {
+                ass = createDataflowAssignment(targetAndIndex.target, source)
+                if (targetAndIndex.index !== null) {
+                    if (targetAndIndex.indices !== null) {
+                        ass.reference.indices.addAll(targetAndIndex.indices)
+                    } else {
+                        ass.reference.indices += targetAndIndex.index
+                    }
                 }
             }
         }
-        assignments.add(ass)
+        if (ass !== null) {
+            assignments.add(ass)
+        }
         return assignments
     }
 
@@ -4082,11 +4108,13 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             if (!serializable) {
                 targetAndIndex.target.insertHighlightAnnotations(expression)
             }
-            val Assignment ass = createDataflowAssignment(targetAndIndex.target, source)
-            if (targetAndIndex.index !== null) {
-                ass.reference.indices += targetAndIndex.index
+            if (isCorrectExpr(source)) {
+                val Assignment ass = createDataflowAssignment(targetAndIndex.target, source)
+                if (targetAndIndex.index !== null) {
+                    ass.reference.indices += targetAndIndex.index
+                }
+                dRegion.equations += ass
             }
-            dRegion.equations += ass
             return
         }
 
@@ -4185,16 +4213,18 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 // Search for the VO in the surrounding state that was given as the argument
                 val variableVOName = (argExpr as ValuedObjectReference).valuedObject.name
                 val outputToVO = findValuedObjectByName(state,
-                    variableVOName.substring(0, variableVOName.indexOf(ssaNameSeperator)), true, dRegion)
-
-                val assignment = SCChartsFactory.eINSTANCE.createDataflowAssignment => [
-                    it.reference = outputToVO.reference
-                    it.expression = refObj.reference => [
-                        it.subReference = outputVO.reference
+                    variableVOName.substring(0, variableVOName.lastIndexOf(ssaNameSeperator)), true, dRegion)
+                
+                if (refObj !== null) {
+                    val assignment = SCChartsFactory.eINSTANCE.createDataflowAssignment => [
+                        it.reference = outputToVO.reference
+                        it.expression = refObj.reference => [
+                            it.subReference = outputVO.reference
+                        ]
                     ]
-                ]
-                // TODO: this should only be executed if the code underneath is not
-                dRegion.equations += assignment
+                    // TODO: this should only be executed if the code underneath is not
+                    dRegion.equations += assignment
+                }
             }
             // If the argument is some pointer, the output of the function has to be assigned to
             // the variable that pointer points to
@@ -4206,23 +4236,29 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                     : null
 
             if (indirectPointer) {
-                val name = ((argument as IASTUnaryExpression).operand as IASTIdExpression).name.toString
-                argumentPointer = findValuedObjectByName(state, name, true, dRegion)
+                if ((argument as IASTUnaryExpression).operand instanceof IASTIdExpression) {
+                    val name = ((argument as IASTUnaryExpression).operand as IASTIdExpression).name.toString
+                    argumentPointer = findValuedObjectByName(state, name, true, dRegion)
+                } else {
+                    // TODO: argument is of the form "&struct -> field" 
+                }
             }
 
             if (argumentPointer !== null && outputVO !== null) {
                 val variableVOName = argumentPointer.name
                 val outputToVO = findValuedObjectByName(state,
-                    variableVOName.substring(0, variableVOName.indexOf(ssaNameSeperator)), true, dRegion)
-
-                val assignment = SCChartsFactory.eINSTANCE.createDataflowAssignment => [
-                    it.reference = outputToVO.reference
-                    it.expression = refObj.reference => [
-                        it.subReference = outputVO.reference
+                    variableVOName.substring(0, variableVOName.lastIndexOf(ssaNameSeperator)), true, dRegion)
+                
+                if (refObj !== null && outputVO !== null) {
+                    val assignment = SCChartsFactory.eINSTANCE.createDataflowAssignment => [
+                        it.reference = outputToVO.reference
+                        it.expression = refObj.reference => [
+                            it.subReference = outputVO.reference
+                        ]
                     ]
-                ]
 
-                dRegion.equations += assignment
+                    dRegion.equations += assignment
+                }
             }
             index++
         }
@@ -4251,18 +4287,26 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 // Lookup the array that represents the struct owning the field
                 val List<Expression> indexExpressions = newArrayList()
                 val owner = getFieldIdentifier(expr, indexExpressions, funcState, dRegion)
-                var opValObj = funcState.findValuedObjectByName((owner as IASTIdExpression).name.toString, 
-                    false, dRegion)
+                if (owner instanceof IASTIdExpression) {
+                    var opValObj = funcState.findValuedObjectByName((owner as IASTIdExpression).name.toString,
+                        false, dRegion)
 
-                // if expr is of the form "pointer -> field", get the struct the pointer points to
-                val label = opValObj.label !== null ? opValObj.label : opValObj.name.split(ssaNameSeperator).get(0)
-                if (getStateVarPointers(funcState).containsKey(label)) {
-                    opValObj = getStateVarPointers(funcState).get(label)
+                    if (opValObj !== null) {
+                        // if expr is of the form "pointer -> field", get the struct the pointer points to
+                        val label = opValObj.label !== null ? opValObj.label : opValObj.name.split(ssaNameSeperator).
+                                get(0)
+                        if (getStateVarPointers(funcState).containsKey(label)) {
+                            opValObj = getStateVarPointers(funcState).get(label)
+                        }
+
+                        // Use the fieldname as a pseudo index so that it appears as label in the diagram
+                        kExpression = opValObj.reference;
+                        (kExpression as ValuedObjectReference).indices += indexExpressions.reverse
+                    }
+                } else {
+                    // TODO: case that owner is a IASTArraySubscriptExpression
+                    println("FieldReference which owner is also a FieldReference is not supported yet")
                 }
-
-                // Use the fieldname as a pseudo index so that it appears as label in the diagram
-                kExpression = opValObj.reference;
-                (kExpression as ValuedObjectReference).indices += indexExpressions.reverse
             }
             // For an array, just use the array expression (and leave out the subscript for now).
             IASTArraySubscriptExpression: {
@@ -4369,7 +4413,10 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             expression = opType.createOperatorExpression
             // Translate the operands and attach them    
             for (operand : binExpr.children) {
-                (expression as OperatorExpression).subExpressions += operand.createKExpression(funcState, dRegion)
+                val expr = operand.createKExpression(funcState, dRegion)
+                if (expr !== null) {
+                    (expression as OperatorExpression).subExpressions += expr
+                }
             }
         }
 
@@ -4562,19 +4609,35 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
     }
     
     def private addEquation(DataflowRegion dRegion, ValuedObject vo, Expression expr) {
-        if (vo !== null && expr !== null) {
-            dRegion.equations += createDataflowAssignment(vo, expr)
+        if (vo !== null && isCorrectExpr(expr)) {
+           dRegion.equations += createDataflowAssignment(vo, expr)
         } else {
-            println("equation translation failed for expression: " + expr)
+            println("equation translation failed for expression: " + expr + ". In the DataflowRegion: " +
+                dRegion.name)
         }
     }
     
     def private addEquation(DataflowRegion dRegion, ValuedObject refVo, ValuedObject vo, Expression expr) {
-        if (vo !== null && expr !== null && refVo !== null) {
-            dRegion.equations += createDataflowAssignment(refVo, vo, expr)
+        if (vo !== null && refVo !== null && isCorrectExpr(expr)) {
+           dRegion.equations += createDataflowAssignment(refVo, vo, expr)
         } else {
-            println("equation translation failed for expression: " + expr)
+            println("equation translation failed for expression: " + expr + ". In the DataflowRegion: " +
+                dRegion.name)
         }
+    }
+    
+    def private boolean isCorrectExpr(Expression expr) {
+        if (expr === null ||
+            (expr instanceof ValuedObjectReference && (expr as ValuedObjectReference).valuedObject === null)) {
+            return false
+        } else if (expr instanceof OperatorExpression) {
+            for (subExpr : (expr as OperatorExpression).subExpressions) {
+                if (!isCorrectExpr(subExpr)) {
+                    return false
+                }
+            }
+        }
+        return true
     }
     
     /**
