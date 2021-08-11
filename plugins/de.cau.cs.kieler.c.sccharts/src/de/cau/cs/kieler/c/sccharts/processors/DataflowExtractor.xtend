@@ -1028,8 +1028,15 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         val thenStmts = (outerIf.thenClause as IASTCompoundStatement).statements.toList
 
         var List<IASTStatement> elseStmts
-        if (outerIf.elseClause !== null) {
-            elseStmts = (outerIf.elseClause as IASTCompoundStatement).statements.toList
+        var curIf = outerIf
+
+        while (curIf.elseClause !== null && curIf.elseClause instanceof IASTIfStatement) {
+            // the elseClause is of the form "else if"
+            elseStmts = ((curIf.elseClause as IASTIfStatement).thenClause as IASTCompoundStatement).statements.toList
+            curIf = curIf.elseClause as IASTIfStatement
+        }
+        if (curIf.elseClause !== null) {
+            elseStmts = (curIf.elseClause as IASTCompoundStatement).statements.toList
         }
 
         val List<IASTStatement> allStmts = newArrayList
