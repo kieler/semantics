@@ -4141,6 +4141,12 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
      */
     def ValuedObjectReference createFunctionCall(IASTFunctionCallExpression expression, State state,
         DataflowRegion dRegion) {
+        if (expression.getFunctionNameExpression instanceof IASTUnaryExpression &&
+            (expression.getFunctionNameExpression as IASTUnaryExpression).operator ===
+                IASTUnaryExpression.op_bracketedPrimary) {
+            // this is not a function call, it is a cast with an unknown type
+            return null
+        }
         val refState = findFunctionState(expression, state, dRegion)
         // Find an existing reference to this state the reference
         var ReferenceDeclaration refDecl = dRegion.declarations.filter(ReferenceDeclaration).findFirst [
