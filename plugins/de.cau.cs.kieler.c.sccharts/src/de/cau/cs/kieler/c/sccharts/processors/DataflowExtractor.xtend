@@ -2215,17 +2215,22 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         // Retrieve the state's valued object map
         val Map<String, List<ValuedObject>> stateVariables = getStateVariables(newState)
         for (outputVO : outputs) {
-            // create output vo
-            val innerOutputVO = createVar(outputVO, newState, stateVariables, outSuffix, "")
-            // Create the assignment
-            val target = outputVO
-            if (refObj === null) {
-                addEquation(dRegion, target, innerOutputVO.reference)
+            if (outputVO !== null) {
+                // create output vo
+                val innerOutputVO = createVar(outputVO, newState, stateVariables, outSuffix, "")
+                // Create the assignment
+                val target = outputVO
+                if (refObj === null) {
+                    addEquation(dRegion, target, innerOutputVO.reference)
+                } else {
+                    val source = refObj.reference => [
+                        subReference = innerOutputVO.reference
+                    ]
+                    addEquation(dRegion, target, source)
+                }
             } else {
-                val source = refObj.reference => [
-                    subReference = innerOutputVO.reference
-                ]
-                addEquation(dRegion, target, source)
+                // Something went wrong before this method
+                println("output is null for multiplexer: " + newState.name)
             }
         }
     }
@@ -2245,31 +2250,31 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         val Map<String, List<ValuedObject>> stateVariables = getStateVariables(newState)
         for (inputVO : inputs) {
             if (inputVO !== null) {
-            // label should not be null
-            val label = inputVO.label !== null ? inputVO.label : inputVO.name.split(ssaNameSeperator).get(0)
-            inputVO.label = label
+                // label should not be null
+                val label = inputVO.label !== null ? inputVO.label : inputVO.name.split(ssaNameSeperator).get(0)
+                inputVO.label = label
 
-            // create input vo
-            val innerInputVO = createVar(inputVO, newState, stateVariables, inSuffix, "")
+                // create input vo
+                val innerInputVO = createVar(inputVO, newState, stateVariables, inSuffix, "")
 
-            // Create the assignment
-            if (innerInputVO !== null) {
-                if (refObj === null) {
-                    val eq = createDataflowAssignment(innerInputVO, inputVO.reference)
-                    if (cond) {
-                        eq.addStringAnnotation("toPort", "in1")
+                // Create the assignment
+                if (innerInputVO !== null) {
+                    if (refObj === null) {
+                        val eq = createDataflowAssignment(innerInputVO, inputVO.reference)
+                        if (cond) {
+                            eq.addStringAnnotation("toPort", "in1")
+                        }
+                        dRegion.equations += eq
+                    } else {
+                        val eq = createDataflowAssignment(refObj, innerInputVO, inputVO.reference)
+                        if (cond) {
+                            eq.addStringAnnotation("toPort", "in1")
+                        }
+                        dRegion.equations += eq
                     }
-                    dRegion.equations += eq
                 } else {
-                    val eq = createDataflowAssignment(refObj, innerInputVO, inputVO.reference)
-                    if (cond) {
-                        eq.addStringAnnotation("toPort", "in1")
-                    }
-                    dRegion.equations += eq
+                    println("Could not set multiplexer input for: " + inputVO + ". In the state: " + newState)
                 }
-            } else {
-                println("Could not set multiplexer input for: " + inputVO + ". In the state: " + newState)
-            }
             } else {
                 // Something went wrong before this method
                 println("input is null for multiplexer: " + newState.name)
@@ -3255,19 +3260,22 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                             index++;
                         }
                     } else {
-                        // function is unkown, so we assume that arguments of the form "&expr" get changed in the function
+                        // function is unkown, so we assume that arguments that are pointers get changed in the function
                         val arguments = (stmt as IASTFunctionCallExpression).arguments
                         for (argument : arguments) {
                             if (argument instanceof IASTUnaryExpression &&
                                 (argument as IASTUnaryExpression).operator === IASTUnaryExpression.op_amper) {
                                 // argument is of the form "&expr"
                                 if ((argument as IASTUnaryExpression).operand instanceof IASTIdExpression) {
-                                outputs += ((argument as IASTUnaryExpression).operand as IASTIdExpression).name.toString
+                                    // argument is of the form "&var"
+                                    outputs +=
+                                        ((argument as IASTUnaryExpression).operand as IASTIdExpression).name.toString
                                 } else {
-                                    //TODO: argument is of the form "&struct -> field"
+                                    // TODO: argument is of the form "&struct -> field"
                                     println("arguments of the type \"&struct->field\" are not supported yet")
                                 }
                             }
+                            // TODO: argument could be a pointer
                         }
                     }
 
