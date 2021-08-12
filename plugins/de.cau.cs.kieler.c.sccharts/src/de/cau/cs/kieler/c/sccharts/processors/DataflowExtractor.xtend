@@ -2865,7 +2865,14 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             
             if (initializer.children.head instanceof IASTFunctionCallExpression) {
                 val expression = initializer.children.head as IASTFunctionCallExpression
-                initExpr = createFunctionCall(expression, state, dRegion)
+                if (expression.getFunctionNameExpression instanceof IASTUnaryExpression &&
+                    (expression.getFunctionNameExpression as IASTUnaryExpression).operator ===
+                        IASTUnaryExpression.op_bracketedPrimary) {
+                    // this is not a function call, it is a cast with an unknown type
+                    initExpr = createKExpression(expression.arguments.get(0), state, dRegion)
+                } else {
+                    initExpr = createFunctionCall(expression, state, dRegion)
+                }
             } else {
                 // Simply translate the expression
                 val initHead = initializer.children.head 
@@ -3400,7 +3407,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             // Consider only arguments of a function call    
             IASTFunctionCallExpression: {
                 // check whether it is really a function call
-                // (type casts with unknown types are interpreted as functioncallexpressions in brackets, in which 
+                // (type casts with unknown types are interpreted as functioncallexpressions, in which 
                 // case the functionNameExpression would be a unary expression)
                 if (stmt.functionNameExpression instanceof IASTIdExpression) {
                     val arguments = (stmt as IASTFunctionCallExpression).getArguments
@@ -3419,6 +3426,9 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                     } else {
                         getUnresFuncDeps(parentState).add(uniqueFunctionIdentifier)
                     }
+                } else if (stmt.functionNameExpression instanceof IASTUnaryExpression) {
+                    // its a cast with an unkown type
+                    inputs+= findInputs(stmt.arguments.get(0), parentState)
                 }
             }
             default: {
@@ -3854,6 +3864,12 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             // TODO: cast could be visualized
             if (sourceExpr instanceof IASTCastExpression) {
                 sourceExpr = sourceExpr.operand
+            } else if (sourceExpr instanceof IASTFunctionCallExpression &&
+                (sourceExpr as IASTFunctionCallExpression).getFunctionNameExpression instanceof IASTUnaryExpression &&
+                ((sourceExpr as IASTFunctionCallExpression).getFunctionNameExpression as IASTUnaryExpression).
+                    operator === IASTUnaryExpression.op_bracketedPrimary) {
+                // this is not a function call, it is a cast with an unknown type
+                sourceExpr = (sourceExpr as IASTFunctionCallExpression).arguments.get(0)
             }
             var Expression source = null
             switch (sourceExpr) {
