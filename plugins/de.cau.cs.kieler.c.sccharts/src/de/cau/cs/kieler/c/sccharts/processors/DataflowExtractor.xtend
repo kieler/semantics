@@ -259,11 +259,11 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
 
     val Map<State, Map<String, List<ValuedObject>>> valuedObjects = newHashMap
 
-    /** All expressions that are pointers to some variable. */
-    val Map<State, Map<IASTExpression, ValuedObject>> pointers = newHashMap
-
-    /** All variables that are pointers to another variable. */
+    /** All variable names that are pointers to another variable. */
     val Map<State, Map<String, ValuedObject>> pointerVariables = newHashMap
+    
+    /** All pointers of a state */
+    val Map<State, Set<String>> pointers = newHashMap
     
     /** All pointers that are parameters of the state. */
     val Map<State, List<String>> parameterPointers = newHashMap
@@ -322,14 +322,14 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
      * Getter to access the pointer variable map.
      * 
      * @param the scoping state containing the variables.
-     * @return the used variables (as valued object lists) for the given state
+     * @return the pointers (as string set) for the given state
      */
     def getStatePointers(State state) {
-        var Map<IASTExpression, ValuedObject> statePointers = null
+        var Set<String> statePointers = null
         if (pointers.containsKey(state)) {
             statePointers = pointers.get(state)
         } else {
-            statePointers = newHashMap
+            statePointers = newHashSet
             pointers.put(state, statePointers)
         }
         return statePointers
@@ -657,7 +657,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 val isPointer = par.declarator.pointerOperators !== null && !par.declarator.pointerOperators.isEmpty
                 if (isPointer) pointerList.add(parName)
                 val isStructPointer = par.declSpecifier instanceof IASTElaboratedTypeSpecifier
-                val unkwonType = par.declSpecifier instanceof IASTNamedTypeSpecifier
+                val unknownType = par.declSpecifier instanceof IASTNamedTypeSpecifier
                 if (isArray || (isPointer && changedPointers.contains(parName))) {
                     // Determine parameter name
                     val varName = par.getDeclarator.getName.toString
@@ -667,7 +667,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                     // determine type
                     if (isArray) {
                         outDecl.type = (outputDeclSpecifier as IASTSimpleDeclSpecifier).type.cdtTypeConversion
-                    } else if (unkwonType) {
+                    } else if (unknownType) {
                         val typeName = (par.declSpecifier as IASTNamedTypeSpecifier).name.toString
                         outDecl.type = ValueType.HOST
                         outDecl.hostType = typeName
@@ -695,6 +695,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 }
             }
             parameterPointers.put(state, pointerList)
+            getStatePointers(state).addAll(pointerList)
         }
 
         return state
@@ -898,19 +899,16 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 if (inputVO === null || inputVO.cardinalities.empty) {
                     needsOutput = false
                 }
+                if (getStatePointers(parentState).contains(varName) || globalVars.containsKey(varName)) {
+                    // argument is a pointer, so we assume, the value gets changed
+                    needsOutput = true
+                }
             } else if (arg instanceof IASTUnaryExpression &&
                 (arg as IASTUnaryExpression).operator === IASTUnaryExpression.op_amper &&
                 (arg as IASTUnaryExpression).operand instanceof IASTIdExpression) {
                 val idExpression = (arg as IASTUnaryExpression).operand as IASTIdExpression
                 varName = idExpression.name.toString
                 varLabel = '&' + varName
-                val varName_ = varName
-                val parentDeclarations = dRegion.declarations.filter(VariableDeclaration) +
-                    parentState.declarations.filter(VariableDeclaration)
-                val inputVO = parentDeclarations.map[it.valuedObjects].flatten.findFirst [
-                    it.name.substring(0, it.name.lastIndexOf(ssaNameSeperator)).equals(varName_)
-                ]
-                getStatePointers(state).put(arg as IASTUnaryExpression, inputVO)
                 needsOutput = true
             } else {
                 needsOutput = false
@@ -2251,7 +2249,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         for (inputVO : inputs) {
             if (inputVO !== null) {
                 // label should not be null
-                val label = inputVO.label !== null ? inputVO.label : inputVO.name.split(ssaNameSeperator).get(0)
+                val label = inputVO.label !== null ? inputVO.label : inputVO.name.substring(0, inputVO.name.lastIndexOf(ssaNameSeperator))
                 inputVO.label = label
 
                 // create input vo
@@ -2307,7 +2305,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         if (!l.equals("")) {
             label = l + ssaNameSeperator
         }
-        label = vo.label !== null ? label + vo.label : label + vo.name.split(ssaNameSeperator).get(0)
+        label = vo.label !== null ? label + vo.label : label + vo.name.substring(0, vo.name.lastIndexOf(ssaNameSeperator))
         state.declarations += decl
         val varVO = decl.createValuedObject(label + suffix)
         varVO.label = label
@@ -2411,7 +2409,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                     val ifStmt = passedStmt.parent instanceof IASTIfStatement
                             ? passedStmt.parent as IASTIfStatement
                             : passedStmt.parent.parent as IASTIfStatement
-                    // only pointers that are parameters of the funciton must be considered
+                    // only pointers that are parameters of the function must be considered
                     breakDependableVars = findBreakOutputs(topStmt.getBody as IASTCompoundStatement, ifStmt, topState).
                         filter[pointerPars.contains(it)].toSet
                     val isVoidReturn = topState.declarations.findFirst [it.valuedObjects.findFirst[it.name.startsWith(returnObjectName)] !== null] === null
@@ -2826,6 +2824,10 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 vo.insertHighlightAnnotations(decl)
             }
 
+            if (!decl.pointerOperators.isEmpty && decl.pointerOperators.get(0) instanceof IASTPointer) {
+                getStatePointers(state).add(varName)
+            }
+
             if (decl instanceof IASTArrayDeclarator) {
                 vo.cardinalities += decl.arrayModifiers.map [
                     val expr = it.constantExpression?.createKExpression(state, dRegion)
@@ -2902,7 +2904,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 (initExpr as OperatorExpression).operator.literal.equals(addressOp)) {
                 // initExpr is of the form "&expr"
                 val ref = (initExpr as OperatorExpression).subExpressions.get(0) as ValuedObjectReference
-                statePointers.put(vo.name.split(ssaNameSeperator).get(0), ref.valuedObject)
+                statePointers.put(vo.name.substring(0, vo.name.lastIndexOf(ssaNameSeperator)), ref.valuedObject)
             }
             
             if (!isStruct) {
@@ -3006,7 +3008,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             if (vo === null) {
                 label = output
             } else {
-                label = vo.label !== null ? vo.label : vo.name.split(ssaNameSeperator).get(0)
+                label = vo.label !== null ? vo.label : vo.name.substring(0, vo.name.lastIndexOf(ssaNameSeperator))
             }
             val outputVO = rootState.findValuedObjectByName(label, addAssignments, dRegion)
             if (outputVO !== null) {
@@ -3142,7 +3144,9 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             IASTIdExpression case checkId: {
                 var varName = (stmt as IASTIdExpression).getName.toString
                 if(getStateVariables(parentState).containsKey(varName)) outputs += varName
-                else if (getStateVarPointers(parentState).containsKey(varName)) outputs += varName
+                else if (getStatePointers(parentState).contains(varName)) {
+                    outputs += varName
+                }
                 else if (pointer.containsKey(varName)) {
                     // pointer was declared in the current state, so the variable that it points to is the output
                     varName = pointer.get(varName)
@@ -3274,8 +3278,17 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                                     // TODO: argument is of the form "&struct -> field"
                                     println("arguments of the type \"&struct->field\" are not supported yet")
                                 }
+                            } else if (argument instanceof IASTIdExpression) {
+                                // argument could be a pointer or global variable
+                                var varName = (argument as IASTIdExpression).getName.toString
+                                if (getStatePointers(parentState).contains(varName)) {
+                                    outputs += varName
+                                } else if (pointer.containsKey(varName)) {
+                                    // pointer was declared in the current state, so the variable that it points to is the output
+                                    varName = pointer.get(varName)
+                                    if(getStateVariables(parentState).containsKey(varName)) outputs += varName
+                                } else if(globalVars.containsKey(varName)) outputs += varName
                             }
-                            // TODO: argument could be a pointer
                         }
                     }
 
@@ -3330,9 +3343,11 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         var Map<String, List<ValuedObject>> stateVariables = getStateVariables(newState)
 
         for (input : inputs) {
+            if(getStatePointers(rootState).contains(input)) getStatePointers(newState).add(input)
             // Retrieve the respective valued object of the containing state 
             var inputVO = rootState.findValuedObjectByName(input, false, dRegion)
             if (inputVO !== null) {
+                
                 val inputRootDecl = inputVO.getVariableDeclaration
                 val inputType = inputRootDecl.getType
 
@@ -3920,12 +3935,15 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             // reset pointer map if target is a pointer
             if (binExpr.getOperand1 instanceof IASTIdExpression &&
                 statePointers.containsKey((binExpr.getOperand1 as IASTIdExpression).getName.toString)) {
-                statePointers.put(targetAndIndex.target.name.split(ssaNameSeperator).get(0), null)
+                val varName = targetAndIndex.target.name.substring(0,
+                    targetAndIndex.target.name.lastIndexOf(ssaNameSeperator))
+                statePointers.put(varName, null)
             }
             // if source is "&exp" update pointer ref to the corresponding vo
             if (sourceExpr instanceof IASTUnaryExpression &&
                 (sourceExpr as IASTUnaryExpression).operator === IASTUnaryExpression.op_amper) {
-                statePointers.put(targetAndIndex.target.name.split(ssaNameSeperator).get(0),
+                statePointers.put(
+                    targetAndIndex.target.name.substring(0, targetAndIndex.target.name.lastIndexOf(ssaNameSeperator)),
                     ((source as OperatorExpression).subExpressions.get(0) as ValuedObjectReference).valuedObject)
             }
 
@@ -4032,7 +4050,8 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                     val statePointerVars = getStateVarPointers(funcState)
                     if (statePointerVars.containsKey(ownerName)) {
                         val ref = statePointerVars.get(ownerName)
-                        ownerName = ref.label !== null ? ref.label : ref.name.split(ssaNameSeperator).get(0)
+                        ownerName = ref.label !== null ? ref.label : ref.name.substring(0,
+                            ref.name.lastIndexOf(ssaNameSeperator))
                     }
                     val artificialIndexExpr = createIndexForFieldAccess(fieldName, funcState, dRegion)
 
@@ -4376,8 +4395,8 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
 
                     if (opValObj !== null) {
                         // if expr is of the form "pointer -> field", get the struct the pointer points to
-                        val label = opValObj.label !== null ? opValObj.label : opValObj.name.split(ssaNameSeperator).
-                                get(0)
+                        val label = opValObj.label !== null ? opValObj.label : opValObj.name.substring(0,
+                                opValObj.name.lastIndexOf(ssaNameSeperator))
                         if (getStateVarPointers(funcState).containsKey(label)) {
                             opValObj = getStateVarPointers(funcState).get(label)
                         }
@@ -4525,6 +4544,15 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
 
         // Test if the operator is a simple translatable operator.
         if (opType !== null) {
+            if (opType === OperatorType.MULT) {
+                val pointsTo = getStateVarPointers(funcState).get((unExpr.getOperand as IASTIdExpression).name.toString)
+                if (pointsTo !== null) {
+                    // return the vo the pointer points to
+                    val vName = pointsTo.name.substring(0, pointsTo.name.lastIndexOf(ssaNameSeperator))
+                    val vo = findValuedObjectByName(funcState, vName, false, dRegion)
+                    return vo.reference
+                }
+            }
             unKExpr = opType.createOperatorExpression
             // Attach the operand
             val operandExpression = unExpr.getOperand.createKExpression(funcState, dRegion)
