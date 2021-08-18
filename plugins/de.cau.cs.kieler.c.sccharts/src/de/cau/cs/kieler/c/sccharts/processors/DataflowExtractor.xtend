@@ -2872,14 +2872,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             
             if (initializer.children.head instanceof IASTFunctionCallExpression) {
                 val expression = initializer.children.head as IASTFunctionCallExpression
-                if (expression.getFunctionNameExpression instanceof IASTUnaryExpression &&
-                    (expression.getFunctionNameExpression as IASTUnaryExpression).operator ===
-                        IASTUnaryExpression.op_bracketedPrimary) {
-                    // this is not a function call, it is a cast with an unknown type
-                    initExpr = createKExpression(expression.arguments.get(0), state, dRegion)
-                } else {
-                    initExpr = createFunctionCall(expression, state, dRegion)
-                }
+                initExpr = createFunctionCall(expression, state, dRegion)
             } else {
                 // Simply translate the expression
                 val initHead = initializer.children.head 
@@ -2896,7 +2889,6 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 }else{
                     initExpr = createKExpression(initializer.children.head, state, dRegion)
                 }
-            
             }
 
             var statePointers = getStateVarPointers(state)
@@ -3482,7 +3474,15 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
      * @return The state for the function.
      */
     def State findFunctionState(IASTFunctionCallExpression expression, State state, DataflowRegion dRegion) {
-        val funcName = (expression.getFunctionNameExpression as IASTIdExpression).getName
+        var IASTExpression expr = expression.getFunctionNameExpression
+        //TODO: support cast with unknown type
+        if (expression.getFunctionNameExpression instanceof IASTUnaryExpression &&
+            (expression.getFunctionNameExpression as IASTUnaryExpression).operator ===
+                IASTUnaryExpression.op_bracketedPrimary) {
+            // expression is in brackets
+            expr = (expression.getFunctionNameExpression as IASTUnaryExpression).operand
+        }
+        val funcName = (expr as IASTIdExpression).getName
         val existingFunction = findFunctionState(funcName, expression.arguments.size)
         if (existingFunction === null) {
             return createUnknownFunctionScaffold(funcName, expression, state, dRegion)
@@ -3887,12 +3887,6 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             // TODO: cast could be visualized
             if (sourceExpr instanceof IASTCastExpression) {
                 sourceExpr = sourceExpr.operand
-            } else if (sourceExpr instanceof IASTFunctionCallExpression &&
-                (sourceExpr as IASTFunctionCallExpression).getFunctionNameExpression instanceof IASTUnaryExpression &&
-                ((sourceExpr as IASTFunctionCallExpression).getFunctionNameExpression as IASTUnaryExpression).
-                    operator === IASTUnaryExpression.op_bracketedPrimary) {
-                // this is not a function call, it is a cast with an unknown type
-                sourceExpr = (sourceExpr as IASTFunctionCallExpression).arguments.get(0)
             }
             var Expression source = null
             switch (sourceExpr) {
@@ -4233,12 +4227,6 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
      */
     def ValuedObjectReference createFunctionCall(IASTFunctionCallExpression expression, State state,
         DataflowRegion dRegion) {
-        if (expression.getFunctionNameExpression instanceof IASTUnaryExpression &&
-            (expression.getFunctionNameExpression as IASTUnaryExpression).operator ===
-                IASTUnaryExpression.op_bracketedPrimary) {
-            // this is not a function call, it is a cast with an unknown type
-            return null
-        }
         val refState = findFunctionState(expression, state, dRegion)
         // Find an existing reference to this state the reference
         var ReferenceDeclaration refDecl = dRegion.declarations.filter(ReferenceDeclaration).findFirst [
