@@ -2897,8 +2897,9 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 // initExpr is of the form "&expr"
                 val ref = (initExpr as OperatorExpression).subExpressions.get(0) as ValuedObjectReference
                 statePointers.put(vo.name.substring(0, vo.name.lastIndexOf(ssaNameSeperator)), ref.valuedObject)
+                // we are only interested in the value the pointer points to not the address
+                initExpr = (initExpr as OperatorExpression).subExpressions.get(0)
             }
-            
             if (!isStruct) {
                 addEquation(dRegion, vo, initExpr)
             }
@@ -3939,6 +3940,8 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 statePointers.put(
                     targetAndIndex.target.name.substring(0, targetAndIndex.target.name.lastIndexOf(ssaNameSeperator)),
                     ((source as OperatorExpression).subExpressions.get(0) as ValuedObjectReference).valuedObject)
+                // we are only interested in the value the pointer points to not the address
+                source = (source as OperatorExpression).subExpressions.get(0)    
             }
 
             if (!serializable) {
@@ -4539,6 +4542,9 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                     val vName = pointsTo.name.substring(0, pointsTo.name.lastIndexOf(ssaNameSeperator))
                     val vo = findValuedObjectByName(funcState, vName, false, dRegion)
                     return vo.reference
+                } else {
+                    // dont visualize the operator "*"
+                    return unExpr.getOperand.createKExpression(funcState, dRegion)
                 }
             }
             unKExpr = opType.createOperatorExpression
