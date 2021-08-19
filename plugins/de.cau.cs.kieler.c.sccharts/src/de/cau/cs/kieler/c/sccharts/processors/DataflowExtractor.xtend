@@ -216,6 +216,8 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
     static final String posTag = "pos"
     /** Tag annotation string of the port group for the negative case in custom multiplexers */
     static final String negTag = "neg"
+    /** Tag annotation string for structs*/
+    static final String struct = "struct"
 
     /** annotation for break/continue states that saves in which if stmt the break/continue is in */
     static final String breakContinueAnno = "ifCounter"
@@ -589,7 +591,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                         variableDeclaration.input = true
 
                         val vo = variableDeclaration.createValuedObject(varName + inSuffix)
-                        vo.addTagAnnotation("struct")
+                        vo.addTagAnnotation(struct)
 
                         val varList = <ValuedObject>newArrayList
                         varList.add(vo)
@@ -2870,7 +2872,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 val initHead = initializer.children.head 
                 
                 if(initHead instanceof IASTInitializerList){
-                    if(initHead.getSize > 0 && initHead.clauses.get(0) instanceof ICASTDesignatedInitializer){
+                    if(isInitializerListForStructs(initHead)){
                         // Case for designated init for structs
                         processDesignatedInitializers(initHead, vo, state, dRegion, newArrayList())
                         isStruct = true
@@ -2912,6 +2914,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         DataflowRegion dRegion, List<Expression> alreadyPassedIndices) {
 
         for (clause : initializers.clauses) {
+            // TODO: Breaks with arrays CASTLiteralExpression
             var el = clause as ICASTDesignatedInitializer
 
             val List<Expression> indices = newArrayList()
@@ -2935,7 +2938,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
 
             val operand = el.getOperand()
             var Expression initVal
-            if (!(operand instanceof IASTInitializerList) || isArrayField) {
+            if (!(operand instanceof IASTInitializerList) || isArrayField || !(operand instanceof IASTInitializerList && isInitializerListForStructs(operand as IASTInitializerList))) {
                 initVal = createKExpression(operand, state, dRegion)
                 if (isCorrectExpr(initVal) && vo !== null) {
                     val assignment = createDataflowAssignment(vo, initVal)
@@ -3552,11 +3555,6 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             
             cards = vo.cardinalities
             if (writing) {
-                /*
-                 * TODO: Reading from Arrays. You want to read from the last variant(vo) in which the index was used for writing.
-                 * Or the first array variant
-                 */
-                 
                                 
                 switch (alreadyWrittenIdxs) {
                     case alreadyWrittenIdxs === null: {
@@ -3585,7 +3583,6 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 
                 // We want to read from newest variant of the array in which the index was changed!
                 // In many cases, that's not the newest variant of the array.
-                //TODO: Not working quite right
                 
                 var searchedVo = varList.reverseView.findFirst[candVo | val writtenIndices = voWrittenIdxs.get(candVo)
                     writtenIndices !== null && writtenIndices.exists[expressionListsEquals(it, index)]
@@ -3642,14 +3639,14 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 dRegion.declarations += varDecl
             }
 
-            val oldAnnotations = vo.annotations
+             val hasStructAnnotation = vo.hasAnnotation(struct)
             // Create the valued object
             vo = varDecl.createValuedObject(newName)
-
-            // TODO: Doesn't work yet
-            if (oldAnnotations !== null) {
-                vo.annotations.addAll(oldAnnotations)
+            
+            if(hasStructAnnotation){
+                vo.annotations += createTagAnnotation(struct)
             }
+       
 
             if (hasOut) {
                 varList.add(varList.length - 1, vo)
@@ -4761,6 +4758,14 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         // Using this short function hides the usage of the ASTNodeFactoryFactory.
         ASTNodeFactoryFactory.defaultCNodeFactory.newLiteralExpression(3, "\"" + fieldName + "\"").
             createKExpression(funcState, dRegion)
+    }
+    
+    /**
+     * Checks whether a InitializerList is used to initialize a struct via Designated Initialization. 
+     *  Does this by checking whether it includes en element of type {@code ICASTDesignatedInitializer}. 
+     */
+    def private isInitializerListForStructs(IASTInitializerList initializers) {
+        return (initializers.getSize > 0 && initializers.clauses.get(0) instanceof ICASTDesignatedInitializer)
     }
 
 }
