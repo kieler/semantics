@@ -3286,6 +3286,10 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                     }
                 }
             }
+            IASTFieldReference: {
+                // we want the top-level owner of the field
+                outputs += findOutputs(stmt.getFieldOwner, parentState, pointer, checkId)
+            }
             default: {
                 // if stmt is a pointer declaration, update the map
                 if (stmt.children.size === 3 && stmt.children.get(0) instanceof IASTPointer) {
