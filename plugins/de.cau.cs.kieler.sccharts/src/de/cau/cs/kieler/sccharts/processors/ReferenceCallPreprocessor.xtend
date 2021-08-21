@@ -63,6 +63,7 @@ class ReferenceCallPreprocessor extends SCChartsProcessor implements Traceable {
     val REF_CALL_INSTANCE_PREFIX = "_"
     val REF_CALL_EXT_SCC_ANNOTATION = "header"
     val REF_CALL_NON_INSTANTANEOUS_ANNOTATION = "isDelayed"
+    val REF_CALL_NONFINAL_ANNOTATION = "nonFinal"
     val REF_CALL_TICK_METHOD_NAME = ReferenceCallProcessor.REF_CALL_TICK_METHOD_NAME
     val REF_CALL_RESET_METHOD_NAME = ReferenceCallProcessor.REF_CALL_RESET_METHOD_NAME
     val REF_CALL_CPIN_METHOD_NAME = ReferenceCallProcessor.REF_CALL_CPIN_METHOD_NAME
@@ -123,15 +124,16 @@ class ReferenceCallPreprocessor extends SCChartsProcessor implements Traceable {
     protected def createProxyState(State ref, PolicyClassDeclaration proxyClass, ValuedObject instance,
         boolean delayed) {
         val region = ref.createControlflowRegion(ref.name)
+        val nonfinal = ref.reference.scope.hasAnnotation(REF_CALL_NONFINAL_ANNOTATION)
         if (delayed) {
-            region.createDelayedTransitions(ref, proxyClass, instance)
+            region.createDelayedTransitions(ref, proxyClass, instance, nonfinal)
         } else {
-            region.createInstantaneousTransitions(ref, proxyClass, instance)
+            region.createInstantaneousTransitions(ref, proxyClass, instance, nonfinal)
         }
     }
 
     protected def createDelayedTransitions(ControlflowRegion region, State ref, PolicyClassDeclaration proxyClass,
-        ValuedObject instance) {
+        ValuedObject instance, boolean nonfinal) {
         val init = region.createInitialState("I")
         val call = region.createState("C")
         val term = region.createFinalState("T")
@@ -207,10 +209,29 @@ class ReferenceCallPreprocessor extends SCChartsProcessor implements Traceable {
         ]
 
         conn.createTransitionTo(call) => [delay = DelayType::IMMEDIATE]
+        
+        if (nonfinal) {
+            term.createTransitionTo(conn) => [
+                effects.add(createReferenceCallEffect => [
+                    subReference = cpin_method.reference
+                    valuedObject = instance
+                    parameters.addAll(inputParamsFromBindings(ref, instance))
+                ])
+                effects.add(createReferenceCallEffect => [
+                    subReference = tick_method.reference
+                    valuedObject = instance
+                ])
+                effects.add(createReferenceCallEffect => [
+                    subReference = cpout_method.reference
+                    valuedObject = instance
+                    parameters.addAll(outputParamsFromBindings(ref, instance))
+                ])
+            ]
+        }
     }
 
     protected def createInstantaneousTransitions(ControlflowRegion region, State ref, PolicyClassDeclaration proxyClass,
-        ValuedObject instance) {
+        ValuedObject instance, boolean nonfinal) {
         val init = region.createInitialState("I")
         val call = region.createState("C")
         val dely = region.createState("D")
@@ -276,6 +297,10 @@ class ReferenceCallPreprocessor extends SCChartsProcessor implements Traceable {
         conn.createTransitionTo(dely) => [delay = DelayType::IMMEDIATE]
 
         dely.createTransitionTo(call)
+        
+        if (nonfinal) {
+            term.createTransitionTo(call)
+        }
     }
 
     protected def PolicyClassDeclaration createOrGetProxyClass(State ref) {
