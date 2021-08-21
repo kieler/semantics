@@ -27982,7 +27982,7 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleEnumMemberDeclaration"
-    // InternalSCTX.g:10039:1: ruleEnumMemberDeclaration returns [EObject current=null] : ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_valuedObjects_1_0= ruleSimpleValuedObject ) ) (otherlv_2= ',' ( (lv_valuedObjects_3_0= ruleSimpleValuedObject ) ) )* ( (lv_annotations_4_0= ruleCommentAnnotatonSL ) )? ) ;
+    // InternalSCTX.g:10039:1: ruleEnumMemberDeclaration returns [EObject current=null] : ( ( (lv_annotations_0_0= ruleQuotedStringAnnotation ) )* ( (lv_valuedObjects_1_0= ruleSimpleValuedObject ) ) (otherlv_2= ',' ( (lv_valuedObjects_3_0= ruleSimpleValuedObject ) ) )* ( (lv_annotations_4_0= ruleCommentAnnotatonSL ) )? ) ;
     public final EObject ruleEnumMemberDeclaration() throws RecognitionException {
         EObject current = null;
 
@@ -28000,13 +28000,13 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalSCTX.g:10045:2: ( ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_valuedObjects_1_0= ruleSimpleValuedObject ) ) (otherlv_2= ',' ( (lv_valuedObjects_3_0= ruleSimpleValuedObject ) ) )* ( (lv_annotations_4_0= ruleCommentAnnotatonSL ) )? ) )
-            // InternalSCTX.g:10046:2: ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_valuedObjects_1_0= ruleSimpleValuedObject ) ) (otherlv_2= ',' ( (lv_valuedObjects_3_0= ruleSimpleValuedObject ) ) )* ( (lv_annotations_4_0= ruleCommentAnnotatonSL ) )? )
+            // InternalSCTX.g:10045:2: ( ( ( (lv_annotations_0_0= ruleQuotedStringAnnotation ) )* ( (lv_valuedObjects_1_0= ruleSimpleValuedObject ) ) (otherlv_2= ',' ( (lv_valuedObjects_3_0= ruleSimpleValuedObject ) ) )* ( (lv_annotations_4_0= ruleCommentAnnotatonSL ) )? ) )
+            // InternalSCTX.g:10046:2: ( ( (lv_annotations_0_0= ruleQuotedStringAnnotation ) )* ( (lv_valuedObjects_1_0= ruleSimpleValuedObject ) ) (otherlv_2= ',' ( (lv_valuedObjects_3_0= ruleSimpleValuedObject ) ) )* ( (lv_annotations_4_0= ruleCommentAnnotatonSL ) )? )
             {
-            // InternalSCTX.g:10046:2: ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_valuedObjects_1_0= ruleSimpleValuedObject ) ) (otherlv_2= ',' ( (lv_valuedObjects_3_0= ruleSimpleValuedObject ) ) )* ( (lv_annotations_4_0= ruleCommentAnnotatonSL ) )? )
-            // InternalSCTX.g:10047:3: ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_valuedObjects_1_0= ruleSimpleValuedObject ) ) (otherlv_2= ',' ( (lv_valuedObjects_3_0= ruleSimpleValuedObject ) ) )* ( (lv_annotations_4_0= ruleCommentAnnotatonSL ) )?
+            // InternalSCTX.g:10046:2: ( ( (lv_annotations_0_0= ruleQuotedStringAnnotation ) )* ( (lv_valuedObjects_1_0= ruleSimpleValuedObject ) ) (otherlv_2= ',' ( (lv_valuedObjects_3_0= ruleSimpleValuedObject ) ) )* ( (lv_annotations_4_0= ruleCommentAnnotatonSL ) )? )
+            // InternalSCTX.g:10047:3: ( (lv_annotations_0_0= ruleQuotedStringAnnotation ) )* ( (lv_valuedObjects_1_0= ruleSimpleValuedObject ) ) (otherlv_2= ',' ( (lv_valuedObjects_3_0= ruleSimpleValuedObject ) ) )* ( (lv_annotations_4_0= ruleCommentAnnotatonSL ) )?
             {
-            // InternalSCTX.g:10047:3: ( (lv_annotations_0_0= ruleAnnotation ) )*
+            // InternalSCTX.g:10047:3: ( (lv_annotations_0_0= ruleQuotedStringAnnotation ) )*
             loop334:
             do {
                 int alt334=2;
@@ -28040,18 +28040,18 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
 
                 switch (alt334) {
             	case 1 :
-            	    // InternalSCTX.g:10048:4: (lv_annotations_0_0= ruleAnnotation )
+            	    // InternalSCTX.g:10048:4: (lv_annotations_0_0= ruleQuotedStringAnnotation )
             	    {
-            	    // InternalSCTX.g:10048:4: (lv_annotations_0_0= ruleAnnotation )
-            	    // InternalSCTX.g:10049:5: lv_annotations_0_0= ruleAnnotation
+            	    // InternalSCTX.g:10048:4: (lv_annotations_0_0= ruleQuotedStringAnnotation )
+            	    // InternalSCTX.g:10049:5: lv_annotations_0_0= ruleQuotedStringAnnotation
             	    {
             	    if ( state.backtracking==0 ) {
 
-            	      					newCompositeNode(grammarAccess.getEnumMemberDeclarationAccess().getAnnotationsAnnotationParserRuleCall_0_0());
+            	      					newCompositeNode(grammarAccess.getEnumMemberDeclarationAccess().getAnnotationsQuotedStringAnnotationParserRuleCall_0_0());
             	      				
             	    }
             	    pushFollow(FollowSets000.FOLLOW_9);
-            	    lv_annotations_0_0=ruleAnnotation();
+            	    lv_annotations_0_0=ruleQuotedStringAnnotation();
 
             	    state._fsp--;
             	    if (state.failed) return current;
@@ -28064,7 +28064,7 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
             	      						current,
             	      						"annotations",
             	      						lv_annotations_0_0,
-            	      						"de.cau.cs.kieler.kexpressions.KExpressions.Annotation");
+            	      						"de.cau.cs.kieler.kexpressions.KExpressions.QuotedStringAnnotation");
             	      					afterParserOrEnumRuleCall();
             	      				
             	    }
@@ -59685,19 +59685,19 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
         EObject lv_annotations_0_0 = null;
 
 
-        // InternalSCTX.g:10048:4: ( (lv_annotations_0_0= ruleAnnotation ) )
-        // InternalSCTX.g:10048:4: (lv_annotations_0_0= ruleAnnotation )
+        // InternalSCTX.g:10048:4: ( (lv_annotations_0_0= ruleQuotedStringAnnotation ) )
+        // InternalSCTX.g:10048:4: (lv_annotations_0_0= ruleQuotedStringAnnotation )
         {
-        // InternalSCTX.g:10048:4: (lv_annotations_0_0= ruleAnnotation )
-        // InternalSCTX.g:10049:5: lv_annotations_0_0= ruleAnnotation
+        // InternalSCTX.g:10048:4: (lv_annotations_0_0= ruleQuotedStringAnnotation )
+        // InternalSCTX.g:10049:5: lv_annotations_0_0= ruleQuotedStringAnnotation
         {
         if ( state.backtracking==0 ) {
 
-          					newCompositeNode(grammarAccess.getEnumMemberDeclarationAccess().getAnnotationsAnnotationParserRuleCall_0_0());
+          					newCompositeNode(grammarAccess.getEnumMemberDeclarationAccess().getAnnotationsQuotedStringAnnotationParserRuleCall_0_0());
           				
         }
         pushFollow(FollowSets000.FOLLOW_2);
-        lv_annotations_0_0=ruleAnnotation();
+        lv_annotations_0_0=ruleQuotedStringAnnotation();
 
         state._fsp--;
         if (state.failed) return ;
@@ -71574,7 +71574,7 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
     static final String dfa_321s = "\1\12\1\uffff\1\5\1\4\1\5\1\4\1\6\4\4\1\23\1\0\1\5\1\4\1\uffff\2\4\2\5\4\4\3\5\3\4\3\5\3\4\1\0\2\5\2\4\1\0\1\5\1\4\1\0";
     static final String dfa_322s = "\1\154\1\uffff\1\5\1\u00a1\1\5\1\u0096\1\6\1\u00a0\3\u00a1\1\u0097\1\0\1\5\1\u0096\1\uffff\2\u00a1\2\5\1\u0096\3\u00a1\3\5\3\u00a1\3\5\3\u00a1\1\0\2\5\2\u00a1\1\0\1\5\1\u00a1\1\0";
     static final String dfa_323s = "\1\uffff\1\1\15\uffff\1\2\35\uffff";
-    static final String dfa_324s = "\14\uffff\1\3\27\uffff\1\0\4\uffff\1\2\2\uffff\1\1}>";
+    static final String dfa_324s = "\14\uffff\1\1\27\uffff\1\0\4\uffff\1\3\2\uffff\1\2}>";
     static final String[] dfa_325s = {
             "\1\1\141\uffff\1\2",
             "",
@@ -71667,6 +71667,21 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
                         if ( s>=0 ) return s;
                         break;
                     case 1 : 
+                        int LA495_12 = input.LA(1);
+
+                         
+                        int index495_12 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred565_InternalSCTX()) ) {s = 1;}
+
+                        else if ( (true) ) {s = 15;}
+
+                         
+                        input.seek(index495_12);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 2 : 
                         int LA495_44 = input.LA(1);
 
                          
@@ -71681,7 +71696,7 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
                         input.seek(index495_44);
                         if ( s>=0 ) return s;
                         break;
-                    case 2 : 
+                    case 3 : 
                         int LA495_41 = input.LA(1);
 
                          
@@ -71694,21 +71709,6 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
 
                          
                         input.seek(index495_41);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 3 : 
-                        int LA495_12 = input.LA(1);
-
-                         
-                        int index495_12 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred565_InternalSCTX()) ) {s = 1;}
-
-                        else if ( (true) ) {s = 15;}
-
-                         
-                        input.seek(index495_12);
                         if ( s>=0 ) return s;
                         break;
             }

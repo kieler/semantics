@@ -10629,7 +10629,7 @@ public class EsterelGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	}
 	
 	//EnumMemberDeclaration returns kexpressions::VariableDeclaration:
-	//    annotations+=Annotation*
+	//    annotations+=QuotedStringAnnotation*
 	//    valuedObjects+=SimpleValuedObject (',' valuedObjects+=SimpleValuedObject)*
 	//    annotations+=CommentAnnotatonSL?
 	//;

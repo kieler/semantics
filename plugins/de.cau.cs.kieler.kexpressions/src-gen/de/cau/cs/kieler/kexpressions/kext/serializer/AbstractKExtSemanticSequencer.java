@@ -1505,7 +1505,7 @@ public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequ
 	 *     EnumMemberDeclaration returns VariableDeclaration
 	 *
 	 * Constraint:
-	 *     (annotations+=Annotation* valuedObjects+=SimpleValuedObject valuedObjects+=SimpleValuedObject* annotations+=CommentAnnotatonSL?)
+	 *     (annotations+=QuotedStringAnnotation* valuedObjects+=SimpleValuedObject valuedObjects+=SimpleValuedObject* annotations+=CommentAnnotatonSL?)
 	 */
 	protected void sequence_EnumMemberDeclaration(ISerializationContext context, VariableDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
