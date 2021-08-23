@@ -3578,7 +3578,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                     case alreadyWrittenIdxs.exists[expressionListsEquals(it, index)] || (alreadyReadIndices !== null
                         ? alreadyReadIndices.exists [expressionListsEquals(it, index)]
                         : false): {
-                        // Any subsequent write to that array only needs a new VO if it is on a different array index.
+                        // Any subsequent write to that array only needs a new VO if it is on a already used array index
                         newArrayVONeeded = true
                     }
                     default:
