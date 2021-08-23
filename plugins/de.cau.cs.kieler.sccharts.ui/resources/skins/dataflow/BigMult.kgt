@@ -14,6 +14,7 @@ knode BigMult {
 	kport in1 {
 		size: width = 0 height = 0
 		properties:
+		org.eclipse.elk.layered.allowNonFlowPortsToSwitchSides = true
 		org.eclipse.elk.port.side = SOUTH
 	}
     kport in0 {

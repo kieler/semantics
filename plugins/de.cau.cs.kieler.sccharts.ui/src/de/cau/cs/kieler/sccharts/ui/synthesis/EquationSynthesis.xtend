@@ -345,8 +345,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         var grp2 = new ArrayList();
         var longestLabel1 = 0f
         var longestLabel2 = 0f
-        
-        
+            
         for (port : node.ports.filter [sourceElement !== null]) {
             val VO = (port.sourceElement as ValuedObjectReference).valuedObject
             if (VO.hasAnnotation(POS_TAG)) {
@@ -554,10 +553,27 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                 if (nextRef !== null) {
                     // set the port labels of the new data access node
                     if (output) {
-                        currentNode.findPortById(PORT0_IN_PREFIX).setLabel(ref.lastSubReferenceLabel, false)
-                        currentNode.findPortById(PORT0_IN_PREFIX).associateWith(ref)
+                        val inPort = currentNode.findPortById(PORT0_IN_PREFIX)
+                        
+                        if (ref.valuedObject.hasAnnotation("struct") && ref.lastSubReferenceLabel.toString.length > 4) {
+                            inPort.setLabel(ref.lastSubReferenceLabel.substring(2, ref.lastSubReferenceLabel.length - 2),
+                                false)
+                        } else {
+                            inPort.setLabel(ref.lastSubReferenceLabel, false)
+                        }
+                        inPort.associateWith(ref)
+                    
                     } else {
-                        currentNode.findPortById(OUT_PORT).setLabel(ref.lastSubReferenceLabel, false)
+                        //currentNode.findPortById(OUT_PORT).setLabel(ref.lastSubReferenceLabel, false)                        
+                        val outPort = currentNode.findPortById(OUT_PORT)
+                        
+                        if (ref.valuedObject.hasAnnotation("struct") && ref.lastSubReferenceLabel.toString.length > 4) {
+                            outPort.setLabel(ref.lastSubReferenceLabel.substring(2, ref.lastSubReferenceLabel.length - 2),
+                                false)
+                        } else {
+                            outPort.setLabel(ref.lastSubReferenceLabel, false)
+                        }
+                        
                         currentNode.findPortById(OUT_PORT).associateWith(ref)
                     }
                 }
@@ -649,6 +665,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         val node = e.createKGTNode("INPUT", "")
         val text = e.serializeHR.toString
         node.addNodeLabelWithPadding(text, INPUT_OUTPUT_TEXT_SIZE, PADDING_INPUT_LEFT, PADDING_INPUT_RIGHT)
+        //println("nodetext: " + text)
         node.setProperty(INPUT_FLAG, true)
 
         if (ALIGN_CONSTANTS.booleanValue) {
@@ -1104,9 +1121,17 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                 if (!node.ports.exists [
                     sourceElement !== null && (sourceElement as ValuedObjectReference).valuedObject == input
                 ]) {
-                    node.getInputPortWithNumber(node.incomingEdges.filter[!isInstance && !isSequential].size +
-                        node.ports.filter[it.edges.empty].size, true).setLabel(input.serializeHR.toString, true).
-                        associateWith(input)
+                    // TODO: the port "n1" in the multiplexers should already have the "conditional" input as source element
+                    if (node.sourceElement instanceof ValuedObjectReference &&
+                        (node.sourceElement as ValuedObjectReference).valuedObject.hasAnnotation(MULTIPLEXER_TAG) &&
+                        (input.name.startsWith("_conditional")|| input.name.contains("_cond_res"))) {
+                        // condition input should be associated with the port "in1" in all multiplexers
+                        node.getInputPortWithNumber(1).setLabel(input.serializeHR.toString, true).associateWith(input)
+                    } else {
+                        node.getInputPortWithNumber(node.incomingEdges.filter[!isInstance && !isSequential].size +
+                            node.ports.filter[it.edges.empty].size, true).setLabel(input.serializeHR.toString, true).
+                            associateWith(input)
+                    }
                 }
             ]
         ]

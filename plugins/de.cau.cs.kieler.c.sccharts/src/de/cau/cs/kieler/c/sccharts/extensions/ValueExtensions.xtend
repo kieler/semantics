@@ -34,42 +34,46 @@ class ValueExtensions {
     def Expression createValue(IASTLiteralExpression value) {
         var Expression valExpr
         val iastType = value.getExpressionType
-        switch (iastType) {
-            IBasicType: {
-                val iastBasicKind = iastType.getKind
-                switch (iastBasicKind) {
-                    case IBasicType.Kind.eInt: {
-                        valExpr = createIntValue(Integer.parseInt(value.toString))
-                    }
-                    case IBasicType.Kind.eDouble: {
-                        valExpr = createFloatValue(Double.parseDouble(value.toString))
-                    }
-                    case IBasicType.Kind.eFloat: {
-                        valExpr = createFloatValue(Float.parseFloat(value.toString))
-                    }
-                    // char literal is mapped to a String literal.
-                    case IBasicType.Kind.eChar,
-                    case IBasicType.Kind.eChar16,
-                    case IBasicType.Kind.eChar32: {
-                        val charWithTicks = value.toString
-                        valExpr = createStringValue(charWithTicks.substring(1, charWithTicks.length - 1))
-                    }
-                    default: {
-                        println("ValueExtensions: Type of literal node not defined!")
+        try {
+            switch (iastType) {
+                IBasicType: {
+                    val iastBasicKind = iastType.getKind
+                    switch (iastBasicKind) {
+                        case IBasicType.Kind.eInt: {
+                            valExpr = createIntValue(Integer.parseInt(value.toString))
+                        }
+                        case IBasicType.Kind.eDouble: {
+                            valExpr = createFloatValue(Double.parseDouble(value.toString))
+                        }
+                        case IBasicType.Kind.eFloat: {
+                            valExpr = createFloatValue(Float.parseFloat(value.toString))
+                        }
+                        // char literal is mapped to a String literal.
+                        case IBasicType.Kind.eChar,
+                        case IBasicType.Kind.eChar16,
+                        case IBasicType.Kind.eChar32: {
+                            val charWithTicks = value.toString
+                            valExpr = createStringValue(charWithTicks.substring(1, charWithTicks.length - 1))
+                        }
+                        default: {
+                            println("ValueExtensions: Type of literal node not defined!")
+                        }
                     }
                 }
+                IPointerType case iastType.type instanceof IQualifierType &&
+                    (iastType.type as IQualifierType).type instanceof IBasicType &&
+                    (iastType.type as IQualifierType).isConst &&
+                    ((iastType.type as IQualifierType).type as IBasicType).kind === IBasicType.Kind.eChar: {
+                    // String literal (with type const char *) is mapped to a String literal.
+                    val stringWithQuotes = value.toString
+                    valExpr = createStringValue(stringWithQuotes.substring(1, stringWithQuotes.length - 1))
+                }
+                default: {
+                    println("ValueExtensions: Type of literal node not a basic or string type!")
+                }
             }
-            IPointerType case iastType.type instanceof IQualifierType
-                && (iastType.type as IQualifierType).type instanceof IBasicType
-                && (iastType.type as IQualifierType).isConst
-                && ((iastType.type as IQualifierType).type as IBasicType).kind === IBasicType.Kind.eChar: {
-                // String literal (with type const char *) is mapped to a String literal.
-                val stringWithQuotes = value.toString
-                valExpr = createStringValue(stringWithQuotes.substring(1, stringWithQuotes.length - 1))
-            }
-            default: {
-                println("ValueExtensions: Type of literal node not a basic or string type!")
-            }
+        } catch (NumberFormatException e) {
+            println("Type could not be properly inferred form the literal expression: " + value)
         }
 
         return valExpr
