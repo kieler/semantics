@@ -2450,14 +2450,6 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                     vo = findValuedObjectByName(state, depVar, false, region)
                 }
 
-                // if the latest vo is in the while/func body, the correct instance of the vo must be taken
-                // (otherwise the output of an if-state, that changes the variable after the break-stmt, is taken)
-                if (state.name.startsWith(whileName + ssaNameSeperator)) {
-                    val varList = getStateVariables(state).get(depVar)
-                    if (varList !== null && varList.length >= 3) {
-                        vo = varList.get(varList.length - 3)
-                    }
-                }
                 vars.add(vo)
             }
 
@@ -3293,6 +3285,10 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                         outputs += findOutputs(child, parentState, pointer, false)
                     }
                 }
+            }
+            IASTFieldReference: {
+                // we want the top-level owner of the field
+                outputs += findOutputs(stmt.getFieldOwner, parentState, pointer, checkId)
             }
             default: {
                 // if stmt is a pointer declaration, update the map
