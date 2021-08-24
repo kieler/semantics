@@ -2426,8 +2426,10 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                     }
                 }
                 // determine variables
-                dependableVars = findMultiplexerInputs(topStmt.getBody as IASTCompoundStatement,
-                    passedStmt.parent.parent as IASTIfStatement, topState)
+                val ifStmt = passedStmt.parent instanceof IASTIfStatement
+                        ? passedStmt.parent as IASTIfStatement
+                        : passedStmt.parent.parent as IASTIfStatement
+                dependableVars = findMultiplexerInputs(topStmt.getBody as IASTCompoundStatement, ifStmt, topState)
             }
             IASTFunctionDefinition: {
                 // determine function state
