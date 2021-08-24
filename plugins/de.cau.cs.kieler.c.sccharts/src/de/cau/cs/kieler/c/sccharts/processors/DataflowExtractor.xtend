@@ -174,8 +174,8 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
 
     /** Shown name prefix for if statements. */
     static final String ifName = "if"
-    /**Shown name prefix for conditions of if statements. */
-    static final String ifCondName = "cond"
+    /**Shown name prefix for conditions of if/while statements. */
+    static final String condName = "cond"
     /** Shown name prefix for then statements. */
     static final String thenName = "then"
     /** Shown name prefix for else statements. */
@@ -188,8 +188,6 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
     static final String whileName = "while"
     /** Shown name prefix for while-body statements. */
     static final String whileBodyName = "body"
-    /** Shown name prefix for while condition. */
-    static final String whileCondName = "cond"
     /** Shown name prefix for switch statements. */
     static final String switchName = "switch"
     /** Shown name prefix for case statements. */
@@ -1954,7 +1952,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         // Create the region for the body part
         val bodyRegion = createDFRegionForNode(whileStmt.getBody, bodyState, whileState, whileRegion, bodyObj)
         bodyState.regions += bodyRegion
-        bodyRegion.label = whileName + ssaNameSeperator + localWhileCounter + whileBodyName
+        bodyRegion.label = whileBodyName
 
         // inlining the output of the condition
         var ValuedObject condOutputVo = findCondOutputVo(condRegion, condState, condObj, whileRegion)
@@ -2033,29 +2031,28 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
      * @param parentRegion DFRegion of the parentState - The condition state is added to this DFRegion
      * @return The DataflowRegion, State and ValuedObject of the condition
      */
-    private def Pair<DataflowRegion, Pair<State, ValuedObject>> createCondDF(int localCounter, IASTStatement stmt,
+    private def createCondDF(int localCounter, IASTStatement stmt,
         State parentState, DataflowRegion parentRegion) {
 
-        var condName = ""
-        var condLabel = ""
-        var IASTExpression condExpr = null
+        var name = ""
+        var label = ""
+        var IASTExpression expr = null
         switch stmt {
             IASTWhileStatement: {
-                condName = whileName + ssaNameSeperator + localCounter + whileCondName
-                condLabel = whileName + ssaNameSeperator + localCounter + "cond: " +
-                    exprToString((stmt as IASTWhileStatement).getCondition, sourceFile)
-                condExpr = (stmt as IASTWhileStatement).getCondition
+                name = whileName + ssaNameSeperator + localCounter + condName
+                label = condName + ": " + exprToString((stmt as IASTWhileStatement).getCondition, sourceFile)
+                expr = (stmt as IASTWhileStatement).getCondition
             }
             IASTIfStatement: {
-                condName = ifName + ssaNameSeperator + localCounter + ifCondName
-                condLabel = condName
-                condExpr = (stmt as IASTIfStatement).conditionExpression
+                name = ifName + ssaNameSeperator + localCounter + condName
+                label = condName
+                expr = (stmt as IASTIfStatement).conditionExpression
             }
             default:
                 throw new IllegalArgumentException("The type of IASTStatement is not supported in addCondDF: " + stmt)
         }
         // Create the cond state
-        val condState = createState(condName)
+        val condState = createState(name)
         condState.annotations += createTagAnnotation("Hide")
         if (serializable) {
             rootSCChart.rootStates += condState
@@ -2063,19 +2060,19 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         val condRefDecl = createReferenceDeclaration
         parentRegion.declarations += condRefDecl
         condRefDecl.setReference(condState)
-        val condObj = condRefDecl.createValuedObject(condName)
+        val condObj = condRefDecl.createValuedObject(name)
         if (!serializable) {
-            condObj.insertHighlightAnnotations(condExpr)
+            condObj.insertHighlightAnnotations(expr)
         }
 
         // set inputs & outputs
-        setInputs(condExpr, parentState, condState, parentRegion, condObj)
-        setOutputs(condExpr, parentState, condState, parentRegion, condObj, false)
+        setInputs(expr, parentState, condState, parentRegion, condObj)
+        setOutputs(expr, parentState, condState, parentRegion, condObj, false)
 
         // Create the region for the condition part
-        val condRegion = createDFRegionForNode(condExpr, condState, parentState, parentRegion, condObj)
+        val condRegion = createDFRegionForNode(expr, condState, parentState, parentRegion, condObj)
         condState.regions += condRegion
-        condRegion.label = condLabel
+        condRegion.label = label
 
         return condRegion -> (condState -> condObj)
     }
@@ -2090,7 +2087,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
      * @param parentRegion Region that includes the condState
      * @return the found OutputValuedObject of the condition
      */
-    private def ValuedObject findCondOutputVo(DataflowRegion condRegion, State condState, ValuedObject condObj,
+    private def findCondOutputVo(DataflowRegion condRegion, State condState, ValuedObject condObj,
         DataflowRegion parentRegion) {
         // find the condition vo in the condition state
         val condOutput = condState.declarations.filter(VariableDeclaration).filter[it.isOutput].map[it.valuedObjects].
