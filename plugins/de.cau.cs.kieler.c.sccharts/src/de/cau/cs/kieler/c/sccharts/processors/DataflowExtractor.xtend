@@ -2483,10 +2483,27 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             // input does not count as the latest vo unless it is in the surrounding while/function state
             while (vo === null || (vo.name.contains(inSuffix) && !state.equals(topState))) {
                 region = hierarchy.get(state)
-                val name = region.label !== null && !region.label.equals("") ? region.label : region.name.split("-").
-                        get(1)
+                val name = region.label !== null && !region.label.equals("")
+                        ? region.label
+                        : region.name.split("-").get(1)
                 state = rootSCChart.rootStates.filter[s|s.name.equals(name)].head
                 vo = findValuedObjectByName(state, depVar, false, region)
+            }
+
+            // if the if-stmt in which the break stmt is, contains the depVar as output, the vo is this output
+            val parentVarList = getStateVariables(parentState).get(depVar)
+            if (state.name.startsWith(whileName + ssaNameSeperator) && parentVarList !== null && !parentVarList.filter [
+                it.isOutput
+            ].isEmpty) {
+                /* Since the output of the if-stmt is not the correct input for the break stmt, 
+                 * we need to select the correct one.
+                 * The correct one is the variable that is directly before this output variable in the list 
+                 * of the while state.
+                 */
+                val varList = getStateVariables(state).get(depVar)
+                if (varList !== null && varList.length >= 3) {
+                    vo = varList.get(varList.length - 3)
+                }
             }
             vars.add(vo)
         }
