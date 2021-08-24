@@ -246,10 +246,12 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
     // needed to add break/continue states to the correct while state
     /** the recent while region that was created */
     var DataflowRegion lastWhileRegion = null
+    /** the top if-state in a while-stmt that contains the break stmt */
+    var State topIfState = null
     /** flag whether a break or continue statement is in a while statement */
     var breakContinueFlag = false
     // needed to add return states to the correct function state
-    /** the recent fucntion region that was created */
+    /** the recent function region that was created */
     var DataflowRegion lastFuncRegion = null
 
     /** parent region of a state */
@@ -981,10 +983,14 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         addAdditionalDeclarations(additionalDeclarations, bodyState, dfRegion)
         
         // set the variables for the recent regions if necessary
+        val saveTopIf = topIfState
         if (body.parent instanceof IASTFunctionDefinition) {
             lastFuncRegion = dfRegion
         } else if (bodyState.name.contains(whileName + ssaNameSeperator)) {
             lastWhileRegion = dfRegion
+            topIfState = null;
+        } else if (bodyState.name.contains(ifName + ssaNameSeperator) && topIfState === null) {
+            topIfState = bodyState
         }
 
         // fill the dataflow region
@@ -996,6 +1002,8 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 lastWhileRegion = dfRegion
             }
         }
+        
+        topIfState = saveTopIf
         
         // if the dataflow region is for a while state and contains a break/continue statement, finalize their multiplexer states
         if (breakContinueFlag && (bodyState.name.contains(whileName + ssaNameSeperator)) ||
@@ -2449,7 +2457,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
     }
     
     /**
-     * Adds the newState to the parentState and sets some inputs.
+     * Adds the newState to the parentState and sets the positive inputs.
      * @param topRegion The region to which the {@code newSTate} should be added.
      * @param newState The state for the break/continue/return.
      * @param newStateName The name for {@code newState}
@@ -2490,8 +2498,8 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 vo = findValuedObjectByName(state, depVar, false, region)
             }
 
-            // if the if-stmt in which the break stmt is, contains the depVar as output, the vo is this output
-            val parentVarList = getStateVariables(parentState).get(depVar)
+            // if the top if-stmt in the while (in which the break stmt is) contains the depVar as output, the vo is this output
+            val parentVarList = getStateVariables(topIfState).get(depVar)
             if (state.name.startsWith(whileName + ssaNameSeperator) && parentVarList !== null && !parentVarList.filter [
                 it.isOutput
             ].isEmpty) {
