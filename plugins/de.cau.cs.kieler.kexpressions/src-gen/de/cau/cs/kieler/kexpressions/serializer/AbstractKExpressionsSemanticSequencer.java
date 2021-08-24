@@ -33,6 +33,7 @@ import de.cau.cs.kieler.kexpressions.ScheduleObjectReference;
 import de.cau.cs.kieler.kexpressions.StaticAccessExpression;
 import de.cau.cs.kieler.kexpressions.StringValue;
 import de.cau.cs.kieler.kexpressions.TextExpression;
+import de.cau.cs.kieler.kexpressions.ThisExpression;
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference;
 import de.cau.cs.kieler.kexpressions.VectorValue;
 import de.cau.cs.kieler.kexpressions.services.KExpressionsGrammarAccess;
@@ -933,6 +934,9 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 					return; 
 				}
 				else break;
+			case KExpressionsPackage.THIS_EXPRESSION:
+				sequence_ThisExpression(context, (ThisExpression) semanticObject); 
+				return; 
 			case KExpressionsPackage.VALUED_OBJECT_REFERENCE:
 				if (rule == grammarAccess.getBoolScheduleExpressionRule()) {
 					sequence_BoolScheduleExpression_ValuedObjectReference(context, (ValuedObjectReference) semanticObject); 
@@ -2240,7 +2244,10 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     BoolScheduleExpression returns VectorValue
 	 *
 	 * Constraint:
-	 *     (values+=VectorValueMember values+=VectorValueMember* schedule+=ScheduleObjectReference?)
+	 *     (
+	 *         ((values+=VectorValueMember values+=VectorValueMember*) | (values+=IntValue range?='to' (values+=IntValue | values+=ValuedObjectReference))) 
+	 *         schedule+=ScheduleObjectReference?
+	 *     )
 	 */
 	protected void sequence_BoolScheduleExpression_VectorValue(ISerializationContext context, VectorValue semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -3144,6 +3151,18 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	
 	/**
 	 * Contexts:
+	 *     ThisExpression returns ThisExpression
+	 *
+	 * Constraint:
+	 *     {ThisExpression}
+	 */
+	protected void sequence_ThisExpression(ISerializationContext context, ThisExpression semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     Root returns ValuedObjectReference
 	 *     Expression returns ValuedObjectReference
 	 *     BoolExpression returns ValuedObjectReference
@@ -3286,7 +3305,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     VectorValueMember returns VectorValue
 	 *
 	 * Constraint:
-	 *     (values+=VectorValueMember values+=VectorValueMember*)
+	 *     ((values+=VectorValueMember values+=VectorValueMember*) | (values+=IntValue range?='to' (values+=IntValue | values+=ValuedObjectReference)))
 	 */
 	protected void sequence_VectorValue(ISerializationContext context, VectorValue semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

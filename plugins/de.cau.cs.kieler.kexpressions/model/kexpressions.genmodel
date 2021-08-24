@@ -116,6 +116,7 @@
     </genClasses>
     <genClasses ecoreClass="kexpressions.ecore#//VectorValue">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference kexpressions.ecore#//VectorValue/values"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute kexpressions.ecore#//VectorValue/range"/>
     </genClasses>
     <genClasses ecoreClass="kexpressions.ecore#//IgnoreValue"/>
     <genClasses ecoreClass="kexpressions.ecore#//JsonPragma">
@@ -160,6 +161,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute kexpressions.ecore#//VariableDeclaration/hostType"/>
     </genClasses>
     <genClasses ecoreClass="kexpressions.ecore#//ReferenceDeclaration">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute kexpressions.ecore#//ReferenceDeclaration/input"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference kexpressions.ecore#//ReferenceDeclaration/reference"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference kexpressions.ecore#//ReferenceDeclaration/referenceContainer"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference kexpressions.ecore#//ReferenceDeclaration/parameters"/>
@@ -218,5 +220,6 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference kexpressions.ecore#//StaticAccessExpression/subReference"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference kexpressions.ecore#//StaticAccessExpression/target"/>
     </genClasses>
+    <genClasses ecoreClass="kexpressions.ecore#//ThisExpression"/>
   </genPackages>
 </genmodel:GenModel>

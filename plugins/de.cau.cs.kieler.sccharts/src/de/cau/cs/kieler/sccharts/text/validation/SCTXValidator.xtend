@@ -871,6 +871,12 @@ class SCTXValidator extends AbstractSCTXValidator {
     def void checkScopeCall(ScopeCall scopeCall) {
         if (scopeCall.eContainer instanceof Scope) {
             if (scopeCall.^super) {
+                if (!scopeCall.parameters.empty) {
+                    error("A reference to a super scope must not have parameters!", scopeCall, KExpressionsPackage.eINSTANCE.call_Parameters);
+                }
+                if (!scopeCall.genericParameters.empty) {
+                    error("A reference to a super scope must not have generic parameters!", scopeCall, SCChartsPackage.eINSTANCE.scopeCall_GenericParameters);
+                }
                 return // No binding -> no checks
             }
             val bindings = scopeCall.eContainer.asScope.createBindings
@@ -927,6 +933,24 @@ class SCTXValidator extends AbstractSCTXValidator {
         
         if (decl.hasAnnotation("noBindingCheck")) {
             return
+        }
+        
+        if (decl.input) {
+            if (!decl.parameters.empty) {
+                error("An input reference must not have parameters!", decl, KExpressionsPackage.eINSTANCE.referenceDeclaration_Parameters);
+            }
+            if (!decl.genericParameters.empty) {
+                error("An input reference must not have generic parameters!", decl, KExpressionsPackage.eINSTANCE.referenceDeclaration_GenericParameters);
+            }
+            for (vo : decl.valuedObjects) {
+                if (!vo.parameters.empty) {
+                    error("An input reference must not have parameters!", vo, KExpressionsPackage.eINSTANCE.valuedObject_Parameters);
+                }
+                if (!vo.genericParameters.empty) {
+                    error("An input reference must not have generic parameters!", vo, KExpressionsPackage.eINSTANCE.valuedObject_GenericParameters);
+                }
+            }
+            return // No binding -> no checks
         }
         
         val parent = decl.nextScope

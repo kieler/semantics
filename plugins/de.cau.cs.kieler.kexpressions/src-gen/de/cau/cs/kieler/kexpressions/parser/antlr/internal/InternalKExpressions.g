@@ -3706,51 +3706,128 @@ ruleVectorValue returns [EObject current=null]
 		}
 		(
 			(
-				{
-					newCompositeNode(grammarAccess.getVectorValueAccess().getValuesVectorValueMemberParserRuleCall_1_0());
-				}
-				lv_values_1_0=ruleVectorValueMember
-				{
-					if ($current==null) {
-						$current = createModelElementForParent(grammarAccess.getVectorValueRule());
+				(
+					(
+						{
+							newCompositeNode(grammarAccess.getVectorValueAccess().getValuesVectorValueMemberParserRuleCall_1_0_0_0());
+						}
+						lv_values_1_0=ruleVectorValueMember
+						{
+							if ($current==null) {
+								$current = createModelElementForParent(grammarAccess.getVectorValueRule());
+							}
+							add(
+								$current,
+								"values",
+								lv_values_1_0,
+								"de.cau.cs.kieler.kexpressions.KExpressions.VectorValueMember");
+							afterParserOrEnumRuleCall();
+						}
+					)
+				)
+				(
+					otherlv_2=','
+					{
+						newLeafNode(otherlv_2, grammarAccess.getVectorValueAccess().getCommaKeyword_1_0_1_0());
 					}
-					add(
-						$current,
-						"values",
-						lv_values_1_0,
-						"de.cau.cs.kieler.kexpressions.KExpressions.VectorValueMember");
-					afterParserOrEnumRuleCall();
-				}
+					(
+						(
+							{
+								newCompositeNode(grammarAccess.getVectorValueAccess().getValuesVectorValueMemberParserRuleCall_1_0_1_1_0());
+							}
+							lv_values_3_0=ruleVectorValueMember
+							{
+								if ($current==null) {
+									$current = createModelElementForParent(grammarAccess.getVectorValueRule());
+								}
+								add(
+									$current,
+									"values",
+									lv_values_3_0,
+									"de.cau.cs.kieler.kexpressions.KExpressions.VectorValueMember");
+								afterParserOrEnumRuleCall();
+							}
+						)
+					)
+				)*
 			)
-		)
-		(
-			otherlv_2=','
-			{
-				newLeafNode(otherlv_2, grammarAccess.getVectorValueAccess().getCommaKeyword_2_0());
-			}
+			    |
 			(
 				(
-					{
-						newCompositeNode(grammarAccess.getVectorValueAccess().getValuesVectorValueMemberParserRuleCall_2_1_0());
-					}
-					lv_values_3_0=ruleVectorValueMember
-					{
-						if ($current==null) {
-							$current = createModelElementForParent(grammarAccess.getVectorValueRule());
+					(
+						{
+							newCompositeNode(grammarAccess.getVectorValueAccess().getValuesIntValueParserRuleCall_1_1_0_0());
 						}
-						add(
-							$current,
-							"values",
-							lv_values_3_0,
-							"de.cau.cs.kieler.kexpressions.KExpressions.VectorValueMember");
-						afterParserOrEnumRuleCall();
-					}
+						lv_values_4_0=ruleIntValue
+						{
+							if ($current==null) {
+								$current = createModelElementForParent(grammarAccess.getVectorValueRule());
+							}
+							add(
+								$current,
+								"values",
+								lv_values_4_0,
+								"de.cau.cs.kieler.kexpressions.KExpressions.IntValue");
+							afterParserOrEnumRuleCall();
+						}
+					)
+				)
+				(
+					(
+						lv_range_5_0='to'
+						{
+							newLeafNode(lv_range_5_0, grammarAccess.getVectorValueAccess().getRangeToKeyword_1_1_1_0());
+						}
+						{
+							if ($current==null) {
+								$current = createModelElement(grammarAccess.getVectorValueRule());
+							}
+							setWithLastConsumed($current, "range", lv_range_5_0 != null, "to");
+						}
+					)
+				)
+				(
+					(
+						(
+							{
+								newCompositeNode(grammarAccess.getVectorValueAccess().getValuesIntValueParserRuleCall_1_1_2_0_0());
+							}
+							lv_values_6_1=ruleIntValue
+							{
+								if ($current==null) {
+									$current = createModelElementForParent(grammarAccess.getVectorValueRule());
+								}
+								add(
+									$current,
+									"values",
+									lv_values_6_1,
+									"de.cau.cs.kieler.kexpressions.KExpressions.IntValue");
+								afterParserOrEnumRuleCall();
+							}
+							    |
+							{
+								newCompositeNode(grammarAccess.getVectorValueAccess().getValuesValuedObjectReferenceParserRuleCall_1_1_2_0_1());
+							}
+							lv_values_6_2=ruleValuedObjectReference
+							{
+								if ($current==null) {
+									$current = createModelElementForParent(grammarAccess.getVectorValueRule());
+								}
+								add(
+									$current,
+									"values",
+									lv_values_6_2,
+									"de.cau.cs.kieler.kexpressions.KExpressions.ValuedObjectReference");
+								afterParserOrEnumRuleCall();
+							}
+						)
+					)
 				)
 			)
-		)*
-		otherlv_4='}'
+		)
+		otherlv_7='}'
 		{
-			newLeafNode(otherlv_4, grammarAccess.getVectorValueAccess().getRightCurlyBracketKeyword_3());
+			newLeafNode(otherlv_7, grammarAccess.getVectorValueAccess().getRightCurlyBracketKeyword_2());
 		}
 	)
 ;

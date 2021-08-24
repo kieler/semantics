@@ -53,6 +53,8 @@ public class KEffectsParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getFunctionCallAccess().getAlternatives_2(), "rule__FunctionCall__Alternatives_2");
 			builder.put(grammarAccess.getPrintCallAccess().getAlternatives_2(), "rule__PrintCall__Alternatives_2");
 			builder.put(grammarAccess.getParameterAccess().getAlternatives(), "rule__Parameter__Alternatives");
+			builder.put(grammarAccess.getVectorValueAccess().getAlternatives_1(), "rule__VectorValue__Alternatives_1");
+			builder.put(grammarAccess.getVectorValueAccess().getValuesAlternatives_1_1_2_0(), "rule__VectorValue__ValuesAlternatives_1_1_2_0");
 			builder.put(grammarAccess.getVectorValueMemberAccess().getAlternatives(), "rule__VectorValueMember__Alternatives");
 			builder.put(grammarAccess.getAnyTypeAccess().getAlternatives(), "rule__AnyType__Alternatives");
 			builder.put(grammarAccess.getAnyValueAccess().getAlternatives(), "rule__AnyValue__Alternatives");
@@ -218,7 +220,9 @@ public class KEffectsParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getParameterAccess().getGroup_0(), "rule__Parameter__Group_0__0");
 			builder.put(grammarAccess.getTextExpressionAccess().getGroup(), "rule__TextExpression__Group__0");
 			builder.put(grammarAccess.getVectorValueAccess().getGroup(), "rule__VectorValue__Group__0");
-			builder.put(grammarAccess.getVectorValueAccess().getGroup_2(), "rule__VectorValue__Group_2__0");
+			builder.put(grammarAccess.getVectorValueAccess().getGroup_1_0(), "rule__VectorValue__Group_1_0__0");
+			builder.put(grammarAccess.getVectorValueAccess().getGroup_1_0_1(), "rule__VectorValue__Group_1_0_1__0");
+			builder.put(grammarAccess.getVectorValueAccess().getGroup_1_1(), "rule__VectorValue__Group_1_1__0");
 			builder.put(grammarAccess.getIgnoreValueAccess().getGroup(), "rule__IgnoreValue__Group__0");
 			builder.put(grammarAccess.getJsonObjectValueAccess().getGroup(), "rule__JsonObjectValue__Group__0");
 			builder.put(grammarAccess.getJsonObjectValueAccess().getGroup_2(), "rule__JsonObjectValue__Group_2__0");
@@ -230,6 +234,7 @@ public class KEffectsParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getNullValueAccess().getGroup(), "rule__NullValue__Group__0");
 			builder.put(grammarAccess.getJsonPragmaAccess().getGroup(), "rule__JsonPragma__Group__0");
 			builder.put(grammarAccess.getJsonAnnotationAccess().getGroup(), "rule__JsonAnnotation__Group__0");
+			builder.put(grammarAccess.getThisExpressionAccess().getGroup(), "rule__ThisExpression__Group__0");
 			builder.put(grammarAccess.getTagAnnotationAccess().getGroup(), "rule__TagAnnotation__Group__0");
 			builder.put(grammarAccess.getPragmaTagAccess().getGroup(), "rule__PragmaTag__Group__0");
 			builder.put(grammarAccess.getKeyStringValueAnnotationAccess().getGroup(), "rule__KeyStringValueAnnotation__Group__0");
@@ -401,8 +406,11 @@ public class KEffectsParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getFloatValueAccess().getValueAssignment(), "rule__FloatValue__ValueAssignment");
 			builder.put(grammarAccess.getBoolValueAccess().getValueAssignment(), "rule__BoolValue__ValueAssignment");
 			builder.put(grammarAccess.getStringValueAccess().getValueAssignment(), "rule__StringValue__ValueAssignment");
-			builder.put(grammarAccess.getVectorValueAccess().getValuesAssignment_1(), "rule__VectorValue__ValuesAssignment_1");
-			builder.put(grammarAccess.getVectorValueAccess().getValuesAssignment_2_1(), "rule__VectorValue__ValuesAssignment_2_1");
+			builder.put(grammarAccess.getVectorValueAccess().getValuesAssignment_1_0_0(), "rule__VectorValue__ValuesAssignment_1_0_0");
+			builder.put(grammarAccess.getVectorValueAccess().getValuesAssignment_1_0_1_1(), "rule__VectorValue__ValuesAssignment_1_0_1_1");
+			builder.put(grammarAccess.getVectorValueAccess().getValuesAssignment_1_1_0(), "rule__VectorValue__ValuesAssignment_1_1_0");
+			builder.put(grammarAccess.getVectorValueAccess().getRangeAssignment_1_1_1(), "rule__VectorValue__RangeAssignment_1_1_1");
+			builder.put(grammarAccess.getVectorValueAccess().getValuesAssignment_1_1_2(), "rule__VectorValue__ValuesAssignment_1_1_2");
 			builder.put(grammarAccess.getJsonObjectValueAccess().getMembersAssignment_2_0(), "rule__JsonObjectValue__MembersAssignment_2_0");
 			builder.put(grammarAccess.getJsonObjectValueAccess().getMembersAssignment_2_1_1(), "rule__JsonObjectValue__MembersAssignment_2_1_1");
 			builder.put(grammarAccess.getJsonObjectMemberAccess().getKeyAssignment_0(), "rule__JsonObjectMember__KeyAssignment_0");

@@ -37,6 +37,7 @@ import de.cau.cs.kieler.kexpressions.ScheduleObjectReference;
 import de.cau.cs.kieler.kexpressions.StaticAccessExpression;
 import de.cau.cs.kieler.kexpressions.StringValue;
 import de.cau.cs.kieler.kexpressions.TextExpression;
+import de.cau.cs.kieler.kexpressions.ThisExpression;
 import de.cau.cs.kieler.kexpressions.ValueTypeReference;
 import de.cau.cs.kieler.kexpressions.ValuedObject;
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference;
@@ -1110,6 +1111,9 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 					return; 
 				}
 				else break;
+			case KExpressionsPackage.THIS_EXPRESSION:
+				sequence_ThisExpression(context, (ThisExpression) semanticObject); 
+				return; 
 			case KExpressionsPackage.VALUE_TYPE_REFERENCE:
 				sequence_ValueTypeReference(context, (ValueTypeReference) semanticObject); 
 				return; 
@@ -1589,11 +1593,6 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	 *     (
 	 *         annotations+=Annotation* 
 	 *         access=AccessModifier? 
-	 *         const?='const'? 
-	 *         input?='input'? 
-	 *         output?='output'? 
-	 *         global?='global'? 
-	 *         static?='static'? 
 	 *         host?='host'? 
 	 *         (
 	 *             (type=ClassType name=EString? policy=PolicyRegion? declarations+=DeclarationOrMethodWOSemicolon*) | 
@@ -1907,6 +1906,7 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	 *             access=AccessModifier? 
 	 *             (
 	 *                 (
+	 *                     input?='input'? 
 	 *                     referenceContainer=[NamedObject|PrimeID]? 
 	 *                     reference=[NamedObject|PrimeID] 
 	 *                     (genericParameters+=GenericParameter genericParameters+=GenericParameter*)? 
@@ -1922,6 +1922,7 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	 *             access=AccessModifier? 
 	 *             (
 	 *                 (
+	 *                     input?='input'? 
 	 *                     referenceContainer=[NamedObject|PrimeID]? 
 	 *                     reference=[NamedObject|PrimeID] 
 	 *                     (genericParameters+=GenericParameter genericParameters+=GenericParameter*)? 
@@ -2049,7 +2050,7 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	 *
 	 * Constraint:
 	 *     (
-	 *         ((accessType=ParameterAccessType expression=ValuedObjectReference) | expression=Expression) 
+	 *         ((accessType=ParameterAccessType expression=ValuedObjectReference) | expression=ThisExpression | expression=Expression) 
 	 *         (explicitBinding=[ValuedObject|ID] explicitBindingIndices+=Expression*)?
 	 *     )
 	 */

@@ -27,6 +27,7 @@ import de.cau.cs.kieler.kexpressions.Parameter
 import de.cau.cs.kieler.kexpressions.ReferenceCall
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 import de.cau.cs.kieler.kexpressions.StaticAccessExpression
+import de.cau.cs.kieler.kexpressions.ThisExpression
 import de.cau.cs.kieler.kexpressions.Value
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValueTypeReference
@@ -311,7 +312,7 @@ class Reference extends SCChartsProcessor implements Traceable {
         
         
         // Remove the input/output declarations from the new state. They should be bound by now.
-        newScope.declarations.removeIf[ if (it instanceof VariableDeclaration) { input || output } else false ]
+        newScope.declarations.removeIf[ input || output ]
         // Add the new variables names to the name set.
         
         snapshot
@@ -571,6 +572,30 @@ class Reference extends SCChartsProcessor implements Traceable {
                 if (valuedObjectReference.subReference !== null) {
                     valuedObjectReference.subReference.replaceReferences(replacements)
                 }
+            } else if (newRef instanceof ThisExpression) {
+                if (valuedObjectReference.subReference !== null) {
+                    // Replace by sub ref (implicit this)
+                    val sub = valuedObjectReference.subReference
+                    val rootStateOfThis = newRef.nextScope.rootState
+                    val rootStateVO = rootStateOfThis.valuedObjects.findFirst[it.name.equals(sub.valuedObject.name)]
+                    
+                    valuedObjectReference.valuedObject = rootStateVO !== null ? rootStateVO : sub.valuedObject
+
+                    valuedObjectReference.indices.clear
+                    valuedObjectReference.indices += sub.indices
+                    for (index : valuedObjectReference.indices) {
+                        index.replaceReferences(replacements)
+                    }
+                    
+                    valuedObjectReference.schedule += sub.schedule
+                    
+                    valuedObjectReference.subReference = sub.subReference
+                    if (valuedObjectReference.subReference !== null) {
+                        valuedObjectReference.subReference.replaceReferences(replacements)
+                    }
+                } else {// Remove VOR entirely
+                    valuedObjectReference.remove
+                }
             } else if (newRef instanceof Value) {
                 // If the replacement is a literal, delegate.
                 valuedObjectReference.replaceReferenceWithLiteral(newRef)
@@ -727,7 +752,7 @@ class Reference extends SCChartsProcessor implements Traceable {
         if (!environment.getProperty(RENAME_SHADOWED_VARIABLES))
             return;
             
-        val VOs = scope.eAllContents.filter(VariableDeclaration).filter[ !input && !output ].map[ valuedObjects ].toIterable.flatten.toList
+        val VOs = scope.eAllContents.filter(Declaration).filter[ !input && !output ].map[ valuedObjects ].toIterable.flatten.toList
 //        val replacementVONames = replacements.values.filter(Stack).map[ it.head ].
 //            filter(ValuedObjectReference).map[ valuedObject ].map[ name ].toSet
         
@@ -788,7 +813,7 @@ class Reference extends SCChartsProcessor implements Traceable {
         val initialSnapshotsFlag = environment.getProperty(Environment.SNAPSHOTS_ENABLED)
         environment.setProperty(Environment.SNAPSHOTS_ENABLED, false)
         
-        val scopesWithReferencesDecl = state.allScopes.filter[ !declarations.filter(ReferenceDeclaration).filter[reference !== null].empty ].toList
+        val scopesWithReferencesDecl = state.allScopes.filter[ !declarations.filter(ReferenceDeclaration).filter[reference !== null && !input].empty ].toList
         for (scope : scopesWithReferencesDecl) {
             val refs = scope.declarations.filter(ReferenceDeclaration).filter[reference !== null].toList
             refs.separateGenericTypeDependentReferenceDeclarations
@@ -804,7 +829,10 @@ class Reference extends SCChartsProcessor implements Traceable {
                     val replacements = new Replacements(parentReplacements)
                     val bindings = ref.valuedObjects.head.createBindings(replacements)
                     for (binding : bindings) {
-                        if (binding.errors > 0) {
+                        // FIXME: Subtyping cannot be checked during compilation because some relations are already gone
+                        // Assumes that the validator invalidated these model before
+                        val ignoreSubtypeErrors = binding.targetValuedObject?.declaration instanceof ReferenceDeclaration
+                        if (binding.errors > 0 && !ignoreSubtypeErrors) {
                             environment.errors.add("There are binding errors in a state with reference declaration of "
                                 + ref.valuedObjects.map[name].join("/") + "!\n"
                                 + binding.errorMessages.join("\n"), 
@@ -843,7 +871,7 @@ class Reference extends SCChartsProcessor implements Traceable {
                     classDecl.addStringAnnotation(REF_CLASS_ORIGIN, Iterables.concat(#[refTarget.name], refTarget.baseStates.map[name]))
                     
                     // Remove the input/output declarations from the new class. They should be bound beforehand.
-                    classDecl.declarations.removeIf[ if (it instanceof VariableDeclaration) { input || output } else false ]
+                    classDecl.declarations.removeIf[ input || output ]
                     // All declarations will be public to enable access by regions that are moved outside the class
                     classDecl.declarations.forEach[ access = AccessModifier.PUBLIC ]
                     // Clear parameters
@@ -851,6 +879,9 @@ class Reference extends SCChartsProcessor implements Traceable {
                     
                     val classVOs = classDecl.innerValuedObjects.toSet
                     ref.replace(classDecl)
+                    if (classDecl.declarations.empty) {
+                        classDecl.remove
+                    }
                     
                     // Fix Methods
                     // WHY ???
@@ -891,6 +922,7 @@ class Reference extends SCChartsProcessor implements Traceable {
                             }
                         }
                         for (x : 0..allCardinalities-1) {
+                            // Clone regions
                             for (region : newState.regions) {
                                 val newRegion = region.copy
                                 newRegion.name = vo.name + (region.name?:"default")
@@ -904,6 +936,7 @@ class Reference extends SCChartsProcessor implements Traceable {
                                 }
                                 targetContainerState.regions += newRegion
                             }
+                            // Clone regions
                             for (action : newState.actions) {
                                 val newAction = action.copy
                                 for (vor : newAction.eAllContents.filter(ValuedObjectReference).toList) {

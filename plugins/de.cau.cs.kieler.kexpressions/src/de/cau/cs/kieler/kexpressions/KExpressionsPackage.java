@@ -465,13 +465,22 @@ public interface KExpressionsPackage extends EPackage {
     int VECTOR_VALUE__VALUES = VALUE_FEATURE_COUNT + 0;
 
     /**
+     * The feature id for the '<em><b>Range</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int VECTOR_VALUE__RANGE = VALUE_FEATURE_COUNT + 1;
+
+    /**
      * The number of structural features of the '<em>Vector Value</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int VECTOR_VALUE_FEATURE_COUNT = VALUE_FEATURE_COUNT + 1;
+    int VECTOR_VALUE_FEATURE_COUNT = VALUE_FEATURE_COUNT + 2;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.impl.IgnoreValueImpl <em>Ignore Value</em>}' class.
@@ -1026,13 +1035,22 @@ public interface KExpressionsPackage extends EPackage {
     int REFERENCE_DECLARATION__ACCESS = DECLARATION__ACCESS;
 
     /**
+     * The feature id for the '<em><b>Input</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int REFERENCE_DECLARATION__INPUT = DECLARATION_FEATURE_COUNT + 0;
+
+    /**
      * The feature id for the '<em><b>Reference</b></em>' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int REFERENCE_DECLARATION__REFERENCE = DECLARATION_FEATURE_COUNT + 0;
+    int REFERENCE_DECLARATION__REFERENCE = DECLARATION_FEATURE_COUNT + 1;
 
     /**
      * The feature id for the '<em><b>Reference Container</b></em>' reference.
@@ -1041,7 +1059,7 @@ public interface KExpressionsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int REFERENCE_DECLARATION__REFERENCE_CONTAINER = DECLARATION_FEATURE_COUNT + 1;
+    int REFERENCE_DECLARATION__REFERENCE_CONTAINER = DECLARATION_FEATURE_COUNT + 2;
 
     /**
      * The feature id for the '<em><b>Parameters</b></em>' containment reference list.
@@ -1050,7 +1068,7 @@ public interface KExpressionsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int REFERENCE_DECLARATION__PARAMETERS = DECLARATION_FEATURE_COUNT + 2;
+    int REFERENCE_DECLARATION__PARAMETERS = DECLARATION_FEATURE_COUNT + 3;
 
     /**
      * The feature id for the '<em><b>Extern</b></em>' containment reference list.
@@ -1059,7 +1077,7 @@ public interface KExpressionsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int REFERENCE_DECLARATION__EXTERN = DECLARATION_FEATURE_COUNT + 3;
+    int REFERENCE_DECLARATION__EXTERN = DECLARATION_FEATURE_COUNT + 4;
 
     /**
      * The feature id for the '<em><b>Generic Parameters</b></em>' containment reference list.
@@ -1068,7 +1086,7 @@ public interface KExpressionsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int REFERENCE_DECLARATION__GENERIC_PARAMETERS = DECLARATION_FEATURE_COUNT + 4;
+    int REFERENCE_DECLARATION__GENERIC_PARAMETERS = DECLARATION_FEATURE_COUNT + 5;
 
     /**
      * The number of structural features of the '<em>Reference Declaration</em>' class.
@@ -1077,7 +1095,7 @@ public interface KExpressionsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int REFERENCE_DECLARATION_FEATURE_COUNT = DECLARATION_FEATURE_COUNT + 5;
+    int REFERENCE_DECLARATION_FEATURE_COUNT = DECLARATION_FEATURE_COUNT + 6;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.impl.GenericParameterDeclarationImpl <em>Generic Parameter Declaration</em>}' class.
@@ -1870,6 +1888,34 @@ public interface KExpressionsPackage extends EPackage {
     int STATIC_ACCESS_EXPRESSION_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 2;
 
     /**
+     * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.impl.ThisExpressionImpl <em>This Expression</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.kexpressions.impl.ThisExpressionImpl
+     * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getThisExpression()
+     * @generated
+     */
+    int THIS_EXPRESSION = 38;
+
+    /**
+     * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int THIS_EXPRESSION__SCHEDULE = EXPRESSION__SCHEDULE;
+
+    /**
+     * The number of structural features of the '<em>This Expression</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int THIS_EXPRESSION_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 0;
+
+    /**
      * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.CombineOperator <em>Combine Operator</em>}' enum.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1877,7 +1923,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getCombineOperator()
      * @generated
      */
-    int COMBINE_OPERATOR = 38;
+    int COMBINE_OPERATOR = 39;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.OperatorType <em>Operator Type</em>}' enum.
@@ -1887,7 +1933,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getOperatorType()
      * @generated
      */
-    int OPERATOR_TYPE = 39;
+    int OPERATOR_TYPE = 40;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.ValueType <em>Value Type</em>}' enum.
@@ -1897,7 +1943,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getValueType()
      * @generated
      */
-    int VALUE_TYPE = 40;
+    int VALUE_TYPE = 41;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.PriorityProtocol <em>Priority Protocol</em>}' enum.
@@ -1907,7 +1953,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getPriorityProtocol()
      * @generated
      */
-    int PRIORITY_PROTOCOL = 41;
+    int PRIORITY_PROTOCOL = 42;
 
 
     /**
@@ -1918,7 +1964,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getParameterAccessType()
      * @generated
      */
-    int PARAMETER_ACCESS_TYPE = 42;
+    int PARAMETER_ACCESS_TYPE = 43;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.AccessModifier <em>Access Modifier</em>}' enum.
@@ -1928,7 +1974,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getAccessModifier()
      * @generated
      */
-    int ACCESS_MODIFIER = 43;
+    int ACCESS_MODIFIER = 44;
 
 
     /**
@@ -2174,6 +2220,17 @@ public interface KExpressionsPackage extends EPackage {
      * @generated
      */
     EReference getVectorValue_Values();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kexpressions.VectorValue#isRange <em>Range</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Range</em>'.
+     * @see de.cau.cs.kieler.kexpressions.VectorValue#isRange()
+     * @see #getVectorValue()
+     * @generated
+     */
+    EAttribute getVectorValue_Range();
 
     /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.kexpressions.IgnoreValue <em>Ignore Value</em>}'.
@@ -2525,6 +2582,17 @@ public interface KExpressionsPackage extends EPackage {
      * @generated
      */
     EClass getReferenceDeclaration();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kexpressions.ReferenceDeclaration#isInput <em>Input</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Input</em>'.
+     * @see de.cau.cs.kieler.kexpressions.ReferenceDeclaration#isInput()
+     * @see #getReferenceDeclaration()
+     * @generated
+     */
+    EAttribute getReferenceDeclaration_Input();
 
     /**
      * Returns the meta object for the reference '{@link de.cau.cs.kieler.kexpressions.ReferenceDeclaration#getReference <em>Reference</em>}'.
@@ -3005,6 +3073,16 @@ public interface KExpressionsPackage extends EPackage {
     EReference getStaticAccessExpression_Target();
 
     /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.kexpressions.ThisExpression <em>This Expression</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>This Expression</em>'.
+     * @see de.cau.cs.kieler.kexpressions.ThisExpression
+     * @generated
+     */
+    EClass getThisExpression();
+
+    /**
      * Returns the meta object for enum '{@link de.cau.cs.kieler.kexpressions.CombineOperator <em>Combine Operator</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -3287,6 +3365,14 @@ public interface KExpressionsPackage extends EPackage {
          * @generated
          */
         EReference VECTOR_VALUE__VALUES = eINSTANCE.getVectorValue_Values();
+
+        /**
+         * The meta object literal for the '<em><b>Range</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute VECTOR_VALUE__RANGE = eINSTANCE.getVectorValue_Range();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.kexpressions.impl.IgnoreValueImpl <em>Ignore Value</em>}' class.
@@ -3575,6 +3661,14 @@ public interface KExpressionsPackage extends EPackage {
          * @generated
          */
         EClass REFERENCE_DECLARATION = eINSTANCE.getReferenceDeclaration();
+
+        /**
+         * The meta object literal for the '<em><b>Input</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute REFERENCE_DECLARATION__INPUT = eINSTANCE.getReferenceDeclaration_Input();
 
         /**
          * The meta object literal for the '<em><b>Reference</b></em>' reference feature.
@@ -3969,6 +4063,16 @@ public interface KExpressionsPackage extends EPackage {
          * @generated
          */
         EReference STATIC_ACCESS_EXPRESSION__TARGET = eINSTANCE.getStaticAccessExpression_Target();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.kexpressions.impl.ThisExpressionImpl <em>This Expression</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.kexpressions.impl.ThisExpressionImpl
+         * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getThisExpression()
+         * @generated
+         */
+        EClass THIS_EXPRESSION = eINSTANCE.getThisExpression();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.kexpressions.CombineOperator <em>Combine Operator</em>}' enum.

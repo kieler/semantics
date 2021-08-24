@@ -2045,7 +2045,11 @@ public class KEffectsGrammarAccess extends AbstractElementFinder.AbstractGrammar
 	}
 	
 	//VectorValue returns VectorValue:
-	//    '{' values+=VectorValueMember (',' values+=VectorValueMember)* '}';
+	//    '{' (
+	//        values+=VectorValueMember (',' values+=VectorValueMember)*
+	//        |
+	//        values+=IntValue range?='to' values+=(IntValue | ValuedObjectReference)
+	//    ) '}';
 	public KExpressionsGrammarAccess.VectorValueElements getVectorValueAccess() {
 		return gaKExpressions.getVectorValueAccess();
 	}
@@ -2559,6 +2563,18 @@ public class KEffectsGrammarAccess extends AbstractElementFinder.AbstractGrammar
 	
 	public ParserRule getQuotedStringAnnotationRule() {
 		return getQuotedStringAnnotationAccess().getRule();
+	}
+	
+	//// OO
+	//ThisExpression returns ThisExpression:
+	//    {ThisExpression}
+	//    'this';
+	public KExpressionsGrammarAccess.ThisExpressionElements getThisExpressionAccess() {
+		return gaKExpressions.getThisExpressionAccess();
+	}
+	
+	public ParserRule getThisExpressionRule() {
+		return getThisExpressionAccess().getRule();
 	}
 	
 	//// ------------------------ //

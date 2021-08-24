@@ -26,6 +26,8 @@ import de.cau.cs.kieler.scl.Statement
 import org.eclipse.xtext.Keyword
 import org.eclipse.xtext.validation.Check
 import org.eclipse.xtext.validation.CheckType
+import de.cau.cs.kieler.kexpressions.MethodDeclaration
+import de.cau.cs.kieler.kexpressions.Call
 
 //import org.eclipse.xtext.validation.Check
 
@@ -51,6 +53,8 @@ class SCLValidator extends AbstractSCLValidator {
     
     static val String ENUM_INIT = "An enum typed variable can only be initialized with a value of the correct enum type."
     static val String ENUM_ASSIGN = "Cannot assign enum value of an incompatible type."
+    
+    static val String NO_METHOD_REFERENCE = "Methods must be used with call syntax using parenthesis."
     
     @Inject extension KExpressionsDeclarationExtensions
     @Inject extension KExpressionsValuedObjectExtensions
@@ -164,6 +168,20 @@ class SCLValidator extends AbstractSCLValidator {
                 if (rDecl.isClass && asm.reference.subReference === null && !(asm.expression instanceof TextExpression)) {
                     error(NO_REFERENCE_TO_CLASS, asm.reference, null, -1)
                 }
+            }
+        }
+    }
+    
+    @Check
+    def void checkMethodCall(ValuedObjectReference vor) {
+        val decl = vor.valuedObject?.declaration
+        if (decl instanceof MethodDeclaration) {
+            var parent = vor
+            while(parent.isSubReference) {
+                parent = parent.eContainer as ValuedObjectReference
+            }
+            if (!(parent instanceof Call)) {
+                error(NO_METHOD_REFERENCE, vor, null, -1)
             }
         }
     }

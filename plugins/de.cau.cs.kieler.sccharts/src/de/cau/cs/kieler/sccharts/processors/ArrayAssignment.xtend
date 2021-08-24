@@ -93,6 +93,7 @@ class ArrayAssignment extends SCChartsProcessor implements Traceable {
      * y[0][0][1] = 1
      * y[0][1][0] = 2
      * y[0][1][1] = 3
+     * also expands { 1 to 5 } and { 1 to X }
      */
     def State transform(State rootState) {
         // Traverse all transitions
@@ -230,8 +231,16 @@ class ArrayAssignment extends SCChartsProcessor implements Traceable {
     }
 
     private def dispatch Expression computeVectorValues(VectorValue e) {
-        for (v : e.values.immutableCopy) {
-            v.replace(v.computeVectorValues)
+        if (e.range) {
+            val start = (e.values.head as IntValue).value
+            val end = (e.values.last as IntValue).value
+            e.values.clear
+            e.values.addAll((new IntegerRange(start, end)).map[createIntValue(it)])
+            e.range = false
+        } else {
+            for (v : e.values.immutableCopy) {
+                v.replace(v.computeVectorValues)
+            }
         }
         return e
     }

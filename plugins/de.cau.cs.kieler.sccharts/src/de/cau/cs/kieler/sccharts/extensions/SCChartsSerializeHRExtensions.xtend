@@ -173,6 +173,9 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
             if (declaration.access == AccessModifier.PROTECTED) {
                 components.addKeyword("protected")
             }
+            if (declaration.access == AccessModifier.PUBLIC) {
+                components.addKeyword("public")
+            }
             if (declaration.isExtern) {
                 components.addKeyword("extern")
             }
@@ -233,8 +236,10 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
                 }
                 if (declaration.reference instanceof NamedObject) {
                     components.addHighlight(containerPrefix + (declaration.reference as NamedObject).name)
-                } else {
+                } else if (declaration.reference instanceof ClassDeclaration) {
                     components.addHighlight(containerPrefix + declaration.reference.class.name)
+                } else {
+                    components.addHighlight("<BROKEN-REFERENCE>")
                 }
             } else {
                 components.addKeyword("extern")

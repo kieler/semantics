@@ -38,6 +38,7 @@ import de.cau.cs.kieler.kexpressions.ScheduleObjectReference;
 import de.cau.cs.kieler.kexpressions.StaticAccessExpression;
 import de.cau.cs.kieler.kexpressions.StringValue;
 import de.cau.cs.kieler.kexpressions.TextExpression;
+import de.cau.cs.kieler.kexpressions.ThisExpression;
 import de.cau.cs.kieler.kexpressions.ValueTypeReference;
 import de.cau.cs.kieler.kexpressions.ValuedObject;
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference;
@@ -1066,6 +1067,9 @@ public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequ
 					return; 
 				}
 				else break;
+			case KExpressionsPackage.THIS_EXPRESSION:
+				sequence_ThisExpression(context, (ThisExpression) semanticObject); 
+				return; 
 			case KExpressionsPackage.VALUE_TYPE_REFERENCE:
 				sequence_ValueTypeReference(context, (ValueTypeReference) semanticObject); 
 				return; 
@@ -1339,11 +1343,6 @@ public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequ
 	 *     (
 	 *         annotations+=Annotation* 
 	 *         access=AccessModifier? 
-	 *         const?='const'? 
-	 *         input?='input'? 
-	 *         output?='output'? 
-	 *         global?='global'? 
-	 *         static?='static'? 
 	 *         host?='host'? 
 	 *         (
 	 *             (type=ClassType name=EString? declarations+=DeclarationOrMethodWOSemicolon*) | 
@@ -1367,11 +1366,6 @@ public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequ
 	 *         (
 	 *             annotations+=Annotation* 
 	 *             access=AccessModifier? 
-	 *             const?='const'? 
-	 *             input?='input'? 
-	 *             output?='output'? 
-	 *             global?='global'? 
-	 *             static?='static'? 
 	 *             host?='host'? 
 	 *             (
 	 *                 (type=ClassType name=EString? declarations+=DeclarationOrMethodWOSemicolon*) | 
@@ -1406,11 +1400,6 @@ public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequ
 	 *     (
 	 *         annotations+=Annotation* 
 	 *         access=AccessModifier? 
-	 *         const?='const'? 
-	 *         input?='input'? 
-	 *         output?='output'? 
-	 *         global?='global'? 
-	 *         static?='static'? 
 	 *         host?='host'? 
 	 *         ((type=ClassType name=EString? declarations+=DeclarationOrMethod*) | (type=StructType name=EString? declarations+=Declaration*)) 
 	 *         (valuedObjects+=ValuedObject valuedObjects+=ValuedObject*)? 
@@ -1431,11 +1420,6 @@ public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequ
 	 *         (
 	 *             annotations+=Annotation* 
 	 *             access=AccessModifier? 
-	 *             const?='const'? 
-	 *             input?='input'? 
-	 *             output?='output'? 
-	 *             global?='global'? 
-	 *             static?='static'? 
 	 *             host?='host'? 
 	 *             ((type=ClassType name=EString? declarations+=DeclarationOrMethod*) | (type=StructType name=EString? declarations+=Declaration*)) 
 	 *             (valuedObjects+=ValuedObject valuedObjects+=ValuedObject*)? 
@@ -1670,6 +1654,7 @@ public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequ
 	 *         access=AccessModifier? 
 	 *         (
 	 *             (
+	 *                 input?='input'? 
 	 *                 referenceContainer=[NamedObject|PrimeID]? 
 	 *                 reference=[NamedObject|PrimeID] 
 	 *                 (genericParameters+=GenericParameter genericParameters+=GenericParameter*)? 
@@ -1698,6 +1683,7 @@ public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequ
 	 *         access=AccessModifier? 
 	 *         (
 	 *             (
+	 *                 input?='input'? 
 	 *                 referenceContainer=[NamedObject|PrimeID]? 
 	 *                 reference=[NamedObject|PrimeID] 
 	 *                 (genericParameters+=GenericParameter genericParameters+=GenericParameter*)? 

@@ -187,6 +187,7 @@ public abstract class AbstractLustreSyntacticSequencer extends AbstractSyntactic
 	 *     ('(' '('*)+
 	 *
 	 * This ambiguous syntax occurs at:
+	 *     (rule start) (ambiguity) '{' values+=IntValue
 	 *     (rule start) (ambiguity) '{' values+=VectorValueMember
 	 *     (rule start) (ambiguity) operator=CurrentOperator
 	 *     (rule start) (ambiguity) operator=LastOperator
@@ -218,6 +219,7 @@ public abstract class AbstractLustreSyntacticSequencer extends AbstractSyntactic
 	 *     ('(' | '(')*
 	 *
 	 * This ambiguous syntax occurs at:
+	 *     (rule start) (ambiguity) '{' values+=IntValue
 	 *     (rule start) (ambiguity) '{' values+=VectorValueMember
 	 *     (rule start) (ambiguity) operator=AtMostOneOperator
 	 *     (rule start) (ambiguity) operator=CurrentOperator

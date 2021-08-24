@@ -310,6 +310,15 @@ public interface KExpressionsFactory extends EFactory {
     StaticAccessExpression createStaticAccessExpression();
 
     /**
+     * Returns a new object of class '<em>This Expression</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>This Expression</em>'.
+     * @generated
+     */
+    ThisExpression createThisExpression();
+
+    /**
      * Returns the package supported by this factory.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

@@ -438,7 +438,11 @@ StringValue returns StringValue:
     value=STRING;
     
 VectorValue returns VectorValue:
-    '{' values+=VectorValueMember (',' values+=VectorValueMember)* '}';
+    '{' (
+        values+=VectorValueMember (',' values+=VectorValueMember)*
+        |
+        values+=IntValue range?='to' values+=(IntValue | ValuedObjectReference)
+    ) '}';
     
 VectorValueMember returns Expression:
     BoolExpression | ValuedExpression | IgnoreValue;
@@ -612,7 +616,13 @@ ValuedAnnotation returns annotations::Annotation:
 
 @Override
 QuotedStringAnnotation returns annotations::Annotation:
-    super | JsonAnnotation;    
+    super | JsonAnnotation;
+    
+// OO
+
+ThisExpression returns ThisExpression:
+    {ThisExpression}
+    'this';
     
 
 // ------------------------ //

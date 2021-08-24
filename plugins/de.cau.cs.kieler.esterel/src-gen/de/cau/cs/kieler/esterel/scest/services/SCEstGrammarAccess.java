@@ -3304,8 +3304,11 @@ public class SCEstGrammarAccess extends AbstractElementFinder.AbstractGrammarEle
 	//    output?='output'?
 	//    global?='global'?
 	//    static?='static'?
-	//    ((signal?='signal'? type = ValueType) |
-	//        signal?='signal' |
+	//    (
+	//        (signal?='signal'? type = ValueType)
+	//        |
+	//        signal?='signal'
+	//        |
 	//        (type = HostType hostType = STRING)
 	//    )
 	//    valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
@@ -3344,11 +3347,6 @@ public class SCEstGrammarAccess extends AbstractElementFinder.AbstractGrammarEle
 	//    {kext::ClassDeclaration}
 	//    annotations+=Annotation*
 	//    access=AccessModifier?
-	//    const?='const'?
-	//    input?='input'?
-	//    output?='output'?
-	//    global?='global'?
-	//    static?='static'?
 	//    host?='host'?
 	//    ((
 	//        type = ClassType
@@ -3390,11 +3388,6 @@ public class SCEstGrammarAccess extends AbstractElementFinder.AbstractGrammarEle
 	//    {kext::ClassDeclaration}
 	//    annotations+=Annotation*
 	//    access=AccessModifier?
-	//    const?='const'?
-	//    input?='input'?
-	//    output?='output'?
-	//    global?='global'?
-	//    static?='static'?
 	//    host?='host'?
 	//    ((
 	//        type = ClassType
@@ -3492,6 +3485,7 @@ public class SCEstGrammarAccess extends AbstractElementFinder.AbstractGrammarEle
 	//    annotations+=Annotation*
 	//    access=AccessModifier?
 	//    ((
+	//        input?='input'?
 	//        'ref'
 	//        (referenceContainer = [annotations::NamedObject|PrimeID] '.')?
 	//        reference = [annotations::NamedObject|PrimeID]
@@ -3515,6 +3509,7 @@ public class SCEstGrammarAccess extends AbstractElementFinder.AbstractGrammarEle
 	//    annotations+=Annotation*
 	//    access=AccessModifier?
 	//    ((
+	//        input?='input'?
 	//        'ref'
 	//        (referenceContainer = [annotations::NamedObject|PrimeID] '.')?
 	//        reference = [annotations::NamedObject|PrimeID]
@@ -4519,7 +4514,11 @@ public class SCEstGrammarAccess extends AbstractElementFinder.AbstractGrammarEle
 	}
 	
 	//VectorValue returns VectorValue:
-	//    '{' values+=VectorValueMember (',' values+=VectorValueMember)* '}';
+	//    '{' (
+	//        values+=VectorValueMember (',' values+=VectorValueMember)*
+	//        |
+	//        values+=IntValue range?='to' values+=(IntValue | ValuedObjectReference)
+	//    ) '}';
 	public KExpressionsGrammarAccess.VectorValueElements getVectorValueAccess() {
 		return gaKExpressions.getVectorValueAccess();
 	}
@@ -5022,6 +5021,18 @@ public class SCEstGrammarAccess extends AbstractElementFinder.AbstractGrammarEle
 	
 	public ParserRule getQuotedStringAnnotationRule() {
 		return getQuotedStringAnnotationAccess().getRule();
+	}
+	
+	//// OO
+	//ThisExpression returns ThisExpression:
+	//    {ThisExpression}
+	//    'this';
+	public KExpressionsGrammarAccess.ThisExpressionElements getThisExpressionAccess() {
+		return gaKExpressions.getThisExpressionAccess();
+	}
+	
+	public ParserRule getThisExpressionRule() {
+		return getThisExpressionAccess().getRule();
 	}
 	
 	//// General rule for pragmas
