@@ -4539,15 +4539,22 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         if (opType !== null) {
             if (opType === OperatorType.MULT) {
                 // operand could be a pointer
-                val pointsTo = getStateVarPointers(funcState).get((unExpr.getOperand as IASTIdExpression).name.toString)
-                if (pointsTo !== null) {
-                    // return the vo the pointer points to
-                    val vName = pointsTo.name.substring(0, pointsTo.name.lastIndexOf(ssaNameSeperator))
-                    val vo = findValuedObjectByName(funcState, vName, false, dRegion)
-                    return vo.reference
+                if (unExpr.getOperand instanceof IASTIdExpression) {
+                    // operand is a pointer
+                    val pointsTo = getStateVarPointers(funcState).get(
+                        (unExpr.getOperand as IASTIdExpression).name.toString)
+                    if (pointsTo !== null) {
+                        // return the vo the pointer points to
+                        val vName = pointsTo.name.substring(0, pointsTo.name.lastIndexOf(ssaNameSeperator))
+                        val vo = findValuedObjectByName(funcState, vName, false, dRegion)
+                        return vo.reference
+                    } else {
+                        // dont visualize the operator "*"
+                        return unExpr.getOperand.createKExpression(funcState, dRegion)
+                    }
                 } else {
-                    // dont visualize the operator "*"
-                    return unExpr.getOperand.createKExpression(funcState, dRegion)
+                    // operand is an expression -> pointer arithmetic
+                    println("Pointer Arithmetic is not properly supported yet")
                 }
             }
             unKExpr = opType.createOperatorExpression
