@@ -13,6 +13,7 @@ import de.cau.cs.kieler.annotations.TypedStringAnnotation
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
 import de.cau.cs.kieler.annotations.registry.PragmaRegistry
+import de.cau.cs.kieler.kexpressions.Call
 import de.cau.cs.kieler.kexpressions.CombineOperator
 import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage
@@ -41,6 +42,7 @@ import de.cau.cs.kieler.sccharts.BaseStateReference
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.DataflowRegion
 import de.cau.cs.kieler.sccharts.DuringAction
+import de.cau.cs.kieler.sccharts.PolicyRegion
 import de.cau.cs.kieler.sccharts.PreemptionType
 import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.SCCharts
@@ -151,6 +153,8 @@ class SCTXValidator extends AbstractSCTXValidator {
     static val String REGION_OVERRIDE_ANONYMOUS = "Cannot override anonymous region." 
     static val String REGION_OVERRIDE_SUPERFLOUSE = "The is no region to override."  
     static val String REGION_OVERRIDE_MISSING = "There is an inherited region with the same name, you may use the override keyword."
+    
+    static val String NO_METHOD_REFERENCE = "Methods must be used with call syntax using parenthesis."
 
 
     @Check
@@ -307,6 +311,37 @@ class SCTXValidator extends AbstractSCTXValidator {
                 }
             } else {
                 error(info.errors.join("\n"), info.decl, null)
+            }
+        }
+    }
+    
+    @Check
+    def void checkMethodCall(ValuedObjectReference vor) {
+        val decl = vor.valuedObject?.declaration
+        if (decl instanceof MethodDeclaration) {
+            var parentExp = vor
+            while(parentExp.isSubReference) {
+                parentExp = parentExp.eContainer as ValuedObjectReference
+            }
+            if (!vor.isSubReference) {
+                // If method is used directly an not with an specific object
+                // And is used as trigger in an transition, no parenthesis are fine,
+                // because it is a method observer or policy regions in general.
+                var EObject container = parentExp
+                while(container !== null) {
+                    val nextContainer = container.eContainer
+                    if (nextContainer instanceof Transition) {
+                        if (nextContainer.trigger == container) {
+                            return
+                        }
+                    } else if (nextContainer instanceof PolicyRegion) {
+                        return
+                    }
+                    container = nextContainer
+                }
+            }
+            if (!(parentExp instanceof Call)) {
+                error(NO_METHOD_REFERENCE, vor, null, -1)
             }
         }
     }
