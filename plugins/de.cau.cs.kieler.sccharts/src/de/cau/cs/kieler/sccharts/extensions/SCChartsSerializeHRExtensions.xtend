@@ -215,6 +215,9 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
             }  else if (type == ValueType.CLASS) {
                 if ((declaration as ClassDeclaration).host) components.addKeyword("host")
                 components.addKeyword("class")
+            }  else if (type == ValueType.ENUM) {
+                if ((declaration as ClassDeclaration).host) components.addKeyword("host")
+                components.addKeyword("enum")
             } else {
                 components.addKeyword(if (hr) {
                     type.serializeHR
