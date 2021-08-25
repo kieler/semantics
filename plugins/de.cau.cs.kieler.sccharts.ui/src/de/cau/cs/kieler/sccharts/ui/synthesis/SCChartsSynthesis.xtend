@@ -114,7 +114,7 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
         val options = new LinkedHashSet()
         
         // Add categories options
-        options.addAll(APPEARANCE, NAVIGATION, DATAFLOW, OO, DEBUGGING, LAYOUT)
+        options.addAll(APPEARANCE, NAVIGATION, DATAFLOW, OO, DEBUGGING, LAYOUT, TOPDOWN_LAYOUT)
         
         // General options
         options.addAll(
@@ -128,7 +128,6 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
             SHOW_COMMENTS,
             SHOW_USER_LABELS,
             SHOW_CAUSAL_DATAFLOW,
-            TOPDOWN_LAYOUT,
             LAYOUT_ENGINE,
             TOPDOWN_LAYOUT_TOGGLE,
             TOPDOWN_LAYOUT_CONSTRAINT,

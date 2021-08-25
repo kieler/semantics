@@ -140,7 +140,6 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
     override List<KNode> performTranformation(State state) {
         val node = state.createNode().associateWith(state)
         
-        // FIXME: In KIELER this causes an error, but in KEITH (LS) this is fine
         node.setProperty(CoreOptions.NODE_SIZE_CONSTRAINT, NODE_SIZE_CONSTRAINT.floatValue as double)
 
         // Set KIdentifier for use with incremental update
