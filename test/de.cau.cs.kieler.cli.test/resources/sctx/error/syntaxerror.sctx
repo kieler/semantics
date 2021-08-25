@@ -1,8 +1,12 @@
 scchart ABO {
     input bool A, B
-    output bool O1 = false, O2 = false
+    output bool O1, O2
     
-    initial state WaitAB {
+    initial state Init
+      immediate do O1 = false; O2 = false
+      go to WaitAB 
+    
+    state WaitAB {
         region HandleA //{
             initial state WaitA 
             immediate if A 
