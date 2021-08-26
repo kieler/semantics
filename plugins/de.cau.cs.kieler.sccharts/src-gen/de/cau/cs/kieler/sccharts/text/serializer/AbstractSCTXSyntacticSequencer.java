@@ -136,7 +136,8 @@ public abstract class AbstractSCTXSyntacticSequencer extends AbstractSyntacticSe
 	 *     (rule start) (ambiguity) 'extern' functionName=ID
 	 *     (rule start) (ambiguity) 'random' (rule start)
 	 *     (rule start) (ambiguity) 'randomize' (rule start)
-	 *     (rule start) (ambiguity) 'scchart' '(' target=[NamedObject|PrimeID]
+	 *     (rule start) (ambiguity) access='scchart'
+	 *     (rule start) (ambiguity) access='state'
 	 *     (rule start) (ambiguity) annotations+=Annotation
 	 *     (rule start) (ambiguity) operator=PreOperator
 	 *     (rule start) (ambiguity) operator=ValOperator
@@ -188,9 +189,10 @@ public abstract class AbstractSCTXSyntacticSequencer extends AbstractSyntacticSe
 	 *     (rule start) (ambiguity) 'random' (rule start)
 	 *     (rule start) (ambiguity) 'randomize' 'schedule' schedule+=ScheduleObjectReference
 	 *     (rule start) (ambiguity) 'randomize' (rule start)
-	 *     (rule start) (ambiguity) 'scchart' '(' target=[NamedObject|PrimeID]
 	 *     (rule start) (ambiguity) '{' values+=IntValue
 	 *     (rule start) (ambiguity) '{' values+=VectorValueMember
+	 *     (rule start) (ambiguity) access='scchart'
+	 *     (rule start) (ambiguity) access='state'
 	 *     (rule start) (ambiguity) annotations+=Annotation
 	 *     (rule start) (ambiguity) operator=PreOperator
 	 *     (rule start) (ambiguity) operator=SubOperator

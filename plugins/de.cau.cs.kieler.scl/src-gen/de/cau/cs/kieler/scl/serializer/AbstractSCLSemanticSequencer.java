@@ -34,7 +34,7 @@ import de.cau.cs.kieler.kexpressions.ReferenceCall;
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration;
 import de.cau.cs.kieler.kexpressions.ScheduleDeclaration;
 import de.cau.cs.kieler.kexpressions.ScheduleObjectReference;
-import de.cau.cs.kieler.kexpressions.StaticAccessExpression;
+import de.cau.cs.kieler.kexpressions.SpecialAccessExpression;
 import de.cau.cs.kieler.kexpressions.StringValue;
 import de.cau.cs.kieler.kexpressions.TextExpression;
 import de.cau.cs.kieler.kexpressions.ThisExpression;
@@ -870,9 +870,9 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 			case KExpressionsPackage.SCHEDULE_OBJECT_REFERENCE:
 				sequence_ScheduleObjectReference(context, (ScheduleObjectReference) semanticObject); 
 				return; 
-			case KExpressionsPackage.STATIC_ACCESS_EXPRESSION:
+			case KExpressionsPackage.SPECIAL_ACCESS_EXPRESSION:
 				if (rule == grammarAccess.getBoolScheduleExpressionRule()) {
-					sequence_BoolScheduleExpression_StaticAccessExpression(context, (StaticAccessExpression) semanticObject); 
+					sequence_BoolScheduleExpression_SpecialAccessExpression(context, (SpecialAccessExpression) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getRootRule()
@@ -931,9 +931,9 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 						|| action == grammarAccess.getSfbyExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getAtomicExpressionRule()
 						|| rule == grammarAccess.getAtomicValuedExpressionRule()
-						|| rule == grammarAccess.getStaticAccessExpressionRule()
+						|| rule == grammarAccess.getSpecialAccessExpressionRule()
 						|| rule == grammarAccess.getVectorValueMemberRule()) {
-					sequence_StaticAccessExpression(context, (StaticAccessExpression) semanticObject); 
+					sequence_SpecialAccessExpression(context, (SpecialAccessExpression) semanticObject); 
 					return; 
 				}
 				else break;

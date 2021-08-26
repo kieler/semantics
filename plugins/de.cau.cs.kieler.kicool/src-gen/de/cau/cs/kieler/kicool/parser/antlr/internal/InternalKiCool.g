@@ -9416,11 +9416,11 @@ ruleAtomicExpression returns [EObject current=null]
 			/* */
 		}
 		{
-			newCompositeNode(grammarAccess.getAtomicExpressionAccess().getStaticAccessExpressionParserRuleCall_7());
+			newCompositeNode(grammarAccess.getAtomicExpressionAccess().getSpecialAccessExpressionParserRuleCall_7());
 		}
-		this_StaticAccessExpression_9=ruleStaticAccessExpression
+		this_SpecialAccessExpression_9=ruleSpecialAccessExpression
 		{
-			$current = $this_StaticAccessExpression_9.current;
+			$current = $this_SpecialAccessExpression_9.current;
 			afterParserOrEnumRuleCall();
 		}
 		    |
@@ -9670,15 +9670,15 @@ ruleValuedObjectTestExpression returns [EObject current=null]
 	)
 ;
 
-// Entry rule entryRuleStaticAccessExpression
-entryRuleStaticAccessExpression returns [EObject current=null]:
-	{ newCompositeNode(grammarAccess.getStaticAccessExpressionRule()); }
-	iv_ruleStaticAccessExpression=ruleStaticAccessExpression
-	{ $current=$iv_ruleStaticAccessExpression.current; }
+// Entry rule entryRuleSpecialAccessExpression
+entryRuleSpecialAccessExpression returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getSpecialAccessExpressionRule()); }
+	iv_ruleSpecialAccessExpression=ruleSpecialAccessExpression
+	{ $current=$iv_ruleSpecialAccessExpression.current; }
 	EOF;
 
-// Rule StaticAccessExpression
-ruleStaticAccessExpression returns [EObject current=null]
+// Rule SpecialAccessExpression
+ruleSpecialAccessExpression returns [EObject current=null]
 @init {
 	enterRule();
 }
@@ -9686,14 +9686,49 @@ ruleStaticAccessExpression returns [EObject current=null]
 	leaveRule();
 }:
 	(
-		otherlv_0='static'
-		{
-			newLeafNode(otherlv_0, grammarAccess.getStaticAccessExpressionAccess().getStaticKeyword_0());
-		}
+		(
+			(
+				lv_access_0_0='static'
+				{
+					newLeafNode(lv_access_0_0, grammarAccess.getSpecialAccessExpressionAccess().getAccessStaticKeyword_0_0());
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getSpecialAccessExpressionRule());
+					}
+					setWithLastConsumed($current, "access", lv_access_0_0, "static");
+				}
+			)
+		)
 		otherlv_1='('
 		{
-			newLeafNode(otherlv_1, grammarAccess.getStaticAccessExpressionAccess().getLeftParenthesisKeyword_1());
+			newLeafNode(otherlv_1, grammarAccess.getSpecialAccessExpressionAccess().getLeftParenthesisKeyword_1());
 		}
+		(
+			(
+				(
+					{
+						/* */
+					}
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getSpecialAccessExpressionRule());
+						}
+					}
+					{
+						newCompositeNode(grammarAccess.getSpecialAccessExpressionAccess().getContainerNamedObjectCrossReference_2_0_0());
+					}
+					rulePrimeID
+					{
+						afterParserOrEnumRuleCall();
+					}
+				)
+			)
+			otherlv_3='.'
+			{
+				newLeafNode(otherlv_3, grammarAccess.getSpecialAccessExpressionAccess().getFullStopKeyword_2_1());
+			}
+		)?
 		(
 			(
 				{
@@ -9701,11 +9736,11 @@ ruleStaticAccessExpression returns [EObject current=null]
 				}
 				{
 					if ($current==null) {
-						$current = createModelElement(grammarAccess.getStaticAccessExpressionRule());
+						$current = createModelElement(grammarAccess.getSpecialAccessExpressionRule());
 					}
 				}
 				{
-					newCompositeNode(grammarAccess.getStaticAccessExpressionAccess().getTargetNamedObjectCrossReference_2_0());
+					newCompositeNode(grammarAccess.getSpecialAccessExpressionAccess().getTargetNamedObjectCrossReference_3_0());
 				}
 				rulePrimeID
 				{
@@ -9713,28 +9748,28 @@ ruleStaticAccessExpression returns [EObject current=null]
 				}
 			)
 		)
-		otherlv_3=')'
+		otherlv_5=')'
 		{
-			newLeafNode(otherlv_3, grammarAccess.getStaticAccessExpressionAccess().getRightParenthesisKeyword_3());
+			newLeafNode(otherlv_5, grammarAccess.getSpecialAccessExpressionAccess().getRightParenthesisKeyword_4());
 		}
-		otherlv_4='.'
+		otherlv_6='.'
 		{
-			newLeafNode(otherlv_4, grammarAccess.getStaticAccessExpressionAccess().getFullStopKeyword_4());
+			newLeafNode(otherlv_6, grammarAccess.getSpecialAccessExpressionAccess().getFullStopKeyword_5());
 		}
 		(
 			(
 				{
-					newCompositeNode(grammarAccess.getStaticAccessExpressionAccess().getSubReferenceValuedObjectReferenceParserRuleCall_5_0());
+					newCompositeNode(grammarAccess.getSpecialAccessExpressionAccess().getSubReferenceValuedObjectReferenceParserRuleCall_6_0());
 				}
-				lv_subReference_5_0=ruleValuedObjectReference
+				lv_subReference_7_0=ruleValuedObjectReference
 				{
 					if ($current==null) {
-						$current = createModelElementForParent(grammarAccess.getStaticAccessExpressionRule());
+						$current = createModelElementForParent(grammarAccess.getSpecialAccessExpressionRule());
 					}
 					set(
 						$current,
 						"subReference",
-						lv_subReference_5_0,
+						lv_subReference_7_0,
 						"de.cau.cs.kieler.kexpressions.KExpressions.ValuedObjectReference");
 					afterParserOrEnumRuleCall();
 				}

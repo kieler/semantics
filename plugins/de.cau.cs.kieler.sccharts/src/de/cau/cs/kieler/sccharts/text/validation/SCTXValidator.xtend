@@ -22,6 +22,7 @@ import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.OperatorType
 import de.cau.cs.kieler.kexpressions.ReferenceCall
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
+import de.cau.cs.kieler.kexpressions.SpecialAccessExpression
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
@@ -60,6 +61,7 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
 import de.cau.cs.kieler.sccharts.processors.For
 import de.cau.cs.kieler.sccharts.text.SCTXResource
+import de.cau.cs.kieler.scl.MethodImplementationDeclaration
 import java.util.Map
 import java.util.Set
 import org.eclipse.elk.core.data.LayoutMetaDataService
@@ -69,6 +71,7 @@ import org.eclipse.xtext.validation.Check
 import org.eclipse.xtext.validation.CheckType
 
 import static extension java.lang.String.*
+import de.cau.cs.kieler.sccharts.processors.MethodSignaling
 
 /**
  * This class contains custom validation rules. 
@@ -155,6 +158,8 @@ class SCTXValidator extends AbstractSCTXValidator {
     static val String REGION_OVERRIDE_MISSING = "There is an inherited region with the same name, you may use the override keyword."
     
     static val String NO_METHOD_REFERENCE = "Methods must be used with call syntax using parenthesis."
+    static val String NO_STATE_ACCESS_OUTSIDE_METHOD = "State access expressions are only permissible in methods bodies."
+    static val String AMBIGOUS_STATE_ACCESS = "This state access is ambiguous as there are multiple anonymous regions with states with this ID. Use region IDs access the state via RegionID.StateID."
 
 
     @Check
@@ -341,8 +346,35 @@ class SCTXValidator extends AbstractSCTXValidator {
                 }
             }
             if (!(parentExp instanceof Call)) {
-                error(NO_METHOD_REFERENCE, vor, null, -1)
+                error(NO_METHOD_REFERENCE, vor, null)
             }
+        }
+    }
+    
+    @Check
+    def void checkStateAccess(SpecialAccessExpression acc) {
+        if (MethodSignaling.ACCESS_KEYWORD.equals(acc.access)) {
+            var EObject container = acc
+            while(container !== null) {
+                if (container instanceof MethodImplementationDeclaration) {
+                    // Check ambiguity
+                    val scope = acc.nextScope
+                    if (scope instanceof de.cau.cs.kieler.sccharts.State) {
+                        // Only if no explicit region is specified
+                        if (acc.container === null && acc.target !== null) {
+                            if (scope.regions.filter(ControlflowRegion).filter[name.nullOrEmpty].map[states].flatten.filter[
+                                !it.name.nullOrEmpty && it.name.equals(acc.target.name)
+                            ].size > 1) {
+                                // If there are multiple states with the target's name
+                                error(AMBIGOUS_STATE_ACCESS, acc, KExpressionsPackage.eINSTANCE.specialAccessExpression_Target)
+                            }
+                        }
+                    }
+                    return
+                }
+                container = container.eContainer
+            }
+            error(NO_STATE_ACCESS_OUTSIDE_METHOD, acc, null)
         }
     }
     

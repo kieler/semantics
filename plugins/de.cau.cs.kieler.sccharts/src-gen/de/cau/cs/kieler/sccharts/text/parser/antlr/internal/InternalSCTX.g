@@ -5635,15 +5635,15 @@ ruleReferenceValuedObject returns [EObject current=null]
 	)
 ;
 
-// Entry rule entryRuleStaticAccessExpression
-entryRuleStaticAccessExpression returns [EObject current=null]:
-	{ newCompositeNode(grammarAccess.getStaticAccessExpressionRule()); }
-	iv_ruleStaticAccessExpression=ruleStaticAccessExpression
-	{ $current=$iv_ruleStaticAccessExpression.current; }
+// Entry rule entryRuleSpecialAccessExpression
+entryRuleSpecialAccessExpression returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getSpecialAccessExpressionRule()); }
+	iv_ruleSpecialAccessExpression=ruleSpecialAccessExpression
+	{ $current=$iv_ruleSpecialAccessExpression.current; }
 	EOF;
 
-// Rule StaticAccessExpression
-ruleStaticAccessExpression returns [EObject current=null]
+// Rule SpecialAccessExpression
+ruleSpecialAccessExpression returns [EObject current=null]
 @init {
 	enterRule();
 }
@@ -5651,13 +5651,65 @@ ruleStaticAccessExpression returns [EObject current=null]
 	leaveRule();
 }:
 	(
-		otherlv_0='scchart'
 		{
-			newLeafNode(otherlv_0, grammarAccess.getStaticAccessExpressionAccess().getScchartKeyword_0());
+			/* */
 		}
+		{
+			newCompositeNode(grammarAccess.getSpecialAccessExpressionAccess().getSCChartAccessExpressionParserRuleCall_0());
+		}
+		this_SCChartAccessExpression_0=ruleSCChartAccessExpression
+		{
+			$current = $this_SCChartAccessExpression_0.current;
+			afterParserOrEnumRuleCall();
+		}
+		    |
+		{
+			/* */
+		}
+		{
+			newCompositeNode(grammarAccess.getSpecialAccessExpressionAccess().getStateAccessExpressionParserRuleCall_1());
+		}
+		this_StateAccessExpression_1=ruleStateAccessExpression
+		{
+			$current = $this_StateAccessExpression_1.current;
+			afterParserOrEnumRuleCall();
+		}
+	)
+;
+
+// Entry rule entryRuleSCChartAccessExpression
+entryRuleSCChartAccessExpression returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getSCChartAccessExpressionRule()); }
+	iv_ruleSCChartAccessExpression=ruleSCChartAccessExpression
+	{ $current=$iv_ruleSCChartAccessExpression.current; }
+	EOF;
+
+// Rule SCChartAccessExpression
+ruleSCChartAccessExpression returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		(
+			(
+				lv_access_0_0='scchart'
+				{
+					newLeafNode(lv_access_0_0, grammarAccess.getSCChartAccessExpressionAccess().getAccessScchartKeyword_0_0());
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getSCChartAccessExpressionRule());
+					}
+					setWithLastConsumed($current, "access", lv_access_0_0, "scchart");
+				}
+			)
+		)
 		otherlv_1='('
 		{
-			newLeafNode(otherlv_1, grammarAccess.getStaticAccessExpressionAccess().getLeftParenthesisKeyword_1());
+			newLeafNode(otherlv_1, grammarAccess.getSCChartAccessExpressionAccess().getLeftParenthesisKeyword_1());
 		}
 		(
 			(
@@ -5666,11 +5718,11 @@ ruleStaticAccessExpression returns [EObject current=null]
 				}
 				{
 					if ($current==null) {
-						$current = createModelElement(grammarAccess.getStaticAccessExpressionRule());
+						$current = createModelElement(grammarAccess.getSCChartAccessExpressionRule());
 					}
 				}
 				{
-					newCompositeNode(grammarAccess.getStaticAccessExpressionAccess().getTargetNamedObjectCrossReference_2_0());
+					newCompositeNode(grammarAccess.getSCChartAccessExpressionAccess().getTargetNamedObjectCrossReference_2_0());
 				}
 				rulePrimeID
 				{
@@ -5680,21 +5732,21 @@ ruleStaticAccessExpression returns [EObject current=null]
 		)
 		otherlv_3=')'
 		{
-			newLeafNode(otherlv_3, grammarAccess.getStaticAccessExpressionAccess().getRightParenthesisKeyword_3());
+			newLeafNode(otherlv_3, grammarAccess.getSCChartAccessExpressionAccess().getRightParenthesisKeyword_3());
 		}
 		otherlv_4='.'
 		{
-			newLeafNode(otherlv_4, grammarAccess.getStaticAccessExpressionAccess().getFullStopKeyword_4());
+			newLeafNode(otherlv_4, grammarAccess.getSCChartAccessExpressionAccess().getFullStopKeyword_4());
 		}
 		(
 			(
 				{
-					newCompositeNode(grammarAccess.getStaticAccessExpressionAccess().getSubReferenceValuedObjectReferenceParserRuleCall_5_0());
+					newCompositeNode(grammarAccess.getSCChartAccessExpressionAccess().getSubReferenceValuedObjectReferenceParserRuleCall_5_0());
 				}
 				lv_subReference_5_0=ruleValuedObjectReference
 				{
 					if ($current==null) {
-						$current = createModelElementForParent(grammarAccess.getStaticAccessExpressionRule());
+						$current = createModelElementForParent(grammarAccess.getSCChartAccessExpressionRule());
 					}
 					set(
 						$current,
@@ -5705,6 +5757,129 @@ ruleStaticAccessExpression returns [EObject current=null]
 				}
 			)
 		)
+	)
+;
+
+// Entry rule entryRuleStateAccessExpression
+entryRuleStateAccessExpression returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getStateAccessExpressionRule()); }
+	iv_ruleStateAccessExpression=ruleStateAccessExpression
+	{ $current=$iv_ruleStateAccessExpression.current; }
+	EOF;
+
+// Rule StateAccessExpression
+ruleStateAccessExpression returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		(
+			(
+				lv_access_0_0='state'
+				{
+					newLeafNode(lv_access_0_0, grammarAccess.getStateAccessExpressionAccess().getAccessStateKeyword_0_0());
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getStateAccessExpressionRule());
+					}
+					setWithLastConsumed($current, "access", lv_access_0_0, "state");
+				}
+			)
+		)
+		otherlv_1='('
+		{
+			newLeafNode(otherlv_1, grammarAccess.getStateAccessExpressionAccess().getLeftParenthesisKeyword_1());
+		}
+		(
+			(
+				(
+					(
+						{
+							/* */
+						}
+						{
+							if ($current==null) {
+								$current = createModelElement(grammarAccess.getStateAccessExpressionRule());
+							}
+						}
+						otherlv_2=RULE_ID
+						{
+							newLeafNode(otherlv_2, grammarAccess.getStateAccessExpressionAccess().getContainerControlflowRegionCrossReference_2_0_0_0());
+						}
+					)
+				)
+				    |
+				(
+					(
+						{
+							/* */
+						}
+						{
+							if ($current==null) {
+								$current = createModelElement(grammarAccess.getStateAccessExpressionRule());
+							}
+						}
+						otherlv_3=RULE_ID
+						{
+							newLeafNode(otherlv_3, grammarAccess.getStateAccessExpressionAccess().getContainerDataflowRegionCrossReference_2_0_1_0());
+						}
+					)
+				)
+			)
+			otherlv_4='.'
+			{
+				newLeafNode(otherlv_4, grammarAccess.getStateAccessExpressionAccess().getFullStopKeyword_2_1());
+			}
+		)?
+		(
+			(
+				{
+					/* */
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getStateAccessExpressionRule());
+					}
+				}
+				otherlv_5=RULE_ID
+				{
+					newLeafNode(otherlv_5, grammarAccess.getStateAccessExpressionAccess().getTargetStateCrossReference_3_0());
+				}
+			)
+		)
+		otherlv_6=')'
+		{
+			newLeafNode(otherlv_6, grammarAccess.getStateAccessExpressionAccess().getRightParenthesisKeyword_4());
+		}
+		(
+			otherlv_7='schedule'
+			{
+				newLeafNode(otherlv_7, grammarAccess.getStateAccessExpressionAccess().getScheduleKeyword_5_0());
+			}
+			(
+				(
+					{
+						newCompositeNode(grammarAccess.getStateAccessExpressionAccess().getScheduleScheduleObjectReferenceParserRuleCall_5_1_0());
+					}
+					lv_schedule_8_0=ruleScheduleObjectReference
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getStateAccessExpressionRule());
+						}
+						add(
+							$current,
+							"schedule",
+							lv_schedule_8_0,
+							"de.cau.cs.kieler.kexpressions.KExpressions.ScheduleObjectReference");
+						afterParserOrEnumRuleCall();
+					}
+				)
+			)
+		)?
 	)
 ;
 
@@ -15864,11 +16039,11 @@ ruleAtomicExpression returns [EObject current=null]
 			/* */
 		}
 		{
-			newCompositeNode(grammarAccess.getAtomicExpressionAccess().getStaticAccessExpressionParserRuleCall_7());
+			newCompositeNode(grammarAccess.getAtomicExpressionAccess().getSpecialAccessExpressionParserRuleCall_7());
 		}
-		this_StaticAccessExpression_9=ruleStaticAccessExpression
+		this_SpecialAccessExpression_9=ruleSpecialAccessExpression
 		{
-			$current = $this_StaticAccessExpression_9.current;
+			$current = $this_SpecialAccessExpression_9.current;
 			afterParserOrEnumRuleCall();
 		}
 		    |

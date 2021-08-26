@@ -77072,7 +77072,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
     static final String dfa_109s = "\3\4\3\uffff\3\4\1\7\16\4\1\7\1\24\7\4\1\7\7\4\1\7\5\4\1\24\2\4\1\7\2\4\1\24\1\60\3\4\1\7\21\4\1\7\1\4\1\24\1\4\3\24\10\4\1\7\31\4\1\7\3\4\4\24\1\4\4\24\41\4\1\24\1\4\6\24\1\4\5\24\2\4\1\0\20\4\1\0\17\4\3\24\1\4\15\24\2\4\1\0\11\4\1\0\6\4\2\0\2\4\1\0\1\4\1\0\1\4\1\0\7\4\16\24\1\0\5\4\1\0\1\4\1\0\1\4\1\0\2\4\1\0\1\4\1\0\1\4\5\0\3\4\1\0\1\4\5\24\1\0\3\4\6\0\1\4\1\0\1\4\1\0";
     static final String dfa_110s = "\2\u00a7\1\4\3\uffff\1\u00a7\1\4\1\u0087\1\7\5\u00a7\1\4\5\u00a7\1\122\1\4\1\u0087\1\7\1\122\1\u0087\1\4\2\u0087\3\u00a7\1\10\5\u00a7\2\4\1\7\1\122\4\u00a7\1\u0082\1\4\1\u0087\1\7\2\4\1\122\1\60\3\u00a7\1\10\2\u00a7\1\4\1\u0087\1\4\1\u0087\1\4\1\u0087\1\133\5\u00a7\1\122\1\4\1\u0087\1\7\1\u00a7\1\u0082\1\u00a7\3\u0082\1\u0087\1\4\1\u0087\2\4\3\u00a7\1\10\5\u00a7\1\4\1\u0087\1\4\1\u0087\1\133\1\u0087\2\4\1\u0087\1\133\2\4\6\u00a7\1\4\1\u0087\1\7\1\4\1\u0087\1\u00a7\4\u0082\1\u00a7\4\u0082\4\4\5\u00a7\1\u0087\2\4\1\u0087\1\133\2\4\1\u0087\1\133\2\4\1\u0087\4\4\4\u00a7\1\4\1\u0087\2\4\1\u0082\1\u00a7\6\u0082\1\u00a7\5\u0082\2\4\1\0\1\4\4\u00a7\1\4\1\133\2\u0087\7\4\1\0\1\u0087\1\4\1\u0087\1\133\4\4\3\u00a7\4\4\3\u0082\1\u00a7\15\u0082\2\4\1\0\4\u00a7\2\4\1\133\1\4\1\u0087\1\0\1\u0087\5\4\2\0\1\u0087\1\133\1\0\1\4\1\0\1\4\1\0\1\4\2\u00a7\4\4\16\u0082\1\0\1\4\4\u00a7\1\0\1\4\1\0\1\4\1\0\1\u0087\1\133\1\0\1\4\1\0\1\4\5\0\1\u00a7\2\4\1\0\1\4\5\u0082\1\0\3\u00a7\6\0\1\4\1\0\1\u00a7\1\0";
     static final String dfa_111s = "\3\uffff\1\1\1\2\1\3\u013e\uffff";
-    static final String dfa_112s = "\u00b3\uffff\1\11\20\uffff\1\24\42\uffff\1\25\11\uffff\1\0\6\uffff\1\1\1\2\2\uffff\1\3\1\uffff\1\4\1\uffff\1\5\25\uffff\1\6\5\uffff\1\13\1\uffff\1\12\1\uffff\1\14\2\uffff\1\15\1\uffff\1\16\1\uffff\1\27\1\32\1\33\1\34\1\35\3\uffff\1\7\6\uffff\1\30\3\uffff\1\17\1\20\1\21\1\22\1\23\1\10\1\uffff\1\31\1\uffff\1\26}>";
+    static final String dfa_112s = "\u00b3\uffff\1\11\20\uffff\1\24\42\uffff\1\26\11\uffff\1\0\6\uffff\1\1\1\2\2\uffff\1\3\1\uffff\1\4\1\uffff\1\5\25\uffff\1\6\5\uffff\1\13\1\uffff\1\12\1\uffff\1\14\2\uffff\1\15\1\uffff\1\16\1\uffff\1\25\1\32\1\33\1\34\1\30\3\uffff\1\7\6\uffff\1\31\3\uffff\1\17\1\20\1\21\1\22\1\23\1\10\1\uffff\1\27\1\uffff\1\35}>";
     static final String[] dfa_113s = {
             "\6\4\1\1\16\uffff\1\5\3\uffff\1\4\64\uffff\1\4\6\uffff\1\4\5\uffff\1\4\22\uffff\1\3\22\uffff\1\2\2\4\1\3\3\uffff\1\3\1\uffff\1\3\27\uffff\2\3",
             "\6\4\1\1\22\uffff\1\4\64\uffff\1\4\6\uffff\1\4\5\uffff\1\4\22\uffff\1\3\22\uffff\1\2\2\4\1\3\3\uffff\1\3\1\uffff\1\3\27\uffff\2\3",
@@ -77743,36 +77743,6 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                         if ( s>=0 ) return s;
                         break;
                     case 21 : 
-                        int LA284_231 = input.LA(1);
-
-                         
-                        int index284_231 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred370_InternalEsterel()) ) {s = 3;}
-
-                        else if ( (synpred371_InternalEsterel()) ) {s = 4;}
-
-                         
-                        input.seek(index284_231);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 22 : 
-                        int LA284_323 = input.LA(1);
-
-                         
-                        int index284_323 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred370_InternalEsterel()) ) {s = 3;}
-
-                        else if ( (synpred371_InternalEsterel()) ) {s = 4;}
-
-                         
-                        input.seek(index284_323);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 23 : 
                         int LA284_295 = input.LA(1);
 
                          
@@ -77787,11 +77757,11 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                         input.seek(index284_295);
                         if ( s>=0 ) return s;
                         break;
-                    case 24 : 
-                        int LA284_310 = input.LA(1);
+                    case 22 : 
+                        int LA284_231 = input.LA(1);
 
                          
-                        int index284_310 = input.index();
+                        int index284_231 = input.index();
                         input.rewind();
                         s = -1;
                         if ( (synpred370_InternalEsterel()) ) {s = 3;}
@@ -77799,10 +77769,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                         else if ( (synpred371_InternalEsterel()) ) {s = 4;}
 
                          
-                        input.seek(index284_310);
+                        input.seek(index284_231);
                         if ( s>=0 ) return s;
                         break;
-                    case 25 : 
+                    case 23 : 
                         int LA284_321 = input.LA(1);
 
                          
@@ -77815,6 +77785,36 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
                          
                         input.seek(index284_321);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 24 : 
+                        int LA284_299 = input.LA(1);
+
+                         
+                        int index284_299 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred370_InternalEsterel()) ) {s = 3;}
+
+                        else if ( (synpred371_InternalEsterel()) ) {s = 4;}
+
+                         
+                        input.seek(index284_299);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 25 : 
+                        int LA284_310 = input.LA(1);
+
+                         
+                        int index284_310 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred370_InternalEsterel()) ) {s = 3;}
+
+                        else if ( (synpred371_InternalEsterel()) ) {s = 4;}
+
+                         
+                        input.seek(index284_310);
                         if ( s>=0 ) return s;
                         break;
                     case 26 : 
@@ -77863,10 +77863,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                         if ( s>=0 ) return s;
                         break;
                     case 29 : 
-                        int LA284_299 = input.LA(1);
+                        int LA284_323 = input.LA(1);
 
                          
-                        int index284_299 = input.index();
+                        int index284_323 = input.index();
                         input.rewind();
                         s = -1;
                         if ( (synpred370_InternalEsterel()) ) {s = 3;}
@@ -77874,7 +77874,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                         else if ( (synpred371_InternalEsterel()) ) {s = 4;}
 
                          
-                        input.seek(index284_299);
+                        input.seek(index284_323);
                         if ( s>=0 ) return s;
                         break;
             }

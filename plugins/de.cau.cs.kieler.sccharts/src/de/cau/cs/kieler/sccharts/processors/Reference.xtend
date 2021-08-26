@@ -26,7 +26,7 @@ import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.Parameter
 import de.cau.cs.kieler.kexpressions.ReferenceCall
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
-import de.cau.cs.kieler.kexpressions.StaticAccessExpression
+import de.cau.cs.kieler.kexpressions.SpecialAccessExpression
 import de.cau.cs.kieler.kexpressions.ThisExpression
 import de.cau.cs.kieler.kexpressions.Value
 import de.cau.cs.kieler.kexpressions.ValueType
@@ -112,6 +112,7 @@ class Reference extends SCChartsProcessor implements Traceable {
     protected var Inheritance inheritanceProcessor = null
     protected var StaticAccess staticAccessProcessor = null
     protected var Enum enumProcessor = null
+    protected var MethodSignaling methodSignalingProcessor = null
     
     protected val replacedWithLiterals = <ValuedObject> newHashSet
     
@@ -133,6 +134,8 @@ class Reference extends SCChartsProcessor implements Traceable {
         staticAccessProcessor?.setEnvironment(sourceEnvironment, environment)
         enumProcessor = KiCoolRegistration.getProcessorInstance(Enum.ID) as Enum
         enumProcessor?.setEnvironment(sourceEnvironment, environment)
+        methodSignalingProcessor = KiCoolRegistration.getProcessorInstance(MethodSignaling.ID) as MethodSignaling
+        methodSignalingProcessor?.setEnvironment(sourceEnvironment, environment)
         
         val model = getModel
         
@@ -163,6 +166,9 @@ class Reference extends SCChartsProcessor implements Traceable {
             inheritanceProcessor?.inheritBaseStates(state, replacements)
         }
         inheritanceProcessor?.inheritBaseStates(rootState, replacements)
+        
+        // Handle method signaling here because it is easier than a standalone transformation
+        methodSignalingProcessor?.transform(rootState)
 
         // Bind generic parameters
         if (!rootState.genericParameterDeclarations.nullOrEmpty) {
@@ -658,7 +664,7 @@ class Reference extends SCChartsProcessor implements Traceable {
     }
     
     /** StaticAccessExpression will not be replaced. */
-    protected dispatch def void replaceReferences(StaticAccessExpression ex, Replacements replacements) {
+    protected dispatch def void replaceReferences(SpecialAccessExpression ex, Replacements replacements) {
         // do nothing, do not bind, resolved later
     }
     
@@ -936,7 +942,7 @@ class Reference extends SCChartsProcessor implements Traceable {
                                 }
                                 targetContainerState.regions += newRegion
                             }
-                            // Clone regions
+                            // Clone actions
                             for (action : newState.actions) {
                                 val newAction = action.copy
                                 for (vor : newAction.eAllContents.filter(ValuedObjectReference).toList) {

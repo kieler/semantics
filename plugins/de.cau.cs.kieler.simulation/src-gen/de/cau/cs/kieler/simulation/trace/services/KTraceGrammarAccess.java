@@ -1979,7 +1979,7 @@ public class KTraceGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	//    | RandomCall
 	//    | RandomizeCall
 	//    | ValuedObjectTestExpression // Last to allow detection of calls
-	//    | StaticAccessExpression
+	//    | SpecialAccessExpression
 	//    | TextExpression;
 	public KExpressionsGrammarAccess.AtomicExpressionElements getAtomicExpressionAccess() {
 		return gaKExpressions.getAtomicExpressionAccess();
@@ -2038,15 +2038,17 @@ public class KTraceGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	
 	//// Accesses a arbitrary target in a static way (needs to be adjusted in the scoper of the deriving language)
 	//// Example: static(Constants).MAX
-	//StaticAccessExpression returns StaticAccessExpression:
-	//    'static' '(' target=[annotations::NamedObject|PrimeID] ')'
-	//    '.' subReference=ValuedObjectReference;
-	public KExpressionsGrammarAccess.StaticAccessExpressionElements getStaticAccessExpressionAccess() {
-		return gaKExpressions.getStaticAccessExpressionAccess();
+	//SpecialAccessExpression returns SpecialAccessExpression:
+	//    access='static' '('
+	//    (container=[annotations::NamedObject|PrimeID] '.')?
+	//    target=[annotations::NamedObject|PrimeID]
+	//    ')' '.' subReference=ValuedObjectReference;
+	public KExpressionsGrammarAccess.SpecialAccessExpressionElements getSpecialAccessExpressionAccess() {
+		return gaKExpressions.getSpecialAccessExpressionAccess();
 	}
 	
-	public ParserRule getStaticAccessExpressionRule() {
-		return getStaticAccessExpressionAccess().getRule();
+	public ParserRule getSpecialAccessExpressionRule() {
+		return getSpecialAccessExpressionAccess().getRule();
 	}
 	
 	//// ID with primes

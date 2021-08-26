@@ -60,6 +60,8 @@ public class SCTXParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getKeywordMethodDeclarationWOSemicolonAccess().getAlternatives_2(), "rule__KeywordMethodDeclarationWOSemicolon__Alternatives_2");
 			builder.put(grammarAccess.getKeywordMethodDeclarationWOSemicolonAccess().getAlternatives_6(), "rule__KeywordMethodDeclarationWOSemicolon__Alternatives_6");
 			builder.put(grammarAccess.getReferenceValuedObjectAccess().getAlternatives_4(), "rule__ReferenceValuedObject__Alternatives_4");
+			builder.put(grammarAccess.getSpecialAccessExpressionAccess().getAlternatives(), "rule__SpecialAccessExpression__Alternatives");
+			builder.put(grammarAccess.getStateAccessExpressionAccess().getAlternatives_2_0(), "rule__StateAccessExpression__Alternatives_2_0");
 			builder.put(grammarAccess.getHiddenKeywordsAccess().getAlternatives(), "rule__HiddenKeywords__Alternatives");
 			builder.put(grammarAccess.getSclEffectAssignmentAccess().getExpressionAlternatives_1_0(), "rule__SclEffectAssignment__ExpressionAlternatives_1_0");
 			builder.put(grammarAccess.getConditionalAccess().getExpressionAlternatives_2_0(), "rule__Conditional__ExpressionAlternatives_2_0");
@@ -254,7 +256,10 @@ public class SCTXParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getReferenceValuedObjectAccess().getGroup_4_0_2(), "rule__ReferenceValuedObject__Group_4_0_2__0");
 			builder.put(grammarAccess.getReferenceValuedObjectAccess().getGroup_5(), "rule__ReferenceValuedObject__Group_5__0");
 			builder.put(grammarAccess.getReferenceValuedObjectAccess().getGroup_6(), "rule__ReferenceValuedObject__Group_6__0");
-			builder.put(grammarAccess.getStaticAccessExpressionAccess().getGroup(), "rule__StaticAccessExpression__Group__0");
+			builder.put(grammarAccess.getSCChartAccessExpressionAccess().getGroup(), "rule__SCChartAccessExpression__Group__0");
+			builder.put(grammarAccess.getStateAccessExpressionAccess().getGroup(), "rule__StateAccessExpression__Group__0");
+			builder.put(grammarAccess.getStateAccessExpressionAccess().getGroup_2(), "rule__StateAccessExpression__Group_2__0");
+			builder.put(grammarAccess.getStateAccessExpressionAccess().getGroup_5(), "rule__StateAccessExpression__Group_5__0");
 			builder.put(grammarAccess.getSCLProgramAccess().getGroup(), "rule__SCLProgram__Group__0");
 			builder.put(grammarAccess.getModuleAccess().getGroup(), "rule__Module__Group__0");
 			builder.put(grammarAccess.getPauseAccess().getGroup(), "rule__Pause__Group__0");
@@ -750,8 +755,14 @@ public class SCTXParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getReferenceValuedObjectAccess().getParametersAssignment_4_0_2_1(), "rule__ReferenceValuedObject__ParametersAssignment_4_0_2_1");
 			builder.put(grammarAccess.getReferenceValuedObjectAccess().getInitialValueAssignment_5_1(), "rule__ReferenceValuedObject__InitialValueAssignment_5_1");
 			builder.put(grammarAccess.getReferenceValuedObjectAccess().getLabelAssignment_6_1(), "rule__ReferenceValuedObject__LabelAssignment_6_1");
-			builder.put(grammarAccess.getStaticAccessExpressionAccess().getTargetAssignment_2(), "rule__StaticAccessExpression__TargetAssignment_2");
-			builder.put(grammarAccess.getStaticAccessExpressionAccess().getSubReferenceAssignment_5(), "rule__StaticAccessExpression__SubReferenceAssignment_5");
+			builder.put(grammarAccess.getSCChartAccessExpressionAccess().getAccessAssignment_0(), "rule__SCChartAccessExpression__AccessAssignment_0");
+			builder.put(grammarAccess.getSCChartAccessExpressionAccess().getTargetAssignment_2(), "rule__SCChartAccessExpression__TargetAssignment_2");
+			builder.put(grammarAccess.getSCChartAccessExpressionAccess().getSubReferenceAssignment_5(), "rule__SCChartAccessExpression__SubReferenceAssignment_5");
+			builder.put(grammarAccess.getStateAccessExpressionAccess().getAccessAssignment_0(), "rule__StateAccessExpression__AccessAssignment_0");
+			builder.put(grammarAccess.getStateAccessExpressionAccess().getContainerAssignment_2_0_0(), "rule__StateAccessExpression__ContainerAssignment_2_0_0");
+			builder.put(grammarAccess.getStateAccessExpressionAccess().getContainerAssignment_2_0_1(), "rule__StateAccessExpression__ContainerAssignment_2_0_1");
+			builder.put(grammarAccess.getStateAccessExpressionAccess().getTargetAssignment_3(), "rule__StateAccessExpression__TargetAssignment_3");
+			builder.put(grammarAccess.getStateAccessExpressionAccess().getScheduleAssignment_5_1(), "rule__StateAccessExpression__ScheduleAssignment_5_1");
 			builder.put(grammarAccess.getSCLProgramAccess().getPragmasAssignment_0(), "rule__SCLProgram__PragmasAssignment_0");
 			builder.put(grammarAccess.getSCLProgramAccess().getModulesAssignment_1(), "rule__SCLProgram__ModulesAssignment_1");
 			builder.put(grammarAccess.getModuleAccess().getAnnotationsAssignment_0(), "rule__Module__AnnotationsAssignment_0");

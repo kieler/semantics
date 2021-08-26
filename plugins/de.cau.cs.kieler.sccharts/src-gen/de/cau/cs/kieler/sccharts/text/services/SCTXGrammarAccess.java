@@ -3730,10 +3730,31 @@ public class SCTXGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		//STRING
 		public RuleCall getLabelSTRINGTerminalRuleCall_6_1_0() { return cLabelSTRINGTerminalRuleCall_6_1_0; }
 	}
-	public class StaticAccessExpressionElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.sccharts.text.SCTX.StaticAccessExpression");
+	public class SpecialAccessExpressionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.sccharts.text.SCTX.SpecialAccessExpression");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cSCChartAccessExpressionParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cStateAccessExpressionParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		
+		//@Override
+		//SpecialAccessExpression returns kexpressions::SpecialAccessExpression:
+		//    SCChartAccessExpression | StateAccessExpression;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//SCChartAccessExpression | StateAccessExpression
+		public Alternatives getAlternatives() { return cAlternatives; }
+		
+		//SCChartAccessExpression
+		public RuleCall getSCChartAccessExpressionParserRuleCall_0() { return cSCChartAccessExpressionParserRuleCall_0; }
+		
+		//StateAccessExpression
+		public RuleCall getStateAccessExpressionParserRuleCall_1() { return cStateAccessExpressionParserRuleCall_1; }
+	}
+	public class SCChartAccessExpressionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.sccharts.text.SCTX.SCChartAccessExpression");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Keyword cScchartKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cAccessAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final Keyword cAccessScchartKeyword_0_0 = (Keyword)cAccessAssignment_0.eContents().get(0);
 		private final Keyword cLeftParenthesisKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		private final Assignment cTargetAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final CrossReference cTargetNamedObjectCrossReference_2_0 = (CrossReference)cTargetAssignment_2.eContents().get(0);
@@ -3743,21 +3764,22 @@ public class SCTXGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		private final Assignment cSubReferenceAssignment_5 = (Assignment)cGroup.eContents().get(5);
 		private final RuleCall cSubReferenceValuedObjectReferenceParserRuleCall_5_0 = (RuleCall)cSubReferenceAssignment_5.eContents().get(0);
 		
-		//@Override
-		//StaticAccessExpression returns kexpressions::StaticAccessExpression:
-		//    // Adjusted keyword!
-		//    'scchart' '(' target=[annotations::NamedObject|PrimeID] ')'
-		//    '.' subReference=ValuedObjectReference;
+		//SCChartAccessExpression returns kexpressions::SpecialAccessExpression:
+		//    access='scchart' '('
+		//    target=[annotations::NamedObject|PrimeID]
+		//    ')' '.' subReference=ValuedObjectReference;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//// Adjusted keyword!
-		//'scchart' '(' target=[annotations::NamedObject|PrimeID] ')'
-		//'.' subReference=ValuedObjectReference
+		//access='scchart' '('
+		//target=[annotations::NamedObject|PrimeID]
+		//')' '.' subReference=ValuedObjectReference
 		public Group getGroup() { return cGroup; }
 		
-		//// Adjusted keyword!
+		//access='scchart'
+		public Assignment getAccessAssignment_0() { return cAccessAssignment_0; }
+		
 		//'scchart'
-		public Keyword getScchartKeyword_0() { return cScchartKeyword_0; }
+		public Keyword getAccessScchartKeyword_0_0() { return cAccessScchartKeyword_0_0; }
 		
 		//'('
 		public Keyword getLeftParenthesisKeyword_1() { return cLeftParenthesisKeyword_1; }
@@ -3782,6 +3804,103 @@ public class SCTXGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		
 		//ValuedObjectReference
 		public RuleCall getSubReferenceValuedObjectReferenceParserRuleCall_5_0() { return cSubReferenceValuedObjectReferenceParserRuleCall_5_0; }
+	}
+	public class StateAccessExpressionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.sccharts.text.SCTX.StateAccessExpression");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cAccessAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final Keyword cAccessStateKeyword_0_0 = (Keyword)cAccessAssignment_0.eContents().get(0);
+		private final Keyword cLeftParenthesisKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
+		private final Alternatives cAlternatives_2_0 = (Alternatives)cGroup_2.eContents().get(0);
+		private final Assignment cContainerAssignment_2_0_0 = (Assignment)cAlternatives_2_0.eContents().get(0);
+		private final CrossReference cContainerControlflowRegionCrossReference_2_0_0_0 = (CrossReference)cContainerAssignment_2_0_0.eContents().get(0);
+		private final RuleCall cContainerControlflowRegionIDTerminalRuleCall_2_0_0_0_1 = (RuleCall)cContainerControlflowRegionCrossReference_2_0_0_0.eContents().get(1);
+		private final Assignment cContainerAssignment_2_0_1 = (Assignment)cAlternatives_2_0.eContents().get(1);
+		private final CrossReference cContainerDataflowRegionCrossReference_2_0_1_0 = (CrossReference)cContainerAssignment_2_0_1.eContents().get(0);
+		private final RuleCall cContainerDataflowRegionIDTerminalRuleCall_2_0_1_0_1 = (RuleCall)cContainerDataflowRegionCrossReference_2_0_1_0.eContents().get(1);
+		private final Keyword cFullStopKeyword_2_1 = (Keyword)cGroup_2.eContents().get(1);
+		private final Assignment cTargetAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final CrossReference cTargetStateCrossReference_3_0 = (CrossReference)cTargetAssignment_3.eContents().get(0);
+		private final RuleCall cTargetStateIDTerminalRuleCall_3_0_1 = (RuleCall)cTargetStateCrossReference_3_0.eContents().get(1);
+		private final Keyword cRightParenthesisKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		private final Group cGroup_5 = (Group)cGroup.eContents().get(5);
+		private final Keyword cScheduleKeyword_5_0 = (Keyword)cGroup_5.eContents().get(0);
+		private final Assignment cScheduleAssignment_5_1 = (Assignment)cGroup_5.eContents().get(1);
+		private final RuleCall cScheduleScheduleObjectReferenceParserRuleCall_5_1_0 = (RuleCall)cScheduleAssignment_5_1.eContents().get(0);
+		
+		//StateAccessExpression returns kexpressions::SpecialAccessExpression:
+		//    access='state' '('
+		//    ( (container=[sccharts::ControlflowRegion] | container=[sccharts::DataflowRegion]) '.')? target=[sccharts::State]
+		//    ')'
+		//    ('schedule' schedule += ScheduleObjectReference)?;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//access='state' '('
+		//( (container=[sccharts::ControlflowRegion] | container=[sccharts::DataflowRegion]) '.')? target=[sccharts::State]
+		//')'
+		//('schedule' schedule += ScheduleObjectReference)?
+		public Group getGroup() { return cGroup; }
+		
+		//access='state'
+		public Assignment getAccessAssignment_0() { return cAccessAssignment_0; }
+		
+		//'state'
+		public Keyword getAccessStateKeyword_0_0() { return cAccessStateKeyword_0_0; }
+		
+		//'('
+		public Keyword getLeftParenthesisKeyword_1() { return cLeftParenthesisKeyword_1; }
+		
+		//( (container=[sccharts::ControlflowRegion] | container=[sccharts::DataflowRegion]) '.')?
+		public Group getGroup_2() { return cGroup_2; }
+		
+		//(container=[sccharts::ControlflowRegion] | container=[sccharts::DataflowRegion])
+		public Alternatives getAlternatives_2_0() { return cAlternatives_2_0; }
+		
+		//container=[sccharts::ControlflowRegion]
+		public Assignment getContainerAssignment_2_0_0() { return cContainerAssignment_2_0_0; }
+		
+		//[sccharts::ControlflowRegion]
+		public CrossReference getContainerControlflowRegionCrossReference_2_0_0_0() { return cContainerControlflowRegionCrossReference_2_0_0_0; }
+		
+		//ID
+		public RuleCall getContainerControlflowRegionIDTerminalRuleCall_2_0_0_0_1() { return cContainerControlflowRegionIDTerminalRuleCall_2_0_0_0_1; }
+		
+		//container=[sccharts::DataflowRegion]
+		public Assignment getContainerAssignment_2_0_1() { return cContainerAssignment_2_0_1; }
+		
+		//[sccharts::DataflowRegion]
+		public CrossReference getContainerDataflowRegionCrossReference_2_0_1_0() { return cContainerDataflowRegionCrossReference_2_0_1_0; }
+		
+		//ID
+		public RuleCall getContainerDataflowRegionIDTerminalRuleCall_2_0_1_0_1() { return cContainerDataflowRegionIDTerminalRuleCall_2_0_1_0_1; }
+		
+		//'.'
+		public Keyword getFullStopKeyword_2_1() { return cFullStopKeyword_2_1; }
+		
+		//target=[sccharts::State]
+		public Assignment getTargetAssignment_3() { return cTargetAssignment_3; }
+		
+		//[sccharts::State]
+		public CrossReference getTargetStateCrossReference_3_0() { return cTargetStateCrossReference_3_0; }
+		
+		//ID
+		public RuleCall getTargetStateIDTerminalRuleCall_3_0_1() { return cTargetStateIDTerminalRuleCall_3_0_1; }
+		
+		//')'
+		public Keyword getRightParenthesisKeyword_4() { return cRightParenthesisKeyword_4; }
+		
+		//('schedule' schedule += ScheduleObjectReference)?
+		public Group getGroup_5() { return cGroup_5; }
+		
+		//'schedule'
+		public Keyword getScheduleKeyword_5_0() { return cScheduleKeyword_5_0; }
+		
+		//schedule += ScheduleObjectReference
+		public Assignment getScheduleAssignment_5_1() { return cScheduleAssignment_5_1; }
+		
+		//ScheduleObjectReference
+		public RuleCall getScheduleScheduleObjectReferenceParserRuleCall_5_1_0() { return cScheduleScheduleObjectReferenceParserRuleCall_5_1_0; }
 	}
 	public class HiddenKeywordsElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.sccharts.text.SCTX.HiddenKeywords");
@@ -4086,7 +4205,9 @@ public class SCTXGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 	private final DeclarationOrMethodWithKeywordWOSemicolonElements pDeclarationOrMethodWithKeywordWOSemicolon;
 	private final KeywordMethodDeclarationWOSemicolonElements pKeywordMethodDeclarationWOSemicolon;
 	private final ReferenceValuedObjectElements pReferenceValuedObject;
-	private final StaticAccessExpressionElements pStaticAccessExpression;
+	private final SpecialAccessExpressionElements pSpecialAccessExpression;
+	private final SCChartAccessExpressionElements pSCChartAccessExpression;
+	private final StateAccessExpressionElements pStateAccessExpression;
 	private final PreemptionTypeElements ePreemptionType;
 	private final PreemptionActionTypeElements ePreemptionActionType;
 	private final DelayTypeElements eDelayType;
@@ -4158,7 +4279,9 @@ public class SCTXGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		this.pDeclarationOrMethodWithKeywordWOSemicolon = new DeclarationOrMethodWithKeywordWOSemicolonElements();
 		this.pKeywordMethodDeclarationWOSemicolon = new KeywordMethodDeclarationWOSemicolonElements();
 		this.pReferenceValuedObject = new ReferenceValuedObjectElements();
-		this.pStaticAccessExpression = new StaticAccessExpressionElements();
+		this.pSpecialAccessExpression = new SpecialAccessExpressionElements();
+		this.pSCChartAccessExpression = new SCChartAccessExpressionElements();
+		this.pStateAccessExpression = new StateAccessExpressionElements();
 		this.ePreemptionType = new PreemptionTypeElements();
 		this.ePreemptionActionType = new PreemptionActionTypeElements();
 		this.eDelayType = new DelayTypeElements();
@@ -4782,16 +4905,39 @@ public class SCTXGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 	}
 	
 	//@Override
-	//StaticAccessExpression returns kexpressions::StaticAccessExpression:
-	//    // Adjusted keyword!
-	//    'scchart' '(' target=[annotations::NamedObject|PrimeID] ')'
-	//    '.' subReference=ValuedObjectReference;
-	public StaticAccessExpressionElements getStaticAccessExpressionAccess() {
-		return pStaticAccessExpression;
+	//SpecialAccessExpression returns kexpressions::SpecialAccessExpression:
+	//    SCChartAccessExpression | StateAccessExpression;
+	public SpecialAccessExpressionElements getSpecialAccessExpressionAccess() {
+		return pSpecialAccessExpression;
 	}
 	
-	public ParserRule getStaticAccessExpressionRule() {
-		return getStaticAccessExpressionAccess().getRule();
+	public ParserRule getSpecialAccessExpressionRule() {
+		return getSpecialAccessExpressionAccess().getRule();
+	}
+	
+	//SCChartAccessExpression returns kexpressions::SpecialAccessExpression:
+	//    access='scchart' '('
+	//    target=[annotations::NamedObject|PrimeID]
+	//    ')' '.' subReference=ValuedObjectReference;
+	public SCChartAccessExpressionElements getSCChartAccessExpressionAccess() {
+		return pSCChartAccessExpression;
+	}
+	
+	public ParserRule getSCChartAccessExpressionRule() {
+		return getSCChartAccessExpressionAccess().getRule();
+	}
+	
+	//StateAccessExpression returns kexpressions::SpecialAccessExpression:
+	//    access='state' '('
+	//    ( (container=[sccharts::ControlflowRegion] | container=[sccharts::DataflowRegion]) '.')? target=[sccharts::State]
+	//    ')'
+	//    ('schedule' schedule += ScheduleObjectReference)?;
+	public StateAccessExpressionElements getStateAccessExpressionAccess() {
+		return pStateAccessExpression;
+	}
+	
+	public ParserRule getStateAccessExpressionRule() {
+		return getStateAccessExpressionAccess().getRule();
 	}
 	
 	//// ------------ //
@@ -6533,7 +6679,7 @@ public class SCTXGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 	//    | RandomCall
 	//    | RandomizeCall
 	//    | ValuedObjectTestExpression // Last to allow detection of calls
-	//    | StaticAccessExpression
+	//    | SpecialAccessExpression
 	//    | TextExpression;
 	public KExpressionsGrammarAccess.AtomicExpressionElements getAtomicExpressionAccess() {
 		return gaKExpressions.getAtomicExpressionAccess();

@@ -30,7 +30,7 @@ import de.cau.cs.kieler.kexpressions.RandomCall;
 import de.cau.cs.kieler.kexpressions.RandomizeCall;
 import de.cau.cs.kieler.kexpressions.ReferenceCall;
 import de.cau.cs.kieler.kexpressions.ScheduleObjectReference;
-import de.cau.cs.kieler.kexpressions.StaticAccessExpression;
+import de.cau.cs.kieler.kexpressions.SpecialAccessExpression;
 import de.cau.cs.kieler.kexpressions.StringValue;
 import de.cau.cs.kieler.kexpressions.TextExpression;
 import de.cau.cs.kieler.kexpressions.ThisExpression;
@@ -731,9 +731,9 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 			case KExpressionsPackage.SCHEDULE_OBJECT_REFERENCE:
 				sequence_ScheduleObjectReference(context, (ScheduleObjectReference) semanticObject); 
 				return; 
-			case KExpressionsPackage.STATIC_ACCESS_EXPRESSION:
+			case KExpressionsPackage.SPECIAL_ACCESS_EXPRESSION:
 				if (rule == grammarAccess.getBoolScheduleExpressionRule()) {
-					sequence_BoolScheduleExpression_StaticAccessExpression(context, (StaticAccessExpression) semanticObject); 
+					sequence_BoolScheduleExpression_SpecialAccessExpression(context, (SpecialAccessExpression) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getRootRule()
@@ -792,9 +792,9 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 						|| action == grammarAccess.getSfbyExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getAtomicExpressionRule()
 						|| rule == grammarAccess.getAtomicValuedExpressionRule()
-						|| rule == grammarAccess.getStaticAccessExpressionRule()
+						|| rule == grammarAccess.getSpecialAccessExpressionRule()
 						|| rule == grammarAccess.getVectorValueMemberRule()) {
-					sequence_StaticAccessExpression(context, (StaticAccessExpression) semanticObject); 
+					sequence_SpecialAccessExpression(context, (SpecialAccessExpression) semanticObject); 
 					return; 
 				}
 				else break;
@@ -2193,12 +2193,18 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	
 	/**
 	 * Contexts:
-	 *     BoolScheduleExpression returns StaticAccessExpression
+	 *     BoolScheduleExpression returns SpecialAccessExpression
 	 *
 	 * Constraint:
-	 *     (target=[NamedObject|PrimeID] subReference=ValuedObjectReference schedule+=ScheduleObjectReference?)
+	 *     (
+	 *         access='static' 
+	 *         container=[NamedObject|PrimeID]? 
+	 *         target=[NamedObject|PrimeID] 
+	 *         subReference=ValuedObjectReference 
+	 *         schedule+=ScheduleObjectReference?
+	 *     )
 	 */
-	protected void sequence_BoolScheduleExpression_StaticAccessExpression(ISerializationContext context, StaticAccessExpression semanticObject) {
+	protected void sequence_BoolScheduleExpression_SpecialAccessExpression(ISerializationContext context, SpecialAccessExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -2927,79 +2933,70 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	
 	/**
 	 * Contexts:
-	 *     Root returns StaticAccessExpression
-	 *     Expression returns StaticAccessExpression
-	 *     BoolExpression returns StaticAccessExpression
-	 *     LogicalOrExpression returns StaticAccessExpression
-	 *     LogicalOrExpression.OperatorExpression_1_0 returns StaticAccessExpression
-	 *     LogicalAndExpression returns StaticAccessExpression
-	 *     LogicalAndExpression.OperatorExpression_1_0 returns StaticAccessExpression
-	 *     BitwiseOrExpression returns StaticAccessExpression
-	 *     BitwiseOrExpression.OperatorExpression_1_0 returns StaticAccessExpression
-	 *     BitwiseXOrExpression returns StaticAccessExpression
-	 *     BitwiseXOrExpression.OperatorExpression_1_0 returns StaticAccessExpression
-	 *     BitwiseAndExpression returns StaticAccessExpression
-	 *     BitwiseAndExpression.OperatorExpression_1_0 returns StaticAccessExpression
-	 *     CompareOperation returns StaticAccessExpression
-	 *     CompareOperation.OperatorExpression_1_0 returns StaticAccessExpression
-	 *     NotOrValuedExpression returns StaticAccessExpression
-	 *     BitwiseNotExpression returns StaticAccessExpression
-	 *     NotExpression returns StaticAccessExpression
-	 *     ValuedExpression returns StaticAccessExpression
-	 *     ShiftExpressions returns StaticAccessExpression
-	 *     ShiftExpressions.OperatorExpression_1_0_0 returns StaticAccessExpression
-	 *     ShiftExpressions.OperatorExpression_1_1_0 returns StaticAccessExpression
-	 *     ShiftExpressions.OperatorExpression_1_2_0 returns StaticAccessExpression
-	 *     ShiftLeftExpression returns StaticAccessExpression
-	 *     ShiftLeftExpression.OperatorExpression_1_0 returns StaticAccessExpression
-	 *     ShiftRightExpression returns StaticAccessExpression
-	 *     ShiftRightExpression.OperatorExpression_1_0 returns StaticAccessExpression
-	 *     ShiftRightUnsignedExpression returns StaticAccessExpression
-	 *     ShiftRightUnsignedExpression.OperatorExpression_1_0 returns StaticAccessExpression
-	 *     SumExpression returns StaticAccessExpression
-	 *     SumExpression.OperatorExpression_1_0_0 returns StaticAccessExpression
-	 *     SumExpression.OperatorExpression_1_1_0 returns StaticAccessExpression
-	 *     AddExpression returns StaticAccessExpression
-	 *     AddExpression.OperatorExpression_1_0 returns StaticAccessExpression
-	 *     SubExpression returns StaticAccessExpression
-	 *     SubExpression.OperatorExpression_1_0 returns StaticAccessExpression
-	 *     ProductExpression returns StaticAccessExpression
-	 *     ProductExpression.OperatorExpression_1_0_0 returns StaticAccessExpression
-	 *     ProductExpression.OperatorExpression_1_1_0 returns StaticAccessExpression
-	 *     ProductExpression.OperatorExpression_1_2_0 returns StaticAccessExpression
-	 *     MultExpression returns StaticAccessExpression
-	 *     MultExpression.OperatorExpression_1_0 returns StaticAccessExpression
-	 *     DivExpression returns StaticAccessExpression
-	 *     DivExpression.OperatorExpression_1_0 returns StaticAccessExpression
-	 *     ModExpression returns StaticAccessExpression
-	 *     ModExpression.OperatorExpression_1_0 returns StaticAccessExpression
-	 *     NegExpression returns StaticAccessExpression
-	 *     TernaryOperation returns StaticAccessExpression
-	 *     InitExpression returns StaticAccessExpression
-	 *     InitExpression.OperatorExpression_1_0 returns StaticAccessExpression
-	 *     FbyExpression returns StaticAccessExpression
-	 *     FbyExpression.OperatorExpression_1_0 returns StaticAccessExpression
-	 *     SfbyExpression returns StaticAccessExpression
-	 *     SfbyExpression.OperatorExpression_1_0 returns StaticAccessExpression
-	 *     AtomicExpression returns StaticAccessExpression
-	 *     AtomicValuedExpression returns StaticAccessExpression
-	 *     StaticAccessExpression returns StaticAccessExpression
-	 *     VectorValueMember returns StaticAccessExpression
+	 *     Root returns SpecialAccessExpression
+	 *     Expression returns SpecialAccessExpression
+	 *     BoolExpression returns SpecialAccessExpression
+	 *     LogicalOrExpression returns SpecialAccessExpression
+	 *     LogicalOrExpression.OperatorExpression_1_0 returns SpecialAccessExpression
+	 *     LogicalAndExpression returns SpecialAccessExpression
+	 *     LogicalAndExpression.OperatorExpression_1_0 returns SpecialAccessExpression
+	 *     BitwiseOrExpression returns SpecialAccessExpression
+	 *     BitwiseOrExpression.OperatorExpression_1_0 returns SpecialAccessExpression
+	 *     BitwiseXOrExpression returns SpecialAccessExpression
+	 *     BitwiseXOrExpression.OperatorExpression_1_0 returns SpecialAccessExpression
+	 *     BitwiseAndExpression returns SpecialAccessExpression
+	 *     BitwiseAndExpression.OperatorExpression_1_0 returns SpecialAccessExpression
+	 *     CompareOperation returns SpecialAccessExpression
+	 *     CompareOperation.OperatorExpression_1_0 returns SpecialAccessExpression
+	 *     NotOrValuedExpression returns SpecialAccessExpression
+	 *     BitwiseNotExpression returns SpecialAccessExpression
+	 *     NotExpression returns SpecialAccessExpression
+	 *     ValuedExpression returns SpecialAccessExpression
+	 *     ShiftExpressions returns SpecialAccessExpression
+	 *     ShiftExpressions.OperatorExpression_1_0_0 returns SpecialAccessExpression
+	 *     ShiftExpressions.OperatorExpression_1_1_0 returns SpecialAccessExpression
+	 *     ShiftExpressions.OperatorExpression_1_2_0 returns SpecialAccessExpression
+	 *     ShiftLeftExpression returns SpecialAccessExpression
+	 *     ShiftLeftExpression.OperatorExpression_1_0 returns SpecialAccessExpression
+	 *     ShiftRightExpression returns SpecialAccessExpression
+	 *     ShiftRightExpression.OperatorExpression_1_0 returns SpecialAccessExpression
+	 *     ShiftRightUnsignedExpression returns SpecialAccessExpression
+	 *     ShiftRightUnsignedExpression.OperatorExpression_1_0 returns SpecialAccessExpression
+	 *     SumExpression returns SpecialAccessExpression
+	 *     SumExpression.OperatorExpression_1_0_0 returns SpecialAccessExpression
+	 *     SumExpression.OperatorExpression_1_1_0 returns SpecialAccessExpression
+	 *     AddExpression returns SpecialAccessExpression
+	 *     AddExpression.OperatorExpression_1_0 returns SpecialAccessExpression
+	 *     SubExpression returns SpecialAccessExpression
+	 *     SubExpression.OperatorExpression_1_0 returns SpecialAccessExpression
+	 *     ProductExpression returns SpecialAccessExpression
+	 *     ProductExpression.OperatorExpression_1_0_0 returns SpecialAccessExpression
+	 *     ProductExpression.OperatorExpression_1_1_0 returns SpecialAccessExpression
+	 *     ProductExpression.OperatorExpression_1_2_0 returns SpecialAccessExpression
+	 *     MultExpression returns SpecialAccessExpression
+	 *     MultExpression.OperatorExpression_1_0 returns SpecialAccessExpression
+	 *     DivExpression returns SpecialAccessExpression
+	 *     DivExpression.OperatorExpression_1_0 returns SpecialAccessExpression
+	 *     ModExpression returns SpecialAccessExpression
+	 *     ModExpression.OperatorExpression_1_0 returns SpecialAccessExpression
+	 *     NegExpression returns SpecialAccessExpression
+	 *     TernaryOperation returns SpecialAccessExpression
+	 *     InitExpression returns SpecialAccessExpression
+	 *     InitExpression.OperatorExpression_1_0 returns SpecialAccessExpression
+	 *     FbyExpression returns SpecialAccessExpression
+	 *     FbyExpression.OperatorExpression_1_0 returns SpecialAccessExpression
+	 *     SfbyExpression returns SpecialAccessExpression
+	 *     SfbyExpression.OperatorExpression_1_0 returns SpecialAccessExpression
+	 *     AtomicExpression returns SpecialAccessExpression
+	 *     AtomicValuedExpression returns SpecialAccessExpression
+	 *     SpecialAccessExpression returns SpecialAccessExpression
+	 *     VectorValueMember returns SpecialAccessExpression
 	 *
 	 * Constraint:
-	 *     (target=[NamedObject|PrimeID] subReference=ValuedObjectReference)
+	 *     (access='static' container=[NamedObject|PrimeID]? target=[NamedObject|PrimeID] subReference=ValuedObjectReference)
 	 */
-	protected void sequence_StaticAccessExpression(ISerializationContext context, StaticAccessExpression semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, KExpressionsPackage.Literals.STATIC_ACCESS_EXPRESSION__TARGET) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KExpressionsPackage.Literals.STATIC_ACCESS_EXPRESSION__TARGET));
-			if (transientValues.isValueTransient(semanticObject, KExpressionsPackage.Literals.STATIC_ACCESS_EXPRESSION__SUB_REFERENCE) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KExpressionsPackage.Literals.STATIC_ACCESS_EXPRESSION__SUB_REFERENCE));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getStaticAccessExpressionAccess().getTargetNamedObjectPrimeIDParserRuleCall_2_0_1(), semanticObject.eGet(KExpressionsPackage.Literals.STATIC_ACCESS_EXPRESSION__TARGET, false));
-		feeder.accept(grammarAccess.getStaticAccessExpressionAccess().getSubReferenceValuedObjectReferenceParserRuleCall_5_0(), semanticObject.getSubReference());
-		feeder.finish();
+	protected void sequence_SpecialAccessExpression(ISerializationContext context, SpecialAccessExpression semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	

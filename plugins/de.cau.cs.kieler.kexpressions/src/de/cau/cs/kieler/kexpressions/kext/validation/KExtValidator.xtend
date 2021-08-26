@@ -7,13 +7,14 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.StringAnnotation
 import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.IntValue
-import de.cau.cs.kieler.kexpressions.StaticAccessExpression
+import de.cau.cs.kieler.kexpressions.SpecialAccessExpression
 import de.cau.cs.kieler.kexpressions.Value
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.VectorValue
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsAccessVisibilityExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
@@ -23,7 +24,6 @@ import de.cau.cs.kieler.kexpressions.kext.Kext
 import de.cau.cs.kieler.kexpressions.kext.TestEntity
 import org.eclipse.xtext.EcoreUtil2
 import org.eclipse.xtext.validation.Check
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsAccessVisibilityExtensions
 
 //import org.eclipse.xtext.validation.Check
 
@@ -106,7 +106,7 @@ class KExtValidator extends AbstractKExtValidator {
                         if (refVO.initialValue !== null && refVO.initialValue instanceof IntValue) ok = true
                     }
                 }
-                if (card instanceof StaticAccessExpression) {
+                if (card instanceof SpecialAccessExpression) {
                     val refVO = card.subReference?.lowermostReference?.valuedObject
                     if (refVO !== null) {
                         val refDecl = refVO.variableDeclaration

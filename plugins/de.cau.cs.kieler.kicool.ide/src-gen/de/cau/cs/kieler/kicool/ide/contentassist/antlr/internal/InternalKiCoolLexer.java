@@ -2038,11 +2038,10 @@ public class InternalKiCoolLexer extends Lexer {
         try {
             int _type = T__108;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKiCool.g:102:8: ( 'static' )
-            // InternalKiCool.g:102:10: 'static'
+            // InternalKiCool.g:102:8: ( '\\'' )
+            // InternalKiCool.g:102:10: '\\''
             {
-            match("static"); 
-
+            match('\''); 
 
             }
 
@@ -2059,10 +2058,11 @@ public class InternalKiCoolLexer extends Lexer {
         try {
             int _type = T__109;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKiCool.g:103:8: ( '\\'' )
-            // InternalKiCool.g:103:10: '\\''
+            // InternalKiCool.g:103:8: ( 'random' )
+            // InternalKiCool.g:103:10: 'random'
             {
-            match('\''); 
+            match("random"); 
+
 
             }
 
@@ -2079,11 +2079,10 @@ public class InternalKiCoolLexer extends Lexer {
         try {
             int _type = T__110;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKiCool.g:104:8: ( 'random' )
-            // InternalKiCool.g:104:10: 'random'
+            // InternalKiCool.g:104:8: ( '_' )
+            // InternalKiCool.g:104:10: '_'
             {
-            match("random"); 
-
+            match('_'); 
 
             }
 
@@ -2100,10 +2099,11 @@ public class InternalKiCoolLexer extends Lexer {
         try {
             int _type = T__111;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKiCool.g:105:8: ( '_' )
-            // InternalKiCool.g:105:10: '_'
+            // InternalKiCool.g:105:8: ( 'null' )
+            // InternalKiCool.g:105:10: 'null'
             {
-            match('_'); 
+            match("null"); 
+
 
             }
 
@@ -2120,11 +2120,10 @@ public class InternalKiCoolLexer extends Lexer {
         try {
             int _type = T__112;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKiCool.g:106:8: ( 'null' )
-            // InternalKiCool.g:106:10: 'null'
+            // InternalKiCool.g:106:8: ( '#' )
+            // InternalKiCool.g:106:10: '#'
             {
-            match("null"); 
-
+            match('#'); 
 
             }
 
@@ -2141,10 +2140,10 @@ public class InternalKiCoolLexer extends Lexer {
         try {
             int _type = T__113;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKiCool.g:107:8: ( '#' )
-            // InternalKiCool.g:107:10: '#'
+            // InternalKiCool.g:107:8: ( '@' )
+            // InternalKiCool.g:107:10: '@'
             {
-            match('#'); 
+            match('@'); 
 
             }
 
@@ -2161,10 +2160,11 @@ public class InternalKiCoolLexer extends Lexer {
         try {
             int _type = T__114;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKiCool.g:108:8: ( '@' )
-            // InternalKiCool.g:108:10: '@'
+            // InternalKiCool.g:108:8: ( 'developer' )
+            // InternalKiCool.g:108:10: 'developer'
             {
-            match('@'); 
+            match("developer"); 
+
 
             }
 
@@ -2181,10 +2181,10 @@ public class InternalKiCoolLexer extends Lexer {
         try {
             int _type = T__115;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKiCool.g:109:8: ( 'developer' )
-            // InternalKiCool.g:109:10: 'developer'
+            // InternalKiCool.g:109:8: ( 'simulation' )
+            // InternalKiCool.g:109:10: 'simulation'
             {
-            match("developer"); 
+            match("simulation"); 
 
 
             }
@@ -2202,10 +2202,10 @@ public class InternalKiCoolLexer extends Lexer {
         try {
             int _type = T__116;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKiCool.g:110:8: ( 'simulation' )
-            // InternalKiCool.g:110:10: 'simulation'
+            // InternalKiCool.g:110:8: ( 'silent' )
+            // InternalKiCool.g:110:10: 'silent'
             {
-            match("simulation"); 
+            match("silent"); 
 
 
             }
@@ -2223,10 +2223,10 @@ public class InternalKiCoolLexer extends Lexer {
         try {
             int _type = T__117;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKiCool.g:111:8: ( 'silent' )
-            // InternalKiCool.g:111:10: 'silent'
+            // InternalKiCool.g:111:8: ( 'const' )
+            // InternalKiCool.g:111:10: 'const'
             {
-            match("silent"); 
+            match("const"); 
 
 
             }
@@ -2244,10 +2244,10 @@ public class InternalKiCoolLexer extends Lexer {
         try {
             int _type = T__118;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKiCool.g:112:8: ( 'const' )
-            // InternalKiCool.g:112:10: 'const'
+            // InternalKiCool.g:112:8: ( 'input' )
+            // InternalKiCool.g:112:10: 'input'
             {
-            match("const"); 
+            match("input"); 
 
 
             }
@@ -2265,10 +2265,10 @@ public class InternalKiCoolLexer extends Lexer {
         try {
             int _type = T__119;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKiCool.g:113:8: ( 'input' )
-            // InternalKiCool.g:113:10: 'input'
+            // InternalKiCool.g:113:8: ( 'output' )
+            // InternalKiCool.g:113:10: 'output'
             {
-            match("input"); 
+            match("output"); 
 
 
             }
@@ -2286,10 +2286,10 @@ public class InternalKiCoolLexer extends Lexer {
         try {
             int _type = T__120;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKiCool.g:114:8: ( 'output' )
-            // InternalKiCool.g:114:10: 'output'
+            // InternalKiCool.g:114:8: ( 'static' )
+            // InternalKiCool.g:114:10: 'static'
             {
-            match("output"); 
+            match("static"); 
 
 
             }
@@ -2349,11 +2349,11 @@ public class InternalKiCoolLexer extends Lexer {
         try {
             int _type = RULE_HOSTCODE;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKiCool.g:33846:15: ( '`' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '`' ) ) )* '`' )
-            // InternalKiCool.g:33846:17: '`' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '`' ) ) )* '`'
+            // InternalKiCool.g:33965:15: ( '`' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '`' ) ) )* '`' )
+            // InternalKiCool.g:33965:17: '`' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '`' ) ) )* '`'
             {
             match('`'); 
-            // InternalKiCool.g:33846:21: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '`' ) ) )*
+            // InternalKiCool.g:33965:21: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '`' ) ) )*
             loop1:
             do {
                 int alt1=3;
@@ -2369,7 +2369,7 @@ public class InternalKiCoolLexer extends Lexer {
 
                 switch (alt1) {
             	case 1 :
-            	    // InternalKiCool.g:33846:22: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' )
+            	    // InternalKiCool.g:33965:22: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' )
             	    {
             	    match('\\'); 
             	    if ( input.LA(1)=='\"'||input.LA(1)=='\''||input.LA(1)=='\\'||input.LA(1)=='b'||input.LA(1)=='f'||input.LA(1)=='n'||input.LA(1)=='r'||input.LA(1)=='t' ) {
@@ -2385,7 +2385,7 @@ public class InternalKiCoolLexer extends Lexer {
             	    }
             	    break;
             	case 2 :
-            	    // InternalKiCool.g:33846:63: ~ ( ( '\\\\' | '`' ) )
+            	    // InternalKiCool.g:33965:63: ~ ( ( '\\\\' | '`' ) )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='_')||(input.LA(1)>='a' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -2422,12 +2422,12 @@ public class InternalKiCoolLexer extends Lexer {
         try {
             int _type = RULE_COMMENT_ANNOTATION;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKiCool.g:33848:25: ( '/**' ( options {greedy=false; } : . )* '*/' )
-            // InternalKiCool.g:33848:27: '/**' ( options {greedy=false; } : . )* '*/'
+            // InternalKiCool.g:33967:25: ( '/**' ( options {greedy=false; } : . )* '*/' )
+            // InternalKiCool.g:33967:27: '/**' ( options {greedy=false; } : . )* '*/'
             {
             match("/**"); 
 
-            // InternalKiCool.g:33848:33: ( options {greedy=false; } : . )*
+            // InternalKiCool.g:33967:33: ( options {greedy=false; } : . )*
             loop2:
             do {
                 int alt2=2;
@@ -2452,7 +2452,7 @@ public class InternalKiCoolLexer extends Lexer {
 
                 switch (alt2) {
             	case 1 :
-            	    // InternalKiCool.g:33848:61: .
+            	    // InternalKiCool.g:33967:61: .
             	    {
             	    matchAny(); 
 
@@ -2482,8 +2482,8 @@ public class InternalKiCoolLexer extends Lexer {
         try {
             int _type = RULE_ML_COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKiCool.g:33850:17: ( '/*' ~ ( '*' ) ( options {greedy=false; } : . )* '*/' )
-            // InternalKiCool.g:33850:19: '/*' ~ ( '*' ) ( options {greedy=false; } : . )* '*/'
+            // InternalKiCool.g:33969:17: ( '/*' ~ ( '*' ) ( options {greedy=false; } : . )* '*/' )
+            // InternalKiCool.g:33969:19: '/*' ~ ( '*' ) ( options {greedy=false; } : . )* '*/'
             {
             match("/*"); 
 
@@ -2496,7 +2496,7 @@ public class InternalKiCoolLexer extends Lexer {
                 recover(mse);
                 throw mse;}
 
-            // InternalKiCool.g:33850:31: ( options {greedy=false; } : . )*
+            // InternalKiCool.g:33969:31: ( options {greedy=false; } : . )*
             loop3:
             do {
                 int alt3=2;
@@ -2521,7 +2521,7 @@ public class InternalKiCoolLexer extends Lexer {
 
                 switch (alt3) {
             	case 1 :
-            	    // InternalKiCool.g:33850:59: .
+            	    // InternalKiCool.g:33969:59: .
             	    {
             	    matchAny(); 
 
@@ -2551,12 +2551,12 @@ public class InternalKiCoolLexer extends Lexer {
         try {
             int _type = RULE_SL_COMMENT_ANNOTATION;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKiCool.g:33852:28: ( '//*' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
-            // InternalKiCool.g:33852:30: '//*' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
+            // InternalKiCool.g:33971:28: ( '//*' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
+            // InternalKiCool.g:33971:30: '//*' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
             {
             match("//*"); 
 
-            // InternalKiCool.g:33852:36: (~ ( ( '\\n' | '\\r' ) ) )*
+            // InternalKiCool.g:33971:36: (~ ( ( '\\n' | '\\r' ) ) )*
             loop4:
             do {
                 int alt4=2;
@@ -2569,7 +2569,7 @@ public class InternalKiCoolLexer extends Lexer {
 
                 switch (alt4) {
             	case 1 :
-            	    // InternalKiCool.g:33852:36: ~ ( ( '\\n' | '\\r' ) )
+            	    // InternalKiCool.g:33971:36: ~ ( ( '\\n' | '\\r' ) )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='\t')||(input.LA(1)>='\u000B' && input.LA(1)<='\f')||(input.LA(1)>='\u000E' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -2589,7 +2589,7 @@ public class InternalKiCoolLexer extends Lexer {
                 }
             } while (true);
 
-            // InternalKiCool.g:33852:52: ( ( '\\r' )? '\\n' )?
+            // InternalKiCool.g:33971:52: ( ( '\\r' )? '\\n' )?
             int alt6=2;
             int LA6_0 = input.LA(1);
 
@@ -2598,9 +2598,9 @@ public class InternalKiCoolLexer extends Lexer {
             }
             switch (alt6) {
                 case 1 :
-                    // InternalKiCool.g:33852:53: ( '\\r' )? '\\n'
+                    // InternalKiCool.g:33971:53: ( '\\r' )? '\\n'
                     {
-                    // InternalKiCool.g:33852:53: ( '\\r' )?
+                    // InternalKiCool.g:33971:53: ( '\\r' )?
                     int alt5=2;
                     int LA5_0 = input.LA(1);
 
@@ -2609,7 +2609,7 @@ public class InternalKiCoolLexer extends Lexer {
                     }
                     switch (alt5) {
                         case 1 :
-                            // InternalKiCool.g:33852:53: '\\r'
+                            // InternalKiCool.g:33971:53: '\\r'
                             {
                             match('\r'); 
 
@@ -2641,8 +2641,8 @@ public class InternalKiCoolLexer extends Lexer {
         try {
             int _type = RULE_SL_COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKiCool.g:33854:17: ( '//' ~ ( '*' ) (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
-            // InternalKiCool.g:33854:19: '//' ~ ( '*' ) (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
+            // InternalKiCool.g:33973:17: ( '//' ~ ( '*' ) (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
+            // InternalKiCool.g:33973:19: '//' ~ ( '*' ) (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
             {
             match("//"); 
 
@@ -2655,7 +2655,7 @@ public class InternalKiCoolLexer extends Lexer {
                 recover(mse);
                 throw mse;}
 
-            // InternalKiCool.g:33854:31: (~ ( ( '\\n' | '\\r' ) ) )*
+            // InternalKiCool.g:33973:31: (~ ( ( '\\n' | '\\r' ) ) )*
             loop7:
             do {
                 int alt7=2;
@@ -2668,7 +2668,7 @@ public class InternalKiCoolLexer extends Lexer {
 
                 switch (alt7) {
             	case 1 :
-            	    // InternalKiCool.g:33854:31: ~ ( ( '\\n' | '\\r' ) )
+            	    // InternalKiCool.g:33973:31: ~ ( ( '\\n' | '\\r' ) )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='\t')||(input.LA(1)>='\u000B' && input.LA(1)<='\f')||(input.LA(1)>='\u000E' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -2688,7 +2688,7 @@ public class InternalKiCoolLexer extends Lexer {
                 }
             } while (true);
 
-            // InternalKiCool.g:33854:47: ( ( '\\r' )? '\\n' )?
+            // InternalKiCool.g:33973:47: ( ( '\\r' )? '\\n' )?
             int alt9=2;
             int LA9_0 = input.LA(1);
 
@@ -2697,9 +2697,9 @@ public class InternalKiCoolLexer extends Lexer {
             }
             switch (alt9) {
                 case 1 :
-                    // InternalKiCool.g:33854:48: ( '\\r' )? '\\n'
+                    // InternalKiCool.g:33973:48: ( '\\r' )? '\\n'
                     {
-                    // InternalKiCool.g:33854:48: ( '\\r' )?
+                    // InternalKiCool.g:33973:48: ( '\\r' )?
                     int alt8=2;
                     int LA8_0 = input.LA(1);
 
@@ -2708,7 +2708,7 @@ public class InternalKiCoolLexer extends Lexer {
                     }
                     switch (alt8) {
                         case 1 :
-                            // InternalKiCool.g:33854:48: '\\r'
+                            // InternalKiCool.g:33973:48: '\\r'
                             {
                             match('\r'); 
 
@@ -2738,8 +2738,8 @@ public class InternalKiCoolLexer extends Lexer {
     // $ANTLR start "RULE_NUMBER"
     public final void mRULE_NUMBER() throws RecognitionException {
         try {
-            // InternalKiCool.g:33856:22: ( '0' .. '9' )
-            // InternalKiCool.g:33856:24: '0' .. '9'
+            // InternalKiCool.g:33975:22: ( '0' .. '9' )
+            // InternalKiCool.g:33975:24: '0' .. '9'
             {
             matchRange('0','9'); 
 
@@ -2756,10 +2756,10 @@ public class InternalKiCoolLexer extends Lexer {
         try {
             int _type = RULE_INT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKiCool.g:33858:10: ( ( RULE_NUMBER )+ )
-            // InternalKiCool.g:33858:12: ( RULE_NUMBER )+
+            // InternalKiCool.g:33977:10: ( ( RULE_NUMBER )+ )
+            // InternalKiCool.g:33977:12: ( RULE_NUMBER )+
             {
-            // InternalKiCool.g:33858:12: ( RULE_NUMBER )+
+            // InternalKiCool.g:33977:12: ( RULE_NUMBER )+
             int cnt10=0;
             loop10:
             do {
@@ -2773,7 +2773,7 @@ public class InternalKiCoolLexer extends Lexer {
 
                 switch (alt10) {
             	case 1 :
-            	    // InternalKiCool.g:33858:12: RULE_NUMBER
+            	    // InternalKiCool.g:33977:12: RULE_NUMBER
             	    {
             	    mRULE_NUMBER(); 
 
@@ -2805,17 +2805,17 @@ public class InternalKiCoolLexer extends Lexer {
         try {
             int _type = RULE_FLOAT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKiCool.g:33860:12: ( ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' ) )
-            // InternalKiCool.g:33860:14: ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' )
+            // InternalKiCool.g:33979:12: ( ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' ) )
+            // InternalKiCool.g:33979:14: ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' )
             {
-            // InternalKiCool.g:33860:14: ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' )
+            // InternalKiCool.g:33979:14: ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' )
             int alt18=2;
             alt18 = dfa18.predict(input);
             switch (alt18) {
                 case 1 :
-                    // InternalKiCool.g:33860:15: ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )?
+                    // InternalKiCool.g:33979:15: ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )?
                     {
-                    // InternalKiCool.g:33860:15: ( RULE_NUMBER )+
+                    // InternalKiCool.g:33979:15: ( RULE_NUMBER )+
                     int cnt11=0;
                     loop11:
                     do {
@@ -2829,7 +2829,7 @@ public class InternalKiCoolLexer extends Lexer {
 
                         switch (alt11) {
                     	case 1 :
-                    	    // InternalKiCool.g:33860:15: RULE_NUMBER
+                    	    // InternalKiCool.g:33979:15: RULE_NUMBER
                     	    {
                     	    mRULE_NUMBER(); 
 
@@ -2846,7 +2846,7 @@ public class InternalKiCoolLexer extends Lexer {
                     } while (true);
 
                     match('.'); 
-                    // InternalKiCool.g:33860:32: ( RULE_NUMBER )*
+                    // InternalKiCool.g:33979:32: ( RULE_NUMBER )*
                     loop12:
                     do {
                         int alt12=2;
@@ -2859,7 +2859,7 @@ public class InternalKiCoolLexer extends Lexer {
 
                         switch (alt12) {
                     	case 1 :
-                    	    // InternalKiCool.g:33860:32: RULE_NUMBER
+                    	    // InternalKiCool.g:33979:32: RULE_NUMBER
                     	    {
                     	    mRULE_NUMBER(); 
 
@@ -2871,7 +2871,7 @@ public class InternalKiCoolLexer extends Lexer {
                         }
                     } while (true);
 
-                    // InternalKiCool.g:33860:45: ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )?
+                    // InternalKiCool.g:33979:45: ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )?
                     int alt15=2;
                     int LA15_0 = input.LA(1);
 
@@ -2880,7 +2880,7 @@ public class InternalKiCoolLexer extends Lexer {
                     }
                     switch (alt15) {
                         case 1 :
-                            // InternalKiCool.g:33860:46: ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+
+                            // InternalKiCool.g:33979:46: ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+
                             {
                             if ( input.LA(1)=='E'||input.LA(1)=='e' ) {
                                 input.consume();
@@ -2891,7 +2891,7 @@ public class InternalKiCoolLexer extends Lexer {
                                 recover(mse);
                                 throw mse;}
 
-                            // InternalKiCool.g:33860:56: ( '+' | '-' )?
+                            // InternalKiCool.g:33979:56: ( '+' | '-' )?
                             int alt13=2;
                             int LA13_0 = input.LA(1);
 
@@ -2917,7 +2917,7 @@ public class InternalKiCoolLexer extends Lexer {
 
                             }
 
-                            // InternalKiCool.g:33860:67: ( RULE_NUMBER )+
+                            // InternalKiCool.g:33979:67: ( RULE_NUMBER )+
                             int cnt14=0;
                             loop14:
                             do {
@@ -2931,7 +2931,7 @@ public class InternalKiCoolLexer extends Lexer {
 
                                 switch (alt14) {
                             	case 1 :
-                            	    // InternalKiCool.g:33860:67: RULE_NUMBER
+                            	    // InternalKiCool.g:33979:67: RULE_NUMBER
                             	    {
                             	    mRULE_NUMBER(); 
 
@@ -2953,7 +2953,7 @@ public class InternalKiCoolLexer extends Lexer {
 
                     }
 
-                    // InternalKiCool.g:33860:82: ( 'f' )?
+                    // InternalKiCool.g:33979:82: ( 'f' )?
                     int alt16=2;
                     int LA16_0 = input.LA(1);
 
@@ -2962,7 +2962,7 @@ public class InternalKiCoolLexer extends Lexer {
                     }
                     switch (alt16) {
                         case 1 :
-                            // InternalKiCool.g:33860:82: 'f'
+                            // InternalKiCool.g:33979:82: 'f'
                             {
                             match('f'); 
 
@@ -2975,9 +2975,9 @@ public class InternalKiCoolLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // InternalKiCool.g:33860:87: ( RULE_NUMBER )+ 'f'
+                    // InternalKiCool.g:33979:87: ( RULE_NUMBER )+ 'f'
                     {
-                    // InternalKiCool.g:33860:87: ( RULE_NUMBER )+
+                    // InternalKiCool.g:33979:87: ( RULE_NUMBER )+
                     int cnt17=0;
                     loop17:
                     do {
@@ -2991,7 +2991,7 @@ public class InternalKiCoolLexer extends Lexer {
 
                         switch (alt17) {
                     	case 1 :
-                    	    // InternalKiCool.g:33860:87: RULE_NUMBER
+                    	    // InternalKiCool.g:33979:87: RULE_NUMBER
                     	    {
                     	    mRULE_NUMBER(); 
 
@@ -3030,10 +3030,10 @@ public class InternalKiCoolLexer extends Lexer {
         try {
             int _type = RULE_BOOLEAN;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKiCool.g:33862:14: ( ( 'true' | 'false' ) )
-            // InternalKiCool.g:33862:16: ( 'true' | 'false' )
+            // InternalKiCool.g:33981:14: ( ( 'true' | 'false' ) )
+            // InternalKiCool.g:33981:16: ( 'true' | 'false' )
             {
-            // InternalKiCool.g:33862:16: ( 'true' | 'false' )
+            // InternalKiCool.g:33981:16: ( 'true' | 'false' )
             int alt19=2;
             int LA19_0 = input.LA(1);
 
@@ -3051,7 +3051,7 @@ public class InternalKiCoolLexer extends Lexer {
             }
             switch (alt19) {
                 case 1 :
-                    // InternalKiCool.g:33862:17: 'true'
+                    // InternalKiCool.g:33981:17: 'true'
                     {
                     match("true"); 
 
@@ -3059,7 +3059,7 @@ public class InternalKiCoolLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // InternalKiCool.g:33862:24: 'false'
+                    // InternalKiCool.g:33981:24: 'false'
                     {
                     match("false"); 
 
@@ -3085,11 +3085,11 @@ public class InternalKiCoolLexer extends Lexer {
         try {
             int _type = RULE_STRING;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKiCool.g:33864:13: ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' )
-            // InternalKiCool.g:33864:15: '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"'
+            // InternalKiCool.g:33983:13: ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' )
+            // InternalKiCool.g:33983:15: '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"'
             {
             match('\"'); 
-            // InternalKiCool.g:33864:19: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )*
+            // InternalKiCool.g:33983:19: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )*
             loop20:
             do {
                 int alt20=3;
@@ -3105,7 +3105,7 @@ public class InternalKiCoolLexer extends Lexer {
 
                 switch (alt20) {
             	case 1 :
-            	    // InternalKiCool.g:33864:20: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' )
+            	    // InternalKiCool.g:33983:20: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' )
             	    {
             	    match('\\'); 
             	    if ( input.LA(1)=='\"'||input.LA(1)=='\''||input.LA(1)=='\\'||input.LA(1)=='b'||input.LA(1)=='f'||input.LA(1)=='n'||input.LA(1)=='r'||input.LA(1)=='t' ) {
@@ -3121,7 +3121,7 @@ public class InternalKiCoolLexer extends Lexer {
             	    }
             	    break;
             	case 2 :
-            	    // InternalKiCool.g:33864:61: ~ ( ( '\\\\' | '\"' ) )
+            	    // InternalKiCool.g:33983:61: ~ ( ( '\\\\' | '\"' ) )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='!')||(input.LA(1)>='#' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -3158,10 +3158,10 @@ public class InternalKiCoolLexer extends Lexer {
         try {
             int _type = RULE_ID;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKiCool.g:33866:9: ( ( '^' )? ( ( ( '_' )? 'a' .. 'z' | ( '_' )? 'A' .. 'Z' ) | '_' '0' .. '9' | '__' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )* )
-            // InternalKiCool.g:33866:11: ( '^' )? ( ( ( '_' )? 'a' .. 'z' | ( '_' )? 'A' .. 'Z' ) | '_' '0' .. '9' | '__' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
+            // InternalKiCool.g:33985:9: ( ( '^' )? ( ( ( '_' )? 'a' .. 'z' | ( '_' )? 'A' .. 'Z' ) | '_' '0' .. '9' | '__' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )* )
+            // InternalKiCool.g:33985:11: ( '^' )? ( ( ( '_' )? 'a' .. 'z' | ( '_' )? 'A' .. 'Z' ) | '_' '0' .. '9' | '__' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
             {
-            // InternalKiCool.g:33866:11: ( '^' )?
+            // InternalKiCool.g:33985:11: ( '^' )?
             int alt21=2;
             int LA21_0 = input.LA(1);
 
@@ -3170,7 +3170,7 @@ public class InternalKiCoolLexer extends Lexer {
             }
             switch (alt21) {
                 case 1 :
-                    // InternalKiCool.g:33866:11: '^'
+                    // InternalKiCool.g:33985:11: '^'
                     {
                     match('^'); 
 
@@ -3179,7 +3179,7 @@ public class InternalKiCoolLexer extends Lexer {
 
             }
 
-            // InternalKiCool.g:33866:16: ( ( ( '_' )? 'a' .. 'z' | ( '_' )? 'A' .. 'Z' ) | '_' '0' .. '9' | '__' )
+            // InternalKiCool.g:33985:16: ( ( ( '_' )? 'a' .. 'z' | ( '_' )? 'A' .. 'Z' ) | '_' '0' .. '9' | '__' )
             int alt25=3;
             int LA25_0 = input.LA(1);
 
@@ -3279,9 +3279,9 @@ public class InternalKiCoolLexer extends Lexer {
             }
             switch (alt25) {
                 case 1 :
-                    // InternalKiCool.g:33866:17: ( ( '_' )? 'a' .. 'z' | ( '_' )? 'A' .. 'Z' )
+                    // InternalKiCool.g:33985:17: ( ( '_' )? 'a' .. 'z' | ( '_' )? 'A' .. 'Z' )
                     {
-                    // InternalKiCool.g:33866:17: ( ( '_' )? 'a' .. 'z' | ( '_' )? 'A' .. 'Z' )
+                    // InternalKiCool.g:33985:17: ( ( '_' )? 'a' .. 'z' | ( '_' )? 'A' .. 'Z' )
                     int alt24=2;
                     switch ( input.LA(1) ) {
                     case '_':
@@ -3371,9 +3371,9 @@ public class InternalKiCoolLexer extends Lexer {
 
                     switch (alt24) {
                         case 1 :
-                            // InternalKiCool.g:33866:18: ( '_' )? 'a' .. 'z'
+                            // InternalKiCool.g:33985:18: ( '_' )? 'a' .. 'z'
                             {
-                            // InternalKiCool.g:33866:18: ( '_' )?
+                            // InternalKiCool.g:33985:18: ( '_' )?
                             int alt22=2;
                             int LA22_0 = input.LA(1);
 
@@ -3382,7 +3382,7 @@ public class InternalKiCoolLexer extends Lexer {
                             }
                             switch (alt22) {
                                 case 1 :
-                                    // InternalKiCool.g:33866:18: '_'
+                                    // InternalKiCool.g:33985:18: '_'
                                     {
                                     match('_'); 
 
@@ -3396,9 +3396,9 @@ public class InternalKiCoolLexer extends Lexer {
                             }
                             break;
                         case 2 :
-                            // InternalKiCool.g:33866:32: ( '_' )? 'A' .. 'Z'
+                            // InternalKiCool.g:33985:32: ( '_' )? 'A' .. 'Z'
                             {
-                            // InternalKiCool.g:33866:32: ( '_' )?
+                            // InternalKiCool.g:33985:32: ( '_' )?
                             int alt23=2;
                             int LA23_0 = input.LA(1);
 
@@ -3407,7 +3407,7 @@ public class InternalKiCoolLexer extends Lexer {
                             }
                             switch (alt23) {
                                 case 1 :
-                                    // InternalKiCool.g:33866:32: '_'
+                                    // InternalKiCool.g:33985:32: '_'
                                     {
                                     match('_'); 
 
@@ -3427,7 +3427,7 @@ public class InternalKiCoolLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // InternalKiCool.g:33866:47: '_' '0' .. '9'
+                    // InternalKiCool.g:33985:47: '_' '0' .. '9'
                     {
                     match('_'); 
                     matchRange('0','9'); 
@@ -3435,7 +3435,7 @@ public class InternalKiCoolLexer extends Lexer {
                     }
                     break;
                 case 3 :
-                    // InternalKiCool.g:33866:60: '__'
+                    // InternalKiCool.g:33985:60: '__'
                     {
                     match("__"); 
 
@@ -3445,7 +3445,7 @@ public class InternalKiCoolLexer extends Lexer {
 
             }
 
-            // InternalKiCool.g:33866:66: ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
+            // InternalKiCool.g:33985:66: ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
             loop26:
             do {
                 int alt26=2;
@@ -3494,10 +3494,10 @@ public class InternalKiCoolLexer extends Lexer {
         try {
             int _type = RULE_WS;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKiCool.g:33868:9: ( ( ' ' | '\\t' | '\\r' | '\\n' )+ )
-            // InternalKiCool.g:33868:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
+            // InternalKiCool.g:33987:9: ( ( ' ' | '\\t' | '\\r' | '\\n' )+ )
+            // InternalKiCool.g:33987:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
             {
-            // InternalKiCool.g:33868:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
+            // InternalKiCool.g:33987:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
             int cnt27=0;
             loop27:
             do {
@@ -3551,8 +3551,8 @@ public class InternalKiCoolLexer extends Lexer {
         try {
             int _type = RULE_ANY_OTHER;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKiCool.g:33870:16: ( . )
-            // InternalKiCool.g:33870:18: .
+            // InternalKiCool.g:33989:16: ( . )
+            // InternalKiCool.g:33989:18: .
             {
             matchAny(); 
 
@@ -4457,7 +4457,7 @@ public class InternalKiCoolLexer extends Lexer {
             this.transition = DFA18_transition;
         }
         public String getDescription() {
-            return "33860:14: ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' )";
+            return "33979:14: ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' )";
         }
     }
     static final String DFA28_eotS =
@@ -4469,7 +4469,7 @@ public class InternalKiCoolLexer extends Lexer {
     static final String DFA28_maxS =
         "\1\uffff\1\165\1\uffff\1\172\1\174\3\75\1\76\3\75\1\157\1\75\1\76\1\uffff\1\154\1\171\2\157\1\170\1\51\1\uffff\1\75\1\151\1\157\1\156\1\165\1\141\1\154\4\uffff\1\163\3\uffff\1\145\1\154\2\uffff\1\172\2\uffff\1\145\1\165\1\162\1\uffff\1\146\1\uffff\4\uffff\1\157\1\162\1\163\31\uffff\2\uffff\1\uffff\1\154\1\151\1\75\2\uffff\1\76\3\uffff\1\171\1\157\1\154\1\142\1\162\1\163\1\157\1\155\1\163\1\141\1\156\1\165\1\164\5\uffff\1\156\1\170\1\157\1\164\1\156\1\154\1\142\1\151\4\uffff\1\157\3\uffff\1\146\1\156\1\157\5\uffff\1\166\1\164\1\172\1\165\2\uffff\1\146\3\uffff\1\172\1\164\1\166\1\145\1\154\1\164\4\uffff\1\172\1\144\2\uffff\1\75\2\uffff\1\172\1\141\1\163\1\171\1\165\2\164\1\160\1\145\1\165\1\145\1\156\1\164\2\163\2\155\1\162\1\145\2\172\1\154\1\172\1\165\1\145\1\154\1\145\1\141\1\156\1\172\1\144\1\142\1\145\1\160\1\uffff\1\145\1\uffff\2\145\1\141\1\164\1\172\1\151\1\172\1\uffff\1\172\3\uffff\1\164\1\145\1\172\1\143\1\156\1\164\1\151\2\145\1\144\1\154\1\156\1\141\1\172\1\163\1\154\1\164\1\165\1\151\1\172\1\145\1\162\4\uffff\1\172\1\162\1\uffff\1\164\2\172\1\154\1\163\1\172\1\uffff\1\157\1\141\1\154\1\165\1\172\1\143\1\163\1\164\1\172\1\uffff\1\143\2\uffff\2\172\1\uffff\1\164\1\147\1\172\1\143\1\155\1\172\1\165\1\141\1\164\1\154\1\uffff\1\172\1\151\1\147\1\172\1\164\1\156\1\uffff\1\163\1\156\1\uffff\1\155\1\172\2\uffff\2\172\1\uffff\1\155\1\154\1\157\1\164\1\uffff\1\164\1\163\1\145\1\uffff\1\172\1\uffff\2\172\1\uffff\2\172\1\uffff\1\154\1\164\2\172\1\uffff\1\143\1\172\1\uffff\1\151\1\145\1\163\1\172\1\145\3\uffff\2\172\1\160\1\172\1\145\2\172\5\uffff\1\145\1\151\2\uffff\1\164\1\uffff\1\156\1\172\1\151\1\uffff\1\144\1\172\2\uffff\1\145\1\uffff\1\144\2\uffff\1\172\1\157\1\151\1\147\1\uffff\1\157\1\151\1\145\1\162\1\172\1\uffff\2\156\1\172\1\156\1\141\2\172\1\uffff\1\172\1\147\1\uffff\1\172\1\164\3\uffff\1\172\1\uffff\1\145\1\uffff\1\172\1\uffff";
     static final String DFA28_acceptS =
-        "\2\uffff\1\2\14\uffff\1\22\6\uffff\1\33\7\uffff\1\107\1\110\1\114\1\115\1\uffff\1\120\1\121\1\123\2\uffff\1\133\1\135\1\uffff\1\141\1\142\6\uffff\2\164\1\165\1\166\3\uffff\1\164\1\2\1\46\1\3\1\15\1\45\1\4\1\16\1\44\1\5\1\63\1\100\1\6\1\37\1\54\1\7\1\23\1\40\1\55\1\10\1\41\1\11\1\43\1\12\1\42\2\uffff\1\13\3\uffff\1\60\1\57\1\uffff\1\62\1\61\1\22\15\uffff\1\32\1\122\1\33\1\56\1\36\10\uffff\1\107\1\110\1\114\1\115\1\uffff\1\120\1\121\1\123\3\uffff\1\133\1\135\1\137\1\141\1\142\4\uffff\1\153\1\160\1\uffff\1\161\1\163\1\165\6\uffff\1\154\1\155\1\156\1\157\2\uffff\1\47\1\17\1\uffff\1\50\1\20\42\uffff\1\152\1\uffff\1\1\7\uffff\1\14\1\uffff\1\51\1\21\1\24\26\uffff\1\52\1\73\1\53\1\72\2\uffff\1\66\6\uffff\1\125\11\uffff\1\64\1\uffff\1\112\1\77\2\uffff\1\25\12\uffff\1\26\6\uffff\1\31\2\uffff\1\65\2\uffff\1\71\1\140\2\uffff\1\117\4\uffff\1\162\3\uffff\1\131\1\uffff\1\67\2\uffff\1\103\2\uffff\1\113\4\uffff\1\30\2\uffff\1\146\5\uffff\1\147\1\102\1\106\7\uffff\1\74\1\27\1\70\1\134\1\101\2\uffff\1\145\1\151\1\uffff\1\104\3\uffff\1\126\2\uffff\1\136\1\127\1\uffff\1\150\1\uffff\1\111\1\76\4\uffff\1\130\5\uffff\1\124\7\uffff\1\75\2\uffff\1\35\2\uffff\1\132\1\143\1\144\1\uffff\1\116\1\uffff\1\34\1\uffff\1\105";
+        "\2\uffff\1\2\14\uffff\1\22\6\uffff\1\33\7\uffff\1\107\1\110\1\114\1\115\1\uffff\1\120\1\121\1\123\2\uffff\1\133\1\134\1\uffff\1\140\1\141\6\uffff\2\164\1\165\1\166\3\uffff\1\164\1\2\1\46\1\3\1\15\1\45\1\4\1\16\1\44\1\5\1\63\1\100\1\6\1\37\1\54\1\7\1\23\1\40\1\55\1\10\1\41\1\11\1\43\1\12\1\42\2\uffff\1\13\3\uffff\1\60\1\57\1\uffff\1\62\1\61\1\22\15\uffff\1\32\1\122\1\33\1\56\1\36\10\uffff\1\107\1\110\1\114\1\115\1\uffff\1\120\1\121\1\123\3\uffff\1\133\1\134\1\136\1\140\1\141\4\uffff\1\153\1\160\1\uffff\1\161\1\163\1\165\6\uffff\1\154\1\155\1\156\1\157\2\uffff\1\47\1\17\1\uffff\1\50\1\20\42\uffff\1\152\1\uffff\1\1\7\uffff\1\14\1\uffff\1\51\1\21\1\24\26\uffff\1\52\1\73\1\53\1\72\2\uffff\1\66\6\uffff\1\125\11\uffff\1\64\1\uffff\1\112\1\77\2\uffff\1\25\12\uffff\1\26\6\uffff\1\31\2\uffff\1\65\2\uffff\1\71\1\137\2\uffff\1\117\4\uffff\1\162\3\uffff\1\131\1\uffff\1\67\2\uffff\1\103\2\uffff\1\113\4\uffff\1\30\2\uffff\1\145\5\uffff\1\146\1\102\1\106\7\uffff\1\74\1\27\1\70\1\150\1\101\2\uffff\1\144\1\151\1\uffff\1\104\3\uffff\1\126\2\uffff\1\135\1\127\1\uffff\1\147\1\uffff\1\111\1\76\4\uffff\1\130\5\uffff\1\124\7\uffff\1\75\2\uffff\1\35\2\uffff\1\132\1\142\1\143\1\uffff\1\116\1\uffff\1\34\1\uffff\1\105";
     static final String DFA28_specialS =
         "\1\2\57\uffff\1\0\1\uffff\1\1\40\uffff\1\3\1\4\u0131\uffff}>";
     static final String[] DFA28_transitionS = {

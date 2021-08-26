@@ -311,7 +311,7 @@ AtomicExpression returns Expression:
     | RandomCall
     | RandomizeCall
     | ValuedObjectTestExpression // Last to allow detection of calls
-    | StaticAccessExpression
+    | SpecialAccessExpression
     | TextExpression;
 
 // Atomic Valued Expression Rule
@@ -342,9 +342,11 @@ ValuedObjectTestExpression returns Expression:
 
 // Accesses a arbitrary target in a static way (needs to be adjusted in the scoper of the deriving language)
 // Example: static(Constants).MAX
-StaticAccessExpression returns StaticAccessExpression:
-    'static' '(' target=[annotations::NamedObject|PrimeID] ')'
-    '.' subReference=ValuedObjectReference; 
+SpecialAccessExpression returns SpecialAccessExpression:
+    access='static' '('
+    (container=[annotations::NamedObject|PrimeID] '.')?
+    target=[annotations::NamedObject|PrimeID]
+    ')' '.' subReference=ValuedObjectReference;
 
 // ID with primes
 PrimeID returns ecore::EString:

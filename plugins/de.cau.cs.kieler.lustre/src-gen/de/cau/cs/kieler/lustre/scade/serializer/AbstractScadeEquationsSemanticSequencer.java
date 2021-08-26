@@ -35,7 +35,7 @@ import de.cau.cs.kieler.kexpressions.ReferenceCall;
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration;
 import de.cau.cs.kieler.kexpressions.ScheduleDeclaration;
 import de.cau.cs.kieler.kexpressions.ScheduleObjectReference;
-import de.cau.cs.kieler.kexpressions.StaticAccessExpression;
+import de.cau.cs.kieler.kexpressions.SpecialAccessExpression;
 import de.cau.cs.kieler.kexpressions.StringValue;
 import de.cau.cs.kieler.kexpressions.TextExpression;
 import de.cau.cs.kieler.kexpressions.ThisExpression;
@@ -760,8 +760,8 @@ public abstract class AbstractScadeEquationsSemanticSequencer extends LustreSema
 			case KExpressionsPackage.SCHEDULE_OBJECT_REFERENCE:
 				sequence_ScheduleObjectReference(context, (ScheduleObjectReference) semanticObject); 
 				return; 
-			case KExpressionsPackage.STATIC_ACCESS_EXPRESSION:
-				sequence_StaticAccessExpression(context, (StaticAccessExpression) semanticObject); 
+			case KExpressionsPackage.SPECIAL_ACCESS_EXPRESSION:
+				sequence_SpecialAccessExpression(context, (SpecialAccessExpression) semanticObject); 
 				return; 
 			case KExpressionsPackage.STRING_VALUE:
 				if (rule == grammarAccess.getBoolScheduleExpressionRule()) {
