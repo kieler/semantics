@@ -2176,6 +2176,7 @@ public class KiCoolGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	//    | FloatValue
 	//    | StringValue
 	//    | VectorValue
+	//    | NullValue
 	//    | '(' ValuedExpression ')'
 	//    | AtomicExpression;
 	public KExpressionsGrammarAccess.AtomicValuedExpressionElements getAtomicValuedExpressionAccess() {

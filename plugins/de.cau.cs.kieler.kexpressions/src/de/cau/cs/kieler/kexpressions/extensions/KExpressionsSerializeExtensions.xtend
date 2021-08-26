@@ -13,31 +13,32 @@
  */
 package de.cau.cs.kieler.kexpressions.extensions
 
+import de.cau.cs.kieler.annotations.NamedObject
 import de.cau.cs.kieler.kexpressions.BoolValue
+import de.cau.cs.kieler.kexpressions.CombineOperator
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.FloatValue
 import de.cau.cs.kieler.kexpressions.FunctionCall
+import de.cau.cs.kieler.kexpressions.IgnoreValue
 import de.cau.cs.kieler.kexpressions.IntValue
+import de.cau.cs.kieler.kexpressions.NullValue
 import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.OperatorType
+import de.cau.cs.kieler.kexpressions.Parameter
+import de.cau.cs.kieler.kexpressions.ParameterAccessType
+import de.cau.cs.kieler.kexpressions.RandomCall
+import de.cau.cs.kieler.kexpressions.RandomizeCall
+import de.cau.cs.kieler.kexpressions.ReferenceCall
+import de.cau.cs.kieler.kexpressions.SpecialAccessExpression
 import de.cau.cs.kieler.kexpressions.StringValue
 import de.cau.cs.kieler.kexpressions.TextExpression
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.kexpressions.VectorValue
 import java.util.Iterator
 import java.util.List
-import de.cau.cs.kieler.kexpressions.VariableDeclaration
-import de.cau.cs.kieler.kexpressions.Parameter
-import de.cau.cs.kieler.kexpressions.ReferenceCall
-import de.cau.cs.kieler.kexpressions.CombineOperator
-import de.cau.cs.kieler.kexpressions.VectorValue
-import de.cau.cs.kieler.kexpressions.IgnoreValue
-import de.cau.cs.kieler.kexpressions.RandomCall
-import de.cau.cs.kieler.kexpressions.RandomizeCall
-import de.cau.cs.kieler.annotations.NamedObject
-import de.cau.cs.kieler.kexpressions.ParameterAccessType
-import de.cau.cs.kieler.kexpressions.SpecialAccessExpression
 
 /**
  * Serialization of KExpressions.
@@ -329,6 +330,10 @@ class KExpressionsSerializeExtensions {
     def dispatch CharSequence serialize(BoolValue expression) {
         if(expression.value == true) return "true"
         return "false"
+    }
+    
+    def dispatch CharSequence serialize(NullValue expression) {
+        "null"
     }
     
     def dispatch CharSequence serialize(ReferenceCall referenceCall) {

@@ -1805,6 +1805,7 @@ public class KEffectsGrammarAccess extends AbstractElementFinder.AbstractGrammar
 	//    | FloatValue
 	//    | StringValue
 	//    | VectorValue
+	//    | NullValue
 	//    | '(' ValuedExpression ')'
 	//    | AtomicExpression;
 	public KExpressionsGrammarAccess.AtomicValuedExpressionElements getAtomicValuedExpressionAccess() {

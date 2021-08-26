@@ -355,7 +355,7 @@ public class SCLParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getSfbyExpressionAccess().getGroup_1_1(), "rule__SfbyExpression__Group_1_1__0");
 			builder.put(grammarAccess.getSfbyExpressionAccess().getGroup_1_2(), "rule__SfbyExpression__Group_1_2__0");
 			builder.put(grammarAccess.getAtomicExpressionAccess().getGroup_1(), "rule__AtomicExpression__Group_1__0");
-			builder.put(grammarAccess.getAtomicValuedExpressionAccess().getGroup_4(), "rule__AtomicValuedExpression__Group_4__0");
+			builder.put(grammarAccess.getAtomicValuedExpressionAccess().getGroup_5(), "rule__AtomicValuedExpression__Group_5__0");
 			builder.put(grammarAccess.getBoolScheduleExpressionAccess().getGroup(), "rule__BoolScheduleExpression__Group__0");
 			builder.put(grammarAccess.getBoolScheduleExpressionAccess().getGroup_1(), "rule__BoolScheduleExpression__Group_1__0");
 			builder.put(grammarAccess.getValuedObjectTestExpressionAccess().getGroup_0(), "rule__ValuedObjectTestExpression__Group_0__0");

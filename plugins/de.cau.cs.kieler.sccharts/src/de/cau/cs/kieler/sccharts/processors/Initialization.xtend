@@ -156,7 +156,7 @@ class Initialization extends SCChartsProcessor implements Traceable {
             case BOOL : { createBoolValue(false) }
             case INT, case UNSIGNED : { createIntValue(0) }
             case FLOAT, case DOUBLE : { createFloatValue(0) }
-            case STRING : { createStringValue("") }
+            case STRING : { createNullValue() }
             default: { null }
         }
     }

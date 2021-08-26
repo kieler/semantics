@@ -2017,11 +2017,12 @@ public class KExpressionsGrammarAccess extends AbstractElementFinder.AbstractGra
 		private final RuleCall cFloatValueParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		private final RuleCall cStringValueParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
 		private final RuleCall cVectorValueParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
-		private final Group cGroup_4 = (Group)cAlternatives.eContents().get(4);
-		private final Keyword cLeftParenthesisKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
-		private final RuleCall cValuedExpressionParserRuleCall_4_1 = (RuleCall)cGroup_4.eContents().get(1);
-		private final Keyword cRightParenthesisKeyword_4_2 = (Keyword)cGroup_4.eContents().get(2);
-		private final RuleCall cAtomicExpressionParserRuleCall_5 = (RuleCall)cAlternatives.eContents().get(5);
+		private final RuleCall cNullValueParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
+		private final Group cGroup_5 = (Group)cAlternatives.eContents().get(5);
+		private final Keyword cLeftParenthesisKeyword_5_0 = (Keyword)cGroup_5.eContents().get(0);
+		private final RuleCall cValuedExpressionParserRuleCall_5_1 = (RuleCall)cGroup_5.eContents().get(1);
+		private final Keyword cRightParenthesisKeyword_5_2 = (Keyword)cGroup_5.eContents().get(2);
+		private final RuleCall cAtomicExpressionParserRuleCall_6 = (RuleCall)cAlternatives.eContents().get(6);
 		
 		//// Atomic Valued Expression Rule
 		//// An atomic valued expression is either a simple int float or string literal, another valued expression
@@ -2032,6 +2033,7 @@ public class KExpressionsGrammarAccess extends AbstractElementFinder.AbstractGra
 		//    | FloatValue
 		//    | StringValue
 		//    | VectorValue
+		//    | NullValue
 		//    | '(' ValuedExpression ')'
 		//    | AtomicExpression;
 		@Override public ParserRule getRule() { return rule; }
@@ -2040,6 +2042,7 @@ public class KExpressionsGrammarAccess extends AbstractElementFinder.AbstractGra
 		//| FloatValue
 		//| StringValue
 		//| VectorValue
+		//| NullValue
 		//| '(' ValuedExpression ')'
 		//| AtomicExpression
 		public Alternatives getAlternatives() { return cAlternatives; }
@@ -2056,20 +2059,23 @@ public class KExpressionsGrammarAccess extends AbstractElementFinder.AbstractGra
 		//VectorValue
 		public RuleCall getVectorValueParserRuleCall_3() { return cVectorValueParserRuleCall_3; }
 		
+		//NullValue
+		public RuleCall getNullValueParserRuleCall_4() { return cNullValueParserRuleCall_4; }
+		
 		//'(' ValuedExpression ')'
-		public Group getGroup_4() { return cGroup_4; }
+		public Group getGroup_5() { return cGroup_5; }
 		
 		//'('
-		public Keyword getLeftParenthesisKeyword_4_0() { return cLeftParenthesisKeyword_4_0; }
+		public Keyword getLeftParenthesisKeyword_5_0() { return cLeftParenthesisKeyword_5_0; }
 		
 		//ValuedExpression
-		public RuleCall getValuedExpressionParserRuleCall_4_1() { return cValuedExpressionParserRuleCall_4_1; }
+		public RuleCall getValuedExpressionParserRuleCall_5_1() { return cValuedExpressionParserRuleCall_5_1; }
 		
 		//')'
-		public Keyword getRightParenthesisKeyword_4_2() { return cRightParenthesisKeyword_4_2; }
+		public Keyword getRightParenthesisKeyword_5_2() { return cRightParenthesisKeyword_5_2; }
 		
 		//AtomicExpression
-		public RuleCall getAtomicExpressionParserRuleCall_5() { return cAtomicExpressionParserRuleCall_5; }
+		public RuleCall getAtomicExpressionParserRuleCall_6() { return cAtomicExpressionParserRuleCall_6; }
 	}
 	public class BoolScheduleExpressionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.BoolScheduleExpression");
@@ -4899,6 +4905,7 @@ public class KExpressionsGrammarAccess extends AbstractElementFinder.AbstractGra
 	//    | FloatValue
 	//    | StringValue
 	//    | VectorValue
+	//    | NullValue
 	//    | '(' ValuedExpression ')'
 	//    | AtomicExpression;
 	public AtomicValuedExpressionElements getAtomicValuedExpressionAccess() {

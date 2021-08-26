@@ -425,8 +425,73 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 				sequence_JsonPragma(context, (JsonPragma) semanticObject); 
 				return; 
 			case KExpressionsPackage.NULL_VALUE:
-				sequence_NullValue(context, (NullValue) semanticObject); 
-				return; 
+				if (rule == grammarAccess.getBoolScheduleExpressionRule()) {
+					sequence_BoolScheduleExpression_NullValue(context, (NullValue) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getRootRule()
+						|| rule == grammarAccess.getExpressionRule()
+						|| rule == grammarAccess.getBoolExpressionRule()
+						|| rule == grammarAccess.getLogicalOrExpressionRule()
+						|| action == grammarAccess.getLogicalOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getLogicalAndExpressionRule()
+						|| action == grammarAccess.getLogicalAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getBitwiseOrExpressionRule()
+						|| action == grammarAccess.getBitwiseOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getBitwiseXOrExpressionRule()
+						|| action == grammarAccess.getBitwiseXOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getBitwiseAndExpressionRule()
+						|| action == grammarAccess.getBitwiseAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getCompareOperationRule()
+						|| action == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getNotOrValuedExpressionRule()
+						|| rule == grammarAccess.getBitwiseNotExpressionRule()
+						|| rule == grammarAccess.getNotExpressionRule()
+						|| rule == grammarAccess.getValuedExpressionRule()
+						|| rule == grammarAccess.getShiftExpressionsRule()
+						|| action == grammarAccess.getShiftExpressionsAccess().getOperatorExpressionSubExpressionsAction_1_0_0()
+						|| action == grammarAccess.getShiftExpressionsAccess().getOperatorExpressionSubExpressionsAction_1_1_0()
+						|| action == grammarAccess.getShiftExpressionsAccess().getOperatorExpressionSubExpressionsAction_1_2_0()
+						|| rule == grammarAccess.getShiftLeftExpressionRule()
+						|| action == grammarAccess.getShiftLeftExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getShiftRightExpressionRule()
+						|| action == grammarAccess.getShiftRightExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getShiftRightUnsignedExpressionRule()
+						|| action == grammarAccess.getShiftRightUnsignedExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getSumExpressionRule()
+						|| action == grammarAccess.getSumExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0_0()
+						|| action == grammarAccess.getSumExpressionAccess().getOperatorExpressionSubExpressionsAction_1_1_0()
+						|| rule == grammarAccess.getAddExpressionRule()
+						|| action == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getSubExpressionRule()
+						|| action == grammarAccess.getSubExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getProductExpressionRule()
+						|| action == grammarAccess.getProductExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0_0()
+						|| action == grammarAccess.getProductExpressionAccess().getOperatorExpressionSubExpressionsAction_1_1_0()
+						|| action == grammarAccess.getProductExpressionAccess().getOperatorExpressionSubExpressionsAction_1_2_0()
+						|| rule == grammarAccess.getMultExpressionRule()
+						|| action == grammarAccess.getMultExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getDivExpressionRule()
+						|| action == grammarAccess.getDivExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getModExpressionRule()
+						|| action == grammarAccess.getModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getNegExpressionRule()
+						|| rule == grammarAccess.getTernaryOperationRule()
+						|| rule == grammarAccess.getInitExpressionRule()
+						|| action == grammarAccess.getInitExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getFbyExpressionRule()
+						|| action == grammarAccess.getFbyExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getSfbyExpressionRule()
+						|| action == grammarAccess.getSfbyExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getAtomicExpressionRule()
+						|| rule == grammarAccess.getAtomicValuedExpressionRule()
+						|| rule == grammarAccess.getVectorValueMemberRule()
+						|| rule == grammarAccess.getJsonValueRule()
+						|| rule == grammarAccess.getNullValueRule()) {
+					sequence_NullValue(context, (NullValue) semanticObject); 
+					return; 
+				}
+				else break;
 			case KExpressionsPackage.OPERATOR_EXPRESSION:
 				if (rule == grammarAccess.getAddExpressionRule()
 						|| action == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()) {
@@ -2151,6 +2216,18 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	
 	/**
 	 * Contexts:
+	 *     BoolScheduleExpression returns NullValue
+	 *
+	 * Constraint:
+	 *     schedule+=ScheduleObjectReference?
+	 */
+	protected void sequence_BoolScheduleExpression_NullValue(ISerializationContext context, NullValue semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     BoolScheduleExpression returns RandomCall
 	 *
 	 * Constraint:
@@ -2668,6 +2745,63 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	
 	/**
 	 * Contexts:
+	 *     Root returns NullValue
+	 *     Expression returns NullValue
+	 *     BoolExpression returns NullValue
+	 *     LogicalOrExpression returns NullValue
+	 *     LogicalOrExpression.OperatorExpression_1_0 returns NullValue
+	 *     LogicalAndExpression returns NullValue
+	 *     LogicalAndExpression.OperatorExpression_1_0 returns NullValue
+	 *     BitwiseOrExpression returns NullValue
+	 *     BitwiseOrExpression.OperatorExpression_1_0 returns NullValue
+	 *     BitwiseXOrExpression returns NullValue
+	 *     BitwiseXOrExpression.OperatorExpression_1_0 returns NullValue
+	 *     BitwiseAndExpression returns NullValue
+	 *     BitwiseAndExpression.OperatorExpression_1_0 returns NullValue
+	 *     CompareOperation returns NullValue
+	 *     CompareOperation.OperatorExpression_1_0 returns NullValue
+	 *     NotOrValuedExpression returns NullValue
+	 *     BitwiseNotExpression returns NullValue
+	 *     NotExpression returns NullValue
+	 *     ValuedExpression returns NullValue
+	 *     ShiftExpressions returns NullValue
+	 *     ShiftExpressions.OperatorExpression_1_0_0 returns NullValue
+	 *     ShiftExpressions.OperatorExpression_1_1_0 returns NullValue
+	 *     ShiftExpressions.OperatorExpression_1_2_0 returns NullValue
+	 *     ShiftLeftExpression returns NullValue
+	 *     ShiftLeftExpression.OperatorExpression_1_0 returns NullValue
+	 *     ShiftRightExpression returns NullValue
+	 *     ShiftRightExpression.OperatorExpression_1_0 returns NullValue
+	 *     ShiftRightUnsignedExpression returns NullValue
+	 *     ShiftRightUnsignedExpression.OperatorExpression_1_0 returns NullValue
+	 *     SumExpression returns NullValue
+	 *     SumExpression.OperatorExpression_1_0_0 returns NullValue
+	 *     SumExpression.OperatorExpression_1_1_0 returns NullValue
+	 *     AddExpression returns NullValue
+	 *     AddExpression.OperatorExpression_1_0 returns NullValue
+	 *     SubExpression returns NullValue
+	 *     SubExpression.OperatorExpression_1_0 returns NullValue
+	 *     ProductExpression returns NullValue
+	 *     ProductExpression.OperatorExpression_1_0_0 returns NullValue
+	 *     ProductExpression.OperatorExpression_1_1_0 returns NullValue
+	 *     ProductExpression.OperatorExpression_1_2_0 returns NullValue
+	 *     MultExpression returns NullValue
+	 *     MultExpression.OperatorExpression_1_0 returns NullValue
+	 *     DivExpression returns NullValue
+	 *     DivExpression.OperatorExpression_1_0 returns NullValue
+	 *     ModExpression returns NullValue
+	 *     ModExpression.OperatorExpression_1_0 returns NullValue
+	 *     NegExpression returns NullValue
+	 *     TernaryOperation returns NullValue
+	 *     InitExpression returns NullValue
+	 *     InitExpression.OperatorExpression_1_0 returns NullValue
+	 *     FbyExpression returns NullValue
+	 *     FbyExpression.OperatorExpression_1_0 returns NullValue
+	 *     SfbyExpression returns NullValue
+	 *     SfbyExpression.OperatorExpression_1_0 returns NullValue
+	 *     AtomicExpression returns NullValue
+	 *     AtomicValuedExpression returns NullValue
+	 *     VectorValueMember returns NullValue
 	 *     JsonValue returns NullValue
 	 *     NullValue returns NullValue
 	 *

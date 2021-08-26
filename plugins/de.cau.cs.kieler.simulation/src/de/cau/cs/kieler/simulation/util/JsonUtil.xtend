@@ -15,17 +15,18 @@ package de.cau.cs.kieler.simulation.util
 import com.google.gson.JsonArray
 import com.google.gson.JsonElement
 import com.google.gson.JsonNull
+import com.google.gson.JsonObject
 import com.google.gson.JsonPrimitive
 import de.cau.cs.kieler.kexpressions.BoolValue
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.FloatValue
 import de.cau.cs.kieler.kexpressions.IntValue
+import de.cau.cs.kieler.kexpressions.NullValue
 import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.OperatorType
 import de.cau.cs.kieler.kexpressions.StringValue
 import de.cau.cs.kieler.kexpressions.Value
 import de.cau.cs.kieler.kexpressions.VectorValue
-import com.google.gson.JsonObject
 
 /**
  * @author als
@@ -81,6 +82,7 @@ class JsonUtil {
                 IntValue: return new JsonPrimitive(e.value)
                 FloatValue: return new JsonPrimitive(e.value)
                 StringValue: return new JsonPrimitive(e.value)
+                NullValue: return JsonNull.INSTANCE
                 VectorValue: {
                     return new JsonArray => [
                         for (v : e.values) {

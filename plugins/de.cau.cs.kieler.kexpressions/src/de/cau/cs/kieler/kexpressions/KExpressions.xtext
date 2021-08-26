@@ -323,6 +323,7 @@ AtomicValuedExpression returns Expression:
     | FloatValue 
     | StringValue
     | VectorValue
+    | NullValue
     | '(' ValuedExpression ')'
     | AtomicExpression;
     
