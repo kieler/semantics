@@ -215,7 +215,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
     /** Tag annotation string of the port group for the negative case in custom multiplexers */
     static final String negTag = "neg"
     /** Tag annotation string for structs*/
-    static final String struct = "struct"
+    static final String structTag = "struct"
 
     /** annotation for break/continue/return multiplexer states that saves in which if stmt the break/continue/return is in */
     static final String ifStmtAnno = "ifCounter"
@@ -582,9 +582,11 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
 
                         // Create valued object for the input
                         vo = decl.createValuedObject(varName + inSuffix)
+                    vo.label = varName
                     }
                     IASTElaboratedTypeSpecifier: {
                         // the parameter is a struct (pointer)
+                        // struct should not have a label in order to visualize the used indices
                         val structName = declSpecifier.name.toString
                         val variableDeclaration = createVariableDeclaration
                         state.declarations += variableDeclaration
@@ -595,7 +597,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                         variableDeclaration.input = true
 
                         vo = variableDeclaration.createValuedObject(varName + inSuffix)
-                        vo.addTagAnnotation(struct)
+                        vo.addTagAnnotation(structTag)
                     }
                     IASTNamedTypeSpecifier: {
                         // the parameter has a unknown type
@@ -612,7 +614,6 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                     }
                 }
                 if (vo !== null) {
-                    vo.label = varName
                     if (!serializable) {
                         vo.insertHighlightAnnotations(par)
                     }
@@ -2398,9 +2399,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         // Create the state
         val newState = createState(localName + ssaNameSeperator + localCounter)
         newState.annotations += createTagAnnotation("Hide")
-        newState.annotations +=
-            createStringAnnotation(de.cau.cs.kieler.c.sccharts.processors.DataflowExtractor.ifStmtAnno,
-                "" + (ifCounter - 1))
+        newState.annotations += createStringAnnotation(ifStmtAnno, "" + (ifCounter - 1))
         newState.addStringAnnotation("figure", "BigMult.kgt")
         if (serializable) {
             rootSCChart.rootStates += newState
@@ -3692,12 +3691,12 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 dRegion.declarations += varDecl
             }
 
-             val hasStructAnnotation = vo.hasAnnotation(struct)
+             val hasStructAnnotation = vo.hasAnnotation(structTag)
             // Create the valued object
             vo = varDecl.createValuedObject(newName)
             
             if(hasStructAnnotation){
-                vo.annotations += createTagAnnotation(struct)
+                vo.annotations += createTagAnnotation(structTag)
             }
 
             if (hasOut) {
