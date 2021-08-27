@@ -41,7 +41,7 @@
     <module>de.cau.cs.kieler.lustre.ide</module>
     <module>de.cau.cs.kieler.lustre.ui</module>
     <module>de.cau.cs.kieler.lustre</module>
-    <module>de.cau.cs.kieler.pragmatics.kieler.core</module>
+    <module>de.cau.cs.kieler.pragmatics.integration</module>
     <module>de.cau.cs.kieler.sccharts.legacy.ui</module>
     <module>de.cau.cs.kieler.sccharts.legacy</module>
     <module>de.cau.cs.kieler.sccharts.ui</module>

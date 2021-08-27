@@ -13,7 +13,7 @@
    <bundle id="de.cau.cs.kieler.lustre"/>
    <bundle id="de.cau.cs.kieler.lustre.compiler"/>
    <bundle id="de.cau.cs.kieler.lustre.ide"/>
-   <bundle id="de.cau.cs.kieler.pragmatics.kieler.core"/>
+   <bundle id="de.cau.cs.kieler.pragmatics.integration"/>
    <bundle id="de.cau.cs.kieler.sccharts"/>
    <bundle id="de.cau.cs.kieler.sccharts.ide"/>
    <bundle id="de.cau.cs.kieler.sccharts.ui"/> <!-- REMOVE after full deeclipsefication -->
