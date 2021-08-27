@@ -140,7 +140,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
     override List<KNode> performTranformation(State state) {
         val node = state.createNode().associateWith(state)
         
-        node.setProperty(CoreOptions.NODE_SIZE_CONSTRAINT, NODE_SIZE_CONSTRAINT.floatValue as double)
+        node.setProperty(CoreOptions.TOP_DOWN_LAYOUT_NODE_SIZE_CONSTRAINT, NODE_SIZE_CONSTRAINT.floatValue as double)
 
         // Set KIdentifier for use with incremental update
         if (!state.name.nullOrEmpty) {

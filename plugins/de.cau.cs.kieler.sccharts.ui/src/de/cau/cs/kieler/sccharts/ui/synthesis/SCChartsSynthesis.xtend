@@ -178,24 +178,24 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
         
         switch(LAYOUT_ENGINE.getObjectValue) {
             case "Recursive":
-                rootNode.setProperty(CoreOptions.LAYOUT_ENGINE, GraphLayoutEngines.RECURSIVE_GRAPH_LAYOUT_ENGINE)
+                rootNode.setProperty(CoreOptions.TOP_DOWN_LAYOUT_LAYOUT_ENGINE, GraphLayoutEngines.RECURSIVE_GRAPH_LAYOUT_ENGINE)
             case "Top-down":
-                rootNode.setProperty(CoreOptions.LAYOUT_ENGINE, GraphLayoutEngines.TOPDOWN_GRAPH_LAYOUT_ENGINE)    
+                rootNode.setProperty(CoreOptions.TOP_DOWN_LAYOUT_LAYOUT_ENGINE, GraphLayoutEngines.TOPDOWN_GRAPH_LAYOUT_ENGINE)    
         }
         
-        rootNode.setProperty(CoreOptions.TOPDOWN_LAYOUT, TOPDOWN_LAYOUT_TOGGLE.booleanValue)
+        rootNode.setProperty(CoreOptions.TOP_DOWN_LAYOUT_TOPDOWN_LAYOUT, TOPDOWN_LAYOUT_TOGGLE.booleanValue)
         switch(TOPDOWN_LAYOUT_CONSTRAINT.getObjectValue) {
             case "Fix Width":
-                rootNode.setProperty(CoreOptions.TOPDOWN_LAYOUT_CONSTRAINT, TopDownLayoutConstraint.FIX_WIDTH)
+                rootNode.setProperty(CoreOptions.TOP_DOWN_LAYOUT_TOPDOWN_LAYOUT_CONSTRAINT, TopDownLayoutConstraint.FIX_WIDTH)
             case "Fix Height":
-                rootNode.setProperty(CoreOptions.TOPDOWN_LAYOUT_CONSTRAINT, TopDownLayoutConstraint.FIX_HEIGHT)
+                rootNode.setProperty(CoreOptions.TOP_DOWN_LAYOUT_TOPDOWN_LAYOUT_CONSTRAINT, TopDownLayoutConstraint.FIX_HEIGHT)
             case "Optimized":
-                rootNode.setProperty(CoreOptions.TOPDOWN_LAYOUT_CONSTRAINT, TopDownLayoutConstraint.OPTIMIZED)
+                rootNode.setProperty(CoreOptions.TOP_DOWN_LAYOUT_TOPDOWN_LAYOUT_CONSTRAINT, TopDownLayoutConstraint.OPTIMIZED)
             case "Square":
-                rootNode.setProperty(CoreOptions.TOPDOWN_LAYOUT_CONSTRAINT, TopDownLayoutConstraint.SQUARE)
+                rootNode.setProperty(CoreOptions.TOP_DOWN_LAYOUT_TOPDOWN_LAYOUT_CONSTRAINT, TopDownLayoutConstraint.SQUARE)
         }
-        rootNode.setProperty(CoreOptions.AUTOMATIC_DIRECTION, AUTOMATIC_DIRECTION.booleanValue)
-        rootNode.setProperty(CoreOptions.DYNAMIC_NODE_SIZE_CONSTRAINT, DYNAMIC_NODE_SIZE_CONSTRAINT.booleanValue)
+        rootNode.setProperty(CoreOptions.TOP_DOWN_LAYOUT_AUTOMATIC_DIRECTION, AUTOMATIC_DIRECTION.booleanValue)
+        rootNode.setProperty(CoreOptions.TOP_DOWN_LAYOUT_DYNAMIC_NODE_SIZE_CONSTRAINT, DYNAMIC_NODE_SIZE_CONSTRAINT.booleanValue)
                 
         // If dot is used draw edges first to prevent overlapping with states when layout is bad
         usedContext.setProperty(KlighdProperties.EDGES_FIRST, !USE_KLAY.booleanValue)
