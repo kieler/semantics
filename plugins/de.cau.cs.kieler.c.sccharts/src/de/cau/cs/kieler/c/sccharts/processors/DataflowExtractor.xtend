@@ -593,7 +593,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
 
                         // Use Host Type for setting the struct type since our structs are represented as array-like valued objects
                         variableDeclaration.type = ValueType.HOST
-                        variableDeclaration.hostType = "struct " + structName
+                        variableDeclaration.hostType = elaboratedKindToString(declSpecifier.kind) + " " + structName
                         variableDeclaration.input = true
 
                         vo = variableDeclaration.createValuedObject(varName + inSuffix)
@@ -687,9 +687,10 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                         outDecl.hostType = typeName
                     } else if (isStructPointer) {
                         // the parameter is a struct (pointer)
+                        val specifier = (par.declSpecifier as IASTElaboratedTypeSpecifier)
                         val structName = (par.declSpecifier as IASTElaboratedTypeSpecifier).name.toString
                         outDecl.type = ValueType.HOST
-                        outDecl.hostType = "struct " + structName
+                        outDecl.hostType = elaboratedKindToString(specifier.kind) + " " + structName
                     } else {
                         // parameter is a pointer
                         outDecl.type = (par.declSpecifier as IASTSimpleDeclSpecifier).type.cdtTypeConversion
@@ -740,13 +741,13 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                     }
                     IASTElaboratedTypeSpecifier: {
                         // struct
-                        hostType = "struct " + declSpec.name.toString
+                        hostType = elaboratedKindToString(declSpec.kind) + " " + declSpec.name.toString
                         type = ValueType.HOST
                         isStruct = true
                     }
                     IASTCompositeTypeSpecifier: {
                         // struct
-                        hostType = "struct " + declSpec.name.toString
+                        hostType = elaboratedKindToString(declSpec.key) + " " + declSpec.name.toString
                         type = ValueType.HOST
                         isStruct = true
                     }
@@ -809,13 +810,13 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                     }
                     IASTElaboratedTypeSpecifier: {
                         // struct
-                        hostType = "struct " + declSpec.name.toString
+                        hostType = elaboratedKindToString(declSpec.kind) + " " + declSpec.name.toString
                         type = ValueType.HOST
                         isStruct  = true
                     }
                     IASTCompositeTypeSpecifier: {
                         // struct
-                        hostType = "struct " + declSpec.name.toString
+                        hostType = elaboratedKindToString(declSpec.key) + " " + declSpec.name.toString
                         type = ValueType.HOST
                         isStruct = true
                     }
@@ -2843,7 +2844,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         // Create the declaration with the cdt type
         val variableDeclaration = createVariableDeclaration
 
-        switch (declaration.getDeclSpecifier) {
+        switch (specifier : declaration.getDeclSpecifier) {
             IASTNamedTypeSpecifier: {
                 // unknown type
                 val typeName = (declaration.getDeclSpecifier as IASTNamedTypeSpecifier).name.toString
@@ -2856,7 +2857,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
 
                 // Uses Host Type for setting the struct type since our structs are represented as array-like valued objects
                 variableDeclaration.type = ValueType.HOST
-                variableDeclaration.hostType = "struct " + structName
+                variableDeclaration.hostType = elaboratedKindToString(specifier.kind) + " " + structName
             }
             IASTSimpleDeclSpecifier: {
                 variableDeclaration.type = (declaration.getDeclSpecifier as IASTSimpleDeclSpecifier).type.
@@ -2911,7 +2912,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 // -> something is handled as array when cardinalities is set
                 // We explicitly create arrays for structs, because arrays are passable in sccharts - structs are not
                 vo.cardinalities += createIntValue(0)
-                vo.addTagAnnotation("struct")
+                vo.addTagAnnotation(structTag)
             }
 
             // Add the valued object and the ssa list to the respective elements    
@@ -4840,6 +4841,20 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
      */
     def private isInitializerListForStructs(IASTInitializerList initializers) {
         return (initializers.getSize > 0 && initializers.clauses.get(0) instanceof ICASTDesignatedInitializer)
+    }
+    
+    /**
+     *Translates the kind of a {@code IASTElaboratedTypeSpecifier} to the string prefix of the fitting type,
+     *
+     * @param kind the kind of the {@code IASTElaboratedTypeSpecifier} as integer
+     */
+    def private elaboratedKindToString(int kind){
+        switch(kind){
+            case 0:  return "enum"
+            case 1:  return "struct"
+            case 2:  return "union"
+            default: return ""
+        }
     }
 
 }
