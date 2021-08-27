@@ -366,7 +366,7 @@ class KielerCompilerCLI implements Runnable, Observer {
                     
                     if (!noOutput && cc.allErrors.empty) {
                         if (verbose) println("Saving compilation result")
-                        val dest = if (output === null) {
+                        var dest = if (output === null) {
                             file.canonicalFile.parentFile
                         } else if (output.exists) {
                             output
@@ -383,7 +383,7 @@ class KielerCompilerCLI implements Runnable, Observer {
                         } else {
                             output
                         }
-                        
+                        dest = new File(dest, files.get(0).toURI.relativize(file.parentFile.toURI).getPath() + "/")
                         if (!cc.result.model.saveModel(dest, file, cc)) {
                             if (tryall) {
                                 error = true
