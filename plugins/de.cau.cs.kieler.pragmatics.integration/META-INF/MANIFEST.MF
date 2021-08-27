@@ -1,10 +1,10 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: KIELER Core Pragmatics Utilities
-Bundle-SymbolicName: de.cau.cs.kieler.pragmatics.kieler.core
+Bundle-Name: KIELER Pragmatics Setup Registration
+Bundle-SymbolicName: de.cau.cs.kieler.pragmatics.integration
 Bundle-Version: 1.3.0.qualifier
 Bundle-Vendor: Kiel University
-Automatic-Module-Name: de.cau.cs.kieler.pragmatics.kieler.core
+Automatic-Module-Name: de.cau.cs.kieler.pragmatics.integration
 Bundle-RequiredExecutionEnvironment: JavaSE-11
 Require-Bundle: com.google.guava,
  org.eclipse.xtext.xbase.lib,
@@ -15,4 +15,4 @@ Require-Bundle: com.google.guava,
  de.cau.cs.kieler.core,
  de.cau.cs.kieler.kgraph.text,
  de.cau.cs.kieler.klighd.kgraph
-Export-Package: de.cau.cs.kieler.pragmatics.kieler.core.services
+Export-Package: de.cau.cs.kieler.pragmatics.integration

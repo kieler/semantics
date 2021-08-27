@@ -10,24 +10,24 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.pragmatics.kieler.core.services
+package de.cau.cs.kieler.pragmatics.integration
 
 import com.google.inject.Injector
 import de.cau.cs.kieler.core.services.KielerLanguage
-import de.cau.cs.kieler.kgraph.text.KGraphStandaloneSetupGenerated
-import de.cau.cs.kieler.klighd.kgraph.KGraphData
-import de.cau.cs.kieler.klighd.kgraph.KGraphPackage
+import org.eclipse.elk.graph.EMapPropertyHolder
+import org.eclipse.elk.graph.ElkGraphPackage
+import org.eclipse.elk.graph.text.ElkGraphStandaloneSetupGenerated
 
 /**
  * @author sdo
  *
  */
-class KGraphStandaloneSetup extends KGraphStandaloneSetupGenerated implements KielerLanguage {
+class ElkGraphStandaloneSetup extends ElkGraphStandaloneSetupGenerated implements KielerLanguage {
     static Injector injector
     
     def static doSetup() {
         if (injector === null) {
-            injector = new KGraphStandaloneSetup().createInjectorAndDoEMFRegistration()
+            injector = new ElkGraphStandaloneSetup().createInjectorAndDoEMFRegistration()
         }
         return injector
     }
@@ -35,7 +35,7 @@ class KGraphStandaloneSetup extends KGraphStandaloneSetupGenerated implements Ki
     override register(Injector injector) {
         super.register(injector)
         // Ensure package is registered 
-        KGraphPackage.eINSTANCE.eClass()
+        ElkGraphPackage.eINSTANCE.eClass()
     }
     
     override getInjector() {
@@ -43,16 +43,16 @@ class KGraphStandaloneSetup extends KGraphStandaloneSetupGenerated implements Ki
     }
 
     override getSupportedModels() {
-        #[KGraphData]
+        #[EMapPropertyHolder]
     }
     
     override getSupportedResourceExtensions() {
-        #["kgt"]
+        #["elkt"]
     }
     
     override getResourceExtension(Object model) {
-        if (model instanceof KGraphData) {
-            return "kgt"
+        if (model instanceof EMapPropertyHolder) {
+            return "elkt"
         }
         return null
     }
