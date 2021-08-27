@@ -732,6 +732,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 val declSpec = globalVars.get(varName)
                 var ValueType type
                 var String hostType
+                var isStruct = false
                 switch (declSpec) {
                     IASTSimpleDeclSpecifier: {
                         // primitive type, pointer or array
@@ -741,11 +742,13 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                         // struct
                         hostType = "struct " + declSpec.name.toString
                         type = ValueType.HOST
+                        isStruct = true
                     }
                     IASTCompositeTypeSpecifier: {
                         // struct
                         hostType = "struct " + declSpec.name.toString
                         type = ValueType.HOST
+                        isStruct = true
                     }
                     default: {
                         type = ValueType.INT
@@ -772,6 +775,9 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 val decl = declarations.get(type) ?: hostDeclarations.get(hostType)
                 val vo = decl.createValuedObject(varName + inSuffix)
                 vo.label = varName
+                if(isStruct){
+                    vo.addTagAnnotation(structTag)
+                }
 
                 val stateVariables = getStateVariables(state)
                 val varList = <ValuedObject>newArrayList
@@ -795,6 +801,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 val declSpec = globalVars.get(varName)
                 var ValueType type
                 var String hostType
+                var isStruct = false
                 switch (declSpec) {
                     IASTSimpleDeclSpecifier: {
                         // primitive type, pointer or array
@@ -804,11 +811,13 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                         // struct
                         hostType = "struct " + declSpec.name.toString
                         type = ValueType.HOST
+                        isStruct  = true
                     }
                     IASTCompositeTypeSpecifier: {
                         // struct
                         hostType = "struct " + declSpec.name.toString
                         type = ValueType.HOST
+                        isStruct = true
                     }
                     default: {
                         type = ValueType.INT
@@ -825,6 +834,10 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 // create the vo and add it to the stateVariables list
                 val vo = outDecl.createValuedObject(varName + outSuffix)
                 vo.label = varName
+                
+                if(isStruct){
+                    vo.addTagAnnotation(structTag)
+                }
 
                 val stateVariables = getStateVariables(state)
                 val varList = stateVariables.get(varName)
