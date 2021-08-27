@@ -62,7 +62,7 @@ class SCTXFormatter extends KExtFormatter {
 			lastObject = idxDeclaration.value
 		}
 		
-		if (lastObject != null && !state.actions.empty) lastObject.append[ newLine ]
+		if (lastObject !== null && !state.actions.empty) lastObject.append[ newLine ]
 		for (idxAction : state.actions.indexed) {
 			format(idxAction.value, document);
             if (idxAction.key < state.actions.size - 1) idxAction.value.append[ newLine ]
@@ -70,7 +70,7 @@ class SCTXFormatter extends KExtFormatter {
 		}
 		
 		if (!state.regions.empty) {
-		    if (lastObject != null) lastObject.append[ setNewLines(2) highPriority ]
+		    if (lastObject !== null) lastObject.append[ setNewLines(2) highPriority ]
 		    format(state.regions.head, document)
     		for (Region regions : state.regions.drop(1)) {
       		    switch (regions) {
@@ -170,7 +170,7 @@ class SCTXFormatter extends KExtFormatter {
             lastObject = idxDeclaration.value
         }
         
-        if (lastObject != null && !controlflowregion.actions.empty) lastObject.append[ newLine ]
+        if (lastObject !== null && !controlflowregion.actions.empty) lastObject.append[ newLine ]
         for (idxAction : controlflowregion.actions.indexed) {
             format(idxAction.value, document);
             if (idxAction.key < controlflowregion.actions.size - 1) idxAction.value.append[ newLine ]
@@ -212,7 +212,7 @@ class SCTXFormatter extends KExtFormatter {
             lastObject = idxDeclaration.value
         }
         
-        if (lastObject != null && !dataflowregion.actions.empty) lastObject.append[ newLine ]
+        if (lastObject !== null && !dataflowregion.actions.empty) lastObject.append[ newLine ]
         for (idxAction : dataflowregion.actions.indexed) {
             format(idxAction.value, document);
             if (idxAction.key < dataflowregion.actions.size - 1) idxAction.value.append[ newLine ]

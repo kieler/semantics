@@ -525,41 +525,41 @@ class KiCoModelUpdateController extends AbstractViewUpdateController implements 
      */
     override void loadState(IMemento memento) {
         val lastSaveDirectoryValue = memento.getString("lastSaveDirectory")
-        if (lastSaveDirectoryValue != null) {
+        if (lastSaveDirectoryValue !== null) {
             lastSaveDirectory = Path.fromPortableString(lastSaveDirectoryValue)
         }
 
         val compilerToggleActionValue = memento.getBoolean("compilerToggleAction")
-        if (compilerToggleActionValue != null) {
-            if (compilerToggleAction != null) {
+        if (compilerToggleActionValue !== null) {
+            if (compilerToggleAction !== null) {
                 compilerToggleAction.setChecked(compilerToggleActionValue)
             }
         }
         
         val sideBySideToggleActionValue = memento.getBoolean("sideBySideToggleAction")
-        if (sideBySideToggleActionValue != null) {
-            if (sideBySideToggleAction != null) {
+        if (sideBySideToggleActionValue !== null) {
+            if (sideBySideToggleAction !== null) {
                 sideBySideToggleAction.setChecked(sideBySideToggleActionValue)
             }
         }
         
         val actionDiagramPlaceholderValue = memento.getBoolean("diagramPlaceholderToggleAction")
-        if (actionDiagramPlaceholderValue != null) {
-            if (diagramPlaceholderToggleAction != null) {
+        if (actionDiagramPlaceholderValue !== null) {
+            if (diagramPlaceholderToggleAction !== null) {
                 diagramPlaceholderToggleAction.setChecked(actionDiagramPlaceholderValue)
             }
         }
         
         val chainToggleActionValue = memento.getBoolean("chainToggleAction")
-        if (chainToggleActionValue != null) {
-            if (chainToggleAction != null) {
+        if (chainToggleActionValue !== null) {
+            if (chainToggleAction !== null) {
                 chainToggleAction.setChecked(chainToggleActionValue)
             }
         }
         
         val simpleUpdateToggleActionValue = memento.getBoolean("simpleUpdateToggleAction")
-        if (simpleUpdateToggleActionValue != null) {
-            if (simpleUpdateToggleAction != null) {
+        if (simpleUpdateToggleActionValue !== null) {
+            if (simpleUpdateToggleAction !== null) {
                 simpleUpdateToggleAction.setChecked(simpleUpdateToggleActionValue)
             }
         }

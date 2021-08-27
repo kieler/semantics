@@ -12,18 +12,13 @@
  */
 package de.cau.cs.kieler.kicool.ui.processors
 
-import de.cau.cs.kieler.kicool.compilation.ExogenousProcessor
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
-import org.eclipse.jdt.core.dom.AST
-import de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure
-import org.eclipse.jdt.core.dom.ASTParser
-import org.eclipse.jdt.core.dom.FileASTRequestor
-import org.eclipse.jdt.core.dom.CompilationUnit
-import java.util.List
+import de.cau.cs.kieler.kicool.compilation.ExogenousProcessor
 import de.cau.cs.kieler.kicool.compilation.JavaCodeFile
-import java.util.Map
 import org.eclipse.jdt.core.JavaCore
-import org.eclipse.jdt.core.dom.ASTNode
+import org.eclipse.jdt.core.dom.AST
+import org.eclipse.jdt.core.dom.ASTParser
+import org.eclipse.jdt.core.dom.CompilationUnit
 
 /**
  * @author kolja

@@ -98,9 +98,9 @@ class SCGDependencyTest extends AbstractXTextModelRepositoryTest<SCCharts> {
             
             val annotation = annotationMap.get(t.toString) 
             try {
-                val dCount = new Integer(annotation.values.get(1))
-                val dConcurrent = new Integer(annotation.values.get(2))
-                val dConfluent = new Integer(annotation.values.get(3))
+                val dCount = Integer.valueOf(annotation.values.get(1))
+                val dConcurrent = Integer.valueOf(annotation.values.get(2))
+                val dConfluent = Integer.valueOf(annotation.values.get(3))
                 
                 assertEquals("The overall count of class " + t.toString + " dependencies is wrong.", 
                     dCount, ds.size)

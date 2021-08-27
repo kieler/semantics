@@ -13,14 +13,11 @@
  */
 package de.cau.cs.kieler.sccharts.processors.scg
 
-import com.google.inject.Guice
 import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.StringAnnotation
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
 import de.cau.cs.kieler.annotations.extensions.UniqueNameCache
-import de.cau.cs.kieler.core.properties.IProperty
-import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.kexpressions.BoolValue
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.FloatValue
@@ -80,8 +77,6 @@ import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.SCGraphs
 import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.scg.Surface
-import de.cau.cs.kieler.scg.processors.optimizer.SuperfluousForkRemover
-import de.cau.cs.kieler.scg.processors.optimizer.SuperfluousThreadRemover
 import de.cau.cs.kieler.scl.MethodImplementationDeclaration
 import de.cau.cs.kieler.scl.processors.transformators.SCLToSCGTransformation
 import java.util.HashMap
@@ -261,6 +256,9 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
 
         sCGraph.trace(rootState)
         
+        // Copy annotations
+        sCGraph.annotations += rootState.annotations.map[copy]
+        
         // Handle declarations
         val declMapping = newLinkedHashMap
         val voMapping = newLinkedHashMap
@@ -285,11 +283,6 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
             // Fix VO association in VariableStore
             val info = voStore.getInfo(key)
             if (info !== null) info.valuedObject = value
-        ]        
-
-        val hostcodeAnnotations = rootState.getAnnotations(ANNOTATION_HOSTCODE)
-        hostcodeAnnotations.forEach [
-            sCGraph.createStringAnnotation(ANNOTATION_HOSTCODE, (it as StringAnnotation).values.head)
         ]
 
         // Include top most level of hierarchy 
@@ -821,17 +814,17 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
 
     // Apply conversion to integer values
     def dispatch Expression convertToSCGExpression(IntValue expression) {
-        createIntValue(new Integer(expression.value)).trace(expression)
+        createIntValue(Integer.valueOf(expression.value)).trace(expression)
     }
 
     // Apply conversion to float values
     def dispatch Expression convertToSCGExpression(FloatValue expression) {
-        createFloatValue(new Float(expression.value)).trace(expression)
+        createFloatValue(Float.valueOf(expression.value.floatValue())).trace(expression)
     }
 
     // Apply conversion to boolean values
     def dispatch Expression convertToSCGExpression(BoolValue expression) {
-        createBoolValue(new Boolean(expression.value)).trace(expression)
+        createBoolValue(Boolean.valueOf(expression.value)).trace(expression)
     }
 
     def dispatch Expression convertToSCGExpression(StringValue expression) {

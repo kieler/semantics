@@ -46,7 +46,8 @@ class JavaCodeGeneratorModule extends CCodeGeneratorModule {
     
     public static val PACKAGE = PragmaRegistry.register("package", StringPragma, "Package name for the generated file(s)")
     public static val HOSTCODE_JAVA = PragmaRegistry.register("hostcode-java", StringPragma, "Allows additional hostcode to be included (e.g. includes) only for Java.")
-
+    public static val HOSTCODE_JAVA_INNER = PragmaRegistry.register("hostcode-java-inner", StringPragma, "Allows additional hostcode to be included (e.g. includes) only for Java and inside the generated class.")
+    
     public static val JAVA_EXTENSION = ".java"
     
     override configure() {

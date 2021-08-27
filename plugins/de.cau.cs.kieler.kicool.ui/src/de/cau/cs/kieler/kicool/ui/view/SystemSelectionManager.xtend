@@ -236,7 +236,7 @@ class SystemSelectionManager implements SelectionListener {
         }
 
         // Previously selected
-        if (activeSystem !== null && activeSystem.systemEntryById != null) {
+        if (activeSystem !== null && activeSystem.systemEntryById !== null) {
             defaultIndex = index.indexOf(activeSystem.systemEntryById)
         } else if (index.size > defaultIndex) {
             view.editPartSystemManager.activeSystem = index.get(defaultIndex)?.id

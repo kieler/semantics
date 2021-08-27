@@ -12,21 +12,18 @@
  */
 package de.cau.cs.kieler.esterel.processors.transformators.incremental
 
-import java.util.HashMap
 import com.google.inject.Inject
-import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
-import de.cau.cs.kieler.esterel.extensions.EsterelTransformationExtensions
-import de.cau.cs.kieler.esterel.EsterelProgram
 import de.cau.cs.kieler.esterel.LocalVariableDeclaration
 import de.cau.cs.kieler.esterel.Variable
-import de.cau.cs.kieler.scl.Statement
-import de.cau.cs.kieler.kexpressions.ValuedObject
-import de.cau.cs.kieler.kexpressions.ValueType
-import de.cau.cs.kieler.kexpressions.ValuedObjectReference
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.kicool.compilation.EObjectReferencePropertyData
-import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.esterel.VariableReference
+import de.cau.cs.kieler.esterel.extensions.EsterelTransformationExtensions
+import de.cau.cs.kieler.kexpressions.ValueType
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.scl.Statement
+import java.util.HashMap
+
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
 /**
  * @author mrb

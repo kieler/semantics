@@ -46,7 +46,7 @@ class ValuedObjectContainer {
     }
     
     def set(ValuedObjectReference valuedObjectReference) {
-        if (valuedObjectReference.valuedObject == null) {
+        if (valuedObjectReference.valuedObject === null) {
             throw new IllegalArgumentException("The valued object of reference " + valuedObjectReference + " is null!")
         }
         valuedObject = valuedObjectReference.valuedObject

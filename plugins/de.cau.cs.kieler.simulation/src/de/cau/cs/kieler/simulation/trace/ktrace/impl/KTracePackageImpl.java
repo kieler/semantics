@@ -16,7 +16,6 @@ import de.cau.cs.kieler.simulation.trace.ktrace.Tick;
 import de.cau.cs.kieler.simulation.trace.ktrace.Trace;
 import de.cau.cs.kieler.simulation.trace.ktrace.TraceFile;
 
-import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;

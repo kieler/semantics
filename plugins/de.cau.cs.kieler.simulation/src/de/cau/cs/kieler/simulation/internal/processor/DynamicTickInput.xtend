@@ -16,7 +16,6 @@ import com.google.gson.JsonPrimitive
 import de.cau.cs.kieler.core.definitions.DynamicTicks
 import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.core.properties.Property
-import de.cau.cs.kieler.simulation.mode.TimedSimulationModeCountDown
 
 /**
  * @author als

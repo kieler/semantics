@@ -18,12 +18,9 @@ import org.eclipse.xtext.Keyword;
 import org.eclipse.xtext.nodemodel.INode;
 import org.eclipse.xtext.parsetree.reconstr.ITokenSerializer;
 import org.eclipse.xtext.parsetree.reconstr.impl.KeywordSerializer;
-import org.eclipse.xtext.util.Strings;
 
 import com.google.inject.Inject;
 
-import de.cau.cs.kieler.sccharts.legacy.sccharts.Region;
-import de.cau.cs.kieler.sccharts.legacy.sccharts.State;
 import de.cau.cs.kieler.sccharts.legacy.text.services.SctGrammarAccess;
 
 /**

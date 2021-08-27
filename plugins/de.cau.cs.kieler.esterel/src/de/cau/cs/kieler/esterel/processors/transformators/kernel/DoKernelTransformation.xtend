@@ -13,19 +13,15 @@
 package de.cau.cs.kieler.esterel.processors.transformators.kernel
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.esterel.Do
 import de.cau.cs.kieler.esterel.EsterelFactory
 import de.cau.cs.kieler.esterel.EsterelProgram
-import de.cau.cs.kieler.esterel.Loop
 import de.cau.cs.kieler.esterel.extensions.EsterelExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
-import de.cau.cs.kieler.scl.SCLFactory
+
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
-import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
-import de.cau.cs.kieler.esterel.Do
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
 /**
  * @author als

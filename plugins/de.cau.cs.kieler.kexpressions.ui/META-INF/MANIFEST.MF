@@ -36,3 +36,4 @@ Export-Package: de.cau.cs.kieler.kexpressions.ui,
  de.cau.cs.kieler.kexpressions.ui.outline,
  de.cau.cs.kieler.kexpressions.ui.quickfix
 Bundle-Activator: de.cau.cs.kieler.kexpressions.ui.internal.KExtActivator
+Automatic-Module-Name: de.cau.cs.kieler.kexpressions.ui

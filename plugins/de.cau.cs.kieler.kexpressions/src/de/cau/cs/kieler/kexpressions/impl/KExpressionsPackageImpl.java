@@ -1014,7 +1014,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * @generated
      */
     @Override
-    public EReference getReferenceDeclaration_Parameters() {
+    public EReference getReferenceDeclaration_ReferenceContainer() {
         return (EReference)referenceDeclarationEClass.getEStructuralFeatures().get(1);
     }
 
@@ -1024,7 +1024,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * @generated
      */
     @Override
-    public EReference getReferenceDeclaration_Extern() {
+    public EReference getReferenceDeclaration_Parameters() {
         return (EReference)referenceDeclarationEClass.getEStructuralFeatures().get(2);
     }
 
@@ -1034,8 +1034,18 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * @generated
      */
     @Override
-    public EReference getReferenceDeclaration_GenericParameters() {
+    public EReference getReferenceDeclaration_Extern() {
         return (EReference)referenceDeclarationEClass.getEStructuralFeatures().get(3);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getReferenceDeclaration_GenericParameters() {
+        return (EReference)referenceDeclarationEClass.getEStructuralFeatures().get(4);
     }
 
     /**
@@ -1604,6 +1614,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
 
         referenceDeclarationEClass = createEClass(REFERENCE_DECLARATION);
         createEReference(referenceDeclarationEClass, REFERENCE_DECLARATION__REFERENCE);
+        createEReference(referenceDeclarationEClass, REFERENCE_DECLARATION__REFERENCE_CONTAINER);
         createEReference(referenceDeclarationEClass, REFERENCE_DECLARATION__PARAMETERS);
         createEReference(referenceDeclarationEClass, REFERENCE_DECLARATION__EXTERN);
         createEReference(referenceDeclarationEClass, REFERENCE_DECLARATION__GENERIC_PARAMETERS);
@@ -1832,6 +1843,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
 
         initEClass(referenceDeclarationEClass, ReferenceDeclaration.class, "ReferenceDeclaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getReferenceDeclaration_Reference(), ecorePackage.getEObject(), null, "reference", null, 0, 1, ReferenceDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getReferenceDeclaration_ReferenceContainer(), ecorePackage.getEObject(), null, "referenceContainer", null, 0, 1, ReferenceDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getReferenceDeclaration_Parameters(), this.getParameter(), null, "parameters", null, 0, -1, ReferenceDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getReferenceDeclaration_Extern(), this.getExternString(), null, "extern", null, 0, -1, ReferenceDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getReferenceDeclaration_GenericParameters(), this.getParameter(), null, "genericParameters", null, 0, -1, ReferenceDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

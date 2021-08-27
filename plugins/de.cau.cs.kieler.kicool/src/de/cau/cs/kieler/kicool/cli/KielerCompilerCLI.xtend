@@ -140,7 +140,7 @@ class KielerCompilerCLI implements Runnable, Observer {
         if (config !== null) {
             try {
                 val content = new String(Files.readAllBytes(config.toPath))
-                val json = (new JsonParser).parse(content) as JsonObject
+                val json = JsonParser.parseString(content) as JsonObject
                 // Additional command arguments
                 val jsonArgs = <String>newArrayList
                 for (entry : json.entrySet.filter[key.startsWith("--") && value.isJsonPrimitive && value.asJsonPrimitive.isString]) {

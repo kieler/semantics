@@ -49,3 +49,4 @@ Export-Package: de.cau.cs.kieler.simulation.ide,
  de.cau.cs.kieler.simulation.ide.visualization
 Import-Package: javax.servlet;version="3.1.0",
  javax.servlet.http;version="3.1.0"
+Automatic-Module-Name: de.cau.cs.kieler.simulation.ide

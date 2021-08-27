@@ -916,6 +916,14 @@ class SCTXValidator extends AbstractSCTXValidator {
     
     @Check
     def void checkReferenceDeclarationBindings(ReferenceDeclaration decl) {
+        if (decl.reference instanceof Scope) {
+            for (vo : decl.valuedObjects) {
+                if (vo.initialValue !== null) {
+                    error("Valued objects of referenced SCCharts cannot be initialized manually.", vo.initialValue, null, -1)
+                }
+            }
+        }
+        
         if (decl.hasAnnotation("noBindingCheck")) {
             return
         }

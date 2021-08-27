@@ -16,7 +16,6 @@ import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.simulation.events.TraceFinishedEvent
 import de.cau.cs.kieler.simulation.events.TraceMismatchEvent
-import de.cau.cs.kieler.simulation.trace.TraceDataProvider
 
 /**
  * @author als

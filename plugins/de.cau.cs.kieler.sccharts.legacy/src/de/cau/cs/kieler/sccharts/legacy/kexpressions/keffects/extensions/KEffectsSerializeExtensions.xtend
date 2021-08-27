@@ -70,7 +70,7 @@ class KEffectsSerializeExtensions extends KExpressionsSerializeHRExtensions {
         }
         
         res = res + assignment.operator.serializeAssignOperator
-        if (expressionStr != null) {
+        if (expressionStr !== null) {
             res = res + expressionStr
         }
         

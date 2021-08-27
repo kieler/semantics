@@ -14,13 +14,11 @@ package de.cau.cs.kieler.sccharts.cli
 
 import de.cau.cs.kieler.kicool.cli.KielerCompilerCLI
 import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
-import de.cau.cs.kieler.sccharts.text.SCTXStandaloneSetup
-import org.eclipse.emf.ecore.resource.Resource
-import org.eclipse.xtext.resource.IResourceFactory
-import picocli.CommandLine
-import picocli.CommandLine.Command
 import de.cau.cs.kieler.kicool.util.KiCoolUtils
 import de.cau.cs.kieler.sccharts.SCCharts
+import de.cau.cs.kieler.sccharts.text.SCTXStandaloneSetup
+import picocli.CommandLine
+import picocli.CommandLine.Command
 
 /**
  * @author als
