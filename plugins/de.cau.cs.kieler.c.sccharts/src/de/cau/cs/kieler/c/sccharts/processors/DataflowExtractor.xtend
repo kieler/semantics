@@ -2920,36 +2920,34 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         if (initializer instanceof IASTEqualsInitializer) {
             var Expression initExpr
             var isStruct = false
-            
+
             if (initializer.children.head instanceof IASTFunctionCallExpression) {
                 val expression = initializer.children.head as IASTFunctionCallExpression
                 initExpr = createFunctionCall(expression, state, dRegion)
             } else {
                 // Simply translate the expression
-                val initHead = initializer.children.head 
-                
-                if(initHead instanceof IASTInitializerList){
-                    if(isInitializerListForStructs(initHead)){
+                val initHead = initializer.children.head
+
+                if (initHead instanceof IASTInitializerList) {
+                    if (isInitializerListForStructs(initHead)) {
                         // Case for designated init for structs
                         processDesignatedInitializers(initHead, vo, state, dRegion, newArrayList())
                         isStruct = true
-                        
-                    }else{
+                    } else {
                         initExpr = createKExpression(initializer.children.head, state, dRegion)
                     }
-                }else{
+                } else {
                     initExpr = createKExpression(initializer.children.head, state, dRegion)
                 }
             }
 
-            if (initExpr instanceof OperatorExpression &&
-                (initExpr as OperatorExpression).operator.literal.equals(addressOp)) {
-                // initExpr is of the form "&expr"
-                val ref = (initExpr as OperatorExpression).subExpressions.get(0) as ValuedObjectReference
+            if (initializer.children.head instanceof IASTUnaryExpression &&
+                (initializer.children.head as IASTUnaryExpression).operand instanceof IASTIdExpression &&
+                (initializer.children.head as IASTUnaryExpression).operator === IASTUnaryExpression.op_amper) {
+                // original initExpr is of the form "&var"
                 val statePointers = getStateVarPointers(state)
-                statePointers.put(vo.name.substring(0, vo.name.lastIndexOf(ssaNameSeperator)), ref.valuedObject)
-                // we are only interested in the value the pointer points to not the address
-                initExpr = (initExpr as OperatorExpression).subExpressions.get(0)
+                statePointers.put(vo.name.substring(0, vo.name.lastIndexOf(ssaNameSeperator)),
+                    (initExpr as ValuedObjectReference).valuedObject)
             }
             if (!isStruct) {
                 addEquation(dRegion, vo, initExpr)
@@ -4584,6 +4582,10 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             // Attach the operand
             val operandExpression = unExpr.getOperand.createKExpression(funcState, dRegion)
             if (operandExpression !== null) {
+                if (unKExpr.operator === OperatorType.BITWISE_NOT) {
+                    // unKExpr is of the form "&expr"
+                    return operandExpression
+                }
                 unKExpr.subExpressions += operandExpression
                 return unKExpr
             } else {
