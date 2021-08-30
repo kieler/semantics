@@ -214,8 +214,10 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
     static final String posTag = "pos"
     /** Tag annotation string of the port group for the negative case in custom multiplexers */
     static final String negTag = "neg"
-    /** Tag annotation string for structs*/
+    /** Tag annotation string for structs */
     static final String structTag = "struct"
+    /** Tag annotation string for unions */
+    static final String unionTag = "union"
 
     /** annotation for break/continue/return multiplexer states that saves in which if stmt the break/continue/return is in */
     static final String ifStmtAnno = "ifCounter"
@@ -597,7 +599,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                         variableDeclaration.input = true
 
                         vo = variableDeclaration.createValuedObject(varName + inSuffix)
-                        vo.addTagAnnotation(structTag)
+                        addElaboratedTag(vo, declSpecifier.kind)
                     }
                     IASTNamedTypeSpecifier: {
                         // the parameter has a unknown type
@@ -734,6 +736,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 var ValueType type
                 var String hostType
                 var isStruct = false
+                var kind = -1
                 switch (declSpec) {
                     IASTSimpleDeclSpecifier: {
                         // primitive type, pointer or array
@@ -741,13 +744,15 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                     }
                     IASTElaboratedTypeSpecifier: {
                         // struct
-                        hostType = elaboratedKindToString(declSpec.kind) + " " + declSpec.name.toString
+                        kind = declSpec.kind
+                        hostType = elaboratedKindToString(kind) + " " + declSpec.name.toString
                         type = ValueType.HOST
                         isStruct = true
                     }
                     IASTCompositeTypeSpecifier: {
                         // struct
-                        hostType = elaboratedKindToString(declSpec.key) + " " + declSpec.name.toString
+                        kind = declSpec.key
+                        hostType = elaboratedKindToString(kind) + " " + declSpec.name.toString
                         type = ValueType.HOST
                         isStruct = true
                     }
@@ -776,8 +781,9 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 val decl = declarations.get(type) ?: hostDeclarations.get(hostType)
                 val vo = decl.createValuedObject(varName + inSuffix)
                 vo.label = varName
+                
                 if(isStruct){
-                    vo.addTagAnnotation(structTag)
+                    addElaboratedTag(vo, kind)
                 }
 
                 val stateVariables = getStateVariables(state)
@@ -803,6 +809,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 var ValueType type
                 var String hostType
                 var isStruct = false
+                var kind = -1
                 switch (declSpec) {
                     IASTSimpleDeclSpecifier: {
                         // primitive type, pointer or array
@@ -810,13 +817,15 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                     }
                     IASTElaboratedTypeSpecifier: {
                         // struct
-                        hostType = elaboratedKindToString(declSpec.kind) + " " + declSpec.name.toString
+                        kind = declSpec.kind
+                        hostType = elaboratedKindToString(kind) + " " + declSpec.name.toString
                         type = ValueType.HOST
                         isStruct  = true
                     }
                     IASTCompositeTypeSpecifier: {
                         // struct
-                        hostType = elaboratedKindToString(declSpec.key) + " " + declSpec.name.toString
+                        kind = declSpec.key
+                        hostType = elaboratedKindToString(kind) + " " + declSpec.name.toString
                         type = ValueType.HOST
                         isStruct = true
                     }
@@ -837,7 +846,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 vo.label = varName
                 
                 if(isStruct){
-                    vo.addTagAnnotation(structTag)
+                    addElaboratedTag(vo, kind)
                 }
 
                 val stateVariables = getStateVariables(state)
@@ -2843,28 +2852,28 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
 
         // Create the declaration with the cdt type
         val variableDeclaration = createVariableDeclaration
+        val declSpecifier = declaration.getDeclSpecifier
 
-        switch (specifier : declaration.getDeclSpecifier) {
+        switch (declSpecifier) {
             IASTNamedTypeSpecifier: {
                 // unknown type
-                val typeName = (declaration.getDeclSpecifier as IASTNamedTypeSpecifier).name.toString
+                val typeName = declSpecifier.name.toString
                 variableDeclaration.type = ValueType.HOST
                 variableDeclaration.hostType = typeName
             }
             IASTElaboratedTypeSpecifier: {
                 // struct type
-                val structName = (declaration.getDeclSpecifier as IASTElaboratedTypeSpecifier).name.toString
+                val structName = declSpecifier.name.toString
 
                 // Uses Host Type for setting the struct type since our structs are represented as array-like valued objects
                 variableDeclaration.type = ValueType.HOST
-                variableDeclaration.hostType = elaboratedKindToString(specifier.kind) + " " + structName
+                variableDeclaration.hostType = elaboratedKindToString(declSpecifier.kind) + " " + structName
             }
             IASTSimpleDeclSpecifier: {
-                variableDeclaration.type = (declaration.getDeclSpecifier as IASTSimpleDeclSpecifier).type.
-                    cdtTypeConversion
+                variableDeclaration.type = declSpecifier.type.cdtTypeConversion
             }
             default: {
-                println("declspecifier \"" + declaration.getDeclSpecifier + "\" not supported")
+                println("declspecifier \"" + declSpecifier + "\" not supported")
             }
         }
         if (!serializable) {
@@ -2907,12 +2916,13 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 ]
             }
 
-            if (declaration.getDeclSpecifier instanceof IASTElaboratedTypeSpecifier) {
+            if (declSpecifier instanceof IASTElaboratedTypeSpecifier) {
                 // Structs shall be visualized and handled as arrays 
                 // -> something is handled as array when cardinalities is set
                 // We explicitly create arrays for structs, because arrays are passable in sccharts - structs are not
                 vo.cardinalities += createIntValue(0)
-                vo.addTagAnnotation(structTag)
+                
+                addElaboratedTag(vo, declSpecifier.kind)
             }
 
             // Add the valued object and the ssa list to the respective elements    
@@ -2986,7 +2996,6 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         DataflowRegion dRegion, List<Expression> alreadyPassedIndices) {
 
         for (clause : initializers.clauses) {
-            // TODO: Breaks with arrays CASTLiteralExpression
             var el = clause as ICASTDesignatedInitializer
 
             val List<Expression> indices = newArrayList()
@@ -3367,8 +3376,10 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                 // if stmt is a pointer declaration, update the pointer map
                 if (stmt.children.size === 3 && stmt.children.get(0) instanceof IASTPointer) {
                     val init = (stmt.children.get(2) as IASTEqualsInitializer).children.get(0)
-                    if (init instanceof IASTUnaryExpression) {
-                        val varName = (init.operand as IASTIdExpression).getName.toString
+                    if (init instanceof IASTUnaryExpression 
+                        && (init as IASTUnaryExpression).operand instanceof IASTIdExpression
+                    ) {
+                        val varName = ((init as IASTUnaryExpression).operand as IASTIdExpression).getName.toString
                         pointer.put(stmt.children.get(1).toString, varName)
                     } else {
                         pointer.put(stmt.children.get(1).toString, null)
@@ -3623,7 +3634,9 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         val boolean isArray = index !== null
         var boolean newArrayVONeeded = false
         var EList<Expression> cards;
-        if (isArray) {
+        val isUnion = vo.hasAnnotation(unionTag)
+        
+        if (isArray && !isUnion) {
             var alreadyWrittenIdxs = voWrittenIdxs.get(vo)
             var alreadyReadIndices = voReadIndices.get(vo)
             
@@ -3647,6 +3660,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                     default:
                         alreadyWrittenIdxs.add(index)
                 }
+                
             } else {
                 // Branch for accessing/reading an array
                 
@@ -3675,6 +3689,11 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                     }
                 }               
             }
+        }
+        // At any time, only one field of a value can carry information. So, each write should create a new ValuedObject
+        if(isUnion && writing){
+             cards = vo.cardinalities
+             newArrayVONeeded = true
         }
 
         // If the valued object is meant to be written to, a new one has to be created to preserve the SSA-form
@@ -3706,11 +3725,16 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             }
 
              val hasStructAnnotation = vo.hasAnnotation(structTag)
+             val hasUnionAnnotation = vo.hasAnnotation(unionTag)
             // Create the valued object
             vo = varDecl.createValuedObject(newName)
             
             if(hasStructAnnotation){
                 vo.annotations += createTagAnnotation(structTag)
+            }
+            
+            if(hasUnionAnnotation){
+               vo.annotations += createTagAnnotation(unionTag) 
             }
 
             if (hasOut) {
@@ -4854,6 +4878,20 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             case 1:  return "struct"
             case 2:  return "union"
             default: return ""
+        }
+    }
+    
+    /**
+     * Adds a fitting tag to the {@code ValuedObject} created for an {@code IASTElaboratedTypeSpecifier} 
+       based on the kind.  
+     * @param kind the kind of the {@code IASTElaboratedTypeSpecifier} as integer
+     * @param vo the ValuedObject 
+     */
+    def private addElaboratedTag(ValuedObject vo, int kind) {
+        switch (kind) {
+            case 0: vo.addTagAnnotation(structTag) // enum
+            case 1: vo.addTagAnnotation(structTag)
+            case 2: vo.addTagAnnotation(unionTag)
         }
     }
 
