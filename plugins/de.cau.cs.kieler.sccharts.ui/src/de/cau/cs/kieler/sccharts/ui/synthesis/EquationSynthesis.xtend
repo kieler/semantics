@@ -552,14 +552,19 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                 }
                 if (nextRef !== null) {
                     // set the port labels of the new data access node
+                    val lastSubReferenceLabel = ref.lastSubReferenceLabel
+                    val lengthLastSubReferenceLabel = lastSubReferenceLabel.length
+                                        
                     if (output) {
                         val inPort = currentNode.findPortById(PORT0_IN_PREFIX)
                         
-                        if (ref.valuedObject.hasAnnotation("struct") && ref.lastSubReferenceLabel.toString.length > 4) {
-                            inPort.setLabel(ref.lastSubReferenceLabel.substring(2, ref.lastSubReferenceLabel.length - 2),
+                        if (ref.valuedObject.hasAnnotation("struct")
+                             && lastSubReferenceLabel.toString.startsWith("[\"") && lastSubReferenceLabel.toString.endsWith("\"]")
+                        ) {
+                            inPort.setLabel(lastSubReferenceLabel.substring(2, lengthLastSubReferenceLabel - 2),
                                 false)
                         } else {
-                            inPort.setLabel(ref.lastSubReferenceLabel, false)
+                            inPort.setLabel(lastSubReferenceLabel, false)
                         }
                         inPort.associateWith(ref)
                     
@@ -567,11 +572,13 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                         //currentNode.findPortById(OUT_PORT).setLabel(ref.lastSubReferenceLabel, false)                        
                         val outPort = currentNode.findPortById(OUT_PORT)
                         
-                        if (ref.valuedObject.hasAnnotation("struct") && ref.lastSubReferenceLabel.toString.length > 4) {
-                            outPort.setLabel(ref.lastSubReferenceLabel.substring(2, ref.lastSubReferenceLabel.length - 2),
+                        if (ref.valuedObject.hasAnnotation("struct") && lengthLastSubReferenceLabel > 4 
+                            && lastSubReferenceLabel.toString.startsWith("[\"") && lastSubReferenceLabel.toString.endsWith("\"]")
+                        ) {
+                            outPort.setLabel(lastSubReferenceLabel.substring(2, lengthLastSubReferenceLabel - 2),
                                 false)
                         } else {
-                            outPort.setLabel(ref.lastSubReferenceLabel, false)
+                            outPort.setLabel(lastSubReferenceLabel, false)
                         }
                         
                         currentNode.findPortById(OUT_PORT).associateWith(ref)
