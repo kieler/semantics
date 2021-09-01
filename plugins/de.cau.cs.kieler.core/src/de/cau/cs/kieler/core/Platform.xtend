@@ -40,4 +40,8 @@ class Platform {
         if (isMac) return OS::MAC
         return OS::UNIX
     }
+    
+    static def isEclipsePlatformRunning() {
+        return org.eclipse.core.runtime.Platform.isRunning()
+    }
 }

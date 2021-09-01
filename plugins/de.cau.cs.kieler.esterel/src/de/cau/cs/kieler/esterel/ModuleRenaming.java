@@ -2,7 +2,6 @@
  */
 package de.cau.cs.kieler.esterel;
 
-import de.cau.cs.kieler.scl.Module;
 import org.eclipse.emf.ecore.EObject;
 
 /**

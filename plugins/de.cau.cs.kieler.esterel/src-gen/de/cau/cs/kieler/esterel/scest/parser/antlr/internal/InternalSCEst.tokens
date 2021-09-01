@@ -1,4 +1,4 @@
-'!&'=174
+'!&'=175
 '#'=44
 '%'=126
 '%='=152
@@ -67,6 +67,7 @@
 'elsif'=60
 'emit'=51
 'end'=19
+'enum'=170
 'every'=70
 'exec'=76
 'exit'=75
@@ -110,10 +111,10 @@
 'pre'=134
 'present'=54
 'print'=118
-'private'=172
+'private'=173
 'procedure'=35
-'protected'=171
-'public'=170
+'protected'=172
+'public'=171
 'pure'=136
 'randomize'=119
 'ref'=115
@@ -145,7 +146,7 @@
 'upto'=94
 'val'=164
 'var'=78
-'void'=173
+'void'=174
 'watching'=95
 'weak'=66
 'when'=68
@@ -244,6 +245,7 @@ T__171=171
 T__172=172
 T__173=173
 T__174=174
+T__175=175
 T__17=17
 T__18=18
 T__19=19

@@ -189,14 +189,14 @@ class ModelChainSynthesis extends AbstractDiagramSynthesis<ModelChain> {
             // fallthrou
         }
         // If normal synthesis failed create message
-        if ((subDiagramNode == null || subDiagramNode.children.isEmpty) && model instanceof EObject) { // component synthesis
+        if ((subDiagramNode === null || subDiagramNode.children.isEmpty) && model instanceof EObject) { // component synthesis
             val properties = new KlighdSynthesisProperties();
             properties.setProperty(KlighdSynthesisProperties.REQUESTED_UPDATE_STRATEGY, SimpleUpdateStrategy.ID);
             subDiagramNode = LightDiagramServices::translateModel(new MessageModel("Cannot create sub-diagram"),
                 usedContext, properties);
         }
         // Add subdiagram
-        if (subDiagramNode != null && !subDiagramNode.children.isEmpty) {
+        if (subDiagramNode !== null && !subDiagramNode.children.isEmpty) {
 
             // prevent adding of rectangle by adding an invisible own one.
             subDiagramNode.addRectangle.invisible = true;

@@ -207,7 +207,7 @@ class SCChartsDiagramHighlighter extends AbstractDiagramHighlighter {
                                             if (original instanceof FloatValue)
                                                 currentWireHighlighting.add(
                                                     new ValuedHighlighting(e, CURRENT_ELEMENT_STYLE,
-                                                        new Float((original as FloatValue).value),
+                                                        Float.valueOf((original as FloatValue).value.floatValue()),
                                                         (original as FloatValue).value != 0))
                                             if (!next.contains(e.target))
                                                 next.add(e.target)
@@ -236,7 +236,7 @@ class SCChartsDiagramHighlighter extends AbstractDiagramHighlighter {
                                                         case ValueType.FLOAT:
                                                             currentWireHighlighting.add(
                                                                 new ValuedHighlighting(e, CURRENT_ELEMENT_STYLE,
-                                                                    new Float(value.rawValue.asFloat),
+                                                                    Float.valueOf(value.rawValue.asFloat),
                                                                     value.rawValue.asFloat != 0))
                                                         default: {
                                                         }
@@ -267,7 +267,7 @@ class SCChartsDiagramHighlighter extends AbstractDiagramHighlighter {
                                                     case ValueType.FLOAT:
                                                         currentWireHighlighting.add(
                                                             new ValuedHighlighting(e, CURRENT_ELEMENT_STYLE,
-                                                                new Float(entry.rawValue.asFloat),
+                                                                Float.valueOf(entry.rawValue.asFloat),
                                                                 entry.rawValue.asFloat != 0))
                                                     default: {
                                                     }
@@ -327,7 +327,7 @@ class SCChartsDiagramHighlighter extends AbstractDiagramHighlighter {
                                                             case ValueType.INT:
                                                                 value = entry.rawValue.asInt
                                                             case ValueType.FLOAT:
-                                                                value = new Float(entry.rawValue.asFloat)
+                                                                value = Float.valueOf(entry.rawValue.asFloat)
                                                             default: {
                                                             }
                                                         }
@@ -414,7 +414,7 @@ class SCChartsDiagramHighlighter extends AbstractDiagramHighlighter {
                                                             new Highlighting(e, CURRENT_ELEMENT_STYLE))
                                                 } else if (value !== null) {
                                                     if (value instanceof Double)
-                                                        value = new Float((value as Double).doubleValue as float)
+                                                        value = Float.valueOf((value as Double).doubleValue as float)
                                                     currentWireHighlighting.add(
                                                         new ValuedHighlighting(e, CURRENT_ELEMENT_STYLE, value,
                                                             (value instanceof Integer ? (value as Integer) !=

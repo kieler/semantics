@@ -248,11 +248,11 @@ class SCChartsExtension {
     }
 
     def boolean isRootState(State state) {
-        state.parentRegion == null
+		state.parentRegion === null
     }
 
     def dispatch State getRootState(State state) {
-        if(state.parentRegion == null) return state;
+        if(state.parentRegion === null) return state;
         state.parentRegion.rootState
     }
 
@@ -338,7 +338,7 @@ class SCChartsExtension {
     }
 
     def private boolean uniqueNameTest(ValuedObject valuedObject, State state, String newName) {
-        if (state == null) { 
+        if (state === null) { 
             // is unique
             return true
         }
@@ -348,7 +348,7 @@ class SCChartsExtension {
     }
 
     def private dispatch boolean uniqueNameTest(ValuedObject valuedObject, String newName) {
-        if (valuedObject.eContainer == null) {
+        if (valuedObject.eContainer === null) {
             // is unique
             return true
         }
@@ -373,7 +373,7 @@ class SCChartsExtension {
         if (eObject.uniqueNameTest(originalId)) {
             return originalId
         }
-        while (newName == null) {
+        while (newName === null) {
             c = c + 1
             val tmpNewName = originalId + c
             if (eObject.uniqueNameTest(tmpNewName)) {
@@ -390,7 +390,7 @@ class SCChartsExtension {
             uniqueNameCache.add(originalId)
             return originalId
         }
-        while (newName == null) {
+        while (newName === null) {
             c = c + 1
             val tmpNewName = originalId + c
             if (!uniqueNameCache.contains(tmpNewName)) {
@@ -443,7 +443,7 @@ class SCChartsExtension {
 
     def ValuedObject uniqueName(ValuedObject valuedObject) {
         var originalId = valuedObject.name
-        if (originalId == null) {
+        if (originalId === null) {
             originalId = "NULL"
         }
         var String newName = valuedObject.uniqueNameHelper(originalId)
@@ -528,7 +528,7 @@ class SCChartsExtension {
     // Get any final state if the region already contains a final state, otherwise create a final state.
     def State retrieveFinalState(ControlflowRegion region, String id) {
         val finalState = region.getFinalState
-        if (finalState != null) {
+        if (finalState !== null) {
             return finalState
         }
         region.createState(id).setFinal
@@ -565,7 +565,7 @@ class SCChartsExtension {
 
     // REF
     def boolean isReferencedState(State state) {
-        state.referencedScope != null
+		state.referencedScope !== null
     }
 
     //========== REGIONS ===========
@@ -624,11 +624,11 @@ class SCChartsExtension {
     }
 
     def boolean hasInnerStatesOrControlflowRegions(State state) {
-        return ((state.regions != null && state.regions.size != 0 && state.controlflowRegionsNotEmpty))
+        return (( state.regions !== null && state.regions.size != 0 && state.controlflowRegionsNotEmpty))
     }
     
     def boolean hasDataflowRegions(State state) {
-        return state.regions != null && state.regions.size != 0 && !state.regions.filter(DataflowRegion).empty
+        return state.regions !== null && state.regions.size != 0 && !state.regions.filter(DataflowRegion).empty
     }
 
     // These are actions that expand to INNER content like during or exit actions.
@@ -801,7 +801,7 @@ class SCChartsExtension {
     // 2. the transition is a normal termination and has NOT trigger, then it is also (implicityly) immediate.
     def Boolean isImmediate2(Transition transition) {
         (transition.immediate) || (transition.sourceState.type == StateType::CONNECTOR) || (transition.type ==
-            TransitionType::TERMINATION && transition.trigger == null
+            TransitionType::TERMINATION && transition.trigger === null
         )
     }
 
@@ -1120,7 +1120,7 @@ class SCChartsExtension {
     // For C variables it is necessary to remove special characters, this may lead
     // to name clashes in unlikely cases. 
     def String removeSpecialCharacters(String string) {
-        if (string == null) {
+        if (string === null) {
             return null;
         }
         return string.replace("-", "").replace("_", "").replace(" ", "").replace("+", "").replace("#", "").
@@ -1136,11 +1136,11 @@ class SCChartsExtension {
     }
 
     def String getHierarchicalName(Scope scope, String decendingName) {
-        if (scope == null)
+        if (scope === null)
             return decendingName
         else {
             var scopeId = "";
-            if (scope.id != null) {
+            if (scope.id !== null) {
                 scopeId = scope.id
             } else {
                 val parent = (scope.eContainer as Scope);
@@ -1210,11 +1210,11 @@ class SCChartsExtension {
     }
 
     def boolean isStateReachable(State originalState, State state, List<State> visited) {
-        if (visited.contains(state) || state == null) {
+        if (visited.contains(state) || state === null) {
             return false
         }
         visited.add(state);
-        if (originalState.parentRegion == null) {
+        if (originalState.parentRegion === null) {
 
             // Root states ARE reachable
             return true
@@ -1369,7 +1369,7 @@ class SCChartsExtension {
 
     def ValuedObject findValuedObjectByName(Scope scope, String name) {
         var EObject container = scope
-        while (container != null) {
+        while (container !== null) {
             var EList<Declaration> declarations = null
             if (container instanceof State)
                 declarations = (container as State).declarations
@@ -1378,7 +1378,7 @@ class SCChartsExtension {
             if (!declarations.nullOrEmpty)
                 for (declaration : declarations) {
                     val valuedObject = declaration.findValuedObjectByName(name)
-                    if(valuedObject != null) return valuedObject
+                    if(valuedObject !== null) return valuedObject
                 }
             container = container.eContainer
         }
@@ -1391,7 +1391,7 @@ class SCChartsExtension {
         // Fix valued object references
         state.valuedObjects.forEach [
             val newValuedObject = newState.findValuedObjectByName(it.name)
-            if (newValuedObject != null) {
+            if (newValuedObject !== null) {
                 newState.replaceAllOccurrences(it, newValuedObject)
             }
         ]

@@ -24,6 +24,7 @@ class SCLHighlighting implements IHighlighting {
         "const",
         "else",
         "end",
+        "enum",
         "expression",
         "extern",
         "fby",

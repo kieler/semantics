@@ -16,15 +16,11 @@ import de.cau.cs.kieler.simulation.DataPoolEntry
 import de.cau.cs.kieler.simulation.SimulationContext
 import de.cau.cs.kieler.simulation.events.SimulationControlEvent
 import de.cau.cs.kieler.simulation.events.SimulationControlEvent.SimulationOperation
-import de.cau.cs.kieler.simulation.ui.SimulationUIPlugin
 import java.util.List
 import java.util.regex.PatternSyntaxException
-import org.eclipse.core.runtime.IStatus
-import org.eclipse.core.runtime.Status
 import org.eclipse.jface.action.Action
 import org.eclipse.jface.action.IAction
 import org.eclipse.jface.action.IMenuManager
-import org.eclipse.jface.action.IToolBarManager
 import org.eclipse.jface.action.MenuManager
 import org.eclipse.jface.action.Separator
 import org.eclipse.jface.viewers.Viewer
@@ -34,13 +30,12 @@ import org.eclipse.swt.events.DisposeEvent
 import org.eclipse.swt.events.DisposeListener
 import org.eclipse.swt.events.ModifyEvent
 import org.eclipse.swt.events.ModifyListener
+import org.eclipse.swt.graphics.Color
 import org.eclipse.swt.layout.RowLayout
 import org.eclipse.swt.widgets.Composite
-import org.eclipse.swt.widgets.Text
-import org.eclipse.ui.statushandlers.StatusManager
-import org.eclipse.xtend.lib.annotations.Accessors
-import org.eclipse.swt.graphics.Color
 import org.eclipse.swt.widgets.Display
+import org.eclipse.swt.widgets.Text
+import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
  * Class that impelments the filter for the data pool view.

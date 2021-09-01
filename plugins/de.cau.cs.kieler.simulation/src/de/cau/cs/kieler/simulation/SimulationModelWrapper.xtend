@@ -17,6 +17,7 @@ import com.google.common.util.concurrent.UncheckedTimeoutException
 import com.google.gson.JsonObject
 import de.cau.cs.kieler.annotations.Nameable
 import de.cau.cs.kieler.kicool.compilation.ExecutableContainer
+import de.cau.cs.kieler.kicool.compilation.ExecutableContainerWrapper
 import de.cau.cs.kieler.kicool.compilation.VariableStore
 import de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure
 import de.cau.cs.kieler.kicool.environments.Environment
@@ -29,8 +30,6 @@ import java.util.concurrent.ArrayBlockingQueue
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
 import org.eclipse.xtend.lib.annotations.Accessors
-import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor
-import de.cau.cs.kieler.kicool.compilation.ExecutableContainerWrapper
 
 /**
  * @author als

@@ -155,7 +155,7 @@ class LegacySynthesisAnnotationHook extends SynthesisHook {
                 usedContext.configureOption(option, value.parseBoolean)
             case option.isChoiceOption: {
                 val newValue = value.parseObject(option.values);
-                if (newValue != null) {
+                if (newValue !== null) {
                     usedContext.configureOption(option, newValue)
                 }
             }

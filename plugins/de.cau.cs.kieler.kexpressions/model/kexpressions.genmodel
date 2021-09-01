@@ -160,6 +160,7 @@
     </genClasses>
     <genClasses ecoreClass="kexpressions.ecore#//ReferenceDeclaration">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference kexpressions.ecore#//ReferenceDeclaration/reference"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference kexpressions.ecore#//ReferenceDeclaration/referenceContainer"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference kexpressions.ecore#//ReferenceDeclaration/parameters"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference kexpressions.ecore#//ReferenceDeclaration/extern"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference kexpressions.ecore#//ReferenceDeclaration/genericParameters"/>

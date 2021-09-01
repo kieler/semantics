@@ -18,17 +18,17 @@ import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObject
-import de.cau.cs.kieler.sccharts.Scope
-import org.eclipse.emf.ecore.EObject
-import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
-import de.cau.cs.kieler.sccharts.ControlflowRegion
-import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import java.util.LinkedList
+import de.cau.cs.kieler.sccharts.ControlflowRegion
+import de.cau.cs.kieler.sccharts.Scope
+import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
+import java.util.LinkedList
+import org.eclipse.emf.ecore.EObject
+
+import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 
 /**
  * SCCharts Transformation Extensions. Extension in order to improve readability of SCCharts extended
@@ -213,10 +213,10 @@ class SCChartsTransformationExtension {
 
     // ========= ATTRIBUTE SETTER =========
     def ValuedObject copyAttributes(ValuedObject valuedObject, ValuedObject valuedObjectWithAttributes) {
-        if (valuedObjectWithAttributes.initialValue != null) {
+        if (valuedObjectWithAttributes.initialValue !== null) {
             valuedObject.setInitialValue(valuedObjectWithAttributes.initialValue.copy)
         }
-        if (valuedObjectWithAttributes.combineOperator != null) {
+        if (valuedObjectWithAttributes.combineOperator !== null) {
             valuedObject.setCombineOperator(valuedObjectWithAttributes.combineOperator)
         }
         if (!valuedObjectWithAttributes.cardinalities.nullOrEmpty) {
@@ -429,7 +429,7 @@ class SCChartsTransformationExtension {
     // as createDeclaration().
     def public VariableDeclaration createDeclaration(VariableDeclaration existingDeclaration) {
         val newDeclaration = createVariableDeclaration()
-        if (existingDeclaration != null) {
+        if (existingDeclaration !== null) {
             newDeclaration.copyAttributes(existingDeclaration)
             val parent = existingDeclaration.eContainer
             if (parent instanceof Scope) {
@@ -472,7 +472,7 @@ class SCChartsTransformationExtension {
     // Attention: The declaration of the valuedObject MUST NOT BE NULL.
     def public VariableDeclaration getUniqueDeclaration(ValuedObject valuedObject) {
         val declaration = valuedObject.declaration2
-        if (declaration == null) {
+        if (declaration === null) {
             // ERROR CASE
         }
         if (declaration._containsOnly(valuedObject)) {

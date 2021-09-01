@@ -107,7 +107,7 @@ class SCCActions implements IAction {
     def getBooleanValue(SynthesisOption option, ViewContext viewContext) {
         val value = viewContext.getOptionValue(option)
         
-        if(value == null) {
+        if(value === null) {
             return false
         } else if (value instanceof Boolean) {
             return value as Boolean;

@@ -12,8 +12,6 @@
  */
 package de.cau.cs.kieler.kicool.ide.language.server
 
-import com.google.common.base.Charsets
-import com.google.common.io.Files
 import com.google.inject.Inject
 import com.google.inject.Injector
 import com.google.inject.Singleton
@@ -21,6 +19,7 @@ import de.cau.cs.kieler.kicool.System
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
 import de.cau.cs.kieler.kicool.compilation.CompilationContext
 import de.cau.cs.kieler.kicool.compilation.Compile
+import de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure
 import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.kicool.ide.klighd.models.CodePlaceHolder
 import de.cau.cs.kieler.kicool.ide.language.server.data.CodeOfModel
@@ -35,6 +34,7 @@ import de.cau.cs.kieler.language.server.KeithLanguageClient
 import de.cau.cs.kieler.language.server.registration.RegistrationLanguageServerExtension
 import java.io.File
 import java.net.URLDecoder
+import java.nio.file.Files
 import java.util.HashMap
 import java.util.List
 import java.util.Map
@@ -50,7 +50,6 @@ import org.eclipse.xtext.ide.server.ILanguageServerExtension
 import org.eclipse.xtext.ide.server.concurrent.RequestManager
 import org.eclipse.xtext.resource.XtextResourceSet
 import org.eclipse.xtext.util.CancelIndicator
-import de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure
 
 /**
  * Implements methods to extend the LSP to allow compilation. Moreover, getting compilation systems and showing
@@ -351,7 +350,7 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, KiCoolC
         if (!RegistrationLanguageServerExtension.registeredLanguageExtensions.contains(ext)) {
             val file = new File(uriObject.path)
             return new CodeContainer() => [
-                addProxy(file,  new String(java.nio.file.Files.readAllBytes(file.toPath)))
+                addProxy(file,  new String(Files.readAllBytes(file.toPath)))
             ]
         }
         val resource = uriObject.xtextResourceSet.getResource(uriObject, true)

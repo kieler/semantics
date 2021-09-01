@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: KIELER SCL Editor
 Bundle-Vendor: Kiel University
-Bundle-Version: 1.2.0.qualifier
+Bundle-Version: 1.3.0.qualifier
 Bundle-SymbolicName: de.cau.cs.kieler.scl.ui;singleton:=true
 Bundle-ActivationPolicy: lazy
 Eclipse-UI: True
@@ -28,3 +28,4 @@ Export-Package: de.cau.cs.kieler.scl.ui,
  de.cau.cs.kieler.scl.ui.synthesis
 Bundle-Activator: de.cau.cs.kieler.scl.ui.internal.SCLActivator
 Import-Package: org.apache.log4j
+Automatic-Module-Name: de.cau.cs.kieler.scl.ui

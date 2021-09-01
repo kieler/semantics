@@ -86,20 +86,20 @@ class Environment extends EnvironmentPropertyHolder {
 
     // Duration of the processor execution in nano seconds
     public static val IProperty<Long> PROCESSOR_TIME = 
-        new Property<Long>("de.cau.cs.kieler.kicool.time.processor", new Long(0))
+        new Property<Long>("de.cau.cs.kieler.kicool.time.processor", Long.valueOf(0))
     // Duration of the processor execution with all intermediate and co-processors in nano seconds
     public static val IProperty<Long> TRANSFORMATION_TIME = 
-        new Property<Long>("de.cau.cs.kieler.kicool.time.transformation", new Long(0))
+        new Property<Long>("de.cau.cs.kieler.kicool.time.transformation", Long.valueOf(0))
     public static val IProperty<Long> TRANSFORMATION_TIME_START = 
-        new Property<Long>("de.cau.cs.kieler.kicool.time.transformation.start", new Long(0))
+        new Property<Long>("de.cau.cs.kieler.kicool.time.transformation.start", Long.valueOf(0))
     // Duration of the processor execution with all intermediate and co-processors as intermediate time until this progress notification (ProcessorProgress) in nano seconds
     public static val IProperty<Long> TRANSFORMATION_INTERMEDIATE_TIME = 
-        new Property<Long>("de.cau.cs.kieler.kicool.time.transformation.start", new Long(0))
+        new Property<Long>("de.cau.cs.kieler.kicool.time.transformation.start", Long.valueOf(0))
     // Duration of the entire compilation in nano seconds
     public static val IProperty<Long> COMPILATION_TIME = 
-        new Property<Long>("de.cau.cs.kieler.kicool.time.compilation", new Long(0))
+        new Property<Long>("de.cau.cs.kieler.kicool.time.compilation", Long.valueOf(0))
     public static val IProperty<Long> COMPILATION_TIME_START = 
-        new Property<Long>("de.cau.cs.kieler.kicool.time.compilation.start", new Long(0))
+        new Property<Long>("de.cau.cs.kieler.kicool.time.compilation.start", Long.valueOf(0))
 
     // Keys of properties that are relevant for benchmarks
     public static val IProperty<List<String>> BENCHMARK_RESULT_KEYS = 

@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: KIELER Simulation Visualization
 Bundle-SymbolicName: de.cau.cs.kieler.kivis.ui;singleton:=true
-Bundle-Version: 1.2.0.qualifier
+Bundle-Version: 1.3.0.qualifier
 Bundle-Vendor: Kiel University
 Bundle-RequiredExecutionEnvironment: JavaSE-11
 Bundle-ActivationPolicy: lazy
@@ -29,3 +29,4 @@ Export-Package: de.cau.cs.kieler.kivis.ui.contentassist,
 Import-Package: org.apache.log4j
 Bundle-Activator: de.cau.cs.kieler.kivis.ui.internal.KiVisActivator
 Bundle-ClassPath: .,lib/org.apache.batik.swing_1.6.0.v201011041432.jar
+Automatic-Module-Name: de.cau.cs.kieler.kivis.ui

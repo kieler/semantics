@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: KIELER Esterel Editor
 Bundle-Vendor: Kiel University
-Bundle-Version: 1.2.0.qualifier
+Bundle-Version: 1.3.0.qualifier
 Bundle-SymbolicName: de.cau.cs.kieler.esterel.ui;singleton:=true
 Bundle-ActivationPolicy: lazy
 Eclipse-UI: True
@@ -30,3 +30,4 @@ Export-Package: de.cau.cs.kieler.esterel.ui.contentassist,
  de.cau.cs.kieler.esterel.ui.scest.contentassist,
  de.cau.cs.kieler.esterel.ui.scest.quickfix
 Bundle-Activator: de.cau.cs.kieler.esterel.ui.DelegateActivator
+Automatic-Module-Name: de.cau.cs.kieler.esterel.ui

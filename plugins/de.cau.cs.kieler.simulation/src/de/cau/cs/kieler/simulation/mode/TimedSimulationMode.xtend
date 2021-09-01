@@ -15,7 +15,6 @@ package de.cau.cs.kieler.simulation.mode
 import com.google.common.base.Stopwatch
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicLong
-import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor
 
 /**
  * 

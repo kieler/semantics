@@ -14,25 +14,24 @@
 package de.cau.cs.kieler.scg.extensions
 
 import com.google.inject.Inject
+import de.cau.cs.kieler.annotations.IntAnnotation
 import de.cau.cs.kieler.annotations.ReferenceAnnotation
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.MethodDeclaration
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
+import de.cau.cs.kieler.kicool.environments.Environment
+import de.cau.cs.kieler.scg.Assignment
+import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
-import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.scg.processors.SCGAnnotations
 import java.util.Collection
 import java.util.List
 import java.util.Map
 import org.eclipse.emf.ecore.util.EcoreUtil.Copier
-import de.cau.cs.kieler.kexpressions.Declaration
-import de.cau.cs.kieler.scg.Node
-import de.cau.cs.kieler.scg.Assignment
-import de.cau.cs.kieler.annotations.IntAnnotation
-import de.cau.cs.kieler.kicool.environments.Environment
-import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
 
 /**
  * 

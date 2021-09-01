@@ -14,6 +14,7 @@ package de.cau.cs.kieler.kicool.ui.synthesis.actions
 
 import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
+import org.eclipse.xtend.lib.annotations.Data
 import de.cau.cs.kieler.kicool.compilation.Processor
 
 /**

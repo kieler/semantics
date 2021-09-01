@@ -12,12 +12,12 @@
  */
 package de.cau.cs.kieler.esterel.compiler.processors
 
-import de.cau.cs.kieler.core.properties.IProperty
-import de.cau.cs.kieler.core.properties.Property
+import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kicool.compilation.CCodeFile
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
 import de.cau.cs.kieler.kicool.compilation.VariableInformation
 import de.cau.cs.kieler.kicool.compilation.VariableStore
+import de.cau.cs.kieler.kicool.compilation.codegen.CodeGeneratorNames
 import de.cau.cs.kieler.kicool.deploy.CommonTemplateVariables
 import de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure
 import de.cau.cs.kieler.kicool.deploy.processor.AbstractTemplateGeneratorProcessor
@@ -26,9 +26,6 @@ import de.cau.cs.kieler.kicool.deploy.processor.TemplateEngine
 import static de.cau.cs.kieler.kicool.deploy.TemplatePosition.*
 
 import static extension de.cau.cs.kieler.kicool.deploy.TemplateInjection.*
-import de.cau.cs.kieler.kexpressions.ValueType
-import de.cau.cs.kieler.esterel.Signal
-import de.cau.cs.kieler.kicool.compilation.codegen.CodeGeneratorNames
 
 /**
  * @author als

@@ -98,7 +98,7 @@ class LegacyLabelShorteningHook extends SynthesisActionHook {
 
     private def configureLabelManagement(KNode rootNode) {
         var labelManager = (SHORTEN_LABEL_STRATEGY.objectValue as LabelShorteningStrategies).getNewLabelManager();
-        if (labelManager != null) {
+        if (labelManager !== null) {
             labelManager.fixedTargetWidth = SHORTEN_LABEL_WIDTH.intValue
         }
         rootNode.setLayoutOption(LabelManagementOptions.LABEL_MANAGER, labelManager)
