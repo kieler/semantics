@@ -1074,7 +1074,15 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         if (outerIf == searchedIf) {
             return true;
         }
-        val thenStmts = (outerIf.thenClause as IASTCompoundStatement).statements.toList
+        
+        var List<IASTStatement> thenStmts
+        if (outerIf.thenClause instanceof IASTCompoundStatement) {
+            thenStmts = (outerIf.thenClause as IASTCompoundStatement).statements.toList;
+        } else {
+            thenStmts = newArrayList()
+            thenStmts.add(outerIf.thenClause)
+        }
+        
         var List<IASTStatement> elseStmts
         var curIf = outerIf
 
@@ -3225,6 +3233,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                     // if necessary, update pointer map
                     val op2 = stmt.getOperand2
                     if (op2 instanceof IASTUnaryExpression &&
+                        (op2 as IASTUnaryExpression).operand instanceof IASTIdExpression &&
                         (op2 as IASTUnaryExpression).operator === IASTUnaryExpression.op_amper) {
                         val pointerName = op1 instanceof IASTIdExpression
                                 ? (op1 as IASTIdExpression).getName.toString
@@ -3500,11 +3509,13 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             }
             // Consider only arguments of a function call    
             IASTFunctionCallExpression: {
+                //TODO: Expressions in brackets are sometimes falsely interpreted as function calls leading to errors
                 // function call could be in brackets
                 var IASTIdExpression function
                 if (stmt.functionNameExpression instanceof IASTIdExpression) {
                     function = stmt.functionNameExpression as IASTIdExpression
                 } else if (stmt.functionNameExpression instanceof IASTUnaryExpression &&
+                    (stmt.functionNameExpression as IASTUnaryExpression).operand instanceof IASTIdExpression &&
                     (stmt.functionNameExpression as IASTUnaryExpression).operator ===
                         IASTUnaryExpression.op_bracketedPrimary) {
                     function = (stmt.functionNameExpression as IASTUnaryExpression).operand as IASTIdExpression
@@ -4502,7 +4513,8 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
                         kExpression = expr.arrayExpression.createKExpression(funcState, dRegion)
                     }
                 }
-                if (kExpression !== null) {
+                //TODO: There are cases in which the cast to ValuedObjectReference fails
+                if (kExpression !== null && kExpression instanceof ValuedObjectReference) {
                     (kExpression as ValuedObjectReference).indices.addAll(indexExpressions)
                 }
             }
