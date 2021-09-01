@@ -2853,6 +2853,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
         // Create the declaration with the cdt type
         val variableDeclaration = createVariableDeclaration
         val declSpecifier = declaration.getDeclSpecifier
+        var isStruct = false
 
         switch (declSpecifier) {
             IASTNamedTypeSpecifier: {
@@ -2864,6 +2865,7 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             IASTElaboratedTypeSpecifier: {
                 // struct type
                 val structName = declSpecifier.name.toString
+                isStruct = true
 
                 // Uses Host Type for setting the struct type since our structs are represented as array-like valued objects
                 variableDeclaration.type = ValueType.HOST
@@ -2893,7 +2895,9 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
 
             // Create the valued object
             val vo = variableDeclaration.createValuedObject(varName + ssaNameSeperator + "0")
-            vo.label = varName
+            if (!isStruct) {
+                vo.label = varName
+            }
             if (!serializable) {
                 vo.insertHighlightAnnotations(decl)
             }
