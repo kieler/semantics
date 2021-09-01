@@ -3385,11 +3385,11 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             }
             default: {
                 // if stmt is a pointer declaration, update the pointer map
-                if (stmt.children.size === 3 && stmt.children.get(0) instanceof IASTPointer) {
+                if (stmt.children.size === 3 && stmt.children.get(0) instanceof IASTPointer &&
+                    stmt.children.get(2) instanceof IASTEqualsInitializer) {
                     val init = (stmt.children.get(2) as IASTEqualsInitializer).children.get(0)
-                    if (init instanceof IASTUnaryExpression 
-                        && (init as IASTUnaryExpression).operand instanceof IASTIdExpression
-                    ) {
+                    if (init instanceof IASTUnaryExpression &&
+                        (init as IASTUnaryExpression).operand instanceof IASTIdExpression) {
                         val varName = ((init as IASTUnaryExpression).operand as IASTIdExpression).getName.toString
                         pointer.put(stmt.children.get(1).toString, varName)
                     } else {
@@ -4026,12 +4026,11 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
             }
             // if source is "&exp" update pointer ref to the corresponding vo
             if (sourceExpr instanceof IASTUnaryExpression &&
-                (sourceExpr as IASTUnaryExpression).operator === IASTUnaryExpression.op_amper) {
+                (sourceExpr as IASTUnaryExpression).operator === IASTUnaryExpression.op_amper &&
+                source instanceof ValuedObjectReference) {
                 statePointers.put(
                     targetAndIndex.target.name.substring(0, targetAndIndex.target.name.lastIndexOf(ssaNameSeperator)),
-                    ((source as OperatorExpression).subExpressions.get(0) as ValuedObjectReference).valuedObject)
-                // we are only interested in the value the pointer points to not the address
-                source = (source as OperatorExpression).subExpressions.get(0)
+                    (source as ValuedObjectReference).valuedObject)
             }
 
             if (!serializable) {
@@ -4290,7 +4289,8 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
 
         // Create the expression
         val sourceExpression = createKExpression(expression, funcState, dRegion)
-        // Retrieve the respective variable VO                
+        // Retrieve the respective variable VO
+        //TODO: How to handle CASTCastExpressions?             
         val opName = (expression.getOperand as IASTIdExpression).getName.toString
         val opVO = funcState.findValuedObjectByName(opName, true, dRegion)
 
